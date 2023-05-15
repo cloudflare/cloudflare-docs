@@ -8,7 +8,7 @@ weight: 1
 
 # Make your first Constellation Worker
 
-In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters.
+In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters. SqueezeNet is an image classifier which can accurately predict what object is present in an image with less computing power than other models.
 
 ## Prerequisites
 
@@ -279,7 +279,7 @@ export interface Env {
 
 ### Download test images
 
-Below are some test `224`x`244` PNG images you can use for tests:
+Download some test `224`x`244` PNG images to a new folder you can use for tests.
 
 ```bash
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/8b78a6fb-44ac-4a97-121b-fb8f47f1e000/public -O cat.png
