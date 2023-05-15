@@ -17,8 +17,8 @@ Specifically, you will increase the security level for a URL known to be expensi
 Create a new branch and append the configuration.
 
 ```bash
-$ git checkout -b step6-pagerule
-Switched to a new branch 'step6-pagerule'
+$ git checkout -b step5-pagerule
+Switched to a new branch 'step5-pagerule'
 
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
@@ -116,14 +116,14 @@ guarantee to take exactly these actions if you run "terraform apply" now.
 
 $ git add cloudflare.tf
 
-$ git commit -m "Step 6 - Add two Page Rules."
-[step6-pagerule d4fec16] Step 6 - Add two Page Rules.
+$ git commit -m "Step 5 - Add two Page Rules."
+[step5-pagerule d4fec16] Step 5 - Add two Page Rules.
  1 file changed, 23 insertions(+)
 
 $ git checkout master
 Switched to branch 'master'
 
-$ git merge step6-pagerule
+$ git merge step5-pagerule
 Updating 7a2ac34..d4fec16
 Fast-forward
  cloudflare.tf | 23 +++++++++++++++++++++++

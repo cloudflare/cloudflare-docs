@@ -15,8 +15,8 @@ In this tutorial, you will add a second origin for some basic round robining, an
 To get started, add a DNS record for a second web server, located in Asia. The IP address for this server is `198.51.100.15`.
 
 ```bash
-$ git checkout -b step5-loadbalance
-Switched to a new branch 'step5-loadbalance'
+$ git checkout -b step4-loadbalance
+Switched to a new branch 'step4-loadbalance'
 
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_record" "www-asia" {
@@ -70,14 +70,14 @@ Note: You didn't use the -out option to save this plan, so Terraform can't
 guarantee to take exactly these actions if you run "terraform apply" now.
 
 $ git add cloudflare.tf
-$ git commit -m "Step 5 - Add additional 'www' DNS record for Asia data center."
-[step5-loadbalance 6761a4f] Step 5 - Add additional 'www' DNS record for Asia data center.
+$ git commit -m "Step 4 - Add additional 'www' DNS record for Asia data center."
+[step4-loadbalance 6761a4f] Step 4 - Add additional 'www' DNS record for Asia data center.
  1 file changed, 7 insertions(+)
 
 $ git checkout master
 Switched to branch 'master'
 
-$ git merge step5-loadbalance
+$ git merge step4-loadbalance
 Updating e1c38cf..6761a4f
 Fast-forward
  cloudflare.tf | 7 +++++++
@@ -158,8 +158,8 @@ As described in the [Load Balancing tutorial](/learning-paths/load-balancing/), 
 To monitor the origins, create a basic health check that makes a `GET` request to each origin on the URL `https://www.example.com`. If the origin returns the `200` status code (`OK`) within five seconds, it is considered healthy. If it fails to do so three times in a row, it is considered unhealthy. This health check will be run once per minute from several regions and send an email notification to `you@example.com` if any failures are detected.
 
 ```bash
-$ git checkout step5-loadbalance
-Switched to branch 'step5-loadbalance'
+$ git checkout step4-loadbalance
+Switched to branch 'step4-loadbalance'
 
 $ cat >> cloudflare.tf <<'EOF'
 
@@ -339,8 +339,8 @@ The plan looks good. Merge the plan and apply it.
 
 ```sh
 $ git add cloudflare.tf
-$ git commit -m "Step 5 - Create load balancer (LB) monitor, LB pool, and LB."
-[step5-loadbalance bc9aa9a] Step 5 - Create load balancer (LB) monitor, LB pool, and LB.
+$ git commit -m "Step 4 - Create load balancer (LB) monitor, LB pool, and LB."
+[step4-loadbalance bc9aa9a] Step 4 - Create load balancer (LB) monitor, LB pool, and LB.
  1 file changed, 35 insertions(+)
 
 $ terraform apply --auto-approve
