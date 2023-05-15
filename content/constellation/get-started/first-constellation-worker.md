@@ -12,7 +12,7 @@ In this guide, you will build an [image classification](https://developers.googl
 
 ## Configure your project
 
-First, let's [create](/constellation/platform/wrangler/#manage-projects) the new project:
+Generate your new project by running [`create`](/constellation/platform/wrangler/#manage-projects). Then run `list` to review th details of your newly created `image-classifier` project:
 
 ```bash
 $ npx wrangler constellation project create "image-classifier" ONNX
