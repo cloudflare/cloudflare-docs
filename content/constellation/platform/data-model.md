@@ -38,5 +38,5 @@ You may not want to train models or upload models you have not tested. Cloudflar
 
 For each machine-learning runtime we support, developers can search for ready-to-use permanent models in our [catalog](/constellation/platform/data-model/#catalog) and use them for some of the most popular tasks without additional configurations or file uploads.
 
-Like user-uploaded models, the models in the catalog have a name, an Id, and a description and are associated with a parent catalog project that defines the runtime.
+Like user-uploaded models, the models in the catalog have a name, an ID, and a description and are associated with a parent catalog project that defines the runtime.
 
