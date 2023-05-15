@@ -76,7 +76,7 @@ $ npm install @cloudflare/constellation --save-dev
 
 ## Upload model
 
-Upload the pre-trained [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model to your project.
+Upload the pre-trained [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model to your project:
 
 ```bash
 $ wget https://github.com/microsoft/onnxjs-demo/raw/master/docs/squeezenet1_1.onnx
