@@ -11,7 +11,7 @@ You may benefit from Smart Placement if you are making multiple round trips to a
 
 ## Background
 
-Smart Placement applies to Pages Functions and middleware. Assets are always served globally and closest to your users. 
+Smart Placement applies to Pages Functions and middleware. Normally, assets are always served globally and closest to your users. 
 
 Smart Placement on Pages currently has some caveats. While assets are always meant to be served from a location closest to the user, there are two exceptions to this behavior:
 
@@ -22,7 +22,7 @@ Smart Placement on Pages currently has some caveats. While assets are always mea
 
 {{<Aside type= "note">}}
 
-For more background and to understand how Smart Placement works visit [Smart Placement](/workers/platform/smart-placement/)
+To understand how Smart Placement works, refer to [Smart Placement](/workers/platform/smart-placement/).
 
 {{</Aside>}}
 
@@ -30,14 +30,15 @@ For more background and to understand how Smart Placement works visit [Smart Pla
 
 Smart Placement is available on all plans. 
 
-### Enable Smart Placement on the dashboard:
+### Enable Smart Placement via the dashboard
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
+2. In Account Home, select **Pages**.
 3. Select your Pages project.
 4. Select **Settings** > **Functions**.
-5. Under **Placement**, enable **Smart** mode.
-6. Send some initial traffic (approximately 20-30 requests) to your Pages Functions. It takes a few minutes after you have sent traffic to your Pages Function for Smart Placement to take effect. 
-7. View your Function's [request duration metrics](/workers/learning/metrics-and-analytics) under Functions Metrics.
+5. Under **Placement**, choose **Smart**.
+6. Send some initial traffic (approximately 20-30 requests) to your Pages Functions. It takes a few minutes after you have sent traffic to your Pages Function for Smart Placement to take effect.
+7. View your Pages Function's [request duration metrics](/workers/learning/metrics-and-analytics) under Functions Metrics.
 
 ## Give feedback on Smart Placement
 
