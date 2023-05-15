@@ -266,7 +266,7 @@ export interface Env {
 
 ### Download test images
 
-Here are some test 224x244 PNG images you can use for tests:
+Below are some test 224x244 PNG images you can use for tests:
 
 ```bash
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/8b78a6fb-44ac-4a97-121b-fb8f47f1e000/public -O cat.png
