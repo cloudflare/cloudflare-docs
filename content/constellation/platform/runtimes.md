@@ -6,9 +6,9 @@ weight: 20
 
 # Constellation runtimes
 
-Due to innovation in the AI space, there are various machine learning, AI tools and frameworks being improved or emerging. Constellation was designed to support multiple machine learning (ML) runtimes at its core.
+With innovation to AI, various machine learning (ML) and AI tools and frameworks are emerging and being improved over time. Constellation was designed to support multiple ML runtimes at its core.
 
-Our vision is to support multiple runtimes over time. Currently, we only support the ONNX Runtime, but we are exploring and researching others. [XGBoost](https://xgboost.ai/) is in the final stages of testing.
+Our vision is to support multiple runtimes. Currently, we only support the ONNX Runtime, and are exploring and researching others. [XGBoost](https://xgboost.ai/) is in the final stages of testing.
 
 | <div style="width:50px">Key</div> | Name | Description |
 | ------- | ----- | -----|
