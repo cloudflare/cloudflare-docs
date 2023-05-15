@@ -85,7 +85,7 @@ $ npm install @cloudflare/constellation --save-dev
 
 ## Upload model
 
-Upload the pre-trained [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model to your `image-classifier` project:
+Upload the pre-trained [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model to your `image-classifier` Constellation project:
 
 ```bash
 $ wget https://github.com/microsoft/onnxjs-demo/raw/master/docs/squeezenet1_1.onnx
@@ -99,7 +99,7 @@ $ npx wrangler constellation model list "image-classifier"
 └──────────────────────────────────────┴──────────────────────────────────────┴──────────────┘
 ```
 
-Take note of the id field as this will be the model ID.
+Take note of the `id` field as this will be the model ID.
 
 ## Download Imagenet classes
 
@@ -113,7 +113,7 @@ $ wget -O src/imagenet.ts \
 
 ## Install modules
 
-Install [pngjs](https://github.com/pngjs/pngjs), a PNG decoder, and [string-to-stream](https://github.com/feross/string-to-stream) before you begin coding your project:
+In your `image-classifier-worker` Worker, install [pngjs](https://github.com/pngjs/pngjs), a PNG decoder, and [string-to-stream](https://github.com/feross/string-to-stream):
 
 ```bash
 $ npm install string-to-stream --save-dev
@@ -122,7 +122,7 @@ $ npm install pngjs --save-dev
 
 ## Code
 
-With your project configured, begin coding in your `image-classifier-worker`'s `index.ts` file.
+With your Worker configured, begin coding in your `image-classifier-worker`'s `index.ts` file.
 
 The following script gets a PNG file upload from the request, decodes the image to RGB raw bitmaps, constructs a 3D tensor with the input data, runs the SqueezeNet model, maps the top predictions to the ImagetNet human-readable classes and returns the strongest one in a JSON object.
 
@@ -313,3 +313,8 @@ When you are ready, deploy your Worker:
 ```bash
 $ npx wrangler publish
 ```
+
+## Related resources
+
+* Learn about the [Constellation data model](/constellation/platform/data-model/)
+* Review the list of [Constellation-supported machine learning runtimes](/constellation/platform/runtimes/)
