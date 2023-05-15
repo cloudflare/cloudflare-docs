@@ -4,7 +4,7 @@ title: Runtimes
 weight: 20
 ---
 
-# Constellation Runtimes
+# Constellation runtimes
 
 There are various machine learning and AI tools and frameworks being improved or emerging, with lots of innovation happening in the space. Constellation was designed to support multiple Machine Learning runtimes at its core.
 
