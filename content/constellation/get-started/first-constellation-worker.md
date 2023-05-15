@@ -102,9 +102,9 @@ $ wget -O src/imagenet.ts \
   https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
 ```
 
-## Install some modules
+## Install modules
 
-We're going to need [pngjs](https://github.com/pngjs/pngjs), our PNG decoder, and [string-to-stream](https://github.com/feross/string-to-stream).
+Install [pngjs](https://github.com/pngjs/pngjs), a PNG decoder, and [string-to-stream](https://github.com/feross/string-to-stream) before you begin coding your project:
 
 ```bash
 $ npm install string-to-stream --save-dev
