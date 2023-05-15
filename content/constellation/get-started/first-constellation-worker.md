@@ -262,7 +262,7 @@ export interface Env {
 
 ```
 
-## Test it
+## Test your project
 
 ### Download test images
 
