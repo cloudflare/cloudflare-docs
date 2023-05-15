@@ -6,7 +6,7 @@ weight: 30
 
 # Wrangler Support
 
-[Wrangler](https://developers.cloudflare.com/workers/wrangler/) our command-line tool for configuring, building and deploying applications with Cloudflare developer products. You can use Wrangler to manipulate your Constellation projects and machine-learning models or search for verified models in our catalog.
+[Wrangler](https://developers.cloudflare.com/workers/wrangler/) is our command-line tool for configuring, building and deploying applications with Cloudflare developer products. Use Wrangler to manipulate your Constellation projects and machine-learning models or search for verified models in our [catalog](/constellation/platform/data-model/#catalog).
 
 ## Installation
 
