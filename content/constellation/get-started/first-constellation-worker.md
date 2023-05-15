@@ -295,12 +295,9 @@ $ curl http://0.0.0.0:8787 -F file=@mountain.png
 
 This is it, your image classifier is working. Run it through other 224x244 PNG images of your own and check the results.
 
-## Publish it
+## Publish your projct
 
-When you're ready, you can deploy your Worker to its permanent location.
+When you are ready, deploy your Worker:
 
 ```bash
 $ npx wrangler publish
-```
-
-You can see this demo online at https://ai.cloudflare.com/demos/image-classifier
