@@ -85,9 +85,13 @@ Because IdPs expose user groups in different formats, reference the list below t
 | -------------- | ------------------------------------- |
 | User Group IDs | `61503835-b6fe-4630-af88-de551dd59a2` |
 
-The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#azure-groups-in-zero-trust-policies) for an Azure group.
+**Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#azure-groups-in-zero-trust-policies) for an Azure group.
 
-The Azure AD IdP supports user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups).
+If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
+
+| Selector       | Value                                 |
+| -------------- | ------------------------------------- |
+| User Group Names | `SCIM group` |
 
 ### GitHub
 
@@ -115,11 +119,14 @@ The Okta IdP supports user and group synchronization with [SCIM](/cloudflare-one
 | --------------- | -------------- | --------------- |
 | SAML Attributes | `name`         | `Marketing`     |
 
-### Generic IdP
+### Generic SAML IdP
 
-If your IdP is not listed above and setup as a SAML provider, use the SAML Attribute:
+For a [generic SAML provider](/cloudflare-one/identity/idp-integration/generic-saml/), use the SAML Attribute selector:
 
 | Selector        | Attribute name | Attribute value |
 | --------------- | -------------- | --------------- |
 | SAML Attributes | `name`         | `Marketing`     |
 
+### Generic OIDC IdP
+
+Custom OIDC claims are not supported in Gateway policies.
