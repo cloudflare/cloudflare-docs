@@ -17,7 +17,7 @@ Constellation allows you to run fast, low-latency inference tasks on pre-trained
 
 Cloudflare provides a curated list of verified models, or you can train and upload your own.
 
-Functionality you can deploy to your application with Constellation includes:
+Functionality you can deploy to your application with Constellation:
 
 * Image or audio classification
 * Object detection
@@ -30,9 +30,17 @@ Functionality you can deploy to your application with Constellation includes:
 
 ---
 
-## Features
-
-{{<feature header="Make your first ML application" href="/radar/get-started/first-request/" cta="Make your first ML application">}}
+{{<feature header="Make your first Constellation Worker" href="/constellation/get-started/first-constellation-worker/" cta="Make your first Constellation Worker">}}
 Use Constellation from a Cloudflare Worker.
 {{</feature>}}
+
+## More resources
+ 
+{{<resource-group>}}
+
+{{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
+
+{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+ 
+{{</resource-group>}}
 
