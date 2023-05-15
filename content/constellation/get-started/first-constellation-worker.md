@@ -308,7 +308,7 @@ $ curl http://0.0.0.0:8787 -F file=@mountain.png
 
 Your image classifier is ready. Run it through other `224`x`244` PNG images of your own and review the results.
 
-## Publish your projct
+## Publish your project
 
 When you are ready, deploy your Worker:
 
