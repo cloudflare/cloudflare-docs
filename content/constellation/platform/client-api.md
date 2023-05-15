@@ -67,7 +67,7 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
 
 ### Tensor examples
 
-**A single string of text**
+#### A single string of text
 
 ```javascript
    new Tensor(
