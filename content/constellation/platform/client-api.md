@@ -39,7 +39,7 @@ export type Tensor = {
 
 **type**
 
-Defines the type of data represented in the Tensor. Options are: <code>float32</code>, <code>float64</code>, <code>int32</code>, <code>int64</code>, <code>string</code> or <code>bool</code>
+Defines the type of data represented in the Tensor. Options are: `float32`, `float64`, `int32`, `int64`, `string` or `bool`.
 
 **shape**
 
