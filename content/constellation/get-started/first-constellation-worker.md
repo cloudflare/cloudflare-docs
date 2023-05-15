@@ -68,7 +68,7 @@ constellation = [
 
 Make sure to substitute the `project_id` with the one enumerated when you ran `npx wrangler constellation project list`.
 
-Install the client API library:
+In your `image-classifier` directory, install the client API library:
 
 ```bash
 $ npm install @cloudflare/constellation --save-dev
