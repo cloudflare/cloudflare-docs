@@ -17,7 +17,7 @@ Constellation allows you to run fast, low-latency inference tasks on pre-trained
 
 Cloudflare provides a curated list of verified models, or you can train and upload your own.
 
-Functionality you can deploy to your application with Constellation includes:
+Functionality you can deploy to your application with Constellation:
 
 * Image or audio classification
 * Object detection

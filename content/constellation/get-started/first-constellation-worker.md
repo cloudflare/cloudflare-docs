@@ -14,8 +14,7 @@ In this guide, you will build an [image classification](https://developers.googl
 
 Before continuing, make sure you have:
 
-* Made a [Cloudflare account](https://dash.cloudflare.com/sign-up).
-* Installed [Wrangler](/workers/wrangler/install-and-update/).
+* A [Cloudflare account](https://dash.cloudflare.com/sign-up).
 
 ## Create a new Constellation project
 
@@ -34,20 +33,21 @@ $ npx wrangler constellation project list
 
 ## Generate a new Worker
 
-Create a new Worker named `image-classifier-worker`.
+Create a new Worker named `image-classifier-worker`. You will install [Wrangler for Constellation](/constellation/platform/wrangler/#installation) which is still in beta.
 
 ```bash
 $ mkdir image-classifier-worker
 $ cd image-classifier-worker
 $ npm init -f
 $ npm install wrangler@beta --save-dev
-$ npx wrangler init
+$ npx wrangler init `image-classifier-worker`
 ```
 
 Answer Wrangler's configuration questions:
 
 ```bash
 Would you like to use git to manage this Worker?: N
+Would you like to use TypeScript? Y
 Would you like to install the type definitions for Workers into your package.json?: Y
 Would you like to create a Worker at src/index.ts?: Fetch handler
 Would you like us to write your first test with Vitest?: N
@@ -77,7 +77,9 @@ constellation = [
 
 Substitute the `project_id` with the one generated when you ran `npx wrangler constellation project list` in [Create a new Constellation project](/constellation/get-started/first-constellation-worker/#configure-your-project).
 
-In your `image-classifier-worker` directory, install the client API library:
+## Install the client API library
+
+In your `image-classifier-worker` Worker, install the [client API](/constellation/platform/client-api/) library:
 
 ```bash
 $ npm install @cloudflare/constellation --save-dev
