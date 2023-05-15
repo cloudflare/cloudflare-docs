@@ -54,7 +54,7 @@ Refer to the [TensorFlow documentation](https://www.tensorflow.org/guide/tensor)
 
 **value**
 
-This is tensor's data. See examples:
+This is tensor's data. Example tensor values could include:
 
 * scalar: 4
 * vector: [1, 2, 3]
