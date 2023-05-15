@@ -12,7 +12,7 @@ Before you use the Constellation client API, you need to:
 
 * Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
 * Enable Constellation by logging into the Cloudflare dashboard > **Workers & Pages** > **Constellation**.
-* Create a [Constellation project](/constellation/get-started/firstconstellation-worker/) and [configure the binding](/constellation/platform/wrangler/#bindings).
+* Create a Constellation project and [configure the binding](/constellation/platform/wrangler/#bindings).
 * Import the <code>@cloudflare/constellation</code> library in your code:
 
 ```javascript
@@ -110,6 +110,6 @@ const output = await run(env.PROJECT, modelId, input)
 ```
 
 * **input** is a list of tensors.
-* **modelId** is the model ID inside the project. Use [wrangler](constellation/platform/wrangler/#manage-models) to list the model ID associated with your project.
+* **modelId** is the model ID inside the project. Use Wrangler to list the model ID associated with your project.
 
 
