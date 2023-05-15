@@ -274,18 +274,13 @@ $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/05c265ae-d3c0-4114-208b-
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/4152ee23-f9af-4b21-a636-600e33883400/public -O mountain.png
 ```
 
-### Run wrangler dev
+### Run `wrangler dev`
 
-You can start a local server while developing it, for testing.
+Start a local server to test your `image-classifier` Worker by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```bash
 $ npx wrangler dev
 ⬣ Listening at http://0.0.0.0:8787
-```
-
-### Run the test images
-
-Now the moment of truth, lets upload the test images to our image classifier.
 
 ```bash
 $ curl http://0.0.0.0:8787 -F file=@cat.png
