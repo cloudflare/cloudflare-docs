@@ -45,7 +45,7 @@ Unlike `wrangler dev`, which provides local instances of resources to develop ag
 
 {{</Aside>}}
 
-### Additional info
+### Customize `wrangler dev`
 
 You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/wrangler/commands/#dev) for available configuration options.
 
@@ -55,8 +55,6 @@ There is a bug associated with `wrangler dev --remote` documented in the [Known 
 
 {{</Aside>}}
 
-## Getting logs from deployed Workers
+## ## Livestream logs from deployed Workers with `wrangler tail`
 
-If you need more insight into currently deployed Workers, you can start a new session to livestream logs by running `wrangler tail`.
-
-TBD: Insert screenshot.
+To get more insight into currently deployed Workers, run [`wrangler tail`](/workers/wrangler/commands/#tail). `wrangler tail` starts a session to livestream logs from a deployed Worker.
