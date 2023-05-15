@@ -42,8 +42,8 @@ export default {
 
 {{<definitions>}}
 
-- {{<code>}}connect(address: {{<type-link href="/workers/runtime-apis/connect/#socketaddress">}}SocketAddress{{</type-link>}} | string, options?: {{<prop-meta>}}optional{{</prop-meta>}} {{<type-link href="/workers/runtime-apis/connect/#socketoptions">}}SocketOptions{{</type-link>}}){{</code>}} : {{<type-link href="/workers/runtime-apis/connect/#socket">}}`Socket`{{</type-link>}}
-  - `connect()` accepts either a URL string or [`SocketAddress`](/workers/runtime-apis/connect/#socketaddress) to define the hostname and port number to connect to, and an optional configuration object, [`SocketOptions`](/workers/runtime-apis/connect/#socketoptions). It returns an instance of a [`Socket`](/workers/runtime-apis/connect/#socket).
+- {{<code>}}connect(address: {{<type-link href="/workers/runtime-apis/tcp-sockets/#socketaddress">}}SocketAddress{{</type-link>}} | string, options?: {{<prop-meta>}}optional{{</prop-meta>}} {{<type-link href="/workers/runtime-apis/tcp-sockets/#socketoptions">}}SocketOptions{{</type-link>}}){{</code>}} : {{<type-link href="/workers/runtime-apis/tcp-sockets/#socket">}}`Socket`{{</type-link>}}
+  - `connect()` accepts either a URL string or [`SocketAddress`](/workers/runtime-apis/tcp-sockets/#socketaddress) to define the hostname and port number to connect to, and an optional configuration object, [`SocketOptions`](/workers/runtime-apis/tcp-sockets/#socketoptions). It returns an instance of a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket).
 {{</definitions>}}
 
 ### `SocketAddress`
@@ -66,7 +66,7 @@ export default {
   - Specifies whether or not to use [TLS](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) when creating the TCP socket.
   - `off` — do not use TLS.
   - `on` — use TLS.
-  - `starttls` — do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/connect/#how-to-implement-the-starttls-pattern).
+  - `starttls` — do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#how-to-implement-the-starttls-pattern).
 
 - `allowHalfOpen` {{<type>}}boolean{{</type>}} — Defaults to `false`
   - Defines whether the writable side of the TCP socket will automatically close on EOF. When set to `false`, the writable side of the TCP socket will automatically close on EOF. When set to `true`, the writable side of the TCP socket will remain open on EOF.
@@ -90,8 +90,8 @@ export default {
 - `close()` {{<type>}}`Promise<void>`{{</type>}}
   - Closes the TCP socket. Both the readable and writable streams are forcibly closed.
 
-- {{<code>}}startTls(){{</code>}} : {{<type-link href="/workers/runtime-apis/connect/#socket">}}Socket{{</type-link>}}
-  - Upgrades an insecure socket to a secure one that uses TLS, returning a new [Socket](/workers/runtime-apis/connect#socket). Note that in order to call `startTls()`, you must set [`secureTransport`](/workers/runtime-apis/connect/#socketoptions) to `starttls` when initially calling `connect()` to create the socket.
+- {{<code>}}startTls(){{</code>}} : {{<type-link href="/workers/runtime-apis/tcp-sockets/#socket">}}Socket{{</type-link>}}
+  - Upgrades an insecure socket to a secure one that uses TLS, returning a new [Socket](/workers/runtime-apis/tcp-sockets#socket). Note that in order to call `startTls()`, you must set [`secureTransport`](/workers/runtime-apis/tcp-sockets/#socketoptions) to `starttls` when initially calling `connect()` to create the socket.
 
 {{</definitions>}}
 
