@@ -115,38 +115,19 @@ const secureSocket = socket.startTls();
 
 ## Error handling
 
+```typescript
 import { connect } from 'cloudflare:sockets';
-
-const connectionUrl = "nonexistinghostname.invalid:1234";
-
+const connectionUrl = "google.com:80";
 export interface Env { }
-
 export default {
   async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
       const socket = connect(connectionUrl);
-
-      // This will throw because the `closed` promise is rejected with an exception.
-      await socket.closed;
-    } catch (error) {
-      return new Response("Socket connection failed: " + error, { status: 500 });
-    }
-  }
-};
-
-```typescript
-import { connect } from "cloudflare:sockets"
-
-const connectionUrl = "<URL>";
-
-export default {
-  async fetch(req, env) {
-
-    try {
-      const socket = connect(connectionUrl);
-
-      //...
-
+      const writer = socket.writable.getWriter();
+      const encoder = new TextEncoder();
+      const encoded = encoder.encode("GET / HTTP/1.0\r\n\r\n");
+      await writer.write(encoded);
+      
       return new Response(socket.readable, { headers: { "Content-Type": "text/plain" } });
     } catch (error) {
       return new Response("Socket connection failed: " + error, { status: 500 });
