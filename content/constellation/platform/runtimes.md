@@ -30,8 +30,6 @@ $ npx wrangler constellation runtime list
 
 ### ONNX
 
-Currently, Constellation supports the [ONNX Runtime](https://onnxruntime.ai/).
-
 The Open Neural Network Exchange (ONNX) is an ecosystem supported by multiple technology companies and research organizations, defines open standards for machine learning, and makes open-source software for AI.
 
 The Open Neural Network Exchange (ONNX) is an ecosystem supported by multiple technology companies and research organizations, defines open standards for machine learning, and makes open-source software for AI.
