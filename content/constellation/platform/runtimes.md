@@ -14,7 +14,7 @@ Our vision is to support multiple runtimes over time. Currently, we only support
 | ------- | ----- | -----|
 | `ONNX` | ONNX Runtime | Cross-platform machine-learning model accelerator. ONNX Runtime can be used with converted models from PyTorch, Tensorflow/Keras, TFLite, scikit-learn, and other frameworks. |
 
-You can also use Wrangler to list the supported models:
+Use Wrangler to list the models Cloudflare supports:
 
 ```bash
 $ npx wrangler constellation runtime list
