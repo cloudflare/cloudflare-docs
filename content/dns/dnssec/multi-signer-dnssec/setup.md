@@ -103,5 +103,5 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 
 ## Step 3 - Configure your registrar
 
-1. Add DS records at your registrar, one for each provider.
+1. Add DS records to your registrar, one for each provider.
 2. Update the nameserver settings at your registrar to include the nameservers of all providers you will be using for your multi-signer DNSSEC setup.
