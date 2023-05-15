@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Data Model
+title: Data model
 weight: 10
 ---
 
