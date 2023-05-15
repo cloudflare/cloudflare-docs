@@ -94,7 +94,7 @@ Take note of the id field as this will be the model id.
 
 ## Download Imagenet Classes
 
-The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.org/) dataset. Let's download the the list of 1000 image classes that it was trained for.
+The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.org/) dataset. Make a new `src` folder in your `image-classifier` directory. Then download the the list of 1,000 image classes that SqueezeNet was trained for:
 
 ```bash
 $ mkdir src
