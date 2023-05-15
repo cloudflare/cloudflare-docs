@@ -16,7 +16,7 @@ The project has a name, a machine-learning runtime, and an ID.
 
 The runtime has to be one of our supported engines. Refer to [Constellation Runtimes](/constellation/platform/runtimes/) for the complete list. The ID is what binds the project to the Worker.
 
-The name can only have alphanumeric, minus (-) and underscore (_) characters (```/^[a-zA-Z0-9-_]+$/```) and it helps organize things and is used for certain operations in [Wrangler](/constellation/concepts/wrangler-support/) and the APIs.
+The name can only have alphanumeric, minus (`-`) and underscore (`_`) characters (`/^[a-zA-Z0-9-_]+$/`). The name helps with organization and is used for certain operations in [Wrangler](/constellation/concepts/wrangler-support/) and the APIs.
 
 You can have as many projects as you want under your account.
 
