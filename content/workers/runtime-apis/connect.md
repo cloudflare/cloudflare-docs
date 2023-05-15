@@ -115,6 +115,8 @@ const secureSocket = socket.startTls();
 
 ## Error handling
 
+To handle errors when creating a new TCP socket, reading from a socket, or writing to a socket, wrap these calls inside `try..catch` blocks. This example opens a connection to Google.com, initiates a HTTP request, and returns the response. If any of this fails and throws an exception, it returns a 500:
+
 ```typescript
 import { connect } from 'cloudflare:sockets';
 const connectionUrl = "google.com:80";
@@ -130,13 +132,13 @@ export default {
       
       return new Response(socket.readable, { headers: { "Content-Type": "text/plain" } });
     } catch (error) {
-      return new Response("Socket connection failed: " + error, { status: 500 });
+      return new Response(`Socket connection failed: ${error}`, { status: 500 });
     }
   }
 };
 ```
 
-### Closing TCP connections
+## Closing TCP connections
 
 You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writeable sides of the socket.
 
@@ -151,7 +153,7 @@ socket.close();
 const reader = socket.readable.getReader(); // This fails
 ```
 
-### Considerations
+## Considerations
 
 - When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, in order to use `connect()`.
 - TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
