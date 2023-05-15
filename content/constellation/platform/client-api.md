@@ -65,7 +65,7 @@ This is tensor's data. Example tensor values could include:
 
 Naming a tensor is optional, it can be a useful key for mapping operations when building the tensor inputs.
 
-### Tensor examples:
+### Tensor examples
 
 **A single string of text**
 
