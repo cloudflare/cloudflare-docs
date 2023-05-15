@@ -22,7 +22,7 @@ In addition to testing Workers locally with `wrangler dev`, the use of Miniflare
 
 ### Local testing against remote resources
 
-While `wrangler dev` runs locally by default, you can run `wrangler dev --remote` to deploy your application to the edge preview service, and make it available for access on `localhost`:
+`wrangler dev` runs locally by default. To deploy your application to the edge preview service, and make it available for access on `localhost`, run `wrangler dev --remote`:
 
 ```sh
 $ wrangler dev
