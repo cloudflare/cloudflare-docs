@@ -10,7 +10,7 @@ weight: 1
 
 In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters.
 
-## Setup project
+## Configure your project
 
 First, let's [create](/constellation/platform/wrangler/#manage-projects) the new project:
 
