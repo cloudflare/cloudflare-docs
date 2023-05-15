@@ -8,7 +8,7 @@ weight: 1
 
 # Make your first Constellation Worker
 
-In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters. SqueezeNet is an image classifier which can accurately predict what object is present in an image with less computing power than other models.
+In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is an image classifier which can accurately predict what object is present in an image. It is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters.
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ $ mkdir image-classifier-worker
 $ cd image-classifier-worker
 $ npm init -f
 $ npm install wrangler@beta --save-dev
-$ npx wrangler init `image-classifier-worker`
+$ npx wrangler init
 ```
 
 Answer Wrangler's configuration questions:
@@ -57,7 +57,9 @@ Would you like us to write your first test with Vitest?: N
 
 In your `image-classifier-worker`, find your [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, such as Constellation. Create a [binding](/constellation/platform/wrangler/#bindings) between your `image-classifier` Constellation project and your `image-classifier-worker` Worker in your `image-classifier-worker` Worker's `wrangler.toml` configuration file:
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, such as Constellation. Create a [binding](/constellation/platform/wrangler/#bindings) between your `image-classifier` Constellation project and your `image-classifier-worker` Worker in your `image-classifier-worker` Worker's `wrangler.toml` configuration file.
+
+Substitute the `project_id` with the one generated when you ran `npx wrangler constellation project list` in [Create a new Constellation project](/constellation/get-started/first-constellation-worker/#configure-your-project):
 
 ```toml
 ---
@@ -74,8 +76,6 @@ constellation = [
     {binding = 'CLASSIFIER', project_id = '2193053a-af0a-40a6-b757-00fa73908ef6'},
 ]
 ```
-
-Substitute the `project_id` with the one generated when you ran `npx wrangler constellation project list` in [Create a new Constellation project](/constellation/get-started/first-constellation-worker/#configure-your-project).
 
 ## Install the client API library
 
@@ -294,6 +294,9 @@ Start a local server to test your `image-classifier-worker` Worker by running [`
 ```bash
 $ npx wrangler dev
 ⬣ Listening at http://0.0.0.0:8787
+```
+
+To classify some test images, run the following commands:
 
 ```bash
 $ curl http://0.0.0.0:8787 -F file=@cat.png
