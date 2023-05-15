@@ -75,4 +75,4 @@ Email bindings allow you to send emails from your Worker. This is useful for whe
 [Constellation](/constellation/) bindings allow for communication between a Worker and a Constellation project.
 
 * Learn more about [Constellation bindings](/constellation/platform/wrangler/#bindings).
-* Configure Constellation bindings via your [`wrangler.toml` file](5173/constellation/platform/wrangler/#bindings).
+* Configure Constellation bindings via your [`wrangler.toml` file](/constellation/platform/wrangler/#bindings).
