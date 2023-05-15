@@ -13,7 +13,7 @@ title: Cloudflares DDoS-Schutz
 
 Ein [Distributed-Denial-of-Service-Angriff](https://www.cloudflare.com/ddos) (DDoS) zielt darauf ab, einen Onlinedienst für seine Endbenutzer unerreichbar zu machen. Für alle Tariftypen bietet Cloudflare eine zeitlich unbeschränkte Abwehr von DDoS-Angriffen auf den Ebenen 3, 4 und 7 an. Cloudflare rechnet nicht nach Angriffsumfang ab und hat keine Obergrenze für die Angriffsgröße, -art oder -dauer.
 
-Das Netzwerk von Cloudflare ist so aufgebaut, dass große [DDoS-Angriffe](https://www.cloudflare.com/ddos) automatisch überwacht und bekämpft werden. Durch das Caching Ihrer Inhalte bei Cloudflare schützen Sie außerdem Ihre Website gegen kleine DDoS-Angriffe. Für Ressourcen, die nicht zwischengespeichert werden, sind [zusätzliche manuelle Reaktionen](https://support.cloudflare.com/hc/articles/200170196) auf DDoS-Angriffe nötig.
+Das Netzwerk von Cloudflare ist so aufgebaut, dass große [DDoS-Angriffe](https://www.cloudflare.com/ddos) automatisch überwacht und bekämpft werden. Durch das Caching Ihrer Inhalte bei Cloudflare schützen Sie außerdem Ihre Website gegen kleine DDoS-Angriffe. Für Ressourcen, die nicht zwischengespeichert werden, sind [zusätzliche manuelle Reaktionen](/ddos-protection/best-practices/respond-to-ddos-attacks/) auf DDoS-Angriffe nötig.
 
 Darüber hinaus hilft Cloudflare bei der Abwehr kleinerer DDoS-Angriffe:
 
@@ -93,7 +93,7 @@ ___
 
 ## Verwandte Ressourcen
 
--   [Reaktion auf DDoS-Angriffe](https://support.cloudflare.com/hc/articles/200170196)
+-   [Reaktion auf DDoS-Angriffe](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [Bewährte Vorgehensweisen: DDoS-Vorbeugemaßnahmen](https://support.cloudflare.com/hc/articles/200170166)
 -   [Einsatz von Cloudflare-Protokollen zur Untersuchung von DDoS-Traffic (nur Enterprise)](https://support.cloudflare.com/hc/de/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [Was ist ein DDoS-Angriff?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

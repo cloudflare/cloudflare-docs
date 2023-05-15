@@ -1,22 +1,18 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170196-Responding-to-DDoS-attacks
-title: Responding to DDoS attacks
+title: Respond to DDoS attacks
 ---
 
-# Responding to DDoS attacks
-
-## Overview
-
-{{<Aside type="note">}}
-Before contacting Cloudflare Support, enable **Under Attack Mode** (Step
-1 below) to help distinguish attack traffic characteristics in logs
-accessible by Cloudflare Support.
-{{</Aside>}}
+# Respond to DDoS attacks
 
 Cloudflare's network automatically mitigates very large [DDoS attacks](https://www.cloudflare.com/ddos). Caching your content at Cloudflare also protects your website against small DDoS attacks, but uncached assets may require additional manual intervention steps provided in this guide.
 
 The steps below won’t help if an attacker learned your origin IP address and is directly attacking your origin web server (bypassing Cloudflare). For details, refer to [Understanding Cloudflare DDoS protection](https://support.cloudflare.com/hc/articles/200172676).
+
+{{<Aside type="note">}}
+Before contacting Cloudflare Support, enable **Under Attack Mode** (Step 1 below) to help distinguish attack traffic characteristics in logs accessible by Cloudflare Support.
+{{</Aside>}}
 
 ___
 

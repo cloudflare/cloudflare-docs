@@ -51,5 +51,5 @@ ___
 ## 相关资源
 
 -   [了解 Cloudflare DDOS 防护](https://support.cloudflare.com/hc/articles/200172676)
--   [响应 DDoS 攻击](https://support.cloudflare.com/hc/articles/200170196)
+-   [响应 DDoS 攻击](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [什么是 DDoS 攻击？](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

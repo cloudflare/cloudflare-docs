@@ -51,5 +51,5 @@ ___
 ## 関連リソース
 
 -   [CloudflareのDDoS保護について理解する](https://support.cloudflare.com/hc/articles/200172676)
--   [DDoS攻撃に対応する](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS攻撃に対応する](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [DDoS攻撃とは？](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

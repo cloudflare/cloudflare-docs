@@ -24,7 +24,7 @@ ___
 
 Um [ataque de Negação de Serviço Distribuída](https://www.cloudflare.com/ddos) (DDoS) busca tornar um serviço on-line indisponível para os usuários finais.  Para todos os tipos de plano, a Cloudflare fornece mitigação ilimitada de ataques DDoS nas Camadas 3, 4 e 7. A Cloudflare não cobra pelo tamanho do ataque e não tem limite para tamanho, tipo ou duração do ataque.
 
-A rede da Cloudflare foi desenvolvida para monitorar e mitigar automaticamente grandes [ataques de DDoS](https://www.cloudflare.com/ddos). Armazenar seu conteúdo em cache na Cloudflare também protege seu site contra ataques menores de DDoS, mas é importante ressaltar que ativos não armazenados em cache requerem uma [resposta manual adicional aos ataques de DDoS](https://support.cloudflare.com/hc/articles/200170196).
+A rede da Cloudflare foi desenvolvida para monitorar e mitigar automaticamente grandes [ataques de DDoS](https://www.cloudflare.com/ddos). Armazenar seu conteúdo em cache na Cloudflare também protege seu site contra ataques menores de DDoS, mas é importante ressaltar que ativos não armazenados em cache requerem uma [resposta manual adicional aos ataques de DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/).
 
 Além disso, a Cloudflare ajuda a mitigar ataques menores de DDoS:
 
@@ -87,7 +87,7 @@ ___
 
 ## Recursos relacionados
 
--   [Resposta a ataques DDoS](https://support.cloudflare.com/hc/articles/200170196)
+-   [Resposta a ataques DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [Melhores práticas: medidas preventivas de DDoS](https://support.cloudflare.com/hc/articles/200170166)
 -   [Uso do Cloudflare Logs para investigar o tráfego DDoS (somente empresa)](https://support.cloudflare.com/hc/pt-br/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [O que é ataque DDoS?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
