@@ -78,7 +78,7 @@ VALUES  ('Ballpoint pen', 'https://example.com/500x500', '1');
     - In **Account Home**, select **Workers & Pages**.
     - Select your Worker.
     - Select **Settings** > **Integrations** > **PlanetScale**. 
-    - Follow the setup flow, selecting the database created in step 2.
+    - Follow the setup flow, selecting the database created in step 1.
 
 5. In your Workers code, install the `@planetscale/database`  driver to connect to your database and start manipulating data.
 ```
@@ -140,7 +140,7 @@ Supabase is the open source Firebase alternative. Full Postgres database, Authen
     - In **Account Home**, select **Workers & Pages**.
     - Select your Worker.
     - Select **Settings** > **Integrations** > **Supabase**. 
-    - Follow the setup flow, selecting the database created in step 2.
+    - Follow the setup flow, selecting the database created in step 1.
 
 5. In your Workers code, install the `@supabase/supabase-js`  driver to connect to your database and start manipulating data.
 ```
@@ -203,7 +203,7 @@ VALUES
     - In **Account Home**, select **Workers & Pages**.
     - Select your Worker.
     - Select **Settings** > **Integrations** > **Neon**. 
-    - Follow the setup flow, selecting the database created in step 2.
+    - Follow the setup flow, selecting the database created in step 1.
 
 5. In your Workers code, install the `@neondatabase/serverless`  driver to connect to your database and start manipulating data.
 ```
