@@ -155,7 +155,7 @@ As described in the [Load Balancing tutorial](/learning-paths/load-balancing/), 
 
 ### i. Define and create the health check ("monitor")
 
-To monitor the origins, create a basic health check that makes a `GET` request to each origin on the URL `https://www.example.com`. If the origin returns the `200` status code (`OK`) within five seconds, it is considered healthy. If it fails to do so three times in a row, it is considered unhealthy. This health check will be run once per minute from several regions and send an email notification to `you@example.com` if any failures are detected.
+To monitor the origins, create a basic health check that makes a `GET` request to each origin on the URL `https://www.example.com`. If the origin returns the `200` status code (`OK`) within five seconds, it is considered healthy. If it fails to do so three times in a row, it is considered unhealthy. This health check will be run once per minute from several regions and send an email notification to your email address (configured as `<YOUR_EMAIL>`) if any failures are detected.
 
 ```bash
 $ git checkout step4-loadbalance
@@ -206,7 +206,7 @@ resource "cloudflare_load_balancer_pool" "www-servers" {
   description        = "www origins"
   enabled            = true
   minimum_origins    = 1
-  notification_email = "you@example.com"
+  notification_email = "<YOUR_EMAIL>"
   check_regions      = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
 }
 EOF
@@ -314,7 +314,7 @@ Terraform will perform the following actions:
       + modified_on        = (known after apply)
       + monitor            = (known after apply)
       + name               = "www-servers"
-      + notification_email = "you@example.com"
+      + notification_email = "<YOUR_EMAIL>"
 
       + origins {
           + address = "198.51.100.15"
@@ -425,7 +425,7 @@ Terraform will perform the following actions:
       + modified_on        = (known after apply)
       + monitor            = (known after apply)
       + name               = "www-servers"
-      + notification_email = "you@example.com"
+      + notification_email = "<YOUR_EMAIL>"
 
       + origins {
           + address = "198.51.100.15"
