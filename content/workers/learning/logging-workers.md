@@ -157,7 +157,11 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 ### Identifying errors: Workers Metrics
 
-You can find out whether your application is experiencing any downtime or returning any errors by navigating to **Account Home** > **Workers** > your **Worker** and reviewing your Worker's summary in **Resources**.
+To review whether your application is experiencing any downtime or returning any errors:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your Worker and review your Worker's summary in **Metrics**.
 
 ### Debugging exceptions
 

@@ -85,7 +85,12 @@ In the following example, you will create a `gateway` Worker that invokes an `au
 
 First, you will create both a `gateway` and `auth` Worker. Once they are set up, go to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding. 
 
-To manage Service bindings, go to Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables** > **Service bindings** > **Edit variables**.
+To manage Service bindings:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**. 
+3. Select your Worker > **Settings**.
+4. In **Variables**, find **Service bindings** > **Edit variables**.
 
 ![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](/workers/platform/bindings/media/service-bindings.png)
 
