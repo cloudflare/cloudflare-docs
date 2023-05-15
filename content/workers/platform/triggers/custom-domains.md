@@ -29,7 +29,7 @@ You cannot create a Custom Domain on a hostname with an existing CNAME DNS recor
 To set up a Custom Domain in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers** and select your Worker.
+2. Select **Workers & Pages** and select your Worker.
 3. Go to **Triggers** > **Custom Domains** > **Add Custom Domain**.
 4. Enter the domain you want to configure for your Worker.
 5. Select **Add Custom Domain**.
@@ -134,7 +134,7 @@ To migrate the route `example.com/*`:
 
 1. Log in to the [Cloudflare dashboard](https://dash.clouflare.com) and select your account.
 2. Go to **DNS** and delete the CNAME record for `example.com`.
-3. Go to **Account Home** > **Workers** > select your Worker > **Triggers**.
+3. Go to **Account Home** > **Workers & Pages** > select your Worker > **Triggers**.
 4. Select **Add Custom Domain** and add `example.com`.
 5. Delete the route `example.com/*` located in your Worker > **Triggers** > **Routes**.
 

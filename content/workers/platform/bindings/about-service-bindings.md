@@ -27,9 +27,10 @@ For more information, refer to the [Runtime API documentation for Service bindin
 
 To manage a Workers Service binding:
 
-1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
-2. Select your **Worker**.
-3. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. Select your **Worker**.
+4. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**. 
 
 ### Wrangler
 
@@ -68,7 +69,11 @@ Service bindings are available in your Worker code under the `<BINDING_NAME>` sp
 
 ### Connected Workers
 
-Workers bound to your Worker will be listed in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
+To review Workers bound to your Worker in the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** and select your **Worker**.
+3. Go to **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
 
 ![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers > Triggers](/workers/platform/bindings/media/service-bindings-triggers.png)
 
