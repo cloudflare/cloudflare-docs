@@ -320,7 +320,7 @@ When you are ready, deploy your Worker:
 $ npx wrangler publish
 ```
 
-Your Worker will take any images sent via `FormData()`, use Constellation and SqueezeNet to detect what is in the image, and then return the detection that it thinks is most likely along with a confidence score.
+Your Worker reads an image from the request, decodes it into a multidimensional `float32` tensor (right now we only decode PNGs, but we can add other formats), feeds it to the SqueezeNet model running in Constellation, gets the results, matches them with the ImageNet classes list, and returns the human-readable tags for the image.
 
 ## Related resources
 
