@@ -55,4 +55,4 @@ ___
 
 ## Related Resources
 
--   [Caching Cloudflare CDN](https://support.cloudflare.com/hc/articles/200172516)
+-   [Caching Cloudflare CDN](/cache/about/default-cache-behavior/)

@@ -31,7 +31,7 @@ The following example lets any user with an `@example.com` email address, as val
 | ------ | --------- | ----------------- | ------ |
 | Allow  | Include   | Emails Ending In: | `@example.com` |
 
-You can add a Require rule in the same policy action to enforce additional checks. Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application. 
+You can add a Require rule in the same policy action to enforce additional checks. Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application.
 
 For example, this second configuration lets any user from Portugal with a `@team.com` email address, as validated against an IdP, reach the application, except for `user-1` and `user-2`:
 
@@ -122,7 +122,7 @@ Next, you can create a policy for your application that requires the group, and 
 
 ## Selectors
 
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.  
+When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.
 
 These criteria are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications. Identity-based attributes are only checked when a user authenticates, whereas other attributes are polled continuously for changes during the session.
 
@@ -141,7 +141,7 @@ These criteria are available for all Access application types, including [SaaS](
 | Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account. |✅ | ✅ |
 | Login Methods | Checks the identity provider used at the time of login. | ✅ | ❌ |
 | Authentication Method | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider. |✅ | ❌  |
-| Identity provider group| Checks the user groups you configured with your identity provider (IdP). This selector only displays if you use AzureAD, Github, Google, or Okta as your IdP.  | ✅ | ❌ |
+| Identity provider group| Checks the user groups you configured with your identity provider (IdP). This selector only displays if you use AzureAD, GitHub, Google, or Okta as your IdP.  | ✅ | ❌ |
 | SAML Group | Checks a SAML attribute name / value pair. This selector only displays if you use a generic SAML identity provider. | ✅ | ❌ |
 | OIDC Claim | Checks an OIDC claim name / value pair. This selector only displays if you use a generic OIDC identity provider. | ✅ | ❌ |
 | Device posture | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider. |✅ | ✅ |

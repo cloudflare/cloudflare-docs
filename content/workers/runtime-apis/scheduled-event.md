@@ -23,6 +23,8 @@ $ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 {{</Aside>}}
 
+---
+
 ## Syntax: Module Worker
 
 A `ScheduledEvent` can be handled in Workers functions written using the Module Worker syntax by adding a `scheduled` function to your module's exported handlers:
@@ -66,11 +68,13 @@ When a Workers script is invoked by a [Cron Trigger](/workers/platform/triggers/
 
 {{<definitions>}}
 
-- {{<code>}}ctx.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}ctx.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/workers/platform/triggers/cron-triggers/) Past Events table. Otherwise, it will be reported as a success.
 
 {{</definitions>}}
+
+---
 
 ## Syntax: Service Worker
 
@@ -105,7 +109,7 @@ When a Workers script is invoked by a [Cron Trigger](/workers/platform/triggers/
 
 {{<definitions>}}
 
-- {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `event.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/workers/platform/triggers/cron-triggers/) Past Events table. Otherwise, it will be reported as a Success.
 

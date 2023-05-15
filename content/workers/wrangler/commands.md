@@ -1291,11 +1291,15 @@ $ wrangler tail <NAME> [OPTIONS]
 
 {{</definitions>}}
 
+After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
+
+If your Worker has a high volume of traffic, the tail might enter sampling mode. This will cause some of your messages to be dropped and a warning to appear in your tail logs. To prevent messages from being dropped, add the options listed above to filter the volume of tail messages.
+
 {{<Aside type="note">}}
-Filtering with `--ip self` will allow tailing a Worker beyond the normal request per second limits.
+It may take up to 1 minute (60 seconds) for a tail to exit sampling mode after adding an option to filter tail messages.
 {{</Aside>}}
 
-After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
+If sampling persists after using options to filter messages, consider using [instant logs](https://developers.cloudflare.com/logs/instant-logs/).
 
 ---
 
@@ -1343,9 +1347,9 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Auto reload HTML pages when change is detected.
 - `--compatibility-flag` {{<type>}}string[]{{</type>}}
-  - Runtime compatibility flags to apply. 
+  - Runtime compatibility flags to apply.
 - `--compatibility-date` {{<type>}}string{{</type>}}
-  - Runtime compatibility date to apply. 
+  - Runtime compatibility date to apply.
 
 {{</definitions>}}
 
@@ -1637,7 +1641,7 @@ binding = "MY_KV"
 ```
 
 ## rollback
-Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message. 
+Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
 
 There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/platform/deployments#rollbacks) for more information.
 
@@ -1671,7 +1675,7 @@ Current Deployment ID: 04d22369-6e55-49ff-944a-d21e216d9f3e
  List all dispatch namespaces.
 
 ```sh
-$ wrangler dispatch-namespace list 
+$ wrangler dispatch-namespace list
 ```
 ### get
 
@@ -1764,7 +1768,7 @@ $ wrangler mtls-certificate upload [OPTIONS]
 - `--cert` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A path to the TLS certificate to upload. Certificate chains are supported
 - `--key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - A path the private key to upload.
+  - A path to the private key to upload.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
 {{</definitions>}}
@@ -1787,6 +1791,8 @@ mtls_certificates = [
   { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
 ]
 ```
+
+Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 {{</Aside>}}
 
 ### `list`

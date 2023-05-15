@@ -12,7 +12,7 @@ meta:
 
 {{<Aside type="note">}}
 
-This guide is tailored to Wrangler v2. If you are still using Wrangler v1, refer to the [Migrate from Wrangler v1 guide](/workers/wrangler-legacy/migration/).
+This guide is tailored to Wrangler v2. If you are still using Wrangler v1, refer to [Migrations](/workers/wrangler/migration/).
 
 {{</Aside>}}
 
@@ -110,7 +110,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler-legacy/configuration/).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 
@@ -224,11 +224,11 @@ Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the
 ✨  Success! Uploaded secret AUTH_KEY_SECRET.
 ```
 
-This secret is now available as the global variable `AUTH_KEY_SECRET` in your Worker.
+This secret is now available as `AUTH_KEY_SECRET` on the `env` parameter in your Worker.
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler-legacy/commands/#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
 $ wrangler publish

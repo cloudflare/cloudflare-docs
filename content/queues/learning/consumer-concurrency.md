@@ -55,12 +55,6 @@ Note that if you are writing messages to a queue faster than you can process the
 
 ### Set concurrency settings via `wrangler.toml`
 
-{{<Aside type="note">}}
-
-Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is currently only supported in `wrangler@beta` (`wrangler@0.0.0-ace46939` or greater). 
-
-{{</Aside>}}
-
 To set a fixed maximum number of concurrent consumer invocations for a given queue, configure a `max_concurrency` in your `wrangler.toml` file:
 
 ```toml
@@ -95,5 +89,9 @@ When multiple consumer Workers are invoked, each Worker invocation incurs [durat
 
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).
+
+Billing for consumers follows the [Workers unbound usage model](/workers/platform/pricing/#usage-models) meaning a developer is billed for the request and the duration of the request. 
+
+### Example
 
 A consumer Worker that takes 2 seconds ([256 GB-seconds](/workers/platform/pricing/#workers-unbound-billing-examples)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).

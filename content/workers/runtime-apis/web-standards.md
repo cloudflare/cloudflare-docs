@@ -69,11 +69,11 @@ Timers are only available inside of [the Request Context](/workers/runtime-apis/
 
 {{</Aside>}}
 
-### EventTarget and Event
+### `EventTarget` and `Event`
 
 The [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) and [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) API allow objects to publish and subscribe to events.
 
-### AbortController and AbortSignal
+### `AbortController` and `AbortSignal`
 
 The [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) and [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) APIs provide a common model for canceling asynchronous operations.
 
@@ -127,11 +127,15 @@ The `CompressionStream` and `DecompressionStream` classes support the deflate, d
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
 
+---
+
 ## URLPattern API
 
-The URLPattern API provides a mechanism for matching URLs based on a convenient pattern syntax.
+The `URLPattern` API provides a mechanism for matching URLs based on a convenient pattern syntax.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern).
+
+---
 
 ## `navigator.userAgent`
 

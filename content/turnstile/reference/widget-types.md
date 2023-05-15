@@ -17,15 +17,15 @@ Cloudflare will use information from the visitor to decide if an interactive cha
 
 ### Light mode
 
-![Managed challenge](/turnstile/static/images/light-verify.png)
-![Verifying the challenge](/turnstile/static/images/light-verifying.png)
-![Successful managed challenge](/turnstile/static/images/light-success.png)
+![Managed challenge](/images/turnstile/light-verify.png)
+![Verifying the challenge](/images/turnstile/light-verifying.png)
+![Successful managed challenge](/images/turnstile/light-success.png)
 
 ### Dark mode
 
-![Managed challenge](/turnstile/static/images/dark-verify.png)
-![Verifying the challenge](/turnstile/static/images/dark-verifying.png)
-![Successful managed challenge](/turnstile/static/images/dark-success.png)
+![Managed challenge](/images/turnstile/dark-verify.png)
+![Verifying the challenge](/images/turnstile/dark-verifying.png)
+![Successful managed challenge](/images/turnstile/dark-success.png)
 
 ## Non-Interactive
 
@@ -33,13 +33,13 @@ Users will see a widget with a loading bar while the browser challenges run. Use
 
 ### Light mode
 
-![Verifying the challenge](/turnstile/static/images/light-verifying.png)
-![Successful managed challenge](/turnstile/static/images/light-success.png)
+![Verifying the challenge](/images/turnstile/light-verifying.png)
+![Successful managed challenge](/images/turnstile/light-success.png)
 
 ### Dark mode
 
-![Verifying the challenge](/turnstile/static/images/dark-verifying.png)
-![Successful managed challenge](/turnstile/static/images/dark-success.png)
+![Verifying the challenge](/images/turnstile/dark-verifying.png)
+![Successful managed challenge](/images/turnstile/dark-success.png)
 
 ## Invisible
 

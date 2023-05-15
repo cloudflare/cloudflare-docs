@@ -24,10 +24,10 @@ Possible errors in your build log are included in the following sections.
 Possible errors in this step could be caused by improper installation during Git integration.
 
 To fix this in GitHub:
-1. Log in to your Github account.
+1. Log in to your GitHub account.
 2. Go to **Settings**  from your user icon > find **Applications** under Integrations.
 3. Find **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
-4. Re-authorize your Github user/organisation on the Cloudflare dashboard.
+4. Re-authorize your GitHub user/organisation on the Cloudflare dashboard.
 
 To fix this in GitLab:
 1. Log in to your GitLab account.
@@ -90,7 +90,7 @@ If your [custom domain](/pages/platform/custom-domains/) has not moved from the 
 
 Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/policies/access/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
 
-To check this, run a `curl` against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
+To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 ```sh
 $ curl -I https://example.com/.well-known/acme-challenge/randomstring
 
@@ -103,7 +103,7 @@ server: cloudflare
 cf-ray: 7b1ffdaa8ad60693-MAN
 ```
 
-In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until it the domain is verified. After it the domain is verified, Access can be reenabled.
+In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until the domain is verified. After the domain is verified, Access can be reenabled.
 
 You will need to do the same kind of thing for Redirect Rules or a Worker example too.
 
@@ -111,12 +111,10 @@ You will need to do the same kind of thing for Redirect Rules or a Worker exampl
 
 If nothing is blocking the HTTP validation, then you may be missing Certification Authority Authorization (CAA) records. This is likely if you have disabled [Universal SSL](/ssl/edge-certificates/universal-ssl/) or use an external provider.
 
-To check this, run a `dig` on the custom domain's apex (or zone, if this is a liberated zone). For example:
+To check this, run a `dig` on the custom domain's apex (or zone, if this is a [subdomain zone](/dns/zone-setups/subdomain-setup/)). For example:
 
-```
-$ dig example.com
-
-dig CAA example.com
+```sh
+$ dig CAA example.com
 
 ; <<>> DiG 9.10.6 <<>> CAA example.com
 ;; global options: +cmd
@@ -160,7 +158,6 @@ If you have done the steps above and your domain is still verifying after 15 min
 
 ## Resources
 
-If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) for guidance on contacting Cloudflare Support.
+If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for guidance on contacting Cloudflare Support.
 
 You can also ask questions in the Pages section of the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
-

@@ -112,11 +112,11 @@ estén interesados en compilar el paquete *mod\_cloudflare* , pueden
 de GitHub.
 {{</Aside>}}
 
-Hay dos métodos para instalar mod\_cloudflare: descargando la extensión de Apache de Github o añadiendo código a tu servidor web de origen.
+Hay dos métodos para instalar mod\_cloudflare: descargando la extensión de Apache de GitHub o añadiendo código a tu servidor web de origen.
 
-### Descarga de paquetes o scripts de Github
+### Descarga de paquetes o scripts de GitHub
 
-Si utilizas un servidor web Apache, puedes descargar mod\_cloudflare de [Github](https://github.com/cloudflare/mod_cloudflare).
+Si utilizas un servidor web Apache, puedes descargar mod\_cloudflare de [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Adición de código a tu servidor web de origen
 

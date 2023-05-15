@@ -70,7 +70,9 @@ If you see the error `Failed to fetch user/group information from the identity`,
 
 The Okta OIDC integration supports the [System for Cross-domain Identity Management (SCIM)](https://www.rfc-editor.org/rfc/rfc7642.txt) protocol. With SCIM, Cloudflare Access can automatically deprovision users after they are deactivated in the identity provider and display synchronized group names in the Access policy builder.
 
-To synchronize users and groups between Access and Okta:
+To synchronize users and groups between Access and Okta, you need two separate app integrations in Okta:
+- The Okta OIDC connector you created when adding [Okta as an identity provider](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider).
+- A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM provisioning.
 
 ### 1. Enable SCIM in Zero Trust
 

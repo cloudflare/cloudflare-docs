@@ -3,7 +3,7 @@ title: Object lifecycles
 pcx_content_type: how to
 ---
 
-{{<beta heading="h1">}} Object lifecycles {{</beta>}}
+# Object lifecycles
 
 Object lifecycles affect how long objects uploaded to your bucket are kept.
 
@@ -15,6 +15,15 @@ For example, you can create an object lifecycle rule to delete objects after 30 
 - When a new lifecycle policy is applied, newly uploaded objects' `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most objects will be transitioned within 24 hours but may take longer depending on the number of objects in the bucket. While objects are being migrated, you may see old applied rules from the previous policy.
 - An object is no longer billable once it has been deleted.
 - Buckets have a default lifecycle policy to expire multipart uploads seven days after initiation.
+
+## Add an object lifecycle rule from the Cloudflare dashboard
+
+1. From the Cloudflare dashboard, select **R2**.
+2. Locate and select your bucket from the list.
+3. From the bucket page, select **Settings**.
+4. Under **Object lifecycle rules**, select **Add rule**.
+5. Fill out the fields for the new rule.
+6. When you are done, select **Add rule**.
 
 ## Configure a bucket’s lifecycle policy
 

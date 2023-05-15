@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="note">}}
 
-This is an installation guide for the new version of Wrangler. If you previously had Wrangler v1 installed or were working on a Wrangler v1 project, refer to the [Migration guide](/workers/wrangler-legacy/migration/).
+This is an installation guide for the new version of Wrangler. If you previously had Wrangler v1 installed or were working on a Wrangler v1 project, refer to the [Migration guide](/workers/wrangler/migration/v1-to-v2/).
 
 {{</Aside>}}
 
@@ -57,6 +57,8 @@ $ yarn global add wrangler
 To check your Wrangler version, run:
 
 ```sh
+$ wrangler --version
+// or run:
 $ wrangler version
 ```
 

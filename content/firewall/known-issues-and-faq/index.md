@@ -35,7 +35,7 @@ An expression built using the visual [Expression Editor](/firewall/cf-dashboard/
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the Expression Editor:
 
-![The Expression Editor displays rule values with special characters escaped using a backslash character](/firewall/static/cf-firewall-rules-escaping.png)
+![The Expression Editor displays rule values with special characters escaped using a backslash character](/images/firewall/cf-firewall-rules-escaping.png)
 
 ### Why isn't my regular expression pattern matching working?
 
