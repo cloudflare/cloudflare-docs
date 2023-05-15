@@ -116,84 +116,86 @@ Calling `terraform plan` at this point will try to create these resources as if 
 ```sh
 $ terraform plan
 
-Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
   # cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 will be created
   + resource "cloudflare_record" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
-      + id:          <computed>
-      + created_on:  <computed>
-      + domain:      "mitigateddos.net"
-      + hostname:    <computed>
-      + metadata.%:  <computed>
-      + modified_on: <computed>
-      + name:        "mitigateddos.net"
-      + proxiable:   <computed>
-      + proxied:     true
-      + ttl:         1
-      + type:        "A"
-      + value:       "192.0.2.1"
-      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+      + id          = (known after apply)>
+      + created_on  = (known after apply)
+      + domain      = "mitigateddos.net"
+      + hostname    = (known after apply)
+      + metadata    = (known after apply)
+      + modified_on = (known after apply)
+      + name        = "mitigateddos.net"
+      + proxiable   = (known after apply)
+      + proxied     = true
+      + ttl         = 1
+      + type        = "A"
+      + value       = "192.0.2.1"
+      + zone_id     = "1109d899a5ff5fd74bc01e581693685b"
     }
 
   # cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 will be created
   + resource "cloudflare_record" "terraform_managed_resource_5e10399a590a45279f09aa8fb1163354" {
-      + id:          <computed>
-      + created_on:  <computed>
-      + domain:      "mitigateddos.net"
-      + hostname:    <computed>
-      + metadata.%:  <computed>
-      + modified_on: <computed>
-      + name:        "www.mitigateddos.net"
-      + proxiable:   <computed>
-      + proxied:     true
-      + ttl:         1
-      + type:        "CNAME"
-      + value:       "mitigateddos.net"
-      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+      + id          = (known after apply)
+      + created_on  = (known after apply)
+      + domain      = "mitigateddos.net"
+      + hostname    = (known after apply)
+      + metadata    = (known after apply)
+      + modified_on = (known after apply)
+      + name        = "www.mitigateddos.net"
+      + proxiable   = (known after apply)
+      + proxied     = true
+      + ttl         = 1
+      + type        = "CNAME"
+      + value       = "mitigateddos.net"
+      + zone_id     = "1109d899a5ff5fd74bc01e581693685b"
     }
 
   # cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 will be created
   + resource "cloudflare_record" "terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248" {
-      + id:          <computed>
-      + created_on:  <computed>
-      + domain:      "mitigateddos.net"
-      + hostname:    <computed>
-      + metadata.%:  <computed>
-      + modified_on: <computed>
-      + name:        "a123.mitigateddos.net"
-      + proxiable:   <computed>
-      + proxied:     false
-      + ttl:         300
-      + type:        "NS"
-      + value:       "rafe.ns.cloudflare.com"
-      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+      + id          = (known after apply)
+      + created_on  = (known after apply)
+      + domain      = "mitigateddos.net"
+      + hostname    = (known after apply)
+      + metadata    = (known after apply)
+      + modified_on = (known after apply)
+      + name        = "a123.mitigateddos.net"
+      + proxiable   = (known after apply)
+      + proxied     = false
+      + ttl         = 300
+      + type        = "NS"
+      + value       = "rafe.ns.cloudflare.com"
+      + zone_id     = "1109d899a5ff5fd74bc01e581693685b"
     }
 
   # cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 will be created
   + resource "cloudflare_record" "terraform_managed_resource_5799bb01054843eea726758f935d2aa2" {
-      + id:          <computed>
-      + created_on:  <computed>
-      + domain:      "mitigateddos.net"
-      + hostname:    <computed>
-      + metadata.%:  <computed>
-      + modified_on: <computed>
-      + name:        "a123.mitigateddos.net"
-      + proxiable:   <computed>
-      + proxied:     false
-      + ttl:         300
-      + type:        "NS"
-      + value:       "terin.ns.cloudflare.com"
-      + zone_id:     "1109d899a5ff5fd74bc01e581693685b"
+      + id          = (known after apply)
+      + created_on  = (known after apply)
+      + domain      = "mitigateddos.net"
+      + hostname    = (known after apply)
+      + metadata    = (known after apply)
+      + modified_on = (known after apply)
+      + name        = "a123.mitigateddos.net"
+      + proxiable   = (known after apply)
+      + proxied     = false
+      + ttl         = 300
+      + type        = "NS"
+      + value       = "terin.ns.cloudflare.com"
+      + zone_id     = "1109d899a5ff5fd74bc01e581693685b"
     }
 
 Plan: 4 to add, 0 to change, 0 to destroy.
 
 ------------------------------------------------------------------------
 
-Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
 ```
 
 To fix this, you must import the real state of those resources from Cloudflare into the Terraform state file (`.tfstate`).
