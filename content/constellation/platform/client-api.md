@@ -77,7 +77,7 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
    );
 ```
 
-**A two-element vector**
+#### A two-element vector
 
 ```javascript
    new Tensor("int32", [2], [1, 2]);
