@@ -33,7 +33,7 @@ $ npx wrangler constellation project list
 
 ## Create a new Worker
 
-Create a new Worker named `image-classifier-worker`. You will install [Wrangler for Constellation](/constellation/platform/wrangler/#installation) which is still in beta.
+Create a new Worker named `image-classifier-worker`. You will install [Wrangler, the developer platform CLI, for Constellation](/constellation/platform/wrangler/#installation) which is still in beta.
 
 ```bash
 $ mkdir image-classifier-worker
@@ -312,7 +312,7 @@ $ curl http://0.0.0.0:8787 -F file=@mountain.png
 
 Your image classifier is ready. Run it through other `224`x`244` PNG images of your own and review the results.
 
-## Publish your project
+## Deploy your project
 
 When you are ready, deploy your Worker:
 
