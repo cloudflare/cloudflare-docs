@@ -12,7 +12,7 @@ Before you use the Constellation client API, you need to:
 
 * Have a Cloudflare account with Constellation enabled.
 * Create a Constellation project and configure the binding.
-* Import the <code>@cloudflare/constellation</code> library in your code.
+* Import the <code>@cloudflare/constellation</code> library in your code:
 
 ```javascript
    import { Tensor, run } from "@cloudflare/constellation";
