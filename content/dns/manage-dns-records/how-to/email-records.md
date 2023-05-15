@@ -153,4 +153,6 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
 
 {{<render file="_domain-spoofing.md" productFolder="dmarc-management">}}
 
-Refer to [Security records](/dmarc-management/security-records) to learn how to set up your email security records.
+### Configure email security records
+
+Refer to [Security records](/dmarc-management/security-records/) to learn how to set up your email security records.
