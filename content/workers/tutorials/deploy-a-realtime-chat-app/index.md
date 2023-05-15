@@ -92,7 +92,7 @@ deleted_classes = ["ChatRoom", "RateLimiter"]
 
 Then run `wrangler publish`.
 
-To delete your Worker, log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers  & Pages** > **Manage Service** > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
+To delete your Worker, log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > **Manage Service** > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
 
 By completing this tutorial, you have deployed a real-time chat application with Durable Objects and Cloudflare Workers.
 
