@@ -320,6 +320,8 @@ When you are ready, deploy your Worker:
 $ npx wrangler publish
 ```
 
+Your Worker will take any images sent via `FormData()`, use Constellation and SqueezeNet to detect what is in the image, and then return the detection that it thinks is most likely along with a confidence score.
+
 ## Related resources
 
 * Learn about the [Constellation data model](/constellation/platform/data-model/)
