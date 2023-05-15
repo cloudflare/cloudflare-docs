@@ -37,6 +37,10 @@ Customize where the incoming traffic will go and with which parameters. Override
 Customize Cloudflare configuration settings for matching incoming requests.
 {{</feature>}}
 
+{{<feature header="Compression Rules" href="/rules/compression-rules/">}}
+Customize the compression applied to responses from Cloudflare's global network to your website visitors, based on the file extension and content type.
+{{</feature>}}
+
 {{<feature header="Custom error responses" href="/rules/custom-error-responses/" cta="Configure custom error responses">}}
 Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
 {{</feature>}}
