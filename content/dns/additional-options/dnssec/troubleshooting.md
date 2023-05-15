@@ -2,7 +2,7 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360021111972-Troubleshooting-DNSSEC
 title: Troubleshooting
-weight: 5
+weight: 6
 meta:
     title: Troubleshooting | DNSSEC
 ---

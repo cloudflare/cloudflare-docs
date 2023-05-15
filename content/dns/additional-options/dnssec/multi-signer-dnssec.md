@@ -10,6 +10,8 @@ Also known as multi-provider DNSSEC, multi-signer DNSSEC consists of two models 
 
 This means better compatibility with DNS features that require live-signing of DNS records (at query time), and also being able to transfer zones without having to disable DNSSEC at any moment.
 
+Cloudflare allows you to [set up multi-signer DNSSEC](/dns/additional-options/dnssec/multi-signer-dnssec-setup/) using either one of the models.
+
 ## How multi-signer DNSSEC works
 
 {{<Aside>}}
@@ -33,53 +35,4 @@ Whereas in both models all providers have each other's Zone Signing Keys (ZSK) a
 
 ### Model 2
 
-In model 2, on the other hand, each provider uses its own KSK to sign its own DNSKEY record set, and these KSKs are then referenced by the DS record (Secure Entry Point). 
-
-## Set up multi-signer DNSSEC (API only)
-
-1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status/) to enable multi-signer DNSSEC. This is done by specifying a value for `dnssec_multi_model`, as in the following example.
-
-```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \ 
---header 'X-Auth-Email: <EMAIL>' \ 
---header 'X-Auth-Key: <KEY>' \ 
---header 'Content-Type: application/json' \ 
---data '{"dnssec_multi_model": 2}'
-```
-
-2. Add the ZSK(s) of your external provider(s) to Cloudflare by creating a DNSKEY record on your zone.
-
-3. Enable DNSSEC for your zone.
-
-4. Add your external provider(s) nameservers as NS records on your zone apex.
-
-5. Enable the usage of the nameservers you added in the previous step by using the following API request.
-
-```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings/use_apex_ns' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
--data '{
-    "id": "use_apex_ns",
-    "value": true
-  }'
-```
-
-6. Get Cloudfare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
-
-API example:
-```bash
-$ curl --request GET 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk' \
---header 'X-Auth-Email: <EMAIL>'
---header 'X-Auth-Key: <KEY>'
---header 'Content-Type: application/json'
-```
-Command line query example:
-```
-$ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
-```
-7. Add Cloudflare's ZSK to your external provider(s).
-8. Add Cloudflare's nameservers to your external provider(s).
-9. Add DS records at your registrar, one for each provider.
-10. Update the nameserver settings at your registrar to include the nameservers of all providers you have been using for your multi-signer DNSSEC setup.
+In model 2, on the other hand, each provider uses its own KSK to sign its own DNSKEY record set, and these KSKs are then referenced by the DS record (Secure Entry Point).
