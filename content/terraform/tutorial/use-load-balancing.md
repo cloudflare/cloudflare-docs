@@ -41,8 +41,8 @@ Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
 
-cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
+cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
 
 ------------------------------------------------------------------------
 
@@ -52,21 +52,22 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
-  + cloudflare_record.www-asia
-      zone_id:     "e097e1136dc79bc1149e32a8a6bde5ef"
-      name:        "www"
-      proxied:     "true"
-      type:        "A"
-      value:       "198.51.100.15"
-
+  # cloudflare_record.www-asia will be created
+  + resource "cloudflare_record" "www-asia" {
+      + allow_overwrite = false
+      + name            = "www"
+      + proxied         = true
+      + type            = "A"
+      + value           = "198.51.100.15"
+      + zone_id         = "e2e6491340be87a3726f91fc4148b126"
+    }
 
 Plan: 1 to add, 0 to change, 0 to destroy.
 
 ------------------------------------------------------------------------
 
-Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-can't guarantee that exactly these actions will be performed if
-"terraform apply" is subsequently run.
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
 
 $ git add cloudflare.tf
 $ git commit -m "Step 5 - Add additional 'www' DNS record for Asia data center."
@@ -89,22 +90,35 @@ Add the second DNS record for www.example.com.
 
 ```sh
 $ terraform apply --auto-approve
-cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8668)
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
+cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8668]
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
+
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # cloudflare_record.www-asia will be created
+  + resource "cloudflare_record" "www-asia" {
+      + allow_overwrite = false
+      + created_on      = (known after apply)
+      + hostname        = (known after apply)
+      + id              = (known after apply)
+      + metadata        = (known after apply)
+      + modified_on     = (known after apply)
+      + name            = "www"
+      + proxiable       = (known after apply)
+      + proxied         = true
+      + ttl             = (known after apply)
+      + type            = "A"
+      + value           = "198.51.100.15"
+      + zone_id         = "e2e6491340be87a3726f91fc4148b126"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
 cloudflare_record.www-asia: Creating...
-  created_on:  "" => "<computed>"
-  domain:      "" => "example.com"
-  hostname:    "" => "<computed>"
-  metadata.%:  "" => "<computed>"
-  modified_on: "" => "<computed>"
-  name:        "" => "www"
-  proxiable:   "" => "<computed>"
-  proxied:     "" => "true"
-  ttl:         "" => "<computed>"
-  type:        "" => "A"
-  value:       "" => "198.51.100.15"
-  zone_id:     "" => "<computed>"
-cloudflare_record.www-asia: Creation complete after 1s (ID: fda39d8c9bf909132e82a36bab992864)
+cloudflare_record.www-asia: Creation complete after 1s [id=fda39d8c9bf909132e82a36bab992864]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
@@ -166,7 +180,7 @@ EOF
 
 In this example, the pool will be called `www-servers` with two origins added to it:
 
-* `www-us` (`203.0.113.10`) 
+* `www-us` (`203.0.113.10`)
 * `www-asia` (`198.51.100.15`)
 
 For now, skip any sort of [geo routing](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/).
@@ -184,8 +198,8 @@ resource "cloudflare_load_balancer_pool" "www-servers" {
     address = "203.0.113.10"
   }
   origins {
-    address = "198.51.100.15"
     name    = "www-asia"
+    address = "198.51.100.15"
   }
   description        = "www origins"
   enabled            = true
@@ -219,84 +233,106 @@ As usual, review the proposed plan before applying any changes.
 
 ```sh
 $ terraform plan
-Refreshing Terraform state in-memory prior to plan...
-The refreshed state will be used to calculate this plan, but will not be
-persisted to local or remote state storage.
+cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
+cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
 
-cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
-
-------------------------------------------------------------------------
-
-An execution plan has been generated and is shown below.
+Terraform used the selected providers to generate the following execution plan.
 Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
-  + cloudflare_load_balancer.www-lb
-      id:                         <computed>
-      created_on:                 <computed>
-      default_pool_ids.#:         <computed>
-      description:                "example load balancer"
-      fallback_pool_id:           <computed>
-      modified_on:                <computed>
-      name:                       "www-lb"
-      pop_pools.#:                <computed>
-      proxied:                    "true"
-      region_pools.#:             <computed>
-      ttl:                        <computed>
-      zone:                       "example.com"
-      zone_id:                    <computed>
+  # cloudflare_load_balancer.www-lb will be created
+  + resource "cloudflare_load_balancer" "www-lb" {
+      + created_on       = (known after apply)
+      + default_pool_ids = (known after apply)
+      + description      = "example load balancer"
+      + enabled          = true
+      + fallback_pool_id = (known after apply)
+      + id               = (known after apply)
+      + modified_on      = (known after apply)
+      + name             = "www-lb"
+      + proxied          = true
+      + session_affinity = "none"
+      + steering_policy  = (known after apply)
+      + ttl              = (known after apply)
+      + zone_id          = "e2e6491340be87a3726f91fc4148b126"
 
-  + cloudflare_load_balancer_monitor.get-root-https
-      id:                         <computed>
-      created_on:                 <computed>
-      description:                "GET / over HTTPS - expect 200"
-      expected_body:              "alive"
-      expected_codes:             "200"
-      interval:                   "60"
-      method:                     "GET"
-      modified_on:                <computed>
-      path:                       "/"
-      retries:                    "2"
-      timeout:                    "5"
-      type:                       "http"
+      + country_pools {
+          + country  = (known after apply)
+          + pool_ids = (known after apply)
+        }
 
-  + cloudflare_load_balancer_pool.www-servers
-      id:                         <computed>
-      check_regions.#:            "6"
-      check_regions.1151265357:   "SEAS"
-      check_regions.1997072153:   "WEU"
-      check_regions.2367191053:   "EEU"
-      check_regions.2826842289:   "ENAM"
-      check_regions.2992567379:   "WNAM"
-      check_regions.3706632574:   "NEAS"
-      created_on:                 <computed>
-      description:                "www origins"
-      enabled:                    "true"
-      minimum_origins:            "1"
-      modified_on:                <computed>
-      monitor:                    <computed>
-      name:                       "www-servers"
-      notification_email:         "you@example.com"
-      origins.#:                  "2"
-      origins.3039426352.address: "198.51.100.15"
-      origins.3039426352.enabled: "true"
-      origins.3039426352.name:    "www-asia"
-      origins.4241861547.address: "203.0.113.10"
-      origins.4241861547.enabled: "true"
-      origins.4241861547.name:    "www-us"
+      + pop_pools {
+          + pool_ids = (known after apply)
+          + pop      = (known after apply)
+        }
 
+      + region_pools {
+          + pool_ids = (known after apply)
+          + region   = (known after apply)
+        }
+    }
+
+  # cloudflare_load_balancer_monitor.get-root-https will be created
+  + resource "cloudflare_load_balancer_monitor" "get-root-https" {
+      + account_id     = "8baedd8d98bf4b0c9bc650acc307b441"
+      + created_on     = (known after apply)
+      + description    = "GET / over HTTPS - expect 200"
+      + expected_body  = "alive"
+      + expected_codes = "200"
+      + id             = (known after apply)
+      + interval       = 60
+      + method         = "GET"
+      + modified_on    = (known after apply)
+      + path           = "/"
+      + retries        = 2
+      + timeout        = 5
+      + type           = "http"
+    }
+
+  # cloudflare_load_balancer_pool.www-servers will be created
+  + resource "cloudflare_load_balancer_pool" "www-servers" {
+      + account_id    = "8baedd8d98bf4b0c9bc650acc307b441"
+      + check_regions = [
+          + "EEU",
+          + "ENAM",
+          + "NEAS",
+          + "SEAS",
+          + "WEU",
+          + "WNAM",
+        ]
+      + created_on         = (known after apply)
+      + description        = "www origins"
+      + enabled            = true
+      + id                 = (known after apply)
+      + minimum_origins    = 1
+      + modified_on        = (known after apply)
+      + monitor            = (known after apply)
+      + name               = "www-servers"
+      + notification_email = "you@example.com"
+
+      + origins {
+          + address = "198.51.100.15"
+          + enabled = true
+          + name    = "www-asia"
+          + weight  = 1
+        }
+      + origins {
+          + address = "203.0.113.10"
+          + enabled = true
+          + name    = "www-us"
+          + weight  = 1
+        }
+    }
 
 Plan: 3 to add, 0 to change, 0 to destroy.
 
 ------------------------------------------------------------------------
 
-Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-can't guarantee that exactly these actions will be performed if
-"terraform apply" is subsequently run.
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
 ```
 
 The plan looks good. Merge the plan and apply it.
@@ -307,62 +343,107 @@ $ git commit -m "Step 5 - Create load balancer (LB) monitor, LB pool, and LB."
 [step5-loadbalance bc9aa9a] Step 5 - Create load balancer (LB) monitor, LB pool, and LB.
  1 file changed, 35 insertions(+)
 
-e$ terraform apply --auto-approve
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
-cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
+$ terraform apply --auto-approve
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
+cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
+cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
+
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # cloudflare_load_balancer.www-lb will be created
+  + resource "cloudflare_load_balancer" "www-lb" {
+      + created_on       = (known after apply)
+      + default_pool_ids = (known after apply)
+      + description      = "example load balancer"
+      + enabled          = true
+      + fallback_pool_id = (known after apply)
+      + id               = (known after apply)
+      + modified_on      = (known after apply)
+      + name             = "www-lb"
+      + proxied          = true
+      + session_affinity = "none"
+      + steering_policy  = (known after apply)
+      + ttl              = (known after apply)
+      + zone_id          = "e2e6491340be87a3726f91fc4148b126"
+
+      + country_pools {
+          + country  = (known after apply)
+          + pool_ids = (known after apply)
+        }
+
+      + pop_pools {
+          + pool_ids = (known after apply)
+          + pop      = (known after apply)
+        }
+
+      + region_pools {
+          + pool_ids = (known after apply)
+          + region   = (known after apply)
+        }
+    }
+
+  # cloudflare_load_balancer_monitor.get-root-https will be created
+  + resource "cloudflare_load_balancer_monitor" "get-root-https" {
+      + account_id     = "8baedd8d98bf4b0c9bc650acc307b441"
+      + created_on     = (known after apply)
+      + description    = "GET / over HTTPS - expect 200"
+      + expected_body  = "alive"
+      + expected_codes = "200"
+      + id             = (known after apply)
+      + interval       = 60
+      + method         = "GET"
+      + modified_on    = (known after apply)
+      + path           = "/"
+      + retries        = 2
+      + timeout        = 5
+      + type           = "http"
+    }
+
+  # cloudflare_load_balancer_pool.www-servers will be created
+  + resource "cloudflare_load_balancer_pool" "www-servers" {
+      + account_id      = "8baedd8d98bf4b0c9bc650acc307b441"
+      + check_regions   = [
+          + "EEU",
+          + "ENAM",
+          + "NEAS",
+          + "SEAS",
+          + "WEU",
+          + "WNAM",
+        ]
+      + created_on         = (known after apply)
+      + description        = "www origins"
+      + enabled            = true
+      + id                 = (known after apply)
+      + minimum_origins    = 1
+      + modified_on        = (known after apply)
+      + monitor            = (known after apply)
+      + name               = "www-servers"
+      + notification_email = "you@example.com"
+
+      + origins {
+          + address = "198.51.100.15"
+          + enabled = true
+          + name    = "www-asia"
+          + weight  = 1
+        }
+      + origins {
+          + address = "203.0.113.10"
+          + enabled = true
+          + name    = "www-us"
+          + weight  = 1
+        }
+    }
+
 cloudflare_load_balancer_monitor.get-root-https: Creating...
-  created_on:     "" => "<computed>"
-  description:    "" => "GET / over HTTPS - expect 200"
-  expected_body:  "" => "alive"
-  expected_codes: "" => "200"
-  interval:       "" => "60"
-  method:         "" => "GET"
-  modified_on:    "" => "<computed>"
-  path:           "" => "/"
-  retries:        "" => "2"
-  timeout:        "" => "5"
-  type:           "" => "http"
-cloudflare_load_balancer_monitor.get-root-https: Creation complete after 1s (ID: 4238142473fcd48e89ef1964be72e3e0)
+cloudflare_load_balancer_monitor.get-root-https: Creation complete after 1s [id=4238142473fcd48e89ef1964be72e3e0]
 cloudflare_load_balancer_pool.www-servers: Creating...
-  check_regions.#:            "" => "6"
-  check_regions.1151265357:   "" => "SEAS"
-  check_regions.1997072153:   "" => "WEU"
-  check_regions.2367191053:   "" => "EEU"
-  check_regions.2826842289:   "" => "ENAM"
-  check_regions.2992567379:   "" => "WNAM"
-  check_regions.3706632574:   "" => "NEAS"
-  created_on:                 "" => "<computed>"
-  description:                "" => "www origins"
-  enabled:                    "" => "true"
-  minimum_origins:            "" => "1"
-  modified_on:                "" => "<computed>"
-  monitor:                    "" => "4238142473fcd48e89ef1964be72e3e0"
-  name:                       "" => "www-servers"
-  notification_email:         "" => "you@example.com"
-  origins.#:                  "" => "2"
-  origins.3039426352.address: "" => "198.51.100.15"
-  origins.3039426352.enabled: "" => "true"
-  origins.3039426352.name:    "" => "www-asia"
-  origins.4241861547.address: "" => "203.0.113.10"
-  origins.4241861547.enabled: "" => "true"
-  origins.4241861547.name:    "" => "www-us"
-cloudflare_load_balancer_pool.www-servers: Creation complete after 0s (ID: 906d2a7521634783f4a96c062eeecc6d)
+cloudflare_load_balancer_pool.www-servers: Creation complete after 0s [id=906d2a7521634783f4a96c062eeecc6d]
 cloudflare_load_balancer.www-lb: Creating...
-  created_on:         "" => "<computed>"
-  default_pool_ids.#: "" => "1"
-  default_pool_ids.0: "" => "906d2a7521634783f4a96c062eeecc6d"
-  description:        "" => "example load balancer"
-  fallback_pool_id:   "" => "906d2a7521634783f4a96c062eeecc6d"
-  modified_on:        "" => "<computed>"
-  name:               "" => "www-lb"
-  pop_pools.#:        "" => "<computed>"
-  proxied:            "" => "true"
-  region_pools.#:     "" => "<computed>"
-  ttl:                "" => "<computed>"
-  zone:               "" => "example.com"
-  zone_id:            "" => "<computed>"
-cloudflare_load_balancer.www-lb: Creation complete after 1s (ID: cb94f53f150e5c1a65a07e43c5d4cac4)
+cloudflare_load_balancer.www-lb: Creation complete after 1s [id=cb94f53f150e5c1a65a07e43c5d4cac4]
 
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 ```
