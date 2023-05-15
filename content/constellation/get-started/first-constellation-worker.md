@@ -31,7 +31,7 @@ $ npx wrangler constellation project list
 └──────────────────────────────────────┴──────────────────────┴─────────┘
 ```
 
-## Generate a new Worker
+## Create a new Worker
 
 Create a new Worker named `image-classifier-worker`. You will install [Wrangler for Constellation](/constellation/platform/wrangler/#installation) which is still in beta.
 
@@ -166,6 +166,7 @@ async function processImage(env: Env, data: ArrayBuffer) {
 
         const output = await run(
             env.CLASSIFIER,
+            // Replace this with your actual model ID generated when you created your Constellation project
             "297f3cda-5e55-33c0-8ffe-224876a76a39",
             tensorInput
         );
