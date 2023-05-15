@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: configuration
 title: Client API
 weight: 40
 ---
