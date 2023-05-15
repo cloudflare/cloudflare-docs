@@ -116,3 +116,5 @@ fetch('/my-api-endpoint')
     }
   });
 ```
+
+See [our FAQ for Challenges here](https://developers.cloudflare.com/firewall/known-issues-and-faq#challenges).
