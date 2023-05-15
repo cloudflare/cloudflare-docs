@@ -30,7 +30,7 @@ You can have as many models per project as you want.
 
 If you delete a project, you also delete all its associated models.
 
-Currently, during the private beta, we only support models that are smaller than 10MiB.
+Currently, during the private beta, we only support models that are smaller than 10 MiB.
 
 ## Catalog
 
