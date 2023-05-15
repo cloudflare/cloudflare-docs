@@ -324,5 +324,5 @@ Your Worker reads an image from the request, decodes it into a multidimensional 
 
 ## Related resources
 
-* Learn about the [Constellation data model](/constellation/platform/data-model/)
-* Review the list of [Constellation-supported machine learning runtimes](/constellation/platform/runtimes/)
+* Learn about the [Constellation data model](/constellation/platform/data-model/).
+* Review the list of [Constellation-supported machine learning runtimes](/constellation/platform/runtimes/).
