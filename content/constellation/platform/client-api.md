@@ -50,7 +50,7 @@ Tensors store multidimensional data. The shape of the data can be a scalar, a ve
 * [3, 2] - two-axes 3x2 matrix
 * [3, 2, 2] - three-axis 3x2 matrix
 
-Click [here](https://www.tensorflow.org/guide/tensor) to know more about shapes.
+Refer to the [TensorFlow documentation](https://www.tensorflow.org/guide/tensor) for more information about shapes.
 
 **value**
 
