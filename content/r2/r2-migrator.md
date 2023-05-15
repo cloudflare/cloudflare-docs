@@ -17,10 +17,7 @@ Migration jobs:
 
 ## When to use Super Slurper
 
-Using Super Slurper as part of your strategy can be a good choice if your use case meets the following criteria:
-
-- The cloud storage bucket you are migrating consists primarily of objects less than 10 GB (1000³ bytes). Objects greater than 10 GB will be skipped and need to be copied separately.
-- The cloud storage bucket you are migrating has fewer than 200 million objects. During the beta, migration jobs can copy around 250 small objects per second.
+Using Super Slurper as part of your strategy can be a good choice if the cloud storage bucket you are migrating consists primarily of objects less than 10 GB (1000³ bytes). Objects greater than 10 GB will be skipped and need to be copied separately.
 
 For migration use cases that do not meet the above criteria, we recommend using tools such as [rclone](/r2/examples/rclone/).
 
