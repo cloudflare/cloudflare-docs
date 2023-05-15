@@ -202,11 +202,11 @@ Routes are specified in the `wrangler.toml` configuration file.
 | `kv`        | ✅   | ✅  |
 | `r2`        | 🚧   | ✅  | Introduced in Wrangler v1.19.8.                 |
 | `pages`     | ❌   | ✅  |
-| `config`    | ✅   | ❔  |
+| `config`    | ✅   | ❓  |
 | `login`     | ✅   | ✅  |
 | `logout`    | ✅   | ✅  |
 | `whoami`    | ✅   | ✅  |
-| `subdomain` | ✅   | ❔  |
+| `subdomain` | ✅   | ❓  |
 | `report`    | ✅   | ❌  | Removed, error reports are made interactively. |
 
 #### Configuration
