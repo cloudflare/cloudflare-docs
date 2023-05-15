@@ -92,7 +92,7 @@ $ npx wrangler constellation model list "image-classifier"
 
 Take note of the id field as this will be the model id.
 
-## Download Imagenet Classes
+## Download Imagenet classes
 
 The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.org/) dataset. Make a new `src` folder in your `image-classifier` directory. Then download the the list of 1,000 image classes that SqueezeNet was trained for:
 
