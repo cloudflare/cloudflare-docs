@@ -7,7 +7,7 @@ weight: 4
 # About multi-signer DNSSEC
 
 {{<Aside>}}
-This is a simplified explanation to give you context and clarify what you will be setting up if you proceed to [set up multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec-setup/). For technical details refer to [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
+This is a simplified explanation to give you context and clarify what you will be setting up if you proceed to [set up multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/setup//). For technical details refer to [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
 {{</Aside>}}
 
 ## How it works
