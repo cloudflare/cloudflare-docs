@@ -159,3 +159,4 @@ const reader = socket.readable.getReader(); // This fails
 - When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, in order to use `connect()`.
 - TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
+- By default, Workers cannot create outbound TCP connections on port 25 to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
