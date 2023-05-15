@@ -27,7 +27,7 @@ resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
   priority = 1
 
   actions {
-    security_level = "under_attack",
+    security_level = "under_attack"
   }
 }
 
