@@ -108,6 +108,11 @@ const socket = connect(address, { secureTransport: "starttls" });
 const secureSocket = socket.startTls();
 ```
 
+#### Note the following:
+
+- `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
+- Once `startTls()` is called, the initial socket is closed and no longer usable. In the example above, one would would use the newly created `secureSocket`.
+
 ## Error handling
 
 import { connect } from 'cloudflare:sockets';
@@ -164,12 +169,6 @@ socket.close();
 // After close() is called, you can no longer read from the readable side of the socket
 const reader = socket.readable.getReader(); // This fails
 ```
-
-
-Note the following:
-
-- `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
-- Once `startTls()` is called, the initial socket is closed and no longer usable. In the example above, one would would use the newly created `secureSocket`.
 
 ### Considerations
 
