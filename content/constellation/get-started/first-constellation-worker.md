@@ -10,7 +10,6 @@ weight: 1
 
 In this example, we will build an Image Classification app powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is a small CNN which achieves AlexNet level accuracy on ImageNet with 50x fewer parameters.
 
-
 ## Setup project
 
 First, let's [create](/constellation/platform/wrangler/#manage-projects) the new project:
@@ -26,15 +25,28 @@ $ npx wrangler constellation project list
 └──────────────────────────────────────┴──────────────────────┴─────────┘
 ```
 
-Next, create a new Worker project. You can follow the instructions [here](/workers/get-started/guide/), or the following commands and follow the prompts:
+Next, create a new Worker project. We are going to need [Wrangler](/constellation/platform/wrangler/).
 
 ```bash
-mkdir image-classifier-worker
-cd image-classifier-worker
-wrangler generate
+$ mkdir image-classifier-worker
+$ cd image-classifier-worker
+$ npm init -f
+$ npm install wrangler@beta --save-dev
+$ npx wrangler init
 ```
 
-In your folder, you should now find a wrangler.toml file.
+Follow the prompts. We are going to skip tests for now.
+
+```bash
+Would you like to use git to manage this Worker?: N
+Would you like to install the type definitions for Workers into your package.json?: Y
+Would you like to create a Worker at src/index.ts?: Fetch handler
+Would you like us to write your first test with Vitest?: N
+```
+
+You can learn more on how to start new projects with Wrangler [here](/workers/get-started/guide/).
+
+In your folder, you should now find a [wrangler.toml](/workers/wrangler/configuration/) file.
 
 Now add the Constellation configuration to the wrangler.toml configuration file with the project [binding](/constellation/platform/wrangler/#bindings):
 
@@ -45,7 +57,9 @@ filename: wrangler.toml
 # Top-level configuration
 name = "image-classifier-worker"
 main = "src/index.ts"
-compatibility_date = "2022-07-12"
+node_compat = true
+workers_dev = true
+compatibility_date = "2023-05-14"
 
 constellation = [
     {binding = 'CLASSIFIER', project_id = '2193053a-af0a-40a6-b757-00fa73908ef6'},
@@ -84,15 +98,29 @@ The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.
 
 ```bash
 $ mkdir src
-$ cd src
-$ wget https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
+$ wget -O src/imagenet.ts \
+  https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
+```
+
+## Install some modules
+
+We're going to need [pngjs](https://github.com/pngjs/pngjs), our PNG decoder, and [string-to-stream](https://github.com/feross/string-to-stream).
+
+```bash
+$ npm install string-to-stream --save-dev
+$ npm install pngjs --save-dev
 ```
 
 ## Code
 
-Finally let's deploy our Worker.
+Finally let's get coding. This script gets a PNG file upload from the request, decodes the image to RGB raw bitmaps, constructs a 3D tensor with the input data, runs the SqueezeNet model, maps the top predictions to the ImagetNet human-readable classes and returns the strongest one in a JSON object.
+
+Make sure to replace <code>297f3cda-5e55-33c0-8ffe-224876a76a39</code> with your actual model id.
 
 ```javascript
+---
+filename: src/index.ts
+---
 import str from "string-to-stream";
 import { PNG } from "pngjs/browser";
 
@@ -234,4 +262,50 @@ export interface Env {
 
 ```
 
-You can see this demo online.
+## Test it
+
+### Download test images
+
+Here are some test 224x244 PNG images you can use for tests:
+
+```bash
+$ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/8b78a6fb-44ac-4a97-121b-fb8f47f1e000/public -O cat.png
+$ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/05c265ae-d3c0-4114-208b-a2d7709cc100/public -O house.png
+$ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/4152ee23-f9af-4b21-a636-600e33883400/public -O mountain.png
+```
+
+### Run wrangler dev
+
+You can start a local server while developing it, for testing.
+
+```bash
+$ npx wrangler dev
+⬣ Listening at http://0.0.0.0:8787
+```
+
+### Run the test images
+
+Now the moment of truth, lets upload the test images to our image classifier.
+
+```bash
+$ curl http://0.0.0.0:8787 -F file=@cat.png
+{"id":"n02124075","index":285,"name":"Egyptian cat","probability":0.5356272459030151}
+
+$ curl http://0.0.0.0:8787 -F file=@house.png
+{"id":"n03028079","index":497,"name":"church","probability":0.5730999112129211}
+
+$ curl http://0.0.0.0:8787 -F file=@mountain.png
+{"id":"n09246464","index":972,"name":"cliff","probability":0.37886714935302734}
+```
+
+This is it, your image classifier is working. Run it through other 224x244 PNG images of your own and check the results.
+
+## Publish it
+
+When you're ready, you can deploy your Worker to its permanent location.
+
+```bash
+$ npx wrangler publish
+```
+
+You can see this demo online at https://ai.cloudflare.com/demos/image-classifier
