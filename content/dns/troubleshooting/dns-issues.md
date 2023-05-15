@@ -35,7 +35,7 @@ If you have a [partial zone setup](/dns/zone-setups/partial-setup), ensure your 
 
 ### DNSSEC was not disabled before the domain was added to Cloudflare
 
-DNS resolution failures occur if [DNSSEC is not disabled](/dns/additional-options/dnssec/#disable-dnssec) at your domain provider before you add the domain to Cloudflare.
+DNS resolution failures occur if [DNSSEC is not disabled](/dns/dnssec/#disable-dnssec) at your domain provider before you add the domain to Cloudflare.
 
 ### Nameservers no longer point to Cloudflare
 

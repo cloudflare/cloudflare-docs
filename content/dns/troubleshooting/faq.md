@@ -102,7 +102,7 @@ ___
 
 {{<render file="_dnssec-providers.md">}}
 
-For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/additional-options/dnssec/).
+For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
 
 ___
 

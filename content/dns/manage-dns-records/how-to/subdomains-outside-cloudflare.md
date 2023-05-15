@@ -39,4 +39,4 @@ To delegate a subdomain such as _internal.example.com_, tell DNS resolvers wher
     {{<Aside type="note">}}The `A` records for the subdomain are only required as glue records for nameservers that are located in the subdomain of the current zone that is being delegated.
     {{</Aside>}}
 
-5. (Optional) If the delegated nameserver has DNSSEC enabled, [add the `DS` record](/dns/additional-options/dnssec/#step-1---activate-dnssec-in-cloudflare) in Cloudflare.
+5. (Optional) If the delegated nameserver has DNSSEC enabled, [add the `DS` record](/dns/dnssec/#step-1---activate-dnssec-in-cloudflare) in Cloudflare.

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: DNSSEC
-weight: 3
+weight: 5
 ---
 
 # DNSSEC

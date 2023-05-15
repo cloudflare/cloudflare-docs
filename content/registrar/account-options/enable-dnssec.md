@@ -17,7 +17,7 @@ DNSSEC creates a secure layer to the domain name system by adding cryptographic 
 
 {{<Aside type="note">}}
 
-If your domain is not on Cloudflare Registrar, you can enable DNSSEC in [**DNS**](/dns/additional-options/dnssec/) on the Cloudflare dashboard.
+If your domain is not on Cloudflare Registrar, you can enable DNSSEC in [**DNS**](/dns/dnssec/) on the Cloudflare dashboard.
 
 {{</Aside>}}
 

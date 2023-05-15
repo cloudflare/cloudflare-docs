@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Set up multi-signer DNSSEC
+title: Setup
 weight: 5
 ---
 
 # Set up multi-signer DNSSEC
 
-This page describes how you can enable [multi-signer DNSSEC](/dns/additional-options/dnssec/multi-signer-dnssec/) with Cloudflare DNS.
+This page describes how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/) with Cloudflare DNS.
 
 {{<Aside type="note">}}
 Note that this process requires that your other DNS provider(s) also support multi-signer DNSSEC.

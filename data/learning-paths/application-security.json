@@ -109,7 +109,7 @@
             "additional_description": "As long as your traffic is <a href='/fundamentals/get-started/concepts/how-cloudflare-works/'>proxied by Cloudflare</a>, Cloudflare automatically protects your application from <a href='/ddos-protection/'>DDoS attacks</a>."
           },
           {
-            "url_path": "/dns/additional-options/dnssec/",
+            "url_path": "/dns/dnssec/",
             "link_title": "Enable DNSSEC"
           },
           {

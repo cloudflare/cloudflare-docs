@@ -1,22 +1,16 @@
 ---
-pcx_content_type: how-to
-title: Multi-signer DNSSEC
+pcx_content_type: concept
+title: About
 weight: 4
 ---
 
-# Multi-signer DNSSEC
-
-Also known as multi-provider DNSSEC, multi-signer DNSSEC consists of two models that allow different authoritative DNS providers to serve the same zone and have DNSSEC enabled at the same time.
-
-This means better compatibility with DNS features that require live-signing of DNS records (at query time), and also being able to transfer zones without having to disable DNSSEC at any moment.
-
-Cloudflare allows you to [set up multi-signer DNSSEC](/dns/additional-options/dnssec/multi-signer-dnssec-setup/) using either one of the models.
-
-## How multi-signer DNSSEC works
+# About multi-signer DNSSEC
 
 {{<Aside>}}
-This is a simplified explanation to give you context and clarify what you will be setting up if you proceed with multi-signer DNSSEC. For technical details refer to [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
+This is a simplified explanation to give you context and clarify what you will be setting up if you proceed to [set up multi-signer DNSSEC](/dns/additional-options/dnssec/multi-signer-dnssec-setup/). For technical details refer to [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
 {{</Aside>}}
+
+## How it works
 
 Multi-signer DNSSEC looks into the chain of trust that is necessary for DNSSEC validation and leverages that to guarantee that validation is completed even when multiple providers are involved.
 
@@ -29,10 +23,10 @@ In order to avoid issues in that case, when you set up multi-signer DNSSEC, you 
 
 When these configurations are adjusted in a way that (a) all involved providers have each other's public Zone Signing Keys (ZSK), and that (b) Delegation Signer (DS) records reference the necessary Key Signing Keys (KSK), then live-signing of zones by multiple providers is no longer a problem.
 
-### Model 1
+## Model 1
 
 Whereas in both models all providers have each other's Zone Signing Keys (ZSK) added to their DNSKEY record set, in model 1, only one Key Signing Key (KSK) is used to sign such DNSKEY record sets. Management of this KSK and its reference by the DS record (i.e. the Secure Entry Point) is the responsibility of the zone owner or only one provider (designated by the zone owner) to hold the KSK.
 
-### Model 2
+## Model 2
 
 In model 2, on the other hand, each provider uses its own KSK to sign its own DNSKEY record set, and these KSKs are then referenced by the DS record (Secure Entry Point).

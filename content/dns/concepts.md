@@ -42,4 +42,4 @@ For more details about using DNS records within Cloudflare, refer to [Manage DNS
 
 DNSSEC stands for DNS Security Extensions. It increases security by adding cryptographic signatures to DNS records. These signatures can then be checked to verify that a record came from the correct DNS server, preventing anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain. You can read more about it in the [article about DNS security](https://www.cloudflare.com/learning/dns/dns-security/).
 
-For help setting up DNSSEC in Cloudflare, refer to [Enable DNSSEC](/dns/additional-options/dnssec/).
+For help setting up DNSSEC in Cloudflare, refer to [Enable DNSSEC](/dns/dnssec/).

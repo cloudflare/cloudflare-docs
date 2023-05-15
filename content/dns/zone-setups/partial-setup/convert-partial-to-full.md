@@ -45,7 +45,7 @@ In the Cloudflare dashboard:
 
 Using values from the Cloudflare dashboard, go to your registrar and [update your nameservers](/dns/zone-setups/full-setup/setup/).
 
-In the Cloudflare dashboard, we recommend that you also [enable DNSSEC](/dns/additional-options/dnssec/) and add the DS record to your registrar.
+In the Cloudflare dashboard, we recommend that you also [enable DNSSEC](/dns/dnssec/) and add the DS record to your registrar.
 
 Once all the DNS TTLs expire, all your DNS queries will be answered by Cloudflare's global edge network.
 

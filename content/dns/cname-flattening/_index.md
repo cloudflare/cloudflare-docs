@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: CNAME flattening
-weight: 5
+weight: 6
 ---
 
 # CNAME flattening
