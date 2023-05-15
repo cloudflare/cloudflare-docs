@@ -10,9 +10,16 @@ weight: 1
 
 In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters.
 
-## Configure your project
+## Prerequisites
 
-Generate your new project by running [`create`](/constellation/platform/wrangler/#manage-projects). Then run `list` to review th details of your newly created `image-classifier` project:
+Before continuing, make you have:
+
+* Made a [Cloudflare account](https://dash.cloudflare.com/sign-up).
+* Installed [Wrangler](/workers/wrangler/install-and-update/).
+
+## Create a new Constellation project
+
+Generate your a new Constellation project named `image-classifier` by running the [`create`](/constellation/platform/wrangler/#manage-projects) command. Then run `list` to review the details of your newly created project:
 
 ```bash
 $ npx wrangler constellation project create "image-classifier" ONNX
@@ -25,7 +32,9 @@ $ npx wrangler constellation project list
 └──────────────────────────────────────┴──────────────────────┴─────────┘
 ```
 
-Next, create a new Worker project. We are going to need [Wrangler](/constellation/platform/wrangler/).
+## Generate a new Worker
+
+Create a new Worker named `image-classifier-worker`.
 
 ```bash
 $ mkdir image-classifier-worker
@@ -35,7 +44,7 @@ $ npm install wrangler@beta --save-dev
 $ npx wrangler init
 ```
 
-Follow the prompts. We are going to skip tests for now.
+Answer Wrangler's configuration questions:
 
 ```bash
 Would you like to use git to manage this Worker?: N
@@ -44,18 +53,18 @@ Would you like to create a Worker at src/index.ts?: Fetch handler
 Would you like us to write your first test with Vitest?: N
 ```
 
-You can learn more on how to start new projects with Wrangler [here](/workers/get-started/guide/).
+## Bind your Constellation project to your Worker
 
-In your folder, you should now find a [wrangler.toml](/workers/wrangler/configuration/) file.
+In your `image-classifier-worker`, find your [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
-Now add the Constellation configuration to the wrangler.toml configuration file with the project [binding](/constellation/platform/wrangler/#bindings):
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, such as Constellation. Create a [binding](/constellation/platform/wrangler/#bindings) between your `image-classifier` Constellation project and your `image-classifier-worker` Worker in your `image-classifier-worker` Worker's `wrangler.toml` configuration file:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 # Top-level configuration
-name = "image-classifier"
+name = "image-classifier-worker"
 main = "src/index.ts"
 node_compat = true
 workers_dev = true
@@ -66,9 +75,9 @@ constellation = [
 ]
 ```
 
-Make sure to substitute the `project_id` with the one enumerated when you ran `npx wrangler constellation project list`.
+Substitute the `project_id` with the one generated when you ran `npx wrangler constellation project list` in [Create a new Constellation project](/constellation/get-started/first-constellation-worker/#configure-your-project).
 
-In your `image-classifier` directory, install the client API library:
+In your `image-classifier-worker` directory, install the client API library:
 
 ```bash
 $ npm install @cloudflare/constellation --save-dev
@@ -76,7 +85,7 @@ $ npm install @cloudflare/constellation --save-dev
 
 ## Upload model
 
-Upload the pre-trained [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model to your project:
+Upload the pre-trained [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model to your `image-classifier` project:
 
 ```bash
 $ wget https://github.com/microsoft/onnxjs-demo/raw/master/docs/squeezenet1_1.onnx
@@ -90,11 +99,11 @@ $ npx wrangler constellation model list "image-classifier"
 └──────────────────────────────────────┴──────────────────────────────────────┴──────────────┘
 ```
 
-Take note of the id field as this will be the model id.
+Take note of the id field as this will be the model ID.
 
 ## Download Imagenet classes
 
-The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.org/) dataset. Make a new `src` folder in your `image-classifier` directory. Then download the the list of 1,000 image classes that SqueezeNet was trained for:
+The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.org/) dataset. Make a new `src` folder in your `image-classifier-worker` project directory. Then download the the list of 1,000 image classes that SqueezeNet was trained for:
 
 ```bash
 $ mkdir src
@@ -113,9 +122,11 @@ $ npm install pngjs --save-dev
 
 ## Code
 
-With your project configured, begin coding. The following script gets a PNG file upload from the request, decodes the image to RGB raw bitmaps, constructs a 3D tensor with the input data, runs the SqueezeNet model, maps the top predictions to the ImagetNet human-readable classes and returns the strongest one in a JSON object.
+With your project configured, begin coding in your `image-classifier-worker`'s `index.ts` file.
 
-Replace <code>297f3cda-5e55-33c0-8ffe-224876a76a39</code> with your actual model ID.
+The following script gets a PNG file upload from the request, decodes the image to RGB raw bitmaps, constructs a 3D tensor with the input data, runs the SqueezeNet model, maps the top predictions to the ImagetNet human-readable classes and returns the strongest one in a JSON object.
+
+Replace `297f3cda-5e55-33c0-8ffe-224876a76a39` with your actual model ID.
 
 ```javascript
 ---
@@ -216,7 +227,7 @@ async function decodeImage(
     });
 }
 
-// See https://en.wikipedia.org/wiki/Softmax_function
+// Refer to https://en.wikipedia.org/wiki/Softmax_function
 // Transforms values to between 0 and 1
 // The sum of all outputs generated by softmax is 1.
 
@@ -266,7 +277,7 @@ export interface Env {
 
 ### Download test images
 
-Below are some test 224x244 PNG images you can use for tests:
+Below are some test `224`x`244` PNG images you can use for tests:
 
 ```bash
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/8b78a6fb-44ac-4a97-121b-fb8f47f1e000/public -O cat.png
@@ -276,7 +287,7 @@ $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/4152ee23-f9af-4b21-a636-
 
 ### Run `wrangler dev`
 
-Start a local server to test your `image-classifier` Worker by running [`wrangler dev`](/workers/wrangler/commands/#dev):
+Start a local server to test your `image-classifier-worker` Worker by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```bash
 $ npx wrangler dev
@@ -293,7 +304,7 @@ $ curl http://0.0.0.0:8787 -F file=@mountain.png
 {"id":"n09246464","index":972,"name":"cliff","probability":0.37886714935302734}
 ```
 
-This is it, your image classifier is working. Run it through other 224x244 PNG images of your own and check the results.
+Your image classifier is ready. Run it through other `224`x`244` PNG images of your own and review the results.
 
 ## Publish your projct
 
@@ -301,3 +312,4 @@ When you are ready, deploy your Worker:
 
 ```bash
 $ npx wrangler publish
+```
