@@ -113,9 +113,9 @@ $ npm install pngjs --save-dev
 
 ## Code
 
-Finally let's get coding. This script gets a PNG file upload from the request, decodes the image to RGB raw bitmaps, constructs a 3D tensor with the input data, runs the SqueezeNet model, maps the top predictions to the ImagetNet human-readable classes and returns the strongest one in a JSON object.
+With your project configured, begin coding. The following script gets a PNG file upload from the request, decodes the image to RGB raw bitmaps, constructs a 3D tensor with the input data, runs the SqueezeNet model, maps the top predictions to the ImagetNet human-readable classes and returns the strongest one in a JSON object.
 
-Make sure to replace <code>297f3cda-5e55-33c0-8ffe-224876a76a39</code> with your actual model id.
+Replace <code>297f3cda-5e55-33c0-8ffe-224876a76a39</code> with your actual model ID.
 
 ```javascript
 ---
