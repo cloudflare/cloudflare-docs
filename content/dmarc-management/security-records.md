@@ -1,5 +1,5 @@
 ---
-title: Manage sources
+title: Security records
 weight: 3
 pcx_content_type: how-to
 meta:
