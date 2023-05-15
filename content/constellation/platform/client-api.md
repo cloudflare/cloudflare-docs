@@ -109,6 +109,6 @@ const output = await run(env.PROJECT, modelId, input)
 ```
 
 * **input** is a list of tensors.
-* **modelId** is the model Id inside the project, you can use [wrangler](constellation/platform/wrangler/#manage-models) to list them.
+* **modelId** is the model ID inside the project. Use [wrangler](constellation/platform/wrangler/#manage-models) to list the model ID associated with your project.
 
 
