@@ -48,8 +48,8 @@ Use the secret value to authenticate with the external service. For example, if 
 
 For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
 
-## Native Database Integrations
-Connect to databases using the new Database Integrations experience on the Cloudflare dashboard. Today, we have support for connecting to PlanetScale, Supabase and Neon through native integrations. 
+## Native Database Integrations (beta)
+Connect to databases using the new Database Integrations (beta) experience on the Cloudflare dashboard. Today, we have support for connecting to PlanetScale, Supabase and Neon through native integrations. 
 
 ### PlanetScale
 PlanetScale is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
