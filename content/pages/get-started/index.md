@@ -125,7 +125,7 @@ After your first deploy, select **Continue to project** to see your project's co
 To delete your Pages project:
 
 1.  Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
-2.  Select **Workers& Pages**.
+2.  Select **Workers & Pages**.
 3.  Select your Pages project > **Settings** > **Delete project**.
 
 {{<Aside type="warning">}}

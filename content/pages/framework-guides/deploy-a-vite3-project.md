@@ -51,7 +51,7 @@ To deploy your site to Pages:
 
 After completing configuration, select **Save and Deploy**.
 
-You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. After you have deployed your project, it will be available at the `<YOUR_PROJECT_NAME>.pages.dev` subdomain. Find your project's subdomain in **Pages** > select your project > **Deployments**.
+You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. After you have deployed your project, it will be available at the `<YOUR_PROJECT_NAME>.pages.dev` subdomain. Find your project's subdomain in **Workers & Pages** > select your Pages project > **Deployments**.
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
