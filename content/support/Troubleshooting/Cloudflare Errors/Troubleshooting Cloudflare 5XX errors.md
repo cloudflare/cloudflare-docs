@@ -10,16 +10,14 @@ source:
 
 ## Error analytics
 
-Error Analytics per domain are available within the support portal for your account.  Error Analytics allows insight into overall errors by HTTP error code and provides the URLs, responses, origin server IP addresses, and Cloudflare data centers needed to diagnose and resolve the issue.  Error Analytics are based on a 1% traffic sample.
+Error Analytics per domain are available within [Zone Analytics](https://developers.cloudflare.com/analytics/account-and-zone-analytics/zone-analytics/). Error Analytics allows insight into overall errors by HTTP error code and provides the URLs, source IP addresses, and Cloudflare data centers needed to diagnose and resolve the issue.  Error Analytics are based on a 1% traffic sample.
 
 To view Error Analytics:
 
--   Navigate to the Cloudflare support portal.  Refer to [instructions about filing a support ticket](https://support.cloudflare.com/hc/articles/200172476#h_4b8753c8-f422-4c74-9e8e-07026c4da730) for information on how to reach the support portal.
--   Scroll down to the **Error Analytics** section.
--   Click **Visit Error Analytics**.
--   Enter the domain to investigate.
--   A graph of **Errors over time** is displayed.
--   Click on a status code in the table beneath the graph to expand traffic error details.
+-   Log in to the Cloudflare dashboard.
+-   Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
+-   Next, click the **Analytics & Logs** app icon.
+-   Click **Add filter**, select **Edge status code** or **Origin status code** and choose any 5xx error code that you want to diagnose.
 
 ___
 
