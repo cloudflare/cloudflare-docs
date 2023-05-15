@@ -8,7 +8,7 @@ weight: 1
 
 # Make your first Constellation Worker
 
-In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters. SqueezeNet is an image classifier which can accurately predict what object is present in an image with less computing power than other models.
+In this guide, you will build an [image classification](https://developers.google.com/machine-learning/practica/image-classification#how_image_classification_works) application powered by a Constellation inference engine and the [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model. SqueezeNet is an image classifier which can accurately predict what object is present in an image. It is a small Convolutional Neural Network (CNN) which achieves AlexNet-level accuracy on ImageNet with 50 times fewer parameters.
 
 ## Prerequisites
 
@@ -31,16 +31,16 @@ $ npx wrangler constellation project list
 └──────────────────────────────────────┴──────────────────────┴─────────┘
 ```
 
-## Generate a new Worker
+## Create a new Worker
 
-Create a new Worker named `image-classifier-worker`. You will install [Wrangler for Constellation](/constellation/platform/wrangler/#installation) which is still in beta.
+Create a new Worker named `image-classifier-worker`. You will install [Wrangler, the developer platform CLI, for Constellation](/constellation/platform/wrangler/#installation) which is still in beta.
 
 ```bash
 $ mkdir image-classifier-worker
 $ cd image-classifier-worker
 $ npm init -f
 $ npm install wrangler@beta --save-dev
-$ npx wrangler init `image-classifier-worker`
+$ npx wrangler init
 ```
 
 Answer Wrangler's configuration questions:
@@ -57,7 +57,9 @@ Would you like us to write your first test with Vitest?: N
 
 In your `image-classifier-worker`, find your [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, such as Constellation. Create a [binding](/constellation/platform/wrangler/#bindings) between your `image-classifier` Constellation project and your `image-classifier-worker` Worker in your `image-classifier-worker` Worker's `wrangler.toml` configuration file:
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, such as Constellation. Create a [binding](/constellation/platform/wrangler/#bindings) between your `image-classifier` Constellation project and your `image-classifier-worker` Worker in your `image-classifier-worker` Worker's `wrangler.toml` configuration file.
+
+Substitute the `project_id` with the project ID generated after running `npx wrangler constellation project list` in [Create a new Constellation project](/constellation/get-started/first-constellation-worker/#configure-your-project):
 
 ```toml
 ---
@@ -74,8 +76,6 @@ constellation = [
     {binding = 'CLASSIFIER', project_id = '2193053a-af0a-40a6-b757-00fa73908ef6'},
 ]
 ```
-
-Substitute the `project_id` with the one generated when you ran `npx wrangler constellation project list` in [Create a new Constellation project](/constellation/get-started/first-constellation-worker/#configure-your-project).
 
 ## Install the client API library
 
@@ -166,6 +166,7 @@ async function processImage(env: Env, data: ArrayBuffer) {
 
         const output = await run(
             env.CLASSIFIER,
+            // Replace this with your actual model ID generated when you created your Constellation project
             "297f3cda-5e55-33c0-8ffe-224876a76a39",
             tensorInput
         );
@@ -279,7 +280,7 @@ export interface Env {
 
 ### Download test images
 
-Download some test `224`x`244` PNG images to a new folder you can use for tests.
+In your `image-classifier-worker` directory, download some test `224`x`244` PNG images you can use for tests.
 
 ```bash
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/8b78a6fb-44ac-4a97-121b-fb8f47f1e000/public -O cat.png
@@ -294,6 +295,9 @@ Start a local server to test your `image-classifier-worker` Worker by running [`
 ```bash
 $ npx wrangler dev
 ⬣ Listening at http://0.0.0.0:8787
+```
+
+To classify some test images, run the following commands in your `image-classifier-worker` Worker:
 
 ```bash
 $ curl http://0.0.0.0:8787 -F file=@cat.png
@@ -308,7 +312,7 @@ $ curl http://0.0.0.0:8787 -F file=@mountain.png
 
 Your image classifier is ready. Run it through other `224`x`244` PNG images of your own and review the results.
 
-## Publish your project
+## Deploy your project
 
 When you are ready, deploy your Worker:
 
@@ -316,7 +320,9 @@ When you are ready, deploy your Worker:
 $ npx wrangler publish
 ```
 
+Your Worker reads an image from the request, decodes it into a multidimensional `float32` tensor (right now we only decode PNGs, but we can add other formats), feeds it to the SqueezeNet model running in Constellation, gets the results, matches them with the ImageNet classes list, and returns the human-readable tags for the image.
+
 ## Related resources
 
-* Learn about the [Constellation data model](/constellation/platform/data-model/)
-* Review the list of [Constellation-supported machine learning runtimes](/constellation/platform/runtimes/)
+* Learn about the [Constellation data model](/constellation/platform/data-model/).
+* Review the list of [Constellation-supported machine learning runtimes](/constellation/platform/runtimes/).
