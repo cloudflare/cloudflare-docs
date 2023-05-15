@@ -280,7 +280,7 @@ export interface Env {
 
 ### Download test images
 
-Download some test `224`x`244` PNG images to a new folder you can use for tests.
+In your `image-classifier-worker` directory, download some test `224`x`244` PNG images you can use for tests.
 
 ```bash
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/8b78a6fb-44ac-4a97-121b-fb8f47f1e000/public -O cat.png
@@ -297,7 +297,7 @@ $ npx wrangler dev
 ⬣ Listening at http://0.0.0.0:8787
 ```
 
-To classify some test images, run the following commands:
+To classify some test images, run the following commands in your `image-classifier-worker` Worker:
 
 ```bash
 $ curl http://0.0.0.0:8787 -F file=@cat.png
