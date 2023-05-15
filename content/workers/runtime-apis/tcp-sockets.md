@@ -1,14 +1,18 @@
 ---
 pcx_content_type: configuration
-title: Connect (TCP Socket API)
+title: TCP Sockets
 weight: 4
 ---
 
-# connect()
+# TCP Sockets
 
-The Workers runtime provides an API, `connect()`, for creating a outbound [TCP connections](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) from Workers. It returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data, allowing you to read and write data on an ongoing basis, as long as the connection remains open.
+The Workers runtime provides the `connect()` API for creating a outbound [TCP connections](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) from Workers.
 
-Many application-layer protocols are built on top of TCP, and require an underlying TCP socket API in order to work, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB and more. `connect()` is the lower-level API that allows these protocols to work on Cloudflare Workers.
+Many application-layer protocols are built on top of TCP, and require an underlying TCP socket API in order to work, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB and more.
+
+## `connect()`
+
+The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data, allowing you to read and write data on an ongoing basis, as long as the connection remains open.
 
 `connect()` is provided as a [Runtime API](/workers/runtime-apis/), and is accessed by importing the `connect` function from `cloudflare:sockets`, akin to how one imports built-in modules in Node.js. A simple example of creating a TCP socket, writing to it, and returning the readable side of the socket as a response, is shown below:
 
@@ -35,8 +39,6 @@ export default {
   }
 };
 ```
-
-## Syntax and Types
 
 {{<definitions>}}
 
@@ -93,7 +95,7 @@ export default {
 
 {{</definitions>}}
 
-## How to implement Opportunistic TLS (StartTLS)
+## Opportunistic TLS (StartTLS)
 
 Many TCP-based systems, including databases and email servers, require that clients use opportunistic TLS (otherwise known as [StartTLS](https://en.wikipedia.org/wiki/Opportunistic_TLS)) when connecting. In this pattern, the client first creates an insecure TCP socket, without TLS, and then "upgrades" it to a secure TCP socket, that uses TLS. The `connect()` API simplifies this by providing a method, `startTls()`, which returns a new `Socket` instance that uses TLS:
 
@@ -107,8 +109,6 @@ const address = {
 const socket = connect(address, { secureTransport: "starttls" });
 const secureSocket = socket.startTls();
 ```
-
-#### Note the following:
 
 - `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
 - Once `startTls()` is called, the initial socket is closed and can no longer be read from or written to. In the example above, anytime after `startTls()` is called, you would use the newly created `secureSocket`. Any existing readers and writers based off the original socket will no longer work — you must create new readers and writers from the newly created `secureSocket`.
