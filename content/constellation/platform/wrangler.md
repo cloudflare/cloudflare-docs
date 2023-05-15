@@ -10,7 +10,7 @@ weight: 30
 
 ## Installation
 
-Wrangler for Constellation is still in Beta. To install it, do:
+Wrangler for Constellation is still in Beta. To install Wrangler, run:
 
 ```bash
 $ npm install wrangler@beta --save-dev
