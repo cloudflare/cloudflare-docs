@@ -20,7 +20,7 @@ Before you use the Constellation client API, you need to:
 
 ## Tensor class
 
-Tensors are essentially multidimensional numerical arrays used to represent any kind of data, like a piece of text, an image, or a time series. TensorFlow popularized the use of [Tensors](https://www.tensorflow.org/guide/tensor) in machine learning (hence the name), and other frameworks and runtimes followed the same concept.
+Tensors are essentially multidimensional numerical arrays used to represent any kind of data, like a piece of text, an image, or a time series. TensorFlow popularized the use of [Tensors](https://www.tensorflow.org/guide/tensor) in machine learning (hence the name). Other frameworks and runtimes have since followed the same concept.
 
 Not surprisingly, Constellation also uses Tensors for model input.
 
