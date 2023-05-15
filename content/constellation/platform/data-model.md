@@ -24,7 +24,7 @@ You can have as many projects as you want under your account.
 
 The models are user-uploaded files that are attached to a specific project. The model has a name, a description, and an ID. A model needs to be compatible with the [machine-learning runtime](/constellation/platform/runtimes/) defined in the project it belongs to. For example, you should only upload the `model.onnx` file to a project configured for ONNX runtime.
 
-The name can only have alphanumeric, minus (-) and underscore (_) characters (```/^[a-zA-Z0-9-_]+$/```).
+The name can only have alphanumeric, minus (`-`) and underscore (`_`) characters (`/^[a-zA-Z0-9-_]+$/`).
 
 You can have as many models per project as you want.
 
