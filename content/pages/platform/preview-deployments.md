@@ -36,7 +36,7 @@ By default, preview deployments are enabled and available publicly. In your proj
 To protect your preview deployments behind Cloudflare Access:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. From Account Home, select **Pages**.
+2. In Account Home, select **Workers & Pages**.
 3. Select your Pages project.
 4. Go to **Settings** > **General** > and select **Enable access policy**.
 

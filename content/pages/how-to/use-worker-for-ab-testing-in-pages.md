@@ -168,4 +168,4 @@ export const onRequest = [abTest];
 
 After you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. Push your project changes to GitHub/GitLab.
 
-After you have deployed your application, you will see your middleware Function in the Cloudflare dashboard under **Pages** > **Settings** > **Functions** > **Configuration**. 
+After you have deployed your application, you will see your middleware Function in the Cloudflare dashboard under **Workers & Pages** > select your Pages project > **Settings** > **Functions** > **Configuration**. 
