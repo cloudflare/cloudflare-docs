@@ -1,16 +1,16 @@
 ---
-pcx_content_type: concept
+pcx_content_type: configuration
 title: Wrangler
 weight: 30
 ---
 
 # Wrangler Support
 
-[Wrangler](https://developers.cloudflare.com/workers/wrangler/) is our command-line tool for configuring, building and deploying applications with Cloudflare developer products. Use Wrangler to manipulate your Constellation projects and machine-learning models or search for verified models in our [catalog](/constellation/platform/data-model/#catalog).
+[Wrangler](/workers/wrangler/) is our command-line tool for configuring, building and deploying applications with Cloudflare developer products. Use Wrangler to manipulate your Constellation projects and machine-learning models or search for verified models in our [catalog](/constellation/platform/data-model/#catalog).
 
 ## Installation
 
-Wrangler for Constellation is still in Beta. To install Wrangler, run:
+Wrangler for Constellation is still in Beta. To install Wrangler for Constellation, run:
 
 ```bash
 $ npm install wrangler@beta --save-dev
@@ -38,9 +38,10 @@ Flags:
   -v, --version                   Show version number  [boolean]
 ```
 
-## Manage Projects
+## Commands
+### Manage projects
 
-Use Wrangler to [list, create or delete your projects](/constellation/platform/data-model/#projects).
+Use Wrangler to list, create or delete your [projects](/constellation/platform/data-model/#projects).
 
 ```bash
 $ npx wrangler constellation project --help
@@ -54,39 +55,33 @@ Commands:
   wrangler constellation project delete <name>            Delete project
 ```
 
-**Create a project**
+#### Create a project
+
+Create a Constellation project.
 
 ```bash
-$ npx wrangler constellation project create "mldemo" ONNX
+$ npx wrangler constellation project create "<YOUR_PROJECT_NAME>" ONNX
 ```
 
-**List your projects**
+#### List your projects
+
+List your Constellation project.
 
 ```bash
 $ npx wrangler constellation project list
-
-┌──────────────────────────────────────┬────────┬─────────┬─────────────────────────────┬─────────────┐
-│ id                                   │ name   │ runtime │ created_at                  │ model_count │
-├──────────────────────────────────────┼────────┼─────────┼─────────────────────────────┼─────────────┤
-│ 06123bab-a5d8-4b63-90bd-52ebbfbc2ed1 │ mldemo │ ONNX    │ 2023-05-04T18:00:45.973211Z │ 0           │
-└──────────────────────────────────────┴────────┴─────────┴─────────────────────────────┴─────────────┘
 ```
 
-**Delete a project**
+#### Delete a project
 
+Delete a Constellation project.
 
 ```bash
-$ npx wrangler constellation project delete "mldemo"
-
-About to delete Project 'mldemo' (06173b0b-e5d8-4b64-90bd-53efffbc2ed5).
-✔ Ok to proceed? … yes
-Deleting...
-Deleted 'mldemo' successfully.
+$ npx wrangler constellation project delete "<YOUR_PROJECT_NAME"
 ```
 
-## Manage Models
+### Manage models
 
-You can use Wrangler to [list, create or delete your models](/constellation/platform/data-model/#models).
+You can use Wrangler to list, create or delete your [models](/constellation/platform/data-model/#models).
 
 ```bash
 $ npx wrangler constellation model --help
@@ -100,59 +95,40 @@ Commands:
   wrangler constellation model delete <projectName> <modelName>              Delete a model of a project
 ```
 
-**Upload a model**
+#### Upload a model
 
-Let's upload the [SqueezeNet1.1 CNN model](https://github.com/onnx/models/tree/main/vision/classification/squeezenet#model) to our project.
-
-```bash
-$ npx wrangler constellation model upload "mldemo" "squeezenet11" squeezenet1.1.onnx
-
-✅ Successfully uploaded Model "squeezenet11"!
-```
-
-**List models**
-
-You can list the models in a project.
+To upload the [SqueezeNet1.1 CNN model](https://github.com/onnx/models/tree/main/vision/classification/squeezenet#model) to your project, run:
 
 ```bash
-$ npx wrangler constellation model list "mldemo"
-
-┌──────────────────────────────────────┬──────────────────────────────────────┬──────────────┬─────────────┬─────────────────────────────┐
-│ id                                   │ project_id                           │ name         │ description │ created_at                  │
-├──────────────────────────────────────┼──────────────────────────────────────┼──────────────┼─────────────┼─────────────────────────────┤
-│ eaf22e20-3886-4387-bfa3-b1670aac8aaf │ 06123bab-a5d8-4b63-90bd-52ebbfbc2ed1 │ squeezenet11 │             │ 2023-05-05T10:55:31.014061Z │
-└──────────────────────────────────────┴──────────────────────────────────────┴──────────────┴─────────────┴─────────────────────────────┘
+$ npx wrangler constellation model upload "<YOUR_PROJECT_NAME" "squeezenet11" squeezenet1.1.onnx
 ```
 
-**Delete model**
+#### List models
 
-You can delete a model in a project.
+List the models in your Constellation project.
 
 ```bash
-$ npx wrangler constellation model delete  "mldemo" "squeezenet11"
-
-About to delete Model 'squeezenet11' (eaf22e20-3886-4387-bfa3-b1670aac8aaf).
-✔ Ok to proceed? … yes
-Deleting...
-Deleted 'squeezenet11' successfully.
+$ npx wrangler constellation model list "<YOUR_PROJECT_NAME>"
 ```
 
-## Access the catalog
+#### Delete model
+
+Delete a model in your Constellation project.
+
+```bash
+$ npx wrangler constellation model delete  "<YOUR_PROJECT_NAME>" "squeezenet11"
+```
+
+### Access the catalog
 
 The [catalog](/constellation/platform/data-model/#catalog) has ready-to-use pre-verified models for our supported runtimes that you can start using in any script without additional configurations. Review the following commands on how you interact with the catalog from Wrangler.
 
-**List catalog models**
+#### List catalog models
 
-You can list the models in a project.
+List the models in the catalog.
 
 ```bash
 $ npx wrangler constellation catalog list
-
-┌──────────────────────────────────────┬──────────────────────┬─────────────────┬───────────────┐
-│ project_id                           │ project_name         │ project_runtime │ models        │
-├──────────────────────────────────────┼──────────────────────┼─────────────────┼───────────────┤
-│ b162a29d-0a6d-4155-bedf-54a01fc8d0ef │ image-classification │ ONNX            │ squeezenet1_1 │
-└──────────────────────────────────────┴──────────────────────┴─────────────────┴───────────────┘
 ```
 
 ## Bindings
