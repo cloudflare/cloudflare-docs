@@ -12,6 +12,6 @@ meta:
 
   - This function looks for matches on a given slice of bits.
   - The offset starts on the given protocol header. For example, to match on the first bit of payload for a UDP packet, you must set `offset_start` to `64`.
-  - This is primarily intended for use with <code class="InlineCode">ip</code>, <code class="InlineCode">udp</code> and <code class="InlineCode">tcp</code>.
+  - This is primarily intended for use with `ip`, `udp` and `tcp`.
   - The slice (`offset_end` — `offset_start`) can be no longer than 32 bits, but multiple calls can be joined together via logical expressions.
   - The `bit_slice` offset cannot exceed 2040 bits.
