@@ -91,7 +91,7 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
 
 ## Methods
 
-### await project.run( model, input )
+### `await project.run(model, input)`
 
 Runs the inference engine on a model and input.
 
