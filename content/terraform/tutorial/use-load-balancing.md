@@ -36,7 +36,7 @@ Note that while the name of the `resource` is different because Terraform resour
 Check the `terraform plan` and then merge and apply the changes.
 
 ```sh
-$ terraform plan | grep -v "<computed>"
+$ terraform plan | grep -v "(known after apply)"
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.

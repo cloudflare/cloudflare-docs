@@ -45,7 +45,7 @@ EOF
 Review what Terraform is proposing before applying changes. The example output below is being filtered to ignore computed values — in this case, settings that will keep their default values.
 
 ```sh
-$ terraform plan | grep -v "<computed>"
+$ terraform plan | grep -v "(known after apply)"
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
