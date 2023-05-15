@@ -112,5 +112,3 @@ const output = await run(env.<PROJECT>, modelId, input)
 * **input** is a list of tensors.
 * **modelId** is the model ID inside the project. Use Wrangler to list the model ID associated with your project.
 * **<PROJECT>** is your Constellation project ID.
-
-
