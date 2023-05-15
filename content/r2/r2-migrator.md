@@ -4,15 +4,9 @@ pcx_content_type: how-to
 weight: 3
 ---
 
-{{<beta heading="h1">}} Super Slurper{{</beta>}}
+# Super Slurper
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
-
-{{<Aside type="note">}}
-
-This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
-
-{{</Aside>}}
 
 Migration jobs:
 
