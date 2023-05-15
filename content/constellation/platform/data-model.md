@@ -12,7 +12,7 @@ The three fundamental concepts of our model are projects, models, and the catalo
 
 ## Projects
 
-The Project has a name, a machine-learning runtime, and an Id.
+The project has a name, a machine-learning runtime, and an ID.
 
 The runtime has to be one of our supported engines. Refer to [Constellation Runtimes](/constellation/platform/runtimes/) for the complete list. The ID is what binds the project to the Worker.
 
