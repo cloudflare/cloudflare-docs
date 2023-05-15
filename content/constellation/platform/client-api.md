@@ -6,7 +6,7 @@ weight: 40
 
 # Constellation client API
 
-The client API allows developers to interact with the inference engine using the models configured for each project. Inference is the process of running data inputs on a machine-learning model and generating an output or a "prediction."
+The Constellation client API allows developers to interact with the inference engine using the models configured for each project. Inference is the process of running data inputs on a machine-learning model and generating an output, or otherwise known as a prediction.
 
 Before you use the Constellation client API, you need to:
 
