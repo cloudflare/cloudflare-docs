@@ -33,12 +33,6 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 
 2. Select **Add tunnels** when you are finished.
 
-    <div class="large-img">
-
-    ![Fill in the correct addresses to set up your IPsec tunnel](/images/magic-wan/third-party/sonicwall/step2.png)
-
-    </div>
-
 3. After you create your tunnel, Cloudflare dashboard will load list of tunnels set up for your account. Select the arrow to expand the tunnels you have just created, and check the following settings:
     - **Customer endpoint**: Refers to the SonicWall WAN IP that the VPN policy is bound to (in red).
     - **Cloudflare Endpoint**: Refers to the Anycast IP provided by Cloudflare (in blue).
