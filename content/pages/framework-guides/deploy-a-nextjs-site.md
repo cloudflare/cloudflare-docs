@@ -97,7 +97,7 @@ For more examples of this and for Next.js versions prior to v13.3.1, take a look
 To deploy your application to Cloudflare Pages, you need to install the `@cloudflare/next-on-pages` package. This library builds your Next.js project in a format that can be deployed to Pages, and handles the runtime logic for your application.
 
 ```sh
-$ npm install @cloudflare/next-on-pages --save-dev
+$ npm install --save-dev @cloudflare/next-on-pages
 ```
 
 Deploy your site to Pages:
