@@ -101,7 +101,7 @@ By default, one percent (1%) of requests are not routed with Smart Placement. Th
 
 Once Smart Placement is enabled, Cloudflare adds a `cf-placement` header to all requests. This can be used to check whether a request has been routed with Smart Placement and where the Worker is processing the request (which is shown as the nearest airport code to the data center).
 
-For example, `cf-placement: remote-LHR` indicates that the request was routed using Smart Placement to a Cloudflare data center near London while `cf-placement: local-EWR` indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received.
+For example, the `cf-placement: remote-LHR` header's `remote` value indicates that the request was routed using Smart Placement to a Cloudflare data center near London. The `cf-placement: local-EWR` header's `local` value indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received.
 
 {{<Aside type="warning" header="Beta use only">}}
 
