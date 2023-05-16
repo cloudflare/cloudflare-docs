@@ -4,7 +4,7 @@ title: Add additional audio tracks
 weight: 5
 ---
 
-# Add Audio Tracks
+# Add audio tracks to a video
 
 Adding audio tracks to your video library.
 
