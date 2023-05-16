@@ -11,8 +11,8 @@ rss: file
 ## 2023-05-16
 
 - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
-- You can now connect directly to databases from Workers, starting with [PostgreSQL](/workers/databases/connect-to-postgres/).
-- Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from your Worker directly.
+- We've added new [native database integrations](/workers/learning/integrations/databases/#native-database-integrations-beta) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
+- You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
 
 ## 2023-05-12
 
