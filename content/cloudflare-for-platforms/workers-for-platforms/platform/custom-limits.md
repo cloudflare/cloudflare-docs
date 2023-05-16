@@ -38,3 +38,8 @@ export default {
  },
 };
 ```
+{{<Aside type="note">}}
+
+If a user Worker hits either of these limits, the user Worker will immediately throw an exception. 
+
+{{</Aside>}}
