@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-05-10
+
+- The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security reasons](/workers/learning/security-model/) time only advances after I/O.
+
 ## 2023-04-28
 
 - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
