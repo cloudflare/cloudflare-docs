@@ -10,7 +10,7 @@ rss: file
 
 ## 2023-05-16 
 
-- You can now connect directly databases from Workers, starting with [PostgreSQL](/workers/databases/connect-to-postgres/).
+- You can now connect directly to databases from Workers, starting with [PostgreSQL](/workers/databases/connect-to-postgres/).
 - Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from your Worker directly.
 
 ## 2023-05-10
