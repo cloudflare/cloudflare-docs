@@ -16,9 +16,9 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 
 There are three ways to connect to a database from a Worker:
 
-1. [Native integrations](/workers/learning/integrations/databases/#native-database-integrations-beta), which includes support for PlanetScale, Neon and Supabase.
-2. [TCP Socket API](/workers/runtime-apis/tcp-sockets): a direct TCP connection to a database. TCP is the de-facto standard protocol that many databases, such as [PostgreSQL](/workers/databases/connect-to-postgres/), use for client connectivity.
-3. [Serverless drivers](/workers/learning/integrations/databases/): many hosted databases support a HTTP API to enable clients to connect in environments that don't support TCP natively.
+1. [Database Integrations](/workers/learning/integrations/databases/#native-database-integrations-beta), which simply authentication by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
+2. [TCP Socket API](/workers/runtime-apis/tcp-sockets): a direct TCP connection to a database. TCP is the de-facto standard protocol that many databases, such as [PostgreSQL](/workers/databases/connect-to-postgres/) and MySQL, use for client connectivity.
+3. HTTP- or WebSocket-based [serverless drivers](/workers/learning/integrations/databases/): many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that don't support TCP, or as their preferred connection protocol.
 
 ## Next steps
 
