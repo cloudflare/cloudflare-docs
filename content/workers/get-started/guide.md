@@ -16,27 +16,29 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 {{</Aside>}}
 
-## 1. Start a new project with C3
+## 1. Create a new project
 
-C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible. To get started, open a terminal window and run:
+C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible. To get started, open a terminal window and run with `npm`:
 
 ```sh
 $ npm create cloudflare
+```
+
+or `yarn`:
+
+```sh
+$ yarn create cloudflare
 ```
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through a setup wizard.
 
 Once your project has been configured and scaffolded, you will be asked if you would like to deploy the project to Cloudflare. If you choose not to deploy, you can navigate to the newly created project folder to begin development. Otherwise, you'll be asked to authenticate (if not logged in already), and your project will be deployed.
 
-## 2. Run your development server via Wrangler CLI
-
-After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
-
-```sh
-$ npx wrangler dev
-```
+## 2. Develop with Wrangler CLI
 
 The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects. Templates installed via C3 will have it installed in the project by default.
+
+After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project folder to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
 {{<Aside type="note">}}
 
@@ -88,15 +90,15 @@ To review code changes in real time, rewrite the `"Hello World!"` string to `"He
 
 To experiment with more Workers, run C3 again for more examples or refer to [Workers Examples](/workers/examples/) in our documentation.
 
-## 4. Publish your project
+## 4. Deploy your project
 
-If you did not deploy previously via C3, you can publish your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+If you did not deploy previously via C3, you can deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 ---
-header: Publish to workers.dev
+header: Deploy to workers.dev
 ---
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
