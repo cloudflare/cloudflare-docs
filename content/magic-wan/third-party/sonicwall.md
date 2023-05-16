@@ -19,21 +19,19 @@ You can connect your SonicWall appliance through [IPsec tunnels](/magic-wan/get-
 
 ![Topology diagram showing how to connect SonicWall appliances to Magic WAN](/images/magic-wan/third-party/sonicwall/topology.png)
 
-## ​​IPsec connection
-
 The following instructions show how to setup an IPsec connection on your SonicWall device. We will use the IP ranges from the topology image to create the several connections needed. Settings not explicitly mentioned can be left with their default values.
 
-### 1. Create an IPsec tunnel on your Cloudflare account
+## 1. Create an IPsec tunnel on your Cloudflare account
 
 1. Start by [creating an IPsec tunnel](/magic-wan/get-started/configure-tunnels/#add-tunnels) on Cloudflare. Name and describe the tunnel as needed, and add the following settings:
     - **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel.
     - **Customer endpoint**: Enter the WAN IP address of your SonicWall device.
     - **Cloudflare endpoint**: Enter the IP address provided by Cloudflare.
-    - **Pre-shared key**: Select Use my own pre-shared key and paste a secure key of your own.
+    - **Pre-shared key**: Select **Use my own pre-shared key** and paste a secure key of your own.
 
 2. Select **Add tunnels** when you are finished.
 
-3. After you create your tunnel, Cloudflare dashboard will load list of tunnels set up for your account. Select the arrow to expand the tunnels you have just created, and check the following settings:
+3. After you create your tunnel, Cloudflare dashboard will load a list of tunnels set up for your account. Select the arrow to expand the tunnels you have just created, and check the following settings:
     - **Customer endpoint**: Refers to the SonicWall WAN IP that the VPN policy is bound to (in red).
     - **Cloudflare Endpoint**: Refers to the Anycast IP provided by Cloudflare (in blue).
     - **FQDN ID**: The ID used in the VPN policy for the SonicWall’s Local IKE ID. Copy this ID and save it. You will need it when configuring the tunnel on your SonicWall (in green).
@@ -46,7 +44,7 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 
 {{<Aside type="note">}}The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. You will need to use `10.200.1.1/31` on the SonicWall side of the tunnel.{{</Aside>}}
 
-### 2. Create static routes on Cloudflare dashboard
+## 2. Create static routes on Cloudflare dashboard
 
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there are two networks: `172.31.3.0/24` and the tunnel network `10.200.1.0/31`.
 
@@ -56,11 +54,11 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 2. Select **Add routes** when you are finished.
 
-### 3. Add a VPN configuration in SonicWall
+## 3. Add a VPN configuration in SonicWall
 
 1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
 2. Select **Add**.
-3. In the **General** tab > **Security Policy** group, add the following settings:
+3. In **General** > **Security Policy** group, add the following settings:
     - **Authentication Method**: _IKE Using Preshared Secret_.
     - **IPsec Primary Gateway Name or Address**: Enter Cloudflare’s Anycast IP address for the primary gateway (in blue).
 4. In the **IKE authentication** group, add the following settings:
@@ -76,7 +74,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 5. Select **Save**.
 
-### 4. Update the VPN policy
+## 4. Update the VPN policy
 
 VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can set the following settings:
 
@@ -104,7 +102,7 @@ VPN Policy is somewhat flexible. Adjust these settings to match your organizatio
 
 5. Select **Save**.
 
-### 5. Disable replay protection
+## 5. Disable replay protection
 
 1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
 2. Select **Advanced**.
@@ -118,11 +116,11 @@ VPN Policy is somewhat flexible. Adjust these settings to match your organizatio
 
 </div>
 
-### 6. Add a VPN tunnel interface
+## 6. Add a VPN tunnel interface
 
 SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When creating the interface, use the prefix `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel, which is `10.200.1.0`.
  
-{{<Aside type="note">}}You will need to use a different IP pair for each tunnel/site.{{<Aside>}}
+{{<Aside type="note">}}You will need to use a different IP pair for each tunnel/site.{{</Aside>}}
 
 1. Go to **Network** > **System** > **Interfaces**.
 2. Select **Add interface** > **VPN Tunnel Interface**.
@@ -135,7 +133,7 @@ SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When cre
 
 </div>
 
-5. Select the **Advanced** tab.
+5. Select **Advanced**.
 6. Enable the **Enable Asymmetric Route Support** option. This is required for the Magic WAN tunnel health check.
 
 <div class="large-img">
@@ -146,13 +144,13 @@ SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When cre
 
 7. Select **OK**.
 
-### 7. Add address object(s)
+## 7. Add address object(s)
 
 Address objects are necessary for route policies. In our example, we have one other site that will be reached via Magic WAN. First, you need to create address objects for each network. Then, you need to create an address group that contains all the remote networks. This address group will be used in the next step to create the correct route policies.
 
 To add an address object: 
 
-1. Select the **Object** tab on the top of the main page > **Addresses**
+1. Select **Object** > **Addresses**
 2. Select **Address Objects** > **Add**.
 3. Enter the information for your address object - refer to the topology image for the examples this tutorial is using. Since the addresses are in the VPN zone, set the **Zone Assignment** for the object to _VPN_.
 4. Select **Save**. The window will stay on to facilitate multiple entries. Select **X** to close it.
@@ -163,7 +161,7 @@ To add an address object:
 
 </div>
 
-5. Select the **Address Groups** tab > **Add** to add a new address group.
+5. Select **Address Groups** > **Add** to add a new address group.
 6. Enter a **Name** for your address group.
 7. Select the individual network objects you have created on the left menu, and add them to the group by selecting the right-facing arrow in the middle column.
 6. Select **Save**.
@@ -174,26 +172,26 @@ To add an address object:
 
 </div>
 
-### 8. Set up routing
+## 8. Set up routing
 
 Add a route using the address object or group just created as the destination.
 
-1. Select the **Policy** tab > **Routing Rules**. 
+1. Select **Policy** > **Routing Rules**. 
 2. Select **Add** to add your route policy.
 3. The **Next Hop** should be the VPN tunnel interface that was previously created in the interface panel.
 
-### 9. Add access rule for health checks
+## 9. Add access rule for health checks
 
 An additional access rule is required for Magic WAN health checks to work properly. This will enable the WAN IP to receive ICMP pings via the tunnel, and return them over the WAN.
 
-1. Select the **Policy** tab > **Add**.
+1. Select **Policy** > **Add**.
 2. Enter a descriptive name for your policy.
-3. Select the **Source / Destination** tab.
+3. Select **Source / Destination**.
 4. In **Destination > Port/Services**, select _ICMP_ from the dropdown.
-5. Select the **Optional Settings** tab.
+5. Select **Optional Settings**.
 6. In **Others**, enable **Allow Management traffic**.
 
-### 10. Setup health checks
+## 10. Setup health checks
 
 You have to [configure Magic WAN health checks](/magic-wan/how-to/run-tunnel-health-checks/) correctly. Here is an example of how to set up health checks: 
 
@@ -214,7 +212,7 @@ curl --request PUT \
 
 Health checks might take some time to stabilize after the configuration is changed.
 
-### 11. Verify tunnel status on Cloudflare dashboard
+## 11. Verify tunnel status on Cloudflare dashboard
 
 You can check if your tunnels are healthy on the Cloudflare dashboard. 
 
