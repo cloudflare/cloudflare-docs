@@ -114,7 +114,7 @@ VPN Policy is somewhat flexible. Adjust these settings to match your organizatio
 
 <div class="large-img">
 
-![Configure a VPN policy on your SonicWall device](/images/magic-wan/third-party/sonicwall/5-anti-replay.png)
+![Enable anti-replay on your SonicWall device](/images/magic-wan/third-party/sonicwall/5-anti-replay.png)
 
 </div>
 
@@ -123,3 +123,53 @@ VPN Policy is somewhat flexible. Adjust these settings to match your organizatio
 SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When creating the interface, use the prefix `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel, which is `10.200.1.0`.
  
 {{<Aside type="note">}}You will need to use a different IP pair for each tunnel/site.{{<Aside>}}
+
+1. Go to **Network** > **System** > **Interfaces**.
+2. Select **Add interface** > **VPN Tunnel Interface**.
+3. For IP Address, use `10.200.1.1`.
+4. Enable **Ping**. This is required so the interface can be pinged for debugging and Magic WAN health checks.
+
+<div class="large-img">
+
+![Enable ping to that your interface can be pinged for debugging and Magic WAN health checks](/images/magic-wan/third-party/sonicwall/6-vpn-ping.png)
+
+</div>
+
+5. Select the **Advanced** tab.
+6. Enable the **Enable Asymmetric Route Support** option. This is required for the Magic WAN tunnel health check.
+
+<div class="large-img">
+
+![Enable Asymmetric Route Support. It is required for Magic WAN health checks](/images/magic-wan/third-party/sonicwall/6-vpn-assymetric.png)
+
+</div>
+
+7. Select **OK**.
+
+### 7. Add address object(s)
+
+Address objects are necessary for route policies. In our example, we have one other site that will be reached via Magic WAN. First, you need to create address objects for each network. Then, you need to create an address group that contains all the remote networks. This address group will be used in the next step to create the correct route policies.
+
+To add an address object: 
+
+1. Select the **Object** tab on the top of the main page > **Addresses**
+2. Select **Address Objects** > **Add**.
+3. Enter the information for your address object - refer to the topology image for the examples this tutorial is using. Since the addresses are in the VPN zone, set the **Zone Assignment** for the object to _VPN_.
+4. Select **Save**. The window will stay on to facilitate multiple entries. Select **X** to close it.
+
+<div class="large-img">
+
+![Enter the appropriate settings for you object](/images/magic-wan/third-party/sonicwall/7-address-objects-settings.png)
+
+</div>
+
+5. Select the **Address Groups** tab > **Add** to add a new address group.
+6. Enter a **Name** for your address group.
+7. Select the individual network objects you have created on the left menu, and add them to the group by selecting the right-facing arrow in the middle column.
+6. Select **Save**.
+
+<div class="large-img">
+
+![Copy the individual network objects and add them to your group](/images/magic-wan/third-party/sonicwall/7-add-objects-group.png)
+
+</div>
