@@ -33,13 +33,38 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 
 2. Select **Add tunnels** when you are finished.
 
-![Fill in the correct addresses to set up your IPsec tunnel](/images/magic-wan/third-party/sonicwall/step2.png)
+    <div class="large-img">
+
+    ![Fill in the correct addresses to set up your IPsec tunnel](/images/magic-wan/third-party/sonicwall/step2.png)
+
+    </div>
 
 3. After you create your tunnel, Cloudflare dashboard will load list of tunnels set up for your account. Select the arrow to expand the tunnels you have just created, and check the following settings:
     - **Customer endpoint**: Refers to the SonicWall WAN IP that the VPN policy is bound to (in red).
     - **Cloudflare Endpoint**: Refers to the Anycast IP provided by Cloudflare (in blue).
     - **FQDN ID**: The ID used in the VPN policy for the SonicWall’s Local IKE ID. Copy this ID and save it. You will need it when configuring the tunnel on your SonicWall (in green).
 
-![An example of what your IPsec tunnel should look like](/images/magic-wan/third-party/sonicwall/step3.png)
+    <div class="large-img">
 
-{{<Aside type="note">}}The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. You will need to use `10.200.1.1/31` on the SonicWall side of the tunnel. 
+    ![An example of what your IPsec tunnel should look like](/images/magic-wan/third-party/sonicwall/step3.png)
+
+    </div>
+
+{{<Aside type="note">}}The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. You will need to use `10.200.1.1/31` on the SonicWall side of the tunnel.{{</Aside>}}
+
+### 2. Create static routes on Cloudflare dashboard
+
+Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there are two networks: `172.31.3.0/24` and the tunnel network `10.200.1.0/31`.
+
+1. [Create your static routes](/magic-wan/get-started/configure-static-routes/#create-a-static-route). Name and describe them as needed, and add the following settings:
+    - **First tunnel**: Following our example, add `10.200.1.0/31` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
+    - **Second tunnel**: Following our example, add `172.31.3.0/24` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
+
+2. Select **Add routes** when you are finished.
+
+    <div class="large-img">
+
+    ![An example of what your static routes should look like](/images/magic-wan/third-party/sonicwall/static-route1.png)
+    ![An example of what your static routes should look like](/images/magic-wan/third-party/sonicwall/static-route2.png)
+
+    </div>
