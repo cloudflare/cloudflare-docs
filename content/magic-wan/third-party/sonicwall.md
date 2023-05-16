@@ -117,3 +117,9 @@ VPN Policy is somewhat flexible. Adjust these settings to match your organizatio
 ![Configure a VPN policy on your SonicWall device](/images/magic-wan/third-party/sonicwall/5-anti-replay.png)
 
 </div>
+
+### 6. Add a VPN tunnel interface
+
+SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When creating the interface, use the prefix `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel, which is `10.200.1.0`.
+ 
+{{<Aside type="note">}}You will need to use a different IP pair for each tunnel/site.{{<Aside>}}
