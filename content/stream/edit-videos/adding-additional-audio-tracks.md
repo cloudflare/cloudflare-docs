@@ -66,8 +66,6 @@ curl -X POST \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/audio
 ```
 
-### Example Response to Add Additional Audio Tracks
-
 ```json
 ---
 header: Example response to add Additional audio tracks
@@ -94,8 +92,6 @@ curl \
  -H 'Authorization: Bearer <API_TOKEN>' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/audio
 ```
-
-### Example response to get the audio tracks associated with a video
 
 ```json
 ---
