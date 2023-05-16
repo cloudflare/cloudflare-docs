@@ -16,6 +16,9 @@ Although a few steps can also be completed via the user interface, currently the
 
 ## Step 1 - Set up Cloudflare zone
 
+{{<Aside>}}
+The following steps also apply if you use [Cloudfare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that the records in steps 2 and 4 should be transferred from the primary, and step 5 is not necessary.
+{{</Aside>}}
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable multi-signer DNSSEC. This is done by specifying a value for `dnssec_multi_model`, as in the following example.
 
 ```bash
