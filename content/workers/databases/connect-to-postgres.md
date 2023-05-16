@@ -59,9 +59,9 @@ const result = await client.query({
 You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/platform/environment-variables/) via the [dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/platform/environment-variables/#environment-variables-via-wrangler), as follows:
 
 ```toml
-----
+---
 filename: wrangler.toml
-----
+---
 
 [vars]
 DB_USERNAME = "postgres"
@@ -123,17 +123,17 @@ To run the example:
 * Provide the connection string as a secret via [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret).
 
 ```toml
-----
+---
 filename: wrangler.toml
-----
+---
 # Ensure you enable Node.js compatibility to your project
 node_compat = true
 ```
 
 ```ts
-----
+---
 filename: index.ts
-----
+---
 
 import { Client } from "pg";
 
