@@ -185,8 +185,8 @@ $ sudo tcpdump -i eth0 src 173.245.48.0/20 and dst <your-server-ip> and tcp port
 
 In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare’s health check probes (both the request and response) are going through the IPsec tunnel we configured.
 
-![tcpdump shows the IPsec encrypted packets from Cloudflare's health probbes](/images/magic-wan/tutorials/strongswan/ipsec.png)
+![tcpdump shows the IPsec encrypted packets from Cloudflare's health probbes](/images/magic-wan/third-party/strongswan/ipsec.png)
 
 You can also run tcpdump on `vti0` to check the decrypted packets.
 
-![If you run tcpdump on vti0 you can check for decrypted packets](/images/magic-wan/tutorials/strongswan/tcpdump.png)
+![If you run tcpdump on vti0 you can check for decrypted packets](/images/magic-wan/third-party/strongswan/tcpdump.png)

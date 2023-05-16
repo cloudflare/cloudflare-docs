@@ -100,6 +100,10 @@ rss: file
 - Validation errors during Worker upload for module scripts now include correct line and column numbers.
 - Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
 
+## 2022-07-08
+
+- Workers Usage Report and Workers Weekly Summary have been disabled due to scaling issues with the service.
+
 ## 2022-06-24
 
 - `wrangler dev` in global network preview mode now supports scheduling alarms.

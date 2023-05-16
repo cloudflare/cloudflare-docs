@@ -1,5 +1,5 @@
 ---
-title: Email routing
+title: Custom domain email addresses
 pcx_content_type: learning-unit
 weight: 4
 layout: learning-unit

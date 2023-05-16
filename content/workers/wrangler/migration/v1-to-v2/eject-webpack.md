@@ -1,10 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Ejecting webpack
-weight: 3
+title: 1. Migrate webpack projects
+weight: 2
 ---
 
 # Migrate webpack projects from Wrangler version 1
+
+This guide describes the steps to migrate a webpack project from Wrangler v1 to Wrangler v2. After completing this guide, [update your Wrangler version](/workers/wrangler/migration/v1-to-v2/update-v1-to-v2/).
 
 Previous versions of Wrangler offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in [`wrangler.toml`](/workers/wrangler/configuration/). Starting with Wrangler v2, Wrangler no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your Workers.
 
