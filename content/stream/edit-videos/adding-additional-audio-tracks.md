@@ -48,7 +48,7 @@ The `default` field denotes whether the audio track will be played by default in
 
 The `status` field will change to `ready` after the audio track is successfully uploaded and encoded. Should an error occur during this process, the status will denote `error`.
 
-### Upload via HTTP
+## Upload via HTTP
 
 Make an HTTP request and include the audio file as an input with the name set to `file`.
 
