@@ -126,3 +126,49 @@ If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/
    ```
 
    The source IP address should fall within the /24 range specified by your EDNS client subnet.
+
+## Clear DNS cache
+
+Modern web browsers and operating systems are designed to cache DNS records for a set amount of time. When a request is made for a DNS record, the browser cache is the first location checked for the requested record. A DNS policy may not appear to work if the response is already cached.
+
+To clear your DNS cache:
+
+<details>
+<summary>ChromeOS</summary>
+<div>
+
+1. Go to `chrome://net-internals/#dns`.
+2. Select **Clear host cache**.
+
+</div>
+</details>
+
+<details>
+<summary>Windows</summary>
+<div>
+
+1. Open the admin command prompt or Powershell.
+2. Run the following command:
+
+```bash
+ipconfig /flushdns
+```
+
+</div>
+</details>
+
+<details>
+<summary>macOS</summary>
+<div>
+
+1. Open Terminal.
+2. Run the following commands:
+
+```sh
+$ sudo killall -HUP mDNSResponder
+$ sudo killall mDNSResponderHelper
+$ sudo dscacheutil -flushcache
+```
+
+</div>
+</details>
