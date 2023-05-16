@@ -139,6 +139,9 @@ Editing the `default` status of an audio track to `true` will mark all other aud
 ### Example response to edit the audio tracks associated with a video
 
 ```json
+---
+header: Example response to edit the audio tracks associated with a video
+---
 {
   "result": {
     "uid": "<AUDIO_UID>",
