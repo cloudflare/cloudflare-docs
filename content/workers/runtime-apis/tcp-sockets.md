@@ -77,10 +77,10 @@ export default {
 
 {{<definitions>}}
 
-- {{<code>}}readable(){{</code>}} : {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
+- {{<code>}}readable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - Returns the readable side of the TCP socket.
 
-- {{<code>}}writeable(){{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WriteableStream{{</type-link>}}
+- {{<code>}}writeable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WriteableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
