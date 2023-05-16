@@ -42,7 +42,7 @@ Also, the maximum validity period for certificates will be decreased from 1 year
 
 ### Before January 23, 2023
 
-If your system integrates with the SSL for SaaS API to [create custom hostnames](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
+If your system integrates with the  API to [create custom hostnames](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
 - The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
@@ -53,7 +53,7 @@ We recommend that you migrate all your current custom hostnames away from DigiCe
 
 #### Identify certificates
 
-To identify certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostnames Alert** events.
+To identify certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for ** Custom Hostnames Alert** events.
 
 You can also send a [GET](/api/operations/custom-hostname-for-a-zone-list-custom-hostnames) request to the API and look for certificates with a `ssl_status` of `pending_validation` and a `certificate_authority` of `digicert` within the SSL object.
 

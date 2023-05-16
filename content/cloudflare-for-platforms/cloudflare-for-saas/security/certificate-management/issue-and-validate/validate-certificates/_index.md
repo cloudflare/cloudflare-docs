@@ -4,6 +4,7 @@ title: Validate
 weight: 2
 meta:
     title: Validate certificates
+    description: Learn which methods you should use to validate Cloudflare for SaaS certificates.
 ---
 
 # Validate certificates
@@ -11,6 +12,22 @@ meta:
 {{<render file="_dcv-definition.md" productFolder="ssl" >}}
 <br>
 
-Cloudflare offers the following methods for DCV:
+## DCV situations
  
-{{<directory-listing>}}
+### Non-wildcard certificates
+
+{{<render file="_http-dcv-situation.md">}}
+
+### Wildcard certificates
+
+{{<render file="_txt-dcv-situation.md">}}
+<br/>
+
+- [DCV Delegation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) (generally recommended)
+- [Manual](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/)
+
+{{<Aside type="warning">}}
+
+With the [upcoming change](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, both [email](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/email/) and [CNAME](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/cname/) DCV will soon be unsupported.
+
+{{</Aside>}}

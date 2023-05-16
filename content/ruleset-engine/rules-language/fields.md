@@ -479,7 +479,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/workers-for-platforms/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/workers-for-platforms/">custom metadata</a> JSON object set by  customers.
           </p>
         </td>
     </tr>
