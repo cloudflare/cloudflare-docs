@@ -120,7 +120,7 @@ To run the example:
 
 * Install the `pg` library via `npm install pg`.
 * Enable [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for your Worker project.
-* Provide the connection string as a secret via [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret).
+* Provide the connection string as a secret via [`wrangler secret put DB_URL`](/workers/wrangler/commands/#secret).
 
 ```toml
 ---
@@ -138,10 +138,10 @@ filename: index.ts
 import { Client } from "pg";
 
 export interface Env {
-  // This should be a valid connection string
-  // For example, "postgres://user:password@your.postgres.database.com
+  // This should be a valid Postgres connection string
+  // e.g "postgres://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs"
   // Use `wrangler secret put DB_URL` to configure a Secret with your connection string
-  DB: string;
+  DB_URL: string;
 }
 
 export default {
