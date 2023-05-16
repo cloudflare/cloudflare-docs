@@ -121,7 +121,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/au
 }
 ```
 
-Please note this API will not return information for audio attached to the video upload.
+Note this API will not return information for audio attached to the video upload.
 
 ## Edit an additional audio track
 
