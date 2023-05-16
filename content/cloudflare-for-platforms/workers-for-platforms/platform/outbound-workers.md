@@ -11,7 +11,13 @@ Outbound Workers sit between your customer’s Workers and the public internet. 
 
 ## General Use Cases
 
-### Use Outbound Workers
+Outbound Workers can be used to:
+
+- Log all subrequests to identify malicious hosts or usage patterns.
+- Create, allow, or block lists for hostnames requested by user Workers.
+- Configure authentication to your APIs behind the scenes (without end developers needing to set credentials).
+
+## Use Outbound Workers
 
 To use Outbound Workers:
 
@@ -59,4 +65,10 @@ export default {
 };
 ```
 
-4. The Outbound Worker will now be invoked on any `fetch()` request from User Workers.  This does not include `fetch()` through Service Bindings or mTLS certificate bindings.  The User Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker, with minimal performance overhead. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
+4. The Outbound Worker will now be invoked on any `fetch()` request from user Workers. The User Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker, with minimal performance overhead. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
+
+{{<Aside type ="note">}}
+
+The request from user Workers does not include `fetch()` through Service Bindings or mTLS certificate bindings. 
+
+{{</Aside>}}
