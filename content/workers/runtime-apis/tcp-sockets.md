@@ -83,7 +83,7 @@ export default {
 - {{<code>}}writeable(){{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WriteableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
 
-- `closed()` {{<type>}}`Promise<void>`{{</type>}}
+- `closed` {{<type>}}`Promise<void>`{{</type>}}
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
 
 - `close()` {{<type>}}`Promise<void>`{{</type>}}
