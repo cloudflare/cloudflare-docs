@@ -24,7 +24,6 @@
     console.log("Running crawler")
 
     return {
-      updateOk: updateResponse.ok,
       runOk: runResponse.ok,
     }
   }
