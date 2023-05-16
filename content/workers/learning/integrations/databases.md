@@ -5,7 +5,7 @@ title: Databases
 
 # Databases
 
-Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use. For more information on ways to connect, refer to [Connect to databases](/workers/databases/connecting-to-databases/) for more information.
+Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use. For more information on ways to connect, refer to [Connect to databases](/workers/databases/connecting-to-databases/).
 
 ## Overview
 
