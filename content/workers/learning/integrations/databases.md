@@ -5,7 +5,7 @@ title: Databases
 
 # Databases
 
-Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use.
+Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use. For more information on ways to connect, refer to [Connect to databases](/workers/databases/connecting-to-databases/).
 
 ## Overview
 
@@ -13,7 +13,7 @@ Use Cloudflare Workers to connect your application to external databases, such a
 
 | Database                                                                         |Native Integration |  Library or Driver      | Connection Method      |
 | ------------------------------------------------------------------------------- | ----- | --------- | --------- |
-| [Postgres](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | - |  [node-postgres](https://node-postgres.com/) | Workers Socket API |
+| [Postgres](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | - |  [node-postgres](https://node-postgres.com/) | [Workers Socket API](/workers/runtime-apis/tcp-sockets/) |
 | [Postgres](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | - |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
 | [MySQL](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | - | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
 | [FaunaDB](https://fauna.com/blog/getting-started-with-fauna-and-cloudflare-workers) | No |  [faunadb](https://github.com/fauna/faunadb-js)         | API via client library |
