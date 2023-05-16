@@ -15,7 +15,7 @@ To create a new DNS policy:
 2. In the **DNS** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
-5. Choose an **Action** to take when traffic matches the logical expression. For example, we recommend adding the following policy:
+5. Choose an **Action** to take when traffic matches the logical expression. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories):
 
     {{<render file="gateway/_block-security-categories.md" productFolder="cloudflare-one">}}
 

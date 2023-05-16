@@ -64,4 +64,4 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 </div>
 </details>
 
-The agent will now forward all DNS queries from the device to Cloudflare Gateway for filtering.
+The agent should show as **Connected**. By default, all DNS queries from the device will be forwarded to Cloudflare Gateway for filtering.
