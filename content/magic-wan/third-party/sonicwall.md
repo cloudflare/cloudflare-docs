@@ -59,8 +59,8 @@ Static routes are required for any networks that will be reached via the IPsec t
 ### 3. Add a VPN configuration in SonicWall
 
 1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
-2. Select **General** > **Add**.
-3. In the **Security Policy** group, add the following settings:
+2. Select **Add**.
+3. In the **General** tab > **Security Policy** group, add the following settings:
     - **Authentication Method**: _IKE Using Preshared Secret_.
     - **IPsec Primary Gateway Name or Address**: Enter Cloudflare’s Anycast IP address for the primary gateway (in blue).
 4. In the **IKE authentication** group, add the following settings:
@@ -173,3 +173,52 @@ To add an address object:
 ![Copy the individual network objects and add them to your group](/images/magic-wan/third-party/sonicwall/7-add-objects-group.png)
 
 </div>
+
+### 8. Set up routing
+
+Add a route using the address object or group just created as the destination.
+
+1. Select the **Policy** tab > **Routing Rules**. 
+2. Select **Add** to add your route policy.
+3. The **Next Hop** should be the VPN tunnel interface that was previously created in the interface panel.
+
+### 9. Add access rule for health checks
+
+An additional access rule is required for Magic WAN health checks to work properly. This will enable the WAN IP to receive ICMP pings via the tunnel, and return them over the WAN.
+
+1. Select the **Policy** tab > **Add**.
+2. Enter a descriptive name for your policy.
+3. Select the **Source / Destination** tab.
+4. In **Destination > Port/Services**, select _ICMP_ from the dropdown.
+5. Select the **Optional Settings** tab.
+6. In **Others**, enable **Allow Management traffic**.
+
+### 10. Setup health checks
+
+You have to [configure Magic WAN health checks](/magic-wan/how-to/run-tunnel-health-checks/) correctly. Here is an example of how to set up health checks: 
+
+```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/ipsec_tunnels/<tunnel_identifier> \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <YOUR_EMAIL> ' \
+  --data '{
+    "health_check": {
+        "enabled":true,
+        "target":"SONICWALL_WAN_IP",
+        "type":"request",
+        "rate":"mid"
+    }
+}'
+```
+
+Health checks might take some time to stabilize after the configuration is changed.
+
+### 11. Verify tunnel status on Cloudflare dashboard
+
+You can check if your tunnels are healthy on the Cloudflare dashboard. 
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and choose your account. 
+2. Go to **Magic WAN** > **Tunnel health**, and select **View**.
+
+This dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogenous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
