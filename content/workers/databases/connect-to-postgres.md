@@ -20,9 +20,9 @@ Ensure you are using `pg` (node-postgres) version 8.11.0 or higher. Earlier vers
 
 To connect to a Postgres database from a Worker:
 
-* Install the `pg` library. The [node-postgres](https://node-postgres.com/) (often referred to as `pg`) library has built-in support for the Workers [Socket API](/workers/runtime-apis/tcp-sockets).
-* Ensure your database is reachable from public IP addresses (see [caveats](#caveats))
-* Confirm that [SSL is configured](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-PROTECTION) on your Postgres instance for security
+* Install the `pg` library. The [node-postgres](https://node-postgres.com/) (often referred to as `pg`) library has built-in support for the Workers [Socket API](/workers/runtime-apis/tcp-sockets) and enable [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for your project.
+* Ensure your database is reachable from public IP addresses (see [caveats](#caveats)).
+* Confirm that [SSL is configured](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-PROTECTION) on your Postgres instance for security.
 
 ## Connecting
 
@@ -116,6 +116,20 @@ The [PostgreSQL documentation](https://www.postgresql.org/docs/current/libpq-ssl
 
 The below example queries a public Postgres database made available by [RNACentral](https://rnacentral.org/help/public-database), which is available at `postgres://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs`.
 
+To run the example:
+
+* Install the `pg` library via `npm install pg`
+* Enable [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for your project
+* Provide the connection string as a secret via `wrangler secret put DB_URL`
+
+```toml
+----
+filename: wrangler.toml
+----
+# Ensure you enable Node.js compatibility to your project
+node_compat = true
+```
+
 ```ts
 ----
 filename: index.ts
@@ -142,6 +156,8 @@ export default {
 
     var client = new Client(env.DB_URL);
     await client.connect();
+
+    // Query the RNA database!
     const result = await client.query({
       text: "SELECT * FROM rnc_database LIMIT 10",
     });
