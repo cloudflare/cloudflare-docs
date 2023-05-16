@@ -65,7 +65,7 @@ If your Worker is making multiple round trip calls to a centralized database, yo
 
 1. To set up an integration with PlanetScale, you need to have an existing PlanetScale database to connect to. [Create a PlanetScale database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database) or [import an existing database to PlanetScale](https://planetscale.com/docs/imports/database-imports#overview).
 
-2. In your PlanetScale database, create a `products` table with the following query:
+2. From the [PlanetScale web console](https://planetscale.com/docs/concepts/web-console#get-started), create a `products` table with the following query:
 
     ```sql
     CREATE TABLE products (
@@ -131,9 +131,9 @@ To learn more about PlanetScale, refer to [Planetscale's official documentation]
 
 1. To set up an integration with Supabase, you to have an existing Supabase database to connect to. [Create a Supabase database](https://supabase.com/docs/guides/database/tables#creating-tables) or [have an existing database to connect to Supabase and load data from](https://supabase.com/docs/guides/database/tables#loading-data).
 
-2. In your Supabase database, create a `countries` table with the following query. You can create a table in your Supabase dashboard in two ways:
+2. Create a `countries` table with the following query. You can create a table in your Supabase dashboard in two ways:
     - Use the table editor, which allows you to set up Postgres similar to a spreadsheet. 
-    - Alternatively, use the SQL editor:
+    - Alternatively, use the [SQL editor](https://supabase.com/docs/guides/database/overview#the-sql-editor):
 
     ```sql
     CREATE TABLE countries (
@@ -190,7 +190,7 @@ To learn more about Supabase, refer to [Supabase's official documentation](https
 
 1. To set up an integration with Neon, you to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/tutorial/project-setup#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
 
-2. In your Neon database, create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
+2. Create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
 
     ```sql
     CREATE TABLE elements (
