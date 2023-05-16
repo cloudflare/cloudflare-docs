@@ -320,7 +320,7 @@ When you are ready, deploy your Worker:
 $ npx wrangler publish
 ```
 
-Your Worker reads an image from a request, decodes it into a multidimensional `float32` tensor (right now we only decode PNGs, but we can add other formats), feeds it to the SqueezeNet model running in your Constellation project, gets the results, matches them with the ImageNet classes list, and returns the human-readable tags for the image.
+Your `image-classifier-worker` Worker reads an image from a request, decodes it into a multidimensional `float32` tensor, feeds it to the SqueezeNet model running in your Constellation project, gets the results, matches them with the ImageNet classes list, and returns the human-readable tags for the image. This project created in this guide only decodes PNGs, but Constellation supports other formats.
 
 ## Related resources
 
