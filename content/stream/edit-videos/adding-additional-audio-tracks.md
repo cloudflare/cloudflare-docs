@@ -170,6 +170,9 @@ deleted.
 ### Example response to delete an audio track
 
 ```json
+---
+header: Example response to delete an audio track
+---
 {
   "result": "ok",
   "success": true,
