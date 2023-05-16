@@ -44,7 +44,8 @@ This will help avoid any certificate pinning errors that may arise from an initi
 | ----------- | -------- | -------------- | -------------- |
 | Application | in       | Do Not Inspect | Do Not Inspect |
 
-{{<render file="gateway/_policies-recommended.md">}}
+### Block all security categories
+{{<render file="gateway/_block-security-categories.md">}}
 
 ## 4. Add optional policies
 
