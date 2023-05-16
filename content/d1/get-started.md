@@ -95,7 +95,7 @@ database_name = "<DATABASE_NAME>"
 database_id = "<unique-ID-for-your-database>"
 ```
 
-This will create a new D1 database, and output the [binding](/workers/platform/bindings/) configuratio needed in the next step.
+This will create a new D1 database, and output the [binding](/workers/platform/bindings/) configuration needed in the next step.
 
 ## 4. Bind your Worker to your D1 database
 
