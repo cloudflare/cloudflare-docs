@@ -1,27 +1,26 @@
 ---
 pcx_content_type: configuration
-title: TCP Sockets
-weight: 4
+title: TCP sockets
 ---
 
-# TCP Sockets
+# TCP sockets
 
-The Workers runtime provides the `connect()` API for creating a outbound [TCP connections](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) from Workers.
+The Workers runtime provides the `connect()` API for creating outbound [TCP connections](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) from Workers.
 
-Many application-layer protocols are built on top of TCP, and require an underlying TCP socket API in order to work, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB and more.
+Many application-layer protocols are built on top of the Transmission Control Protocol (TCP). These application-layer protocols, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB, require an underlying TCP socket API in order to work.
 
 ## `connect()`
 
-The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data, allowing you to read and write data on an ongoing basis, as long as the connection remains open.
+The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data. This allows you to read and write data on an ongoing basis, as long as the connection remains open.
 
-`connect()` is provided as a [Runtime API](/workers/runtime-apis/), and is accessed by importing the `connect` function from `cloudflare:sockets`, akin to how one imports built-in modules in Node.js. A simple example of creating a TCP socket, writing to it, and returning the readable side of the socket as a response, is shown below:
+`connect()` is provided as a [Runtime API](/workers/runtime-apis/), and is accessed by importing the `connect` function from `cloudflare:sockets`. This process is similar to how one imports built-in modules in Node.js. Refer to the following codeblock for an example of creating a TCP socket, writing to it, and returning the readable side of the socket as a response:
 
 ```typescript
 import { connect } from 'cloudflare:sockets';
 
 export default {
   async fetch(req: Request) {
-    const gopherAddr = "gopher.floodgap.com:70";
+    const gopherAddr = { hostname: "gopher.floodgap.com", port: 70 };
     const url = new URL(req.url);
 
     try {
@@ -51,10 +50,10 @@ export default {
 {{<definitions>}}
 
 - `hostname` {{<type>}}string{{</type>}}
-  - The hostname to connect to. Ex: `cloudflare.com`.
+  - The hostname to connect to. Example: `cloudflare.com`.
 
 - `port` {{<type>}}number{{</type>}}
-  - The port number to connect to. Ex: `5432`.
+  - The port number to connect to. Example: `5432`.
 
 {{</definitions>}}
 
@@ -64,13 +63,13 @@ export default {
 
 - `secureTransport` {{<type>}}"off" | "on" | "starttls"{{</type>}} — Defaults to `off`
   - Specifies whether or not to use [TLS](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) when creating the TCP socket.
-  - `off` — do not use TLS.
-  - `on` — use TLS.
-  - `starttls` — do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#how-to-implement-the-starttls-pattern).
+  - `off` — Do not use TLS.
+  - `on` — Use TLS.
+  - `starttls` — Do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#how-to-implement-the-starttls-pattern).
 
 - `allowHalfOpen` {{<type>}}boolean{{</type>}} — Defaults to `false`
-  - Defines whether the writable side of the TCP socket will automatically close on EOF. When set to `false`, the writable side of the TCP socket will automatically close on EOF. When set to `true`, the writable side of the TCP socket will remain open on EOF.
-  - This option is similar to that offered by the Node.js [`net` module](https://nodejs.org/api/net.html) and allows interoperability with code which utilises it.
+  - Defines whether the writable side of the TCP socket will automatically close on end-of-file (EOF). When set to `false`, the writable side of the TCP socket will automatically close on EOF. When set to `true`, the writable side of the TCP socket will remain open on EOF.
+  - This option is similar to that offered by the Node.js [`net` module](https://nodejs.org/api/net.html) and allows interoperability with code which utilizes it.
 
 {{</definitions>}}
 
@@ -97,7 +96,7 @@ export default {
 
 ## Opportunistic TLS (StartTLS)
 
-Many TCP-based systems, including databases and email servers, require that clients use opportunistic TLS (otherwise known as [StartTLS](https://en.wikipedia.org/wiki/Opportunistic_TLS)) when connecting. In this pattern, the client first creates an insecure TCP socket, without TLS, and then "upgrades" it to a secure TCP socket, that uses TLS. The `connect()` API simplifies this by providing a method, `startTls()`, which returns a new `Socket` instance that uses TLS:
+Many TCP-based systems, including databases and email servers, require that clients use opportunistic TLS (otherwise known as [StartTLS](https://en.wikipedia.org/wiki/Opportunistic_TLS)) when connecting. In this pattern, the client first creates an insecure TCP socket, without TLS, and then upgrades it to a secure TCP socket, that uses TLS. The `connect()` API simplifies this by providing a method, `startTls()`, which returns a new `Socket` instance that uses TLS:
 
 ```typescript
 import { connect } from "cloudflare:sockets"
@@ -111,16 +110,16 @@ const secureSocket = socket.startTls();
 ```
 
 - `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
-- Once `startTls()` is called, the initial socket is closed and can no longer be read from or written to. In the example above, anytime after `startTls()` is called, you would use the newly created `secureSocket`. Any existing readers and writers based off the original socket will no longer work — you must create new readers and writers from the newly created `secureSocket`.
+- Once `startTls()` is called, the initial socket is closed and can no longer be read from or written to. In the example above, anytime after `startTls()` is called, you would use the newly created `secureSocket`. Any existing readers and writers based off the original socket will no longer work. You must create new readers and writers from the newly created `secureSocket`.
 - `startTls()` should only be called once on an existing socket.
 
-## Error handling
+## Handle errors
 
-To handle errors when creating a new TCP socket, reading from a socket, or writing to a socket, wrap these calls inside `try..catch` blocks. This example opens a connection to Google.com, initiates a HTTP request, and returns the response. If any of this fails and throws an exception, it returns a 500:
+To handle errors when creating a new TCP socket, reading from a socket, or writing to a socket, wrap these calls inside `try..catch` blocks. The following example opens a connection to Google.com, initiates a HTTP request, and returns the response. If any of this fails and throws an exception, it returns a `500` response:
 
 ```typescript
 import { connect } from 'cloudflare:sockets';
-const connectionUrl = "google.com:80";
+const connectionUrl = { hostname: "google.com", port: 80 };
 export interface Env { }
 export default {
   async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -139,14 +138,14 @@ export default {
 };
 ```
 
-## Closing TCP connections
+## Close TCP connections
 
 You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writeable sides of the socket.
 
 ```typescript
 import { connect } from "cloudflare:sockets"
 
-const socket = connect("my-url.com:70");
+const socket = connect({ hostname: "my-url.com", port: 70 });
 const reader = socket.readable.getReader();
 socket.close();
 
@@ -156,7 +155,7 @@ const reader = socket.readable.getReader(); // This fails
 
 ## Considerations
 
-- When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, in order to use `connect()`.
+- When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, to use `connect()`.
 - TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
-- By default, Workers cannot create outbound TCP connections on port 25 to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
+- By default, Workers cannot create outbound TCP connections on port `25` to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
