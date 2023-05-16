@@ -11,7 +11,7 @@ rss: file
 
 ### Multiple audio tracks now generally available
 
-Stream supports adding multiple audio tracks to an existing video upload.
+Stream supports adding multiple audio tracks to an existing video.
 
 For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/) to get started.
 
