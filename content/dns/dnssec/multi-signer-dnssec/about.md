@@ -23,10 +23,10 @@ In order to avoid issues in that case, when you set up multi-signer DNSSEC, you 
 
 When these configurations are adjusted in a way that (a) all involved providers have each other's public Zone Signing Keys (ZSK), and that (b) Delegation Signer (DS) records reference the necessary Key Signing Keys (KSK), then live-signing of zones by multiple providers is no longer a problem.
 
-## Model 1
+### Model 1
 
-Whereas in both models all providers have each other's Zone Signing Keys (ZSK) added to their DNSKEY record set, in model 1, only one Key Signing Key (KSK) is used to sign such DNSKEY record sets. Management of this KSK and its reference by the DS record (i.e. the Secure Entry Point) is the responsibility of the zone owner or only one provider (designated by the zone owner) to hold the KSK.
+Whereas in both models all providers have each other's Zone Signing Keys (ZSK) added to their DNSKEY record set, in model 1, only one Key Signing Key (KSK) is used to sign such DNSKEY record sets. Management of this KSK and its reference by the DS record (i.e. the Secure Entry Point) is the responsibility of the zone owner or only one provider (designated by the zone owner).
 
-## Model 2
+### Model 2
 
 In model 2, on the other hand, each provider uses its own KSK to sign its own DNSKEY record set, and these KSKs are then referenced by the DS record (Secure Entry Point).

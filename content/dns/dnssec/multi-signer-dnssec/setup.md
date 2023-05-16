@@ -14,9 +14,9 @@ Note that this process requires that your other DNS provider(s) also support mul
 
 Although a few steps can also be completed via the user interface, currently the whole process can only be completed using the API.
 
-## Step 1 - Configure Cloudflare
+## Step 1 - Set up Cloudflare zone
 
-1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status/) to enable multi-signer DNSSEC. This is done by specifying a value for `dnssec_multi_model`, as in the following example.
+1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable multi-signer DNSSEC. This is done by specifying a value for `dnssec_multi_model`, as in the following example.
 
 ```bash
 $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \ 
@@ -71,7 +71,7 @@ curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/dnsse
    }'
 ```
 
-5. Enable the usage of the nameservers you added in the previous step by using the following API request.
+5. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
 
 ```bash
 $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings/use_apex_ns' \
@@ -83,7 +83,7 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
     "value": true
   }'
 ```
-## Step 2 - Configure external provider
+## Step 2 - Set up external provider
 
 1. Get Cloudfare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
 
@@ -98,10 +98,10 @@ Command line query example:
 ```
 $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
-2. Add Cloudflare's ZSK to your external provider(s).
+2. Add Cloudflare's ZSK that you fetched in the previous step to your external provider(s).
 3. Add Cloudflare's nameservers to your external provider(s).
 
-## Step 3 - Configure your registrar
+## Step 3 - Set up registrar
 
-1. Add DS records to your registrar, one for each provider.
+1. Add DS records to your registrar, one for each provider. You can see your Cloudflare DS record on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns) by going to **DNS** > **Settings** > **DS Record**.
 2. Update the nameserver settings at your registrar to include the nameservers of all providers you will be using for your multi-signer DNSSEC setup.
