@@ -41,4 +41,4 @@ ___
 
 -   [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/)
 -   [Understanding Cloudflare Under Attack Mode](https://support.cloudflare.com/hc/articles/200170076)
--   [Responding to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/)
+-   [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/)

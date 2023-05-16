@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Troubleshooting Attacks
+title: Troubleshooting attacks
 weight: 4
 ---
 
-# Troubleshooting Attacks
+# Troubleshooting attacks
 
 {{<directory-listing>}}
