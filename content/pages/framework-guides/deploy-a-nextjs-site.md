@@ -36,7 +36,7 @@ $ cd my-app
 The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (e.g. API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
 
 ```js
-export const runtime = "edge";
+export const runtime = 'edge';
 ```
 
 As an example, an [Edge Route Handler](https://nextjs.org/docs/app/building-your-application/routing/router-handlers#edge-and-nodejs-runtimes) might look like this:
@@ -111,7 +111,7 @@ Deploy your site to Pages:
    | Configuration option | Value                              |
    | -------------------- | ---------------------------------- |
    | Production branch    | `main`                             |
-   | Build command        | `npx @cloudflare/next-on-pages@v1` |
+   | Build command        | `npx @cloudflare/next-on-pages@1` |
    | Build directory      | `.vercel/output/static`            |
 
    {{</table-wrap>}}
