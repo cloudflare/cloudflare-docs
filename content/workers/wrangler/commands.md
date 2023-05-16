@@ -1489,7 +1489,7 @@ $ wrangler pages publish [DIRECTORY] [OPTIONS]
 
 {{<Aside type="note">}}
 
-This command has been deprecated as of v3 in favor of `wrangler pages deploy`. It will be removed in v4.
+This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](#deploy-1). It will be removed in v4.
 
 {{</Aside>}}
 
