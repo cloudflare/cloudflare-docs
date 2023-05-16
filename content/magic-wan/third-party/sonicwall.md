@@ -21,7 +21,7 @@ You can connect your SonicWall appliance through [IPsec tunnels](/magic-wan/get-
 
 ## ​​IPsec connection
 
-The following instructions show how to setup an IPsec connection on your SonicWall device. Settings not explicitly mentioned can be left with their default values.
+The following instructions show how to setup an IPsec connection on your SonicWall device. We will use the IP ranges from the topology image to create the several connections needed. Settings not explicitly mentioned can be left with their default values.
 
 ### 1. Create an IPsec tunnel on your Cloudflare account
 
@@ -61,10 +61,3 @@ Static routes are required for any networks that will be reached via the IPsec t
     - **Second tunnel**: Following our example, add `172.31.3.0/24` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
 
 2. Select **Add routes** when you are finished.
-
-    <div class="large-img">
-
-    ![An example of what your static routes should look like](/images/magic-wan/third-party/sonicwall/static-route1.png)
-    ![An example of what your static routes should look like](/images/magic-wan/third-party/sonicwall/static-route2.png)
-
-    </div>
