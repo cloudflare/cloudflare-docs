@@ -14,12 +14,6 @@ Using Waiting Room Analytics, you can:
 - Determine how long users spent in the waiting room.
 - Use analytics to help calibrate your waiting room settings.
 
-{{<Aside type="note">}}
-
-Waiting Room Analytics in the Waiting Room dashboard will be rolled out gradually and available to all Business and Enterprise plans by the end of May, 2023. Waiting Room Analytics via GraphQL is available now to all Business and Enterprise plans.
-
-{{</Aside>}}
-
 ## ​Dashboard Analytics
 
 To access your waiting room’s analytics in the dashboard:

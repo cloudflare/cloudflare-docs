@@ -8,6 +8,15 @@ rss: file
 
 # Changelog
 
+## 2023-05-12
+
+- The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security reasons](/workers/learning/security-model/) time only advances after I/O.
+
+## 2023-05-05
+
+- The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
+- Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+
 ## 2023-04-28
 
 - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
@@ -90,6 +99,10 @@ rss: file
 - Fixed the TypeScript type of `DurableObjectState.id` in [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) to always be a `DurableObjectId`.
 - Validation errors during Worker upload for module scripts now include correct line and column numbers.
 - Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
+
+## 2022-07-08
+
+- Workers Usage Report and Workers Weekly Summary have been disabled due to scaling issues with the service.
 
 ## 2022-06-24
 

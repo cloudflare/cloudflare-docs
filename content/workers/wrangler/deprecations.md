@@ -10,24 +10,42 @@ Review the difference between Wrangler versions, specifically deprecations and b
 
 ## Wrangler v2
 
-Wrangler v2 introduces some new fields for configuration, while also deprecating some redundant fields.
+Wrangler v2 introduces new fields for configuration and new features for developing and deploying a Worker, while deprecating some redundant fields.
+
+- `wrangler.toml` is no longer mandatory.
+- `dev` and `publish` accept CLI arguments.
+- `tail` can be run on arbitrary Worker names.
+- `init` creates a project boilerplate.
+- JSON bindings for `vars`.
+- Local mode for `wrangler dev`.
+- Module system (for both modules and service worker format Workers).
+- Devtools.
+- Typescript support.
+- Sharing development environment on the Internet.
+- Wider platform compatibility.
+- Developer hotkeys.
+- Better configuration validation.
+
+The following video describes some of the major changes in Wrangler v2, and shows you how Wrangler v2 can help speed up your workflow.
+
+<div style="position: relative; padding-top: 56.25%;"><iframe src="https://iframe.videodelivery.net/6ce3c7bd51288e1e8439f50ad63eda1d?poster=https%3A%2F%2Fcloudflarestream.com%2F6ce3c7bd51288e1e8439f50ad63eda1d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
 
 ### Common deprecations
 
-Here are common fields that are no longer required.
+Refer to the following list for common fields that are no longer required.
 
 - `type` is no longer required. Wrangler will infer the correct project type automatically.
 - `zone_id` is no longer required. It can be deduced from the routes directly.
 - `build.upload.format` is no longer used. The format is now inferred automatically from the code.
 - `build.upload.main` and `build.upload.dir` are no longer required. Use the top level `main` field, which now serves as the entry-point for the Worker.
 - `site.entry-point` is no longer required. The entry point should be specified through the `main` field.
-- `webpack_config` and `webpack` properties are no longer supported. Refer to [Ejecting Webpack](/workers/wrangler-legacy/migration/eject-webpack/).
+- `webpack_config` and `webpack` properties are no longer supported. Refer to [Migrate webpack projects from Wrangler version 1](/workers/wrangler/migration/v1-to-v2/eject-webpack/).
   Here are the Wrangler v1 commands that are no longer supported:
 - `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
 - `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
 - `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
-- `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-- `wrangler build` - If you wish to access the output from bundling your Worker use `wrangler publish --outdir=path/to/output`.
+- `wrangler report` - If you find a bug, report it at [Wrangler issues](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+- `wrangler build` - If you wish to access the output from bundling your Worker, use `wrangler publish --outdir=path/to/output`.
 
 #### New fields
 
@@ -99,7 +117,7 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 - **`type`**: `rust` | `javascript` | `webpack`, deprecated
 
-  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [webpack migration guide](/workers/wrangler-legacy/migration/eject-webpack/) to modify your project and use a custom build instead.
+  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [webpack migration guide](/workers/wrangler/migration/v1-to-v2/eject-webpack/) to modify your project and use a custom build instead.
 
 ### Deprecated commands
 
@@ -165,3 +183,44 @@ Routes are specified in the `wrangler.toml` configuration file.
   - import SomeDependency from "some-dependency.js";
   + import SomeDependency from "./some-dependency.js";
   ```
+
+### Wrangler v1 and v2 comparison tables
+
+#### Commands
+
+| Command     | v1   | v2   | Notes                                          |
+| ----------- | ---  | --- | ---------------------------------------------- |
+| `publish`   | ✅   | ✅  |
+| `dev`       | ✅   | ✅  |
+| `preview`   | ✅   | ❌  | Removed, use `dev` instead.                    |
+| `init`      | ✅   | ✅  |
+| `generate`  | ✅   | ❌  | Removed, use `git clone` instead.              |
+| `build`     | ✅   | ❌  | Removed, invoke your own build script instead. |
+| `secret`    | ✅   | ✅  |
+| `route`     | ✅   | ❌  | Removed, use `publish` instead.                |
+| `tail`      | ✅   | ✅  |
+| `kv`        | ✅   | ✅  |
+| `r2`        | 🚧   | ✅  | Introduced in Wrangler v1.19.8.                 |
+| `pages`     | ❌   | ✅  |
+| `config`    | ✅   | ❓  |
+| `login`     | ✅   | ✅  |
+| `logout`    | ✅   | ✅  |
+| `whoami`    | ✅   | ✅  |
+| `subdomain` | ✅   | ❓  |
+| `report`    | ✅   | ❌  | Removed, error reports are made interactively. |
+
+#### Configuration
+
+| Property              | v1   | v2   | Notes                                                                          |
+| --------------------- | --- | --- | ------------------------------------------------------------------------------ |
+| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/migration/v1-to-v2/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate.                                        |
+| `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead. |
+| `type = "javascript"` | ✅  | 🚧  | No longer required, can be omitted.                                            |
+
+#### Features
+
+| Feature    | v1   | v2   | Notes                                                                                                                                                                 |
+| ---------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TypeScript | ❌  | ✅  | You can give wrangler a TypeScript file, and it will automatically transpile it to JavaScript using [`esbuild`](https://github.com/evanw/esbuild) under-the-hood.     |
+| Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/miniflare). |
+
