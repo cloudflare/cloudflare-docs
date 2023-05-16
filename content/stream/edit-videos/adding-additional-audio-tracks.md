@@ -6,10 +6,6 @@ weight: 5
 
 # Add audio tracks to a video
 
-Adding audio tracks to your video library.
-
-## Add an audio track to a video
-
 A video must be uploaded before additional audio tracks can be attached to it. In the following example URLs, the video’s UID is referenced as `VIDEO_UID`.
 
 To add an audio track to a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
@@ -28,8 +24,6 @@ curl -X POST \
  -d '{"url": "https://www.examplestorage.com/audio_file.mp3", "label": "Example Audio Label"}' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/audio/copy
 ```
-
-### Example Response to Add Additional Audio Tracks
 
 ```json
 ---
@@ -139,8 +133,6 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/au
 
 Editing the `default` status of an audio track to `true` will mark all other audio tracks on the video `default` status to `false`.
 
-### Example response to edit the audio tracks associated with a video
-
 ```json
 ---
 header: Example response to edit the audio tracks associated with a video
@@ -172,8 +164,6 @@ Deleting a `default` audio track is not allowed.  You must assign another audio 
 
 If there is an entry in `errors` response field, the audio track has not been
 deleted.
-
-### Example response to delete an audio track
 
 ```json
 ---
