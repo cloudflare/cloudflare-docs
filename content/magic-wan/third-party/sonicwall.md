@@ -55,3 +55,65 @@ Static routes are required for any networks that will be reached via the IPsec t
     - **Second tunnel**: Following our example, add `172.31.3.0/24` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
 
 2. Select **Add routes** when you are finished.
+
+### 3. Add a VPN configuration in SonicWall
+
+1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
+2. Select **General** > **Add**.
+3. In the **Security Policy** group, add the following settings:
+    - **Authentication Method**: _IKE Using Preshared Secret_.
+    - **IPsec Primary Gateway Name or Address**: Enter Cloudflare’s Anycast IP address for the primary gateway (in blue).
+4. In the **IKE authentication** group, add the following settings:
+    - **Shared secret**: Paste the pre-shared key you use to create the IPsec tunnel in step 1 (in purple).
+    - **Local IKE ID**: Select _Domain name_ from the dropdown menu, and paste here the **FQDN ID** you saved from step 1, after creating the IPsec tunnel (in green).
+    - **Peer IKE IDE**: Select _IPv4_ Address from the dropdown menu, and enter the Cloudflare Anycast IP address (in blue).
+
+<div class="large-img">
+
+![Configure a VPN policy on your SonicWall device](/images/magic-wan/third-party/sonicwall/3-vpn-config.png)
+
+</div>
+
+5. Select **Save**.
+
+### 4. Update the VPN policy
+
+VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can set the following settings:
+
+1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
+2. Select **Proposals**.
+3. In the **IKE (Phase 1) Proposal** group, select the following settings:
+    - **Exchange**: _IKEv2 Mode_
+    - **DH Group**: _Group 14_
+    - **Encryption**: _AES-256_
+    - **Authentication**: _SHA256_
+    - **Life Time (seconds)**: `28800`
+4. In the **IPsec (Phase 2) Proposal** group, add the following settings:
+    - **Protocol**: _ESP_
+    - **Encryption**: _AESGCM16-256_
+    - **Authentication**: _None_
+    - **Enable Perfect Forward Secrecy**: Enabled
+    - **DH Group**: _Group 14_
+    - **Life Time (seconds)**: `28800`
+
+<div class="large-img">
+
+![Configure a VPN policy on your SonicWall device](/images/magic-wan/third-party/sonicwall/4-vpn-policy-proposals.png)
+
+</div>
+
+5. Select **Save**.
+
+### 5. Disable replay protection
+
+1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
+2. Select **Advanced**.
+3. Enable **Disable IPsec Anti-Replay**.
+4. In **VPN Policy bound to** select your WAN interface from the dropdown menu, to bind it to your VPN.
+5. Select **Save**.
+
+<div class="large-img">
+
+![Configure a VPN policy on your SonicWall device](/images/magic-wan/third-party/sonicwall/5-anti-replay.png)
+
+</div>
