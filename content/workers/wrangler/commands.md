@@ -1897,5 +1897,3 @@ Generate types from bindings and module rules in configuration.
 ```sh
 $ wrangler types
 ```
-
-<!--TODO Add examples of DTS generated output -->
