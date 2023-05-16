@@ -16,6 +16,7 @@ For more information about the Edge Runtime, refer to [the official Next.js docu
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Using the Edge Runtime
+
 ### 1. Select your Next.js app
 
 If you already have a Next.js project that you wish to deploy, change to its directory and proceed to the next step. Otherwise, you can use `create-next-app` to start a new one.
@@ -32,10 +33,10 @@ $ cd my-app
 
 ### 2. Configure the application to use the Edge Runtime
 
-The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (e.g. API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file. 
+The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (e.g. API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
 
 ```js
-export const runtime = 'edge';
+export const runtime = "edge";
 ```
 
 As an example, an [Edge Route Handler](https://nextjs.org/docs/app/building-your-application/routing/router-handlers#edge-and-nodejs-runtimes) might look like this:
@@ -89,7 +90,6 @@ export async function GET(request: Request) {
 
 For more examples of this and for Next.js versions prior to v13.3.1, take a look at the `@cloudflare/next-on-pages` [examples document](https://github.com/cloudflare/next-on-pages/blob/main/docs/examples.md). Additionally, ensure that your application is not using any [unsupported APIs](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis) or [features](https://github.com/cloudflare/next-on-pages/blob/main/docs/supported.md).
 
-
 {{<render file="_create-github-repository_no_init.md">}}
 
 ### 3. Deploy your application to Cloudflare Pages
@@ -108,11 +108,11 @@ Deploy your site to Pages:
 
    {{<table-wrap>}}
 
-   | Configuration option | Value                                                 |
-   | -------------------- | ----------------------------------------------------- |
-   | Production branch    | `main`                                                |
-   | Build command        | `npx @cloudflare/next-on-pages@v1`                    |
-   | Build directory      | `.vercel/output/static`                               |
+   | Configuration option | Value                              |
+   | -------------------- | ---------------------------------- |
+   | Production branch    | `main`                             |
+   | Build command        | `npx @cloudflare/next-on-pages@v1` |
+   | Build directory      | `.vercel/output/static`            |
 
    {{</table-wrap>}}
 
@@ -127,6 +127,7 @@ The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of yo
 {{</Aside>}}
 
 ## Using a Static Export
+
 ### 1. Select your Next.js app
 
 If you already have a Next.js project that you wish to deploy, ensure that it is [configured for static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports), change to its directory, and proceed to the next step. Otherwise, you can use `create-next-app` to start a new one.
@@ -153,11 +154,11 @@ Deploy your site to Pages:
 
    {{<table-wrap>}}
 
-   | Configuration option | Value            |
-   | -------------------- | ---------------- |
-   | Production branch    | `main`           |
-   | Build command        | `npm run build`  |
-   | Build directory      | `out`            |
+   | Configuration option | Value           |
+   | -------------------- | --------------- |
+   | Production branch    | `main`          |
+   | Build command        | `npm run build` |
+   | Build directory      | `out`           |
 
    {{</table-wrap>}}
 
