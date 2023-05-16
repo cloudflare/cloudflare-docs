@@ -16,7 +16,7 @@ To add an audio track to a video a [Cloudflare API Token](https://www.cloudflare
 
 The API will make a best effort to handle any mismatch between the duration of the uploaded audio file and the video duration, though we recommend uploading audio files that match the duration of the video. If the duration of the audio file is longer than the video, the additional audio track will be truncated to match the video duration. If the duration of the audio file is shorter than the video, silence will be appended at the end of the audio track to match the video duration.
 
-### Upload via a link
+## Upload via a link
 
 If you have audio files stored in a cloud storage bucket, you can simply pass a HTTP link for the file. Stream will fetch the file and make it available for streaming.
 
