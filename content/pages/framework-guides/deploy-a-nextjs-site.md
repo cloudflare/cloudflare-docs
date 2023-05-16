@@ -11,7 +11,7 @@ title: Deploy a Next.js site
 
 Cloudflare Pages supports full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/api-reference/edge-runtime) or any projects which can be [statically exported](https://nextjs.org/docs/advanced-features/static-html-export). The Edge Runtime allows applications to use server-side features such as [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), server-side rendering (SSR) pages with [`getServerSideProps()`](https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props) and [Middleware](https://nextjs.org/docs/advanced-features/middleware).
 
-For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) which explains the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
+For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/app/api-reference/edge) which explains the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
