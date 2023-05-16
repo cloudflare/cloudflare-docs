@@ -5,15 +5,16 @@ title: Databases
 
 # Databases
 
-Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use.
+Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use. For more information on ways to connect visit [connecting to databases](/workers/databases/connecting-to-databases/).
 
 ## Overview
 {{<table-wrap>}}
 
 | Database                                                                         |Native Integration |  Library or Driver      | Connection Method      |
 | ------------------------------------------------------------------------------- | ----- | --------- | --------- |
-| [Postgres](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | No |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
-| [MySQL](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | No | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
+| [Postgres](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | - |  [node-postgres](https://node-postgres.com/) | [Workers Socket API](/workers/runtime-apis/tcp-sockets) |
+| [Postgres](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | - |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
+| [MySQL](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | - | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
 | [FaunaDB](https://fauna.com/blog/getting-started-with-fauna-and-cloudflare-workers) | No |  [faunadb](https://github.com/fauna/faunadb-js)         | API via client library |
 | [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript) | [Yes](/workers/learning/integrations/databases/#planetscale) |[@planetscale/database](https://github.com/planetscale/database-js)         | API via client library |
 | [Supabase](https://github.com/supabase/examples-archive/tree/main/supabase-js-v1/with-cloudflare-workers) | [Yes](/workers/learning/integrations/databases/#supabase) | [@supabase/supabase-js](https://github.com/supabase/supabase-js)         | API via client library |
@@ -49,7 +50,13 @@ Use the secret value to authenticate with the external service. For example, if 
 For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
 
 ## Native Database Integrations (beta)
-Connect to databases using the new Database Integrations (beta) experience on the Cloudflare dashboard. Today, we have support for connecting to PlanetScale, Supabase and Neon through native integrations. 
+Connect to databases using the new Database Integrations (beta) experience on the Cloudflare dashboard. With native Database Integrations, Cloudflare automatically handles the process of creating a connection string and adding it as secrets to your Worker. Today, we have support for connecting to PlanetScale, Supabase and Neon through native integrations. 
+
+{{<Aside type="note">}}
+**Making multiple round trip calls to a centralized database from a Worker?**
+
+Your Worker may be a good fit for Smart Placement! Smart Placement speeds up applications by automatically running your Worker closer to your back-end infrastructure rather than the end user. Learn more about [how Smart Placement works](/workers/platform/smart-placement/).
+{{</Aside>}} 
 
 ### PlanetScale
 PlanetScale is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
