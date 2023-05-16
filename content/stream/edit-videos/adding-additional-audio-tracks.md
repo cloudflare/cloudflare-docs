@@ -98,6 +98,9 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/au
 ### Example response to get the audio tracks associated with a video
 
 ```json
+---
+header: Example response to get the audio tracks associated with a video
+---
 {
   "result": {
     "audio": [
