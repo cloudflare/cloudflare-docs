@@ -36,4 +36,6 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
 
 ## Related resources
 
-* [How to prepare and respond to DDoS attacks](https://support.cloudflare.com/hc/sections/360007347692)
+* [Prevent DDoS attacks](/learning-paths/prevent-ddos-attacks/) (learning path)
+* [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/)
+* [Using Cloudflare Logs to investigate DDoS traffic (Enterprise Only)](/support/troubleshooting/website-under-attack/using-cloudflare-logs-els-to-investigate-ddos-traffic-enterprise-only/)
