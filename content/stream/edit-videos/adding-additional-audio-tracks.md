@@ -52,7 +52,7 @@ The `status` field will change to `ready` after the audio track is successfully 
 
 Make an HTTP request and include the audio file as an input with the name set to `file`.
 
-Audio file uploads cannot exceed 200 MB in size. If your audio file is larger, please compress the file prior to upload. 
+Audio file uploads cannot exceed 200 MB in size. If your audio file is larger, compress the file prior to upload. 
 
 The form input `label` is required and must uniquely identify the track amongst other audio track labels for the specified video.
 
