@@ -13,6 +13,10 @@ rss: file
 - You can now connect directly databases from Workers, starting with [PostgreSQL](/workers/databases/connect-to-postgres/).
 - Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from your Worker directly.
 
+## 2023-05-10
+
+- The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security reasons](/workers/learning/security-model/) time only advances after I/O.
+
 ## 2023-04-28
 
 - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
@@ -95,6 +99,10 @@ rss: file
 - Fixed the TypeScript type of `DurableObjectState.id` in [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) to always be a `DurableObjectId`.
 - Validation errors during Worker upload for module scripts now include correct line and column numbers.
 - Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
+
+## 2022-07-08
+
+- Workers Usage Report and Workers Weekly Summary have been disabled due to scaling issues with the service.
 
 ## 2022-06-24
 

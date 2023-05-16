@@ -55,6 +55,11 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/managed_headers" \
         "has_conflict": false
       },
       {
+        "id": "add_client_certificate_headers",
+        "enabled": false,
+        "has_conflict": false
+      },
+      {
         "id": "add_visitor_location_headers",
         "enabled": false,
         "has_conflict": false
@@ -142,6 +147,11 @@ The response will include all the available Managed Transforms and their new sta
     "managed_request_headers": [
       {
         "id": "add_bot_protection_headers",
+        "enabled": false,
+        "has_conflict": false
+      },
+      {
+        "id": "add_client_certificate_headers",
         "enabled": false,
         "has_conflict": false
       },

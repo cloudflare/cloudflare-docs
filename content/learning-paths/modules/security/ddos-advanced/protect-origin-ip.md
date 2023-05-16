@@ -21,6 +21,12 @@ Unproxied DNS records - also known as **DNS-only** records - can sometimes conta
 
 Review these records to make sure they do not contain origin IP information or use [Cloudflare Spectrum](/spectrum/) to proxy these records.
 
+## Conceal unproxied DNS records
+
+If you need to have **DNS-only** records that contain origin IP information, use non-standard names for these records. This action makes dictionary scans of your DNS less likely to expose your origin IP address.
+
+For example, instead of `ftp.example.com`, you could use `827450184590183489.example.com` or `cloudflare-docs-are-great.example.com`.
+
 ## Evaluate mail infrastructure
 
 {{<render file="_email-record-origin-ip.md">}}

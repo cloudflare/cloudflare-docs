@@ -597,15 +597,6 @@ The Cloudflare Rules language supports these dynamic fields:
       <code>"2688201DBA77402EA87118876F2E1B24CF8B0395"</code>
       </p></td>
     </tr>
-    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha1">
-      <td><code>cf.tls_client_auth.cert_fingerprint_sha1</code><br />{{<type>}}String{{</type>}}</td>
-      <td>
-      <p>The SHA-1 fingerprint of the certificate in the request.
-      </p>
-      <p>Example:<br/>
-      <code>"933ad5282c560ae3f482a43ecd73bc9de878a190"</code>
-      </p></td>
-    </tr>
     <tr id="field-cf-tls_client_auth-cert_fingerprint_sha256">
       <td><code>cf.tls_client_auth.cert_fingerprint_sha256</code><br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -613,6 +604,15 @@ The Cloudflare Rules language supports these dynamic fields:
       </p>
       <p>Example:<br/>
       <code>"af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha1">
+      <td><code>cf.tls_client_auth.cert_fingerprint_sha1</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The SHA-1 fingerprint of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"933ad5282c560ae3f482a43ecd73bc9de878a190"</code>
       </p></td>
     </tr>
     <tr id="field-cf-tls_client_auth-cert_not_before">

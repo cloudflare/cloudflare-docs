@@ -37,9 +37,9 @@ Include or exclude query strings, optimize cache keys, or enable tiered cache to
 
 Control resources a client is allowed to load and set access permissions to allow different origins to access your origin’s resources. Protect your site from web cache deception attacks while still caching static assets.
 
-- [Avoid web cache poisoning attacks](/cache/best-practices/avoid-web-poisoning/)
-- [Configure Cross-Origin Resource Sharing (CORS)](/cache/about/cors/)
-- [Enable Cache Deception Armor](/cache/about/cache-deception-armor/)
+- [Avoid web cache poisoning attacks](/cache/cache-security/avoid-web-poisoning/)
+- [Configure Cross-Origin Resource Sharing (CORS)](/cache/cache-security/cors/)
+- [Enable Cache Deception Armor](/cache/cache-security/cache-deception-armor/#enable-cache-deception-armor)
 
 ## Cloudflare features that can alter your HTML and cacheable objects
 
