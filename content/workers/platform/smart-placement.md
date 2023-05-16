@@ -5,14 +5,14 @@ title: Smart Placement (beta)
 
 {{<beta>}}Smart Placement{{</beta>}}
 
-By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications. 
+By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your backend infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications. 
 
 You may benefit from Smart Placement if you are making multiple round trips to a centralized database, API or origin server in a Worker. 
 
 
 ## Background
 
-The following example demonstrates how moving your Worker close to your back-end services could decrease application latency:
+The following example demonstrates how moving your Worker close to your backend services could decrease application latency:
 
 You have a user in Sydney, Australia who is accessing an application running on Workers. This application makes multiple round trips to a database located in Frankfurt, Germany in order to serve the user’s request. 
 
@@ -24,15 +24,15 @@ The issue is the time that it takes the Worker to perform multiple round trips t
 
 ## Understand how Smart Placement (beta) works
 
-Smart Placement is enabled on a per-Worker basis. Once enabled, fetch requests (also known as subrequests) from your Worker are analyzed regularly. The Smart Placement algorithm determines the optimal placement to minimize the round-trip time (RTT) between the Worker and the back-end service the Worker is communicating with. 
+Smart Placement is enabled on a per-Worker basis. Once enabled, fetch requests (also known as subrequests) from your Worker are analyzed regularly. The Smart Placement algorithm determines the optimal placement to minimize the round-trip time (RTT) between the Worker and the backend service the Worker is communicating with. 
 
-Smart Placement is only active for Workers that **make multiple roundtrips (two or more roundtrips)** to back-end infrastructure. If your Worker only does a single subrequest to your back-end infrastructure, Smart Placement will run the Worker at the data center closest to the user.  
+Smart Placement is only active for Workers that **make multiple roundtrips (two or more roundtrips)** to backend infrastructure. If your Worker only does a single subrequest to your backend infrastructure, Smart Placement will run the Worker at the data center closest to the user.  
 
 Smart Placement is a best-effort attempt. Smart Placement will not take action unless it is more performant than the default (which is running the Worker at the data center closest to the user).
 
-### Supported back-end services
+### Supported backend services
 
-There are some back-end services that are not considered by the Smart Placement algorithm:
+There are some backend services that are not considered by the Smart Placement algorithm:
 
 - **Globally distributed services**: If the services that your Worker communicates with are geo-distributed in many regions (for example, CDNs, distributed databases, distributed APIs), Smart Placement is not a good fit. We automatically rule these out of the Smart Placement optimization. 
     - Examples: Google APIs, services using Fastly or Akamai's CDN.
@@ -74,13 +74,45 @@ To enable Smart Placement via the dashboard:
 6. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect.
 7. View your Worker's [request duration analytics](/workers/learning/metrics-and-analytics)
 
+## Observability
+
+### Placement Status
+Worker's script metadata contains details about a script's placement status. This can be queried through the following Workers API endpoint:
+
+```bash
+$ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/workers/services/{WORKER_NAME} \
+-H "Authorization: Bearer <TOKEN>" \ 
+-H "Content-Type: application/json" | jq .
+```
+The different states include:
+- `INSUFFICIENT_INVOCATIONS`: Not enough requests for Smart Placement to make a placement decision.
+- `NO_VALID_HOSTS`: The Worker does not send subrequests to [backends supported by Smart Placement](/workers/platform/smart-placement/#supported-backend-services).
+- `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid backends.
+
+### Request Duration Analytics
+Once Smart Placement is enabled, data about request duration gets collected. Request duration is measured at the data center closest to the end user. 
+
+By default 1% of requests are not routed with Smart Placement, serving as a baseline to compare to. 
+
+### `cf-placement` header
+Once Smart Placement is enabled, Cloudflare adds a `cf-placement` header to all requests. This can be used to check whether a request has been routed with Smart Placement and where the Worker is processing request (nearest airport code).
+
+For example, `cf-placement: remote-LHR` indicates that the request was routed using Smart Placement to a Cloudflare data center near London while `cf-placement: local-EWR` indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received.
+
+{{<Aside type="warning" header="Beta use only">}}
+
+We may remove the `cf-placement` before Smart Placement enters general availability.
+
+{{</Aside>}}
+
+
 ## Best practices
 
 If you are building full-stack applications on Workers, we reccomend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/platform/smart-placement) to connect your front-end logic and back-end logic Workers. 
 
 ![Smart Placement and Service Bindings](../media/smart-placement-service-bindings.png)
 
-Enabling Smart Placement on your back-end Worker will invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintatins fast, reactive front-ends while also improving latency when the back-end Worker is called.  
+Enabling Smart Placement on your backend Worker will invoke it close to your backend service, while the front-end Worker serves requests close to the user. This architecture maintatins fast, reactive front-ends while also improving latency when the backend Worker is called.  
 
 ## Give feedback on Smart Placement
 
