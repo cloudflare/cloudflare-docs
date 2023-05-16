@@ -5,9 +5,10 @@ title: Databases
 
 # Databases
 
-Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use. For more information on ways to connect visit [connecting to databases](/workers/databases/connecting-to-databases/).
+Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use. For more information on ways to connect, refer to [Connecting to databases](/workers/databases/connecting-to-databases/).
 
 ## Overview
+
 {{<table-wrap>}}
 
 | Database                                                                         |Native Integration |  Library or Driver      | Connection Method      |
@@ -50,20 +51,22 @@ Use the secret value to authenticate with the external service. For example, if 
 For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
 
 ## Native Database Integrations (beta)
-Connect to databases using the new Database Integrations (beta) experience on the Cloudflare dashboard. With native Database Integrations, Cloudflare automatically handles the process of creating a connection string and adding it as secrets to your Worker. Today, we have support for connecting to PlanetScale, Supabase and Neon through native integrations. 
 
-{{<Aside type="note">}}
-**Making multiple round trip calls to a centralized database from a Worker?**
+Connect to databases using the new Database Integrations (beta) experience. Enable native Database Integrations in the [Cloudflare dashboard](https://dash.cloudflare.com). With native Database Integrations, Cloudflare automatically handles the process of creating a connection string and adding it as secrets to your Worker. Today, we have support for connecting to PlanetScale, Supabase and Neon through native integrations. 
 
-Your Worker may be a good fit for Smart Placement! Smart Placement speeds up applications by automatically running your Worker closer to your back-end infrastructure rather than the end user. Learn more about [how Smart Placement works](/workers/platform/smart-placement/).
+{{<Aside type="note" header="Making multiple round trip calls to a centralized database from a Worker?">}}
+
+If your Worker is making multiple round trip calls to a centralized database, your Worker may be a good fit for Smart Placement. Smart Placement speeds up applications by automatically running your Worker closer to your back-end infrastructure rather than the end user. Learn more about [how Smart Placement works](/workers/platform/smart-placement/).
 {{</Aside>}} 
 
 ### PlanetScale
-PlanetScale is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
 
-1. In order to set up an integration with PlanetScale, you first need to have an existing database to connect to. [Create a PlanetScale database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database) or [import an existing database](https://planetscale.com/docs/imports/database-imports#overview).
+[PlanetScale](https://planetscale.com/) is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
 
-2. To follow along with this example, create a `products` table with the following query.
+1. To set up an integration with PlanetScale, you need to have an existing PlanetScale database to connect to. [Create a PlanetScale database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database) or [import an existing database to PlanetScale](https://planetscale.com/docs/imports/database-imports#overview).
+
+2. In your PlanetScale database, create a `products` table with the following query:
+
 ```sql
 CREATE TABLE products (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -74,7 +77,9 @@ CREATE TABLE products (
 );
 
 ```
-3. Now that you have created your table, insert some data. Run the following command to add a product and category to your table:
+
+3. Insert some data in your newly created table. Run the following command to add a product and category to your table:
+
 ```sql
 INSERT INTO products (name, image_url, category_id)
 VALUES  ('Ballpoint pen', 'https://example.com/500x500', '1');
@@ -82,17 +87,18 @@ VALUES  ('Ballpoint pen', 'https://example.com/500x500', '1');
 
 4. Add the PlanetScale integration to your Worker
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers & Pages**.
+    - In **Account Home**, select **Workers**.
     - Select your Worker.
     - Select **Settings** > **Integrations** > **PlanetScale**. 
     - Follow the setup flow, selecting the database created in step 1.
 
-5. In your Workers code, install the `@planetscale/database`  driver to connect to your database and start manipulating data.
+5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
+
 ```
 npm install @planetscale/database
 ```
 
-6. This example shows how to make a query to your PlanetScale database in Workers. The credentials needed to connect to PlanetScale have been automatically added as secrets to your Worker through the integration. 
+6. The following example shows how to make a query to your PlanetScale database in a Worker. The credentials needed to connect to PlanetScale have been automatically added as secrets to your Worker through the integration. 
 
 ```js
 import { connect } from '@planetscale/database';
@@ -117,17 +123,17 @@ export default {
 };
 ```
 
-To learn more about PlanetScale, please refer to Planetscale's [official documentation](https://docs.planetscale.com/).
+To learn more about PlanetScale, refer to [Planetscale's official documentation](https://docs.planetscale.com/).
 
 ### Supabase
-Supabase is the open source Firebase alternative. Full Postgres database, Authentication, Storage, Realtime, and more.
 
+[Supabase](https://supabase.com/) is an open source Firebase alternative and a PostgreSQL database service that offers real-time functionality, database backups, and extensions. With Supabase, developers can quickly set up a PostgreSQL database and build applications.
 
-1. In order to set up an integration with Supabase, you first need to have an existing database to connect to. [Create a Supabase database](https://supabase.com/docs/guides/database/tables#creating-tables) or [load data from an existing database](https://supabase.com/docs/guides/database/tables#loading-data).
+1. To set up an integration with Supabase, you to have an existing Supabase database to connect to. [Create a Supabase database](https://supabase.com/docs/guides/database/tables#creating-tables) or [have an existing database to connect to Supabase and load data from](https://supabase.com/docs/guides/database/tables#loading-data).
 
-2. To follow along with this example, create a `countries` table with the following query. To create a table in your Supabase dashboard, you have two options:
-    - You can use the table editor, which allows you to set up Postgres similar to a spreadsheet. 
-    - Alternatively, you can use the SQL editor:
+2. In your Supabase database, create a `countries` table with the following query. You can create a table in your Supabase dashboard in two ways:
+    - Use the table editor, which allows you to set up Postgres similar to a spreadsheet. 
+    - Alternatively, use the SQL editor:
 ```sql
  CREATE TABLE countries (
  id SERIAL PRIMARY KEY,
@@ -135,7 +141,7 @@ Supabase is the open source Firebase alternative. Full Postgres database, Authen
  );
  ```
 
- 3. Now that you have created your table, insert some data. Run the following commands to add countries to your table:
+ 3. Insert some data in your newly created table. Run the following commands to add countries to your table:
 ```sql
  INSERT INTO countries (name) VALUES ('United States');
  INSERT INTO countries (name) VALUES ('Canada');
@@ -144,17 +150,19 @@ Supabase is the open source Firebase alternative. Full Postgres database, Authen
 
 4. Add the Supabase database integration to your Worker
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers & Pages**.
+    - In **Account Home**, select **Workers**.
     - Select your Worker.
     - Select **Settings** > **Integrations** > **Supabase**. 
     - Follow the setup flow, selecting the database created in step 1.
 
-5. In your Workers code, install the `@supabase/supabase-js`  driver to connect to your database and start manipulating data.
+5. In your Worker, install the `@supabase/supabase-js`  driver to connect to your database and start manipulating data:
+
 ```
 npm install @supabase/supabase-js
 ```
 
-6. This example shows how to make a query to your Supabase database in Workers. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.
+6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.
+
 ```sql 
 import { createClient } from '@supabase/supabase-js';
 
@@ -172,14 +180,16 @@ export default {
 };
 ```
 
-To learn more about Supabase, please refer to Supabase's [official documentation](https://supabase.com/docs).
+To learn more about Supabase, refer to [Supabase's official documentation](https://supabase.com/docs).
 
 ### Neon
-Neon is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features such as serverless, branching, and bottomless storage.
 
-1. In order to set up an integration with Neon, you first need to have an existing database to connect to. [Create a Neon database](https://neon.tech/docs/tutorial/project-setup#create-a-table) or [load data from an existing database](https://neon.tech/docs/import/import-from-postgres).
+[Neon](https://neon.tech/) is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features, such as serverless, branching, and bottomless storage.
 
-2. To follow along with this example, create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
+1. To set up an integration with Neon, you to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/tutorial/project-setup#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
+
+2. In your Neon database, create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
+
 ```sql
 CREATE TABLE elements (
   id INTEGER NOT NULL,
@@ -189,7 +199,8 @@ CREATE TABLE elements (
  );
  ```
 
- 3. Now that you have created your table, insert some data.
+ 3. Insert some data into your newly created table.
+
 ```sql
 INSERT INTO elements (id, elementName, atomicNumber, symbol)
 VALUES
@@ -205,19 +216,21 @@ VALUES
   (10, 'Neon', 10, 'Ne');
 ```
 
-4. Add the Neon database integration to your Worker
+4. Add the Neon database integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers & Pages**.
+    - In **Account Home**, select **Workers**.
     - Select your Worker.
     - Select **Settings** > **Integrations** > **Neon**. 
     - Follow the setup flow, selecting the database created in step 1.
 
-5. In your Workers code, install the `@neondatabase/serverless`  driver to connect to your database and start manipulating data.
+5. In your Worker, install the `@neondatabase/serverless`  driver to connect to your database and start manipulating data:
+
 ```
 npm install @neondatabase/serverless
 ```
 
-6. This example shows how to make a query to your Neon database in Workers. The credentials needed to connect to Neon have been automatically added as secrets to your Worker through the integration. 
+6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been automatically added as secrets to your Worker through the integration.
+
 ```sql 
 import { Client } from '@neondatabase/serverless';
 
@@ -232,12 +245,12 @@ export default {
   }
 }
 ```
-To learn more about Neon, please refer to Neon's [official documentation](https://neon.tech/docs/introduction).
+To learn more about Neon, refer to [Neon's official documentation](https://neon.tech/docs/introduction).
 
 ### FAQs
 
 #### What happens to the Database Integration if I rotate my database credentials?
-If you rotate or delete database credentials you must delete the integration and go through the setup flow again. 
+If you rotate or delete database credentials, you must delete the integration and go through the setup flow again. 
 
 #### Can I select multiple databases per database service?
-At this time, Database Integrations only support access to one database per provider. To add multiple, you can manually configure secrets.
+At this time, Database Integrations only support access to one database per provider. To add multiple, you must manually configure secrets.
