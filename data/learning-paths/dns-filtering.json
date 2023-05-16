@@ -14,15 +14,7 @@
         },
         {
             "folder": "security",
-            "uid": "dns-filtering-connect-locations"
-        },
-        {
-            "folder": "security",
             "uid": "dns-filtering-connect-devices"
-        },
-        {
-            "folder": "security",
-            "uid": "dns-filtering-test-policy"
         },
         {
             "folder": "security",

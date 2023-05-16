@@ -52,7 +52,7 @@ Each DNS location is assigned a unique hostname for DNS over TLS (DoT). Gateway 
 
 ## DNS over HTTPS
 
-Each DNS ocation is assigned a unique hostname for DNS over HTTPS (DoH). Gateway will identify your location based on its DoH hostname.
+Each DNS location is assigned a unique hostname for DNS over HTTPS (DoH). Gateway will identify your location based on its DoH hostname.
 
 ### DoH subdomain
 

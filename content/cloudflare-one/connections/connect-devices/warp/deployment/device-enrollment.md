@@ -10,11 +10,7 @@ Device enrollment permissions determine which users can connect new devices to y
 
 ## Set device enrollment permissions
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
-2. In the **Device enrollment** card, select **Manage**.
-3. In the **Rules** tab, configure one or more [Access policies](/cloudflare-one/policies/access/) to define who can join their device.
-4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with.
-5. Select **Save**.
+{{<render file="_device-enrollment.md">}}
 
 Users can now [enroll their device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) by logging in to your identity provider. To prevent users from logging out of your organization after they enroll, disable [Allow devices to leave organization](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) in your WARP client settings.
 

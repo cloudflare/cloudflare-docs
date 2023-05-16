@@ -1,6 +1,6 @@
 ---
-title: Test a policy in the browser
+title: Verify device connectivity
 pcx_content_type: learning-unit
-weight: 2
+weight: 3
 layout: learning-unit
 ---
