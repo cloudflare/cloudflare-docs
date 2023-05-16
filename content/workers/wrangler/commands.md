@@ -496,7 +496,7 @@ $ wrangler publish [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-This command has been deprecated as of v3 in favor of `wrangler deploy`. It will be removed in v4.
+This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
 
 {{</Aside>}}
 
