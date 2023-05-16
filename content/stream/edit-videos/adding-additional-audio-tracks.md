@@ -69,6 +69,9 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/au
 ### Example Response to Add Additional Audio Tracks
 
 ```json
+---
+header: Example response to add Additional audio tracks
+---
 {
  "result": {
    "uid": "<AUDIO_UID>",
