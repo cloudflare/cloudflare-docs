@@ -32,6 +32,8 @@ Smart Placement is available on all plans.
 
 ### Enable Smart Placement via the dashboard
 
+To enable Smart Placement via the dashboard:
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Pages**.
 3. Select your Pages project.

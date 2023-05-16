@@ -77,31 +77,35 @@ To enable Smart Placement via the dashboard:
 ## Observability
 
 ### Placement Status
-Worker's script metadata contains details about a script's placement status. This can be queried through the following Workers API endpoint:
+
+A Worker's metadata contains details about a Worker's placement status. Query your Worker's placement status through the following Workers API endpoint:
 
 ```bash
 $ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/workers/services/{WORKER_NAME} \
 -H "Authorization: Bearer <TOKEN>" \ 
 -H "Content-Type: application/json" | jq .
 ```
-The different states include:
+
+Possible placement states include:
 - `INSUFFICIENT_INVOCATIONS`: Not enough requests for Smart Placement to make a placement decision.
-- `NO_VALID_HOSTS`: The Worker does not send subrequests to [backends supported by Smart Placement](/workers/platform/smart-placement/#supported-backend-services).
-- `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid backends.
+- `NO_VALID_HOSTS`: The Worker does not send subrequests to [back-end services supported by Smart Placement](/workers/platform/smart-placement/#supported-backend-services).
+- `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid back-end services.
 
 ### Request Duration Analytics
+
 Once Smart Placement is enabled, data about request duration gets collected. Request duration is measured at the data center closest to the end user. 
 
-By default 1% of requests are not routed with Smart Placement, serving as a baseline to compare to. 
+By default, one percent (1%) of requests are not routed with Smart Placement. These requests serve as a baseline to compare to. 
 
 ### `cf-placement` header
-Once Smart Placement is enabled, Cloudflare adds a `cf-placement` header to all requests. This can be used to check whether a request has been routed with Smart Placement and where the Worker is processing request (nearest airport code).
+
+Once Smart Placement is enabled, Cloudflare adds a `cf-placement` header to all requests. This can be used to check whether a request has been routed with Smart Placement and where the Worker is processing the request (which is shown as the nearest airport code to the data center).
 
 For example, `cf-placement: remote-LHR` indicates that the request was routed using Smart Placement to a Cloudflare data center near London while `cf-placement: local-EWR` indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received.
 
 {{<Aside type="warning" header="Beta use only">}}
 
-We may remove the `cf-placement` before Smart Placement enters general availability.
+We may remove the `cf-placement` header before Smart Placement enters general availability.
 
 {{</Aside>}}
 
