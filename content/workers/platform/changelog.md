@@ -13,9 +13,14 @@ rss: file
 - You can now connect directly to databases from Workers, starting with [PostgreSQL](/workers/databases/connect-to-postgres/).
 - Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from your Worker directly.
 
-## 2023-05-10
+## 2023-05-12
 
 - The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security reasons](/workers/learning/security-model/) time only advances after I/O.
+
+## 2023-05-05
+
+- The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
+- Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
 
 ## 2023-04-28
 
