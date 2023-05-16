@@ -72,7 +72,7 @@ Indicating `-y` will answer affirmatively to all of Wrangler's initialization qu
 
 A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
 
-To create your first D1 database, change into the directory you just created for your Workers Service:
+To create your first D1 database, change into the directory you just created for your Workers project:
 
 ```sh
 $ cd d1-tutorial
