@@ -6,7 +6,7 @@ weight: 2
 
 # Connect to PostgreSQL (beta)
 
-Cloudflare Workers supports direct connectivity to PostgreSQL instances over TCP using the [Socket API](/workers/runtime-apis/tcp-sockets), as well as via serverless drivers that enable HTTP access.
+Cloudflare Workers supports direct connectivity to PostgreSQL instances over the Transmission Control Protocol (TCP) using the [Socket API](/workers/runtime-apis/tcp-sockets), and via serverless drivers that enable HTTP access.
 
 This guide demonstrates how to use the Socket API and the `pg` JavaScript driver to connect to a PostgreSQL server from your Workers.
 
@@ -14,28 +14,28 @@ This guide demonstrates how to use the Socket API and the `pg` JavaScript driver
 
 {{<Aside type="note">}}
 
-Ensure you are using `pg` (node-postgres) version 8.11.0 or higher. Earlier versions do not support the Workers Socket API.
+Ensure you are using `pg` (node-postgres) version `8.11.0` or higher. Earlier versions do not support the Workers Socket API.
 
 {{</Aside>}}
 
 To connect to a Postgres database from a Worker:
 
 * Install the `pg` library. The [node-postgres](https://node-postgres.com/) (often referred to as `pg`) library has built-in support for the Workers [Socket API](/workers/runtime-apis/tcp-sockets) and enable [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for your project.
-* Ensure your database is reachable from public IP addresses (see [caveats](#caveats)).
+* Ensure your database is reachable from public IP addresses (refer to [Caveats](#caveats)).
 * Confirm that [SSL is configured](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-PROTECTION) on your Postgres instance for security.
 
-## Connecting
+## Connect to a Postgres database
 
-There are two primary approaches to connecting to a Postgres database:
+There are two ways to connect to a Postgres database:
 
-* Using a connection string - e.g. `postgresql://username:password@ep-aged-sound-175961.us-east-2.aws.neon.tech/neondb`
-* By setting explicit parameters (username, password, host, port and database name)
+* [Use a connection string](/workers/databases/connect-to-postgres/#using-a-connection-string) - for example, `postgresql://username:password@ep-aged-sound-175961.us-east-2.aws.neon.tech/neondb`.
+* [Set explicit parameters](/workers/databases/connect-to-postgres/#explicit-host-and-port-parameters) (username, password, host, port and database name).
 
-### Using a connection string
+### Use a connection string
 
 A connection string combines the username, password, host, port and (optional) database name as a single URL-like string.
 
-To set your connection string as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put DB_URL`](/workers/wrangler/commands/#secret) as follows:
+To set your connection string as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_URL` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_URL
@@ -54,7 +54,7 @@ const result = await client.query({
 })
 ```
 
-### Explicit host and port parameters
+### Set explicit host and port parameters
 
 You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/platform/environment-variables/) via the [dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/platform/environment-variables/#environment-variables-via-wrangler), as follows:
 
@@ -65,13 +65,13 @@ filename: wrangler.toml
 
 [vars]
 DB_USERNAME = "postgres"
-# We set our password by creating a Secret so it is not stored as plain text
+# Set your password by creating a Secret so it is not stored as plain text
 DB_HOST = "ep-aged-sound-175961.us-east-2.aws.neon.tech"
 DB_PORT = "5432"
 DB_NAME = "neondb"
 ```
 
-To set your password as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put DB_PASSWORD`](/workers/wrangler/commands/#secret) as follows:
+To set your password as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_PASSWORD
@@ -93,7 +93,7 @@ const client = new Client({
 await client.connect()
 ```
 
-### SSL Modes
+### SSL modes
 
 The Socket API currently supports the below SSL modes in PostgreSQL:
 
@@ -118,9 +118,9 @@ The below example queries a public Postgres database made available by [RNACentr
 
 To run the example:
 
-* Install the `pg` library via `npm install pg`
-* Enable [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for your project
-* Provide the connection string as a secret via `wrangler secret put DB_URL`
+* Install the `pg` library via `npm install pg`.
+* Enable [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for your Worker project.
+* Provide the connection string as a secret via [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret).
 
 ```toml
 ----
@@ -139,7 +139,7 @@ import { Client } from "pg";
 
 export interface Env {
   // This should be a valid connection string
-  // e.g. "postgres://user:password@your.postgres.database.com
+  // For example, "postgres://user:password@your.postgres.database.com
   // Use `wrangler secret put DB_URL` to configure a Secret with your connection string
   DB: string;
 }
@@ -176,14 +176,25 @@ export default {
 
 There are some caveats to be aware of during the beta release of PostgreSQL support with Workers, including:
 
-* Connection pooling & startup: each Worker invocation currently establishes a new connection to your database, which will introduce additional latency during this beta release. Since many PostgreSQL instances also have limits on the number of concurrent connections they can support, we recommend enabling connection pooling with your database provider or configuring [PgBouncer](https://www.pgbouncer.org/) in front of it. Instances may otherwise be at risk of running out of memory due to how PostgreSQL allocations memory per client connection.
-* Access control: Connectivity to your database is over the public Internet. You may need to allow access to your database from outside the private network and/or VPC network it is configured on before you can connect to it from a Worker.
-* Mutual TLS support: as documented in the [supported connection modes](#connecting), SSL modes that require support for TLS client certificates are not yet supported.
-* ORM (Object Relational Mapper) libraries that use `pg` as their underlying driver will need to be updated to support version `8.11.0` or higher to work within a Worker.
+### Connection pooling & startup
+
+Each Worker invocation currently establishes a new connection to your database, which will introduce additional latency during this beta release. Since many PostgreSQL instances also have limits on the number of concurrent connections they can support, we recommend enabling connection pooling with your database provider or configuring [PgBouncer](https://www.pgbouncer.org/) in front of it. Instances may otherwise be at risk of running out of memory due to how PostgreSQL allocations memory per client connection.
+
+### Access control
+
+Connectivity to your database is over the public Internet. You may need to allow access to your database from outside the private network and/or VPC network it is configured on before you can connect to it from a Worker.
+
+### Mutual TLS support
+
+As documented in the [supported connection modes](#connecting), SSL modes that require support for TLS client certificates are not yet supported.
+
+### ORM (Object Relational Mapper) library version requirement
+
+ORM libraries that use `pg` as their underlying driver will need to be updated to support version `8.11.0` or higher to work within a Worker.
 
 Follow the [changelog](/workers/platform/changelog/) for updates to these caveats.
 
-## Provider specific configuration
+## Provider-specific configuration
 
 {{<table-wrap>}}
 
@@ -198,6 +209,6 @@ Follow the [changelog](/workers/platform/changelog/) for updates to these caveat
 
 ## Next steps
 
-* Visit the list of [supported database integrations](/workers/learning/integrations/databases/) to understand other ways to connect to existing databases.
-* Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker
+* Refer to the list of [supported database integrations](/workers/learning/integrations/databases/) to understand other ways to connect to existing databases.
+* Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker.
 * Understand the [protocols supported by Workers](/workers/platform/protocols).
