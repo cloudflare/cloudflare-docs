@@ -262,6 +262,27 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
+   <tr id="field-ip-src-region_code">
+      <td valign="top"><code>ip.src.region_code</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the region code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">TX</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-timezone-name">
+      <td valign="top"><code>ip.src.timezone.name</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the name of the timezone associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">America/Chicago</code>
+         </p>
+         <p>This field is only available in rewrite expressions of <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
    <tr id="field-ip-geoip-asnum">
       <td valign="top"><code>ip.geoip.asnum</code><br />{{<type>}}Number{{</type>}}</td>
       <td>
