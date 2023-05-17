@@ -11,13 +11,58 @@ meta:
 Follow this tutorial to migrate an existing DNS zone to Cloudflare without having to disable DNSSEC.
 
 {{<Aside type="warning">}}
-This procedure involves cross-importing the zone signing keys (ZSKs) from one provider to the other. If you are not familiar with this, consider this article [about multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html)
+This procedure involves cross-importing the zone signing keys (ZSKs) from one provider to the other. To learn more about this, consider this article [about multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 {{</Aside>}}
+
+This is an advanced procedure and assume some familiarity with [DNS concepts](/dns/concepts/), [API operations](/fundamentals/api/), and basic setup steps. Assumed knowledge that is not detailed in this tutorial can be referenced through the linked content in each of the steps.
+
+## Requirements
+* The provider you are migrating from must allow you to add DNSKEY records and use these in responses to DNS queries.
 
 ## Step 1 - Set up Cloudflare
 
-1. Add zone to Cloudflare import DNS records, and enable DNSSEC on Cloudflare
-2. Enable multi signer DNSSEC.
+1. [Add your zone to Cloudflare](/fundamentals/get-started/setup/add-site/).
+
+    To add the zone using the API, refer to the following example. Check the [API documentation about this endpoint](/api/operations/zones-post).
+
+    ```bash
+    curl --request POST "https://api.cloudflare.com/client/v4/zones" \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <KEY>' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "account": {
+            "id": "<ACCOUNT_ID>"
+            },
+            "name": "<YOUR_DOMAIN>",
+            "type": "full"
+        }'
+    ```
+
+2. [Review the records found by the automatic scan](/dns/manage-dns-records/how-to/create-dns-records/) or [import your zone file](/dns/manage-dns-records/how-to/import-and-export/).
+
+    To import the zone file using the API, refer to the following example and use a [properly formatted file](#format-your-zone-file). Check the [API documentation about this endpoint](/api/operations/dns-records-for-a-zone-import-dns-records).
+
+    ```bash
+    curl --request POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records/import" \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <KEY>' \
+    --header 'Content-Type: multipart/form-data' \
+    --form 'file=<YOUR_BIND_FILE>' \
+    --form 'proxied=<BOOLEAN>' \
+    ```
+
+3. Go to **DNS**>**Settings**, and select **Enable DNSSEC**. Or use the following API request.
+
+```bash
+curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <KEY>" \
+--header "Content-Type: application/json" \
+--data '{"status": "active"}'
+```
+
+4. Enable multi-signer DNSSEC.
 
 ```bash
 $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \ 
