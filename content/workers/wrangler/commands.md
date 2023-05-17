@@ -132,7 +132,11 @@ $ wrangler d1 create <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
-
+- `--experimental-backend` {{<type>}}boolean{{</type>}}
+  - Use the new experimental storage backend for this database.
+- `--location` {{<type>}}string{{</type>}}
+  - Provide an optional [location hint](/d1/learning/data-location/) for your database leader.
+  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
 {{</definitions>}}
 
 ### `list`
