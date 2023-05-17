@@ -12,7 +12,7 @@ Review the difference between Wrangler versions, specifically deprecations and b
 
 ### Deprecated commands
 
-The following commands are deprecated in Wrangler as of Wrangler v3. They will be fully removed in v4.
+The following commands are deprecated in Wrangler as of Wrangler v3. These commands will be fully removed in v4.
 
 ### `generate`
 
