@@ -9,6 +9,16 @@ weight: 8
 
 ## Why do I see a large amount of traffic from CLOUDFLARENET ASN 13335 in Analytics? Does this indicate a DDoS attack?
 
-When you notice a significant volume of traffic originating from **CLOUDFLARENET ASN 13335**, you may assume that Cloudflare is flooding your network with a DDoS attack or generating an excessive traffic. However, multiple types of connections can come from the Cloudflare's ASN, such as Workers Requests, WARP, [iCloud Private Relay](https://blog.cloudflare.com/icloud-private-relay/) and other custom analytics, such as health checks, where we consolidate traffic from numerous other ISPs behind our own as we proxy that traffic and egress it from our network.
+There is a number of different types of traffic which may originate from **CLOUDFLARENET ASN 13335**; just because there is a lot of traffic from this AS, it likely does not indicate a DDoS attack.
+
+Some sources of traffic from ASN13335 include:
+* [Workers subrequests](https://developers.cloudflare.com/workers/runtime-apis/fetch/)
+* [WARP](https://developers.cloudflare.com/warp-client/known-issues-and-faq/#does-warp-reveal-my-ip-address-to-websites-i-visit)
+* [iCloud Private Relay](https://blog.cloudflare.com/icloud-private-relay/) (For reference, iCloud Private Relay’s egress IP addresses are available in this [CSV form](https://mask-api.icloud.com/egress-ip-ranges.csv))
+* [Cloudflare Privacy Proxy](https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/)
+* Other Cloudflare features like [Health Checks](https://developers.cloudflare.com/health-checks/
+)
+
+
 
 For reference, iCloud Private Relay’s egress IP addresses are available in this [CSV form](https://mask-api.icloud.com/egress-ip-ranges.csv).
