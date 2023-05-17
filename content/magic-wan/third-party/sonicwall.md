@@ -72,18 +72,14 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 </div>
 
-5. Continue in the next section.
-
-## 4. Update the VPN policy
-
-6. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can use the settings in the examples bellow.
-7. In the **IKE (Phase 1) Proposal** group, select the following settings:
+5. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can use the settings in the examples bellow.
+6. In the **IKE (Phase 1) Proposal** group, select the following settings:
     - **Exchange**: _IKEv2 Mode_
     - **DH Group**: _Group 14_
     - **Encryption**: _AES-256_
     - **Authentication**: _SHA256_
     - **Life Time (seconds)**: `28800`
-8. In the **IPsec (Phase 2) Proposal** group, add the following settings:
+7. In the **IPsec (Phase 2) Proposal** group, add the following settings:
     - **Protocol**: _ESP_
     - **Encryption**: _AESGCM16-256_
     - **Authentication**: _None_
@@ -97,14 +93,10 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 </div>
 
-9. Continue in the next section.
-
-## 5. Disable replay protection
-
-10. Select **Advanced**.
-11. Enable **Disable IPsec Anti-Replay**.
-12. In **VPN Policy bound to** select your WAN interface from the dropdown menu, to bind it to your VPN.
-13. Select **Save**.
+8. Select **Advanced**.
+9. Enable **Disable IPsec Anti-Replay**.
+10. In **VPN Policy bound to** select your WAN interface from the dropdown menu, to bind it to your VPN.
+11. Select **Save**.
 
 <div class="large-img">
 
@@ -112,7 +104,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 </div>
 
-## 6. Add a VPN tunnel interface
+## 4. Add a VPN tunnel interface
 
 SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When creating the interface, use the prefix `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel, which is `10.200.1.0`.
  
@@ -140,7 +132,7 @@ SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When cre
 
 7. Select **OK**.
 
-## 7. Add address object(s)
+## 5. Add address object(s)
 
 Address objects are necessary for route policies. In our example, we have one other site that will be reached via Magic WAN. First, you need to create address objects for each network. Then, you need to create an address group that contains all the remote networks. This address group will be used in the next step to create the correct route policies.
 
@@ -168,7 +160,7 @@ To add an address object:
 
 </div>
 
-## 8. Set up routing
+## 6. Set up routing
 
 Add a route using the address object or group just created as the destination.
 
@@ -176,7 +168,7 @@ Add a route using the address object or group just created as the destination.
 2. Select **Add** to add your route policy.
 3. The **Next Hop** should be the VPN tunnel interface that was previously created in the interface panel.
 
-## 9. Add access rule for health checks
+## 7. Add access rule for health checks
 
 An additional access rule is required for Magic WAN health checks to work properly. This will enable the WAN IP to receive ICMP pings via the tunnel, and return them over the WAN.
 
@@ -187,7 +179,7 @@ An additional access rule is required for Magic WAN health checks to work proper
 5. Select **Optional Settings**.
 6. In **Others**, enable **Allow Management traffic**.
 
-## 10. Setup health checks
+## 8. Setup health checks
 
 You have to [configure Magic WAN health checks](/magic-wan/how-to/run-tunnel-health-checks/) correctly. Here is an example of how to set up health checks: 
 
@@ -208,7 +200,7 @@ curl --request PUT \
 
 Health checks might take some time to stabilize after the configuration is changed.
 
-## 11. Verify tunnel status on Cloudflare dashboard
+## 9. Verify tunnel status on Cloudflare dashboard
 
 You can check if your tunnels are healthy on the Cloudflare dashboard. 
 
