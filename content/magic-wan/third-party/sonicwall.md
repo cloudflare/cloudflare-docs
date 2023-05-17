@@ -72,21 +72,18 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 </div>
 
-5. Select **Save**.
+5. Continue in the next section.
 
 ## 4. Update the VPN policy
 
-VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can set the following settings:
-
-1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
-2. Select **Proposals**.
-3. In the **IKE (Phase 1) Proposal** group, select the following settings:
+6. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can use the settings in the examples bellow.
+7. In the **IKE (Phase 1) Proposal** group, select the following settings:
     - **Exchange**: _IKEv2 Mode_
     - **DH Group**: _Group 14_
     - **Encryption**: _AES-256_
     - **Authentication**: _SHA256_
     - **Life Time (seconds)**: `28800`
-4. In the **IPsec (Phase 2) Proposal** group, add the following settings:
+8. In the **IPsec (Phase 2) Proposal** group, add the following settings:
     - **Protocol**: _ESP_
     - **Encryption**: _AESGCM16-256_
     - **Authentication**: _None_
@@ -100,15 +97,14 @@ VPN Policy is somewhat flexible. Adjust these settings to match your organizatio
 
 </div>
 
-5. Select **Save**.
+9. Continue in the next section.
 
 ## 5. Disable replay protection
 
-1. Go to **Network** > **IPSec VPN** > **Rules and Settings**.
-2. Select **Advanced**.
-3. Enable **Disable IPsec Anti-Replay**.
-4. In **VPN Policy bound to** select your WAN interface from the dropdown menu, to bind it to your VPN.
-5. Select **Save**.
+10. Select **Advanced**.
+11. Enable **Disable IPsec Anti-Replay**.
+12. In **VPN Policy bound to** select your WAN interface from the dropdown menu, to bind it to your VPN.
+13. Select **Save**.
 
 <div class="large-img">
 
@@ -150,7 +146,7 @@ Address objects are necessary for route policies. In our example, we have one ot
 
 To add an address object: 
 
-1. Select **Object** > **Addresses**
+1. Select **Object** > **Match Objects** > **Addresses**
 2. Select **Address Objects** > **Add**.
 3. Enter the information for your address object - refer to the topology image for the examples this tutorial is using. Since the addresses are in the VPN zone, set the **Zone Assignment** for the object to _VPN_.
 4. Select **Save**. The window will stay on to facilitate multiple entries. Select **X** to close it.
@@ -176,7 +172,7 @@ To add an address object:
 
 Add a route using the address object or group just created as the destination.
 
-1. Select **Policy** > **Routing Rules**. 
+1. Select **Policy** > **Rules and Policies** > **Routing Rules**. 
 2. Select **Add** to add your route policy.
 3. The **Next Hop** should be the VPN tunnel interface that was previously created in the interface panel.
 
@@ -184,10 +180,10 @@ Add a route using the address object or group just created as the destination.
 
 An additional access rule is required for Magic WAN health checks to work properly. This will enable the WAN IP to receive ICMP pings via the tunnel, and return them over the WAN.
 
-1. Select **Policy** > **Add**.
-2. Enter a descriptive name for your policy.
-3. Select **Source / Destination**.
-4. In **Destination > Port/Services**, select _ICMP_ from the dropdown.
+1. Select **Policy** > **Rules and Policies**.
+2. Select **Access Rules** > **Add**.
+3. Enter a descriptive name for your policy.
+4. In **Source / Destination** > **Destination > Port/Services**, select _ICMP_ from the dropdown.
 5. Select **Optional Settings**.
 6. In **Others**, enable **Allow Management traffic**.
 
