@@ -42,9 +42,9 @@ _build:
         1. Under **Recipients** select **Add**.
         2. Change the setting to **Advanced**.
         3. In **Envelope recipient** select **Change envelope recipient**.
-        4. In **Replace recipient** add the recipient BCC address. For example, `bcc_recipient@mxrecord.io`. This address is specific to each customer tenant and can be found in your [Portal](https://horizon.area1security.com/support/service-addresses).
+        4. In **Replace recipient** add the recipient BCC address. For example, `<customer_name>@journaling.mxrecord.io`. This address is specific to each customer tenant and can be found in your [Portal](https://horizon.area1security.com/support/service-addresses).
 
-        {{<Aside type="note">}}If you are located in the EU or GDPR applies to your organization, replace the `@mxrecord.io` domain in the BCC recipient with `@mailstream-eu-primary.journaling.mxrecord.io`. For example, input `bcc_recipient@mailstream-eu-primary.journaling.mxrecord.io`. This will prioritize emails to be processed in Germany while allowing failover to the US. If you do not want failover protection, use `@mailstream-eu1.mxrecord.io`.{{</Aside>}}
+        {{<Aside type="note">}}If you are located in India or the EU, or if GDPR applies to your organization, you will have to replace the `@journaling.mxrecord.io` domain in the BCC recipient with the appropriate record to process emails in the appropriate geographic location. Refer to the [Geographic locations](#geographic-locations) table for more information.{{</Aside>}}
 
         5. Make sure that in **Spam and delivery options** > **Do not deliver spam to this recipient** is not checked.
         6. Under **Headers** select **Add X-Gm-Spam and X-Gm-Phishy headers**.

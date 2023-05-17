@@ -16,15 +16,44 @@ If you plan to run Keyless SSL in a [high availability setup](/ssl/keyless-ssl/r
 
 ### Install
 
+#### Debian/Ubuntu packages
+
 1.  Add the Cloudflare Package Repository as per https://pkg.cloudflare.com/.
-2.  Amazon Linux customers need to manually set the yum `$releasever` value:
-    - Amazon Linux 1: `sudo sed -i 's/$releasever/6/' /etc/yum.repos.d/cloudflare.repo`
-    - Amazon Linux 2: `sudo sed -i 's/$releasever/7/' /etc/yum.repos.d/cloudflare.repo`
-3.  Update your OS’ package listings, e.g., `apt-get update` or `yum makecache`.
-4.  Install the gokeyless server (min version used should be 1.5.3):
-    - Debian/Ubuntu: `sudo apt-get install gokeyless`
-    - RHEL/CentOS: `sudo yum install gokeyless`
-    - Amazon Linux: `sudo yum install rsyslog shadow-utils && sudo yum install gokeyless`
+2.  Update your OS’ package listings with `apt-get update`.
+3.  Install the `gokeyless` server (minimum version used should be `1.5.3`): `sudo apt-get install gokeyless`.
+
+#### RHEL/CentOS packages
+    
+Use either of the following examples to install the `gokeyless` package for RHEL or CentOS.
+
+**Option 1**
+
+```sh
+---
+header: RHEL or CentOS
+---
+$ yum makecache
+$ yum-config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
+$ echo 'gpgkey=https://pkg.cloudflare.com/cloudflare-ascii-pubkey.gpg' >> /etc/yum.repos.d/gokeyless.repo
+$ yum install gokeyless
+```
+
+**Option 2**
+
+```sh
+---
+header: RHEL or CentOS
+---
+$ yum install -y sudo dnf dnf-plugins-core && yum clean all
+$ dnf config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
+$ dnf install gokeyless
+```
+
+{{<Aside type="note">}}
+
+Amazon Linux customers may need to update their final installation command to be something similar to `sudo yum install rsyslog shadow-utils && sudo yum install gokeyless`.
+
+{{</Aside>}}
 
 ### Configure
 

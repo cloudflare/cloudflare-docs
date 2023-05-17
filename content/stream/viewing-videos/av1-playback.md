@@ -1,6 +1,7 @@
 ---
 title: AV1 playback (beta)
 weight: 7
+pcx_content_type: how-to
 ---
 
 {{<beta>}}AV1 playback{{</beta>}}

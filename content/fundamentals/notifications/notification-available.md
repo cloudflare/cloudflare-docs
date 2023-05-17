@@ -531,6 +531,35 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 </div>
 </details>
 
+## Scheduled Maintenance
+
+<details>
+<summary>Maintenance Notification</summary>
+<div>
+
+**Who is it for?**
+
+Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
+
+Specifically, the notification lets you know when maintenance on a data center has been scheduled, changed, or canceled.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar.
+
+During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
+
+</div>
+</details>
+
 ## SSL/TLS
 
 <details>
@@ -597,7 +626,7 @@ Authenticated Origin Pull.
 
 **What should you do if you receive one?**
 
-Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 </div>
 </details>
@@ -952,7 +981,7 @@ No direct call to action.
 
 **Who is it for?**
 
-Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/tunnel-monitoring/notifications/) for their Cloudflare Tunnels.
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
 
 **Other options / filters**
 
@@ -990,54 +1019,6 @@ All plans.
 **What should you do if you receive one?**
 
 No action required. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
-
-</div>
-</details>
-
-## Workers
-
-<details>
-<summary>Workers Usage Report</summary>
-<div>
-
-**Who is it for?**
-
-Developers using Workers, especially those on the Unbound usage model.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Workers subscription (free or paid).
-
-**What should you do if you receive one?**
-
-Check any recent changes to your script or its external dependencies. Usage reports inform users of a sharp increase (25% or more) in key metrics like CPU time.
-
-</div>
-</details>
-
-<details>
-<summary>Workers Weekly Summary</summary>
-<div>
-
-**Who is it for?**
-
-Developers using Workers.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Workers subscription (free or paid).
-
-**What should you do if you receive one?**
-
-No action is usually required. This notification gives users a high-level overview of their key Workers’ metrics without having to check the dashboard. Possible metrics include account usage and per-worker usage.
 
 </div>
 </details>

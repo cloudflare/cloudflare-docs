@@ -10,7 +10,7 @@ weight: 3
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems      | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems      | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | iOS, Android, ChromeOS | WARP with Gateway                                                                         | All plans                                                     |
 
@@ -31,7 +31,7 @@ To create rules based on device UUIDs, you first need to create a [Gateway List]
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 
-2. Select **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's [API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-lists-list-zero-trust-lists).
+2. Select **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's [API endpoint](/api/operations/zero-trust-lists-list-zero-trust-lists).
 
 3. Give your list a descriptive name, as this name will appear when configuring your policies.
 

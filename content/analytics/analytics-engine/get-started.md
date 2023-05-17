@@ -12,10 +12,10 @@ There are four steps to get started with Workers Analytics Engine:
 
 ## 1. Enable Analytics Engine for your account
 
-* Log into the Cloudflare dashboard.
-* Navigate to the **Workers** page.
-* Click **Set up** in the right hand side bar.
-* Click **Enable Analytics Engine**
+* Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+* Go to **Workers & Pages**.
+* In **Overview**, find **Analytics Engine** in the right side bar and select **Set up**.
+* Select **Enable Analytics Engine**
 
 ## 2. Configure your dataset and binding in Wrangler
 
@@ -42,11 +42,13 @@ analytics_engine_datasets = [
 ]
 ```
 
+Save the changes that you made to your `wrangler.toml` file. Republish your Worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
+
 ## 3. Write data from your Worker
 
 Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles. Calls to `writeDataPoint` will return immediately while processing of the data point continues in the background.
 
-A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering. Indexes are strings that will be used as a [sampling](../sql-api/#sampling) key.
+A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering. Indexes are strings that will be used as a [sampling](/analytics/analytics-engine/sql-api/#sampling) key.
 
 For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Doubles might include numbers like the temperature or air pressure reading. The blobs could include the location of the sensor and the hardware identifier of the sensor.
 
@@ -63,11 +65,35 @@ This is how it translates into code:
   }
 ```
 
+Besides writing static data points, a common use case of Workers Analytics Engine is to capture information about incoming HTTP requests.
+
+In the runtime API documentation, you can find  information about the [variables](/workers/runtime-apis/request/). Because these variables are already available in the runtime, you will not need to define them. In other words, you can directly use `request.cf.<variable name>` as a blob or double field. Using this adaptation of this Worker [example](/workers/examples/geolocation-hello-world/) template, you can write the geolocation variables to Analytics Engine.
+
+```js
+env.<EXAMPLE_DATASET>.writeDataPoint({
+  'blobs': [ 
+    request.cf.colo, 
+    request.cf.country, 
+    request.cf.city, 
+    request.cf.region, 
+    request.cf.timezone
+  ],
+  'doubles': [
+    request.cf.metroCode, 
+    request.cf.longitude, 
+    request.cf.latitude
+  ],
+  'indexes': [
+    request.cf.postalCode
+  ] 
+});
+```
+
 In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their blobs and doubles in the binding, and then use these names when writing data points in the runtime.
 
 ## 4. Query data using GraphQL and SQL API
 
-Data can be queried using either [GraphQL](/analytics/graphql-api/) or the [SQL API](../sql-api/).
+Data can be queried using either [GraphQL](/analytics/graphql-api/) or the [SQL API](/analytics/analytics-engine/sql-api/).
 
 The GraphQL API powers our dashboard and is better suited for building interactive dashboards. At this time, the GraphQL API exposes a highly simplified schema, though we plan to support a richer schema over time.
 
@@ -75,11 +101,13 @@ SQL API is better suited for writing ad hoc queries and integrating with externa
 
 The SQL API is available as an HTTP endpoint at `https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql` using the `POST` and `GET` method. You need to include an `Authorization: Bearer _____` token where the underscores should be replaced with a Cloudflare [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission.
 
+If you prefer a graphical interface, you can use [Postman](https://www.postman.com/) to connect to the SQL API endpoint and run your query. Postman is an application that can be used to test APIs. You can use the endpoint mentioned above using the `POST` and `GET` methods.
+
 ### Example of querying data with the SQL API
 
 In the following example, we use the SQL API to query the top 10 cities that had the highest average humidity readings when the temperature was above zero.
 
-Here is how we represent that as SQL. We are using a custom averaging function to take into account [sampling](../sql-api/#sampling):
+Here is how we represent that as SQL. We are using a custom averaging function to take into account [sampling](/analytics/analytics-engine/sql-api/#sampling):
 
 ```sql
 SELECT 
@@ -100,7 +128,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/anal
 
 Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when developers will be able to name blobs and doubles in their binding, these names will also be available via the SQL API.
 
-Refer to the [SQL API docs](../sql-api/) for more information on connecting to and querying SQL API and the [Workers Analytics Engine SQL Reference](../sql-reference/) for a full list of supported SQL functionality.
+Refer to the [SQL API docs](/analytics/analytics-engine/sql-api/) for more information on connecting to and querying SQL API and the [Workers Analytics Engine SQL Reference](/analytics/analytics-engine/sql-reference/) for a full list of supported SQL functionality.
 
 ### Working with time series
 
@@ -121,7 +149,7 @@ ORDER BY t, avg_humidity DESC
 
 This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
 
-Refer to [Querying Workers Analytics Engine from Grafana](../grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
+Refer to [Querying Workers Analytics Engine from Grafana](/analytics/analytics-engine/grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
 
 ## Limits
 

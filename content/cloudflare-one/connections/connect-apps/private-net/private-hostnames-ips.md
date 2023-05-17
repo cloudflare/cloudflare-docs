@@ -24,7 +24,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Prerequisites
 
-- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels) to route traffic to a private IP space.
+- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) to route traffic to a private IP space.
 - `cloudflared` must be connected to Cloudflare from your target private network.
 - Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
 
@@ -42,7 +42,7 @@ Next, we need to [create a Local Domain Fallback entry](/cloudflare-one/connecti
 
 {{<Aside type="note">}}
 
-Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#route-private-network-ips-through-gateway).
+Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#3-route-private-network-ips-through-warp).
 
 {{</Aside>}}
 

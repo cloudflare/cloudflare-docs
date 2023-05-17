@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/115003687931-Warnung-bez%C3%BCglich-Anzeigen-Ihrer-Ursprungs-IP-Adresse-%C3%BCber-DNS-Eintr%C3%A4ge
-title: Warnung bezüglich Anzeigen Ihrer Ursprungs-IP-Adresse über DNS-Einträge 
+title: Warnung bezüglich Anzeigen Ihrer Ursprungs-IP-Adresse über DNS-Einträge
 ---
 
-# Warnung bezüglich Anzeigen Ihrer Ursprungs-IP-Adresse über DNS-Einträge 
+# Warnung bezüglich Anzeigen Ihrer Ursprungs-IP-Adresse über DNS-Einträge
 
 
 
@@ -43,7 +43,7 @@ _`Ein A-, AAAA-, CNAME- oder MX-Eintrag verweist auf Ihren Ursprungsserver, der 
 
 _`Dieser Eintrag zeigt die IP-Adresse Ihres Ursprungsservers an und kann ihn möglicherweise einem Denial-of-Service-Angriff aussetzen.`_
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare unterstützt jetzt das Proxying von Wildcard-„\*"-Einträgen
 für die DNS-Verwaltung in allen Kundentarifen. Bisher war das nur im
 Enterprise Plan möglich.

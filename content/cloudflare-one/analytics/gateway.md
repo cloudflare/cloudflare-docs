@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Gateway Analytics
+title: Gateway analytics
 weight: 3
 ---
 
-# Gateway Analytics
+# Gateway analytics
 
 To see the top Allowed and Blocked requests across all of your DNS locations, navigate to **Analytics** > **Gateway**. You can filter the data by selecting a specific location and/or time.
 
@@ -18,4 +18,4 @@ To see the top Allowed and Blocked requests across all of your DNS locations, na
 
 ## GraphQL queries
 
-You can use the [GraphQL Analytics API](/analytics/graphql-api/) to query your Gateway Analytics data. For more information on the Gateway Analytics dataset, refer to the [available datasets](/analytics/graphql-api/features/data-sets/#available-datasets) table and use the [GraphiQL client](/analytics/graphql-api/getting-started/explore-graphql-schema/) to explore the schema.
+You can use the [GraphQL Analytics API](/analytics/graphql-api/) to query your Gateway Analytics data. For more information on the Gateway Analytics dataset, refer to the [available datasets](/analytics/graphql-api/features/data-sets/) table and use the [GraphiQL client](/analytics/graphql-api/getting-started/explore-graphql-schema/) to explore the schema.

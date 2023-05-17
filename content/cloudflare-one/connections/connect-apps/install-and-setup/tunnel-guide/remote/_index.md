@@ -34,11 +34,11 @@ Before you start, make sure you:
 
 7. Select **Next**.
 
-The next steps depend on whether you want to [connect an application](#connect-an-application) or [connect a network](#connect-a-network).
+The next steps depend on whether you want to [connect an application](#2-connect-an-application) or [connect a network](#3-connect-a-network).
 
 ## 2. Connect an application
 
-Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#connect-a-network).
+Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#3-connect-a-network).
 
 1. In the **Public Hostnames** tab, choose an application from the drop-down menu and specify any subdomain or path information.
 
@@ -64,6 +64,6 @@ After saving the tunnel, you will be redirected to the **Tunnels** page. Look fo
 
 {{<Aside type="note" header="Troubleshooting">}}
 
-If you run into issues during the remote setup process, refer to the [Tunnel FAQ](/cloudflare-one/faq/cloudflare-tunnels-faq/#how-can-i-troubleshoot-a-tunnel-that-was-configured-from-the-zero-trust-dashboard) for troubleshooting tips.
+If you run into issues while setting up your tunnel, refer to the [troubleshooting FAQ](/cloudflare-one/faq/cloudflare-tunnels-faq/#how-can-i-troubleshoot-a-tunnel-that-was-configured-from-zero-trust).
 
 {{</Aside>}}

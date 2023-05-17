@@ -25,7 +25,7 @@ meta:
 
 **1. Get list of available Managed Transforms**
 
-Check the Managed Transform's current status and availability using the [List Managed Transforms](https://developers.cloudflare.com/api/operations/managed-transforms-list-managed-transforms) operation.
+Check the Managed Transform's current status and availability using the [List Managed Transforms](/api/operations/managed-transforms-list-managed-transforms) operation.
 
 The following example request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field).
 
@@ -51,6 +51,11 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/managed_headers" \
     "managed_request_headers": [
       {
         "id": "add_bot_protection_headers",
+        "enabled": false,
+        "has_conflict": false
+      },
+      {
+        "id": "add_client_certificate_headers",
         "enabled": false,
         "has_conflict": false
       },
@@ -100,7 +105,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/managed_headers" \
 
 **2. Change the status of Managed Transforms**
 
-Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Update status of Managed Transforms](https://developers.cloudflare.com/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
+Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Update status of Managed Transforms](/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
 
 Add the Managed Transforms you wish to change to the request body, and update their status in the `enabled` field. You cannot enable a Managed Transform that has a conflict with a currently enabled Managed Transform (that is, an item where `has_conflict` is `true`).
 
@@ -142,6 +147,11 @@ The response will include all the available Managed Transforms and their new sta
     "managed_request_headers": [
       {
         "id": "add_bot_protection_headers",
+        "enabled": false,
+        "has_conflict": false
+      },
+      {
+        "id": "add_client_certificate_headers",
         "enabled": false,
         "has_conflict": false
       },

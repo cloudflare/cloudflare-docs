@@ -32,7 +32,7 @@ You can create and configure a tunnel once and run that tunnel through multiple,
 
 ## Default `cloudflared` directory
 
-`cloudflared` uses a default directory when storing credentials files for your tunnels, as well as the `cert.pem` file it generates when you run `cloudflared login`. The default directory is also where `cloudflared` will look for a [configuration file](#configuration-file) if no other file path is [specified](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/#storing-a-configuration-file) when running a tunnel.
+`cloudflared` uses a default directory when storing credentials files for your tunnels, as well as the `cert.pem` file it generates when you run `cloudflared login`. The default directory is also where `cloudflared` will look for a [configuration file](#configuration-file) if no other file path is [specified](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/#naming-and-storing-a-configuration-file) when running a tunnel.
 
 | OS                          | Path to default directory                                                              |
 | --------------------------- | -------------------------------------------------------------------------------------- |

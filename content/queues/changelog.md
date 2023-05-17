@@ -7,6 +7,12 @@ rss: file
 
 # Changelog
 
+## 2023-03-28
+
+### Consumer concurrency (enabled)
+
+Queue consumers will now [automatically scale up](/queues/learning/consumer-concurrency/) based on the number of messages being written to the queue. To control or limit concurrency, you can explicitly define a [`max_concurrency`](/queues/platform/configuration/#consumer) for your consumer.
+
 ## 2023-03-15
 
 ### Consumer concurrency (upcoming)
@@ -21,7 +27,7 @@ Queue consumers will soon automatically scale up concurrently as a queues' backl
 
 ### Explicit acknowledgement (new feature)
 
-You can now [acknowledge individual messages with a batch](https://developers.cloudflare.com/queues/learning/batching-retries/#explicit-acknowledgement) by calling `.ack()` on a message.
+You can now [acknowledge individual messages with a batch](/queues/learning/batching-retries/#explicit-acknowledgement) by calling `.ack()` on a message.
 
 This allows you to mark a message as delivered as you process it within a batch, and avoids the entire batch from being redelivered if your consumer throws an error during batch processing. This can be particularly useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent actions on individual messages within a batch.
 

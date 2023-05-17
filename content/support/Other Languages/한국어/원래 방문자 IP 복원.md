@@ -26,7 +26,7 @@ ___
 
 [웹 사이트 트래픽이 Cloudflare 네트워크를 통해 라우팅된](https://support.cloudflare.com/hc/articles/205177068) 경우, Cloudflare는 리버스 프록시의 역할을 합니다. 이렇게 함으로써, Cloudflare는 패킷을 더 효율적으로 라우팅하고 이미지, JavaScript, CSS 등의 정적 콘텐츠를 캐시해 페이지 로드 시간을 단축할 수 있습니다. 그 결과, 원본 서버가 요청에 응답하고 로그를 작성할 때는 [Cloudflare IP 주소](https://www.cloudflare.com/ips/)를 반환하게 됩니다.
 
-예를 들어 원래 방문자의 유입되는 IP 주소에 의존하는 애플리케이션을 설치하는 경우 기본적으로 Cloudflare IP 주소가 기록됩니다.원래 방문자 IP 주소는 [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986) 라는 추가된 HTTP 헤더에 나타납니다. [웹 서버 지침](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq)에 따라 원본 서버에 원래 방문자 IP 주소를 기록할 수 있습니다.요청이 원본 서버에 도달했는데 이 HTTP 헤더를 사용할 수 없는 경우 [변환 규칙](https://developers.cloudflare.com/rules/transform/) 및 [관리형 변환](https://developers.cloudflare.com/rules/transform/managed-transforms/) 구성을 확인하시기 바랍니다.
+예를 들어 원래 방문자의 유입되는 IP 주소에 의존하는 애플리케이션을 설치하는 경우 기본적으로 Cloudflare IP 주소가 기록됩니다.원래 방문자 IP 주소는 [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986) 라는 추가된 HTTP 헤더에 나타납니다. [웹 서버 지침](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq)에 따라 원본 서버에 원래 방문자 IP 주소를 기록할 수 있습니다.요청이 원본 서버에 도달했는데 이 HTTP 헤더를 사용할 수 없는 경우 [변환 규칙](/rules/transform/) 및 [관리형 변환](/rules/transform/managed-transforms/) 구성을 확인하시기 바랍니다.
 
 아래 그림에서 Cloudflare를 사용할 때와 사용하지 않을 때 IP 주소를 어떻게 달리 처리하는지 알 수 있습니다.
 
@@ -101,7 +101,7 @@ mod\_cloudflare를 설치하는 방법에는 2가지가 있습니다. 하나는 
 
 ### Github에서 패킷/스크립트 다운로드
 
-Apache 웹 서버를 사용하는 경우, [Github](https://github.com/cloudflare/mod_cloudflare)에서 mod\_cloudflare를 다운로드할 수 있습니다.
+Apache 웹 서버를 사용하는 경우, [GitHub](https://github.com/cloudflare/mod_cloudflare)에서 mod\_cloudflare를 다운로드할 수 있습니다.
 
 ### 원본 웹 서버에 코드 추가
 
@@ -320,5 +320,5 @@ ___
 
 ## 관련 자료
 
--   [HTTP 요청 헤더](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [변환 규칙](https://developers.cloudflare.com/rules/transform/)
+-   [HTTP 요청 헤더](/fundamentals/get-started/http-request-headers)
+-   [변환 규칙](/rules/transform/)

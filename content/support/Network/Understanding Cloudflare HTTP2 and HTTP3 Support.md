@@ -10,40 +10,40 @@ title: Understanding Cloudflare HTTP2 and HTTP3 Support
 
 ## Overview
 
-HTTP/2 and HTTP/3 accelerate page load and are free for all [Cloudflare plans](http://www.cloudflare.com/plans).  HTTP/2 is enabled by default and requires an [SSL certificate at Cloudflare’s edge network](https://support.cloudflare.com/hc/articles/203295200#h_036e2e20-96d8-4199-bb1f-0fbb41b5cdd0). Configure HTTP/2 and HTTP/3 via the Cloudflare **Network** app. Domains on Free plans cannot disable HTTP/2.
+HTTP/2 and HTTP/3 accelerate page load. They are both free for all [Cloudflare plans](https://www.cloudflare.com/plans) but require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/). Configure HTTP/2 and HTTP/3 via the Cloudflare **Network** app. HTTP/2 is enabled by default and domains on Free plans cannot disable it.
 
-A browser and web server automatically negotiate the highest protocol available. Thus, HTTP/3 takes precedence over HTTP/2. 
+A browser and web server automatically negotiate the highest protocol available. Thus, when both HTTP/3 and HTTP/2 are enabled, HTTP/3 takes precedence. 
 
-To determine the protocol used for your connection, enter _example.com_/cdn-cgi/trace from a web browser or client and replace _example.com_ with your domain name. Several lines of data are returned. If _http=h2_ appears in the results, the connection occurred over HTTP/2. Other possible values are _http=http2+quic/99_ for HTTP/3, and _http=http/1.x_ for HTTP/1.x.
+To determine the protocol used for your connection, enter _example.com_/cdn-cgi/trace from a web browser or client and replace _example.com_ with your domain name. Several lines of data are returned. If _http=http/2_ appears in the results, the connection occurred over HTTP/2. Other possible values are _http=http/3_ for HTTP/3, and _http=http/1.x_ for HTTP/1.x.
 
 ___
 
-HTTP/2 improves page load times via:
+HTTP/2 uses the TCP transport protocol and TLS to secure communications. It improves page load times via:
 
--   Connection multiplexing - Retrieves multiple resources in a single network request. Responses are sent when resources are available to avoid slowing page rendering.
--   HTTP header compression - Compresses headers and simplifies HTTP requests to avoid resending headers.
--   HTTP/2 Server Push - To improve page load speed, Cloudflare provides additional resources for a client to cache without waiting for additional requests.
+-   Request and response multiplexing - A single network connection can be used to fetch multiple resources. Responses are prioritized to ensure important assets are sent first, which impreoves page rendering times.
+-   HTTP header compression - can reduce the number of bytes required to exchange headers, which speeds up requests and responses.
 
 Note:
 
--   Not all browsers support HTTP/2 and use HTTP 1.x instead.
--   Connection multiplexing is on a per-domain basis.
+-   How browsers choose which requests to multiplexing in a single connection is a complext topic. Typically a connection applies to a single domain. However, HTTP/2 supports [connection coalescing](https://www.rfc-editor.org/rfc/rfc9113.html#name-connection-reuse), where clients can carry out additional checks and if they pass, requests for different domains can also be multiplexed.
 
 ___
 
 ## HTTP/3
 
-HTTP/3 enables fast, reliable, and secure connections.  HTTP/3 encrypts Internet transport by default using a protocol from Google called QUIC.   Enable HTTP/3 via the Cloudflare **Network** app. 
+HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better. Enable HTTP/3 via the Cloudflare **Network** app. 
 
-For more information, refer to the [Learning center](https://www.cloudflare.com/learning/performance/what-is-http3/).
+For more information, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/performance/what-is-http3/).
 
 ___
 
 ## Server Push
 
-The Server Push feature allows origin web servers to send resources to the client or web browser without waiting to parse HTML for references to additional assets like images, stylesheets, JavaScript, etc.  Server Push avoids the usual HTTP request and response cycle for every script or stylesheet on a page. Server Push is available for all Cloudflare plans.
+The Server Push feature allows origin web servers to send resources to the client or web browser without waiting to for the client to discover they are needed. In practice, this protocol feature was hard to leverage and could sometimes make page load times worse. [Early Hints](/cache/about/early-hints/) has emerged as a replacement solution that avoids some of the pitfalls of Server Push.
 
-Server Push extracts URI references within the rel=preload parameter of the **Link** header from your origin server. These additional URIs are then provided to the client.  Example **Link** headers include:
+Server Push is available for all Cloudflare plans but only over HTTP/2. Cloudflare does not support Server Push for HTTP/3.
+
+Server Push extracts URI references within the rel=preload parameter of the **Link** header from your origin server. The linked URIs are used to fetch a resource that is then pushed to the client.  Example **Link** headers include:
 
 `Link: </images/image.png>; rel=preload;`
 
@@ -61,5 +61,5 @@ ___
 
 Browser support information: 
 
--   [HTTP/2](http://caniuse.com/#feat=http2) 
+-   [HTTP/2](https://caniuse.com/#feat=http2) 
 -   [HTTP/3](https://caniuse.com/#feat=http3)

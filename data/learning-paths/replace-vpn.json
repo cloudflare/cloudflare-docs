@@ -81,7 +81,7 @@
         "pages": [
           {
             "external_link": true,
-            "url_path": "http://dash.teams.cloudflare.com/onboarding",
+            "url_path": "https://one.dash.cloudflare.com/onboarding",
             "link_title": "Choose a team name",
             "additional_description": "The <a href='/cloudflare-one/glossary#team-name'>team name</a> is used to create a unique subdomain for your application portal."
           },
@@ -138,7 +138,7 @@
         "estimated_time": 30,
         "pages": [
           {
-            "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions",
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/",
             "link_title": "Define device enrollment permissions",
             "additional_description": "With device enrollment rules, you define which users can connect devices to your Zero Trust organization."
           },

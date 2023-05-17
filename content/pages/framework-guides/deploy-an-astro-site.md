@@ -26,7 +26,7 @@ Astro will ask:
 
 2. If you want to install dependencies. Select `Yes`. If you select `No`, you must run `npm install` before running or building your application for the first time.
 
-3. If you want to set initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#creating-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
+3. If you want to set initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#create-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
 
 ### Astro configuration
 
@@ -44,7 +44,10 @@ $ npm run astro add cloudflare
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
@@ -96,7 +99,7 @@ If no mode is set, the default is `"advanced"`.
 
 {{</Aside>}}
 
-2. **Directory** mode: This mode is used when you want to run your Pages Function in `directory` mode. In this mode, the adapter will compile the client-side part of your application the same way, but it will move the Worker into a `functions` folder in the project root. The adapter will allow you to access your Pages Functions from your `functions` folder. This allows you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/#adding-middleware) which can be checked into version control.
+2. **Directory** mode: This mode is used when you want to run your Pages Function in `directory` mode. In this mode, the adapter will compile the client-side part of your application the same way, but it will move the Worker into a `functions` folder in the project root. The adapter will allow you to access your Pages Functions from your `functions` folder. This allows you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/middleware/) which can be checked into version control.
 
 To use `directory` mode, modify your `astro.config.mjs` file to add `mode: "directory"` to the adapter configuration:
 
@@ -116,7 +119,7 @@ export default defineConfig({
 
 ## Use bindings in your Astro application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 In Astro you can add server-side code via [endpoints](https://docs.astro.build/en/core-concepts/endpoints/), in such endpoints you can then use the `getRuntime()` method to access Cloudflare's environment and consecutively any bindings set for your application.
 

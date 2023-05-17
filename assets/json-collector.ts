@@ -5,12 +5,16 @@ import * as replace_vpn from "data/learning-paths/replace-vpn.json";
 import * as bot_management from "data/learning-paths/bot-management.json";
 import * as load_balancing from "data/learning-paths/load-balancing.json";
 import * as workers from "data/learning-paths/workers.json";
+import * as prevent_ddos_attacks from "data/learning-paths/prevent-ddos-attacks.json";
+import * as get_started_free from "data/learning-paths/get-started-free.json";
 
 let learning_paths = [
-  get_started,
+  get_started_free,
   load_balancing,
   bot_management,
+  prevent_ddos_attacks,
   workers,
+  get_started,
   replace_vpn,
   optimize_site_speed,
   application_security,

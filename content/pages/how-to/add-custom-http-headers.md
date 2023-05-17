@@ -15,7 +15,7 @@ More advanced customization of HTTP headers is available through Cloudflare Work
 
 If you have not deployed a Worker before, get started with our [tutorial](/workers/get-started/guide/). For the purpose of this tutorial, accomplish steps one (Sign up for a Workers account) through four (Generate a new project) before returning to this page.
 
-Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/get-started/#adding-a-custom-domain).
+Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/platform/custom-domains/#add-a-custom-domain).
 
 ## Writing a Workers function
 
@@ -52,7 +52,7 @@ async function handleRequest(request) {
 
 ## Deploying a Workers function in the dashboard
 
-The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log in to your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
+The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log in to your account to be automatically directed to the Workers & Pages dashboard. From the Workers & Pages dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
 
 Click **Save and Deploy** when your script is ready and set a [route](/workers/platform/triggers/routes/) in your domain's zone settings.
 
@@ -86,7 +86,7 @@ route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
 
-If you do not know how to find your Account ID and Zone ID, refer to [our guide](/workers/get-started/guide/#7-configure-your-project-for-deployment).
+If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 Once you have configured your `wrangler.toml`, run `wrangler publish` in your terminal to deploy your Worker:
 

@@ -43,8 +43,8 @@ For more information on exposed credentials checks, refer to [Automated exposed 
 
 You can configure the following settings of the Cloudflare Exposed Credentials Check Managed Ruleset in the dashboard:
 
-- **Set the action to perform.** When you define an action for the ruleset, you override the default action defined for each rule. The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Legacy CAPTCHA_. To remove the action override, set the ruleset action to _Default_.
-- **Override the action performed by individual rules.** The available actions are: _Exposed-Credential-Check Header_, _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Legacy CAPTCHA_. For more information, refer to [Available actions](/waf/exposed-credentials-check/#available-actions).
+- **Set the action to perform.** When you define an action for the ruleset, you override the default action defined for each rule. The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_. To remove the action override, set the ruleset action to _Default_.
+- **Override the action performed by individual rules.** The available actions are: _Exposed-Credential-Check Header_, _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_. For more information, refer to [Available actions](/waf/exposed-credentials-check/#available-actions).
 - **Disable specific rules.**
 - **Customize the filter expression.** With a custom expression, the Cloudflare Managed Ruleset applies only to a subset of the incoming requests.
 - **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.

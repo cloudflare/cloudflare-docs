@@ -1,5 +1,5 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
 weight: 1
 ---
@@ -41,13 +41,29 @@ This Function will run on the `/helloworld` route and returns `"Hello, world!"`.
 
 Refer to [Routing](/pages/platform/functions/routing/) for more information on route customization.
 
+### Runtime features
+
+Workers runtime features, including compatibility with a subset of Node.js APIs and setting a [compatibility date or compatibility flag](/workers/platform/compatibility-dates/) are configurable on Pages Functions. 
+
+Set these configurations by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. To set Pages compatibility flags in the Cloudflare dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** and select your Pages project.
+3. Select **Settings** > **Functions** > **Compatibility Flags**.
+4. Configure your Production and Preview compatiblity flags as needed.
+
+Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) and [R2](/r2/) from within your Pages project by configuring [bindings](/pages/platform/functions/bindings/). 
+
 ## Deploy your Function
 
 After you have set up your Function, deploy your Pages project. Deploy your project by:
 
-* Connecting your [Git provider](/pages/get-started/#connecting-your-git-provider-to-pages).
-* Using [Direct Uploads](/pages/platform/direct-upload/) from the Cloudflare dashboard.
+* Connecting your [Git provider](/pages/get-started/#connect-your-git-provider-to-pages).
 * Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
+
+{{<Aside type="warning">}}
+[Direct Uploads](/pages/platform/direct-upload/) is currently not supported with Functions.
+{{</Aside>}}
 
 ## Related resources
 

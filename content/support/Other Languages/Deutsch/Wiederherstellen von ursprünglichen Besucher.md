@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/200170786-Wiederherstellen-von-urspr%C3%BCnglichen-Besucher-IPs
-title: Wiederherstellen von ursprünglichen Besucher-IPs 
+title: Wiederherstellen von ursprünglichen Besucher-IPs
 ---
 
-# Wiederherstellen von ursprünglichen Besucher-IPs 
+# Wiederherstellen von ursprünglichen Besucher-IPs
 
 
 
@@ -23,7 +23,7 @@ von GitHub herunterladen](https://github.com/cloudflare/mod_cloudflare).
 
 Wenn Ihr [Website-Traffic durch das Cloudflare-Netzwerk geroutet wird](https://support.cloudflare.com/hc/articles/205177068), fungieren wir als Reverse-Proxy. Dadurch kann Cloudflare die Seitenladezeiten verringern, weil Pakete effizienter geroutet und statische Ressourcen (Bilder, JavaScript, CSS usw.) zwischengespeichert werden. Wenn Sie also auf Anfragen antworten und diese protokollieren, gibt Ihr Ursprungsserver eine [Cloudflare-IP-Adresse](https://www.cloudflare.com/ips/) zurück.
 
-Wenn Sie zum Beispiel Anwendungen installieren, die die eingehende IP-Adresse des ursprünglichen Besuchers brauchen, wird standardmäßig eine Cloudflare-IP-Adresse protokolliert. Die IP-Adresse des ursprünglichen Besuchers erscheint in einem angefügten HTTP-Header mit der Bezeichnung [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). Wenn Sie unsere [Webserver-Anleitung](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq) befolgen, können Sie die ursprüngliche Besuchs-IP-Adresse auf Ihrem Ursprungsserver protokollieren. Ist dieser HTTP-Header nicht verfügbar, wenn Anfragen Ihren Ursprungsserver erreichen, überprüfen Sie Ihre [Transform Rules](https://developers.cloudflare.com/rules/transform/) und [Managed Transforms](https://developers.cloudflare.com/rules/transform/managed-transforms/)\-Konfiguration.
+Wenn Sie zum Beispiel Anwendungen installieren, die die eingehende IP-Adresse des ursprünglichen Besuchers brauchen, wird standardmäßig eine Cloudflare-IP-Adresse protokolliert. Die IP-Adresse des ursprünglichen Besuchers erscheint in einem angefügten HTTP-Header mit der Bezeichnung [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). Wenn Sie unsere [Webserver-Anleitung](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq) befolgen, können Sie die ursprüngliche Besuchs-IP-Adresse auf Ihrem Ursprungsserver protokollieren. Ist dieser HTTP-Header nicht verfügbar, wenn Anfragen Ihren Ursprungsserver erreichen, überprüfen Sie Ihre [Transform Rules](/rules/transform/) und [Managed Transforms](/rules/transform/managed-transforms/)\-Konfiguration.
 
 Das folgende Diagramm zeigt die verschiedenen Arten, wie IP-Adressen mit und ohne Cloudflare behandelt werden.
 
@@ -110,11 +110,11 @@ von GitHub herunterladen](https://github.com/cloudflare/mod_cloudflare).
 {{</Aside>}}
 
 
-Sie können mod\_cloudflare auf zwei Arten installieren: indem Sie die Apache-Erweiterung von Github herunterladen oder indem Sie Code zu Ihrem Ursprungs-Webserver hinzufügen.
+Sie können mod\_cloudflare auf zwei Arten installieren: indem Sie die Apache-Erweiterung von GitHub herunterladen oder indem Sie Code zu Ihrem Ursprungs-Webserver hinzufügen.
 
-### Pakete oder Skripte von Github herunterladen
+### Pakete oder Skripte von GitHub herunterladen
 
-Wenn Sie einen Apache-Webserver verwenden, können Sie mod\_cloudflare von [Github](https://github.com/cloudflare/mod_cloudflare) herunterladen.
+Wenn Sie einen Apache-Webserver verwenden, können Sie mod\_cloudflare von [GitHub](https://github.com/cloudflare/mod_cloudflare) herunterladen.
 
 ### Hinzufügen von Code zu Ihrem Ursprungswebserver
 
@@ -378,5 +378,5 @@ ___
 
 ## Verwandte Ressourcen
 
--   [HTTP-Anfragenheader](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [Regeln transformieren](https://developers.cloudflare.com/rules/transform/)
+-   [HTTP-Anfragenheader](/fundamentals/get-started/http-request-headers)
+-   [Regeln transformieren](/rules/transform/)

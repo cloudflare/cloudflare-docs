@@ -10,7 +10,7 @@ title: Billing for Cloudflare for Teams
 
 ## Overview
 
-Cloudflare for Teams uses Cloudflare's global network to empower your internal teams and infrastructure with secure, fast, and seamless access to any device on the internet.
+Cloudflare for Teams uses Cloudflare's global network to empower your internal teams and infrastructure with secure, fast, and seamless access to any device on the Internet.
 
 Cloudflare for Teams consists of two products: [Cloudflare Access](/cloudflare-one/policies/access/) and [Cloudflare Gateway](/cloudflare-one/policies/filtering/). You can subscribe to each independently or together as a bundle.
 

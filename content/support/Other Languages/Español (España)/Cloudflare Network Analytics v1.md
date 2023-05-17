@@ -14,20 +14,20 @@ title: Cloudflare Network Analytics v1
 Para acceder a Network Analytics sigue los siguientes pasos:
 
 -   Plan Enterprise de Cloudflare
--   [Magic Transit](https://developers.cloudflare.com/magic-transit/) o [Spectrum](https://developers.cloudflare.com/spectrum/) de Cloudflare
+-   [Magic Transit](/magic-transit/) o [Spectrum](/spectrum/) de Cloudflare
 
-La vista de **Network Analytics** de Cloudflare proporciona visibilidad casi en tiempo real de los patrones de tráfico de las capas de red y de transporte, así como de los ataques DDoS. Network Analytics visualiza datos a nivel de paquete y de bits. Son los mismos datos disponibles a través de la [API de GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/).
+La vista de **Network Analytics** de Cloudflare proporciona visibilidad casi en tiempo real de los patrones de tráfico de las capas de red y de transporte, así como de los ataques DDoS. Network Analytics visualiza datos a nivel de paquete y de bits. Son los mismos datos disponibles a través de la [API de GraphQL Analytics](/analytics/graphql-api/).
 
 {{<Aside type="note">}}
 -   Si necesitas información sobre el nuevo panel de control de Network
     Analytics v2 (NAv2), disponible en versión beta, consulta
     [Cloudflare Network
-    Analytics](https://developers.cloudflare.com/analytics/network-analytics/)
+    Analytics](/analytics/network-analytics/)
     en la documentación para desarrolladores.
 -   También hay una nueva versión de la API GraphQL de Network
     Analytics. Si todavía estás utilizando NAv1, deberías migrar a NAv2.
     Para ello, consulta la [guía de
-    migración](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2/).
+    migración](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
 ![Panel de Analytics que muestra el resumen de paquetes por tipo](/support/static/na-main-dashboard.png)
@@ -141,7 +141,7 @@ En este ejemplo, al hacer clic en el botón **Filtrar** se reduce el alcance de 
 Esta función sólo está disponible para los usuarios de Magic Transit.
 {{</Aside>}}
 
-Puedes crear una regla [Magic Firewall](https://developers.cloudflare.com/magic-firewall) que bloquee todo el tráfico que coincida con los filtros seleccionados en Network Analytics. Los filtros admitidos actualmente son:
+Puedes crear una regla [Magic Firewall](/magic-firewall) que bloquee todo el tráfico que coincida con los filtros seleccionados en Network Analytics. Los filtros admitidos actualmente son:
 
 -   IP de destino
 -   Protocolo
@@ -476,7 +476,7 @@ ___
 
 ## Ver el registro de actividad
 
-El **registro de actividad** de Network Analytics muestra hasta 500 eventos del registro en el intervalo de tiempo seleccionado actualmente, con 10 resultados por página por vista de intervalo de tiempo. (La [API de GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/) no tiene esta limitación). 
+El **registro de actividad** de Network Analytics muestra hasta 500 eventos del registro en el intervalo de tiempo seleccionado actualmente, con 10 resultados por página por vista de intervalo de tiempo. (La [API de GraphQL Analytics](/analytics/graphql-api/) no tiene esta limitación). 
 
 Para mostrar los detalles del evento, haz clic en el widget de expansión asociado a los eventos.
 
@@ -533,9 +533,9 @@ ___
 
 ## Recursos relacionados
 
--   [Cloudflare Network Analytics v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [Migración de Network Analytics v1 a Network Analytics v2](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [Cloudflare GraphQL API](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Cloudflare Network Analytics v2](/analytics/network-analytics/)
+-   [Migración de Network Analytics v1 a Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [Cloudflare GraphQL API](/analytics/graphql-api/)
 -   [Cloudflare Analytics: vista rápida](https://support.cloudflare.com/hc/articles/360037684111)
 -   [Números de puertos y nombres de servicio de la IANA](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -660,7 +660,7 @@ Cuando trabajes con los registros de ataques en el panel de control, ten en cuen
 -   Los registros de los ataques se almacenan con marcas de tiempo de inicio y fin, estadísticas de paquetes y bits para la tasa de datos mínima, máxima y media, así como los totales, el tipo de ataque y la acción realizada. 
 -   Las direcciones IP de origen se consideran información de identificación personal. Por lo tanto, Cloudflare solo los almacena durante 30 días. Después de este tiempo, las direcciones IP de origen se descartan y los registros se agrupan primero en grupos de 1 hora y luego en grupos de 1 día. Los resúmenes de 1 hora se almacenan 6 meses. Los resúmenes de 1 día se almacenan 1 año.
 
-Para obtener más información sobre la consulta y el acceso a los datos de registros, consulta la página web [API GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/limits). 
+Para obtener más información sobre la consulta y el acceso a los datos de registros, consulta la página web [API GraphQL Analytics](/analytics/graphql-api/limits). 
 
 ### ¿Por qué Network Analytics indica que la dirección IP de destino no está disponible?
 

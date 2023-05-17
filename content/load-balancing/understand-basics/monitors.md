@@ -22,7 +22,7 @@ Health checks associated with load balancers are different from [**Standalone he
 
 ## Properties
 
-For an up-to-date list of monitor properties, refer to [Monitor properties](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-list-monitors) in our API documentation.
+For an up-to-date list of monitor properties, refer to [Monitor properties](/api/operations/account-load-balancer-monitors-list-monitors) in our API documentation.
 
 ---
 
@@ -34,7 +34,7 @@ For step-by-step guidance, refer to [Create monitors](/load-balancing/how-to/cre
 
 ## Health check regions
 
-When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#attach-the-monitor-to-a-pool), you can select multiple regions to increase reporting accuracy.
+When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can select multiple regions to increase reporting accuracy.
 
 {{<render file="_health-check-regions.md">}}
 
@@ -56,10 +56,10 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
 
 | Command | Method | Endpoint |
 | --- | --- | --- |
-| [Create Monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors`|
-| [Delete Monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-delete-monitor) | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id` |
-| [List Monitors](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-list-monitors) | `GET` |  `accounts/:account_id/load_balancers/monitors` |
-| [Monitor Details](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-monitor-details) | `GET` |`accounts/:account_id/load_balancers/monitors/:id` |
-| [Overwrite specific properties](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-patch-monitor) | `PATCH` | `accounts/:account_id/load_balancers/monitors/:id` |
-| [Overwrite existing monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-update-monitor) | `PUT` | `accounts/:account_id/load_balancers/monitors/:id` |
-| [Preview Monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-preview-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors/:id/preview` |
+| [Create Monitor](/api/operations/account-load-balancer-monitors-create-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors`|
+| [Delete Monitor](/api/operations/account-load-balancer-monitors-delete-monitor) | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [List Monitors](/api/operations/account-load-balancer-monitors-list-monitors) | `GET` |  `accounts/:account_id/load_balancers/monitors` |
+| [Monitor Details](/api/operations/account-load-balancer-monitors-monitor-details) | `GET` |`accounts/:account_id/load_balancers/monitors/:id` |
+| [Overwrite specific properties](/api/operations/account-load-balancer-monitors-patch-monitor) | `PATCH` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [Overwrite existing monitor](/api/operations/account-load-balancer-monitors-update-monitor) | `PUT` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [Preview Monitor](/api/operations/account-load-balancer-monitors-preview-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors/:id/preview` |

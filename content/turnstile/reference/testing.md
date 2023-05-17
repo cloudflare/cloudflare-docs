@@ -11,17 +11,13 @@ layout: single
 
 The following sitekeys and secret keys are available for testing.
 
-| Sitekey | Description |
-| --- | --- |
-| `1x00000000000000000000AA` | Always passes |
-| `2x00000000000000000000AB` | Always blocks |
-| `3x00000000000000000000FF` | Forces an interactive challenge |
-
-{{<Aside type="note">}}
-
-There are currently no sitekeys for testing invisible mode.
-
-{{</Aside>}}
+| Sitekey | Description | Visibility |
+| --- | --- | --- |
+| `1x00000000000000000000AA` | Always passes | visible |
+| `2x00000000000000000000AB` | Always blocks | visible |
+| `1x00000000000000000000BB` | Always passes | invisible |
+| `2x00000000000000000000BB` | Always blocks | invisible |
+| `3x00000000000000000000FF` | Forces an interactive challenge | visible |
 
 | Secret key | Description |
 | --- | --- |

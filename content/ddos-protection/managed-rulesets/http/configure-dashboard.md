@@ -24,7 +24,7 @@ For more information on the available parameters and allowed values, refer to [R
 
 3. Next to **HTTP DDoS attack protection**, select **Deploy a DDoS override**.
 
-    ![The DDoS L7 managed ruleset override configuration page in the Cloudflare dashboard.](/ddos-protection/static/ddos/ddos-configure-override.png)
+    ![The DDoS L7 managed ruleset override configuration page in the Cloudflare dashboard.](/images/ddos-protection/ddos/ddos-configure-override.png)
 
 4. Enter a descriptive name for the override in **Override name**.
 
@@ -39,7 +39,7 @@ For more information on the available parameters and allowed values, refer to [R
 
     Under **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Attack Protection managed ruleset.
 
-    ![Ruleset configuration page for a DDoS override in the Cloudflare dashboard.](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
+    ![Ruleset configuration page for a DDoS override in the Cloudflare dashboard.](/images/ddos-protection/ddos/ddos-configure-ruleset.png)
 
     </div></details>
 
@@ -49,13 +49,16 @@ For more information on the available parameters and allowed values, refer to [R
 
     2\. Search for the rules you wish to configure using the available filters. You can search by [tag](/ddos-protection/managed-rulesets/http/rule-categories/) (also known as category).
 
-    ![Configuring the action and sensitivity of specific rules in the HTTP DDoS managed ruleset.](/ddos-protection/static/ddos/ddos-configure-rules.png)
+    ![Configuring the action and sensitivity of specific rules in the HTTP DDoS managed ruleset.](/images/ddos-protection/ddos/ddos-configure-rules.png)
 
     3\. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
     To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-    {{<Aside type="note">}}Tag and rule configurations have greater priority than ruleset configurations.{{</Aside>}}
+    {{<Aside type="note" header="Notes">}}
+* Tag and rule configurations have greater priority than ruleset configurations.
+* {{<render file="managed-rulesets/_read-only-rules-note.md">}}
+    {{</Aside>}}
 
     4\. Select **Next**.
 

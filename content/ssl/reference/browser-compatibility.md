@@ -2,11 +2,13 @@
 pcx_content_type: reference
 title: Browser compatibility
 weight: 6
+meta:
+    description: Review information about browser compatibility for the different Cloudflare SSL offerings.
 ---
 
 # Browser compatibility
 
-Cloudflare attempts to provide compatibility for as wide a range of user agents (browsers, API clients, etc.) as possible. The specific set of supported browsers differs by SSL product, however. See below for specific details.
+Cloudflare attempts to provide compatibility for as wide a range of user agents (browsers, API clients, etc.) as possible. However, the specific set of supported browsers differs by SSL product. Consider the following sections for details.
 
 ## Universal SSL
 

@@ -58,7 +58,7 @@ To create a Keyless certificate in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To create a Keyless certificate with the API, send a [`POST`](https://developers.cloudflare.com/api/operations/keyless-ssl-for-a-zone-create-keyless-ssl-configuration) request.
+To create a Keyless certificate with the API, send a [`POST`](/api/operations/keyless-ssl-for-a-zone-create-keyless-ssl-configuration) request.
 
 {{</tab>}}
 {{</tabs>}}
@@ -73,4 +73,4 @@ To create a Keyless certificate with the API, send a [`POST`](https://developers
 
 During TLS handshakes, Cloudflare’s keyless client will initiate connections to the key server hostname or IP address you specify during certificate upload. By default, the keyless client will use a destination TCP port of 2407, but this can be changed during certificate upload or by editing the certificate details after upload.
 
-Create firewall rules that allow your key server to accept connections from only Cloudflare. We publish our IPv4 and IPv6 addresses [via our API](https://developers.cloudflare.com/api/operations/cloudflare-i-ps-cloudflare-ip-details).
+Create firewall rules that allow your key server to accept connections from only Cloudflare. We publish our IPv4 and IPv6 addresses [via our API](/api/operations/cloudflare-i-ps-cloudflare-ip-details).

@@ -33,7 +33,7 @@ To update this setting in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To update your **Minimum TLS Version** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-minimum-tls-version-setting) request with the `value` parameter specifying your preferred minimum version.
+To update your **Minimum TLS Version** with the API, send a [`PATCH`](/api/operations/zone-settings-change-minimum-tls-version-setting) request with the `value` parameter specifying your preferred minimum version.
  
 {{</tab>}}
 {{</tabs>}}

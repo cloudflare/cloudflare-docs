@@ -13,7 +13,7 @@ Cloudflare WARP allows you to selectively apply WARP client settings if the devi
 
 A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, WARP detects the TLS endpoint and validates its certificate against an uploaded SHA-256 fingerprint.
 
-The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. One option is to choose a host that is physically in the office which remote users do not need to access, such as a printer.
+The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. Therefore, do not choose a [private network IP](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/) that is exposed to users over Cloudflare Tunnel. One option is to choose a host that is physically in the office which remote users do not need to access, such as a printer.
 
 ### Create a new TLS endpoint
 
@@ -87,10 +87,17 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate.
 
-## 4. Configure device profiles
+WARP will automatically exclude the IP address of the TLS endpoint from all [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configurations. This prevents remote users from accessing the endpoint through the WARP tunnel on any port. 
 
-1. [Create a settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) for devices on this network. In the rule builder, the network name will appear when you choose the _Managed network_ selector.
-2. For all device profiles, add a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the TLS endpoint's IP address. This blocks remote users from accessing the TLS endpoint through the WARP tunnel.
+## 4. Configure device profile
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+2. Under **Profile settings**, create a new [settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) or edit an existing profile.
+3. To apply this profile whenever a device connects to your network, add the following rule:
+| Selector | Operator | Value |
+| -------  | -------- | ------|
+| Managed network | is | `<NETWORK-NAME>` |
+4. Save the profile.
 
 Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will determine its network location and apply the corresponding settings profile.
 
