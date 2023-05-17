@@ -56,7 +56,7 @@ export default {
 }
 ```
 
-After you have deployed the JavaScript Worker, set a cron trigger through the Workers dashboard to run this script periodically. Refer to [Cron Triggers](/workers/platform/triggers/cron-triggers/) for more details.
+After you have deployed the JavaScript Worker, set a cron trigger in your Worker to run this script periodically. Refer to [Cron Triggers](/workers/platform/triggers/cron-triggers/) for more details.
 
 ### Deleting old deployments after a week
 
@@ -96,7 +96,7 @@ export default {
 }
 ```
 
-After you have deployed the JavaScript Worker, you can set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/triggers/cron-triggers/) for more details.
+After you have deployed the JavaScript Worker, you can set a cron trigger in your Worker to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/triggers/cron-triggers/) for more details.
 
 ### Sharing project information
 
