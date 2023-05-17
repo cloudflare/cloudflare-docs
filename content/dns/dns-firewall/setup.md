@@ -43,7 +43,7 @@ If you forget to save your new IP addresses, find your cluster and click **IP Ad
 
 #### Using the API
 
-You can also create a DNS Firewall cluster by sending a [POST request](https://developers.cloudflare.com/api/operations/dns-firewall-create-dns-firewall-cluster) to the API.
+You can also create a DNS Firewall cluster by sending a [POST request](/api/operations/dns-firewall-create-dns-firewall-cluster) to the API.
 
 ### Update registrar settings
 

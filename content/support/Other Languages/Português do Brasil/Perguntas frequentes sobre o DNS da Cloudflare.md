@@ -65,7 +65,7 @@ ___
 
 ## Onde posso alterar meus nameservers para que apontem para a Cloudflare?
 
-Faça a alteração no seu registrador, que pode ou não ser seu provedor de hospedagem. Se você não sabe quem é o seu registrador para esse domínio, você pode localizá-lo fazendo uma [pesquisa no WHOis](http://www.whois.net/).Siga as instruções em [alterar os nameservers para a Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup).
+Faça a alteração no seu registrador, que pode ou não ser seu provedor de hospedagem. Se você não sabe quem é o seu registrador para esse domínio, você pode localizá-lo fazendo uma [pesquisa no WHOis](http://www.whois.net/).Siga as instruções em [alterar os nameservers para a Cloudflare](/dns/zone-setups/full-setup/setup).
 
 ___
 
@@ -109,13 +109,13 @@ ___
 
 Por padrão, quaisquer alterações ou acréscimos feitos no seu arquivo de zona da Cloudflare entrarão no ar em 5 minutos ou menos. Seu cache de DNS local pode demorar mais para atualizar e por esse motivo a propagação em todos os lugares pode demorar mais de 5 minutos.
 
-Esta configuração é controlada pelo valor do Tempo até entrar no ar (TTL) em um [registro de DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).Atualização de registros proxy dentro de 300 segundos (Auto), mas o TTL para registros sem proxy pode ser personalizado.
+Esta configuração é controlada pelo valor do Tempo até entrar no ar (TTL) em um [registro de DNS](/dns/manage-dns-records/how-to/create-dns-records).Atualização de registros proxy dentro de 300 segundos (Auto), mas o TTL para registros sem proxy pode ser personalizado.
 
 ___
 
 ## A Cloudflare oferece mascaramento de domínio?
 
-Não. A Cloudflare não oferece serviços de mascaramento de domínio ou redirecionamento de DNS (talvez seu provedor de hospedagem ofereça). No entanto, oferecemos encaminhamento de URLs através de [Bulk Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/).
+Não. A Cloudflare não oferece serviços de mascaramento de domínio ou redirecionamento de DNS (talvez seu provedor de hospedagem ofereça). No entanto, oferecemos encaminhamento de URLs através de [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
 ___
 
@@ -187,7 +187,7 @@ ___
 
 ## O ícone de nuvem ao lado do meu registro de DNS deve estar em laranja ou cinza?
 
-Por padrão, somente os registros A e CNAME que lidam com o tráfego da web (HTTP e HTTPs) podem fazer proxy para a Cloudflare. Todos os demais registros de DNS devem ser alternados para uma nuvem cinza. Para mais detalhes, consulte nosso [guia de suporte](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
+Por padrão, somente os registros A e CNAME que lidam com o tráfego da web (HTTP e HTTPs) podem fazer proxy para a Cloudflare. Todos os demais registros de DNS devem ser alternados para uma nuvem cinza. Para mais detalhes, consulte nosso [guia de suporte](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
@@ -209,7 +209,7 @@ O erro parece enganoso, pois foi encontrado na sintaxe do código do cliente, es
 
 **Solução**
 
-Confira o argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Um caso de uso mais detalhado pode ser encontrado [neste](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) thread do Github.
+Confira o argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Um caso de uso mais detalhado pode ser encontrado [neste](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) thread do GitHub.
 
 ___
 

@@ -58,14 +58,18 @@ If none of the above scenarios apply, contact Cloudflare support with the follow
 - URL of the request
 - Screenshot or copy/paste of the content from the error page
 
+For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
+
 ## I see error 504 when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-domain) or create a [Gateway DNS policy](/cloudflare-one/policies/filtering/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/filtering/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
 
 | Selector          | Operator | Value         | Action |
 | ----------------- | -------- | ------------- | ------ |
 | Host              | is       | `example.com` | Block  |
 | Query Record Type | is       | `AAAA`        |        |
+
+For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-502-bad-gateway-or-error-504-gateway-timeout).
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
@@ -129,7 +133,7 @@ Those three components are bundled into a single PEM file that is downloaded one
 
 The third component, the token, consists of the zone ID (for the selected domain) and an API token scoped to the user who first authenticated with the login command. When user permissions change (if that user is removed from the account or becomes an admin of another account, for example), Cloudflare rolls the user's API key. However, the certificate file downloaded through `cloudflared` retains the older API key and can cause authentication failures. The user will need to login once more through `cloudflared` to regenerate the certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
 
-## Firefox shows a network protocol violation when I use the WARP client
+## Firefox shows a network protocol violation when I use the WARP client.
 
 If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
@@ -157,9 +161,25 @@ If `cloudflared` returns error `error="remote error: tls: handshake failure"`, c
 
 ## My tunnel disconnects at random intervals
 
-If your [Cloudflare Tunnel logs](/cloudflare-one/faq/cloudflare-tunnels-faq/#run-tunnel-with-debug-logging) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
+If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
+
+## WARP on Linux shows `DNS connectivity check failed` with reason `DNSLookupFailed`.
+
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. To solve the issue:
+
+1. Add the following line to `/etc/systemd/resolved.conf`:
+
+```txt
+ResolveUnicastSingleLabel=yes
+```
+
+2. Restart the service:
+
+```sh
+$ sudo systemctl restart systemd-resolved.service
+```

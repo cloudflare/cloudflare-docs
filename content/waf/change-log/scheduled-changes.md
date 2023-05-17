@@ -24,40 +24,22 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
+      <td>2023-05-10</td>
+      <td>2023-05-22</td>
       <td>Block</td>
-      <td>100546_BETA</td>
-      <td>N/A</td>
-      <td>XSS - HTML Encoding</td>
-      <td>This rule will replace 100546</td>
+      <td>100583</td>
+      <td>...dae05f0a</td>
+      <td>Sophos - Code Injection - CVE:CVE-2023-1671</td>
+      <td>New Detection</td>
     </tr>
     <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
-      <td>Block</td>
-      <td>100580</td>
-      <td>...dfc9b843</td>
-      <td>XSS - Error handling</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
-      <td>Block</td>
-      <td>100581</td>
-      <td>...2f26b3a7</td>
-      <td>Joomla - Information Disclosure - CVE:CVE-2023-23752</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
-      <td>Block</td>
-      <td>N/A</td>
-      <td>...602dabe0</td>
-      <td>XSS - JavaScript Events - Beta</td>
-      <td>This rule will replace ...602dabe0</td>
+      <td>2023-05-10</td>
+      <td>2023-05-22</td>
+      <td>Disabled</td>
+      <td>100584</td>
+      <td>...dd1b7502</td>
+      <td>Oracle Opera - Code Injection - CVE:CVE-2023-21932</td>
+      <td>New Detection</td>
     </tr>
   </tbody>
 </table>

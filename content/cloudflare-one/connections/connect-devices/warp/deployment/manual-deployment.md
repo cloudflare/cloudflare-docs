@@ -11,21 +11,9 @@ If you plan to direct your users to manually download and configure the WARP cli
 ## Prerequisites
 
 - [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/) on user devices.
+- [Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
 
-## Set device enrollment permissions
-
-To specify which users in your organization can enroll new devices:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
-2. In the **Device enrollment** card, select **Manage**.
-3. In the **Rules** tab, configure one or more [Access policies](/cloudflare-one/policies/access/) to define who can enroll or revoke devices.
-4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with.
-5. Choose a global **Session duration** for enrolled devices. Users will need to re-authenticate their device after their session expires. To customize session durations for different users or applications, refer to [session duration policies](/cloudflare-one/policies/filtering/enforce-sessions/).
-6. Select **Save**.
-
-Your device enrollment rules are now active. To see which devices have been enrolled or revoked, go to **My Team** > **Devices**.
-
-## Enroll a device
+## Enroll a device manually
 
 ### Windows and macOS
 

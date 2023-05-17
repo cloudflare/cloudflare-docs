@@ -16,7 +16,7 @@
     {{- range $index, $item := (split .RelPermalink "/") -}}
       {{- if gt (len $item ) 0 -}}
       
-        {{- $rellink = printf "%s/%s" $rellink $item -}}
+        {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item).Path -}}
         {{- $page := $.Site.GetPage $rellink -}}
         
       {{- if eq ($page.RelPermalink | strings.Count "/" ) 2 -}}

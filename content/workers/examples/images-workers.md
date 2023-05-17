@@ -13,12 +13,12 @@ layout: example
 To serve images from a custom domain:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select you account > select **Workers**.
-3. Select **Create a service**.
-4. In your Workers, select **Quick edit** and paste the following code.
+2. Select your account > select **Workers & Pages**.
+3. Select **Create application** > **Workers** > **Create Worker** and create your Worker.
+4. In your Worker, select **Quick edit** and paste the following code.
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -37,7 +37,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {

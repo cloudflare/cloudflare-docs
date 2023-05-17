@@ -18,6 +18,6 @@ These are the current alphas and betas relevant to the Cloudflare Workers platfo
 | Green Compute                 |               |              |  ✅          |[Blog](https://blog.cloudflare.com/earth-day-2022-green-compute-open-beta/) |
 | Pub/Sub                       |               | ✅           |              |[Docs](/pub-sub)                                                            |
 | Queues                        |               |              |  ✅          |[Docs](/queues)                                                             |
-| TCP Workers                   |               | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-socket-workers/)             |
+| TCP Workers                   |               |            |     ✅         |[Docs](/workers/runtime-apis/tcp-sockets)             |
 | Workers Analytics Engine      |               |             | ✅            |[Docs](/analytics/analytics-engine/)               |
 | Workers Deployments           |               |             | ✅            |[Docs](/workers/platform/deployments)               |

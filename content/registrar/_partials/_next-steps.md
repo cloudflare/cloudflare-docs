@@ -13,4 +13,4 @@ Refer to your web host's documentation to learn what type of records you need to
 
 For example, Netlify asks customers that host websites with them to add a `CNAME` record pointing `<YOUR-DOMAIN>` to `apex-loadbalancer.netlify.com`, and another `CNAME` record pointing `www` to `<YOUR-DOMAIN>.netlify.app`, depending on which one is the primary domain.
 
-![An example of DNS management in Cloudflare's DNS dashboard](/registrar/static/dns-management.png)
+![An example of DNS management in Cloudflare's DNS dashboard](/images/registrar/dns-management.png)

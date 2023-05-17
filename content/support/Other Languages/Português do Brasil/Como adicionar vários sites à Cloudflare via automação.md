@@ -27,7 +27,7 @@ Se você precisar adicionar vários sites (+10) à Cloudflare de uma só vez, po
 -   For uma agência ou consultoria de TI e gerenciar vários domínios em nome de seus clientes (observação: nesse caso você deve avaliar o [programa de Parceiros](https://www.cloudflare.com/partners/) da Cloudflare)
 -   Estiver transferindo um conjunto existente de sites para a Cloudflare
 
-O uso da API permitirá que você adicione vários sites de forma rápida e eficiente, especialmente se já souber [como alterar seus nameservers](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup) ou [adicionar um registro de DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
+O uso da API permitirá que você adicione vários sites de forma rápida e eficiente, especialmente se já souber [como alterar seus nameservers](/dns/zone-setups/full-setup/setup) ou [adicionar um registro de DNS](/dns/manage-dns-records/how-to/create-dns-records).
 
 ___
 

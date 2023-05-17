@@ -12,11 +12,11 @@ meta:
 
 {{<Aside type="note">}}
 
-This guide is tailored to Wrangler v2. If you are still using Wrangler v1, refer to the [Migrate from Wrangler v1 guide](/workers/wrangler-legacy/migration/).
+This guide is tailored to Wrangler v2. If you are still using Wrangler v1, refer to [Migrations](/workers/wrangler/migration/).
 
 {{</Aside>}}
 
-To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
+To create your R2 bucket, install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler-legacy), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
@@ -77,7 +77,7 @@ You will need to bind your bucket to a Worker.
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables/) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables/) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -102,7 +102,7 @@ account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
 ```
 
-To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#create-your-bucket):
+To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#3-create-your-bucket):
 
 ```toml
 [[r2_buckets]]
@@ -110,7 +110,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler-legacy/configuration/).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 
@@ -224,11 +224,11 @@ Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the
 ✨  Success! Uploaded secret AUTH_KEY_SECRET.
 ```
 
-This secret is now available as the global variable `AUTH_KEY_SECRET` in your Worker.
+This secret is now available as `AUTH_KEY_SECRET` on the `env` parameter in your Worker.
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler-legacy/commands/#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
 $ wrangler publish

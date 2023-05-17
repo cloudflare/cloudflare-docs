@@ -38,6 +38,10 @@ If Zaraz is not loading, please verify the following:
 
 Yes. You can use the metrics in [Zaraz Monitoring](/zaraz/monitoring/) to help you find where in the workflow the problem occurred.
 
+#### Can I use Zaraz with Rocket Loader?
+
+We recommend disabling [Rocket Loader](/fundamentals/speed/rocket-loader/) when using Zaraz. While Zaraz can be used together with Rocket Loader, there's usually no need to use both. Rocket Loader can sometimes delay data from reaching Zaraz, causing issues.
+
 #### Is Zaraz compatible with Content Security Policies (CSP)?
 
 Yes. To learn more about how Zaraz works to be compatible with CSP configurations, refer to the [Cloudflare Zaraz supports CSP](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/) blog post.

@@ -24,7 +24,11 @@ No. **Logpush** only pushes the logs once as they become available and is unable
 
 ## I have reconfigured the job to a new destination, but why am I still receiving the logs at the old destination?
 
-Typically there will be a delay no greater than 15 minutes to complete the transition. Refer to the question about [destination temporarily unavailable](/logs/faq/logpush/#what-happens-if-my-cloud-storage-destination-is-temporarily-unavailable), for more details on this topic. 
+Although we cannot provide a precise time, we estimate that it will take 10-15 minutes to complete the transition. Refer to the question about [destination temporarily unavailable](/logs/faq/logpush/#what-happens-if-my-cloud-storage-destination-is-temporarily-unavailable), for more details on this topic.
+
+## If I add new fields to an existing Logpush job, how long will it take for the change to become effective? 
+
+We cannot provide a precise time, but we estimate that the new fields will show up within 10-15 minutes.
 
 ## Why am I receiving a validating destination error while setting up a Splunk job? 
 

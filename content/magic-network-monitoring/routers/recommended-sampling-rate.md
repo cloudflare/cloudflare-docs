@@ -12,8 +12,8 @@ NetFlow or sFlow data is created by sampling the traffic that passes through you
 
 The table below gives general recommendations for sampling rates depending on your traffic volume. Customers are encouraged to test different sampling rates to find the best option.
 
-| Traffic Volume | Recommendation |
-|----------------|----------------|
+| Traffic Volume | Router sampling recommendation |
+|----------------|--------------------------------|
 | Low            | Between 1 in 100 packets - 1 in 500 packets |
 | Medium         | Between 1 in 1,000 - 1 in 2,000 packets |
 | High           | Between 1 in 2,000 - 1 in 4,000 packets |

@@ -38,6 +38,12 @@ If you need to re-add the domain in a different account, make sure the current s
 
 2. On the **Overview** page, find **Advanced Actions** and then select **Remove Site from Cloudflare**.
 
-    ![Remove site from Cloudflare is an option under Advanced Actions](/fundamentals/static/images/get-started/remove-domain.png)
+    ![Remove site from Cloudflare is an option under Advanced Actions](/images/fundamentals/get-started/remove-domain.png)
 
 3. Select **Confirm**.
+
+{{<Aside type="note">}}
+
+Cloudflare retains your configuration history for 18 months, which is the default retention period for the zone's [audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). 
+
+{{</Aside>}}

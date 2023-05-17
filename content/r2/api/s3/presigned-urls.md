@@ -41,6 +41,17 @@ The central application can be, for example, a Cloudflare Worker. Worker secrets
 
 Another potential use case for presigned URLs is debugging. For example, if you are debugging your application and want to grant temporary access to a specific test object in a production environment, you can do this without needing to share the underlying token and remembering to revoke it.
 
+## Supported HTTP methods
+
+R2 currently supports the following methods when generating a presigned URL:
+
+- `GET`: allows a user to fetch an object from a bucket
+- `HEAD`: allows a user to fetch an object's metadata from a bucket
+- `PUT`: allows a user to upload an object to a bucket
+- `DELETE`: allows a user to delete an object from a bucket
+
+`POST`, which performs uploads via native HTML forms, is not currently supported.
+
 ## Generate presigned URLs
 
 Generate a presigned URL by referring to the following examples:
@@ -57,7 +68,7 @@ A valid alternative design to presigned URLs is to use a Worker with a [binding]
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/platform/environment-variables) for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/platform/environment-variables) for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 

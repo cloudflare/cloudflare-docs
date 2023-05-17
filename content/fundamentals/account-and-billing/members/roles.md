@@ -16,7 +16,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 
 | Role | Description |
 | --- | --- |
-| Administrator | Can access the full account, except for membership management and billing. |
+| Administrator | Can access the full account including subscriptions, except for membership management and billing. |
 | Super Administrator - All Privileges | Can edit any Cloudflare setting, make purchases, update billing, and manage memberships. Super Administrators can revoke the access of other Super Administrators. |
 | Administrator Read Only | Can access the full account in read-only mode. |
 | Analytics | Can read Analytics. |
@@ -27,7 +27,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Cloudflare Gateway | Can edit [Cloudflare Gateway](/cloudflare-one/policies/filtering/) and read [Access](/cloudflare-one/identity/). |
 | Cloudflare Images | Can access [Cloudflare Images](/images/cloudflare-images/) data. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
-| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/) and [Pages](/pages/). |
+| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), and [R2](/r2/). |
 | Cloudflare Zero Trust | Can edit [Cloudflare for Zero Trust](/cloudflare-one/). |
 | Cloudflare Zero Trust PII | Can access [Cloudflare for Zero Trust](/cloudflare-one/) PII. |
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |

@@ -16,7 +16,7 @@ Argo Smart Routing is a one-click solution to speed up your global traffic.
 To enable [Argo Smart Routing](https://dash.cloudflare.com/?to=/:account/:zone/traffic) in the dashboard:
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Traffic** > **Argo**.
+2. Go to **Traffic** > **Argo Smart Routing**.
 3. For **Argo Smart Routing**, switch the toggle to **On**.
 4. Provide your billing information.
 

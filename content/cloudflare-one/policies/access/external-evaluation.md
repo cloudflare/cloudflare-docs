@@ -47,7 +47,7 @@ You can set up External Evaluation rules using any API service, but to get start
 
 4. Open `wrangler.toml` in a text editor and insert the following:
 
-   - `<ACCOUNT_ID>`: your Cloudflare account ID, shown in the [Cloudflare dashboard](https://dash.cloudflare.com/) in the **Workers** tab.
+   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
    - `<KV_NAMESPACE_ID>`: the `id` of your KV namespace.
    - `<TEAM_NAME>`: your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
 
@@ -79,7 +79,7 @@ You can set up External Evaluation rules using any API service, but to get start
 
 {{<Aside type="note">}}
 
-- Sample code is available in our [Github repository](https://github.com/cloudflare/workers-access-external-auth-example).
+- Sample code is available in our [GitHub repository](https://github.com/cloudflare/workers-access-external-auth-example).
 - To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
   {{</Aside>}}
 
@@ -98,7 +98,7 @@ To generate an RSA private/public key pair:
 1. Open a browser and go to `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys`.
 
 2. (Optional) Verify that the key has been stored in the `KV` namespace:
-   1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to **Workers** > **KV**.
+   1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to **Workers & Pages** > **KV**.
    2. Select **View** next to `my-worker-KV`.
 
 Other key formats (such as DSA) are not supported at this time.

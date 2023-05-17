@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
 title: WARP session duration
-weight: 7
+weight: 12
 ---
 
 # Enforce WARP session duration
 
-Cloudflare Zero Trust allows you to enforce session durations on Gateway Network and HTTP policies. Once a session expires, a user will be prompted to re-authenticate with the identity provider they used to enroll in the WARP client.
+Cloudflare Zero Trust allows you to enforce session durations on Gateway Network and HTTP policies. Once a session expires, a user will be prompted to re-authenticate with the identity provider they used to enroll in the WARP client. If you do not enforce a session duration, WARP sessions will be unlimited by default.
 
 ## Prerequisites
 

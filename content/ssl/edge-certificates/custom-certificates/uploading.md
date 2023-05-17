@@ -66,7 +66,7 @@ To upload a custom SSL certificate in the dashboard:
 
 9.  Select **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
-10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/custom-certificates/caa-records/).
+10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/caa-records/).
 {{</tab>}}
 
 {{<tab label="api" no-code="true">}}
@@ -125,7 +125,7 @@ EOF
 
 2. Upload your certificate and key
 
-Use the [POST](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
+Use the [POST](/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
 
 ```bash
 $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
@@ -137,7 +137,7 @@ $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_cert
 
 {{<render file="_caa-records-definition.md">}}
 
-For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/custom-certificates/caa-records/).
+For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/caa-records/).
 
 {{</tab>}}
 {{</tabs>}}
@@ -161,7 +161,7 @@ To update a certificate in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To update a certificate using the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
+To update a certificate using the API, send a [`PATCH`](/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
  
 {{</tab>}}
 {{</tabs>}}

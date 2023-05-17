@@ -3,18 +3,17 @@ pcx_content_type: how-to
 type: overview
 title: Create in the dashboard for an account
 weight: 15
+meta:
+  title: Create a rate limiting rule in the dashboard for an account
 ---
 
-# Create rate limiting rules in the dashboard for an account
+# Create a rate limiting rule in the dashboard for an account
 
 At the account level, you must first create a custom rate limiting ruleset, containing one or more rate limiting rules, and then deploy it to one or more zones on an Enterprise plan.
-
-Both operations are available in the dashboard in Account Home > **WAF** > **Rate limiting rulesets**.
 
 {{<Aside type="note" header="Notes">}}
 * Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
 * At the API level, custom rate limiting rulesets are regular [custom rulesets](/waf/custom-rulesets/) with one or more rate limiting rules. The concept of custom rate limiting ruleset exists only in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level.
-* For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 {{</Aside>}}
 
 ## 1. Create a custom rate limiting ruleset

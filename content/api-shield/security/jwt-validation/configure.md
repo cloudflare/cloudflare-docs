@@ -107,7 +107,7 @@ The response will be in a Cloudflare `v4` response envelope and the result conta
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Navigate to **Security** > **Events** to view the Firewall Events.
-3. Filter for a specific rule ID. The rule ID used for filtering can be obtained from the response after creating the `POST` command to send the token validation configuration to Cloudflare’s API.
+3. Filter for a specific rule ID. The rule ID used for filtering can be obtained from the response of a `GET` (`GET https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation`) request after having created a token configuration using the `POST` request. The rule ID will be present as soon as the rule has been correctly setup. 
 
 ## Maintenance
 

@@ -59,7 +59,7 @@ echo '{ "query":
   -H "X-Auth-key: <API_KEY>" \
   -s \
   -d @- \
-  https://api.cloudflare.com/client/v4/graphql/ | jq.
+  https://api.cloudflare.com/client/v4/graphql/ | jq .
 ```
 
 {{<Aside type="note">}}

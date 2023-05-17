@@ -12,7 +12,7 @@ meta:
 
 If you are using an existing [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
 
-Once you order a certificate, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://developers.cloudflare.com/api/operations/certificate-packs-list-certificate-packs).
+Once you order a certificate, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](/api/operations/certificate-packs-list-certificate-packs).
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -33,14 +33,14 @@ To create a new advanced certificate in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To create a new certificate using the API, send a [POST request](https://developers.cloudflare.com/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+To create a new certificate using the API, send a [POST request](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
  
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="warning">}}
 
-{{<render file="_lets-encrypt-advanced-limitations.md">}}
+{{<render file="_acm-ca-hostnames-conditions.md">}}
 
 {{</Aside>}}
 
@@ -61,7 +61,7 @@ To delete an advanced certificate in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To delete a certificate using the API, send a [DELETE request](https://developers.cloudflare.com/api/operations/certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+To delete a certificate using the API, send a [DELETE request](/api/operations/certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
  
 {{</tab>}}
 {{</tabs>}}
@@ -70,7 +70,7 @@ To delete a certificate using the API, send a [DELETE request](https://developer
 
 ## Restart validation
 
-To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](https://developers.cloudflare.com/api/operations/certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
+To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](/api/operations/certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
 
 ---
 
