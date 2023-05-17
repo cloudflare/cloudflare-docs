@@ -17,7 +17,7 @@ To understand Workers Services better, it will help to know about Bindings and D
 
 ## Bindings
 
-Bindings allow your Workers to interact with resources on the Workers platform. Bindings can be configured by logging in to the Cloudflare dashboard > Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables**. Bindings also provide a security model for interacting with those resources. Workers only have access to other resources that are explicitly defined as a binding in configuration.
+Bindings allow your Workers to interact with resources on the Workers platform. Bindings can be configured by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers & Pages** > select your Worker > **Settings**> **Variables**. Bindings also provide a security model for interacting with those resources. Workers only have access to other resources that are explicitly defined as a binding in configuration.
 
 There are multiple types of bindings available today:
 

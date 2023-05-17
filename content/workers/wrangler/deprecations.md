@@ -145,7 +145,7 @@ Try using `wrangler dev` to try out a worker during development.
 
 The `wrangler subdomain` command is no longer available for creating a `workers.dev` subdomain.
 
-Create the `workers.dev` subdomain on your Workers dashboard.
+Create the `workers.dev` subdomain in **Workers & Pages** > select your Worker > Your subdomain > **Change**.
 
 #### route
 

@@ -108,7 +108,7 @@ After you have generated your Cloudflare API token and found your account ID in 
 
 To add environment variables, in the CircleCI web application:
 
-1. Go to your project's settings.
+1. Go to your Pages project > **Settings**.
 2. Select **Projects** in the side menu.
 3. Select the ellipsis (...) button in the project's row. You will see the option to add environment variables.
 4. Select **Environment Variables** > **Add Environment Variable**.
