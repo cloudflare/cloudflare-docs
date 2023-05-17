@@ -134,9 +134,10 @@ To migrate the route `example.com/*`:
 
 1. Log in to the [Cloudflare dashboard](https://dash.clouflare.com) and select your account.
 2. Go to **DNS** and delete the CNAME record for `example.com`.
-3. Go to **Account Home** > **Workers & Pages** > in **Overview**, select your Worker > **Triggers**.
-4. Select **Add Custom Domain** and add `example.com`.
-5. Delete the route `example.com/*` located in your Worker > **Triggers** > **Routes**.
+3. Go to **Account Home** > **Workers & Pages**.
+4. In **Overview**, select your Worker > **Triggers**.
+5. Select **Add Custom Domain** and add `example.com`.
+6. Delete the route `example.com/*` located in your Worker > **Triggers** > **Routes**.
 
 ### Migrate from Routes via Wrangler
 

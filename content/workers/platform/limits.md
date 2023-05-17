@@ -166,7 +166,7 @@ Workers being rate-limited by Anti-Abuse Protection are also visible from the Cl
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and your website.
 2. Select **Security** > **Events** > scroll to **Activity log**.
-3. Review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
+3. Review the log for a Web Application Firewall block event with a `ruleID` of `worker`.
 
 ### Daily request
 
@@ -189,7 +189,7 @@ Only one Workers instance runs on each of the many global Cloudflare global netw
 If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > in **Overview**, select the Worker you would like to investigate.
+2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
 3. Find **Invocation Statuses** and examine _Exceeded Resources_.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
