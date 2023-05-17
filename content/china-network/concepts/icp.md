@@ -14,8 +14,6 @@ Under ICP, all websites with their own domain name that operate inside China mus
 
 All public websites in mainland China must have an ICP number [displayed on the website's home page](#display-your-icp-number). Websites with the same root domain can share the same ICP number. China-based hosting providers are instructed to shut down any website (often without notice) without an ICP number.
 
-Local government requires that all domains have valid ICP licenses to onboard Cloudflare's China Network.
-
 ## Types of ICP
 
 To host web services in mainland China, you are legally required to acquire an **ICP filing** or an **ICP license** in China.
@@ -42,7 +40,6 @@ If you wish to host a marketing-related website, you only need an ICP filing.
 ## Obtain an ICP number
 
 Cloudflare recommends that you apply for an ICP license through your hosting or Cloud Services Provider. You will need to provide the necessary documents to your provider to register the ICP number on your behalf:
-
 
 {{<table-wrap>}}
 
