@@ -61,7 +61,7 @@ If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. From Account Home, select **Workers & Pages**.
-3. Select your Pages project.
+3. In **Overview**, select your Pages project.
 4. Go to **Settings** > **Enable access policy**.
 5. Select **Edit** on the Acccess policy created for your preview deployments.
 6. In Edit, go to **Overview**.

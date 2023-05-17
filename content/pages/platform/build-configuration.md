@@ -72,7 +72,7 @@ If you are not using a framework, leave the **Build command** field blank.
 If your project makes use of environment variables to build your site, provide custom environment variables:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages** > your Pages project.
+2. In **Account Home**, select **Workers & Pages** > in **Overview**,select your Pages project.
 3. Select **Settings** > **Environment variables**.
 
 The following system environment variables are injected by default (but can be overridden):

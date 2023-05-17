@@ -16,7 +16,7 @@ Pages supports both Bundled and Unbound Usage Models. When an account is first u
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
-3. Select your Pages project.
+3. In **Overview**, select your Pages project.
 4. Find **Default Usage Model** on the right-side menu and select **Change**.
 
 You can update the Usage Model per project, for both Production and Preview deployments, in the Project Settings page. Like other modifications to your Project Settings, you must redeploy your site in order for this change to take effect. Requests to previous deployments will continue to be billed under the Usage Model the Function was deployed with.
