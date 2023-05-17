@@ -18,4 +18,4 @@ When turning on Always Online, you are also enabling the Internet Archive integr
 
 {{</Aside>}}
 
-For best practices and limitations for Always Online, refer to [Always Online Best Practices](/cache/best-practices/always-online/).
+Refer to [Always Online](/cache/troubleshooting/always-online/) for best practices, limitations and FAQs.

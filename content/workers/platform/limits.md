@@ -89,19 +89,19 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 {{<table-wrap>}}
 
-| Feature                               | Free                  | Paid       |
-| ------------------------------------- | --------------------- | ---------- |
-| [Reads/second](#kv)                   | 100,000 reads per day | unlimited  |
-| [Writes/second (different keys)](#kv) | 1,000 writes per day  | unlimited  |
-| [Writes/second (same key)](#kv)       | 1                     | 1          |
-| [Operations/worker invocation](#kv)   | 1000                  | 1000       |
-| [Namespaces](#kv)                     | 100                   | 100        |
-| [Storage/account](#kv)                | 1 GB                  | unlimited  |
-| [Storage/namespace](#kv)              | 1 GB                  | unlimited  |
-| [Keys/namespace](#kv)                 | unlimited             | unlimited  |
-| [Key size](#kv)                       | 512 bytes             | 512 bytes  |
-| [Key metadata](#kv)                   | 1024 bytes            | 1024 bytes |
-| [Value size](#kv)                     | 25 MiB                | 25 MiB     |
+| Feature                               | Free                  | Paid        |
+| ------------------------------------- | --------------------- | ----------  |
+| Reads                                 | 100,000 reads per day | unlimited   |
+| Writes to different keys              | 1,000 writes per day  | unlimited   |
+| Writes to same key                    | 1 per second          | 1 per second|
+| Operations/worker invocation          | 1000                  | 1000        |
+| Namespaces                            | 100                   | 100         |
+| Storage/account                       | 1 GB                  | unlimited   |
+| Storage/namespace                     | 1 GB                  | unlimited   |
+| Keys/namespace                        | unlimited             | unlimited   |
+| Key size                              | 512 bytes             | 512 bytes   |
+| Key metadata                          | 1024 bytes            | 1024 bytes  |
+| Value size                            | 25 MiB                | 25 MiB      |
 
 {{</table-wrap>}}
 
@@ -182,7 +182,11 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
-If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine _Exceeded Resources_.
+If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** > select the Worker you would like to investigate.
+3. Find **Invocation Statuses** and examine _Exceeded Resources_.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
@@ -242,6 +246,7 @@ While handling a request, each Worker is allowed to have up to six connections o
 - `put()`, `match()`, and `delete()` methods of [Cache objects](/workers/runtime-apis/cache/).
 - `list()`, `get()`, `put()`, `delete()`, and `head()` methods of [R2](/r2/).
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
+- Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
 
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 
@@ -283,26 +288,6 @@ App Workers do not count towards this limit.
 ## Number of routes per zone
 
 Each zone has a limit of 1,000 [routes](/workers/platform/triggers/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
----
-
-## KV
-
-Workers KV supports:
-
-- Up to 100 namespaces per account
-- Unlimited keys per namespace
-- Unlimited storage per namespace (except on the free tier, which is limited to 1 GB total across all namespaces in an account)
-- Keys of up to 512 bytes
-- Values of up to 25 MiB
-- Metadata of up to 1024 bytes per key
-- Unlimited reads per second
-- Unlimited writes per second, if they are to different keys
-- Up to one write per second to any particular key
-
-Workers KV read performance is determined by the amount of read-volume a given key receives. Maximum performance for a key is not reached unless that key is being read at least a couple times per minute in any given data center.
-
-Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds or more before reads in all global network locations are guaranteed to see the new value.
 
 ---
 

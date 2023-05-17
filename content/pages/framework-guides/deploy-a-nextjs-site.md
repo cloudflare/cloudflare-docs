@@ -107,10 +107,10 @@ Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs
 
 ### Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. In **Account Home**, select **Pages** > **Create a project**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create** > **Pages** > **Import from Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js_ as your **Framework preset**. Your selection will provide the following information.
 
    {{<table-wrap>}}
@@ -123,7 +123,7 @@ Deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v14 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
 
 {{<Aside type="note" header="Note">}}
 
@@ -149,10 +149,10 @@ After creating your project, a new `my-app` directory will be generated using th
 
 ### Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. In **Account Home**, select **Pages** > **Create a project**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create** > **Pages** > **Import from Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js (Static HTML Export)_ as your **Framework preset**. Your selection will provide the following information.
 
    {{<table-wrap>}}

@@ -38,6 +38,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 - Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
 - Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/about/cache-rules/)),
 - Have a Content-Length response header.
+- When using [Image Resizing](/images/image-resizing/), original files are eligible for Cache Reserve, but resized file variants are not eligible because Image Resizing happens after Cache Reserve in the response flow.
 
 ## Limits
 
@@ -45,6 +46,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
+- Cache Reserve makes requests for uncompressed content directly from the origin. Unlike the standard Cloudflare CDN, Cache Reserve does not include the `Accept-Encoding: gzip` header when sending requests to the origin.
 
 ## Usage
 

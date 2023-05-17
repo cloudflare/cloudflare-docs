@@ -73,7 +73,11 @@ database_name = "<DATABASE_NAME>"
 database_id = "<UUID>"
 ```
 
-Set your binding name by updating the `<BINDING_NAME>` value. Your binding is available in your Worker at `env.<BINDING_NAME>`. You will find the values for `database_name` and `database_id` in your terminal after you run the `create` command in step 3.
+The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+
+Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/platform/client-api/) is exposed on this binding.
+
+Find the values for `database_name` and `database_id` in your terminal after you run the `create` command in [step 3](/d1/get-started/#3-create-your-database).
 
 {{<Aside type="note">}}
 
@@ -160,7 +164,7 @@ To test that your database is running successfully, add `/api/beverages` to the 
 
 ## 7. Deploy your database
 
-To deploy your database to production, you must first repeat the [database bootstrapping](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read.
+To deploy your database to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps without the `--local` flag to give your Worker data to read.
 
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 

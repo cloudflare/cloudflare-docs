@@ -19,7 +19,7 @@ There are four major concepts to understand with Queues:
 
 A queue is a buffer or list that automatically scales as messages are written to it, and allows a consumer Worker to pull messages from that same queue.
 
-Queues are designed to be reliable, and messages written to a queue should never be lost once the write succeeds. Similarly, messages are not deleted from a queue until the [consumer](#consumer) has successfully consumed the message.
+Queues are designed to be reliable, and messages written to a queue should never be lost once the write succeeds. Similarly, messages are not deleted from a queue until the [consumer](#consumers) has successfully consumed the message.
 
 Developers can create multiple queues. Creating multiple queues can be useful to:
 
@@ -57,6 +57,8 @@ A queue can have multiple producer Workers. For example, you may have multiple p
 Additionally, multiple queues can be bound to a single Worker. That single Worker can decide which queue to write to (or write to multiple) based on any logic you define in your code.
 
 ## Consumers
+
+### Create a consumer
 
 A consumer is the term for a client that is subscribing to or _consuming_ messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
 
@@ -117,6 +119,9 @@ export default {
   },
 };
 ```
+### Remove a consumer
+
+To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in `wrangler.toml` file.
 
 ## Messages
 

@@ -22,6 +22,14 @@ Next, Gateway evaluates HTTP policies in [a specific order](#http-policies). For
 
 Lastly, if traffic passes your HTTP policies, Gateway checks the traffic against your network policies. For example, even if you create a Do Not Inspect HTTP policy for a site, it can be blocked by a subsequent network policy.
 
+### HTTP/3 traffic
+
+For proxied [HTTP/3 traffic](/cloudflare-one/policies/filtering/http-policies/http3/), Gateway applies your policies in the following order:
+
+1. DNS
+2. Network
+3. HTTP
+
 ## Priority within a policy builder
 
 ### DNS policies

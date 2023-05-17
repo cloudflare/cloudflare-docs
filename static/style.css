@@ -5271,6 +5271,11 @@ pre {
   /* identical to box height, or 18px */
 }
 
+.DocsMarkdown--pill-tab {
+  top: 0;
+  margin-left: 0.8em;
+}
+
 .DocsMarkdown--pill-beta {
   width: 42px;
   background: var(--orange-8);

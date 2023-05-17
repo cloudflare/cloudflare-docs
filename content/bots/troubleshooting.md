@@ -81,6 +81,16 @@ To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-la
 
 ___
 
+## Why might the ja3hash be empty in HTTP logs?
+
+The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:
+
+- Orange to Orange zones (Cloudflare Zone proxied to another Cloudflare Zone).
+
+- Worker sending requests within the same zone or to a zone that is not proxied (or a 3rd party).
+
+___
+
 ## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).

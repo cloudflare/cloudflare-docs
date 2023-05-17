@@ -293,7 +293,7 @@ function extractVariant(url) {
 }
 ```
 
-In a nutshell, this code receives HTTP requests for images on they original URLs, and relays them transparently to Cloudflare Images before responding to the HTTP client, effectively proxying traffic between your website and Cloudflare Images.
+In a nutshell, this code receives HTTP requests for images on their original URLs, and relays them transparently to Cloudflare Images before responding to the HTTP client, effectively proxying traffic between your website and Cloudflare Images.
 
 Once the worker is deployed, your website will use Cloudflare Images with the original, unchanged URLs. Refer to [Step 4](https://imagejam.net/step-4/) in the demo website the check the result.
 

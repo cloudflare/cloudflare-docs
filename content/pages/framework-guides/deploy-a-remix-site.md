@@ -40,7 +40,11 @@ $ npm run dev
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create** > **Pages** > **Import from Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -85,7 +89,7 @@ The following code block shows an example of accessing a KV namespace in Remix.
 ```typescript
 ---
 filename: app/routes/products/$productId.tsx
-highlight: [9,10,11,12,13,17,24]
+highlight: 9-13,17,24
 ---
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";

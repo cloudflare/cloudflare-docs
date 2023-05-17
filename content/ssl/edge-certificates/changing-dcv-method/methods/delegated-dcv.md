@@ -12,6 +12,10 @@ Delegated DCV allows zones with [partial DNS setups](/dns/zone-setups/partial-se
 
 DCV Delegation requires you to place a one-time record that allows Cloudflare to auto-renew all future certificate orders, so that there’s no manual intervention at the time of the renewal.
 
+## Availability
+
+{{<feature-table id="ssl.delegated_dcv">}}
+
 ## When to use
 
 You should use Delegated DCV when all of the following conditions are true:

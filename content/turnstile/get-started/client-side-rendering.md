@@ -139,54 +139,6 @@ If the invocation is successful, the function returns a `widgetId (string)`. If 
 
 Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
 
-This is an advanced example for dynamically rendering Turnstile widgets using [Bootstrap](https://getbootstrap.com/) 3 or 4 with modals and responsive widget sizes:
-
-<div>
-
-```javascript
-//
-// Handle explicit Cloudflare Turnstile (Advanced Example with Bootstrap/Modals/Responsive Support)
-// <https://github.com/forwardemail/forwardemail.net>
-// <https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget>
-//
-function handleExplicitTurnstile() {
-  let widgetId = $(this).data('widgetId');
-  if (widgetId) return;
-
-  const isModal = $(this).parents('.modal:first').length > 0;
-
-  widgetId = window.turnstile.render(this, {
-    sitekey: '<YOUR_SITE_KEY>',
-    tabindex: isModal ? -1 : 0,
-    action: isModal ? 'modal' : 'page',
-    'error-callback': (err) => console.error(err)
-    // uncomment this if you want to render a smaller size (e.g. 576px = Bootstrap "md" breakpoint)
-    // size: window.matchMedia('(min-width: 576px)').matches ? 'normal' : 'compact'
-  });
-
-  $(this).data('widgetId', widgetId);
-}
-
-// an alternative approach for performance is to use IntersectionObserver API
-window.onloadTurnstileCallback = function () {
-  // handle elements on page
-  $('.cf-explicit-turnstile')
-    .filter(function () {
-      // render if not inside modal or if inside modal that's shown
-      // (e.g. in case you render a modal on the page when it loads; which is an anti-pattern)
-      const $modal = $(this).parents('.modal:first');
-      if ($modal.length === 0) return true;
-      return $modal.is(':visible');
-    })
-    .each(handleExplicitTurnstile);
-
-  // handle modals
-  $('body').on('show.bs.modal', '.modal', function () {
-    $(this).find('.cf-explicit-turnstile').each(handleExplicitTurnstile);
-  });
-};
-```
-</div>
 
 ## Access a widget's state
 

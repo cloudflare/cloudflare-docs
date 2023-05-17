@@ -33,13 +33,13 @@ The descriptions below detail the fields available for `gateway_http`.
 | HTTPMethod | HTTP request method. | string |
 | HTTPStatusCode | HTTP status code gateway returned to the user. Zero if nothing was returned (for example, client disconnected). | int |
 | HTTPVersion | Version name for the HTTP request. | string |
-| InternalSourceIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | IsIsolated | If the requested was isolated with Cloudflare Browser Isolation or not. | bool |
 | PolicyID | The gateway policy UUID applied to the request, if any. | string |
 | PolicyName | The name of the gateway policy applied to the request, if any. | string |
 | Referer | Contents of the referer header in the HTTP request. | string |
 | RequestID | Cloudflare request ID. This might be empty on bypass action. | string |
 | SourceIP | Source ip of the request. | string |
+| SourceInternalIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | SourcePort | Source port of the request. | string |
 | URL | HTTP request URL. | string |
 | UntrustedCertificateAction | Action taken when an untrusted origin certificate error occurs (for example, expired certificate, mismatched common name, invalid certificate chain, signed by non-public CA). One of <em>none</em> \| <em>block</em> \| <em>error</em> \| <em>passThrough</em>. | string |
