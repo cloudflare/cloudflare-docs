@@ -67,7 +67,7 @@ Then, in **DNS** > **Records**:
 
 Next, in Account Home, go to **Workers & Pages**:
 
-1.  Select your Pages project.
+1.  In **Overview**, select your Pages project.
 2.  Go to **Custom domains**.
 3.  Select the **three dot icon** next to your custom domain > **Remove domain**.
 

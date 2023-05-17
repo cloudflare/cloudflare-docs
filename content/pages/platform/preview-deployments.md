@@ -41,7 +41,7 @@ To protect your preview deployments behind Cloudflare Access:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. In Account Home, select **Workers & Pages**.
-3. Select your Pages project.
+3. In **Overview**, select your Pages project.
 4. Go to **Settings** > **General** > and select **Enable access policy**.
 
 Note that this will only protect your preview deployments (for example, `373f31e2.user-example.pages.dev` and every other randomly generated preview link) and not your `*.pages.dev` domain or custom domain.

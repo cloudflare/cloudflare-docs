@@ -172,4 +172,4 @@ After you have deployed your application, review your middleware Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **Configuration**. 
+3. In **Overview**, select your Pages project > **Settings** > **Functions** > **Configuration**. 
