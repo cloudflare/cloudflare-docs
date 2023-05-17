@@ -24,7 +24,7 @@ Try using `npm create cloudflare` for new Workers and Pages projects.
 
 The `wrangler init` command is deprecated, but still active in v3. It will be fully removed in v4.
 
-Try using `npm create cloudflare` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. This will be replaced by another command in v4.
+Try using `npm create cloudflare` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
 
 ### `publish`
 
