@@ -116,7 +116,7 @@ Deploy your site to Pages:
    | Configuration option | Value                              |
    | -------------------- | ---------------------------------- |
    | Production branch    | `main`                             |
-   | Build command        | `npx @cloudflare/next-on-pages@1` |
+   | Build command        | `npx @cloudflare/next-on-pages@1`  |
    | Build directory      | `.vercel/output/static`            |
 
    {{</table-wrap>}}
