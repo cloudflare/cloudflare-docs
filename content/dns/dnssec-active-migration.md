@@ -88,12 +88,12 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 
 ## Step 3 - Set up registrar
 
-1. Add Cloudflare DS record to your registrar.
-2. Add Cloudflare assigned nameservers to your registrar.
+1. Add Cloudflare DS record to your registrar. You can see your Cloudflare DS record on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns) by going to **DNS** > **Settings** > **DS Record**.
+2. Add Cloudflare assigned nameservers to your registrar. You can see your Cloudflare nameservers by going to **DNS** > **Records**.
 
-At this point you're in a multi-signer setup.
+At this point your zone is in a multi-signer DNSSEC setup.
 
 ## Step 4 - Remove previous provider
 
-1. Remove previous provider's DS record from your registrar.
-2. Remove previous provider's nameservers from your registrar.
+1. Remove your previous provider's DS record from your registrar.
+2. Remove your previous provider's nameservers from your registrar.
