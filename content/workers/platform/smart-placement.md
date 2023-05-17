@@ -67,7 +67,7 @@ To enable Smart Placement via Wrangler:
 To enable Smart Placement via the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers**.
+2. In **Account Home**, select **Workers & Pages**.
 3. Select your Worker.
 4. Select **Settings** > **General**.
 5. Under **Placement**, choose **Smart**.

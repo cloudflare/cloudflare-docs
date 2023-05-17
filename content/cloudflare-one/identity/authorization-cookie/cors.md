@@ -218,7 +218,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 ### 4. Configure the Worker
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), navigate to the **Workers** tab.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/) Account Home, navigate to **Workers & Pages**.
 
 2. Click your newly created Worker. In this example, the Worker is called `redirect-worker`.
 
