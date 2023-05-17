@@ -11,13 +11,13 @@ The Constellation client API allows developers to interact with the inference en
 Before you use the Constellation client API, you need to:
 
 * Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
-* Enable Constellation by logging into the Cloudflare dashboard > **Workers & Pages** > **Constellation**.
+* Enable Constellation by logging into the Cloudflare dashboard > **Workers** > **Constellation**.
 * Create a Constellation project and [configure the binding](/constellation/platform/wrangler/#bindings).
-* Import the <code>@cloudflare/constellation</code> library in your code:
+* Import the `@cloudflare/constellation` library in your code:
 
-```javascript
-   import { Tensor, run } from "@cloudflare/constellation";
-```
+   ```javascript
+      import { Tensor, run } from "@cloudflare/constellation";
+   ```
 
 ## Tensor class
 
@@ -92,7 +92,7 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
 
 ## Methods
 
-### `await project.run(model, input)`
+### `await project.run(project, model, input)`
 
 Runs the inference engine on a model and input.
 
@@ -111,5 +111,4 @@ const output = await run(env.PROJECT, modelId, input)
 
 * **input** is a list of tensors.
 * **modelId** is the model ID inside the project. Use Wrangler to list the model ID associated with your project.
-
-
+* **PROJECT** is your Constellation project ID.

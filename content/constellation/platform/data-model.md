@@ -6,7 +6,7 @@ weight: 10
 
 # Data model
 
-Our data model is loosely inspired by the [MLflow machine learning lifecycle](https://mlflow.org/docs/latest/concepts.html) and simplified to align with our general Workers' developer experience.
+Our data model is inspired by the [MLflow machine learning lifecycle](https://mlflow.org/docs/latest/concepts.html) and simplified to align with our general Workers' developer experience.
 
 The three fundamental concepts of our model are projects, models, and the catalog.
 
