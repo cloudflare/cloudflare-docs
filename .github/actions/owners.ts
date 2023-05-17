@@ -21,6 +21,7 @@ export const OWNERS: Record<string, string[]> = {
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-platforms": ["kodster28"],
   "cloudflare-one": ["ranbel"],
+  constellation: ["deadlypants1973"],
   d1: ["deadlypants1973"],
   "data-localization": ["angelampcosta"],
   "ddos-protection": ["pedrosousa"],
