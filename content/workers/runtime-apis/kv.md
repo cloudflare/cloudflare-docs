@@ -409,7 +409,7 @@ You can create a namespace [using Wrangler](/workers/wrangler/install-and-update
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages**.
-2. Select your Worker.
+2. In **Overview**, select your Worker.
 3. Select **Settings** > **Variables**.
 4. Go to **KV Namespace Bindings**.
 5. Select **Add binding**.

@@ -16,7 +16,7 @@ Workers metrics aggregate request data for an individual Worker script (if your 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages**.
-3. Select your Worker to view its metrics.
+3. In **Overview**, select your Worker to view its metrics.
 
 There are two metrics that can help you understand the health of your Worker in a given moment: requests success and error metrics, and invocation statuses.
 
