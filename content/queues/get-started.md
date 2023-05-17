@@ -27,7 +27,7 @@ Before you can use Queues, you must enable it via [the Cloudflare dashboard](htt
 To enable Queues:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Workers** > [**Queues**](https://dash.cloudflare.com/?to=/:account/workers/queues).
+2. Go to **Workers & Pages** > **Queues**.
 3. Select **Enable Queues Beta**.
 
 Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
