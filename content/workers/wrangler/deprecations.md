@@ -34,7 +34,7 @@ Try using [`wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy Work
 
 ### `pages publish`
 
-The `wrangler pages publish` command is deprecated, but still active in v3. It will be fully removed in v4.
+The `wrangler pages publish` command is deprecated, but still active in v3. `wrangler pages publish` will be fully removed in v4.
 
 Try using [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pages.
 
