@@ -364,7 +364,6 @@ ___
 
 ## 相关资源
 
--   [Cloudflare Rate Limiting 计费](https://support.cloudflare.com/hc/articles/115000272247)
 -   [ELS (Enterprise Log Share) 中如何报告 Rate Limiting？](/logs/reference/log-fields)
 -   [Cloudflare Rate Limiting 故障排除](https://support.cloudflare.com/hc/articles/115000546328)
 -   [从 Cloudflare API 配置 Rate Limiting](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

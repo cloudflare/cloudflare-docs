@@ -16,12 +16,3 @@ Por ejemplo, si tu fecha de facturación es el 15 de marzo y habilitas Cloudflar
 {{<Aside type="note">}}
 La estructura de precios variará según el servicio que se use.
 {{</Aside>}}
-
-Consulta las páginas específicas del producto para obtener detalles sobre precios y cargos:
-
--   [Argo](https://support.cloudflare.com/hc/en-us/articles/115000224192)
--   [Cloudflare Access](https://support.cloudflare.com/hc/en-us/articles/360007897072)
--   [Load Balancing](https://support.cloudflare.com/hc/en-us/articles/115005254367)
--   [Rate Limiting de Cloudflare](https://support.cloudflare.com/hc/en-us/articles/115000272247)
--   [Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360016450871)
--   [Cloudflare Workers y Workers KV](https://support.cloudflare.com/hc/en-us/articles/360001657552)

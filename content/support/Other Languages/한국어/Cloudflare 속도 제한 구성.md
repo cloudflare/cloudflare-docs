@@ -364,7 +364,6 @@ ___
 
 ## 관련 자료
 
--   [Cloudflare 속도 제한의 요금 청구](https://support.cloudflare.com/hc/articles/115000272247)
 -   [속도 제한의 ELS(Enterprise Log Share) 보고 방법](/logs/reference/log-fields)
 -   [Cloudflare 속도 제한 문제 해결](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Cloudflare API를 통한 속도 제한 구성](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)
