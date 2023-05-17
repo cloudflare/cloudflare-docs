@@ -1,7 +1,7 @@
 {{- $files := slice -}}
 {{- range os.ReadDir "content/pages/_partials/_platform-language-support-and-tools" -}}
   {{- with $.Site.GetPage (path.Join "pages/_partials/_platform-language-support-and-tools/" .Name) -}}
-    {{- $files = $files | append (dict "name" (printf "v%d" .Params.major_version) "enable_date" (time .Params.enable_date) "languages" .Params.languages) -}}
+    {{- $files = $files | append (dict "name" (printf "v%d" .Params.major_version) "status" .Params.status "enable_date" (time .Params.enable_date) "languages" .Params.languages) -}}
   {{- end -}}
 {{- end -}}
 
@@ -23,7 +23,7 @@
       <li class="tab-label-wrapper">
         <a class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}" href="#" data-link="tab-{{ $file.name }}"
            data-id="{{ lower $unique_id }}">
-          {{ $file.name }}
+          {{ $file.name }}{{ if eq $file.status "beta" }}<div class="DocsMarkdown--pill DocsMarkdown--pill-tab DocsMarkdown--pill-beta">Beta</div>{{ end }}
         </a>
       </li>
       {{ end }}

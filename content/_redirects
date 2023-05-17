@@ -190,6 +190,9 @@
 /support/caching/learn-more/using-etag-headers-with-cloudflare/ /cache/reference/etag-headers/ 301
 /support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/cache-everything-ignore-query-strings/ 301
 
+# china network
+/support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
+
 # cloudflare for platforms
 /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/get-started/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/analytics/ /cloudflare-for-platforms/workers-for-platforms/platform/observability/ 301
@@ -417,8 +420,6 @@
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
-/magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
-/magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
 /magic-wan/how-to/configure-static-routes/ /magic-wan/get-started/configure-static-routes/ 301
 /magic-wan/about/ /magic-wan/reference/ 301
@@ -428,6 +429,17 @@
 /magic-wan/how-to/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/reference/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/reference/health-checks/ /magic-wan/reference/probe-construction/ 301
+/magic-wan/partners/aruba-edgeconnect/ /magic-wan/third-party/aruba-edgeconnect/ 301
+/magic-wan/tutorials/aruba-edgeconnect/ /magic-wan/third-party/aruba-edgeconnect/ 301
+/magic-wan/tutorials/viptela/ /magic-wan/third-party/viptela/ 301
+/magic-wan/tutorials/cisco-ios-xe/ /magic-wan/third-party/cisco-ios-xe/ 301
+/magic-wan/tutorials/secure-web-gateway/ /magic-wan/zero-trust/cloudflare-gateway/ 301
+/magic-wan/tutorials/fortinet/ /magic-wan/third-party/fortinet/ 301
+/magic-wan/tutorials/pfsense/ /magic-wan/third-party/pfsense/ 301
+/magic-wan/tutorials/sophos-firewall/ /magic-wan/third-party/sophos-firewall/ 301
+/magic-wan/tutorials/ipsec/strongswan/ /magic-wan/third-party/strongswan/ 301
+/magic-wan/tutorials/vyos/ /magic-wan/third-party/vyos/ 301
+/magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
@@ -833,6 +845,9 @@
 /workers/runtime-apis/headers/ /workers/platform/headers/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
+/workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
+/workers/wrangler-legacy/migration/ /workers/wrangler/migration/ 301
+
 
 # zaraz
 
@@ -1012,8 +1027,7 @@
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
-/workers/wrangler/migration/* /workers/wrangler-legacy/migration/:splat 301
-/workers/wrangler/cli-wrangler/* /workers/wrangler-legacy/:splat 301
+/workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301

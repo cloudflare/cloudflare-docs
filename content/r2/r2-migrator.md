@@ -4,15 +4,9 @@ pcx_content_type: how-to
 weight: 3
 ---
 
-{{<beta heading="h1">}} Super Slurper{{</beta>}}
+# Super Slurper
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
-
-{{<Aside type="note">}}
-
-This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
-
-{{</Aside>}}
 
 Migration jobs:
 
@@ -23,10 +17,7 @@ Migration jobs:
 
 ## When to use Super Slurper
 
-Using Super Slurper as part of your strategy can be a good choice if your use case meets the following criteria:
-
-- The cloud storage bucket you are migrating consists primarily of objects less than 10 GB (1000³ bytes). Objects greater than 10 GB will be skipped and need to be copied separately.
-- The cloud storage bucket you are migrating has fewer than 200 million objects. During the beta, migration jobs can copy around 250 small objects per second.
+Using Super Slurper as part of your strategy can be a good choice if the cloud storage bucket you are migrating consists primarily of objects less than 10 GB (1000³ bytes). Objects greater than 10 GB will be skipped and need to be copied separately.
 
 For migration use cases that do not meet the above criteria, we recommend using tools such as [rclone](/r2/examples/rclone/).
 

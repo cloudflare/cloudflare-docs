@@ -42,7 +42,7 @@ Before you set up a route, make sure you have a DNS record set up for the [domai
 To set up a route in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers** and select your Worker.
+2. Go to **Workers & Pages** and in **Overview**, select your Worker.
 3. Go to **Triggers** > **Routes** > **Add route**.
 4. Enter the route and select the zone it applies to.
 5. Select **Add route**.
@@ -83,7 +83,7 @@ Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is config
 To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers**.
+2. In **Account Home**, select **Workers & Pages**.
 3. Select **Change** next to **Your subdomain**. The `name` field in your Worker configuration is used as the preview subdomain for the deployed Worker, (for example, `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.`).
 
 When you create your Worker, the `workers.dev` route is automatically set up. Review this in your Worker > **Triggers** > **Routes**.

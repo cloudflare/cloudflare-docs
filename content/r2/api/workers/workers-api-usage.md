@@ -12,7 +12,7 @@ meta:
 
 {{<Aside type="note">}}
 
-This guide is tailored to Wrangler v2. If you are still using Wrangler v1, refer to the [Migrate from Wrangler v1 guide](/workers/wrangler-legacy/migration/).
+This guide is tailored to Wrangler v2. If you are still using Wrangler v1, refer to [Migrations](/workers/wrangler/migration/).
 
 {{</Aside>}}
 
@@ -228,7 +228,7 @@ This secret is now available as `AUTH_KEY_SECRET` on the `env` parameter in your
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler-legacy/commands/#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
 $ wrangler publish
