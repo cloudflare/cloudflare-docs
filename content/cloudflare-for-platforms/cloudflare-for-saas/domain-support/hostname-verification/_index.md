@@ -16,6 +16,6 @@ If a custom hostname is already on Cloudflare, then traffic will only shift to y
 
 ## Options
 
-If minimizing downtime is more important to you, check out our [pre-verification methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/txt/).
+If minimizing downtime is more important to you, check out our [pre-verification methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/pre-verification/).
 
 If ease of use for your customers is more important, review our [real-time verification methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/realtime-verification/).
