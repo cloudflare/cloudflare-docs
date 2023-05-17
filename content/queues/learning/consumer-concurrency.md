@@ -44,8 +44,8 @@ If you have a workflow that is limited by an upstream API and/or system, you may
 
 Concurrency settings can be configured in each projects' `wrangler.toml` file and/or the Cloudflare dashboard. To set concurrency settings in the Cloudflare dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select the **Workers** dropdown > **Queues**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** > **Queues**.
 3. Select your queue > **Settings**.
 4. Set **Maximum consumer invocations** to a value between `1` and `10`. This value represents the maximum number of concurrent consumer invocations available to your queue.
 

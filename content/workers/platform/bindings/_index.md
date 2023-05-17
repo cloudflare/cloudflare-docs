@@ -15,7 +15,7 @@ There are multiple types of bindings available today.
 Bindings can be configured by one of two ways:
 
 * Updating your project's [`wrangler.toml` file](/workers/wrangler/configuration/#bindings).
-* Logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers** > your **Worker** > **Settings**> **Variables**.
+* Logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers & Pages** > your Worker > **Settings**> **Variables**.
 
 ### Service bindings
 

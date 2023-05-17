@@ -121,7 +121,7 @@ $ echo -n "v=DKIM1;p=" > dkim_record.txt && openssl rsa -in private_key.pem -pub
 This creates a public key from the private key (`openssl rsa -in priv_key.pem -pubout -outform der`), encodes it in base64 (`openssl base 64 -A`), and finally writes it to the `dkim_record.txt` file.
 
 
-2. Copy the contents of the `private_key.txt` file and add that as an environment variable to your Pages project by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > your Pages project > **Settings** > **Environment Variables* > **Add variables**. Set the variable name as `DKIM_PRIVATE_KEY` and the value as the contents of `private_key.txt` file.
+2. Copy the contents of the `private_key.txt` file and add that as an environment variable to your Pages project by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers & Pages** > your Pages project > **Settings** > **Environment Variables** > **Add variables**. Set the variable name as `DKIM_PRIVATE_KEY` and the value as the contents of `private_key.txt` file.
 
 3. Create a DNS record with the content of the generated `dkim_record.txt` file content.
 

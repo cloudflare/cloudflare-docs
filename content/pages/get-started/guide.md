@@ -1,8 +1,10 @@
 ---
+title: Guide
 pcx_content_type: get-started
-title: Get started
+weight: 1
 layout: single
-weight: 2
+meta:
+  title: Get started guide
 ---
 
 # Get started
@@ -21,9 +23,9 @@ This guide will take you through the Git setup option.
 
 Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). To create your first Pages project:
 
-1. Log in to the Cloudflare dashboard.
-2. Select your account in **Account Home** > **Pages**.
-3. Select **Create a project** > **Connect to Git**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. Select **Create application** > **Pages** > **Connect to Git**.
 
 You will be prompted to sign in with your preferred Git provider. This allows Cloudflare Pages to deploy your projects, and update your PRs with [preview deployments](/pages/platform/preview-deployments/).
 
@@ -110,7 +112,7 @@ When your project has finished deploying, you will receive a unique URL to view 
 
 {{<Aside type="warning" header="DNS errors">}}
 
-If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. To solve the error, wait for the DNS to propagate, or try another device or network to resolve the error. 
+If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. To solve the error, wait for the DNS to propagate, or try another device or network to resolve the error.
 
 {{</Aside>}}
 
@@ -125,8 +127,8 @@ After your first deploy, select **Continue to project** to see your project's co
 To delete your Pages project:
 
 1.  Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
-2.  Select **Pages**.
-3.  Remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
+2.  Select **Workers & Pages**.
+3.  Select your Pages project > **Settings** > **Delete project**.
 
 {{<Aside type="warning">}}
 
