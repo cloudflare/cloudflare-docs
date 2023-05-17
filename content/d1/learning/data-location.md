@@ -18,8 +18,8 @@ You may want to explicitly provide a location hint in cases where the majorit of
 
 You can provide a Location Hint when creating a D1 database when:
 
-* Creating a database [via the Cloudflare dashboard]()
-* Using [`wrangler d1`](/wrangler/commands/#d1) to create a database
+* Creating a database [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1)
+* Using [`wrangler d1`](/workers//wrangler/commands/#d1) to create a database
 
 ### Using wrangler
 
@@ -36,6 +36,8 @@ $ wrangler d1 create new-database --location=weur
 ```
 
 ### Using the dashboard
+
+To provide a location hint whne creating a database via the dashboard:
 
 1. Login to the Cloudflare dashboard
 2. Navigate to [**Workers** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1)
