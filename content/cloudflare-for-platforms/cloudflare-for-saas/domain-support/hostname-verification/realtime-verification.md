@@ -28,20 +28,8 @@ The exact record depends on your Cloudflare for SaaS setup.
 
 ### Normal setup (CNAME target)
 
-Most customers will have a `CNAME` target, which requires their customers to create a `CNAME` record similar to:
-
-```txt
-app.example.com CNAME customers.saasprovider.com
-```
+{{<render file="_cname-target-process.md">}}
 
 ### Apex proxying
 
-With apex proxying - available as an [Enterprise add-on](/cloudflare-for-platforms/cloudflare-for-saas/plans/) - SaaS customers need to create an `A` record for their hostname that points to the IP prefix allocated to the SaaS provider's account.
-
-```txt
-example.com.  60  IN  A   192.0.2.1
-```
-
-Since most DNS providers do not allow `CNAME` records at the zone's root[^1], apex proxying also allows your customers to use their root domain (`example.com`) instead of a subdomain (`shop.example.com`).
-
-[^1]: Cloudflare offers this functionality through [CNAME flattening](/dns/cname-flattening/).
+{{<render file="_apex-proxying-process.md">}}

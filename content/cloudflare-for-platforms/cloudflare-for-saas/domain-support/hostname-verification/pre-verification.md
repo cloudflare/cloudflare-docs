@@ -14,7 +14,9 @@ Pre-verification methods help verify domain ownership before your customer's tra
 
 Use pre-verification methods when your customers cannot tolerate any downtime, which often occurs with production domains.
 
-These methods require an additional setup step for your customers. If your customers can tolerate a bit of downtime and you want their setup to be simpler, review our [real-time verification methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/realtime-verification/).
+The downside is that these methods require an additional setup step for your customers. Especially if you already need them to add something to their domain for [domain control validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/), pre-verification might make their onboarding more complicated.
+
+If your customers can tolerate a bit of downtime and you want their setup to be simpler, review our [real-time verification methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/realtime-verification/).
 
 ## How to
 

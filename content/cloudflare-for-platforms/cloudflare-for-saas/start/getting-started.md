@@ -2,6 +2,8 @@
 title: Configuring Cloudflare for SaaS
 pcx_content_type: get-started
 weight: 1
+meta:
+  description: Get started with Cloudflare for SaaS
 ---
 
 # Configuring Cloudflare for SaaS
@@ -14,7 +16,7 @@ Before you can start creating custom hostnames, you need to have access to [Clou
 
 If you have not used the Cloudflare API previously, review our [API documentation](/fundamentals/api/).
 
-If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
+If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
  
 ---
 
@@ -36,18 +38,15 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 2. [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
 
-  *   A proxied *A*, *AAAA*, or *CNAME* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
-  *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
+  *   A proxied `A`, `AAAA`, or `CNAME` record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+  *   A `CNAME` record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
   | Record          | Type  | Name                              | Content                           |
   | --------------- | ----- | --------------------------------- | --------------------------------- |
-  | Fallback origin | A     | `proxy-fallback.saasprovider.com` | 192.0.2.1                         |
-  | CNAME target    | CNAME | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
+  | Fallback origin | `A`     | `proxy-fallback.saasprovider.com` | `192.0.2.1`                         |
+  | CNAME target    | `CNAME` | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
 
-4.  Enable **Custom Hostnames** for your zone:
-
-    - If you are an Enterprise customer, upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **Cloudflare for SaaS Certificates**.
-    - If you are not an Enterprise customer, go to **SSL/TLS** > **Custom Hostnames** to enable **Cloudflare for SaaS**.
+4.  Go to **SSL/TLS** > **Custom Hostnames** and enable **Cloudflare for SaaS**.
 
 5.  Set the **Fallback Origin** via either the dashboard or API.
 

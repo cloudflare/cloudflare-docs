@@ -14,6 +14,6 @@ When you [verify a custom hostname](/cloudflare-for-platforms/cloudflare-for-saa
 | --- | --- |
 | Zone does not have a fallback origin set. | Fallback is not active. |
 | Fallback origin is in a status of `initializing`, `pending_deployment`, `pending_deletion`, or `deleted`. | Fallback is not active. |
-| Custom hostname does not `CNAME` to this zone. | Zone does not have [apex proxying entitlement](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/realtime-verification/#apex-proxying) and custom hostname does not CNAME to zone. |
-| None of the `A` or `AAAA` records are owned by this account and the pre-generated ownership verification token was not found. | Account has [apex proxying enabled](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/realtime-verification/#apex-proxying) but the custom hostname failed the hostname validation check on the `A` record. |
+| Custom hostname does not `CNAME` to this zone. | Zone does not have [apex proxying entitlement](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/) and custom hostname does not CNAME to zone. |
+| None of the `A` or `AAAA` records are owned by this account and the pre-generated ownership verification token was not found. | Account has [apex proxying enabled](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/) but the custom hostname failed the hostname validation check on the `A` record. |
 | This account and the pre-generated ownership verification token was not found. | Hostname does not `CNAME` to zone or none of the `A`/`AAAA` records match reserved IPs for zone. |
