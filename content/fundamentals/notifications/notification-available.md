@@ -37,7 +37,7 @@ Purchase of Access.
 
 **What should you do if you receive one?**
 
-Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflare.com/) under **Configuration** > **Service Auth**.
+Refresh your service token in the [Teams dashboard](https://one.dash.cloudflare.com/) under **Configuration** > **Service Auth**.
 
 </div>
 </details>
@@ -352,11 +352,11 @@ Multiple filters available:
 
 - Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
 - Customers can also choose the trigger that fires the notification. Available options are:
-  - *Health status trigger*:
+  - _Health status trigger_:
     - Becomes unhealthy or healthy
     - Becomes unhealthy
     - Becomes healthy
-  - *Event source trigger*:
+  - _Event source trigger_:
     - Health status changes in either pool or origin
     - Health status changes in pool
     - Health status changes in origin
@@ -382,7 +382,6 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 
 This is for any customer who uses Logpush and wants to monitor their job health.
 
-
 **Other options / filters**
 
 - Notification Name
@@ -398,7 +397,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working.  You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
+In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working. You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
 
 </div>
 </details>
@@ -532,6 +531,35 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 </div>
 </details>
 
+## Scheduled Maintenance
+
+<details>
+<summary>Maintenance Notification</summary>
+<div>
+
+**Who is it for?**
+
+Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
+
+Specifically, the notification lets you know when maintenance on a data center has been scheduled, changed, or canceled.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar.
+
+During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
+
+</div>
+</details>
+
 ## SSL/TLS
 
 <details>
@@ -598,7 +626,7 @@ Authenticated Origin Pull.
 
 **What should you do if you receive one?**
 
-Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 </div>
 </details>
@@ -953,7 +981,7 @@ No direct call to action.
 
 **Who is it for?**
 
-Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/tunnel-monitoring/notifications/) for their Cloudflare Tunnels.
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
 
 **Other options / filters**
 
@@ -991,54 +1019,6 @@ All plans.
 **What should you do if you receive one?**
 
 No action required. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
-
-</div>
-</details>
-
-## Workers
-
-<details>
-<summary>Workers Usage Report</summary>
-<div>
-
-**Who is it for?**
-
-Developers using Workers, especially those on the Unbound usage model.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Workers subscription (free or paid).
-
-**What should you do if you receive one?**
-
-Check any recent changes to your script or its external dependencies. Usage reports inform users of a sharp increase (25% or more) in key metrics like CPU time.
-
-</div>
-</details>
-
-<details>
-<summary>Workers Weekly Summary</summary>
-<div>
-
-**Who is it for?**
-
-Developers using Workers.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Workers subscription (free or paid).
-
-**What should you do if you receive one?**
-
-No action is usually required. This notification gives users a high-level overview of their key Workers’ metrics without having to check the dashboard. Possible metrics include account usage and per-worker usage.
 
 </div>
 </details>

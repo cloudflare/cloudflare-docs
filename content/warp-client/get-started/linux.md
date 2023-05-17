@@ -35,16 +35,6 @@ To connect for the very first time you must call `register` first:
 2. Connect `warp-cli connect`.
 3. Run `curl https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`.
 
-### Always stay connected
-
-If you want to always stay connected to WARP you must call `enable-always-on`. This is the `cli` equivalent to switching the toggle switch to the `on` position in our GUI apps.
-
-To enable this feature, run:
-
-```sh
-$ warp-cli enable-always-on
-```
-
 ### Switching modes
 
 You can use `warp-cli set-mode --help` to get a list of the modes to switch between. For example:

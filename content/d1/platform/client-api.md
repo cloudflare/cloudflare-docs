@@ -48,22 +48,24 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ?2 AND age = ?1').bind
 ```
 
 ## Type conversion
-Type conversion from Javascript inputs to D1 inputs is as follows:
 
-| Javascript | D1 |
-| ----- | ----- |
-| null | `NULL` |
-| Number | `REAL` |
-| Number[^1] | `INTEGER` |
-| String | `TEXT` |
-| ArrayBuffer | `BLOB` |
-| undefined | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
+D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the client API to their associated D1 types. The type conversion is as follows:
 
-`[^1]`: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+| JavaScript          | D1          |
+| ------------------- | ----------- |
+| null                | `NULL`      |
+| Number              | `REAL`      |
+| Number <sup>1</sup> | `INTEGER`   |
+| String              | `TEXT`      |
+| Boolean <sup>2</sup>| `INTEGER`   |
+| ArrayBuffer         | `BLOB`      |
+| undefined           | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
 
-* Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`.
+* <sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) are not currently supported in the API yet. JavaScript integers are safe up to [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+* <sup>2</sup> Booleans will be cast to an `INTEGER` type where 1 is `TRUE` and 0 is `FALSE`.
 
 ## Return object
+
 The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js

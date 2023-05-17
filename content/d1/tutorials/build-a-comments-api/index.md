@@ -93,7 +93,7 @@ CREATE INDEX idx_comments_post_slug ON comments (post_slug);
 
 -- Optionally, uncomment the below query to create data
 
--- INSERT INTO COMMENTS (author, body, post_slug) VALUES ("Kristian", "Great post!", "hello-world");
+-- INSERT INTO COMMENTS (author, body, post_slug) VALUES ('Kristian', 'Great post!', 'hello-world');
 ```
 
 With the file created, execute the schema file against the D1 database by passing it with the flag `--file`:

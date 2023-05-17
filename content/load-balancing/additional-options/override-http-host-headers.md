@@ -58,4 +58,4 @@ For a list of origins that override a monitor's `Host` header:
 2.  Select **Advanced health check settings**.
 3.  If you have origin overrides, you will see **Origin host header overrides**.
 
-![Example configuration of origin host header overrides](/load-balancing/static/images/origin-host-header-override.png)
+![Example configuration of origin host header overrides](/images/load-balancing/origin-host-header-override.png)

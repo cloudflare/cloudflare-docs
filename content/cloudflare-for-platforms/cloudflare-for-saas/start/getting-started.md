@@ -66,7 +66,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 <summary>Using the API</summary>
 <div>
 
-Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://developers.cloudflare.com/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+Using the hostname from the A or AAAA record you just created, [update the fallback origin value](/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
 
 </div>
 </details>
@@ -158,7 +158,13 @@ This routes traffic from `app.customer.com` to your origin.
 
 ---
 
-## Step 6 — Offboard custom hostnames
+## Step 6 - Usage-based notifications
+
+{{<render file="_ubb-recommendation.md" productFolder="fundamentals">}}
+
+---
+
+## Offboard custom hostnames
 
 As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
 
@@ -177,7 +183,7 @@ As a SaaS provider, you must remove a customer's custom hostname from your zone 
 <summary>Using the API</summary>
 <div>
 
-To delete a custom hostname and any issued certificates using the API, use a [DELETE command](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
+To delete a custom hostname and any issued certificates using the API, use a [DELETE command](/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
 
 </div>
 </details>

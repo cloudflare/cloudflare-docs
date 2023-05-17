@@ -414,7 +414,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 [^5]: Railgun is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
 
-[^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to Cloudflare’s edge.
+[^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 
 [^7]: Hotlink Protection prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
 

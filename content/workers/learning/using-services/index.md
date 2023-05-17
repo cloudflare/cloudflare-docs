@@ -17,13 +17,19 @@ To understand Workers Services better, it will help to know about Bindings and D
 
 ## Bindings
 
-Bindings allow your Workers to interact with resources on the Workers platform. Bindings can be configured by logging in to the Cloudflare dashboard > Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables**. Bindings also provide a security model for interacting with those resources. Workers only have access to other resources that are explicitly defined as a binding in configuration.
+Bindings allow your Workers to interact with resources on the Workers platform. To configure bindings:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Settings**> **Variables**. 
+
+Bindings also provide a security model for interacting with those resources. Workers only have access to other resources that are explicitly defined as a binding in configuration.
 
 There are multiple types of bindings available today:
 
 1. [Service bindings](/workers/platform/bindings/about-service-bindings/) for communication with another Worker.
 2. [KV namespace bindings](/workers/runtime-apis/kv/#kv-bindings) for communication between a Worker and a KV namespace.
-3. [R2 bucket bindings](/r2/data-access/workers-api/workers-api-reference/#create-a-binding) for communication between a Worker and an R2 bucket.
+3. [R2 bucket bindings](/r2/api/workers/workers-api-reference/#create-a-binding) for communication between a Worker and an R2 bucket.
 4. [Durable Object bindings](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker) for communication between a Worker and a Durable Object.
 5. [Queue bindings](/queues/platform/configuration/) for communication between a Worker and a Queue.
 6. [mTLS certificate bindings](/workers/runtime-apis/mtls) enable communication between a Worker and an origin server secured by mTLS using an uploaded certificate.

@@ -22,22 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
-      <td>...97003a74</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #17).</td>
+      <td>2023-05-15</td>
+      <td>2023-05-22</td>
+      <td>...4a95ba67</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #32).</td>
       <td>N/A</td>
       <td>log</td>
-      <td>Detect new attacks with unusual HTTP attributes.</td>
-    </tr>
-<tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
-      <td>...d2f294d7</td>
-      <td>HTTP requests trying to impersonate browsers.</td>
-      <td>ddos_dynamic</td>
-      <td>ddos_dynamic</td>
-      <td>Expanded the filter to catch more attacks.</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

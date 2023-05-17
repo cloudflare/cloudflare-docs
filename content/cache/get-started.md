@@ -19,7 +19,7 @@ Discover the benefits of caching with Cloudflare’s CDN and understand the defa
 
 Configure your settings to cache static HTML or cache anonymous page views of dynamic content.
 
-- [Speed up your site with caching best practices](https://support.cloudflare.com/hc/en-us/articles/360021023712)
+- [Speed up your site with caching best practices](/cache/troubleshooting/customize-caching/)
 - [Specify which resources to cache](/cache/best-practices/customize-cache/)
 - [Understand Origin Cache Control](/cache/about/cache-control/)
 - [Cache by device type (Enterprise only)](/cache/how-to/create-page-rules/#cache-by-device-type-enterprise-only)
@@ -37,9 +37,9 @@ Include or exclude query strings, optimize cache keys, or enable tiered cache to
 
 Control resources a client is allowed to load and set access permissions to allow different origins to access your origin’s resources. Protect your site from web cache deception attacks while still caching static assets.
 
-- [Avoid web cache poisoning attacks](/cache/best-practices/avoid-web-poisoning/)
-- [Configure Cross-Origin Resource Sharing (CORS)](/cache/about/cors/)
-- [Enable Cache Deception Armor](/cache/about/cache-deception-armor/)
+- [Avoid web cache poisoning attacks](/cache/cache-security/avoid-web-poisoning/)
+- [Configure Cross-Origin Resource Sharing (CORS)](/cache/cache-security/cors/)
+- [Enable Cache Deception Armor](/cache/cache-security/cache-deception-armor/#enable-cache-deception-armor)
 
 ## Cloudflare features that can alter your HTML and cacheable objects
 
@@ -63,4 +63,4 @@ Resolve common caching concerns.
 
 - [Learn about Cloudflare's cache response statuses](/cache/about/default-cache-behavior/#cloudflare-cache-responses)
 - [Investigate Cloudflare's cache response with cURL](https://support.cloudflare.com/hc/articles/203118044#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)
-- [Diagnose Always Online issues](/cache/best-practices/always-online/)
+- [Diagnose Always Online issues](/cache/troubleshooting/always-online/)

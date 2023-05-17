@@ -1,6 +1,8 @@
 {{ $DATA := (index $.Site.Data .Section) }}
 {{ $productName := $DATA.product.title }}
 
+{{- if ne $productName "Support" -}}
+
 <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
       <a href="/products/" class="DocsMarkdown--link" itemprop="item">
@@ -14,7 +16,7 @@
     {{- range $index, $item := (split .RelPermalink "/") -}}
       {{- if gt (len $item ) 0 -}}
       
-        {{- $rellink = printf "%s/%s" $rellink $item -}}
+        {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item).Path -}}
         {{- $page := $.Site.GetPage $rellink -}}
         
       {{- if eq ($page.RelPermalink | strings.Count "/" ) 2 -}}
@@ -35,3 +37,5 @@
       {{- end -}}
     {{- end -}}
   </ol>
+
+  {{- end -}}

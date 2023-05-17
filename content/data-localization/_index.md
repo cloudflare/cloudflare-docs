@@ -29,6 +29,9 @@ Support by product and region is summarized in the following table:
 | Australia | &#x2705;[^25] | &#x2705; | ✘ |
 | Japan | &#x2705;[^25] | &#x2705; | ✘ |
 | India | &#x2705;[^25] | &#x2705; | ✘ |
+| ISO 27001 Certified European Union | &#x2705;[^25] | &#x2705; | Can use EU metadata boundary. |
+| Germany | &#x2705;[^25] | &#x2705; | Can use EU metadata boundary. |
+| Singapore | &#x2705;[^25] | &#x2705; | ✘ |
 
 Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
 
@@ -40,6 +43,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Suite/Category | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- | --- |
 | Application Performance | Caching/CDN | ✅ | ✅ | ✅ |
+| | Cache Reserve | ⚫️ | 🚧[^8] | 🚧[^1] | 
 | | DNS | ⚫️ | ⚫️ | 🚧[^1] | 
 | | Image Resizing | ✅ | ✅ | 🚧[^1] |
 | | Load Balancing | ✅ | ✅ | 🚧[^1] |
@@ -55,7 +59,8 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Page Shield | ✅ | ✅ | ✘[^6] |
 | | Rate Limiting | ✅ | ✅ | 🚧[^1] |
 | | SSL | ✅ | ✅ | ✅ |
-| | Cloudflare for SaaS | ✅ | ✅ | ✅ |
+| | Cloudflare for SaaS | ✘ | ✅ | ✅ |
+| | Turnstile | ⚫️ | ✘ | ✘ |
 | | WAF/L7 Firewall | ✅ | ✅ | ✅ |
 | Developer Platform | Cloudflare Images | ⚫️ | ✘ | ✘ |
 | | Cloudflare Pages | ✘ | ✘ | ✘ |
@@ -73,7 +78,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Spectrum | ✅ | ✅ | 🚧[^1] |
 | Platform | Logpull | ⚫️ | ✅ | 🚧[^12] |
 | | Logpush | ⚫️ | ✅ | 🚧[^13] |
-| Zero Trust | Access | 🚧[^14] | 🚧[^15] | 🚧[^16] |
+| [Zero Trust](/data-localization/how-to/zero-trust/) | Access | 🚧[^14] | 🚧[^15] | 🚧[^16] |
 | | Area 1 | ⚫️ | ✅[^23] | 🚧[^24] |
 | | Browser Isolation | ⚫️ | 🚧[^17] | ✅ |
 | | CASB | ⚫️ | ⚫️ | ✘ |
@@ -103,7 +108,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^19]:Uses Gateway and CASB.
 [^20]:You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 [^21]:Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
-[^22]:Logs are currently stored in the US only, but customers have the [option to exclude PII from logs](/cloudflare-one/analytics/logs/gateway-logs/manage-pii/).
-[^23]:US and EU region only. <br> For Area 1, this is called the **Processing & Inspection Boundary**.
+[^22]:Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs and analytics are still not available in the dashboard when setting the region to the EU).
+[^23]:[US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing & Inspection Boundary**.
 [^24]:Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).
 [^25]: Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).

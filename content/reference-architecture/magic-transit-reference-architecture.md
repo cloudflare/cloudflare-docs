@@ -11,9 +11,9 @@ The purpose of this document is to describe the key architecture, functionalitie
 ## 2 What Is Magic Transit?
 Protecting network infrastructure from DDoS attacks demands a unique combination of strength and speed. Volumetric attacks can easily overwhelm hardware boxes and their bandwidth-constrained Internet links. And most cloud-based solutions redirect traffic to centralized scrubbing centers, which impacts network performance significantly. 
 
-Cloudflare Magic Transit provides DDoS protection and traffic acceleration for on-premise, cloud, and hybrid networks. With data centers spanning 250 cities and with over 100 Tbps in mitigation capacity, Magic Transit can detect and mitigate attacks close to their source of origin in under 3 seconds globally on average — all while routing traffic faster than the public Internet.
+Cloudflare Magic Transit provides DDoS protection and traffic acceleration for on-premise, cloud, and hybrid networks. With data centers spanning [hundreds of cities](https://www.cloudflare.com/network/) and  offering hundreds of Tbps in mitigation capacity, Magic Transit can detect and mitigate attacks close to their source of origin in under three seconds globally on average — all while routing traffic faster than the public Internet.
 
-![Figure 1: Magic transit overview](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-1.png)
+![Figure 1: Magic transit overview](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-1.png)
 
 At a high level, Magic Transit works as follows:
 * **Connect:** Using Border Gateway Protocol (BGP) route announcements to the Internet, and the Cloudflare Anycast network, customer traffic is ingested at a Cloudflare data center closest to the source.
@@ -22,7 +22,7 @@ At a high level, Magic Transit works as follows:
 * **Protect and Process:** All customer traffic is inspected for attacks. Advanced and automated mitigation techniques are applied immediately upon detecting an attack. Additional functions such as load balancing, next-generation firewall, content caching, and serverless compute are also available as a service.
 
 
-* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. More details specifically on tunnels and encapsulation can be found [here](/magic-transit/about/tunnels-and-encapsulation/).
+* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. More details specifically on tunnels and encapsulation can be found [here](/magic-transit/reference/tunnels/).
 
 ### Baking resilience into our network using Anycast
 
@@ -41,7 +41,7 @@ By default, Magic Transit processes traffic in the ingress direction only (from 
 The network diagram in Figure 2 illustrates such a Magic Transit setup, and the end-to-end packet flow of Magic Transit-protected traffic. The tunnel in this setup uses GRE for encapsulation.
 
 
-![Figure 2: Reference Configuration of Magic Transit Anycast Tunnel (GRE) With Default DSR Option](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-2.png)
+![Figure 2: Reference Configuration of Magic Transit Anycast Tunnel (GRE) With Default DSR Option](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-2.png)
 
 * Cloudflare provides the customer with a pair of Anycast IP addresses for the Cloudflare end of the tunnel endpoints. These are publicly routable IP addresses from Cloudflare-owned address space. The pair of Anycast IP addresses can be used to configure two tunnels for network redundancy, although only one is required for a basic configuration. The above configuration shows a single tunnel, with the Cloudflare end of the tunnel endpoint address being 192.0.2.1. 
 
@@ -65,7 +65,7 @@ When Magic Transit is deployed with the Egress option enabled, egress traffic fr
 The following network diagram illustrates the end-to-end packet flow between the end client and customer network when the Magic Transit Egress option is enabled. 
 
 
-![Figure 3: Magic Transit With Egress Option Enabled](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-3.png)
+![Figure 3: Magic Transit With Egress Option Enabled](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-3.png)
 
 * The ingress traffic flow is the same as in use case 3.1. 
 
@@ -94,18 +94,18 @@ Figure 4 illustrates a reference configuration for Magic Transit over CNI, and i
 
 
 
-![Figure 4: Reference Configuration of Magic Transit Over CNI (Default DSR Option)](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-4.png)
+![Figure 4: Reference Configuration of Magic Transit Over CNI (Default DSR Option)](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-4.png)
 
 When the Magic Transit Egress option is enabled and utilized, the server return traffic can be sent back to the clients through the Cloudflare network, via the IP tunnels that are configured over the CNI connections. Figure 5 illustrates one such example.
 
 
-![Figure 5: Reference Configuration of Magic Transit Over CNI with Egress Option Enabled](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-5.png)
+![Figure 5: Reference Configuration of Magic Transit Over CNI with Egress Option Enabled](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-5.png)
 
 ### 3.4 Magic Transit Protecting Public Cloud-Hosted Services
 
 Magic Transit protects services hosted on-premise and in the cloud. This use case illustrates the configuration for a cloud-hosted deployment.
 
-![Figure 6: Protect Multi-Cloud-Based Services With Magic Transit (Egress Option Enabled)](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-6.png)
+![Figure 6: Protect Multi-Cloud-Based Services With Magic Transit (Egress Option Enabled)](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-6.png)
 
 * In this example, a given customer has two cloud VPC deployments spread across two different cloud providers, and in two different geographical regions.
 
@@ -127,7 +127,7 @@ Both services can either be deployed in the same service instance, or, for custo
 Figure 7 illustrates an example of deploying Magic Transit and Magic WAN services in separate service instances.
 
 
-![Figure 7: Magic Transit + Magic WAN Provide Network-as-a-Service for the Entire Enterprise](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-7.png)
+![Figure 7: Magic Transit + Magic WAN Provide Network-as-a-Service for the Entire Enterprise](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-7.png)
 
 * In the example, GRE tunnels are used to connect the customer’s various sites over the Cloudflare global Anycast network. The Cloudflare Anycast IP address for the Magic Transit service instance is 192.0.2.1, while the one for the Magic WAN service instance is 192.0.2.2. The Magic Transit service is enabled with the Egress option.
 
@@ -140,7 +140,7 @@ While Magic Transit protects customers’ services from DDoS attacks, many netwo
 Magic Firewall is deployed and configured as part of Magic Transit. All ingress traffic flowing through Cloudflare edge data centers, whose destination prefixes are protected by Magic Transit, can be filtered by Magic Firewall.
 
 
-![Figure 8: Magic Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge](/reference-architecture/static/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-8.png)
+![Figure 8: Magic Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-8.png)
 
 In Magic Firewall rules, administrators can match and filter network traffic not only based on the typical 5-tuple (source/destination IP, source/destination port, protocol) information carried in the IP packet header but also other packet information such as IP packet length, IP header length, TTL, etc. In addition, geographical information such as the name of the Cloudflare data center/colo, the region, and the country the data centers are located in can also be used in configuring Magic Firewall rules (geo-blocking).
 
@@ -157,7 +157,7 @@ Of all approaches and deployment options, the always-on method provides the most
 
 However, depending on the provider, diverting all traffic through the DDoS mitigation provider’s cloud might add latency that is suboptimal for business-critical applications. Cloudflare is architected so that customers do not incur a latency penalty as a result of attacks — even for always-on deployments. Analyzing traffic at the edge is the only way to mitigate at scale without impacting performance. 
 
-This is because ingesting traffic via Anycast ensures that traffic travels only to the nearest Cloudflare data center for inspection. With data centers in over 250 cities across more than 100 countries, it is likely to be a short distance. This eliminates the trombone effect. 
+This is because ingesting traffic via Anycast ensures that traffic travels only to the nearest Cloudflare data center for inspection. With data centers in hundreds of cities across more than 100 countries, it is likely to be a short distance. This eliminates the trombone effect. 
 
 In many cases, [traffic is faster when routed over Cloudflare](https://www.cloudflare.com/static/360e550c8890054d5e5835efb9fb8dd1/Magic_Transit_protects_networks_while_also_improving_performance__1_.pdf) than over the public Internet. We believe customers should not have to sacrifice performance to achieve comprehensive security.
 

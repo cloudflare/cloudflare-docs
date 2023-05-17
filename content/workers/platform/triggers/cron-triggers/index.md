@@ -12,7 +12,13 @@ Cron Triggers allow users to map a cron expression to a Worker script using a [S
 
 ## Add a Cron Trigger
 
-You can add Cron Triggers to Workers with the Cloudflare API, or in the dashboard in **Workers** > **Manage Workers** > select **your Worker** > [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers). Refer to [Limits](/workers/platform/limits/#number-of-schedules) to track the maximum number of Cron Triggers per Worker. If a Worker is managed with Wrangler, [Cron Triggers should be exclusively managed through the `wrangler.toml`](/workers/wrangler/configuration/) file.
+Add Cron Triggers to Workers with the Cloudflare API, or in the dashboard. To add Cron Triggers in the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Triggers** > **Cron Triggers**.
+
+Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker. If a Worker is managed with Wrangler, [Cron Triggers should be exclusively managed through the `wrangler.toml`](/workers/wrangler/configuration/) file.
 
 {{<Aside type="note" header="Requires a ScheduledEvent Listener">}}
 
@@ -72,14 +78,14 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
   - 6PM on the last Friday of the month
 
-- `23 59 LW * *`
+- `59 23 LW * *`
   - 11:59PM on the last weekday of the month
 
 {{</definitions>}}
 
 {{<Aside type="note" header="Testing Cron Triggers and potential delays">}}
 
-The recommended way of testing Cron Triggers is using Wrangler. Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes to propagate to the Cloudflare network edge.
+The recommended way of testing Cron Triggers is using Wrangler. Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes to propagate to the Cloudflare global network.
 
 Cron triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 

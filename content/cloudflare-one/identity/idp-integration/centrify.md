@@ -49,6 +49,7 @@ These steps help you set up Centrify as your identity provider:
 1.  Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
          {{<Aside>}}
+
     Do not use the forward slash from the **Settings** tab.
     {{</Aside>}}
 
@@ -56,7 +57,7 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Select the roles to grant access to your application.
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

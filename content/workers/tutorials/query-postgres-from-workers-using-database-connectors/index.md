@@ -7,6 +7,13 @@ title: Query Postgres from Workers using a database connector
 layout: single
 ---
 
+{{<Aside type="warning" header="This tutorial has been deprecated">}}
+  
+Workers now supports [connecting directly to a PostgreSQL database](/workers/databases/connect-to-postgres/) using the new [TCP Sockets API](/workers/runtime-apis/tcp-sockets/). This direct approach significantly minimizes the steps needed to connect to an existing Postgres database.
+  
+{{</Aside>}}
+
+
 # Query Postgres from Workers using a database connector
 
 {{<render file="_tutorials-wrangler-v1-warning.md">}}
@@ -165,7 +172,7 @@ In `wrangler.toml`, enter your Cloudflare account ID in the line containing `acc
 
 {{<Aside type="note">}}
 
-[Refer to Get started](/workers/get-started/guide#7-configure-your-project-for-deployment) if you need help finding your Cloudflare account ID.
+[Refer to Get started](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) if you need help finding your Cloudflare account ID.
 
 {{</Aside>}}
 

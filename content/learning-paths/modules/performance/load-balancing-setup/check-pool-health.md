@@ -21,9 +21,9 @@ For more information on pool and origin health statuses, refer to [How a pool be
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To fetch the latest health status of all pools, use the [List Pools](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-list-pools) command, paying attention to the `healthy` value for pools and origins.
+To fetch the latest health status of all pools, use the [List Pools](/api/operations/account-load-balancer-pools-list-pools) command, paying attention to the `healthy` value for pools and origins.
 
-For troubleshooting a specific pool's health, use the [Pool Health Details](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-pool-health-details) command.
+For troubleshooting a specific pool's health, use the [Pool Health Details](/api/operations/account-load-balancer-pools-pool-health-details) command.
 
 {{</tab>}}
 {{</tabs>}}
@@ -33,4 +33,4 @@ For troubleshooting a specific pool's health, use the [Pool Health Details](http
 If you notice that healthy pools are being marked unhealthy:
 
 - Review [how origins and pools become unhealthy](/load-balancing/understand-basics/health-details/).
-- Refer to the [Troubleshooting guide](https://support.cloudflare.com/hc/articles/4407016052493).
+- Refer to the [Troubleshooting guide](/load-balancing/troubleshooting/load-balancing-faq/).

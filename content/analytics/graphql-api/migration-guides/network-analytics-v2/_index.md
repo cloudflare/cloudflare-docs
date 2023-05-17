@@ -8,7 +8,7 @@ layout: single
 
 # Network Analytics v1 to Network Analytics v2
 
-In early 2020, Cloudflare released the first version of the Network Analytics dashboard and its corresponding API. The second version was made available on September 13th, 2021. Users should only use the newer version, Network Analytics v2 (NAv2). Network Analytics v1 (NAv1) is planned to be deprecated on March 31st, 2022.
+In early 2020, Cloudflare released the first version of the Network Analytics dashboard and its corresponding API. The second version was made available on 2021-09-13. Users should only use the newer version, Network Analytics v2 (NAv2). Network Analytics v1 (NAv1) is planned to be deprecated on 2023-08-01.
 
 ## Before you start
 

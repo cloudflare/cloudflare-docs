@@ -8,7 +8,11 @@ weight: 4
 
 You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
 
-The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
+The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or in the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Logs**.
 
 {{<Aside type="warning" header="Warning">}}
 This feature is not available for zones on the [Cloudflare China Network](/china-network/).
@@ -116,7 +120,13 @@ You can customize how `wrangler tail` works to fit your needs: refer to [the `wr
 
 ## View logs from the dashboard
 
-You can review the production logs associated with any Worker by [logging in to the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to **Workers** > select your **Worker** > and select **Logs**. Logging is available for all customers, including those on the free plan.
+Review the production logs associated with any Worker:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, go to **Workers & Pages**.
+3. In **Overview**, select your **Worker** > and select **Logs**. 
+
+Logging is available for all customers, including those on the free plan.
 
 ![Cloudflare dashboard showing logs for a Worker named logging-example](../media/workers-logging-dashboard.png)
 
@@ -126,6 +136,12 @@ Note that:
 - Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
 - Logs from any [Durable Objects](/workers/learning/using-durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
+
+## Push logs to storage
+
+[Workers Logpush](/workers/platform/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
+
+Refer to the [Workers Logpush documentation](/workers/platform/logpush/) to learn how to create and configure Logpush jobs.
 
 ---
 
@@ -151,7 +167,11 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 ### Identifying errors: Workers Metrics
 
-You can find out whether your application is experiencing any downtime or returning any errors by navigating to **Account Home** > **Workers** > your **Worker** and reviewing your Worker's summary in **Resources**.
+To review whether your application is experiencing any downtime or returning any errors:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Worker and review your Worker's metrics.
 
 ### Debugging exceptions
 
@@ -213,7 +233,7 @@ function postLog(data) {
 
 ### Go to origin on error
 
-By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}

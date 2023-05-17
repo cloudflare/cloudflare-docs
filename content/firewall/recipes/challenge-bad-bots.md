@@ -9,7 +9,7 @@ Cloudflare’s Bot Management feature scores the likelihood that a request origi
 
 {{<Aside type="warning">}}
 
-Access to [Bot Management](/bots/get-started/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management enabled.
+Access to [Bot Management](/bots/plans/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management enabled.
 
 {{</Aside>}}
 
@@ -25,10 +25,10 @@ These examples use:
 
 For best results:
 
-- Use [Bot Analytics](/bots/get-started/bm-subscription/#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
+- Use [Bot Analytics](/learning-paths/modules/security/bot-management-setup/review-analytics/) to learn about your traffic before applying rules
 - Start small and increase your bot threshold over time
 
-Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/#step-4--create-additional-firewall-rules) and your tolerance for false positives.
+Your rules may also vary based on the [nature of your site](/learning-paths/modules/security/bot-management-setup/expand-rules/) and your tolerance for false positives.
 
 ### Protect browser endpoints
 

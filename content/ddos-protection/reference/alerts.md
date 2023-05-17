@@ -17,6 +17,8 @@ Each notification email includes the following information:
 * Attack type
 * Maximum rate of attack
 * Attack target
+* Rule that matched the attack (ID and description)
+* Rule override, if any
 
 Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target hostname.
 
@@ -28,28 +30,7 @@ Cloudflare automatically sends weekly summaries of detected and mitigated DDoS a
 
 ## Set up a notification for DDoS alerts
 
-To set up a notification:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-
-2. Select **Notifications**.
-
-3. Under **Notifications**, select **Add**.
-
-4. Select one of the [available DDoS alerts](#alert-types) (depending on your plan and services):
-
-    * HTTP DDoS Attack Alert
-    * Layer 3/4 DDoS Attack Alert
-    * Advanced HTTP DDoS Attack Alert
-    * Advanced Layer 3/4 DDoS Attack Alert
-
-5. Enter a notification name and (optionally) a description.
-
-6. Configure a delivery method for the notification. The available delivery methods depend on your Cloudflare plan. For more information, refer to [Cloudflare Notifications](/fundamentals/notifications/).
-
-7. If you are creating a notification for one of the advanced DDoS attack alerts, select **Next** and define the parameters that will filter the notifications you will receive.
-
-8. Select **Save**.
+{{<render file="_create-notification.md">}}
 
 ## Edit an existing notification
 
@@ -88,6 +69,8 @@ Advanced DDoS attack alerts support additional configuration, allowing you to fi
     * The minimum megabits-per-second rate that will trigger the alert.
     * The protocols for which you wish to receive notifications (all protocols by default).
 
+You will also receive alerts for rules with a _Log_ action, containing information on what triggered the alert.
+
 ## Availability
 
 The available alerts depend on your Cloudflare plan and subscribed services:
@@ -106,9 +89,9 @@ Advanced Layer 3/4 DDoS Attack Alert |        –        |        –        | Y
 
 The following image shows an example notification delivered via email:
 
-![Example notification email of a DDoS attack](/ddos-protection/static/ddos-notification-example.png)
+![Example notification email of a DDoS attack](/images/ddos-protection/ddos-notification-example.png)
 
-To investigate a possibly ongoing attack, select **View Dashboard**.
+To investigate a possibly ongoing attack, select **View Dashboard**. To go to the rule details in the Cloudflare dashboard, select **View Rule**.
 
 ## Final remarks
 

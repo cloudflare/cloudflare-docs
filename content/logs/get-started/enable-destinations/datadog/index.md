@@ -23,7 +23,7 @@ To enable the Cloudflare Logpush service:
 
 3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Add Logpush job**. A modal window opens where you will need to complete several steps.
 
 5.  Select the dataset you want to push to a storage service.
 
@@ -37,19 +37,19 @@ To enable the Cloudflare Logpush service:
 
     {{<tabs labels="V1 | V2">}}
     {{<tab label="v1" no-code="true">}}
- 
+
   `https://http-intake.logs.datadoghq.com/v1/input`
- 
+
     {{</tab>}}
     {{<tab label="v2" no-code="true">}}
- 
+
   `https://http-intake.logs.datadoghq.com/api/v2/logs`
- 
+
     {{</tab>}}
     {{</tabs>}}
 
     - **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
-    
+
 9.  Click **Validate access**.
 
 10. Click **Save and Start Pushing** to finish enabling Logpush.
@@ -82,14 +82,14 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
   {{<tabs labels="V1 | V2">}}
   {{<tab label="v1" no-code="true">}}
- 
+
 `https://http-intake.logs.datadoghq.com/v1/input`
- 
+
   {{</tab>}}
   {{<tab label="v2" no-code="true">}}
- 
+
 `https://http-intake.logs.datadoghq.com/api/v2/logs`
- 
+
   {{</tab>}}
   {{</tabs>}}
 

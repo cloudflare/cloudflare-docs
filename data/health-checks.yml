@@ -4,7 +4,7 @@ logo: <svg width="64" height="65" viewBox="0 0 64 65" xmlns="http://www.w3.org/2
 product:
   title: Health Checks
   url: /health-checks/
-  group: Performance
+  group: Application performance
 
 meta:
   title: Cloudflare Health Checks docs
@@ -18,3 +18,7 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: health-checks

@@ -24,32 +24,23 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
+      <td>2023-05-10</td>
+      <td>2023-05-22</td>
       <td>Block</td>
-      <td>100524_BETA</td>
-      <td>...9d787fc2</td>
-      <td>Java - Remote Code Execution - Beta</td>
-      <td>This detection will replace 100524 on Legacy WAF and ...f2cc4e84 on new WAF</td>
+      <td>100583</td>
+      <td>...dae05f0a</td>
+      <td>Sophos - Code Injection - CVE:CVE-2023-1671</td>
+      <td>New Detection</td>
     </tr>
     <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
-      <td>Block</td>
-      <td>100572</td>
-      <td>...30d612c4</td>
-      <td>Java - Remote Code Execution</td>
-      <td>N/A</td>
-    <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
-      <td>Block</td>
-      <td>100570</td>
-      <td>...9497744a</td>
-      <td>FortiNAC - Remote Code Execution - CVE:CVE-2022-39952</td>
-      <td>N/A</td>
+      <td>2023-05-10</td>
+      <td>2023-05-22</td>
+      <td>Disabled</td>
+      <td>100584</td>
+      <td>...dd1b7502</td>
+      <td>Oracle Opera - Code Injection - CVE:CVE-2023-21932</td>
+      <td>New Detection</td>
     </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
-

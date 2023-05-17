@@ -1,12 +1,11 @@
 ---
-title: Configure R2 with Terraform
-summary: Example of how to configure R2 with Terraform.
+title: Terraform
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure R2 with Terraform
+
+{{<render file="_keys.md">}}<br>
 
 With [`terraform`](https://developer.hashicorp.com/terraform/downloads) installed, create `main.tf` and copy the content below replacing with your Account ID and R2 credentials.
 
