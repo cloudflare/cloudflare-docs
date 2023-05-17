@@ -55,6 +55,6 @@ There is a bug associated with `wrangler dev --remote` documented in the [Known 
 
 {{</Aside>}}
 
-## ## Livestream logs from deployed Workers with `wrangler tail`
+## Livestream logs from deployed Workers with `wrangler tail`
 
 To get more insight into currently deployed Workers, run [`wrangler tail`](/workers/wrangler/commands/#tail). `wrangler tail` starts a session to livestream logs from a deployed Worker.
