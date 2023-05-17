@@ -36,11 +36,7 @@ The following instructions show how to setup an IPsec connection on your SonicWa
     - **Cloudflare endpoint**: Refers to the Anycast IP provided by Cloudflare (in blue).
     - **FQDN ID**: The ID used in the VPN policy for the SonicWall’s Local IKE ID. Copy this ID and save it. You will need it when configuring the tunnel on your SonicWall (in green).
 
-    <div class="large-img">
-
     ![An example of what your IPsec tunnel should look like](/images/magic-wan/third-party/sonicwall/step3.png)
-
-    </div>
 
 {{<Aside type="note">}}The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. You will need to use `10.200.1.1/31` on the SonicWall side of the tunnel.{{</Aside>}}
 
