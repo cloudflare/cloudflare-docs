@@ -90,51 +90,51 @@ Additionally, the [QUANTILEWEIGHTED function](../sql-reference/#quantileweighted
 
 When you have a lot of data stored, the SQL API may not be able to retrieve all the data with one `SELECT` query. Instead you will need to retrieve it using multiple queries. We suggest retrieving 1000 records at a time.
 
-Traditionally, the SQL `OFFSET` feature has been used for pagination, but we do not support it because it is inefficient with big datasets. Instead you can use the timestamp of each row as a cursor.
+Traditionally, the SQL `OFFSET` feature has been used for pagination, but we do not support it because it is inefficient with big datasets. Instead you can use a unique field of each row as a cursor. You can use a field that is already present in the row (such as an event ID) or if you are using `GROUP BY` then you can use the field that you are grouping on.
 
-An example might be when you want to retrieve all of your data from a dataset: `SELECT * FROM your_dataset`. If you only have a few thousand rows then that query should execute fine, but if you have millions of rows then it is likely to fail. Instead you can break down the query into multiple sequential queries.
+An example might be a dataset containing page views. You want to list the number of hits for each URL and you have many URLs: `SELECT blob1 AS url, count() AS hits FROM dataset GROUP BY url`. If you only have a thousand unique URLs then that query should execute fine, but if you have many more then it is likely to fail. Instead you can break down the query into multiple sequental queries.
 
-First, run your desired query, adding `ORDER BY timestamp DESC` and our recommended `LIMIT` of 1000:
+First, run your desired query, adding `ORDER BY url` and our recommended `LIMIT` of 1000:
 
 ```sql
-SELECT * FROM your_dataset ORDER BY timestamp DESC LIMIT 1000
+SELECT blob1 AS url, count() AS hits FROM dataset GROUP BY url ORDER BY url DESC LIMIT 1000
 ```
 
-The response will include up to 1000 rows. Since the rows are ordered by descending timestamp, the oldest row has the oldest timestamp:
+The response will include up to 1000 rows:
 
 ```json
 {
     "data": [
         [...],
         {
-            "timestamp": "2022-10-10 13:56:48",
-            [...]
+            "url": "products/abc1",
+            "count": 123
         }
     ]
 }
 ```
 
-Next, run a second query, using the timestamp of the final row in the `WHERE` clause of the next query:
+Next, run a second query, using the url from the final row in the `WHERE` clause of the next query:
 
 ```sql
-SELECT * FROM your_dataset WHERE timestamp < toDateTime("2022-10-10 13:56:48") ORDER BY timestamp DESC LIMIT 1000
+SELECT blob1 AS url, count() AS hits FROM dataset WHERE url > '/products/abc1' GROUP BY url ORDER BY url DESC LIMIT 1000
 ```
 
-You will get the next 1000 older rows:
+You will get the next 1000 rows:
 
 ```json
 {
     "data": [
-        [...],
         {
-            "timestamp": "2022-10-09 21:33:00",
-            [...]
-        }
+            "url": "/products/abc2",
+            "count": 321
+        },
+        [...]
     ]
 }
 ```
 
-Repeat the process, using the new oldest timestamp to run another query. Keep doing that until you run out of results.
+Repeat the process, using the new URL from the last row to run another query. Keep doing that until you run out of results.
 
 ## Example queries
 
