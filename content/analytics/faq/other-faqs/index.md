@@ -20,5 +20,3 @@ Some sources of traffic from ASN13335 include:
 )
 
 
-
-For reference, iCloud Private Relay’s egress IP addresses are available in this [CSV form](https://mask-api.icloud.com/egress-ip-ranges.csv).
