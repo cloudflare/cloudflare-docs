@@ -327,7 +327,7 @@ None of the options for this command are required. Many of these options can be 
   - Perform on a specific environment.
 - `--compatibility-date` {{<type>}}string{{</type>}}
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
+- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Use the latest version of the Workers runtime.
@@ -444,7 +444,7 @@ None of the options for this command are required. Also, many can be set in your
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` {{<type>}}string{{</type>}}
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
+- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Use the latest version of the Workers runtime.
@@ -1897,3 +1897,5 @@ Generate types from bindings and module rules in configuration.
 ```sh
 $ wrangler types
 ```
+
+<!--TODO Add examples of DTS generated output -->
