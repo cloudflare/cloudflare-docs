@@ -14,7 +14,7 @@ By default, D1 will automatically create your database in a location close to wh
 
 ## Providing Location Hints
 
-You may want to explicitly provide a location hint in cases where the majorit of your writes to a specific database come from a different location than where you're created from. This can be particularly useful when working in a distributed team, when creating databases specific to users in specific locations, or when using continuous deployment (CD) or Infrastructure as Code (IaC) systems to programmatically create your databases.
+You may want to explicitly provide a location hint in cases where the majority of your writes to a specific database come from a different location than where you're creating the database from. This can be particularly useful when working in a distributed team, when creating databases specific to users in specific locations, or when using continuous deployment (CD) or Infrastructure as Code (IaC) systems to programmatically create your databases.
 
 You can provide a Location Hint when creating a D1 database when:
 
