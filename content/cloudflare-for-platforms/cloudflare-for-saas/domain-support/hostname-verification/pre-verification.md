@@ -1,0 +1,115 @@
+---
+pcx_content_type: configuration
+title: Pre-verification
+weight: 1
+meta:
+    title: Pre-verification methods - Custom Hostname Verification
+---
+
+# Pre-verification methods
+
+Pre-verification methods help verify domain ownership before your customer's traffic is proxying through Cloudflare.
+
+## Use when
+
+Use pre-verification methods when your customers cannot tolerate any downtime, which often occurs with production domains.
+
+These methods require an additional setup step for your customers. If your customers can tolerate a bit of downtime and you want their setup to be simpler, review our [real-time verification methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/realtime-verification/).
+
+## How to
+
+### TXT records
+
+TXT verification is when your customer adds a `TXT` record to their authoritative DNS to verify domain ownership.
+
+{{<Aside type="note">}}
+
+If your customer cannot update their authoritative DNS, you could also use [HTTP verification](#http-tokens).
+
+{{</Aside>}}
+
+To set up TXT verification:
+
+1. When you [create a Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), save the `ownership_verification` information.
+
+    ```json
+    ---
+    highlight: [11-12]
+    ---
+    {
+    "result": [
+        {
+        "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
+        "hostname": "app.example.com",
+        // ...
+        "status": "pending",
+        "verification_errors": ["custom hostname does not CNAME to this zone."],
+        "ownership_verification": {
+            "type": "txt",
+            "name": "_cf-custom-hostname.app.example.com",
+            "value": "0e2d5a7f-1548-4f27-8c05-b577cb14f4ec"
+        },
+        "created_at": "2020-03-04T19:04:02.705068Z"
+        }
+    ]
+    }
+    ```
+
+2. Have your customer add a TXT record with that `name` and `value` at their authoritative DNS provider.
+3. Once you activate the custom hostname, your customer can remove the TXT record.
+
+### HTTP tokens
+
+HTTP verification is when you or your customer places an HTTP token on their origin server to verify domain ownership.
+
+To set up HTTP verification:
+
+When you [create a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) using the API, Cloudflare provides an HTTP `ownership_verification` record in the response.
+
+To get and use the `ownership_verification` record:
+
+1.  Make an API call to [create a Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
+
+2.  In the response, copy the `http_url` and `http_body` from the `ownership_verification_http` object:
+
+    ```json
+    ---
+    header: Example response (truncated)
+    highlight: [8-9]
+    ---
+    {
+    "result": [
+        {
+        "id": "24c8c68e-bec2-49b6-868e-f06373780630",
+        "hostname": "app.example.com",
+        // ...
+        "ownership_verification_http": {
+            "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
+            "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
+        },
+        "created_at": "2020-03-04T20:06:04.117122Z"
+        }
+    ]
+    }
+    ```
+
+3.  Have your customer place the `http_url` and `http_body` on their origin web server.
+
+    ```bash
+    ---
+    header: Example response (truncated)
+    highlight: [7-10]
+    ---
+    location "/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630" {
+        return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";
+    }
+    ```
+
+    Cloudflare will access this token by sending `GET` requests to the `http_url` using `User-Agent: Cloudflare Custom Hostname Verification`.
+
+    {{<Aside type="note">}}If you can serve these tokens on behalf of your customers, you can simplify their overall setup.{{</Aside>}}
+    <br/>
+
+5.  After a few minutes, you will see the hostname status become **Active** in the UI.
+
+6. Once the hostname is active, your customer can remove the token from their origin server.
