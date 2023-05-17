@@ -23,34 +23,11 @@ This is an advanced procedure and assume some familiarity with [DNS concepts](/d
 
 1. [Add your zone to Cloudflare](/fundamentals/get-started/setup/add-site/).
 
-    To add the zone using the API, refer to the following example. Check the [API documentation about this endpoint](/api/operations/zones-post).
-
-    ```bash
-    curl --request POST "https://api.cloudflare.com/client/v4/zones" \
-    --header 'X-Auth-Email: <EMAIL>' \
-    --header 'X-Auth-Key: <KEY>' \
-    --header 'Content-Type: application/json' \
-    --data '{
-        "account": {
-            "id": "<ACCOUNT_ID>"
-            },
-            "name": "<YOUR_DOMAIN>",
-            "type": "full"
-        }'
-    ```
+    To add your zone using the API, refer to the [Create Zone endpoint](/api/operations/zones-post).
 
 2. [Review the records found by the automatic scan](/dns/manage-dns-records/how-to/create-dns-records/) or [import your zone file](/dns/manage-dns-records/how-to/import-and-export/).
 
-    To import the zone file using the API, refer to the following example and use a [properly formatted file](#format-your-zone-file). Check the [API documentation about this endpoint](/api/operations/dns-records-for-a-zone-import-dns-records).
-
-    ```bash
-    curl --request POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records/import" \
-    --header 'X-Auth-Email: <EMAIL>' \
-    --header 'X-Auth-Key: <KEY>' \
-    --header 'Content-Type: multipart/form-data' \
-    --form 'file=<YOUR_BIND_FILE>' \
-    --form 'proxied=<BOOLEAN>' \
-    ```
+    To import the zone file using the API, refer [Import DNS Records endpoint](/api/operations/dns-records-for-a-zone-import-dns-records).
 
 3. Go to **DNS**>**Settings**, and select **Enable DNSSEC**. Or use the following API request.
 
