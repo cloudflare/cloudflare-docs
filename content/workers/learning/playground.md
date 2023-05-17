@@ -46,7 +46,7 @@ To access the dashboard Playground:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Worker and in your Worker, select **Quick edit**.
+3. In **Overview**, select your Worker > **Quick edit**.
 
 When you have code you are ready to test, select **Save and Deploy** to preview at the bottom of the script panel.
 

@@ -25,7 +25,7 @@ Durable Objects are named instances of a class you define. Like a class in objec
 To start, enable Durable Objects for your account by purchasing Workers Paid:
 
  1. Log in to [the Cloudflare dashboard](https://dash.cloudflare.com/).
- 2. Go to **Workers & Pages** and select your Worker. 
+ 2. Go to **Workers & Pages** > in **Overview**, select your Worker. 
  3. In your Worker, scroll down to **Durable Objects** > **Learn more** > **View Paid Plan**.
  4. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 

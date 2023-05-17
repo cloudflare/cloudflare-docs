@@ -42,7 +42,7 @@ Before you set up a route, make sure you have a DNS record set up for the [domai
 To set up a route in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers & Pages** and select your Worker.
+2. Go to **Workers & Pages** and in **Overview**, select your Worker.
 3. Go to **Triggers** > **Routes** > **Add route**.
 4. Enter the route and select the zone it applies to.
 5. Select **Add route**.

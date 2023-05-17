@@ -139,7 +139,7 @@ To add environment variables, such as `vars` and `secret`, via the dashboard:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Worker > **Settings**.
+3. In **Overview**, select your Worker > **Settings**.
 4. Under **Environment Variables**, select **Add variable**.
 5. Input a **Variable name** and its **value**, which will be made available to your Worker.
 6. If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via Wrangler and the dashboard.
@@ -159,7 +159,7 @@ Do not select **Encrypt** when adding environment variables if your variable is 
 To add KV namespace bindings:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** and select your Worker.
+2. Select **Workers & Pages** and in **Overview**, select your Worker.
 3. Select **Settings** > **Add binding** under **KV Namespace Bindings**.
 4. Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker.
 5. Next, select a **KV namespace** from the dropdown.

@@ -162,7 +162,11 @@ If you are currently being rate limited, upgrade to a [Paid plan](https://dash.c
 
 Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
-Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your site > **Security** > **Events** > scroll to **Activity log**  and review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
+Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and your website.
+2. Select **Security** > **Events** > scroll to **Activity log**.
+3. Review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
 
 ### Daily request
 
@@ -185,7 +189,7 @@ Only one Workers instance runs on each of the many global Cloudflare global netw
 If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > select the Worker you would like to investigate.
+2. Select **Workers & Pages** > in **Overview**, select the Worker you would like to investigate.
 3. Find **Invocation Statuses** and examine _Exceeded Resources_.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.

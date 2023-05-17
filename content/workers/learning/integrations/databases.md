@@ -88,7 +88,7 @@ If your Worker is making multiple round trip calls to a centralized database, yo
 4. Add the PlanetScale integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     - In **Account Home**, select **Workers & Pages**.
-    - Select your Worker.
+    - In **Overview**, select your Worker.
     - Select **Settings** > **Integrations** > **PlanetScale**. 
     - Follow the setup flow, selecting the database created in step 1.
 
@@ -153,7 +153,7 @@ To learn more about PlanetScale, refer to [Planetscale's official documentation]
 4. Add the Supabase database integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     - In **Account Home**, select **Workers & Pages**.
-    - Select your Worker.
+    - In **Overview**, select your Worker.
     - Select **Settings** > **Integrations** > **Supabase**. 
     - Follow the setup flow, selecting the database created in step 1.
 
@@ -221,7 +221,7 @@ To learn more about Supabase, refer to [Supabase's official documentation](https
 4. Add the Neon database integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     - In **Account Home**, select **Workers & Pages**.
-    - Select your Worker.
+    - In **Overview**, select your Worker.
     - Select **Settings** > **Integrations** > **Neon**. 
     - Follow the setup flow, selecting the database created in step 1.
 
