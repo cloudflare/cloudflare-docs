@@ -330,7 +330,6 @@ ___
 
 ## Related resources
 
--   [Billing for Cloudflare Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115000272247)
 -   [How is Rate Limiting reported in ELS (Enterprise Log Share)?](/logs/reference/log-fields)
 -   [Troubleshooting Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configure Rate Limiting via the Cloudflare API](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)
