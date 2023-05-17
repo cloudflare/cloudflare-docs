@@ -16,7 +16,7 @@ The following commands are deprecated in Wrangler as of Wrangler v3. These comma
 
 ### `generate`
 
-The `wrangler generate` command is deprecated, but still active in v3. It will be fully removed in v4.
+The `wrangler generate` command is deprecated, but still active in v3. `wrangler generate` will be fully removed in v4.
 
 Try using `npm create cloudflare` for new Workers and Pages projects.
 
