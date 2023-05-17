@@ -3,7 +3,6 @@ title: Internet Content Provider (ICP)
 pcx_content_type: concept
 weight: 3
 source: https://support.cloudflare.com/hc/en-us/articles/209714777-Understanding-and-configuring-an-ICP-number
-layout: single
 ---
 
 # Internet Content Provider (ICP)
