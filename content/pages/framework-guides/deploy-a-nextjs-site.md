@@ -7,25 +7,30 @@ title: Deploy a Next.js site
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and apps. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
 
+This guide will instruct you how to deploy:
+
+* Full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge). 
+* Next.js projects which can be [statically exported](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
+
 ## Consider if you need the Edge Runtime
 
-Cloudflare Pages supports full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge), or any projects which can be [statically exported](https://nextjs.org/docs/app/building-your-application/deploying/static-exports). The Edge Runtime allows applications to use server-side features such as [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), server-side rendering (SSR) pages with [`getServerSideProps()`](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props), [Server Components](https://nextjs.org/docs/getting-started/react-essentials#server-components), and [Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware).
+The Edge Runtime allows applications to use server-side features such as [Edge API Routes](https://nextjs.org/docs/api-routes/edge-api-routes), server-side rendering (SSR) pages with [`getServerSideProps()`](https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props), [Server Components](https://nextjs.org/docs/getting-started/react-essentials#server-components), and [Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware).
 
 For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) which explains the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Using the Edge Runtime
+## Use the Edge Runtime
 
-### 1. Select your Next.js app
+### 1. Select your Next.js project
 
-If you already have a Next.js project that you wish to deploy, change to its directory and proceed to the next step. Otherwise, you can use `create-next-app` to start a new one.
+If you already have a Next.js project that you wish to deploy, change to its directory and proceed to the next step. Otherwise, use `create-next-app` to create a new Next.js project:
 
 ```sh
 $ npx create-next-app my-app
 ```
 
-After creating your project, a new `my-app` directory will be generated using the official default template. Switch to this directory to continue.
+After creating your project, a new `my-app` directory will be generated using the official default template. Change to this directory to continue.
 
 ```sh
 $ cd my-app
@@ -117,26 +122,28 @@ Deploy your site to Pages:
    {{</table-wrap>}}
 
 4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
-5. Click on **Save and Deploy** to start the deployment (this first deployment won't be fully functional as the next step is also necessary).
-6. Go to the **Pages project settings** page (_Settings_ > _Functions_ > _Compatibility Flags_), **add the `nodejs_compat` flag** for both production and preview, and make sure that the **Compatibility Date** for both production and preview is set to at least `2022-11-30`.
+5. Click on **Save and Deploy** to start the deployment. This first deployment will not be fully functional as the next step is also necessary.
+6. In your Pages project, go to **Settings** > **Functions** > **Compatibility Flags**.
+7. Configure a `nodejs_compat` flag for both production and preview .
+8. Above **Compability Flags**, go to **Compatibility Date**  and configure a compatibility date that is at least `2022-11-30` for both production and preview.
 
 {{<Aside type="note" header="Note">}}
 
-The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/advanced-mode/). The library attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](/workers/platform/limits/#worker-size). If you notice any bugs, please let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
+The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/advanced-mode/). The library attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](/workers/platform/limits/#worker-size). If you notice any bugs, let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
 
 {{</Aside>}}
 
-## Using a Static Export
+## Use a static export
 
-### 1. Select your Next.js app
+### 1. Select your Next.js project
 
-If you already have a Next.js project that you wish to deploy, ensure that it is [configured for static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports), change to its directory, and proceed to the next step. Otherwise, you can use `create-next-app` to start a new one.
+If you already have a Next.js project that you wish to deploy, ensure that it is [configured for static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports), change to its directory, and proceed to the next step. Otherwise, use `create-next-app` to create a new Next.js project.
 
 ```sh
 $ npx create-next-app --example with-static-export my-app
 ```
 
-After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template. Switch to this directory to continue.
+After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template. Change to this directory to continue.
 
 ```sh
 $ cd my-app
@@ -162,7 +169,7 @@ Deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
+4. Next.js requires a specific Node.js version to build successfully. Refer to [System Requirements in Next.js Installation guide](https://nextjs.org/docs/getting-started/installation) to review the required Node.js version. To set your Node.js version, go to your Pages project > **Settings** > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of the required version. For example, if the required Node.js version on Next.js's Installation guide is Node.js `16.8` or later, your environment variable value must be set to `16` or greater.
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 
