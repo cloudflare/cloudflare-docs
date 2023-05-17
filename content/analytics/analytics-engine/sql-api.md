@@ -92,12 +92,12 @@ When you have a lot of data stored, the SQL API may not be able to retrieve all 
 
 Traditionally, the SQL `OFFSET` feature has been used for pagination, but we do not support it because it is inefficient with big datasets. Instead you can use a unique field of each row as a cursor. You can use a field that is already present in the row (such as an event ID) or if you are using `GROUP BY` then you can use the field that you are grouping on.
 
-An example might be a dataset containing page views. You want to list the number of hits for each URL and you have many URLs: `SELECT blob1 AS url, count() AS hits FROM dataset GROUP BY url`. If you only have a thousand unique URLs then that query should execute fine, but if you have many more then it is likely to fail. Instead you can break down the query into multiple sequental queries.
+An example might be a dataset containing page views. You want to list the number of hits for each URL: `SELECT blob1 AS url, count() AS hits FROM dataset GROUP BY url`. If you have less than a thousand unique URLs then that query should execute fine, but if you have many more then it is likely to fail. Instead you can break down the query into multiple sequental queries.
 
 First, run your desired query, adding `ORDER BY url` and our recommended `LIMIT` of 1000:
 
 ```sql
-SELECT blob1 AS url, count() AS hits FROM dataset GROUP BY url ORDER BY url DESC LIMIT 1000
+SELECT blob1 AS url, count() AS hits FROM dataset GROUP BY url ORDER BY url LIMIT 1000
 ```
 
 The response will include up to 1000 rows:
@@ -117,7 +117,7 @@ The response will include up to 1000 rows:
 Next, run a second query, using the url from the final row in the `WHERE` clause of the next query:
 
 ```sql
-SELECT blob1 AS url, count() AS hits FROM dataset WHERE url > '/products/abc1' GROUP BY url ORDER BY url DESC LIMIT 1000
+SELECT blob1 AS url, count() AS hits FROM dataset WHERE url > '/products/abc1' GROUP BY url ORDER BY url LIMIT 1000
 ```
 
 You will get the next 1000 rows:
