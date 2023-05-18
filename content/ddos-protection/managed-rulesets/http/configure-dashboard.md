@@ -35,7 +35,7 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 6. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
-    <details><summary>Configure all the rules in the ruleset</summary><div>
+    <details><summary>Configure all the rules in the ruleset (ruleset override)</summary><div>
 
     1. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
     2. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
@@ -57,7 +57,7 @@ If you cannot deploy any additional overrides, consider editing an existing over
     </div></details>
 
     {{<Aside type="note" header="Notes">}}
-* Tag and rule configurations have greater priority than ruleset configurations.
+* Tag and rule overrides have priority over ruleset overrides.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
     {{</Aside>}}
 

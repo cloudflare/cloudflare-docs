@@ -25,7 +25,7 @@ For more information on the available parameters and allowed values, refer to [R
 
 7. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
-    <details><summary>Configure all the rules in the ruleset</summary><div>
+    <details><summary>Configure all the rules in the ruleset (ruleset override)</summary><div>
 
     1. Select **Next**.
     2. Enter a name for your override in **Rule description**.
@@ -49,7 +49,7 @@ For more information on the available parameters and allowed values, refer to [R
     </div></details>
 
     {{<Aside type="note" header="Notes">}}
-* Tag and rule configurations have greater priority than ruleset configurations.
+* Tag and rule overrides have priority over ruleset overrides.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
     {{</Aside>}}
 
