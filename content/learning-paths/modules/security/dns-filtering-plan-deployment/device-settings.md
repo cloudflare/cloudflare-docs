@@ -27,7 +27,7 @@ To configure these settings for your organization:
     | Split Tunnels | | Unused for DNS filtering. |
     | Directly route Office 365 traffic | Disabled | Unused for DNS filtering.|
 
-4. Save the profile. You can optionally configure other [device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) to apply to specific users.
+4. Save the profile.
 5. Under **Global settings**,
     1. (Recommended) Enable **Admin override code** if you turned on **Lock WARP switch**.
     2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/).
