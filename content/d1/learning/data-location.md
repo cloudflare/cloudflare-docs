@@ -1,10 +1,10 @@
 ---
-title: Data Location
+title: Data location
 pcx_content_type: concept
 weight: 5
 ---
 
-# Data Location
+# Data location
 
 Learn how the location of data stored in D1 is determined, including where the leader is placed and how you optimize that location based on your needs.
 
@@ -12,20 +12,24 @@ Learn how the location of data stored in D1 is determined, including where the l
 
 By default, D1 will automatically create your database in a location close to where you issued the request to create a database. In most cases this allows D1 to choose the optimal location for your database on your behalf.
 
-## Providing Location Hints
+## Provide Location Hints
 
-You may want to explicitly provide a location hint in cases where the majority of your writes to a specific database come from a different location than where you're creating the database from. This can be particularly useful when working in a distributed team, when creating databases specific to users in specific locations, or when using continuous deployment (CD) or Infrastructure as Code (IaC) systems to programmatically create your databases.
+You may want to explicitly provide a location hint in cases where the majority of your writes to a specific database come from a different location than where you are creating the database from. Location hints can be useful when:
 
-You can provide a Location Hint when creating a D1 database when:
+* Working in a distributed team.
+* Creating databases specific to users in specific locations.
+* Using continuous deployment (CD) or Infrastructure as Code (IaC) systems to programmatically create your databases.
 
-* Creating a database [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1)
-* Using [`wrangler d1`](/workers//wrangler/commands/#d1) to create a database
+Provide a Location Hint when creating a D1 database when:
 
-### Using wrangler
+* Using [`wrangler d1`](/workers//wrangler/commands/#d1) to create a database.
+* Creating a database [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1).
+
+### Use Wrangler
 
 {{<Aside type="note">}}
 
-You can install Wrangler, the command-line interface for D1 and Workers, by [following the installation instructions](/workers/wrangler/install-and-update/).
+To install Wrangler, the command-line interface for D1 and Workers, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
 
 {{</Aside>}}
 
@@ -35,15 +39,15 @@ To provide a location hint when creating a new database, pass the `--location` f
 $ wrangler d1 create new-database --location=weur 
 ```
 
-### Using the dashboard
+### Use the dashboard
 
 To provide a location hint whne creating a database via the dashboard:
 
-1. Login to the Cloudflare dashboard
-2. Navigate to [**Workers** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1)
-3. Choose **Create database**
-4. Provide a database name and an optional **Location**
-5. Select **Create** to create your database
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
+3. Select **Create database**.
+4. Provide a database name and an optional **Location**.
+5. Select **Create** to create your database.
 
 ## Available hints
 

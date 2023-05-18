@@ -1,10 +1,10 @@
 ---
-title: Using Indexes
+title: Use indexes
 pcx_content_type: concept
 weight: 3
 ---
 
-# Using Indexes
+# Use indexes
 
 Indexes enable D1 to improve query performance over the indexed columns for common (popular) queries by reducing the amount of data (number of rows) the database has to scan when running a query.
 
@@ -13,12 +13,12 @@ Indexes enable D1 to improve query performance over the indexed columns for comm
 Indexes are useful:
 
 * When you want to improve the read performance over columns that are regularly used in predicates - for example, a `WHERE email_address = ?` or `WHERE user_id = 'a793b483-df87-43a8-a057-e5286d3537c5'` - email addresses, usernames, user IDs and/or dates are good choices for columns to index in typical web applications or services.
-* For enforcing uniqueness constraints on a column or columns - for example, an email address or user id via the `CREATE UNIQUE INDEX`
-* In cases where you query over multiple columns together - `(customer_id, transaction_date)` 
+* For enforcing uniqueness constraints on a column or columns - for example, an email address or user ID via the `CREATE UNIQUE INDEX`.
+* In cases where you query over multiple columns together - `(customer_id, transaction_date)`.
 
-Indexes are automatically updated when the table and column(s) they reference are inserted, updated or deleted: you do not need to manually update an index after you write to the table it references.
+Indexes are automatically updated when the table and column(s) they reference are inserted, updated or deleted. You do not need to manually update an index after you write to the table it references.
 
-## Creating an index
+## Create an index
 
 {{<Aside type="note">}}
 Tables that use the default primary key (an `INTEGER` based `ROWID`), or that define their own `INTEGER PRIMARY KEY`, do not need to create an index for that column.
@@ -26,12 +26,12 @@ Tables that use the default primary key (an `INTEGER` based `ROWID`), or that de
 
 To create an index on a D1 table, use the `CREATE INDEX` SQL command and specify the table and column(s) to create the index over.
 
-For example, given the following `orders` table, we may want to create an index on `customer_id`: nearly all of our queries against that table filter on `customer_id`, and we'd see a performance improvement by creating an index for it.
+For example, given the following `orders` table, you may want to create an index on `customer_id`. Nearly all of your queries against that table filter on `customer_id`, and you would see a performance improvement by creating an index for it.
 
 ```sql
 CREATE TABLE IF NOT EXISTS orders (
     order_id INTEGER PRIMARY KEY,
-    customer_id STRING NOT NULL, -- e.g. a unique ID aba0e360-1e04-41b3-91a0-1f2263e1e0fb
+    customer_id STRING NOT NULL, -- for example, a unique ID aba0e360-1e04-41b3-91a0-1f2263e1e0fb
     order_date STRING NOT NULL,
     status INTEGER NOT NULL,
     last_updated_date STRING NOT NULL
@@ -60,9 +60,9 @@ SELECT * FROM orders WHERE order_date = '2023-05-01'
 
 In more complex cases, you can confirm whether an index was used by D1 by [analyzing a query](#testing-an-index) directly.
 
-## Listing indexes
+## List indexes
 
-You can list the indexes on a database, as well as the SQL definition, by querying the `sqlite_schema` system table:
+List the indexes on a database, as well as the SQL definition, by querying the `sqlite_schema` system table:
 
 ```sql
 SELECT name, type, sql FROM sqlite_schema WHERE type IN ('index');
@@ -80,11 +80,11 @@ This will return output resembling the below:
 
 Note that you cannot modify this table, or an existing index. To modify an index, [delete it first](#removing-indexes) and [create a new index](#creating-an-index) with the updated definition.
 
-## Testing an index
+## Test an index
 
-You can validate that an index was used for a query by prepending a query with [`EXPLAIN QUERY PLAN`](https://www.sqlite.org/eqp.html). This will output a query plan for the succeeding statement, including which (if any) indexes were used.
+Validate that an index was used for a query by prepending a query with [`EXPLAIN QUERY PLAN`](https://www.sqlite.org/eqp.html). This will output a query plan for the succeeding statement, including which (if any) indexes were used.
 
-For example, if we assume the `users` table has an `email_address TEXT` column and we created an index `CREATE UNIQUE INDEX idx_email_address ON users(email_address)`, any query with a predicate on `email_address` should use our index. 
+For example, if you assume the `users` table has an `email_address TEXT` column and you created an index `CREATE UNIQUE INDEX idx_email_address ON users(email_address)`, any query with a predicate on `email_address` should use your index. 
 
 ```sql
 EXPLAIN QUERY PLAN SELECT * FROM users WHERE email_address = 'foo@example.com';
@@ -92,9 +92,9 @@ QUERY PLAN
 `--SEARCH users USING INDEX idx_email_address (email_address=?)
 ```
 
-We can see the `USING INDEX <index_name>` output from the query planner, confirming the index was used.
+Review the `USING INDEX <INDEX_NAME>` output from the query planner, confirming the index was used.
 
-This is also a fairly common use-case for an index: finding a user based on their email address is often a very common query type for login (authentication) systems.
+This is also a fairly common use-case for an index. Finding a user based on their email address is often a very common query type for login (authentication) systems.
 
 ## Multi-column indexes
 
@@ -110,16 +110,16 @@ Given an index of `CREATE INDEX idx_customer_date_transaction_date ON transactio
   
 Notes:
 
-* If we created an index over three columns instead — `customer_id`, `transaction_date` and `shipping_status` — a query that uses both `customer_id` and `transaction_date` would use the index, as we're including all columns "to the left".
-* With the same index, a query that uses only `transaction_date` and `shipping_status` would _not_ use the index, as we have not used `customer_id` (the leftmost column) in the query.
+* If you created an index over three columns instead — `customer_id`, `transaction_date` and `shipping_status` — a query that uses both `customer_id` and `transaction_date` would use the index, as you are including all columns "to the left".
+* With the same index, a query that uses only `transaction_date` and `shipping_status` would _not_ use the index, as you have not used `customer_id` (the leftmost column) in the query.
 
 ## Partial indexes
 
-Partial indexes are indexes over a subset of rows in a table: they are defined by the use of a `WHERE` clause when creating the index. A partial index can be useful to omit certain rows, such as those where values are `NULL` or where rows with a specific value are present across queries.
+Partial indexes are indexes over a subset of rows in a table. Partial indexes are defined by the use of a `WHERE` clause when creating the index. A partial index can be useful to omit certain rows, such as those where values are `NULL` or where rows with a specific value are present across queries.
 
-* A concrete example of a partial index would be on a table with a `order_status INTEGER` column, where `6` might represent "order complete" in your application code.
-* This would allow queries against orders that are yet to be fulfilled, shipped or are in-progress, which are likely to be some of the most common users (users checking their order status)
-* It also keeps the index from growing unbounded over time: the index does not need to keep a row for every completed order, and completed orders are likely to be queried far fewer times than in-progress orders.
+* A concrete example of a partial index would be on a table with a `order_status INTEGER` column, where `6` might represent `"order complete"` in your application code.
+* This would allow queries against orders that are yet to be fulfilled, shipped or are in-progress, which are likely to be some of the most common users (users checking their order status).
+* Partial indexes also keep the index from growing unbounded over time. The index does not need to keep a row for every completed order, and completed orders are likely to be queried far fewer times than in-progress orders.
 
 A partial index that filters out completed orders from the index would resemble the following:
 
@@ -135,9 +135,9 @@ Use `DROP INDEX` to remove an index. Dropped indexes cannot be restored.
 
 ## Considerations
 
-There are some useful considerations to keep in mind when creating indexes:
+Take note of the following considerations when creating indexes:
 
-* Indexes aren't always a free performance boost: you should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained: when you write to an indexed column, the database needs to write to the table and the index.
+* Indexes are not always a free performance boost. You should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained. When you write to an indexed column, the database needs to write to the table and the index.
 * You cannot create indexes that reference other tables or use non-deterministic functions, since the index would not be stable.
-* Indexes cannot be updated: if you want to add or remove a column from an index, [remove](#removing-indexes) the index and then [create a new index](#creating-an-index) with the new columns.
+* Indexes cannot be updated. To add or remove a column from an index, [remove](#removing-indexes) the index and then [create a new index](#creating-an-index) with the new columns.
 * Indexes contribute to the overall storage required by your database: an index is effectively a table itself.

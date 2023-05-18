@@ -1,5 +1,5 @@
 ---
-title: Querying JSON
+title: Query JSON
 pcx_content_type: concept
 weight: 4
 ---
@@ -8,9 +8,9 @@ weight: 4
 
 D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:
 
-* Query paths within a stored JSON object - e.g. extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
+* Query paths within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
 * Insert and/or replace values within an object or array,
-* Expand the contents of a JSON object or array into multiple rows - e.g. for use as part of a `WHERE ... IN` predicate.
+* Expand the contents of a JSON object or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
 
 One of the biggest benefits to parsing JSON within D1 directly is that it can directly reduce the number of round-trips (queries) to your database. It reduces the cases where you have to read a JSON object into your application (1), parse it, and then write it back (2).
 
@@ -20,18 +20,18 @@ This allows you to more precisely query over data and reduce the result set your
 
 JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/platform/client-api/#type-conversion) as D1 in general, including:
 
-* A JSON null is treated as a D1 `NULL`
-* A JSON number is treated as an `INTEGER` or `REAL`
-* Booleans are treated as `INTEGER` values: `true` as `1` and `false` as `0`
-* Object and array values as `TEXT`
+* A JSON null is treated as a D1 `NULL`.
+* A JSON number is treated as an `INTEGER` or `REAL`.
+* Booleans are treated as `INTEGER` values: `true` as `1` and `false` as `0`.
+* Object and array values as `TEXT`.
 
-## Supported Functions
+## Supported functions
 
-The following table outlines the JSON functions built into D1, as well as example usage.
+The following table outlines the JSON functions built into D1 and example usage.
 
 * The `json` argument placeholder can be a JSON object, array, string, number or a null value.
 * The `value` argument accepts string literals (only) and treats input as a string, even if it is well-formed JSON. The exception to this rule is when nesting `json_*` functions: the outer (wrapping) function will interpret the inner (wrapped) functions return value as JSON.
-* The `path` argument accepts path-style traversal syntax - e.g. `$` to refer to the top-level object/array, `$.key1.key2` to refer to a nested object, and `$.key[2]` to index into an array.
+* The `path` argument accepts path-style traversal syntax - for example, `$` to refer to the top-level object/array, `$.key1.key2` to refer to a nested object, and `$.key[2]` to index into an array.
 
 | Function                                  | Description                                         | Example                 |
 | ----------------------------------------- | --------------------------------------------------- | ----------------------- |
@@ -71,15 +71,15 @@ ERROR 9015: SQL engine error: query error: Error code 1: SQL error or missing da
   JSON)`
 ```
 
-## Example Usage
+## Example usage
 
 ### Extracting values
 
 There are three ways to extract a value from a JSON object in D1:
 
-* The `json_extract()` function - e.g. `json_extract(text_column_containing_json, '$.path.to.value)`
-* The `->` operator, which returns a JSON representation of the value
-* The `->>` operator, which returns an SQL representation of the value
+* The `json_extract()` function - for example, `json_extract(text_column_containing_json, '$.path.to.value)`.
+* The `->` operator, which returns a JSON representation of the value.
+* The `->>` operator, which returns an SQL representation of the value.
 
 The `->` and `->>` operators functions both operate similarly to the same operators in PostgreSQL and MySQL/MariaDB.
 
@@ -115,9 +115,9 @@ sensor_reading -\-> '$.measurement.o3' -- returns '[18, 500]' as TEXT
 You can get the length of a JSON array in two ways:
 
 1. By calling `json_array(value)` directly
-2. By calling `json_array(value, path)` to specify the array size of a 
+2. By calling `json_array(value, path)` to specify the path to an array within an object or outer array.
 
-For example, given the following JSON object stored in a column called `login_history`, we could get a count of the last logins directly:
+For example, given the following JSON object stored in a column called `login_history`, you could get a count of the last logins directly:
 
 ```json
 {
@@ -130,7 +130,7 @@ For example, given the following JSON object stored in a column called `login_hi
 json_array(login_history, '$.previous_logins') --> returns 3 as an INTEGER
 ```
 
-You can also use `json_array` as a predicate in a more complex query - e.g. `WHERE json_array(some_column, '$.path.to.value') >= 5`.
+You can also use `json_array` as a predicate in a more complex query - for example, `WHERE json_array(some_column, '$.path.to.value') >= 5`.
 
 ### Insert a value into an existing object
 
@@ -140,7 +140,7 @@ You can insert a value into an existing JSON object or array using `json_insert(
 {"history": ["2023-05-13T15:13:02+00:00", "2023-05-14T07:11:22+00:00", "2023-05-15T15:03:51+00:00"]}
 ```
 
-To add a new timestamp to the `history` array within our `login_history` column, we'd write a query resembling the following:
+To add a new timestamp to the `history` array within our `login_history` column, write a query resembling the following:
 
 ```sql
 UPDATE users
@@ -148,13 +148,17 @@ SET login_history = json_insert(login_history, '$.history[#]', '2023-05-15T20:33
 WHERE user_id = 'aba0e360-1e04-41b3-91a0-1f2263e1e0fb'
 ```
 
-We provide three arguments to `json_insert`: the name of our column containing the JSON we want to modify, the path to the key within the object to modify, and the JSON value to insert. Using `[#]` tells `json_insert` to append to the end of our array.
+Provide three arguments to `json_insert`: 
 
-To replace an existing value, using `json_replace()`, which will overwrite an existing key-value pair if one already exists. To set a value regardless of whether it already exists, use `json_set()`.
+1. The name of our column containing the JSON you want to modify.
+2. The path to the key within the object to modify.
+3. The JSON value to insert. Using `[#]` tells `json_insert` to append to the end of your array.
+
+To replace an existing value, use `json_replace()`, which will overwrite an existing key-value pair if one already exists. To set a value regardless of whether it already exists, use `json_set()`.
 
 ### Expanding arrays for IN queries
 
-You can use `json_each` to expand an array into multiple rows, which can be useful when composing a `WHERE column IN (?)` query over several values. For example, if we wanted to update a list of users by their integer `id`, we can use `json_each` to return a table with each value as a column called `value`:
+Use `json_each` to expand an array into multiple rows. This can be useful when composing a `WHERE column IN (?)` query over several values. For example, if you wanted to update a list of users by their integer `id`, use `json_each` to return a table with each value as a column called `value`:
 
 ```sql
 UPDATE users 
@@ -192,4 +196,4 @@ const resp = await stmt.bind(
     ).run()
 ```
 
-This would only update rows in our `users` table where the `id` matches one of the three provided.
+This would only update rows in your `users` table where the `id` matches one of the three provided.
