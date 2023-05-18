@@ -49,7 +49,7 @@ The _Log_ action is only available to Enterprise customers.
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. [Configure all the rules in the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/configure-dashboard/#create-a-ddos-override), setting their action to _Log_.
 
-3. [Configure all the rules in the Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/configure-dashboard/#override-all-the-rules-in-the-ruleset), setting the override scope to _Apply DDoS managed ruleset override to all incoming packets_ and the action to _Log_.
+3. [Configure all the rules in the Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/configure-dashboard/#create-a-ddos-override), setting the action to _Log_.
 
 Alternatively, if you are using the API, define an override at the ruleset level to set the action of all managed ruleset rules to `log` by following these instructions:
 
