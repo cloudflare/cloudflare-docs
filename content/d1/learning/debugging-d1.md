@@ -1,0 +1,62 @@
+---
+title: Debugging D1
+weight: 5
+pcx_content_type: concept
+---
+
+# Debugging
+
+Debugging issues is a critical part of development. D1 allows you to both capture exceptions and log errors returned when querying a database using the same tools available when [debugging Workers](/workers/learning/debugging-workers/).
+
+## Handling errors
+
+The D1 [client API](/d1/platform/client-api/) returns detailed error messages on the [`cause` property](/d1/platform/client-api/#errors) within an `Error` object. 
+
+To ensure you're capturing the full error message, make sure to log or return `e.cause.message`, as follows:
+
+```ts
+try {
+    await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
+} catch (e: any) {
+    console.log({
+        message: e.message,
+        cause: e.cause.message,
+    });
+}
+/*
+{
+  "message": "D1_EXEC_ERROR",
+  "cause": "Error in line 1: INSERTZ INTO my_table (name, employees) VALUES (): sql error: near \"INSERTZ\": syntax error in INSERTZ INTO my_table (name, employees) VALUES () at offset 0"
+}
+*/
+```
+
+## Viewing logs
+
+You can view a stream of live logs from your Worker by using [`wrangler tail`](/workers/learning/logging-workers/#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/learning/logging-workers/#view-logs-from-the-dashboard).
+
+## Reporting issues
+
+{{<Aside type="note" header="Reporting bugs during the open alpha">}}
+
+D1 is in open alpha and we welcome any bug reports or issues.
+
+{{</Aside>}}
+
+To report a bug or issue with D1:
+
+* For `wrangler` issues, open an [issue on GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose)
+* For issues with D1 queries or databases, join the Cloudflare [Developer Discord](https://discord.cloudflare.com/) to engage with other developers building on Workers and the engineering team behind D1.
+
+You should include as much of the following in any bug report:
+
+* The ID of your database: use `wrangler d1 list` to match a database name to its ID.
+* The query, or queries, that you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
+* The Worker code that makes the query, including any calls to `.bind()` using the [client API](/d1/platform/client-api/).
+* The full error text, including the content of [`error.cause.message`](#handling-errors).
+
+## Next steps
+
+* Learn [how to debug Workers](/workers/learning/debugging-workers/)
+* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1
+* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
