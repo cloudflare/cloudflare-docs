@@ -5,6 +5,7 @@
     {{- partial "onetrust" -}}
     {{- end -}}
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
+
     {{- block "styles" . -}}{{- end -}} 
 
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
