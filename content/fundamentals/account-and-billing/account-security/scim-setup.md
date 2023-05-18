@@ -35,7 +35,7 @@ Add the following account resources:
 
 | Action  | Account          |
 | ------- | ---------------- |
-| Include | < account name > |
+| Include | \<account name\> |
 
 After creating the token, copy the token value.
 
