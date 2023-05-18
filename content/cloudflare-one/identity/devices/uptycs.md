@@ -16,12 +16,13 @@ The following Uptycs values are needed to set up the Uptycs posture check:
 - Client key
 - Client Secret
 - Customer ID
+- REST API URL (https://{domain}.{domainsuffix}) 
 
 To obtain these values:
 
 1. Open your Uptycs console.
 1. Navigate to **Account Settings** > **API Key**.
-1. Generate and download your `.json` file. This file will contain your **Client key**, **Client Secret** and **Customer ID**.
+1. Generate and download your `.json` file. This file will contain your **Client key**, **Client Secret**, **Customer ID**, and **REST API URL**.
 
 ## 2. Add Uptycs as a service provider
 
@@ -29,7 +30,7 @@ To obtain these values:
 1. Scroll down to **Device posture providers** and select **Add new**.
 1. Select **Uptycs**.
 1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
-1. Enter the **Client ID**, **Client secret** and **Customer ID** as you noted down above.
+1. Enter the **Client ID**, **Client secret**, **Customer ID**, and **REST API URL** as you noted down above.
 1. Select a polling frequency for how often Cloudflare Zero Trust should query Uptycs for information.
 1. Select **Save**.
 
