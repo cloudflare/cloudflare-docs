@@ -108,7 +108,11 @@ If your Worker is making multiple round trip calls to a centralized database, yo
         const config = {
           host: env.DATABASE_HOST,
           username: env.DATABASE_USERNAME,
-          password: env.DATABASE_PASSWORD
+          password: env.DATABASE_PASSWORD,
+			      fetch: (url, init) => {
+				    delete (init)["cache"];
+				    return fetch(url, init);
+          }
         }
         
         const conn = connect(config)
