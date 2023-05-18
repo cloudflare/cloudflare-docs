@@ -41,10 +41,10 @@ Once your monitor is created, you need to attach it to an origin pool:
 4.  Update the following information:
 
     - **Monitor**: Select your monitor.
-    - **Health Check Regions:** Specifies geographic regions from which Cloudflare should send health check requests. Because of [how monitors check pool health](/load-balancing/understand-basics/monitors/#health-check-regions), selecting multiple regions could increase the load on your servers.
+    - **Health Check Regions:** Specifies geographic regions from which Cloudflare should send health monitor requests. Because of [how monitors check pool health](/load-balancing/understand-basics/monitors/#health-check-regions), selecting multiple regions could increase the load on your servers.
     - **Notification E-mail:** Contains email addresses that receive notifications (individual, mailing list address, PagerDuty address).
 
-5.  Click **Save**. The status of your health check will be _unknown_ until the results of the first check are available.
+5.  Click **Save**. The status of your health monitor will be _unknown_ until the results of the first check are available.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

@@ -7,7 +7,7 @@ layout: single
 
 # Common error codes
 
-The Cloudflare Load Balancing API adds global health to each pool and origin server. It also gives you a view into what our network sees at a wider level. Cloudflare uses a quorum system to determine pool and origin health status. The quorum is taken from PoPs responsible for running health checks in a region, and the majority result is used.
+The Cloudflare Load Balancing API adds global health to each pool and origin server. It also gives you a view into what our network sees at a wider level. Cloudflare uses a quorum system to determine pool and origin health status. The quorum is taken from PoPs responsible for running health monitor requests in a region, and the majority result is used.
 
 When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Check Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
 
@@ -17,7 +17,7 @@ You can get a per-data center breakdown of the health of your origins from the C
 GET user/load_balancing_analytics/events
 ```
 
-If a health check fails, the breakdown will include the reason.
+If a health monitor request fails, the breakdown will include the reason.
 
 For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Check Events](/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
 
@@ -29,7 +29,7 @@ Common troubleshooting causes and solutions are listed below.
 
 ### Cause
 
-Our health checks failed to establish a TCP connection to your origin server.
+Our health monitor requests failed to establish a TCP connection to your origin server.
 
 ### Solution
 
@@ -75,7 +75,7 @@ Either change your Cloudflare monitor configuration to use HTTPS, or set the val
 
 The response body returns from your origin server and does not include the (case-insensitive) value of `expected_body` configured in your monitor.
 
-Note that we only read the first 10 KB of the response. If you return a larger response, and the expected_body is not in the first 10 KB, the health check will fail.
+Note that we only read the first 10 KB of the response. If you return a larger response, and the expected_body is not in the first 10 KB, the health monitor request will fail.
 
 ### Solution
 
@@ -99,7 +99,7 @@ If you're using a self-signed certificate, we recommend either using a publicly 
 
 ### Cause
 
-Our health check (client) was not able to match a name on the server certificate to the hostname of the request.
+Our health monitor (client) was not able to match a name on the server certificate to the hostname of the request.
 
 ### Solution
 

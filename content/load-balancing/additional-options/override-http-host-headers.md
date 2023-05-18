@@ -6,7 +6,7 @@ weight: 16
 
 # Override HTTP Host headers
 
-When your application needs specialized routing (`CNAME` setup or custom hosts like Heroku), you can customize the `Host` header used in health checks on a per-origin or per-monitor level.
+When your application needs specialized routing (`CNAME` setup or custom hosts like Heroku), you can customize the `Host` header used in health monitors on a per-origin or per-monitor level.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -32,7 +32,7 @@ If you need an origin `Host` header override, add it when [creating](/load-balan
 
 ## Host header prioritization
 
-If you set a header override on an individual origin, it will take precedence over a header override set on a monitor during health checks.
+If you set a header override on an individual origin, it will take precedence over a header override set on a monitor during health monitor requests.
 
 For example, you might have a load balancer for `www.example.com` with the following setup:
 
@@ -50,7 +50,7 @@ For example, you might have a load balancer for `www.example.com` with the follo
 
 - Monitor (`Host` header set to `www.example.com`)
 
-In this scenario, health checks for **Origin 1** would use `lb-app-a.example.com`, health checks for **Origin 4** would use `lb-app-b.example.com`, and all other health checks would default to `www.example.com`. For more information on updating your custom host configuration to be compatible with Cloudflare, see [Configure Cloudflare and Heroku over HTTPS](https://support.cloudflare.com/hc/articles/205893698).
+In this scenario, health monitor requests for **Origin 1** would use `lb-app-a.example.com`, health monitor requests for **Origin 4** would use `lb-app-b.example.com`, and all other health monitor requests would default to `www.example.com`. For more information on updating your custom host configuration to be compatible with Cloudflare, see [Configure Cloudflare and Heroku over HTTPS](https://support.cloudflare.com/hc/articles/205893698).
 
 For a list of origins that override a monitor's `Host` header:
 
