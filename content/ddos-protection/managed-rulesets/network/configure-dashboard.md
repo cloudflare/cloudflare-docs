@@ -52,4 +52,4 @@ For more information on the available parameters and allowed values, refer to [R
 
 8. To save and deploy the override, select **Deploy**. If you are not ready to deploy your override, select **Save as Draft**.
 
-{{<render file="managed-rulesets/_delete-override.md" withParameters="and select your account;;Account Home > **L3/4 DDoS** > **Network-layer DDoS Protection**">}}
+{{<render file="managed-rulesets/_delete-override.md" withParameters="select your account;;Account Home > **L3/4 DDoS** > **Network-layer DDoS Protection**">}}
