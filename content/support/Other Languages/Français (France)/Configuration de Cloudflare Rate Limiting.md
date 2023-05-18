@@ -364,7 +364,6 @@ ___
 
 ## Ressources associées
 
--   [Facturation de Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115000272247)
 -   [Comment est rapportée Rate Limiting dans ELS (Enterprise Log Share) ?](/logs/reference/log-fields)
 -   [Résolution des problèmes liés à Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configuration de Rate Limiting via l'API Cloudflare](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

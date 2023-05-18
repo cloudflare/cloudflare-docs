@@ -26,6 +26,8 @@ The **Allow** action functions as an implicit logger, providing visibility into 
 |------|
 |Allow |
 
+{{<render file="gateway/_block-file-types.md">}}
+
 ## Block uploads/downloads for specific users
 
 You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/policies/filtering/identity-selectors/) to your policies. The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps.

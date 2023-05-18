@@ -302,7 +302,7 @@ Cache Deception Armor
 
  | 
 
-静的アセットをキャッシュしておく一方で、Web Cache Deception攻撃から保護します。この設定では、URLの拡張子が戻された_Content-Type_と一致しているか検証します。[詳細を見る](/cache/about/cache-deception-armor)。
+静的アセットをキャッシュしておく一方で、Web Cache Deception攻撃から保護します。この設定では、URLの拡張子が戻された_Content-Type_と一致しているか検証します。[詳細を見る](/cache/cache-security/cache-deception-armor/)。
 
  | 
 

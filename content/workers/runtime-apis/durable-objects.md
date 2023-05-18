@@ -5,7 +5,7 @@ title: Durable Objects
 
 # Durable Objects
 
-Durable Objects are available to anyone with a Workers paid subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and opting in to pricing.
+Durable Objects are available to anyone with a Workers paid subscription. Enable Durable Objects for your account by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > going to **Workers & Pages** > selecting your Worker and in **Metrics**, opting in to pricing.
 
 ## Background
 
@@ -42,7 +42,7 @@ export class DurableObject {
 
 - `state.id` {{<type>}}DurableObjectId{{</type>}}
 
-  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
+  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method. Inside a Durable Object, the `state.id.name` property is not defined. If you need access to the name, explicitly pass it in the fetch request to the Durable Object, for example, a query parameter in the URL. 
 
 - `state.waitUntil`
 

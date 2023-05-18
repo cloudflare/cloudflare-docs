@@ -18,12 +18,3 @@ ___
 Para algumas assinaturas e serviços da Cloudflare, você será cobrado pelo tempo em que um recurso foi utilizado durante o período de faturamento anterior. É diferente de outros serviços, pelos quais você paga um valor fixo para o mês seguinte (ex.: planos, Page Rules etc.).
 
 Por exemplo, se a data de faturamento for 15 de março e você ativar o Cloudflare Workers no painel no dia 1º de março, sua fatura de 15 de março incluirá os encargos de Rate Limiting referentes ao período de 1º a 15 de março. A fatura seguinte, de 15 de abril, incluirá encargos pelo uso de Rate Limiting do período de 16 de março a 15 de abril.
-
-Leia as páginas específicas do produto para conhecer os preços e encargos:
-
--   [Argo](https://support.cloudflare.com/hc/en-us/articles/115000224192)
--   [Cloudflare Access](https://support.cloudflare.com/hc/en-us/articles/360007897072)
--   [Balanceamento de carga](https://support.cloudflare.com/hc/en-us/articles/115005254367)
--   [Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/en-us/articles/115000272247)
--   [Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360016450871)
--   [Cloudflare Workers e Workers KV](https://support.cloudflare.com/hc/en-us/articles/360001657552)

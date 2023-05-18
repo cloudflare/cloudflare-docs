@@ -227,11 +227,7 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
 
 ## Magic Firewall Functions
 
-- <code id="function-bit_slice">{{<name>}}bit_slice{{</name>}}({{<type>}}String{{</type>}}, {{<type>}}Number{{</type>}}, {{<type>}}Number{{</type>}})</code> {{<type>}}Number{{</type>}}
-
-  - Select a slice of contiguous bits from a string field. This is primarily intended for use with <code>ip</code> and <code>tcp</code>.
-  - The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
-  - Use of structure fields is preferred over this mechanism.
+{{<render file="_magic-firewall-functions.md" productFolder="magic-firewall">}}
 
 ## HMAC validation
 

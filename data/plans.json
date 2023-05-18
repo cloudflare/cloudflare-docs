@@ -186,7 +186,7 @@
     },
     "cache_analytics": {
       "title": "Cache analytics",
-      "link": "/cache/about/cache-analytics/",
+      "link": "/cache/performance-review/cache-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -607,11 +607,11 @@
         },
         "character_limit": {
           "title": "Character limit",
-          "free": 50,
-          "lite": 250,
-          "pro": 250,
-          "biz": 250,
-          "ent": 250
+          "free": 100,
+          "lite": 500,
+          "pro": 500,
+          "biz": 500,
+          "ent": 500
         },
         "number_per_record": {
           "title": "Comments per record",

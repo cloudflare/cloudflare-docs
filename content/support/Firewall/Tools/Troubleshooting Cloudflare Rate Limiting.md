@@ -40,5 +40,4 @@ ___
 
 ## Related resources
 
--   [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/en-us/articles/115000272247)
--   [Billing for Cloudflare Rate Limiting](https://support.cloudflare.com/hc/en-us/articles/115000272247)
+-   [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)

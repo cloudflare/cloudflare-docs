@@ -67,17 +67,29 @@ You can block security and content categories by creating DNS or HTTP policies. 
 
 {{</table-wrap>}}
 
+### Miscellaneous subcategories
+
+{{<table-wrap>}}
+
+| Category      | Definition                                                             |
+| ------------- | ---------------------------------------------------------------------- |
+| Login Screens | Sites hosting login screens that are not included in other categories. |
+| Miscellaneous | Sites that do not belong to other content categories.                  |
+| No Content    | Sites that have no content.                                            |
+| Redirect      | Domains that redirect to other sites.                                  |
+| Unreachable   | Domains that resolve to unreachable IP addresses.                      |
+
+{{</table-wrap>}}
+
 ### Security risk subcategories
 
 {{<table-wrap>}}
-| Category | Definition |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Login Screens | Sites hosting login screens that are not included in other categories. |
-| New Domains | Domains registered within the past 30 days. |
-| Newly Seen Domains | Domains that were resolved for the first time within the past 30 days. |
-| No Content | Sites that have no content. |
-| Parked & For Sale Domains | Domains that are not connected to a hosting service. |
-| Unreachable | Domains that resolve to unreachable IP addresses. |
+
+| Category                  | Definition                                                             |
+| ------------------------- | ---------------------------------------------------------------------- |
+| New Domains               | Domains registered within the past 30 days.                            |
+| Newly Seen Domains        | Domains that were resolved for the first time within the past 30 days. |
+| Parked & For Sale Domains | Domains that are not connected to a hosting service.                   |
 
 {{</table-wrap>}}
 
@@ -130,8 +142,11 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 12          | Internet Communication | 168            | Webmail                                    |
 | 12          | Internet Communication | 172            | Photo Sharing                              |
 | 13          | Job Search & Careers   | 113            | Job Search & Careers                       |
+| 15          | Miscellaneous          | 115            | Login Screens                              |
 | 15          | Miscellaneous          | 119            | Miscellaneous                              |
+| 15          | Miscellaneous          | 124            | No Content                                 |
 | 15          | Miscellaneous          | 141            | Redirect                                   |
+| 15          | Miscellaneous          | 161            | Unreachable                                |
 | 17          | Questionable Content   | 85             | Deceptive Ads                              |
 | 17          | Questionable Content   | 87             | Drugs                                      |
 | 17          | Questionable Content   | 102            | Hacking                                    |
@@ -198,9 +213,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 32          | Security Risks         | 128            | Parked & For Sale Domains                  |
 | 32          | Security Risks         | 169            | New Domains                                |
 | 32          | Security Risks         | 177            | Newly Seen Domains                         |
-| 32          | Security Risks         | 115            | Login Screens                              |
-| 32          | Security Risks         | 124            | No Content                                 |
-| 32          | Security Risks         | 161            | Unreachable                                |
 
 {{</table-wrap>}}
 

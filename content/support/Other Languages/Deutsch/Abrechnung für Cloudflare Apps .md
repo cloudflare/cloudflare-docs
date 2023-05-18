@@ -7,10 +7,6 @@ title: Abrechnung für Cloudflare Apps
 
 # Abrechnung für Cloudflare Apps 
 
-
-
-## Überblick
-
 Viele Apps innerhalb von Cloudflare Apps sind kostenlos und werden Ihnen nicht in Rechnung gestellt.
 
 ![Screenshot der Apps-Startseite im Cloudflare-Dashboard](/support/static/hc-dash-apps_main_page.png)

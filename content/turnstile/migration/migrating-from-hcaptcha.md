@@ -7,11 +7,11 @@ layout: single
 
 # Migrating from hCaptcha
 
-Customers using hCaptcha today can switch seamlessly to Cloudflare Turnstile. Follow the step-by-step guide below to assist with the upgrade process. 
+Customers using hCaptcha today can switch seamlessly to Cloudflare Turnstile. Follow the step-by-step guide below to assist with the upgrade process.
 
-To complete the migration, you must obtain the [sitekey and secret key](/turnstile/get-started/#sitekey-and-secret-key).
+To complete the migration, you must obtain the [sitekey and secret key](/turnstile/get-started/#get-a-sitekey-and-secret-key).
 
-## Client-side integration 
+## Client-side integration
 
 1. Update the client-side integration by inserting the Turnstile script snippet in your HTML's `<head>` element:
 
@@ -43,7 +43,7 @@ turnstile.render(element, {
 {{<Aside type= "Note">}}
 
 Turnstile supports:
-* the `render()` call 
+* the `render()` call
 * hCaptcha invisible mode with the `execute()` call
 
 {{</Aside>}}

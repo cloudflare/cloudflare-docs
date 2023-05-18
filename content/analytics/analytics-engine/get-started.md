@@ -12,10 +12,10 @@ There are four steps to get started with Workers Analytics Engine:
 
 ## 1. Enable Analytics Engine for your account
 
-* Log into the Cloudflare dashboard.
-* Navigate to the **Workers** page.
-* Click **Set up** in the right hand side bar.
-* Click **Enable Analytics Engine**
+* Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+* Go to **Workers & Pages**.
+* In **Overview**, find **Analytics Engine** in the right side bar and select **Set up**.
+* Select **Enable Analytics Engine**
 
 ## 2. Configure your dataset and binding in Wrangler
 

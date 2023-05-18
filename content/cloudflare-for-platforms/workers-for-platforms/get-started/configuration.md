@@ -144,8 +144,8 @@ You will now send a request to the route your dispatch Worker is on. You should 
 To test your user Worker:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers**.
-3. Go to your dynamic dispatch Worker.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, go to your dynamic dispatch Worker.
 4. In the dynamic dispatch Worker, go to the link under **Preview**.
 
 {{<Aside type="note" header="Dynamic dispatch Workers versus user Workers">}}

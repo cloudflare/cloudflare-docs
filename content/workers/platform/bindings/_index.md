@@ -15,7 +15,7 @@ There are multiple types of bindings available today.
 Bindings can be configured by one of two ways:
 
 * Updating your project's [`wrangler.toml` file](/workers/wrangler/configuration/#bindings).
-* Logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers** > your **Worker** > **Settings**> **Variables**.
+* Logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers & Pages** > your Worker > **Settings**> **Variables**.
 
 ### Service bindings
 
@@ -69,3 +69,10 @@ Email bindings allow you to send emails from your Worker. This is useful for whe
 
 - Learn more about [email bindings](/email-routing/email-workers/send-email-workers/).
 - Configure email bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings).
+
+### Constellation bindings
+
+[Constellation](/constellation/) bindings allow for communication between a Worker and a Constellation project.
+
+* Learn more about [Constellation bindings](/constellation/platform/wrangler/#bindings).
+* Configure Constellation bindings via your [`wrangler.toml` file](/constellation/platform/wrangler/#bindings).

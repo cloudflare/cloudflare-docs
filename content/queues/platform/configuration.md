@@ -83,6 +83,6 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 
 - {{<code>}}max_concurrency{{<param-type>}}number{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of concurrent consumers allowed to run at once. Leaving this unset, or setting it to `null`, will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
+  - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
 
 {{</definitions>}}
