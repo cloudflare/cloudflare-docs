@@ -24,6 +24,8 @@ To use Outbound Workers:
 1. Create a Worker intended to serve as your Outbound Worker.
 2. Outbound Worker can be specified as an optional parameter in the [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatch-namespace) binding in a projects [wrangler.toml](/workers/wrangler/configuration/). Optionally, to pass data from your Dispatch Worker to the Outbound Worker, the variable names must be specified under **parameters**.  
 
+Make sure that you have `wrangler@3.3.0` or later [installed](/workers/wrangler/install-and-update/).
+
 ```toml
 ---
 filename: wrangler.toml
