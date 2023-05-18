@@ -76,8 +76,8 @@ filename: index.js
 
 3. Add the following to the `wrangler.toml` file of the producing Worker:
 
-```
 tail_consumers = [{service = "<TAIL_WORKER_NAME>", environment = "<ENVIRONMENT_NAME>"}]
+
 {{<Aside type="note">}}
 The Worker selected must have a `TailEvent` handler defined. 
 {{</Aside>}}
