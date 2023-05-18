@@ -18,7 +18,7 @@
 {{- $pathUID := index $pathData "uid" -}}
 {{- $pathModules := $pathData.modules }}
 
-{{- $firstUnitURL := "" -}}
+{{- $firstModuleURL := "" -}}
 {{- $moduleDataArray := slice -}}
 
 {{- range $index, $module := $pathModules -}}
@@ -39,8 +39,7 @@
   <!--Get various values needed elsewhere in template-->
   {{- $totalUnits = (add $totalUnits 1) -}}
   {{- if eq $index 0 -}}
-    {{- $firstUnit := index (index $currentModuleData "units") 0 -}}
-    {{- $firstUnitURL = $firstUnit.RelPermalink -}}
+    {{- $firstModuleURL = index $currentModuleData "url" -}}
   {{- end -}}
 {{- end -}}
 
@@ -53,7 +52,7 @@
 <p>{{- $pathData.detailed_description | markdownify -}}</p>
 <p class="DocsMarkdown--button-group">
   <span class="DocsMarkdown--button-group-content">
-    <a href="{{- print $firstUnitURL "?learning_path=" $pathUID -}}" class="getStartedButton learningNavigation Button Button-is-docs-primary">
+    <a href="{{- print $firstModuleURL "?learning_path=" $pathUID -}}" class="getStartedButton learningNavigation Button Button-is-docs-primary">
       <span class="getStarted DocsMarkdown--link-content">Start path</span>
     </a>
 </span>
@@ -65,9 +64,6 @@
 
 
 {{- range $index, $moduleData := $moduleDataArray -}}
-
-{{- $firstUnit := index (index $moduleData "units") 0 -}}
-
 <div class="learningPathModule">
   <div class="moduleHeader">
   <h2 id="{{- $moduleData.title | safeURL | anchorize -}}"><span class="DocsMarkdown--header-anchor-positioner">
@@ -86,8 +82,8 @@
  
   <p class="DocsMarkdown--button-group">
     <span class="DocsMarkdown--button-group-content">
-      <a href="{{- print $firstUnit.RelPermalink "?learning_path=" $pathUID -}}" class="learningNavigation Button Button-is-docs-secondary">
-        <span class="DocsMarkdown--link-content">Start module</span>
+      <a href="{{- print $moduleData.url "?learning_path=" $pathUID -}}" class="learningNavigation Button Button-is-docs-secondary">
+        <span class="DocsMarkdown--link-content">Go to module</span>
       </a>
   </span>
 </p>
