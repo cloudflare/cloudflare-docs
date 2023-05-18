@@ -46,3 +46,7 @@ Refer to the Logpush documentation for a list of available fields.
 | [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | Security issues detected by Cloudflare CASB                    |
 | [Device Posture](/logs/reference/log-fields/account/device_posture_results/)    | Device posture status from the WARP client                     |
 | [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway |
+
+## Parse output
+
+For more information on parsing outputs, refer to [Rdata](/logs/reference/rdata/).
