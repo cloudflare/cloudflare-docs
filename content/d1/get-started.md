@@ -36,10 +36,10 @@ $ yarn global add wrangler
 
 After installing Wrangler, if you are unauthenticated, you will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
-## 2. Create your Workers project
+## 2. Create your Worker
 
-{{<Aside type="note">}}
-New to Workers? [Learn more about](/workers/learning/how-workers-works/) how Workers serverless execution model works and/or [visit the getting started guide](/workers/get-started/guide/) to setup your first Worker.
+{{<Aside type="note" header="New to Workers?">}}
+Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to setup your first Worker.
 {{</Aside>}}
 
 You will create a new [Workers Service](/workers/learning/using-services/) as the container for both your D1 database and the Worker application that you'll use to query your database. Create a new Workers service named `d1-tutorial` by running:
@@ -81,8 +81,8 @@ $ cd d1-tutorial
 Run the following `wrangler d1` command and give your database a name. A good database name is:
 
 * Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces
-* Descriptive of the use-case and environment - e.g. "staging-db-web" or "production-db-backend"
-* Only used for describing the database, and isn't directly referenced in code.
+* Descriptive of the use-case and environment - for example, "staging-db-web" or "production-db-backend"
+* Only used for describing the database, and is not directly referenced in code.
 
 ```sh
 $ wrangler d1 create <DATABASE_NAME>
@@ -232,6 +232,6 @@ By finishing this guide, you have created a D1 database, a Worker to access that
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
-- Learn how to use the [D1 client API](/d1/platform/client-api/) within your Worker
-- Explore [community projects](/d1/platform/community-projects/) built on D1
+- Learn how to use the [D1 client API](/d1/platform/client-api/) within your Worker.
+- Explore [community projects built on D1](/d1/platform/community-projects/).
 
