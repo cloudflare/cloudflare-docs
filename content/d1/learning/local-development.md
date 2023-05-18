@@ -4,7 +4,7 @@ weight: 6
 pcx_content_type: concept
 ---
 
-# Developing locally
+# Develop locally
 
 D1 has fully-featured support for local development, running the same version of D1 as we run globally. Local development uses [wrangler](/workers/wrangler/install-and-update/), our command-line interface, for managing local development sessions and state.
 
@@ -73,5 +73,5 @@ To persist data across local development sessions:
 ## Next steps
 
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
-* Learn [how to debug D1](/d1/debugging-d1/)
+* Learn [how to debug D1](/d1/learning/debug-d1/)
 * Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1

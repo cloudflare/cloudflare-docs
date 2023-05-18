@@ -330,9 +330,9 @@ Example:
 header: wrangler.toml
 ---
 [[d1_databases]]
-binding = "<BINDING_NAME>"
-database_name = "<DATABASE_NAME>"
-database_id = "<UUID>"
+binding = "PROD_DB"
+database_name = "test-db"
+database_id = "c020574a-5623-407b-be0c-cd192bab9545"V
 ```
 
 ### Durable Objects

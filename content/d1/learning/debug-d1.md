@@ -1,10 +1,10 @@
 ---
-title: Debugging D1
+title: Debug D1
 weight: 5
 pcx_content_type: concept
 ---
 
-# Debugging
+# Debug
 
 Debugging issues is a critical part of development. D1 allows you to both capture exceptions and log errors returned when querying a database using the same tools available when [debugging Workers](/workers/learning/debugging-workers/).
 
