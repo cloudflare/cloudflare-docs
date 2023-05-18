@@ -54,8 +54,8 @@ query {
     }) {
       streamMinutesViewedAdaptiveGroups(
         filter: {
-          date_geq: "2022-03-01"
-          date_lt: "2022-02-01"
+          date_geq: "2022-02-01"
+          date_lt: "2022-03-01"
         }
         orderBy:[sum_minutesViewed_DESC]
         limit: 100
