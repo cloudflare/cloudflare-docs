@@ -11,7 +11,7 @@ meta:
 
 ## Cloudflare Keyless SSL key server (“key server”)
 
-The key server is a daemon that you run on your own infrastructure. The key server receives inbound requests from Cloudflare’s keyless client on TCP port `2407` (by default) so you must make sure that your firewall and other access control lists permit these requests from Cloudflare’s IP ranges.
+The key server is a daemon that you run on your own infrastructure. The key server receives inbound requests from Cloudflare’s keyless client on TCP port `2407` (by default) so you must make sure that your firewall and other access control lists permit these requests from [Cloudflare’s IP ranges](https://www.cloudflare.com/ips/).
 
 Your key servers are contacted by Cloudflare during the TLS handshake process and must be online to terminate new TLS connections. Existing sessions can be resumed using unexpired TLS session tickets without needing to contact the key server.
 
