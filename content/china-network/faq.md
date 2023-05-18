@@ -36,7 +36,7 @@ As a US company, Cloudflare does not have a license from China's Ministry of Ind
 
 ### Can Cloudflare or JD Cloud help me to get the ICP?
 
-No, neither Cloudflare nor JD Cloud is responsible for [ICP (Internet Content Provider)](/china-network/concepts/icp/) applications. Cloudflare recommends you to reach out to local agents specialized in ICP applications.
+No, neither Cloudflare nor JD Cloud is responsible for [ICP (Internet Content Provider)](/china-network/concepts/icp/) applications. Cloudflare recommends you to reach out to local agents specialized in ICP applications. For more information, refer to [Obtain an ICP number](/china-network/concepts/icp/#obtain-an-icp-number).
 
 ### Why is my ICP filing/license revoked?
 

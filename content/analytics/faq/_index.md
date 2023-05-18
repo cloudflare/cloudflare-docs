@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: FAQs
-weight: 41
+weight: 6
 ---
 
 # FAQs

@@ -44,7 +44,12 @@ $ dotnet new gitignore
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+
+Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 

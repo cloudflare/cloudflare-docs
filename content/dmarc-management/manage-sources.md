@@ -1,6 +1,6 @@
 ---
 title: Manage sources
-weight: 3
+weight: 4
 pcx_content_type: how-to
 ---
 

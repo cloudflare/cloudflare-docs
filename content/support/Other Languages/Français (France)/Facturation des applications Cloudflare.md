@@ -7,14 +7,6 @@ title: Facturation des applications Cloudflare
 
 # Facturation des applications Cloudflare
 
-## Facturation des applications Cloudflare
-
-_En savoir plus sur les modalités de facturation des applications Cloudflare._
-
-___
-
-## Présentation
-
 De nombreuses applications Cloudflare sont gratuites et ne vous seront pas facturées.
 
 ![Capture d'écran de la page d'accueil des applications du tableau de bord Cloudflare](/support/static/hc-dash-apps_main_page.png)

@@ -13,9 +13,10 @@ With Deploy Hooks, you can trigger deployments using event sources beyond commit
 
 To create a Deploy Hook:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Pages**.
-2. Select your Pages project.
-3. Go to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Pages project.
+4. Go to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
 
 ![Add a deploy hook on the Cloudflare dashboard](/pages/platform/media/deploy-hooks-add.png)
 

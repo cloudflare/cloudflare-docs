@@ -389,7 +389,6 @@ ___
 
 ## Verwandte Ressourcen
 
--   [Abrechnung für Cloudflare-Durchsatzbegrenzung](https://support.cloudflare.com/hc/articles/115000272247)
 -   [Wie wird die Durchsatzbegrenzung in ELS (Enterprise Log Share) gemeldet?](/logs/reference/log-fields)
 -   [Fehlerbehebung bei der Durchsatzbegrenzung von Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Durchsatzbegrenzung über die Cloudflare-API konfigurieren](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

@@ -89,10 +89,7 @@ To decide which country or IPs to block or challenge, check your log files. Cont
 {{<Aside type="note">}}
 Cloudflare also offers **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** to
-help control the flow of requests to your server. [**Rate Limiting** is
-billed based on
-usage](https://support.cloudflare.com/hc/en-us/articles/115000272247-Billing-for-Cloudflare-Rate-Limiting)
-and is independent of plan type.
+help control the flow of requests to your server.
 {{</Aside>}}
 
 ___
