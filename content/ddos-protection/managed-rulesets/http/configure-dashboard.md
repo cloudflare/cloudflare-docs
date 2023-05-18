@@ -66,9 +66,4 @@ For more information on the available parameters and allowed values, refer to [R
 
 7. Select **Save**.
 
-## Delete a DDoS override
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-2. Go to **Security** > **DDoS**.
-3. Under **HTTP DDoS attack protection**, select **Edit** next to the DDoS override you wish to delete.
-4. Select **Delete deployment**, and then select **Delete deployment** to confirm the operation.
+{{<render file="managed-rulesets/_delete-override.md" withParameters="and select your account and website;;**Security** > **DDoS**">}}
