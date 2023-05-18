@@ -12,7 +12,7 @@ This section covers how to create, renew, and revoke a service token.
 
 ## Create a service token
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access** > **Service Auth** > **Service Tokens**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
 
 2. Select **Create Service Token**.
 

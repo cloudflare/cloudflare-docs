@@ -19,19 +19,7 @@ Cloudflare Zero Trust supports social identity providers that do not require adm
 
 ## Set up IdPs in Zero Trust
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings > Authentication**.
-
-2. In the **Login methods** card, click **Add new**.
-
-3. Select the identity provider you want to add. You can add multiple providers of the same type.
-
-If you do not see your identity provider listed, these providers can typically still be enabled. If they support OIDC or OAuth, select the generic OIDC option. If they support SAML, select the generic SAML option. Cloudflare supports all SAML and OIDC providers and can integrate with the majority of OAuth providers. If your provider supports both SAML and OIDC, we recommend OIDC for ease of configuration.
-
-4. Fill in the necessary fields to set up your identity provider.
-
-Each identity provider will have different required fields for you to fill in. If you need help, step-by-step instructions can be expanded below the input form.
-
-5. Once you have filled in the necessary fields, click **Save**.
+{{<render file="_idp-integration.md">}}
 
 Your IdP will now be listed in the **Login methods** card.
 
