@@ -60,7 +60,7 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 ### Step 2 - Add PTR records
 
-1.  Once you finish zone onboarding, go to **DNS** > **Records**.
+1.  Go to **DNS** > **Records**.
 
 2.  For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
 
