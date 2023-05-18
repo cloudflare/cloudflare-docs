@@ -106,8 +106,9 @@ addEventListener('tail', event  =>
     - `unknown`: outcome status was not set.
     - `ok`: The worker invocation succeeded.
     - `exception`: An unhandled exception was thrown.  This can happen for many reasons, including:
-      - `exceededCpu`: The Worker invocation exceeded either its CPU or memory limits.
-      - `scriptNotFound`: an internal error difficulty retrieving the script.
+      - `exceededCpu`: The Worker invocation exceeded either its CPU limits.
+      - `exceededMemory`: The Worker invocation exceeded memory limits. 
+      - `scriptNotFound`: An internal error from difficulty retrieving the script.
       - `canceled`: The worker invocation was canceled before it completed. Commonly because the client disconnected before a response could be sent.
 {{</definitions>}}
 
@@ -126,7 +127,7 @@ A Worker can have an 'ok' outcome when it “successfully” sends a 404 or 5xx 
 
   - A [`TailRequest` object](/workers/runtime-apis/tail-event/#tailrequest)
 
-- `reponse` {{<type>}}object{{</type>}}
+- `response` {{<type>}}object{{</type>}}
 
   - A [`TailResponse` object](/workers/runtime-apis/tail-event/#tailresponse)
 {{</definitions>}}
