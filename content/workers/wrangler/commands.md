@@ -137,7 +137,7 @@ $ wrangler d1 create <DATABASE_NAME>
 - `--location` {{<type>}}string{{</type>}}
   - Provide an optional [location hint](/d1/learning/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
-{{</definitions>}}
+    {{</definitions>}}
 
 ### `list`
 
@@ -319,6 +319,15 @@ None of the options for this command are required. Many of these options can be 
 
 {{</Aside>}}
 
+{{<Aside type="warning">}}
+
+When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
+
+- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
+- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+
+{{</Aside>}}
+
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
@@ -371,25 +380,6 @@ None of the options for this command are required. Many of these options can be 
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
-- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-
-  - Run the preview of the Worker directly on your local machine.
-    {{<Aside type="warning">}}
-    This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
-    {{</Aside>}}
-
-- `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-
-  - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
-    {{<Aside type="warning">}}
-    When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
-
-- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
-- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
-  {{</Aside>}}
-
-- `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
 - `--node-compat` {{<type>}}boolean{{</type>}}
@@ -398,6 +388,8 @@ None of the options for this command are required. Many of these options can be 
   - Enable persistence for local mode, using default path: `.wrangler/state`.
 - `--persist-to` {{<type>}}string{{</type>}}
   - Specify directory to use for local persistence. Setting this flag implicitly enables `--persist`.
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Develop against remote resources and data stored on Cloudflare's network.
 - `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
 - `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}}
@@ -405,10 +397,7 @@ None of the options for this command are required. Many of these options can be 
 
 {{</definitions>}}
 
-The `wrangler dev` command that establishes a connection between `localhost` and a Cloudflare server that hosts your Worker in development. This allows full access to Workers KV and Durable Objects. `wrangler dev` is a way to easily test your Worker while developing.
-
 ```sh
-
 ~/my-worker $ wrangler dev
 ⬣ Listening at http://localhost:8787
 ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
@@ -416,7 +405,7 @@ The `wrangler dev` command that establishes a connection between `localhost` and
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to easily test your Worker while developing. With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
