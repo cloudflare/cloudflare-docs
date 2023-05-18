@@ -15,8 +15,10 @@ A Tail Worker is automatically invoked after the invocation of a producer Worker
 
 ## Configure Tail Workers
 
-1. Create a Worker to serve as the Tail Worker.
-2. Tail Workers use a `TailEvent` handler to capture events from the producer. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
+To configure a Tail Worker:
+
+1. [Create a Worker](/workers/get-started/guide) to serve as the Tail Worker.
+2. Tail Workers use a [`TailEvent`](/workers/runtime-apis/tail-event) handler to capture events from the producer. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
 
 ```js
 ---
@@ -76,13 +78,11 @@ filename: index.js
 
 3. Add the following to the `wrangler.toml` file of the producing Worker:
 
+```toml
 tail_consumers = [{service = "<TAIL_WORKER_NAME>", environment = "<ENVIRONMENT_NAME>"}]
+```
 
 {{<Aside type="note">}}
 The Worker selected must have a `TailEvent` handler defined. 
 {{</Aside>}}
-
-
-
-
 
