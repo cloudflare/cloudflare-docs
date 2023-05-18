@@ -42,5 +42,4 @@ ___
 
 ## Recursos relacionados
 
--   [Configuración de la función de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/es-es/articles/115000272247)
--   [Facturación para Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/es-es/articles/115000272247)
+-   [Configuración de la función de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115001635128)

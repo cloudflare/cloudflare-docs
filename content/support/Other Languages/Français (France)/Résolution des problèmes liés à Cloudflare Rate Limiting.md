@@ -45,5 +45,4 @@ ___
 
 ## Ressources associées
 
--   [Configuration de Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/fr-fr/articles/115000272247)
--   [Facturation de Cloudflare Rate Limiting](https://support.cloudflare.com/hc/fr-fr/articles/115000272247)
+-   [Configuration de Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)

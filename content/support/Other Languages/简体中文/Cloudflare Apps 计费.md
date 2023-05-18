@@ -7,14 +7,6 @@ title: Cloudflare Apps 计费
 
 # Cloudflare Apps 计费
 
-## Cloudflare Apps 计费
-
-_了解有关 Cloudflare Apps 计费方式的更多信息。_
-
-___
-
-## 概述
-
 Cloudflare Apps 中的许多应用都是免费的，您无需为之付费。
 
 ![Cloudflare 仪表板中 Apps 首页屏幕截图](/support/static/hc-dash-apps_main_page.png)

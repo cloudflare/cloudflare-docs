@@ -6,24 +6,12 @@ title: Will Mirage and Polish optimize off-site resources
 
 # Will Mirage and Polish optimize off-site resources?
 
-
-
-## Overview
-
 -   **Polish** (resizes images): Only works for images on your server
 -   **Mirage** (lazy loading): Works for any images on your site
 
 ### Not finding what you need?
 
 [Submit a request](https://dash.cloudflare.com/redirect?account=support "Submit a request")
-
-### Recently viewed articles
-
--   [Securing user access with two-factor authentication (2FA)](https://support.cloudflare.com/hc/en-us/articles/200167906-Securing-user-access-with-two-factor-authentication-2FA-)
--   [Billing for Cloudflare Load Balancing](https://support.cloudflare.com/hc/en-us/articles/115005254367-Billing-for-Cloudflare-Load-Balancing)
--   [Understanding Billing for Add-on Services](https://support.cloudflare.com/hc/en-us/articles/115004555148-Understanding-Billing-for-Add-on-Services)
--   [Using Cloudflare with your Magento 1 online store](https://support.cloudflare.com/hc/en-us/articles/115004180727-Using-Cloudflare-with-your-Magento-1-online-store)
--   [Problems logging into Magento 1 Admin Panel](https://support.cloudflare.com/hc/en-us/articles/115004180627-Problems-logging-into-Magento-1-Admin-Panel)
 
 ### Related articles
 

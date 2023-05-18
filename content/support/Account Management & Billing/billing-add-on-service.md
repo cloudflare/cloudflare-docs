@@ -16,23 +16,9 @@ For example, if your billing date is March 15 and you enabled Cloudflare Workers
 The pricing structure varies based on the service being used.
 {{</Aside>}}
 
-Please review the product-specific pages for details on pricing and charges:
-
--   [Argo](https://support.cloudflare.com/hc/en-us/articles/115000224192)
--   [Cloudflare Access](https://support.cloudflare.com/hc/en-us/articles/360007897072)
--   [Load Balancing](https://support.cloudflare.com/hc/en-us/articles/115005254367)
--   [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/en-us/articles/115000272247)
--   [Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360016450871)
--   [Cloudflare Workers and Workers KV](/workers/platform/pricing/)
-
 ___
 
 ## Usage-Based billing notifications
-
-{{<Aside type="note">}}
-The usage-based billing alerts feature is currently in beta and only
-available to some Cloudflare users.
-{{</Aside>}}
 
 To monitor the usage of Cloudflare add-ons, you can enable email notifications. When enabled, you will receive a notification to the billing email address on file when the traffic, queries, requests, or minutes watched exceed your desired threshold.
 
@@ -43,3 +29,13 @@ source for billing information.
 {{</Aside>}}
 
 For help creating usage-based billing alerts, refer to our [Notifications documentation](/fundamentals/notifications/create-notifications/). For the _Event Type_ of your notification, you would select **Usage-Based Billing**.
+
+---
+
+## Billing for Cloudflare Apps
+
+Many apps within Cloudflare Apps are free and you will not be billed for them.
+
+All paid apps within Cloudflare Apps are billed monthly. You are charged monthly for each domain for which you have purchased and installed an app.
+
+When you remove an app you are not refunded for the remainder of the final month, but can reinstall the app at any time during that period to resume using it.
