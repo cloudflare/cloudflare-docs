@@ -2,15 +2,21 @@
 pcx_content_type: concept
 title: TailEvent
 ---
+
 # TailEvent
 
 ### Background
-A Tail Event is the event type to automatically capture data from a producer Worker. It can be used to process logs in real-time and send them to a logging or analytics service.
+
+A tail event is the event type to automatically capture data from a producer Worker. It can be used to process logs in real-time and send them to a logging or analytics service.
 
 ## Synatx: Module Worker
-`TailEvent` can be handled in Workers functions written using the Module Worker syntax by adding an tail function to your module’s exported handlers:
+
+`TailEvent` can be handled in Workers functions, written using the Module Worker syntax, by adding a `tail()` function to your module’s exported handlers:
 
 ```js
+---
+filename: index.js
+---
 export default {
   async tail(events, env, ctx) => {
     fetch("<YOUR_ENDPOINT>", {
@@ -41,9 +47,13 @@ export default {
 
 
 ## Synatx: Service Worker
-`TailEvent` can be handled in Workers functions written using the Service Worker syntax by attaching to the tail event with addEventListener:
+
+`TailEvent` can be handled in Workers functions, written using the Service Worker syntax, by attaching to the tail event with `addEventListener`:
 
 ```js
+---
+filename: index.js
+---
 addEventListener('tail', event  => 
     fetch("<YOUR_ENDPOINT>", {
       method: "POST",
@@ -83,7 +93,7 @@ addEventListener('tail', event  =>
 
   - Contains information about the Worker’s triggering event.
     - For fetch events: a [`FetchEventInfo` object](/workers/runtime-apis/tail-event/#fetcheventinfo)
-    - For other event types: null, currently
+    - For other event types: `null`, currently.
 
 - `eventTimestamp` {{<type>}}number{{</type>}}
 
@@ -95,14 +105,14 @@ addEventListener('tail', event  =>
 
 - `exceptions` {{<type>}}array{{</type>}}
 
-  - An array of [TailExceptions](/workers/runtime-apis/tail-event/#tailexceptions). A single worker invocation might result in multiple unhandled exceptions, since a worker can register multiple asynchronous tasks.
+  - An array of [`TailExceptions`](/workers/runtime-apis/tail-event/#tailexceptions). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
   
 - `outcome` {{<type>}}string{{</type>}}
 
-  - The outcome of the worker invocation, one of:
-    - An uncaught JavaScript exception
-    - A fetch handler that does not result in a Response
-    - An internal error
+  - The outcome of the Worker invocation, one of:
+    - An uncaught JavaScript exception.
+    - A fetch handler that does not result in a Response.
+    - An internal error.
     - `unknown`: outcome status was not set.
     - `ok`: The worker invocation succeeded.
     - `exception`: An unhandled exception was thrown.  This can happen for many reasons, including:
@@ -115,7 +125,7 @@ addEventListener('tail', event  =>
 
 
 {{<Aside type="note" header="Outcome is not the same as HTTP status.">}}
-A Worker can have an 'ok' outcome when it “successfully” sends a 404 or 5xx error.  Likewise, a worker can have a non-'ok' outcome even after successfully sending a 200 response – for example, when an asynchronous task registered via waitUntil() later exceeds CPU or memory limits. 
+A Worker can have an 'ok' outcome when it successfully sends a `404` or `5xx` error.  Likewise, a Worker can have an unsuccessful outcome even after successfully sending a `200` response. For example, when an asynchronous task registered via `waitUntil()` later exceeds CPU or memory limits. 
 {{</Aside>}}
 
 ### `FetchEventInfo`
@@ -125,11 +135,11 @@ A Worker can have an 'ok' outcome when it “successfully” sends a 404 or 5xx 
 
 - `request` {{<type>}}object{{</type>}}
 
-  - A [`TailRequest` object](/workers/runtime-apis/tail-event/#tailrequest)
+  - A [`TailRequest` object](/workers/runtime-apis/tail-event/#tailrequest).
 
 - `response` {{<type>}}object{{</type>}}
 
-  - A [`TailResponse` object](/workers/runtime-apis/tail-event/#tailresponse)
+  - A [`TailResponse` object](/workers/runtime-apis/tail-event/#tailresponse).
 {{</definitions>}}
 
 ### `TailRequest`
@@ -138,11 +148,11 @@ A Worker can have an 'ok' outcome when it “successfully” sends a 404 or 5xx 
 
 - `cf` {{<type>}}object{{</type>}}
 
-  - Contains the data from [IncomingRequestCfProperties](/workers/runtime-apis/request/#incomingrequestcfproperties)
+  - Contains the data from [`IncomingRequestCfProperties`](/workers/runtime-apis/request/#incomingrequestcfproperties).
 
 - `headers` {{<type>}}Object{{</type>}}
 
-  - Header name/value entries (redacted by default).  Header names are lower-cased, and the values associated with duplicate header names are concatenated, with the string ", " (comma space) interleaved, similar to [the Fetch standard](https://fetch.spec.whatwg.org/#concept-header-list-get).
+  - Header name/value entries (redacted by default).  Header names are lowercased, and the values associated with duplicate header names are concatenated, with the string `", "` (comma space) interleaved, similar to [the Fetch standard](https://fetch.spec.whatwg.org/#concept-header-list-get).
 
 - `method` {{<type>}}String{{</type>}}
 
@@ -153,34 +163,41 @@ A Worker can have an 'ok' outcome when it “successfully” sends a 404 or 5xx 
   - The HTTP request URL (redacted by default).
 
 {{</definitions>}}
+
 #### Methods
+
 {{<definitions>}}
 - `getUnredacted()` {{<type>}}Object{{</type>}}
 
   - Returns a TailRequest object with unredacted properties.
 {{</definitions>}}
 
-Some of the properties of TraceRequest are redacted by default, to make it harder to accidentally record sensitive information like user credentials or API tokens.  The redactions use heuristic rules, so they are subject to false positives and negatives; clients can call getUnredacted() to bypass redaction, but they should always be careful about what information is retained, whether using the redaction or not.
+Some of the properties of `TraceRequest` are redacted by default to make it harder to accidentally record sensitive information, like user credentials or API tokens. The redactions use heuristic rules, so they are subject to false positives and negatives. Clients can call `getUnredacted()` to bypass redaction, but they should always be careful about what information is retained, whether using the redaction or not.
 
-- Header redaction: The header value will be the string “REDACTED” when the (case-insensitive) header name is “cookie”/“set-cookie” or contains a substring “auth”, “key”, “secret”, “token”, or "jwt".
-- URL redaction: For each greedily matched substring of ID characters (a-z, A-Z, 0-9, '+', '-', '_') in the URL, if it meets the following criteria for a hex or base-64 ID, the substring will be replaced with the string “REDACTED”:
+- Header redaction: The header value will be the string `“REDACTED”` when the (case-insensitive) header name is `cookie`/`set-cookie` or contains a substring `"auth”`, `“key”`, `“secret”`, `“token”`, or `"jwt"`.
+- URL redaction: For each greedily matched substring of ID characters (a-z, A-Z, 0-9, '+', '-', '_') in the URL, if it meets the following criteria for a hex or base-64 ID, the substring will be replaced with the string `“REDACTED”`:
 - Hex ID: Contains 32 or more hex digits, and contains only hex digits and separators ('+', '-', '_')
 - Base-64 ID: Contains 21 or more characters, and contains at least two uppercase, two lowercase, and two digits.
 
 ### `TailResponse`
+
 #### Properties
+
 {{<definitions>}}
 
 - `status` {{<type>}}number{{</type>}}
 
-  - The HTTP status code
+  - The HTTP status code.
+
 {{</definitions>}}
 
 
 ### `TailLog`
+
 Records information sent to console functions.
 
 #### Properties
+
 {{<definitions>}}
 
 - `timestamp` {{<type>}}number{{</type>}}
@@ -189,7 +206,7 @@ Records information sent to console functions.
 
 - `level` {{<type>}}String{{</type>}}
 
-  - A string indicating the console function that was called. One of: `debug`, `info`, `log`, `warn`, `error`
+  - A string indicating the console function that was called. One of: `debug`, `info`, `log`, `warn`, `error`.
 
 - `message` {{<type>}}Object{{</type>}}
 
@@ -197,9 +214,11 @@ Records information sent to console functions.
 {{</definitions>}}
 
 ### `TailException`
+
 Records an unhandled exception that occurred during the Worker invocation.
 
 #### Properties
+
 {{<definitions>}}
 
 - `timestamp` {{<type>}}number{{</type>}}
@@ -208,11 +227,11 @@ Records an unhandled exception that occurred during the Worker invocation.
 
 - `name` {{<type>}}String{{</type>}}
 
-  - The error type (e.g. “Error”, “TypeError”, etc.)
+  - The error type (For example,`Error`, `TypeError`, etc.).
 
 - `message` {{<type>}}Object{{</type>}}
 
-  - The error description (e.g. “"x" is not a function”)
+  - The error description (For example, `"x" is not a function`).
 
 {{</definitions>}}
 
