@@ -8,9 +8,9 @@ meta:
 
 # Configure Network-layer DDoS Attack Protection in the dashboard
 
-You can customize the **action** and **sensitivity** of the rules in the Network-layer DDoS Attack Protection managed ruleset using overrides.
+Configure the Network-layer DDoS Attack Protection managed ruleset by defining [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Cloudflare dashboard. DDoS overrides allow you to customize the **action** and **sensitivity** of one or more rules in the managed ruleset.
 
-You define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level. Tag and rule overrides have greater priority than ruleset overrides.
+You define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level.
 
 For more information on the available parameters and allowed values, refer to [Ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/).
 
