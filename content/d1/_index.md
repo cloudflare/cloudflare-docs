@@ -29,7 +29,6 @@ To report bugs or request features, go to the [Cloudflare Community Forums](http
 
 {{</Aside>}}
 
-## Explore
  
 {{<feature header="Create your first database" href="/d1/get-started/">}}
 
