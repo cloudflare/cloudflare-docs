@@ -16,7 +16,7 @@ If you plan to run Keyless SSL in a [high availability setup](/ssl/keyless-ssl/r
 
 ### Install
 
-These steps are also at [pkg.cloudflare.com](pkg.cloudflare.com).
+These steps are also at [pkg.cloudflare.com](https://pkg.cloudflare.com/index.html).
 
 #### Debian/Ubuntu packages
 
