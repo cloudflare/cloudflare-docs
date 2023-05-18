@@ -10,7 +10,7 @@ D1 has fully-featured support for local development, running the same version of
 
 ## Starting a local development session
 
-{{<Aside type="note"}}
+{{<Aside type="note">}}
 
 This guide assumes you are using [wrangler v3.0](https://blog.cloudflare.com/wrangler3/) or later.
 
