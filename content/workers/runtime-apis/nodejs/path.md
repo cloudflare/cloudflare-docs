@@ -10,7 +10,7 @@ title: path
 The [`node:path`](https://nodejs.org/api/path.html) module provides utilities for working with file and directory paths. The `node:path` module can be accessed using:
 
 ```js
-const path = require('node:path'); 
+import path from "node:path"
 path.join('/foo', 'bar', 'baz/asdf', 'quux', '..');
 // Returns: '/foo/bar/baz/asdf'
 ```
