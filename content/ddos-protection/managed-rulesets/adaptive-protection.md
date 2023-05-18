@@ -62,7 +62,7 @@ You can adjust the action and sensitivity of the Adaptive DDoS Protection rules.
 To configure a rule, refer to the instructions in the following pages:
 
 * [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/) (for L7 rules)
-* [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/#override-one-or-more-rules) (for L3/4 rules)
+* [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/) (for L3/4 rules)
 
 For more information on the available configuration parameters, refer to the following pages:
 
