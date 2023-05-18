@@ -172,7 +172,7 @@ A Worker can have a successful outcome when it successfully sends a `404` or `5x
 Some of the properties of `TraceRequest` are redacted by default to make it harder to accidentally record sensitive information, like user credentials or API tokens. The redactions use heuristic rules, so they are subject to false positives and negatives. Clients can call `getUnredacted()` to bypass redaction, but they should always be careful about what information is retained, whether using the redaction or not.
 
 - Header redaction: The header value will be the string `“REDACTED”` when the (case-insensitive) header name is `cookie`/`set-cookie` or contains a substring `"auth”`, `“key”`, `“secret”`, `“token”`, or `"jwt"`.
-- URL redaction: For each greedily matched substring of ID characters (a-z, A-Z, 0-9, '+', '-', '_') in the URL, if it meets the following criteria for a hex or base-64 ID, the substring will be replaced with the string `“REDACTED”`
+- URL redaction: For each greedily matched substring of ID characters (a-z, A-Z, 0-9, '+', '-', '_') in the URL, if it meets the following criteria for a hex or base-64 ID, the substring will be replaced with the string `“REDACTED”`.
 - Hex ID: Contains 32 or more hex digits, and contains only hex digits and separators ('+', '-', '_')
 - Base-64 ID: Contains 21 or more characters, and contains at least two uppercase, two lowercase, and two digits.
 
