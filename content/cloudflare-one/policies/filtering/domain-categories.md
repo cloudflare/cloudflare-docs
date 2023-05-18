@@ -39,8 +39,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes.                                                                                 |
 | Business & Economy     | Sites that are related to business, economy, finance, education, science and technology.                                                                                          |
 | Child Abuse            | Sites hosting child abuse content.                                                                                                                                                |
-| Deceptive Ads          | Sites that spoof clicks, impressions, conversions for ads.                                                                                                                        |
-| Drugs                  | Sites related to the use and promotion of illegal drugs or illegal use of prescribed drugs.                                                                                       |
 | Education              | Sites hosting educational content that are not included in other categories like Science, Technology or Educational institutions.                                                 |
 | Entertainment          | Sites that are hosting entertaining content that are not included in other categories like Comic books, Audio streaming, Video streaming etc.                                     |
 | Gambling               | Sites that are providing online gambling or are related to gambling.                                                                                                              |
@@ -53,8 +51,7 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | Questionable Content   | Sites hosting content that are related to hacking, piracy, profanity and other questionable activities.                                                                           |
 | Real Estate            | Sites related to real estate.                                                                                                                                                     |
 | Religion               | Sites hosting content about religion, alternative religion, religious teachings, religious groups and spirituality.                                                               |
-| Safe for Kids          | Sites that are safe for kids to visit.                                                                                                                                            |
-| Security Risk          | Sites that are [new or misconfigured](#security-risk-subcategories). We recommend that you allow or isolate this content category to avoid accidentally blocking trusted domains. |
+| Security Risks         | Sites that are [new or misconfigured](#security-risk-subcategories). We recommend that you allow or isolate this content category to avoid accidentally blocking trusted domains. |
 | Shopping & Auctions    | Sites that are hosting content related to ecommerce, coupons, shopping, auctions and marketplaces.                                                                                |
 | Social & Family        | Sites related to society and lifestyle.                                                                                                                                           |
 | Society & Lifestyle    | Sites hosting information about lifestyle that are not included in other categories like fashion, food & drink etc.                                                               |
