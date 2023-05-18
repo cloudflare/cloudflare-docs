@@ -49,8 +49,10 @@ export default {
        workerName,
        {},
        {// outbound arguments
-         customer_name: workerName,
-         url: request.url
+         outbound: {
+          customer_name: workerName,
+            url: request.url}
+          }
        }
      );
      return await userWorker.fetch(request);
@@ -65,10 +67,10 @@ export default {
 };
 ```
 
-4. The Outbound Worker will now be invoked on any `fetch()` request from user Workers. The User Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker, with minimal performance overhead. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
+4. The Outbound Worker will now be invoked on any `fetch()` requests from user Workers. The User Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
 
 {{<Aside type ="note">}}
 
-The request from user Workers does not include `fetch()` through Service Bindings or mTLS certificate bindings. 
+Outbound Workers do not intercept fetch requests from Service Bindings or mTLS certificate bindings. 
 
 {{</Aside>}}
