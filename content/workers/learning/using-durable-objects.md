@@ -240,7 +240,7 @@ You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-
 
 {{</Aside>}}
 
-The supported way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/workers/wrangler/), the Workers CLI. You should start with one of our templates, the simplest of which can be used by running:
+To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. Start with one of our templates, the simplest of which can be used by running:
 
 ```sh
 $ git clone https://github.com/cloudflare/durable-objects-template
