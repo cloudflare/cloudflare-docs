@@ -8,7 +8,7 @@ meta:
 
 # Policy violations
 
-Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_). The same information is also available via GraphQL API.
+Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_). The same information is also available via [GraphQL API](/analytics/graphql-api/).
 
 ## Review policy violations in the dashboard
 
