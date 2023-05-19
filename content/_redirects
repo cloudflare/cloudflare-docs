@@ -590,6 +590,7 @@
 # support
 
 /support/account-management-billing/billing-cloudflare-add-on-services/ /support/account-management-billing/billing-add-on-service/ 301
+/support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /support/third-party-software/e-commerce/using-cloudflare-with-bigcommerce/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
