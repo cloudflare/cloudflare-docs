@@ -13,7 +13,6 @@ D1's billing is based on:
 
 * *What you use*: queries you issue against D1 will consume read units and/or write units depending on the volume of data read (scanned) or written.
 * *Scale-to-zero*: You are not billed for "hours" or "capacity units": if you are not issuing queries against your database, you are only billed for storage above the included limits of your plan when your database is not in use.
-* *Workers Compute*: Workers querying D1 and computing results: for example, serializing results into JSON and/or issuing queries, are billed per [Workers pricing](/workers/platform/pricing/#workers), in addition to your D1 specific usage.
 
 ## Billing metrics 
 
@@ -56,6 +55,10 @@ We'll be adding analytics for read units, write units and storage at both the ac
 * Does D1 charge for data transfer / egress?
 
 No.
+
+* Does D1 charge additional for additional compute?
+
+D1 itself does not charge for additional compute. Workers querying D1 and computing results: for example, serializing results into JSON and/or issuing queries, are billed per [Workers pricing](/workers/platform/pricing/#workers), in addition to your D1 specific usage.
 
 * Do queries I issue from the dashboard or wrangler (the CLI) count as billable usage?
 
