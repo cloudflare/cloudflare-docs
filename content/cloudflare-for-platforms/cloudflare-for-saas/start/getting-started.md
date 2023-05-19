@@ -1,7 +1,7 @@
 ---
 title: Configuring Cloudflare for SaaS
 pcx_content_type: get-started
-weight: 1
+weight: 2
 meta:
   description: Get started with Cloudflare for SaaS
 ---
@@ -12,12 +12,14 @@ meta:
 
 ## Prerequisites
 
-Before you can start creating custom hostnames, you need to have access to [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/#availability).
+Before you can start creating custom hostnames:
 
-If you have not used the Cloudflare API previously, review our [API documentation](/fundamentals/api/).
+1. [Add](/fundamentals/get-started/setup/add-site/) your zone and activate it on a [full setup](/dns/zone-setups/full-setup/) or [partial setup](/dns/zone-setups/partial-setup/).
+2. [Enable](/cloudflare-for-platforms/cloudflare-for-saas/start/enable/) Cloudflare for SaaS for your zone.
+3. (optional) Review the following documentation:
+  - [API documentation](/fundamentals/api/) (if you have not worked with the Cloudflare API before).
+  - [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas) (if there are multiple proxied DNS records for a custom hostname, because Cloudflare must prioritize which record controls the zone settings and associated origin server).
 
-If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
- 
 ---
 
 ## Step 1 — Create fallback origin and CNAME target
@@ -32,7 +34,7 @@ You can also [use a Worker as your origin](/cloudflare-for-platforms/cloudflare-
 
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
-We suggest using a domain other than your main company domain (example.cloud instead of example.com) to lower risk and add flexibility to your custom hostname management.
+We suggest using a domain other than your main company domain (`example.cloud` instead of `example.com`) to lower risk and add flexibility to your custom hostname management.
 
 1.  Create a [new application](/fundamentals/get-started/setup/add-site/) and select the **Free** plan.
 
@@ -46,9 +48,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
   | Fallback origin | `A`     | `proxy-fallback.saasprovider.com` | `192.0.2.1`                         |
   | CNAME target    | `CNAME` | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
 
-4.  Go to **SSL/TLS** > **Custom Hostnames** and enable **Cloudflare for SaaS**.
-
-5.  Set the **Fallback Origin** via either the dashboard or API.
+4.  Set the **Fallback Origin** via either the dashboard or API.
 
 <details>
 <summary>Using the dashboard</summary>
