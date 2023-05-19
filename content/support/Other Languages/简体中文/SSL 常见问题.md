@@ -26,7 +26,7 @@ _查找有关 Cloudflare **SSL/TLS** 应用的常见问题的答案。_
 -   [启用 Cloudflare 会影响 PayPal 的 TLS 1.2 要求吗？](https://support.cloudflare.com/hc/zh-cn/articles/204144518-SSL-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#h_100356045661548960034406)
 -   [如何从 Cloudflare 的中国数据中心提供 SSL 证书？](https://support.cloudflare.com/hc/zh-cn/articles/204144518-SSL-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#h_853db670-78aa-4c98-99d4-3aa3d38f8d59)
 -   [Cloudflare 是否支持 TLS 客户端身份验证？](https://support.cloudflare.com/hc/zh-cn/articles/204144518-SSL-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#h_db0bcd71-24f9-4b0c-8cfc-7a5ed0f27649)
--   [如何使用 Github 启用 Universal SSL？](https://support.cloudflare.com/hc/zh-cn/articles/204144518-SSL-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#h_4e7e3537-ade2-431c-abe7-2dfe26e1cb9a)
+-   [如何使用 GitHub 启用 Universal SSL？](https://support.cloudflare.com/hc/zh-cn/articles/204144518-SSL-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#h_4e7e3537-ade2-431c-abe7-2dfe26e1cb9a)
 
 ___
 
@@ -36,9 +36,9 @@ Cloudflare 证书按[证书类型](https://support.cloudflare.com/hc/articles/20
 
 -   [Custom SSL](https://support.cloudflare.com/hc/articles/200170466)
 -   [Dedicated SSL](https://support.cloudflare.com/hc/articles/228009108)
--   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)   
+-   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)
 
-一般优先级的例外情况是基于主机名的特异性。  提及特定主机名的证书优先于通配符证书。  例如，明确提及 _www.example.com_ 的 Universal SSL 证书优先于通过通配符（例如 _\*.example.com_）匹配 _www_ 主机名的证书。  
+一般优先级的例外情况是基于主机名的特异性。  提及特定主机名的证书优先于通配符证书。  例如，明确提及 _www.example.com_ 的 Universal SSL 证书优先于通过通配符（例如 _\*.example.com_）匹配 _www_ 主机名的证书。
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 ### SSL 无效品牌检查是什么意思？
 
-如果某些域包含与商标域冲突的字词，则不符合 Universal SSL 的条件。  
+如果某些域包含与商标域冲突的字词，则不符合 Universal SSL 的条件。
 
 要解决此问题，您可以：
 
@@ -161,6 +161,6 @@ TLS 客户端身份验证可验证客户端提供的证书是否由公司的根�
 
 ___
 
-### 如何使用 Github 启用 Universal SSL？  
+### 如何使用 GitHub 启用 Universal SSL？
 
 请参阅 Cloudflare 关于[通过 GitHub Pages 使用 Cloudflare Universal SSL](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/) 的博客文章。

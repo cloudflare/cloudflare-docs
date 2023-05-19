@@ -5,7 +5,7 @@ product:
   title: Magic Network Monitoring
   url: /magic-network-monitoring/
   wrap: true
-  group: Network services
+  group: Network security
   additional_groups: [Analytics]
 
 meta:
@@ -22,3 +22,8 @@ externals:
 
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: magic-network-monitoring

@@ -149,21 +149,10 @@ Google handles Groups (that is, distributions lists) differently from user mail 
 
 ## 3. Update your domain MX records
 
-Instructions to update your MX records will depend on the DNS provider you are using. You need to replace the existing Google MX records with the Area 1 hosts.
-
-These are the typical default MX records when using Google Workspace:
-
-MX Priority | Host
------------ | ---
-`1`           | `aspmx.l.google.com`
-`5`           | `alt1.aspmx.l.google.com`
-`5`           | `alt2.aspmx.l.google.com`
-`10`          | `alt3.aspmx.l.google.com`
-`10`          | `alt4.aspmx.l.google.com`
-
-To update your MX records with Area 1, use the following:
+Instructions to update your MX records will depend on the DNS provider you are using. You need to replace the existing Google MX records with the Area 1 hosts. For example:
 
 {{<render file="_mx-deployment-values.md">}}
+{{<render file="_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 

@@ -41,7 +41,7 @@ Refer to the [WritableStreamDefaultWriter](/workers/runtime-apis/streams/writabl
 
 {{<definitions>}}
 
-- {{<code>}}abort(reason{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+- {{<code>}}abort(reason{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<void>{{</type>}}
 
   - Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
 
@@ -49,11 +49,13 @@ Refer to the [WritableStreamDefaultWriter](/workers/runtime-apis/streams/writabl
 Any data not yet written is lost upon abort.
   {{</Aside>}}
 
-- `getWriter()` {{<type-link href="/runtime-apis/streams/writablestreamdefaultwriter">}}WritableStreamDefaultWriter{{</type-link>}}
+- `getWriter()` : {{<type-link href="/runtime-apis/streams/writablestreamdefaultwriter">}}WritableStreamDefaultWriter{{</type-link>}}
 
   - Gets an instance of `WritableStreamDefaultWriter` and locks the `WritableStream` to that writer instance.
 
 {{</definitions>}}
+
+---
 
 ## Related resources
 

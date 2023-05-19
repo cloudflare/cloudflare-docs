@@ -6,7 +6,7 @@ weight: 3
 
 # Certificate Transparency Monitoring
 
-Certificate Transparency Monitoring sends you emails when certificates — including [backup certificates](/ssl/edge-certificates/universal-ssl/#backup-certificates) — are issued for your domain. This feature is in **public beta** and is opt-in.
+Certificate Transparency (CT) Monitoring sends you emails when certificates — including [backup certificates](/ssl/edge-certificates/universal-ssl/#backup-certificates) — are issued for your domain. This feature is in **public beta** and is opt-in.
 
 {{<Aside type="note">}}
 
@@ -32,13 +32,13 @@ For even more details, refer to the [introductory blog post](https://blog.cloudf
 
 ---
 
-## Opting in and out
+## Opt in and out
 
-Alerts are turned off by default. If you want to receive alerts, go to [SSL/TLS](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) in the Cloudflare dashboard.
+Alerts are turned off by default. If you want to receive alerts, go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) and enable **Certificate Transparency Monitoring**. If you are in a Business or Enterprise zone, select **Add Email**.
 
 {{<feature-table id="ssl.cert_transparency">}}
 
-To stop receiving alerts, switch the toggle to **Off** or remove your emails from the feature card.
+To stop receiving alerts, disable **Certificate Transparency Monitoring** or remove your email from the feature card.
 
 {{<Aside type="note" header="Note:">}}
 CT monitoring does not detect phishing attempts. For example, for <code>cloudflare.com</code>, an alert would not trigger for a certificate issued for <code>cloudf1are.com</code> or <code>cloud-flare.com</code>.

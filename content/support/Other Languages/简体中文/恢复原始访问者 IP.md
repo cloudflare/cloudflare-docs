@@ -97,11 +97,11 @@ ___
 
 ## mod\_cloudflare
 
-mod\_cloudflare 的安装方式有两种：从 Github 下载 Apache 扩展，或在您的原始 Web 服务器上添加代码。
+mod\_cloudflare 的安装方式有两种：从 GitHub 下载 Apache 扩展，或在您的原始 Web 服务器上添加代码。
 
-### 从 Github 下载数据包或脚本
+### 从 GitHub 下载数据包或脚本
 
-如果您使用的是 Apache Web 服务器，可以从 [Github](https://github.com/cloudflare/mod_cloudflare) 下载 mod\_cloudflare。
+如果您使用的是 Apache Web 服务器，可以从 [GitHub](https://github.com/cloudflare/mod_cloudflare) 下载 mod\_cloudflare。
 
 ### 添加代码到您的源站 Web 服务器
 

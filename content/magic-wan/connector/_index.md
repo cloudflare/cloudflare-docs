@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Magic WAN Connector
-weight: 8
+weight: 9
 hidden: true
 ---
 

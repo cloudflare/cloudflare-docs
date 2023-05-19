@@ -22,7 +22,7 @@ The following diagram outlines the request handling process where requests go th
 
 Cloudflare products are specific to one or more phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable phases.
 
-Refer to [Phases list](/ruleset-engine/reference/phases-list) for a list of phases and their corresponding Cloudflare products.
+Refer to [Phases list](/ruleset-engine/reference/phases-list/) for a list of phases and their corresponding Cloudflare products.
 
 ## Phase entry point ruleset
 

@@ -1,6 +1,6 @@
 ---
 title: Statistics
-weight: 4
+weight: 5
 pcx_content_type: how-to
 meta:
     title: Review DMARC statistics

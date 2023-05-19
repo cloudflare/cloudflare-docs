@@ -11,7 +11,7 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 
 Learn more about [How KV works](/workers/learning/how-kv-works/).
 
-To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/workers-kv/) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
+To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/workers-kv/) on how to create a namespace with Wrangler. Create a KV namespace in the dashboard by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > select **Workers & Pages** > **KV**.
 
 The descriptions of KV methods below also contain links to Wrangler or REST API equivalents where appropriate, but using KV from your Worker is generally better for latency, scalability, and availability.
 
@@ -78,9 +78,9 @@ The `put` method described [previously](/workers/runtime-apis/kv/#writing-key-va
 
 {{<definitions>}}
 
-- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` : {{<type>}}Promise{{</type>}}
 
-- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` : {{<type>}}Promise{{</type>}}
 
 {{</definitions>}}
 
@@ -206,6 +206,8 @@ await NAMESPACE.delete(key);
 This will remove the key and value from your namespace. As with any operations, it may take some time to see that they key has been deleted from various points in the Cloudflare global network.
 
 This method returns a promise that you should `await` on in order to verify successful deletion.
+
+If you attempt to read a deleted key from KV, the promise will resolve with the literal value `null`.
 
 You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair).
 
@@ -368,7 +370,7 @@ kv_namespaces = [
 ]
 ```
 
-With this, the deployed Worker will have a `TODO` global variable. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
+With this, the deployed Worker will have a `TODO` binding on the `env` parameter in Modules format, and a `TODO` global variable in Service Worker format. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -405,11 +407,12 @@ addEventListener("fetch", async (event) => {
 
 You can create a namespace [using Wrangler](/workers/wrangler/install-and-update/) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
 
-1.  Go to **Workers**.
-2.  Select your **Worker**.
-3.  Select **Settings** > **Variables**.
-4.  Go to **KV Namespace Bindings**.
-5.  Select **Add binding**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages**.
+2. In **Overview**, select your Worker.
+3. Select **Settings** > **Variables**.
+4. Go to **KV Namespace Bindings**.
+5. Select **Add binding**.
 
 {{</Aside>}}
 

@@ -43,3 +43,13 @@ For example, if your application is hosted on `internal.site.com`, the following
 | Action |
 | ------ |
 | Block  |
+
+## Limitations
+
+The **Isolate application** setting is incompatible with the following Cloudflare products:
+
+- Automatic Platform Optimization (APO) for WordPress
+- Zaraz
+- Automatic Signed Exchanges (SXGs)
+
+If any of these products are enabled, you will see a `double isolation` error.

@@ -18,7 +18,7 @@ After you sign your partner agreement with Cloudflare, Cloudflare will add [cert
 
 ### API access
 
-You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
+You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) to authenticate your requests to the Tenant API.
 
 For more details on using the Cloudflare API, refer to our [API overview](/fundamentals/api/).
 

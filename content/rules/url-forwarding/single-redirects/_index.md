@@ -15,4 +15,7 @@ Single Redirects allow you to create static or dynamic URL redirects [^1]. Dynam
 
 ---
 
-Refer to [Availability](/rules/url-forwarding/#availability) for more information on the quotas and features per Cloudflare plan.
+## Related resources
+
+* [Availability](/rules/url-forwarding/#availability): Information on the Single Redirects quotas and features per Cloudflare plan.
+* [Execution order](/rules/url-forwarding/#execution-order): Execution order of the different Rules products.

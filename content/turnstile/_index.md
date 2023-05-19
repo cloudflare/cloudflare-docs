@@ -11,7 +11,7 @@ meta:
 
 Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
 
-![Turnstile Overview](/turnstile/static/images/turnstile-overview.png)
+![Turnstile Overview](/images/turnstile/turnstile-overview.png)
 
 Turnstile leverages the same technology behind our [Managed Challenge](https://blog.cloudflare.com/end-cloudflare-captcha/), but opens it to anyone not currently utilizing the Cloudflare network. In contrast to our Challenge page offerings, Turnstile allows the customer to run challenges anywhere on their site in a less-intrusive way without requiring the use of Cloudflare’s CDN.
 

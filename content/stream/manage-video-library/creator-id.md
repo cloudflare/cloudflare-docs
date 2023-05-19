@@ -74,10 +74,6 @@ highlight: [35]
       "padding": 0.1,
       "scale": 0.1,
       "position": "center"
-    },
-    "nft": {
-      "contract": "0x57f1887a8bf19b14fc0d912b9b2acc9af147ea85",
-      "token": 5
     }
   }
 }
@@ -212,10 +208,6 @@ highlight: [36]
         "padding": 0.1,
         "scale": 0.1,
         "position": "center"
-      },
-      "nft": {
-        "contract": "0x57f1887a8bf19b14fc0d912b9b2acc9af147ea85",
-        "token": 5
       }
     }
   ],

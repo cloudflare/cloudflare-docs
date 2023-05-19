@@ -25,7 +25,7 @@ title: Limits
 
 {{<Aside type="note">}}
 
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 {{</Aside>}}
 
@@ -52,7 +52,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 
 ## Response limits
 
-Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/articles/200172516#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](/cache/about/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
 
 ## Worker limits
 
@@ -73,7 +73,11 @@ Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundl
 
 {{<Aside type="note" header="No limit* for duration">}}
 
-There is no hard limit for duration. However, after 30 seconds, there is a higher chance of eviction.
+There is no hard limit for duration. 
+
+Cloudflare updates the Workers runtime a few times per week. When this happens, in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated.
+
+While your application should follow the best practice of handling disconnects by retrying requests, the scenario described above is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
 
 {{</Aside>}}
 
@@ -85,19 +89,19 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 {{<table-wrap>}}
 
-| Feature                               | Free                  | Paid       |
-| ------------------------------------- | --------------------- | ---------- |
-| [Reads/second](#kv)                   | 100,000 reads per day | unlimited  |
-| [Writes/second (different keys)](#kv) | 1,000 writes per day  | unlimited  |
-| [Writes/second (same key)](#kv)       | 1                     | 1          |
-| [Operations/worker invocation](#kv)   | 1000                  | 1000       |
-| [Namespaces](#kv)                     | 100                   | 100        |
-| [Storage/account](#kv)                | 1 GB                  | unlimited  |
-| [Storage/namespace](#kv)              | 1 GB                  | unlimited  |
-| [Keys/namespace](#kv)                 | unlimited             | unlimited  |
-| [Key size](#kv)                       | 512 bytes             | 512 bytes  |
-| [Key metadata](#kv)                   | 1024 bytes            | 1024 bytes |
-| [Value size](#kv)                     | 25 MiB                | 25 MiB     |
+| Feature                               | Free                  | Paid        |
+| ------------------------------------- | --------------------- | ----------  |
+| Reads                                 | 100,000 reads per day | unlimited   |
+| Writes to different keys              | 1,000 writes per day  | unlimited   |
+| Writes to same key                    | 1 per second          | 1 per second|
+| Operations/worker invocation          | 1000                  | 1000        |
+| Namespaces                            | 100                   | 100         |
+| Storage/account                       | 1 GB                  | unlimited   |
+| Storage/namespace                     | 1 GB                  | unlimited   |
+| Keys/namespace                        | unlimited             | unlimited   |
+| Key size                              | 512 bytes             | 512 bytes   |
+| Key metadata                          | 1024 bytes            | 1024 bytes  |
+| Value size                            | 25 MiB                | 25 MiB      |
 
 {{</table-wrap>}}
 
@@ -158,7 +162,11 @@ If you are currently being rate limited, upgrade to a [Paid plan](https://dash.c
 
 Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
-Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your site > **Security** > **Events** > scroll to **Activity log**  and review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
+Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and your website.
+2. Select **Security** > **Events** > scroll to **Activity log**.
+3. Review the log for a Web Application Firewall block event with a `ruleID` of `worker`.
 
 ### Daily request
 
@@ -178,7 +186,11 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
-If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine _Exceeded Resources_.
+If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
+3. Find **Invocation Statuses** and examine _Exceeded Resources_.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
@@ -238,6 +250,7 @@ While handling a request, each Worker is allowed to have up to six connections o
 - `put()`, `match()`, and `delete()` methods of [Cache objects](/workers/runtime-apis/cache/).
 - `list()`, `get()`, `put()`, `delete()`, and `head()` methods of [R2](/r2/).
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
+- Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
 
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 
@@ -260,11 +273,11 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 ## Worker startup time
 
-A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 ## Number of Workers
 
@@ -279,26 +292,6 @@ App Workers do not count towards this limit.
 ## Number of routes per zone
 
 Each zone has a limit of 1,000 [routes](/workers/platform/triggers/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
----
-
-## KV
-
-Workers KV supports:
-
-- Up to 100 namespaces per account
-- Unlimited keys per namespace
-- Unlimited storage per namespace (except on the free tier, which is limited to 1 GB total across all namespaces in an account)
-- Keys of up to 512 bytes
-- Values of up to 25 MiB
-- Metadata of up to 1024 bytes per key
-- Unlimited reads per second
-- Unlimited writes per second, if they are to different keys
-- Up to one write per second to any particular key
-
-Workers KV read performance is determined by the amount of read-volume a given key receives. Maximum performance for a key is not reached unless that key is being read at least a couple times per minute in any given data center.
-
-Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds or more before reads in all global network locations are guaranteed to see the new value.
 
 ---
 

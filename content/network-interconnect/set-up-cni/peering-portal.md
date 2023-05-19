@@ -23,11 +23,11 @@ Select the **OIDC PeeringDB** and follow the log in process.
 
 If you receive a message stating your account has not been affiliated with an organization, you will need to request affiliation.
 
-![Error message about missing organization affiliation](/network-interconnect/static/peeringdb-request-affiliation.png)
+![Error message about missing organization affiliation](/images/network-interconnect/peeringdb-request-affiliation.png)
 
 When your affiliation is approved, **Cloudflare, Inc.** appears under **Existing affiliations** on your profile.
 
-![List of existing affiliations](/network-interconnect/static/peeringdb-affiliation-approved.png)
+![List of existing affiliations](/images/network-interconnect/peeringdb-affiliation-approved.png)
 
 ## Request peer sessions
 
@@ -39,8 +39,8 @@ Before you can request a peering session for an ASN, you must be an admin for th
 
 The **Peer** button under **Peering Request** only appears active to admins. 
 
-![Admin view of peering locations list](/network-interconnect/static/peeringdb-admin-view.png)
+![Admin view of peering locations list](/images/network-interconnect/peeringdb-admin-view.png)
 
 Non-admin users will be unable to select **Peer** and hovering over the button will display a message about the need for admin access.
 
-![Non-admin view of peering locations list](/network-interconnect/static/peeringdb-nonadmin-view.png)
+![Non-admin view of peering locations list](/images/network-interconnect/peeringdb-nonadmin-view.png)

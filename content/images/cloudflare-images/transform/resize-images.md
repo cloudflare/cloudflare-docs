@@ -10,7 +10,7 @@ Resizing images in Cloudflare Images works by creating variants of your image. V
 
 Each variant has several properties, including the width and height of resized images.
 
-![Configure variants in Cloudflare Images](/images/static/variants.png)
+![Configure variants in Cloudflare Images](/images/images/variants.png)
 
 ## How to resize an image
 

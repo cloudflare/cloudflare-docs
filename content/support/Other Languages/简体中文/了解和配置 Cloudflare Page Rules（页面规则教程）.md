@@ -302,7 +302,7 @@ Web 缓存欺骗防护
 
  | 
 
-防止 Web 缓存欺骗攻击，同时仍然允许缓存静态资产。此设置会验证 URL 的扩展部分是否匹配返回的 _Content-Type_。[了解更多](/cache/about/cache-deception-armor)。
+防止 Web 缓存欺骗攻击，同时仍然允许缓存静态资产。此设置会验证 URL 的扩展部分是否匹配返回的 _Content-Type_。[了解更多](/cache/cache-security/cache-deception-armor/)。
 
  | 
 

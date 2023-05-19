@@ -11,5 +11,6 @@ The execution order of Rules products is the following:
 * [Cache Rules](/cache/about/cache-rules/)
 * [Configuration Rules](/rules/configuration-rules/)
 * [Single Redirects](/rules/url-forwarding/single-redirects/)
+* [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
 
 The different types of rules listed above will take precedence over [Page Rules](https://support.cloudflare.com/hc/articles/218411427). This means that Page Rules will be overridden if there is a match for both Page Rules and the Rules products listed above.

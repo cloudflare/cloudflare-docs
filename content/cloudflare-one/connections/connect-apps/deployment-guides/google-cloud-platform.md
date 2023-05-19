@@ -11,7 +11,7 @@ The purpose of this guide is to walk through some best practices for accessing p
 ## Prerequisites
 
 - Navigate to [Zero Trust](https://one.dash.cloudflare.com/) and create a Cloudflare Zero Trust account.
-- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) into your Cloudflare Zero Trust account.
+- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) into your Cloudflare Zero Trust account.
 
 ## Create your environment
 

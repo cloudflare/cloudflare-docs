@@ -34,7 +34,7 @@ Here are the most common reasons why this issue occurs:
 
 ### A third-party service is blocking WARP
 
-A third-party service (such as a hardware or software firewall, router, MDM/group policy configuration, or other networking interface) may have a security policy in place which blocks WARP from connecting. 
+A third-party service (such as a hardware or software firewall, router, MDM/group policy configuration, or other networking interface) may have a security policy in place which blocks WARP from connecting.
 
 #### Solution
 
@@ -47,11 +47,11 @@ The most common places we see interference with WARP from VPNs are:
 - **Control of traffic routing:** In `daemon.log`, you will see a large number of routing table changes. For example,
     ```txt
     DEBUG warp::warp_service: Routes changed:
-        Added; Interface: 8; Destination: 10.133.27.201/32; Next hop: 100.64.0.2; 
-        Added; Interface: 8; Destination: 10.133.27.202/32; Next hop: 100.64.0.2; 
+        Added; Interface: 8; Destination: 10.133.27.201/32; Next hop: 100.64.0.2;
+        Added; Interface: 8; Destination: 10.133.27.202/32; Next hop: 100.64.0.2;
     DEBUG warp::warp_service: Routes changed:
-        Added; Interface: 8; Destination: 10.133.27.203/32; Next hop: 100.64.0.2; 
-        Added; Interface: 8; Destination: 10.133.27.204/32; Next hop: 100.64.0.2; 
+        Added; Interface: 8; Destination: 10.133.27.203/32; Next hop: 100.64.0.2;
+        Added; Interface: 8; Destination: 10.133.27.204/32; Next hop: 100.64.0.2;
     DEBUG warp::warp_service: Routes changed:
         Added; Interface: 8; Destination: 10.133.27.205/32; Next hop: 100.64.0.2;
     ```
@@ -148,7 +148,7 @@ Some applications do not support SSL inspection or are otherwise [incompatible w
 
 #### Solution (if the app has a private certificate store)
 
-Applications such as Firefox, Docker, Python, and NPM rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
+Applications such as Firefox, Docker, Python, and npm rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
 Refer to [our instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) for adding the root certificate to common applications. For applications not on our list, try searching the Internet for `<app-name> proxy support` or `<app-name> proxy certificate`.
 
@@ -171,5 +171,5 @@ Some applications require traffic to flow either all inside or all outside of th
 #### Solution
 
 1. Determine the IP addresses and/or domains required for your application to function. Common Internet search terms include `<app-name> split tunnel list`, `<app-name> allow list`, or `<app-name> firewall ips`.
-2. In the Zero Trust dashboard, go to your [Split Tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).  
+2. In the Zero Trust dashboard, go to your [Split Tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-office-365-traffic) to exclude all Office 365 IPs.

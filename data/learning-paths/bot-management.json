@@ -20,7 +20,7 @@
     "description": "Stop bad bots with threat intelligence at scale.",
     "products": [
       "Bots",
-      "Firewall"
+      "WAF"
     ],
     "category": ["Security"]
 }

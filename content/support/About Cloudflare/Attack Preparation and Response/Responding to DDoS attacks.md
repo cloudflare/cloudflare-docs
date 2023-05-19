@@ -89,10 +89,7 @@ To decide which country or IPs to block or challenge, check your log files. Cont
 {{<Aside type="note">}}
 Cloudflare also offers **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** to
-help control the flow of requests to your server. [**Rate Limiting** is
-billed based on
-usage](https://support.cloudflare.com/hc/en-us/articles/115000272247-Billing-for-Cloudflare-Rate-Limiting)
-and is independent of plan type.
+help control the flow of requests to your server.
 {{</Aside>}}
 
 ___
@@ -113,7 +110,7 @@ The following table lists mitigation options for DDoS ransom campaigns:
 | Disable [Privacy Pass Support](https://support.cloudflare.com/hc/articles/115001992652-Using-Privacy-Pass-with-Cloudflare) | In several reports, attackers claim to exploit Privacy Pass. This is not so much a vulnerability in Privacy Pass, but a side effect of how Privacy Pass interacts with other Cloudflare features. Disable Privacy Pass Support if a flood of requests with Privacy Pass tokens attached is expected. |
 | Enable [I'm Under Attack Mode (IUAM)](https://support.cloudflare.com/hc/articles/200170076)! | IUAM is designed to help mitigate attacks and generally increase a zone's security, so it's a good idea during several types of attacks.|
 | Enable [Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128-Configuring-Cloudflare-Rate-Limiting) | Some DDoS attacks are effective at low rates because the attacker targets an endpoint which they have discovered to be uncachable and computationally expensive for the origin server. If an origin server normally receives a dozen or so logins each second and suddenly receives thousands per second, this can result in degraded performance and will likely result in an increased bill for cloud service. Rate Limiting works well against simple single-origin DoS, small botnets, and it may prevent the attacks from persisting for a long period of time . It can also help drop floods to the origin, but its efficacy may be limited for very weak origin servers.|
-| Configure more aggressive caching | [Caching your content at Cloudflare](https://support.cloudflare.com/hc/articles/200172516) also protects your website against small DDoS attacks, but uncached assets may require additional manual intervention steps provided above. |
+| Configure more aggressive caching | [Caching your content at Cloudflare](/cache/about/default-cache-behavior/) also protects your website against small DDoS attacks, but uncached assets may require additional manual intervention steps provided above. |
 
 ___
 

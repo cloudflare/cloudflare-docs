@@ -21,7 +21,7 @@ The components we'll use in this tutorial include:
 
 The following diagram depicts how data flows from Cloudflare Logs through the different components of the Google Cloud Platform discussed in this tutorial.
 
-![Data flow from Cloudflare Logpush to Google Cloud Platform](/fundamentals/static/images/google/cf-logpush-to-google-cloud-platform.png)
+![Data flow from Cloudflare Logpush to Google Cloud Platform](/images/fundamentals/google/cf-logpush-to-google-cloud-platform.png)
 
 {{<Aside type="note">}}
 

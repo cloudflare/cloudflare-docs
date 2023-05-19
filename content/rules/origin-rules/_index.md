@@ -28,6 +28,6 @@ The Origin Rule expression will determine when these overrides will be applied.
 
 ## Important remarks
 
-If you override the hostname with an Origin Rule (via Host header override or DNS record override) and add a header override to your load balancer configuration, the Origin Rule will take precedence over the load balancer configuration.
+If you override the hostname with an Origin Rule (via `Host` header override or DNS record override) and add a header override to your load balancer configuration, the Origin Rule will take precedence over the load balancer configuration.
 
-Like [Page Rules](https://support.cloudflare.com/hc/articles/218411427), an Origin Rule performing a Host header override will update the SNI value of the original request to the same value of the Host header. To set an SNI value different from the Host header override, add an SNI override in the same Origin Rule or create a separate Origin Rule for this purpose.
+Like [Page Rules](https://support.cloudflare.com/hc/articles/218411427), an Origin Rule performing a `Host` header override will update the SNI value of the original request to the same value of the `Host` header. To set an SNI value different from the `Host` header override, add an SNI override in the same Origin Rule or create a separate Origin Rule for this purpose.

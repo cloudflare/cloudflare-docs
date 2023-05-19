@@ -10,4 +10,4 @@ The Terraform configurations provided in this page need the zone ID (or account 
 * To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](/api/operations/accounts-list-accounts) API operation.
 * To retrieve the list of zones you have access to, including their IDs, use the [List zones](/api/operations/zone-list-zones) API operation.
 
-The deployment of managed rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of managed rulesets, use the [List account rulesets](/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of existing managed rulesets.
+The deployment of managed rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of managed rulesets, use the [List account rulesets](/api/operations/listAccountRulesets) API operation. The response will include the description and IDs of existing managed rulesets.

@@ -6,7 +6,7 @@ weight: 8
 
 # API and Terraform
 
-This section covers a few common use cases with the API and Terraform to manage Cloudflare Access. For specific API documentation, please see [api.cloudflare.com](https://api.cloudflare.com/).
+This section covers a few common use cases with the API and Terraform to manage Cloudflare Zero Trust. For more information, refer to our [API documentation](https://developers.cloudflare.com/api/) and [Terraform reference guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 {{<directory-listing>}}
 

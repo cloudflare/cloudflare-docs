@@ -364,7 +364,6 @@ ___
 
 ## 関連リソース
 
--   [Cloudflareレート制限の請求](https://support.cloudflare.com/hc/articles/115000272247)
 -   [ELS（Enterprise Log Share）でレート制限はどのように報告されますか？](/logs/reference/log-fields)
 -   [Cloudflareレート制限のトラブルシューティング](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Cloudflare APIを使ったレート制限設定](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

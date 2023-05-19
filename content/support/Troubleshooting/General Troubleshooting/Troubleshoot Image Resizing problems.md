@@ -22,23 +22,23 @@ ___
 
 When resizing fails, the response body contains an error message explaining the reason, as well as the `Cf-Resize`d header containing `err=code`:
 
--   9401 — Missing or invalid required arguments in `{cf:image{…}}` options, for example `width` is not a number.
--   9402 — Download of the original image failed, for example because the image was too large or the connection was interrupted.
--   9403 — [Request loop](/images/image-resizing/resize-with-workers#prevent-request-loops). The service was asked to resize an already-resized image, or the Worker has fetched its own URL.
--   9406 & 9419 — Invalid image URL specified (for example, contains spaces, unescaped Unicode, or non-HTTP/S URL).
--   9407 — Origin domain name lookup error.
--   9404 — Origin returned 404 HTTP status code. The image does not exist on the origin server, or a wrong URL was given to resize.
--   9408 — Origin returned 4xx HTTP status code. The origin server may be denying access to the image.
--   9509 — Origin returned 5xx HTTP status code. This is most likely a problem with the origin server-side software, not image resizing.
--   9412 — Origin returned a non-image, for example an HTML page. This usually happens when an invalid URL is specified, or server-side software has printed an error, or presented a login page.
--   9413 — The image is too large (exceeds 10,000 pixels width or height).
--   9420 — Origin server redirected to an invalid URL.
--   9421 — Origin redirected too many times.
--   9504, 9505 & 9510 — Unable to contact origin. The origin server may be down or overloaded.
--   9524 — `/cdn-cgi/image/` resizing service could not perform resizing, probably because the image URL was intercepted by a Worker.
--   9511 — Image format not supported.
--   9522 — Exceeded processing limit. This may happen briefly after purging an entire zone or when requesting files with huge dimensions. If the problem persists, please contact support.
--   9424, 9516, 9517, 9518 & 9523 — Internal errors. Please contact support if you encounter these errors.
+-  9401 — The required arguments in `{cf:image{…}}` options are missing or are invalid. Try again. Refer to "Fetch options" for supported arguments at https://cfl.re/3toqlvG
+-  9402 — The image was too large or the connection was interrupted. Refer to "Supported formats and limitations" for more information at https://cfl.re/3TrMEeO
+-  9403 — A [request loop](/images/image-resizing/resize-with-workers#prevent-request-loops) occurred because the image was already resized or the Worker fetched its own URL. Verify your Worker path and image path on the server do not overlap.
+-  9406 & 9419 — The image URL is a non-HTTPS URL or the URL has spaces or unescaped Unicode. Check your URL and try again.
+-  9407 — A lookup error occured with the origin server's domain name. Check your DNS settings and try again.
+-  9404 — The image does not exist on the origin server or the URL used to resize the image is wrong. Verify the image exists and check the URL.
+-  9408 — The origin server returned an HTTP 4xx status code and may be denying access to the image. Confirm your image settings and try again.
+-  9509 — The origin server returned an HTTP 5xx status code. This is most likely a problem with the origin server-side software, not Image Resizing.
+-  9412 — The origin server returned a non-image, for example, an HTML page. This usually happens when an invalid URL is specified or server-side software has printed an error or presented a login page.
+-  9413 — 9413 — The image exceeds the maximum image area of 100 megapixels. Use a smaller image and try again.
+-  9420 — The origin server redirected to an invalid URL. Confirm settings at your origin and try again.
+-  9421 — The origin server redirected too many times. Confirm settings at your origin and try again.
+-  9504, 9505 & 9510 — The origin server could not be contacted because the origin server may be down or overloaded. Try again later.
+-  9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. Check your Workers and try again.
+-  9511 — The image format is not supported. Refer to "Supported formats and limitations" to learn about supported input and output formats. https://cfl.re/3TrMEeO
+-  9522 — The image exceeded the processing limit. This may happen briefly after purging an entire zone or when files with very large dimensions are requested. If the problem persists, contact support.
+-  9424, 9516, 9517, 9518, 9522 & 9523 — Internal errors. Please contact support if you encounter these errors.
 
 ___
 

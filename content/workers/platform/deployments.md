@@ -43,7 +43,13 @@ For more information on the `wrangler deployments list` and `wrangler deployment
 
 ### via the Cloudflare Dashboard
 
-Access deployments by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Account Home** > **Workers** > selecting your Worker project > **Deployments**. Deployments includes information about previous deployments, and your Worker’s detail page displays information about the most recently deployed and currently active deployment.
+To access your deployments:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Deployments**. 
+
+Deployments includes information about previous deployments, and your Worker’s detail page displays information about the most recently deployed and currently active deployment.
 
 ### via the API
 
@@ -69,7 +75,7 @@ To perform a rollback via Wrangler, use the `wrangler rollback` command. Refer t
 To perform a rollback via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers** > select your Worker > **Deployments**. 
+2. Go to **Workers & Pages** and in **Overview**, select your Worker > **Deployments**. 
 3. Find the deployment you would like to rollback to.
 4. Select the three dot icon on the right of the deployment and select **Rollback to this deployment**.
 

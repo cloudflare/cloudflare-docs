@@ -8,6 +8,40 @@ rss: file
 
 # Changelog
 
+## 2023-05-16
+
+- The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
+- We've added new [native database integrations](/workers/learning/integrations/databases/#native-database-integrations-beta) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
+- You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
+- The [R2 Migrator](/r2/r2-migrator/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
+
+## 2023-05-15
+
+- [Cursor](/workers/ai/), an experimental AI assistant, trained to answer questions about Cloudflare's Developer Platform, is now available to preview! Cursor can answer questions about Workers and the Cloudflare Developer Platform, and is itself built on Workers. You can read more about Cursor in the [announcement blog](https://blog.cloudflare.com/introducing-cursor-the-ai-assistant-for-docs/).
+
+## 2023-05-12
+
+- The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security reasons](/workers/learning/security-model/) time only advances after I/O.
+
+## 2023-05-05
+
+- The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
+- Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+
+## 2023-04-28
+
+- The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
+- The global `connect` method has been moved to a `cloudflare:sockets` module.
+
+## 2023-04-14
+
+- No externally-visible changes this week.
+
+## 2023-04-10
+
+- `URL.canParse(...)` is a new standard API for testing that an input string can be parsed successfully as a URL without the additional cost of creating and throwing an error.
+- The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
+
 ## 2023-03-24
 
 - Fixed a bug in Wrangler tail and and live logs on the dashboard that prevented the Administrator Read-Only and Workers Tail Read roles from successfully tailing Workers.
@@ -76,6 +110,10 @@ rss: file
 - Fixed the TypeScript type of `DurableObjectState.id` in [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) to always be a `DurableObjectId`.
 - Validation errors during Worker upload for module scripts now include correct line and column numbers.
 - Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
+
+## 2022-07-08
+
+- Workers Usage Report and Workers Weekly Summary have been disabled due to scaling issues with the service.
 
 ## 2022-06-24
 
@@ -604,7 +642,7 @@ New this week:
 Runtime release notes covering the past few weeks:
 
 - Increased total per-request `Cache.put()` limit to 5GiB.
-- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal cache limits (<https://support.cloudflare.com/hc/en-us/articles/200172516-Understanding-Cloudflare-s-CDN>).
+- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/about/default-cache-behavior/).
 - Added a helpful error message explaining AES decryption failures.
 - Some overload errors were erroneously being reported as daemonDown (1105) errors. They have been changed to exceededCpu (1102) errors, which better describes their cause.
 - More “internal errors” were converted to useful user-facing errors.

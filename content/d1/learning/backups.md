@@ -1,6 +1,6 @@
 ---
 title: Backups
-weight: 2
+weight: 9
 pcx_content_type: concept
 ---
 

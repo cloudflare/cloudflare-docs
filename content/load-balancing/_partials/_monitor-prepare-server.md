@@ -11,6 +11,6 @@ Each health check has the HTTP user-agent of `"Mozilla/5.0 (compatible; Cloudfla
 
 {{<Aside type="warning">}}
 
-If you know that your origin server is healthy but load balancing is reporting it as unhealthy, refer to our [Monitor troubleshooting guide](https://support.cloudflare.com/hc/articles/4407016052493#h_4wg9kQ1xyMWU8HToLDLXRe).
+If you know that your origin server is healthy but load balancing is reporting it as unhealthy, refer to our [Monitor troubleshooting guide](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
 
 {{</Aside>}}

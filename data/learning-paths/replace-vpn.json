@@ -138,7 +138,7 @@
         "estimated_time": 30,
         "pages": [
           {
-            "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions",
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/",
             "link_title": "Define device enrollment permissions",
             "additional_description": "With device enrollment rules, you define which users can connect devices to your Zero Trust organization."
           },

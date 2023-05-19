@@ -16,15 +16,56 @@ If you plan to run Keyless SSL in a [high availability setup](/ssl/keyless-ssl/r
 
 ### Install
 
-1.  Add the Cloudflare Package Repository as per https://pkg.cloudflare.com/.
-2.  Amazon Linux customers need to manually set the yum `$releasever` value:
-    - Amazon Linux 1: `sudo sed -i 's/$releasever/6/' /etc/yum.repos.d/cloudflare.repo`
-    - Amazon Linux 2: `sudo sed -i 's/$releasever/7/' /etc/yum.repos.d/cloudflare.repo`
-3.  Update your OS’ package listings, e.g., `apt-get update` or `yum makecache`.
-4.  Install the gokeyless server (min version used should be 1.5.3):
-    - Debian/Ubuntu: `sudo apt-get install gokeyless`
-    - RHEL/CentOS: `sudo yum install gokeyless`
-    - Amazon Linux: `sudo yum install rsyslog shadow-utils && sudo yum install gokeyless`
+These steps are also at [pkg.cloudflare.com](https://pkg.cloudflare.com/index.html).
+
+#### Debian/Ubuntu packages
+
+```sh
+---
+header: Debian or Ubuntu
+---
+$ sudo mkdir -p --mode=0755 /usr/share/keyrings
+$ curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
+
+# Add this repo to your apt repositories
+$ echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/gokeyless buster main' | sudo tee /etc/apt/sources.list.d/cloudflare.list
+
+# install gokeyless
+$ sudo apt-get update && sudo apt-get install gokeyless
+```
+
+#### RHEL/CentOS packages
+    
+Use either of the following examples to install the `gokeyless` package for RHEL or CentOS.
+
+**Option 1**
+
+```sh
+---
+header: RHEL or CentOS
+---
+$ yum makecache
+$ yum-config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
+$ echo 'gpgkey=https://pkg.cloudflare.com/cloudflare-ascii-pubkey.gpg' >> /etc/yum.repos.d/gokeyless.repo
+$ yum install gokeyless
+```
+
+**Option 2**
+
+```sh
+---
+header: RHEL or CentOS
+---
+$ yum install -y sudo dnf dnf-plugins-core && yum clean all
+$ dnf config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
+$ dnf install gokeyless
+```
+
+{{<Aside type="note">}}
+
+Amazon Linux customers may need to update their final installation command to be something similar to `sudo yum install rsyslog shadow-utils && sudo yum install gokeyless`.
+
+{{</Aside>}}
 
 ### Configure
 

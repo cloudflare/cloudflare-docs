@@ -11,4 +11,5 @@ These variables are also available as part of the [request.cf](/workers/runtime-
 - `request.cf.botManagement.verifiedBot`
 - `request.cf.botManagement.staticResource`
 - `request.cf.botManagement.ja3Hash`
+- `request.cf.botManagement.js_detection.passed`
 - `request.cf.botManagement.detectionIds`

@@ -42,7 +42,7 @@ Next, we need to [create a Local Domain Fallback entry](/cloudflare-one/connecti
 
 {{<Aside type="note">}}
 
-Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#route-private-network-ips-through-gateway).
+Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#3-route-private-network-ips-through-warp).
 
 {{</Aside>}}
 

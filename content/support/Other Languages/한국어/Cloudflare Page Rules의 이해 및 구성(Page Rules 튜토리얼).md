@@ -298,7 +298,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  | 
 
-정적 자산의 캐시를 허용하면서 웹 캐시 속임수 공격으로부터 보호합니다. 이 설정은 URL의 확장이 반환된 _Content-Type_과 일치하는지 확인합니다.[자세히 알아보세요.](/cache/about/cache-deception-armor)
+정적 자산의 캐시를 허용하면서 웹 캐시 속임수 공격으로부터 보호합니다. 이 설정은 URL의 확장이 반환된 _Content-Type_과 일치하는지 확인합니다.[자세히 알아보세요.](/cache/cache-security/cache-deception-armor/)
 
  | 
 

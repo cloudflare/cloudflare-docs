@@ -8,9 +8,45 @@ weight: 1
 
 The following policies are commonly used to secure HTTP traffic.
 
+Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
+
+## Block sites
+
+Block attempts to reach sites by hostname or URL paths. Different approaches may be required based on how a site is organized.
+
+### Block sites by hostname
+
+Block all subdomains that use a host.
+
+| Selector | Operator      | Value            | Action |
+| -------- | ------------- | ---------------- | ------ |
+| Host     | matches regex | `.*example\.com` | Block  |
+
+### Block sites by URL
+
+Block a section of a site without blocking the entire site. For example, you can block a specific subreddit, such as `reddit.com/r/gaming`, without blocking `reddit.com`.
+
+| Selector | Operator      | Value       | Action |
+| -------- | ------------- | ----------- | ------ |
+| URL      | matches regex | `/r/gaming` | Block  |
+
 {{<render file="gateway/_content-categories.md">}}
 
 {{<render file="gateway/_policies-optional.md">}}
+
+## Skip inspection for groups of applications
+
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS inspection](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/filtering/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
+
+| Selector    | Operator | Value          | Action         |
+| ----------- | -------- | -------------- | -------------- |
+| Application | in       | Do Not Inspect | Do Not Inspect |
+
+{{<Aside type="note">}}
+You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
+{{</Aside>}}
 
 ## Enforce device posture
 
@@ -36,31 +72,35 @@ When accessing origin servers with certificates not signed by a public certifica
 | -------- | -------- | ------------------- | -------------- |
 | Domain   | in       | `internal.site.com` | Do Not Inspect |
 
-## Block file types
+{{<render file="gateway/_block-file-types.md">}}
 
-Block the upload or download of files based on their type.
+## Block Google services
 
-| Selector           | Operator | Value                                 | Action |
-| ------------------ | -------- | ------------------------------------- | ------ |
-| Upload File Type   | in       | Microsoft Office Word Document (docx) | Block  |
-| Download File Type | in       | PDF (pdf)                             | Block  |
+To enable Gateway inspection for Google Drive traffic, you must [add the Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#google-drive-for-desktop).
 
-## Block Google Drive downloads
+### Block Google Drive uploads
 
-Block file downloads from Google Drive. You can also [Block file uploads to Google Drive](/cloudflare-one/tutorials/block-uploads/).
+Block file uploads to Google Drive.
 
-| Selector         | Operator      | Value                      | Action | Operator |
-| ---------------- | ------------- | -------------------------- | ------ | -------- |
-| Application      | in            | Google Drive               | Block  | And      |
-| URL Path & Query | matches regex | `.*(e=download\|export).*` | Block  |          |
+| Selector         | Operator      | Value        | Logic | Action |
+| ---------------- | ------------- | ------------ | ----- | ------ |
+| Application      | in            | Google Drive | And   | Block  |
+| Upload Mime Type | matches regex | `.*`         |       |        |
 
-## Block Gmail downloads
+### Block Google Drive downloads
+
+Block file downloads from Google Drive.
+
+| Selector         | Operator      | Value                      | Logic | Action |
+| ---------------- | ------------- | -------------------------- | ----- | ------ |
+| Application      | in            | Google Drive               | And   | Block  |
+| URL Path & Query | matches regex | `.*(e=download\|export).*` |       |        |
+
+### Block Gmail downloads
 
 Block file downloads from Gmail.
 
-| Selector         | Operator | Value                                   | Action | Operator |
-| ---------------- | -------- | --------------------------------------- | ------ | -------- |
-| Host             | is       | `mail-attachment.googleusercontent.com` | Block  | And      |
-| URL Path & Query | is       | `/attachment/u/0`                       | Block  |          |
-
-Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
+| Selector         | Operator | Value                                   | Logic | Action |
+| ---------------- | -------- | --------------------------------------- | ----- | ------ |
+| Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
+| URL Path & Query | is       | `/attachment/u/0`                       |       |        |

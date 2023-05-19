@@ -40,7 +40,7 @@ With this setting in place, you can set the necessary Page Rules to cache anonym
 5\. Click the **Create Page Rule** button and enter your domain. In the example below, the domain is www.orangeclouded.com.
 
 -   _Cache Everything_ will instruct Cloudflare to cache static HTML.
--   When the _Bypass Cache on Cookie_ rule matches the criteria we set, Cloudflare won't cache HTML ([whilst static images and other files will still be cached](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-)). Depending on whether you're using Magento 1 or Magento 2, you will need a different rule:
+-   When the _Bypass Cache on Cookie_ rule matches the criteria we set, Cloudflare won't cache HTML ([though static images and other files will still be cached](/cache/about/default-cache-behavior/)). Depending on whether you're using Magento 1 or Magento 2, you will need a different rule:
 
 `Magento 1    external_no_cache=.*|PHPSESSID=.*|adminhtml=.* Magento 2    admin=.*|PHPSESSID=.*|private_content_version=.*`
 
@@ -86,4 +86,4 @@ ___
 
 ## Related resources
 
--   [Understanding Cloudflare's CDN](https://support.cloudflare.com/hc/en-us/articles/200172516)
+-   [Understanding Cloudflare's CDN](/cache/about/default-cache-behavior/)

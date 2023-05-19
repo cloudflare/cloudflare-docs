@@ -16,7 +16,7 @@ Cloudflare Access removes the burden on the end user of generating a key, while 
 
 Cloudflare Access short-lived certificates can work with any modern SSH server, whether it is behind Access or not. However, we recommend putting your server behind Access for added security and features, such as auditability and browser-based terminals.
 
-To secure your server behind Cloudflare Access, follow [these instructions](/cloudflare-one/connections/connect-apps/use_cases/ssh/).
+To secure your server behind Cloudflare Access, follow [these instructions](/cloudflare-one/connections/connect-apps/use-cases/ssh/).
 
 ## 2. Ensure Unix usernames match user SSO identities
 
@@ -53,7 +53,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ### Configure your client SSH config
 
-On the client side, [configure your device](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file (`~/.ssh/config`).
+On the client side, [configure your device](/cloudflare-one/connections/connect-apps/use-cases/ssh/) to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file (`~/.ssh/config`).
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 

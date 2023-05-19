@@ -12,10 +12,6 @@ To download an ad-hoc DDoS report, generate a PDF report file by selecting **Pri
 
 Additionally, if you are a Magic Transit or Spectrum BYOIP customer, you will receive weekly DDoS reports by email with a snapshot of the DDoS attacks that Cloudflare detected and mitigated in the previous week.
 
-{{<Aside type="note">}}
-Currently, Magic Transit customers with leased IPs will not receive weekly DDoS reports.
-{{</Aside>}}
-
 ## Weekly DDoS reports
 
 Cloudflare sends DDoS reports via email from `no-reply@notify.cloudflare.com` to users with the Super Administrator role on accounts with prefixes advertised by Cloudflare.
@@ -41,11 +37,11 @@ To receive real-time attack alerts, configure [DDoS alerts](/ddos-protection/ref
 
 The following image shows an example DDoS report:
 
-![Example email sent with a weekly DDoS report](/ddos-protection/static/ddos-report-email.png)
+![Example email sent with a weekly DDoS report](/images/ddos-protection/ddos-report-email.png)
 
 When Cloudflare does not detect any L3/4 DDoS attacks in the prior week, Cloudflare sends a confirmation report:
 
-![Example report email sent when Cloudflare does not detect any DDoS attack in the previous week](/ddos-protection/static/ddos-report-no-attacks.png)
+![Example report email sent when Cloudflare does not detect any DDoS attack in the previous week](/images/ddos-protection/ddos-report-no-attacks.png)
 
 ### Manage reporting subscriptions
 

@@ -20,7 +20,7 @@ ___
 
 Enabling O2O is only available on the Cloudflare Enterprise plan.
 
-To enable O2O on your account, you need either an A or CNAME DNS record that points your shop’s domain to the domain shops.myshopify.com. Orange cloud the record.
+To enable O2O on your account, you need a CNAME DNS record that points your shop’s domain to the domain shops.myshopify.com. Orange cloud the record.
 
 After adding the DNS record with proxy enabled, contact your account team to enable O2O on your shop domain.
 

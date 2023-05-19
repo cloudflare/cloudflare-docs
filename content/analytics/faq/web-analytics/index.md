@@ -2,6 +2,7 @@
 pcx_content_type: faq
 title: Web Analytics FAQ
 layout: single
+weight: 7
 ---
 
 # Web Analytics FAQ
@@ -83,6 +84,10 @@ No. However, if the root domain is the same, you can use the same site tag. For 
 No, you can only use the [automatic setup] with JS snippet injection if traffic to your domain is proxied through Cloudflare (orange-clouded).
 
 If you have a DNS-only domain, you will have to do a [manual setup] instead.
+
+### What prevents the JS Snippet from being added to a page?
+
+{{<render file="_web-analytics-troubleshooting.md">}}
 
 ---
 

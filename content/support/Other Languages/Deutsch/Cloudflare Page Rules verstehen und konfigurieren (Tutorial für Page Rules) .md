@@ -321,7 +321,7 @@ Cache Deception Armor
 
  | 
 
-Schutz vor Webcache-Betrugsangriffen, während statische Assets weiterhin zwischengespeichert werden können. Bei dieser Einstellung wird überprüft, ob die URL-Erweiterung mit dem zurückgegebenen _Inhaltstyp_ übereinstimmt. [Mehr dazu hier.](/cache/about/cache-deception-armor)
+Schutz vor Webcache-Betrugsangriffen, während statische Assets weiterhin zwischengespeichert werden können. Bei dieser Einstellung wird überprüft, ob die URL-Erweiterung mit dem zurückgegebenen _Inhaltstyp_ übereinstimmt. [Mehr dazu hier.](/cache/cache-security/cache-deception-armor/)
 
  | 
 

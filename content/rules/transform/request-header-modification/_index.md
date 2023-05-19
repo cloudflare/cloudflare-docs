@@ -25,6 +25,8 @@ To modify HTTP headers in the **response**, refer to [HTTP Response Header Modif
 
 *   You cannot modify the value of any header commonly used to identify the website visitor's IP address, such as `x-forwarded-for`, `true-client-ip`, or `x-real-ip`. Additionally, you cannot remove the `x-forwarded-for` header.
 
+*   You cannot set or modify the value of `cookie` HTTP request headers, but you can remove these headers. Configuring a rule that removes the `cookie` HTTP request header will remove all `cookie` headers in matching requests.
+
 *   If you modify the value of an existing HTTP request header using an expression that evaluates to an empty string (`""`) or an undefined value, the HTTP request header is **removed**.
 
 *   The HTTP request header removal operation will remove all request headers with the provided name.

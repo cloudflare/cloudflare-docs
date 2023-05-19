@@ -147,7 +147,7 @@ Saves application log to this file. Mainly useful for reporting issues. For more
 | ---------------- | ------- | -------------------- |
 | `loglevel value` | `info`  | `TUNNEL_LOGLEVEL`    |
 
-Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
+Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `debug`, `info`, `warn`, `error`, `fatal`.
 
 ## `transport-loglevel`
 

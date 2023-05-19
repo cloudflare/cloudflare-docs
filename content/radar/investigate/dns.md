@@ -45,8 +45,6 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/dns/top/locations?domain
 
 Returns the following response:
 
-Returns the following response:
-
 ```json
 {
   "clientCountryAlpha2": "RU",

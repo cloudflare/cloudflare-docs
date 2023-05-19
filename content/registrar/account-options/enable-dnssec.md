@@ -13,19 +13,14 @@ DNSSEC creates a secure layer to the domain name system by adding cryptographic 
 
 ## Enable or disable DNSSEC
 
-Cloudflare Registrar offers one-click DNSSEC activation for free to all customers. You will not need to set the DS record details manually. However, your domain must be using Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/).
+{{<render file="_enable-dnssec.md">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Domain Registration** > **Manage Domains**.
-3. Find the domain you where you want to activate DNSSEC and select **Manage**.
-4. Select **Configuration** > **Enable DNSSEC**. If DNSSEC was previously activated, select **Disable DNSSEC** to disable it.
+{{<Aside type="note">}}
 
 If your domain is not on Cloudflare Registrar, you can enable DNSSEC in [**DNS**](/dns/additional-options/dnssec/) on the Cloudflare dashboard.
 
-Cloudflare publishes DS details in the form of [CDS and CDNSKEY records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) for a domain delegated to Cloudflare. Cloudflare Registrar scans those records at regular intervals, and gathers those details and sends them to your domain’s registry.
-
-This process can take one to two days after you first enable DNSSEC.
+{{</Aside>}}
 
 ## Confirming DNSSEC
 
-When DNSSEC has been successfully applied to your domain, Cloudflare shows you a confirmed status. Navigate to [**DNS** > **Settings**](https://dash.cloudflare.com/login?to=/:account/:zone/dns) in the Cloudflare dashboard, and scroll down to DNSSEC. You can also confirm this by reviewing the WHOIS information for your domain. Domains with DNSSEC will read `signedDelegation` in the DNSSEC field.
+{{<render file="_verify-dnssec.md">}}

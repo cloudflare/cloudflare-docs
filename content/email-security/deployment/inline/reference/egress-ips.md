@@ -66,4 +66,10 @@ For customers in Europe, add all our US IP addresses. Additionally, you need to 
 - `52.58.35.43`
 - `35.157.195.63`
 
+## India
+
+For customers in India, add all our US IP addresses. Additionally, you need to add the following IP range for our data centers in India:
+
+`134.195.26.0/23`
+
 [^1]: Office 365 does not support this subnet mask range. If you use Office 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to **Office 365 `/24` addresses** for a list of these IPv4 addresses.

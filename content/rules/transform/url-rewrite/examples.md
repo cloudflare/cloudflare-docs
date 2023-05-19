@@ -81,7 +81,7 @@ sort-by=date
 
 Additionally, set the path rewrite action of the same rule to _Preserve_ so that the URL path does not change.
 
-![Rewrite URL Rule configuration to perform a static query rewrite according to the blog example described in the page.](/rules/static/transform/use-case-blog.png)
+![Rewrite URL Rule configuration to perform a static query rewrite according to the blog example described in the page.](/images/rules/transform/use-case-blog.png)
 
 ### Rewrite path of archived blog posts
 

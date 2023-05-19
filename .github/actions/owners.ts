@@ -21,6 +21,7 @@ export const OWNERS: Record<string, string[]> = {
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-platforms": ["kodster28"],
   "cloudflare-one": ["ranbel"],
+  constellation: ["deadlypants1973"],
   d1: ["deadlypants1973"],
   "data-localization": ["angelampcosta"],
   "ddos-protection": ["pedrosousa"],
@@ -43,17 +44,18 @@ export const OWNERS: Record<string, string[]> = {
   "network-interconnect": ["dcpena"],
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
-  "pub-sub": ["dcpena"],
-  queues: ["deadlypants1973"],
+  "privacy-gateway": ["kodster28"],
+  "pub-sub": ["dcpena", "Maddy-Cloudflare"],
+  queues: ["Maddy-Cloudflare"],
   r2: ["dcpena"],
   radar: ["haleycode"],
   railgun: ["haleycode"],
   "randomness-beacon": ["kodster28"],
   "reference-architecture": ["haleycode"],
-  registrar: ["haleycode"],
+  registrar: ["jason-cf"],
   rules: ["pedrosousa"],
   "ruleset-engine": ["pedrosousa"],
-  "security-center": ["ranbel"],
+  "security-center": ["jason-cf"],
   spectrum: ["angelampcosta"],
   ssl: ["kodster28"],
   stream: ["dcpena"],
@@ -73,11 +75,13 @@ export const OWNERS: Record<string, string[]> = {
 
 export const REVIEWERS: Record<string, string[]> = {
   analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit"], // todo: re-add "soheiokamoto", "tlozoot"
-  d1: ["nevikashah", "WalshyDev"],
+  d1: ["elithrar", "rozenmd"],
   "data-localization": [], // todo: re-add "soheiokamoto", "tlozoot"
   radar: ["meddulla", "G4brym"],
   logs: ["jherre", "bharatnc", "victor-perov"], // todo: re-add "soheiokamoto", "tlozoot"
   pages: ["WalshyDev"],
+  "pub-sub": ["CharlieBurnett", "elithrar"],
+  queues: ["CharlieBurnett", "elithrar"],
   turnstile: ["migueldemoura", "punkeel"], // todo: re-add "worenga"
   "waiting-room": ["aolache"],
 };

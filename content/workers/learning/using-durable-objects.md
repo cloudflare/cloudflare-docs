@@ -25,8 +25,8 @@ Durable Objects are named instances of a class you define. Like a class in objec
 To start, enable Durable Objects for your account by purchasing Workers Paid:
 
  1. Log in to [the Cloudflare dashboard](https://dash.cloudflare.com/).
- 2. Go to **Workers** and select your Worker. 
- 3. In your Worker, scroll down to **Durable Objects** **Learn more** > **View Paid Plan**.
+ 2. Go to **Workers & Pages** and in **Overview**, select your Worker. 
+ 3. In your Worker, scroll down to **Durable Objects** > **Learn more** > **View Paid Plan**.
  4. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
 There are three steps to creating and using a Durable Object:
@@ -240,7 +240,7 @@ You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-
 
 {{</Aside>}}
 
-The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/workers/wrangler/), the Workers CLI. You can start with one of our templates, the simplest of which can be used by running:
+To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. Start with one of our templates, the simplest of which can be used by running:
 
 ```sh
 $ git clone https://github.com/cloudflare/durable-objects-template
@@ -307,8 +307,14 @@ durable_objects.bindings = [
 
 ### Configuring Durable Object classes with migrations
 
-When you make changes to your list of Durable Objects classes, you must initiate a migration process. A migration is informing the Workers platform of the changes and provide it with instructions on how to deal with those changes.
+You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
 
+{{<Aside type="note">}}
+
+Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler publish`](/workers/wrangler/commands/). This is true even for changes to how code interacts with persistent storage. Because of [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness) you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
+
+{{</Aside>}}
+  
 The most common migration performed is a new class migration, which informs the system that a new Durable Object class is being uploaded.
 
 Migrations can also be used for transferring stored data between two Durable Object classes:

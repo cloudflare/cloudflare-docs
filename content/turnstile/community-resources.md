@@ -47,6 +47,7 @@ Libraries that both support the both client-side rendering and server-side valid
 
 - [Nuxt](https://www.npmjs.com/package/@nuxtjs/turnstile)
 - [Laravel](https://github.com/romanzipp/Laravel-Turnstile)
+- [Phoenix](https://github.com/jsonmaur/phoenix-turnstile)
 
 ## Integrations
 

@@ -127,31 +127,34 @@ index b92cb6f..195b646 100644
  }
 +
 +resource "cloudflare_load_balancer_monitor" "get-root-https" {
-+  expected_body = "alive"
++  account_id     = var.account_id
++  expected_body  = "alive"
 +  expected_codes = "200"
-+  method = "GET"
-+  timeout = 5
-+  path = "/"
-+  interval = 60
-+  retries = 2
-+  description = "GET / over HTTPS - expect 200"
++  method         = "GET"
++  timeout        = 5
++  path           = "/"
++  interval       = 60
++  retries        = 2
++  description    = "GET / over HTTPS - expect 200"
 +}
++
 +resource "cloudflare_load_balancer_pool" "www-servers" {
-+  name = "www-servers"
-+  monitor = cloudflare_load_balancer_monitor.get-root-https.id
-+  check_regions = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
++  account_id = var.account_id
++  name       = "www-servers"
++  monitor    = cloudflare_load_balancer_monitor.get-root-https.id
 +  origins {
-+    name = "www-us"
++    name    = "www-us"
 +    address = "203.0.113.10"
 +  }
 +  origins {
-+    name = "www-asia"
++    name    = "www-asia"
 +    address = "198.51.100.15"
 +  }
-+  description = "www origins"
-+  enabled = true
-+  minimum_origins = 1
++  description        = "www origins"
++  enabled            = true
++  minimum_origins    = 1
 +  notification_email = "you@example.com"
++  check_regions      = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
 +}
 +resource "cloudflare_load_balancer" "www-lb" {
 +  zone_id = var.zone_id
@@ -227,14 +230,14 @@ Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
 
-cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)
-cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
-cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
-cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
-cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)
-cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)
+cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... [id=1c13fdb84710c4cc8b11daf7ffcca449]
+cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... [id=c5c40ff2dc12416b5fe4d0541980c591]
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
+cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
+cloudflare_load_balancer_monitor.get-root-https: Refreshing state... [id=4238142473fcd48e89ef1964be72e3e0]
+cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
+cloudflare_load_balancer_pool.www-servers: Refreshing state... [id=906d2a7521634783f4a96c062eeecc6d]
+cloudflare_load_balancer.www-lb: Refreshing state... [id=cb94f53f150e5c1a65a07e43c5d4cac4]
 
 ------------------------------------------------------------------------
 
@@ -266,16 +269,16 @@ The changes look good. Terraform reverts the Cloudflare configuration when you a
 
 ```sh
 $ terraform apply --auto-approve
-cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
-cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
-cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
-cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
-cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
-cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)
-cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)
-cloudflare_page_rule.redirect-to-new-db-page: Destroying... (ID: c5c40ff2dc12416b5fe4d0541980c591)
-cloudflare_page_rule.increase-security-on-expensive-page: Destroying... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)
+cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... [id=c5c40ff2dc12416b5fe4d0541980c591]
+cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... [id=1c13fdb84710c4cc8b11daf7ffcca449]
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
+cloudflare_load_balancer_monitor.get-root-https: Refreshing state... [id=4238142473fcd48e89ef1964be72e3e0]
+cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
+cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
+cloudflare_load_balancer_pool.www-servers: Refreshing state... [id=906d2a7521634783f4a96c062eeecc6d]
+cloudflare_load_balancer.www-lb: Refreshing state... [id=cb94f53f150e5c1a65a07e43c5d4cac4]
+cloudflare_page_rule.redirect-to-new-db-page: Destroying... [id=c5c40ff2dc12416b5fe4d0541980c591]
+cloudflare_page_rule.increase-security-on-expensive-page: Destroying... [id=1c13fdb84710c4cc8b11daf7ffcca449]
 cloudflare_page_rule.increase-security-on-expensive-page: Destruction complete after 0s
 cloudflare_page_rule.redirect-to-new-db-page: Destruction complete after 1s
 

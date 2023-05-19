@@ -300,7 +300,7 @@ Cache Deception Armor
 
  | 
 
-(Protection contre les attaques Cache Deception) Protégez-vous contre les attaques Web Cache Deception tout en permettant la mise en cache de ressources statiques. Ce paramètre confirme que l’extension de l’URL correspond à la balise  _Content-Type_ renvoyée. [En savoir plus.](/cache/about/cache-deception-armor)
+(Protection contre les attaques Cache Deception) Protégez-vous contre les attaques Web Cache Deception tout en permettant la mise en cache de ressources statiques. Ce paramètre confirme que l’extension de l’URL correspond à la balise  _Content-Type_ renvoyée. [En savoir plus.](/cache/cache-security/cache-deception-armor/)
 
  | 
 

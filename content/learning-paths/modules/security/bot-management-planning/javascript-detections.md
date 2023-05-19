@@ -11,6 +11,8 @@ layout: learning-unit
 
 {{<render file="_javascript-detections-enable.md" productFolder="bots" >}}
 
+{{<render file="_javascript-detections-implementation.md" productFolder="bots" >}}
+
 ### Content Security Policies (CSPs)
 
 {{<render file="_javascript-detections-csp.md" productFolder="bots" >}}

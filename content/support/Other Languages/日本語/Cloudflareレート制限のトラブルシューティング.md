@@ -39,5 +39,4 @@ ___
 
 ## 関連リソース
 
--   [Cloudflareレート制限を設定する](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/ja/articles/115000272247)
--   [Cloudflareレート制限の請求](https://support.cloudflare.com/hc/ja/articles/115000272247)
+-   [Cloudflareレート制限を設定する](https://support.cloudflare.com/hc/articles/115001635128)

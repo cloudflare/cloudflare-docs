@@ -21,7 +21,7 @@ ___
 
 ## Use Cloudflare Page Rules to customize caching
 
-By default Cloudflare [caches static content](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-) like images, CSS and JavaScript; however, you can extend Cloudflare caching to work with HTML by creating custom [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-).
+By default Cloudflare [caches static content](/cache/about/default-cache-behavior/) like images, CSS and JavaScript; however, you can extend Cloudflare caching to work with HTML by creating custom [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-).
 
 ### Cache everything
 
