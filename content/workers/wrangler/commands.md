@@ -384,10 +384,8 @@ When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cl
   - Minify the script.
 - `--node-compat` {{<type>}}boolean{{</type>}}
   - Enable node.js compatibility.
-- `--persist` {{<type>}}boolean{{</type>}}
-  - Enable persistence for local mode, using default path: `.wrangler/state`.
 - `--persist-to` {{<type>}}string{{</type>}}
-  - Specify directory to use for local persistence. Setting this flag implicitly enables `--persist`.
+  - Specify directory to use for local persistence.
 - `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Develop against remote resources and data stored on Cloudflare's network.
 - `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -405,7 +403,7 @@ When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cl
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-`wrangler dev` is a way to easily test your Worker while developing. With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to locally test your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
