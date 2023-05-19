@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: selectWebsite;;dashLocation
+inputParameters: selectAccountWebsite;;dashboardLocation
 ---
 
 ## Delete a DDoS override
