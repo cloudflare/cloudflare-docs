@@ -16,7 +16,7 @@ Website visitor →  End customer Cloudflare (CF) Proxy → BigCommerce CF Prox
 
 ![In an orange to orange topology, Cloudflare Enterprise customers can apply their own account security settings to BigCommerce.](/support/static/o2o-bigcommerce.png)
 
-### **Benefits**
+### Benefits
 
 O2O benefits include your own version of Cloudflare’s WAF, Bot Management, and Waiting Room. Additionally, O2O routing also enables you to take advantage of Cloudflare zones specifically customized for BigCommerce traffic.
 
@@ -34,25 +34,25 @@ ___
 
 Certain Cloudflare features, when used with O2O, can interrupt the flow of traffic to your BigCommerce site or display incorrect data to your visitors. Review best practices before using the following features.
 
-### **Caching**
+### Caching
 
 Customers should disable caching for all hostnames that are routed through BigCommerce’s Cloudflare zones. Traffic for other hostnames that are not CNAME’d to BigCommerce’s zone can remain cached on the customer’s zone.
 
 By default, caching of HTML pages is disabled. Customers should not enable caching of HTML because the HTML content is dynamic.  
 
-**Page Rules**
+### Page Rules
 
-Incorrectly configured [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427) that match the subdomain used for BigCommerce may block or interfere with the flow of visitors to your website.
+Incorrectly configured [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) that match the subdomain used for BigCommerce may block or interfere with the flow of visitors to your website.
 
-### **Workers**
+### Workers
 
 Similar to Page Rules, [Workers](/workers/) may interfere with the flow of traffic to your website.  Write Workers with caution. It is advisable to exclude the subdomain used with BigCommerce from the Worker route.
 
-### **Argo Smart Routing**
+### Argo Smart Routing
 
-[Argo Smart Routing](https://support.cloudflare.com/hc/en-us/articles/115000224552) is not compatible for customers that have O2O configured. Traffic for other hostnames that are not CNAME’d to BigCommerce’s zones can receive the benefits of Argo smart routing.
+[Argo Smart Routing](/argo-smart-routing/get-started/) is not compatible for customers that have O2O configured. Traffic for other hostnames that are not CNAME’d to BigCommerce’s zones can receive the benefits of Argo smart routing.
 
-### **Load Balancing**
+### Load Balancing
 
 [Load Balancing](/load-balancing/) is not compatible with O2O for customers.
 
@@ -60,4 +60,4 @@ ___
 
 ## For additional help
 
-If you are a BigCommerce customer setting up your own Cloudflare account, contact your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) for help in resolving issues. Cloudflare will turn to BigCommerce if there are technical issues that Cloudflare cannot resolve.
+If you are a BigCommerce customer setting up your own Cloudflare account, contact your Cloudflare account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for help in resolving issues. Cloudflare will turn to BigCommerce if there are technical issues that Cloudflare cannot resolve.
