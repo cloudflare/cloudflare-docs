@@ -14,7 +14,7 @@ When you use a real-time verification method, Cloudflare verifies your customer'
 
 Real-time verification methods put less burden on your customers because it does not require any additional actions.
 
-However, it may cause some downtime since Cloudflare takes a few seconds to iterate over DNS records. This downtime also can increase - due to the increasing [validation backoff schedule](/ssl/reference/validation-backoff-schedule/) - if your customer takes additional time to add their DNS routing record.
+However, it may cause some downtime since Cloudflare takes a few seconds to iterate over DNS records. This downtime also can increase - due to the increasing [verification backoff schedule](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/backoff-schedule/) - if your customer takes additional time to add their DNS routing record.
 
 To minimize this downtime, you can continually send no-change [`PATCH` requests](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) for the specific custom hostname until it validates (which resets the validation backoff schedule).
 

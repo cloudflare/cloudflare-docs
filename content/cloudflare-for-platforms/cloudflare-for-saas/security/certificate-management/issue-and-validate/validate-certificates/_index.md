@@ -2,6 +2,7 @@
 pcx_content_type: navigation
 title: Validate
 weight: 2
+layout: single
 meta:
     title: Validate certificates
     description: Learn which methods you should use to validate Cloudflare for SaaS certificates.
@@ -11,6 +12,12 @@ meta:
 
 {{<render file="_dcv-definition.md" productFolder="ssl" >}}
 <br>
+
+{{<Aside type="warning">}}
+
+With the [upcoming change](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, both [email](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/email/) and [CNAME](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/cname/) DCV will soon be unsupported.
+
+{{</Aside>}}
 
 ## DCV situations
  
@@ -26,8 +33,14 @@ meta:
 - [DCV Delegation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) (generally recommended)
 - [Manual](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/)
 
-{{<Aside type="warning">}}
+### Minimize downtime
 
-With the [upcoming change](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, both [email](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/email/) and [CNAME](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/cname/) DCV will soon be unsupported.
+If you want to minimize downtime, explore one of the following methods:
 
-{{</Aside>}}
+- [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/)
+- [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/)
+- [Manual HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-manual)
+
+### Minimize customer effort
+
+If you value simplicity and your customers can handle a few minutes of downtime, you can rely on Cloudflare [automatic HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic).

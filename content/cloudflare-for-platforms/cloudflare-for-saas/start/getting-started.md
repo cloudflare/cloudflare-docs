@@ -12,9 +12,9 @@ meta:
 
 ## Prerequisites
 
-Before you can start creating custom hostnames:
+Before you start creating custom hostnames:
 
-1. [Add](/fundamentals/get-started/setup/add-site/) your zone and activate it on a [full setup](/dns/zone-setups/full-setup/) or [partial setup](/dns/zone-setups/partial-setup/).
+1. [Add](/fundamentals/get-started/setup/add-site/) your zone on a **Free** plan and activate it on a [full setup](/dns/zone-setups/full-setup/) or [partial setup](/dns/zone-setups/partial-setup/).
 2. [Enable](/cloudflare-for-platforms/cloudflare-for-saas/start/enable/) Cloudflare for SaaS for your zone.
 3. (optional) Review the following documentation:
   - [API documentation](/fundamentals/api/) (if you have not worked with the Cloudflare API before).
@@ -22,167 +22,150 @@ Before you can start creating custom hostnames:
 
 ---
 
-## Step 1 — Create fallback origin and CNAME target
+## Initial setup
+
+When you first [enable](/cloudflare-for-platforms/cloudflare-for-saas/start/enable/) Cloudflare for SaaS, you need to perform a few steps prior to creating any custom hostnames.
+
+### Step 1 — Create fallback origin
 
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
-{{<Aside type="note">}}
+<details>
+<summary>If you need more flexibility</summary>
+<div>
 
-You can also [use a Worker as your origin](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/) or [create a custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+You can also [use a Worker as your origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/) or [create a custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
 
-{{</Aside>}}
+</div>
+</details>
 
-The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
+To create your fallback origin:
+
+1. [Create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a proxied `A`, `AAAA`, or `CNAME` record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+
+  {{<example>}}
+
+  | **Type** | **Name** | **IPv4 address** | **Proxy status** |
+  | -------- | -------- | ---------------- | ---------------- |
+  | `A`        | `proxy-fallback` | `192.0.2.1` | Proxied       |
+
+  {{</example>}}
+
+2. Designate that record as your **fallback origin**.
+
+  {{<tabs labels="Dashboard | API">}}
+  {{<tab label="dashboard" no-code="true">}}
+  
+  1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+  2. Select your account and zone.
+  3. Go to **SSL/TLS** > **Custom Hostnames**. 
+  4. For **Fallback Origin**, enter the hostname for your fallback origin.
+  5. Click **Add Fallback Origin**.
+  
+  {{</tab>}}
+  {{<tab label="api" no-code="true">}}
+  
+  Using the hostname of the record you just created, [update the fallback origin value](/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+  
+  {{</tab>}}
+  {{</tabs>}}
+
+3. Once you have added the fallback origin, confirm that its status is **Active**.
+
+  {{<Aside type="note">}}When Cloudflare marks your fallback origin as **Active**, that only reflects that we are ready to send traffic to that DNS record.
+
+  You need to make sure your DNS record is sending traffic to the correct origin location.
+  
+  {{</Aside>}}
+
+### Step 2 (optional) — Create CNAME target
+
+The `CNAME` target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
 We suggest using a domain other than your main company domain (`example.cloud` instead of `example.com`) to lower risk and add flexibility to your custom hostname management.
 
-1.  Create a [new application](/fundamentals/get-started/setup/add-site/) and select the **Free** plan.
+[Create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a proxied `CNAME` that points your `CNAME` target to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
-2. [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
+{{<example>}}
 
-  *   A proxied `A`, `AAAA`, or `CNAME` record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
-  *   A `CNAME` record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
+| **Type** | **Name** | **IPv4 address** | **Proxy status** |
+| -------- | -------- | ---------------- | ---------------- |
+| `CNAME`       | `*.customers` | `proxy-fallback.saasprovider.com` | Proxied       |
 
-  | Record          | Type  | Name                              | Content                           |
-  | --------------- | ----- | --------------------------------- | --------------------------------- |
-  | Fallback origin | `A`     | `proxy-fallback.saasprovider.com` | `192.0.2.1`                         |
-  | CNAME target    | `CNAME` | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
-
-4.  Set the **Fallback Origin** via either the dashboard or API.
-
-<details>
-<summary>Using the dashboard</summary>
-<div>
-
-1.  Navigate to **SSL/TLS** > **Custom Hostnames**.
-2.  In the **Custom Hostnames** card, enter the hostname for your fallback origin.
-3.  Click **Add**.
-
-</div>
-</details>
-
-<details>
-<summary>Using the API</summary>
-<div>
-
-Using the hostname from the A or AAAA record you just created, [update the fallback origin value](/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
-
-</div>
-</details>
+{{</example>}}
 
 ---
 
-## Step 2 — Review validation and verification options
+## Per-hostname setup
 
-Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
+You need to perform the following steps for each custom hostname.
 
-- [Certificate Validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
-- [Hostname Verification](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+### Step 1 — Plan for validation and verification
 
-{{<Aside type="note">}}
+Before you create a hostname, you need to plan for:
 
-Verification checks occur frequently immediately after a hostname is created, but the gaps between check intervals increase over the following seven days. For more detail, refer to [Hostname verification backoff schedule](/cloudflare-for-platforms/cloudflare-for-saas/start/hostname-verification-backoff-schedule/).
+- [Certificate Validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/): Upon successful validation, the certificates are deployed to Cloudflare’s global network.
+- [Hostname Verification](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/): Upon successful verification, Cloudflare proxies traffic for this hostname.
 
-{{</Aside>}}
+{{<Aside type="warning" header="Important">}}
 
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 
-{{<Aside type="warning">}}
-You can no longer use [HTTP-based validation for Wildcard certificates](/ssl/reference/migration-guides/dcv-update/) according to the Certificate Authority Browser Forum.
 {{</Aside>}}
 
----
+### Step 2 - Create custom hostname
 
-## Step 3 — Issue certificate
+After planning for certification validation and hostname verification, you can create the custom hostname.
 
-Once your account has been provisioned, you are ready to issue certificates.
+To create a custom hostname:
 
-{{<render file="_issue-certs-preamble.md">}}
-
-<details>
-<summary>Using the dashboard</summary>
-<div>
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 {{<render file="_create-custom-hostname.md">}}
 
-</div>
-</details>
-
-<details>
-<summary>Using the API</summary>
-<div>
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 {{<render file="_create-custom-hostname-api.md">}}
 
-</div>
-</details>
+{{</tab>}}
+{{</tabs>}}
 
----
+{{<Aside type="note">}}
 
-## Step 4 — Monitor and view certificates
+{{<render file="_issue-certs-preamble.md">}}
 
-Once you issue certificates, Cloudflare will initiate the domain validation process using the method you specified.
+{{</Aside>}}
 
-With a CNAME in place, the entire process — from validation to issuance to edge deployment — completes in approximately 90 seconds.
+### Step 3 — Have customer create CNAME record
 
-### Monitor certificate status
+To finish the custom hostname setup, your customer needs to set up a `CNAME` record at their authoritative DNS that points to [`CNAME` target](#step-2-optional--create-cname-target) [^1].
 
-For help tracking a certificate's status, refer to [Monitor certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+{{<Aside type="warning">}}
 
-### View certificates
+Before your customer does this, confirm that you are prepared for both [certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/) and [hostname verification](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/). 
 
-Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge.
+Otherwise, you may cause issues with their domain.
 
-To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/)).
+{{</Aside>}}
 
-```sh
-$ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
-```
-
----
-
-## Step 5 — Have customer create a CNAME record
-
-Your customer needs to set up a CNAME record at their DNS provider that points to your [CNAME target](#step-1--create-fallback-origin-and-cname-target)[^1]. For an existing site, ensure your custom hostname and certificate are verified and valid prior to completing this step. Shifting traffic before the certificate has been issued may cause an insecurity in your domain.
-
-For example:
+Your customer's `CNAME` record might look like the following:
 
 ```txt
 app CNAME john.customers.saasprovider.com
 ```
 
-This routes traffic from `app.customer.com` to your origin.
+This record would route traffic in the following way:
+
+```mermaid
+flowchart TD
+accTitle: How traffic routing works with a CNAME target
+A[Request to <code>app.customer.com</code>] --> B[<code>john.customers.saasprovider.com</code>]
+B --> C[<code>proxy-fallback.saasprovider.com</code>]
+```
+<br/>
+
+Requests to `app.customer.com` would go to your `CNAME` target (`john.customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
 
 [^1]: If you have [regional services](/data-localization/regional-services/) set up for your custom hostnames, Cloudflare always uses the processing region associated with your CNAME target record (instead of the processing region of any [custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)).
-
----
-
-## Step 6 - Usage-based notifications
-
-{{<render file="_ubb-recommendation.md" productFolder="fundamentals">}}
-
----
-
-## Offboard custom hostnames
-
-As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
-
-### Delete custom hostname
-
-<details>
-<summary>Using the dashboard</summary>
-<div>
-
-{{<render file="_delete-custom-hostname-dash.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Using the API</summary>
-<div>
-
-To delete a custom hostname and any issued certificates using the API, use a [DELETE command](/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
-
-</div>
-</details>

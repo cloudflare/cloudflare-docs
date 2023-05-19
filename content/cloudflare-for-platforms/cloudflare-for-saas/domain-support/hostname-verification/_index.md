@@ -1,12 +1,12 @@
 ---
 pcx_content_type: concept
-title: Custom hostname verification
-weight: 1
+title: Verify hostnames
+weight: 2
 ---
 
-# Custom hostname verification
+# Verify hostnames
 
-Before Cloudflare can proxy traffic through a custom hostname, we need to verify your ownership of that custom hostname.
+Before Cloudflare can proxy traffic through a custom hostname, we need to verify your customer's ownership of that hostname.
 
 {{<Aside type="note">}}
 

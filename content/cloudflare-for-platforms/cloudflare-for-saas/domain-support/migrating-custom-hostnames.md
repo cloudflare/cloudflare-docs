@@ -1,10 +1,13 @@
 ---
 pcx_content_type: how_to
-title: Migrating custom hostnames
-weight: 2
+title: Move hostnames
+weight: 3
+meta:
+    title: Move hostnames between zones
+    description: Learn how to move hostnames between different zones.
 ---
 
-# Migrating Custom Hostnames
+# Move hostnames between zones
  
 As a SaaS provider, you may want, or have, multiple zones to manage hostnames. Each zone can have different configurations or origins, as well as correlate to varying products. You might shift custom hostnames between zones to enable or disable certain features. Cloudflare allows migration within the same account through the steps below:
  

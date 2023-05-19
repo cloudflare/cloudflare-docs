@@ -1,10 +1,13 @@
 ---
 pcx_content_type: how-to
-title: Using a Worker as your origin
+title: Workers as your fallback origin
 weight: 4
+meta:
+  title: Workers as your fallback origin
+  description: Learn how to use a Worker as the fallback origin for your SaaS zone.
 ---
 
-# Using a Worker as your origin
+# Workers as your fallback origin
 
 If you are building your application on [Cloudflare Workers](/workers/), you can use a Worker as the origin for your SaaS zone (also known as your fallback origin).
 
