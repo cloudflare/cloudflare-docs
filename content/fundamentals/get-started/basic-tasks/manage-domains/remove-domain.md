@@ -26,6 +26,8 @@ If you need to re-add the domain in a different account, make sure the current s
 
 * [Cancel active add-on subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/).
 
+* [Delete all the Logpush jobs for that domain](https://developers.cloudflare.com/logs/tutorials/examples/example-logpush-curl/#step-4---delete-a-job)
+
 * If you use Cloudflare Registrar:
 
     * [Disable domain auto-renewal](/registrar/account-options/renew-domains/) or [transfer your domain out of Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/).
