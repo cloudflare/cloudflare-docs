@@ -20,9 +20,9 @@ ___
 
 This issue may be caused by a combination of two issues.
 
-### Multiple health check regions
+### Multiple Health Monitor Regions
 
-When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can specify the **Health Check Regions** that Cloudflare uses to monitor your origin health.
+When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can specify the **Health Monitor Regions** that Cloudflare uses to monitor your origin health.
 
 If you select multiple regions or choose **All Data Centers (Enterprise Only)**, you may [dramatically increase traffic](/load-balancing/understand-basics/health-details#how-an-origin-becomes-unhealthy) to that pool and its associated origins. Each region sends individual health monitor request from 3 data centers. Using **All Data Centers** sends individual health monitor requests from all existing Cloudflare data centers (and that number of data centers is growing all the time).
 

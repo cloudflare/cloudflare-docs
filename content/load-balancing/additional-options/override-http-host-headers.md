@@ -55,7 +55,7 @@ In this scenario, health monitor requests for **Origin 1** would use `lb-app-a.e
 For a list of origins that override a monitor's `Host` header:
 
 1.  On a monitor, select **Edit**.
-2.  Select **Advanced health check settings**.
+2.  Select **Advanced health monitor settings**.
 3.  If you have origin overrides, you will see **Origin host header overrides**.
 
 ![Example configuration of origin host header overrides](/images/load-balancing/origin-host-header-override.png)

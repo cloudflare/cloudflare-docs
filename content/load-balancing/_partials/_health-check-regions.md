@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-For each option selected in a pool's **Health Check Regions**, Cloudflare sends health monitor requests from three separate data centers in that region.
+For each option selected in a pool's **Health Monitor Regions**, Cloudflare sends health monitor requests from three separate data centers in that region.
 
 ![Health monitor requests come from three data centers within each selected region.](/images/load-balancing/health-check-component.png)
 

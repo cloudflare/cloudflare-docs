@@ -28,7 +28,7 @@ Dynamic load balancing happens through a combination of [origin pools](/load-bal
 
 {{<Aside type="note">}}
 
-If **Health Check Regions** for a pool is set to **All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
+If **Health Monitor Regions** for a pool is set to **All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
 
 {{</Aside>}}
 

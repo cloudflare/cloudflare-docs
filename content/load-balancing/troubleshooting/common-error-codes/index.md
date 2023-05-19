@@ -9,9 +9,9 @@ layout: single
 
 The Cloudflare Load Balancing API adds global health to each pool and origin server. It also gives you a view into what our network sees at a wider level. Cloudflare uses a quorum system to determine pool and origin health status. The quorum is taken from PoPs responsible for running health monitor requests in a region, and the majority result is used.
 
-When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Check Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
+When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Monitor Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
 
-You can get a per-data center breakdown of the health of your origins from the Cloudflare API from the List Health Check Events command:
+You can get a per-data center breakdown of the health of your origins from the Cloudflare API from the List Health Monitor Events command:
 
 ```txt
 GET user/load_balancing_analytics/events
@@ -19,7 +19,7 @@ GET user/load_balancing_analytics/events
 
 If a health monitor request fails, the breakdown will include the reason.
 
-For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Check Events](/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
+For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Monitor Events](/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
 
 Common troubleshooting causes and solutions are listed below.
 

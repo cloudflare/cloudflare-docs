@@ -77,7 +77,7 @@ To find pools with existing notifications in the dashboard:
 2. Go to **Traffic** > **Load Balancing**.
 3. Click **Manage Pools**.
 4. On a pool, click **Edit**.
-5. For **Health Check Notifications**, check the value is toggled to **On** and an email address is present in the **Notification email address** field.
+5. For **Health Monitor Notifications**, check the value is toggled to **On** and an email address is present in the **Notification email address** field.
 
 </div>
 </details>
