@@ -8,7 +8,7 @@ weight: 3
 
 If your visitors use older devices/browsers that do not have [Server Name Indication (SNI)](https://www.cloudflare.com/learning/ssl/what-is-sni/) support, they may get `common name mismatch` errors when trying to access your website or application.
 
-Consider the following options on how to avoid this situation.
+Consider the following options to avoid this problem.
 
 ## Custom certificates
 
@@ -24,8 +24,8 @@ If you need to enable non-SNI support for a **paid zone**, you can [contact Clou
 
 Since not having SNI means that the client is unable to specify its target hostname during the SSL/TLS handshake, when you make sure only one zone is served on a specific IP, this action prevents that sort of errors from happening.
     
-Dedicated IPs can be used with [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates].
+Dedicated IPs can be used with [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
 {{<Aside type="warning">}}
-Note that a dedicated IP is not the same as a static IP. Dedicated IPs only serve one zone, but can eventually change. Static IPs, on the other hand, are contractually guaranteed to never change but can serve more than one zone.
+Note that a dedicated IP is not the same as a [static IP](/fundamentals/get-started/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses). Dedicated IPs only serve one zone, but can eventually change. Static IPs, on the other hand, are contractually guaranteed to never change but can serve more than one zone.
 {{</Aside>}}
