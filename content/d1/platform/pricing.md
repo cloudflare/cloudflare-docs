@@ -6,7 +6,7 @@ title: Pricing
 # Pricing
 
 {{<Aside type="note">}}
-**D1 is currently free to use** ([read our recent announcement](https://blog.cloudflare.com/d1-turning-it-up-to-11/)).
+While in public Alpha, D1 is currently free to use on all [Workers plans](/workers/platform/pricing/#workers). Refer to the [our recent announcement](https://blog.cloudflare.com/d1-turning-it-up-to-11/)) for more information.
 {{</Aside>}}
 
 D1's billing is based on:
@@ -47,7 +47,7 @@ You will be billed for the additional reads, writes and storage according to [D1
 
 * When will D1 start billing me?
 
-For [Workers paid tier](/workers/platform/pricing/#workers) users, we intend to start billing for additional usage beyond the included reads, writes and storage by (no earlier than) September 2023. We will notify all customers via email (the super administrator address on their account) prior to this change.
+For [Workers Paid tier](/workers/platform/pricing/#workers) users, we intend to start billing for additional usage beyond the included reads, writes and storage by (no earlier than) September 2023. We will notify all customers via email (the super administrator address on their account) prior to this change.
 
 * How can I estimate my (eventual) bill?
 

@@ -122,7 +122,7 @@ D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers
 
 {{<render file="_d1-pricing.md">}}
 
-Visit [the D1 documentation](/d1/platform/pricing/) to learn more about how D1 is billed.
+Refer to [the D1 documentation](/d1/platform/pricing/) to learn more about how D1 is billed.
 
 ## Durable Objects
 

@@ -6,7 +6,7 @@ _build:
 ---
 
 {{<Aside type="note">}}
-The alpha [currently limits](/d1/platform/limits/) maximum database size to 100MB and allows a total of 10 databases across all plans. Pricing below is not yet final.
+The alpha [currently limits](/d1/platform/limits/) maximum database size to 100 MB and allows a total of 10 databases across all [Workers plans](/workers/platform/pricing/#workers). Pricing below is not yet final.
 {{</Aside>}}
 
 |                                 | [Workers Free](/workers/platform/pricing/#workers) | [Workers Paid](/workers/platform/pricing/#workers)                 |
@@ -17,7 +17,7 @@ The alpha [currently limits](/d1/platform/limits/) maximum database size to 100M
 
 Notes:
 
-1. Read units measure how much data a query reads (scans), in units of 4KB. For example, if you have a table with 5000 rows, with each row ~200 bytes, and run a `SELECT * FROM table`, your query would scan (5000 rows * 0.2KB / 4KB read unit) 1000 KB in total, or 250 read units.
+1. Read units measure how much data a query reads (scans), in units of 4 KB. For example, if you have a table with 5000 rows, with each row ~200 bytes, and run a `SELECT * FROM table`, your query would scan (5000 rows * 0.2KB / 4KB read unit) 1000 KB in total, or 250 read units.
 2. Write units measure how much data was written to a D1 database, in 1KB units. An `INSERT` of a single row of 1900 bytes — a userID, name, email address and comments field, for example — would count as two (2) write units (2KB).
 3. Storage is based on gigabytes stored per month, and is based on the sum of all databases in your account. Tables and indexes both count towards storage consumed.
 4. Free limits reset daily at 00:00 UTC. Monthly included limits reset based on your monthly subscription renewal date, which is determined by the day you first subscribed.
