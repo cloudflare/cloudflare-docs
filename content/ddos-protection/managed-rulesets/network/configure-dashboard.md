@@ -28,7 +28,7 @@ For more information on the available parameters and allowed values, refer to [R
     <details><summary>Configure all the rules in the ruleset (ruleset override)</summary><div>
 
     1. Select **Next**.
-    2. Enter a name for your override in **Rule description**.
+    2. Enter a name for your override in **Execution name**.
     3. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
     4. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
 
@@ -44,7 +44,7 @@ For more information on the available parameters and allowed values, refer to [R
 
     3. Select **Next**.
 
-    4. Enter a name for your override in **Rule description**.
+    4. Enter a name for your override in **Execution name**.
 
     </div></details>
 
