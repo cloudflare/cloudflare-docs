@@ -14,7 +14,7 @@ D1 has fully-featured support for local development, running the same version of
 
 This guide assumes you are using [wrangler v3.0](https://blog.cloudflare.com/wrangler3/) or later.
 
-If you're new to D1 and/or Cloudflare Workers, visit the [D1 tutorial](/d1/get-started/) to install `wrangler` and deploy your first database.
+Users new to D1 and/or Cloudflare Workers should visit the [D1 tutorial](/d1/get-started/) to install `wrangler` and deploy their first database.
 
 {{</Aside>}}
 
@@ -63,12 +63,11 @@ Visit the [documentation for `wrangler dev`](/workers/wrangler/commands/#dev) to
 
 ## Persisting data
 
-By default, each run of `wrangler dev` starts from a clean slate, and **does not retain any database state between invocations**. If your local development and testing requires a populated database, you will need to `INSERT` data first.
+**By default, in wrangler `3.0.0` and above, data is persisted cross each run of `wrangler dev`.**. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
 
-To persist data across local development sessions:
+Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific location. This can be useful when working in a team (allowing you to share) the same copy, when deploying via CI/CD (to ensure the same starting state), or as a way to keep data when migrating across machines.
 
-* Use `wrangler dev --persist` to persist a local version of your D1 database.
-* Use `wrangler dev --persist-to=/path/to/file` to persist to a specific location. This can be useful when working in a team (allowing you to share) the same copy, when deploying via CI/CD (to ensure the same starting state), or as a way to keep data across machines.
+Users of wrangler `2.x` must use the `--persist` flag: previous versions of wrangler did not persist data by default.
 
 ## Next steps
 
