@@ -1,18 +1,16 @@
 ---
 pcx_content_type: concept
-title: RData
-weight: 39
+title: RDATA
+weight: 1
 ---
 
-# RData
+# RDATA
 
-RData output provides the full response for a DNS query in a [base64-encoded binary format](https://datatracker.ietf.org/doc/html/rfc1035#section-3.3).
-
-Cloudflare Gateway's [Logpush integration](/logs/reference/log-fields/account/gateway_dns/) outputs Rdata for DNS queries.
+Cloudflare Gateway logs information on DNS queries in RDATA, a [Base64-encoded binary format](https://datatracker.ietf.org/doc/html/rfc1035#section-3.3).
 
 ## Parse output
 
-The Rdata output contains a number of extra bytes. To parse the output, use the following Python code:
+The RDATA output contains a number of extra bytes. To parse the output, use the following Python code:
 
 ```python
 import dnslib

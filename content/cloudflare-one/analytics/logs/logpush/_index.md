@@ -49,4 +49,4 @@ Refer to the Logpush documentation for a list of available fields.
 
 ## Parse output
 
-For more information on parsing outputs, refer to [Rdata](/logs/reference/rdata/).
+For more information on parsing outputs, refer to [RDATA](/cloudflare-one/analytics/logs/logpush/rdata).
