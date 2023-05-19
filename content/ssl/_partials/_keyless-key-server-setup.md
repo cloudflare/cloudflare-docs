@@ -55,9 +55,9 @@ $ sudo yum install gokeyless
 ---
 header: RHEL or CentOS (version 8 or higher)
 ---
-$ dnf install dnf-plugins-core && dnf clean all
-$ dnf config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
-$ dnf install gokeyless
+$ sudo dnf install dnf-plugins-core && dnf clean all
+$ sudo dnf config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
+$ sudo dnf install gokeyless
 ```
 
 {{<Aside type="note">}}
