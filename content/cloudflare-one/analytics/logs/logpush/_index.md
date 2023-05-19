@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Logpush integration
+layout: single
 weight: 8
 ---
 
@@ -47,6 +48,6 @@ Refer to the Logpush documentation for a list of available fields.
 | [Device Posture](/logs/reference/log-fields/account/device_posture_results/)    | Device posture status from the WARP client                     |
 | [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway |
 
-## Parse output
+## Parse Logpush logs
 
-For more information on parsing outputs, refer to [RDATA](/cloudflare-one/analytics/logs/logpush/rdata).
+For more information on parsing outputs, refer to [RData](rdata/).
