@@ -10,8 +10,8 @@ If your visitors use older devices/browsers and do not have [Server Name Indicat
 
 To avoid these situations, you can:
 
-1. Use [Custom](/ssl/edge-certificates/custom-certificates/uploading/) certificates with **Legacy** Client Support.
+1. Use [Custom certificates](/ssl/edge-certificates/custom-certificates/uploading/) with **Legacy** Client Support.
 
+    {{<render file="_custom-certificates-management.md">}}
 
-2. (Paid plans only) [Contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support) to enable Dedicated IP for your zone.
-
+2. (Paid plans only) [Contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support) to enable **Dedicated IP** for your zone.
