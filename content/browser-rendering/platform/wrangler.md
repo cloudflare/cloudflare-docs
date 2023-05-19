@@ -4,27 +4,25 @@ title: Wrangler
 weight: 20
 ---
 
-# Wrangler Support
+# Wrangler
 
-[Wrangler](/workers/wrangler/) is our command-line tool for configuring, building and deploying applications with Cloudflare developer products.
+[Wrangler](/workers/wrangler/) is a command-line tool for building with Cloudflare developer products.
 
 Use Wrangler to deploy projects that use the Workers Browser Rendering API.
 
-## Installation
+## Install
 
-To install Wrangler, run:
-
-```bash
-$ npm install wrangler --save-dev
-```
+To install Wrangler, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
 
 ## Bindings
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform. In this case, they will provide your Worker script with an authenticated endpoint to interact with a dedicated Chromium browser instance.
+[Bindings](/workers/platform/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. A browser binding will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
 
-To deploy a Browser Rendering Worker, you must declare the [browser binding](/workers/platform/bindings/) in your `wrangler.toml` configuration file.
+To deploy a Browser Rendering Worker, you must declare a [browser binding](/workers/platform/bindings/) in your Worker's `wrangler.toml` configuration file.
 
-Note: if you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your code, then you also need to add `node_compat = true` to the configuration.
+{{<Aside type="note" header="Wrangler configuration">}}
+If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add `node_compat = true` to your Worker's `wrangler.toml` configuration.
+{{</Aside>}}
 
 
 ```toml
@@ -40,7 +38,7 @@ workers_dev = true
 browser = { binding = "MYBROWSER", type = "browser" }
 ```
 
-After the binding is declared, you can access the DevTools endpoint using `env.MYBROWSER` in your code:
+After the binding is declared, access the DevTools endpoint using `env.MYBROWSER` in your Worker code:
 
 ```javascript
 const browser = await puppeteer.launch(env.BROWSER);

@@ -6,21 +6,21 @@ weight: 10
 
 # Puppeteer
 
-[Puppeteer](https://pptr.dev/) is one of the most popular libraries that abstract the lower-level DevTools protocol from developers and provides a high-level API that you can use to easily instrument Chrome/Chromium and automate browsing sessions. It's widely used for things like creating screenshots, crawling pages, and testing web applications.
+[Puppeteer](https://pptr.dev/) is one of the most popular libraries that abstract the lower-level DevTools protocol from developers and provides a high-level API that you can use to easily instrument Chrome/Chromium and automate browsing sessions. Puppeteer is used for tasks like creating screenshots, crawling pages, and testing web applications.
 
-Puppeteer typically [connects](https://pptr.dev/api/puppeteer.puppeteer.connect) to a local Chrome or Chromium browser using the DevTools port.
+Puppeteer typically connects to a local Chrome or Chromium browser using the DevTools port. Refer to the [Puppeteer API documentation on the `Puppeteer.connect()` method](https://pptr.dev/api/puppeteer.puppeteer.connect) for more information.
 
-We forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. The [changes](https://github.com/cloudflare/puppeteer/blob/main/src/puppeteer-core.ts) are minimal; after connecting the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
+The Workers team forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. Review the The [changes between Workers Puppeteer fork and the Puppeteer core](https://github.com/cloudflare/puppeteer/blob/main/src/puppeteer-core.ts) are minimal. After connecting, the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
 
-Our version is open sourced [here](https://github.com/cloudflare/puppeteer), and the npm can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/puppeteer](https://www.npmjs.com/package/@cloudflare/puppeteer):
+Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer](https://github.com/cloudflare/puppeteer). The npm can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/puppeteer](https://www.npmjs.com/package/@cloudflare/puppeteer):
 
 ```javascript
 npm install @cloudflare/puppeteer --save-dev
 ```
 
-## Using Puppeteer in a Worker
+## Use Puppeteer in a Worker
 
-Once the [binding](/browser-rendering/platform/wrangler/#bindings) is configured and the `@cloudflare/puppeteer` library is installed, it can be used in a Worker:
+Once the [browser binding](/browser-rendering/platform/wrangler/#bindings) is configured and the `@cloudflare/puppeteer` library is installed, Puppeteer can be used in a Worker:
 
 ```javascript
 import puppeteer from "@cloudflare/puppeteer";
@@ -41,6 +41,6 @@ This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the 
 
 ## Puppeteer API
 
-The full Puppeteer API can be found in the [here](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md).
+The full Puppeteer API can be found in the [Cloudflare's fork of Puppeteer](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md).
 
 

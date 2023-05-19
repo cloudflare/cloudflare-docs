@@ -1,34 +1,32 @@
 ---
-pcx_content_type: reference
-title: Deploy a Screenshots Worker
+pcx_content_type: get-started
+title: Deploy a Browser Rendering Worker
 meta:
     title: Deploy a Screenshots Worker
 weight: 1
 ---
 
-# Example: taking screenshots
+# Deploy a Browser Rendering Worker
 
-Taking screenshots from web pages is one of the typical cases for browser automation.
+By following this guide, you will create a Worker that uses the Browser Rendering API to take screenshots from web pages. This is a common use case for browser automation. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 
-Let's create a Worker that uses the Browser Rendering API to do just that. This is a perfect example of how to set up everything and get an application running in minutes, it will give you a good overview of the steps involved and the basics of the Puppeteer API, and then you can move from here to other more sophisticated use-cases.
-
-## Start a project
+## Create a Browser Rendering project
 
 Install Wrangler and Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
 ```bash
-npm init -f
-npm install wrangler -save-dev
-npm install @cloudflare/puppeteer -save-dev
+$ npm init -f
+$ npm install wrangler --save-dev
+$ npm install @cloudflare/puppeteer --save-dev
 ```
 
 ## Create a KV namespace
 
 Browser Rendering can be used with other developer products. You might need a [relational database](https://developers.cloudflare.com/d1/), an [R2 bucket](https://developers.cloudflare.com/r2/) to archive your crawled pages and assets, or maybe use a [Durable Object](https://developers.cloudflare.com/workers/runtime-apis/durable-objects/#durable-objects) to keep your browser instance alive and share it with multiple requests, or [queues](https://developers.cloudflare.com/queues/) to handle your jobs asynchronous.
 
-In our example we are going to use a [KV store](https://developers.cloudflare.com/workers/runtime-apis/kv/#kv) to cache our screenshots.
+For the purpose of this guide, you are going to use a [KV store](https://developers.cloudflare.com/workers/runtime-apis/kv/#kv) to cache your screenshots.
 
-Let's create two namespaces, one for production, and one for development.
+Create two namespaces, one for production, and one for development.
 
 ```bash
 npx wrangler kv:namespace create BROWSER_KV_DEMO

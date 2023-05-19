@@ -10,20 +10,22 @@ meta:
 {{<beta>}}Browser Rendering{{</beta>}}
 
 {{<description>}}
-Browser automation for Cloudflare Workers
+Browser automation for [Cloudflare Workers](/workers/).
 {{</description>}}
 
-The Workers Browser Rendering API allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products. Once you configure the service, it gives you access to a WebSocket endpoint that speaks the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/). DevTools is what allows us to instrument a Chromium instance running in our global network.
+{{<plan type="all">}}
 
-You can use Browser Rendering to:
+The Workers Browser Rendering API allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products. Once you configure the service, Workers Browser Rendering gives you access to a WebSocket endpoint that speaks the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/). DevTools is what allows Cloudflare to instrument a Chromium instance running in the Cloudflare global network.
 
-* Take screenshots of pages
-* Convert a page to a PDF
-* Test web applications
-* Gather page load performance metrics
-* Crawl web pages for information retrieval
+Use Browser Rendering to:
 
-You can deploy Browser Rendering using [Wrangler](/browser-rendering/platform/wrangler/) and our version of [Puppeteer](/browser-rendering/platform/puppeteer/). Jump to [Get started](/browser-rendering/get-started/) for examples.
+* Take screenshots of pages.
+* Convert a page to a PDF.
+* Test web applications.
+* Gather page load performance metrics.
+* Crawl web pages for information retrieval.
+
+Deploy Browser Rendering using [Wrangler](/browser-rendering/platform/wrangler/) and our version of [Puppeteer](/browser-rendering/platform/puppeteer/). Refer to [Get started](/browser-rendering/get-started/) to deploy your first Browser Rendering project using Wrangler and Puppeteer.
 
 ## More resources
 
