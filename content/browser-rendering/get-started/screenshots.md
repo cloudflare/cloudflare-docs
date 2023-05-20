@@ -35,7 +35,7 @@ npx wrangler kv:namespace create BROWSER_KV_DEMO --preview
 
 Take note of the IDs.
 
-## wranger.toml
+## wrangler.toml
 
 Let’s create the simplest possible wrangler.toml configuration file with the Browser Rendering API binding and the KV namespaces we just created:
 
