@@ -6,7 +6,7 @@ pcx_content_type: concept
 
 # Develop locally
 
-D1 has fully-featured support for local development, running the same version of D1 as we run globally. Local development uses [wrangler](/workers/wrangler/install-and-update/), our command-line interface, for managing local development sessions and state.
+D1 has fully-featured support for local development, running the same version of D1 as Cloudflare runs globally. Local development uses [wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
 ## Starting a local development session
 
@@ -63,7 +63,7 @@ Visit the [documentation for `wrangler dev`](/workers/wrangler/commands/#dev) to
 
 ## Persisting data
 
-**By default, in wrangler `3.0.0` and above, data is persisted cross each run of `wrangler dev`.**. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
+**By default, in wrangler `3.0.0` and above, data is persisted across each run of `wrangler dev`**. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
 
 Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific location. This can be useful when working in a team (allowing you to share) the same copy, when deploying via CI/CD (to ensure the same starting state), or as a way to keep data when migrating across machines.
 
