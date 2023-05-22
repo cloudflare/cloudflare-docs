@@ -1,0 +1,7 @@
+name: Cloudflare Tunnel
+
+product:
+  title: Cloudflare Tunnel
+  group: Cloudflare One
+  url: /cloudflare-one/connections/connect-apps/
+  grid_placeholder: true

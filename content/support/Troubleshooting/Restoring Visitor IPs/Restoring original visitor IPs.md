@@ -119,11 +119,11 @@ building the *mod\_cloudflare* package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 {{</Aside>}}
 
-There are two methods for installing mod\_cloudflare: by downloading the Apache extension from Github or by adding code to your origin web server.
+There are two methods for installing mod\_cloudflare: by downloading the Apache extension from GitHub or by adding code to your origin web server.
 
-### Downloading packets or scripts from Github
+### Downloading packets or scripts from GitHub
 
-If you are using an Apache web server, you can download mod\_cloudflare from [Github](https://github.com/cloudflare/mod_cloudflare).
+If you are using an Apache web server, you can download mod\_cloudflare from [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Adding code to your origin web server
 
@@ -245,7 +245,7 @@ To have Lighttpd automatically rewrite the server IP for the access logs and for
 2.  Add the following code block anywhere in the **lighttpd.conf** file after the server modules list and then restart Lighttpd
 
 ```
-$HTTP["remoteip"] == "192.2.0.1 (example IP address)" 
+$HTTP["remoteip"] == "192.2.0.1 (example IP address)"
 {
 extforward.forwarder = ( "all" => "trust" )
 extforward.headers = ("CF-Connecting-IP")
@@ -255,7 +255,7 @@ extforward.headers = ("CF-Connecting-IP")
 ```
 
 {{<Aside type="tip">}}
-If your origin connects to the internet with IPv6,
+If your origin connects to the Internet with IPv6,
 **\$HTTP\[\"remoteip\"\]**, which is required for matching the remote IP
 ranges does not work when IPv6 is enabled. Using the above method will
 not work when trying to forward IP ranges. Add the following lines to

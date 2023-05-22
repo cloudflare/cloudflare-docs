@@ -5,7 +5,7 @@ pcx_content_type: concept
 
 {{<beta>}} Cache Rules {{</beta>}}
 
-Use Cache Rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare edge network. 
+Use Cache Rules to customize cache properties of your HTTP requests. For example, create a rule to specify how long to cache a resource in the Cloudflare global network.
 
 ## Availability
 
@@ -17,11 +17,11 @@ The following table describes Cache Rules availability per plan.
 
 Cache rules are unique, unlike Page Rules. This is how they are applied:
 
-1. Cache Rules are stackable. This means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied.
+1. Cache Rules are stackable. This means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied. If several matching rules set a value for the same setting, the value in the last matching rule wins. For an example of a similar scenario where multiple rules match, refer to the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
 
-2. If you have conflicting settings, then ordering matters and rules will be applied in the order they appear in your Cloudflare dashboard, from bottom to top. For example, if the top rule is set to cache everything on `example.com/images` and the bottom rule is set to bypass cache on `example.com`, then because we apply rules from bottom to top, cache will be bypassed for all URLs that match `example.com`. To create this type of wildcard rule that applies to everything in the URI directory, when [creating a cache rule in the dashboard](/cache/about/cache-rules/#create-cache-rules-in-the-dashboard), select the option _URI_ in **Field**, _starts with_ in **Operator**, and `example.com` in **Value**.
-  
-3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, we plan on releasing a one-click migration tool for Page Rules.
+2. For conflicting settings (for example, bypass cache vs. eligible for cache), the last matching rule wins. For example, if Cache Rule #1 is set to cache everything on `example.com/images` and Cache Rule #2 is set to bypass cache on `example.com`, then cache will be bypassed for all URLs that match `example.com`, since rule #2 is the last matching rule.
+
+3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, Cloudflare plans on releasing a one-click migration tool for Page Rules.
 
 ## Create Cache Rules in the dashboard
 
@@ -32,6 +32,7 @@ To create a new cache rule:
 3. Select **Create cache rule**.
 4. Enter a descriptive name for the rule in **Rule name**.
 5. Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property (refer to [Available fields](/cache/about/cache-rules/#available-fields) for the list of available fields). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
+    To create a wildcard rule that applies to everything under a URI directory (for example, `/images`), select the option _URI_ in **Field**, _starts with_ in **Operator**, and `/images` in **Value**.
 6. Under **Then**, in the **Cache status** section, select **Bypass cache**, if matching requests will bypass cache and fetch a response from the origin server or **Eligible for cache** if requests will be eligible for cache. Note that proper [origin cache-control headers](/cache/about/cache-control/) are also required for cache eligibility.
 
 {{<Aside type="note">}}
@@ -46,7 +47,7 @@ Be aware that when you select **Eligible for cache** in Cache Rules, this is equ
 <summary>Edge TTL</summary>
 <div>
 
-Select **Respect origin** if matching requests will respect cache headers received from the origin server, or **Override origin**. If you wish to override the Edge TTL value, you need to select how long you want to cache resources in the Cloudflare edge network.
+Select **Respect origin** if matching requests will respect cache headers received from the origin server, or **Override origin**. If you wish to override the Edge TTL value, you need to select how long you want to cache resources in the Cloudflare global network.
 - In **Status code TTL** you can define the cache time-to-live (TTL) duration for one or more response status codes received from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than_ or _Less than_ status code or to a _Range_ of status codes. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
 
 </div>
@@ -66,7 +67,7 @@ Select if you want to **Respect origin** or **Override origin**. If you wish to 
 <div>
 
 Define the request components used to define a [custom cache key](/cache/about/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
- - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/about/cache-deception-armor/), and [Ignore query string order](https://support.cloudflare.com/hc/articles/360023040812).
+ - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), and [Ignore query string order](/cache/troubleshooting/cache-everything-ignore-query-strings/).
  - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
  - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
  - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.
@@ -145,7 +146,7 @@ When creating a Configuration Rule via API, make sure you:
 The API token used in API requests to manage Cache Rules must have the following permissions:
 
 - _Zone_ > _Config Rules_ > _Edit_
-- _Account Rulesets_ > _Edit_  
+- _Account Rulesets_ > _Edit_
 - _Account Filter Lists_ > _Edit_
 
 ### API examples
@@ -183,7 +184,7 @@ curl -X PUT \
         }
     ]
 }
-' 
+'
 ```
 
 In this second example, `status_code_ttl` is set to `override_origin` and cache TTL is set by status code `404` with a duration of 30 seconds. Instead of a single status code, you can also define a range.

@@ -2,6 +2,7 @@
 title: Overview
 type: overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
   title: Cloudflare R2 
@@ -10,6 +11,16 @@ meta:
 # Cloudflare R2
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+{{<Aside type="note" header="Help us improve our documentation">}}
+
+From May 10th through May 26th, 2023, the Cloudflare documentation team is running a survey to measure the effectiveness of the R2 documentation.
+
+Complete the [survey](https://docs.google.com/forms/d/e/1FAIpQLScaVrdZh2PoZFvJGFPyMthuGVvKpQvoPfZ-BxIJ4Q5zsQebDA/viewform) to contribute. (Total time: 3 minutes)
+
+Thank you for your support.
+
+{{</Aside>}}
 
 You can use R2 for multiple scenarios, including but not limited to:
 

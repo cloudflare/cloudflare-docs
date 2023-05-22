@@ -5,7 +5,7 @@ title: Buffer
 
 # Buffer
 
-{{<render file="nodejs-compat-howto.md">}}
+{{<render file="_nodejs-compat-howto.md">}}
 
 The `Buffer` API in Node.js is one of the most commonly used Node.js APIs for manipulating binary data. Every `Buffer` instance extends from the standard [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) class, but adds a range of unique capabilities such as built-in base64 and hex encoding/decoding, byte-order manipulation, and encoding-aware substring searching.
 

@@ -36,16 +36,16 @@ ___
 Quando usados com O2O, certos recursos da Cloudflare podem interromper o fluxo de tráfego para sua loja Shopify ou exibir dados incorretos para seus visitantes, o que significa que você deve:
 
 -   Não utilizar os seguintes recursos da Cloudflare:
-    -   [Cache de HTML](https://developers.cloudflare.com/cache/)
-    -   [Regras de firewall personalizadas](https://developers.cloudflare.com/firewall/)
+    -   [Cache de HTML](/cache/)
+    -   [Regras de firewall personalizadas](/firewall/)
     -   [Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)
     -   [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
-    -   [Balanceamento de Carga](https://developers.cloudflare.com/load-balancing/)
+    -   [Balanceamento de Carga](/load-balancing/)
     -   [IPv6](https://support.cloudflare.com/hc/articles/229666767)
 -   Tenha cuidado com os seguintes recursos da Cloudflare:
     -   [Page Rules](https://support.cloudflare.com/hc/articles/218411427): Page Rules configuradas incorretamente que correspondem ao subdomínio usado pelo Shopify podem bloquear ou distorcer o fluxo de visitantes de comércio eletrônico em seu site.
-    -   [Workers](https://developers.cloudflare.com/workers/): de modo semelhante ao Page Rules, o Workers pode interromper o fluxo de tráfego para o seu site e, consequentemente, reduzir a receita. Insira o Workers com cautela. É aconselhável excluir o subdomínio usado com a Shopify da rota do Workers.
-    -   [Registros DNS CAA](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records): a Shopify emite certificados SSL/TLS para domínios de lojistas usando a Let's Encrypt. Se você adicionar algum registro de DNS CAA, deverá selecionar a Let's Encrypt como autoridade de certificação (CA) ou as conexões HTTPS poderão falhar.
+    -   [Workers](/workers/): de modo semelhante ao Page Rules, o Workers pode interromper o fluxo de tráfego para o seu site e, consequentemente, reduzir a receita. Insira o Workers com cautela. É aconselhável excluir o subdomínio usado com a Shopify da rota do Workers.
+    -   [Registros DNS CAA](/ssl/edge-certificates/caa-records/): a Shopify emite certificados SSL/TLS para domínios de lojistas usando a Let's Encrypt. Se você adicionar algum registro de DNS CAA, deverá selecionar a Let's Encrypt como autoridade de certificação (CA) ou as conexões HTTPS poderão falhar.
 
 ___
 

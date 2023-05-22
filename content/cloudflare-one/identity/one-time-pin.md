@@ -17,7 +17,7 @@ For example, if your team uses Okta® but you are collaborating with someone out
 3. Select **One-time PIN**.
 4. If your organization uses a 3rd party email scanning service (for example, Mimecast or Barracuda), add `noreply@notify.cloudflare.com` to your Allow List.
 
-To grant a user access to an application, simply add their email address to an [Access policy](/cloudflare-one/policies/access/policy-management/#add-a-policy).
+To grant a user access to an application, simply add their email address to an [Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy).
 
 ## Log in with OTP
 

@@ -14,6 +14,10 @@ Here you will find information regarding Email Routing, along with best practice
 
 ## Postmaster
 
+### Authenticated Received Chain (ARC)
+
+Email Routing supports [Authenticated Received Chain (ARC)](http://arc-spec.org/). ARC is an email authentication system designed to allow an intermediate email server (such as Email Routing) to preserve email authentication results. Google also supports ARC. 
+
 ### Contact information
 
 The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).

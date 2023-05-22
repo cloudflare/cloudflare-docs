@@ -7,7 +7,7 @@
       "Cloudflare Essentials",
       "DNS",
       "SSL/TLS",
-      "Firewall",
+      "WAF",
       "Cache"
     ],
     "category": ["Security", "Performance", "Reliability"],

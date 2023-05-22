@@ -34,9 +34,9 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 The Rulesets API endpoints require a value for `<ACCOUNT_ID>` or `<ZONE_ID>`.
 
-To retrieve a list of accounts you have access to, use the [List Accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
+To retrieve a list of accounts you have access to, use the [List Accounts](/api/operations/accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
 
-To retrieve a list of zones you have access to, use the [List Zones](https://developers.cloudflare.com/api/operations/zone-list-zones) operation. Note the IDs of the zones you want to manage.
+To retrieve a list of zones you have access to, use the [List Zones](/api/operations/zone-list-zones) operation. Note the IDs of the zones you want to manage.
 
 {{</Aside>}}
 

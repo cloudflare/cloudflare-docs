@@ -30,13 +30,13 @@ Cloudflare 的网络设计旨在自动监测和缓解大型 [DDoS 攻击](https:
 
 此外，Cloudflare 也会在以下情况下帮助缓解较小的 DDoS 攻击：
 
--   对于任何计划中的区域，当 HTTP 错误率高于_高_（默认）敏感度级别，即每秒 1,000 个错误的错误率阈值时。您可以[配置 HTTP DDoS 攻击防护托管规则集](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http)以降低敏感度级别。
+-   对于任何计划中的区域，当 HTTP 错误率高于_高_（默认）敏感度级别，即每秒 1,000 个错误的错误率阈值时。您可以[配置 HTTP DDoS 攻击防护托管规则集](/ddos-protection/managed-rulesets/http)以降低敏感度级别。
 
 -   对于 Pro、Business 和 Enterprise 计划中的区域，Cloudflare 会执行额外检查以提高检测准确性：每秒错误率还必须至少是正常源站流量水平的五倍。
 
 Cloudflare 根据 52X 范围内（内部服务器错误）和 53X 范围内的所有 HTTP 错误来确定错误率，但[错误 530](https://support.cloudflare.com/hc/articles/115003011431#530error)除外。
 
-HTTP DDoS 攻击缓解在 Firewall Analytics 仪表板中显示为 HTTP DDoS 事件。这些事件也可通过 [Cloudflare Logs](https://developers.cloudflare.com/logs/) 查看。
+HTTP DDoS 攻击缓解在 Firewall Analytics 仪表板中显示为 HTTP DDoS 事件。这些事件也可通过 [Cloudflare Logs](/logs/) 查看。
 
 目前，对于基于 HTTP 错误率的 DDoS 缓解，客户无法排除特定的 HTTP 错误代码。
 
@@ -48,9 +48,9 @@ Cloudflare HTTP DDoS 攻击防护托管规则集是一组预先配置的规则�
 
 如果您预计合法流量会出现大幅激增，请考虑自定义 DDoS 防护设置以避免误报。误报是指合法流量被错误地识别为攻击流量并被阻止/质询。
 
-[在 Cloudflare 开发人员门户](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http)中详细了解 Cloudflare HTTP DDoS 攻击防护托管规则集和可用的配置设置。
+[在 Cloudflare 开发人员门户](/ddos-protection/managed-rulesets/http)中详细了解 Cloudflare HTTP DDoS 攻击防护托管规则集和可用的配置设置。
 
-如需详细了解 HTTP DDoS 攻击防护系统所采用的操作，请参阅 [HTTP DDoS 攻击防护参数：操作](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http/override-parameters#action)。
+如需详细了解 HTTP DDoS 攻击防护系统所采用的操作，请参阅 [HTTP DDoS 攻击防护参数：操作](/ddos-protection/managed-rulesets/http/override-parameters#action)。
 
 ___
 
@@ -58,9 +58,9 @@ ___
 
 Cloudflare 网络层 DDoS 攻击防护托管规则集是一组预先配置的规则，用于匹配 OSI 模型第 3 层和第 4 层已知的 DDoS 攻击手段。该规则集适用于 Cloudflare 任一计划的客户，并且默认启用。
 
-[在 Cloudflare 开发人员门户](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network)中详细了解 Cloudflare 网络层 DDoS 攻击防护托管规则集和可用的配置设置。
+[在 Cloudflare 开发人员门户](/ddos-protection/managed-rulesets/network)中详细了解 Cloudflare 网络层 DDoS 攻击防护托管规则集和可用的配置设置。
 
-如需详细了解 L3/4 DDoS 攻击防护系统所采用的操作，请参阅[网络层 DDoS 攻击防护参数：操作](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network/override-parameters#action)。
+如需详细了解 L3/4 DDoS 攻击防护系统所采用的操作，请参阅[网络层 DDoS 攻击防护参数：操作](/ddos-protection/managed-rulesets/network/override-parameters#action)。
 
 ___
 
@@ -79,7 +79,7 @@ ___
 两种常见情况造成错误地认为 Cloudflare 攻击您的站点：
 
 -   除非您[恢复源访问者 IP 地址](https://support.cloudflare.com/hc/zh-cn/sections/200805497-Restoring-Visitor-IPs)，否则服务器日志中所有代理请求都显示 Cloudflare IP 地址。
--   攻击者在假冒 Cloudflare 的 IP。Cloudflare 仅[通过几个特定端口向您的源 Web 服务器发送流量](https://support.cloudflare.com/hc/articles/200169156)，除非您使用了 [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started/)。
+-   攻击者在假冒 Cloudflare 的 IP。Cloudflare 仅[通过几个特定端口向您的源 Web 服务器发送流量](https://support.cloudflare.com/hc/articles/200169156)，除非您使用了 [Cloudflare Spectrum](/spectrum/get-started/)。
 
 理想情况下，由于 Cloudflare 是反向代理，因此您的托管服务提供商会观察到从 [Cloudflare IP 地址](https://www.cloudflare.com/ips/)连接的攻击流量。另一方面，如果您看到来自不属于 Cloudflare 的 IP 地址的连接，则攻击直接针对您的源 Web 服务器。Cloudflare 无法阻止直接针对您的源站 IP 地址的攻击，因为流量绕过了 Cloudflare 的网络。
 

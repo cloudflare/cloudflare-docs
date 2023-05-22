@@ -31,7 +31,7 @@ Stream collects data about the number of minutes of video delivered to viewers f
 | `clientCountryName` | ISO 3166 alpha2 country code from the client who viewed the video                                        |
 | `creator`           | The [Creator ID](/stream/manage-video-library/creator-id/) associated with individual videos, if present |
 
-Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
+Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](/analytics/graphql-api/features/filtering/).
 
 ### Metrics
 
@@ -139,7 +139,7 @@ Client-side analytics are only collected when the [Stream Player](/stream/viewin
 | `deviceOs`          | Device operating system                                           |
 | `deviceType`        | Device type                                                       |
 
-Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
+Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](/analytics/graphql-api/features/filtering/).
 
 ### Metrics
 

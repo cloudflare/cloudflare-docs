@@ -109,6 +109,6 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^20]:You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 [^21]:Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
 [^22]:Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs and analytics are still not available in the dashboard when setting the region to the EU).
-[^23]:US and EU region only. <br> For Area 1, this is called the **Processing & Inspection Boundary**.
+[^23]:[US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing & Inspection Boundary**.
 [^24]:Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).
 [^25]: Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).

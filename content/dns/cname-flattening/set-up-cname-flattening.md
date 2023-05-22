@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Set up
+title: Setup
 weight: 2
 meta:
     title: Set up CNAME flattening
@@ -25,3 +25,7 @@ Accounts on paid plans can also choose to flatten all `CNAME` records on their d
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2.  Navigate to **DNS** > **Settings**.
 3.  For **CNAME Flattening**, select **Flatten all CNAMEs**.
+
+{{<Aside type="warning">}}
+{{<render file="_cname-flattening-callout.md">}}
+{{</Aside>}}

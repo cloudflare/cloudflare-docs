@@ -34,7 +34,7 @@ You can view a list of all discovered SaaS applications and mark them as approve
 | ------------| ----------- |
 | Application | SaaS application's name and logo.   |
 | Application type |[Application type](/cloudflare-one/policies/filtering/application-app-types/#app-types) assigned by Cloudflare Zero Trust. |
-| Status | Application's [approval status](#application-status). |
+| Status | Application's [approval status](#approval-status). |
 | Secured | Whether the application is currently secured behind Cloudflare Access. |
 | Users  |  Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
 {{</table-wrap>}}
@@ -70,7 +70,7 @@ You can view a list of all discovered origins and mark them as approved or unapp
 | Port       | Port used to connect to the origin.          |
 | Protocol   | Protocol used to connect to the origin. |
 | Hostname   | Hostname used to access the origin.           |
-| Status     | Origin's [approval status](#application-status)    |
+| Status     | Origin's [approval status](#approval-status)    |
 | Users      | Number of users who connected to the origin over the period of time specified on the Shadow IT Discovery overview page.  |
 
 {{</table-wrap>}}

@@ -88,4 +88,4 @@ Stream 시청 시간 보기 
 ___
 
 -   [Cloudflare Stream 동영상 플랫폼](https://support.cloudflare.com/hc/ko/articles/360017801091)
--   [Cloudflare Stream 개발자 문서](https://developers.cloudflare.com/stream/getting-started/)
+-   [Cloudflare Stream 개발자 문서](/stream/getting-started/)

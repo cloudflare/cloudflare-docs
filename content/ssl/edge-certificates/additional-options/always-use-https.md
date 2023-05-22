@@ -24,7 +24,7 @@ To redirect traffic for all subdomains and hosts in your application, you can en
 To enable **Always Use HTTPS** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
 3.  For **Always Use HTTPS**, switch the toggle to **On**.
 
 {{<Aside type="note">}}
@@ -36,12 +36,18 @@ When you set your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}
 
 ### Encrypt some visitor traffic
+
+#### Configuration rules
+
+If only some parts of your application can support HTTPS traffic, use [Configuration Rules](/rules/configuration-rules/create-dashboard/) to selectively disable **Always Use HTTPS**.
+
+#### Redirects
 
 If you only want specific subdomains redirected to HTTPS, redirect on a URL basis using Cloudflare [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 

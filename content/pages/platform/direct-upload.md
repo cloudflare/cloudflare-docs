@@ -5,7 +5,7 @@ title: Direct Uploads
 
 # Direct Uploads
 
-Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare edge network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
+Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
 
 ## Upload methods
 

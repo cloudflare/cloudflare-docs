@@ -17,7 +17,7 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 | -------------------------------------------------- | --------------------------------------- |
 | Databases                                          | 10 per account <sup>1</sup>             |
 | Database size                                      | 100 MB <sup>2</sup>                     |
-| Maximum [database backups](/d1/learning/backups/)  | No currently defined limit.             |
+| Maximum [database backups](/d1/learning/backups/)  | 24 hours (backups are hourly)           |
 
 {{</table-wrap>}}
 
@@ -25,7 +25,7 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 
 If you would like to explore other storage solutions for your application, Cloudflare also offers [Workers KV](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), and [R2](/r2/get-started/). 
 
-Refer to the [Storage options guide](/workers/platform/storage-objects/) to review which storage option is right for your use case.
+Refer to the [Storage options guide](/workers/platform/storage-options/) to review which storage option is right for your use case.
 
 {{</Aside>}}
 

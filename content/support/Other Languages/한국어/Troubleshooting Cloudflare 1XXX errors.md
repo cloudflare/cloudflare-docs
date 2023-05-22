@@ -82,15 +82,15 @@ ___
 -   Cloudflare를 사용하지 않는 외부 도메인에 Cloudflare에서 활성화된 도메인에 대한 CNAME 레코드가 있습니다.
 -   DNS CNAME 레코드의 대상이 확인되지 않습니다.
 -   Cloudflare DNS 앱의 CNAME 레코드가 DNS 공급자를 통한 확인을 필요로 하는데, 현재 DNS 공급자가 오프라인 상태입니다.
--   [사용자 지정 호스트 이름(SaaS용 SSL](https://developers.cloudflare.com/ssl/ssl-for-saas)) 도메인에 [Always Online](https://developers.cloudflare.com/cache/about/always-online)이 활성화되어 있습니다.
+-   [사용자 지정 호스트 이름(SaaS용 SSL](/ssl/ssl-for-saas)) 도메인에 [Always Online](/cache/about/always-online)이 활성화되어 있습니다.
 
 ### 문제 해결
 
 Cloudflare 이외의 도메인은, 해당 도메인이 Cloudflare 계정에 추가되지 않는 한 Cloudflare 도메인에 CNAME 할 수 없습니다.
 
-[Cloudflare CNAME 설정](https://developers.cloudflare.com/dns/zone-setups/partial-setup)에 사용된 DNS 레코드에 직접 액세스를 시도하는 경우에도 1001 오류가 발생할 수 있습니다(예: _www.example.com.cdn.cloudflare.net_).
+[Cloudflare CNAME 설정](/dns/zone-setups/partial-setup)에 사용된 DNS 레코드에 직접 액세스를 시도하는 경우에도 1001 오류가 발생할 수 있습니다(예: _www.example.com.cdn.cloudflare.net_).
 
-[사용자 지정 호스트 이름(SaaS용 SSL)](https://developers.cloudflare.com/ssl/ssl-for-saas)을 사용 중인 경우   [Always Online](https://developers.cloudflare.com/cache/how-to/enable-always-online) 을 비활성화하세요.
+[사용자 지정 호스트 이름(SaaS용 SSL)](/ssl/ssl-for-saas)을 사용 중인 경우   [Always Online](/cache/how-to/enable-always-online) 을 비활성화하세요.
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 ### 일반적인 원인
 
-클라이언트 또는 브라우저에서  [서버 이름 표시](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) (SNI)를 통해 전송된 호스트 이름이 요청 호스트 헤더와 일치하지 않습니다.
+클라이언트 또는 브라우저에서  [서버 이름 표시](/fundamentals/glossary#server-name-indication-sni) (SNI)를 통해 전송된 호스트 이름이 요청 호스트 헤더와 일치하지 않습니다.
 
 ### 문제 해결
 
@@ -250,7 +250,7 @@ Cloudflare는 서로 다른 Cloudflare 계정의 도메인 간 DNS _CNAME 레코
 
 ### 문제 해결
 
-다른 Cloudflare 계정에 CNAME 레코드 확인을 허용할 경우 CNAME 대상의 도메인 소유자는 [SaaS용 Cloudflare](https://www.cloudflare.com/saas/), 구체적으로는 [SaaS용 SSL](https://developers.cloudflare.com/ssl/ssl-for-saas/)을 이용해야 합니다.
+다른 Cloudflare 계정에 CNAME 레코드 확인을 허용할 경우 CNAME 대상의 도메인 소유자는 [SaaS용 Cloudflare](https://www.cloudflare.com/saas/), 구체적으로는 [SaaS용 SSL](/ssl/ssl-for-saas/)을 이용해야 합니다.
 
 ___
 
@@ -278,8 +278,8 @@ Cloudflare가 원본 웹 서버의 IP 주소를 확인하지 못했습니다.
 
 -   원본 IP 주소가 언급된 DNS _A 레코드_가 누락되었습니다.
 -   Cloudflare DNS 내 _CNAME 레코드_가 확인할 수 없는 외부 도메인을 가리킵니다.
--   Cloudflare [Load Balancer](https://developers.cloudflare.com/load-balancing/) 기본값, 지역, 폴백 풀에서 원본 호스트 이름(CNAME)을 인식할 수 없습니다. 다른 풀을 사용할 수 없는 경우 실제 IP에 설정된 폴백 풀을 백업으로 사용할 수 있습니다.
--   CNAME 원본으로 Spectrum 앱을 생성할 경우, 먼저 Cloudflare DNS 측에 원본을 가리키는 CNAME을 생성해야 합니다. 자세한 내용은 [Spectrum CNAME 원본](https://developers.cloudflare.com/spectrum/how-to/cname-origins) 을 참조하세요
+-   Cloudflare [Load Balancer](/load-balancing/) 기본값, 지역, 폴백 풀에서 원본 호스트 이름(CNAME)을 인식할 수 없습니다. 다른 풀을 사용할 수 없는 경우 실제 IP에 설정된 폴백 풀을 백업으로 사용할 수 있습니다.
+-   CNAME 원본으로 Spectrum 앱을 생성할 경우, 먼저 Cloudflare DNS 측에 원본을 가리키는 CNAME을 생성해야 합니다. 자세한 내용은 [Spectrum CNAME 원본](/spectrum/how-to/cname-origins) 을 참조하세요
 
 ### 문제 해결
 
@@ -332,7 +332,7 @@ ___
 웹 사이트 소유자의 경우, 다음의 단계를 따라 문제를 해결하세요.
 
 1.  고객으로부터 1020 오류의 스크린샷을 받습니다.
-2.  Cloudflare **Firewall** 앱의 **개요** 탭에 있는 [**방화벽 이벤트**](https://developers.cloudflare.com/waf/analytics)에서 방문자의 1020 오류 메시지에 있는 **RayID** 또는 클라이언트 IP 주소를 찾습니다.
+2.  Cloudflare **Firewall** 앱의 **개요** 탭에 있는 [**방화벽 이벤트**](/waf/analytics)에서 방문자의 1020 오류 메시지에 있는 **RayID** 또는 클라이언트 IP 주소를 찾습니다.
 
 3\. 차단의 원인을 파악해 **방화벽 규칙**을 업데이트하거나, [**IP 액세스 규칙**](https://support.cloudflare.com/hc/articles/217074967)에서 방문자 IP 주소를 허용합니다.
 
@@ -359,7 +359,7 @@ ___
 
 ### 일반적인 원인
 
-도메인이  [Cloudflare Workers의 요금제 제한](https://developers.cloudflare.com/workers/platform/limits)을 초과해 요청이 처리되지 않았습니다.
+도메인이  [Cloudflare Workers의 요금제 제한](/workers/platform/limits)을 초과해 요청이 처리되지 않았습니다.
 
 ### 문제 해결:
 
@@ -376,7 +376,7 @@ Cloudflare 네트워크에 있는 웹 사이트(`tunnel.example.com`) 페이지�
 ### 문제 해결
 
 -   **이 웹 사이트의 방문자인 경우**: 잠시 후 다시 시도하시기 바랍니다.
--   **이 웹 사이트의 소유자인 경우**: _cloudflared_가 실행 중이며 해당 네트워크에 도달할 수 있는지 확인하시기 바랍니다. 터널에 대해 [로드 밸런싱](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)을 사용해야 하는 경우도 있습니다.
+-   **이 웹 사이트의 소유자인 경우**: _cloudflared_가 실행 중이며 해당 네트워크에 도달할 수 있는지 확인하시기 바랍니다. 터널에 대해 [로드 밸런싱](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)을 사용해야 하는 경우도 있습니다.
 
 ___
 
@@ -450,7 +450,7 @@ HTTP 요청 헤더 수정 규칙이 변경할 수 없는 HTTP 헤더를 수정�
 
 ### 문제 해결
 
-[예약된 HTTP 요청 헤더](https://developers.cloudflare.com/rules/transform#http-request-header-modification-rules) 중 하나를 수정하려 하고 있지 않은지 확인하시기 바랍니다.
+[예약된 HTTP 요청 헤더](/rules/transform#http-request-header-modification-rules) 중 하나를 수정하려 하고 있지 않은지 확인하시기 바랍니다.
 
 ___
 
@@ -463,7 +463,7 @@ ___
 ### 문제 해결
 
 -   짧은 값 또는 식으로 헤더 값을 정의하십시오.
--   허용되지 않는 문자를 삭제하십시오. 허용되는 문자에 대한 자세한 정보는 개발자 문서에서 [HTTP 요청 헤더 이름 및 값의 형식](https://developers.cloudflare.com/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values)을 참조하시기 바랍니다.
+-   허용되지 않는 문자를 삭제하십시오. 허용되는 문자에 대한 자세한 정보는 개발자 문서에서 [HTTP 요청 헤더 이름 및 값의 형식](/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values)을 참조하시기 바랍니다.
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### 일반적인 원인
 
-Cloudflare Worker가  [CPU 시간제한](https://developers.cloudflare.com/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)을 초과했습니다. CPU 시간은 loops, parsing JSON 등의 코드를 실행하는 데 걸리는 시간을 말합니다. 네트워크 요청(가져오기, 응답하기)에 걸리는 시간은 CPU 시간에 포함되지 않습니다.
+Cloudflare Worker가  [CPU 시간제한](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)을 초과했습니다. CPU 시간은 loops, parsing JSON 등의 코드를 실행하는 데 걸리는 시간을 말합니다. 네트워크 요청(가져오기, 응답하기)에 걸리는 시간은 CPU 시간에 포함되지 않습니다.
 
 ### 문제 해결
 

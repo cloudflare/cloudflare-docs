@@ -14,7 +14,7 @@ When a new certificate is created, Cloudflare first deploys the certificate and 
 
 ## Certificate deployment
 
-For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) apply to that hostname:
+For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) to apply to that hostname:
 
 1.  **Hostname specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a wildcard certificate (`*.example.com`) for requests to `www.example.com`.
 
@@ -24,12 +24,13 @@ For any given hostname, Cloudflare uses the following order to determine which c
 
     | Priority | Certificate Type                                                 |
     | -------- | ---------------------------------------------------------------- |
-    | 1        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
-    | 2        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)   |
-    | 3        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/)             |
-    | 4        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
-    | 5        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/) |
-    | 6        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
+    | 1        | [Keyless SSL](/ssl/keyless-ssl/)                                 |
+    | 2        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
+    | 3        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)     |
+    | 4        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/) |
+    | 5        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
+    | 6        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/) |
+    | 7        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
 
 4.  **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued or renewed certificate.
 

@@ -30,13 +30,13 @@ Cloudflare의 네트워크는 대형 [DDoS 공격](https://www.cloudflare.com/dd
 
 또한 Cloudflare는 소규모의 DDoS 공격 완화도 도와드립니다.
 
--   모든 요금제의 구역에 대해 HTTP 오류율이 _높음_(기본값) 민감도 수준인 초당 1,000 오류 임계값을 넘는 경우. [HTTP DDoS 관리 규칙 세트를 구성](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http)함으로써 민감도 수준을 낮출 수 있습니다.
+-   모든 요금제의 구역에 대해 HTTP 오류율이 _높음_(기본값) 민감도 수준인 초당 1,000 오류 임계값을 넘는 경우. [HTTP DDoS 관리 규칙 세트를 구성](/ddos-protection/managed-rulesets/http)함으로써 민감도 수준을 낮출 수 있습니다.
 
 -   Pro 요금제, Business 요금제, Enterprise 요금제 구역에 대해서는 Cloudflare가 감지 정확도를 높이기 위한 추가 검사를 수행합니다. 초당 오류 값은 정상적인 원본 트래픽 수준의 5배 이상이어야 합니다.
 
 Cloudflare는 52X 범위의 모든 HTTP 오류(내부 서버 오류)와 [530 오류](https://support.cloudflare.com/hc/articles/115003011431#530error)를 제외한 모든 53X 범위 오류에 기초하여 결정합니다.
 
-HTTP DDoS 공격 완화는 방화벽 분석 대시보드에 HTTP DDoS 이벤트로 표시됩니다.이러한 이벤트는 [Cloudflare Logs](https://developers.cloudflare.com/logs/)에서도 볼 수 있습니다.
+HTTP DDoS 공격 완화는 방화벽 분석 대시보드에 HTTP DDoS 이벤트로 표시됩니다.이러한 이벤트는 [Cloudflare Logs](/logs/)에서도 볼 수 있습니다.
 
 현재는 HTTP 오류 비율에 기반한 DDoS 완화에서는 고객이 특정 HTTP 오류 코드를 배제할 수 없습니다.
 
@@ -48,9 +48,9 @@ Cloudflare HTTP DDoS 공격 방어 관리 규칙 세트는 알려진 공격 패�
 
 정당한 트래픽이 급증할 것으로 예상되는 경우에는 정당한 트래픽을 공격 트래픽으로 잘못 식별하여 차단하거나 인증 질문을 제기하는 긍정 오류를 방지할 수 있도록 DDoS 방어 설정의 사용자 정의를 검토하시기 바랍니다.
 
-Cloudflare HTTP DDoS 공격 방어 관리 규칙 세트 및 사용 가능한 구성 설정에 대한 자세한 내용은 [Cloudflare 개발자 포털](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http) 및 최신 블로그 게시물을 참조하세요.
+Cloudflare HTTP DDoS 공격 방어 관리 규칙 세트 및 사용 가능한 구성 설정에 대한 자세한 내용은 [Cloudflare 개발자 포털](/ddos-protection/managed-rulesets/http) 및 최신 블로그 게시물을 참조하세요.
 
-HTTP DDoS 공격 방어 시스템이 취하는 조치에 대한 자세한 내용은 [HTTP DDoS 공격 방어 매개 변수: 조치](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http/override-parameters#action)를 참고하시기 .
+HTTP DDoS 공격 방어 시스템이 취하는 조치에 대한 자세한 내용은 [HTTP DDoS 공격 방어 매개 변수: 조치](/ddos-protection/managed-rulesets/http/override-parameters#action)를 참고하시기 .
 
 ___
 
@@ -58,9 +58,9 @@ ___
 
 Cloudflare 네트워크 계층 DDoS 공격 방어 관리 규칙 세트는 OSI 모델의 계층 3과 4에서의 알려진 DDoS 공격 벡터와 비교하기 위해 이용하는 사전 구성된 규칙의 모음입니다, 규칙 세트는 모든 요금제의 Cloudflare 고객이 사용할 수 있으며 기본적으로 활성화되어 있습니다.
 
-Cloudflare 네트워크 계층 DDoS 공격 방어 관리 규칙 세트 및 사용 가능한 구성 설정에 대한 자세한 내용은 [Cloudflare 개발자 포털](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network) 및 최신 블로그 게시물을 참조하세요.
+Cloudflare 네트워크 계층 DDoS 공격 방어 관리 규칙 세트 및 사용 가능한 구성 설정에 대한 자세한 내용은 [Cloudflare 개발자 포털](/ddos-protection/managed-rulesets/network) 및 최신 블로그 게시물을 참조하세요.
 
-L3/4 DDoS 공격 방어 시스템이 취하는 조치에 대한 자세한 내용은 [네크워크 계층 DDoS 공격 방어 매개 변수: 조치](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network/override-parameters#action)를 참고하시기 바랍니다.
+L3/4 DDoS 공격 방어 시스템이 취하는 조치에 대한 자세한 내용은 [네크워크 계층 DDoS 공격 방어 매개 변수: 조치](/ddos-protection/managed-rulesets/network/override-parameters#action)를 참고하시기 바랍니다.
 
 ___
 
@@ -79,7 +79,7 @@ ___
 Cloudflare가 귀사의 사이트를 공격하는 것으로 잘못 인식되는 두 가지의 흔한 시나리오가 있습니다.
 
 -    [원본 방문자 IP 주소를 복구하지 않으면](https://support.cloudflare.com/hc/ko/sections/200805497-Restoring-Visitor-IPs) 모든 프록시 설정된 요청에 대해 Cloudflare IP 주소가 서버 로그에 나타납니다.
--   공격자가 Cloudflare IP를 스푸핑합니다.  [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started/)을 사용하지 않는다면 Cloudflare는  [몇 개의 특정 포트를 통해 원본 웹 서버에만 트래픽을 보냅니다](https://support.cloudflare.com/hc/articles/200169156) .
+-   공격자가 Cloudflare IP를 스푸핑합니다.  [Cloudflare Spectrum](/spectrum/get-started/)을 사용하지 않는다면 Cloudflare는  [몇 개의 특정 포트를 통해 원본 웹 서버에만 트래픽을 보냅니다](https://support.cloudflare.com/hc/articles/200169156) .
 
 이상적으로는, Cloudflare가 리버스 프록시이기 때문에 호스팅 공급자는  [Cloudflare IP 주소](https://www.cloudflare.com/ips/)에서 시작된 공격 트래픽을 관찰하게 됩니다. 이와 반대로 Cloudflare에 속하지 않는 IP 주소에서 시작된 연결이 나타나면 원본 웹 서버가 공격을 받고 있는 것입니다. 트래픽이 Cloudflare 네트워크를 우회하기 때문에 Cloudflare는 원본 IP 주소에 대한 공격을 막을 수 없습니다.
 

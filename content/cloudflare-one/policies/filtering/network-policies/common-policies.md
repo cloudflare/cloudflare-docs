@@ -8,6 +8,8 @@ weight: 1
 
 The following policies are commonly used to secure network traffic.
 
+Refer to the [network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.
+
 {{<render file="gateway/_policies-optional.md">}}
 
 ## Enforce device posture
@@ -43,5 +45,3 @@ The following example consists of two policies: the first allows specific users 
 | Selector       | Operator | Value        | Action |
 | -------------- | -------- | ------------ | ------ |
 | Destination IP | in       | `10.0.0.0/8` | Block  |
-
-Refer to the [network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.

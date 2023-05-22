@@ -1,7 +1,8 @@
 ---
 title: Cipher suites
 pcx_content_type: reference
-weight: 4
+weight: 6
+layout: list
 meta:
   title: Cipher suites — Origin
   description: Review a list of cipher suites that Cloudflare presents to origins during an SSL/TLS handshake.
@@ -9,9 +10,13 @@ meta:
 
 # Cipher suites — Origin
 
-Below are the cipher suites that we present to origins during an SSL/TLS handshake. We also have a list of [cipher suites that we support at our edge](/ssl/reference/cipher-suites/), i.e., that are presented to browsers and other user agents.
+Refer to the following list to know what cipher suites Cloudflare presents to origin servers during an SSL/TLS handshake.
 
-Note that the cipher suites below are ordered based on how they appear in the ClientHello, communicating our preference to the origin.
+{{<Aside>}}
+Refer to [cipher suites supported at Cloudflare's global network](/ssl/reference/cipher-suites/) to know what cipher suites Cloudflare presents to browsers and other user agents.
+{{</Aside>}}
+
+The list order is based on how the cipher suites appear in the [ClientHello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/#:~:text=client%20hello), communicating Cloudflare's preference.
 
 ## Supported cipher suites by protocol
 

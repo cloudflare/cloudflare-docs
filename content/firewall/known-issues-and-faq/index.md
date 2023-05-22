@@ -35,11 +35,11 @@ An expression built using the visual [Expression Editor](/firewall/cf-dashboard/
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the Expression Editor:
 
-![The Expression Editor displays rule values with special characters escaped using a backslash character](/firewall/static/cf-firewall-rules-escaping.png)
+![The Expression Editor displays rule values with special characters escaped using a backslash character](/images/firewall/cf-firewall-rules-escaping.png)
 
 ### Why isn't my regular expression pattern matching working?
 
-If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
+If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust) or [Rustexp](https://rustexp.lpil.uk).
 
 Also, note that the `http.request.method` field requires all-caps for method names (for example, `POST`).
 
@@ -221,6 +221,12 @@ Refer to [How do I create an exception to exclude certain requests from being bl
 #### Bots currently detected
 
 [Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to true.
+
+{{<Aside type="note">}}
+
+There is no functional difference between known and verified bots. However, the known bots field is available for all customers, while the verified bots field is available for Enterprise customers.
+
+{{</Aside>}}
 
 If you need to submit a friendly bot to be verified, use [our online form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 

@@ -17,9 +17,30 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 ### Setting up Zaraz
 
-#### Zaraz does not appear to be working. Is there a way to check where the problem is?
+#### Zaraz does not appear to be working.
+
+If you are experiencing issues with Zaraz, there could be multiple reasons behind it. First, it's important to verify that the Zaraz script is loading properly on your website.
+
+To check if the script is loading correctly, follow these steps:
+
+1. Open your website in a web browser.
+2. Open your browser's Developer Tools.
+3. In the Console, type `zaraz`.
+4. If you see an error message saying `zaraz is not defined`, it means that Zaraz failed to load.
+
+If Zaraz is not loading, please verify the following:
+
+- The domain running Zaraz [is proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+- Auto Injection is enabled in your [Zaraz Settings](/zaraz/reference/settings/#auto-inject-script).
+- Your website's HTML is valid and includes `<head>` and `</head>` tags.
+
+#### I'm seeing some data discrepancies. Is there a way to check what data reaches Zaraz?
 
 Yes. You can use the metrics in [Zaraz Monitoring](/zaraz/monitoring/) to help you find where in the workflow the problem occurred.
+
+#### Can I use Zaraz with Rocket Loader?
+
+We recommend disabling [Rocket Loader](/fundamentals/speed/rocket-loader/) when using Zaraz. While Zaraz can be used together with Rocket Loader, there's usually no need to use both. Rocket Loader can sometimes delay data from reaching Zaraz, causing issues.
 
 #### Is Zaraz compatible with Content Security Policies (CSP)?
 
@@ -37,11 +58,24 @@ Yes. Refer to [Page Shield](/page-shield/) for more information related to this 
 
 To prevent Zaraz from loading on specific pages, refer to [Load Zaraz selectively](/zaraz/advanced/load-selectively/).
 
+#### How can I remove my Zaraz configuration?
+
+Resetting your Zaraz configuration will erase all of your configuration settings, including any tools, triggers, and variables you've set up. This action will disable Zaraz immediately. If you want to start over with a clean slate, you can always reset your configuration.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Zaraz** > **Settings** > **Advanced**.
+3. Click "Reset" and follow the instructions.
+
 ### Zaraz Web API
 
 #### Using the `zaraz.ecommerce()` method returns an undefined error.
 
 E-commerce tracking needs to be enabled in [the Zaraz Settings page](/zaraz/reference/settings/#e-commerce-tracking) before you can start using the E-commerce Web API.
+
+
+#### How to trigger pageviews manually on a Single Page Application (SPA)?
+
+Zaraz comes with built-in [Single Page Application (SPA) support](/zaraz/reference/settings/#single-page-application-support) that automatically sends pageview events when navigating through the pages of your SPA. However, if you have advanced use cases, you might want to build your own system to trigger pageviews. In such cases, you can use the internal SPA pageview event by calling `zaraz.track("__zarazSPA")`.
 
 ---
 

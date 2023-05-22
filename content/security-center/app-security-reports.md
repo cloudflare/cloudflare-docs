@@ -36,3 +36,10 @@ A Cloudflare user must have one of the following [roles](/fundamentals/account-a
 
 * Super Administrator
 * Administrator
+
+## Number of mitigated requests
+
+As of the April 2023 report, the number of mitigated requests in each report is a sum of the following requests:
+
+* Blocked requests
+* Challenged requests that were not solved or bypassed (that is, not issued again because the visitor had previously passed a similar challenge)

@@ -14,7 +14,7 @@ Cloudflare partners with BigCommerce to provide BigCommerce customers’ website
 
 Website visitor →  End customer Cloudflare (CF) Proxy → BigCommerce CF Proxy → BigCommerce Origin
 
-![In an orange to orange topology, Cloudflare Enterprise customers can apply their own account security settings to BigCommerce.](/support/static/o2o.png)
+![In an orange to orange topology, Cloudflare Enterprise customers can apply their own account security settings to BigCommerce.](/support/static/o2o-bigcommerce.png)
 
 ### **Benefits**
 

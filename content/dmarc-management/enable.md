@@ -6,6 +6,12 @@ pcx_content_type: how-to
 
 {{<beta>}}Enable DMARC Management{{</beta>}}
 
+Before enabling DMARC Management, note that it does not support subdomains. You can only use it with your primary domain on [each zone](/fundamentals/get-started/concepts/accounts-and-zones/) of your Cloudflare account.
+
+{{<Aside type="warning" header="A warning on DMARC Management and SPF records">}}
+DMARC Management does not support actions on SPF records when your zone has a CNAME record that points to a different domain. Changing the SPF record would make DMARC rules invalid, as Cloudflare cannot change other DNS records to reflect your updates.
+{{</Aside>}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Select **Email** > **DMARC Management**.
 3. Select **Enable DMARC reports**.

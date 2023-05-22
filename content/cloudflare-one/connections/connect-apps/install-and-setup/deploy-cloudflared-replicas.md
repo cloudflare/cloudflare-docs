@@ -25,7 +25,26 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it as multiple different processes.
 
-1. To create and configure a tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/).
+<details>
+<summary>Via the dashboard</summary>
+<div>
+
+1. To create a remotely-managed tunnel, follow the [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/).
+2. On the **Tunnels** page, select your newly created tunnel. The **Connectors** section shows all of the `cloudflared` instances for that tunnel.
+3. Select **Configure**.
+4. Select the operating system of the host where you want to deploy a replica.
+5. Copy the installation command and run it on the host.
+
+The new replica will appear on the **Connectors** list for the tunnel.
+
+</div>
+</details>
+
+<details>
+<summary>Via the command line</summary>
+<div>
+
+1. To create a locally-managed tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/).
 
 2. Next, run your newly created tunnel.
 
@@ -50,6 +69,9 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
    ```
 
   This will output your tunnel UUID as well as two Connector IDs, one for each `cloudflared` process running your tunnel. With this command, you can also see that your tunnel is now being served by eight connections.
+
+</div>
+</details>
 
 You can run the same tunnel across various `cloudflared` processes for up to 100 connections (25 replicas) per tunnel. Cloudflare Load Balancers and DNS records can still point to the tunnel and its UUID. Traffic will be sent to all `cloudflared` processes associated with the tunnel.
 

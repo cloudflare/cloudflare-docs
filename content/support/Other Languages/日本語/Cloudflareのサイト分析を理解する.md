@@ -100,11 +100,11 @@ DNSタブで利用できるメトリックパネルには次が含まれます�
 
 ### ログ
 
-「ログ」タブは、メトリックを表示しません。その代わりに、Enterpriseプランのお客様は[Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/)サービスを有効にできます。Logpushなら、お客様が選んだ分析ツールを使って、データのダウンロードと分析が可能です。
+「ログ」タブは、メトリックを表示しません。その代わりに、Enterpriseプランのお客様は[Cloudflare Logs Logpush](/logs/about/)サービスを有効にできます。Logpushなら、お客様が選んだ分析ツールを使って、データのダウンロードと分析が可能です。
 
 ___
 
 ## 関連リソース
 
--   [Cloudflareの分析：クイックビュー](https://developers.cloudflare.com/analytics)
--   [Cloudflare Analytics GraphQL API](https://developers.cloudflare.com/analytics/)
+-   [Cloudflareの分析：クイックビュー](/analytics)
+-   [Cloudflare Analytics GraphQL API](/analytics/)

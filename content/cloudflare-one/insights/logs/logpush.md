@@ -19,7 +19,7 @@ With Cloudflare's [Logpush](/logs/about/) service, you can configure the automat
 To enable Logpush for Zero Trust logs:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Logs** > **Logpush**.
-2. Select **Connect a service**.
+2. Select **Add Logpush job**.
 3. Enter a **Job name**.
 4. From the drop-down menu, choose the [dataset](#zero-trust-datasets) to export.
 5. Next, select the data fields you want to include in the log.
@@ -36,13 +36,13 @@ You can configure multiple destinations and add additional fields to your logs b
 
 Refer to the Logpush documentation for a list of available fields.
 
-| Dataset                                                                         | Description                                                                                                                |
-| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)                  | [DNS queries](/cloudflare-one/analytics/logs/gateway-logs/#dns-logs) inspected by Cloudflare Gateway                       |
-| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)                | [HTTP requests](/cloudflare-one/analytics/logs/gateway-logs/#http-logs) inspected by Cloudflare Gateway                    |
-| [Gateway Network](/logs/reference/log-fields/account/gateway_network/)          | [Network packets](/cloudflare-one/analytics/logs/gateway-logs/#network-logs) inspected by Cloudflare Gateway               |
-| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)                    | [Authentication events](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs) through Cloudflare Access    |
-| [Access Requests](/logs/reference/log-fields/account/access_requests/)          | [HTTP requests](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) to sites protected by Cloudflare Access |
-| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | [Security issues](/cloudflare-one/applications/scan-apps/manage-findings/) detected by Cloudflare CASB                     |
-| Device Posture                                                                  | [Device posture status](/cloudflare-one/analytics/logs/posture-logs) from the WARP client                                  |
-| [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway                                                             |
+| Dataset                                                                         | Description                                                    |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)                  | DNS queries inspected by Cloudflare Gateway                    |
+| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)                | HTTP requests inspected by Cloudflare Gateway                  |
+| [Gateway Network](/logs/reference/log-fields/account/gateway_network/)          | Network packets inspected by Cloudflare Gateway                |
+| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)                    | Authentication events through Cloudflare Access                |
+| [Access Requests](/logs/reference/log-fields/account/access_requests/)          | HTTP requests to sites protected by Cloudflare Access          |
+| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | Security issues detected by Cloudflare CASB                    |
+| [Device Posture](/logs/reference/log-fields/account/device_posture_results/)    | Device posture status from the WARP client                     |
+| [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway |

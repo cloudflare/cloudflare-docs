@@ -75,7 +75,7 @@ Les minutes facturables représentent le temps passé à transmettre les vidéos
 
 Si un visiteur du site charge une vidéo et ne la regarde pas, Cloudflare facturera quand même la livraison de la vidéo. Cependant, si le navigateur du visiteur met la vidéo en cache localement, Cloudflare ne facture pas le temps passé à la regarder. En d'autres termes, si le visiteur regarde la vidéo plusieurs fois, nous ne facturerons pas les visionnages suivants.
 
-Si vous utilisez l'attribut _preload_ (décrit dans la [API documentation](https://developers.cloudflare.com/stream/video-playback/player-api/) de Stream) dans le code incorporé, nous vous facturerons le temps passé à pré-charger la vidéo. Notez que le comportement de pré-chargement varie selon le navigateur. Certains navigateurs pré-chargent quelques secondes de vidéo alors que d'autres pré-chargent la vidéo entière. Bien que le pré-chargement soit utile pour optimiser la disponibilité de la vidéo, demandez-vous s'il convient à votre utilisation.
+Si vous utilisez l'attribut _preload_ (décrit dans la [API documentation](/stream/video-playback/player-api/) de Stream) dans le code incorporé, nous vous facturerons le temps passé à pré-charger la vidéo. Notez que le comportement de pré-chargement varie selon le navigateur. Certains navigateurs pré-chargent quelques secondes de vidéo alors que d'autres pré-chargent la vidéo entière. Bien que le pré-chargement soit utile pour optimiser la disponibilité de la vidéo, demandez-vous s'il convient à votre utilisation.
 
 Vous pouvez consulter vos minutes facturables Cloudflare Stream dans le tableau de bord Cloudflare pour estimer le coût des minutes que vous avez consommées.
 
@@ -90,4 +90,4 @@ Pour voir vos minutes de streaming regardées, 
 ___
 
 -   [Plate-forme vidéo Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Documentation pour les développeurs de Cloudflare Stream](https://developers.cloudflare.com/stream/getting-started/)
+-   [Documentation pour les développeurs de Cloudflare Stream](/stream/getting-started/)

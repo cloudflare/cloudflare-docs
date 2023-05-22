@@ -153,7 +153,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
       <td colspan="5" rowspan="1">
         Cloudflare does not consider the asset eligible to cache and your Cloudflare settings do not
         explicitly instruct Cloudflare to cache the asset. Instead, the asset was requested from the
-        origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> to implement
+        origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> or <a href="/cache/about/cache-rules/">Cache Rules</a> to implement
         custom caching options.
       </td>
     </tr>

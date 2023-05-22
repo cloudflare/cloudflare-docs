@@ -50,6 +50,8 @@ The phases execute in the order they appear in the table.
 
 \* _This phase is for configuration purposes only — the corresponding rules will not be executed at this stage in the request handling process._
 
+{{<render productFolder="bots" file="_bfm-change-notice.md">}}
+
 ### Response phases
 
 The phases execute in the order they appear in the table.

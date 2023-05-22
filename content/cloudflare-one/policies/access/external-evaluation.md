@@ -79,7 +79,7 @@ You can set up External Evaluation rules using any API service, but to get start
 
 {{<Aside type="note">}}
 
-- Sample code is available in our [Github repository](https://github.com/cloudflare/workers-access-external-auth-example).
+- Sample code is available in our [GitHub repository](https://github.com/cloudflare/workers-access-external-auth-example).
 - To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
   {{</Aside>}}
 

@@ -32,16 +32,16 @@ ___
 Bei der Verwendung mit O2O können bestimmte Cloudflare-Funktionen den Traffic-Fluss zu Ihrem Shopify-Shop unterbrechen oder Ihren Besuchern falsche Daten anzeigen, was bedeutet, dass Sie dies tun sollten:
 
 -   Verwenden Sie die folgenden Cloudflare-Funktionen nicht:
-    -   [HTML-Caching](https://developers.cloudflare.com/cache/)
-    -   [Benutzerdefinierte Firewall-Regeln](https://developers.cloudflare.com/firewall/)
+    -   [HTML-Caching](/cache/)
+    -   [Benutzerdefinierte Firewall-Regeln](/firewall/)
     -   [Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)
     -   [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
-    -   [Lastverteilung](https://developers.cloudflare.com/load-balancing/)
+    -   [Lastverteilung](/load-balancing/)
     -   [IPv6](https://support.cloudflare.com/hc/articles/229666767)
 -   Seien Sie vorsichtig mit den folgenden Cloudflare-Funktionen:
     -   [Page Rules](https://support.cloudflare.com/hc/articles/218411427): Falsch konfigurierte Page Rules, die mit der für Shopify verwendeten Subdomain übereinstimmen, können den Fluss der E-Commerce-Besucher auf Ihrer Website blockieren oder verzerren.
-    -   [Workers](https://developers.cloudflare.com/workers/): Ähnlich wie Page Rules kann Workers den Traffic-Fluss auf Ihre Website unterbrechen und folglich den Umsatz reduzieren. Seien Sie beim Schreiben von Workers vorsichtig. Es wird empfohlen, die mit Shopify verwendete Subdomain von der Worker-Route auszuschließen.
-    -   [DNS-CAA-Einträge](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records): Shopify stellt SSL/TLS-Zertifikate für Händlerdomains mit Let's Encrypt aus. Wenn Sie DNS-CAA-Einträge hinzufügen, müssen Sie Let's Encrypt als Zertifizierungsstelle (CA) auswählen, da HTTPS-Verbindungen sonst fehlschlagen können.
+    -   [Workers](/workers/): Ähnlich wie Page Rules kann Workers den Traffic-Fluss auf Ihre Website unterbrechen und folglich den Umsatz reduzieren. Seien Sie beim Schreiben von Workers vorsichtig. Es wird empfohlen, die mit Shopify verwendete Subdomain von der Worker-Route auszuschließen.
+    -   [DNS-CAA-Einträge](/ssl/edge-certificates/caa-records/): Shopify stellt SSL/TLS-Zertifikate für Händlerdomains mit Let's Encrypt aus. Wenn Sie DNS-CAA-Einträge hinzufügen, müssen Sie Let's Encrypt als Zertifizierungsstelle (CA) auswählen, da HTTPS-Verbindungen sonst fehlschlagen können.
 
 {{<Aside type="note">}}
 Cloudflare kann keine Konfigurationsprobleme mit den oben genannten

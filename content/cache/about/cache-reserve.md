@@ -1,17 +1,13 @@
 ---
-title: Cache Reserve (beta)
+title: Cache Reserve
 pcx_content_type: concept
-product_grid:
-  show: true
-  title: Cache Reserve
-  group: Application performance
 ---
 
-{{<beta>}} Cache Reserve {{</beta>}}
+# Cache Reserve
 
 Cache Reserve is a large, persistent data store [implemented on top of R2](https://blog.cloudflare.com/r2-open-beta/). By pushing a single button in the dashboard, your website’s cacheable content will be written to Cache Reserve. In the same way that [Tiered Cache](https://blog.cloudflare.com/introducing-smarter-tiered-cache-topology-generation/) builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/about/tiered-cache/) that will reserve storage space for your assets for as long as you want. This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
-![Content served from origin and getting cached in Cache Reserve, and Edge Cache Data Centers (T1=upper-tier, T2=lower-tier) on its way back to the client](/cache/static/images/content-being-served.png)
+![Content served from origin and getting cached in Cache Reserve, and Edge Cache Data Centers (T1=upper-tier, T2=lower-tier) on its way back to the client](/images/cache/content-being-served.png)
 
 How long content in Cache Reserve will be considered “fresh” is determined by Edge Cache TTL setting or Cache-Control headers at your origin, if [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl) is not set. After freshness expires, Cloudflare will attempt to revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same behavior as in Cloudflare's regular CDN.
 
@@ -23,17 +19,15 @@ Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below
 
 ## Enable Cache Reserve
 
-You can enable Cache Reserve from the dashboard or [via API](https://api.cloudflare.com/#zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
+You can enable Cache Reserve from the dashboard or [via API](/api/operations/zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
 
 To enable Cache Reserve through the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
-2.  Navigate to **Caching**.
-3.  Enable **Cache Reserve**.
+2.  Go to **Caching** > **Cache Reserve**.
+3.  Select **Enable storage sync**.
 
 {{<Aside type="note" header="Note">}}You can pause Cache Reserve at any time. Pausing Cache Reserve means that Cloudflare’s network will no longer use Cache Reserve to serve data, but resources will remain in storage until they are purged or expired.{{</Aside>}}
-
-![Cache Reserve enablement in the dashboard](/cache/static/images/cache-reserve-dash.png)
 
 If you are an Enterprise customer and are interested in Cache Reserve, contact your account team to get help with your configuration.
 
@@ -41,9 +35,10 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 
 Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must:
 
-- Be cacheable, according to Cloudflare's standard [cacheability factors](https://developers.cloudflare.com/cache),
+- Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
 - Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/about/cache-rules/)),
 - Have a Content-Length response header.
+- When using [Image Resizing](/images/image-resizing/), original files are eligible for Cache Reserve, but resized file variants are not eligible because Image Resizing happens after Cache Reserve in the response flow.
 
 ## Limits
 
@@ -51,6 +46,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
+- Cache Reserve makes requests for uncompressed content directly from the origin. Unlike the standard Cloudflare CDN, Cache Reserve does not include the `Accept-Encoding: gzip` header when sending requests to the origin.
 
 ## Usage
 

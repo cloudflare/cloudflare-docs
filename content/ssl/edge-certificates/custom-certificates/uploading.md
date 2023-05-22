@@ -49,9 +49,9 @@ To upload a custom SSL certificate in the dashboard:
 
 3.  Go to **SSL/TLS**.
 
-4.  In **Edge Certificates**, click **Upload Custom SSL Certificate**.
+4.  In **Edge Certificates**, select **Upload Custom SSL Certificate**.
 
-5.  Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or click **Paste from file**).
+5.  Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or select **Paste from file**).
 
     {{<Aside type="note">}}If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.{{</Aside>}}
 
@@ -64,9 +64,9 @@ To upload a custom SSL certificate in the dashboard:
     - **Modern (recommended)**: SNI only
     - **Legacy**: Supports non-SNI
 
-9.  Click **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
+9.  Select **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
-10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/custom-certificates/caa-records/).
+10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/caa-records/).
 {{</tab>}}
 
 {{<tab label="api" no-code="true">}}
@@ -125,7 +125,7 @@ EOF
 
 2. Upload your certificate and key
 
-Use the [POST](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
+Use the [POST](/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
 
 ```bash
 $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
@@ -137,7 +137,7 @@ $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_cert
 
 {{<render file="_caa-records-definition.md">}}
 
-For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/custom-certificates/caa-records/).
+For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/caa-records/).
 
 {{</tab>}}
 {{</tabs>}}
@@ -155,13 +155,13 @@ To update a certificate in the dashboard:
 2.  Select your application.
 3.  Go to **SSL/TLS**.
 4.  In **Edge Certificates**, locate a custom certificate.
-5.  Click the wrench icon and click **Replace SSL certificate and key**.
+5.  Select the wrench icon and select **Replace SSL certificate and key**.
 6.  Follow the same steps as [upload a new certificate](#upload-a-custom-certificate).
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To update a certificate using the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
+To update a certificate using the API, send a [`PATCH`](/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
  
 {{</tab>}}
 {{</tabs>}}

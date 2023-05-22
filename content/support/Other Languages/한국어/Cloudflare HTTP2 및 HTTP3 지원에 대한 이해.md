@@ -40,7 +40,7 @@ ___
 
 HTTP/3을 사용하면 빠르고 안정적이며 안전한 연결이 가능합니다.  HTTP/3은 QUIC라는 Google의 프로토콜을 사용하여 기본적으로 인터넷 전송을 암호화합니다.  HTTP/3는 Cloudflare **Network** 앱에서 활성화합니다. 
 
-자세한 정보는 [HTTP/3 개발자 문서](https://developers.cloudflare.com/http3/)를 검토하시기 바랍니다.
+자세한 정보는 [HTTP/3 개발자 문서](/http3/)를 검토하시기 바랍니다.
 
 ___
 

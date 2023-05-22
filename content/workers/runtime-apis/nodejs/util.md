@@ -5,7 +5,7 @@ title: util
 
 # util
 
-{{<render file="nodejs-compat-howto.md">}}
+{{<render file="_nodejs-compat-howto.md">}}
 
 ## promisify/callbackify
 

@@ -35,7 +35,7 @@ Before running the sample plan, edit the waiting room in the test plan to point 
 
 1. Select **Waiting Room Simulation** to expand the test plan and then select **Request origin with waiting room** to update the test configuration.
 
-![Select Request origin with waiting room in the Waiting Room Simulation panel](/waiting-room/static/simulation-panel.png)
+![Select Request origin with waiting room in the Waiting Room Simulation panel](/images/waiting-room/simulation-panel.png)
 
 2. In the **HTTP Request** section update the **Protocol**, **Server Name or IP**, and **Path** fields to point to your test URL with waiting room enabled. For example, if your full URL looks like `https://www.example.com/deals/summer`, then the fields should match as the following:
 
@@ -45,11 +45,11 @@ Protocol | https
 Server Name or IP | www.example.com
 Path | deals/summer
 
-![Update the HTTP Request section](/waiting-room/static/http-request-section.png)
+![Update the HTTP Request section](/images/waiting-room/http-request-section.png)
 
 Then, select the **play** button to get the test started. This should take roughly around 3-4 minutes.
 
-![Select the play button](/waiting-room/static/navigation.png)
+![Select the play button](/images/waiting-room/navigation.png)
 
 - Each simulated user has the following attributes:
 
@@ -60,11 +60,11 @@ Then, select the **play** button to get the test started. This should take rough
     - Logs request details.
     - Pauses for 10 seconds before refreshing the page to make another request to the origin site.
 
-![User attributes](/waiting-room/static/user-attributes.png)
+![User attributes](/images/waiting-room/user-attributes.png)
 
 Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/test_plan.html#thread_group) performs the above action once. The user traffic ramps up within the first minute and keeps a sustained traffic for the next three minutes before users leave the site. You can send more or less traffic than what is being sent in this example by updating these properties.
 
-![Visualizing number of threads](/waiting-room/static/threads.png)
+![Visualizing number of threads](/images/waiting-room/threads.png)
 
 ## 3. Analyze results
 

@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/205359838-Ich-kann-meine-Domain-nicht-zu-Cloudflare-hinzuf%C3%BCgen-
-title: Ich kann meine Domain nicht zu Cloudflare hinzufügen... 
+title: Ich kann meine Domain nicht zu Cloudflare hinzufügen...
 ---
 
-# Ich kann meine Domain nicht zu Cloudflare hinzufügen... 
+# Ich kann meine Domain nicht zu Cloudflare hinzufügen...
 
 
 
@@ -13,7 +13,7 @@ title: Ich kann meine Domain nicht zu Cloudflare hinzufügen...
 
 Cloudflare kann keine autoritative DNS-Auflösung für eine Domain bereitstellen, wenn **DNSSEC** in Ihrem Domain-Registrar aktiviert ist. Sie können **DNSSEC** erneut aktivieren, nachdem die Domain _in Cloudflare aktiv_ ist. Sie müssen **DNSSEC** gemäß [Cloudflares](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS) [DNSSEC](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS)[\-Anforderungen jedoch konfigurieren](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS).
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 **DNSSEC** darf nur für Domains in vollständigen Setups deaktiviert
 werden, in denen die Nameserver von Cloudflare maßgeblich sind.
 {{</Aside>}}
@@ -87,7 +87,7 @@ _Fehler bei Cloudflare-Anfrage: \[1105\] Diese Zone ist vorübergehend gesperrt 
 
 Warten Sie 3 Stunden, bevor Sie sich an den Cloudflare-Support wenden, bevor Sie versuchen, die Domain erneut zu Cloudflare hinzuzufügen.
 
-###   
+###
 Aufhebung einer dauerhaften Sperre
 
 Senden Sie eine Anfrage an den Cloudflare-Support, wenn beim Hinzufügen einer Domain einer der folgenden Fehler auftritt:

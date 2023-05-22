@@ -2,11 +2,6 @@
 pcx_content_type: overview
 title: GraphQL Analytics API
 weight: 4
-product_grid:
-  show: true
-  title: GraphQL Analytics API
-  group: Cloudflare essentials
-  wrap: true
 ---
 
 # GraphQL Analytics API

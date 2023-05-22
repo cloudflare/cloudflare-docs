@@ -11,8 +11,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 const NAME = "myExampleWorkersABTest";
@@ -53,7 +53,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const NAME = "myExampleWorkersABTest";

@@ -38,9 +38,9 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     | Field                              | Description                                                                    |
     | ---------------------------------- | ------------------------------------------------------------------------------ |
-    | **Name**                           | The certificate name you defined while [configuring SAML](#configure-saml)     |
+    | **Name**                           | The certificate name you defined while [configuring SAML](#set-up-citrix-adc-saml)     |
     | **Assertion Consumer Service URL** | `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`        |
-    | **IdP Certificate Name**           | The IdP certificate name you defined while [configuring SAML](#configure-saml) |
+    | **IdP Certificate Name**           | The IdP certificate name you defined while [configuring SAML](#set-up-citrix-adc-saml) |
     | **Issuer Name**                    | `https://idp.<yourdomain>.com/saml/login`                                      |
     | **Service Provider ID**            | `https://idp.<yourdomain>.com/saml/login`                                      |
     | **Name ID Format**                 | EmailAddress                                                                   |

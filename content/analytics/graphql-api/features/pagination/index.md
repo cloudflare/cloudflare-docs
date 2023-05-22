@@ -58,7 +58,7 @@ To get the next *n* results, specify a filter to exclude the last result from th
 
 ```javascript
 
-firewallEventsAdaptive (limit: 2, orderBy: [datetime_ASC, clientCountryName_ASC], filter: {date_geq: "2018-11-12T00:00:00Z", clientCounterName_gt: "US"}) {
+firewallEventsAdaptive (limit: 2, orderBy: [datetime_ASC, clientCountryName_ASC], filter: {date_geq: "2018-11-12T00:00:00Z", clientCountryName_gt: "US"}) {
     date
     clientCountryName
 }

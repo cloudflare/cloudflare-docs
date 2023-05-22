@@ -13,6 +13,7 @@
     try {
       let theme = isDark ? "dark" : "light";
       document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
       localStorage.theme = JSON.stringify({ theme });
 
       if (btn) {

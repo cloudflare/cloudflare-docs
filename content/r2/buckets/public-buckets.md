@@ -8,7 +8,7 @@ weight: 2
 
 ## Overview
 
-Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
+Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the Internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
 
 Public buckets can be set up in either one of two ways:
 

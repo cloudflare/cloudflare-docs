@@ -74,7 +74,7 @@ Follow the best practices for internal routers or firewall interface IP addresse
 
 1.  Create [an IP List](/fundamentals/global-configurations/lists/ip-lists/), **Internal routers** for example, list your IP addresses.
 2.  Block ICMP if it is not needed.
-3.  Permit GRE/ESP as needed if the devices have GRE/IPSEC tunnels via the Internet.
+3.  Permit GRE/ESP as needed if the devices have GRE/IPsec tunnels via the Internet.
 
 ### Suggested rules
 
@@ -110,7 +110,7 @@ The following is an example of suggested rules, but you should only make changes
 ### Suggested rules
 
 **Rule ID**: 1 <br/>
-**Description**: Allows inbound HTTP/S traffic from the internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
+**Description**: Allows inbound HTTP/S traffic from the Internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
 **Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
 **Action**: Allow <br/>
 

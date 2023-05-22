@@ -10,7 +10,7 @@ meta:
 
 ## Firewall rule example JSON response
 
-A JSON response for the [Firewall Rules API](https://developers.cloudflare.com/api/operations/firewall-rules-list-firewall-rules) has this structure:
+A JSON response for the [Firewall Rules API](/api/operations/firewall-rules-list-firewall-rules) has this structure:
 
 ```json
 {

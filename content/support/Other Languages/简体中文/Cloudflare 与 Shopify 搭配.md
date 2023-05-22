@@ -36,16 +36,16 @@ ___
 当与 O2O 一起使用时，Cloudflare 的某些功能会中断 Shopify 商店的流量，或向访问者显示不正确的数据，这意味着您应该：
 
 -   不使用以下 Cloudflare 功能：
-    -   [HTML 缓存](https://developers.cloudflare.com/cache/)
-    -   [自定义防火墙规则](https://developers.cloudflare.com/firewall/)
+    -   [HTML 缓存](/cache/)
+    -   [自定义防火墙规则](/firewall/)
     -   [速率限制](https://support.cloudflare.com/hc/articles/115001635128)
     -   [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
-    -   [负载平衡](https://developers.cloudflare.com/load-balancing/)
+    -   [负载平衡](/load-balancing/)
     -   [IPv6](https://support.cloudflare.com/hc/articles/229666767)
 -   要注意以下 Cloudflare 功能：
     -   [页面规则](https://support.cloudflare.com/hc/articles/218411427): 与 Shopify 使用的子域相匹配的页面规则配置不正确，可能会阻止或扭曲电子商务访问者对您网站的访问。
-    -   [Workers](https://developers.cloudflare.com/workers/)：与页面规则类似，Workers 可能会中断发往您网站的流量，从而导致收益缩减。编写 Workers 应谨慎。建议您从 Workers 路由中排除用于 Shopify 的子域。
-    -   [DNS CAA 记录](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records)：Shopify 使用 Let’s Encrypt 为商家域颁发 SSL/TLS 证书。如果您添加任何 DNS CAA 记录，则必须选择 Let’s Encrypt 作为证书颁发机构（CA），否则 HTTPS 连接可能会出错。
+    -   [Workers](/workers/)：与页面规则类似，Workers 可能会中断发往您网站的流量，从而导致收益缩减。编写 Workers 应谨慎。建议您从 Workers 路由中排除用于 Shopify 的子域。
+    -   [DNS CAA 记录](/ssl/edge-certificates/caa-records/)：Shopify 使用 Let’s Encrypt 为商家域颁发 SSL/TLS 证书。如果您添加任何 DNS CAA 记录，则必须选择 Let’s Encrypt 作为证书颁发机构（CA），否则 HTTPS 连接可能会出错。
 
 ___
 

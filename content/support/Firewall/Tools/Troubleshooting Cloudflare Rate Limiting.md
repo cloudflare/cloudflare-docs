@@ -24,7 +24,7 @@ Also, there are a few common errors that prevent configuring **Rate Limiting** v
 -   _Ratelimit.api.not\_entitled_ - Enterprise customers must contact their Cloudflare Account Team before adding rules.
 -   Other errors are documented in the [API documentation](https://api.cloudflare.com/#rate-limits-for-a-zone-errors). If you're unsure about a particular error, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) and provide the failed API request after redacting your API key.
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 The **origin\_traffic** parameter can only be set on Enterprise plans.
 Setting **origin\_traffic** = *false* for a rule on a Free, Pro, or
 Enterprise domain is automatically converted into **origin\_traffic** =

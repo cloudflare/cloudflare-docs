@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploying your site
+title: Deploy your site
 ---
 
-# Deploying your site
+# Deploy your site
 
 Cloudflare supports deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in [Framework guides](/pages/framework-guides/), you can still deploy it using this guide.
 
@@ -11,7 +11,7 @@ Cloudflare supports deploying any static HTML website to Cloudflare Pages. If yo
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 

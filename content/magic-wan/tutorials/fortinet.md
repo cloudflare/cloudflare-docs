@@ -1,11 +1,11 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 title: Fortinet
 ---
 
 # Fortinet
 
-This tutorial provides a configuration example for using FortiOS (ver 6.x) along with Magic WAN. You can choose to configure Magic WAN with Fortigate using Policy Based IPSec, Route Based IPSec, or GRE, and all three options are listed below.
+This tutorial provides a configuration example for using FortiOS (ver 6.x) along with Magic WAN. You can choose to configure Magic WAN with Fortigate using Policy Based IPsec, Route Based IPsec, or GRE, and all three options are listed below.
 
 ## IPsec – Route based configuration
 
@@ -112,7 +112,7 @@ header: Policy based route
 end
 ```
 
-Fortigate is firewall first, and you will need to create Firewall Policies to ensure traffic is allowed between LAN and IPSec.
+Fortigate is firewall first, and you will need to create Firewall Policies to ensure traffic is allowed between LAN and IPsec.
 
 
 ## IPsec - Policy based configuration
@@ -176,7 +176,7 @@ end
 
 ### Route traffic via the IPsec tunnel
 
-The following firewall policy will match the interesting traffic that should be routed via the IPSec tunnel, and you can adjust the policy to meet your requirements. The following example policy will route all traffic from the "LAN" to anywhere via the IPSec tunnel.  
+The following firewall policy will match the interesting traffic that should be routed via the IPsec tunnel, and you can adjust the policy to meet your requirements. The following example policy will route all traffic from the "LAN" to anywhere via the IPsec tunnel.  
 
 ```bash
 ---

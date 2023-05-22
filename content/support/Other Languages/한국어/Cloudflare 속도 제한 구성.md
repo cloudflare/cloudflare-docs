@@ -35,7 +35,7 @@ ___
 
 ## Analytics
 
-**Analytics** > **보안**.에서 속도 제한에 대한 분석 자료를 볼 수 있습니다. 속도 제한 분석 자료에서는 시뮬레이션된 요청과 일치하는 트래픽이 실선으로 표시되고 실제 차단된 요청이 점선으로 표시됩니다. 속도 제한 규칙으로 생성된 로그는 Enterprise 요금제 고객만 [Cloudflare Logs](https://developers.cloudflare.com/logs/)를 통해 볼 수 있습니다.
+**Analytics** > **보안**.에서 속도 제한에 대한 분석 자료를 볼 수 있습니다. 속도 제한 분석 자료에서는 시뮬레이션된 요청과 일치하는 트래픽이 실선으로 표시되고 실제 차단된 요청이 점선으로 표시됩니다. 속도 제한 규칙으로 생성된 로그는 Enterprise 요금제 고객만 [Cloudflare Logs](/logs/)를 통해 볼 수 있습니다.
 
 Cloudflare는 차단된 요청에 대해 HTTP 429 오류를 반환합니다. Enterprise 요금제 고객은 **Analytics** > **트래픽**의 분석 대시보드에 있는 **상태 코드**에서 위치별로 차단된 요청에 대한 세부사항을 불 수 있습니다.
 
@@ -365,6 +365,6 @@ ___
 ## 관련 자료
 
 -   [Cloudflare 속도 제한의 요금 청구](https://support.cloudflare.com/hc/articles/115000272247)
--   [속도 제한의 ELS(Enterprise Log Share) 보고 방법](https://developers.cloudflare.com/logs/reference/log-fields)
+-   [속도 제한의 ELS(Enterprise Log Share) 보고 방법](/logs/reference/log-fields)
 -   [Cloudflare 속도 제한 문제 해결](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Cloudflare API를 통한 속도 제한 구성](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

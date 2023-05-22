@@ -48,6 +48,10 @@ Class B Operations include `HeadBucket`, `HeadObject`, `GetObject`, `UsageSummar
 
 Free operations include `DeleteObject`, `DeleteBucket` and `AbortMultipartUpload`.
 
+## Pricing calculator
+
+To learn about potential cost savings from using R2, refer to the [R2 pricing calculator](https://r2-calculator.cloudflare.com/).
+
 ## R2 billing examples
 
 #### Data Storage

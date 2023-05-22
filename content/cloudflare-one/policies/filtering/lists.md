@@ -1,21 +1,23 @@
 ---
 pcx_content_type: how-to
 title: Lists
-weight: 11
+weight: 13
 ---
 
 # Lists
 
 {{<Aside>}}
-Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,000 for Standard subscriptions. An uploaded CSV file must be smaller than 2 MB.
+Your lists can include up to 1,000 entries for Standard plans and 5,000 for Enterprise plans. An uploaded CSV file must be smaller than 2 MB.
 {{</Aside>}}
 
 With Cloudflare Zero Trust, you can create lists of URLs, hostnames, or other entries to reference when creating [Gateway policies](/cloudflare-one/policies/filtering/) or [Access policies](/cloudflare-one/policies/access/). This allows you to quickly create rules that match and take actions against several items at once.
 
+Lists cannot have duplicate entries. Because hostnames are converted to [Punycode](https://www.rfc-editor.org/rfc/rfc3492.txt), multiple list entries that convert to the same string will count as duplicates. For example, `éxàmple.com` converts to `xn—xmple-rqa5d.com`, so including both `éxàmple.com` and `xn—xmple-rqa5d.com` in a list will result in an error.
+
 You can create a list by:
 
-- [Uploading a list of entries](#creating-a-list-from-a-csv-file)
-- [Manually creating a list of entries](#creating-a-manual-list)
+- [Uploading a list of entries](#create-a-list-from-a-csv-file)
+- [Manually creating a list of entries](#create-a-manual-list)
 
 ## Create a list from a CSV file
 

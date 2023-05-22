@@ -112,5 +112,5 @@ ___
 ## Recursos relacionados
 
 -   [Servidores de nombres secundarios](https://support.cloudflare.com/hc/en-us/articles/360001356152-How-do-I-setup-and-manage-Secondary-DNS-) (función de Enterprise)
--   [Configuración de CNAME](https://developers.cloudflare.com/dns/zone-setups/partial-setup) (función de los planes Business y Enterprise)
--   [Cómo cambiar los servidores de nombres a Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)
+-   [Configuración de CNAME](/dns/zone-setups/partial-setup) (función de los planes Business y Enterprise)
+-   [Cómo cambiar los servidores de nombres a Cloudflare](/dns/zone-setups/full-setup/setup)

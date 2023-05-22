@@ -8,13 +8,9 @@ meta:
 
 # DDoS reports
 
-To download an ad-hoc DDoS report, generate a PDF report file by selecting **Print report** in your [analytics dashboard](/ddos-protection/reference/analytics/). WAF/CDN customers can download a monthly report in Account Home > **Security Center**, by selecting **Security Reports** and downloading the desired monthly report.
+To download an ad-hoc DDoS report, generate a PDF report file by selecting **Print report** in your [analytics dashboard](/ddos-protection/reference/analytics/). WAF/CDN customers can download a monthly report in Account Home > **Security Center**, by selecting [Security Reports](/security-center/app-security-reports/) and downloading the desired monthly report.
 
 Additionally, if you are a Magic Transit or Spectrum BYOIP customer, you will receive weekly DDoS reports by email with a snapshot of the DDoS attacks that Cloudflare detected and mitigated in the previous week.
-
-{{<Aside type="note">}}
-Currently, Magic Transit customers with leased IPs will not receive weekly DDoS reports.
-{{</Aside>}}
 
 ## Weekly DDoS reports
 
@@ -41,11 +37,11 @@ To receive real-time attack alerts, configure [DDoS alerts](/ddos-protection/ref
 
 The following image shows an example DDoS report:
 
-![Example email sent with a weekly DDoS report](/ddos-protection/static/ddos-report-email.png)
+![Example email sent with a weekly DDoS report](/images/ddos-protection/ddos-report-email.png)
 
 When Cloudflare does not detect any L3/4 DDoS attacks in the prior week, Cloudflare sends a confirmation report:
 
-![Example report email sent when Cloudflare does not detect any DDoS attack in the previous week](/ddos-protection/static/ddos-report-no-attacks.png)
+![Example report email sent when Cloudflare does not detect any DDoS attack in the previous week](/images/ddos-protection/ddos-report-no-attacks.png)
 
 ### Manage reporting subscriptions
 

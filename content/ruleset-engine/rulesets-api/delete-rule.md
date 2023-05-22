@@ -17,8 +17,8 @@ Use one of the following API endpoints:
 | [Delete an account ruleset rule][dr-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
 | [Delete a zone ruleset rule][dr-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>`       |
 
-[dr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-delete-an-account-ruleset-rule
-[dr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-delete-a-zone-ruleset-rule
+[dr-account]: /api/operations/deleteAccountRulesetRule
+[dr-zone]: /api/operations/deleteZoneRulesetRule
 
 If the delete operation succeeds, the API method call returns a `200 OK` HTTP status code with the complete ruleset in the response body.
 

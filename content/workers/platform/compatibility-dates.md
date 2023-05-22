@@ -58,6 +58,8 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
+{{<render file="_nodejs-compat-local-dev.md">}}
+
 As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 ## Change history

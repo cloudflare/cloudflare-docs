@@ -183,7 +183,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 -   The origin IP address in your Cloudflare **DNS** app does not match the IP address currently provisioned to your origin web server by your hosting provider.
 -   Packets were dropped at your origin web server.
 
-If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/get-started/#adding-a-custom-domain).
+If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/platform/custom-domains/#add-a-custom-domain).
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](https://support.cloudflare.com/hc/articles/200172476):
 
@@ -240,7 +240,7 @@ or
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](https://api.cloudflare.com/#zone-settings-change-proxy-read-timeout-setting).
+-   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting).
 -   If you regularly run HTTP requests that take over 100 seconds to complete (for example large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
 -   If error 524 occurs for a domain using Cloudflare Railgun, ensure the _lan.timeout_ is set higher than the default of 30 seconds and restart the railgun service.
 

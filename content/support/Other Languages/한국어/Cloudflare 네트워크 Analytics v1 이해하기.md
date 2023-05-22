@@ -29,9 +29,9 @@ ___
 네트워크 Analytics에 액세스하려면 다음이 필요합니다.
 
 -   Cloudflare Enterprise 요금제
--   Cloudflare [Magic Transit](https://developers.cloudflare.com/magic-transit/) 또는 [Spectrum](https://developers.cloudflare.com/spectrum/).
+-   Cloudflare [Magic Transit](/magic-transit/) 또는 [Spectrum](/spectrum/).
 
-Cloudflare **네트워크 Analytics** 보기에서는 네트워크 계층과 통신 계층의 트래픽 패턴 및 DDoS 공격에 대해 거의 실시간 가시성이 제공됩니다. Network Analytics는 [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/)를 통해 제공되는 것과 동일한 패킷 및 비트 수준 데이터를 가시화합니다.
+Cloudflare **네트워크 Analytics** 보기에서는 네트워크 계층과 통신 계층의 트래픽 패턴 및 DDoS 공격에 대해 거의 실시간 가시성이 제공됩니다. Network Analytics는 [GraphQL Analytics API](/analytics/graphql-api/)를 통해 제공되는 것과 동일한 패킷 및 비트 수준 데이터를 가시화합니다.
 
 ![유형별 패킷 요약 정보가 표시된 Analytics 화면](/support/static/na-main-dashboard.png)
 
@@ -132,7 +132,7 @@ Network Analytics 통계량과 연관된 데이터 유형을 기반으로 필터
 
 ### 적용된 필터로부터 Magic Firewall 규칙 생성
 
-네트워크 Analytics에서 선택한 필터에 일치하는 모든 트래픽을 차단하도록 [Magic Firewall](https://developers.cloudflare.com/magic-firewall) 규칙을 작성할 수 있습니다. 현재 지원되는 필터는 다음과 같습니다.
+네트워크 Analytics에서 선택한 필터에 일치하는 모든 트래픽을 차단하도록 [Magic Firewall](/magic-firewall) 규칙을 작성할 수 있습니다. 현재 지원되는 필터는 다음과 같습니다.
 
 -   대상 IP
 -   프로토콜
@@ -461,7 +461,7 @@ ___
 
 ## 활동 로그 보기
 
-네트워크 Analytics **활동 로그**에는 현재 선택된 시간 범위 내의 로그 이벤트가 500개까지 표시되며 시간 범위 보기마다 페이지당 10개의 결과가 표시됩니다. ([GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/)에는 이러한 제한이 없습니다.) 
+네트워크 Analytics **활동 로그**에는 현재 선택된 시간 범위 내의 로그 이벤트가 500개까지 표시되며 시간 범위 보기마다 페이지당 10개의 결과가 표시됩니다. ([GraphQL Analytics API](/analytics/graphql-api/)에는 이러한 제한이 없습니다.) 
 
 이벤트 세부사항을 표시하려면 이벤트와 연관된 확장 위젯을 클릭하십시오.
 
@@ -518,9 +518,9 @@ ___
 
 ## 관련 자료
 
--   [Cloudflare 네트워크 Analytics v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [Network Analytics v1에서 Network Analytics v2로 마이그레이션하기](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [Cloudflare GraphQL API](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Cloudflare 네트워크 Analytics v2](/analytics/network-analytics/)
+-   [Network Analytics v1에서 Network Analytics v2로 마이그레이션하기](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [Cloudflare GraphQL API](/analytics/graphql-api/)
 -   [Cloudflare Analytics: 개요](https://support.cloudflare.com/hc/articles/360037684111)
 -   [IANA 포트 번호 및 서비스 이름](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -645,7 +645,7 @@ _**\*\* notOlderThan**__을 이용하면 쿼리로 검색할 수 있는 과거 �
 -   공격 로그는 최소, 최대, 평균 데이터 속도에 대한 시작 및 종료 타임스탬프, 패킷 및 비트 통계량, 총량, 공격 유형, 취해진 조치 등과 함께 저장됩니다. 
 -   소스 IP 주소는 개인 식별 정보로 간주됩니다. 그러므로 Cloudflare는 소스 IP 주소를 30일간만 보관합니다. 30일이 지나면 소스 IP 주소는 폐기되며 해당 로그는 먼저 1시간 그룹, 이어서 1일 그룹으로 롤업됩니다. 1시간 롤업은 6개월 간 보관됩니다. 1일 롤업은 1년 간 보관됩니다.
 
-로그 데이터에 대한 쿼리 및 액세스에 대한 자세한 정보는 [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/limits).를 참조하시기 바랍니다.
+로그 데이터에 대한 쿼리 및 액세스에 대한 자세한 정보는 [GraphQL Analytics API](/analytics/graphql-api/limits).를 참조하시기 바랍니다.
 
 ### 네트워크 Analytics에서 대상 IP가 "사용 불가"라고 나오는 이유는 무엇입니까?
 

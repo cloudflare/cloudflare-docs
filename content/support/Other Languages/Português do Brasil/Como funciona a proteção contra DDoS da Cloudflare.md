@@ -28,13 +28,13 @@ A rede da Cloudflare foi desenvolvida para monitorar e mitigar automaticamente g
 
 Além disso, a Cloudflare ajuda a mitigar ataques menores de DDoS:
 
--   Para zonas em qualquer plano, quando a taxa de erros de HTTP estiver acima do nível de sensibilidade _Alto_ (padrão), com um limite de taxa de 1.000 erros por segundo. Para diminuir o nível de sensibilidade, [você pode configurar o conjunto de regras gerenciadas de proteção contra ataques DDoS HTTP](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http).
+-   Para zonas em qualquer plano, quando a taxa de erros de HTTP estiver acima do nível de sensibilidade _Alto_ (padrão), com um limite de taxa de 1.000 erros por segundo. Para diminuir o nível de sensibilidade, [você pode configurar o conjunto de regras gerenciadas de proteção contra ataques DDoS HTTP](/ddos-protection/managed-rulesets/http).
 
 -   Para zonas nos planos Pro, Business e Enterprise, a Cloudflare realiza uma verificação adicional para maior precisão na detecção: a taxa de erros por segundo também precisa ser no mínimo cinco vezes os níveis normais de tráfego de origem.
 
 A Cloudflare determina a taxa de erro com base em todos os erros de HTTP na faixa 52X (Erro Interno do Servidor) e na faixa 53X, exceto para o [erro 530](https://support.cloudflare.com/hc/articles/115003011431#530error).
 
-Os ataques DDoS por HTTP mitigados podem ser vistos no painel "Firewall Analytics" como eventos de DDoS por HTTP, que também estão disponíveis nos [Registros da Cloudflare](https://developers.cloudflare.com/logs/).
+Os ataques DDoS por HTTP mitigados podem ser vistos no painel "Firewall Analytics" como eventos de DDoS por HTTP, que também estão disponíveis nos [Registros da Cloudflare](/logs/).
 
 No momento, em mitigações de DDoS baseadas na taxa de erro HTTP, os clientes não podem excluir códigos de erro HTTP específicos.
 
@@ -48,9 +48,9 @@ O conjunto de regras gerenciadas de proteção contra ataques DDoS HTTP da Cloud
 
 Se você espera grandes picos de tráfego legítimo, considere personalizar suas configurações de proteção contra DDoS para evitar falsos positivos, que ocorrem quando o tráfego legítimo é falsamente identificado como tráfego de ataque e bloqueado/desafiado.
 
-Saiba mais sobre o conjunto de regras gerenciadas de proteção contra ataques DDoS HTTP da Cloudflare e as definições de configuração disponíveis  no [portal de Desenvolvedores da Cloudflare](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http).
+Saiba mais sobre o conjunto de regras gerenciadas de proteção contra ataques DDoS HTTP da Cloudflare e as definições de configuração disponíveis  no [portal de Desenvolvedores da Cloudflare](/ddos-protection/managed-rulesets/http).
 
-Para saber mais sobre as ações realizadas por sistemas de proteção contra ataques DDoS HTTP, consulte [Parâmetros de proteção contra ataques DDoS HTTP: ação](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http/override-parameters#action).
+Para saber mais sobre as ações realizadas por sistemas de proteção contra ataques DDoS HTTP, consulte [Parâmetros de proteção contra ataques DDoS HTTP: ação](/ddos-protection/managed-rulesets/http/override-parameters#action).
 
 ___
 
@@ -58,9 +58,9 @@ ___
 
 O conjunto de regras gerenciadas de proteção contra ataques DDoS na camada de rede da Cloudflare é um conjunto de regras pré-configuradas usadas para fazer a correspondência de vetores de ataque DDoS conhecidos nos níveis 3 e 4 do modelo OSI. O conjunto de regras está disponível para clientes da Cloudflare em todos os planos e é habilitado por padrão.
 
-Saiba mais sobre o conjunto de regras gerenciadas de proteção contra ataques DDoS na camada de rede da Cloudflare e as definições de configuração disponíveis no [portal de Desenvolvedores da Cloudflare](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network).
+Saiba mais sobre o conjunto de regras gerenciadas de proteção contra ataques DDoS na camada de rede da Cloudflare e as definições de configuração disponíveis no [portal de Desenvolvedores da Cloudflare](/ddos-protection/managed-rulesets/network).
 
-Para saber mais sobre as ações realizadas por sistemas de proteção contra ataques DDoS de camada 3/4, consulte [Parâmetros de proteção contra ataques DDoS na camada de rede: ação](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network/override-parameters#action).
+Para saber mais sobre as ações realizadas por sistemas de proteção contra ataques DDoS de camada 3/4, consulte [Parâmetros de proteção contra ataques DDoS na camada de rede: ação](/ddos-protection/managed-rulesets/network/override-parameters#action).
 
 ___
 
@@ -79,7 +79,7 @@ ___
 Há dois cenários comuns em que parece que a Cloudflare está atacando seu site:
 
 -   A não ser que você [restaure os endereços de IP originais do visitante](https://support.cloudflare.com/hc/pt-br/sections/200805497-Restoring-Visitor-IPs), os endereços de IP da Cloudflare aparecerão nos logs do seu servidor para todas as solicitações com proxy.
--   O invasor está falsificando os IPs da Cloudflare. A Cloudflare apenas [envia tráfego para seu servidor Web de origem por algumas portas específicas](https://support.cloudflare.com/hc/articles/200169156) a menos que você use o [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started/).
+-   O invasor está falsificando os IPs da Cloudflare. A Cloudflare apenas [envia tráfego para seu servidor Web de origem por algumas portas específicas](https://support.cloudflare.com/hc/articles/200169156) a menos que você use o [Cloudflare Spectrum](/spectrum/get-started/).
 
 Idealmente, como a Cloudflare é um proxy reverso, seu provedor de hosting observa o tráfego de ataque que se conecta a partir de [endereços de IP da Cloudflare](https://www.cloudflare.com/ips/). Por outro lado, se estiver vendo conexões de endereços de IP que não pertencem à Cloudflare, trata-se de um ataque direto ao seu servidor Web de origem. A Cloudflare não pode parar os ataques diretamente no seu endereço de IP de origem porque o tráfego ignora a rede da Cloudflare.
 

@@ -8,7 +8,7 @@ weight: 1
 
 Cloudflare helps Channel and Alliance partners manage their and their customers' accounts through a Tenant structure.
 
-![Partner accounts contain a tenant, which is a container for customer accounts and zones. For more details, keep reading.](/tenant/static/tenant-diagram.png)
+![Partner accounts contain a tenant, which is a container for customer accounts and zones. For more details, keep reading.](/images/tenant/tenant-diagram.png)
 
 ## Tenants and Tenant admins
 

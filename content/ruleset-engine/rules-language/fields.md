@@ -375,9 +375,11 @@ The Cloudflare Rules language supports these standard fields:
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Notes">}}
 
-Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+* Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+* The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
 {{</Aside>}}
 
@@ -386,7 +388,7 @@ The Cloudflare Rules language supports these dynamic fields:
 <table>
   <thead>
    <tr>
-      <th style="width: 50%;">Field Name</th>
+      <th style="width: 51%;">Field Name</th>
       <th>Description</th>
    </tr>
   </thead>
@@ -513,6 +515,140 @@ The Cloudflare Rules language supports these dynamic fields:
       <p>Returns <code class="InlineCode">true</code> when a request presents a valid client certificate.
       </p>
       <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_presented">
+      <td><code>cf.tls_client_auth.cert_presented</code><br />{{<type>}}Boolean{{</type>}}</td>
+      <td>
+      <p>
+      Returns <code class="InlineCode">true</code> when a request presents a certificate (valid or not).
+      </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn">
+      <td><code>cf.tls_client_auth.cert_issuer_dn</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn">
+      <td><code>cf.tls_client_auth.cert_subject_dn</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn_rfc2253">
+      <td><code>cf.tls_client_auth.cert_issuer_dn_rfc2253</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in <a href="https://datatracker.ietf.org/doc/html/rfc2253">RFC 2253</a> format.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn_rfc2253">
+      <td><code>cf.tls_client_auth.cert_subject_dn_rfc2253</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in <a href="https://datatracker.ietf.org/doc/html/rfc2253">RFC 2253</a> format.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn_legacy">
+      <td><code>cf.tls_client_auth.cert_issuer_dn_legacy</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
+      </p>
+      <p>Example:<br/>
+      <code>"/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn_legacy">
+      <td><code>cf.tls_client_auth.cert_subject_dn_legacy</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
+      </p>
+      <p>Example:<br/>
+      <code>"/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_serial">
+      <td><code>cf.tls_client_auth.cert_serial</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>Serial number of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"527E0F20A20EA2A4146C78390F34CE7AF0878CA4"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_serial">
+      <td><code>cf.tls_client_auth.cert_issuer_serial</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>Serial number of the direct issuer of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"2688201DBA77402EA87118876F2E1B24CF8B0395"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha256">
+      <td><code>cf.tls_client_auth.cert_fingerprint_sha256</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The SHA-256 fingerprint of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha1">
+      <td><code>cf.tls_client_auth.cert_fingerprint_sha1</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The SHA-1 fingerprint of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"933ad5282c560ae3f482a43ecd73bc9de878a190"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_not_before">
+      <td><code>cf.tls_client_auth.cert_not_before</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The certificate in the request is not valid before this date.
+      </p>
+      <p>Example:<br/>
+      <code>"Mar 21 13:35:00 2022 GMT"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_not_after">
+      <td><code>cf.tls_client_auth.cert_not_after</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The certificate in the request is not valid after this date.
+      </p>
+      <p>Example:<br/>
+      <code>"Mar 21 13:35:00 2023 GMT"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_ski">
+      <td><code>cf.tls_client_auth.cert_ski</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Subject Key Identifier (SKI) of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"27846FAE6EAC4A8DAD9101B519CF1EB460242831"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_ski">
+      <td><code>cf.tls_client_auth.cert_issuer_ski</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"8204924CF49D471E855862706D889F58F6B784D3"</code>
       </p></td>
     </tr>
     <tr id="field-cf-waf-score">

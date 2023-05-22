@@ -108,6 +108,8 @@ These records include the following fields:
 
 You can use `CNAME` records to point to other `CNAME` records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid `A` or `AAAA` record) if this hostname is meant to proxy traffic.
 
+Cloudflare uses a process called `CNAME` flattening to deliver better performance. This process supports a few features and can interact with [different setups that depend on `CNAME` records](/dns/cname-flattening/#aspects-to-keep-in-mind). Refer to the [`CNAME` flattening section](/dns/cname-flattening/) to learn more about this.
+
 #### Example API call
 
 When creating `CNAME` records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
@@ -234,7 +236,7 @@ The **Content** for TXT records at Cloudflare must be 2048 characters or less.
 
 ### CAA
 
-A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/custom-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
+A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
 
 {{<render file="_api-field-definitions.md">}}
 
@@ -331,7 +333,7 @@ If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-s
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
 
-You only need to add NS records when you are [creating custom or vanity nameservers](/dns/additional-options/custom-nameservers/) or [delegating subdomains outside of Cloudflare](https://support.cloudflare.com/hc/articles/360021357131).
+You only need to add NS records when you are [creating custom or vanity nameservers](/dns/additional-options/custom-nameservers/) or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
 {{<render file="_api-field-definitions.md">}}
 

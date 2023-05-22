@@ -41,7 +41,7 @@ Cloudflare Zone Lockdown is available on paid plans. The number of available Zon
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Issue a `POST` request for the [Create a Zone Lockdown rule](https://developers.cloudflare.com/api/operations/zone-lockdown-create-a-zone-lockdown-rule) operation.
+Issue a `POST` request for the [Create a Zone Lockdown rule](/api/operations/zone-lockdown-create-a-zone-lockdown-rule) operation.
 
 For example:
 

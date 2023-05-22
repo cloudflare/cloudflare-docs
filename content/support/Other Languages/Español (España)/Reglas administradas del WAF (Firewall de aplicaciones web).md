@@ -28,7 +28,7 @@ Las reglas administradas están disponibles en los planes Pro, Business y Enterp
 {{<Aside type="note">}}
 -   El nuevo WAF, anunciado en marzo de 2021, proporciona el [el
     conjunto de reglas administradas gratuitas de
-    Cloudflare](https://developers.cloudflare.com/waf/managed-rulesets/)
+    Cloudflare](/waf/managed-rulesets/)
     a todos los clientes, incluidos los suscritos a un plan gratuito.
     Consulta la [entrada del
     blog](https://blog.cloudflare.com/waf-for-everyone/) para obtener
@@ -39,7 +39,7 @@ Las reglas administradas están disponibles en los planes Pro, Business y Enterp
     reglas administradas del WAF.
 {{</Aside>}}
 
-Revisa las amenazas bloqueadas a través de [Análisis de firewall](https://developers.cloudflare.com/waf/analytics/) **Registro de actividad** disponible en **Seguridad** > **Información general**.
+Revisa las amenazas bloqueadas a través de [Análisis de firewall](/waf/analytics/) **Registro de actividad** disponible en **Seguridad** > **Información general**.
 
 ### Consideraciones importantes
 
@@ -51,7 +51,7 @@ Revisa las amenazas bloqueadas a través de [Análisis de firewall](https://deve
 -   Las reglas administradas analizan las respuestas JSON para identificar las vulnerabilidades dirigidas a las API. El análisis de la carga útil JSON está limitado a 128 KB.
 -   Las reglas administradas mitigan las técnicas de relleno. Recomendamos lo siguiente:
     1.  Activar la regla _100048_. Esta regla protege ahora contra los ataques de "relleno", pero no se implementa por defecto ya que provoca muchos falsos positivos en los entornos de los clientes. Sin embargo, es importante que los clientes ajusten su configuración de reglas administradas. Cloudflare está trabajando en una solución mejor a largo plazo.
-    2.  Crea una regla de firewall utilizando el [Editor de expresión](https://developers.cloudflare.com/firewall/cf-dashboard/edit-expressions/#expression-editor) en función de la necesidad de comprobar los encabezados y/o el cuerpo para bloquear la carga útil más grande (> 128 KB). Asegúrate de probar tu regla de firewall en el modo _Registro_ primero, ya que podría ser propenso a generar falsos positivos.
+    2.  Crea una regla de firewall utilizando el [Editor de expresión](/firewall/cf-dashboard/edit-expressions/#expression-editor) en función de la necesidad de comprobar los encabezados y/o el cuerpo para bloquear la carga útil más grande (> 128 KB). Asegúrate de probar tu regla de firewall en el modo _Registro_ primero, ya que podría ser propenso a generar falsos positivos.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Hay varias reglas administradas que Cloudflare no desactiva aunque **Reglas administradas** esté _desactivado_ en el panel de control de Cloudflare, como los Id. de regla _WP0025B_, _100043A_ y _100030._
@@ -69,18 +69,18 @@ Por defecto, las reglas administradas del WAF se administran completamente a tra
 
 La definición de contenido sospechoso es subjetiva para cada sitio web.  Por ejemplo, el código PHP publicado en tu sitio web es sospechoso a menos que tu sitio web te enseñe a codificar y requiera el envío de código PHP de los visitantes.  Por lo tanto, dicho sitio web debe deshabilitar las reglas administradas que interfieran con el funcionamiento normal.
 
-Para hacer la prueba de falsos positivos, configura las reglas administradas del WAF en modo **Simular**, de esta manera registrarás la respuesta a posibles ataques sin las acciones de desafiar o bloquear. Utiliza también el [**registro de actividad**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) de la función Análisis de firewall para determinar qué reglas administradas causaron falsos positivos.
+Para hacer la prueba de falsos positivos, configura las reglas administradas del WAF en modo **Simular**, de esta manera registrarás la respuesta a posibles ataques sin las acciones de desafiar o bloquear. Utiliza también el [**registro de actividad**](/waf/analytics/paid-plans#activity-log) de la función Análisis de firewall para determinar qué reglas administradas causaron falsos positivos.
 
 Si te encuentras con un falso positivo debido al [WAF heredado](https://support.cloudflare.com/hc/es-es/articles/200172016-Understanding-the-Cloudflare-Web-Application-Firewall-WAF-), existen varias soluciones potenciales:
 
 -   **Añade las direcciones IP del cliente a la lista de permisos de** [**reglas de Access de IP**](https://support.cloudflare.com/hc/articles/217074967)**:** si el navegador o el cliente visita desde las mismas direcciones IP, recomendamos permitir. 
 -   **Desactiva la(s)** [**regla(s) administradas**](https://support.cloudflare.com/hc/articles/200172016) correspondiente(s): evita bloquear o desafiar los falsos positivos, pero reduce la seguridad general del sitio. Una solicitud bloqueada por el Id. de regla _981176_ hace referencia a las reglas de OWASP. Reduce la sensibilidad de OWASP para resolver el problema.
--   **Omitir las reglas administradas del WAF con una regla de firewall:** crea una regla de firewall con la acción **Omitir** para desactivar las reglas administradas del WAF en una combinación específica de parámetros. Por ejemplo, [omite las reglas administradas](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/) para una URL específica y una dirección IP o agente de usuario concreto.
+-   **Omitir las reglas administradas del WAF con una regla de firewall:** crea una regla de firewall con la acción **Omitir** para desactivar las reglas administradas del WAF en una combinación específica de parámetros. Por ejemplo, [omite las reglas administradas](/firewall/cf-firewall-rules/actions/) para una URL específica y una dirección IP o agente de usuario concreto.
 -   **No se recomienda desactivar las reglas administradas del WAF para el tráfico hacia una URL:**  disminuye la seguridad en el punto de conexión de la URL en particular.  Configuración a través de [Page Rules](https://support.cloudflare.com/hc/es-es/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-).
 
 Si te encuentras con un falso positivo debido al [nuevo WAF](https://blog.cloudflare.com/new-cloudflare-waf/), existen varias soluciones potenciales:
 
-1.  **Añade una excepción del WAF:** puedes definir excepciones del WAF en el [panel de control de Cloudflare](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-dashboard) o por medio del  [conjunto de reglas API](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-api).
+1.  **Añade una excepción del WAF:** puedes definir excepciones del WAF en el [panel de control de Cloudflare](/waf/managed-rulesets/waf-exceptions/define-dashboard) o por medio del  [conjunto de reglas API](/waf/managed-rulesets/waf-exceptions/define-api).
 2.  **Desactiva la(s)** [**regla(s) administradas**](https://support.cloudflare.com/hc/articles/200172016) correspondiente(s): evita bloquear o desafiar los falsos positivos, pero reduce la seguridad general del sitio. Una solicitud bloqueada por el Id. de regla _949110_ se refiere a las [nuevas reglas de OWASP](https://blog.cloudflare.com/new-cloudflare-waf/). Reduce la sensibilidad de OWASP para resolver el problema.
 
 **Nota:** Si [contactas con Soporte de Cloudflare](https://support.cloudflare.com/hc/articles/200172476) para verificar si una regla administrada del WAF se activa según lo previsto, [facilita una captura de un archivo HAR](https://support.cloudflare.com/hc/articles/203118044#h_8c9c815c-0933-49c0-ac00-b700700efce7) al enviar la solicitud específica.
@@ -100,8 +100,8 @@ Para identificar falsos negativos, revisa los registros HTTP de tu servidor web 
     -   Por ejemplo, Cloudflare permite solicitudes con agentes de usuario vacíos de forma predeterminada. Para bloquear solicitudes con un agente de usuario vacío, cambia el  **Modo** de la regla a **Bloquear**.
     -   Otro ejemplo, si quieres bloquear los ataques de inyección de código SQL no mitigados, asegúrate de que las reglas de inyección de código SQL relevantes están activadas y configuradas en el modo **Bloquear** en el grupo **Cloudflare Specials**.
 -   ¿Se redirigen los registros DNS que sirven tráfico HTTP mediante proxy a Cloudflare?
--   ¿Una [**regla de firewall** omite](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/#supported-actions) las reglas administradas de Cloudflare? 
--   ¿Puede un país, aviso de envío por adelantado (ASN), rango de IP o dirección IP que estén autorizados en las [**reglas de Access de IP**](https://support.cloudflare.com/hc/articles/217074967) o [**reglas de firewall**](https://developers.cloudflare.com/firewall/cf-firewall-rules/) coincidir con el tráfico de ataque?
+-   ¿Una [**regla de firewall** omite](/firewall/cf-firewall-rules/actions/#supported-actions) las reglas administradas de Cloudflare? 
+-   ¿Puede un país, aviso de envío por adelantado (ASN), rango de IP o dirección IP que estén autorizados en las [**reglas de Access de IP**](https://support.cloudflare.com/hc/articles/217074967) o [**reglas de firewall**](/firewall/cf-firewall-rules/) coincidir con el tráfico de ataque?
 -   ¿Se dirige el tráfico malicioso a tus direcciones IP de origen para evitar la protección de Cloudflare? Bloquea todo el tráfico, excepto las [direcciones IP de Cloudflare](https://www.cloudflare.com/ips/) en tu servidor web de origen.
 
 ___
@@ -125,9 +125,9 @@ Al visualizar un conjunto de reglas, Cloudflare muestra las acciones predetermin
 -   _Desactivado:_ desactiva la regla específica dentro del grupo.
 -   _Bloqueado_: la solicitud se descarta.
 -   _CAPTCHA heredado (Legacy CAPTCHA)_ -El visitante recibe una página de desafío CAPTCHA.
--   _Simulado_: la solicitud se permite pero se registra en el [**registro de actividad**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log).
+-   _Simulado_: la solicitud se permite pero se registra en el [**registro de actividad**](/waf/analytics/paid-plans#activity-log).
 
-El [registro de cambios del WAF](https://developers.cloudflare.com/waf/change-log/scheduled-changes/) de Cloudflare permite a los clientes supervisar los cambios en curso en el **Conjunto de reglas administradas de Cloudflare.**
+El [registro de cambios del WAF](/waf/change-log/scheduled-changes/) de Cloudflare permite a los clientes supervisar los cambios en curso en el **Conjunto de reglas administradas de Cloudflare.**
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 -   _Bloqueado_: la solicitud se descarta.
 -   _Desafío_: el visitante recibe una página de desafío CAPTCHA.
--   _Simulado_: la solicitud se permite pero se registra en el [**registro de actividad**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log).
+-   _Simulado_: la solicitud se permite pero se registra en el [**registro de actividad**](/waf/analytics/paid-plans#activity-log).
 
 La puntuación de sensibilidad necesaria para activar el WAF para una **sensibilidad** específica es la siguiente:
 
@@ -153,7 +153,7 @@ Para las solicitudes de Ajax, se aplican las siguientes puntuaciones:
 -   _Media_ - 80 y superior
 -   _Alta_ - 65 y superior
 
-Revisa el [registro de actividad](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) para ver la puntuación final, así como las reglas individuales activadas.
+Revisa el [registro de actividad](/waf/analytics/paid-plans#activity-log) para ver la puntuación final, así como las reglas individuales activadas.
 
 ### Controla el paquete OWASP de Cloudflare
 
@@ -185,6 +185,6 @@ ___
 
 ## Recursos relacionados
 
--   [Análisis de firewall](https://developers.cloudflare.com/waf/analytics/)
--   [Reglas de firewall de Cloudflare](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
--   [Registro de cambios del WAF de Cloudflare](https://developers.cloudflare.com/waf/change-log/scheduled-changes/)
+-   [Análisis de firewall](/waf/analytics/)
+-   [Reglas de firewall de Cloudflare](/firewall/cf-firewall-rules/)
+-   [Registro de cambios del WAF de Cloudflare](/waf/change-log/scheduled-changes/)

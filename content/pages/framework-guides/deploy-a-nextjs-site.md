@@ -123,11 +123,11 @@ Deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v14 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
 
 {{<Aside type="note" header="Note">}}
 
-The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/#advanced-mode). The `--experimental-minify` argument attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](https://developers.cloudflare.com/workers/platform/limits/#worker-size). If you notice any bugs in this feature, please let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
+The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/advanced-mode/). The `--experimental-minify` argument attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](/workers/platform/limits/#worker-size). If you notice any bugs in this feature, please let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
 
 {{</Aside>}}
 
@@ -178,7 +178,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/api-routes/introduction) and [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props). Then access bindings set for your application by accessing them in your code via `process.env`.
 

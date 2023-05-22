@@ -35,7 +35,7 @@ ___
 
 ## 分析
 
-**分析**\>**セキュリティ**でレート制限分析を表示します。レート制限分析では、実線はシミュレートされたリクエストと一致するトラフィックを表し、点線は実際にブロックされたリクエストを表します。レート制限ルールで生成されたログは、[Cloudflare ログ](https://developers.cloudflare.com/logs/)を通じてEnterpriseプランのお客様にだけ表示されます。
+**分析**\>**セキュリティ**でレート制限分析を表示します。レート制限分析では、実線はシミュレートされたリクエストと一致するトラフィックを表し、点線は実際にブロックされたリクエストを表します。レート制限ルールで生成されたログは、[Cloudflare ログ](/logs/)を通じてEnterpriseプランのお客様にだけ表示されます。
 
 Cloudflareは、ブロックされたリクエストに対してHTTP429エラーを返します。ロケーションごとにブロックされたリクエストの詳細は、**分析**\>**Traffic**で利用可能な分析ダッシュボード上の**ステータスコード**で、Enterpriseのお客様に提供されます。
 
@@ -365,6 +365,6 @@ ___
 ## 関連リソース
 
 -   [Cloudflareレート制限の請求](https://support.cloudflare.com/hc/articles/115000272247)
--   [ELS（Enterprise Log Share）でレート制限はどのように報告されますか？](https://developers.cloudflare.com/logs/reference/log-fields)
+-   [ELS（Enterprise Log Share）でレート制限はどのように報告されますか？](/logs/reference/log-fields)
 -   [Cloudflareレート制限のトラブルシューティング](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Cloudflare APIを使ったレート制限設定](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

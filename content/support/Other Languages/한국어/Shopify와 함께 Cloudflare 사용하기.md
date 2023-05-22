@@ -36,16 +36,16 @@ ___
 O2O와 함께 사용하는 경우 특정 Cloudflare 기능은 구매자에게 트래픽 흐름을 방해하거나 잘못된 데이터를 방문자에게 표시할 수 있습니다. 즉, 다음을 수행해야 합니다.
 
 -   다음 Cloudflare 기능은 사용하지 않는다.
-    -   [HTML 캐싱](https://developers.cloudflare.com/cache/)
-    -   [사용자 정의 방화벽 규칙](https://developers.cloudflare.com/firewall/)
+    -   [HTML 캐싱](/cache/)
+    -   [사용자 정의 방화벽 규칙](/firewall/)
     -   [속도 제한](https://support.cloudflare.com/hc/articles/115001635128)
     -   [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
-    -   [부하 분산](https://developers.cloudflare.com/load-balancing/)
+    -   [부하 분산](/load-balancing/)
     -   [IPv6](https://support.cloudflare.com/hc/articles/229666767)
 -   다음 Cloudflare 기능에 주의하십시오.
     -   [페이지 규칙](https://support.cloudflare.com/hc/articles/218411427): Shopify에 사용되는 서브도메인과 일치하는 올바르게 구성된 페이지 규칙은 웹 사이트에 대한 전자 상거래 방문자의 플로우를 차단하거나 왜곡할 수 있습니다.
-    -   [Workers](https://developers.cloudflare.com/workers/): Page Rules와 유사하게 Workers도 웹 사이트의 트래픽 흐름을 방해하여 결과적으로 매출이 낮아질 수 있습니다. Workers 이용 시 주의가 필요합니다. Shopify에 사용되는 하위 도메인은 Workers 경로에서 제외하는 것이 좋습니다.
-    -   [DNS CAA 레코드](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records): Shopify는 Let’s Encrypt를 이용하여 상인들에게 SSL/TLS 인증서를 발급합니다. DNS CAA 레코드를 추가하는 경우 Let's Encrypt를 인증 기관(CA)으로 선택해야 하며 그렇게 하지 않으면 HTTPS 연결이 실패할 수 있습니다.
+    -   [Workers](/workers/): Page Rules와 유사하게 Workers도 웹 사이트의 트래픽 흐름을 방해하여 결과적으로 매출이 낮아질 수 있습니다. Workers 이용 시 주의가 필요합니다. Shopify에 사용되는 하위 도메인은 Workers 경로에서 제외하는 것이 좋습니다.
+    -   [DNS CAA 레코드](/ssl/edge-certificates/caa-records/): Shopify는 Let’s Encrypt를 이용하여 상인들에게 SSL/TLS 인증서를 발급합니다. DNS CAA 레코드를 추가하는 경우 Let's Encrypt를 인증 기관(CA)으로 선택해야 하며 그렇게 하지 않으면 HTTPS 연결이 실패할 수 있습니다.
 
 ___
 

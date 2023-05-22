@@ -58,13 +58,13 @@ layout: list
             <td>7</td>
             <td>Signature Expired</td>
             <td><code>EDE: 7 (Signature Expired): (for DNSKEY example.com., id = 12345: RRSIG example.com., expiration = 123456)</code></td>
-            <td>This domain did not pass DNSSEC validation due to an expired signature. Make sure your zone is signed with valid <a href="https://support.cloudflare.com/hc/articles/360021111972">DNSSEC signatures</a>.</td>
+            <td>This domain did not pass DNSSEC validation due to an expired signature. Make sure your zone is signed with valid <a href="/dns/additional-options/dnssec/troubleshooting/">DNSSEC signatures</a>.</td>
         </tr>
         <tr>
             <td>8</td>
             <td>Signature Not Yet Valid</td>
             <td><code>EDE: 8 (Signature Not Yet Valid): (for DNSKEY example.com., id = 12345: RRSIG example.com., inception = 12345)</code></td>
-            <td>This domain did not pass DNSSEC validation. Make sure your zone is signed with valid <a href="https://support.cloudflare.com/hc/articles/360021111972">DNSSEC signatures</a>.</td>
+            <td>This domain did not pass DNSSEC validation. Make sure your zone is signed with valid <a href="/dns/additional-options/dnssec/troubleshooting/">DNSSEC signatures</a>.</td>
         </tr>
         <tr>
             <td>9</td>
@@ -82,13 +82,13 @@ layout: list
             <td>11</td>
             <td>No Zone Key Bit Set</td>
             <td><code>EDE: 11 (No Zone Key Bit Set): (for DNSKEY example.com., id = 12345)</code></td>
-            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href="https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1">set a Zone Key flag</a>. Check your <a href="/dns/additional-options/dnssec/">DNSSEC configuration</a> or DNSSEC's <a href="https://support.cloudflare.com/hc/articles/360021111972">troubleshooting guide</a>.</td>
+            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href="https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1">set a Zone Key flag</a>. Check your <a href="/dns/additional-options/dnssec/">DNSSEC configuration</a> or DNSSEC's <a href="/dns/additional-options/dnssec/troubleshooting/">troubleshooting guide</a>.</td>
         </tr>
         <tr>
             <td>12</td>
             <td>NSEC Missing</td>
             <td><code>EDE: 12 (NSEC Missing): failed to verify an insecure referral proof for example.com</code></td>
-            <td>This domain did not pass DNSSEC validation. The upstream nameserver did not include a valid proof of non-existence for the target name. Make sure the zone is <a href="https://support.cloudflare.com/hc/articles/360021111972">signed with DNSSEC</a> and has valid <a href="https://www.cloudflare.com/dns/dnssec/dnssec-complexities-and-considerations/">NSEC/NSEC3 records</a>.</td>
+            <td>This domain did not pass DNSSEC validation. The upstream nameserver did not include a valid proof of non-existence for the target name. Make sure the zone is <a href="/dns/additional-options/dnssec/troubleshooting/">signed with DNSSEC</a> and has valid <a href="https://www.cloudflare.com/dns/dnssec/dnssec-complexities-and-considerations/">NSEC/NSEC3 records</a>.</td>
         </tr>
         <tr>
             <td>13</td>

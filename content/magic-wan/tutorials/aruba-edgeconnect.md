@@ -1,6 +1,6 @@
 ---
 title: Aruba EdgeConnect Enterprise
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
 ---
 
@@ -62,9 +62,9 @@ The Deployment screenshot displays several different IP addresses and interfaces
 
 For the purpose of this tutorial, the integration will refer to a scenario with two branch offices, each with distinct subnets.
 
-The central branch office has a `10.22.0.0/24` network with an EdgeConnect terminating the Anycast IPSec tunnel. 
+The central branch office has a `10.22.0.0/24` network with an EdgeConnect terminating the Anycast IPsec tunnel. 
 
-The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminating the Anycast IPSec tunnel.
+The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminating the Anycast IPsec tunnel.
 
 ![IPsec tunnel values for east and west branches](/magic-wan/static/central-west-branch-ipsec.png)
 
@@ -82,7 +82,7 @@ The Deployment screenshot displays several different IP addresses and interfaces
 
 ## 1. Define a common site on the Orchestrator
 
-For all EdgeConnect devices using Cloudflare, modify the devices to put them on the same site. This disables automatic IPSec tunnel creation between the EdgeConnect devices using the same labels for the WAN interfaces in use.
+For all EdgeConnect devices using Cloudflare, modify the devices to put them on the same site. This disables automatic IPsec tunnel creation between the EdgeConnect devices using the same labels for the WAN interfaces in use.
 
 This step is only required if Cloudflare is used for east-west traffic routing.
 
@@ -169,7 +169,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](/magic-wan/static/gcp-edgeconnect-diagram-ipsec.png)
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)
@@ -264,7 +264,7 @@ header: Response
 }
 ```
 
-**Create an IPSec tunnel on EdgeConnect**
+**Create an IPsec tunnel on EdgeConnect**
 
 You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in [configure overlay policy](/magic-wan/tutorials/aruba-edgeconnect/#2-configure-overlay-policies). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
 
@@ -382,8 +382,8 @@ The example shows a client in GCP Central (`10.22.0.9`), which can ping the priv
 
 The traceroute shows the path going from the client (`10.22.0.9`) <br>
 → to the GCP Central lan0 IP on the EdgeConnect (`10.22.0.2`) <br>
-→ to the Cloudflare private IPSec endpoint IP (`192.168.10.11`) <br>
-→ to the GCP West EdgeConnect private IPSec endpoint IP (`192.168.15.10`) <br>
+→ to the Cloudflare private IPsec endpoint IP (`192.168.10.11`) <br>
+→ to the GCP West EdgeConnect private IPsec endpoint IP (`192.168.15.10`) <br>
 → to the GCP West client (`10.77.0.10`).
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.

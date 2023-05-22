@@ -13,6 +13,6 @@ To enable [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/secur
 
 ## JavaScript detections
 
-JavaScript detections increase the accuracy of how Cloudflare scores bot requests. For more details and implementation considerations, refer to [JavaScript detections](/learning-paths/modules/security/bot-management-planning/javascript-detections/?learning_path=bot-management).
+JavaScript detections increase the accuracy of how Cloudflare scores bot requests. For more details and implementation considerations, refer to [JavaScript detections](/learning-paths/modules/security/bot-management-planning/javascript-detections/).
 
 {{<render file="_javascript-detections-enable.md" productFolder="bots" >}}

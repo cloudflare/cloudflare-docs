@@ -19,7 +19,7 @@ Stream handles video streaming end-to-end, from ingestion through delivery.
 4. Cloudflare Stream encodes this live video at multiple resolutions and delivers it to viewers, using Cloudflare's Global Network. You can play video on your website using the [Stream Player](/stream/viewing-videos/using-the-stream-player/) or using [any video player that supports HLS or DASH](/stream/viewing-videos/using-own-player/).
 
 
-![Diagram the explains the live stream workflow](/stream/static/live-stream-workflow.png)
+![Diagram the explains the live stream workflow](/images/stream/live-stream-workflow.png)
 
 ## RTMP reconnections
 

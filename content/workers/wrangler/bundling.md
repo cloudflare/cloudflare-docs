@@ -19,7 +19,7 @@ Bundling your Worker code takes multiple modules and bundles them into one. Some
 - `.txt`
 - `.html`
 - `.bin`
-- `.wasm`
+- `.wasm` and `.wasm?module`
 
 Refer to [Bundling configuration](/workers/wrangler/configuration/#bundling) to customize these file types.
 
@@ -33,10 +33,11 @@ This is also the basis of Wasm support with Wrangler. To use a Wasm module in a 
 
 ```js
 import wasm from "./example.wasm"; // Where `example.wasm` is a file in your local directory
+const instance = await WebAssembly.instantiate(wasm); // Instantiate Wasm modules in global scope, not within the fetch() handler
 
 export default {
   fetch(request) {
-    const module = WebAssembly.instantiate(wasm);
+    const result = instance.exports.exported_func();
   },
 };
 ```
@@ -55,7 +56,7 @@ Wrangler respects the [conditional `exports` field](https://nodejs.org/api/packa
 Disabling bundling is not recommended and has a number of major tradeoffs that are detailed below. Most users should be able to ignore this section.
 {{</Aside>}}
 
-Opt out of bundling by using the `--no-bundle` command line flag: `wrangler publish --no-bundle`. If you opt out of bundling, Wrangler will not process your code and a number of features will not be available. You can use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare edge network when you use `wrangler dev` and `wrangler publish`.
+Opt out of bundling by using the `--no-bundle` command line flag: `wrangler publish --no-bundle`. If you opt out of bundling, Wrangler will not process your code and a number of features will not be available. You can use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use `wrangler dev` and `wrangler publish`.
 
 ### D1 bindings
 

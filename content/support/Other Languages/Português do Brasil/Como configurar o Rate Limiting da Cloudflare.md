@@ -35,7 +35,7 @@ ___
 
 ## Análise de Dados
 
-Veja a análise de dados do Rate Limiting em **Análise de Dados** > **Segurança**. A análise de dados do Rate Limiting usa linhas sólidas para representar o tráfego que corresponde a solicitações simuladas e linhas pontilhadas para retratar solicitações bloqueadas reais. Os registro gerados por uma regra de Rate Limiting só são visíveis para clientes Enterprise por meio do [Cloudflare Logs](https://developers.cloudflare.com/logs/). 
+Veja a análise de dados do Rate Limiting em **Análise de Dados** > **Segurança**. A análise de dados do Rate Limiting usa linhas sólidas para representar o tráfego que corresponde a solicitações simuladas e linhas pontilhadas para retratar solicitações bloqueadas reais. Os registro gerados por uma regra de Rate Limiting só são visíveis para clientes Enterprise por meio do [Cloudflare Logs](/logs/). 
 
 A Cloudflare retorna um erro HTTP 429 para solicitações bloqueadas.  Detalhes sobre solicitações bloqueadas por local são fornecidos a clientes Enterprise na análise de dados dos **Códigos de status** no painel de análise de dados disponível em **Análise de Dados** > **Tráfego**. 
 
@@ -365,6 +365,6 @@ ___
 ## Recursos relacionados
 
 -   [Cobrança do Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/articles/115000272247)
--   [Como o Rate Limiting é relatado no ELS (Enterprise Log Share)?](https://developers.cloudflare.com/logs/reference/log-fields)
+-   [Como o Rate Limiting é relatado no ELS (Enterprise Log Share)?](/logs/reference/log-fields)
 -   [Solução de problemas no Rate Limiting da Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configurar Rate Limiting por meio da API da Cloudflare](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

@@ -53,7 +53,7 @@ To create an account at parent level or child level:
 
 You should add escalation contacts so Area 1 can send notifications regarding detection events and critical service related issues. Area 1 highly recommends that these contacts have both phone and email contacts.
 
-Refer to [Escalation contacts](https://developers.cloudflare.com/email-security/account-setup/escalation-contacts/) for more information.
+Refer to [Escalation contacts](/email-security/account-setup/escalation-contacts/) for more information.
 
 ## Status alerts
 

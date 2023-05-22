@@ -28,7 +28,7 @@ Die verwalteten Regeln sind für Pro, Business und Enterprise Pläne für alle [
 {{<Aside type="note">}}
 -   Die neue WAF, die im März 2021 vorgestellt wurde, bietet das
     [Cloudflare Free Managed
-    Ruleset](https://developers.cloudflare.com/waf/managed-rulesets/)
+    Ruleset](/waf/managed-rulesets/)
     für alle Kunden, auch für Kunden mit einem Free-Plan. Einzelheiten
     finden Sie im [entsprechenden
     Blogbeitrag](https://blog.cloudflare.com/waf-for-everyone/).
@@ -37,7 +37,7 @@ Die verwalteten Regeln sind für Pro, Business und Enterprise Pläne für alle [
     von WAF-verwalteten Regeln zu dem neuen WAF-verwalteten Regelsatz.
 {{</Aside>}}
 
-Überprüfen Sie die blockierten Bedrohungen über das **Aktivitätsprotokoll** der [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/), Sie finden es unter **Sicherheit** > **Übersicht**.
+Überprüfen Sie die blockierten Bedrohungen über das **Aktivitätsprotokoll** der [Firewall Analytics](/waf/analytics/), Sie finden es unter **Sicherheit** > **Übersicht**.
 
 ### Wichtige Faktoren
 
@@ -48,7 +48,7 @@ Die verwalteten Regeln sind für Pro, Business und Enterprise Pläne für alle [
 -   Verwaltete Regeln analysieren JSON-Antworten, um auf APIs abzielende Schwachstellen zu identifizieren. Das Parsen von JSON-Nutzdaten ist auf 128 KB begrenzt.
 -   Verwaltete Regeln bekämpfen Padding-Techniken. Wir empfehlen Folgendes:
     1.  Aktivieren Sie die Regel _100048_. Diese Regel schützt jetzt vor Angriffen vom Typ Padding. Sie wird standardmäßig nicht bereitgestellt, da sie in Kundenumgebungen viele falsch-positive Ergebnisse erzeugt. Die Kunden müssen die Konfiguration ihrer verwalteten Regeln jedoch unbedingt abstimmen. Cloudflare arbeitet an einer besseren, langfristigen Lösung.
-    2.  Erstellen Sie mit dem [Expression Editor](https://developers.cloudflare.com/firewall/cf-dashboard/edit-expressions/#expression-editor) eine Firewall-Regel, je nachdem, ob Sie Header und/oder Body prüfen müssen, um größere Nutzdaten (> 128 KB) zu blockieren. Testen Sie Ihre Firewall-Regel zunächst im _Protokollmodus_, da sie unter Umständen zu falsch-positiven Ergebnissen führen kann.
+    2.  Erstellen Sie mit dem [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) eine Firewall-Regel, je nachdem, ob Sie Header und/oder Body prüfen müssen, um größere Nutzdaten (> 128 KB) zu blockieren. Testen Sie Ihre Firewall-Regel zunächst im _Protokollmodus_, da sie unter Umständen zu falsch-positiven Ergebnissen führen kann.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Es gibt eine Handvoll verwalteter Regeln, die Cloudflare auch dann nicht deaktiviert, wenn die Option **Verwaltete Regeln** im Cloudflare-Dashboard _ausgeschaltet_ ist, wie die Regel-IDs _WP0025B_, _100043A_ und _100030_.
@@ -66,18 +66,18 @@ Die WAF-Regeln werden standardmäßig vollständig über das Cloudflare-Dashboar
 
 Was man unter „verdächtigen Inhalten“ versteht, unterscheidet sich von Website zu Website.  Zum Beispiel ist PHP-Code, der auf Ihrer Website veröffentlicht wird, normalerweise verdächtig. Wenn allerdings auf Ihrer Website Programmieren unterrichtet wird und die Besucher aufgefordert werden, PHP-Code einzureichen, wäre er unverdächtig.  Daher muss eine solche Website verwaltete Regeln, die den normalen Betrieb stören, deaktivieren.
 
-Um auf falsch-positive Ergebnisse zu testen, stellen Sie die WAF-verwalteten Regeln auf den **Simulationsmodus** ein. So wird die Reaktion auf mögliche Angriffe aufgezeichnet, ohne dass diese abgewehrt oder blockiert werden. Mit dem Firewall-Analytics-[**Aktivitätsprotokoll**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) können Sie außerdem feststellen, welche WAF-verwalteten Regeln ein falsch-positives Ergebnis verursacht haben.
+Um auf falsch-positive Ergebnisse zu testen, stellen Sie die WAF-verwalteten Regeln auf den **Simulationsmodus** ein. So wird die Reaktion auf mögliche Angriffe aufgezeichnet, ohne dass diese abgewehrt oder blockiert werden. Mit dem Firewall-Analytics-[**Aktivitätsprotokoll**](/waf/analytics/paid-plans#activity-log) können Sie außerdem feststellen, welche WAF-verwalteten Regeln ein falsch-positives Ergebnis verursacht haben.
 
 Wenn eine [veraltete WAF](https://support.cloudflare.com/hc/de/articles/200172016-Understanding-the-Cloudflare-Web-Application-Firewall-WAF-) ein falsch-positives Ergebnis verursacht, gibt es mehrere Lösungsmöglichkeiten:
 
 -   **Die IP-Adressen des Clients in die Genehmigungsliste der** [**IP-Access-Regeln**](https://support.cloudflare.com/hc/articles/217074967) **aufnehmen:** Wenn der Browser oder der Client von diesen IP-Adressen aus zugreift, wird das Zulassen empfohlen. 
 -   **Die entsprechenden** [**verwaltete Regeln**](https://support.cloudflare.com/hc/articles/200172016) deaktivieren: Stoppt die Blockierung oder Herausforderung von falsch-positiven Ergebnissen, macht die Website aber insgesamt weniger sicher. Eine durch die Regel-ID _981176_ blockierte Anfrage bezieht sich auf OWASP-Regeln. Reduzieren Sie die OWASP-Empfindlichkeit, um das Problem zu beheben.
--   **Umgehen Sie WAF-verwaltete Regeln mit einer Firewall-Regel:** Erstellen Sie eine Firewall-Regel mit der **Bypass**\-Aktion, um WAF-verwaltete Regeln für eine bestimmte Kombination von Parametern zu deaktivieren. Zum Beispiel: [Umgehen der verwalteten Regeln](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/) für eine bestimmte URL und eine bestimmte IP-Adresse oder einen bestimmten User Agent.
+-   **Umgehen Sie WAF-verwaltete Regeln mit einer Firewall-Regel:** Erstellen Sie eine Firewall-Regel mit der **Bypass**\-Aktion, um WAF-verwaltete Regeln für eine bestimmte Kombination von Parametern zu deaktivieren. Zum Beispiel: [Umgehen der verwalteten Regeln](/firewall/cf-firewall-rules/actions/) für eine bestimmte URL und eine bestimmte IP-Adresse oder einen bestimmten User Agent.
 -   **(nicht empfohlen) Die WAF-verwalteten Regeln für den Traffic zu einer URL deaktivieren:**  Verringert die Sicherheit für den jeweiligen URL-Endpunkt.  Wird über die [Page Rules](https://support.cloudflare.com/hc/de/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-) konfiguriert.
 
 Wenn eine [neue WAF](https://blog.cloudflare.com/new-cloudflare-waf/) ein falsch-positives Ergebnis verursacht, gibt es mehrere Lösungsmöglichkeiten:
 
-1.  **WAF-Ausnahme hinzufügen:** Sie können WAF-Ausnahmen im [Cloudflare-Dashboard](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-dashboard) oder über die [API für Regelsätze](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-api) definieren.
+1.  **WAF-Ausnahme hinzufügen:** Sie können WAF-Ausnahmen im [Cloudflare-Dashboard](/waf/managed-rulesets/waf-exceptions/define-dashboard) oder über die [API für Regelsätze](/waf/managed-rulesets/waf-exceptions/define-api) definieren.
 2.  **Die entsprechenden** [**verwalteten Regeln**](https://support.cloudflare.com/hc/articles/200172016) deaktivieren: Stoppt die Blockierung oder Herausforderung von falsch-positiven Ergebnissen, macht die Website aber insgesamt weniger sicher. Eine durch die Regel-ID _949110_ blockierte Anfrage bezieht sich auf [neue OWASP-Regeln](https://blog.cloudflare.com/new-cloudflare-waf/). Reduzieren Sie die OWASP-Empfindlichkeit, um das Problem zu beheben.
 
 **Hinweis:** Wenn Sie den [Cloudflare-Support kontaktieren](https://support.cloudflare.com/hc/articles/200172476), damit dieser überprüft, ob eine WAF-verwaltete Regel wie erwartet ausgelöst wird, [fügen Sie auch eine HAR-Datei an](https://support.cloudflare.com/hc/articles/203118044#h_8c9c815c-0933-49c0-ac00-b700700efce7), die beim Senden der spezifischen Anfrage erfasst wurde.
@@ -97,8 +97,8 @@ Um falsch-negative Ergebnisse zu identifizieren, überprüfen Sie die HTTP-Proto
     -   Beispielsweise lässt Cloudflare standardmäßig Anfragen mit leeren User Agents zu. Um Anfragen mit einem leeren User Agent zu blockieren, ändern Sie den **Modus** der Regel in **Blockieren**
     -   Ein weiteres Beispiel: Wenn Sie ungehinderte SQL-Injection-Angriffe blockieren möchten, stellen Sie sicher, dass die entsprechenden SQLi-Regeln aktiviert und unter der Gruppe **Cloudflare Specials** auf **Blockieren** gesetzt sind.
 -   Werden DNS-Einträge, die HTTP-Traffic bereitstellen, über Cloudflare als Proxy umgeleitet?
--   [Umgeht eine **Firewall-Regel**](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/#supported-actions) die verwalteten Regeln? 
--   Stimmt ein erlaubtes Land, eine ASN, ein IP-Bereich oder eine IP in [**IP-Access-Regeln**](https://support.cloudflare.com/hc/articles/217074967) oder [**Firewall-Regeln**](https://developers.cloudflare.com/firewall/cf-firewall-rules/) mit dem Angriffs-Traffic überein?
+-   [Umgeht eine **Firewall-Regel**](/firewall/cf-firewall-rules/actions/#supported-actions) die verwalteten Regeln? 
+-   Stimmt ein erlaubtes Land, eine ASN, ein IP-Bereich oder eine IP in [**IP-Access-Regeln**](https://support.cloudflare.com/hc/articles/217074967) oder [**Firewall-Regeln**](/firewall/cf-firewall-rules/) mit dem Angriffs-Traffic überein?
 -   Wird der böswillige Traffic an Ihre Ursprungs-IP-Adressen geleitet, um den Cloudflare-Schutz zu umgehen? Blockieren Sie den gesamten Traffic, außer den von [Cloudflare-IP-Adressen](https://www.cloudflare.com/ips/) direkt an Ihrem Ursprungs-Webserver.
 
 ___
@@ -122,9 +122,9 @@ Bei der Anzeige eines Regelsatzes zeigt Cloudflare Standardaktionen für jede Re
 -   _Deaktivieren:_ schaltet die spezifische Regel innerhalb der Gruppe aus**.**
 -   _Blockieren_: die Anfrage wird verworfen. 
 -   _Legacy CAPTCHA_: Der Besucher bekommt eine CAPTCHA-Abfrageseite vorgelegt.
--   _Simulieren_: Die Anfrage wird durchgelassen, aber im [**Aktivitätsprotokoll**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) protokolliert.
+-   _Simulieren_: Die Anfrage wird durchgelassen, aber im [**Aktivitätsprotokoll**](/waf/analytics/paid-plans#activity-log) protokolliert.
 
-Mit dem [WAF-Änderungsprotokoll](https://developers.cloudflare.com/waf/change-log/scheduled-changes/) von Cloudflare können Kunden laufende Änderungen am **Cloudflare-verwalteten Regelsatz** überwachen.
+Mit dem [WAF-Änderungsprotokoll](/waf/change-log/scheduled-changes/) von Cloudflare können Kunden laufende Änderungen am **Cloudflare-verwalteten Regelsatz** überwachen.
 
 ___
 
@@ -136,7 +136,7 @@ Das **Paket: OWASP ModSecurity Core Rule Set** ordnet jeder Anfrage eine Punktza
 
 -   _Blockieren_: Die Anfrage wird verworfen.
 -   _Herausfordern_: Der Besucher bekommt eine CAPTCHA-Herausforderungsseite vorgelegt.
--   _Simulieren_: Die Anfrage wird durchgelassen, aber im [**Aktivitätsprotokoll**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) protokolliert.
+-   _Simulieren_: Die Anfrage wird durchgelassen, aber im [**Aktivitätsprotokoll**](/waf/analytics/paid-plans#activity-log) protokolliert.
 
 Die Punktesensitivität, die erforderlich ist, um die WAF für eine bestimmte **Sensitivität** auszulösen, lautet wie folgt:
 
@@ -150,7 +150,7 @@ Für Ajax-Anfragen werden stattdessen die folgenden Punktzahlen angewendet:
 -   _Mittel_: ab 80
 -   _Hoch_: ab 65
 
-Im [Aktivitätsprotokoll](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) können Sie sich die endgültige Punktzahl sowie die einzelnen ausgelösten Regeln ansehen.
+Im [Aktivitätsprotokoll](/waf/analytics/paid-plans#activity-log) können Sie sich die endgültige Punktzahl sowie die einzelnen ausgelösten Regeln ansehen.
 
 ### Das OWASP-Paket von Cloudflare steuern
 
@@ -182,6 +182,6 @@ ___
 
 ## Verwandte Ressourcen
 
--   [Firewall-Analytics](https://developers.cloudflare.com/waf/analytics/)
--   [Cloudflare Firewall-Regeln](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
--   [Cloudflare-WAF-Änderungsprotokoll](https://developers.cloudflare.com/waf/change-log/scheduled-changes/)
+-   [Firewall-Analytics](/waf/analytics/)
+-   [Cloudflare Firewall-Regeln](/firewall/cf-firewall-rules/)
+-   [Cloudflare-WAF-Änderungsprotokoll](/waf/change-log/scheduled-changes/)

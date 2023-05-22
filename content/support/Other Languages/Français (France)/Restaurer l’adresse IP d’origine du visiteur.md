@@ -17,7 +17,7 @@ ___
 
 Lorsque [le trafic de votre site web est routé via le réseau Cloudflare](https://support.cloudflare.com/hc/articles/205177068), nous agissons comme un proxy inverse. Cela permet à Cloudflare de réduire le temps de chargement de page en optimisant le routage des paquets et en mettant en cache les ressources statiques (images, JavaScript, CSS, etc.). Par conséquent, en répondant aux requêtes et en les enregistrant, votre serveur d’origine verra [les adresses IP de Cloudflare](https://www.cloudflare.com/ips/).
 
-Par exemple, si vous installez des applications qui dépendent de l'adresse IP entrante du visiteur initial, une adresse IP Cloudflare est enregistrée par défaut.L'adresse IP originale du visiteur apparaît dans un en-tête HTTP ajouté appelé [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986).En suivant nos instructions pour le serveur web [](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), vous pouvez enregistrer l'adresse IP du visiteur original sur votre serveur d'origine.Si cet en-tête HTTP n'est pas disponible lorsque les requêtes atteignent votre serveur d'origine, vérifiez votre configuration des règles de transformation [](https://developers.cloudflare.com/rules/transform/)et [Managed Transforms](https://developers.cloudflare.com/rules/transform/managed-transforms/).
+Par exemple, si vous installez des applications qui dépendent de l'adresse IP entrante du visiteur initial, une adresse IP Cloudflare est enregistrée par défaut.L'adresse IP originale du visiteur apparaît dans un en-tête HTTP ajouté appelé [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986).En suivant nos instructions pour le serveur web [](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), vous pouvez enregistrer l'adresse IP du visiteur original sur votre serveur d'origine.Si cet en-tête HTTP n'est pas disponible lorsque les requêtes atteignent votre serveur d'origine, vérifiez votre configuration des règles de transformation [](/rules/transform/)et [Managed Transforms](/rules/transform/managed-transforms/).
 
 Le diagramme ci-dessous illustre les différentes façons dont les adresses IP sont gérées avec et sans Cloudflare.
 
@@ -88,11 +88,11 @@ ___
 
 ## mod\_cloudflare
 
-Il existe deux méthodes pour installer mod\_cloudflare : en téléchargeant l'extension Apache depuis Github ou en ajoutant du code à votre serveur web d'origine.
+Il existe deux méthodes pour installer mod\_cloudflare : en téléchargeant l'extension Apache depuis GitHub ou en ajoutant du code à votre serveur web d'origine.
 
-### Télécharger des paquets ou des scripts depuis Github
+### Télécharger des paquets ou des scripts depuis GitHub
 
-Si vous utilisez un serveur web Apache, vous pouvez télécharger mod\_cloudflare à partir de [Github](https://github.com/cloudflare/mod_cloudflare).
+Si vous utilisez un serveur web Apache, vous pouvez télécharger mod\_cloudflare à partir de [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Ajouter du code à votre serveur web d'origine
 
@@ -315,5 +315,5 @@ ___
 
 ## Ressources associées
 
--   [Les champs d'en-tête de la requête HTTP](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [Règles de transformation](https://developers.cloudflare.com/rules/transform/)
+-   [Les champs d'en-tête de la requête HTTP](/fundamentals/get-started/http-request-headers)
+-   [Règles de transformation](/rules/transform/)

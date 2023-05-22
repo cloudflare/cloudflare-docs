@@ -15,7 +15,7 @@ Sie können eine Page Rule definieren, um eine oder mehrere Aktionen auszulösen
 
 {{<Aside type="warning">}}
 Page Rules erfordern einen „[mit
-Proxy](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)"
+Proxy](/dns/manage-dns-records/reference/proxied-dns-records)"
 markierten DNS-Eintrag, damit die Page Rule funktioniert. Page Rules
 gelten nicht für Hostnamen, die nicht im DNS vorhanden sind oder nicht
 an Cloudflare weitergeleitet werden.
@@ -223,7 +223,7 @@ Immer HTTPS verwenden
 
  | 
 
-Aktivieren oder deaktivieren Sie das Feature **[Immer HTTPS verwenden](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https)** auf der Registerkarte **Edge-Zertifikate** in der **Cloudflare SSL/TLS**\-App. Wenn diese Option aktiviert ist, wird jede _http://_\-URL durch eine 301-Weiterleitung in _https://_ konvertiert.
+Aktivieren oder deaktivieren Sie das Feature **[Immer HTTPS verwenden](/ssl/edge-certificates/additional-options/always-use-https)** auf der Registerkarte **Edge-Zertifikate** in der **Cloudflare SSL/TLS**\-App. Wenn diese Option aktiviert ist, wird jede _http://_\-URL durch eine 301-Weiterleitung in _https://_ konvertiert.
 
 Wenn diese Option nicht angezeigt wird, haben Sie kein aktives **Edge-Zertifikat**.
 
@@ -251,7 +251,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-Aktivieren oder deaktivieren Sie das Feature **Cloudflare Automatic HTTPS Rewrites** auf der Registerkarte **Edge-Zertifikate** in der **Cloudflare SSL/TLS**\-App. [Mehr dazu hier](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites).
+Aktivieren oder deaktivieren Sie das Feature **Cloudflare Automatic HTTPS Rewrites** auf der Registerkarte **Edge-Zertifikate** in der **Cloudflare SSL/TLS**\-App. [Mehr dazu hier](/ssl/edge-certificates/additional-options/automatic-https-rewrites).
 
  | 
 
@@ -264,7 +264,7 @@ Browser-Cache-TTL
 
  | 
 
-Steuert, wie lange in Client-Browsern zwischengespeicherte Ressourcen gültig bleiben. Sowohl die Cloudflare-Benutzeroberfläche als auch die API verbieten die Einstellung der **Browser-Cache-TTL** auf _0_ für Nicht-Enterprise-Domains. [Mehr dazu hier](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl).
+Steuert, wie lange in Client-Browsern zwischengespeicherte Ressourcen gültig bleiben. Sowohl die Cloudflare-Benutzeroberfläche als auch die API verbieten die Einstellung der **Browser-Cache-TTL** auf _0_ für Nicht-Enterprise-Domains. [Mehr dazu hier](/cache/about/edge-browser-cache-ttl).
 
  | 
 
@@ -308,7 +308,7 @@ Cache nach Gerätetyp
 
  | 
 
-Zwischengespeicherte Inhalte werden basierend auf dem Gerätetyp des Besuchers getrennt. [Mehr dazu hier.](https://developers.cloudflare.com/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+Zwischengespeicherte Inhalte werden basierend auf dem Gerätetyp des Besuchers getrennt. [Mehr dazu hier.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -321,7 +321,7 @@ Cache Deception Armor
 
  | 
 
-Schutz vor Webcache-Betrugsangriffen, während statische Assets weiterhin zwischengespeichert werden können. Bei dieser Einstellung wird überprüft, ob die URL-Erweiterung mit dem zurückgegebenen _Inhaltstyp_ übereinstimmt. [Mehr dazu hier.](https://developers.cloudflare.com/cache/about/cache-deception-armor)
+Schutz vor Webcache-Betrugsangriffen, während statische Assets weiterhin zwischengespeichert werden können. Bei dieser Einstellung wird überprüft, ob die URL-Erweiterung mit dem zurückgegebenen _Inhaltstyp_ übereinstimmt. [Mehr dazu hier.](/cache/cache-security/cache-deception-armor/)
 
  | 
 
@@ -336,7 +336,7 @@ Cache-Schlüssel
 
 Wird auch als _Custom Cache Key_ bezeichnet.
 
-Hiermit kann man bei der Entscheidung, welche Ressourcen zwischengespeichert werden sollen, genau festlegen, welche Variablen berücksichtigt werden sollen. Auf diese Weise können Kunden anhand anderer Faktoren als der URL bestimmen, was zwischengespeichert werden soll. [Mehr dazu hier](https://developers.cloudflare.com/cache/about/cache-keys).
+Hiermit kann man bei der Entscheidung, welche Ressourcen zwischengespeichert werden sollen, genau festlegen, welche Variablen berücksichtigt werden sollen. Auf diese Weise können Kunden anhand anderer Faktoren als der URL bestimmen, was zwischengespeichert werden soll. [Mehr dazu hier](/cache/about/cache-keys).
 
  | 
 
@@ -359,7 +359,7 @@ Wendet benutzerdefiniertes Caching basierend auf der ausgewählten Option an:
 
 **Standard**: Speichert alle statischen Inhalte mit einer Abfragezeichenfolge im Cache.
 
-**Alles zwischenspeichern**: Behandelt alle Inhalte als statisch und speichert alle Dateitypen im Cache, nicht nur die [standardmäßig von Cloudflare zwischengespeicherten Inhalte](https://developers.cloudflare.com/cache/about/default-cache-behavior#default-cached-file-extensions). Respektiert Cache-Header vom Ursprungswebserver, es sei denn, **Edge-Cache-TTL** ist ebenfalls in der Page Rule festgelegt. In Kombination mit **Edge-Cache-TTL** > _0_ entfernt **Alles zwischenspeichern** Cookies aus der Antwort des Ursprungswebservers.  
+**Alles zwischenspeichern**: Behandelt alle Inhalte als statisch und speichert alle Dateitypen im Cache, nicht nur die [standardmäßig von Cloudflare zwischengespeicherten Inhalte](/cache/about/default-cache-behavior#default-cached-file-extensions). Respektiert Cache-Header vom Ursprungswebserver, es sei denn, **Edge-Cache-TTL** ist ebenfalls in der Page Rule festgelegt. In Kombination mit **Edge-Cache-TTL** > _0_ entfernt **Alles zwischenspeichern** Cookies aus der Antwort des Ursprungswebservers.  
 
 
  | 
@@ -552,14 +552,14 @@ Opportunistic Encryption
 
  | 
 
-Aktivieren oder deaktivieren Sie das Feature **Cloudflare Opportunistic Encryption** auf der Registerkarte **Edge-Zertifikate** in der **Cloudflare SSL/TLS**\-App. [Mehr dazu hier](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/opportunistic-encryption).
+Aktivieren oder deaktivieren Sie das Feature **Cloudflare Opportunistic Encryption** auf der Registerkarte **Edge-Zertifikate** in der **Cloudflare SSL/TLS**\-App. [Mehr dazu hier](/ssl/edge-certificates/additional-options/opportunistic-encryption).
 
  | 
 
 -   Alle
 
  |
-| Ursprungs-Cache-Steuerung | Die [Ursprungs-Cache-Steuerung](https://developers.cloudflare.com/cache/about/cache-control) ist standardmäßig für Free-, Pro- und Business-Domains aktiviert und für Enterprise-Domains standardmäßig deaktiviert. | 
+| Ursprungs-Cache-Steuerung | Die [Ursprungs-Cache-Steuerung](/cache/about/cache-control) ist standardmäßig für Free-, Pro- und Business-Domains aktiviert und für Enterprise-Domains standardmäßig deaktiviert. | 
 
 -   Alle
 
@@ -583,7 +583,7 @@ Polish
 
  | 
 
-Optionen des Features **Polish** der Cloudflare **Speed**\-App anwenden. [Mehr dazu hier](https://developers.cloudflare.com/images/polish).
+Optionen des Features **Polish** der Cloudflare **Speed**\-App anwenden. [Mehr dazu hier](/images/polish).
 
  | 
 
@@ -689,7 +689,7 @@ SSL
 
  | 
 
-Steuern Sie Optionen für das Feature **SSL** auf der Registerkarte **Edge-Zertifikate** in der Cloudflare **SSL/TLS**\-App. [Mehr erfahren](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+Steuern Sie Optionen für das Feature **SSL** auf der Registerkarte **Edge-Zertifikate** in der Cloudflare **SSL/TLS**\-App. [Mehr erfahren](/ssl/origin-configuration/ssl-modes).
 
  | 
 
@@ -785,12 +785,12 @@ Beachten Sie, dass `example.com/some-path/cloudflare.com` _ohne_ einen abschlie�
 
 Wenn Sie einen Port im Page-Rule-Feld **Wenn die URL übereinstimmt** angeben, muss es sich um einen der folgenden Ports handeln:
 
--   Einer der HTTP/HTTPS-Ports, die [mit dem Proxy von Cloudflare kompatibel](https://developers.cloudflare.com/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) sind.
--   Ein benutzerdefinierter Port einer [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/) HTTPS-Anwendung.
+-   Einer der HTTP/HTTPS-Ports, die [mit dem Proxy von Cloudflare kompatibel](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) sind.
+-   Ein benutzerdefinierter Port einer [Cloudflare Spectrum](/spectrum/) HTTPS-Anwendung.
 
 ### Page Rules mit Workers verwenden
 
-Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](https://developers.cloudflare.com/workers/platform/routes) übereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation für Entwickler](https://developers.cloudflare.com/workers/platform/workers-with-page-rules/).
+Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](/workers/platform/routes) übereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation für Entwickler](/workers/platform/workers-with-page-rules/).
 
 ___
 

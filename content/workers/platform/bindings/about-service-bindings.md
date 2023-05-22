@@ -13,11 +13,11 @@ Service bindings allow you to:
 
 * Segment multiple use cases into separate Workers Services that can be explicitly invoked from your code.
 * Achieve better composability on the Workers platform using service-oriented architecture.
-* Create private microservices, to be conditionally invoked from other edge-facing services.
+* Create private microservices, to be conditionally invoked from other global network-facing services.
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
-More details are available in our [Runtime API Documentation for Service bindings](/workers/runtime-apis/service-bindings).
+For more information, refer to the [Runtime API documentation for Service bindings](/workers/runtime-apis/service-bindings).
 
 ![Service bindings are a zero-cost abstraction](/workers/platform/bindings/media/service-bindings-comparison.png)
 

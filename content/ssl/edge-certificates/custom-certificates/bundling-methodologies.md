@@ -14,7 +14,7 @@ You can control the mechanics of how certificates are bundled by specifying a bu
 
 Cloudflare maintains intermediate and root certificates used for bundling on a [GitHub repository](https://github.com/cloudflare/cfssl_trust). As the certificates expire or are removed by certificate authorities, Cloudflare removes and adds them accordingly.
 
-Expiration values for these certificates may appear in the `expires_on` field when you use the [Analyze Certificate endpoint](https://developers.cloudflare.com/api/operations/analyze-certificate-analyze-certificate) - often when the methodology you specify is [Compatible](#compatible). However, these expiration values reflect intermediate and root certificates - which are handled by Cloudflare -, not the leaf certificate you would have previously uploaded to Cloudflare.
+Expiration values for these certificates may appear in the `expires_on` field when you use the [Analyze Certificate endpoint](/api/operations/analyze-certificate-analyze-certificate) - often when the methodology you specify is [Compatible](#compatible). However, these expiration values reflect intermediate and root certificates - which are handled by Cloudflare -, not the leaf certificate you would have previously uploaded to Cloudflare.
 
 ## Methodologies
 

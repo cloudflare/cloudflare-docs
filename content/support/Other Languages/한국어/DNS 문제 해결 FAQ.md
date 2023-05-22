@@ -60,7 +60,7 @@ ___
 
 _A, AAAA 또는 CNAME 레코드를 찾을 수 없다_는 것은 Cloudflare **DNS** 앱에 DNS 확인을 위한 적절한 레코드가 부족하다는 것입니다.
 
-[누락된 DNS 레코드를 도메인에 추가](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)하세요.
+[누락된 DNS 레코드를 도메인에 추가](/dns/manage-dns-records/how-to/create-dns-records)하세요.
 
 ___
 

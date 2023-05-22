@@ -23,7 +23,18 @@ Cloudflare does not recommend setting your encryption mode to **Off**.
 
 ## Required setup
 
-There is no required setup for this option.
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-dash.md">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 

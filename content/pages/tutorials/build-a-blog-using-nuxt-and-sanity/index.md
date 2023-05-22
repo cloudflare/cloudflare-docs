@@ -15,7 +15,7 @@ In this tutorial, you will build a blog application using Nuxt.js and Sanity.io 
 
 ## Prerequisites
 
-- A recent version of [NPM](https://docs.npmjs.com/getting-started) on your computer
+- A recent version of [npm](https://docs.npmjs.com/getting-started) on your computer
 - A [Sanity.io](https://www.sanity.io) account
 
 ## Creating a new Sanity project
@@ -24,7 +24,7 @@ To begin, create a new Sanity project, using one of Sanity's templates, the blog
 
 ### Installing Sanity and configuring your dataset
 
-Create your new Sanity project by installing the `@sanity/cli` client from NPM, and running `sanity init` in your terminal:
+Create your new Sanity project by installing the `@sanity/cli` client from npm, and running `sanity init` in your terminal:
 
 ```sh
 ---
@@ -86,7 +86,7 @@ $ npx create-nuxt-app blog
 
 Importantly, ensure that you select a rendering mode of **Universal (SSR / SSG)** and a deployment target of **Static (Static/JAMStack hosting)**, while going through the setup process.
 
-After you have completed your project, `cd` into your new project, and start a local development server by running `yarn dev` (or, if you chose NPM as your package manager, `npm run dev`):
+After you have completed your project, `cd` into your new project, and start a local development server by running `yarn dev` (or, if you chose npm as your package manager, `npm run dev`):
 
 ```sh
 ---
@@ -276,7 +276,7 @@ When visiting, for example, `/hello-world`, Nuxt will take the incoming slug `he
 
 You have rendered the `post` title for our blog, but you are still missing the content of the blog post itself. To render this, import the [`sanity-blocks-vue-component`](https://github.com/rdunk/sanity-blocks-vue-component) package, which takes Sanity's [Portable Text](https://www.sanity.io/docs/presenting-block-text) format and renders it as a Vue component.
 
-First, install the NPM package:
+First, install the npm package:
 
 ```sh
 ---

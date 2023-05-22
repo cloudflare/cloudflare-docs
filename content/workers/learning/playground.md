@@ -83,10 +83,10 @@ To preview a script, begin by [logging in](https://www.cloudflare.com/a/login) t
 After selecting an account and/or zone to deploy the Worker script to, navigate to the appropriate Workers section.
 
 - For workers.dev:
-  ![Navigate workers.dev](https://developers.cloudflare.com/workers/tooling/media/navigate-workers-dev.png)
+  ![Navigate workers.dev](/workers/tooling/media/navigate-workers-dev.png)
 
   For a zone on Cloudflare:
-  ![Navigate zone](https://developers.cloudflare.com/workers/tooling/media/navigate-zone.png)
+  ![Navigate zone](/workers/tooling/media/navigate-zone.png)
 
 You will see options to edit existing Workers scripts or create new scripts.
 

@@ -82,15 +82,15 @@ ___
 -   Um domínio externo que não está usando a Cloudflare tem um registro CNAME para um domínio ativo na Cloudflare
 -   O destino do registro CNAME de DNS não resolve.
 -   Um registro CNAME no seu aplicativo DNS da Cloudflare requer resolução por meio de um provedor de DNS que está atualmente offline.
--   [Always Online](https://developers.cloudflare.com/cache/about/always-online) está habilitado para um domínio [Custom Hostname (SSL for SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas)).
+-   [Always Online](/cache/about/always-online) está habilitado para um domínio [Custom Hostname (SSL for SaaS](/ssl/ssl-for-saas)).
 
 ### Solução
 
 Um domínio não Cloudflare não pode CNAME para um domínio Cloudflare, a menos que o domínio não Cloudflare seja adicionado a uma conta Cloudflare.
 
-A tentativa de acessar diretamente os registros de DNS usados para [configurações da CNAME na Cloudflare](https://developers.cloudflare.com/dns/zone-setups/partial-setup) também resulta em um erro 1001 (por exemplo: _www.exemplo.com.cdn.cloudflare.net_).
+A tentativa de acessar diretamente os registros de DNS usados para [configurações da CNAME na Cloudflare](/dns/zone-setups/partial-setup) também resulta em um erro 1001 (por exemplo: _www.exemplo.com.cdn.cloudflare.net_).
 
-Desabilite o [Always Online](https://developers.cloudflare.com/cache/how-to/enable-always-online) se estiver usando [Custom Hostnames (SSL para SaaS)](https://developers.cloudflare.com/ssl/ssl-for-saas).
+Desabilite o [Always Online](/cache/how-to/enable-always-online) se estiver usando [Custom Hostnames (SSL para SaaS)](/ssl/ssl-for-saas).
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 ### Causa comum
 
-O hostname enviado pelo cliente ou pelo navegador por meio da [Indicação de Nome do Servidor](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) (SNI) não corresponde ao cabeçalho do host da solicitação.
+O hostname enviado pelo cliente ou pelo navegador por meio da [Indicação de Nome do Servidor](/fundamentals/glossary#server-name-indication-sni) (SNI) não corresponde ao cabeçalho do host da solicitação.
 
 ### Solução
 
@@ -250,7 +250,7 @@ Por padrão, a Cloudflare proíbe _registros de DNS tipo CNAME_ entre domínio
 
 ### Solução
 
-Para permitir a resolução do registro CNAME de um domínio em uma conta diferente da Cloudflare, o proprietário do domínio do destino CNAME precisa usar o [Cloudflare para SaaS](https://www.cloudflare.com/saas/); mais especificamente, nossa solução [SSL para SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas/).
+Para permitir a resolução do registro CNAME de um domínio em uma conta diferente da Cloudflare, o proprietário do domínio do destino CNAME precisa usar o [Cloudflare para SaaS](https://www.cloudflare.com/saas/); mais especificamente, nossa solução [SSL para SaaS](/ssl/ssl-for-saas/).
 
 ___
 
@@ -278,8 +278,8 @@ As causas comuns do Erro 1016 são:
 
 -   Ausência de um _registro de DNS tipo A_ que mencione o endereço IP de origem.
 -   Um _registro CNAME_ no DNS da Cloudflare aponta para um domínio externo não resolvível.
--   Os hostnames de origem (CNAMEs)nos pools padrão, de região e de fallback do [Balanceador de Carga](https://developers.cloudflare.com/load-balancing/) da Cloudflare não podem se resolvidos. Use um grupo de fallback configurado com um IP de origem como backup, caso todos os outros grupos estejam indisponíveis.
--   Ao criar um aplicativo Spectrum com uma origem CNAME, você precisa primeiro criar um CNAME no lado do DNS da Cloudflare que aponte para a origem. Consulte [Origens CNAME no Spectrum](https://developers.cloudflare.com/spectrum/how-to/cname-origins) para saber mais
+-   Os hostnames de origem (CNAMEs)nos pools padrão, de região e de fallback do [Balanceador de Carga](/load-balancing/) da Cloudflare não podem se resolvidos. Use um grupo de fallback configurado com um IP de origem como backup, caso todos os outros grupos estejam indisponíveis.
+-   Ao criar um aplicativo Spectrum com uma origem CNAME, você precisa primeiro criar um CNAME no lado do DNS da Cloudflare que aponte para a origem. Consulte [Origens CNAME no Spectrum](/spectrum/how-to/cname-origins) para saber mais
 
 ### Solução
 
@@ -332,7 +332,7 @@ Se você não é o proprietário do site, forneça ao proprietário do site uma 
 Se você é o proprietário do site:
 
 1.  Recupere uma captura de tela do erro 1020 do seu cliente
-2.  Pesquise o [**Registro de Eventos de Firewall**](https://developers.cloudflare.com/waf/analytics) na guia**Visão Geral** do aplicativo de **Firewall** da Cloudflare para obter a **RayID** ou o endereço IP do cliente na mensagem de erro 1020 do visitante.
+2.  Pesquise o [**Registro de Eventos de Firewall**](/waf/analytics) na guia**Visão Geral** do aplicativo de **Firewall** da Cloudflare para obter a **RayID** ou o endereço IP do cliente na mensagem de erro 1020 do visitante.
 
 3\. Avalie a causa do bloqueio e atualize a **Regra de Firewall** ou permita o endereço IP do visitante nas [**Regras do Acesso de IPs**](https://support.cloudflare.com/hc/articles/217074967).
 
@@ -359,7 +359,7 @@ ___
 
 ### Causa comum
 
-Uma solicitação não é atendida porque o domínio atingiu [limites de plano para o Cloudflare Workers](https://developers.cloudflare.com/workers/platform/limits).
+Uma solicitação não é atendida porque o domínio atingiu [limites de plano para o Cloudflare Workers](/workers/platform/limits).
 
 ### Solução
 
@@ -376,7 +376,7 @@ Você solicitou uma página em um site (`tunel.exemplo.com`) que está na rede d
 ### Solução
 
 -   **Se você for um visitante desse site**: tente novamente daqui a alguns minutos.
--   **Se você for o proprietário desse site**: certifique-se de que o _cloudflared_ está sendo executado e pode alcançar a rede. Você pode querer ativar o [balanceamento de carga](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para o seu túnel.
+-   **Se você for o proprietário desse site**: certifique-se de que o _cloudflared_ está sendo executado e pode alcançar a rede. Você pode querer ativar o [balanceamento de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para o seu túnel.
 
 ___
 
@@ -450,7 +450,7 @@ Você está tentando modificar um cabeçalho HTTP que as Regras de Modificação
 
 ### Solução
 
-Certifique-se de não estar tentando modificar um dos [cabeçalhos de solicitação HTTP reservados](https://developers.cloudflare.com/rules/transform#http-request-header-modification-rules).
+Certifique-se de não estar tentando modificar um dos [cabeçalhos de solicitação HTTP reservados](/rules/transform#http-request-header-modification-rules).
 
 ___
 
@@ -463,7 +463,7 @@ O valor de cabeçalho adicionado/modificado é muito longo ou contém caracteres
 ### Solução
 
 -   Use uma expressão ou valor mais curtos para definir o valor do cabeçalho.
--   Remova os caracteres que não são permitidos. Consulte a seção [Formato dos nomes e valores de cabeçalho de solicitação HTTP](https://developers.cloudflare.com/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values) nos Documentos do Desenvolvedor para obter mais informações sobre os caracteres permitidos.
+-   Remova os caracteres que não são permitidos. Consulte a seção [Formato dos nomes e valores de cabeçalho de solicitação HTTP](/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values) nos Documentos do Desenvolvedor para obter mais informações sobre os caracteres permitidos.
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### Causa comum
 
-Um Cloudflare Worker excede um [limite de tempo de CPU](https://developers.cloudflare.com/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
+Um Cloudflare Worker excede um [limite de tempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
 
 ### Solução
 

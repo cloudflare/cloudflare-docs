@@ -2,10 +2,6 @@
 pcx_content_type: navigation
 title: Workers for Platforms
 weight: 9
-product_grid:
-  show: true
-  title: Workers for Platforms
-  group: Developer platform
 ---
  
 # Workers for Platforms

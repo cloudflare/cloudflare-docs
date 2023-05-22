@@ -40,7 +40,7 @@ ___
 
 O HTTP/3 permite conexões rápidas, confiáveis e seguras.  O HTTP/3 criptografa o transporte da Internet por padrão usando um protocolo do Google chamado QUIC.  Habilite o HTTP/3 por meio do aplicativo **Network** da Cloudflare.
 
-Para mais informações, consulte a [documentação do desenvolvedor do HTTP/3](https://developers.cloudflare.com/http3/).
+Para mais informações, consulte a [documentação do desenvolvedor do HTTP/3](/http3/).
 
 ___
 
