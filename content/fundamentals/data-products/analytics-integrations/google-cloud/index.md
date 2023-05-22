@@ -159,64 +159,27 @@ To create a report for your log data based on the Cloudflare template:
 
 8.  Next, update the **Type** for each of the following fields as indicated below:
 
-<table style="border: solid 2px darkgrey; width: 100%;">
-  <thead style="background: #ffeadf;">
-    <tr>
-      <th>Cloudflare Log Field</th>
-      <th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ZoneID</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>EdgeColoID</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>ClientSrcPort</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>EdgeResponseStatus</td>
-      <td>Number</td>
-    </tr>
-    <tr>
-      <td>EdgeRateLimitID</td>
-      <td>Text&nbsp;</td>
-    </tr>
-    <tr>
-      <td>
-        <div>
-          <div>Copy of EdgeStartTimestamp</div>
-        </div>
-      </td>
-      <td>Date &amp; Time &gt; Date Hour (YYYYMMDDHH)</td>
-    </tr>
-    <tr>
-      <td>OriginResponseStatus</td>
-      <td>Number</td>
-    </tr>
-    <tr>
-      <td>ClientASN</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>ClientCountry</td>
-      <td>Geo &gt; Country</td>
-    </tr>
-    <tr>
-      <td>CacheResponseStatus</td>
-      <td>Text</td>
-    </tr>
-  </tbody>
-</table>
+    {{<table-wrap>}}
+| Cloudflare Log Field       | Type                                 |
+|----------------------------|--------------------------------------|
+| ZoneID                     | Text                                 |
+| EdgeColoID                 | Text                                 |
+| ClientSrcPort              | Text                                 |
+| EdgeResponseStatus         | Number                               |
+| EdgeRateLimitID            | Text                                 |
+| Copy of EdgeStartTimestamp | Date & Time > Date Hour (YYYYMMDDHH) |
+| OriginResponseStatus       | Number                               |
+| ClientASN                  | Text                                 |
+| ClientCountry              | Geo > Country                        |
+| CacheResponseStatus        | Text                                 |
+    {{</table-wrap>}}
+
 
 9.  Next, add a new field to identify and calculate threat. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
-    \_ For **Field Name**, type _Threats_.
-    \_ In the **Formula** text box, paste the following code:
+
+    - For **Field Name**, type _Threats_.
+
+    - In the **Formula** text box, paste the following code:
 
     ```bash
     CASE
@@ -235,11 +198,12 @@ To create a report for your log data based on the Cloudflare template:
     END
     ```
 
-    \* Click **Save** in the lower right corner.
+    - Click **Save** in the lower right corner.
 
 10. Finally, add another new field for grouping status error codes. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
-    \_ For **Field Name**, type _EdgeResponseStatus_Class_.
-    \_ In the **Formula** text box, paste the following code:
+
+    - For **Field Name**, type _EdgeResponseStatusClass_.
+    - In the **Formula** text box, paste the following code:
 
     ```bash
     CASE
@@ -252,7 +216,7 @@ To create a report for your log data based on the Cloudflare template:
     END
     ```
 
-- Click **Save** in the lower right corner.
+    - Click **Save** in the lower right corner.
 
 11. To finish, click **Add to Report** in the upper right.
 
@@ -292,8 +256,8 @@ You can also create custom fields directly in Data Studio.
 
 The following table summarizes which specific components require to be fixed:
 
-<table style="border: solid 2px darkgrey; width: 100%;">
-  <thead style="background: #ffeadf;">
+<table>
+  <thead>
     <tr>
       <th>Report page</th>
       <th>Components</th>
