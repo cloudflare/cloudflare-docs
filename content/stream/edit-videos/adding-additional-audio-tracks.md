@@ -178,3 +178,7 @@ header: Example response to delete an audio track
   "messages": []
 }
 ```
+
+## Limitations
+
+- The Stream player does not currently support selection amongst multiple audio tracks. The video manifest returned from Cloudflare Stream contains audio track information and multi-audio selection is supported by other video players.
