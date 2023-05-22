@@ -24,7 +24,7 @@ Riverbed                                                      | Specifications c
 [strongSwan](/magic-wan/third-party/strongswan/)                 | –                          | ✅
 Velocloud                                                     | Compatibility on roadmap   | Compatibility on roadmap
 Versa                                                         | Specifications compatible* | Compatibility on roadmap
-[VyOS](/magic-wan/third-party/vyos/)                             | –                          | ✅
+[VyOS](/magic-wan/third-party/vyos/)                             | ✅                          | ✅
 
 VPN               | GRE tunnel                  | IPsec tunnel 
 ------------------|-----------------------------|---------------
