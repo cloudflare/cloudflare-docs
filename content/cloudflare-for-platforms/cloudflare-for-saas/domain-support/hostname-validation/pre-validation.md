@@ -1,36 +1,36 @@
 ---
 pcx_content_type: configuration
-title: Pre-verification
+title: Pre-validation
 weight: 1
 meta:
-    title: Pre-verification methods - Custom Hostname Verification
+    title: Pre-validation methods - Custom Hostname Validation
 ---
 
-# Pre-verification methods
+# Pre-validation methods
 
-Pre-verification methods help verify domain ownership before your customer's traffic is proxying through Cloudflare.
+Pre-validation methods help verify domain ownership before your customer's traffic is proxying through Cloudflare.
 
 ## Use when
 
-Use pre-verification methods when your customers cannot tolerate any downtime, which often occurs with production domains.
+Use pre-validation methods when your customers cannot tolerate any downtime, which often occurs with production domains.
 
-The downside is that these methods require an additional setup step for your customers. Especially if you already need them to add something to their domain for [domain control validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/), pre-verification might make their onboarding more complicated.
+The downside is that these methods require an additional setup step for your customers. Especially if you already need them to add something to their domain for [certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/), pre-validation might make their onboarding more complicated.
 
-If your customers can tolerate a bit of downtime and you want their setup to be simpler, review our [real-time verification methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/realtime-verification/).
+If your customers can tolerate a bit of downtime and you want their setup to be simpler, review our [real-time validation methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/realtime-validation/).
 
 ## How to
 
 ### TXT records
 
-TXT verification is when your customer adds a `TXT` record to their authoritative DNS to verify domain ownership.
+TXT validation is when your customer adds a `TXT` record to their authoritative DNS to verify domain ownership.
 
 {{<Aside type="note">}}
 
-If your customer cannot update their authoritative DNS, you could also use [HTTP verification](#http-tokens).
+If your customer cannot update their authoritative DNS, you could also use [HTTP validation](#http-tokens).
 
 {{</Aside>}}
 
-To set up TXT verification:
+To set up `TXT` validation:
 
 1. When you [create a Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), save the `ownership_verification` information.
 
@@ -58,13 +58,14 @@ To set up TXT verification:
     ```
 
 2. Have your customer add a TXT record with that `name` and `value` at their authoritative DNS provider.
-3. Once you activate the custom hostname, your customer can remove the TXT record.
+3. After a few minutes, you will see the hostname status become **Active** in the UI.
+4. Once you activate the custom hostname, your customer can remove the `TXT` record.
 
 ### HTTP tokens
 
-HTTP verification is when you or your customer places an HTTP token on their origin server to verify domain ownership.
+HTTP validation is when you or your customer places an HTTP token on their origin server to verify domain ownership.
 
-To set up HTTP verification:
+To set up HTTP validation:
 
 When you [create a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) using the API, Cloudflare provides an HTTP `ownership_verification` record in the response.
 

@@ -33,7 +33,7 @@ If your customers already have their applications on Cloudflare, they cannot con
 
 ## How it works
 
-As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/). Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to an origin, set up on your domain. Cloudflare for SaaS is highly customizable. Three possible configurations are shown below.
+As the SaaS provider, you can extend Cloudflare's products to customer-owned custom domains by adding them to your zone [as custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/). Through a suite of easy-to-use products, Cloudflare for SaaS routes traffic from custom hostnames to an origin, set up on your domain. Cloudflare for SaaS is highly customizable. Three possible configurations are shown below.
 
 ### Standard Cloudflare for SaaS configuration:
 

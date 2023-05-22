@@ -14,11 +14,13 @@ meta:
 
 Before you start creating custom hostnames:
 
-1. [Add](/fundamentals/get-started/setup/add-site/) your zone on a **Free** plan and activate it on a [full setup](/dns/zone-setups/full-setup/) or [partial setup](/dns/zone-setups/partial-setup/).
+1. [Add](/fundamentals/get-started/setup/add-site/) your zone to Cloudflare on a **Free** plan.
 2. [Enable](/cloudflare-for-platforms/cloudflare-for-saas/start/enable/) Cloudflare for SaaS for your zone.
 3. (optional) Review the following documentation:
+
   - [API documentation](/fundamentals/api/) (if you have not worked with the Cloudflare API before).
-  - [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas) (if there are multiple proxied DNS records for a custom hostname, because Cloudflare must prioritize which record controls the zone settings and associated origin server).
+  - [Hostname prioritization](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
+  - [Certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).
 
 ---
 
@@ -30,14 +32,11 @@ When you first [enable](/cloudflare-for-platforms/cloudflare-for-saas/start/enab
 
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
-<details>
-<summary>If you need more flexibility</summary>
-<div>
+{{<Aside type="note">}}
 
-You can also [use a Worker as your origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/) or [create a custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) to send traffic from one or more custom hostnames somewhere besides your default proxy fallback.
+If you are an Enterprise customer, you can route custom hostnames to distinct origins by using [custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/).
 
-</div>
-</details>
+{{</Aside>}}
 
 To create your fallback origin:
 
@@ -80,9 +79,7 @@ To create your fallback origin:
 
 ### Step 2 (optional) — Create CNAME target
 
-The `CNAME` target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
-
-We suggest using a domain other than your main company domain (`example.cloud` instead of `example.com`) to lower risk and add flexibility to your custom hostname management.
+The `CNAME` target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record). You may want to use a subdomain such as `customers.<SAAS_PROVIDER>.com`.
 
 [Create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a proxied `CNAME` that points your `CNAME` target to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
@@ -90,7 +87,7 @@ We suggest using a domain other than your main company domain (`example.cloud` i
 
 | **Type** | **Name** | **IPv4 address** | **Proxy status** |
 | -------- | -------- | ---------------- | ---------------- |
-| `CNAME`       | `*.customers` | `proxy-fallback.saasprovider.com` | Proxied       |
+| `CNAME`       | `.customers` | `proxy-fallback.saasprovider.com` | Proxied       |
 
 {{</example>}}
 
@@ -100,12 +97,14 @@ We suggest using a domain other than your main company domain (`example.cloud` i
 
 You need to perform the following steps for each custom hostname.
 
-### Step 1 — Plan for validation and verification
+### Step 1 — Plan for validation
 
 Before you create a hostname, you need to plan for:
 
-- [Certificate Validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/): Upon successful validation, the certificates are deployed to Cloudflare’s global network.
-- [Hostname Verification](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/): Upon successful verification, Cloudflare proxies traffic for this hostname.
+1. [Certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/): Upon successful validation, the certificates are deployed to Cloudflare’s global network.
+2. [Hostname validation](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+
+You must complete both these steps for the hostname to work as expected.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -115,7 +114,7 @@ Depending on which method you select for each of these options, additional steps
 
 ### Step 2 - Create custom hostname
 
-After planning for certification validation and hostname verification, you can create the custom hostname.
+After planning for certification and hostname validation, you can create the custom hostname.
 
 To create a custom hostname:
 
@@ -144,16 +143,16 @@ To finish the custom hostname setup, your customer needs to set up a `CNAME` rec
 
 {{<Aside type="warning">}}
 
-Before your customer does this, confirm that you are prepared for both [certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/) and [hostname verification](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/). 
+Before your customer does this step, confirm that the hostname's **Certificate status** and **Hostname status** are both **Active**. 
 
-Otherwise, you may cause issues with their domain.
+If not, confirm that you are using a method of [certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic) or [hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/realtime-validation/) validation that occurs after your customer adds their `CNAME` record.
 
 {{</Aside>}}
 
 Your customer's `CNAME` record might look like the following:
 
 ```txt
-app CNAME john.customers.saasprovider.com
+mystore.com CNAME customers.saasprovider.com
 ```
 
 This record would route traffic in the following way:
@@ -161,11 +160,11 @@ This record would route traffic in the following way:
 ```mermaid
 flowchart TD
 accTitle: How traffic routing works with a CNAME target
-A[Request to <code>app.customer.com</code>] --> B[<code>john.customers.saasprovider.com</code>]
+A[Request to <code>mystore.com</code>] --> B[<code>customers.saasprovider.com</code>]
 B --> C[<code>proxy-fallback.saasprovider.com</code>]
 ```
 <br/>
 
-Requests to `app.customer.com` would go to your `CNAME` target (`john.customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
+Requests to `mystore.com` would go to your `CNAME` target (`customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
 
 [^1]: If you have [regional services](/data-localization/regional-services/) set up for your custom hostnames, Cloudflare always uses the processing region associated with your CNAME target record (instead of the processing region of any [custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)).
