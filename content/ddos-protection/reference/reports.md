@@ -21,7 +21,7 @@ Reports contain the following information:
 * Total number of DDoS attacks
 * Largest DDoS attack in packets per second (pps) and bits per second (bps)
 * Changes in DDoS attacks compared to the previous report
-* Top attack vectors
+* Top attack protocols
 * Top targeted IP addresses
 * Top targeted destination ports
 * Total potential downtime prevented (a sum of the duration of all attacks in that week)
@@ -33,7 +33,7 @@ To receive real-time attack alerts, configure [DDoS alerts](/ddos-protection/ref
 
 {{<Aside type="note" header="Notes">}}
 
-* Information about top attack vectors, IP addresses, and destination ports is temporarily unavaible in weekly DDoS reports. Use the [Network Analytics dashboard](/analytics/network-analytics/) to get this information.
+* Information about top attack protocols, IP addresses, and destination ports is temporarily unavaible in weekly DDoS reports. Use the [Network Analytics dashboard](/analytics/network-analytics/) to get this information.
 * {{<render file="_alerts-and-reports-independent.md">}}
 
 {{</Aside>}}
