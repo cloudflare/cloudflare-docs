@@ -23,24 +23,34 @@ If you run your own authoritative nameservers but still want to benefit from Clo
 flowchart LR
 A[Your domain is <br /> <strong>not</strong> on Cloudlfare Registrar]
 Q1{Are you on a <br /> Free plan?}
-Q2{Will you be using <br /> another DNS provider?}
-D[Partial setup]
-Q5{{Manage subdomains seperately}}
-
-Q3{{Transfer data <br /> from one provider <br /> to the other}}
-C[Zone transfers]
-Q4{{Only use Cloudflare <br /> for specific hostnames}} --> D
-
 B[Full setup]
-Q5 ---> E[Subdomain setup]
+C[Consider the other setup options]
 
 A --> Q1
 Q1 -- yes --> B
-Q1 --- H[no] ---> Q2
-H --- Q5
-Q2 -- no --> B
-Q2 --->I[yes]
+Q1 -- no --> C
+
+A1[You are on Enterprise]
+Q5{Do you need to manage <br /> subdomains seperately?}
+
+A1 --- Q5
+Q5 -- no --> B1[Full setup]
+Q5 -- yes --> E[Subdomain setup]
+
+A2[You are on Business <br /> or Enterprise]
+
+A2 --- Q2
+Q2{Will you be using <br /> another DNS provider?}
+F[Partial setup]
+
+Q3{{Transfer data <br /> from one provider <br /> to the other}}
+Q4{{Only use Cloudflare <br /> for specific hostnames}} --> F
+
+
+G[Zone transfers]
+Q2 -- no --> B2[Full setup]
+Q2 --- I[yes]
 I --- Q3
-Q3 ---> C
+Q3 ---> G
 I --- Q4
 ```
