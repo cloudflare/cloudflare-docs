@@ -16,13 +16,14 @@ Cloudflare Gateway logs DNS query information in [RData](https://datatracker.iet
 
 ## Parse RData
 
-To parse RData from Logpush, use the following Python code:
+To parse RData from Logpush, run the following Python script with your desired samples:
 
 ```python
 import dnslib
 import base64
 
 
+# The samples from your Logpush output
 samples = [
    {"type":"1","data":"BnJlZGRpdANjb20AAAEAAQAAALwABJdlwYw="},
    {"type":"5","data":"BnNlY3VyZQV3bHhycwNjb20AAAUAAQAADggAIgZzZWN1cmUEYmFzZQV3bHhycwNjb20GYWthZG5zA25ldAA="},
@@ -47,9 +48,9 @@ for sample in samples:
    print(f"query name: {query_name} | query type: {query_type} | query class: {query_class} | ttl: {response_ttl} | rdata: {response_data}\n")
 ```
 
-Example output:
+The script will print a list of your samples. For example:
 
-```txt
+```text
 == Print the full Resource Record ==
 reddit.com.             188     IN      A       151.101.193.140
 == Print invidual components of the Resource Record ==
