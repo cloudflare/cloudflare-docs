@@ -6,7 +6,7 @@ weight: 1
 
 # RData
 
-Cloudflare Gateway logs DNS query information in [RData](https://datatracker.ietf.org/doc/html/rfc1035#section-3.3), a Base64-encoded binary format. The output is a list of objects including:
+Cloudflare Gateway logs DNS query information in [RData](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3), a Base64-encoded binary format. The output is a list of objects including:
 
 - Query name
 - Query type
