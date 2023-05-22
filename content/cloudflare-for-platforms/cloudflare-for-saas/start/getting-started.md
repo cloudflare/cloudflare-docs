@@ -21,7 +21,7 @@ meta:
 
 ### Step 1 — Create fallback origin
 
-{{<render file="_get-started-fallback-origin.md">}}
+{{<render file="_get-started-fallback-origin.md" noMarkdown=true >}}
 
 ### Step 2 (optional) — Create CNAME target
 
@@ -41,59 +41,13 @@ The `CNAME` target — optional, but highly encouraged — provides a friendly a
 
 ## Per-hostname setup
 
-You need to perform the following steps for each custom hostname.
-
-### Step 1 — Plan for validation
-
-Before you create a hostname, you need to plan for:
-
-1. [Certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/): Upon successful validation, the certificates are deployed to Cloudflare’s global network.
-2. [Hostname validation](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/): Upon successful validation, Cloudflare proxies traffic for this hostname.
-
-You must complete both these steps for the hostname to work as expected.
-
-{{<Aside type="warning" header="Important">}}
-
-Depending on which method you select for each of these options, additional steps might be required for you and your customers.
-
-{{</Aside>}}
-
-### Step 2 — Create custom hostname
-
-After planning for certification and hostname validation, you can create the custom hostname.
-
-To create a custom hostname:
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
-
-{{<render file="_create-custom-hostname.md">}}
-
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
-
-{{<render file="_create-custom-hostname-api.md">}}
-
-{{</tab>}}
-{{</tabs>}}
-
-{{<Aside type="note">}}
-
-{{<render file="_issue-certs-preamble.md">}}
-
-{{</Aside>}}
+{{<render file="_get-started-per-hostname.md" noMarkdown=true >}}
 
 ### Step 3 — Have customer create CNAME record
 
-To finish the custom hostname setup, your customer needs to set up a `CNAME` record at their authoritative DNS that points to [`CNAME` target](#step-2-optional--create-cname-target) [^1].
+To finish the custom hostname setup, your customer needs to set up a `CNAME` record at their authoritative DNS that points to your [`CNAME` target](#step-2-optional--create-cname-target) [^1].
 
-{{<Aside type="warning">}}
-
-Before your customer does this step, confirm that the hostname's **Certificate status** and **Hostname status** are both **Active**. 
-
-If not, confirm that you are using a method of [certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic) or [hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/realtime-validation/) validation that occurs after your customer adds their `CNAME` record.
-
-{{</Aside>}}
+{{<render file="_get-started-check-statuses.md">}}
 
 Your customer's `CNAME` record might look like the following:
 
@@ -117,6 +71,4 @@ Requests to `mystore.com` would go to your `CNAME` target (`customers.saasprovid
 
 #### Service continuation
 
-If your customer is also using Cloudflare for their domain, they should keep their `CNAME` record in place for as long as they want to use your service.
-
-For more details, refer to [Remove custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/remove-custom-hostnames/).
+{{<render file="_get-started-service-continuation.md">}}
