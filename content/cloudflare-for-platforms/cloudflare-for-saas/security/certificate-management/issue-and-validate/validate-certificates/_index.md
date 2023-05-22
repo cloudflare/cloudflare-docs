@@ -44,3 +44,7 @@ If you want to minimize downtime, explore one of the following methods:
 ### Minimize customer effort
 
 If you value simplicity and your customers can handle a few minutes of downtime, you can rely on Cloudflare [automatic HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic).
+
+## Potential issues
+
+To avoid or solve potential issues, refer to our [troubleshooting guide](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/).

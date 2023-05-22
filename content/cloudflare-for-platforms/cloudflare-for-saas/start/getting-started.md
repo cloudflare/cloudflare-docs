@@ -10,7 +10,7 @@ meta:
 
 ---
 
-## Prerequisites
+## Before you begin
 
 Before you start creating custom hostnames:
 
@@ -112,7 +112,7 @@ Depending on which method you select for each of these options, additional steps
 
 {{</Aside>}}
 
-### Step 2 - Create custom hostname
+### Step 2 — Create custom hostname
 
 After planning for certification and hostname validation, you can create the custom hostname.
 
@@ -168,3 +168,9 @@ B --> C[<code>proxy-fallback.saasprovider.com</code>]
 Requests to `mystore.com` would go to your `CNAME` target (`customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
 
 [^1]: If you have [regional services](/data-localization/regional-services/) set up for your custom hostnames, Cloudflare always uses the processing region associated with your CNAME target record (instead of the processing region of any [custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)).
+
+#### Service continuation
+
+If your customer is also using Cloudflare for their domain, they should keep their `CNAME` record in place for as long as they want to use your service.
+
+For more details, refer to [Remove custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/remove-custom-hostnames/).

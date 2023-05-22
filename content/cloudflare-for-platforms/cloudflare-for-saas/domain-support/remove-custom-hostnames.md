@@ -8,7 +8,22 @@ meta:
 
 # Remove custom hostnames
 
-As a SaaS provider, you must remove a customer's custom hostname from your zone if they decide to churn. 
+As a SaaS provider, your customers may decide to no longer participate in your service offering. If that happens, you need to stop routing traffic through those custom hostnames.
+
+## Domains using Cloudflare
+
+If your customer's domain is also using Cloudflare, they can stop routing their traffic through your custom hostname by updating their Cloudflare DNS.
+
+If they update their [`CNAME` record](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-3--have-customer-create-cname-record) so that it no longer points to your `CNAME` target:
+
+- The domain's traffic will note route through your custom hostname.
+- The custom hostname will enter into a **Moved** state.
+
+If the custom hostname is in a **Moved** state for 7 days, it will be automatically deleted.
+
+## Domains not using Cloudflare
+
+If your customer's domain is not using Cloudflare, you must remove a customer's custom hostname from your zone if they decide to churn.
 
 This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
 
@@ -25,8 +40,9 @@ To delete a custom hostname and any issued certificates using the API, send a [`
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
+## For end customers
 
-**For end customers**: if you have recently churned with your service (SaaS) provider but traffic continues to route to them, your service provider likely still has your domain listed as a custom hostname. Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) for further assistance.
+If you recently churned with your service (SaaS) provider but traffic continues to route to them, your approach depends on whether your domain uses Cloudflare:
 
-{{</Aside>}}
+- **With Cloudflare**: Update your Cloudflare DNS to remove any records pointing to your SaaS provider.
+- **Without Cloudflare**: Ask your service provider to delete your custom hostname. Contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) for further assistance.
