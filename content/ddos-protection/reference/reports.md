@@ -27,7 +27,7 @@ Reports contain the following information:
 * Total potential downtime prevented (a sum of the duration of all attacks in that week)
 * Total bytes mitigated (a sum of all the mitigated attack traffic)
 
-Cloudflare issues DDoS reports via email each Tuesday. Reports summarize the attacks that occurred from Monday of the previous week to Sunday of the current week. For example, a report issued Tuesday, November 10th, 2020 summarizes activity from Monday the 2nd to Sunday the 8th.
+Cloudflare issues DDoS reports via email each Tuesday. Reports summarize the attacks that occurred from Monday of the previous week to Sunday of the current week. For example, a report issued on 2020-11-10 (Tuesday) summarizes activity from 2020-11-02 (Monday) to 2020-11-08 (Sunday).
 
 To receive real-time attack alerts, configure [DDoS alerts](/ddos-protection/reference/alerts/).
 
