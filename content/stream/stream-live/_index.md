@@ -59,5 +59,3 @@ Stream Live is billed identically to the rest of Cloudflare Stream.
 - You pay $1 per 1000 minutes of delivered video.
 
 All Stream Live videos are automatically recorded. There is no additional cost for encoding and packaging live videos.
-
-For more, see [Billing for Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360016450871-Billing-for-Cloudflare-Stream).

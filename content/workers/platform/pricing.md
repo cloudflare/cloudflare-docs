@@ -116,6 +116,14 @@ Workers Logpush is only available on the Workers Paid plan.
 
 Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](/queues/platform/pricing/).
 
+## D1
+
+D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans. 
+
+{{<render file="_d1-pricing.md">}}
+
+Refer to [the D1 documentation](/d1/platform/pricing/) to learn more about how D1 is billed.
+
 ## Durable Objects
 
 Durable Objects are only available on the Workers Paid plan.

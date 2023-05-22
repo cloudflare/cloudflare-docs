@@ -2,6 +2,7 @@
 pcx_content_type: faq
 title: Web Analytics FAQ
 layout: single
+weight: 7
 ---
 
 # Web Analytics FAQ
