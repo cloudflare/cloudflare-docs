@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: User logs
-weight: 4
+weight: 1
 ---
 
 # User logs

@@ -11,7 +11,7 @@ Posture logs show the [device posture check](/cloudflare-one/identity/devices/) 
 
 To view device posture logs, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Posture**. Logs will only display if you have configured [device posture checks](/cloudflare-one/identity/devices/) for your Zero Trust organization.
 
-Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/analytics/logs/logpush/).
+Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/insights/logs/logpush/).
 
 ## Explanation of the fields
 

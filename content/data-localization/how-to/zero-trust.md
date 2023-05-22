@@ -52,8 +52,8 @@ By default, Cloudflare will store and deliver logs from data centers across our 
  Gateway Network | ✅ Log region can be configured to US | ✅ Logpush can be used from EU <br> 🚧 Logs and Analytics in the dashboard not yet available
 
 Customers also have the option to reduce the logs that Cloudflare stores:
-- You can [exclude PII from logs](/cloudflare-one/analytics/logs/gateway-logs/manage-pii/) 
-- You can [disable logging, or only log blocked requests](/cloudflare-one/analytics/logs/gateway-logs/#selective-logging).
+- You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/) 
+- You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/gateway-logs/#selective-logging).
 
 ## Access 
 
