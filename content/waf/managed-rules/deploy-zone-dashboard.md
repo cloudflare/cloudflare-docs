@@ -12,7 +12,7 @@ You can deploy and configure managed rulesets for a zone in **Security** > **WAF
 
 To deploy a managed ruleset for several Enterprise domains in your account, refer to [Deploy a managed ruleset in the dashboard for an account](/waf/managed-rules/deploy-account-dashboard/).
 
-![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There is a configured rule for executing the Cloudflare Managed Ruleset, and there are two managed rulesets available for deployment.](/waf/static/waf-managed-rules-tab.png)
+![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There is a configured rule for executing the Cloudflare Managed Ruleset, and there are two managed rulesets available for deployment.](/images/waf/waf-managed-rules-tab.png)
 
 ## Deploy a managed ruleset
 
@@ -56,7 +56,7 @@ To configure rule field values for all the rules in a managed ruleset:
 
     For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
 
-    ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](/waf/static/waf-configure-ruleset.png)
+    ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](/images/waf/waf-configure-ruleset.png)
 
 5. (Optional) To apply the rules in the ruleset to a subset of incoming requests instead of all requests, [set the scope using a custom filter expression](#specify-a-custom-expression-for-the-ruleset).
 
@@ -78,7 +78,7 @@ To view the rules of a managed ruleset:
 
 4. Select **Browse rules**.
 
-    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset](/waf/static/waf-browse-rules.png)
+    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset](/images/waf/waf-browse-rules.png)
 
 ### Configure a single rule in a managed ruleset
 

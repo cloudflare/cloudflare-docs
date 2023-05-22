@@ -379,14 +379,14 @@ header: Response
 
 ### Create a policy
 
-This example creates a log policy in Page Shield, defining the following scripts as allowed based on where they are hosted:
+This example creates a Page Shield policy with _Log_ action, defining the following scripts as allowed based on where they are hosted:
 
 * Scripts hosted in `myapp.example.com` (which does not include scripts in `example.com`).
 * Scripts hosted in `cdnjs.cloudflare.com`.
 * The Google Analytics script using its full URL.
 * All scripts in the same origin (same HTTP or HTTPS scheme and hostname).
 
-All other scripts would trigger a policy violation.
+All other scripts would trigger a policy violation, but those scripts would not be blocked.
 
 For details on Content Security Policy values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
 
@@ -402,7 +402,7 @@ Currently, you can only create Page Shield policies containing `script-src` dire
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/policies" \
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/policies" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "description": "My first policy in log mode",
@@ -432,4 +432,4 @@ header: Response
 }
 ```
 
-To create an allow policy instead of a log policy, use `"action": "allow"` in the request body. In the case of such policy, all scripts not allowed by the policy would be blocked.
+To create a policy with an _Allow_ action instead of _Log_, use `"action": "allow"` in the request body. In the case of such policy, all scripts not allowed by the policy would be blocked.

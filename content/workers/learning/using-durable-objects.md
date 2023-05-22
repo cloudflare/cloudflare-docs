@@ -18,7 +18,7 @@ For details on the specific Durable Object APIs, refer to the [Runtime API docum
 
 [The Workers community on Discord](https://discord.gg/cloudflaredev) has a #durable-objects channel where you can ask questions, show off what you are building, and discuss Durable Objects with other developers.
 
-## Using Durable Objects
+## Use Durable Objects
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
@@ -35,7 +35,7 @@ There are three steps to creating and using a Durable Object:
 - [Instantiating and communicating with a Durable Object](#instantiating-and-communicating-with-a-durable-object) from another Worker via the [Fetch](/workers/runtime-apis/durable-objects/#fetch-handler-method) API.
 - [Uploading the Durable Object and Worker](#uploading-a-durable-object-worker) to Cloudflare's servers using Wrangler.
 
-## Writing a class that defines a Durable Object
+## Write a class that defines a Durable Object
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
@@ -69,7 +69,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 {{</Aside>}}
 
-### Accessing Persistent Storage from a Durable Object
+### Access Persistent Storage from a Durable Object
 
 Durable Objects gain access to a [persistent storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) via the first parameter passed to the Durable Object constructor. While access to a Durable Object is single-threaded, it is important to remember that request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
 
@@ -160,7 +160,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
 
-## Instantiating and communicating with a Durable Object
+## Instantiate and communicate with a Durable Object
 
 Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings work similarly to KV bindings and must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 
@@ -232,7 +232,7 @@ In the above example, you used a string-derived object ID by calling the `idFrom
 
 {{</Aside>}}
 
-## Uploading a Durable Object Worker
+## Upload a Durable Object Worker
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
@@ -240,7 +240,7 @@ You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-
 
 {{</Aside>}}
 
-The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/workers/wrangler/), the Workers CLI. You can start with one of our templates, the simplest of which can be used by running:
+To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. Start with one of our templates, the simplest of which can be used by running:
 
 ```sh
 $ git clone https://github.com/cloudflare/durable-objects-template
@@ -256,11 +256,11 @@ This will create a directory for your project with basic configuration and a sin
 
 The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler publish`](/workers/wrangler/commands/) command.
 
-### Specifying the main module
+### Specify the main module
 
 Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. Refer to the [modules section of the custom builds documentation](/workers/wrangler/custom-builds/) for more details.
 
-### Configuring Durable Object bindings
+### Configure Durable Object bindings
 
 Durable Objects bindings can be configured in `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
@@ -305,7 +305,7 @@ durable_objects.bindings = [
 ]
 ```
 
-### Configuring Durable Object classes with migrations
+### Configure Durable Object classes with migrations
 
 You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
 

@@ -80,7 +80,7 @@
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
 /access/setting-up-access/access-groups/ /cloudflare-one/identity/users/groups/ 301
-/access/setting-up-access/audit-logs/ /cloudflare-one/analytics/logs/audit-logs/ 301
+/access/setting-up-access/audit-logs/ /cloudflare-one/insights/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/access/policy-management/ 301
 /access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
 /access/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
@@ -590,6 +590,7 @@
 # support
 
 /support/account-management-billing/billing-cloudflare-add-on-services/ /support/account-management-billing/billing-add-on-service/ 301
+/support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /support/third-party-software/e-commerce/using-cloudflare-with-bigcommerce/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
@@ -862,8 +863,12 @@
 /zaraz/advanced/preview-mode/ /zaraz/history/preview-mode/ 301
 
 # cloudflare-one / zero-trust
-/cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
-/cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/analytics/access/ 301
+/cloudflare-one/analytics/ /cloudflare-one/insights/ 301
+/cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
+/cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/access/ 301
+/cloudflare-one/analytics/access/ /cloudflare-one/insights/analytics/access/ 301
+/cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
+/cloudflare-one/analytics/users/ /cloudflare-one/insights/logs/users/ 301
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
@@ -1008,6 +1013,7 @@
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/:splat 301
+/cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
 /cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-apps/use-cases/:splat 301
 /cloudflare-one/connections/connect-apps/tunnel-monitoring/* /cloudflare-one/connections/connect-apps/monitor-tunnels/:splat 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301

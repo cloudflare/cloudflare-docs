@@ -112,7 +112,7 @@ We may remove the `cf-placement` header before Smart Placement enters general av
 
 ## Best practices
 
-If you are building full-stack applications on Workers, we reccomend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/platform/smart-placement) to connect your front-end logic and back-end logic Workers. 
+If you are building full-stack applications on Workers, we reccomend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/runtime-apis/service-bindings/) to connect your front-end logic and back-end logic Workers. 
 
 ![Smart Placement and Service Bindings](../media/smart-placement-service-bindings.png)
 

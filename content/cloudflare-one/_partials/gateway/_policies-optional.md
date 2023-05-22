@@ -14,7 +14,7 @@ Block content categories which go against your organization’s acceptable use p
 | Application | in       | Netflix | Block  |
 
 {{<Aside type="note">}}
-After 7 days, view your [Shadow IT analytics](/cloudflare-one/analytics/access/) and block additional applications based on what your users are accessing.
+After 7 days, view your [Shadow IT analytics](/cloudflare-one/insights/analytics/access/) and block additional applications based on what your users are accessing.
 {{</Aside>}}
 
 ## Check user identity

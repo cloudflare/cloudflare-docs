@@ -168,7 +168,7 @@
             "additional_description": "These policies allow Cloudflare to proxy requests to internal or private infrastructure without a public DNS record."
           },
           {
-            "url_path": "/cloudflare-one/analytics/logs/gateway-logs/",
+            "url_path": "/cloudflare-one/insights/logs/gateway-logs/",
             "link_title": "Validate that Cloudflare is receiving your WARP traffic",
             "additional_description": "Review your Gateway logs to make sure traffic is reaching the edge."
           }
