@@ -19,3 +19,7 @@ However, most DNS providers do not allow `CNAME` records at the zone's root[^1].
 This limitation does not apply with apex proxying. Cloudflare assigns a set of IP prefixes to your account (or uses your own if you have [BYOIP](/byoip/)). This means that customers can create a standard `A` record to route traffic to your domain, which can support the domain apex.
 
 [^1]: Cloudflare offers this functionality through [CNAME flattening](/dns/cname-flattening/).
+
+## Setup
+
+- [Set up Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/setup/)
