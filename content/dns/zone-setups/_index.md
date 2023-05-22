@@ -30,27 +30,28 @@ A --> Q1
 Q1 -- yes --> B
 Q1 -- no --> C
 
-A1[You are on Enterprise]
+A2[You are on <strong>Business <br /> or Enterprise</strong>]
+
+A2 --- Q2
+Q2{Will you be using <br /> another DNS provider?}
+Q2 -- no --> B2[Full setup]
+Q2 -- yes --> H[Consider options for when you use multiple providers]
+
+I[You use Cloudflare together <br /> <strong>with other providers</strong>]
+
+Q3{{Transfer data <br /> from one provider <br /> to the other}}
+Q4{{Only use Cloudflare <br /> for specific hostnames}} --> F
+F[Partial setup]
+
+I --- Q3
+I --- Q4
+Q3 ---> G
+G[Zone transfers]
+
+A1[You are on <strong>Enterprise</strong>]
 Q5{Do you need to manage <br /> subdomains seperately?}
 
 A1 --- Q5
 Q5 -- no --> B1[Full setup]
 Q5 -- yes --> E[Subdomain setup]
-
-A2[You are on Business <br /> or Enterprise]
-
-A2 --- Q2
-Q2{Will you be using <br /> another DNS provider?}
-F[Partial setup]
-
-Q3{{Transfer data <br /> from one provider <br /> to the other}}
-Q4{{Only use Cloudflare <br /> for specific hostnames}} --> F
-
-
-G[Zone transfers]
-Q2 -- no --> B2[Full setup]
-Q2 --- I[yes]
-I --- Q3
-Q3 ---> G
-I --- Q4
 ```
