@@ -31,7 +31,13 @@ Cloudflare issues DDoS reports via email each Tuesday. Reports summarize the att
 
 To receive real-time attack alerts, configure [DDoS alerts](/ddos-protection/reference/alerts/).
 
-{{<render file="_alerts-and-reports-independent.md">}}
+{{<Aside type="note" header="Notes">}}
+
+* Information about top attack vectors, IP addresses, and destination ports is temporarily unavaible in DDoS reports. Refer to the [analytics dashboard](/ddos-protection/reference/analytics/) to get this information.
+* {{<render file="_alerts-and-reports-independent.md">}}
+
+{{</Aside>}}
+
 
 ### Example report
 
