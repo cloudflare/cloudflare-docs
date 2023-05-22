@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Access audit logs
-weight: 6
+weight: 2
 meta:
   description: Use Access audit logs to review authentication events and HTTP requests to protected URI paths.
 ---
