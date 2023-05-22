@@ -45,7 +45,7 @@ There are some back-end services that are not considered by the Smart Placement 
 
 Smart Placement is available to users on all Workers plans.
 
-It is intended for latency-sensitive Workers and as such, does not currently work with [Cron Triggers](/workers/platform/triggers/cron-triggers/).
+Smart Placement is intended for latency-sensitive Workers and as such, does not currently work with [Cron Triggers](/workers/platform/triggers/cron-triggers/).
 
 ### Enable Smart Placement via Wrangler
 
@@ -93,7 +93,7 @@ Possible placement states include:
 - `INSUFFICIENT_INVOCATIONS`: Not enough requests for Smart Placement to make a placement decision.
 - `NO_VALID_HOSTS`: The Worker does not send subrequests to [back-end services supported by Smart Placement](/workers/platform/smart-placement/#supported-backend-services).
 - `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid back-end services.
-- `SUCCESS`: The Worker has been successfully analyzed and will be Smart Placed.
+- `SUCCESS`: The Worker has been successfully analyzed and will be optimized by Smart Placement.
 
 ### Request Duration Analytics
 
