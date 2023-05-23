@@ -41,14 +41,18 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 Access detects changes in device posture at the same rate as the [polling frequency](#polling-frequency) configured for the posture check.
 
-Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device. The expiration for the service provider check (i.e. posture rule) can be set with the [expiration field](https://developers.cloudflare.com/api/operations/device-posture-rules-update-device-posture-rule#request-body).
+Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device.
+
+### Expiration
+
+By default, the posture result remains valid until it is overwritten by new data. You can specify an `expiration` time using the [API](/api/operations/device-posture-rules-update-device-posture-rule).
 
 ### Polling frequency
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` and `expiration` duration using the [API](/api/operations/device-posture-rules-create-device-posture-rule).
+By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` using the [API](/api/operations/device-posture-rules-update-device-posture-rule).
 
 #### Service provider checks
 
-When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. 
+When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API.
