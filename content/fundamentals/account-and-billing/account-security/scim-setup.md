@@ -8,19 +8,19 @@ weight: 4
 
 By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access on a per-user basis.
 
-This page will use Okta as the IdP provider.
+This how-to will use Okta as the IdP provider.
 
 ## Prerequisites
 
-- In Cloudflare, super administrator access on the account that maintains the SSO connector
-- In Okta, access to Create Groups and Create Applications
+- In Cloudflare, super administrator access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
+- In Okta, access to Create Groups and Create Applications.
 
 ## Limitations
 
-- We are unable to automatically deprovision users under domains that do not have the SSO connector
-- We are unable to update user attributes from the IDP
+- You cannot automatically deprovision users under domains that do not have the SSO connector.
+- You cannot update user attributes from the IdP.
 - If a user is the only super administrator on an enterprise account, they will not be deprovisioned.
-- We currently do not have an Okta Application Network integration, but this is currently in review.
+- We currently do not have an Okta Integration Network (OIN) integration. This is currently in review.
 
 ## 1. Create a token
 
@@ -33,7 +33,7 @@ This page will use Okta as the IdP provider.
 | User    | Memberships      | Read       |
 | User    | Memberships      | Edit       |
 
-Add the following account resources:
+Add the following under **Account Resources**:
 
 | Action  | Account          |
 | ------- | ---------------- |
@@ -45,7 +45,8 @@ After creating the token, copy the token value.
 
 1. In the Okta dashboard, go to **Directory** > **Groups**.
 2. Select **Add a group**, enter a name, then select **Save**.
-3. Select the group, then select **Assign people**. Add your users, then select **Done**.
+3. Select the group, then select **Assign people**.
+4. Add your users, then select **Done**.
 
 ## 3. Set up the Okta application
 
