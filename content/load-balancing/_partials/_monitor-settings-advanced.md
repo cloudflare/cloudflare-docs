@@ -22,4 +22,4 @@ _build:
 *   **Configure Request Header(s)**:
     *   Useful if your servers are expecting specific incoming headers.
 *   **Header**:
-    *   The HTTP request headers to send in the health monitors. It is recommended that you set a Host header by default. The User-Agent header cannot be overridden. This parameter is only valid for HTTP and HTTPS monitors.
+    *   The HTTP request headers to send in the health monitor. It is recommended that you set a Host header by default. The User-Agent header cannot be overridden. This parameter is only valid for HTTP and HTTPS monitors.
