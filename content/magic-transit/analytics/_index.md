@@ -1,9 +1,10 @@
 ---
-title: Partners
 pcx_content_type: navigation
-weight: 11
+title: Analytics
+weight: 10
 ---
 
-# Partners
+# Magic Transit analytics
+
 
 {{<directory-listing>}}
