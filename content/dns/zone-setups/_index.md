@@ -19,6 +19,10 @@ If you run your own authoritative nameservers but still want to benefit from Clo
 
 {{</Aside>}}
 
+## Common use cases and availability
+
+If you are unsure of which setup to use, refer to the following chart for an overview of common use cases and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
+
 ```mermaid
 flowchart LR
 
@@ -27,7 +31,7 @@ Q1{Are you on a <br /> <strong>Free or Pro</strong> plan?}
 B[Full setup]
 C[Consider the other setup options]
 
-A --> Q1
+A --- Q1
 Q1 -- yes --> B
 Q1 -- no --> C
 
@@ -44,7 +48,7 @@ Q3[You are on <strong>Business <br />or Enterprise</strong>]
 Q4{{You want to use Cloudflare <br />only for <strong>specific hostnames</strong>}}
 Q5[You are on <strong>Enterprise</strong>]
 Q6{{You want to  <strong>transfer <br />zone data</strong> from one provider <br /> to the other}}
-E[Partial setup]
+E["Partial (CNAME) setup"]
 F[Zone transfers]
 
 D1 --- Q3 --- Q4 ---> E
