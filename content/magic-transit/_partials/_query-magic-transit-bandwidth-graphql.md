@@ -7,9 +7,9 @@ _build:
 
 # Querying Magic Transit tunnel bandwidth analytics with GraphQL
 
-In this example, you are going to use the GraphQL Analytics API to query Magic Transit Ingress Tunnel Traffic over a specified time period.
+In this example, you are going to use the GraphQL Analytics API to query Magic Transit ingress tunnel traffic over a specified time period.
 
-The following API call will request Magic Transit Ingress Tunnel Traffic over a one-hour period and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request Magic Transit ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
 
 The following example queries for ingress traffic. To query for egress, change the value in the direction filter.
 
