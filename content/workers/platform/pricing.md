@@ -29,7 +29,7 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 
 {{</table-wrap>}}
 
-1.  Requests inbound to your Worker from the Internet are charged on a unit basis for paid plans. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but network time incurred may slightly increase any duration-based billing. For WebSockets, each incoming message is billed as a separate request.
+1.  Requests inbound to your Worker from the Internet are charged on a unit basis for paid plans. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but network time incurred may slightly increase any duration-based billing. WebSockets messages are unmetered and not billed.
 
 2.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
