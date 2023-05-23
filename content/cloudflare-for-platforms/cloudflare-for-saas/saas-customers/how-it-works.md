@@ -44,6 +44,6 @@ end
 D[SaaS Origin]
 
 A -->|CF Proxy| B
-B -->|"CF Proxy (Orange-to-Orange)"| C
+B -->|CF Proxy through Orange-to-Orange| C
 C --> D
 ```
