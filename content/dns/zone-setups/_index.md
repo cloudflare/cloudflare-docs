@@ -21,7 +21,45 @@ If you run your own authoritative nameservers but still want to benefit from Clo
 
 ## Common use cases and availability
 
-If you are unsure of which setup to use, refer to the following chart for an overview of common use cases and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
+If you are unsure of which setup to use, consider the questions below for an overview of common use cases and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
+
+<details>
+<summary>Are you on a Free or Pro plan?</summary>
+<div> 
+Full setup is the only one available for Free or Pro plans.
+</div>
+</details>
+
+<details>
+<summary>Will you be using Cloudflare with other DNS providers?</summary>
+<div> 
+<details>
+<summary>Business plan</summary>
+<div> 
+Partial (CNAME) setup
+</div>
+</details>
+<details>
+<summary>Enterprise plan</summary>
+<div> 
+Zone transfers
+</div>
+</details>
+</div>
+</details>
+
+<details>
+<summary>Do you need to manage subdomains separately?</summary>
+<div> 
+Subdomain setup (Ent only)
+</div>
+</details>
+
+<br />
+
+<details>
+<summary>Previous chart - erase afterwards</summary>
+<div> 
 
 ```mermaid
 flowchart LR
@@ -34,7 +72,6 @@ C[Consider the other setup options]
 A --- Q1
 Q1 -- yes --> B
 Q1 -- no --> C
-
 
 C1[You are on <strong>Business <br /> or Enterprise</strong>]
 Q2{Will you be using <br /> other DNS providers?}
@@ -61,3 +98,6 @@ G --- Q7
 Q7 -- no --> B1[Full setup]
 Q7 -- yes --> H[Subdomain setup]
 ```
+
+</div>
+</details>
