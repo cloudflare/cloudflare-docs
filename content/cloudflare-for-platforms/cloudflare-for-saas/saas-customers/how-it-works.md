@@ -30,20 +30,3 @@ B --> C
 
 With O2O, Cloudflare can apply the settings specified by both you and your SaaS provider.
 
-```mermaid
-graph TD
-accTitle: Orange-to-orange process diagram
-
-A[Website visitor]
-
-subgraph Cloudflare
-  B[Customer zone]
-  C[SaaS zone]
-end
-
-D[SaaS Origin]
-
-A -->|CF Proxy| B
-B -->|CF Proxy through Orange-to-Orange| C
-C --> D
-```
