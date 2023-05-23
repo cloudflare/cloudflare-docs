@@ -22,7 +22,7 @@ A[Website visitor]
 B[SaaS provider owned Cloudflare account]
 C[SaaS provider origin]
 
-A --|CF Proxy| B
+A -->|CF Proxy| B
 B --> C
 ```
 
