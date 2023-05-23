@@ -21,8 +21,9 @@ If you run your own authoritative nameservers but still want to benefit from Clo
 
 ```mermaid
 flowchart LR
-A[Your domain is <br /> <strong>not</strong> on Cloudlfare Registrar]
-Q1{Are you on a <br /> Free plan?}
+
+A[You have added your <br /> domain to Cloudlfare]
+Q1{Are you on a <br /> <strong>Free or Pro</strong> plan?}
 B[Full setup]
 C[Consider the other setup options]
 
@@ -30,28 +31,29 @@ A --> Q1
 Q1 -- yes --> B
 Q1 -- no --> C
 
-A2[You are on <strong>Business <br /> or Enterprise</strong>]
 
-A2 --- Q2
-Q2{Will you be using <br /> another DNS provider?}
+C1[You are on <strong>Business <br /> or Enterprise</strong>]
+Q2{Will you be using <br /> other DNS providers?}
+
+C1 --- Q2
 Q2 -- no --> B2[Full setup]
-Q2 -- yes --> H[Consider options for when you use multiple providers]
+Q2 -- yes --> D[Consider options for when you use multiple providers]
 
-I[You use Cloudflare together <br /> <strong>with other providers</strong>]
+D1[You use Cloudflare together <br /><strong>with other providers</strong>]
+Q3[You are on <strong>Business <br />or Enterprise</strong>]
+Q4{{You want to use Cloudflare <br />only for <strong>specific hostnames</strong>}}
+Q5[You are on <strong>Enterprise</strong>]
+Q6{{You want to  <strong>transfer <br />zone data</strong> from one provider <br /> to the other}}
+E[Partial setup]
+F[Zone transfers]
 
-Q3{{Transfer data <br /> from one provider <br /> to the other}}
-Q4{{Only use Cloudflare <br /> for specific hostnames}} --> F
-F[Partial setup]
+D1 --- Q3 --- Q4 ---> E
+D1 --- Q5 --- Q6 ---> F
 
-I --- Q3
-I --- Q4
-Q3 ---> G
-G[Zone transfers]
+G[You are on <strong>Enterprise</strong>]
+Q7{Do you need to manage <br /> subdomains seperately?}
 
-A1[You are on <strong>Enterprise</strong>]
-Q5{Do you need to manage <br /> subdomains seperately?}
-
-A1 --- Q5
-Q5 -- no --> B1[Full setup]
-Q5 -- yes --> E[Subdomain setup]
+G --- Q7
+Q7 -- no --> B1[Full setup]
+Q7 -- yes --> H[Subdomain setup]
 ```
