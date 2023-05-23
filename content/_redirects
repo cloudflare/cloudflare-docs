@@ -772,6 +772,8 @@
 /workers/platform/scripts/ /api/operations/worker-script-list-workers 301
 /workers/platform/services/ /workers/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
+/workers/platform/web-assembly/javascript/ /workers/platform/webassembly/javascript/ 301
+/workers/platform/web-assembly/rust/ /workers/platform/webassembly/rust/ 301
 /workers/quickstart/ /workers/get-started/quickstarts/ 301
 /workers/quickstart/configuring-and-publishing/ /workers/get-started/quickstarts/ 301
 /workers/recipes/ /workers/get-started/quickstarts/ 301
