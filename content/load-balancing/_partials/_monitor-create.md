@@ -16,7 +16,7 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
 4.  Add the following information:
     {{<render file=_monitor-settings-basic.md productFolder="load-balancing">}}
 
-5.  For additional settings, select **Advanced health check settings**:
+5.  For additional settings, select **Advanced health monitor settings**:
     {{<render file=_monitor-settings-advanced.md productFolder="load-balancing">}}
     
 6.  Select **Save**.
