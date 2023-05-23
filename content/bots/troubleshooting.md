@@ -131,7 +131,7 @@ ___
 
 {{<Aside type="warning" header="Important considerations you need to be aware of before turning on BFM or SBFM">}}
   
--   BFM and SBFM are high security features intended to very quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen. 
+-   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen. 
 
 -   BFM has limited control. You can't bypass or skip BFM using Firewall Rules or Page Rules. BFM will be disabled if there are any IP access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access Rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
