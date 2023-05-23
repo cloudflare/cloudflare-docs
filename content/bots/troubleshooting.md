@@ -135,7 +135,7 @@ ___
 
 -   BFM has limited control. You cannot bypass or skip BFM using Firewall Rules or Page Rules. BFM will be disabled if there are any IP access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access Rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
--   SBFM can be bypassed with IP Access "Allow" action rules. You can use the Skip action in [Custom Rules](https://developers.cloudflare.com/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
+-   SBFM can be bypassed with IP Access `Allow` action rules. You can use the Skip action in [Custom Rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
 
 {{</Aside>}}
 
