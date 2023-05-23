@@ -16,8 +16,9 @@ Available under **Analytics & Logs** in your Cloudflare dashboard when you log i
 
 ### Network Analytics
 
-Network Analytics provide visibility into network and transport-layer traffic patterns, and DDoS attacks. Only available for customers on an Enterprise plan who use [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), or [Bring Your Own IP (BYOIP)](/byoip/).
+Network Analytics provides [visibility into network and transport-layer traffic patterns, and DDoS attacks](/analytics/network-analytics/).
 
+The Network Analytics dashboard is only available for customers on an Enterprise plan who use [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), or [Bring Your Own IP (BYOIP)](/byoip/).
 
 ### Web Analytics
 

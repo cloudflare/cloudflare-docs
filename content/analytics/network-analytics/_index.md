@@ -4,6 +4,7 @@ pcx_content_type: overview
 weight: 3
 meta:
   title: Cloudflare Network Analytics v2
+layout: single
 ---
 
 # Cloudflare Network Analytics
@@ -17,4 +18,4 @@ For guidance on the previous version of Network Analytics, refer to [Understandi
 ## Related resources
 
 * [Cloudflare GraphQL API](/analytics/graphql-api/)
-* [Migrating from Network Analytics v1 to Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
+* [Migrating from Network Analytics v1 to Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2/)
