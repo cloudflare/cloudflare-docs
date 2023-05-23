@@ -6,7 +6,7 @@ weight: 1
 
 # RData
 
-Cloudflare Gateway logs DNS query information in [RData](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3), a Base64-encoded binary format. The output is a list of objects for each query including:
+Cloudflare Gateway logs DNS query information in [RData](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3), a Base64-encoded binary format. The following fields are available for each query:
 
 - Query name
 - Query type
@@ -39,7 +39,7 @@ for sample in samples:
    r = dnslib.RR.parse(buffer)
    print("== Print the full Resource Record ==")
    print(r)
-   print("== Print invidual components of the Resource Record ==")
+   print("== Print individual components of the Resource Record ==")
    query_name = r.rname
    query_type = r.rtype
    query_class = r.rclass
@@ -53,16 +53,16 @@ The script will print a list of your samples. For example:
 ```text
 == Print the full Resource Record ==
 reddit.com.             188     IN      A       151.101.193.140
-== Print invidual components of the Resource Record ==
+== Print individual components of the Resource Record ==
 query name: reddit.com. | query type: 1 | query class: 1 | ttl: 188 | rdata: 151.101.193.140
 
 == Print the full Resource Record ==
 secure.wlxrs.com.       3592    IN      CNAME   secure.base.wlxrs.com.akadns.net.
-== Print invidual components of the Resource Record ==
+== Print individual components of the Resource Record ==
 query name: secure.wlxrs.com. | query type: 5 | query class: 1 | ttl: 3592 | rdata: secure.base.wlxrs.com.akadns.net.
 
 == Print the full Resource Record ==
 google.com.             105     IN      AAAA    2607:f8b0:4023:1009::65
-== Print invidual components of the Resource Record ==
+== Print individual components of the Resource Record ==
 query name: google.com. | query type: 28 | query class: 1 | ttl: 105 | rdata: 2607:f8b0:4023:1009::65
 ```
