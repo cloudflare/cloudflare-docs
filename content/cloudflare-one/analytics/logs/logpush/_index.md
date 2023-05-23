@@ -50,4 +50,4 @@ Refer to the Logpush documentation for a list of available fields.
 
 ## Parse Logpush logs
 
-For more information on parsing outputs, refer to [RData](rdata/).
+For more information on parsing DNS logs, refer to [RData](rdata/).
