@@ -27,7 +27,7 @@ async def validate_cloudflare(request: Request):
     """
     Validate the request is authenticated by Cloudflare Access.
     """
-    if verify_token(request) != True:  # noqa
+    if verify_token(request) != True:
         raise HTTPException(status_code=400, detail="Not authenticated properly!")
 
 
@@ -66,7 +66,7 @@ def verify_token(request):
             jwt.decode(token, key=key, audience=POLICY_AUD, algorithms=["RS256"])
             valid_token = True
             break
-        except:  # noqa
+        except:
             return responses.return_403("Error decoding token")
     if not valid_token:
         return responses.return_403("Invalid token")
@@ -79,8 +79,7 @@ def verify_token(request):
 ```python
 router.include_router(
     portal.router,
-    prefix="/portal",
-    tags=["Data Portal API"]
+    prefix="/",
     dependencies=[Depends(cloudflare.validate_cloudflare)]
 )
 ```
