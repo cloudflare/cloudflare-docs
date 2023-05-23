@@ -6,7 +6,7 @@ weight: 1
 
 # RData
 
-Cloudflare Gateway logs DNS query information in [RData](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3), a Base64-encoded binary format. The output is a list of objects including:
+Cloudflare Gateway logs DNS query information in [RData](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3), a Base64-encoded binary format. The output is a list of objects for each query including:
 
 - Query name
 - Query type
@@ -16,7 +16,7 @@ Cloudflare Gateway logs DNS query information in [RData](https://datatracker.iet
 
 ## Parse RData
 
-To parse RData from Logpush, run the following Python script with your desired samples:
+To parse RData logs from Logpush, run the following Python script with your desired samples:
 
 ```python
 import dnslib
