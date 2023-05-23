@@ -15,7 +15,6 @@ This tutorial covers how to connect Cloudflare and Fast API.
 
 1. Create a new file in your Fast API to validate the request, with the following code:
 ```python
-TOKEN = "XXXXXX"
 # Your policies audience tag
 POLICY_AUD = "XXXXX"
 
