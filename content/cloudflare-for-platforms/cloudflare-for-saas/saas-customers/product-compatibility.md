@@ -48,5 +48,6 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Waiting Room](/waiting-room/) | Yes | Yes |
 | [Websockets](/support/network/using-cloudflare-with-websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
+| [Zaraz](/zaraz/) | Yes | No | 
 
 {{</table-wrap>}}
