@@ -6,6 +6,6 @@ weight: 6
 
 # Magic Transit analytics
 
-Review the following documents to learn more about analytics in Magic Transit.
+Review the topics below to learn more about analytics in Magic Transit.
 
 {{<directory-listing>}}
