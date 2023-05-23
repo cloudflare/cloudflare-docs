@@ -235,7 +235,7 @@
     },
     "cache_reserve": {
       "title": "Cache reserve",
-      "link": "/cache/about/cache-reserve/",
+      "link": "/cache/advanced-configuration/cache-reserve/",
       "paid_add_on": true,
       "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
@@ -286,7 +286,7 @@
     },
     "crawler_hints": {
       "title": "Crawler Hints",
-      "link": "/cache/about/crawler-hints/",
+      "link": "/cache/advanced-configuration/crawler-hints/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -384,7 +384,7 @@
     },
     "query_string_sort": {
       "title": "Query string sort",
-      "link": "/cache/about/query-string-sort/",
+      "link": "/cache/advanced-configuration/query-string-sort/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -412,7 +412,7 @@
     },
     "vary_for_images": {
       "title": "Vary for images",
-      "link": "/cache/about/vary-for-images/",
+      "link": "/cache/advanced-configuration/vary-for-images/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1784,7 +1784,7 @@
     },
     "early_hints": {
       "title": "Early Hints",
-      "link": "/cache/about/early-hints",
+      "link": "/cache/advanced-configuration/early-hints",
       "properties": {
         "availability": {
           "title": "Availability",

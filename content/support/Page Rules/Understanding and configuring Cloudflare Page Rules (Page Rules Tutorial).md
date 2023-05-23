@@ -201,7 +201,7 @@ Below is the full list of settings available, presented in the order that they a
 | Origin Cache Control | [Origin Cache Control](/cache/about/cache-control) is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |
 | Origin Error Page Pass-thru | Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin. | Enterprise |
 | Polish | Apply options from the **Polish** feature of the Cloudflare **Speed** app. [Learn more](/images/polish). | Pro and above |
-| Query String Sort | Turn on or off the reordering of query strings. When query strings have the same structure, caching improves. [Learn more](/cache/about/query-string-sort/). | Enterprise |
+| Query String Sort | Turn on or off the reordering of query strings. When query strings have the same structure, caching improves. [Learn more](/cache/advanced-configuration/query-string-sort/). | Enterprise |
 | Resolve Override | Change the origin address to the value specified in this setting. [Learn more](https://support.cloudflare.com/hc/articles/206190798). | Enterprise |
 | Respect Strong ETags | Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. [Learn more](/cache/reference/etag-headers/). | Enterprise |
 | Response Buffering | Turn on or off whether Cloudflare should wait for an entire file from the origin server before forwarding it to the site visitor. By default, Cloudflare sends packets to the client as they arrive from the origin server. |  Enterprise |

@@ -23,6 +23,10 @@ Crawler Hints also means less traffic hitting your origin, improving resource co
 
 {{<feature-table id="cache.crawler_hints">}}
 
-## How to enable
+## Enable Crawler Hints
 
-To enable Crawler Hints, refer to [Enable Crawler Hints](/cache/how-to/enable-crawler-hints/).
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
+2.  Go to **Caching** > **Configuration**.
+3.  Enable **Crawler Hints**.
+
+After enabling Crawler Hints, Cloudflare will begin sending hints to search engines about when they should crawl particular parts of your website.
