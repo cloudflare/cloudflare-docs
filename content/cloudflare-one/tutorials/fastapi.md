@@ -7,7 +7,7 @@ title: Connect FastAPI with Cloudflare Zero Trust
 
 # Connect FastAPI with Cloudflare Zero Trust
 
-This tutorial covers how to connect Cloudflare and Fast API.
+This tutorial covers how to connect Cloudflare and Fast API. A requirement is that you have FastAPI installed.
 
 **Time to complete:** 15 minutes
 
@@ -15,6 +15,8 @@ This tutorial covers how to connect Cloudflare and Fast API.
 
 1. Create a new file in your Fast API to validate the request, with the following code:
 ```python
+from fastapi import Request, HTTPException
+
 # Your policies audience tag
 POLICY_AUD = "XXXXX"
 
@@ -83,4 +85,4 @@ router.include_router(
 )
 ```
 
-In your router, you can see import the functions you have created called `validate_cloudflare` and use it as a dependency in FastAPI. 
+In your router, you can see import the functions you have created called `validate_cloudflare` and use it as a dependency in FastAPI. An example can be found on the official  [website of FastAPI](https://fastapi.tiangolo.com/tutorial/bigger-applications/#another-module-with-apirouter). 
