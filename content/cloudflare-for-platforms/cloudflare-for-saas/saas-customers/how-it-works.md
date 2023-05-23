@@ -14,7 +14,17 @@ Orange-to-orange (O2O) is when a Cloudflare zone sends proxied traffic to anothe
 
 Without O2O, the settings of your SaaS provider override whatever settings are applied to your own Cloudflare zone.
 
+```mermaid
+graph TD
+accTitle: Your zone using a SaaS provider, but without O2O
 
+A[Website visitor]
+B[SaaS provider owned Cloudflare account]
+C[SaaS provider origin]
+
+A --|CF Proxy| B
+B --> C
+```
 
 ## With O2O
 
@@ -22,7 +32,7 @@ With O2O, Cloudflare can apply the settings specified by both you and your SaaS 
 
 ```mermaid
 graph TD
-accTitle: Orange-to-orange process diagram
+accTitle: O2O process diagram
 
 A[Website visitor]
 
@@ -34,6 +44,6 @@ end
 D[SaaS Origin]
 
 A -->|CF Proxy| B
-B -->|CF Proxy through Orange-to-Orange| C
+B -->|CF Proxy through O2O| C
 C --> D
 ```
