@@ -26,7 +26,7 @@ The issue is the time that it takes the Worker to perform multiple round trips t
 
 Smart Placement is enabled on a per-Worker basis. Once enabled, fetch requests (also known as subrequests) from your Worker are analyzed regularly. The Smart Placement algorithm determines the optimal placement to minimize the round-trip time (RTT) between the Worker and the back-end service the Worker is communicating with. 
 
-Smart Placement is only active for Workers that **make multiple roundtrips (two or more roundtrips)** to back-end infrastructure. If your Worker only does a single subrequest to your back-end infrastructure, Smart Placement will run the Worker at the data center closest to the user.  
+Smart Placement is only active for Workers that **make more than one roundtrip** to back-end infrastructure. If your Worker does less than one subrequest on average, Smart Placement will run the Worker at the data center closest to the user.  
 
 Smart Placement is a best-effort attempt. Smart Placement will not take action unless it is more performant than the default (which is running the Worker at the data center closest to the user).
 
@@ -43,7 +43,9 @@ There are some back-end services that are not considered by the Smart Placement 
 
 ## Enable Smart Placement (beta)
 
-Smart Placement is available to users on all Workers plans. 
+Smart Placement is available to users on all Workers plans.
+
+Smart Placement is intended for latency-sensitive Workers and as such, does not currently work with [Cron Triggers](/workers/platform/triggers/cron-triggers/).
 
 ### Enable Smart Placement via Wrangler
 
@@ -87,9 +89,11 @@ $ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/workers
 ```
 
 Possible placement states include:
+- _(not present)_: The Worker has not been analyzed for Smart Placement yet.
 - `INSUFFICIENT_INVOCATIONS`: Not enough requests for Smart Placement to make a placement decision.
 - `NO_VALID_HOSTS`: The Worker does not send subrequests to [back-end services supported by Smart Placement](/workers/platform/smart-placement/#supported-backend-services).
 - `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid back-end services.
+- `SUCCESS`: The Worker has been successfully analyzed and will be optimized by Smart Placement.
 
 ### Request Duration Analytics
 
