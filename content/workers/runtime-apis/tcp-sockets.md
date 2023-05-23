@@ -154,7 +154,8 @@ const reader = socket.readable.getReader(); // This fails
 ```
 
 ## Considerations
-
+ 
+- Outbound TCP sockets to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are temporarily blocked, but will be re-enabled shortly.
 - When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, to use `connect()`.
 - TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
