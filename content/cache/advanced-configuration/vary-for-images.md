@@ -42,7 +42,53 @@ You can use vary for images on the file extensions below if the origin server se
 </div>
 </details>
 
-To begin using Vary for Images, refer to [Enable Vary for Images](/cache/how-to/enable-vary-for-images/). To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/#purge-varied-images).
+## Enable vary for images
+
+Vary for Images is enabled through Cloudflare’s API by creating a variants rule. In the examples below, learn how to serve JPEG, WebP, and AVIF variants for `.jpeg` and `.jpg` extensions.
+
+### Create a variants rule
+
+```json
+curl -X PATCH 
+"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0 c353/cache/variants" \ 
+-H "X-Auth-Email: user@example.com" \ 
+-H "X-Auth-Key: 3xamp1ek3y1234" \ 
+-H "Content-Type: application/json" \ 
+--data 
+'{"value":{"jpeg":["image/webp","image/avif"],"jpg":["image/webp","image/avif"]}}' 
+```
+
+### Modify to only allow WebP variants
+
+```json
+curl -X PATCH 
+"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0 c353/cache/variants" \ 
+-H "X-Auth-Email: user@example.com" \ 
+-H "X-Auth-Key: 3xamp1ek3y1234" \ 
+-H "Content-Type: application/json" \ 
+--data 
+'{"value":{"jpeg":["image/webp"],"jpg":["image/webp"]}}' 
+```
+
+### Delete the rule
+
+```json
+curl -X DELETE 
+"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/cache/variants" \ 
+-H "X-Auth-Email: user@example.com" \ 
+-H "X-Auth-Key: 3xamp1ek3y1234" 
+```
+
+### Get the rule
+
+```json
+curl -X GET 
+"https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/cache/variants" \
+-H "X-Auth-Email: user@example.com" \ 
+-H "X-Auth-Key: 3xamp1ek3y1234" 
+```
+
+To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/#purge-varied-images).
 
 ## Limitations
 
