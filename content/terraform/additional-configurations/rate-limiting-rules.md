@@ -115,6 +115,9 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 </div>
 </details>
 
+{{<render file="_add-new-rule.md" withParameters="rate limiting rule">}}
+<br/>
+
 ## Create an advanced rate limiting rule
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` with:
@@ -151,3 +154,6 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
   }
 }
 ```
+
+{{<render file="_add-new-rule.md" withParameters="rate limiting rule">}}
+<br/>
