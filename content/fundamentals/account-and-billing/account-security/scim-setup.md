@@ -1,12 +1,14 @@
 ---
 pcx_content_type: how-to
-title: SCIM provisioning
+title: Provision with SCIM
 weight: 4
 ---
 
 # Provision Cloudflare with SCIM
 
-By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
+By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access on a per-user basis.
+
+This page will use Okta as the IdP provider.
 
 ## Prerequisites
 
@@ -42,7 +44,7 @@ After creating the token, copy the token value.
 ## 2. Assign Cloudflare users to an Okta group
 
 1. In the Okta dashboard, go to **Directory** > **Groups**.
-2. Select **Add a group**, name it, then select **Save**.
+2. Select **Add a group**, enter a name, then select **Save**.
 3. Select the group, then select **Assign people**. Add your users, then select **Done**.
 
 ## 3. Set up the Okta application
