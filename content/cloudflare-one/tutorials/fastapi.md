@@ -5,7 +5,7 @@ pcx_content_type: tutorial
 title: Connect FastAPI with Cloudflare Zero Trust
 ---
 
-# Connect to Google Workspace through Access
+# Connect FastAPI with Cloudflare Zero Trust
 
 This tutorial covers how to connect Cloudflare and Fast API.
 
