@@ -39,7 +39,7 @@ Block sites with a specific top-level domain (TLD).
 
 | Selector | Operator      | Value     | Action |
 | -------- | ------------- | --------- | ------ |
-| Domain   | matches regex | `[.]fail` | Block  |
+| Domain   | matches regex | `[.]fail$` | Block  |
 
 ## Control IP version
 
