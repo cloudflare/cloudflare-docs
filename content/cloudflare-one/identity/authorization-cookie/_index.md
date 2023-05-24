@@ -17,7 +17,15 @@ Two tokens are generated:
 
 - **Global session token**: a token generated when a user logs in to Access. This token is stored as a cookie at your [team domain](/cloudflare-one/glossary/#team-domain) (for example, `https://<your-team-name>.cloudflareaccess.com`) and prevents a user from needing to log in to each application.
 
-- [**Application token**](/cloudflare-one/identity/authorization-cookie/application-token/): a token generated for each application that a user reaches. This token is stored as a cookie on the application (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/identity/authorization-cookie/validating-json) on your origin.
+- [**Application token**](/cloudflare-one/identity/authorization-cookie/application-token/): a token generated for each application that a user reaches. This token is stored as a cookie on the protected domain (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/identity/authorization-cookie/validating-json) on your origin.
+
+### Multi-domain applications
+
+Cloudflare Access allows you to protect and manage multiple domains in a single [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/). When a user authenticates to one domain, Access will automatically issue a `CF_Authorization` cookie when they go to another domain in the same Access application. This means that users only need to authenticate once to a multi-domain application.
+
+For Access applications with five or less domains, Access will preemptively set the cookie for all domains through a series of redirects. This allows single-page applications (SPAs) to retrieve data from other subdomains, even if the user has not explicitly visited those subdomains. Note that we cannot set cookies up-front for a wildcarded subdomain, because we do not know which concrete subdomain to redirect to (wildcarded paths are allowed).
+
+If the Access application has more than five domains, Access will not preemptively set any cookies. Cookies are only issued as the user visits each domain. This limitation is to avoid latency issues that could affect the user experience.
 
 ## Cookie settings
 
