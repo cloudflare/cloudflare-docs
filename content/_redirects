@@ -174,7 +174,7 @@
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
 /cache/best-practices/always-online/ /cache/troubleshooting/always-online/ 301
-/cache/reference/common-cf-published-statuses/ /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ 301
+/cache/reference/common-cf-published-statuses/ /images/polish/cf-polished-statuses/ 301
 /cache/best-practices/cache-performance/ /cache/performance-review/cache-performance/ 301
 /cache/best-practices/avoid-web-poisoning/ /cache/cache-security/avoid-web-poisoning/ 301
 /cache/about/cors/ /cache/cache-security/cors/ 301
@@ -360,6 +360,7 @@
 /images/worker/ /images/image-resizing/resize-with-workers/ 301
 /images/cloudflare-images/export-image/ /images/cloudflare-images/transform/export-image/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
+/support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/image-resizing/troubleshooting/ 301
 
 # learning-paths
 /learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
