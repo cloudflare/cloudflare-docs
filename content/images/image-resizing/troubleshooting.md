@@ -1,7 +1,9 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4412024022029-Troubleshoot-Image-Resizing-problems
-title: Troubleshooting | Image Resizing
+title: Troubleshooting
+meta:
+    title: Troubleshooting | Image Resizing
 weight: 10
 ---
 
