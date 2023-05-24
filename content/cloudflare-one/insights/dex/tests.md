@@ -22,7 +22,7 @@ Admins must have the [Cloudflare Zero Trust PII role](/cloudflare-one/cloudflare
     - **Test type**: Refer to [test types](#test-types) for descriptions of the available tests.
     - **Test frequency**: How often the test will run. Input a minute value between 5 and 60.
 
-The test will now run on all devices connected to your Zero Trust organization. 
+The test will now run on all devices connected to your Zero Trust organization.
 
 ## View test results
 
@@ -51,4 +51,4 @@ An HTTP test sends a `GET` request from an end-user device to a public-facing en
 | Resource fetch time | Difference between the start and end time of the test. Calculated by adding the server response time + DNS response time. |
 | Server response time | Round-trip time for the device to receive a response from the target. |
 | DNS response time | Round-trip time for the DNS query to resolve. |
-| HTTP status codes | [Status code](/support/troubleshooting/http-status-codes/http-status-codes/) returned by the target.|
+| HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target.|
