@@ -47,6 +47,12 @@ This page lists the default account limits for rules, applications, fields, and 
 | IP routes per account                    | 1,000 |
 | Active `cloudflared` replicas per tunnel | 25    |
 
+## Digital Experience Monitoring
+
+| Feature                                  | Limit |
+| ---------------------------------------- | ----- |
+| Tests per account                        | 10    |
+
 ## Maximum number of characters
 
 | Feature                | Character limit |
