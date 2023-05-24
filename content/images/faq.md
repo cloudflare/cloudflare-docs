@@ -138,4 +138,4 @@ This is expected behaviour when upscaling a PNG file with transparency, due to t
 
 ### How can I troubleshoot common `Cf-Polished` statuses?
 
-Refer to the [Troubleshoot common Cf-Polished statuses](https://support.cloudflare.com/hc/articles/4412244347917) page were you can find a list of common `Cf-Polished` statuses and how to troubleshoot them.
+Refer to the [Troubleshoot common Cf-Polished statuses](/images/polish/cf-polished-statuses/) page were you can find a list of common `Cf-Polished` statuses and how to troubleshoot them.
