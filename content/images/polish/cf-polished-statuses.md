@@ -1,14 +1,11 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4412244347917-Troubleshoot-common-Cf-Polished-statuses
-title: Troubleshoot common Cf-Polished statuses
+title: Cf-Polished statuses
+weight: 8
 ---
 
-# Troubleshoot common Cf-Polished statuses
-
-
-
-## Overview
+# `Cf-Polished` statuses
 
 If a `Cf-Polished` header is not returned, try [using single-file cache purge](/cache/how-to/purge-cache) to purge the image. The `Cf-Polished` header may also be missing if the origin is sending non-image `Content-Type`, or non-cacheable `Cache-Control`.
 

@@ -174,7 +174,7 @@
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
 /cache/best-practices/always-online/ /cache/troubleshooting/always-online/ 301
-/cache/reference/common-cf-published-statuses/ /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ 301
+/cache/reference/common-cf-published-statuses/ /images/polish/cf-polished-statuses/ 301
 /cache/best-practices/cache-performance/ /cache/performance-review/cache-performance/ 301
 /cache/best-practices/avoid-web-poisoning/ /cache/cache-security/avoid-web-poisoning/ 301
 /cache/about/cors/ /cache/cache-security/cors/ 301
@@ -359,6 +359,8 @@
 /images/variants/ /images/cloudflare-images/transform/ 301
 /images/worker/ /images/image-resizing/resize-with-workers/ 301
 /images/cloudflare-images/export-image/ /images/cloudflare-images/transform/export-image/ 301
+/support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
+/support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/image-resizing/troubleshooting/ 301
 
 # learning-paths
 /learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
@@ -372,6 +374,7 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
+/support/traffic/ /load-balancing/ 301
 /support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 
 # logs
@@ -485,6 +488,7 @@
 /page-shield/use-dashboard/monitor-scripts/ /page-shield/detection/monitor-connections-scripts/ 301
 /page-shield/use-dashboard/review-changed-scripts/ /page-shield/detection/review-changed-scripts/ 301
 /page-shield/use-dashboard/review-malicious-scripts/ /page-shield/detection/review-malicious-scripts/ 301
+/support/firewall/tools/troubleshooting-page-shield/ /page-shield/troubleshooting/ 301
 
 # queues
 /queues/configuration/ /queues/platform/configuration/ 301
@@ -967,6 +971,8 @@
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
+/support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-apps/ 301
+/support/traffic/argo-tunnel/exposing-applications-running-on-microsoft-azure-with-cloudflare-argo-tunnel/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
 ## tutorials
 /cloudflare-one/tutorials/block-football/ /cloudflare-one/policies/filtering/http-policies/common-policies/#block-sites 301
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/filtering/http-policies/common-policies/#check-user-identity 301
