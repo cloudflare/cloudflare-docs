@@ -45,14 +45,14 @@ Because Gateway evaluates network and HTTP policies on every request, it maintai
 
 ### Expiration
 
-By default, the posture result remains valid until it is overwritten by new data. You can specify an `expiration` time using the [API](/api/operations/device-posture-rules-update-device-posture-rule).
+By default, the posture result remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/operations/device-posture-rules-update-device-posture-rule). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
 
 ### Polling frequency
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` using the [API](/api/operations/device-posture-rules-update-device-posture-rule).
+By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. To modify the polling frequency, use the API to update the [`schedule`](/api/operations/device-posture-rules-update-device-posture-rule) parameter.
 
 #### Service provider checks
 
-When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API.
+When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/operations/device-posture-integrations-update-device-posture-integration) parameter.
