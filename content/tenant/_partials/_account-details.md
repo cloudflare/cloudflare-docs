@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To retreive a list of accounts associated with a Tenant details, send a `GET` request to the `/tenants/<tenant-tag>/accounts` endpoint. You can find the Tenant tag and all Tenants associated with the user with the [**Tenant Details**](/tenant/how-to/get-tenant-details) API. The Tenant Accounts API also requires pagination passed as query paramaters:
+To retreive a list of accounts associated with a Tenant details, send a `GET` request to the `/tenants/<tenant-tag>/accounts` endpoint. You can find the Tenant tag and all Tenants associated with the user with the [**Tenant Details**](/tenant/how-to/get-tenant-details/) API. The Tenant Accounts API also requires pagination passed as query parameters:
 
 - `page` {{<type>}}number{{</type>}}
 
