@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Search for videos
 ---
 
-# Search for videos
+# Search for a video
 
 You can search for videos by name through the Stream API by adding a `search` query parameter to the [list media files](/api/operations/stream-videos-list-videos) endpoint.
 

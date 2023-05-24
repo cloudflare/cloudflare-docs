@@ -4,7 +4,7 @@ title: Use webhooks
 weight: 7
 ---
 
-# Use webhooks
+# Use a webhook
 
 Webhooks notify your service when videos successfully finish processing and are ready to stream or if your video enters an error state.
 
