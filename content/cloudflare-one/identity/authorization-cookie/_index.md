@@ -21,7 +21,7 @@ Two tokens are generated:
 
 ### Multi-domain applications
 
-Cloudflare Access allows you to protect and manage multiple domains in a single [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/). When a user authenticates to one domain, Access will automatically issue a `CF_Authorization` cookie when they go to another domain in the same Access application. This means that users only need to authenticate once to a multi-domain application.
+Cloudflare Access allows you to protect and manage multiple domains in a single [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/). After a user has successfully authenticated to one domain, Access will automatically issue a `CF_Authorization` cookie when they go to another domain in the same Access application. This means that users only need to authenticate once to a multi-domain application.
 
 For Access applications with five or less domains, Access will preemptively set the cookie for all domains through a series of redirects. This allows single-page applications (SPAs) to retrieve data from other subdomains, even if the user has not explicitly visited those subdomains. Note that we cannot set cookies up-front for a wildcarded subdomain, because we do not know which concrete subdomain to redirect to (wildcarded paths are allowed).
 
