@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Manage videos
+title: Manage video
 weight: 7
 ---
 
-# Manage videos
+# Manage video
 
 {{<directory-listing>}}
