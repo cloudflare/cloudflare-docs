@@ -43,10 +43,9 @@ D1 is in open alpha and we welcome any bug reports or issues.
 
 {{</Aside>}}
 
-To report a bug or issue with D1:
-
-* For `wrangler` issues, open an [issue on GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose)
-* For issues with D1 queries or databases, join the Cloudflare [Developer Discord](https://discord.cloudflare.com/) to engage with other developers building on Workers and the engineering team behind D1.
+* To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85).
+* To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev).
+* If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose)."
 
 You should include as much of the following in any bug report:
 
