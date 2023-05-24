@@ -27,8 +27,8 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 5. Choose a **Session Duration**. The session duration determines the minimum frequency for which a user will be prompted to authenticate with the configured IdP. If you want users to re-authenticate every time they reach your application, select _No duration, expires immediately_.
 
-6. In **Application domain**, enter the hostname that will represent the application.
-   - The hostname must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/access-for-saas/) that you control.
+6. In **Application domain**, enter the domains that will represent the application.
+   - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/access-for-saas/) that you control.
    - You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
 
 7. (Optional) If you want the application to be visible in the [App Launcher](/cloudflare-one/applications/app-launcher):
@@ -38,7 +38,8 @@ Cloudflare Access allows you to securely publish internal tools and applications
    This toggle does not impact the user's ability to reach the application. Allowed users can always reach the application via a direct link, regardless of whether the toggle is enabled. Blocked users will never have access to the application.
    {{</Aside>}}
 
-   2. To add a custom logo for your application, select **Custom** and enter a link to your desired image.
+   2. Choose a domain to use for the App Launcher link.
+   3. To add a custom logo for your application, select **Custom** and enter a link to your desired image.
 
    {{<Aside type="note">}}
    If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
