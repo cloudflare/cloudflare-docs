@@ -1,13 +1,13 @@
 ---
-title: Validity periods
+title: Validity periods and renewal
 pcx_content_type: reference
 weight: 8
 meta:
-  title: Certificate validity periods
+  title: Validity periods and renewal
   description: Review information about available validity periods for your Cloudflare SSL certificates.
 ---
 
-# Certificate validity periods
+# Validity periods and renewal
 
 ## Universal SSL
 
@@ -39,3 +39,11 @@ First, shorter-lived certificates limit the damage from key compromise and mista
 Second, shorter certificates encourage automation. The more frequently you have to do a task, the more likely you will want to automate it. Automation also means that you are less likely to let a certificate expire in production or give a person access to key material.
 
 For more details on the benefits of shorter validity periods, refer to our [blog post introducing Advanced Certificate Manager](https://blog.cloudflare.com/advanced-certificate-manager/).
+
+## Failure to renew and certificate replacement
+
+For certificates managed by Cloudflare, attempts to renew start at the auto renewal period (based on the [different validity periods](/ssl/reference/certificate-validity-periods/#advanced-certificates)) and continue up until 24 hours before expiration.
+
+If a certificate fails to renew and another valid certificate exists for the hostname, Cloudflare will deploy the valid certificate within these last 24 hours.
+
+For information regarding custom certificates (managed by you), consider this other page on [renewal and expiration](/ssl/edge-certificates/custom-certificates/renewing/).
