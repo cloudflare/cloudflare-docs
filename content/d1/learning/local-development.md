@@ -6,13 +6,13 @@ pcx_content_type: concept
 
 # Develop locally
 
-D1 has fully-featured support for local development, running the same version of D1 as Cloudflare runs globally. Local development uses [wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
+D1 has fully-featured support for local development, running the same version of D1 as Cloudflare runs globally. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
-## Starting a local development session
+## Start a local development session
 
 {{<Aside type="note">}}
 
-This guide assumes you are using [wrangler v3.0](https://blog.cloudflare.com/wrangler3/) or later.
+This guide assumes you are using [Wrangler v3.0](https://blog.cloudflare.com/wrangler3/) or later.
 
 Users new to D1 and/or Cloudflare Workers should visit the [D1 tutorial](/d1/get-started/) to install `wrangler` and deploy their first database.
 
@@ -45,7 +45,7 @@ Your worker has access to the following bindings:
 [b] open a browser, [d] open Devtools, [l] turn off local mode, [c] clear console, [x] to exit                                                                                 │
 ```
 
-In this example, we can see that our Worker has access to local-only D1 database. The corresponding binding in our `wrangler.toml` configuration file would resemble the following:
+In this example, the Worker has access to local-only D1 database. The corresponding D1 binding in your `wrangler.toml` configuration file would resemble the following:
 
 ```toml
 ---
@@ -54,14 +54,14 @@ header: wrangler.toml
 [[d1_databases]]
 binding = "DB"
 database_name = "test-db"
-database_id = "c020574a-5623-407b-be0c-cd192bab9545"V
+database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 ```
 
 Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, pass the `--remote` flag when calling `wrangler dev`. Any changes you make when running in `--remote` mode cannot be undone.
 
-Visit the [documentation for `wrangler dev`](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
+Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
-## Persisting data
+## Persist data
 
 **By default, in wrangler `3.0.0` and above, data is persisted across each run of `wrangler dev`**. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
 
@@ -69,8 +69,8 @@ Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific loca
 
 Users of wrangler `2.x` must use the `--persist` flag: previous versions of wrangler did not persist data by default.
 
-## Next steps
+## Related resources
 
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
-* Learn [how to debug D1](/d1/learning/debug-d1/)
-* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1
+* Learn [how to debug D1](/d1/learning/debug-d1/).
+* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1.

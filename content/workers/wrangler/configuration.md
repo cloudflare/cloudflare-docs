@@ -303,7 +303,7 @@ watch_dir = "build_watch_dir"
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a binding to each database for D1's [client API](/d1/platform/client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/platform/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 

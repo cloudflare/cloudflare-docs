@@ -6,13 +6,13 @@ pcx_content_type: concept
 
 # Debug
 
-Debugging issues is a critical part of development. D1 allows you to both capture exceptions and log errors returned when querying a database using the same tools available when [debugging Workers](/workers/learning/debugging-workers/).
+D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/learning/debugging-workers/).
 
-## Handling errors
+## Handle errors
 
 The D1 [client API](/d1/platform/client-api/) returns detailed error messages on the [`cause` property](/d1/platform/client-api/#errors) within an `Error` object. 
 
-To ensure you're capturing the full error message, make sure to log or return `e.cause.message`, as follows:
+To ensure you are capturing the full error message, make sure to log or return `e.cause.message`, as follows:
 
 ```ts
 try {
@@ -31,11 +31,11 @@ try {
 */
 ```
 
-## Viewing logs
+## View logs
 
-You can view a stream of live logs from your Worker by using [`wrangler tail`](/workers/learning/logging-workers/#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/learning/logging-workers/#view-logs-from-the-dashboard).
+View a stream of live logs from your Worker by using [`wrangler tail`](/workers/learning/logging-workers/#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/learning/logging-workers/#view-logs-from-the-dashboard).
 
-## Reporting issues
+## Report issues
 
 {{<Aside type="note" header="Reporting bugs during the open alpha">}}
 
@@ -55,8 +55,8 @@ You should include as much of the following in any bug report:
 * The Worker code that makes the query, including any calls to `.bind()` using the [client API](/d1/platform/client-api/).
 * The full error text, including the content of [`error.cause.message`](#handling-errors).
 
-## Next steps
+## Related resources
 
-* Learn [how to debug Workers](/workers/learning/debugging-workers/)
-* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1
+* Learn [how to debug Workers](/workers/learning/debugging-workers/).
+* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1.
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
