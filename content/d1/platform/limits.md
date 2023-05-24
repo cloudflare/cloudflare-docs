@@ -11,8 +11,6 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 
 {{</Aside>}}
 
-{{<table-wrap>}}
-
 | Feature                                            | Limit                                        |
 | -------------------------------------------------- | -------------------------------------------- | 
 | Databases                                          | 10 per account <sup>1</sup>                  |
@@ -25,8 +23,6 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 | Maximum SQL statement length                       | 100,000 bytes (100KB)                        |
 | Maximum bound parameters per query                 | 100                                          |
 | Maximum arguments per SQL function                 | 8                                            |
-
-{{</table-wrap>}}
 
 {{<Aside type="note">}}
 
