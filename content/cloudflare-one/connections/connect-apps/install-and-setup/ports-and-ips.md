@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: Ports and IPs
-weight: 2
+title: Tunnel with firewall
+weight: 3
 ---
 
-# Ports and IPs
+# Tunnel with firewall
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
