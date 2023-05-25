@@ -16,19 +16,19 @@ Once endpoints are saved into Endpoint Management, API Shield doubles as an API 
 3. Under **Create a developer portal**, select **Create site**.
 4. Upload an OpenAPI v3.0 schema file or choose to select an existing schema from API Shield. 
 
-{{<aside type="note">}} 
+{{<Aside type="note">}} 
 If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters. 
 
 Only API schemas uploaded to Schema Validation 2 are available when selecting existing schemas
-{{</aside>}}
+{{</Aside>}}
 
 5. Select **Download project files** to save a local copy of the files that will be uploaded to Cloudflare Pages. Downloading the project files can be helpful if you wish to modify the project in any way and then upload the new version manually to Pages.
 6. Select **Create pages project** to begin project creation. A new Pages project will be automatically created and your API schema will be automatically uploaded to the project along with other supporting static content.
 7. Select **Deploy site**. 
 
-{{<aside type="note">}} 
+{{<Aside type="note">}} 
 After deploying, you may need to wait a few minutes before the site is available.
-{{</aside>}}
+{{</Aside>}}
 
 ### Custom domains
 
