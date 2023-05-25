@@ -245,7 +245,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-控制客户端浏览器缓存的资源在多久时间内保持有效。对于非 Enterprise 域，Cloudflare UI 和 API 都会禁止将**浏览器缓存 TTL** 设置为 _0_。[了解更多](/cache/about/edge-browser-cache-ttl)。
+控制客户端浏览器缓存的资源在多久时间内保持有效。对于非 Enterprise 域，Cloudflare UI 和 API 都会禁止将**浏览器缓存 TTL** 设置为 _0_。[了解更多](/cache/how-to/edge-browser-cache-ttl/)。
 
  | 
 
@@ -289,7 +289,7 @@ _参见下文中的其他详细信息，以了解支持的少量正则表达式�
 
  | 
 
-根据访问者的设备类型，分隔缓存的内容。[了解更多](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)。
+根据访问者的设备类型，分隔缓存的内容。[了解更多](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)。
 
  | 
 
@@ -317,7 +317,7 @@ Web 缓存欺骗防护
 
 也称为_自定义缓存键_。
 
-专门用于控制在决定要缓存哪些资源时要包括的变量。这允许客户基于除了 URL 之外的其他内容来确定缓存内容。[了解更多](/cache/about/cache-keys)。
+专门用于控制在决定要缓存哪些资源时要包括的变量。这允许客户基于除了 URL 之外的其他内容来确定缓存内容。[了解更多](/cache/how-to/cache-keys/)。
 
  | 
 

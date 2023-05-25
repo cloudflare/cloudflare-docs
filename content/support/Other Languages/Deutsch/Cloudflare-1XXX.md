@@ -65,7 +65,7 @@ ___
 -   Eine externe Domain, die nicht über Cloudflare läuft, hat einen CNAME-Eintrag zu einer auf Cloudflare aktiven Domain.
 -   Das Ziel des DNS-CNAME-Eintrags lässt sich nicht auflösen.
 -   Ein CNAME-Eintrag in Ihrer Cloudflare-DNS-App erfordert eine Auflösung durch einen DNS-Provider, der zurzeit offline ist.
--   [Always Online](/cache/about/always-online) ist für eine Domain mit [benutzerdefiniertem Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) aktiviert.
+-   [Always Online](/cache/how-to/always-online/) ist für eine Domain mit [benutzerdefiniertem Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) aktiviert.
 
 ### Lösung
 
@@ -73,7 +73,7 @@ Eine Cloudflare-fremde Domain kann sich nicht per CNAME auf eine Cloudflare-Doma
 
 Der direkte Zugriffsversuch auf DNS-Einträge, die für [Cloudflare CNAME-Setups](/dns/zone-setups/partial-setup) verwendet werden, führt ebenfalls zu Fehler 1001 (zum Beispiel:_www.beispiel.com.cdn.cloudflare.net_).
 
-Deaktivieren Sie [Always Online](/cache/how-to/enable-always-online), wenn Sie [benutzerdefinierte Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) verwenden.
+Deaktivieren Sie [Always Online](/cache/how-to/always-online/#enable-always-online), wenn Sie [benutzerdefinierte Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) verwenden.
 
 ___
 

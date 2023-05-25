@@ -264,7 +264,7 @@ Browser-Cache-TTL
 
  | 
 
-Steuert, wie lange in Client-Browsern zwischengespeicherte Ressourcen gültig bleiben. Sowohl die Cloudflare-Benutzeroberfläche als auch die API verbieten die Einstellung der **Browser-Cache-TTL** auf _0_ für Nicht-Enterprise-Domains. [Mehr dazu hier](/cache/about/edge-browser-cache-ttl).
+Steuert, wie lange in Client-Browsern zwischengespeicherte Ressourcen gültig bleiben. Sowohl die Cloudflare-Benutzeroberfläche als auch die API verbieten die Einstellung der **Browser-Cache-TTL** auf _0_ für Nicht-Enterprise-Domains. [Mehr dazu hier](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -308,7 +308,7 @@ Cache nach Gerätetyp
 
  | 
 
-Zwischengespeicherte Inhalte werden basierend auf dem Gerätetyp des Besuchers getrennt. [Mehr dazu hier.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+Zwischengespeicherte Inhalte werden basierend auf dem Gerätetyp des Besuchers getrennt. [Mehr dazu hier.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -336,7 +336,7 @@ Cache-Schlüssel
 
 Wird auch als _Custom Cache Key_ bezeichnet.
 
-Hiermit kann man bei der Entscheidung, welche Ressourcen zwischengespeichert werden sollen, genau festlegen, welche Variablen berücksichtigt werden sollen. Auf diese Weise können Kunden anhand anderer Faktoren als der URL bestimmen, was zwischengespeichert werden soll. [Mehr dazu hier](/cache/about/cache-keys).
+Hiermit kann man bei der Entscheidung, welche Ressourcen zwischengespeichert werden sollen, genau festlegen, welche Variablen berücksichtigt werden sollen. Auf diese Weise können Kunden anhand anderer Faktoren als der URL bestimmen, was zwischengespeichert werden soll. [Mehr dazu hier](/cache/how-to/cache-keys/).
 
  | 
 
