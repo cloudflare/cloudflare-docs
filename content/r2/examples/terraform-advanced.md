@@ -1,9 +1,11 @@
 ---
-title: Terraform
+title: Terraform (Advanced)
 pcx_content_type: configuration
 ---
 
 # Configure R2 with Terraform
+
+This example shows how to configure R2 with Terraform using the [AWS provider](https://github.com/hashicorp/terraform-provider-aws). For using only the Cloudflare provider, see [Terraform](./terraform-native.md).
 
 {{<render file="_keys.md">}}<br>
 
@@ -14,7 +16,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-      version = "4.20.1"
+      version = "~> 4"
     }
   }
 }
@@ -30,9 +32,35 @@ provider "aws" {
   }
 }
 
-
 resource "aws_s3_bucket" "cloudflare-bucket" {
   bucket = "my-tf-test-bucket"
+}
+
+resource "aws_s3_bucket_cors_configuration" "public_bucket_cors" {
+  bucket   = aws_s3_bucket.cloudflare-bucket.id
+
+  cors_rule {
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "life_cycles" {
+  bucket = aws_s3_bucket.cloudflare-bucket.id
+  rule {
+    id = "expire-bucket"
+    status = "Enabled"
+    expiration {
+      days = 1
+    }
+  }
+  rule {
+    id = "abort-multipart-upload"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
+  }
 }
 ```
 
