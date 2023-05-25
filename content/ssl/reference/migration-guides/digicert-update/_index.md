@@ -6,7 +6,9 @@ weight: 2
 
 # DigiCert update
 
-In the latter half of 2022, Cloudflare will begin deprecating DigiCert as a Certificate Authority available for a variety of certificates:
+{{<render file="_digicert-offboarding-paused">}}
+
+Cloudflare will begin deprecating DigiCert as a Certificate Authority available for a variety of certificates:
 
 {{<directory-listing>}}
 
