@@ -43,15 +43,23 @@ Access detects changes in device posture at the same rate as the [polling freque
 
 Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device.
 
+```mermaid
+flowchart LR
+accTitle: Device posture policy enforcement
+A[Device] --schedule--> B[WARP client]--> C((Cloudflare)) --> D[Access policy]
+C --5 min--> E[Cache] --> F[Gateway policy]
+A --> G[Service provider] --interval--> C
+```
+
 ### Expiration
 
-By default, the posture result remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/operations/device-posture-rules-update-device-posture-rule). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
+By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/operations/device-posture-rules-update-device-posture-rule). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
 
 ### Polling frequency
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. To modify the polling frequency, use the API to update the [`schedule`](/api/operations/device-posture-rules-update-device-posture-rule) parameter.
+By default, the WARP client polls the device for status changes every five minutes. To modify the polling frequency, use the API to update the [`schedule`](/api/operations/device-posture-rules-update-device-posture-rule) parameter.
 
 #### Service provider checks
 
