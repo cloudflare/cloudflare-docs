@@ -42,7 +42,7 @@ After installing Wrangler, if you are unauthenticated, you will be directed to a
 Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to setup your first Worker.
 {{</Aside>}}
 
-You will create a new [Workers Service](/workers/learning/using-services/) as the container for both your D1 database and the Worker application that you'll use to query your database. Create a new Workers service named `d1-tutorial` by running:
+You will create a new Worker as the container for both your D1 database and the Worker application that you will use to query your database. Create a new Worker named `d1-tutorial` by running:
 
 ```sh
 $ wrangler init d1-tutorial -y
