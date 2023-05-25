@@ -136,7 +136,7 @@
     "link": "/cache/",
     "always_online": {
       "title": "Always Online",
-      "link": "/cache/about/always-online/",
+      "link": "/cache/how-to/always-online/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -158,7 +158,7 @@
     },
     "browser_cache_ttl": {
       "title": "Browser Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -207,7 +207,7 @@
     },
     "cache_key": {
       "title": "Cache keys",
-      "link": "/cache/about/cache-keys/",
+      "link": "/cache/how-to/cache-keys/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -251,7 +251,7 @@
     },
     "cache_rules": {
       "title": "Cache Rules",
-      "link": "/cache/about/cache-rules/",
+      "link": "/cache/how-to/cache-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -328,7 +328,7 @@
     },
     "edge_cache_ttl": {
       "title": "Edge Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -398,7 +398,7 @@
     },
     "tiered_cache": {
       "title": "Tiered cache",
-      "link": "/cache/about/tiered-cache/",
+      "link": "/cache/how-to/tiered-cache/",
       "properties": {
         "availability": {
           "title": "Availability",

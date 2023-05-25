@@ -31,13 +31,13 @@ To create a new cache rule:
 2. Go to **Caching** > **Cache Rules**.
 3. Select **Create cache rule**.
 4. Enter a descriptive name for the rule in **Rule name**.
-5. Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property (refer to [Available fields](/cache/about/cache-rules/#available-fields) for the list of available fields). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
+5. Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property (refer to [Available fields](/cache/how-to/cache-rules/#available-fields) for the list of available fields). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
     To create a wildcard rule that applies to everything under a URI directory (for example, `/images`), select the option _URI_ in **Field**, _starts with_ in **Operator**, and `/images` in **Value**.
 6. Under **Then**, in the **Cache status** section, select **Bypass cache**, if matching requests will bypass cache and fetch a response from the origin server or **Eligible for cache** if requests will be eligible for cache. Note that proper [origin cache-control headers](/cache/about/cache-control/) are also required for cache eligibility.
 
 {{<Aside type="note">}}
 
-Be aware that when you select **Eligible for cache** in Cache Rules, this is equivalent to [cache everything](/cache/how-to/create-page-rules/#cache-everything) cache level. If you do not enable eligible for cache, the expected behavior is the standard cache level present in Page Rules.
+Be aware that when you select **Eligible for cache** in Cache Rules, this is equivalent to [cache everything](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-everything) cache level. If you do not enable eligible for cache, the expected behavior is the standard cache level present in Page Rules.
 
 {{</Aside>}}
 
@@ -57,7 +57,7 @@ Select **Respect origin** if matching requests will respect cache headers receiv
 <summary>Browser TTL</summary>
 <div>
 
-Select if you want to **Respect origin** or **Override origin**. If you wish to override the browser TTL value, define how long resources cached by client browsers will remain valid. For more information, refer to [Browser Cache TTL](/cache/about/edge-browser-cache-ttl/#browser-cache-ttl).
+Select if you want to **Respect origin** or **Override origin**. If you wish to override the browser TTL value, define how long resources cached by client browsers will remain valid. For more information, refer to [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl).
 
 </div>
 </details>
@@ -66,7 +66,7 @@ Select if you want to **Respect origin** or **Override origin**. If you wish to 
 <summary>Cache Key</summary>
 <div>
 
-Define the request components used to define a [custom cache key](/cache/about/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
+Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
  - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), and [Ignore query string order](/cache/troubleshooting/cache-everything-ignore-query-strings/).
  - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
  - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.

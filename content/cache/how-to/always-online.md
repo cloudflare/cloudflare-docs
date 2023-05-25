@@ -27,4 +27,19 @@ When the Internet Archive integration is enabled, Cloudflare checks the archive 
 
 Visitors who interact with dynamic parts of a website, such as a shopping cart or comment box, will see an error page caused by the offline origin web server.
 
-To enable Always Online, see [Enable Always Online](/cache/how-to/enable-always-online/).
+## Enable Always Online
+
+Here is how to enable Always Online in the dashboard:
+
+1.  Log in to your Cloudflare account.
+2.  Choose the domain that will use Always Online with Internet Archive integration.
+3.  Select **Caching** > **Configuration**.
+4.  Under **Always Online**, set the toggle to **On**.
+
+{{<Aside type="note" header="Note">}}
+
+When turning on Always Online, you are also enabling the Internet Archive integration.
+
+{{</Aside>}}
+
+Refer to [Always Online](/cache/troubleshooting/always-online/) for best practices, limitations and FAQs.

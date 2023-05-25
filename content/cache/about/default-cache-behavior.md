@@ -36,13 +36,13 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 | CLASS | EXE  | JS   | PICT | SWF  | XLS   |
 | CSS   | FLAC | MID  | PLS  | TAR  | XLSX  |
 
-To cache additional content, see [Page Rules](/cache/how-to/create-page-rules/) to create a rule to cache everything.
+To cache additional content, refer to [Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) to create a rule to cache everything.
 
 ## Customization options and limitations
 
 Cloudflare’s CDN provides several cache customization options:
 
-- Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/create-page-rules/)
+- Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/)
 - Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works/)
 - Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
@@ -153,7 +153,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
       <td colspan="5" rowspan="1">
         Cloudflare does not consider the asset eligible to cache and your Cloudflare settings do not
         explicitly instruct Cloudflare to cache the asset. Instead, the asset was requested from the
-        origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> or <a href="/cache/about/cache-rules/">Cache Rules</a> to implement
+        origin web server. Use <a href="/cache/how-to/edge-browser-cache-ttl/create-page-rules/">Page Rules</a> or <a href="/cache/how-to/cache-rules/">Cache Rules</a> to implement
         custom caching options.
       </td>
     </tr>

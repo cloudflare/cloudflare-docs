@@ -1,6 +1,7 @@
 ---
 title: Create Edge Cache TTL page rules
-pcx_content_type: tutorial
+pcx_content_type: how-to
+weight: 2
 ---
 
 # Create Edge Cache TTL page rules

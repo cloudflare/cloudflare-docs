@@ -188,6 +188,16 @@
 /cache/how-to/enable-vary-for-images/ /cache/advanced-configuration/vary-for-images/#enable-vary-for-images 301
 /cache/about/crawler-hints/ /cache/advanced-configuration/crawler-hints/ 301
 /cache/how-to/enable-crawler-hints/ /cache/advanced-configuration/crawler-hints/#enable-crawler-hints 301
+/cache/about/edge-browser-cache-ttl/ /cache/how-to/edge-browser-cache-ttl/ 301
+/cache/how-to/create-page-rules/ /cache/how-to/edge-browser-cache-ttl/create-page-rules/ 301
+/cache/how-to/set-browser-ttl/ /cache/how-to/edge-browser-cache-ttl/set-browser-ttl/ 301
+/cache/about/cache-rules/ /cache/how-to/cache-rules/ 301
+/cache/about/cache-keys/ /cache/how-to/cache-keys/ 301
+/cache/how-to/create-cache-keys/ /cache/how-to/cache-keys/#create-custom-cache-keys 301
+/cache/about/tiered-cache/ /cache/how-to/tiered-cache/ 301
+/cache/how-to/enable-tiered-cache/ /cache/how-to/tiered-cache/#enable-tiered-cache 301
+/cache/about/always-online/ /cache/how-to/always-online/ 301
+/cache/how-to/enable-always-online/ /cache/how-to/always-online/#enable-always-online 301
 /support/caching/ /cache/troubleshooting/ 301
 /support/caching/configuration/ /cache/how-to/ 301
 /support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
