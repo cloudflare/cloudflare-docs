@@ -15,4 +15,6 @@ Match count refers to the number of times that any enabled entry in the profile 
 
 ## Context analysis
 
-Context analysis makes DLP detections more restrictive based on proximity words. Additionally, you can enable context analysis within files to further restrict detections. Proximity words are detected within a distance of 1000 bytes from the original detection.
+Context analysis restricts DLP detections based on proximity words. Additional proximity words must be detected within a distance of 1000 bytes from the original detection to trigger a match.
+
+Additionally, you can enable context analysis within files to further restrict detections.
