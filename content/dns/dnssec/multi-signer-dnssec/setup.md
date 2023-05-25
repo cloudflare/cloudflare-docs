@@ -19,14 +19,14 @@ Although a few steps can also be completed via the user interface, currently the
 {{<Aside>}}
 The following steps also apply if you use [Cloudfare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that the records in steps 2 and 4 should be transferred from the primary, and step 5 is not necessary.
 {{</Aside>}}
-1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable multi-signer DNSSEC. This is done by specifying a value for `dnssec_multi_model`, as in the following example.
+1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable multi-signer DNSSEC. This is done by setting `dnssec_multi_signer` to `true`, as in the following example.
 
 ```bash
 $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \ 
 --header 'X-Auth-Email: <EMAIL>' \ 
 --header 'X-Auth-Key: <KEY>' \ 
 --header 'Content-Type: application/json' \ 
---data '{"dnssec_multi_model": 2}'
+--data '{"dnssec_multi_signer": true}'
 ```
 
 2. Add the ZSK(s) of your external provider(s) to Cloudflare by creating a DNSKEY record on your zone.
