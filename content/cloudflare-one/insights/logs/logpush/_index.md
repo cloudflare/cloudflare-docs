@@ -48,6 +48,12 @@ Refer to the Logpush documentation for a list of available fields.
 | [Device Posture](/logs/reference/log-fields/account/device_posture_results/)    | Device posture status from the WARP client                     |
 | [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway |
 
-## Parse Logpush logs
+## Read Logpush logs
 
-For more information on parsing DNS logs, refer to [RData](rdata/).
+### Filter logs
+
+You can filter your Logpush output with the API. For more information, refer to [Filters](/logs/reference/filters/).
+
+### Parse DNS logs
+
+Logpush provides resource record information for DNS queries in RData format. For more information on parsing DNS logs, refer to [RData](rdata/).
