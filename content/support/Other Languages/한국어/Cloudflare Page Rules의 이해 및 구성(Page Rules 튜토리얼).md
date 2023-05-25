@@ -241,7 +241,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-클라이언트 브라우저가 캐시한 자원이 유효한 상태로 유지되는 기간을 제어합니다. Cloudflare UI 및 API 모두 Enterprise 도메인이 아닌 경우, **브라우저 캐시 TTL** 을 _0_으로 설정할 수 없습니다. [자세히 알아보세요](/cache/about/edge-browser-cache-ttl).
+클라이언트 브라우저가 캐시한 자원이 유효한 상태로 유지되는 기간을 제어합니다. Cloudflare UI 및 API 모두 Enterprise 도메인이 아닌 경우, **브라우저 캐시 TTL** 을 _0_으로 설정할 수 없습니다. [자세히 알아보세요](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -285,7 +285,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  | 
 
-방문자의 장치 유형에 따라 캐시하는 콘텐츠를 구분합니다. [자세히 알아보세요.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+방문자의 장치 유형에 따라 캐시하는 콘텐츠를 구분합니다. [자세히 알아보세요.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -313,7 +313,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  _사용자 정의 캐시 키_라고도 합니다.
 
-어떤 자원을 캐시할지 결정할 때 포함할 변수를 구체적으로 제어합니다. 이를 통해, URL만이 아니라 다른 정보에 따라 어떤 것을 캐시할지 결정할 수 있습니다. [자세히 알아보세요](/cache/about/cache-keys).
+어떤 자원을 캐시할지 결정할 때 포함할 변수를 구체적으로 제어합니다. 이를 통해, URL만이 아니라 다른 정보에 따라 어떤 것을 캐시할지 결정할 수 있습니다. [자세히 알아보세요](/cache/how-to/cache-keys/).
 
  | 
 

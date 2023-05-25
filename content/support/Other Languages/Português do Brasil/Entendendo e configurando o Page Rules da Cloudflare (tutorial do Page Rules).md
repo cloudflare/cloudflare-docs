@@ -243,7 +243,7 @@ TTL de cache de navegador
 
  | 
 
-Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](/cache/about/edge-browser-cache-ttl).
+Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -287,7 +287,7 @@ Cache por tipo de dispositivo
 
  | 
 
-Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -315,7 +315,7 @@ Chave do cache
 
 Também conhecida como _Chave do cache Personalizada_ .
 
-Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](/cache/about/cache-keys).
+Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](/cache/how-to/cache-keys/).
 
  | 
 

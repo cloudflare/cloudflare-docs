@@ -243,7 +243,7 @@ Browser Cache TTL
 
  | 
 
-(Durée de vie du cache du navigateur) Contrôlez la durée de validité des ressources mises en cache par les navigateurs clients.L’interface utilisateur et l’API Cloudflare interdisent tous les deux de définir **Browser Cache TTL** sur une valeur de _0_ pour les domaines non couverts par une offre Enterprise.[En savoir plus](/cache/about/edge-browser-cache-ttl).
+(Durée de vie du cache du navigateur) Contrôlez la durée de validité des ressources mises en cache par les navigateurs clients.L’interface utilisateur et l’API Cloudflare interdisent tous les deux de définir **Browser Cache TTL** sur une valeur de _0_ pour les domaines non couverts par une offre Enterprise.[En savoir plus](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -287,7 +287,7 @@ Cache By Device Type
 
  | 
 
-(Mise en cache par type d’appareil) Séparer le contenu mis en cache en fonction du type d’appareil du visiteur. [En savoir plus.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+(Mise en cache par type d’appareil) Séparer le contenu mis en cache en fonction du type d’appareil du visiteur. [En savoir plus.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -315,7 +315,7 @@ Cache Key
 
 (Clé de cache) Elle est également appelée _Custom Cache Key_.
 
-Contrôlez précisément les variables à prendre en compte lorsque vous décidez des ressources à mettre en cache. Cela permet aux clients de déterminer quelles ressources doivent être mises en cache en fonction de données autres que l’URL. [En savoir plus](/cache/about/cache-keys).
+Contrôlez précisément les variables à prendre en compte lorsque vous décidez des ressources à mettre en cache. Cela permet aux clients de déterminer quelles ressources doivent être mises en cache en fonction de données autres que l’URL. [En savoir plus](/cache/how-to/cache-keys/).
 
  | 
 

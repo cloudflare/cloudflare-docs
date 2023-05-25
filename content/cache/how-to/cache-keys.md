@@ -32,11 +32,25 @@ Using Custom Cache Keys may result in cache sharding and reduction of your cache
 
 {{</Aside>}}
 
-To create a Cache Key, see [Create a Custom Cache Key](/cache/how-to/create-cache-keys/).
+## Create custom cache keys
 
-## Availability
+A [Cache Key](/cache/how-to/cache-keys/) is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
 
-{{<feature-table id="cache.cache_key">}}
+1.  Log in to your Cloudflare account.
+2.  Select the domain that requires changes to the Cache Key Template.
+3.  Select **Rules** > **Page Rules**.
+4.  Select **Create Page Rule**.
+5.  Under **If the URL matches**, enter the URL to match.
+6.  Under **Then the settings are**, choose **Custom Cache Key** from the dropdown.
+7.  Select the appropriate _Query String_ setting.
+8.  (Optional) Select **Advanced** and enter appropriate settings for:
+    - `Headers`
+    - `Cookie`
+    - `Host`
+    - `User Features`
+9.  Choose a save option:
+    - **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
+    - **Save and Deploy** to save the rule and enable it immediately.
 
 ## Cache Key Template
 
@@ -127,6 +141,10 @@ User feature fields add features about the end-user (client) into the Cache Key.
 - `device_type` classifies a request as `mobile`, `desktop`, or `tablet` based on the User Agent
 - `geo` includes the client’s country, derived from the IP address
 - `lang` includes the first language code contained in the `Accept-Language` header sent by the client
+
+## Availability
+
+{{<feature-table id="cache.cache_key">}}
 
 ## Limitations
 
