@@ -73,7 +73,7 @@ Eine Cloudflare-fremde Domain kann sich nicht per CNAME auf eine Cloudflare-Doma
 
 Der direkte Zugriffsversuch auf DNS-Einträge, die für [Cloudflare CNAME-Setups](/dns/zone-setups/partial-setup) verwendet werden, führt ebenfalls zu Fehler 1001 (zum Beispiel:_www.beispiel.com.cdn.cloudflare.net_).
 
-Deaktivieren Sie [Always Online](/cache/how-to/always-online/#enable-always-online), wenn Sie [benutzerdefinierte Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas) verwenden.
+Deaktivieren Sie [Always Online](/cache/how-to/always-online/#enable-always-online), wenn Sie [benutzerdefinierte Hostnamen (SSL für SaaS)](/ssl/ssl-for-saas/) verwenden.
 
 ___
 
