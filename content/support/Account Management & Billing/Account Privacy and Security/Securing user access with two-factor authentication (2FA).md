@@ -39,7 +39,7 @@ ___
 
 We recommend that all Cloudflare user account holders enable 2FA to keep their accounts secure. 
 
-2FA can only be enabled successfully on an account with a verified email address. Please ensure to keep the associated email address verified at all times when enforcing 2FA. As it is a prerequisite in 2FA enablement process, **a failure to do so may result in a loss of account access**.
+2FA can only be enabled successfully on an account with a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/). If you do not verify your email address first, you may lock yourself out of your account.
 
 {{<Aside type="warning">}}
 Super Administrators can turn on **2FA Enforcement** to require all
