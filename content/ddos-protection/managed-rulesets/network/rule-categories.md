@@ -7,7 +7,7 @@ layout: list
 
 # Rule categories
 
-Rules in the Network-layer DDoS Attack Protection managed ruleset belong to the following categories (also known as tags):
+The main categories (or tags) of Network-layer DDoS Attack Protection managed rules are the following:
 
 {{<table-wrap>}}
 
@@ -20,3 +20,5 @@ Name | Description
 `read-only` | {{<render file="managed-rulesets/_read-only-rules-description.md">}}
 
 {{</table-wrap>}}
+
+There are other rule categories based on the attack vector/protocol, such as `udp`, `dns`, and `icmp`. The categories list is dynamic and may change over time.

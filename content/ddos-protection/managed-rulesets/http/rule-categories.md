@@ -7,7 +7,7 @@ layout: list
 
 # Rule categories
 
-Rules in the HTTP DDoS Attack Protection managed ruleset belong to the following categories (also known as tags):
+The main categories (or tags) of HTTP DDoS Attack Protection managed rules are the following:
 
 {{<table-wrap>}}
 
