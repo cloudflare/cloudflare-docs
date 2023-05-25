@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: Ports and IPs
-weight: 2
+title: Tunnel with firewall
+weight: 3
 ---
 
-# Ports and IPs
+# Tunnel with firewall
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
@@ -25,7 +25,7 @@ Opening port 443 for connections to `update.argotunnel.com` is optional. Failure
 
 To test your connectivity to Cloudflare, you can use the `dig` command to query the hostnames listed above. Note that `cloudflared` defaults to connecting with IPv4.
 
-```bash
+```sh
 $ dig A region1.v2.argotunnel.com
 ...
 ;; ANSWER SECTION:
@@ -42,7 +42,7 @@ region1.v2.argotunnel.com. 86400 IN	A	198.41.192.77
 ...
 ```
 
-```bash
+```sh
 $ dig AAAA region1.v2.argotunnel.com
 ...
 ;; ANSWER SECTION:
@@ -59,7 +59,7 @@ region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::10
 ...
 ```
 
-```bash
+```sh
 $ dig A region2.v2.argotunnel.com
 ...
 ;; ANSWER SECTION:
@@ -76,7 +76,7 @@ region2.v2.argotunnel.com. 86400 IN	A	198.41.200.23
 ...
 ```
 
-```bash
+```sh
 $ dig AAAA region2.v2.argotunnel.com
 ...
 ;; ANSWER SECTION:
@@ -93,7 +93,7 @@ region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::10
 ...
 ```
 
-```bash
+```sh
 $ dig api.cloudflare.com
 ...
 ;; ANSWER SECTION:
@@ -102,7 +102,7 @@ api.cloudflare.com.     41      IN      A       104.19.192.29
 ...
 ```
 
-```bash
+```sh
 $ dig update.argotunnel.com
 ...
 ;; ANSWER SECTION:
@@ -112,36 +112,42 @@ update.argotunnel.com.	190	IN	A	172.64.155.89
 ```
 
 ## Test connectivity with PowerShell
+
 On Windows, you can use PowerShell commands if `dig` is not available.
 
 To test DNS:
 
-    PS C:\Windows\system32> Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
+```bash
+PS C:\Windows\system32> Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
 
-    Name                                     Type   TTL   Section    NameTarget                     Priority Weight Port
-    ----                                     ----   ---   -------    ----------                     -------- ------ ----
-    _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region2.v2.argotunnel.com         2        1      7844
-    _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region1.v2.argotunnel.com         1        1      7844
+Name                                     Type   TTL   Section    NameTarget                     Priority Weight Port
+----                                     ----   ---   -------    ----------                     -------- ------ ----
+_v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region2.v2.argotunnel.com         2        1      7844
+_v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region1.v2.argotunnel.com         1        1      7844
+```
 
 To test ports:
 
-    PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 443
+```bash
+PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 443
 
-    ComputerName     : region1.v2.argotunnel.com
-    RemoteAddress    : 198.41.192.227
-    RemotePort       : 443
-    InterfaceAlias   : Ethernet
-    SourceAddress    : 10.0.2.15
-    TcpTestSucceeded : True
+ComputerName     : region1.v2.argotunnel.com
+RemoteAddress    : 198.41.192.227
+RemotePort       : 443
+InterfaceAlias   : Ethernet
+SourceAddress    : 10.0.2.15
+TcpTestSucceeded : True
 
-<!---->
+```
 
-    PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 7844
+```bash
 
-    ComputerName     : region1.v2.argotunnel.com
-    RemoteAddress    : 198.41.192.227
-    RemotePort       : 7844
-    InterfaceAlias   : Ethernet
-    SourceAddress    : 10.0.2.15
-    TcpTestSucceeded : True
+PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 7844
 
+ComputerName     : region1.v2.argotunnel.com
+RemoteAddress    : 198.41.192.227
+RemotePort       : 7844
+InterfaceAlias   : Ethernet
+SourceAddress    : 10.0.2.15
+TcpTestSucceeded : True
+```
