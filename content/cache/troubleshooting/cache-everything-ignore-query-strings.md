@@ -26,7 +26,7 @@ The _Cache Everything_ setting forces Cloudflare to consider all content that 
 
 _Ignore Query String_ modifies the cache key used at the Cloudflare edge to improve cache hit rates by reducing the number of unnecessary variations of an object that could be stored. It does so by storing and serving the same object from the edge regardless of any query string key value pairs appearing in the request path.
 
-If you’re an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/about/cache-keys/). You can request your cache keys from your Cloudflare Solutions Engineer.
+If you’re an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/how-to/cache-keys/). You can request your cache keys from your Cloudflare Solutions Engineer.
 
 ___
 
@@ -78,5 +78,5 @@ ___
 ## Related resources
 
 -   [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427)
--   [Using Custom Cache Keys](/cache/about/cache-keys/)
+-   [Using Custom Cache Keys](/cache/how-to/cache-keys/)
 -   [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache/)

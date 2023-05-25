@@ -22,15 +22,15 @@ Configure your settings to cache static HTML or cache anonymous page views of dy
 - [Speed up your site with caching best practices](/cache/troubleshooting/customize-caching/)
 - [Specify which resources to cache](/cache/best-practices/customize-cache/)
 - [Understand Origin Cache Control](/cache/about/cache-control/)
-- [Cache by device type (Enterprise only)](/cache/how-to/create-page-rules/#cache-by-device-type-enterprise-only)
+- [Cache by device type (Enterprise only)](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
 ## Improve cache hit rates
 
 Include or exclude query strings, optimize cache keys, or enable tiered cache to improve hit rates and reduce traffic to your origin.
 
 - [Choose a cache level](/cache/how-to/set-caching-levels/)
-- [Enable Tiered Cache with Argo](/cache/how-to/enable-tiered-cache/)
-- [Configure custom cache keys (Enterprise only)](/cache/about/cache-keys/)
+- [Enable Tiered Cache with Argo](/cache/how-to/tiered-cache/#enable-tiered-cache)
+- [Configure custom cache keys (Enterprise only)](/cache/how-to/cache-keys/)
 - [Enable Prefetch URLs (Enterprise only)](/fundamentals/speed/prefetch-urls/)
 
 ## Secure your cache configuration

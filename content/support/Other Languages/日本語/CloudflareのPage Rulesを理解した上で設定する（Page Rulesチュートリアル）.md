@@ -245,7 +245,7 @@ Browser Cache TTL（ブラウザキャッシュTTL）
 
  | 
 
-クライアントブラウザでキャッシュされるリソースが有効な状態を維持できる時間を管理します。Cloudflare UIとAPIの両方で、Enterpriseプランではないお客様が**ブラウザCache TTL**を_0_に設定することは禁止されています。[詳細を見る](/cache/about/edge-browser-cache-ttl)。
+クライアントブラウザでキャッシュされるリソースが有効な状態を維持できる時間を管理します。Cloudflare UIとAPIの両方で、Enterpriseプランではないお客様が**ブラウザCache TTL**を_0_に設定することは禁止されています。[詳細を見る](/cache/how-to/edge-browser-cache-ttl/)。
 
  | 
 
@@ -289,7 +289,7 @@ _下記の追加詳細で、限定的な正規表現のサポートについて�
 
  | 
 
-訪問者のデバイスタイプに基づき、キャッシュするコンテンツを分けます。[詳細を見る](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)。
+訪問者のデバイスタイプに基づき、キャッシュするコンテンツを分けます。[詳細を見る](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)。
 
  | 
 
@@ -317,7 +317,7 @@ Cache Deception Armor
 
 _カスタムキャッシュキー_とも呼ばれています。
 
-キャッシュするリソースを決定する際、どの変数を含めるかを具体的に管理します。お客様は、URLだけではなく他の要素にも基づいてキャッシュするものを決定できます。[詳細を見る](/cache/about/cache-keys)。
+キャッシュするリソースを決定する際、どの変数を含めるかを具体的に管理します。お客様は、URLだけではなく他の要素にも基づいてキャッシュするものを決定できます。[詳細を見る](/cache/how-to/cache-keys/)。
 
  | 
 
