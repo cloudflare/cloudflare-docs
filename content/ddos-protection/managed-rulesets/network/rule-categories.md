@@ -22,4 +22,4 @@ Name | Description
 
 {{</table-wrap>}}
 
-There are other rule categories based on the attack vector/protocol, such as `udp`, `dns`, and `icmp`. The categories list is dynamic and may change over time.
+There are other rule categories based on the attack vector/protocol, such as `dns`, `quic`, and `sip`. The categories list is dynamic and may change over time.
