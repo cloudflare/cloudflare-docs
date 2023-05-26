@@ -26,7 +26,7 @@ If you are unsure of which setup to use, consider the questions below for an ove
 <details>
 <summary>Are you on a Free or Pro plan?</summary>
 <div> 
-Full setup is the recommended and most common option. If you are on a Free or Pro plan this is the only setup available.
+If you are on a Free or Pro plan, full setup is the only one available. This is the recommended and most common option.
 </div>
 </details>
 
@@ -36,7 +36,7 @@ Full setup is the recommended and most common option. If you are on a Free or Pr
 If you are on a Business or Enterprise plan, use Partial (CNAME) setups to keep your primary DNS provider and only proxy individual subdomains through Cloudflare.
 <br />
 <br />
-If you are on an Enterprise plan, you also have the option to use zone transfers to set up Cloudflare as either a primary or a secondary DNS provider and transfer zone files between Cloudflare and your other DNS providers.
+If you are on an Enterprise plan, you also have the option to use zone transfers to set up Cloudflare as either a primary or a secondary DNS provider.
 </div>
 </details>
 
