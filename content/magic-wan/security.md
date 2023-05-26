@@ -1,7 +1,9 @@
 ---
-title: Add security filters
+title: Security filters
 pcx_content_type: concept
 weight: 5
+meta:
+    title: Add security filters
 ---
 
 # Add security filters
