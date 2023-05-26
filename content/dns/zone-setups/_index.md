@@ -21,7 +21,7 @@ If you run your own authoritative nameservers but still want to benefit from Clo
 
 ## Common use cases and availability
 
-If you are unsure of which setup to use, consider the questions below for an overview of common use cases and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
+If you are unsure of which setup to use, consider the questions below for an overview of common prompts and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
 
 <details>
 <summary>Are you on a Free or Pro plan?</summary>
@@ -44,52 +44,5 @@ If you are on an Enterprise plan, you also have the option to use zone transfers
 <summary>Do you need to manage subdomains separately?</summary>
 <div> 
 If you are on an Enterprise plan, you can use a subdomain setup to manage the Cloudflare settings for one or more subdomains separately from the settings associated with your domain apex.
-</div>
-</details>
-
-<br />
-
-<details>
-<summary>Previous chart - erase afterwards</summary>
-<div> 
-
-```mermaid
-flowchart LR
-
-A[You have added your <br /> domain to Cloudlfare]
-Q1{Are you on a <br /> <strong>Free or Pro</strong> plan?}
-B[Full setup]
-C[Consider the other setup options]
-
-A --- Q1
-Q1 -- yes --> B
-Q1 -- no --> C
-
-C1[You are on <strong>Business <br /> or Enterprise</strong>]
-Q2{Will you be using <br /> other DNS providers?}
-
-C1 --- Q2
-Q2 -- no --> B2[Full setup]
-Q2 -- yes --> D[Consider options for when you use multiple providers]
-
-D1[You use Cloudflare together <br /><strong>with other providers</strong>]
-Q3[You are on <strong>Business <br />or Enterprise</strong>]
-Q4{{You want to use Cloudflare <br />only for <strong>specific hostnames</strong>}}
-Q5[You are on <strong>Enterprise</strong>]
-Q6{{You want to  <strong>transfer <br />zone data</strong> from one provider <br /> to the other}}
-E["Partial (CNAME) setup"]
-F[Zone transfers]
-
-D1 --- Q3 --- Q4 ---> E
-D1 --- Q5 --- Q6 ---> F
-
-G[You are on <strong>Enterprise</strong>]
-Q7{Do you need to manage <br /> subdomains seperately?}
-
-G --- Q7
-Q7 -- no --> B1[Full setup]
-Q7 -- yes --> H[Subdomain setup]
-```
-
 </div>
 </details>
