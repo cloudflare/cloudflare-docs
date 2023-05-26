@@ -12,13 +12,15 @@ If you need to make large changes to your website, you may want to make your sit
 
 If you are familiar with code, [create a Worker](/workers/get-started/guide/) that returns an [HTML page](/workers/examples/return-html/) to any site visitors.
 
-![Workers page returned instead of your website](/images/fundamentals/workers-page.png)
+![Workers maintenance page returned instead of your website](/images/fundamentals/workers-page.png)
 
 ## Without code
 
 ### Business and Enterprise
 
-For a maintenance page without code, Business and Enterprise uses can create a [Cloudflare Waiting Room](/waiting-room/how-to/create-waiting-room/) (though certain customization and queue options depend on your [plan](/waiting-room/plans/)).
+For a maintenance page without code, Business and Enterprise uses can create a [Cloudflare Waiting Room](/waiting-room/how-to/create-waiting-room/).
+
+Certain certain customization and queue options depend on your [plan](/waiting-room/plans/).
 
 ![Waiting room page returned instead of your website](/images/fundamentals/waiting-room-page.png)
 
