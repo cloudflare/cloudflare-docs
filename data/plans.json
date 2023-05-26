@@ -862,7 +862,7 @@
     },
     "max_upload_size": {
       "title": "Max upload size",
-      "link": "/cache/about/default-cache-behavior/",
+      "link": "/cache/concepts/default-cache-behavior/",
       "properties": {
         "availability": {
           "title": "Availability",

@@ -13,15 +13,15 @@ meta:
 Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
 
 - [What is a CDN?](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
-- [Understand the default file types Cloudflare caches](/cache/about/default-cache-behavior/#default-cached-file-extensions)
+- [Understand the default file types Cloudflare caches](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
 
 ## Make more resources cacheable
 
 Configure your settings to cache static HTML or cache anonymous page views of dynamic content.
 
 - [Speed up your site with caching best practices](/cache/troubleshooting/customize-caching/)
-- [Specify which resources to cache](/cache/best-practices/customize-cache/)
-- [Understand Origin Cache Control](/cache/about/cache-control/)
+- [Specify which resources to cache](/cache/concepts/customize-cache/)
+- [Understand Origin Cache Control](/cache/concepts/cache-control/)
 - [Cache by device type (Enterprise only)](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
 ## Improve cache hit rates
@@ -61,6 +61,6 @@ Review the list of Cloudflare features that function in this manner.
 
 Resolve common caching concerns.
 
-- [Learn about Cloudflare's cache response statuses](/cache/about/default-cache-behavior/#cloudflare-cache-responses)
+- [Learn about Cloudflare's cache response statuses](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses)
 - [Investigate Cloudflare's cache response with cURL](https://support.cloudflare.com/hc/articles/203118044#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)
 - [Diagnose Always Online issues](/cache/troubleshooting/always-online/)

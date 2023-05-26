@@ -22,7 +22,7 @@ When configuring caching settings in the **Page Rules** app, you are essential
 
 For background information on Cloudflare’s caching tools and options, consult:
 
--   [Which file extensions does Cloudflare cache for static content?](/cache/about/default-cache-behavior/)
+-   [Which file extensions does Cloudflare cache for static content?](/cache/concepts/default-cache-behavior/)
 -   [Getting started with Cloudflare caching](/cache/get-started/)
 -   [What are Cloudflare's caching levels?](/cache/how-to/set-caching-levels)
 
@@ -43,7 +43,7 @@ To add a _Cache Everything_ page rule:
 5.  Select the _Cache Everything_ setting value.
 6.  Save and deploy the rule.
 
-In conclusion, this recommendation is only appropriate for HTML pages that are static and anonymous. To learn more, refer to [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache/)
+In conclusion, this recommendation is only appropriate for HTML pages that are static and anonymous. To learn more, refer to [How do I use Cache Everything with Cloudflare?](/cache/concepts/customize-cache/)
 
 ___
 
@@ -64,7 +64,7 @@ Below, we provide links to articles with specific instructions on implementing t
 3. Save and deploy your new rule
 
 {{<Aside type="note">}}
-As an alternative to *Edge Cache TTL*, you could use the [Origin Cache Control](/cache/about/cache-control/) setting if you believe the cache-control headers set in your origin server are appropriate.
+As an alternative to *Edge Cache TTL*, you could use the [Origin Cache Control](/cache/concepts/cache-control/) setting if you believe the cache-control headers set in your origin server are appropriate.
 {{</Aside>}}
 
 To learn more about the technique described, consult:
@@ -72,6 +72,6 @@ To learn more about the technique described, consult:
 -   [Caching Anonymous Page Views](https://blog.cloudflare.com/caching-anonymous-page-views/)
 -   [Caching Anonymous Page Views with WordPress or WooCommerce](https://support.cloudflare.com/hc/articles/236166048)
 -   [Caching Anonymous Page Views with Magento 1 and Magento 2](https://support.cloudflare.com/hc/articles/236168808)
--   [How do I cache static HTML?](/cache/best-practices/customize-cache/)
+-   [How do I cache static HTML?](/cache/concepts/customize-cache/)
 
 Note that the Cloudflare **Caching** app allows you to purge the cache so that new requests are sent to the origin for re-fetching. To learn more, refer to [How do I purge my cache?](/cache/how-to/purge-cache/)

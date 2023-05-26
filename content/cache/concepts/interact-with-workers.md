@@ -10,3 +10,5 @@ You can use [Workers](/workers/) to customize cache behavior on Cloudflare's CDN
 To determine how to cache a resource by setting TTLs, custom cache keys, and cache headers in a fetch request, refer to [Cache using fetch](/workers/examples/cache-using-fetch/).
 
 To use the Cache API to store responses in Cloudflare's cache, refer to [Using the Cache API](/workers/examples/cache-api/).
+
+To understand more about how Cache and Workers interact refer to [Cache in Workers](/workers/learning/how-the-cache-works/).

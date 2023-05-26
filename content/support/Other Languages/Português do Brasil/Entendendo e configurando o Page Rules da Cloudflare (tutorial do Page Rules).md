@@ -338,7 +338,7 @@ A aplicação do caching personalizado com base na opção selecionada:
 
 **Standard —** armazena em cache todo o conteúdo estático que possui uma cadeia de consulta.
 
-**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
+**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
 
 
  | 
@@ -538,7 +538,7 @@ Ative ou desative o recurso **Criptografia Oportunística da Cloudflare** da g
 -   Todos
 
  |
-| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/about/cache-control) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
+| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/concepts/cache-control) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
 
 -   Todos
 

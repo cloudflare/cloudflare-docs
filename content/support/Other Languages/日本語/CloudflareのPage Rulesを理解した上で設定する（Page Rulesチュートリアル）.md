@@ -340,7 +340,7 @@ _カスタムキャッシュキー_とも呼ばれています。
 
 **標準 -** クエリ文字列を持つ静的コンテンツ全てをキャッシュします。
 
-**すべてをキャッシュする**\- すべてのコンテンツを静的コンテンツとして扱い、[Cloudflareのデフォルトでキャッシュされたコンテンツ](/cache/about/default-cache-behavior#default-cached-file-extensions)を超えて、すべてのファイルタイプをキャッシュします。Page Ruleで **エッジCache TTL**を設定している場合を除き、オリジンWebサーバーからのCacheヘッダーを尊重します。**エッジCache TTL**\>_0__と組み合わせると、_**すべてをキャッシュする**では、オリジンWebサーバーのレスポンスからのCookieを削除します。  
+**すべてをキャッシュする**\- すべてのコンテンツを静的コンテンツとして扱い、[Cloudflareのデフォルトでキャッシュされたコンテンツ](/cache/concepts/default-cache-behavior#default-cached-file-extensions)を超えて、すべてのファイルタイプをキャッシュします。Page Ruleで **エッジCache TTL**を設定している場合を除き、オリジンWebサーバーからのCacheヘッダーを尊重します。**エッジCache TTL**\>_0__と組み合わせると、_**すべてをキャッシュする**では、オリジンWebサーバーのレスポンスからのCookieを削除します。  
 
 
  | 
@@ -540,7 +540,7 @@ Mirage
 -   すべて
 
  |
-| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/about/cache-control)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
+| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/concepts/cache-control)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
 
 -   すべて
 
