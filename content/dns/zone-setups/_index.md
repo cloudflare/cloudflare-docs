@@ -21,7 +21,7 @@ If you run your own authoritative nameservers but still want to benefit from Clo
 
 ## Common use cases and availability
 
-If you are unsure of which setup to use, consider the questions below for an overview of common prompts and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
+If you are unsure of which setup to use, consider the questions below for an overview of common use cases and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
 
 <details>
 <summary>Are you on a Free or Pro plan?</summary>
