@@ -16,8 +16,16 @@ If you are familiar with code, [create a Worker](/workers/get-started/guide/) th
 
 ## Without code
 
-Otherwise, [create an Acccess application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) with **One-time PIN** as your identity provider. Make sure to limit your [Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy) to only allow your email address.
+### Business and Enterprise
 
-![Example Access login page](/cloudflare-one/static/documentation/identity/otp/otp1.png)
+For a maintenance page without code, Business and Enterprise uses can create a [Cloudflare Waiting Room](/waiting-room/how-to/create-waiting-room/) (though certain customization and queue options depend on your [plan](/waiting-room/plans/)).
+
+![Waiting room page returned instead of your website](/images/fundamentals/waiting-room-page.png)
+
+### All plans
+
+Users on all plans can [create an Acccess application](/cloudflare-one/applications/configure-apps/self-hosted-apps/). Make sure to limit your [Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy) to only include yourself and any collaborators.
 
 If needed, you can also further [customize the login page](/cloudflare-one/identity/login-page/).
+
+![Example Access login page](/images/fundamentals/access-page.png)
