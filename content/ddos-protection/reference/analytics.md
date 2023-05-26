@@ -12,7 +12,7 @@ You can view DDoS analytics in different dashboards, depending on your service a
 
 - The [Security Events dashboard](/waf/security-events/) provides you with visibility into L7 security events that target your zone, including HTTP DDoS attacks and TCP attacks.
 
-- The [Network Analytics dashboard](/analytics/network-analytics/reference/network-analytics-v1/) provides you with visibility into L3/4 traffic and DDoS attacks that target your IP ranges or Spectrum applications.
+- The [Network Analytics dashboard](/analytics/network-analytics/) provides you with visibility into L3/4 traffic and DDoS attacks that target your IP ranges or Spectrum applications.
 
 ## Availability
 

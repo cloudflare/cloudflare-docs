@@ -19,4 +19,4 @@ For log field **ClientIPClass**, Cloudflare recommends using [Bot Tags](/bots/co
 - [Zone-scoped datasets](/logs/reference/log-fields/zone/)
 - [Account-scoped datasets](/logs/reference/log-fields/account/)
 
-For more information on logs available in Cloudflare Zero Trust, refer to [Zero Trust logs](/cloudflare-one/analytics/logs/).
+For more information on logs available in Cloudflare Zero Trust, refer to [Zero Trust logs](/cloudflare-one/insights/logs/).

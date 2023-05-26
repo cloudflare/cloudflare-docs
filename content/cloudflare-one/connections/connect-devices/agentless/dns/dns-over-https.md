@@ -306,5 +306,5 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </div>
 </details>
 
-You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
+You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
 

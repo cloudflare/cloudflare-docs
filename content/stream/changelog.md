@@ -7,6 +7,14 @@ rss: file
 
 # Changelog
 
+## 2023-05-16
+
+### Multiple audio tracks now generally available
+
+Stream supports adding multiple audio tracks to an existing video.
+
+For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/) to get started.
+
 ## 2023-04-26
 
 ### Player Enhancement Properties

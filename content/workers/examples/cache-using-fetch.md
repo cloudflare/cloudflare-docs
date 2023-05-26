@@ -94,7 +94,7 @@ This feature is available only to Enterprise customers.
 
 {{</Aside>}}
 
-A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/create-cache-keys/) documentation.
+A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/cache-keys/#create-custom-cache-keys) documentation.
 
 ```js
 // Set cache key for this request to "some-string".

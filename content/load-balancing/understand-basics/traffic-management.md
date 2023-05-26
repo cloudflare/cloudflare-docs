@@ -53,7 +53,7 @@ $ curl --request PATCH \
 
 Traffic steering decisions or failover relies on the health information of IPs and pools. Local Traffic Management supports health monitors on your virtual and private IPs.
 
-Before, you could only enter tunnel addresses in your load balancer and configure health checks your tunnels. Now, you have the ability to input your IPs directly as origins within your load balancer and set up health check for them instead of only the tunnels. You will be able to leverage existing health monitoring to your virtual and private IPs, along with the current functionality of public IPs. 
+Before, you could only enter tunnel addresses in your load balancer and configure health monitor requests to your tunnels. Now, you have the ability to input your IPs directly as origins within your load balancer and set up health monitors for them instead of only the tunnels. You will be able to leverage existing health monitoring to your virtual and private IPs, along with the current functionality of public IPs. 
 
 Health monitors automatically work once the origin and VNet Tunnel association is configured. Cloudflare determines the health of the Tunnel and the private targets.
 
