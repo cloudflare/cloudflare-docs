@@ -7,7 +7,7 @@ pcx_content_type: how-to
 
 Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.
 
-Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/about/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-everything). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
+Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/concepts/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-everything). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
 
 ## Caching limits
 

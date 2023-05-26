@@ -358,7 +358,7 @@ Aplica la memoria caché personalizada en función de la opción seleccionada:
 
 **Estándar:** almacena en la memoria caché todo el contenido estático que tiene una cadena de consulta.
 
-**Copiar todo en caché**: trata todo el contenido como estático y almacena en la memoria caché todos los tipos de archivos más allá del [contenido almacenado en caché predeterminado de Cloudflare](/cache/about/default-cache-behavior#default-cached-file-extensions). Respeta los encabezados de caché del servidor web de origen a menos que el **TTL de caché del perímetro** también se establezca en la regla de página. Cuando se combina con un **TTL de caché del perímetro** > _0_, **Copiar todo en caché** elimina las cookies de la respuesta del servidor web de origen.   
+**Copiar todo en caché**: trata todo el contenido como estático y almacena en la memoria caché todos los tipos de archivos más allá del [contenido almacenado en caché predeterminado de Cloudflare](/cache/concepts/default-cache-behavior/#default-cached-file-extensions). Respeta los encabezados de caché del servidor web de origen a menos que el **TTL de caché del perímetro** también se establezca en la regla de página. Cuando se combina con un **TTL de caché del perímetro** > _0_, **Copiar todo en caché** elimina las cookies de la respuesta del servidor web de origen.   
 
 
  | 
@@ -559,7 +559,7 @@ Activa o desactiva la función **Encriptación oportunista de Cloudflare** de 
 -   Todo
 
  |
-| Encabezado Origin Cache Control | [Origin Cache Control](/cache/about/cache-control) está activado por defecto en los dominios de los planes gratuito, Pro y Business y desactivado por defecto en los dominios Enterprise. | 
+| Encabezado Origin Cache Control | [Origin Cache Control](/cache/concepts/cache-control/) está activado por defecto en los dominios de los planes gratuito, Pro y Business y desactivado por defecto en los dominios Enterprise. | 
 
 -   Todo
 

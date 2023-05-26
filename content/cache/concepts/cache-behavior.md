@@ -1,8 +1,8 @@
 ---
-title: Cache behavior
+title: Cache behavior with HEAD requests and Set-Cookie header
 pcx_content_type: concept
 ---
-# Cache behavior
+# Cache behavior with `HEAD` requests and `Set-Cookie` header
 
 In this page, we document how Cloudflare's cache system behaves in interaction with `HEAD` requests and with `Set-Cookie` response header.
 

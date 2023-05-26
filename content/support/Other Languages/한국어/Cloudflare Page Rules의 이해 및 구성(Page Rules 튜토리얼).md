@@ -336,7 +336,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
 **표준 -** 쿼리 문자열이 있는 모든 정적 콘텐츠를 캐시합니다.
 
-**모두 캐시** - 모든 콘텐츠를 정적인 것으로 간주하고 [Cloudflare 기본 캐시 콘텐츠](/cache/about/default-cache-behavior#default-cached-file-extensions) 이외의 모든 파일 유형을 캐시합니다. 페이지 규칙에서 **Edge Cache TTL**도 설정하지 않았다면, 원본 웹 서버의 캐시 헤더를 따릅니다. **Edge Cache TTL > 0과 결합된 경우**_0_,**모두 캐시**는 원본 웹 서버 응답에서 쿠키를 제거합니다.   
+**모두 캐시** - 모든 콘텐츠를 정적인 것으로 간주하고 [Cloudflare 기본 캐시 콘텐츠](/cache/concepts/default-cache-behavior#default-cached-file-extensions) 이외의 모든 파일 유형을 캐시합니다. 페이지 규칙에서 **Edge Cache TTL**도 설정하지 않았다면, 원본 웹 서버의 캐시 헤더를 따릅니다. **Edge Cache TTL > 0과 결합된 경우**_0_,**모두 캐시**는 원본 웹 서버 응답에서 쿠키를 제거합니다.   
 
 
  | 
@@ -536,7 +536,7 @@ Cloudflare **SSL/TLS** 앱의 **에지 인증서** 탭에 있는 **Cloudflare �
 -   전체
 
  |
-| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](/cache/about/cache-control)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
+| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](/cache/concepts/cache-control/)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
 
 -   전체
 

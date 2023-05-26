@@ -36,13 +36,13 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must:
 
 - Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
-- Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/how-to/cache-rules/)),
+- Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/concepts/cache-control/) origin response headers, [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/how-to/cache-rules/)),
 - Have a Content-Length response header.
 - When using [Image Resizing](/images/image-resizing/), original files are eligible for Cache Reserve, but resized file variants are not eligible because Image Resizing happens after Cache Reserve in the response flow.
 
 ## Limits
 
-- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
+- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.

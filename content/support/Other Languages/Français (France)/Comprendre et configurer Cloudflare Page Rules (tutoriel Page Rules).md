@@ -338,7 +338,7 @@ Cache Level
 
 **Standard** - Met en cache tout contenu statique comportant une chaîne de requête.
 
-**Cache Everything** (Tout mettre en cache) - Considère tous les contenus comme statiques et met en cache tous les types de fichiers au-delà du [contenu mis en cache par défaut par Cloudflare](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respecte les en-têtes de cache du serveur web d’origine, sauf si **Edge Cache TTL** est également défini dans la règle Page Rule. Associée à une valeur **Edge Cache TTL** > _0_, **Cache Everything** supprime les cookies de la réponse du serveur web d’origine.   
+**Cache Everything** (Tout mettre en cache) - Considère tous les contenus comme statiques et met en cache tous les types de fichiers au-delà du [contenu mis en cache par défaut par Cloudflare](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respecte les en-têtes de cache du serveur web d’origine, sauf si **Edge Cache TTL** est également défini dans la règle Page Rule. Associée à une valeur **Edge Cache TTL** > _0_, **Cache Everything** supprime les cookies de la réponse du serveur web d’origine.   
 
 
  | 
@@ -538,7 +538,7 @@ Opportunistic Encryption
 -   Toutes
 
  |
-| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/about/cache-control) est activé par défaut pour les domaines Free, Pro et Business. | 
+| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/concepts/cache-control/) est activé par défaut pour les domaines Free, Pro et Business. | 
 
 -   Toutes
 
