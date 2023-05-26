@@ -36,7 +36,7 @@ For more details about a BigCommerce setup, refer to their [support guide](https
 
 ## Product compatibility
 
-For a full list of compatible products and potential limitations, refer to [Product compatibility](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/product-compatibility/).
+{{<render file="_provider-guide-compatibility">}}
 
 ## Additional support
 
