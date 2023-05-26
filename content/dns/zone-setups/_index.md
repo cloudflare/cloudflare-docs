@@ -26,7 +26,7 @@ If you are unsure of which setup to use, consider the questions below for an ove
 <details>
 <summary>Are you on a Free or Pro plan?</summary>
 <div> 
-Full setup is the recommended and most common option. If you are on a Free or Pro plan use this setup.
+Full setup is the recommended and most common option. If you are on a Free or Pro plan this is the only setup available.
 </div>
 </details>
 
