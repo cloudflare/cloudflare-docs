@@ -3,10 +3,10 @@ title: Security filters
 pcx_content_type: concept
 weight: 5
 meta:
-    title: Add security filters
+    title: Enable security filters
 ---
 
-# Add security filters
+# Enable security filters
 
 Magic WAN customers have automatic access to [Magic Firewall](/magic-firewall/plans/). Magic Firewall is Cloudflare’s firewall-as-a-service solution that allows you to protect your infrastructure. Magic Firewall supports layers three and four of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), and enables you to allow or block traffic on a variety of packet characteristics.
 
