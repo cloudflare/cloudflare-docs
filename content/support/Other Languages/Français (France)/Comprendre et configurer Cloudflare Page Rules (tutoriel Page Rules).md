@@ -538,7 +538,7 @@ Opportunistic Encryption
 -   Toutes
 
  |
-| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/concepts/cache-control) est activé par défaut pour les domaines Free, Pro et Business. | 
+| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/concepts/cache-control/) est activé par défaut pour les domaines Free, Pro et Business. | 
 
 -   Toutes
 

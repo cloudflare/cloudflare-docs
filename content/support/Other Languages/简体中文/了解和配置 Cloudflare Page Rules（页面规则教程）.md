@@ -540,7 +540,7 @@ Mirage
 -   所有
 
  |
-| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](/cache/concepts/cache-control)，Enterprise 域则默认禁用此设置。 | 
+| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](/cache/concepts/cache-control/)，Enterprise 域则默认禁用此设置。 | 
 
 -   所有
 

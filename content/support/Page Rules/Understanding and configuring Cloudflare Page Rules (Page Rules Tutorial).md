@@ -198,9 +198,9 @@ Below is the full list of settings available, presented in the order that they a
 | IP Geolocation Header | Cloudflare adds a _CF-IPCountry_ HTTP header containing the country code that corresponds to the visitor. | All |
 | Mirage | Turn on or off **Cloudflare Mirage** of the Cloudflare **Speed** app. [Learn more](https://support.cloudflare.com/hc/articles/200403554). | Pro and above |
 | Opportunistic Encryption | Turn on or off the **Cloudflare Opportunistic Encryption** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app. [Learn more](/ssl/edge-certificates/additional-options/opportunistic-encryption). | All |
-| Origin Cache Control | [Origin Cache Control](/cache/concepts/cache-control) is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |
+| Origin Cache Control | [Origin Cache Control](/cache/concepts/cache-control/) is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |
 | Origin Error Page Pass-thru | Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin. | Enterprise |
-| Polish | Apply options from the **Polish** feature of the Cloudflare **Speed** app. [Learn more](/images/polish). | Pro and above |
+| Polish | Apply options from the **Polish** feature of the Cloudflare **Speed** app. [Learn more](/images/polish/). | Pro and above |
 | Query String Sort | Turn on or off the reordering of query strings. When query strings have the same structure, caching improves. [Learn more](/cache/advanced-configuration/query-string-sort/). | Enterprise |
 | Resolve Override | Change the origin address to the value specified in this setting. [Learn more](https://support.cloudflare.com/hc/articles/206190798). | Enterprise |
 | Respect Strong ETags | Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. [Learn more](/cache/reference/etag-headers/). | Enterprise |

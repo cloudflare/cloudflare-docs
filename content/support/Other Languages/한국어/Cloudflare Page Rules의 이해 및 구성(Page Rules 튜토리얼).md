@@ -536,7 +536,7 @@ Cloudflare **SSL/TLS** 앱의 **에지 인증서** 탭에 있는 **Cloudflare �
 -   전체
 
  |
-| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](/cache/concepts/cache-control)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
+| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](/cache/concepts/cache-control/)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
 
 -   전체
 

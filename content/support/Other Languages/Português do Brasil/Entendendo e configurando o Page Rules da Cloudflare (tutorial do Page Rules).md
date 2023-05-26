@@ -538,7 +538,7 @@ Ative ou desative o recurso **Criptografia Oportunística da Cloudflare** da g
 -   Todos
 
  |
-| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/concepts/cache-control) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
+| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/concepts/cache-control/) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
 
 -   Todos
 

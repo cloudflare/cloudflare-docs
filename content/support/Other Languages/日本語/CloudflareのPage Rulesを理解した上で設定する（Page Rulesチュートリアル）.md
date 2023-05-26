@@ -540,7 +540,7 @@ Mirage
 -   すべて
 
  |
-| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/concepts/cache-control)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
+| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/concepts/cache-control/)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
 
 -   すべて
 
