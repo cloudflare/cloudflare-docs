@@ -40,6 +40,6 @@ Building developer portals is available to all API Shield subscribers. This feat
 
 ## Limitations
 
-This feature currently uses the open source [Redoc](https://github.com/Redocly/redoc) project from [Redocly](https://redocly.com/). For custom theme and branding options, visit the Redoc github repository to learn more about theming. 
+This feature currently uses the open source [Redoc](https://github.com/Redocly/redoc) project from [Redocly](https://redocly.com/). For custom theme and branding options, visit the [Redoc GitHub repository](https://github.com/Redocly/redoc) to learn more about theming. 
 
 In order to modify the resulting page,  download the project files before creating the Pages project. You can create a new Pages project with the modified files you have made to meet your branding guidelines.
