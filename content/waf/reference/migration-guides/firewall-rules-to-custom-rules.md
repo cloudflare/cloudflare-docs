@@ -26,7 +26,7 @@ The Firewall Rules API and Filters API, as well as the `cloudflare_firewall_rule
 The main differences between firewall rules and WAF custom rules are the following:
 
 * [Improved response for Block action](#improved-response-for-block-action)
-* [Different default page for blocked requests](#different-default-page-for-blocked-requests)
+* [Different error page for blocked requests](#different-error-page-for-blocked-requests)
 * [New Skip action replacing both Allow and Bypass actions](#new-skip-action-replacing-both-allow-and-bypass-actions)
 * [Custom rules are evaluated in order](#custom-rules-are-evaluated-in-order)
 * [Logs and events](#logs-and-events)
@@ -44,7 +44,7 @@ To define a custom response for a single rule, go to **Security** > **WAF** > [*
 Custom block response configurations will not be returned by the Firewall Rules API. You must use the [Rulesets API](/waf/custom-rules/create-api/#example-b) to manage this new feature.
 {{</Aside>}}
 
-### Different default page for blocked requests
+### Different error page for blocked requests
 
 Requests blocked by a firewall rule with a _Block_ action would get a Cloudflare [1020 error code](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) response. Cloudflare users could customize this error page in **Custom Pages** > **1000 Class Errors**.
 
