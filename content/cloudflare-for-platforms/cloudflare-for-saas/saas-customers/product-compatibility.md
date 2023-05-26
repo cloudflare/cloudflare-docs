@@ -23,7 +23,7 @@ This is not an exhaustive list of Cloudflare products and features.
 
 | Product | Customer zone | Saas zone | Notes |
 | --- | --- | --- | --- |
-| [Cloudflare Access](/cloudflare-one/policies/access/) | Yes | Yes |
+| [Cloudflare Access](/cloudflare-for-platforms/cloudflare-for-saas/security/access-for-saas/) | Yes | Yes |
 | [Argo Smart Routing](/argo-smart-routing/) | No | Yes | Customer zones can still use Smart Routing for non-O2O traffic. |
 | [Bot Management](/bots/plans/bm-subscription/) | Yes* | Yes* | Bot Management cannot be enabled on both the customer zone and the SaaS zone |
 | [Browser Integrity Check](/support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/) | Yes | Yes |
