@@ -71,4 +71,6 @@ After creating the token, copy the token value.
 - `Super Administrator - All Privileges`
 
 4. Go to **Push Groups** > gear icon. Disable **Rename groups**. Select **Save**.
-5. Within the **Push Groups** tab, select **Push Groups**. Add the previous 4 groups and select **Save**.
+5. Within the **Push Groups** tab, select **Push Groups**. Add the previous 4 groups. Select **Save**.
+
+Adding any users to these groups will grant them the role. Removing the users from the IdP will remove them from the associated role.
