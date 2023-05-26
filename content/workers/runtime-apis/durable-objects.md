@@ -310,6 +310,8 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 [Code updates](/workers/learning/using-durable-objects/#global-uniqueness) will disconnect all WebSockets.
 
+`wrangler dev` in local mode does not currently work with the Hibernation API. Instead, use `wrangler dev --remote` with a recent version (3.0 or higher) of wrangler.
+
 #### WebSocket extensions
 
 - {{<code>}}webSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
