@@ -45,7 +45,7 @@ For a full list of compatible products and potential limitations, refer to [Prod
 
 ### Resolving SSL errors
 
-If you encounter SSL errors, check to see if you have a `CAA` record.
+If you encounter SSL errors, check if you have a `CAA` record.
 
 If you do have a `CAA` record, check that it permits SSL certificates to be issued by `digicert.com` and `letsencrypt.org`.
 
