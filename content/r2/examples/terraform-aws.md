@@ -1,13 +1,19 @@
 ---
-title: Terraform (Advanced)
+title: Terraform (AWS)
 pcx_content_type: configuration
 ---
 
 # Configure R2 with Terraform
 
-This example shows how to configure R2 with Terraform using the [AWS provider](https://github.com/hashicorp/terraform-provider-aws). For using only the Cloudflare provider, see [Terraform](./terraform-native.md).
-
 {{<render file="_keys.md">}}<br>
+
+This example shows how to configure R2 with Terraform using the [AWS provider](https://github.com/hashicorp/terraform-provider-aws).
+
+{{<Aside type="note" header="Note for using AWS provider">}}
+
+For using only the Cloudflare provider, see [Terraform](/r2/examples/terraform/).
+
+{{</Aside>}}
 
 With [`terraform`](https://developer.hashicorp.com/terraform/downloads) installed, create `main.tf` and copy the content below replacing with your Account ID and R2 credentials.
 
