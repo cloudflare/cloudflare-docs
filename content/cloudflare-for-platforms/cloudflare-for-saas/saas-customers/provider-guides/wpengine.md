@@ -13,7 +13,6 @@ meta:
 ## Benefits
 
 {{<render file="_provider-guide-benefits" withParameters="WP Engine">}}
-<br/>
 
 ## How it works
 
