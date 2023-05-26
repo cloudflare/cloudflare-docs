@@ -100,11 +100,12 @@ For example, typing:
 ```txt
 NSLookup(B1, B2)
 ```
-or
+
+Or - depending on your regional settings - you may have to use this formula:
+
 ```txt
 NSLookup(B1; B2)
 ```
-depending on your regional settings
 
 <div class="medium-img">
 
