@@ -17,8 +17,6 @@ Create new serverless SQL databases to query from your Workers and Pages project
 
 {{</description>}}
 
-{{<plan type="all">}}
-
 D1 is Cloudflare’s native serverless database. Create your first database by [following the getting started guide](/d1/get-started/), learn how to [importing data into a database](/d1/learning/importing-data/) or learn how to [query your database](/d1/platform/client-api/) directly from [Workers](/workers/) or [Pages](/pages/platform/functions/bindings/#d1-databases).
 
 {{<Aside type="warning" header="Open Alpha">}}
