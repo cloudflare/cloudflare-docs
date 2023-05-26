@@ -20,7 +20,7 @@ If you are familiar with code, [create a Worker](/workers/get-started/guide/) th
 
 For a maintenance page without code, Business and Enterprise uses can create a [Cloudflare Waiting Room](/waiting-room/how-to/create-waiting-room/).
 
-Certain certain customization and queue options depend on your [plan](/waiting-room/plans/).
+Certain customization and queue options depend on your [plan](/waiting-room/plans/).
 
 ![Waiting room page returned instead of your website](/images/fundamentals/waiting-room-page.png)
 
