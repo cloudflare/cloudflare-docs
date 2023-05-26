@@ -7,11 +7,11 @@ pcx_content_type: configuration
 
 {{<render file="_keys.md">}}<br>
 
-This example shows how to configure R2 with Terraform using the [Cloudflare provider](https://github.com/cloudflare/terraform-provider-cloudflare).The For more advanced use cases, see.
+This example shows how to configure R2 with Terraform using the [Cloudflare provider](https://github.com/cloudflare/terraform-provider-cloudflare).
 
 {{<Aside type="note" header="Note for using AWS provider">}}
 
-When using the Cloudflare Terraform provider, you are only able to manage buckets. For configuring items such as CORS and lifecycle, you will need to use the [AWS Provider](/r2/examples/terraform-aws/).
+When using the Cloudflare Terraform provider, you can only manage buckets. To configure items such as CORS and object lifecycles, you will need to use the [AWS Provider](/r2/examples/terraform-aws/).
 
 {{</Aside>}}
 
