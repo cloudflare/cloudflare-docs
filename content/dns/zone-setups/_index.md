@@ -26,32 +26,24 @@ If you are unsure of which setup to use, consider the questions below for an ove
 <details>
 <summary>Are you on a Free or Pro plan?</summary>
 <div> 
-Full setup is the only one available for Free or Pro plans.
+Full setup is the recommended and most common option. If you are on a Free or Pro plan use this setup.
 </div>
 </details>
 
 <details>
 <summary>Will you be using Cloudflare with other DNS providers?</summary>
-<div> 
-<details>
-<summary>Business plan</summary>
-<div> 
-Partial (CNAME) setup
-</div>
-</details>
-<details>
-<summary>Enterprise plan</summary>
-<div> 
-Zone transfers
-</div>
-</details>
+<div>
+If you are on a Business or Enterprise plan, use Partial (CNAME) setups to keep your primary DNS provider and only proxy individual subdomains through Cloudflare.
+<br />
+<br />
+If you are on an Enterprise plan, you also have the option to use zone transfers to setup Cloudflare as either a primary or a secondary DNS provider and transfer zone files between Cloudflare and your other DNS providers.
 </div>
 </details>
 
 <details>
 <summary>Do you need to manage subdomains separately?</summary>
 <div> 
-Subdomain setup (Ent only)
+If you are on an Enterprise plan, you can use a subdomain setup to manage the Cloudflare settings for one or more subdomains separately from the settings associated with your domain apex.
 </div>
 </details>
 
