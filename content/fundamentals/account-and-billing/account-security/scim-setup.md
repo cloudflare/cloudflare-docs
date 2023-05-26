@@ -44,17 +44,31 @@ After creating the token, copy the token value.
 ## 2. Assign Cloudflare users to an Okta group
 
 1. In the Okta dashboard, go to **Directory** > **Groups**.
-2. Select **Add a group**, enter a name, then select **Save**.
-3. Select the group, then select **Assign people**.
-4. Add your users, then select **Done**.
+2. Select **Add a group** and enter a name. Select **Save**.
+3. Select the group > **Assign people**.
+4. Add your users. Select **Done**.
 
 ## 3. Set up the Okta application
 
 1. In the Okta dashboard, go to **Applications** > **Applications**.
-2. Select **Browse App Catalog**. Locate and select **SCIM 2.0 Test App (OAuth Bearer Token)**, then select **Add Integration**.
+2. Select **Browse App Catalog**. Locate and select **SCIM 2.0 Test App (OAuth Bearer Token)**. Select **Add Integration**.
 3. Name your application. Enable **Do not display application icon to users** and **Do not display application icon in the Okta Mobile App**, and disable **Automatically log in when user lands on login page**.
 4. Select **Next**, then select **Done**.
 5. Go to **Provisioning** > **Configure API Integration**.
-6. Enable **Enable API Integration**. In SCIM 2.0 Base Url, enter `https://api.cloudflare.com/client/v4/accounts/<youraccounttag>/scim/v2`. In OAuth Bearer Token, enter your token value. Disable **Import Groups**, then select **Save**.
-7. In **Provisioning to App**, select **Edit**. Enable **Create Users** and **Deactivate Users**, then select **Save**.
-8. Go to **Assignments** > **Assign** > **Assign to Groups**. Assign your Cloudflare group, then select **Done**.
+6. Enable **Enable API Integration**. In SCIM 2.0 Base Url, enter `https://api.cloudflare.com/client/v4/accounts/<your_account_tag>/scim/v2`. In OAuth Bearer Token, enter your token value. Disable **Import Groups**. Select **Save**.
+7. In **Provisioning to App**, select **Edit**. Enable **Create Users** and **Deactivate Users**. Select **Save**.
+8. Go to **Assignments** > **Assign** > **Assign to Groups**. Assign your Cloudflare group. Select **Done**.
+
+## 4. Configure permissions
+
+1. Go to **Provisioning**. Select **Edit**.
+2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
+3. Select **Add group** and add groups with the following names:
+
+- `Administrator Read Only`
+- `Administrator`
+- `Billing`
+- `Super Administrator - All Privileges`
+
+4. Go to **Push Groups** > gear icon. Disable **Rename groups**. Select **Save**.
+5. Within the **Push Groups** tab, select **Push Groups**. Add the previous 4 groups and select **Save**.
