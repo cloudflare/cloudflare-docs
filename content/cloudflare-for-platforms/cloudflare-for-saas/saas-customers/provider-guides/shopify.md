@@ -12,8 +12,7 @@ meta:
 
 ## Benefits
 
-{{<render file="_provider-guide-benefits" withParameters="WP Shopify">}}
-<br/>
+O2O routing also enables you to take advantage of Cloudflare zones specifically customized for Shopify traffic.
 
 ## How it works
 

@@ -6,7 +6,7 @@ meta:
     description: Learn how to configure your Enterprise zone with WP Engine.
 ---
 
-# WPEngine
+# WP Engine
 
 {{<render file="_provider-guide-intro" withParameters="WP Engine">}}
 
