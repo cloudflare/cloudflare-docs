@@ -26,7 +26,7 @@ To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dn
 
 | Type | Name | Target | Proxy status |
 | --- | --- | --- | --- |
-| `CNAME` | `<YOUR_SHOP_DOMAIN>` | `shops.myshopify.com`
+| `CNAME` | `<YOUR_SHOP_DOMAIN>` | `shops.myshopify.com` | Proxied |
 
 {{<Aside type="note">}}
 
