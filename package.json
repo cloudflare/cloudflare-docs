@@ -9,7 +9,7 @@
     "dev:hugo": "hugo -D -w",
     "dev:wrangler": "wrangler pages dev -- vite",
     "dev:vite": "vite",
-    "dev": "concurrently --kill-others \"npm run dev:hugo\" \"npm run dev:vite\"",
+    "dev": "concurrently --kill-others \"npm run dev:hugo\" \"npm run dev:vite\" \"npm run dev:wrangler\"",
     "lint": "tsm bin/format.ts --check",
     "crawl": "tsm bin/crawl.ts",
     "build:hugo": "hugo",
