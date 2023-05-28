@@ -296,6 +296,17 @@ $ npx wrangler dev --remote
 ⬣ Listening at http://0.0.0.0:8787
 ```
 
+{{<Aside type="note">}}
+
+If you're still using Wrangler v2 then run:
+
+```sh
+$ npx wrangler dev
+⬣ Listening at http://0.0.0.0:8787
+```
+
+{{</Aside>}}
+
 To classify some test images, run the following commands in your `image-classifier-worker` Worker:
 
 ```sh
