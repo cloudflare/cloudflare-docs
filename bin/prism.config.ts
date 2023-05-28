@@ -32,7 +32,7 @@ import 'prismjs/components/prism-kotlin.min.js';
 import 'prismjs/components/prism-swift.min.js';
 
 // Custom `shell` grammar
-Prism.languages.sh = {
+const shell = {
   comment: {
     pattern: /(^|[^'{\\$])#.*/,
     alias: 'unselectable',
@@ -52,8 +52,11 @@ Prism.languages.sh = {
         alias: 'unselectable',
       },
     },
-  },
+  }
 };
+
+Prism.languages.sh = shell;
+Prism.languages.bash = shell;
 
 // Prism language aliases
 export const langs: Record<string, string> = {

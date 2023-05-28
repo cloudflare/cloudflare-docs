@@ -2337,42 +2337,53 @@ html {
     color: var(--code-gold)
 }
 
-[language=sh] .CodeBlock--token-directory {
-    color: var(--code-orange)
+[language="sh"] .CodeBlock--token-directory,
+[language="bash"] .CodeBlock--token-directory {
+  color: var(--code-orange);
 }
 
-[language=sh] .CodeBlock--token-prompt {
-    color: var(--code-orange);
-    opacity: .7
+[language="sh"] .CodeBlock--token-prompt,
+[language="bash"] .CodeBlock--token-prompt {
+  color: var(--code-orange);
+  opacity: 0.7;
 }
 
-[language=sh] .CodeBlock--token-value {
-    color: var(--code-cyan)
+[language="sh"] .CodeBlock--token-value,
+[language="bash"] .CodeBlock--token-value {
+  color: var(--code-cyan);
 }
 
-[language=sh] .CodeBlock--token-success {
-    color: var(--code-green)
+[language="sh"] .CodeBlock--token-success,
+[language="bash"] .CodeBlock--token-success {
+  color: var(--code-green);
 }
 
-[language=sh] .CodeBlock--token-plain {
-    color: var(--code-gray)
+[language="sh"] .CodeBlock--token-plain,
+[language="bash"] .CodeBlock--token-plain {
+  color: var(--code-gray);
 }
 
-[language=sh] .CodeBlock--token-plain,
-[language=sh] .CodeBlock--token-unselectable {
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
-    text-decoration: none;
-    transition: opacity .25s ease
+[language="sh"] .CodeBlock--token-plain,
+[language="bash"] .CodeBlock--token-plain,
+[language="sh"] .CodeBlock--token-unselectable,
+[language="bash"] .CodeBlock--token-unselectable {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
 }
 
-[language=sh]:hover .CodeBlock--token-plain,
-[language=sh]:hover .CodeBlock--token-unselectable,
-[language=sh][has-selection-contained-within] .CodeBlock--token-plain,
-[language=sh][has-selection-contained-within] .CodeBlock--token-unselectable {
-    opacity: .25
+[language="sh"]:hover .CodeBlock--token-plain,
+[language="bash"]:hover .CodeBlock--token-plain,
+[language="sh"]:hover .CodeBlock--token-unselectable,
+[language="bash"]:hover .CodeBlock--token-unselectable,
+[language="sh"][has-selection-contained-within] .CodeBlock--token-plain,
+[language="bash"][has-selection-contained-within] .CodeBlock--token-plain,
+[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable,
+[language="bash"][has-selection-contained-within] .CodeBlock--token-unselectable {
+  opacity: 0.25;
 }
 
 .CodeBlock--row>.CodeBlock--row-indicator:empty+.CodeBlock--row-content>.CodeBlock--token-plain:empty+.CodeBlock--token-doc-comment.CodeBlock--token-comment:empty:after,

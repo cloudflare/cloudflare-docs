@@ -1159,29 +1159,36 @@ html {
   color: var(--code-gold);
 }
 
-[language="sh"] .CodeBlock--token-directory {
+[language="sh"] .CodeBlock--token-directory,
+[language="bash"] .CodeBlock--token-directory {
   color: var(--code-orange);
 }
 
-[language="sh"] .CodeBlock--token-prompt {
+[language="sh"] .CodeBlock--token-prompt,
+[language="bash"] .CodeBlock--token-prompt {
   color: var(--code-orange);
   opacity: 0.7;
 }
 
-[language="sh"] .CodeBlock--token-value {
+[language="sh"] .CodeBlock--token-value,
+[language="bash"] .CodeBlock--token-value {
   color: var(--code-cyan);
 }
 
-[language="sh"] .CodeBlock--token-success {
+[language="sh"] .CodeBlock--token-success,
+[language="bash"] .CodeBlock--token-success {
   color: var(--code-green);
 }
 
-[language="sh"] .CodeBlock--token-plain {
+[language="sh"] .CodeBlock--token-plain,
+[language="bash"] .CodeBlock--token-plain {
   color: var(--code-gray);
 }
 
 [language="sh"] .CodeBlock--token-plain,
-[language="sh"] .CodeBlock--token-unselectable {
+[language="bash"] .CodeBlock--token-plain,
+[language="sh"] .CodeBlock--token-unselectable,
+[language="bash"] .CodeBlock--token-unselectable {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -1191,9 +1198,13 @@ html {
 }
 
 [language="sh"]:hover .CodeBlock--token-plain,
+[language="bash"]:hover .CodeBlock--token-plain,
 [language="sh"]:hover .CodeBlock--token-unselectable,
+[language="bash"]:hover .CodeBlock--token-unselectable,
 [language="sh"][has-selection-contained-within] .CodeBlock--token-plain,
-[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable {
+[language="bash"][has-selection-contained-within] .CodeBlock--token-plain,
+[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable,
+[language="bash"][has-selection-contained-within] .CodeBlock--token-unselectable {
   opacity: 0.25;
 }
 
