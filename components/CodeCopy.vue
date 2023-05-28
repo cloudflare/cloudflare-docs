@@ -7,17 +7,13 @@ function copyCode(e: MouseEvent) {
     e.target as HTMLElement
   )?.parentElement?.parentElement?.querySelector("pre code");
   if (highlightedCode) {
-    // the markdown's code blocks adds a class "CodeBlock--token-unselectable", if it is not supposed to be copied.
-    // clone the code node, we do not want to modify the DOM.
-    const code = highlightedCode.cloneNode(true) as HTMLElement;
-
     // We have 2 types of code blocks, ones with commands and one with general outputs
     // For the ones with commands, we only want the commands copied, not their output
     // So let's first try selecting that
-    let lines = code.querySelectorAll("span:where(.CodeBlock--token-command):not(.CodeBlock--token-unselectable)");
+    let lines = highlightedCode.querySelectorAll("span:where(.CodeBlock--token-command):not(.CodeBlock--token-unselectable)");
     // We found no commands so let's instead copy all output
     if (lines.length === 0) {
-      lines = code.querySelectorAll(".CodeBlock--row");
+      lines = highlightedCode.querySelectorAll(".CodeBlock--row");
     }
 
     let textLines: string[] = [];
