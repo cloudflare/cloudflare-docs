@@ -35,7 +35,7 @@ $ npx wrangler constellation project list
 
 Create a new [Worker](/workers/) named `image-classifier-worker`. You will install [Wrangler, the developer platform CLI, for Constellation](/constellation/platform/wrangler/#installation).
 
-```bash
+```sh
 $ mkdir image-classifier-worker
 $ cd image-classifier-worker
 $ npm init -f
