@@ -110,7 +110,7 @@ The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.
 ```bash
 $ mkdir src
 $ wget -O src/imagenet.ts \
-  https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
+$  https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
 ```
 
 ## Install modules

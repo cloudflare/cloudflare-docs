@@ -60,10 +60,10 @@ You can program your app to generate token in two ways:
 You can call the `/token` endpoint for any video that is marked private to get a signed url token which expires in one hour:
 
 ```bash
-curl \
--X POST \
--H "Authorization: Bearer <API_TOKEN>" \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token
+$ curl \
+$   -X POST \
+$   -H "Authorization: Bearer <API_TOKEN>" \
+$   https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token
 ```
 
 You will see a response similar to this if the request succeeds:
@@ -104,7 +104,7 @@ async function handleRequest(request) {
 
     var signed_url_restrictions = {
         //limit viewing for the next 12 hours
-        exp: Math.floor(Date.now() / 1000) + (12*60*60) 
+        exp: Math.floor(Date.now() / 1000) + (12*60*60)
     };
 
     const init = {
