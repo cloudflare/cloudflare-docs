@@ -204,7 +204,7 @@
 /cache/about/ /cache/concepts/ 301
 /cache/how-to/enable-http2-to-origin/ /cache/concepts/enable-http2-to-origin/ 301
 /cache/how-to/interact-with-workers/ /cache/concepts/interact-with-workers/ 301
-/cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 
+/cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/
 /cache/best-practices/customize-cache/ /cache/concepts/customize-cache/
 /cache/best-practices/ /cache/concepts/
 /support/caching/ /cache/troubleshooting/ 301
@@ -274,7 +274,8 @@
 /firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
 /firewall/api/cf-lists/endpoints/ /fundamentals/global-configurations/lists/lists-api/endpoints/ 301
 /firewall/api/cf-lists/json-object/ /fundamentals/global-configurations/lists/lists-api/json-object/ 301
-/firewall/cf-dashboard/expression-preview-editor/ /firewall/cf-dashboard/edit-expressions/ 301
+/firewall/cf-dashboard/edit-expressions/ /ruleset-engine/rules-language/expressions/edit-expressions/ 301
+/firewall/cf-dashboard/expression-preview-editor/ /ruleset-engine/rules-language/expressions/edit-expressions/ 301
 /firewall/cf-dashboard/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
 /firewall/cf-dashboard/rules-lists/manage-items/ /fundamentals/global-configurations/lists/create-dashboard/#add-items-to-a-list 301
 /firewall/cf-dashboard/rules-lists/manage-lists/ /fundamentals/global-configurations/lists/create-dashboard/ 301
