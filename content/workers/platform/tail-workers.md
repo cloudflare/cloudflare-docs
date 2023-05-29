@@ -25,7 +25,7 @@ To configure a Tail Worker:
 filename: index.js
 ---
 export default {
-  async tail(events) => {
+  async tail(events) {
     fetch("https://example.com/endpoint", {
       method: "POST",
       body: JSON.stringify(events),
