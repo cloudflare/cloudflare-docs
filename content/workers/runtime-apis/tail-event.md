@@ -18,7 +18,7 @@ Written using the Module Worker syntax, handle `TailEvent` in Workers functions 
 filename: index.js
 ---
 export default {
-  async tail(events, env, ctx) => {
+  async tail(events, env, ctx) {
     fetch("<YOUR_ENDPOINT>", {
       method: "POST",
       body: JSON.stringify(events),
