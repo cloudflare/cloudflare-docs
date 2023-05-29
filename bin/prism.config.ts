@@ -45,7 +45,7 @@ const shell = {
   },
 
   command: {
-    pattern: /[$](?:[^\r\n])+/,
+    pattern: /\$([^\n]*\\\n)*[^\n]*/g,
     inside: {
       prompt: {
         pattern: /^[$] /,

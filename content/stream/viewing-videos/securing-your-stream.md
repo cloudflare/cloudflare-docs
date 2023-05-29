@@ -61,9 +61,9 @@ You can call the `/token` endpoint for any video that is marked private to get a
 
 ```bash
 $ curl \
-$   -X POST \
-$   -H "Authorization: Bearer <API_TOKEN>" \
-$   https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token
+  -X POST \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token
 ```
 
 You will see a response similar to this if the request succeeds:
