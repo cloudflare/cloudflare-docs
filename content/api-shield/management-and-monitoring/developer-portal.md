@@ -17,9 +17,9 @@ Once endpoints are saved into Endpoint Management, API Shield doubles as an API 
 4. Upload an OpenAPI v3.0 schema file or choose to select an existing schema from API Shield. 
 
     {{<Aside type="note">}} 
-    If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters. 
+If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters. 
 
-    Only API schemas uploaded to Schema Validation 2.0 are available when selecting existing schemas
+Only API schemas uploaded to Schema Validation 2.0 are available when selecting existing schemas
     {{</Aside>}}
 
 5. Select **Download project files** to save a local copy of the files that will be uploaded to Cloudflare Pages. Downloading the project files can be helpful if you wish to modify the project in any way and then upload the new version manually to Pages.
