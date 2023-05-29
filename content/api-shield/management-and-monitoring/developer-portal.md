@@ -16,30 +16,26 @@ Once endpoints are saved into Endpoint Management, API Shield doubles as an API 
 3. Under **Create a developer portal**, select **Create site**.
 4. Upload an OpenAPI v3.0 schema file or choose to select an existing schema from API Shield. 
 
-{{<Aside type="note">}} 
-If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters. 
+    {{<Aside type="note">}} 
+    If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters. 
 
-Only API schemas uploaded to Schema Validation 2 are available when selecting existing schemas
-{{</Aside>}}
+    Only API schemas uploaded to Schema Validation 2.0 are available when selecting existing schemas
+    {{</Aside>}}
 
 5. Select **Download project files** to save a local copy of the files that will be uploaded to Cloudflare Pages. Downloading the project files can be helpful if you wish to modify the project in any way and then upload the new version manually to Pages.
 6. Select **Create pages project** to begin project creation. A new Pages project will be automatically created and your API schema will be automatically uploaded to the project along with other supporting static content.
 7. Select **Deploy site**. 
 
-{{<Aside type="note">}} 
-After deploying, you may need to wait a few minutes before the site is available.
-{{</Aside>}}
-
 ### Custom domains
 
-In order to create a vanity domain instead of using the pages.dev domain, see the [Pages custom domain documentation](/pages/platform/custom-domains/).
+To create a vanity domain instead of using the pages.dev domain, refer to the [Pages custom domain documentation](/pages/platform/custom-domains/).
 
 ## Availability
 
-Building developer portals is available to all API Shield subscribers. This feature uses Cloudflare Pages to host the resulting portal. See [Pages](/pages/) for any limitations for your current subscription plan.
+Building developer portals is available to all API Shield subscribers. This feature uses Cloudflare Pages to host the resulting portal. Refer to [Pages](/pages/) for any limitations of your current subscription plan.
 
 ## Limitations
 
-This feature currently uses the open source [Redoc](https://github.com/Redocly/redoc) project from [Redocly](https://redocly.com/). For custom theme and branding options, visit the [Redoc GitHub repository](https://github.com/Redocly/redoc) to learn more about theming. 
+This feature currently uses the open source [Redoc](https://github.com/Redocly/redoc) project from [Redocly](https://redocly.com/). For custom theme and branding options, visit the [Redoc GitHub repository](https://github.com/Redocly/redoc). 
 
-In order to modify the resulting page,  download the project files before creating the Pages project. You can create a new Pages project with the modified files you have made to meet your branding guidelines.
+To modify the resulting page, download the project files before creating the Pages project. You can create a new Pages project with the modified files you have made to meet your branding guidelines.
