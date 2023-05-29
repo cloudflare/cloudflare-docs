@@ -39,4 +39,4 @@ Only 2 types of cache purge requests can be found in the logs:
 ## At which stage are HTTP requests logged?
 
 Requests are logged only after they successfully reach our proxy.
-It means that requests failing during the TCP or TLS handshake between the client and the Cloudflare proxy won't be available in the logs.
+It means that requests failing during the TCP or TLS handshake between the client and the Cloudflare proxy will not be available in the logs.
