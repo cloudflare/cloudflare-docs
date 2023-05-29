@@ -6,11 +6,15 @@ weight: 1
 
 # Create, edit, and delete rules
 
-A firewall rule has two main attributes: an **expression** and an **action**.
+A firewall rule has two main attributes: an [expression](/ruleset-engine/rules-language/expressions/) and an [action](/firewall/cf-firewall-rules/actions/).
 
-When an incoming HTTP request matches a firewall rule expression, Cloudflare performs the specified action. For more information, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Actions](/firewall/cf-firewall-rules/actions/).
+When an incoming HTTP request matches a firewall rule expression, Cloudflare performs the specified action.
 
-Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters). This limit applies whether you use the visual Expression Builder or edit your expression manually in the Expression Editor.
+{{<Aside type="note">}}
+
+{{<render file="_max-expression-length.md" productFolder="ruleset-engine">}}
+
+{{</Aside>}}
 
 ## Create a firewall rule
 
