@@ -31,7 +31,7 @@ In this case, Cloudflare considers the client details, including its IP address,
 
 When used as literals in an expression, the backslash `\` and double quote `"` characters require proper escaping.
 
-An expression built using the visual [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) does not require you to manually escape those special characters. Conveniently, the [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+An expression built using the visual [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) does not require you to manually escape those special characters. Conveniently, the [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the Expression Editor:
 
