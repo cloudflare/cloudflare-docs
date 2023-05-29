@@ -50,6 +50,13 @@ Compound expressions have the following general syntax:
 
 Compound expressions allow you to generate sophisticated, highly targeted rules.
 
+## Maximum rule expression length
+
+{{<render file="_max-expression-length.md">}}
+<br/>
+
+This limit applies whether you use the visual [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) to define your expression, or write the expression manually in the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor).
+
 ## Additional features
 
 You can also use the following Rules language features in your expressions:
