@@ -25,7 +25,7 @@ There are two common scenarios where Cloudflare is falsely perceived to attack y
 
 Ideally, because Cloudflare is a reverse proxy, your hosting provider observes attack traffic connecting from [Cloudflare IP addresses](https://www.cloudflare.com/ips/). In contrast, if you notice connections from IP addresses that do not belong to Cloudflare, the attack is direct to your origin web server. Cloudflare cannot stop attacks directly to your origin IP address because the traffic bypasses Cloudflare’s network.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If an attacker is directly targeting your origin web server, refer to [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/).
 {{</Aside>}}
 
