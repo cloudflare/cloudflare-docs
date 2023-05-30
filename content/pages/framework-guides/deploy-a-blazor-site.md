@@ -46,12 +46,19 @@ $ dotnet new gitignore
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+{{<Aside type="note">}}
+
+Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`, or commit the file as an executable by running `git add --chmod=+x build.sh`.
+
+{{</Aside>}}
+
+## Deploy with Cloudflare Pages
 
 To deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+2. In Account Home, select **Workers & Pages**.
+3. Select **Create application** > **Pages** > **Connect to Git**.
 
 Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
@@ -64,12 +71,6 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Build directory      | `output/wwwroot` |
 
 </div>
-
-{{<Aside type="note">}}
-
-Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`, or commit the file as an executable by running `git add --chmod=+x build.sh`.
-
-{{</Aside>}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
 
@@ -86,7 +87,7 @@ Every time you commit new code to your Blazor site, Cloudflare Pages will automa
 
 ### A file is over the 25 MiB limit
 
-If you receive the error message `Error: Asset "/opt/buildhome/repo/output/wwwroot/_framework/dotnet.wasm" is over the 25MiB limit`, you have two options:
+If you receive the error message `Error: Asset "/opt/buildhome/repo/output/wwwroot/_framework/dotnet.wasm" is over the 25MiB limit`, resolve this by doing one of the following actions:
 
 1.  Reduce the size of your assets with the following [guide](https://docs.microsoft.com/en-us/aspnet/core/blazor/performance?view=aspnetcore-6.0#minimize-app-download-size).
 
