@@ -15,25 +15,22 @@ Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Worker
 
 {{<plan type="enterprise">}}
 
-Workers for Platforms allows you to:
+Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your user's code, create custom logic, and use additional APIs such as script tags for bulk operations.
 
-* Run your own code as a wrapper around your users' code.
-* Logically group your code separately from your users’ code.
-* Create custom routing logic.
-* Use additional APIs like script tags for bulk operations.
-* Surpass Workers' 500 script/account limit.
-
-{{<button type="primary" href="/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/">}}Get started{{</button>}}
+Workers for Platforms lets you surpass Workers' 500 script/account [limit](/cloudflare-for-platforms/workers-for-platforms/platform/limits/).
 
 ---
 
 ## Features
 
-{{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
-
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects.
-
+{{<feature header="Get started" href="/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/" cta="Get started">}}
+Learn how to set up Workers for Platforms.
 {{</feature>}}
+
+{{<feature header="Workers for Platforms Architecture" href="/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/" cta="Learn more">}}
+Learn about Workers for Platforms architecture.
+{{</feature>}}
+
 
 ---
 
