@@ -204,9 +204,9 @@
 /cache/about/ /cache/concepts/ 301
 /cache/how-to/enable-http2-to-origin/ /cache/concepts/enable-http2-to-origin/ 301
 /cache/how-to/interact-with-workers/ /cache/concepts/interact-with-workers/ 301
-/cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/
-/cache/best-practices/customize-cache/ /cache/concepts/customize-cache/
-/cache/best-practices/ /cache/concepts/
+/cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 301
+/cache/best-practices/customize-cache/ /cache/concepts/customize-cache/ 301
+/cache/best-practices/ /cache/concepts/ 301
 /support/caching/ /cache/troubleshooting/ 301
 /support/caching/configuration/ /cache/how-to/ 301
 /support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
@@ -240,6 +240,8 @@
 /ddos-protection/managed-rulesets/tcp-protection/configure-dashboard/ /ddos-protection/tcp-protection/setup/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
+/support/about-cloudflare/attack-preparation-and-response/responding-to-ddos-attacks/ /ddos-protection/best-practices/respond-to-ddos-attacks/ 301
+/support/about-cloudflare/attack-preparation-and-response/understanding-cloudflare-ddos-protection/ /ddos-protection/about/ 301
 
 # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
