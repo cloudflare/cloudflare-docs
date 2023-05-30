@@ -15,6 +15,6 @@ Match count refers to the number of times that any enabled entry in the profile 
 
 ## Context analysis
 
-Context analysis restricts DLP detections based on proximity keywords. Additional proximity keywords must be detected within a distance of 1000 bytes (~1000 characters) from the original detection to trigger an action.
+Context analysis restricts DLP detections based on proximity keywords. Additional proximity keywords must be detected within a distance of 1000 bytes (~1000 characters) from the original detection to trigger an action. For example, the string `123-45-6789` will only count as a detection if in proximity to keywords such as `ssn`.
 
 Additionally, you can control context analysis for scans within files. When files are excluded from the context filter, DLP only evaluates uploaded and downloaded files based on regular expression and validation checks. Additional keywords within the file are not required.
