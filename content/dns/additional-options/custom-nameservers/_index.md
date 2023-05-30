@@ -6,7 +6,7 @@ weight: 2
 
 # Custom nameservers
 
-With custom (or vanity) nameservers, a domain can use Cloudflare DNS without using the hostnames of Cloudflare-assigned nameservers. For instance, you can configure `ns1.example.com` and `ns2.example.com` as nameservers for `example.com`.
+With custom (or vanity) nameservers, a domain can use Cloudflare DNS without using Cloudflare branded nameservers. For instance, you can configure `ns1.example.com` and `ns2.example.com` as nameservers for `example.com`.
 
 ## Configuration scope
 

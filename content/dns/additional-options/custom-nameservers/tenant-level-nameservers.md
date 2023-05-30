@@ -15,9 +15,7 @@ For this configuration to be possible, a few conditions apply:
 2. Tenant owners can create up to five different tenant nameserver sets. Each nameserver set must have between two and five different nameserver names (ns_name) and each name cannot belong to more than one set. For example, if ns1.example.com is part of ns_set 1 it cannot be part of ns_set 2 or vice versa.
 3. Subdomain or Reverse zones can use tenant-level custom nameservers as long as they use a different nameserver set (ns_set) than their parent or child.
 
-{{<Aside>}}
-Tenant owners that want to [use their own IP prefix](/byoip/) for the tenant-level custom nameserver should contact their account team.
-{{</Aside>}}
+{{<render file="_acns-tcns-byoip.md" withParameters="Tenant;;tenant-" >}}
 
 ## Enable tenant nameservers on a zone
 If you are an account owner and your account is part of a tenant that has custom nameservers, you can enable the tenant-level custom nameservers on your zones by using a PUT command and specifying `ns_type` and `ns_set`.
@@ -28,10 +26,10 @@ curl -- request PUT "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom
   -- header "X-Auth-Key: <KEY>" \
   -- header "Content-Type: application/json" \
   -- data '{
-    "enabled":true,
-    "ns_type":"tenant",
-    "ns_set": <SET>
-  }'
+     "enabled":true,
+     "ns_type":"tenant",
+     "ns_set": <SET>
+     }'
 ```
 
 {{<Aside>}}
@@ -49,12 +47,8 @@ curl -- request PUT “https://api.cloudflare.com/client/v4/accounts/{account_id
   -- header "X-Auth-Key: <KEY>" \
   -- header "Content-Type: application/json" \
   -- data '{
-    "zone_onboarding": {
-        “Nameservers”: “tenant_custom_ns”
-    }
-}'
+     "settings": {
+      "default_nameservers":"custom.tenant"
+      }
+     }'
 ```
-
-{{<Aside>}}
-Note that you cannot use this setting and have [`use_account_custom_ns_by_default` set to `true`](/dns/additional-options/custom-nameservers/account-level-nameservers/#add-account-nameservers) at the same time. Only one of these options can be set per account.
-{{</Aside>}}
