@@ -102,6 +102,6 @@ To apply the rules in the ruleset to a subset of incoming requests, specify a cu
 
 5. Under **Set Scope**, select **Custom filter expression**.
 
-6. Under **When incoming requests match**, define the scope for all the rules in the ruleset using a custom filter expression. Use the Expression Builder or the Expression Editor for defining the expression. For more information, refer to [Edit rule expressions](/firewall/cf-dashboard/edit-expressions/).
+6. Under **When incoming requests match**, define the scope for all the rules in the ruleset using a custom filter expression. Use the Expression Builder or the Expression Editor for defining the expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
 7. Select **Next**, and then select **Save**.

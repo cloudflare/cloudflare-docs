@@ -4,6 +4,7 @@ pcx_content_type: reference
 weight: 2
 meta:
   title: Rule expressions
+layout: single
 ---
 
 # Rule expressions
@@ -55,7 +56,7 @@ Compound expressions allow you to generate sophisticated, highly targeted rules.
 {{<render file="_max-expression-length.md">}}
 <br/>
 
-This limit applies whether you use the visual [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) to define your expression, or write the expression manually in the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor).
+This limit applies whether you use the visual [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) to define your expression, or write the expression manually in the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
 
 ## Additional features
 
