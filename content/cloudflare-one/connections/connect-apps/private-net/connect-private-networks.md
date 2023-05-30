@@ -41,7 +41,7 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
     2. On Linux servers:
 
     * Ensure that the Group ID for the `cloudflared` process is included in `/proc/sys/net/ipv4/ping_group_range`.
-    * If you are running multiple network interfaces (for example, eth0 and eth1), configure `cloudflared` to use the external Internet-facing interface:
+    * If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
     ```sh
     $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
     ```
