@@ -16,7 +16,7 @@ For this configuration to be possible, a few conditions apply:
 2. You can create up to five different account nameserver sets. Each nameserver set must have between two and five different nameserver names (`ns_name`) and each name cannot belong to more than one set. For example, if `ns1.example.com` is part of `ns_set 1` it cannot be part of `ns_set 2` or vice versa.
 3. [Subdomain](/dns/zone-setups/subdomain-setup/) or [Reverse](/dns/additional-options/reverse-zones/) zones can use account-level custom nameservers as long as they use a different nameserver set (`ns_set`) than their parent or child.
 
-{{<render file="_acns-tcns-byoip.md" withParameters="Account;;account-level" >}}
+{{<render file="_acns-tcns-byoip.md" withParameters="Account;;account" >}}
 
 ## Cloudflare Registrar
 
