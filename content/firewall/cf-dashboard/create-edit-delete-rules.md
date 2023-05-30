@@ -28,7 +28,7 @@ When an incoming HTTP request matches a firewall rule expression, Cloudflare per
 
 5. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property (refer to [Fields reference](/ruleset-engine/rules-language/fields/) for details). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
-    Alternatively, use the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) to define the rule expression.
+    Alternatively, use the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) to define the rule expression.
 
     ![Example firewall rule expression with a selected field, operator, and value](/images/firewall/firewall-rules-expression-builder-value.png)
 
