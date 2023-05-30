@@ -15,7 +15,7 @@ For this configuration to be possible, a few conditions apply:
 2. Tenant owners can create up to five different tenant nameserver sets. Each nameserver set must have between two and five different nameserver names (ns_name) and each name cannot belong to more than one set. For example, if ns1.example.com is part of ns_set 1 it cannot be part of ns_set 2 or vice versa.
 3. Subdomain or Reverse zones can use tenant-level custom nameservers as long as they use a different nameserver set (ns_set) than their parent or child.
 
-{{<render file="_acns-tcns-byoip.md" withParameters="Tenant;;tenant-" >}}
+{{<render file="_acns-tcns-byoip.md" withParameters="Tenant;;tenant-level" >}}
 
 ## Enable tenant nameservers on a zone
 If you are an account owner and your account is part of a tenant that has custom nameservers, you can enable the tenant-level custom nameservers on your zones by using a PUT command and specifying `ns_type` and `ns_set`.
