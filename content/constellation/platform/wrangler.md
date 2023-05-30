@@ -100,7 +100,7 @@ Commands:
 To upload the [SqueezeNet1.1 CNN model](https://github.com/onnx/models/tree/main/vision/classification/squeezenet#model) to your project, run:
 
 ```bash
-$ npx wrangler constellation model upload "<YOUR_PROJECT_NAME" "squeezenet11" squeezenet1.1.onnx
+$ npx wrangler constellation model upload "<YOUR_PROJECT_NAME>" "squeezenet11" squeezenet1.1.onnx
 ```
 
 #### List models

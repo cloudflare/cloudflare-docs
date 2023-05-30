@@ -7,6 +7,24 @@ rss: file
 
 # Changelog
 
+## 2023-05-16
+
+### Multiple audio tracks now generally available
+
+Stream supports adding multiple audio tracks to an existing video.
+
+For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/) to get started.
+
+## 2023-04-26
+
+### Player Enhancement Properties
+
+Cloudflare Stream now supports player enhancement properties.
+
+With player enhancements, you can modify your video player to incorporate elements of your branding, such as your logo, and customize additional options to present to your viewers.
+
+For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/player-enhancements/) to get started.
+
 ## 2023-03-21
 
 ### Limits for downloadable MP4s for live recordings

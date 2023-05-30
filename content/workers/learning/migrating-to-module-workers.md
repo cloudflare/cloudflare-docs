@@ -88,7 +88,7 @@ export default worker;
 
 ## Module Workers in the dashboard
 
-The module Worker syntax has full support in the Cloudflare dashboard. Go to **Workers** > **Create a Service** > pick the HTTP Handler example > **Create Service**. After your service is created, select **Quick Edit** and it will launch the dashboard. Select **Send** at the top to test if your service is returning `“Hello world”`.
+The module Worker syntax has full support in the Cloudflare dashboard. Go to **Workers & Pages** > **Create application** > **Workers**. After your Worker is created, select **Quick Edit** and it will launch the dashboard. Select **Send** at the top to test if your service is returning `“Hello world”`.
 
 Then replace:
 

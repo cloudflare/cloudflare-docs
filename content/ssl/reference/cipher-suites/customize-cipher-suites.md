@@ -10,6 +10,8 @@ meta:
 
 With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific cipher suites.
 
+This process will not lead to any downtime in your SSL/TLS protection.
+
 Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)

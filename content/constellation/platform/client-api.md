@@ -11,7 +11,7 @@ The Constellation client API allows developers to interact with the inference en
 Before you use the Constellation client API, you need to:
 
 * Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
-* Enable Constellation by logging into the Cloudflare dashboard > **Workers** > **Constellation**.
+* Enable Constellation by logging into the Cloudflare dashboard > **Workers & Pages** > **Constellation**.
 * Create a Constellation project and [configure the binding](/constellation/platform/wrangler/#bindings).
 * Import the `@cloudflare/constellation` library in your code:
 

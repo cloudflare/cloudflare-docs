@@ -8,7 +8,7 @@ layout: single
 
 [WebAssembly](https://webassembly.org/) (abbreviated Wasm) allows you to compile languages like Rust, Go, or C to a binary format that can run in a wide variety of environments, including [web browsers](https://developer.mozilla.org/en-US/docs/WebAssembly#browser_compatibility), Cloudflare Workers, and other WebAssembly runtimes.
 
-On Workers, you can use WebAssembly to:
+On Workers and in [Cloudflare Pages Functions](https://blog.cloudflare.com/pages-functions-with-webassembly/), you can use WebAssembly to:
 - Execute code written in a language other than JavaScript, via `WebAssembly.instantiate()`.
 - Write an entire Cloudflare Worker in Rust, using bindings that make Workers' JavaScript APIs available directly from your Rust code.
 

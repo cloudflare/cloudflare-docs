@@ -102,10 +102,7 @@ Firewall-Updates werden innerhalb von 2 Minuten wirksam.
 {{<Aside type="note">}}
 Cloudflare bietet auch **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** an, um
-das Anfragevolumen an Ihren Server unter Kontrolle zu halten.  [**Rate
-Limiting** wird auf Nutzungsgrundlage
-berechnet](https://support.cloudflare.com/hc/en-us/articles/115000272247-Billing-for-Cloudflare-Rate-Limiting)
-und ist unabhängig vom Tariftyp.
+das Anfragevolumen an Ihren Server unter Kontrolle zu halten.
 {{</Aside>}}
 
 ___

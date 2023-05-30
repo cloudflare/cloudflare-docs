@@ -19,7 +19,7 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
 2. Go to Account Home > **WAF** > **Custom rulesets**.
 
-    ![Custom rulesets page in the Cloudflare dashboard](/waf/static/account/custom-rulesets-dashboard.png)
+    ![Custom rulesets page in the Cloudflare dashboard](/images/waf/account/custom-rulesets-dashboard.png)
 
 3. Next to **Your custom rulesets**, select **Create new ruleset**.
 

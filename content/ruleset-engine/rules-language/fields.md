@@ -31,7 +31,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 {{<Aside type="note" header="Availability notes">}}
 
-- Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+- Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
 - Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -262,17 +262,39 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-asnum">
-      <td valign="top"><code>ip.geoip.asnum</code><br />{{<type>}}Number{{</type>}}</td>
+   <tr id="field-ip-src-region_code">
+      <td valign="top"><code>ip.src.region_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
+         <p>Represents the region code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">TX</code>
          </p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-continent">
-      <td valign="top"><code>ip.geoip.continent</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-timezone-name">
+      <td valign="top"><code>ip.src.timezone.name</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         Represents the continent code associated with client IP address:
+         <p>Represents the name of the timezone associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">America/Chicago</code>
+         </p>
+         <p>This field is only available in rewrite expressions of <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-asnum">
+      <td valign="top"><code>ip.src.asnum</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
+         </p>
+         <p>This field has the same value as the <code>ip.geoip.asnum</code> field, which is still available.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-continent">
+      <td valign="top"><code>ip.src.continent</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the continent code associated with client IP address:
           <ul>
               <li>AF &#8211; Africa</li>
               <li>AN &#8211; Antarctica</li>
@@ -283,10 +305,12 @@ The Cloudflare Rules language supports these standard fields:
               <li>SA &#8211; South America</li>
               <li>T1 &#8211; Tor network</li>
           </ul>
+        </p>
+        <p>This field has the same value as the <code>ip.geoip.continent</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-country">
-      <td valign="top"><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-country">
+      <td valign="top"><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
          </p>
@@ -294,20 +318,22 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-subdivision-1-iso-code">
-      <td valign="top"><code>ip.geoip.subdivision_1_iso_code</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-subdivision-1-iso-code">
+      <td valign="top"><code>ip.src.subdivision_1_iso_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the ISO 3166-2 code for the first level region associated with the IP address. When the actual value is not available, this field contains an empty string.</p>
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-subdivision-2-iso-code">
-      <td valign="top"><code>ip.geoip.subdivision_2_iso_code</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-subdivision-2-iso-code">
+      <td valign="top"><code>ip.src.subdivision_2_iso_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the ISO 3166-2 code for the second level region associated with the IP address. When the actual value is not available, this field contains an empty string.
          </p>
@@ -316,13 +342,15 @@ The Cloudflare Rules language supports these standard fields:
          <code class="InlineCode">GB-SWK</code>
          </p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-is-in-european-union">
-      <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
+   <tr id="field-ip-src-is-in-european-union">
+      <td valign="top"><code>ip.src.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
+         <p>This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is still available.</p>
       </td>
   </tr>
   <tr id="field-raw-http-request-full-uri">
@@ -479,7 +507,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/workers-for-platforms/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
           </p>
         </td>
     </tr>
@@ -774,14 +802,16 @@ The Cloudflare Rules language supports these dynamic fields:
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
-    <tr id="field-ip-geoip-country">
-        <td><p><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</p>
+    <tr id="field-ip-src-country">
+        <td><p><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
-         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
-         Example value:
-         <code class="InlineCode">GB</code>
+         <p>Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+            Example value:<br />
+            <code>GB</code>
+         </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
         </td>
     </tr>
     <tr id="field-ip-hdr_len">

@@ -15,12 +15,14 @@ export const OWNERS: Record<string, string[]> = {
   "argo-smart-routing": ["dcpena"],
   "automatic-platform-optimization": ["dcpena"],
   bots: ["patriciasantaana"],
+  "browser-rendering": ["deadlypants1973"],
   byoip: [], // TODO
   cache: ["angelampcosta"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-platforms": ["kodster28"],
   "cloudflare-one": ["ranbel"],
+  constellation: ["deadlypants1973"],
   d1: ["deadlypants1973"],
   "data-localization": ["angelampcosta"],
   "ddos-protection": ["pedrosousa"],
@@ -44,7 +46,7 @@ export const OWNERS: Record<string, string[]> = {
   "page-shield": ["pedrosousa"],
   pages: ["deadlypants1973"],
   "privacy-gateway": ["kodster28"],
-  "pub-sub": ["dcpena"],
+  "pub-sub": ["dcpena", "Maddy-Cloudflare"],
   queues: ["Maddy-Cloudflare"],
   r2: ["dcpena"],
   radar: ["haleycode"],
@@ -56,7 +58,7 @@ export const OWNERS: Record<string, string[]> = {
   "ruleset-engine": ["pedrosousa"],
   "security-center": ["jason-cf"],
   spectrum: ["angelampcosta"],
-  ssl: ["kodster28"],
+  ssl: ["RebeccaTamachiro"],
   stream: ["dcpena"],
   support: ["jedecf"],
   tenant: ["kodster28"],
@@ -73,12 +75,14 @@ export const OWNERS: Record<string, string[]> = {
 };
 
 export const REVIEWERS: Record<string, string[]> = {
-  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit"], // todo: re-add "soheiokamoto", "tlozoot"
-  d1: ["nevikashah", "WalshyDev"],
-  "data-localization": [], // todo: re-add "soheiokamoto", "tlozoot"
+  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit", "soheiokamoto", "tlozoot"],
+  d1: ["elithrar", "rozenmd"],
+  "data-localization": ["soheiokamoto", "tlozoot"],
   radar: ["meddulla", "G4brym"],
-  logs: ["jherre", "bharatnc", "victor-perov"], // todo: re-add "soheiokamoto", "tlozoot"
+  logs: ["jherre", "bharatnc", "victor-perov", "soheiokamoto", "tlozoot"],
   pages: ["WalshyDev"],
-  turnstile: ["migueldemoura", "punkeel"], // todo: re-add "worenga"
+  "pub-sub": ["CharlieBurnett", "elithrar"],
+  queues: ["CharlieBurnett", "elithrar"],
+  turnstile: ["migueldemoura", "punkeel", "worenga"],
   "waiting-room": ["aolache"],
 };

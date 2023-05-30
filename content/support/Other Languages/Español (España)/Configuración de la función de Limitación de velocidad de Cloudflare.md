@@ -383,7 +383,6 @@ ___
 
 ## Recursos relacionados
 
--   [Facturación de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000272247)
 -   [¿Cómo se notifica la limitación de velocidad en los registros de Enterprise Log Share (ELS)?](/logs/reference/log-fields)
 -   [Resolución de problemas de la función de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configuración de la limitación de velocidad desde el panel de Cloudflare](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

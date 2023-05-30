@@ -27,7 +27,7 @@ To add a WAF exception at the account level (Enterprise plans only):
 
 1. In the exception creation page, enter a name for the exception.
 
-    ![The Add exception page in the Cloudflare dashboard](/waf/static/waf-exception-create.png)
+    ![The Add exception page in the Cloudflare dashboard](/images/waf/waf-exception-create.png)
 
 2. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. The filter expression uses the [Rules language](/ruleset-engine/rules-language/).
 

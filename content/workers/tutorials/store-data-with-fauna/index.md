@@ -872,7 +872,7 @@ export function getFaunaError(error) {
 
 ## Cleaning up
 
-To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers** > **Manage Workers** > **your Worker** > **Settings** > **Delete**:
+To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage Service** > **Delete**:
 
 ![Delete your Worker by following the steps above](./media/delete-worker.png)
 

@@ -15,7 +15,7 @@ There are multiple types of bindings available today.
 Bindings can be configured by one of two ways:
 
 * Updating your project's [`wrangler.toml` file](/workers/wrangler/configuration/#bindings).
-* Logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers** > your **Worker** > **Settings**> **Variables**.
+* Logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers & Pages** > your Worker > **Settings**> **Variables**.
 
 ### Service bindings
 
@@ -49,6 +49,13 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 [Queue](/queues) bindings allow for communication between a Worker and a Queue.
 
 * Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
+
+### D1 database bindings
+
+[D1](/d1) bindings allow you to query a D1 database from your Worker.
+
+* [Configure a D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
+* Learn more about how to query a D1 database using the [client API](/d1/platform/client-api/).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 

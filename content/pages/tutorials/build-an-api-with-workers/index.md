@@ -405,7 +405,13 @@ Pages will deploy a new version of your site each time you publish and will set 
 
 To push your project to GitHub, [create a new repository](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose **React** -- Pages will automatically apply the correct build settings for you.
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _React_.
+
+Pages will automatically apply the correct build settings for you.
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
