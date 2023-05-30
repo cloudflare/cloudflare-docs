@@ -60,7 +60,9 @@ header: Example POST request body sent in response to successful encoding
   }
 ```
 
-When a video is done processing, the `state` field returns a `ready` state. Videos may sometimes return the `state` field as `ready` and an additional `pctComplete` state that is not 100, which means higher quality renditions are still processing. When `pctComplete` reaches 100, all quality resolutions are available for the video.
+When a video is done processing, the `state` field returns a `ready` state, which means all quality levels are encoded. The `ready` state can be useful if picture quality is important to you, and you only want to enable video playback when the highest quality levels are available. The `readyToStream` value returns `true` when at least one quality level is encoded and ready to be streamed.
+
+Videos may sometimes return the `state` field as `ready` and an additional `pctComplete` state that is not 100, which means higher quality renditions are still processing. When `pctComplete` reaches 100, all quality resolutions are available for the video.
 
 ## Error codes
 
