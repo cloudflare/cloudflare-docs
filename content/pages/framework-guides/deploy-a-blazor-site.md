@@ -9,26 +9,30 @@ title: Deploy a Blazor Site
 
 ## Install .NET
 
-Blazor uses C#, so you will need to [install the .NET SDK](https://dotnet.microsoft.com/download) by grabbing the newest installation from the [.NET downloads page](https://dotnet.microsoft.com/download) and download and running the installer.
+Blazor uses C#. You will need to [install the .NET SDK](https://dotnet.microsoft.com/download) to continue creating a Blazor project. Download and run the installer.
 
 ## Creating a new Blazor WASM project
 
-There are two types of Blazor projects: Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. Create a new Blazor WASM application by running the following command in your terminal:
+There are two types of Blazor projects: Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. 
+
+Create a new Blazor WASM application by running the following command in a new directory:
 
 ```sh
-$ dotnet new blazorwasm my-blazor-project
+$ dotnet new blazorwasm -o my-blazor-project
 ```
 
-## Creating the build script
+## Create the build script
 
 To deploy, Cloudflare Pages will need a way to build the Blazor project. In the project's directory root, create a `build.sh` file. Populate the file with this:
 
-    #!/bin/sh
-    curl -sSL https://dot.net/v1/dotnet-install.sh > dotnet-install.sh
-    chmod +x dotnet-install.sh
-    ./dotnet-install.sh -c 6.0 -InstallDir ./dotnet6
-    ./dotnet6/dotnet --version
-    ./dotnet6/dotnet publish -c Release -o output
+```
+#!/bin/sh
+curl -sSL https://dot.net/v1/dotnet-install.sh > dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh -c 7.0 -InstallDir ./dotnet
+./dotnet/dotnet --version
+./dotnet/dotnet publish -c Release -o output
+```
 
 {{<render file="_tutorials-before-you-start.md">}}
 
