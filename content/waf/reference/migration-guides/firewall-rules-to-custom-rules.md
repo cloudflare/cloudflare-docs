@@ -50,7 +50,7 @@ Requests blocked by a firewall rule with a _Block_ action would get a Cloudflare
 
 Requests blocked by a WAF custom rule will get a different response: the WAF block response. To customize the default block response, you can either:
 * Define a custom WAF block response for your entire zone in [**Custom Pages**](https://dash.cloudflare.com/?to=/:account/:zone/custom-pages) > **WAF Block**. This custom page will always have an HTML content type.
-* [Define a custom response](#improved-response-for-block-action) for requests blocked by a specific WAF custom rule. This custom response supports other content types besides HTML.
+* [Define a custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked by a specific WAF custom rule. This custom response supports other content types besides HTML.
 
 If you have customized your 1xxx error page in Custom Pages for requests blocked by firewall rules, you will need to create a new response page for blocked requests using one of the above methods.
 
