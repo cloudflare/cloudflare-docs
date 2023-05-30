@@ -13,4 +13,6 @@ The first time you access Email Routing, you will see a wizard guiding you throu
 
 If you need to pause Email Routing or offboard to another service, refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/).
 
+You cannot send emails using Email Routing. Cloudflare Email Routing works for emails addressed to you at your domain. Cloudflare will route incoming emails to your preferred email inbox.
+
 {{<directory-listing>}}

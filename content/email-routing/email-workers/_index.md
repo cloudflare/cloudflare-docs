@@ -42,12 +42,6 @@ The route, or email address, bound to the Worker forwards emails to your Email W
 
 For example, say that you create an allowlist Email Worker and bind it to a `hello@my-company.com` route. This route will be the email address you share with the world, to make sure that only email addresses on your allowlist are forwarded to your destination address. All other emails will be dropped.
 
-{{<Aside type="note">}}
- 
-You cannot send emails from Email Routing.
-
-{{</Aside>}}
-
 ## Limits
 
 If you encounter any allocation errors while using Email Workers, refer to [Limits](/email-routing/limits/#email-workers-size-limits) for more information.
