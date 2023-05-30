@@ -1,16 +1,20 @@
 ---
 pcx_content_type: how-to
-title: Zone nameservers
+title: Zone level
 weight: 3
+meta:
+  title: Zone-level custom nameservers
+  description: Zone-level custom nameservers must be a subdomain of the zone where the custom nameservers are configured. These nameservers can only be aplied and used within the respective zone.
+
 ---
 
-# Zone-level nameservers
+# Zone-level custom nameservers
 
 With zone-level custom nameservers, each custom nameserver name must be a subdomain of the zone where the custom nameservers are configured.
 
 For example, for a zone `domain.test`, the custom nameservers can be `ns1.domain.test` and `ns2.domain.test` but they cannot use a different TLD (`ns1.domain.org`) nor a different domain (`ns1.example.com`).
 
-## Create zone-level nameservers
+## Create zone-level custom nameservers
 
 ### Using the dashboard
 

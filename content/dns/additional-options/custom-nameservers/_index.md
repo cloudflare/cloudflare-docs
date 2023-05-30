@@ -10,7 +10,7 @@ With custom (or vanity) nameservers, a domain can use Cloudflare DNS without usi
 
 ## Configuration scope
 
-{{<directory-listing showDescriptions=true char_limit=300 >}}
+{{<directory-listing showDescriptions=true char_limit=400 >}}
 
 ## Availability
 

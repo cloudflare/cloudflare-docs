@@ -1,10 +1,13 @@
 ---
 pcx_content_type: how-to
-title: Account nameservers
+title: Account level
 weight: 4
+meta:
+  title: Account-level custom nameservers
+  description: Account-level custom nameservers can be part of any domain, even if the domain does not exist as a zone within any account in Cloudflare. These nameservers are organized in different sets (`ns_set`) and can be applied and used by different zones in the account.
 ---
 
-# Account-level nameservers
+# Account-level custom nameservers
 
 Account-level custom nameservers can be part of any domain, even if the domain does not exist as a zone within any account in Cloudflare. These nameservers are organized in different sets (`ns_set`) and can be applied and used by different zones in the account.
 
