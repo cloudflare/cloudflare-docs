@@ -16,10 +16,6 @@ _build:
 5. In the **Use Provider** drop-down menu, select _Custom_.
 6. In the **Custom** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 7. Select **OK**.
-8. Enter **about:config** in the address bar.
-9. Select **Accept the risk!** if you see a prompt from Firefox.
-10. Set **network.trr.bootstrapAddress** to `162.159.36.5`.
-11. Set **network.trr.mode** to `3`.
 
 {{<Aside type="note">}}
 

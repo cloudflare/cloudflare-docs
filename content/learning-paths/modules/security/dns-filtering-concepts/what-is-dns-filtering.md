@@ -12,8 +12,8 @@ DNS filtering is a technique to block access to websites or online content. DNS 
 DNS filtering is commonly used to:
 
 - Protect company data from phishing, ransomware, and malware.
-- Block content that goes against corporate acceptable use policy, such as adult content, gambling, and piracy.
-- Restrict access to non-work content such as games, social media, and video streaming.
+- Block websites that go against corporate acceptable use policy, such as adult content, gambling, and piracy.
+- Restrict access to websites that may impact employee productivity, such as gaming, social media, and video streaming.
 
 ## How DNS filtering works
 
@@ -52,7 +52,7 @@ Secure Web Gateways (SWGs) offer a greater set of capabilities, including:
 - [Data loss prevention](https://www.cloudflare.com/learning/access-management/what-is-dlp/)
 - [Browser isolation](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/)
 
-However, this can make SWGs more complex and expensive to deploy. Therefore, many organizations will start with DNS filtering as an initial layer of defense against Internet threats.
+However, this can make SWGs more complex to deploy. Therefore, many organizations will start with DNS filtering as an initial layer of defense against Internet threats.
 
 ## Related resources
 

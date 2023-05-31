@@ -41,4 +41,4 @@ resource "cloudflare_teams_list" "example" {
 
 ## Descaler program
 
-If you are migrating from ZScaler, you can use our [Descaler toolkit](https://blog.cloudflare.com/descaler-program/) to export policies from ZScaler and import them into Cloudflare Zero Trust.
+If you are an Enterprise organization migrating from Zscaler, you can use our [Descaler toolkit](https://blog.cloudflare.com/descaler-program/) to export policies from Zscaler Internet Access (ZIA) and import them into Cloudflare Gateway.
