@@ -14,7 +14,7 @@ Review the difference between Wrangler versions, specifically deprecations and b
 
 The following commands are deprecated in Wrangler as of Wrangler v3. These commands will be fully removed in v4.
 
-### `generate`
+#### `generate`
 
 The `wrangler generate` command is deprecated, but still active in v3. `wrangler generate` will be fully removed in v4.
 
@@ -26,17 +26,31 @@ The `wrangler init` command is deprecated, but still active in v3. It will be fu
 
 Try using `npm create cloudflare` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
 
-### `publish`
+#### `publish`
 
 The `wrangler publish` command is deprecated, but still active in v3. `wrangler publish` will be fully removed in v4.
 
 Try using [`wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy Workers.
 
-### `pages publish`
+#### `pages publish`
 
 The `wrangler pages publish` command is deprecated, but still active in v3. `wrangler pages publish` will be fully removed in v4.
 
 Try using [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pages.
+
+### Deprecated options
+
+### `--experimental-local`
+
+`wrangler dev` in v3 is local by default so this option is no longer necessary.
+
+### `--local`
+
+`wrangler dev` in v3 is local by default so this option is no longer necessary.
+
+### `--persist`
+
+`wrangler dev` automatically persists data by default so this option is no longer necessary.
 
 ## Wrangler v2
 
