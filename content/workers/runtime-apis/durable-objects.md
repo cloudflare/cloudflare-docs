@@ -294,6 +294,72 @@ The system calls the `alarm()` handler method when a scheduled alarm time is rea
 
 The method takes no parameters, does not return a result, and can be `async`.
 
+To use alarms:
+
+1. Add the `durable_object_alarms` compatibility flag to your `wrangler.toml`
+
+```toml
+---
+filename: wrangler.toml
+---
+compatibility_flags = ["durable_object_alarms"]
+```
+
+2. Implement an `alarm()` handler in your Durable Object. The `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
+
+The example below will show you how to implement an `alarm()` handler that wakes the Durable Object up once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue for it to be worth processing them.
+
+```js
+export default {
+  async fetch(request, env) {
+    let id = env.BATCHER.idFromName("foo");
+    return await env.BATCHER.get(id).fetch(request);
+  },
+};
+
+const SECONDS = 1000;
+
+export class Batcher {
+  constructor(state, env) {
+    this.state = state;
+    this.storage = state.storage;
+    this.state.blockConcurrencyWhile(async () => {
+      let vals = await this.storage.list({ reverse: true, limit: 1 });
+      this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
+    });
+  }
+  async fetch(request) {
+    this.count++;
+
+    // If there is no alarm currently set, set one for 10 seconds from now
+    // Any further POSTs in the next 10 seconds will be part of this kh.
+    let currentAlarm = await this.storage.getAlarm();
+    if (currentAlarm == null) {
+      this.storage.setAlarm(Date.now() + 10 * SECONDS);
+    }
+
+    // Add the request to the batch.
+    await this.storage.put(this.count, await request.text());
+    return new Response(JSON.stringify({ queued: this.count }), {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+  }
+  async alarm() {
+    let vals = await this.storage.list();
+    await fetch("http://example.com/some-upstream-service", {
+      method: "POST",
+      body: Array.from(vals.values()),
+    });
+    await this.storage.deleteAll();
+    this.count = 0;
+  }
+}
+```
+
+The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine, following a short delay, where it can continue processing.
+
 ### `fetch()` handler method
 
 The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#accessing-a-durable-object-from-a-worker).
