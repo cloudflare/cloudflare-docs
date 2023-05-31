@@ -110,7 +110,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 </div>
 </details>
 
-## Disable Railgun
+## Disable Railgun (deprecated)
 
 Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
 
