@@ -29,7 +29,7 @@ Before you start, make sure SentinelOne is installed on your machine.
    3. **Application Path**: Enter the full path to the SentinelOne process to be checked (for example, `C:\Program Files\SentinelOne\Sentinel Agent 21.7.4.1043\SentinelAgent.exe`).
    {{<Aside type="note">}}
   
-   The path of the SentinelOne process may change between updates. Be sure to edit **Application Path** to match the new path, or use `%PATH%` variables.
+   The path of the SentinelOne process may change between updates. Make sure to edit **Application Path** to match the new path, or use `%PATH%` variables.
   
    {{</Aside>}}
    4. **Signing certificate thumbprint (recommended)**: Enter the thumbprint of the publishing certificate used to sign the binary. This proves the binary came from SentinelOne and is the recommended way to validate the process.
