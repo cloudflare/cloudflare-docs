@@ -6,5 +6,5 @@ _build:
 ---
 
 {{<Aside type="warning" header="Deprecation notice">}}
-Railgun was deprecated on January 31, 2024. For more information about our improved solutions, refer to [blog post](blog link).
+Railgun was deprecated on 2023-06-01 and will be phased out on 2024-01-31. Refer to the [announcement](/link) for more information.
 {{</Aside>}}
