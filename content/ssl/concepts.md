@@ -37,7 +37,7 @@ flowchart LR
 
 One common aspect of every SSL/TLS certificate is that they must have a fixed expiration date. If a certificate is expired, clients - such as your visitor's browser - will consider that a secure connection cannot be established, resulting in warnings or errors.
 
-Different [certificate authorities (CAs)](#certificate-authority-ca) support different validity periods. Cloudlfare works with them to guarantee that both [Universal](/ssl/edge-certificates/universal-ssl/) and [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) edge certificates are always renewed.
+Different [certificate authorities (CAs)](#certificate-authority-ca) support different validity periods. Cloudflare works with them to guarantee that both [Universal](/ssl/edge-certificates/universal-ssl/) and [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) edge certificates are always renewed.
 
 ## Certificate authority (CA)
 
