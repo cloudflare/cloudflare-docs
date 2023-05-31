@@ -3,9 +3,9 @@ pcx_content_type: configuration
 title: Enable and disable connections
 weight: 4
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Enable and disable connections
+{{<render file="_railgun-deprecation-notice.md">}}
 
 After a Railgun has been activated, it can be assigned to a particular domain with the [`conn_set`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_set) API call. [`conn_setmode_enabled`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_setmode_enabled) and [`conn_setmode_disabled`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain. [`conn_set`](/railgun/partners/client-api/enable-and-disable-connections/#post-conn_set) also accepts a mode parameter to assign and enable Railgun in a single API call. [`zone_conn_get_active`](/railgun/partners/client-api/list-railgun-details/#post-zone_conn_get_active) can be used to view active Railgun connections.
 

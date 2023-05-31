@@ -5,9 +5,9 @@ weight: 2
 meta:
   title: Potential problems and common issues
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Potential problems
+{{<render file="_railgun-deprecation-notice.md">}}
 
 If you notice consistent `523`, `524`, or other error responses, check the [System Status Map](https://www.cloudflarestatus.com/) and [contact support](#support) if needed. Railgun will fall back to direct HTTP requests if Cloudflare's endpoints cannot contact your Railgun daemon, but consistent error responses may indicate a system or origin server problem. When contacting support, please provide a screenshot of `http://www.yourdomain.com/cdn-cgi/trace` if possible, or a [traceroute](https://support.cloudflare.com/hc/articles/200169336) to your domain so Cloudflare knows which data center your requests are reaching. You can then [pause](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/) Cloudflare via the website to disable the service and resume normal website traffic.
 

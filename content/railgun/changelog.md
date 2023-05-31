@@ -3,9 +3,9 @@ pcx_content_type: reference
 title: Changelog
 weight: 8
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Changelog
+{{<render file="_railgun-deprecation-notice.md">}}
 
 ```txt
 * Apr 23 2018 Cloudflare Inc <help@cloudflare.com> - 5.3.3

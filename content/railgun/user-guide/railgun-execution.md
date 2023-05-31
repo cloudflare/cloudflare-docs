@@ -3,9 +3,9 @@ pcx_content_type: reference
 title: Railgun execution
 weight: 3
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Railgun execution
+{{<render file="_railgun-deprecation-notice.md">}}
 
 Railgun consists of two programs: `rg-listener` and `rg-sender`. `rg-listener` is to be installed at a hosting provider or end-user environment and listens for WAN connections. `rg-sender` is to be installed at Cloudflare locations and establishes connections across the WAN.
 

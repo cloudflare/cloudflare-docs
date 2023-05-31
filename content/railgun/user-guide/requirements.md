@@ -3,9 +3,9 @@ title: Requirements
 pcx_content_type: reference
 weight: 1
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Requirements
+{{<render file="_railgun-deprecation-notice.md">}}
 
 Review the following requirements to install Railgun:
 

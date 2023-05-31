@@ -5,9 +5,9 @@ weight: 7
 meta:
   title: License
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # License
+{{<render file="_railgun-deprecation-notice.md">}}
 
 SERVICES AGREEMENT
 

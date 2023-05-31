@@ -4,9 +4,9 @@ title: Installation
 weight: 2
 ---
 
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Installation
+{{<render file="_railgun-deprecation-notice.md">}}
 
 
 {{<directory-listing>}}

@@ -5,9 +5,9 @@ weight: 6
 meta:
     title: Best practices for Railgun and a Load Balancer
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Best practices for Railgun and a load balancer
+{{<render file="_railgun-deprecation-notice.md">}}
 
 If you are looking to use Cloudflare Railgun to optimize the load times of dynamic (non-cached) content and you currently use a load balancer, a firewall, or a NAT scheme in front of your application, review the following configurations and best practices associated with each setup.
 

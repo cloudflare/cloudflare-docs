@@ -3,9 +3,9 @@ pcx_content_type: reference
 title: Increase logging for Railgun
 weight: 1
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Increase logging for Railgun
+{{<render file="_railgun-deprecation-notice.md">}}
 
 When troubleshooting or testing the Railgun Listener, it may be necessary to raise the level of verbosity to capture more log data for debugging.
 

@@ -3,9 +3,9 @@ pcx_content_type: how-to
 title: Administration
 weight: 4
 ---
-{{<render file="_railgun-deprecation-notice.md">}}
 
 # Administration
+{{<render file="_railgun-deprecation-notice.md">}}
 
 Multiple Railguns may be added to a Cloudflare account. Only one registered and activated Railgun may be used per domain.
 
