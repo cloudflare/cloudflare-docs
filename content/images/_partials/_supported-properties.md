@@ -504,7 +504,7 @@ Specifies a number of pixels to cut off on each side. Allows removal of borders 
 ---
 header: URL format
 ---
-trim=20;30;20;0
+image.trim = {width:678, height:678}
 ```
 
 ```js
