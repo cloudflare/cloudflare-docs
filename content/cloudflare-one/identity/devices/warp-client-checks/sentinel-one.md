@@ -27,11 +27,11 @@ Before you start, make sure SentinelOne is installed on your machine.
    1. **Name**: Enter a unique name for this device posture check.
    2. **Operating system**: Select your operating system. You will need to configure one posture check per operating system (macOS and Windows currently supported).
    3. **Application Path**: Enter the full path to the SentinelOne process to be checked (for example, `C:\Program Files\SentinelOne\Sentinel Agent 21.7.4.1043\SentinelAgent.exe`).
-  {{<Aside type="note">}}
+   {{<Aside type="note">}}
   
-- The path of the SentinelOne process may change between updates. Ensure the client check is always changed to match the new path, or use `%PATH%` variables.
+   The path of the SentinelOne process may change between updates. Be sure to edit **Application Path** to match the new path, or use `%PATH%` variables.
   
-{{</Aside>}}
+   {{</Aside>}}
    4. **Signing certificate thumbprint (recommended)**: Enter the thumbprint of the publishing certificate used to sign the binary. This proves the binary came from SentinelOne and is the recommended way to validate the process.
    5. **SHA-256 (optional)**: Enter a SHA-256 value. This is used to validate the SHA256 signature of the binary and ensures the integrity of the binary file on the device. Note: do not fill out this field unless you strictly control updates to SentinelOne, as this will change between versions.
 
