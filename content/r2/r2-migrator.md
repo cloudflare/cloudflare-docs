@@ -23,7 +23,7 @@ Migration jobs:
 
 ## When to use Super Slurper
 
-Using Super Slurper as part of your strategy can be a good choice if the cloud storage bucket you are migrating consists primarily of objects less than 50 GB (5000³ bytes). Objects greater than 50 GB will be skipped and need to be copied separately.
+Using Super Slurper as part of your strategy can be a good choice if the cloud storage bucket you are migrating consists primarily of objects less than 50 GB. Objects greater than 50 GB will be skipped and need to be copied separately.
 
 For migration use cases that do not meet the above criteria, we recommend using tools such as [rclone](/r2/examples/rclone/).
 
