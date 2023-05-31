@@ -5,6 +5,7 @@ weight: 1
 ---
 
 # Increase logging for Railgun
+
 {{<render file="_railgun-deprecation-notice.md">}}
 
 When troubleshooting or testing the Railgun Listener, it may be necessary to raise the level of verbosity to capture more log data for debugging.

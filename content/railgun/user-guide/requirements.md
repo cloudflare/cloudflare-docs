@@ -5,6 +5,7 @@ weight: 1
 ---
 
 # Requirements
+
 {{<render file="_railgun-deprecation-notice.md">}}
 
 Review the following requirements to install Railgun:

@@ -5,6 +5,7 @@ weight: 1
 ---
 
 # Preparing the environment
+
 {{<render file="_railgun-deprecation-notice.md">}}
 
 There are no dependencies to install Railgun. The only external requirement is a Memcached instance for Railgun to use as a cache backend. However, you should ensure that the latest CA certificate bundle is installed for your operating system as it will be used to connect securely back to Cloudflare during activation. CentOS, Red Hat, Debian, and Ubuntu users should make sure that the `ca-certificates` package is installed and up-to-date via `yum` or `apt`.

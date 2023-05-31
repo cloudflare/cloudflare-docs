@@ -5,6 +5,7 @@ weight: 5
 ---
 
 # Using Railgun with Origin CA Certificates
+
 {{<render file="_railgun-deprecation-notice.md">}}
 
 While using Railgun and configuring Origin CA certificates, you will need additional steps to avoid service impact for HTTPS requests being sent from the listener to the site's origin (where the origin CA certificates are installed). This happens because the default trust store shipped with the Railgun Listener is an identical copy of the root certificates that it trusts (identical to what NSS/Mozilla trusts).

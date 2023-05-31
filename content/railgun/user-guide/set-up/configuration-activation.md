@@ -5,6 +5,7 @@ weight: 3
 ---
 
 # Configuration and activation
+
 {{<render file="_railgun-deprecation-notice.md">}}
 
 Railgun is configured in `/etc/railgun/railgun.conf` (GNU/Linux). The most important directives are `wan.port`, which specifies the port Railgun listens on, and `memcached.servers`, a space separated list of `host:port` Memcached instances for Railgun to utilize. It is also possible to specify the full path to a single socket file for Memcached. Using a socket file is recommended for best performance if your Memcached does not require network communication. Make sure at least one Memcached instance is defined. Full details on the available options [can be found in the Railgun Execution docs](/railgun/user-guide/railgun-execution/).

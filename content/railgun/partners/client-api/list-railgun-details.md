@@ -5,6 +5,7 @@ weight: 3
 ---
 
 # List Railgun details
+
 {{<render file="_railgun-deprecation-notice.md">}}
 
 The following API calls can be used to determine details and the status of one or more Railguns assigned to an account. These calls are sometimes needed to determine the unique `rtkn` or `id` values assigned to a Railgun.

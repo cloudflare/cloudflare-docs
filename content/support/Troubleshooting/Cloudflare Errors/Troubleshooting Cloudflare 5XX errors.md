@@ -319,7 +319,6 @@ ___
 
 {{<render file="_railgun-deprecation-notice.md" productFolder="railgun">}}
 
-
 A 527 error indicates an interrupted connection between Cloudflare and your origin's [Railgun server (rg-listener)](https://support.cloudflare.com/hc/articles/200168406). Common causes include:
 
 -   Firewall interference
