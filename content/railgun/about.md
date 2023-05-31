@@ -3,6 +3,7 @@ title: About
 pcx_content_type: reference
 weight: 2
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # About
 

@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Client API
 weight: 1
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Client API
 

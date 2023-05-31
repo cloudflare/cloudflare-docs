@@ -3,6 +3,7 @@ pcx_content_type: how-to
 title: Administration
 weight: 4
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Administration
 

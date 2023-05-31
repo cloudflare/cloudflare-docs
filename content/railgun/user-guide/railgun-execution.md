@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Railgun execution
 weight: 3
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Railgun execution
 

@@ -3,6 +3,7 @@ pcx_content_type: configuration
 title: Manage Railguns
 weight: 2
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Manage Railguns
 

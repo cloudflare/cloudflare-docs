@@ -3,6 +3,7 @@ title: Requirements
 pcx_content_type: reference
 weight: 1
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Requirements
 

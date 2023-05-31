@@ -5,6 +5,7 @@ weight: 6
 meta:
     title: Best practices for Railgun and a Load Balancer
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Best practices for Railgun and a load balancer
 

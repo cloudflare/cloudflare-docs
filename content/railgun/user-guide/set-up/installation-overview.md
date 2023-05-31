@@ -3,6 +3,7 @@ pcx_content_type: tutorial
 title: Installation overview
 weight: 2
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Installation overview
 

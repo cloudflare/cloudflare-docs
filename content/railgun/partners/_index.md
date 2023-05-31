@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Channel and Alliance Partners
 weight: 5
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Channel and Alliance Partners
 

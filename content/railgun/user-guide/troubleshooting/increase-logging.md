@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Increase logging for Railgun
 weight: 1
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Increase logging for Railgun
 

@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Using Railgun with Origin CA Certificates
 weight: 5
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Using Railgun with Origin CA Certificates
 

@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Changelog
 weight: 8
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Changelog
 

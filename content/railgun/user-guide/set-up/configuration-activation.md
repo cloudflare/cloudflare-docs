@@ -3,6 +3,7 @@ pcx_content_type: tutorial
 title: Configuration and activation
 weight: 3
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Configuration and activation
 

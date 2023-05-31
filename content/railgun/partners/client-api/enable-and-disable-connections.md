@@ -3,6 +3,7 @@ pcx_content_type: configuration
 title: Enable and disable connections
 weight: 4
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Enable and disable connections
 

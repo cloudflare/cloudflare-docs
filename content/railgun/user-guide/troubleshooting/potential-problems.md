@@ -5,6 +5,7 @@ weight: 2
 meta:
   title: Potential problems and common issues
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # Potential problems
 

@@ -3,6 +3,7 @@ pcx_content_type: configuration
 title: List Railgun details
 weight: 3
 ---
+{{<render file="_railgun-deprecation-notice.md">}}
 
 # List Railgun details
 
