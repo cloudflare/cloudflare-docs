@@ -294,18 +294,9 @@ The system calls the `alarm()` handler method when a scheduled alarm time is rea
 
 The method takes no parameters, does not return a result, and can be `async`.
 
-To use alarms:
+#### Use `alarm()` handler method
 
-1. Add the `durable_object_alarms` compatibility flag to your `wrangler.toml`
-
-```toml
----
-filename: wrangler.toml
----
-compatibility_flags = ["durable_object_alarms"]
-```
-
-2. Implement an `alarm()` handler in your Durable Object. The `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
+In your Durable Object, the `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
 
 The example below will show you how to implement an `alarm()` handler that wakes the Durable Object up once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue for it to be worth processing them.
 
@@ -332,7 +323,7 @@ export class Batcher {
     this.count++;
 
     // If there is no alarm currently set, set one for 10 seconds from now
-    // Any further POSTs in the next 10 seconds will be part of this kh.
+    // Any further POSTs in the next 10 seconds will be part of this batch.
     let currentAlarm = await this.storage.getAlarm();
     if (currentAlarm == null) {
       this.storage.setAlarm(Date.now() + 10 * SECONDS);
@@ -358,7 +349,7 @@ export class Batcher {
 }
 ```
 
-The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine, following a short delay, where it can continue processing.
+The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler can continue processing on the other machine.
 
 ### `fetch()` handler method
 
