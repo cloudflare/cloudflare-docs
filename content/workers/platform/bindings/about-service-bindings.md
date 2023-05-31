@@ -11,9 +11,9 @@ A Service binding allows you to send HTTP requests to another Worker without tho
 
 Service bindings allow you to:
 
-* Segment multiple use cases into separate Workers that can be explicitly invoked from your code.
-* Achieve better composability on the Workers platform using service-oriented architecture.
-* Create private microservices, to be conditionally invoked from other global network-facing services.
+- Segment multiple use cases into separate Workers that can be explicitly invoked from your code.
+- Achieve better composability on the Workers platform using service-oriented architecture.
+- Create private microservices, to be conditionally invoked from other global network-facing services.
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
@@ -30,7 +30,7 @@ To manage a Workers Service binding:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker.
-4. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**. 
+4. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**.
 
 ### Wrangler
 
@@ -41,10 +41,11 @@ services = [
   { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", environment = "<ENVIRONMENT_NAME>" }
 ]
 ```
+
 The `wrangler.toml` options are:
 
-* `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [Module syntax](/workers/learning/migrating-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
-* `service`: Name of the target Worker you would like to communicate with. This Worker should be on your account.
+- `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [Module syntax](/workers/learning/migrating-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
+- `service`: Name of the target Worker you would like to communicate with. This Worker should be on your account.
 
 ### `wrangler.toml` example
 
@@ -61,7 +62,7 @@ In the example above, the Service bindings for the `authentication` and `logout`
 
 ### Local development
 
-Local development is supported for Service bindings. For each Worker, open a terminal and use [`wrangler dev --local`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+Local development is supported for Service bindings. For each Worker, open a terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
 
 ### Use Service bindings
 
@@ -83,12 +84,12 @@ In the following example, you will create a `gateway` Worker that invokes an `au
 
 ### Gateway Worker and Service bindings usage
 
-First, you will create both a `gateway` and `auth` Worker. Once they are set up, go to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding. 
+First, you will create both a `gateway` and `auth` Worker. Once they are set up, go to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding.
 
 To manage Service bindings:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**. 
+2. In Account Home, select **Workers & Pages**.
 3. Select your Worker > **Settings**.
 4. In **Variables**, find **Service bindings** > **Edit variables**.
 
@@ -111,7 +112,7 @@ export default {
     // Request allowed
     // You can write application logic here
     // In this case we delegate the logic to an `application` Worker
-    return await env.application.fetch(request)
+    return await env.application.fetch(request);
   },
 };
 ```
@@ -132,10 +133,13 @@ The following authentication Worker code responds with a status code `200` in th
 export default {
   async fetch(request, env) {
     // Read x-custom-token header and make sure it matches SECRET_TOKEN
-    if (request.headers.get('x-custom-token') === env.SECRET_TOKEN) {
-      return new Response('Request allowed', { status: 200 });
+    if (request.headers.get("x-custom-token") === env.SECRET_TOKEN) {
+      return new Response("Request allowed", { status: 200 });
     } else {
-      return new Response('x-custom-token does not match, request not allowed', { status: 403 });
+      return new Response(
+        "x-custom-token does not match, request not allowed",
+        { status: 403 }
+      );
     }
   },
 };

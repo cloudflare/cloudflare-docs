@@ -17,10 +17,10 @@ Node.js APIs in Workers are available under the `node:` prefix, and this prefix 
 
 ```js
 // Do this:
-import { Buffer } from 'node:buffer';
+import { Buffer } from "node:buffer";
 
 //  Do not do this:
-import { Buffer } from 'buffer';
+import { Buffer } from "buffer";
 ```
 
 ## Enable Node.js with Workers
@@ -44,7 +44,7 @@ compatibility_flags = [ "nodejs_compat" ]
 To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
 
 ```sh
-$ wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat" --experimental-local
+$ wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
 ```
 
 For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).

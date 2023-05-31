@@ -12,8 +12,6 @@ This guide will instruct you on configuring a binding for your Pages Function. Y
 
 {{<Aside type="note">}}
 Local development uses local storage. It cannot access data stored on Cloudflare’s servers.
-
-By default, data in local development is not persisted. This means if you write a value into KV, for example, the next time you start local dev, it will no longer exist. Enable persistence with the `--persist` flag.
 {{</Aside>}}
 
 ## KV namespaces
@@ -32,14 +30,17 @@ Below is an example of how to use KV in your Function. Your KV binding is `TODO_
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export async function onRequest(context) {
   const task = await context.env.TODO_LIST.get("Task:123");
   return new Response(task);
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   TODO_LIST: KVNamespace;
@@ -48,8 +49,9 @@ interface Env {
 export const onRequest: PagesFunction<Env> = async (context) => {
   const task = await context.env.TODO_LIST.get("Task:123");
   return new Response(task);
-}
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -73,6 +75,7 @@ Below is an example of how to use Durable Objects in your Function. Your DO bind
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export async function onRequestGet(context) {
   const id = context.env.DURABLE_OBJECT.newUniqueId();
@@ -82,8 +85,10 @@ export async function onRequestGet(context) {
   return stub.fetch(context.request);
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   DURABLE_OBJECT: DurableObjectNamespace;
@@ -95,11 +100,11 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
   // Pass the request down to the durable object
   return stub.fetch(context.request);
-}
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
-
 
 ## R2 buckets
 
@@ -117,30 +122,34 @@ Below is an example of how to use R2 buckets in your Function. Your R2 binding i
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export async function onRequest(context) {
-  const obj = await context.env.BUCKET.get('some-key');
+  const obj = await context.env.BUCKET.get("some-key");
   if (obj === null) {
-    return new Response('Not found', { status: 404 });
+    return new Response("Not found", { status: 404 });
   }
   return new Response(obj.body);
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   BUCKET: R2Bucket;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const obj = await context.env.BUCKET.get('some-key');
+  const obj = await context.env.BUCKET.get("some-key");
   if (obj === null) {
-    return new Response('Not found', { status: 404 });
+    return new Response("Not found", { status: 404 });
   }
   return new Response(obj.body);
-}
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -164,17 +173,20 @@ Below is an example of how to use D1 databases in your Function. Your D1 binding
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export async function onRequest(context) {
   // Create a prepared statement with our query
-  const ps = context.env.NORTHWIND_DB.prepare('SELECT * from users');
+  const ps = context.env.NORTHWIND_DB.prepare("SELECT * from users");
   const data = await ps.first();
 
   return Response.json(data);
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   NORTHWIND_DB: D1Database;
@@ -182,29 +194,30 @@ interface Env {
 
 export const onRequest: PagesFunction<Env> = async (context) => {
   // Create a prepared statement with our query
-  const ps = context.env.NORTHWIND_DB.prepare('SELECT * from users');
+  const ps = context.env.NORTHWIND_DB.prepare("SELECT * from users");
   const data = await ps.first();
 
   return Response.json(data);
-}
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
 ### Interact with your D1 databases locally
 
 While developing locally, interact with a D1 database by adding `--d1=<BINDING_NAME>` to your run command.
-  
+
 {{<Aside type="note">}}
 By default, data in local development is not persisted. This means if you create a schema and/or insert data into a D1 table, the next time you start local development, it will no longer exist.
-  
+
 You can enable persistence with the `--persist` flag.
 {{</Aside>}}
-  
+
 Specifically:
-  
-* If your database is bound to `NORTHWIND_DB`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`.
-* Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
+
+- If your database is bound to `NORTHWIND_DB`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`.
+- Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
 Refer to the [D1 client API documentation](/d1/platform/client-api/) for the API methods available on your D1 binding.
 
@@ -224,13 +237,16 @@ Below is an example of how to use service bindings in your Function. Your servic
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export async function onRequestGet(context) {
   return context.env.SERVICE.fetch(context.request);
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   SERVICE: Fetcher;
@@ -238,14 +254,15 @@ interface Env {
 
 export const onRequest: PagesFunction<Env> = async (context) => {
   return context.env.SERVICE.fetch(context.request);
-}
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
 ### Interact with your Service binding locally
 
-While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
+While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
 
 ## Queue Producers
 
@@ -263,6 +280,7 @@ Below is an example of how to use Queue Producers in your Function. In this exam
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export async function onRequest(context) {
   await env.MY_QUEUE.send({
@@ -271,11 +289,13 @@ export async function onRequest(context) {
     headers: Object.fromEntries(request.headers),
   });
 
-  return new Response('Sent!');
+  return new Response("Sent!");
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   MY_QUEUE: Queue;
@@ -288,9 +308,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     headers: Object.fromEntries(request.headers),
   });
 
-  return new Response('Sent!');
-}
+  return new Response("Sent!");
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -314,6 +335,7 @@ Below is an example of how to use Analytics Engine in your Function. In this exa
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export async function onRequest(context) {
   const url = new URL(context.request.url);
@@ -324,11 +346,13 @@ export async function onRequest(context) {
     doubles: [],
   });
 
-  return new Response('Logged analytic');
+  return new Response("Logged analytic");
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   ANALYTICS_ENGINE: AnalyticsEngineDataset;
@@ -343,9 +367,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     doubles: [],
   });
 
-  return new Response('Logged analytic');
-}
+  return new Response("Logged analytic");
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -363,36 +388,40 @@ To add Pages project environment variables:
 2. In **Account Home**, select **Workers & Pages**.
 3. Select your Pages project > **Settings** > **Environment variables**.
 4. Selecting **Add variables** under **Production** and/or **Preview**.
-6. After setting a variable name and value, select **Save**.
+5. After setting a variable name and value, select **Save**.
 
 Below is an example of how to use environment variables in your Function. The environment variable in this example is `ENVIRONMENT`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 export function onRequest(context) {
-	if (context.env.ENVIRONMENT === 'development') {
-		return new Response('This is a local environment!');
-	} else {
-		return new Response('This is a live environment');
-	}
+  if (context.env.ENVIRONMENT === "development") {
+    return new Response("This is a local environment!");
+  } else {
+    return new Response("This is a live environment");
+  }
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts">}}
+
 ```ts
 interface Env {
   ENVIRONMENT: string;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-	if (context.env.ENVIRONMENT === 'development') {
-		return new Response('This is a local environment!');
-	} else {
-		return new Response('This is a live environment');
-	}
-}
+  if (context.env.ENVIRONMENT === "development") {
+    return new Response("This is a local environment!");
+  } else {
+    return new Response("This is a live environment");
+  }
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}
 

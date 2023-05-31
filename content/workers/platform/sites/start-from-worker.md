@@ -36,8 +36,8 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 {{<tab label="js/esm" default="true">}}
 
 ```js
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
-import manifestJSON from '__STATIC_CONTENT_MANIFEST';
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+import manifestJSON from "__STATIC_CONTENT_MANIFEST";
 const assetManifest = JSON.parse(manifestJSON);
 
 export default {
@@ -58,14 +58,16 @@ export default {
       let pathname = new URL(request.url).pathname;
       return new Response(`"${pathname}" not found`, {
         status: 404,
-        statusText: 'not found',
+        statusText: "not found",
       });
     }
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="js/sw">}}
+
 ```js
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
@@ -86,14 +88,15 @@ async function handleEvent(event) {
   }
 }
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
     For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
 
-5.  Run `wrangler dev` or `wrangler publish` as you would normally with your Worker project.
+5.  Run `wrangler dev` or `wrangler deploy` as you would normally with your Worker project.
     Wrangler will automatically upload the assets found in the configured directory.
 
     ```sh
-    $ wrangler publish
+    $ wrangler deploy
     ```

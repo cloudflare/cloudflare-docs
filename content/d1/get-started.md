@@ -8,9 +8,9 @@ pcx_content_type: get-started
 
 This guide will instruct you through:
 
-* Creating your first database using D1, Cloudflare’s native serverless SQL database.
-* Creating a schema and querying your database via the command-line.
-* Connecting a [Cloudflare Worker](/workers/) to your D1 database.
+- Creating your first database using D1, Cloudflare’s native serverless SQL database.
+- Creating a schema and querying your database via the command-line.
+- Connecting a [Cloudflare Worker](/workers/) to your D1 database.
 
 This guide assumes you already have a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
 
@@ -18,9 +18,9 @@ This guide assumes you already have a [Cloudflare account](/fundamentals/account
 
 You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access D1.
 
-* To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
-* Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions.
-* Wrangler requires a Node version of `16.13.0` or later.
+- To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
+- Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions.
+- Wrangler requires a Node version of `16.13.0` or later.
 
 Install Wrangler by running:
 
@@ -80,9 +80,9 @@ $ cd d1-tutorial
 
 Run the following `wrangler d1` command and give your database a name. A good database name is:
 
-* Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces
-* Descriptive of the use-case and environment - for example, "staging-db-web" or "production-db-backend"
-* Only used for describing the database, and is not directly referenced in code.
+- Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces
+- Descriptive of the use-case and environment - for example, "staging-db-web" or "production-db-backend"
+- Only used for describing the database, and is not directly referenced in code.
 
 ```sh
 $ wrangler d1 create <DATABASE_NAME>
@@ -116,9 +116,9 @@ database_id = "<unique-ID-for-your-database>"
 
 Specifically:
 
-* The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker.
-* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-* Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/platform/client-api/) is exposed on this binding.
+- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker.
+- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/platform/client-api/) is exposed on this binding.
 
 {{<Aside type="note">}}
 
@@ -196,7 +196,7 @@ After configuring your Worker, test your project locally.
 While in your project directory, test your database locally by running:
 
 ```sh
-$ wrangler dev --local --persist
+$ wrangler dev
 ```
 
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
@@ -234,4 +234,3 @@ If you have any feature requests or notice any bugs, share your feedback directl
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
 - Learn how to use the [D1 client API](/d1/platform/client-api/) within your Worker.
 - Explore [community projects built on D1](/d1/platform/community-projects/).
-

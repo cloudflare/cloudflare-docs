@@ -61,8 +61,8 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 {{<tab label="js/esm" default="true">}}
 
 ```js
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
-import manifestJSON from '__STATIC_CONTENT_MANIFEST';
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+import manifestJSON from "__STATIC_CONTENT_MANIFEST";
 const assetManifest = JSON.parse(manifestJSON);
 
 export default {
@@ -83,12 +83,13 @@ export default {
       let pathname = new URL(request.url).pathname;
       return new Response(`"${pathname}" not found`, {
         status: 404,
-        statusText: 'not found',
+        statusText: "not found",
       });
     }
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="js/sw">}}
 
@@ -112,24 +113,26 @@ async function handleEvent(event) {
   }
 }
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
-5.  Run `wrangler dev` or `wrangler publish` to preview or publish your site on Cloudflare.
+5.  Run `wrangler dev` or `wrangler deploy` to preview or publish your site on Cloudflare.
     Wrangler will automatically upload the assets found in the configured directory.
 
     ```sh
-    $ wrangler publish
+    $ wrangler deploy
     ```
 
-6.  Publish your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
+6.  Deploy your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
 
-    ```toml
-    route = "https://example.com/*"
-    ```
+        ```toml
+        route = "https://example.com/*"
+        ```
 
-    {{<Aside type="note">}}
-Refer to the documentation on [Routes](/workers/platform/triggers/routes/) to configure a `route` properly.
+        {{<Aside type="note">}}
+
+    Refer to the documentation on [Routes](/workers/platform/triggers/routes/) to configure a `route` properly.
     {{</Aside>}}
 
 Learn more about [configuring your project](/workers/wrangler/configuration/).

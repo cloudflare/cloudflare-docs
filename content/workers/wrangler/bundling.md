@@ -56,7 +56,7 @@ Wrangler respects the [conditional `exports` field](https://nodejs.org/api/packa
 Disabling bundling is not recommended and has a number of major tradeoffs that are detailed below. Most users should be able to ignore this section.
 {{</Aside>}}
 
-Opt out of bundling by using the `--no-bundle` command line flag: `wrangler publish --no-bundle`. If you opt out of bundling, Wrangler will not process your code and a number of features will not be available. You can use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use `wrangler dev` and `wrangler publish`.
+Opt out of bundling by using the `--no-bundle` command line flag: `wrangler publish --no-bundle`. If you opt out of bundling, Wrangler will not process your code and a number of features will not be available. You can use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use `wrangler dev` and `wrangler deploy`.
 
 ### D1 bindings
 

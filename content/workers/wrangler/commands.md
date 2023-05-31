@@ -1333,8 +1333,6 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
   - The directory of static assets to serve.
 - `COMMAND..` {{<type>}}string{{</type>}}
   - The proxy command(s) to run.
-- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Run on your local machine.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
 - `--proxy` {{<type>}}number{{</type>}}
