@@ -146,4 +146,4 @@ Specifies the verbosity of logging. The default `info` level does not produce mu
 | --------------- | -------------------- |
 | `token value`   | `TUNNEL_TOKEN`       |
 
-Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can also retrieve the token using the [API](https://developers.cloudflare.com/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
