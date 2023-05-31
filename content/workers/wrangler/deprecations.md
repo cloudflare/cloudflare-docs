@@ -40,15 +40,15 @@ Try using [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to dep
 
 ### Deprecated options
 
-### `--experimental-local`
+#### `--experimental-local`
 
 `wrangler dev` in v3 is local by default so this option is no longer necessary.
 
-### `--local`
+#### `--local`
 
 `wrangler dev` in v3 is local by default so this option is no longer necessary.
 
-### `--persist`
+#### `--persist`
 
 `wrangler dev` automatically persists data by default so this option is no longer necessary.
 
