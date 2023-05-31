@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Setup
 weight: 5
+meta:
+  title: Set up multi-signer DNSSEC
 ---
 
 # Set up multi-signer DNSSEC
