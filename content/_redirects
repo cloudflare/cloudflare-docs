@@ -533,6 +533,8 @@
 /railgun/user-guide/optimized-partner-api/enable-and-disable-connections/ /railgun/partners/client-api/enable-and-disable-connections/ 301
 /railgun/user-guide/optimized-partner-api/manage-railguns/ /railgun/partners/client-api/manage-railguns/ 301
 /railgun/user-guide/optimized-partner-api/railguns-via-ip-ranges/ /railgun/partners/client-api/ 301
+/support/speed/optimization-delivery-railgun/ /railgun/ 301
+/support/speed/optimization-delivery-railgun/railgun-faq/ /railgun/ 301
 
 # registrar
 /registrar/cloudflare-registrar/domain-management/ /registrar/account-options/domain-management/ 301
