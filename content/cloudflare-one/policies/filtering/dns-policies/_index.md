@@ -73,6 +73,8 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
 
+{{<Aside>}}The Override action cannot be used with post-resolution selectors, such as Resolved IP.{{</Aside>}}
+
 ### SafeSearch
 
 SafeSearch is a feature of search engines that helps you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children or at work.
