@@ -12,11 +12,10 @@ meta:
 Tenant-level custom nameservers can be part of any domain, even if the domain does not exist as a zone within any account in Cloudflare. These nameservers are organized in different sets (`ns_set`) and can be applied and used across different accounts, as long as the accounts are part of the [tenant](/tenant/).
 
 ## Configuration conditions
+
 For this configuration to be possible, a few conditions apply:
 
-1. If the domain that is used for the tenant custom nameservers does not exist within the same account, the tenant owner must create the A/AAAA records on the configured nameserver names (e.g. ns1.example.org) at the authoritative DNS provider.
-2. Tenant owners can create up to five different tenant nameserver sets. Each nameserver set must have between two and five different nameserver names (ns_name) and each name cannot belong to more than one set. For example, if ns1.example.com is part of ns_set 1 it cannot be part of ns_set 2 or vice versa.
-3. Subdomain or Reverse zones can use tenant-level custom nameservers as long as they use a different nameserver set (ns_set) than their parent or child.
+{{<render file="_acns-tcns-conditions.md" withParameters="tenant;;the tenant owner;;Tenant owners" >}}
 
 {{<render file="_acns-tcns-byoip.md" withParameters="Tenant;;tenant" >}}
 
