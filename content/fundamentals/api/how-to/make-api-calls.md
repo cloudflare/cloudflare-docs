@@ -50,9 +50,7 @@ There are two options, which can be combined to paginate across the results.
 * `page=x` enables you to select a specific page.
 * `per-page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
 
-Example:
-
-`https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2 `
+An example might be `https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2`.
 
 Other options are:
 
