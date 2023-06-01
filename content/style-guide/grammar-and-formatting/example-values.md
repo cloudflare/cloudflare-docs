@@ -1,6 +1,6 @@
 ---
-pcx_content_type:
-title:
+pcx_content_type: Concept
+title: Example Values
 ---
 
 ## IPv4 ranges

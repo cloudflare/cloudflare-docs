@@ -1,6 +1,6 @@
 ---
 pcx_content_type: Concept
-title: Footnotes
+title: Dashes
 ---
 
-## Footnotes
+## Dashes
