@@ -7,6 +7,7 @@ meta:
 ---
 
 # License
+
 {{<render file="_railgun-deprecation-notice.md">}}
 
 SERVICES AGREEMENT
