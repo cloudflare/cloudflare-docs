@@ -12,6 +12,16 @@ The Data Localization Suite (DLS) is a set of products that helps customers who 
 
 DLS is currently available for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information about purchasing DLS.
 
+{{<Aside type="warning" header="HTTP/3 traffic not supported">}}
+DLS does not support UDP traffic with Cloudlfare Secure Web Gateway. To prevent traffic bypass, disable UDP in your account and [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
+
+  1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+  2. Under **Firewall**, disable **UDP**.
+  3. Enable **TLS decryption**.
+
+For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/filtering/http-policies/http3/).
+{{</Aside>}}
+
 The Data Localization Suite consists of the following products:
 
 - [Key Management](/data-localization/key-management/)
