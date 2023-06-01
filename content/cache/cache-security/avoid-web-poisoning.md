@@ -40,6 +40,6 @@ Cloudflare caches contents of GET request bodies, but they are not included in t
 
 To keep informed about Internet security threats, Cloudflare recommends that you monitor web security advisories on a regular basis. Some of the more popular advisories include:
 
-- [Drupal Security Advisories](http://content.cloudflare.com/dZ0O0ckIN00C000S0h020X0)
-- [Symfony Security Advisories](http://content.cloudflare.com/o02lI00iN00c0X000CSZ0O0)
-- [Zend Security Advisories](http://content.cloudflare.com/AN0j00XS20IZc0000O0m00C)
+- [Drupal Security Advisories](https://www.drupal.org/security)
+- [Symfony Security Advisories](https://symfony.com/blog/category/security-advisories)
+- [Zend Security Advisories](https://framework.zend.com/security/advisories)
