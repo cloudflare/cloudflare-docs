@@ -22,9 +22,9 @@ This guide will use Okta as the SCIM provider.
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
 - Currently, we do not support Okta Integration Network (OIN) integration. This integration is in review.
 
-## 1. Create a token
+## 1. Create an API token
 
-1. [Create a token](/fundamentals/api/get-started/create-token/) with the following permissions:
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
    | Type    | Item             | Permission |
    | ------- | ---------------- | ---------- |
@@ -45,8 +45,9 @@ This guide will use Okta as the SCIM provider.
 
 1. In the Okta dashboard, go to **Directory** > **Groups**.
 2. Select **Add a group** and enter a name. Select **Save**.
-3. Select the group > **Assign people**.
-4. Add your users. Select **Done**.
+3. Select the group you created.
+4. Select **Assign people** and add your users.
+5. Select **Done**.
 
 ## 3. Set up the Okta application
 
@@ -55,27 +56,33 @@ This guide will use Okta as the SCIM provider.
    1. In the Okta dashboard, go to **Applications** > **Applications**.
    2. Select **Browse App Catalog**.
    3. Locate and select **SCIM 2.0 Test App (OAuth Bearer Token)**.
-   4. Select **Add Integration** and name your application.
-   5. Enable **Do not display application icon to users** and **Do not display application icon in the Okta Mobile App**, and disable **Automatically log in when user lands on login page**.
-   6. Select **Next**, then select **Done**.
+   4. Select **Add Integration** and name your integration.
+   5. Enable the following options:
+
+      - **Do not display application icon to users**
+      - **Do not display application icon in the Okta Mobile App**
+
+   6. Disable **Automatically log in when user lands on login page**.
+   7. Select **Next**, then select **Done**.
 
 2. Integrate the Cloudflare API.
 
-   1. Go to **Provisioning** > **Configure API Integration**.
+   1. In your integration page, go to **Provisioning** > **Configure API Integration**.
    2. Enable **Enable API Integration**.
-   3. In SCIM 2.0 Base Url, enter `https://api.cloudflare.com/client/v4/accounts/<your_account_tag>/scim/v2`.
-   4. In OAuth Bearer Token, enter your token value.
+   3. In SCIM 2.0 Base Url, enter `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
+   4. In OAuth Bearer Token, enter your API token value.
    5. Disable **Import Groups**.
    6. Select **Save**.
 
-3. Set up your users.
+3. Set up your SCIM users.
 
    1. In **Provisioning to App**, select **Edit**.
    2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
-   3. Go to **Assignments** > **Assign** > **Assign to Groups**. Assign your Cloudflare group.
-   4. Select **Done**.
+   3. In the integration page, go to **Assignments** > **Assign** > **Assign to Groups**.
+   4. Assign users to your Cloudflare group.
+   5. Select **Done**.
 
-## 4. Configure permissions
+## 4. Configure user permissions
 
 1. In the tab bar, go to **Provisioning**. Select **Edit**.
 2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
@@ -86,7 +93,7 @@ This guide will use Okta as the SCIM provider.
 - `Billing`
 - `Super Administrator - All Privileges`
 
-4. Go to **Push Groups** > gear icon.
+4. Go to **Push Groups** and select the gear icon.
 5. Disable **Rename groups**. Select **Save**.
 6. Within the **Push Groups** tab, select **Push Groups**.
 7. Add the groups you created.
