@@ -1,25 +1,218 @@
 ---
-updated: 2022-08-03
+updated: 2023-05-31
 pcx_content_type: tutorial
 content_type: 📝 Tutorial
 difficulty: Intermediate
-title: Build an API for your front end using Cloudflare Workers
+title: Build an API for your front end using Pages Functions
 layout: single
 ---
 
-# Build an API for your front end using Cloudflare Workers
-
+# Build an API for your front end using Pages Functions
 ## Introduction
 
-In this tutorial, you will build an API on [Cloudflare Workers](https://www.cloudflare.com/learning/serverless/glossary/serverless-and-cloudflare-workers/) that can be used by your Pages application. Workers serve as a great companion to your front-end applications on Cloudflare Pages. In this tutorial, you will build a simple JSON API that returns blog posts that can be retrieved and rendered in a front-end application.
+In this tutorial, you will build a fullstack Pages application containing a JSON API which returns blog posts that can be retrieved and rendered in your front-end Pages application. You will build your JSON API using using [Pages Functions](/pages/tutorials/build-an-api-with-workers/). You will build the front end with [React](). In conclusion, deployed using Cloudflare Pages. 
 
-This tutorial contains two, separate applications: the backend, a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) API deployed on Cloudflare Workers, and the front end, built with React and deployed using Cloudflare Pages.
+If you prefer to work with a headless CMS rather than an API to render your blog content, refer to the [headless CMS tutorial].
 
-If you are interested in a more comprehensive approach to building applications like this, you may benefit from moving from a serverless API for your content to a headless CMS — refer to the [headless CMS tutorial] to learn more.
+## Generate a new Pages application
 
-## Deploying a serverless API
+Make a new Pages application using the React framework.
 
-### Generating a new project
+### Create a new React project
+
+In your terminal, create a new React application called `blog-frontend` using `create-react-app`. Go into the newly created `blog-frontend` directory and start a local development server:
+
+```sh
+---
+header: "Create a new React application"
+---
+$ npx create-react-app blog-frontend
+$ cd blog-frontend
+$ npm start
+```
+
+In your newly created `blog-frontend` directory, find the `src/App.js` file and clear its contents.
+
+### Add routing and consuming blog posts
+
+Install [React Router](https://reactrouter.com/en/main/start/tutorial):
+
+```sh
+---
+header: "Add React Router"
+---
+$ yarn add react-router-dom@6
+```
+
+or
+
+```sh
+$ npm install react-router-dom@6
+```
+
+Import it into `App.js`, and set up a new router with two routes:
+
+```js
+---
+filename: "src/App.js"
+---
+import { Router } from '@reach/router';
+
+import Posts from './components/posts';
+import Post from './components/post';
+
+function App() {
+  return (
+    <Router>
+      <Posts path="/" />
+      <Post path="/posts/:id" />
+    </Router>
+  );
+}
+
+export default App;
+```
+
+Create a new folder called `components`, and inside of it, create two files: `posts.js`, and `post.js`. These components will load the blog posts from our API, and render them. Begin with `posts.js`:
+
+```js
+---
+filename: "src/components/posts.js"
+---
+import React, { useEffect, useState } from 'react';
+import { Link } from '@reach/router';
+
+const Posts = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const resp = await fetch('https://serverless-api.signalnerve.workers.dev/api/posts');
+      const postsResp = await resp.json();
+      setPosts(postsResp);
+    };
+
+    getPosts();
+  }, []);
+
+  return (
+    <div>
+      <h1>Posts</h1>
+      {posts.map(post => (
+        <div key={post.id}>
+          <h2>
+            <Link to={`/posts/${post.id}`}>{post.title}</Link>
+          </h2>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Posts;
+```
+
+Next, add the component for individual blog posts, in `src/components/post.js`:
+
+```js
+---
+filename: "src/components/post.js"
+---
+import React, { useEffect, useState } from 'react';
+import { Link } from '@reach/router';
+
+const Post = ({ id }) => {
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const getPost = async () => {
+      const resp = await fetch(`https://serverless-api.signalnerve.workers.dev/api/posts/${id}`);
+      const postResp = await resp.json();
+      setPost(postResp);
+    };
+
+    getPost();
+  }, [id]);
+
+  if (!Object.keys(post).length) return <div />;
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.text}</p>
+      <p>
+        <em>Published {new Date(post.published_at).toLocaleString()}</em>
+      </p>
+      <p>
+        <Link to="/">Go back</Link>
+      </p>
+    </div>
+  );
+};
+
+export default Post;
+```
+## Write your Pages Function
+
+Go into your `blog-frontend` directory and create a `functions` directory.
+
+### Use your Pages Functions in your front-end application
+
+
+
+## Deploy
+
+After you have configured your Pages application and Pages Function, deploy using the Wrangler or via the dashboard.
+### Deploy with Wrangler
+
+In your `blog-frontend` directory, run [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy your project to the Cloudflare dashboard.
+
+```sh
+$ wrangler pages deploy blog-frontend
+```
+
+### Deploy via connecting to Git in the dashboard
+
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+
+```sh
+$ git init
+$ git remote add origin https://github.com/<YOUR-GH-USERNAME>/<REPOSITORY-NAME>
+$ git add .
+$ git commit -m "Initial commit"
+$ git branch -M main
+$ git push -u origin main
+```
+
+Then deploy your application to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+
+<div>
+
+| Configuration option | Value           |
+| -------------------- | --------------- |
+| Production branch    | `main`          |
+| Build command        | `npm run build` |
+| Build directory      | `build`         |
+
+</div>
+
+After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `blog-frontend`, your project dependencies, and building your site, before deploying it.
+
+## Related resources
+
+* Learn about [Pages Functions routing](/pages/platform/functions/routing)
+
+<!-->
+
+## Deploy a serverless API
+
+### Generate a new project
+
+
 
 Begin by creating a new Cloudflare Workers project. If you have not used Cloudflare Workers, or installed [Wrangler](/workers/wrangler/install-and-update/), the command-line tool for managing and publishing Workers projects, refer to the [Get started guide](/workers/get-started/guide/) in the Workers documentation. Once you have configured Wrangler and authenticated it with your Cloudflare account, return here to generate your API codebase.
 
