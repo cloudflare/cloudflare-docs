@@ -55,7 +55,7 @@ def verify_token(request):
     if "CF_Authorization" in request.cookies:
         token = request.cookies["CF_Authorization"]
     else:
-        raise HTTPException(status_code=400, detail="missing required cf authorization token"!")
+        raise HTTPException(status_code=400, detail="missing required cf authorization token")
 
     keys = _get_public_keys()
 
