@@ -40,9 +40,9 @@ Sometimes there will be too many results to display via the default page size, f
 
 ```txt
 "count": 1,
-    "page": 1,
-    "per_page": 20,
-    "total_count": 200,
+"page": 1,
+"per_page": 20,
+"total_count": 200,
 ```
 
 There are two options, which can be combined to paginate across the results.
