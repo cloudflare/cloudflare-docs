@@ -56,17 +56,17 @@ Import it into `App.js`, and set up a new router with two routes:
 ---
 filename: "src/App.js"
 ---
-import { Router } from '@reach/router';
+import { Routes, Route } from "react-router-dom";
 
 import Posts from './components/posts';
 import Post from './components/post';
 
 function App() {
   return (
-    <Router>
-      <Posts path="/" />
-      <Post path="/posts/:id" />
-    </Router>
+    <Routes>
+      <Route path="/" element={<Posts />} />
+      <Route path="/posts/:id" element={<Post />} />
+    </Routes>
   );
 }
 
@@ -154,11 +154,87 @@ export default Post;
 ```
 ## Write your Pages Function
 
-Go into your `blog-frontend` directory and create a `functions` directory.
+You will now create a Pages Functions that stores your blog content and retrieves it via a JSON API.
 
 ### Use your Pages Functions in your front-end application
 
+To ___:
 
+1. Create a `functions` directory in your `blog-frontend` directory. 
+2. In `functions`, create a directory named `api`. 
+3. In `api`, create a `posts.js` file in the `api` directory. 
+4. Populate `posts.js` with the following code:
+
+```js
+---
+filename: "posts.js"
+---
+import posts from './post/data'
+
+export function onRequestGet() {
+    return new Response(JSON.stringify(posts), {
+        headers: {
+            'content-type': 'application/json;charset=UTF-8',
+        }
+    })
+}
+```
+
+5. In `api`, create a directory named  `post`.
+6. In `post`, create an `[[id]].js` file. 
+7. Populate `[[id]].js` with the following code:
+
+```js
+---
+filename: ""
+---
+import posts from './data'
+
+export function onRequestGet(context) {
+    const id = context.params.id
+
+    if (!id) {
+        return new Response('Not found', { status: 404 })
+    }
+
+    const post = posts.find(post => post.id === Number(id))
+
+    if (!post) {
+        return new Response('Not found', { status: 404 })
+    }
+
+    return new Response(JSON.stringify(post), {
+        headers: {
+            'content-type': 'application/json;charset=UTF-8',
+        }
+    })
+}
+```
+
+8. In the `post` directory, create a `data.js` file.
+9. Populate `data.js` with the following code. `id` indicates ___.
+
+```js
+---
+filename: "data.js"
+---
+const posts = [
+    {
+        id: 1,
+        title: 'My first blog post',
+        text: 'Hello world! This is my first blog post on my new Cloudflare Workers + Pages blog.',
+        published_at: new Date('2020-10-23'),
+    },
+    {
+        id: 2,
+        title: 'Updating my blog',
+        text: "It's my second blog post! I'm still writing and publishing using Cloudflare Workers + Pages :)",
+        published_at: new Date('2020-10-26'),
+    },
+];
+
+export default posts
+```
 
 ## Deploy
 
@@ -200,7 +276,7 @@ Then deploy your application to Pages:
 
 </div>
 
-After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `blog-frontend`, your project dependencies, and building your site, before deploying it.
+After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `blog-frontend`, your project dependencies, and building your site. Your site will be  available at 
 
 ## Related resources
 
