@@ -34,6 +34,25 @@ For specific guidance on making API calls, refer to the following resources:
 *   [API schema docs](/api/) for request and response payloads for each endpoint.
 *   If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare), use our first-party libraries to integrate with Cloudflare's API.
 
+## Pagination
+
+Sometimes there will be too many results to display via the default page size, for example you might see:
+
+``` "count": 1,
+    "page": 1,
+    "per_page": 20,
+    "total_count": 200,
+```
+
+There are two options, which can be combined to paginate across the results.
+
+* page=x enables you to select the page you want to see.
+* per-page=xx enables you to adjust the number of results displayed on a page. Don't select too many or you may get a timeout.
+
+Example:
+
+`https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2 `
+
 
 ## Making API calls on Windows
 
