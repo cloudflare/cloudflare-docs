@@ -1,5 +1,5 @@
 ---
-title: What is DNS filtering
+title: What is DNS filtering?
 pcx_content_type: learning-unit
 weight: 3
 layout: learning-unit

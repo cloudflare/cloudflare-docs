@@ -15,9 +15,8 @@ As discussed in a [previous module](/learning-paths/modules/security/dns-filteri
 
 You can use the [Cloudflare API](/api/operations/zero-trust-lists-create-zero-trust-list) to create a list of IPs or domains:
 
-```sh
-curl --request POST \
---url https://api.cloudflare.com/client/v4/accounts/{accountid}/gateway/lists \
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \

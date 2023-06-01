@@ -30,7 +30,7 @@ The categories included in this policy are not always a security threat, but blo
 
 ## Block unauthorized applications
 
-To minimize the risk of [Shadow IT](https://www.cloudflare.com/learning/access-management/what-is-shadow-it/), some organizations choose to limit their users' access to certain web-based tools and applications. For example, the following policy blocks AI assistants:
+To minimize the risk of [shadow IT](https://www.cloudflare.com/learning/access-management/what-is-shadow-it/), some organizations choose to limit their users' access to certain web-based tools and applications. For example, the following policy blocks AI assistants:
 
 | Selector            | Operator  | Value              | Action |
 | ------------------- | ----------| -------------------| ------ |
@@ -38,7 +38,7 @@ To minimize the risk of [Shadow IT](https://www.cloudflare.com/learning/access-m
 
 ## Block banned countries
 
-You can implement policies that restrict traffic to domains hosted in countries categorized as high risk. The designation of such countries may result from your organization's customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
+You can implement policies to block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
 | Selector            | Operator  | Value              | Action |
 | ------------------- | ----------| -------------------| ------ |
@@ -50,8 +50,9 @@ Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-lev
 
 | Selector            | Operator  | Value              | Logic  | Action |
 | ------------------- | ----------| -------------------| ------ | ------ |
-| Domain              | matches regex        | `[.](cn\|ru)` | Or | Block |
-| Domain              | matches regex        | `[.](rest\|hair\|top\|live\|cfd\|boats\|beauty\|mom\|skin\|okinawa)` |
+| Domain              | matches regex        | `[.](cn\|ru)$` | Or | Block |
+| Domain              | matches regex        | `[.](rest\|hair\|top\|live\|cfd\|boats\|beauty\|mom\|skin\|okinawa)$` | Or | |
+| Domain              | matches regex        | `[.](zip\|mobi)$`  | | |
 
 ## Block phishing attacks
 
@@ -59,8 +60,8 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 
 | Selector            | Operator  | Value              | Logic  | Action |
 | ------------------- | ----------| -------------------| ------ | ------ |
-| Domain              | matches regex        | `[.](cn\|ru)` | Or | Block |
-| Domain              | matches regex        | `[.](rest\|hair\|top\|live\|cfd\|boats\|beauty\|mom\|skin\|okinawa)` |
+| Domain              | not in list        | `Corporate Domains` | And | Block |
+| Domain              | matches regex        | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |
 
 ## Block online tracking
 
