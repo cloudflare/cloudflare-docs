@@ -22,7 +22,7 @@ Block [security categories](/cloudflare-one/policies/filtering/domain-categories
 
 ## Block content categories
 
-The categories included this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/filtering/domain-categories/).
+The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/filtering/domain-categories/).
 
 | Selector            | Operator  | Value              | Action |
 | ------------------- | ----------| -------------------| ------ |
