@@ -6,13 +6,13 @@ weight: 4
 
 # Provision Cloudflare with SCIM
 
-By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access on a per-user basis.
+By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis.
 
 This guide will use Okta as the SCIM provider.
 
 ## Prerequisites
 
-- In Cloudflare, [Super Administrator](/fundamentals/account-and-billing/account-maintenance/change-super-admin/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
+- In Cloudflare, [Super Administrator](/fundamentals/account-and-billing/members/roles/) access on the account that maintains [your SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
 - In Okta, access to the `Create groups` and `Manage applications` [permissions](https://help.okta.com/en-us/Content/Topics/Security/custom-admin-role/about-role-permissions.htm).
 
 ## Limitations
