@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Add a custom Managed Component
+title: Add a Custom Managed Component
 weight: 1
 ---
 
