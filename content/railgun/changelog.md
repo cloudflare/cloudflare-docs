@@ -6,6 +6,8 @@ weight: 8
 
 # Changelog
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 ```txt
 * Apr 23 2018 Cloudflare Inc <help@cloudflare.com> - 5.3.3
 - Uses go 1.10.1
