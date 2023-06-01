@@ -10,13 +10,11 @@ meta:
 
 ## Filter expressions
 
-A Rewrite URL Rule filter expression (that is, the expression that defines which incoming requests match the rule) can include the following fields:
+A Rewrite URL Rule [filter expression](/ruleset-engine/rules-language/expressions/) (that is, the expression that defines which incoming requests match the rule) can include the following fields:
 
 {{<render file="transform/_transform-phase-fields.md">}}
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
-
-The maximum length of a filter expression is 4,096 characters.
 
 ## Rewrite expressions
 

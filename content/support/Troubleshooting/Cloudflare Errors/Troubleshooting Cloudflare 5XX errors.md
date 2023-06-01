@@ -204,8 +204,8 @@ Error 523 occurs when Cloudflare cannot contact your origin web server. This typ
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator:
 
 -   An [MTR or traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP from the logs of the origin web server.
--   If you use Railgun via a Cloudflare Hosting Partner, [contact your hosting provider](#h_cf28c038-16c1-4841-a85f-f905240aaebe) to troubleshoot the 523 errors.
--   If you manage your Railgun installation, provide the following to:
+-   If you use [Railgun](/railgun/) (deprecated) via a Cloudflare Hosting Partner, [contact your hosting provider](#h_cf28c038-16c1-4841-a85f-f905240aaebe) to troubleshoot the 523 errors.
+-   If you manage your [Railgun](/railgun/) (deprecated) installation, provide the following:
     -   A [traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) to your origin web server from your Railgun server.
     -   The most recent syslog file from your Railgun server.
 
@@ -242,7 +242,7 @@ or
 
 -   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting).
 -   If you regularly run HTTP requests that take over 100 seconds to complete (for example large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
--   If error 524 occurs for a domain using Cloudflare Railgun, ensure the _lan.timeout_ is set higher than the default of 30 seconds and restart the railgun service.
+-   If error 524 occurs for a domain using [Cloudflare Railgun](/railgun/) (deprecated), ensure the _lan.timeout_ is set higher than the default of 30 seconds and restart the railgun service.
 
 ___
 
@@ -316,6 +316,8 @@ If the origin server uses a self-signed certificate, configure the domain to use
 ___
 
 ## 527 Error: Railgun Listener to origin error
+
+{{<render file="_railgun-deprecation-notice.md" productFolder="railgun">}}
 
 A 527 error indicates an interrupted connection between Cloudflare and your origin's [Railgun server (rg-listener)](https://support.cloudflare.com/hc/articles/200168406). Common causes include:
 

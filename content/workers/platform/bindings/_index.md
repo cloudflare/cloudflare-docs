@@ -50,6 +50,13 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 * Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
 
+### D1 database bindings
+
+[D1](/d1) bindings allow you to query a D1 database from your Worker.
+
+* [Configure a D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
+* Learn more about how to query a D1 database using the [client API](/d1/platform/client-api/).
+
 ### Dispatch namespace bindings (Workers for Platforms)
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.

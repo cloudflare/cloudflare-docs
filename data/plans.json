@@ -136,7 +136,7 @@
     "link": "/cache/",
     "always_online": {
       "title": "Always Online",
-      "link": "/cache/about/always-online/",
+      "link": "/cache/how-to/always-online/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -158,7 +158,7 @@
     },
     "browser_cache_ttl": {
       "title": "Browser Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -168,12 +168,19 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "minimum": {
-          "title": "Minimum Browser Cache TTL",
+        "minimum_page_rules": {
+          "title": "Minimum Browser Cache TTL (Page Rules)",
           "free": "2 minutes",
           "pro": "2 minutes",
           "biz": "2 minutes",
           "ent": "30 seconds"
+        },
+        "minimum_cache_rules": {
+          "title": "Minimum Browser Cache TTL (Cache Rules)",
+          "free": "2 hours",
+          "pro": "1 hour",
+          "biz": "1 second",
+          "ent": "1 second"
         },
         "default": {
           "title": "Default Browser Cache TTL",
@@ -200,7 +207,7 @@
     },
     "cache_key": {
       "title": "Cache keys",
-      "link": "/cache/about/cache-keys/",
+      "link": "/cache/how-to/cache-keys/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -228,7 +235,7 @@
     },
     "cache_reserve": {
       "title": "Cache reserve",
-      "link": "/cache/about/cache-reserve/",
+      "link": "/cache/advanced-configuration/cache-reserve/",
       "paid_add_on": true,
       "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
@@ -244,7 +251,7 @@
     },
     "cache_rules": {
       "title": "Cache Rules",
-      "link": "/cache/about/cache-rules/",
+      "link": "/cache/how-to/cache-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -279,7 +286,7 @@
     },
     "crawler_hints": {
       "title": "Crawler Hints",
-      "link": "/cache/about/crawler-hints/",
+      "link": "/cache/advanced-configuration/crawler-hints/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -321,7 +328,7 @@
     },
     "edge_cache_ttl": {
       "title": "Edge Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -377,7 +384,7 @@
     },
     "query_string_sort": {
       "title": "Query string sort",
-      "link": "/cache/about/query-string-sort/",
+      "link": "/cache/advanced-configuration/query-string-sort/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -391,21 +398,49 @@
     },
     "tiered_cache": {
       "title": "Tiered cache",
-      "link": "/cache/about/tiered-cache/",
+      "link": "/cache/how-to/tiered-cache/",
       "properties": {
         "availability": {
-          "title": "Availability",
+          "title": "Tiered Cache",
           "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
+          "ent": "Yes"
+        },
+        "b_smart_topology": {
+          "title": "Smart Topology",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "c_generic_global_topology": {
+          "title": "Generic Global Topology",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "d_regional_tiered_cache": {
+          "title": "Regional Tiered Cache",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "z_custom_topology": {
+          "title": "Custom Topology",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
           "ent": "Yes"
         }
       }
     },
     "vary_for_images": {
       "title": "Vary for images",
-      "link": "/cache/about/vary-for-images/",
+      "link": "/cache/advanced-configuration/vary-for-images/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -791,7 +826,7 @@
     },
     "http2_to_origin": {
       "title": "HTTP/2 to Origin",
-      "link": "/cache/how-to/enable-http2-to-origin/",
+      "link": "/cache/concepts/enable-http2-to-origin/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -855,7 +890,7 @@
     },
     "max_upload_size": {
       "title": "Max upload size",
-      "link": "/cache/about/default-cache-behavior/",
+      "link": "/cache/concepts/default-cache-behavior/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1777,7 +1812,7 @@
     },
     "early_hints": {
       "title": "Early Hints",
-      "link": "/cache/about/early-hints",
+      "link": "/cache/advanced-configuration/early-hints",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1877,7 +1912,7 @@
       }
     },
     "railgun": {
-      "title": "Railgun",
+      "title": "Railgun (deprecated)",
       "link": "/railgun/",
       "properties": {
         "availability": {
@@ -2550,7 +2585,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": "Custom"
+          "ent": "1 (default)<br/><br/><em>With add-on</em><br/>Custom (can purchase more)"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2566,7 +2601,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO)<br/><br/><em>With add-on</em><br/>All options"
+          "ent": "First In First Out (FIFO) (default)<br/><br/><em>With add-on</em><br/>All options"
         },
         "disable_session_renewal": {
           "title": "Disable session renewal",

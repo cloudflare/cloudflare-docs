@@ -51,7 +51,7 @@ Revisa las amenazas bloqueadas a través de [Análisis de firewall](/waf/analyti
 -   Las reglas administradas analizan las respuestas JSON para identificar las vulnerabilidades dirigidas a las API. El análisis de la carga útil JSON está limitado a 128 KB.
 -   Las reglas administradas mitigan las técnicas de relleno. Recomendamos lo siguiente:
     1.  Activar la regla _100048_. Esta regla protege ahora contra los ataques de "relleno", pero no se implementa por defecto ya que provoca muchos falsos positivos en los entornos de los clientes. Sin embargo, es importante que los clientes ajusten su configuración de reglas administradas. Cloudflare está trabajando en una solución mejor a largo plazo.
-    2.  Crea una regla de firewall utilizando el [Editor de expresión](/firewall/cf-dashboard/edit-expressions/#expression-editor) en función de la necesidad de comprobar los encabezados y/o el cuerpo para bloquear la carga útil más grande (> 128 KB). Asegúrate de probar tu regla de firewall en el modo _Registro_ primero, ya que podría ser propenso a generar falsos positivos.
+    2.  Crea una regla de firewall utilizando el [Editor de expresión](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) en función de la necesidad de comprobar los encabezados y/o el cuerpo para bloquear la carga útil más grande (> 128 KB). Asegúrate de probar tu regla de firewall en el modo _Registro_ primero, ya que podría ser propenso a generar falsos positivos.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Hay varias reglas administradas que Cloudflare no desactiva aunque **Reglas administradas** esté _desactivado_ en el panel de control de Cloudflare, como los Id. de regla _WP0025B_, _100043A_ y _100030._

@@ -13,7 +13,7 @@ Cloudflare may crawl or make HTTP requests to your site to make sure its protect
 
 Cloudflare will crawl your site when you have specific products enabled:
 
-* [**Always Online**](/cache/about/always-online/)
+* [**Always Online**](/cache/how-to/always-online/)
     * *User-Agent*: `Mozilla/5.0 (compatible; CloudFlare-AlwaysOnline/1.0; +http://www.cloudflare.com/always-online)`
 * [**SSL/TLS recommender**](/ssl/origin-configuration/ssl-tls-recommender/)
     * *User-Agent*: `Cloudflare-SSLDetector`

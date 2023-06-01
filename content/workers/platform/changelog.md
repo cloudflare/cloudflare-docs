@@ -642,7 +642,7 @@ New this week:
 Runtime release notes covering the past few weeks:
 
 - Increased total per-request `Cache.put()` limit to 5GiB.
-- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/about/default-cache-behavior/).
+- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/concepts/default-cache-behavior/).
 - Added a helpful error message explaining AES decryption failures.
 - Some overload errors were erroneously being reported as daemonDown (1105) errors. They have been changed to exceededCpu (1102) errors, which better describes their cause.
 - More “internal errors” were converted to useful user-facing errors.

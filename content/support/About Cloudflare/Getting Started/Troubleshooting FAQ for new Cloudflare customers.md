@@ -16,6 +16,19 @@ Below are the most common customer questions and issues experienced when getting
 - [Why is my site served over HTTP instead of HTTPS?](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156)
 - [Why is my Cloudflare Universal SSL certificate not active?](https://support.cloudflare.com/hc/articles/200170566#h_122b94f3-ff14-4544-b5fa-8875e08ff5f0)
 
+### Is Cloudflare attacking me?
+
+There are two common scenarios where Cloudflare is falsely perceived to attack your site:
+
+- Unless you [restore the original visitor IP addresses](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/), Cloudflare IP addresses appear in your server logs for all proxied requests.
+- The attacker is spoofing Cloudflare's IPs. Cloudflare only [sends traffic to your origin web server over a few specific ports](/fundamentals/get-started/reference/network-ports/) unless you use [Cloudflare Spectrum](/spectrum/).
+
+Ideally, because Cloudflare is a reverse proxy, your hosting provider observes attack traffic connecting from [Cloudflare IP addresses](https://www.cloudflare.com/ips/). In contrast, if you notice connections from IP addresses that do not belong to Cloudflare, the attack is direct to your origin web server. Cloudflare cannot stop attacks directly to your origin IP address because the traffic bypasses Cloudflare’s network.
+
+{{<Aside type="note">}}
+If an attacker is directly targeting your origin web server, refer to [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/).
+{{</Aside>}}
+
 ## Issues
 
 - [SSL errors in appear in my browser](https://support.cloudflare.com/hc/articles/200170566)

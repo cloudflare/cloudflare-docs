@@ -42,23 +42,22 @@ Use either of the following examples to install the `gokeyless` package for RHEL
 
 ```sh
 ---
-header: RHEL or CentOS
+header: RHEL or CentOS (version lower than 8)
 ---
-$ yum makecache
-$ yum-config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
-$ echo 'gpgkey=https://pkg.cloudflare.com/cloudflare-ascii-pubkey.gpg' >> /etc/yum.repos.d/gokeyless.repo
-$ yum install gokeyless
+$ sudo yum makecache
+$ sudo yum-config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo && sudo yum-config-manager --setopt=gokeyless-stable.gpgkey=https://pkg.cloudflare.com/cloudflare-ascii-pubkey.gpg --save
+$ sudo yum install gokeyless
 ```
 
 **Option 2**
 
 ```sh
 ---
-header: RHEL or CentOS
+header: RHEL or CentOS (version 8 or higher)
 ---
-$ yum install -y sudo dnf dnf-plugins-core && yum clean all
-$ dnf config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
-$ dnf install gokeyless
+$ sudo dnf install dnf-plugins-core && dnf clean all
+$ sudo dnf config-manager --add-repo https://pkg.cloudflare.com/gokeyless.repo
+$ sudo dnf install gokeyless
 ```
 
 {{<Aside type="note">}}

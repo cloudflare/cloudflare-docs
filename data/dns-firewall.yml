@@ -2,6 +2,7 @@ name: DNS Firewall
 
 product:
   title: DNS Firewall
-  group: Application security
+  group: Application performance
+  additional_groups: [Application security]
   url: /dns/dns-firewall/
   grid_placeholder: true

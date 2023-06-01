@@ -8,7 +8,7 @@ title: What will Cloudflare compress
 
 
 
-In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/about/default-cache-behavior/) and [auto-minification](https://support.cloudflare.com/hc/en-us/articles/200168196-How-do-I-minify-HTML-CSS-and-JavaScript-to-optimize-my-site-) of CSS, JS & HTML to speed up your site, Cloudflare also provides gzip and brotli compression to help site owners. 
+In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/concepts/default-cache-behavior/) and [auto-minification](https://support.cloudflare.com/hc/en-us/articles/200168196-How-do-I-minify-HTML-CSS-and-JavaScript-to-optimize-my-site-) of CSS, JS & HTML to speed up your site, Cloudflare also provides gzip and brotli compression to help site owners. 
 
 Cloudflare will return gzip or brotli encoded responses to compatible clients / browsers for the following content-types:
 

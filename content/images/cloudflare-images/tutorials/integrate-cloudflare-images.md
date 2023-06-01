@@ -328,8 +328,6 @@ You can get them both in your Cloudflare dashboard 👇:
 
 This refers to your Cloudflare Image account ID. You can get this value in your Cloudflare Images dashboard.
 
-![Where to find your Cloudflare Images account ID](/images/images/tutorials/integrate-cloudflare-images/step-02-accountid.jpg)
-
 #### `CF_IMAGES_API_KEY`
 
 This value refers to a Cloudflare API token, with `Read` and `Update` permissions for Cloudflare Images. If you do not have one yet, refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn how to create a Cloudflare API token.

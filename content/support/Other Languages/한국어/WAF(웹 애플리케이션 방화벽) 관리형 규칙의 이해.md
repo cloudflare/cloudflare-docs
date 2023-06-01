@@ -48,7 +48,7 @@ Cloudflare WAF(웹 애플리케이션 방화벽)의 기능인 관리형 규칙�
 -   관리형 규칙은 JSON 응답을 구문 분석하여 API를 대상으로 하는 취약점을 식별합니다. JSON 페이로드 구문 분석은 128KB로 제한됩니다.
 -   WAF는 패딩 기법을 완화합니다. 다음을 권장합니다.
     1.  규칙 _100048_을 켭니다. 이 규칙은 이제 패딩 형태의 공격을 방어하지만 고객 환경에서 긍정 오류를 유발할 수 있으므로 기본적으로 배포되어 있지는 않습니다. 하지만 고객이 WAF를 적절히 조정하는 것이 중요합니다. Cloudflare는 개선된 장기적 솔루션을 개발하고 있습니다.
-    2.  헤더 및/또는 본문을 확인해 128KB 이상의 대규모 페이로드를 차단할 필요가 있는 경우에는 [식 편집기](/firewall/cf-dashboard/edit-expressions/#expression-editor)를 이용해 방화벽 규칙을 작성합니다. 긍정 오류가 발생하기 쉬우므로 먼저 _로그_ 모드에서 방화벽 규칙을 테스트하여야 합니다.
+    2.  헤더 및/또는 본문을 확인해 128KB 이상의 대규모 페이로드를 차단할 필요가 있는 경우에는 [식 편집기](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor)를 이용해 방화벽 규칙을 작성합니다. 긍정 오류가 발생하기 쉬우므로 먼저 _로그_ 모드에서 방화벽 규칙을 테스트하여야 합니다.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Cloudflare Dashboard에서 **관리형 규칙**을 _끈_ 경우에도 Cloudflare가 비활성화하지 않는 WAF 규칙이 몇 가지 있으며 규칙 ID _WP0025B_, _100043A_, _100030_ 등이 그 예입니다.

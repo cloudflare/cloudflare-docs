@@ -19,11 +19,11 @@ Ray IDs are not guaranteed to be unique for every request. In some situations, d
 
 All customers can view Ray IDs and associated information — IP address, user agent, ASN, etc. — by looking through the [Activity Log](/waf/security-events/) in Security Events.
 
-![Example list of events in the Activity log, with one of the events expanded to show its details](/waf/static/analytics-activity-log.png)
+![Example list of events in the Activity log, with one of the events expanded to show its details](/images/waf/events-activity-log.png)
 
 Additionally, you can [add filters](/waf/security-events/paid-plans/#adjusting-displayed-data) to look for specific Ray IDs.
 
-![Example of adding a new filter in Security Events for the Allow action](/waf/static/analytics-add-filter-free.png)
+![Example of adding a new filter in Security Events for the Allow action](/images/waf/events-add-filter-free.png)
 
 Please note that Security Events may use sampled data to improve performance. If sampled data is applied to your search, you might not see all events, and filters might not return the expected results. To display more events, select a smaller timeframe.
 

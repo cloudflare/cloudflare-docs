@@ -39,7 +39,7 @@ By design, blocked users will not receive an email. The login page will always s
    - If the code was invalid, you will see **That account does not have access.**
 
 {{<Aside type="note">}}
-Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs).
+Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs).
 {{</Aside>}}
 
 ## Example API Config

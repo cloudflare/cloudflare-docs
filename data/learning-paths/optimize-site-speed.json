@@ -137,11 +137,6 @@
             "additional_description": "Deploy your dynamic front-end applications using Cloudflare Pages. Pages are super fast, always up to date, and deployed directly from your Git provider."
           },
           {
-            "url_path": "/railgun/",
-            "link_title": "Railgun",
-            "additional_description": "Improve caching for dynamic content."
-          },
-          {
             "url_path": "/stream/",
             "link_title": "Stream",
             "additional_description": "Cloudflare Stream lets you or your end users upload, store, encode, and deliver live and on-demand video with one API, without configuring or maintaining infrastructure."
