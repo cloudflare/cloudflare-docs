@@ -25,7 +25,7 @@ Before you start, make sure SentinelOne is installed on your machine.
 4. You will be prompted for the following information:
 
    1. **Name**: Enter a unique name for this device posture check.
-   2. **Operating system**: Select your operating system. You will need to configure one posture check per operating system (macOS and Windows currently supported).
+   2. **Operating system**: Select your operating system. You will need to configure one posture check per operating system.
    3. **Application Path**: Enter the full path to the SentinelOne process to be checked (for example, `C:\Program Files\SentinelOne\Sentinel Agent 21.7.4.1043\SentinelAgent.exe`).
    {{<Aside type="note">}}
   
