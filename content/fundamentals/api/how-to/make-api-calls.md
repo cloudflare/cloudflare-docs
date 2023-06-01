@@ -53,6 +53,13 @@ Example:
 
 `https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2 `
 
+Other options are:
+
+* order - select the attribute to order by
+* direction - either ASC (ascending) or DESC (descending)
+
+The available optiosn will be listed at the bottom of the result_info of the api documention, for example the request above: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-list-dns-records
+
 
 ## Making API calls on Windows
 
