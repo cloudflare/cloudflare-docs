@@ -298,7 +298,7 @@ The method takes no parameters, does not return a result, and can be `async`.
 
 In your Durable Object, the `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
 
-The example below will show you how to implement an `alarm()` handler that wakes the Durable Object up once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue for it to be worth processing them.
+The example below implements an `alarm()` handler that wakes the Durable Object up once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
 
 ```js
 export default {
