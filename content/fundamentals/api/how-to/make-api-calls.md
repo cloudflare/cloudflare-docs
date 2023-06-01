@@ -36,7 +36,7 @@ For specific guidance on making API calls, refer to the following resources:
 
 ## Pagination
 
-Sometimes there will be too many results to display via the default page size, for example you might see:
+Sometimes there will be too many results to display via the default page size, for example you might receive the following:
 
 ```txt
 "count": 1,
