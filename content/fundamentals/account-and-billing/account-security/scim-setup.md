@@ -88,10 +88,10 @@ This guide will use Okta as the SCIM provider.
 2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
 3. Select **Add group** and add groups with the following names:
 
-- `Administrator Read Only`
-- `Administrator`
-- `Billing`
-- `Super Administrator - All Privileges`
+   - `Administrator Read Only`
+   - `Administrator`
+   - `Billing`
+   - `Super Administrator - All Privileges`
 
 4. Go to **Push Groups** and select the gear icon.
 5. Disable **Rename groups**. Select **Save**.
@@ -99,4 +99,4 @@ This guide will use Okta as the SCIM provider.
 7. Add the groups you created.
 8. Select **Save**.
 
-Adding any users to these groups will grant them the role. Removing the users from the IdP will remove them from the associated role.
+Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
