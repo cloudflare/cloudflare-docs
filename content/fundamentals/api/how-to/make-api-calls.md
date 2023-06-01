@@ -38,7 +38,8 @@ For specific guidance on making API calls, refer to the following resources:
 
 Sometimes there will be too many results to display via the default page size, for example you might see:
 
-``` "count": 1,
+```txt
+"count": 1,
     "page": 1,
     "per_page": 20,
     "total_count": 200,
@@ -46,8 +47,8 @@ Sometimes there will be too many results to display via the default page size, f
 
 There are two options, which can be combined to paginate across the results.
 
-* page=x enables you to select the page you want to see.
-* per-page=xx enables you to adjust the number of results displayed on a page. Don't select too many or you may get a timeout.
+* `page=x` enables you to select a specific page.
+* `per-page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
 
 Example:
 
@@ -55,10 +56,10 @@ Example:
 
 Other options are:
 
-* order - select the attribute to order by
-* direction - either ASC (ascending) or DESC (descending)
+* `order`: select the attribute to order by
+* `direction` - either `ASC` (ascending) or `DESC` (descending)
 
-The available options will be listed at the bottom of the result_info of the api documention, for example the request above: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-list-dns-records
+The available options will be listed at the end of the `result_info` of all endpoints in the [API documentation](/api/).
 
 
 ## Making API calls on Windows
