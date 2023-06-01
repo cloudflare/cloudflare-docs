@@ -26,6 +26,7 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 - [`protocol`](#protocol)
 - [`logfile`](#logfile)
 - [`loglevel`](#loglevel)
+- [`token`](#token)
 
 ## `config`
 
@@ -138,3 +139,11 @@ Saves application log to this file. Mainly useful for reporting issues. For more
 | `loglevel value` | `info`  | `TUNNEL_LOGLEVEL`    |
 
 Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `debug`, `info`, `warn`, `error`, `fatal`.
+
+## `token`
+
+| Syntax          | Environment Variable |
+| --------------- | -------------------- |
+| `token value`   | `TUNNEL_TOKEN`       |
+
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
