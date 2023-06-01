@@ -1,0 +1,8 @@
+---
+pcx_content_type:
+title:
+---
+
+# Semicolons
+
+Avoid semicolons when possible. Break down long explanations into shorter, simpler sentences.

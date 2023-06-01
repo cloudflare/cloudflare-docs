@@ -1,0 +1,21 @@
+name: Style Guide
+logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M4 14h22v-4H4v4Zm0 8h22v-4H4v4Zm36 16H26v-4h14v4Zm-14-8h14v-4H26v4Zm34 24H26v-4h34v4Zm-34-8h34v-4H26v4Z"/></svg>
+
+product:
+  title: Style Guide
+  url: /style-guide/
+  show: false
+ 
+meta:
+  title: Cloudflare Style Guide
+  description: Style guide to follow for contributing to Cloudflare docs.
+  author: '@cloudflare'
+ 
+resources:
+  community: https://community.cloudflare.com/c/developers/zaraz/67
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/zaraz
+  discord: https://discord.gg/2TRr6nSxdd
+ 
+externals:
+  title: Cloudflare homepage
+  url: https://cloudflare.com
