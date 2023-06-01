@@ -30,7 +30,7 @@ Cisco vManage is Cisco's SD-WAN management tool that is used to manage all the S
 
 For this example scenario, a generic template for `SIG-Branch` was created.
 
-![Traffic flow diagram for GRE](/magic-wan/static/viptela-flow-diagram-gre.png)
+![Traffic flow diagram for GRE](/images/magic-wan/third-party/viptela/viptela-flow-diagram-gre.png)
 
 To create a Secure Internet Gateway (SIG) using vManage:
 
@@ -72,19 +72,19 @@ From vManage, select **Configuration** > **Templates**. You should see the newly
 
 Because the template was created to add GRE tunnels, you only need to update the device values. Note that **VPN0** is the default, and the WAN interface used to build the tunnel must be part of **VPN0**.
 
-![Update template fields for GRE tunnel](/magic-wan/static/viptela-update-device-template-gre.png)
+![Update template fields for GRE tunnel](/images/magic-wan/third-party/viptela/viptela-update-device-template-gre.png)
 
 ## 3. Create tunnels in Cloudflare
 
 Refer to [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/) for more information on creating a GRE tunnel.
 
-![Established GRE tunne in Cloudflash dashboard](/magic-wan/static/viptela-gre-tunnel.png)
+![Established GRE tunne in Cloudflash dashboard](/images/magic-wan/third-party/viptela/viptela-gre-tunnel.png)
 
 ## 4. Define static routes
 
 Refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/) for more information on configuring your static routes.
 
-![Established GRE static routes in Cloudflare dashboard](/magic-wan/static/viptela-gre-static-routes.png)
+![Established GRE static routes in Cloudflare dashboard](/images/magic-wan/third-party/viptela/viptela-gre-static-routes.png)
 
 ## 5. Validate traffic flow
 
@@ -92,11 +92,11 @@ In the example below, a request for `neverssl.com` was issued, which has a Cloud
 
 On the client VM (192.168.30.3), a blocked response is visible.
 
-![cURL example for a request to neverssl.com](/magic-wan/static/viptela-curl-traffic-flow.png)
+![cURL example for a request to neverssl.com](/images/magic-wan/third-party/viptela/viptela-curl-traffic-flow.png)
 
 A matching blocked log line is visible from the Cloudflare logs.
 
-![A blocked log from Gateway Activity Log in the Cloudflare dashboard](/magic-wan/static/viptela-gre-swg-traffic.png)
+![A blocked log from Gateway Activity Log in the Cloudflare dashboard](/images/magic-wan/third-party/viptela/viptela-gre-swg-traffic.png)
 
 ## Add new tunnels using IPsec
 
