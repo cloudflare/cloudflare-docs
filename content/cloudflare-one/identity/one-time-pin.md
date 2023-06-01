@@ -12,10 +12,7 @@ For example, if your team uses Okta® but you are collaborating with someone out
 
 ## Set up OTP
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authenticaton**.
-2. Under **Login methods**, select **Add new**.
-3. Select **One-time PIN**.
-4. If your organization uses a 3rd party email scanning service (for example, Mimecast or Barracuda), add `noreply@notify.cloudflare.com` to your Allow List.
+{{<render file="_one-time-pin.md">}}
 
 To grant a user access to an application, simply add their email address to an [Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy).
 
