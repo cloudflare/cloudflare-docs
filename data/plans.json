@@ -2557,7 +2557,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": "Custom"
+          "ent": "1 (default)<br/><br/><em>With add-on</em><br/>Custom (can purchase more)"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2573,7 +2573,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO)<br/><br/><em>With add-on</em><br/>All options"
+          "ent": "First In First Out (FIFO) (default)<br/><br/><em>With add-on</em><br/>All options"
         },
         "disable_session_renewal": {
           "title": "Disable session renewal",
