@@ -8,7 +8,7 @@ async function checkLinks() {
   });
   const page = await browser.newPage();
 
-  const sitemapUrl = 'https://developers.cloudflare/sitemap.xml';
+  const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml';
   await page.goto(sitemapUrl, { timeout: navigationTimeout });
 
   const sitemapLinks = await page.$$eval('url loc', (elements) =>
