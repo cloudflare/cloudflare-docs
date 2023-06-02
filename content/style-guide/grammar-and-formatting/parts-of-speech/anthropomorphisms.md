@@ -1,6 +1,6 @@
 ---
 pcx_content_type: Concept
-title: ANthropomorphisms
+title: Anthropomorphisms
 ---
 
 ## Anthropomorphisms
