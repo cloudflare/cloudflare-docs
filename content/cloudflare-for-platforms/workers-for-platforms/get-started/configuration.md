@@ -103,7 +103,7 @@ You will use the Cloudflare API to upload the user Worker. This will upload the 
 Update the necessary fields and run the following command:
 
 1. Add your Cloudflare account email to the value of the `X-Auth-Email` header.
-2. Find your `<AUTH_KEY>` by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > user icon > **My Profile** > **API Tokens** > **Global API Key** > **View**.
+2. Find your `<AUTH_KEY>` by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > user icon > **My Profile** > **API Tokens** > **Global API Key** > **View**. Your token should be scoped down to **Account.Workers Scripts** under the **Permissions** column.
 3. Add your Cloudflare account ID found in your site's **Overview**.
 4. Add the namespace name you created in step 2 to `<NAMESPACE_NAME>`.
 5. Add the script name `customer-worker-1` to `<SCRIPT_NAME>`.
