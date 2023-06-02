@@ -40,11 +40,9 @@ To add zone-level custom nameservers via the API, use a [PATCH request](/api/ope
 
 If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone-level custom nameservers but will need to perform a few steps manually, after [steps 1-3 above](#using-the-dashboard) or after [using the API](#using-the-api).
 
-1. Use the [API](/api/operations/zone-edit-zone) to get the `vanity_name_servers_ips`.
-2. Add [glue records](https://www.ietf.org/rfc/rfc1912.txt) at your registrar.
-3. Add `A/AAAA` records at your primary DNS provider.
-4. Add `NS` records at your primary DNS provider.
-5. Add the custom nameservers at your registrar.
+1. Get the custom nameservers IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [API](/api/operations/zone-edit-zone) to get the `vanity_name_servers_ips`.
+2. At your primary DNS provider, add `NS` records and, on the subdomains that you used as custom nameservers names, add `A/AAAA` records.
+3. At your registrar, add the custom nameservers as your authoritative nameservers and as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt).
 
 ## Remove zone-level nameservers
 
