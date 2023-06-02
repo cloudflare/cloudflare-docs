@@ -32,6 +32,8 @@ Block a section of a site without blocking the entire site. For example, you can
 
 {{<render file="gateway/_content-categories.md">}}
 
+{{<render file="gateway/_block-applications.md" productFolder="cloudflare-one">}}
+
 {{<render file="gateway/_policies-optional.md">}}
 
 ## Skip inspection for groups of applications
