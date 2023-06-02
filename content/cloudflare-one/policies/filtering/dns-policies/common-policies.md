@@ -10,7 +10,7 @@ The following policies are commonly used to secure DNS traffic.
 
 Refer to the [DNS policies page](/cloudflare-one/policies/filtering/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
 
-{{<render file="gateway/_content-categories.md">}}
+{{<render file="gateway/_recommended-dns-policies.md" productFolder="cloudflare-one">}}
 
 {{<render file="/gateway/_policies-optional.md">}}
 
@@ -32,14 +32,6 @@ The following example includes two policies. The first policy allows the specifi
 | Selector           | Operator | Value           | Action |
 | ------------------ | -------- | --------------- | ------ |
 | Content Categories | in       | Social Networks | Block  |
-
-## Block sites by top-level domain
-
-Block sites with a specific top-level domain (TLD).
-
-| Selector | Operator      | Value     | Action |
-| -------- | ------------- | --------- | ------ |
-| Domain   | matches regex | `[.]fail` | Block  |
 
 ## Control IP version
 
