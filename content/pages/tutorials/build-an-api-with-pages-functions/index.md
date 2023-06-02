@@ -12,7 +12,7 @@ layout: single
 
 In this tutorial, you will build a fullstack Pages application. Your application will contain:
 
-1. A front end, via the [React framework](/pages/framework-guides/deploy-a-react-site/).
+1. A front end, built using Cloudflare Pages and the [React framework](/pages/framework-guides/deploy-a-react-site/).
 2. A JSON API, built with [Pages Functions](/pages/platform/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
 
 If you prefer to work with a headless CMS rather than an API to render your blog content, refer to the [headless CMS tutorial](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/).
