@@ -5,6 +5,7 @@ async function checkLinks() {
   const page = await browser.newPage();
 
   const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml'; // Replace with your sitemap URL
+  console.log(`Processing sitemap: ${sitemapUrl}`);
   await page.goto(sitemapUrl);
 
   const sitemapLinks = await page.$$eval('url loc', (elements) =>
