@@ -17,6 +17,7 @@ async function checkLinks() {
   const brokenLinks = [];
 
   for (const link of sitemapLinks) {
+    if (link) {
     console.log(`Processing link: ${link}`);
     await page.goto(link, { waitUntil: 'networkidle0' });
 
@@ -40,6 +41,7 @@ async function checkLinks() {
       }
     }
   }
+}
 }
 
   await browser.close();
