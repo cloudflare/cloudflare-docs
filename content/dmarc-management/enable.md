@@ -13,7 +13,7 @@ DMARC Management does not support actions on SPF records when your zone has a CN
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Email** > **DMARC Management**.
+2. Go to **Email** > **DMARC Management**.
 3. Select **Enable DMARC reports**.
 4. DMARC Management will scan your zone for DMARC records. 
 
