@@ -26,6 +26,7 @@ async function checkLinks() {
     );
 
     for (const pageLink of pageLinks) {
+      if (pageLink) {
       if (pageLink.includes("https://developers.cloudflare.com/api/operations")) {
       await page.goto(pageLink, { waitUntil: 'networkidle0', navigationTimeout });
 
@@ -41,6 +42,7 @@ async function checkLinks() {
       }
     }
   }
+}
 }
 }
 
