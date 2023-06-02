@@ -26,6 +26,7 @@ The Firewall Rules API and Filters API, as well as the `cloudflare_firewall_rule
 The main differences between firewall rules and WAF custom rules are the following:
 
 * [Improved response for Block action](#improved-response-for-block-action)
+* [Different error page for blocked requests](#different-error-page-for-blocked-requests)
 * [New Skip action replacing both Allow and Bypass actions](#new-skip-action-replacing-both-allow-and-bypass-actions)
 * [Custom rules are evaluated in order](#custom-rules-are-evaluated-in-order)
 * [Logs and events](#logs-and-events)
@@ -37,9 +38,23 @@ In WAF custom rules you can [customize the response of the _Block_ action](/waf/
 
 The default block response is a Cloudflare standard HTML page. If you need to send a custom response for _Block_ actions, configure the custom rule to return a fixed response with a custom response code (403, by default) and a custom body (HTML, JSON, XML, or plain text).
 
+To define a custom response for a single rule, go to **Security** > **WAF** > [**Custom rules**](https://dash.cloudflare.com/?to=/:account/:zone/security/waf/custom-rules), edit the custom rule, and fill in the block-related options.
+
 {{<Aside type="note">}}
 Custom block response configurations will not be returned by the Firewall Rules API. You must use the [Rulesets API](/waf/custom-rules/create-api/#example-b) to manage this new feature.
 {{</Aside>}}
+
+### Different error page for blocked requests
+
+Requests blocked by a firewall rule with a _Block_ action would get a Cloudflare [1020 error code](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) response. Cloudflare users could customize this error page in **Custom Pages** > **1000 Class Errors**.
+
+Requests blocked by a WAF custom rule will get a different response: the WAF block response. To customize the default block response, you can either:
+* Define a custom WAF block response for your entire zone in [**Custom Pages**](https://dash.cloudflare.com/?to=/:account/:zone/custom-pages) > **WAF Block**. This custom page will always have an HTML content type.
+* [Define a custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked by a specific WAF custom rule. This custom response supports other content types besides HTML.
+
+If you have customized your 1xxx error page in Custom Pages for requests blocked by firewall rules, you will need to create a new response page for blocked requests using one of the above methods.
+
+For more information on Custom Pages, refer to [Configuring Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).
 
 ### New Skip action replacing both Allow and Bypass actions
 
