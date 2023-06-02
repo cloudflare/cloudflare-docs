@@ -11,7 +11,7 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 
 Learn more about [How KV works](/workers/learning/how-kv-works/).
 
-To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/workers-kv/) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
+To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/workers-kv/) on how to create a namespace with Wrangler. Create a KV namespace in the dashboard by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > select **Workers & Pages** > **KV**.
 
 The descriptions of KV methods below also contain links to Wrangler or REST API equivalents where appropriate, but using KV from your Worker is generally better for latency, scalability, and availability.
 
@@ -407,11 +407,12 @@ addEventListener("fetch", async (event) => {
 
 You can create a namespace [using Wrangler](/workers/wrangler/install-and-update/) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
 
-1.  Go to **Workers**.
-2.  Select your **Worker**.
-3.  Select **Settings** > **Variables**.
-4.  Go to **KV Namespace Bindings**.
-5.  Select **Add binding**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages**.
+2. In **Overview**, select your Worker.
+3. Select **Settings** > **Variables**.
+4. Go to **KV Namespace Bindings**.
+5. Select **Add binding**.
 
 {{</Aside>}}
 

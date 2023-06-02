@@ -41,17 +41,17 @@ $ gh repo create
 $ git push
 ```
 
-To deploy your project with Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Pages** > **Create a project** > **Connect to git**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select your new GitHub repository.
 4. In the **Set up builds and deployments**, set `npm run build` as the **Build command**, and `dist` as the **Build output directory**.
 5. Select **Environment variables (advanced)** > **+ Add variable** > configure a `NODE_VERSION` variable with a value of any version of Node greater than `14.18` -- this example uses `16`:
 
 After completing configuration, select **Save and Deploy**.
 
-You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. After you have deployed your project, it will be available at the `<YOUR_PROJECT_NAME>.pages.dev` subdomain. Find your project's subdomain in **Pages** > select your project > **Deployments**.
+You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. After you have deployed your project, it will be available at the `<YOUR_PROJECT_NAME>.pages.dev` subdomain. Find your project's subdomain in **Workers & Pages** > select your Pages project > **Deployments**.
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 

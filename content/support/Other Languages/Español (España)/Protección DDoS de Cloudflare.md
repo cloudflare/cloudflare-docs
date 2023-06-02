@@ -13,7 +13,7 @@ title: Protección DDoS de Cloudflare
 
 Un ataque de denegación de servicio distribuido (DDoS) intenta desactivar un servicio en línea utilizado por usuarios finales.  Cloudflare ofrece en todos los planes un servicio de mitigación ilimitada de ataques DDoS en las capas 3, 4 y 7. No facturamos por tamaño de ataque y no tenemos un límite de tamaño, tipo o duración de ataque.
 
-La red de Cloudflare está diseñada para supervisar y mitigar  [ataques DDoS](https://www.cloudflare.com/ddos) a gran escala de forma automática. Almacenar tu contenido en la memoria caché de Cloudflare también protege tu sitio web de ataques DDoS pequeños, pero los activos no almacenados en la memoria caché requieren una respuesta [manual adicional al ataque DDoS](https://support.cloudflare.com/hc/articles/200170196).
+La red de Cloudflare está diseñada para supervisar y mitigar  [ataques DDoS](https://www.cloudflare.com/ddos) a gran escala de forma automática. Almacenar tu contenido en la memoria caché de Cloudflare también protege tu sitio web de ataques DDoS pequeños, pero los activos no almacenados en la memoria caché requieren una respuesta [manual adicional al ataque DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/).
 
 Además, Cloudflare ayuda a mitigar los ataques DDoS más pequeños:
 
@@ -91,7 +91,7 @@ ___
 
 ## Recursos relacionados
 
--   [Cómo responder a los ataques DDoS](https://support.cloudflare.com/hc/articles/200170196)
+-   [Cómo responder a los ataques DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [Prácticas recomendadas: medidas preventivas de DDoS](https://support.cloudflare.com/hc/articles/200170166)
 -   [Cómo usar los registros de Cloudflare para investigar el tráfico DDoS (solo Enterprise)](https://support.cloudflare.com/hc/es-es/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [¿Qué es un ataque DDoS?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

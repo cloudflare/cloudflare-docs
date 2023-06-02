@@ -6,7 +6,11 @@ title: Cloudflare PHP API Binding
 
 # Cloudflare PHP API Binding
 
+{{<Aside type="warning">}}
 
+This PHP API binding has been deprecated. You should refer to the [REST API documentation](/api/) instead.
+
+{{</Aside>}}
 
 ## Overview
 

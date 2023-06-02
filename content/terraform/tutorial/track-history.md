@@ -40,11 +40,7 @@ After running the commands above, ensure that you can still authenticate to Clou
 
 ```sh
 $ terraform plan
-Refreshing Terraform state in-memory prior to plan...
-The refreshed state will be used to calculate this plan, but will not be
-persisted to local or remote state storage.
-
-cloudflare_record.www: Refreshing state... (ID: c38d3102767284e7ca14d5dad3ab8b69)
+cloudflare_record.www: Refreshing state... [id=c38d3102767284e7ca14d5dad3ab8b69]
 
 ------------------------------------------------------------------------
 

@@ -141,7 +141,7 @@ header: Installing the qr-image package
 $ npm install --save qr-image
 ```
 
-To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/wrangler-legacy/webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/wrangler-legacy/configuration/) in the Wrangler documentation.
+To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/wrangler/migration/v1-to-v2/eject-webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) in the Wrangler documentation.
 
 ```toml
 ---

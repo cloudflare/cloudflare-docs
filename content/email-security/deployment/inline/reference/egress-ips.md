@@ -20,7 +20,7 @@ For customers in the United States, enter the following IP addresses:
   - `104.30.32.0/19`[^1]
   - `158.51.64.0/26`
   - `158.51.65.0/26`
-  - `134.195.26.0/24`
+  - `134.195.26.0/23`
 
 - **Office 365 `/24` addresses (to be used instead of the `/19` subnet):**
   - `104.30.32.0/24`
@@ -68,8 +68,6 @@ For customers in Europe, add all our US IP addresses. Additionally, you need to 
 
 ## India
 
-For customers in India, add all our US IP addresses. Additionally, you need to add the following IP range for our data centers in India:
-
-`134.195.26.0/23`
+For customers in India, add all our US IP addresses.
 
 [^1]: Office 365 does not support this subnet mask range. If you use Office 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to **Office 365 `/24` addresses** for a list of these IPv4 addresses.

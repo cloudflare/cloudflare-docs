@@ -39,7 +39,7 @@ ___
 
 ## Server Push
 
-The Server Push feature allows origin web servers to send resources to the client or web browser without waiting to for the client to discover they are needed. In practice, this protocol feature was hard to leverage and could sometimes make page load times worse. [Early Hints](/cache/about/early-hints/) has emerged as a replacement solution that avoids some of the pitfalls of Server Push.
+The Server Push feature allows origin web servers to send resources to the client or web browser without waiting to for the client to discover they are needed. In practice, this protocol feature was hard to leverage and could sometimes make page load times worse. [Early Hints](/cache/advanced-configuration/early-hints/) has emerged as a replacement solution that avoids some of the pitfalls of Server Push.
 
 Server Push is available for all Cloudflare plans but only over HTTP/2. Cloudflare does not support Server Push for HTTP/3.
 

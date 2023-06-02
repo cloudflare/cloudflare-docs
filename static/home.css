@@ -1036,6 +1036,17 @@ a {
     }
 }
 
+.subTitle {
+    font-size: 1.3em;
+    font-weight: 400;
+    padding-left: .1em;
+    color: #131313;
+}
+
+[theme=dark] .subTitle {
+    color: #fff;
+}
+
 .StartHere {
     font-size: 1.8em;
     font-weight: 400;
@@ -5797,4 +5808,9 @@ html #ot-sdk-btn.ot-sdk-show-settings {
 
 html #ot-sdk-btn.ot-sdk-show-settings:hover {
     color: inherit;
+}
+
+.md__image {
+  display: inline;
+  margin: 0 10px 0 0;
 }

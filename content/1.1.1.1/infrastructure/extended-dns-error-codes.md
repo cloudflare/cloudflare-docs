@@ -76,7 +76,7 @@ layout: list
             <td>10</td>
             <td>RRSIGs Missing</td>
             <td><code>EDE: 10 (RRSIGs Missing): (for DNSKEY example.com., id = 12345)</code></td>
-            <td>1.1.1.1 was unable to retrieve Resource Record Signatures (RRSigs) to verify the authenticity of the records. Check your <a href="/dns/">DNS configuration</a> and the response code. If the response code is not <code>SERVFAIL</code> this error indicates that there is a key rollover at the zone, or a key that is only used to sign the Zone Signing Key (ZSK).</td>
+            <td>1.1.1.1 was unable to retrieve Resource Record Signatures (RRSigs) to verify the authenticity of the records. Check your <a href="/dns/">DNS configuration</a> and the response code. If the response code is not <code>SERVFAIL</code>, this error indicates that there is a non-operational key issue somewhere along the path, but the resolver found at least one successful path for validation. Examples of non-operational key issues include but are not limited to key rollover in-progress, stand-by key, and attacker stripping signatures made by a certain key.</td>
         </tr>
         <tr>
             <td>11</td>

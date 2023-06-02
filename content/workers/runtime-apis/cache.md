@@ -52,7 +52,7 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 {{<definitions>}}
 
 - `Cache-Control`
-  - Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](/cache/about/cache-control#cache-control-directives). Refer to [Edge TTL](/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
+  - Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](/cache/concepts/cache-control#cache-control-directives). Refer to [Edge TTL](/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
 - `Cache-Tag`
   - Allows resource purging by tag(s) later (Enterprise only).
 - `ETag`
@@ -227,5 +227,6 @@ The `cache.delete` method only purges content of the cache in the data center th
 
 - [How the Cache works](/workers/learning/how-the-cache-works/)
 - [Configure your CDN](/workers/tutorials/configure-your-cdn/)
+- [Example: Cache using `fetch()`](/workers/examples/cache-using-fetch/)
 - [Example: using the Cache API](/workers/examples/cache-api/)
 - [Example: caching POST requests](/workers/examples/cache-post-request/)

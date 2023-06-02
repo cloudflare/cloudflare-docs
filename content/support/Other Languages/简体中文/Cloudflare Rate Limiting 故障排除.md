@@ -39,5 +39,4 @@ ___
 
 ## 相关资源
 
--   [配置 Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/zh-cn/articles/115000272247)
--   [Cloudflare Rate Limiting 计费](https://support.cloudflare.com/hc/zh-cn/articles/115000272247)
+-   [配置 Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)
