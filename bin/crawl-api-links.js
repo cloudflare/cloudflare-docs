@@ -55,6 +55,9 @@ async function checkLinks() {
   }
 
   await browser.close();
+  console.log('Evaluated links:');
+  console.log(visitedLinks)
+  console.log('Broken links:');
   console.log(brokenLinks)
   if (brokenLinks.length > 0) {
     console.log('Broken links found:');
