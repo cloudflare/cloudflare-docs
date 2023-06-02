@@ -1,10 +1,10 @@
-import puppeteer from 'puppeteer';
+const puppeteer = require('puppeteer');
 
 async function checkLinks() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml';
+  const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml'; // Replace with your sitemap URL
   await page.goto(sitemapUrl);
 
   const sitemapLinks = await page.$$eval('url loc', (elements) =>
