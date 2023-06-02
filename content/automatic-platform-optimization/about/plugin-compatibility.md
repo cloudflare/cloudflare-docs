@@ -39,3 +39,4 @@ The Cloudflare APO Wordpress plugin does not support multisite WordPress install
 - [WPML](https://wpml.org/)
 - [Hummingbird](https://wordpress.org/plugins/hummingbird-performance/)
 - [Imunify360](https://docs.imunify360.com/features/#webshield)
+- [Perfmatters](https://perfmatters.io/docs/cloudflare-wordpress-settings/)
