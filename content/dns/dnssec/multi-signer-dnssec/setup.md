@@ -96,10 +96,9 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 API example:
 
 ```bash
-$ curl --request GET 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk' \
---header 'X-Auth-Email: <EMAIL>'
+$ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk' \
+--header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <KEY>'
---header 'Content-Type: application/json'
 ```
 
 Command line query example:
