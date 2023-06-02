@@ -21,6 +21,7 @@ async function checkLinks() {
     );
 
     for (const pageLink of pageLinks) {
+      if (pageLink.includes("https://developers.cloudflare.com/api/operations")) {
       await page.goto(pageLink, { waitUntil: 'networkidle0' });
 
       const statusCode = await page.evaluate(() => {
@@ -35,6 +36,7 @@ async function checkLinks() {
       }
     }
   }
+}
 
   await browser.close();
 
