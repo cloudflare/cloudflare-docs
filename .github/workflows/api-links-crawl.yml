@@ -10,12 +10,16 @@ jobs:
     name: Compiles
     runs-on: ubuntu-latest
     steps:
-       - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18.1
 
       - name: Install dependencies
         run: npm install puppeteer
 
-      - name: Run script
+      - name: Run API docs link checker
         run: npm run crawl-api-links
 
