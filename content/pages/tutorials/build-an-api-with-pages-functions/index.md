@@ -12,8 +12,8 @@ layout: single
 
 In this tutorial, you will build a fullstack Pages application. Your application will contain:
 
-1. A front end, built using Cloudflare Pages and the [React framework](/pages/framework-guides/deploy-a-react-site/).
-2. A JSON API, built with [Pages Functions](/pages/platform/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
+* A front end, built using Cloudflare Pages and the [React framework](/pages/framework-guides/deploy-a-react-site/).
+* A JSON API, built with [Pages Functions](/pages/platform/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
 
 If you prefer to work with a headless CMS rather than an API to render your blog content, refer to the [headless CMS tutorial](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/).
 
@@ -239,6 +239,7 @@ export function onRequestGet(context) {
 ## Deploy
 
 After you have configured your Pages application and Pages Function, deploy your project using the Wrangler or via the dashboard.
+
 ### Deploy with Wrangler
 
 In your `blog-frontend` directory, run [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy your project to the Cloudflare dashboard.
@@ -247,7 +248,11 @@ In your `blog-frontend` directory, run [`wrangler pages deploy`](/workers/wrangl
 $ wrangler pages deploy blog-frontend
 ```
 
-### Deploy via connecting to Git in the dashboard
+### Deploy via the dashboard
+
+To deploy via the Cloudflare dashboard, you will need to create a new Git repository for your Pages project and connect your Git repository to Cloudflare. This tutorial uses GitHub as its Git provider.
+
+#### Create a new repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
@@ -260,7 +265,9 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
-Then deploy your application to Pages:
+#### Deploy with Cloudflare Pages
+
+Deploy your application to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
