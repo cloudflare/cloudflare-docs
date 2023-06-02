@@ -4486,7 +4486,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin: 0 auto;
 }
 
-[theme="dark"] .DocSearch-Logo svg > * {
+[theme="dark"] .DocSearch-Logo svg>* {
   fill: white;
 }
 
@@ -4495,6 +4495,13 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   #algolia {
     display: none;
   }
+}
+
+.DocSearch-Search-Icon,
+.DocSearch-Container svg,
+.DocSearch-Logo svg {
+  height: auto;
+  width: auto;
 }
 
 /* dark */
