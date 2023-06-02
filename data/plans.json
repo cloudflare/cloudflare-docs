@@ -572,7 +572,7 @@
     },
     "dnssec": {
       "title": "DNSSEC",
-      "link": "/dns/additional-options/dnssec/",
+      "link": "/dns/dnssec/",
       "properties": {
         "availability": {
           "title": "Availability",
