@@ -276,7 +276,9 @@ Then deploy your application to Pages:
 
 </div>
 
-After configuring your site, begin your first deploy. You should see Cloudflare Pages installing `blog-frontend`, your project dependencies, and building your site. 
+After configuring your site, begin your first deploy. You should see Cloudflare Pages installing `blog-frontend`, your project dependencies, and building your site.
+
+By completing this tutorial, you have created a fullstack Pages application.
 
 ## Related resources
 
