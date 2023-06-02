@@ -1,4 +1,4 @@
-name: Begin Algolia crawl
+name: Crawl API docs links
 
 on:
   pull_request:
@@ -21,7 +21,7 @@ jobs:
         run: npm install puppeteer
 
       - name: Compile TypeScript
-        run: npm install typescript && npx tsc link_checker.ts
+        run: npm install typescript && npx tsc crawl-api-links.ts
 
       - name: Run API docs link checker
         run: node crawl-api-links.ts
