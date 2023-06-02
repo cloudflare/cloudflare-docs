@@ -62,7 +62,7 @@ Finally, you will need to configure your SaaS application to require users to lo
 
 1. Configure the following fields with your SAML SSO-compliant application:
 
-   - **SSO endpoint**
+   - **SSO endpoint** (If your SaaS app supports a meta-data file config, appending /saml-metadata to this URL will produce a metadata file that can be uploaded)
    - **Access Entity ID or Issuer**
    - **Public key**
 
