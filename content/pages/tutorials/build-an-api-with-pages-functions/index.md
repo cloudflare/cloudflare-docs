@@ -177,11 +177,7 @@ filename: functions/api/posts.js
 import posts from './post/data'
 
 export function onRequestGet() {
-    return new Response(JSON.stringify(posts), {
-        headers: {
-            'content-type': 'application/json;charset=UTF-8',
-        }
-    })
+    return Response.json(posts)
 }
 ```
 
@@ -234,11 +230,7 @@ export function onRequestGet(context) {
         return new Response('Not found', { status: 404 })
     }
 
-    return new Response(JSON.stringify(post), {
-        headers: {
-            'content-type': 'application/json;charset=UTF-8',
-        }
-    })
+    return Response.json(post)
 }
 ```
 
