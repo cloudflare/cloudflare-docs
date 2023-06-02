@@ -1,10 +1,9 @@
 name: Begin Algolia crawl
 
 on:
-  push:
+  pull_request:
     branches:
       - production
-  workflow_dispatch:
 
 jobs:
   compile:
