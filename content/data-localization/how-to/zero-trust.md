@@ -21,6 +21,8 @@ This allows your egress traffic to geolocate to the city selected in your [egres
 
 As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/connections/connect-devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)).
 
+{{<render file="gateway/_disable-udp.md" productFolder="cloudflare-one">}}
+
 #### Data Loss Prevention (DLP) 
 
 You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/) and encrypt them with your public key so that only you can examine them later.
