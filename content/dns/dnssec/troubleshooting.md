@@ -2,6 +2,7 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360021111972-Troubleshooting-DNSSEC
 title: Troubleshooting
+weight: 6
 meta:
     title: Troubleshooting | DNSSEC
 ---
@@ -141,4 +142,4 @@ ___
 
 ## Next steps
 
-If a problem is discovered with DNSSEC implementation, contact the domain's registrar and confirm the `DS` record matches what the authoritative DNS provider has specified. If Cloudflare is the authoritative DNS provider, follow the instructions for [configuring DNSSEC with Cloudflare](/dns/additional-options/dnssec/).
+If a problem is discovered with DNSSEC implementation, contact the domain's registrar and confirm the `DS` record matches what the authoritative DNS provider has specified. If Cloudflare is the authoritative DNS provider, follow the instructions for [configuring DNSSEC with Cloudflare](/dns/dnssec/).
