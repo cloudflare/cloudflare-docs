@@ -20,7 +20,7 @@ DMARC Management (beta) allows you to review how emails sent on your behalf have
 
 The Top 10 sources section shows you details about the top sources sending emails on your behalf, with information such as total volume of emails and how these sources fared regarding security policies.
 
-You also have access to information about all third parties, and can drill-down for further details on each of them:
+You also have access to information about all third parties, and can drill down for further details on each of them:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Select **Email** > **DMARC Management**.
