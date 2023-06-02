@@ -10,7 +10,7 @@ Cloudflare supports content compression both when delivering content to your web
 
 ## Content compression from the Cloudflare network to website visitors
 
-In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/about/default-cache-behavior/) and [auto-minifying](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) CSS, JavaScript, and HTML content to speed up your site, Cloudflare supports gzip and Brotli compression when delivering content to website visitors.
+In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/concepts/default-cache-behavior/) and [auto-minifying](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) CSS, JavaScript, and HTML content to speed up your site, Cloudflare supports gzip and Brotli compression when delivering content to website visitors.
 
 If supported by visitors' web browsers, Cloudflare will return gzip or Brotli-encoded responses for the following content types:
 
