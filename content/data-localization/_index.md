@@ -19,7 +19,7 @@ DLS does not support UDP traffic with Cloudlfare Secure Web Gateway. To prevent 
   2. Under **Firewall**, disable **UDP**.
   3. Enable **TLS decryption**.
   
-You must also [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers, either manually or through your mobile device management (MDM) software. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/filtering/http-policies/http3/).
+If you wish to apply HTTP filtering to all HTTPS traffic, you must also [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers, either manually or through your mobile device management (MDM) software. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/filtering/http-policies/http3/).
 {{</Aside>}}
 
 The Data Localization Suite consists of the following products:
