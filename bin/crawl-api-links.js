@@ -1,8 +1,11 @@
 import puppeteer from 'puppeteer';
 
 async function checkLinks() {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: 'new',
+  });
   const page = await browser.newPage();
+  const navigationTimeout = 1200000;
 
   const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml'; // Replace with your sitemap URL
   await page.goto(sitemapUrl);
@@ -23,7 +26,7 @@ async function checkLinks() {
 
     for (const pageLink of pageLinks) {
       if (pageLink.includes("https://developers.cloudflare.com/api/operations")) {
-      await page.goto(pageLink, { waitUntil: 'networkidle0' });
+      await page.goto(pageLink, { waitUntil: 'networkidle0', navigationTimeout });
 
       const statusCode = await page.evaluate(() => {
         return {
