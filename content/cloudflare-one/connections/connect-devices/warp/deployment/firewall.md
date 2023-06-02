@@ -27,6 +27,10 @@ These are the IP addresses that the WARP client will connect to. All traffic fro
 - IPv4 Range: `162.159.193.0/24`
 - IPv6 Range: `2606:4700:100::/48`
 
+{{<Aside type="note">}}
+Before you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you may see the different IPv4 Range `162.159.192.0/24` of consumer WARP.
+{{</Aside>}}
+
 ### WARP UDP ports
 
 WARP utilizes UDP for all of its communications. By default, the UDP port required for WARP is `UDP 2408`. WARP can fallback to `UDP 500`, `UDP 1701`, or `UDP 4500`.
