@@ -20,9 +20,6 @@ jobs:
       - name: Install dependencies
         run: npm install puppeteer
 
-      - name: Compile TypeScript
-        run: npm install typescript && npx tsc crawl-api-links.ts
-
       - name: Run API docs link checker
         run: node crawl-api-links.ts
 
