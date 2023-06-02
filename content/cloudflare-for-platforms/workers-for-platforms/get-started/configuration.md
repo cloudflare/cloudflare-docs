@@ -122,9 +122,8 @@ async function handleRequest(request) {
 }"
 ```
 
-If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) and add the token to the `"Authorization: Bearer <API_TOKEN>"` header. 
+If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) with **Workers Edit** permission. Select **Account**, **Workers Script**, and **Edit**. Then, add the token to the `"Authorization: Bearer <API_TOKEN>"` header. 
 
-Your API token will need **Workers Edit** permission. Select the **Edit Cloudflare Workers** template. Then, select **Account**, **Workers Script**, and **Edit**. 
 
 ```bash
 curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
