@@ -12,8 +12,8 @@ layout: single
 
 In this tutorial, you will build a fullstack Pages application. Your application will contain:
 
-1. A JSON API, built with [Pages Functions](/pages/tutorials/build-an-api-with-workers/), that returns blog posts that can be retrieved and rendered in your front end.
-2. A front end, via the React framework.
+1. A front end, via the [React framework](/pages/framework-guides/deploy-a-react-site/).
+2. A JSON API, built with [Pages Functions](/pages/tutorials/build-an-api-with-workers/), that returns blog posts that can be retrieved and rendered in your front end.
 
 If you prefer to work with a headless CMS rather than an API to render your blog content, refer to the [headless CMS tutorial](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/).
 
@@ -23,11 +23,11 @@ To begin, create a new Pages application using the React framework.
 
 ### Create a new React project
 
-In your terminal, create a new React application called `blog-frontend` using `create-react-app`. Go into the newly created `blog-frontend` directory and start a local development server:
+In your terminal, create a new React project called `blog-frontend` using the `create-react-app` command. Go into the newly created `blog-frontend` directory and start a local development server:
 
 ```sh
 ---
-header: "Create a new React application"
+header: Create a new React application
 ---
 $ npx create-react-app blog-frontend
 $ cd blog-frontend
@@ -38,28 +38,26 @@ $ npm start
 
 To set up your React project:
 
-1. Install the [React Router](https://reactrouter.com/en/main/start/tutorial) in the root of your `blog-frontend` directory:
+1. Install the [React Router](https://reactrouter.com/en/main/start/tutorial) in the root of your `blog-frontend` directory.
 
-```sh
----
-header: "Add React Router"
----
-$ yarn add react-router-dom@6
-```
-
-or
+With `npm`:
 
 ```sh
 $ npm install react-router-dom@6
 ```
+With `yarn`:
 
-2. Clear the content of `src/App.js`. Import the React Router into `App.js`, and set up a new router with two routes:
+```sh
+$ yarn add react-router-dom@6
+```
+
+2. Clear the contents of `src/App.js`. Copy and paste the following code to import the React Router into `App.js`, and set up a new router with two routes:
 
 ```js
 ---
-filename: "src/App.js"
+filename: src/App.js
 ---
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 
 import Posts from './components/posts';
 import Post from './components/post';
@@ -78,11 +76,11 @@ export default App;
 
 3. In the `src` directory, create a new folder called `components`.
 4. In the `components` directory, create two files: `posts.js`, and `post.js`. These files will load the blog posts from your API, and render them.
-5. Populate `posts.js` with:
+5. Populate `posts.js` with the following code:
 
-```sh
+```js
 ---
-filename:  "posts.js"
+filename: src/components/posts.js
 ---
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
@@ -121,10 +119,10 @@ export default Posts;
 
 ```js
 ---
-filename: "post.js"
+filename: src/components/post.js
 ---
 import React, { useEffect, useState } from 'react';
-import {Link, useParams} from "react-router-dom";
+import { Link, useParams } from 'react-router-dom';
 
 const Post = () => {
     const [post, setPost] = useState({});
@@ -174,7 +172,7 @@ To create the Pages Function that will act as your JSON API:
 
 ```js
 ---
-filename: "posts.js"
+filename: functions/api/posts.js
 ---
 import posts from './post/data'
 
@@ -195,7 +193,7 @@ This code gets blog data (from `data.js`, which you will make in step 8) and ret
 
 ```js
 ---
-filename: "data.js"
+filename: functions/api/post/data.js
 ---
 const posts = [
     {
@@ -219,7 +217,7 @@ export default posts
 
 ```js
 ---
-filename: "[[id]].js"
+filename: [[id]].js
 ---
 import posts from './data'
 
