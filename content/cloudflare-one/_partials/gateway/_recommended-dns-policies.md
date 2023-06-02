@@ -26,13 +26,7 @@ The categories included in this policy are not always a security threat, but blo
 | ------------------ | -------- | --------------------------------------------------------- | ------ |
 | Content Categories | in       | `Questionable Content`, `Security Risks`, `Miscellaneous` | Block  |
 
-## Block unauthorized applications
-
-To minimize the risk of [shadow IT](https://www.cloudflare.com/learning/access-management/what-is-shadow-it/), some organizations choose to limit their users' access to certain web-based tools and applications. For example, the following policy blocks AI assistants:
-
-| Selector    | Operator | Value             | Action |
-| ----------- | -------- | ----------------- | ------ |
-| Application | in       | `ChatGPT`, `Bard` | Block  |
+{{<render file="gateway/_block-applications.md" productFolder="cloudflare-one">}}
 
 ## Block banned countries
 
