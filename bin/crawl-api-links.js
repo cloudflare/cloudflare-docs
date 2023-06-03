@@ -1,17 +1,17 @@
-import puppeteer from 'puppeteer';
+import puppeteer from "puppeteer";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
 
 async function checkLinks() {
   const browser = await puppeteer.launch({
-    headless: 'new',
+    headless: "new",
   });
   const page = await browser.newPage();
 
-  const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml';
+  const sitemapUrl = "https://developers.cloudflare.com/sitemap.xml";
   await page.goto(sitemapUrl, { timeout: navigationTimeout });
 
-  const sitemapLinks = await page.$$eval('url loc', (elements) =>
+  const sitemapLinks = await page.$$eval("url loc", (elements) =>
     elements.map((el) => el.textContent)
   );
 
@@ -23,44 +23,47 @@ async function checkLinks() {
       continue; // Skip if the link is empty
     }
 
-    console.log(`Processing link: ${link}`);
-    await page.goto(link, { waitUntil: 'networkidle0', timeout: navigationTimeout });
-    visitedLinks.add(link); // Add the link to the visited set
+    await page.goto(link, {
+      waitUntil: "networkidle0",
+      timeout: navigationTimeout,
+    });
 
-    const pageLinks = await page.$$eval('a', (elements) =>
+    const pageLinks = await page.$$eval("a", (elements) =>
       elements.map((el) => el.href)
     );
 
     for (const pageLink of pageLinks) {
       if (!pageLink || visitedLinks.has(pageLink)) {
         continue; // Skip if the pageLink is empty or has already been visited
-      } else if (!pageLink.includes("https://developers.cloudflare.com/api/operations")) {
-        continue; // Skip if the pageLink isn't from the api docs
       }
 
-      await page.goto(pageLink, { waitUntil: 'networkidle0', timeout: navigationTimeout });
-      visitedLinks.add(pageLink); // Add the pageLink to the visited set
-
-      const statusCode = await page.evaluate(() => {
-        return {
-          status: document.querySelector('body') ? 200 : 404,
-          url: window.location.href,
-        };
-      });
-
-      if (statusCode.status !== 200) {
-        brokenLinks.push(statusCode.url);
+      if (pageLink.includes("/api/operations/")) {
+        console.log(`Evaluating link: ${pageLink}`);
+        await page.goto(pageLink, {
+          waitUntil: "networkidle0",
+          timeout: navigationTimeout,
+        });
+        visitedLinks.add(pageLink); // Add the pageLink to the visited set
+        const statusCode = await page.evaluate(() => {
+          return {
+            status: document.querySelector("body") ? 200 : 404,
+            url: window.location.href,
+          };
+        });
+        if (statusCode.status !== 200) {
+          brokenLinks.push(statusCode.url);
+        }
       }
     }
   }
 
   await browser.close();
-  console.log('Evaluated links:');
-  console.log(visitedLinks)
-  console.log('Broken links:');
-  console.log(brokenLinks)
+  console.log("Evaluated links:");
+  console.log(visitedLinks);
+  console.log("Broken links:");
+  console.log(brokenLinks);
   if (brokenLinks.length > 0) {
-    console.log('Broken links found:');
+    console.log("Broken links found:");
     for (const link of brokenLinks) {
       console.log(link);
     }
@@ -71,4 +74,4 @@ async function checkLinks() {
 checkLinks().catch((error) => {
   console.error(error);
   process.exit(1);
-});  
+});
