@@ -16,6 +16,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.1
+      
+      - name: Install @actions/core
+        run: npm install @actions/core
 
       - name: Install dependencies
         run: npm install puppeteer
