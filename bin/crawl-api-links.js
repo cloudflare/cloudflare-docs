@@ -4,6 +4,9 @@ const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (6
 let counter = 0;
 
 async function checkLinks() {
+  if (counter > 10) {
+    return;
+  }
   const browser = await puppeteer.launch({
     headless: "new",
   });
@@ -46,17 +49,14 @@ async function checkLinks() {
         });
         visitedLinks.add(pageLink); // Add the pageLink to the visited set
         counter++;
-        if (counter > 10) {
-          return;
-        }
+
         const statusCode = await page.evaluate(() => {
           return {
             status: document.querySelector("body") ? 200 : 404,
             url: window.location.href,
           };
         });
-        console.log(statusCode)
-        if (statusCode.status !== 200) {
+        if (statusCode.url === "https://developers.cloudflare.com/api/") {
           brokenLinks.push(statusCode.url);
         }
       }
