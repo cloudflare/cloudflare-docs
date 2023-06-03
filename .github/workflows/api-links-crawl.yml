@@ -25,10 +25,9 @@ jobs:
         run: npm run crawl-api-links
 
       - name: Create issue
-        needs: check-api-links
 
         env:
-          EXPORTED_VARIABLE: ${{ needs.export_variable_step.outputs.broken_links }}
+          EXPORTED_VARIABLE: ${{ steps.check-api-links.outputs.broken_links }}
         if: env.EXPORTED_VARIABLE
         run: |
           # Create the issue and reference the exported variable
