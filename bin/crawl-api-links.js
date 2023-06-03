@@ -5,7 +5,10 @@ let counter = 0;
 
 async function checkLinks() {
   if (counter > 10) {
-    return;
+    await browser.close();
+    console.log("Broken links:");
+    console.log(brokenLinks);
+    process.exit(1);
   }
   const browser = await puppeteer.launch({
     headless: "new",
@@ -64,17 +67,9 @@ async function checkLinks() {
   }
 
   await browser.close();
-  console.log("Evaluated links:");
-  console.log(visitedLinks);
   console.log("Broken links:");
   console.log(brokenLinks);
-  if (brokenLinks.length > 0) {
-    console.log("Broken links found:");
-    for (const link of brokenLinks) {
-      console.log(link);
-    }
-    process.exit(1);
-  }
+  process.exit(1);
 }
 
 checkLinks().catch((error) => {
