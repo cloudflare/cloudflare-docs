@@ -28,7 +28,6 @@ jobs:
         run: npm run crawl-api-links
 
       - name: Create issue
-
         env:
           EXPORTED_VARIABLE: ${{ steps.check-api-links.outputs.brokenLinks }}
         if: env.EXPORTED_VARIABLE
