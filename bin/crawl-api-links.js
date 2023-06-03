@@ -21,7 +21,7 @@ async function checkLinks() {
   const brokenLinks = [];
 
   for (const link of sitemapLinks) {
-    if (counter > 1) {
+    if (counter > 5) {
       await browser.close();
       console.log("Broken links:");
       console.log(brokenLinks);
