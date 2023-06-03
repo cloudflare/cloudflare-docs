@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
-let counter = 10;
+let counter = 0;
 
 async function checkLinks() {
   const browser = await puppeteer.launch({
