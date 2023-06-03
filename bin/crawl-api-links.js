@@ -26,7 +26,7 @@ async function checkLinks() {
       console.log("Broken links:");
       console.log(brokenLinks);
       if (brokenLinks.length > 0) {
-        core.exportVariable('brokenLinks', JSON.stringify(brokenLinks));
+        core.setOutput('brokenLinks', JSON.stringify(brokenLinks));
       }
       process.exit(0);
     }
