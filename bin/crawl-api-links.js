@@ -60,7 +60,7 @@ async function checkLinks() {
           };
         });
         if (statusCode.url === "https://developers.cloudflare.com/api/") {
-          brokenLinks.push(statusCode.url);
+          brokenLinks.push(pageLink);
         }
       }
     }
