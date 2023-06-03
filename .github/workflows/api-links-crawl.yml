@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - production
-  workflow_dispatch:
 
 jobs:
   compile:
