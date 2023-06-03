@@ -2,7 +2,6 @@ import puppeteer from "puppeteer";
 import core from "@actions/core";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
-let counter = 0;
 
 function arrayToHTMLList(array) {
   let html = '<ul>';
@@ -33,15 +32,6 @@ async function checkLinks() {
   const brokenLinks = [];
 
   for (const link of sitemapLinks) {
-    if (counter > 10) {
-      await browser.close();
-      console.log("Broken links:");
-      console.log(brokenLinks);
-      if (brokenLinks.length > 0) {
-        core.setOutput('brokenLinks', arrayToHTMLList(brokenLinks));
-      }
-      process.exit(0);
-    }
     if (!link) {
       continue; // Skip if the link is empty
     }
@@ -67,7 +57,6 @@ async function checkLinks() {
           timeout: navigationTimeout,
         });
         visitedLinks.add(pageLink); // Add the pageLink to the visited set
-        counter++;
 
         const statusCode = await page.evaluate(() => {
           return {
@@ -85,7 +74,10 @@ async function checkLinks() {
   await browser.close();
   console.log("Broken links:");
   console.log(brokenLinks);
-  process.exit(1);
+  if (brokenLinks.length > 0) {
+    core.setOutput('brokenLinks', arrayToHTMLList(brokenLinks));
+  }
+  process.exit(0);
 }
 
 checkLinks().catch((error) => {
