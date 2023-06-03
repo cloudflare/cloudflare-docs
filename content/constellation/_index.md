@@ -44,3 +44,6 @@ Use Constellation from a Cloudflare Worker.
  
 {{</resource-group>}}
 
+## Bad api links
+
+Testing this [link](/api/operations/fake-value-thingy).

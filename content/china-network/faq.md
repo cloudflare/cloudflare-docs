@@ -8,6 +8,10 @@ meta:
 
 # FAQ
 
+## Bad api links
+
+Testing this [link](/api/operations/fake-value-thingy2).
+
 ## Requirements
 
 ### What are the requirements to enable the Cloudflare China Network service from Cloudflare?

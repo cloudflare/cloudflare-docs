@@ -6,6 +6,10 @@ weight: 2
 
 # Get started
 
+## Bad api links
+
+Testing this [link](/api/operations/fake-value-thingy3).
+
 ## Step 1 — Contract required services and agree to supplemental terms
 
 1. Ensure that you have a Cloudflare Enterprise plan. If you do not have an Enterprise plan yet, you must upgrade.
