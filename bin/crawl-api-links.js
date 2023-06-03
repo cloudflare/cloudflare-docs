@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+const core = require('@actions/core');
 
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
 let counter = 0;
@@ -25,9 +26,8 @@ async function checkLinks() {
       console.log("Broken links:");
       console.log(brokenLinks);
       if (brokenLinks.length > 0) {
-        console.log(`::set-output name=broken_links::${JSON.stringify(brokenLinks)}`);
+        core.exportVariable('broken_links', JSON.stringify(brokenLinks));
       }
-      process.exit(1);
     }
     if (!link) {
       continue; // Skip if the link is empty
