@@ -4,6 +4,18 @@ import core from "@actions/core";
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
 let counter = 0;
 
+function arrayToHTMLList(array) {
+  let html = '<ul>';
+
+  for (let i = 0; i < array.length; i++) {
+    html += '<li>' + array[i] + '</li>';
+  }
+
+  html += '</ul>';
+
+  return html;
+}
+
 async function checkLinks() {
   const browser = await puppeteer.launch({
     headless: "new",
@@ -26,7 +38,7 @@ async function checkLinks() {
       console.log("Broken links:");
       console.log(brokenLinks);
       if (brokenLinks.length > 0) {
-        core.setOutput('brokenLinks', JSON.stringify(brokenLinks));
+        core.setOutput('brokenLinks', arrayToHTMLList(brokenLinks));
       }
       process.exit(0);
     }
