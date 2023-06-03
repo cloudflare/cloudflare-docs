@@ -28,6 +28,7 @@ async function checkLinks() {
       if (brokenLinks.length > 0) {
         core.exportVariable('broken_links', JSON.stringify(brokenLinks));
       }
+      process.exit(0);
     }
     if (!link) {
       continue; // Skip if the link is empty
