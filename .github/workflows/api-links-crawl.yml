@@ -26,7 +26,6 @@ jobs:
 
       - name: Create issue
         needs: check-api-links
-        runs-on: ubuntu-latest
 
         env:
           EXPORTED_VARIABLE: ${{ needs.export_variable_step.outputs.broken_links }}
