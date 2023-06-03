@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-const core = require('@actions/core');
+import core from "@actions/core";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
 let counter = 0;
