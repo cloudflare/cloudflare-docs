@@ -4,12 +4,6 @@ const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (6
 let counter = 0;
 
 async function checkLinks() {
-  if (counter > 10) {
-    await browser.close();
-    console.log("Broken links:");
-    console.log(brokenLinks);
-    process.exit(1);
-  }
   const browser = await puppeteer.launch({
     headless: "new",
   });
@@ -26,6 +20,12 @@ async function checkLinks() {
   const brokenLinks = [];
 
   for (const link of sitemapLinks) {
+    if (counter > 10) {
+      await browser.close();
+      console.log("Broken links:");
+      console.log(brokenLinks);
+      process.exit(1);
+    }
     if (!link) {
       continue; // Skip if the link is empty
     }
