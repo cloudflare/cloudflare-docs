@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
+let counter = 10;
 
 async function checkLinks() {
   const browser = await puppeteer.launch({
@@ -44,12 +45,17 @@ async function checkLinks() {
           timeout: navigationTimeout,
         });
         visitedLinks.add(pageLink); // Add the pageLink to the visited set
+        counter++;
+        if (counter > 10) {
+          return;
+        }
         const statusCode = await page.evaluate(() => {
           return {
             status: document.querySelector("body") ? 200 : 404,
             url: window.location.href,
           };
         });
+        console.log(statusCode)
         if (statusCode.status !== 200) {
           brokenLinks.push(statusCode.url);
         }
