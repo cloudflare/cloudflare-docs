@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
+let counter = 0;
 
 async function checkLinks() {
   const browser = await puppeteer.launch({
@@ -19,6 +20,15 @@ async function checkLinks() {
   const brokenLinks = [];
 
   for (const link of sitemapLinks) {
+    if (counter > 10) {
+      await browser.close();
+      console.log("Broken links:");
+      console.log(brokenLinks);
+      if (brokenLinks.length > 0) {
+        console.log(`::set-output name=broken_links::${JSON.stringify(brokenLinks)}`);
+      }
+      process.exit(1);
+    }
     if (!link) {
       continue; // Skip if the link is empty
     }
@@ -38,12 +48,13 @@ async function checkLinks() {
       }
 
       if (pageLink.includes("/api/operations/")) {
+        console.log(`Evaluating link: ${pageLink}`);
         await page.goto(pageLink, {
           waitUntil: "networkidle0",
           timeout: navigationTimeout,
         });
-
         visitedLinks.add(pageLink); // Add the pageLink to the visited set
+        counter++;
 
         const statusCode = await page.evaluate(() => {
           return {
