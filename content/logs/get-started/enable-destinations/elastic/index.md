@@ -53,7 +53,7 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/zones/<ZONE
 
 ## Enable the Integration in Elastic
 
-Once the Logpush job is configured, follow Elastics instructions for [setting up the Integration](https://docs.elastic.co/integrations/cloudflare) in the Elastic app.
+Once the Logpush job is configured, follow Elastics instructions for [setting up the Integration](https://docs.elastic.co/integrations/cloudflare_logpush) in the Elastic app.
 
 ## View Dashboards
 
