@@ -48,7 +48,7 @@ By default, TLS decryption can use both TLS version 1.2 and 1.3. However, some e
 
 When [FIPS compliance is enabled](#enable-tls-decryption), Gateway will only choose [FIPS-compliant cipher suites](#cipher-suites) when connecting to the origin. If the origin does not support FIPS-compliant ciphers, the request will fail.
 
-Gateway does not inspect HTTP/3 traffic from most browsers, including Chrome, Firefox, and Safari. To enforce your HTTP policies for this HTTP/3 traffic, you must [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
+FIPS-compliant traffic defaults to HTTP/3. Gateway does not inspect HTTP/3 traffic from most browsers, including Chrome, Firefox, and Safari. To enforce your HTTP policies for this HTTP/3 traffic, you must [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
 
 ### Cipher suites
 
