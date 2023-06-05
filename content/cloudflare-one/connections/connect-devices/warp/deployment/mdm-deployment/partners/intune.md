@@ -36,7 +36,7 @@ Refer to the [generic instructions for macOS](/cloudflare-one/connections/connec
 
 Refer to the [generic instructions for iOS](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#ios).
 
-If you would like to use variables within a property list of an app configuration policy in Intune, Refer to [the available token types with example values](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list). For example, you can use `{{deviceid}}` as [`unique_client_id` key](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#unique_client_id) for large-scale [Device UUID](/cloudflare-one/identity/devices/warp-client-checks/device-uuid.md) posture check deployment.
+Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid/) deployment.
 
 ## Android
 
