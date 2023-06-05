@@ -7,7 +7,7 @@ _build:
 
 ## Allow corporate domains
 
-This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a [blocked category](/learning-paths/modules/security/dns-filtering-create-policy/recommended-policies/#block-content-categories) like _Newly seen domains_ or _Login pages_.
+This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a [blocked category](/learning-paths/modules/security/dns-filtering-create-policy/recommended-policies/#block-content-categories) like `Newly seen domains` or `Login pages`.
 
 | Selector | Operator | Value             | Action | Precedence |
 | -------- | -------- | ----------------- | ------ | ---------- |
@@ -32,8 +32,8 @@ The categories included in this policy are not always a security threat, but blo
 
 You can implement policies to block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
-| Selector                        | Operator | Value                                                                                                                                                           | Action |
-| ------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Selector                        | Operator | Value                                                                                                                                                          | Action |
+| ------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
 | Resolved Country IP Geolocation | in       | `Afghanistan`, `Belarus`, `Congo (Kinshasa)`, `Cuba`, `Iran`, `Iraq`, `Korea, North`, `Myanmar`, `Russian Federation`, `Sudan`, `Syria`, `Ukraine`, `Zimbabwe` | Block  |
 
 ## Block top-level domains
