@@ -58,7 +58,7 @@ You may also see Managed Challenge as a result of a [firewall rule](https://supp
 
 This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
 
-To understand if the result of the challenge was a success or a failure, you can verify it using [Logpush](https://developers.cloudflare.com/logs/about/).
+To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 ___
 
 ## What is the difference between the threat score and bot management score?
