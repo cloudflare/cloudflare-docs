@@ -16,7 +16,7 @@ This policy allows users to access official corporate domains. By deploying the 
 ## Block security threats
 
 Block [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
-{{<render file="gateway/_block-security-categories.md" productFolder="cloudflare-one">}}
+{{<render file="gateway/_block-security-categories.md">}}
 
 ## Block content categories
 
@@ -26,7 +26,7 @@ The categories included in this policy are not always a security threat, but blo
 | ------------------ | -------- | --------------------------------------------------------- | ------ |
 | Content Categories | in       | `Questionable Content`, `Security Risks`, `Miscellaneous` | Block  |
 
-{{<render file="gateway/_block-applications.md" productFolder="cloudflare-one">}}
+{{<render file="gateway/_block-applications.md">}}
 
 ## Block banned countries
 
@@ -34,11 +34,11 @@ You can implement policies to block websites hosted in countries categorized as 
 
 | Selector                        | Operator | Value                                                                                                                                                           | Action |
 | ------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| Resolved Country IP Geolocation | in       | `Afghanistan`, `Belarus`, `Congo (Kinshasa)`, `Cuba`, `Iran`, `Iraq`, `Korean, North`, `Myanmar`, `Russian Federation`, `Sudan`, `Syria`, `Ukraine`, `Zimbabwe` | Block  |
+| Resolved Country IP Geolocation | in       | `Afghanistan`, `Belarus`, `Congo (Kinshasa)`, `Cuba`, `Iran`, `Iraq`, `Korea, North`, `Myanmar`, `Russian Federation`, `Sudan`, `Syria`, `Ukraine`, `Zimbabwe` | Block  |
 
 ## Block top-level domains
 
-Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-level domains (TLDs) can reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations like [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries) or [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries) .
+Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-level domains (TLDs) can reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations like [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries) or [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries).
 
 | Selector | Operator      | Value                                                                 | Logic | Action |
 | -------- | ------------- | --------------------------------------------------------------------- | ----- | ------ |
@@ -53,7 +53,7 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 | Selector | Operator      | Value                                       | Logic | Action |
 | -------- | ------------- | ------------------------------------------- | ----- | ------ |
 | Domain   | not in list   | `Corporate Domains`                         | And   | Block  |
-| Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |
+| Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |       |        |
 
 ## Block online tracking
 
@@ -73,7 +73,7 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 
 ## Hide explicit search results
 
-SafeSearch is a feature of search engines that helps you filter explicit or offensive content. You can enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo:
+SafeSearch is a feature of search engines that helps you filter explicit or offensive content. You can enable SafeSearch on search engines like Google, Bing, Yandex, YouTube, and DuckDuckGo:
 
 | Selector           | Operator | Value            | Action      |
 | ------------------ | -------- | ---------------- | ----------- |

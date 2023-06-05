@@ -14,5 +14,5 @@ To minimize the risk of [shadow IT](https://www.cloudflare.com/learning/access-m
 | Application | in       | `ChatGPT`, `Bard` | Block  |
 
 {{<Aside type="note">}}
-After 7 days, view your [shadow IT analytics](/cloudflare-one/insights/analytics/access/) and block additional applications based on what your users are accessing.
+After seven days, view your [shadow IT analytics](/cloudflare-one/insights/analytics/access/) and block additional applications based on what your users are accessing.
 {{</Aside>}}

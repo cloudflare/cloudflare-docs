@@ -10,7 +10,7 @@ The following policies are commonly used to secure DNS traffic.
 
 Refer to the [DNS policies page](/cloudflare-one/policies/filtering/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
 
-{{<render file="gateway/_recommended-dns-policies.md" productFolder="cloudflare-one">}}
+{{<render file="gateway/_recommended-dns-policies.md">}}
 
 {{<render file="/gateway/_policies-optional.md">}}
 
