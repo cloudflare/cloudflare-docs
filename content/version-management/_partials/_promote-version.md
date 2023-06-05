@@ -13,4 +13,4 @@ To promote a version:
 4. Select **Environments**.
 5. On the environment in which you tested the version, select **Promote**. This option will only be available if the lower-ranked environment has a different version than the higher-ranked environment.
 
-Promoting a Version to a read-only environment, will make the version permanently read-only.
+Promoting a version to a read-only environment will make the version permanently read-only.
