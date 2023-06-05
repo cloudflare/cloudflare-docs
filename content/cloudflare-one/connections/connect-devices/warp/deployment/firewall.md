@@ -58,7 +58,7 @@ The following domains are used as part of our captive portal check:
 As part of establishing the WARP connection, the client will check the following URLs to validate a successful connection:
 
 - `engage.cloudflareclient.com` verifies general Internet connectivity outside of the WARP tunnel.
-- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel.
+- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add `connectivity.cloudflareclient.com` to your firewall allowlist.
 
 ## NEL reporting
 
