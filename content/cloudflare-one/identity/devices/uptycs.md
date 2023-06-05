@@ -16,7 +16,7 @@ The following Uptycs values are needed to set up the Uptycs posture check:
 - Client key
 - Client Secret
 - Customer ID
-- REST API URL (https://{domain}.{domainsuffix}) 
+- REST API URL (`https://{domain}.{domainsuffix}`) 
 
 To obtain these values:
 
