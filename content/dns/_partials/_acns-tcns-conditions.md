@@ -12,7 +12,7 @@ inputParameters: param1;;param2;;param3
 
   | Type | Name | Content |
   | --- | --- | --- |
-  | `A` | `ns1.example.org` | `192.0.2.1` |
+  | `A` | `ns1.example.org` | `<IPv4>` |
 
   {{</example>}}
 

@@ -4,8 +4,7 @@ title: Zone level
 weight: 3
 meta:
   title: Zone-level custom nameservers
-  description: Zone-level custom nameservers must be a subdomain of the zone where the custom nameservers are configured. These nameservers can only be aplied and used within the respective zone.
-
+  description: With zone-level custom nameservers, each custom nameserver name must be a subdomain of the zone where the custom nameservers are configured. These custom nameservers can only be used within the respective zone.
 ---
 
 # Zone-level custom nameservers

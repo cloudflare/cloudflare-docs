@@ -4,7 +4,7 @@ title: Tenant level
 weight: 5
 meta:
   title: Tenant-level custom nameservers
-  description: Tenant-level custom nameservers can be part of any domain, even if the domain does not exist as a zone within any account in Cloudflare. These nameservers are organized in different sets (`ns_set`) and can be applied and used across different accounts, as long as the accounts are part of the [tenant](/tenant/).
+  description: With tenant-level custom nameservers, you can use the same custom nameservers for different zones and across different accounts, as long as the accounts are part of the [tenant](/tenant/). The domain that provides the nameservers names does not have to exist as a zone within any account in Cloudflare.
 ---
 
 # Tenant-level custom nameservers
