@@ -45,7 +45,7 @@ SSLCACertificateFile /path/to/origin-pull-ca.pem
 <summary>NGINX example</summary>
 <div>
 
-For this example, you would have saved the your certificate to `/etc/nginx/certs/cloudflare.crt`.
+For this example, you would have saved your certificate to `/etc/nginx/certs/cloudflare.crt`.
 
 ```txt
 ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
