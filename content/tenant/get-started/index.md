@@ -28,14 +28,14 @@ For more details on using the Cloudflare API, refer to our [API overview](/funda
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 {{<render file="_create-account-dash.md">}}
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 {{<render file="_create-account-api.md">}}
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -65,9 +65,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
 -H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<customer-email>", 
-    "roles": ["<user-role>"] 
+-d '{
+    "email": "<customer-email>",
+    "roles": ["<user-role>"]
     }'
 ```
 
@@ -97,8 +97,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/users' \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
 -H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<ID@youremaildomain.com>" 
+-d '{
+    "email": "<ID@youremaildomain.com>"
     }'
 ```
 

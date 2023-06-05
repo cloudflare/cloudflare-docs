@@ -75,7 +75,7 @@ Each token can contain multiple policies.
 API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 {{<Aside type="note">}}
- 
+
 Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](/api/operations/user-user-details), [Account](/api/operations/accounts-list-accounts), and [Zone](/api/operations/zones-get) documentation for more details.
   {{</Aside>}}
 
@@ -132,7 +132,7 @@ Each parameter in the `in` and `not_in` objects must be in CIDR notation. For ex
 Combine the previous information to create a token as in the following example:
 
 ```json
-$ curl -X POST 
+$ curl -X POST
 "https://api.cloudflare.com/client/v4/user/tokens" \
      -H "Authorization: Bearer <api token secret>" \
      -H "Content-Type: application/json" \
