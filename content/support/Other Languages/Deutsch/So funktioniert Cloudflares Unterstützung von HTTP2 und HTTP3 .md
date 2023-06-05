@@ -36,7 +36,7 @@ ___
 
 HTTP/3 ermöglicht schnelle, zuverlässige und sichere Verbindungen.  Es verschlüsselt den Internet-Transport standardmäßig mit einem Google-Protokoll namens QUIC.  Aktivieren Sie HTTP/3 über die Cloudflare-App **Netzwerk**. 
 
-Weitere Informationen finden Sie in unserer [HTTP/3-Dokumentation für Entwickler](https://developers.cloudflare.com/http3/).
+Weitere Informationen finden Sie in unserer [HTTP/3-Dokumentation für Entwickler](/http3/).
 
 ___
 

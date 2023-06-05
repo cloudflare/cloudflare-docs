@@ -24,7 +24,7 @@ Les pirates tentent d'identifier votre adresse IP d'origine pour attaquer direct
 Configurez vos enregistrements DNS pour bénéficier d'une protection maximale en procédant comme suit :
 
 1.  [Activez le proxy Cloudflare (nuage orange)](https://support.cloudflare.com/hc/articles/200169626)
-2.  Supprimez les enregistrements DNS utilisés pour le FTP ou le SSH et utilisez plutôt votre IP d'origine pour lancer directement des requêtes FTP ou SSH. Vous pouvez également mettre en proxy FTP et SSH via [Spectrum](https://developers.cloudflare.com/spectrum/getting-started/) .
+2.  Supprimez les enregistrements DNS utilisés pour le FTP ou le SSH et utilisez plutôt votre IP d'origine pour lancer directement des requêtes FTP ou SSH. Vous pouvez également mettre en proxy FTP et SSH via [Spectrum](/spectrum/getting-started/) .
 3.  [Désactivez les enregistrements A, AAAA ou CNAME correspondant à votre serveur de messagerie](https://support.cloudflare.com/hc/articles/200168876)
 4.  Supprimez les métacaractères des domaines Free, Pro ou Business car ils révèlent votre adresse IP d'origine. [Cloudflare ne protège que les enregistrements contenant des métacaractères pour les domaines inscrits à une formule Enterprise](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries).
 
@@ -51,5 +51,5 @@ ___
 ## Ressources associées
 
 -   [Comprendre la protection Cloudflare contre les attaques DDoS](https://support.cloudflare.com/hc/articles/200172676)
--   [Répondre aux attaques DDoS](https://support.cloudflare.com/hc/articles/200170196)
+-   [Répondre aux attaques DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [Qu'est-ce qu'une attaque DDoS ?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

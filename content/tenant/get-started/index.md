@@ -18,7 +18,7 @@ After you sign your partner agreement with Cloudflare, Cloudflare will add [cert
 
 ### API access
 
-You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
+You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) to authenticate your requests to the Tenant API.
 
 For more details on using the Cloudflare API, refer to our [API overview](/fundamentals/api/).
 
@@ -28,14 +28,14 @@ For more details on using the Cloudflare API, refer to our [API overview](/funda
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 {{<render file="_create-account-dash.md">}}
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 {{<render file="_create-account-api.md">}}
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -65,15 +65,15 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
 -H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<customer-email>", 
-    "roles": ["<user-role>"] 
+-d '{
+    "email": "<customer-email>",
+    "roles": ["<user-role>"]
     }'
 ```
 
 In most cases, you will want to create new users with a role of `Administrator` which always has the id `05784afa30c1afe1440e79d9351c7430`.
 
-If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](https://developers.cloudflare.com/api/operations/account-roles-list-roles) request to the API.
+If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](/api/operations/account-roles-list-roles) request to the API.
 
 ### Option 2 - Access via an interface
 
@@ -97,8 +97,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/users' \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
 -H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<ID@youremaildomain.com>" 
+-d '{
+    "email": "<ID@youremaildomain.com>"
     }'
 ```
 
@@ -133,7 +133,7 @@ header: Response
 
 Now that you have a customer account and customer users (or service users), you need to create a zone.
 
-To do this, send a [`POST`](https://developers.cloudflare.com/api/operations/zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
+To do this, send a [`POST`](/api/operations/zones-post) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
 
 ```bash
 ---

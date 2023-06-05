@@ -4,7 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M39.2
 product:
   title: Load Balancing
   url: /load-balancing/
-  group: Performance
+  group: Application performance
+  preview_tryout: true
 
 meta:
   title: Cloudflare Load Balancing docs
@@ -21,3 +22,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: load-balancing

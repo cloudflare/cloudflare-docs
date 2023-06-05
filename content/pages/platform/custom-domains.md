@@ -9,7 +9,7 @@ When deploying your Pages project, you may wish to point custom domains (or subd
 
 {{<Aside type="note" header="Purging the cache">}}
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/#purge-everything) in the dashboard to ensure the latest build gets served.
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/#purge-everything) in the dashboard to ensure the latest build gets served.
 
 {{</Aside>}}
 
@@ -18,7 +18,7 @@ If Page Rules or other cache settings are used on your custom domain, that may l
 To add a custom domain:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account in **Account Home** > **Pages**.
+2. Select your account in **Account Home** > **Workers & Pages**.
 3. Select your Pages project > **Custom domains**.
 4. Select **Set up a domain**.
 5. Provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
@@ -65,9 +65,9 @@ Then, in **DNS** > **Records**:
 2.  Select **Edit**.
 3.  Select **Delete**.
 
-Next, in the **Pages** dashboard:
+Next, in Account Home, go to **Workers & Pages**:
 
-1.  Select **your Pages project**.
+1.  In **Overview**, select your Pages project.
 2.  Go to **Custom domains**.
 3.  Select the **three dot icon** next to your custom domain > **Remove domain**.
 

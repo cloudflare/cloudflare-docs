@@ -28,7 +28,7 @@ Customers can configure their load balancer using the `location_strategy` parame
 | `"always"`| Always prefers ECS. |
 | `"never"` | Never prefers ECS. |
 | `"proximity"` | Prefers ECS only when `steering_policy="proximity"`. |
-| `"geo"` | Prefers ECS only when `steering_policy="geo"`. |
+| `"geo"` | Prefers ECS only when `steering_policy="geo"` and only supports country-level steering. |
 
 `mode` determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful. 
 

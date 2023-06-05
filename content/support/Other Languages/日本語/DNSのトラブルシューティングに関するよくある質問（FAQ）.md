@@ -60,7 +60,7 @@ ___
 
 _Aレコード、AAAAレコード、またはCNAMEレコードが見つからなかった_ 場合は、Cloudflare  **DNS** アプリにDNS解決のための適切な レコードが不足していることを意味します。
 
-[不足しているDNSレコード](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) をドメインに追加します。
+[不足しているDNSレコード](/dns/manage-dns-records/how-to/create-dns-records) をドメインに追加します。
 
 ___
 

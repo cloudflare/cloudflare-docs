@@ -46,8 +46,8 @@ mTLS certificate bindings present an API similar to [service bindings](/workers/
 
 ### Interface
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 export default {
     async fetch(request, environment) {
@@ -56,7 +56,7 @@ export default {
 }
 ```
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 ```js
 interface Env {
   MY_CERT: Fetcher;

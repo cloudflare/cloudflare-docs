@@ -7,11 +7,13 @@ layout: single
 
 # CrowdStrike
 
-Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the integration.
+{{<render file="posture/_available-for-warp-with-gateway.md">}}
+
+Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. Our service-to-service posture check identifies devices based on their serial numbers.
 
 ## Set up CrowdStrike as a service provider
 
-### 1. Get CrowdStrike settings
+### 1. Obtain CrowdStrike settings
 
 The following CrowdStrike values are needed to set up the CrowdStrike posture check:
 
@@ -52,19 +54,13 @@ To retrieve those values:
 8. Choose a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
 9. Select **Save**.
 
-To ensure the values have been entered correctly, select **Test**.
+{{<render file="posture/_test-posture-provider.md">}}
 
 ### 3. Configure the posture check
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
-2. Select **Add new**.
-3. Select the CrowdStrike provider.
-4. Configure a [device posture check](#crowdstrike-device-posture-attributes) and enter any name.
-5. Select **Save**.
+{{<render file="posture/_configure-posture-check.md" withParameters="Crowdstrike">}}
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the service provider posture check is returning the expected results.
-
-## Crowdstrike device posture attributes
+## Device posture attributes
 
 Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis). To learn more about how scores are calculated, refer to the [CrowdStrike Zero Trust Assessment](https://falcon.us-2.crowdstrike.com/documentation/138/zero-trust-assessment) documentation.
 

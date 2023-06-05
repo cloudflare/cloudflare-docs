@@ -21,7 +21,7 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 - Azure AD Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
 - [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) enabled on your devices
-- (Recommended) [`wrangler`](/workers/get-started/guide/#1-install-wrangler-workers-cli) installation
+- (Recommended) [`wrangler`](/workers/wrangler/install-and-update/) installation
 
 ## 1. Set up Azure AD as an identity provider
 
@@ -86,7 +86,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
 4. Modify `wrangler.toml` to include the following values:
 
-   - `<ACCOUNT_ID>`: your Cloudflare account ID, shown in the [Cloudflare dashboard](https://dash.cloudflare.com/) in the **Workers** tab.
+   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
    - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 

@@ -12,7 +12,7 @@ meta:
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Windows           | WARP with Gateway                                                                         | All plans                                                     |
 
@@ -31,7 +31,7 @@ The Domain Joined device posture attribute ensures that a user is a member of a 
 1. Enter the domain you want to check for, such as `example.com`.
 1. Select **Save**.
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the Domain Joined check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the Domain Joined check is returning the expected results.
 
 ### Validate the domain value on your Windows device
 

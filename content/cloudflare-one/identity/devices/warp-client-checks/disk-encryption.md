@@ -8,16 +8,7 @@ meta:
 
 # Disk encryption
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
-
-</div>
-</details>
+{{<render file="posture/_available-for-warp-with-gateway.md">}}
 
 The Disk Encryption device posture attribute ensures that disks are encrypted on a device.
 
@@ -31,7 +22,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 1. Either enable disk encryption for all volumes, or input the specific volume(s) you want to check for encryption (for example, `C`).
 1. Select **Save**.
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the disk encryption check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the disk encryption check is returning the expected results.
 
 ## How WARP checks for encryption
 

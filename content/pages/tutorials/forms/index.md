@@ -92,7 +92,7 @@ Because the `enctype` changed, the browser changes how it sends data to the serv
 
 The rest of this tutorial will focus on building an HTML form on Pages, including a Worker to receive and parse the form submissions.
 
-{{<Aside type="info" header="GitHub Repository">}}
+{{<Aside type="note" header="GitHub Repository">}}
 
 The source code for this example is [available on GitHub](https://github.com/cloudflare/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
 
@@ -201,7 +201,7 @@ The HTML form is complete and ready for deployment. When the user submits this f
 
 Cloudflare Pages offers a [Functions](/pages/platform/functions/) feature, which allows you to define and deploy Workers for dynamic behaviors.
 
-Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/platform/functions/#functions-routing) documentation for more information.
+Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/platform/functions/routing/) documentation for more information.
 
 To define a handler for `/api/submit`, you must create a `functions/api/submit.js` file. This means that your `functions` and `public` directories should be siblings, with a total project structure similar to the following:
 
@@ -329,5 +329,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
+- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-pages-functions/)
 - [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)

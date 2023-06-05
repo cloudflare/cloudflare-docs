@@ -53,10 +53,10 @@ ___
 
 Cloudflare **Firewall** 应用可通过以下方式协助流量拦截：
 
-**[IP 访问规则](https://support.cloudflare.com/hc/articles/217074967)** - 建议用于阻止多个 IP 地址、/16 或 /24 IP 范围或自治系统编号 (ASN)。   
-**[防火墙规则](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)** - 建议用于阻止国家/地区、任意有效的 IP 范围或更为复杂的攻击模式。  
-**[Zone Lockdown](https://support.cloudflare.com/hc/en-us/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-)** - 建议用于仅允许受信任的 IP 地址或范围访问您的站点的某一部分。  
-**[User Agent Blocking](https://support.cloudflare.com/hc/en-us/articles/115001856951-How-do-I-block-malicious-User-Agents-with-Cloudflare-)** - 建议用于阻止整个域中可疑的[用户代理标头](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent)。
+**[IP 访问规则](/waf/tools/ip-access-rules/)** - 建议用于阻止多个 IP 地址、/16 或 /24 IP 范围或自治系统编号 (ASN)。 
+**[防火墙规则](/firewall/cf-dashboard/create-edit-delete-rules/)** - 建议用于阻止国家/地区、任意有效的 IP 范围或更为复杂的攻击模式。
+**[Zone Lockdown](/waf/tools/zone-lockdown/)** - 建议用于仅允许受信任的 IP 地址或范围访问您的站点的某一部分。
+**[User Agent Blocking](/waf/tools/user-agent-blocking/)** - 建议用于阻止整个域中可疑的[用户代理标头](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent)。
 
 要决定阻止或质询哪些国家/地区或 IP，请查看您的日志文件。联系您的主机提供商以帮助确定以下几项：
 

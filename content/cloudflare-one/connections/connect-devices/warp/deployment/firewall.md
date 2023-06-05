@@ -12,15 +12,20 @@ If your organization uses a firewall or other policies to restrict or intercept 
 
 The WARP client talks with our edge via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow `zero-trust-client.cloudflareclient.com` which will lookup the following IP addresses:
 
-- IPv4 API Endpoints: `162.159.137.105` and `162.159.138.105`
-- IPv6 API Endpoints: `2606:4700:7::a29f:8969` and `2606:4700:7::a29f:8a69`
+{{<render file="_client-orchestration-ips.md">}}
 
 ## DoH IP
 
 All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTPS). The following IP addresses must be reachable for DNS to work correctly.
 
-- IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
-- IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
+{{<render file="_doh-ips.md">}}
+
+## Client authentication endpoint
+
+When you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow `<your-team-name>.cloudflareaccess.com` which will lookup the following IP addresses:.
+
+- IPv4 Endpoints: `104.19.194.29` and `104.19.195.29`
+- IPv6 Endpoints: `2606:4700:300a::6813:c21d` and `2606:4700:300a::6813:c31d`
 
 ## WARP ingress IP
 
@@ -53,7 +58,7 @@ The following domains are used as part of our captive portal check:
 As part of establishing the WARP connection, the client will check the following URLs to validate a successful connection:
 
 - `engage.cloudflareclient.com` verifies general Internet connectivity outside of the WARP tunnel.
-- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel.
+- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add `connectivity.cloudflareclient.com` to your firewall allowlist.
 
 ## NEL reporting
 

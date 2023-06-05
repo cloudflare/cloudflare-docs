@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Client certificates
-weight: 4
+weight: 7
 meta:
     description: Use Cloudflare public key infrastructure (PKI) to create client certificates and enforce mutual Transport Layer Security (mTLS) encryption.
 ---

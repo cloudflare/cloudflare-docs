@@ -388,7 +388,7 @@ html[is-site-page] .DocsContent {
 
 .ProductGrid--link span {
     white-space: nowrap;
-    font-weight: 600;
+    font-weight: 450;
     line-height: 1.25
 }
 
@@ -422,10 +422,6 @@ html[is-site-page] .DocsContent {
 .ProductGrid--link svg path,
 .ProductGrid--link svg rect {
     fill: #6d767b
-}
-
-[theme=dark] .ProductGrid--link span {
-    font-weight: 500
 }
 
 [theme=dark] .ProductGrid--link svg path,
@@ -478,21 +474,21 @@ html[is-site-page] .DocsContent {
 }
 
 @media (min-width:768px) {
-.HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-    background-repeat: no-repeat;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 0 0px .5px white inset;
-    margin-top: 3em;
-}
+    .HeroImage {
+        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
+        background-repeat: no-repeat;
+        margin: 0 auto;
+        position: relative;
+        box-shadow: 0 0 0px .5px white inset;
+        margin-top: 3em;
+    }
 }
 
 @media (min-width:768px) {
-[theme=dark] .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
-    box-shadow: 0 0 0px .5px #1d1f20 inset;
-}
+    [theme=dark] .HeroImage {
+        background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
+        box-shadow: 0 0 0px .5px #1d1f20 inset;
+    }
 }
 
 @media (max-width:768px) {
@@ -510,20 +506,20 @@ html[is-site-page] .DocsContent {
         box-shadow: 0 0 0px .5px white inset;
         margin-top: 3em;
     }
-    }
+}
 
-    @media (min-width:768px) {
+@media (min-width:768px) {
     [theme=dark] .ZTHeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
-    }
+}
 
-    @media (max-width:768px) {
-        .ZTHeroImage {
-            background-image: none;
-        }
+@media (max-width:768px) {
+    .ZTHeroImage {
+        background-image: none;
     }
+}
 
 .HeroBlockGrid {
     padding: 40px 0;
@@ -651,7 +647,8 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #fff;
 }
 
-.QuadBlockGrid a, .ViewProducts a {
+.QuadBlockGrid a,
+.ViewProducts a {
     color: inherit;
     text-decoration: none;
 }
@@ -799,7 +796,6 @@ html[is-site-page] .DocsContent {
 
 .TriBlock {
     border-left: 5px solid #F6821F;
-    border-radius: 6px;
     padding: .5em 1.8em;
     height: 22em;
     width: 15em;
@@ -835,12 +831,16 @@ html[is-site-page] .DocsContent {
 
 .TriBlock li {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 10px;
     padding: 6px 0;
 }
 
-.TriBlock img{
+.TriBlock li p {
+    margin-bottom: initial;
+}
+
+.TriBlock img {
     height: 25px;
 }
 
@@ -854,6 +854,7 @@ html[is-site-page] .DocsContent {
 
 .DocsMarkdown .TriBlock ul {
     padding-left: 0;
+    margin-bottom: 1em;
 }
 
 .DocsMarkdown .TriBlockHeader p {
@@ -897,7 +898,8 @@ html[is-site-page] .DocsContent {
     padding: 2.6rem var(--docs-content-gap) 3.5rem;
 }
 
-.SiteFooterItem ul, a {
+.SiteFooterItem ul,
+a {
     text-decoration: none;
     list-style: none;
     padding: 0;
@@ -928,57 +930,57 @@ html[is-site-page] .DocsContent {
     }
 }
 
- .FeaturedContentSection {
+.FeaturedContentSection {
     margin-top: 2em;
- }
+}
 
- .FeatureContentGrid {
+.FeatureContentGrid {
     display: flex;
     gap: 2em;
     align-items: flex-end;
     margin-bottom: 3em;
- }
+}
 
- .FeaturedContentBlock {
+.FeaturedContentBlock {
     padding-top: 80px;
- }
+}
 
- .FeatureContentWithImage {
+.FeatureContentWithImage {
     margin: 0 30px;
- }
+}
 
- .FeatureContentWithCard {
+.FeatureContentWithCard {
     padding: 1em;
     margin: 1em;
     height: 20em;
     width: 30em;
     border: 1px solid #c8c6c6;
     border-radius: 6px;
- }
+}
 
- .FeatureContentDescription {
+.FeatureContentDescription {
     font-size: .85em;
     width: 16em;
     align-self: flex-start;
- }
+}
 
- .FeatureContentTitle {
-     font-size: 1.3em;
- }
+.FeatureContentTitle {
+    font-size: 1.3em;
+}
 
-  .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+.FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
     color: #0051C3;
     background: inherit;
     border-bottom-color: #0051C3;
-  }
+}
 
-  [theme=dark] .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
-      text-decoration: none;
-      color: var(--code-orange);
-      background: inherit;
-      border-bottom-color: var(--code-orange);
-  }
+[theme=dark] .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: var(--code-orange);
+    background: inherit;
+    border-bottom-color: var(--code-orange);
+}
 
 .ZeroTrustImage {
     content: url('./zero-trust-light.svg');
@@ -995,6 +997,7 @@ html[is-site-page] .DocsContent {
 [theme=dark] .DeveloperPlatformImage {
     content: url('./developer-platform-dark.svg');
 }
+
 @media (max-width:768px) {
     .FeaturedContentSection {
         margin-top: 5em;
@@ -1033,6 +1036,17 @@ html[is-site-page] .DocsContent {
     }
 }
 
+.subTitle {
+    font-size: 1.3em;
+    font-weight: 400;
+    padding-left: .1em;
+    color: #131313;
+}
+
+[theme=dark] .subTitle {
+    color: #fff;
+}
+
 .StartHere {
     font-size: 1.8em;
     font-weight: 400;
@@ -1046,11 +1060,11 @@ html[is-site-page] .DocsContent {
 }
 
 .leading {
-font-size: 2.5em;
-padding: 1em 0;
-line-height: 20px;
-font-weight: 400;
-color: #313131;
+    font-size: 2.5em;
+    padding: 1em 0;
+    line-height: 20px;
+    font-weight: 400;
+    color: #313131;
 }
 
 [theme=dark] .leading {
@@ -2759,6 +2773,49 @@ html {
     vertical-align: initial;
     font-size: .8em;
     top: -.5em
+}
+
+.DocsToolbar--theme-toggle {
+    display: flex;
+}
+
+#MobileSearch {
+    background: var(--background-color);
+    border-radius: 5px;
+    border: none;
+    color: var(--color);
+    cursor: pointer;
+    height: 28px;
+    margin-right: .8em;
+    width: 28px;
+}
+
+@media (min-width: 768px) {
+    #MobileSearch {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    #MobileSearch {
+        width: 40px;
+    }
+
+    #MobileSearch svg {
+        width: 24px;
+    }
+}
+
+#MobileSearch:hover {
+    background: rgba(var(--gray-6-rgb), .7);
+}
+
+[theme="dark"] #MobileSearch {
+    background: none;
+}
+
+[theme="dark"] #MobileSearch:hover {
+    background: rgba(var(--gray-2-rgb), .7)
 }
 
 .Superscript,
@@ -4626,7 +4683,7 @@ code .DocsMarkdown--prop-meta {
 }
 
 .DocsMarkdown blockquote:before {
-    quotes: "\201C""\201D";
+    quotes: "\201C" "\201D";
     content: open-quote;
     position: absolute;
     top: .05em;
@@ -5126,196 +5183,106 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsSearch {
     --text-indent: calc(var(--docs-content-gap) + 1px);
-    height: var(--docs-header-height)
+    height: var(--docs-header-height);
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.DocsSearch--input,
-.DocsSearch--input-wrapper {
-    position: relative;
-    height: 100%
-}
-
-@media (min-width: 769px) {
-.DocsSearch--input-wrapper:focus-within {
-    --highlight-opacity: 0.2;
-    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
-  }
-
-  .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-
-  .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-
-  .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-
-  [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-
-  [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-
-  [theme="dark"] .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-}
-
-.DocsSearch--input {
-    color: inherit;
+#algolia {
     width: 100%;
-    border: 0;
-    padding: 0 var(--text-indent) .05em;
-    background: transparent;
-    outline: none;
-    z-index: 2
 }
 
-@-moz-document url-prefix() {
-    .DocsSearch--input {
-        letter-spacing: 0
-    }
+.DocSearch-Container {
+    z-index: 999;
 }
 
-.DocsSearch--input::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .45);
-    opacity: 1
+[theme="dark"] .DocSearch-Container {
+    background: rgba(var(--background-color-rgb), .7);
 }
 
-.DocsSearch--input:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .45);
-    opacity: 1
+.DocSearch-Reset {
+    color: rgb(var(--gray-0-rgb));
 }
 
-.DocsSearch--input::placeholder {
-    color: rgba(var(--color-rgb), .45);
-    opacity: 1
+.DocSearch-Hit-Tree {
+    height: var(--docsearch-hit-height) !important;
+    width: 24px;
 }
 
-[theme=dark] .DocsSearch--input::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .55)
+.DocSearch-Search-Icon,
+.DocSearch-Container svg,
+.DocSearch-Logo svg {
+    height: auto;
+    width: auto;
 }
 
-[theme=dark] .DocsSearch--input:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .55)
+[theme="dark"] .DocSearch-Logo svg>* {
+    fill: white;
 }
 
-[theme=dark] .DocsSearch--input::placeholder {
-    color: rgba(var(--color-rgb), .55)
+.DocSearch-Screen-Icon svg {
+    height: auto;
+    width: auto;
+    margin: 0 auto;
 }
 
-.DocsSearch--input-icon {
-    position: absolute;
-    top: 0;
-    bottom: .05em;
-    margin-top: auto;
-    margin-bottom: auto;
-    left: 2.2em;
-    height: .8823529411em;
-    width: .8823529411em;
-    pointer-events: none;
-    opacity: .5;
-    transition: color .3s ease, opacity .3s ease;
-    z-index: 3
-}
-
-.DocsSearch--input-wrapper:focus-within .DocsSearch--input-icon {
-    color: var(--orange);
-    opacity: 1
-}
-
-.DocsSearch--input-bottom-border {
-    position: absolute;
-    left: 0;
-    width: 50%;
-    bottom: 0;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(var(--color-rgb), .07) 0, rgba(var(--color-rgb), .07) calc(100% - 6em), rgba(var(--color-rgb), 0))
-}
-
-[theme=dark] .DocsSearch--input {
-    background: linear-gradient(90deg, rgba(var(--shadow-color-rgb), .1) 0, rgba(var(--shadow-color-rgb), .1) calc(30% - 6em), rgba(var(--shadow-color-rgb), 0) 30%)
-}
-
-[theme=dark] .DocsSearch--input-bottom-border {
-    bottom: -1px
-}
-
-[theme=dark] .DocsSearch--input-bottom-border:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -1px;
-    width: 100%;
-    bottom: 0;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(var(--shadow-color-rgb), .5) 0, rgba(var(--shadow-color-rgb), .5) calc(100% - 6em), rgba(var(--shadow-color-rgb), 0))
-}
-
-.DocsSearch .ds-suggestion {
-    display: block;
-    --horizontal-padding: 1em;
-    padding: var(--suggestion-item-vertical-padding) var(--horizontal-padding);
-    margin: 0 calc(var(--horizontal-padding)*-1);
-    border-radius: .25em
-}
-
-.DocsSearch .ds-suggestion.ds-cursor {
-    background: rgba(var(--gray-5-rgb), .2)
-}
-
-[theme=dark] .DocsSearch .ds-suggestion.ds-cursor {
-    background: rgba(var(--gray-6-rgb), .15)
-}
-
+/* hide docssearch on mobile */
 @media (max-width:768px) {
-    .DocsSearch {
-        pointer-events: all
+    #algolia {
+        display: none;
     }
+}
 
-    .DocsSearch--input:not(:focus) {
-        padding: 0;
-        opacity: 0
-    }
+.DocsSearch-Modal {
+    top: 48px;
+}
 
-    .DocsSearch[is-focused] {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        --text-indent: 3rem;
-        z-index: 2
-    }
+/* dark */
+[theme=dark] .DocsSearch {
+    --docsearch-searchbox-background: var(--background-color);
+}
 
-    .DocsSearch--input-icon {
-        left: 15px;
-        height: 15px;
-        width: 15px
-    }
+[theme=dark] .DocSearch-Button .DocSearch-Search-Icon {
+    color: var(--color);
+}
 
-    .DocsSearch--input-wrapper:focus-within .DocsSearch--input-icon {
-        left: 19px
-    }
+[theme=dark] .DocSearch-Button-Placeholder {
+    color: var(--color);
+}
 
-    .DocsSearch[is-focused] .DocsSearch--input-wrapper {
-        background: var(--background-color);
-        height: var(--docs-header-height)
-    }
+[theme=dark] .DocSearch-Title {
+    color: rgb(var(--background-color-rgb));
+}
 
-    .DocsSearch--input-bottom-border {
-        display: none
-    }
+.DocSearch-Button,
+.DocSearch-Button:hover {
+    transition: background-color 0.3s ease;
+}
+
+.DocSearch-Button {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 95%;
+}
+
+[theme=dark] .DocSearch-Button {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[theme=dark] .DocSearch-Button:hover {
+    --docsearch-searchbox-focus-background: rgba(var(--color-rgb), .05);
+    box-shadow: none;
+}
+
+[theme=dark] .DocSearch-Button-Key {
+    --docsearch-key-gradient: rgba(var(--color-rgb), .05);
+    --docsearch-muted-color: var(--color);
+    box-shadow: none;
+}
+
+.DocSearch-Button {
+    margin: 0 48px 0 16px;
 }
 
 .DocsMobileHeader {
@@ -5786,7 +5753,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .slashPlaceholder {
-      visibility: hidden;
+    visibility: hidden;
 }
 
 .legalInformation {
@@ -5815,7 +5782,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
         padding-left: 0;
     }
 
-    .legalInformation li + li:before {
+    .legalInformation li+li:before {
         content: "|";
         padding-right: .5rem;
     }
@@ -5841,4 +5808,9 @@ html #ot-sdk-btn.ot-sdk-show-settings {
 
 html #ot-sdk-btn.ot-sdk-show-settings:hover {
     color: inherit;
+}
+
+.md__image {
+  display: inline;
+  margin: 0 10px 0 0;
 }

@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M9.9 
 product:
   title: Page Shield
   url: /page-shield/
-  group: Security
+  group: Application security
 
 meta:
   title: Cloudflare Page Shield docs
@@ -18,3 +18,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: page-shield

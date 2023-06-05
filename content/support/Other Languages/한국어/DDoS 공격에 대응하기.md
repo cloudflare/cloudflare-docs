@@ -56,11 +56,11 @@ ___
 
 Cloudflare **Firewall** 앱은 다음과 같은 방법으로 트래픽 차단을 용이하게 합니다.
 
--   [**IP 액세스 규칙**](https://support.cloudflare.com/hc/articles/217074967) \- 여러 IP 주소/16 또는 /24 IP 범위, 또는 ASN(자치 시스템 번호)을 차단하는 데 추천합니다. 
--   [**방화벽 규칙**](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) \- 국가, 유효한 IP 범위 또는 복잡한 공격 패턴을 차단하는 데 추천합니다.
+-   [**IP 액세스 규칙**](/waf/tools/ip-access-rules/) \- 여러 IP 주소/16 또는 /24 IP 범위, 또는 ASN(자치 시스템 번호)을 차단하는 데 추천합니다. 
+-   [**방화벽 규칙**](/firewall/cf-dashboard/create-edit-delete-rules/) \- 국가, 유효한 IP 범위 또는 복잡한 공격 패턴을 차단하는 데 추천합니다.
 
--   [**영역 잠금**](https://support.cloudflare.com/hc/ko/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-) \- 신뢰할 수 있는 IP 주소나 범위만을 사이트에 허용할 때 추천합니다.
--   [**사용자 에이전트 차단**](https://support.cloudflare.com/hc/ko/articles/115001856951-How-do-I-block-malicious-User-Agents-with-Cloudflare-) \- 전체 도메인에 대해 의심스러운 [사용자 에이전트 헤더](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent)를 차단할 때 추천합니다.
+-   [**영역 잠금**](/waf/tools/zone-lockdown/) \- 신뢰할 수 있는 IP 주소나 범위만을 사이트에 허용할 때 추천합니다.
+-   [**사용자 에이전트 차단**](/waf/tools/user-agent-blocking/) \- 전체 도메인에 대해 의심스러운 [사용자 에이전트 헤더](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent)를 차단할 때 추천합니다.
 
 차단하거나 대응할 국가나 IP를 결정하려면 로그 파일을 확인하세요. 호스팅 공급자에게 문의하여 다음을 파악하세요.
 

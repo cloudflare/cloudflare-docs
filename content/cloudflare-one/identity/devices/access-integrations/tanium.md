@@ -10,7 +10,7 @@ weight: 4
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems          | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems          | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | -------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Any OS supported by Tanium | WARP with Gateway                                                                         | All plans                                                     |
 

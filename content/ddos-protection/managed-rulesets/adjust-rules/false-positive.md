@@ -50,7 +50,7 @@ Once saved, the rule takes effect within one or two minutes. The rule adjustment
 
 ## Updating the adjusted rules later
 
-Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
+Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity-level) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
 
 {{<Aside type="note" header="Recommendation: Enable DDoS alerts">}}
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Debugging and logging
 weight: 12
 ---
@@ -85,9 +85,9 @@ The output of each `wrangler pages deployment tail` log is a structured JSON obj
 
 To view logs for your `production` or `preview` environments associated with any deployment:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/). 
-2. In **Account Home**, select **Pages**.
-3. In your your **Pages project**, go to the deployment you want to view logs for and select **View details** > **Functions**. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your Pages project, go to the deployment you want to view logs for and select **View details** > **Functions**. 
 
 Logging is available for all customers (Free, Paid, Enterprise).
 

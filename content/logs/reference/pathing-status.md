@@ -165,7 +165,7 @@ Cloudflare Firewall Rules triggers actions based on matching customer-defined ru
 
 ## Firewall User-Agent Block
 
-Challenge (Captcha or JavaScript) or block visitors who use a browser for which the User-Agent name matches a specific string.
+Challenge (Interactive or Non-Interactive) or block visitors who use a browser for which the User-Agent name matches a specific string.
 
 {{<table-wrap>}}
 

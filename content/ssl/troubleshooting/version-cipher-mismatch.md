@@ -14,8 +14,23 @@ After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloud
 This error occurs when your domain or subdomain is not covered by an SSL/TLS certificate, which is usually caused by:
 
 - A [delay in certificate activation](#certificate-activation).
-- An [expired Custom certificate](#certificate-expiration)
+- An [unproxied domain or subdomain DNS record](#proxied-dns-records).
+- An [expired Custom certificate](#certificate-expiration).
 - A [multi-level subdomain](#multi-level-subdomains) (`test.dev.example.com`).
+
+## Decision tree
+
+```mermaid
+flowchart TD
+accTitle: Troubleshooting ERR_SSL_VERSION_OR_CIPHER_MISMATCH decision tree
+A>Is your certificate active?] -- Yes --> B>Is the DNS record proxied?]
+A -- No --> C[Wait for certificate to activate or pause Cloudflare]
+B -- No --> D[Proxy the DNS record]
+B -- Yes --> E>Are you using a custom certificate?]
+E -- Yes --> F[Custom certificate may be expired]
+E -- No --> G>Are you accessing a multi-level subdomain?]
+G -- Yes --> H[Get an advanced or custom certificate]
+```
 
 ---
 
@@ -42,6 +57,16 @@ If you need to immediately resolve this error, [temporarily pause Cloudflare](/f
 Since Universal certificates can take up to 24 hours to be issued, wait and [monitor the certificate's status](/ssl/reference/certificate-statuses/#ssltls). Once your certificate becomes **Active**, unpause Cloudflare using whichever method you used previously.
 
 If your certificate is still not **Active** after 24 hours, try the various troubleshooting steps used to [resolve timeout issues](/ssl/edge-certificates/universal-ssl/troubleshooting/#resolve-a-timed-out-state). If these methods are successful (and your certificate becomes **Active**), unpause Cloudflare using whichever method you used previously.
+
+---
+
+## Proxied DNS records
+
+Cloudflare Universal and Advanced certificates only cover the domains and subdomains you have [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+
+If the **Proxy status** of `A`, `AAAA`, or `CNAME` records for a hostname are **DNS-only**, you will need to change it to **Proxied**.
+
+![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](/images/dns/proxy-status-screenshot.png)
 
 ---
 

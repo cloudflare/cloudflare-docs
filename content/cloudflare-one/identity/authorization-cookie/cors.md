@@ -41,7 +41,7 @@ If you make a preflighted cross-origin request to an Access-protected domain, th
 
 There are two ways you can resolve this error:
 
-- **Option 1** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-request).
+- **Option 1** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
 - **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
 ### Configure response to preflight requests
@@ -139,7 +139,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
    $ cd redirect-worker
    ```
 
-3. Open `wrangler.toml` in a text editor and insert your Account ID. To find your Account ID, open your [Cloudflare dashboard](https://dash.cloudflare.com/) and click the **Workers** tab.
+3. Open `wrangler.toml` in a text editor and insert your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
    ```txt
    ---
@@ -218,7 +218,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 ### 4. Configure the Worker
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), navigate to the **Workers** tab.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/) Account Home, navigate to **Workers & Pages**.
 
 2. Click your newly created Worker. In this example, the Worker is called `redirect-worker`.
 

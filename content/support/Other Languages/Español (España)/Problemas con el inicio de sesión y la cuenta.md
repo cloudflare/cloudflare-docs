@@ -165,7 +165,7 @@ ___
 
 ## Cómo proteger una cuenta en riesgo
 
-Si detectas actividad sospechosa en tu cuenta de Cloudflare, sigue [estos pasos](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/) para proteger tu cuenta.
+Si detectas actividad sospechosa en tu cuenta de Cloudflare, sigue [estos pasos](/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/) para proteger tu cuenta.
 
 ___
 
@@ -174,7 +174,7 @@ ___
 Tienes varias opciones para iniciar sesión en el [panel de control de Cloudflare](https://dash.cloudflare.com/login):
 
 -   **Correo electrónico y contraseña:** escribe tu dirección de correo electrónico y contraseña para iniciar sesión.
--   **Inicio de sesión único (SSO**): escribe tu dirección de correo electrónico (siempre que tu administrador haya [configurado SSO](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/dash-sso-apps/) como opción de inicio de sesión).
+-   **Inicio de sesión único (SSO**): escribe tu dirección de correo electrónico (siempre que tu administrador haya [configurado SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) como opción de inicio de sesión).
 -   **Iniciar sesión con Apple**:
     -   _Mismo correo electrónico de la cuenta de Cloudflare que el Id. de Apple_: puedes iniciar sesión con tu correo electrónico y contraseña o iniciar sesión con Apple.
     -   _Cuenta de Cloudflare diferente como Id. de Apple_: crearás una nueva cuenta de Cloudflare si inicias sesión con Apple. Si quieres iniciar sesión en una cuenta existente, [cambia tu dirección de correo electrónico](https://support.cloudflare.com/hc/es-es/articles/203471284-Problemas-con-el-inicio-de-sesi%C3%B3n-y-la-cuenta#12345679) para que coincida con la que usas para tu Id. de Apple.

@@ -1,0 +1,8 @@
+name: Speed
+
+product:
+  title: Speed
+  group: Application performance
+  url: /fundamentals/speed/
+  grid_placeholder: true
+

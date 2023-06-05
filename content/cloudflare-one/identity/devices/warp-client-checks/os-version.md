@@ -10,9 +10,9 @@ weight: 8
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All               | WARP with Gateway                                                                         | All plans                                                     |
+| All systems               | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -34,7 +34,7 @@ The OS version must be specified as a valid Semver. For example, if your device 
 
 6. Select **Save**.
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the OS version check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the OS version check is returning the expected results.
 
 ## Determine the OS version
 

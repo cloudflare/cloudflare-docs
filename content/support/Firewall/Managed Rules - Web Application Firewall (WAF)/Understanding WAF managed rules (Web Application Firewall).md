@@ -52,7 +52,7 @@ Review threats blocked via the [Security Events](/waf/security-events/)' **Activ
 -   Managed rules parse JSON responses to identify vulnerabilities targeted at APIs. JSON payload parsing is limited to 128 KB.
 -   Managed rules mitigate padding techniques. We recommend the following:
     1.  Turn on rule _100048_. This rule now protects against padding type attacks, but it is not deployed by default as it causes many false positives in customer environments. It is, however, important that customers tune their managed rules configuration. Cloudflare is working on a better long term solution.
-    2.  Create a firewall rule using the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) depending on the need to check headers and/or body to block larger payload (> 128 KB). Make sure to test your firewall rule in _Log_ mode first as it could be prone to generating false positives.
+    2.  Create a firewall rule using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) depending on the need to check headers and/or body to block larger payload (> 128 KB). Make sure to test your firewall rule in _Log_ mode first as it could be prone to generating false positives.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   There are a handful of managed rules that Cloudflare does not disable even if **Managed rules** is turned _Off_ in the Cloudflare dashboard, such as rule IDs _WP0025B_, _100043A_, and _100030._
@@ -125,7 +125,7 @@ When viewing a ruleset, Cloudflare shows default actions for each rule listed un
 -   _Default - takes the default action listed under_ _**Default mode**_ _when viewing a specific rule._
 -   _Disable -_ turns off the specific rule within the group**.**
 -   _Block_ - the request is discarded. 
--   _Legacy CAPTCHA_ - the visitor receives a CAPTCHA challenge page.
+-   _Interactive Challenge_ - the visitor receives a challenge page that requires interaction.
 -   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans#activity-log).
 
 Cloudflare’s [WAF changelog](/waf/change-log/scheduled-changes/) allows customers to monitor ongoing changes to the **Cloudflare Managed Ruleset.**
@@ -139,7 +139,7 @@ ___
 **Package: OWASP ModSecurity Core Rule Set** assigns a score to each request based on how many OWASP rules trigger. Some OWASP rules have a higher sensitivity score than others. After OWASP evaluates a request, Cloudflare compares the final score to the **Sensitivity** configured for the domain.  If the score exceeds the **Sensitivity**, the request is actioned based on the **Action** configured within **Package: OWASP ModSecurity Core Rule Set**:
 
 -   _Block_ - the request is discarded.
--   _Challenge_ - the visitor receives a CAPTCHA challenge page.
+-   _Challenge_ - the visitor receives an interactive challenge page.
 -   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans#activity-log).
 
 The sensitivity score required to trigger the WAF for a specific **Sensitivity** is as follows:

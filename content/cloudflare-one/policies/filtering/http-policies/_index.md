@@ -9,7 +9,7 @@ weight: 4
 
 {{<Aside>}}
 
-Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/">Cloudflare Root Certificate</a> before creating HTTP policies.
+Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/">Cloudflare Root Certificate</a> before creating HTTP policies.
 
 {{</Aside>}}
 
@@ -39,13 +39,19 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 #### Untrusted certificates
 
+{{<Aside type="note">}}
+
+To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
+
+{{</Aside>}}
+
 The **Untrusted certificate action** determines how to handle insecure requests.
 
-| Option       | Action                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------------------ |
-| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                 |
-| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust. |
-| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream.                            |
+| Option       | Action                                                                                                                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                          |
+| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust.                                                                                                                          |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom CA certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). |
 
 ### Block
 
@@ -206,7 +212,7 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 | -------------- | ------------------------------------------ |
 | Security Risks | `any(http.request.uri.category[*] in {1})` |
 
-For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories-1).
+For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories).
 
 ### Source Continent
 
@@ -217,6 +223,10 @@ The continent of the user making the request.
 
 The country of the user making the request.
 {{<render file="gateway/_source-country.md" withParameters="http.src_ip">}}
+
+### Source Internal IP
+
+{{<render file="gateway/_source-internal-ip.md" withParameters="HTTP;;http">}}
 
 ### Source IP
 

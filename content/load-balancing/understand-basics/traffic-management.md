@@ -10,21 +10,25 @@ Local Traffic Management enables you to load balance traffic within a data cente
 
 {{<Aside type="note">}}
 
-Cloudflare does not currently support entering the same IP using a different VNet. 
+Virtual IP support is currently API only.
 
 {{</Aside>}}
 
 ## Via the API
 
-Enable Virtual IP support by adding the `virtual_network_id` field to your API requests. Refer to the [Cloudflare API documentation](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-create-pool) for more information.
+You can [set up your Tunnels and Tunnel routes](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) to create a `virtual_network_id` value to use in the Load Balancing API call. To enable Cloudflare Load Balancers to connect to private IP origins, a Cloudflare Tunnel is required with an associated Virtual Network. VNets are associated with Load Balancing origins. You can find out more about Tunnel Virtual Networks in the [Cloudflare Tunnels documentation](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/). 
+
+To get a list of your current Virtual Networks, use the [`/teamnet/virtual_networks`](/api/operations/tunnel-virtual-network-list-virtual-networks) API endpoint.
+
+Enable Virtual IP support by adding the `virtual_network_id` field to your API requests. Refer to the [Cloudflare Load Balancer API documentation](/api/operations/account-load-balancer-pools-create-pool) for more information on creating a pool using the API.
 
 {{<Aside type="note">}}
 
-Virtual IP support is currently API only.
+Cloudflare does not currently support entering the same IP addresses, even when using different virtual networks.
 
 {{</Aside>}}
 
-Example using cURL: 
+Example updating an existing Load Balancer pool with a Virtual IP origin using cURL: 
 
 ```bash
 $ curl --request PATCH \
@@ -49,7 +53,9 @@ $ curl --request PATCH \
 
 Traffic steering decisions or failover relies on the health information of IPs and pools. Local Traffic Management supports health monitors on your virtual and private IPs.
 
-Before, you could only enter tunnel addresses in your load balancer and configure health checks your tunnels. Now, you have the ability to input your IPs directly as origins within your load balancer and set up health check for them instead of only the tunnels. You will be able to leverage existing health monitoring to your virtual and private IPs, along with the current functionality of public IPs. 
+Before, you could only enter tunnel addresses in your load balancer and configure health monitor requests to your tunnels. Now, you have the ability to input your IPs directly as origins within your load balancer and set up health monitors for them instead of only the tunnels. You will be able to leverage existing health monitoring to your virtual and private IPs, along with the current functionality of public IPs. 
+
+Health monitors automatically work once the origin and VNet Tunnel association is configured. Cloudflare determines the health of the Tunnel and the private targets.
 
 ## Off-ramps
 

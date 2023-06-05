@@ -1,7 +1,8 @@
 ---
 pcx_content_type: faq
-title: Web Analytics FAQ
+title: Web Analytics FAQs
 layout: single
+weight: 7
 ---
 
 # Web Analytics FAQ
@@ -46,7 +47,7 @@ Since only one JS snippet can be rendered and used per page, you cannot have mul
 
 ### My website is proxied through Cloudflare, but Web Analytic's automatic setup is not working.
 
-If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information. 
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/concepts/cache-control/) for more information. 
 
 ---
 
@@ -84,6 +85,10 @@ No, you can only use the [automatic setup] with JS snippet injection if traffic 
 
 If you have a DNS-only domain, you will have to do a [manual setup] instead.
 
+### What prevents the JS Snippet from being added to a page?
+
+{{<render file="_web-analytics-troubleshooting.md">}}
+
 ---
 
 ## Functionality
@@ -114,6 +119,10 @@ Not yet, but we may add support for this in the future.
 ### Can I track more than one website with Web Analytics?
 
 Yes. Right now there is a soft limit of ten sites per account, but that can be adjusted by contacting Cloudflare support.
+
+### When does the beacon send metrics to the `/cdn-cgi/rum/` endpoint?
+
+For traditional websites, not Single Page Applications (SPAs), the Web Analytics beacon reports to the `/cdn-cgi/rum/` endpoint when the page has finished loading (load event) and when the user leaves the page. For Single Page Applications, additional metrics are sent for every route change to capture the page load event.
 
 [manual setup]: /analytics/web-analytics/getting-started/#sites-not-proxied-through-cloudflare
 [automatic setup]: /analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare

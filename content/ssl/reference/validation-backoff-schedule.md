@@ -24,7 +24,7 @@ Here is the function that is used to determine the next check:
 now() + min((floor(60 * pow(1.05, retry_attempt)) * INTERVAL '1 second'), INTERVAL '4 hours')
 ```
 
-As the table below shows, most of the checks take place on the first day. Most validations complete within the first five minutes, unless the customer has misconfigured the CNAME to your domain. We cap the check backoff to a maximum of four hours to avoid the function growing exponentially, which would result in large gaps between checks towards the end of the month.
+As presented in the following table, most of the checks take place on the first day. Most validations complete within the first five minutes, unless the customer has misconfigured the CNAME to your domain. Cloudflare caps the check backoff to a maximum of four hours to avoid the function growing exponentially, which would result in large gaps between checks towards the end of the month.
 
 | Retry Attempt | In Seconds | In Minutes | In Hours |
 | ------------- | ---------- | ---------- | -------- |

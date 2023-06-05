@@ -43,7 +43,7 @@ _`Un registro A, AAA, CNAME o MX se dirige a tu servidor de origen y expone tu I
 
 _`Este registro expone la dirección IP de tu servidor de origen, lo que puede dejarla vulnerable ante la denegación de servicio.`_
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare ahora admite el redirecconamiento mediante proxy del registro
 \'\*\' comodín para la gestión de DNS en todos los planes de clientes.
 Antes solo se ofrecía a los planes Enterprise.

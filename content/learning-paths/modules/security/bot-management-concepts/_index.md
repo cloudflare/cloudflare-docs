@@ -5,6 +5,6 @@ weight: 1
 layout: learning-module
 ---
 
-# Load balancing concepts
+# Bot management concepts
 
 {{<learning-module-summary>}}

@@ -62,6 +62,13 @@ To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](
 
 ### Egress location
 
+| Destination IP | Destination proxied by Cloudflare | Physical egress location                      | IP geolocation              |
+| -------------- | --------------------------------- | --------------------------------------------- | --------------------------- |
+| IPv4           | No                                | Egresses data center with dedicated egress IP | Matches dedicated egress IP |
+| IPv4           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
+| IPv6           | No                                | Egresses locally connected data center        | Matches dedicated egress IP |
+| IPv6           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
+
 #### IPv4
 
 To physically egress from a specific location, traffic must be proxied to Cloudflare via IPv4. The end user connects to the nearest Cloudflare data center, but Cloudflare will internally route their traffic to egress from the dedicated location configured in your [egress policies](/cloudflare-one/policies/filtering/egress-policies/). Therefore, the connected data center shown in the user's WARP client preferences may not match their actual egress location.

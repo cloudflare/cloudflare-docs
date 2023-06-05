@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: reference
 title: Module support
 weight: 13
 ---
@@ -38,7 +38,9 @@ export async function onRequest(context) {
 
 ### WebAssembly Modules
 
-[WebAssembly](https://webassembly.org/) (or Wasm) is a low-level language that provides programming languages such as C++ or Rust with a compilation target so that they can run on the web. The distributable, loadable, and executable unit of code in WebAssembly is called a [module](https://webassembly.github.io/spec/core/syntax/modules.html).
+[WebAssembly](/workers/platform/webassembly/) (abbreviated Wasm) allows you to compile languages like Rust, Go, or C to a binary format that can run in a wide variety of environments, including web browsers, Cloudflare Workers, Cloudflare Pages Functions, and other WebAssembly runtimes.
+
+The distributable, loadable, and executable unit of code in WebAssembly is called a [module](https://webassembly.github.io/spec/core/syntax/modules.html).
 
 Below is a basic example of how you can import Wasm Modules inside your Pages Functions code:
 

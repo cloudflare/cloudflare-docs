@@ -12,7 +12,7 @@ meta:
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | macOS, Windows    | WARP with Gateway                                                                         | All plans                                                     |
 
@@ -31,7 +31,7 @@ The Firewall device posture attribute ensures that a firewall is running on a de
 1. Turn on **Enable firewall check**.
 1. Select **Save**.
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the firewall check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the firewall check is returning the expected results.
 
 ## How WARP checks the firewall status
 

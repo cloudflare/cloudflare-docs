@@ -18,9 +18,13 @@ $ npx create-remix@latest
 
 ```
 
-After running the above command, you will be prompted to name your project in your terminal and select your deploy method. This guide uses Cloudflare Pages.
+After running `npx create-remix@latest`, you will be prompted to answer configuration questions and select your deploy method. This guide uses Cloudflare Pages.
 
-By selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](/pages/platform/functions/#path-segments) to learn more.
+After selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your Remix Project will generate a `functions/[[path]].js` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+
+{{<Aside type="warning" header="Before you deploy">}}
+The `functions/[[path]].js` file will not be generated until you interact with Remix the first time, via `remix dev` or `remix build`. The `functions/[[path]].js` will not function as expected if you attempt to deploy your site before running `remix dev` or `remix build`.
+{{</Aside>}}
 
 After selecting your deployment option, change the directory to your project and render your project by running the following command:
 
@@ -36,7 +40,11 @@ $ npm run dev
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -68,7 +76,7 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 
 ## Create and add a binding to your Remix application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
 
@@ -81,7 +89,7 @@ The following code block shows an example of accessing a KV namespace in Remix.
 ```typescript
 ---
 filename: app/routes/products/$productId.tsx
-highlight: [9,10,11,12,13,17,24]
+highlight: 9-13,17,24
 ---
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";

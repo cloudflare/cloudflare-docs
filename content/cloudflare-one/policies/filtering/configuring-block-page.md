@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Block page
-weight: 7
+weight: 10
 ---
 
 # Configure block page
@@ -12,7 +12,7 @@ Configuring a custom block page in Zero Trust helps avoid this confusion. Your b
 
 ## Prerequisites
 
-In order to display the block page, your devices must have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) installed.
+In order to display the block page as the URL of the blocked domain, your devices must have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
 
 ## Enable the block page for HTTP policies
 
@@ -20,11 +20,11 @@ Gateway automatically enables a block page for all HTTP policies. When a user is
 
 To specify a policy-specific block message:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Firewall Policies** > **HTTP**.
-2. Find the policy you want to customize and click **Edit**. You can only edit the block page for policies with a Block action.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Firewall Policies** > **HTTP**.
+2. Find the policy you want to customize and select **Edit**. You can only edit the block page for policies with a Block action.
 3. Scroll down to the **Configure policy settings** step.
 4. In the **Block page customised text** field, enter a custom block message.
-5. Click **Save policy**.
+5. Select **Save policy**.
 
 Users will now see a custom message when they are blocked by this HTTP policy.
 
@@ -32,11 +32,11 @@ Users will now see a custom message when they are blocked by this HTTP policy.
 
 For DNS policies, you will need to enable the block page on a per-policy basis.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Firewall Policies** > **DNS**.
-2. Find the policy for which you would like to display a block page and click **Edit**. You can only enable the block page for policies with a Block action.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Firewall Policies** > **DNS**.
+2. Find the policy for which you would like to display a block page and select **Edit**. You can only enable the block page for policies with a Block action.
 3. Scroll down to the **Configure policy settings** step.
 4. Enable **Display block page**.
-5. Click **Save policy**.
+5. Select **Save policy**.
 
 Users will now see a block page when they are blocked by this DNS policy.
 
@@ -48,13 +48,13 @@ If your users see a "Warning: Potential Security Risk Ahead" message in their br
 
 ## Customize the block page
 
-You can customize the block page by making global changes that will show up every time a user navigates to a block page, independently of the type of rule (DNS or HTTP) that is blocking the website.
+You can customize the block page by making global changes that will show up every time a user visits a block page, independently of the type of rule (DNS or HTTP) that is blocking the website.
 
 To apply customizations to your block page:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **General**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **General**.
 2. Under **Block page**, enable the custom block page feature.
-3. Click **Customize**. Available global customizations include:
+3. Select **Customize**. Available global customizations include:
 
    - Adding your organization's name
    - Adding a logo
@@ -63,18 +63,18 @@ To apply customizations to your block page:
    - Adding a [Mailto link](#allow-users-to-email-an-administrator)
    - Choosing a background color
 
-4. Click **Save**. Your customers will now see your custom block page when navigating to a blocked website.
+4. Select **Save**. Your customers will now see your custom block page when navigating to a blocked website.
 
 ### Allow users to email an administrator
 
-You can add a Mailto link to your custom block page, which allows users to directly email you about the blocked site. When users click **Contact your Administrator** on your block page, an email template opens with the email address and subject line you configure, as well as the following diagnostic information:
+You can add a Mailto link to your custom block page, which allows users to directly email you about the blocked site. When users select **Contact your Administrator** on your block page, an email template opens with the email address and subject line you configure, as well as the following diagnostic information:
 
-| Field        | Description                                                                                                                                                                                                              |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Site URL     | The URL of the blocked page.                                                                                                                                                                                             |
-| Rule ID      | The ID of the Gateway policy that blocked the page.                                                                                                                                                                      |
-| Source IP    | The public source IP of the user device.                                                                                                                                                                                 |
-| Account ID   | The Cloudflare account associated with the block policy.                                                                                                                                                                 |
-| User ID      | The ID of the user who visited the page. Currently, User IDs are not surfaced in the dashboard and can only be viewed by calling the [API](https://developers.cloudflare.com/api/operations/zero-trust-users-get-users). |
-| Device ID    | The ID of the device that visited the page. This is generated by the WARP client.                                                                                                                                        |
-| Block Reason | Your policy-specific block message.                                                                                                                                                                                      |
+| Field        | Description                                                                                                                                                                             |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Site URL     | The URL of the blocked page.                                                                                                                                                            |
+| Rule ID      | The ID of the Gateway policy that blocked the page.                                                                                                                                     |
+| Source IP    | The public source IP of the user device.                                                                                                                                                |
+| Account ID   | The Cloudflare account associated with the block policy.                                                                                                                                |
+| User ID      | The ID of the user who visited the page. Currently, User IDs are not surfaced in the dashboard and can only be viewed by calling the [API](/api/operations/zero-trust-users-get-users). |
+| Device ID    | The ID of the device that visited the page. This is generated by the WARP client.                                                                                                       |
+| Block Reason | Your policy-specific block message.                                                                                                                                                     |

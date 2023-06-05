@@ -133,7 +133,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 1. Go to [Security Admin console](https://security.microsoft.com/homepage) > **Email & collaboration** > **Policy & Rules**.
 
-2. Navigate to **Threat policies** > **Rules**, and select **Enhanced filtering**.
+2. Go to **Threat policies** > **Rules**, and select **Enhanced filtering**.
 
     <div class="large-img">
 
@@ -194,7 +194,7 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 | Disposition <div style="width: 100px"> | Action |
 -------------- | -----------------------
 | `MALICIOUS`  | Should always be quarantined. If the user requires notification, they should require administrator approval to release messages. Users should never have the ability to self remediate `MALICIOUS` emails without approval from an administrator. Emails should be body and subject tagged. |
-| `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged, and delivered to the user’s inbox or junk mail folder. Advantage customers should use [`URL defang`](/email-security/email-configuration/email-policies/link-actions/) with this disposition, while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta). |
+| `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged, and delivered to the user’s inbox or junk mail folder. Advantage customers should use [`URL defang`](/email-security/email-configuration/email-policies/link-actions/) with this disposition, while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation). |
 | `SPAM`       | Should always be quarantined. If the user requires notification, they may or may not require administrator approval to release emails. Emails should be subject tagged. |
 | `BULK`       | Should not be quarantined. Emails should be subject tagged and delivered to the inbox or junk mail folder. |
 | `SPOOF`      | If `SPOOF` detections are clean and well managed [in the Allow List](/email-security/email-configuration/lists/), emails should always be quarantined. If the `SPOOF` detections are not clean, they should have the same treatment as `SPAM` dispositions if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. |
@@ -211,9 +211,10 @@ The Area 1 dashboard has an [Admin quarantine](/email-security/email-configurati
 
 ## 5. Update your domain MX records
 
-Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts:
+Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts. For example:
 
 {{<render file="_mx-deployment-values.md">}}
+{{<render file="_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
@@ -274,7 +275,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 13. Select **Next**.
 14. Review your settings and select **Create connector**.
 
-## 6: Execute `Enable-OrganizationCustomization` (if required)
+## 6 Execute `Enable-OrganizationCustomization` (if required)
 
 The following steps are only required if you have not previously customized your Office 365 instance. If you received the message to run this cmdlet in any of the previous steps, you will need to execute it in order to proceed with the configuration. This change may take as long as 24 hours to take effect.
 

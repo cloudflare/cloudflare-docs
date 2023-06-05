@@ -143,7 +143,7 @@ ___
 
 ## Sécuriser un compte piraté
 
-Si vous constatez des activités suspectes sur votre compte Cloudflare, protégez-le en suivant [ces étapes](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/).
+Si vous constatez des activités suspectes sur votre compte Cloudflare, protégez-le en suivant [ces étapes](/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/).
 
 ___
 
@@ -152,7 +152,7 @@ ___
 Vous avez plusieurs options de connexion au [tableau de bord Cloudflare](https://dash.cloudflare.com/login) :
 
 -   **Adresse e-mail et mot de passe** : saisissez votre adresse e-mail et votre mot de passe pour vous connecter.
--   **Authentification unique (Single Sign On, SSO)** : saisissez votre adresse e-mail (si votre administrateur a [configuré l'authentification unique](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/dash-sso-apps/) en tant qu'option de connexion).
+-   **Authentification unique (Single Sign On, SSO)** : saisissez votre adresse e-mail (si votre administrateur a [configuré l'authentification unique](/cloudflare-one/applications/configure-apps/dash-sso-apps/) en tant qu'option de connexion).
 -   **Connexion avec Apple** :
     -   _Même adresse e-mail de compte Cloudflare que l'ID Apple_ : vous pouvez soit vous connecter avec votre adresse e-mail et votre mot de passe, soit vous connecter avec Apple.
     -   _Adresse e-mail de compte Cloudflare différente de l'ID Apple_ : un compte Cloudflare sera créé si vous vous connectez avec Apple. Si vous voulez vous connecter à un compte existant, [modifiez votre adresse e-mail](https://support.cloudflare.com/hc/fr-fr/articles/203471284-Probl%C3%A8mes-de-connexion-et-de-compte#12345679) pour qu'elle corresponde à celle utilisée pour votre ID Apple.

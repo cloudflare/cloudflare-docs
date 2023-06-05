@@ -16,7 +16,7 @@ If you use the wrong set of fields, you might see unexpected behavior from load 
 | [Proxied-only fields](#proxied-only-fields) | `PROXIED ONLY` | The values accessible only when the load balancer's traffic is proxied. |
 | [Unproxied-only fields](#unproxied-only-fields) | `NON-PROXIED ONLY` | The values accessible only when the load balancer's traffic is not proxied (DNS-only traffic). |
 
-![Choose load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
+![Choose load balancer fields based on the proxy status header](/images/load-balancing/proxy-status.png)
 
 For a step-by-step guide for creating a rule using the UI's Expression Builder, see [Create a load balancing rule](/load-balancing/additional-options/load-balancing-rules/create-rules/). Note that there are a few fields that are still API-only and not present in the UI.
 

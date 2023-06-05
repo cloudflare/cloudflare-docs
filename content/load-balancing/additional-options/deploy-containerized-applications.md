@@ -10,6 +10,6 @@ meta:
 
 Cloudflare’s Load Balancer distributes global traffic intelligently across Google Kubernetes Engine (GKE) and Amazon Web Services EC2 (AWS). Cloudflare’s native Kubernetes support provides a multi-cloud deployment that is transparent to end users.
 
-![Diagram of an application deployed across Google Kubernetes Engine and AWS](/load-balancing/static/images/best-practices-2.png)
+![Diagram of an application deployed across Google Kubernetes Engine and AWS](/images/load-balancing/best-practices-2.png)
 
 For more details on implementation, refer to our [Support Knowledgebase](https://support.cloudflare.com/hc/articles/115003384591).

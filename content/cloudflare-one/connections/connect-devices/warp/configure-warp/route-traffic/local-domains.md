@@ -30,7 +30,7 @@ Local Domain Fallback configuration only impacts where DNS requests get resolved
 
 ## Add a domain
 
-1. [Navigate](#view-list-of-domains) to the **Local Domain Fallback** page.
+1. [Navigate](#view-local-domains) to the **Local Domain Fallback** page.
 
 2. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `\*.example.com`).
 
@@ -42,7 +42,7 @@ The domain will appear in the list of Local Domain entries.
 
 ## Delete a domain
 
-1. [Navigate](#view-list-of-domains) to the **Local Domain Fallback** page.
+1. [Navigate](#view-local-domains) to the **Local Domain Fallback** page.
 
 2. Find the domain in the list and select **Delete**.
 

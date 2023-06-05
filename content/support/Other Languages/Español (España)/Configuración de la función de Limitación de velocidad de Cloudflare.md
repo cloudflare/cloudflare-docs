@@ -22,16 +22,16 @@ conocimiento de Soporte de Cloudflare), los recursos almacenados en
 caché y los rastreadores conocidos de los motores de búsqueda están
 exentos de tus reglas de limitación de velocidad. Por lo tanto, no
 afectan a la clasificación [SEO de tu sitio
-web](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/improve-seo/).
+web](/fundamentals/get-started/basic-tasks/improve-seo/).
 Sin embargo, si estás utilizando la [nueva versión de reglas de
 limitación de
-velocidad](https://developers.cloudflare.com/waf/rate-limiting-rules/)
+velocidad](/waf/rate-limiting-rules/)
 (cuya documentación está en nuestra sección de documentación para
 desarrolladores), debes asegurarte de que tus reglas de limitación de
 velocidad no afecten a los bots buenos conocidos, para que la
 clasificación SEO de tu sitio web no se vea afectada. Para más
 información, consulta [Mejorar el
-SEO](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/improve-seo/).
+SEO](/fundamentals/get-started/basic-tasks/improve-seo/).
 {{</Aside>}}
 
 {{<Aside type="note">}}
@@ -43,7 +43,7 @@ ___
 
 ## Análisis
 
-Puedes ver los análisis de la función limitación de velocidad en **Analytics** > **Seguridad**. Este análisis utiliza líneas continuas que representan el tráfico que coincide con las solicitudes simuladas y líneas discontinuas que representan las solicitudes reales bloqueadas. Los registros generados por una regla de limitación de velocidad solo son visibles para los clientes Enterprise a través de los [registros de Cloudflare](https://developers.cloudflare.com/logs/). 
+Puedes ver los análisis de la función limitación de velocidad en **Analytics** > **Seguridad**. Este análisis utiliza líneas continuas que representan el tráfico que coincide con las solicitudes simuladas y líneas discontinuas que representan las solicitudes reales bloqueadas. Los registros generados por una regla de limitación de velocidad solo son visibles para los clientes Enterprise a través de los [registros de Cloudflare](/logs/). 
 
 Cloudflare devuelve un error HTTP 429 para las solicitudes bloqueadas.  Los clientes Enterprise pueden consultar los detalles de las solicitudes bloqueadas por ubicación en **Códigos de estado** en el panel de control de análisis disponible en **Analytics** > **Tráfico**. 
 
@@ -383,7 +383,6 @@ ___
 
 ## Recursos relacionados
 
--   [Facturación de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000272247)
--   [¿Cómo se notifica la limitación de velocidad en los registros de Enterprise Log Share (ELS)?](https://developers.cloudflare.com/logs/reference/log-fields)
+-   [¿Cómo se notifica la limitación de velocidad en los registros de Enterprise Log Share (ELS)?](/logs/reference/log-fields)
 -   [Resolución de problemas de la función de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configuración de la limitación de velocidad desde el panel de Cloudflare](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

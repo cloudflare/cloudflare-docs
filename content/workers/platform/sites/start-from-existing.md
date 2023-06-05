@@ -122,7 +122,7 @@ async function handleEvent(event) {
     $ wrangler publish
     ```
 
-6.  Publish your site to a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
+6.  Publish your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
 
     ```toml
     route = "https://example.com/*"
@@ -132,4 +132,4 @@ async function handleEvent(event) {
 Refer to the documentation on [Routes](/workers/platform/triggers/routes/) to configure a `route` properly.
     {{</Aside>}}
 
-Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).
+Learn more about [configuring your project](/workers/wrangler/configuration/).

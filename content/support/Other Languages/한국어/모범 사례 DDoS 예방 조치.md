@@ -24,7 +24,7 @@ Cloudflare에 가입한 후 아래 권장 사항을 통해 사이트가 DDoS 공
 다음과 같은 조치로 DNS 레코드 보호를 극대화하세요.
 
 1.  [Cloudflare 프록시(오렌지색 구름)를 사용하세요.](https://support.cloudflare.com/hc/articles/200169626)
-2.  FTP 또는 SSH용 DNS 레코드를 제거하고 원본 IP를 사용하여 FTP 또는 SSH 요청을 직접 실행하세요. 또는 [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/getting-started/)으로 FTP와 SSH를 프록시 설정하세요.
+2.  FTP 또는 SSH용 DNS 레코드를 제거하고 원본 IP를 사용하여 FTP 또는 SSH 요청을 직접 실행하세요. 또는 [Cloudflare Spectrum](/spectrum/getting-started/)으로 FTP와 SSH를 프록시 설정하세요.
 3.  [메일 서버와 통신하는 A, AAAA 또는 CNAME 레코드를 회색 구름으로 전환하세요.](https://support.cloudflare.com/hc/articles/200168876)
 4.  무료, 프로, 비즈니스 요금제의 경우 도메인 내 와일드카드를 제거하세요. 이들 도메인을 통해 원본 IP 주소가 노출됩니다. [Cloudflare는 기업 요금제 상의 도메인에 대해서만 와일드카드를 보호합니다](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries).
 
@@ -55,5 +55,5 @@ ___
 ## 관련 자료
 
 -   [Cloudflare DDoS 방어 이해](https://support.cloudflare.com/hc/articles/200172676)
--   [DDoS 공격에 대한 대응](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS 공격에 대한 대응](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [DDoS 공격이란?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

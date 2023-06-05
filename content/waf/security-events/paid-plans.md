@@ -16,7 +16,7 @@ Additionally, Enterprise customers have access to the account-level dashboard in
 
 You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs.
 
-![Example of adding a new filter in Security Events for the Allow action](/waf/static/analytics-add-filter.png)
+![Example of adding a new filter in Security Events for the Allow action](/images/waf/events-add-filter.png)
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
@@ -28,7 +28,7 @@ You can apply multiple filters and exclusions to narrow the scope of Security Ev
 
 The **Events summary** section provides the number of security events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
 
-![Filter by action by selecting Filter when hovering the desired action in Events summary](/waf/static/analytics-events-summary.png)
+![Filter by action by selecting Filter when hovering the desired action in Events summary](/images/waf/events-summary.png)
 
 You can adjust the displayed data according to one of the values by selecting **Filter** or **Exclude** when hovering the legend.
 

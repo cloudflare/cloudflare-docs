@@ -38,12 +38,12 @@ Vergewissern Sie sich, dass in der **DNS**\-App Ihres Cloudflare Dashboards die 
 
 {{<Aside type="tip">}}
 Wenn Sie ein [partielles
-Setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup)
+Setup](/dns/zone-setups/partial-setup)
 haben, stellen Sie sicher, dass Ihre DNS-Einträge auch bei Ihren
 autoritativen Nameservern vorhanden sind.
 {{</Aside>}}
 
-Erfahren Sie mehr über das Einrichten von A- und CNAME-[DNS-Einträgen](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
+Erfahren Sie mehr über das Einrichten von A- und CNAME-[DNS-Einträgen](/dns/manage-dns-records/how-to/create-dns-records).
 
 ### Vor dem Hinzufügen der Domain zu Cloudflare wurde DNSSEC nicht deaktiviert
 
@@ -55,4 +55,4 @@ Wenn Sie DNS-Einträge über die **DNS**\-App in Ihrem Cloudflare-Dashboard ver
 
 ### Nicht aufgelöste IP-Adresse
 
-In seltenen Fällen scheitert der DNS-Resolver auf dem Client, von dem die URL angefordert wird, daran, einen DNS-Eintrag in eine gültige IP-Adresse aufzulösen. Laden Sie die Seite nach einer kurzen Wartezeit einfach erneut, um zu sehen, ob das Problem dadurch verschwindet.Für dieses Problem ist Cloudflare nicht verantwortlich, aber die Verwendung von [Cloudflares DNS-Resolver](https://developers.cloudflare.com/1.1.1.1/setup/) kann möglicherweise helfen.Wenden Sie sich an Ihren Hosting-Provider und bitten Sie um weitere Hilfe bei Ihrem aktuellen DNS-Resolver.
+In seltenen Fällen scheitert der DNS-Resolver auf dem Client, von dem die URL angefordert wird, daran, einen DNS-Eintrag in eine gültige IP-Adresse aufzulösen. Laden Sie die Seite nach einer kurzen Wartezeit einfach erneut, um zu sehen, ob das Problem dadurch verschwindet.Für dieses Problem ist Cloudflare nicht verantwortlich, aber die Verwendung von [Cloudflares DNS-Resolver](/1.1.1.1/setup/) kann möglicherweise helfen.Wenden Sie sich an Ihren Hosting-Provider und bitten Sie um weitere Hilfe bei Ihrem aktuellen DNS-Resolver.

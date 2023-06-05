@@ -1,10 +1,10 @@
 ---
 title: Download objects
-pcx_content_type: how to
+pcx_content_type: how-to
 weight: 2
 ---
 
-# Upload objects
+# Download objects
 
 You can download objects from your bucket from the Cloudflare dashboard or using the Wrangler.
 
@@ -12,7 +12,7 @@ You can download objects from your bucket from the Cloudflare dashboard or using
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
 2. From the **R2** page in the dashboard, locate and select your bucket.
-3. From your bucket's page, locate the object you want to download. 
+3. From your bucket's page, locate the object you want to download.
 4. At the end of the object's row, select the menu button and click **Download**.
 
 ## Download objects via Wrangler

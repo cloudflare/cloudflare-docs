@@ -20,7 +20,7 @@ Los atacantes intentan identificar tu dirección IP de origen para atacar direct
 Configura tus registros DNS para una protección máxima mediante los siguientes pasos:
 
 1.  [Habilita el proxy de Cloudflare (nube-naranja)](https://support.cloudflare.com/hc/articles/200169626)
-2.  Elimina los registros DNS utilizados para FTP o SSH y utiliza en su lugar tu IP de origen para llevar a cabo directamente solicitudes FTP o SSH. De forma alternativa, redirige mediante proxy el FTP y SSH con [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/getting-started/).
+2.  Elimina los registros DNS utilizados para FTP o SSH y utiliza en su lugar tu IP de origen para llevar a cabo directamente solicitudes FTP o SSH. De forma alternativa, redirige mediante proxy el FTP y SSH con [Cloudflare Spectrum](/spectrum/getting-started/).
 3.  [Registros de nube-gris A, AAAA o CNAME correspondientes a tu servidor de correo](https://support.cloudflare.com/hc/articles/200168876)
 4.  Elimina los registros comodín en los dominios Free, Pro o Business, ya que revelan tu dirección IP de origen. [Cloudflare solo protege los registros comodín para dominios en planes Enterprise](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries).
 
@@ -52,5 +52,5 @@ ___
 ## Recursos relacionados
 
 -   [Cómo comprender la protección DDoS de Cloudflare](https://support.cloudflare.com/hc/articles/200172676)
--   [Cómo responder a los ataques DDoS](https://support.cloudflare.com/hc/articles/200170196)
+-   [Cómo responder a los ataques DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [¿Qué es un ataque DDoS?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
