@@ -20,10 +20,10 @@ Cloudflare domains on Business or Enterprise plans can set Custom Nameservers at
 
 - Enterprise plans:
   - Create account-level nameservers via the [API](/api/operations/account-level-custom-nameservers-list-account-custom-nameservers)
-  - Create zone-level nameservers via the dashboard or [API](/api/operations/zone-edit-zone)
+  - Create zone-level nameservers via the dashboard or [API](/api/operations/zones-0-patch)
 - Business plans:
   - Create account-level nameservers via the [API](/api/operations/account-level-custom-nameservers-add-account-custom-nameserver) (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476))
-  - Create zone-level nameservers via the dashboard or [API](/api/operations/zone-edit-zone)
+  - Create zone-level nameservers via the dashboard or [API](/api/operations/zones-0-patch)
 
 ## Restrictions
 
@@ -101,7 +101,7 @@ To add custom nameservers to a specific zone:
 
 #### Using the API
 
-To add zone-level custom nameservers via the API, use a [PATCH request](/api/operations/zone-edit-zone) and specify the custom nameservers in the payload:
+To add zone-level custom nameservers via the API, use a [PATCH request](/api/operations/zones-0-patch) and specify the custom nameservers in the payload:
 
 ```txt
 "vanity_name_servers": ["ns1.example.com","ns2.example.com"]
@@ -120,7 +120,7 @@ To remove zone-level nameservers (and their associated, read-only DNS records) u
 
 #### Using the API
 
-To remove zone-level custom nameservers (and their associated, read-only DNS records) via the API, use a [PATCH request](/api/operations/zone-edit-zone) and include an empty array in the payload:
+To remove zone-level custom nameservers (and their associated, read-only DNS records) via the API, use a [PATCH request](/api/operations/zones-0-patch) and include an empty array in the payload:
 
 ```txt
 "vanity_name_servers": []

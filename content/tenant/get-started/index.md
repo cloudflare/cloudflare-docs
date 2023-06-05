@@ -133,7 +133,7 @@ header: Response
 
 Now that you have a customer account and customer users (or service users), you need to create a zone.
 
-To do this, send a [`POST`](/api/operations/zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
+To do this, send a [`POST`](/api/operations/zones-post) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
 
 ```bash
 ---

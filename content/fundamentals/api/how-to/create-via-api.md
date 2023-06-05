@@ -76,7 +76,7 @@ API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 {{<Aside type="note">}}
  
-Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](/api/operations/user-user-details), [Account](/api/operations/accounts-list-accounts), and [Zone](/api/operations/zone-list-zones) documentation for more details.
+Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](/api/operations/user-user-details), [Account](/api/operations/accounts-list-accounts), and [Zone](/api/operations/zones-get) documentation for more details.
   {{</Aside>}}
 
 ##### Account

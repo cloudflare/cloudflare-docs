@@ -34,8 +34,8 @@ The following table summarizes the available operations:
 
 | Operation                         | Method + URL stub                                      | Notes                                                    |
 | --------------------------------- | ------------------------------------------------------ | -------------------------------------------------------- |
-| [Get Page Shield status][1]       | `GET zones/<ZONE_ID>/page_shield`                      | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield status][2]    | `PUT zones/<ZONE_ID>/page_shield`                      | Update the Page Shield status (enabled/disabled).        |
+| [Get Page Shield settings][1]       | `GET zones/<ZONE_ID>/page_shield`                      | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield settings][2]    | `PUT zones/<ZONE_ID>/page_shield`                      | Update the Page Shield status (enabled/disabled).        |
 | [List Page Shield scripts][3]     | `GET zones/<ZONE_ID>/page_shield/scripts`              | Fetch a list of currently monitored scripts.             |
 | [Get a Page Shield script][4]     | `GET zones/<ZONE_ID>/page_shield/scripts/<SCRIPT_ID>`  | Fetch the details of a currently monitored script.       |
 | [List Page Shield connections][5] | `GET zones/<ZONE_ID>/page_shield/connections`          | Fetch a list of currently monitored connections.         |
@@ -46,12 +46,12 @@ The following table summarizes the available operations:
 | Update a policy                   | `PUT zones/<ZONE_ID>/page_shield/policies/<POLICY_ID>` | Updates an existing CSP policy.                          |
 | Delete a policy                   | `DELETE zones/<ZONE_ID>/page_shield/policies/<POLICY_ID>` | Deletes an existing CSP policy.                       |
 
-[1]: https://developers.cloudflare.com/api/operations/page-shield-get-page-shield-status
-[2]: https://developers.cloudflare.com/api/operations/page-shield-update-page-shield-status
-[3]: https://developers.cloudflare.com/api/operations/page-shield-list-page-shield-scripts
-[4]: https://developers.cloudflare.com/api/operations/page-shield-get-a-page-shield-script
-[5]: https://developers.cloudflare.com/api/operations/page-shield-list-page-shield-connections
-[6]: https://developers.cloudflare.com/api/operations/page-shield-get-a-page-shield-connection
+[1]: /api/operations/page-shield-get-page-shield-settings
+[2]: /api/operations/page-shield-update-page-shield-settings
+[3]: /api/operations/page-shield-list-page-shield-scripts
+[4]: /api/operations/page-shield-get-a-page-shield-script
+[5]: /api/operations/page-shield-list-page-shield-connections
+[6]: /api/operations/page-shield-get-a-page-shield-connection
 
 ## API notes
 
