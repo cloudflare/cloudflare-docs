@@ -190,7 +190,7 @@ Below is the full list of settings available, presented in the order that they a
 | Disable Apps | Turn off all active **Cloudflare Apps**. | All |
 | Disable Performance | Turn off [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/), [Rocket Loader](/fundamentals/speed/rocket-loader/), [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/), and [Polish](/images/polish)| All|
 | Disable Railgun (deprecated) | Turn off the **Railgun** feature of the Cloudflare **Speed** app | Business and above |
-| Disable Security| Turn off [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), [Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/), [Scrape Shield](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/), [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/), [URL (Zone) Lockdown](/support/firewall/tools/understanding-cloudflare-zone-lockdown/), and [WAF managed rules (previous version)](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/) | All |
+| Disable Security| Turn off [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), [Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/), [Scrape Shield](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/), [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/) | All |
 | Edge Cache TTL | Specify how long to cache a resource in the Cloudflare edge network. _Edge Cache TTL_ isn't visible in response headers. | All |
 | Email Obfuscation | Turn on or off the **Cloudflare Email Obfuscation** feature of the **Cloudflare Scrape Shield** app. [Learn more.](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/) | All |
 | Forwarding URL | Redirects one URL to another using an `HTTP 301/302 redirect`. _Refer to [Understand wildcard matching and referencing above](#understand-wildcard-matching-and-referencing)._ | All |
@@ -253,7 +253,7 @@ To learn how to configure **Bypass Cache on Cookie** with a variety of platfor
 
 -   [Caching Anonymous Page Views with WordPress or WooCommerce](/support/third-party-software/content-management-system-cms/caching-static-html-with-wordpresswoocommerce/)
 -   [Caching Anonymous Page Views with Magento 1 and Magento 2](/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/)
--   [How do I cache static HTML?](/cache/best-practices/customize-cache)
+-   [How do I cache static HTML?](/cache/concepts/customize-cache/)
 
 **Note:** If you add both this setting and the enterprise-only _Cache On Cookie_ setting to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_.
 
@@ -283,6 +283,6 @@ ___
 
 -   [Recommended Page Rules to Consider](/support/page-rules/recommended-page-rules-to-consider/)
 -   [What subdomains are appropriate for orange/grey clouds?](/dns/manage-dns-records/reference/proxied-dns-records/#limitations)
--   [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache)
--   [How do I cache static HTML?](/cache/best-practices/customize-cache)
+-   [How do I use Cache Everything with Cloudflare?](/cache/concepts/customize-cache/)
+-   [How do I cache static HTML?](/cache/concepts/customize-cache/)
 -   [Offline error message when updating or accessing the admin section of my content management system](/support/third-party-software/content-management-system-cms/improving-web-security-for-content-management-systems-like-wordpress/)
