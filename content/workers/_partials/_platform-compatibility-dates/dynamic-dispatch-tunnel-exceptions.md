@@ -4,7 +4,7 @@ _build:
   render: never
   list: never
 
-name: "Dynamic Dispatch Exception Tunneling"
+name: "Dynamic Dispatch Exception Propagation"
 sort_date: "2023-03-01"
 enable_date: "2023-03-01"
 enable_flag: "dynamic_dispatch_tunnel_exceptions"
