@@ -7,5 +7,5 @@ inputParameters: param1;;param2
 ---
 
 {{<Aside>}}
-$1 owners that want to [use their own IP prefix](/byoip/) for the $2-level custom nameserver should contact their account team.
+$1 owners that want to [use their own IP prefix](/byoip/) for the $2 custom nameserver should contact their account team.
 {{</Aside>}}
