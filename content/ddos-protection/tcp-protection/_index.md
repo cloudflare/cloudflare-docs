@@ -11,7 +11,9 @@ meta:
 
 Cloudflare Advanced TCP Protection, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), is a stateful TCP inspection engine used to detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods or SYN and SYN-ACK floods.
 
-Advanced TCP Protection can protect not only against attacks targeting a specific destination IP/port combination, but also against broader attacks targeting multiple IP addresses of an IP prefix at the same time.
+Advanced TCP Protection can simultaneously protect against different kinds of attacks:
+* Pinpointed attacks targeting a specific destination IP/port combination.
+* Broad attacks targeting multiple IP addresses of an IP prefix at the same time.
 
 ## Availability
 
