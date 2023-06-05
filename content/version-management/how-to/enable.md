@@ -14,4 +14,4 @@ meta:
 
 ## Disable Version Management
 
-There is no option on the UI to disable Zone Versioning. Please contact Customer Support to disable it.
+There is no option on the UI to disable Zone Versioning. To disable it, [contact Customer Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
