@@ -4,12 +4,12 @@ title: Tenant level
 weight: 5
 meta:
   title: Tenant-level custom nameservers
-  description: With tenant-level custom nameservers, you can use the same custom nameservers for different zones and across different accounts, as long as the accounts are part of the [tenant](/tenant/). The domain that provides the nameservers names does not have to exist as a zone within any account in Cloudflare.
+  description: With tenant-level custom nameservers, you can use the same custom nameservers for different zones and across different accounts, as long as the accounts are part of the [tenant](/tenant/). The domain that provides the nameservers names does not have to exist as a zone within a Cloudflare account.
 ---
 
 # Tenant custom nameservers
 
-Tenant custom nameservers (TCNS) can be part of any domain, even if the domain does not exist as a zone within any account in Cloudflare. These nameservers are organized in different sets (`ns_set`) and can be applied and used across different accounts, as long as the accounts are part of the [tenant](/tenant/).
+{{<render file="_acns-tcns-intro.md" withParameters="Tenant;;T;;tenant;;accounts;;[tenant](/tenant/) " >}}
 
 ## Configuration conditions
 

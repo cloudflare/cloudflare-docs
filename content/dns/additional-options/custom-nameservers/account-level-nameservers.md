@@ -4,12 +4,12 @@ title: Account level
 weight: 4
 meta:
   title: Account-level custom nameservers
-  description: With account-level custom nameservers, you can use the same custom nameservers for different zones in the account. The domain that provides the nameservers names does not have to exist as a zone within any account in Cloudflare.
+  description: With account-level custom nameservers, you can use the same custom nameservers for different zones in the account. The domain that provides the nameservers names does not have to exist as a zone within a Cloudflare account.
 ---
 
 # Account custom nameservers
 
-Account custom nameservers (ACNS) can be part of any domain, even if the domain does not exist as a zone within any account in Cloudflare. These nameservers are organized in different sets (`ns_set`) and can be applied and used by different zones in the account.
+{{<render file="_acns-tcns-intro.md" withParameters="Account;;A;;account;;zones;;account " >}}
 
 ## Configuration conditions
 
