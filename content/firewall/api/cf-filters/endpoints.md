@@ -23,7 +23,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 The Filters API endpoints require a value for `<ZONE_ID>`.
 
-To retrieve a list of zones associated with your account, use the [List Zones](/api/operations/zone-list-zones) operation and note the Zone ID associated with the domain for which you want to manage filters.
+To retrieve a list of zones associated with your account, use the [List Zones](/api/operations/zones-get) operation and note the Zone ID associated with the domain for which you want to manage filters.
 
 {{</Aside>}}
 
