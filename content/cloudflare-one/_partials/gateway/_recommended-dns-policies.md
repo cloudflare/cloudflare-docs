@@ -65,7 +65,7 @@ To safeguard user privacy, some organizations will block tracking domains such a
 
 ## Block malicious IPs
 
-Block specific IP addresses that are known to be malicious or pose a threat to your organization, This policy is usually implemented by creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTS).
+Block specific IP addresses that are known to be malicious or pose a threat to your organization. This policy is usually implemented by creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTS).
 
 | Selector    | Operator | Value     | Action |
 | ----------- | -------- | --------- | ------ |
