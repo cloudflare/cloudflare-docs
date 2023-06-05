@@ -262,6 +262,16 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
+   <tr id="field-ip-src-region">
+      <td valign="top"><code>ip.src.region</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the region name associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">Texas</code>
+         </p>
+      </td>
+   </tr>
    <tr id="field-ip-src-region_code">
       <td valign="top"><code>ip.src.region_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
