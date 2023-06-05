@@ -4,7 +4,7 @@ title: Tenant level
 weight: 5
 meta:
   title: Tenant-level custom nameservers
-  description: With tenant-level custom nameservers, you can use the same custom nameservers for different zones and across different accounts, as long as the accounts are part of the [tenant](/tenant/). The domain that provides the nameservers names does not have to exist as a zone within a Cloudflare account.
+  description: With tenant-level custom nameservers, you can use the same custom nameservers for different zones and across different accounts, as long as the accounts are part of the [tenant](/tenant/). The domain or domains that provide the nameservers names do not have to exist as zones in Cloudflare.
 ---
 
 # Tenant custom nameservers
@@ -40,18 +40,4 @@ If the parameter `ns_type` is omitted, the default type `account` will be assign
 If the parameter `ns_set` is omitted, the default set `1` will be assigned.
 {{</Aside>}}
 
-## Make tenant custom nameservers default for new zones
-
-To make TCNS the default nameservers for all new zones added to your account from now on, use a [PUT command](/api/operations/accounts-update-account) on your account with the following parameters.
-
-``` bash
-curl -- request PUT “https://api.cloudflare.com/client/v4/accounts/{account_id}” \
-  -- header "X-Auth-Email: <EMAIL>" \
-  -- header "X-Auth-Key: <KEY>" \
-  -- header "Content-Type: application/json" \
-  -- data '{
-     "settings": {
-      "default_nameservers":"custom.tenant"
-      }
-     }'
-```
+To make these TCNS the default namerservers for all new zones added to your account from now on, use a [PUT command](/api/operations/accounts-update-account) on your account and set the value of `default_nameservers` to `custom.tenant`.

@@ -6,13 +6,13 @@ _build:
 inputParameters: param1;;param2;;param3
 ---
 
-1. If the domain or domains that are used for the $1 custom nameservers do not exist within the same account, $2 must create the `A/AAAA` records on the configured nameserver names (e.g. `ns1.example.org`) at the authoritative DNS provider.
+1. If the domain or domains that are used for the $1 custom nameservers do not exist within the same account, $2 must create the `A/AAAA` records on the configured nameserver names (e.g. `ns1.example.com`) at the authoritative DNS provider.
 
   {{<example>}}
 
   | Type | Name | Content |
   | --- | --- | --- |
-  | `A` | `ns1.example.org` | `<IPv4>` |
+  | `A` | `ns1.example.com` | `<IPv4>` |
 
   {{</example>}}
 
