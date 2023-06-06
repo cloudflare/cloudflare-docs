@@ -7,15 +7,20 @@ layout: single
 
 # Get started
 
-Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to take to set up your Zero Trust environment.
+This guide covers the recommended steps to start securing your users and devices with Cloudflare Zero Trust.
 
-## Prerequisites
+{{<Aside type="note">}}
+To get started with a specific use case, refer to the following learning paths:
 
-- A Cloudflare account
+- [Replace your VPN](/learning-paths/replace-vpn/)
+- [Get started with DNS filtering](/learning-paths/dns-filtering/)
+{{</Aside>}}
 
-## Start from the Cloudflare dashboard
+## Create a Zero Trust organization
 
-{{<render file=_choose-team-name.md productFolder="cloudflare-one">}} 
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
+
+{{<render file=_choose-team-name.md productFolder="cloudflare-one">}}
 
 Welcome to Cloudflare Zero Trust! You can now explore a list of one-click actions we have designed to help you kickstart your Zero Trust experience.
 
@@ -31,20 +36,8 @@ If you want to enable security features such as Browser Isolation, HTTP filterin
 
 4. **Download and deploy the WARP client to your devices**. Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-5. **Log in to your organization's Cloudflare Zero Trust instance from your devices**. On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
+5. **Log in to your organization's Cloudflare Zero Trust instance from your devices**. On your device, go to the Settings section in the WARP client and insert your organization's team name.
 
-Your devices are now connected to Cloudflare Zero Trust through the WARP client, and you can start [enforcing security measures](/cloudflare-one/policies/) on your traffic and access requests.
+Your devices are now connected to Cloudflare Zero Trust through the WARP client. You can go to **My Team** > **Devices** to find a list of your enrolled devices, when they were last seen, and the WARP client version they are running.
 
-## Check your Zero Trust environment
-
-Now that your environment is set up, you have in-depth visibility into your network activity.
-
-1. **View your Devices in Cloudflare Zero Trust.** Navigate to **My Team** > **Devices** to find a list of your enrolled devices, when they were last seen, and the WARP client version they are running.
-
-2. **View your Users in Zero Trust.** Navigate to **My Team** > **Users** to check who is currently an active user in your Zero Trust environment, revoke users, and check information such as last login, location, and devices they use.
-
-3. **View Analytics.** Navigate to the **Analytics** section to check which SaaS applications your users are accessing and view a summary of the top Allowed and Blocked requests.
-
-4. **View Logs.** Navigate to the **Logs** section for an overview of events in your network. Deep-dive into which access requests were made, and check which queries were filtered by Gateway and the action that was enforced on each of them.
-
-You can also check the [Zero Trust Health Page](https://help.teams.cloudflare.com/) for a comprehensive overview of what filtering options you have enabled for your traffic.
+Next, [enforce security policies](/cloudflare-one/policies/) on your traffic and access requests.
