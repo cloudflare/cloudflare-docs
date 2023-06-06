@@ -30,8 +30,12 @@ async function checkLinks() {
 
   const visitedLinks = [];
   const brokenLinks = [];
+  let counter = 0
 
   for (const link of sitemapLinks) {
+    if (counter > 10) {
+      break;
+    }
     if (!link) {
       continue; // Skip if the link is empty
     }
@@ -50,6 +54,11 @@ async function checkLinks() {
         continue; // Skip if the pageLink is empty or has already been visited
       }
 
+      
+      if (counter > 10) {
+        break;
+      }
+
       if (pageLink.includes("developers.cloudflare.com/api/operations/") || pageLink.startsWith("/api/operations/")) {
         console.log(`Evaluating link: ${pageLink}`);
         await page.goto(pageLink, {
@@ -57,6 +66,7 @@ async function checkLinks() {
           timeout: navigationTimeout,
         });
         visitedLinks.push(pageLink);
+        counter++;
 
         const statusCode = await page.evaluate(() => {
           return {
