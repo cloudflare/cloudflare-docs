@@ -382,7 +382,7 @@ new Error("D1_ERROR", { cause: new Error("Error detail") })
 To capture exceptions:
 ```js
 try {
-    await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
+    await db.exec("INSERT INTO my_table (name, employees) VALUES ()");
 } catch (e: any) {
     console.log({
         message: e.message,
