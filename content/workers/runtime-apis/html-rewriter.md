@@ -164,11 +164,7 @@ The `element` argument, used only in element handlers, is a representation of a 
 
   - Inserts content before the element.
 
-  {{<Aside type="note" header="Content and ContentOptions">}}
-
-  Refer to [Global types](workers/runtime-apis/html-rewriter/#global-types) for more information on `Content` and `ContentOptions`.
-
-  {{</Aside>}}
+  {{<render file="_content_and_contentoptions.md">}}
 
 - {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
@@ -230,11 +226,7 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
   - Inserts content right after the end tag.
 
-  {{<Aside type="note" header="Content and ContentOptions">}}
-
-  Refer to [Global types](workers/runtime-apis/html-rewriter/#global-types) for more information on `Content` and `ContentOptions`.
-
-  {{</Aside>}}
+  {{<render file="_content_and_contentoptions.md">}}
 
 - {{<code>}}remove(){{</code>}} : {{<type>}}EndTag{{</type>}}
 
@@ -273,11 +265,7 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
   - Inserts content before the element.
 
-  {{<Aside type="note" header="Content and ContentOptions">}}
-
-  Refer to [Global types](workers/runtime-apis/html-rewriter/#global-types) for more information on `Content` and `ContentOptions`.
-
-  {{</Aside>}}
+  {{<render file="_content_and_contentoptions.md">}}
 
 - {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
@@ -326,11 +314,7 @@ class ElementHandler {
 
   - Inserts content before the element.
 
-  {{<Aside type="note" header="Content and ContentOptions">}}
-
-  Refer to [Global types](workers/runtime-apis/html-rewriter/#global-types) for more information on `Content` and `ContentOptions`.
-
-  {{</Aside>}}
+  {{<render file="_content_and_contentoptions.md">}}
 
 - {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
@@ -396,11 +380,7 @@ class DocumentHandler {
 
   - Inserts content after the end of the document.
 
-  {{<Aside type="note" header="Content and ContentOptions">}}
-
-  Refer to [Global types](workers/runtime-apis/html-rewriter/#global-types) for more information on `Content` and `ContentOptions`.
-
-  {{</Aside>}}
+  {{<render file="_content_and_contentoptions.md">}}
 
 {{</definitions>}}
 
