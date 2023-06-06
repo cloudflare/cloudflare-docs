@@ -9,13 +9,13 @@ meta:
 
 # Enable Logpush to Elastic
 
-Push your Cloudflare logs to Elastic for instant visibility and insights. Enabling this integration with Elastic comes with a predefined dashboard to view all of your Cloudflare Observability and Security data with ease.
+Push your Cloudflare logs to Elastic for instant visibility and insights. Enabling this integration with Elastic comes with a predefined dashboard to view all of your Cloudflare observability and security data with ease.
 
 The Cloudflare Logpush integration can be used in three different modes to collect data:
 
-- HTTP Endpoint mode - Cloudflare pushes logs directly to an HTTP endpoint hosted by your Elastic Agent.
-- AWS S3 polling mode - Cloudflare writes data to S3 and Elastic Agent polls the S3 bucket by listing its contents and reading new files.
-- AWS S3 SQS mode - Cloudflare writes data to S3, S3 pushes a new object notification to SQS, Elastic Agent receives the notification from SQS, and then reads the S3 object. Multiple Agents can be used in this mode.
+- **HTTP Endpoint mode** - Cloudflare pushes logs directly to an HTTP endpoint hosted by your Elastic Agent.
+- **AWS S3 polling mode** - Cloudflare writes data to S3, and Elastic Agent polls the S3 bucket by listing its contents and reading new files.
+- **AWS S3 SQS mode** - Cloudflare writes data to S3, S3 pushes a new object notification to SQS, Elastic Agent receives the notification from SQS, and then reads the S3 object. Multiple Agents can be used in this mode.
 
 {{<Aside type="note" header="Note">}}
 
@@ -57,4 +57,4 @@ Once the Logpush job is configured, follow Elastics instructions for [setting up
 
 ## View Dashboards
 
-Login to your [Elastic account](https://www.elastic.co/) to view pre built dashboards and configure alerts.
+Log in to your [Elastic account](https://www.elastic.co/) to view prebuilt dashboards and configure alerts.
