@@ -28,7 +28,7 @@ async function checkLinks() {
     elements.map((el) => el.textContent)
   );
 
-  const visitedLinks = new Set(); // Set to store visited links
+  const visitedLinks = [];
   const brokenLinks = [];
 
   for (const link of sitemapLinks) {
@@ -46,7 +46,7 @@ async function checkLinks() {
     );
 
     for (const pageLink of pageLinks) {
-      if (!pageLink || visitedLinks.has(pageLink)) {
+      if (!pageLink || visitedLinks.includes(pageLink)) {
         continue; // Skip if the pageLink is empty or has already been visited
       }
 
@@ -56,7 +56,7 @@ async function checkLinks() {
           waitUntil: "networkidle0",
           timeout: navigationTimeout,
         });
-        visitedLinks.add(pageLink); // Add the pageLink to the visited set
+        visitedLinks.push(pageLink);
 
         const statusCode = await page.evaluate(() => {
           return {
