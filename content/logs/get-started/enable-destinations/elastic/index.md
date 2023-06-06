@@ -14,8 +14,8 @@ Push your Cloudflare logs to Elastic for instant visibility and insights. Enabli
 The Cloudflare Logpush integration can be used in three different modes to collect data:
 
 - **HTTP Endpoint mode** - Cloudflare pushes logs directly to an HTTP endpoint hosted by your Elastic Agent.
-- **AWS S3 polling mode** - Cloudflare writes data to S3, and Elastic Agent polls the S3 bucket by listing its contents and reading new files.
-- **AWS S3 SQS mode** - Cloudflare writes data to S3, S3 pushes a new object notification to SQS, Elastic Agent receives the notification from SQS, and then reads the S3 object. Multiple Agents can be used in this mode.
+- **AWS S3 polling mode** - Cloudflare writes data to S3, and the Elastic Agent polls the S3 bucket by listing its contents and reading new files.
+- **AWS S3 SQS mode** - Cloudflare writes data to S3, S3 pushes a new object notification to SQS, the Elastic Agent receives the notification from SQS, and then reads the S3 object. Multiple Agents can be used in this mode.
 
 {{<Aside type="note" header="Note">}}
 
