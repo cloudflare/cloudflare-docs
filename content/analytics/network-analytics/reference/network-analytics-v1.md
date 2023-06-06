@@ -2,6 +2,7 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360038696631-Understanding-Cloudflare-Network-Analytics-v1
 title: Cloudflare Network Analytics v1
+weight: 3
 ---
 
 # Cloudflare Network Analytics v1
