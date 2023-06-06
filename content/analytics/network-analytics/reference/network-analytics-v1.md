@@ -14,12 +14,9 @@ Access to Network Analytics requires the following:
 
 Cloudflare’s **Network Analytics** view provides near real-time visibility into network- and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the [GraphQL Analytics API](/analytics/graphql-api/).
 
-{{<Aside type="note">}}
--   **The Network Analytics v2 (NAv2) dashboard is now available.** For
-    more information, refer to [Cloudflare Network Analytics](/analytics/network-analytics/).
--   There is also new version of the Network Analytics GraphQL API. If
-    you are still using NAv1, you should migrate from NAv1 to NAv2 by
-    following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
+{{<Aside type="note" header="Network Analytics v2 is now available">}}
+-   For more information on the Network Analytics v2 (NAv2) dashboard, refer to [Cloudflare Network Analytics](/analytics/network-analytics/).
+-   There is also new version of the Network Analytics GraphQL API. If you are still using NAv1, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
 ![Analytics panel showing packets summary per type](/support/static/na-main-dashboard.png)
@@ -52,8 +49,7 @@ To access the **Network Analytics** view, follow these steps:
 3.  On the account’s **Home** page, click **Network Analytics**.
 
 {{<Aside type="note">}}
-Source IPs are stored for 30 days. Report periods older than 30 days do
-not include source IP data.
+Source IPs are stored for 30 days. Report periods older than 30 days do not include source IP data.
 {{</Aside>}}
 
 ___
