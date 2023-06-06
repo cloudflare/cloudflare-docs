@@ -67,7 +67,7 @@ B --> C[<code>proxy-fallback.saasprovider.com</code>]
 
 Requests to `mystore.com` would go to your `CNAME` target (`customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
 
-[^1]: If you have [regional services](/data-localization/regional-services/) set up for your custom hostnames, Cloudflare always uses the processing region associated with your CNAME target record (instead of the processing region of any [custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)).
+[^1]: {{<render file="_regional-services.md">}}
 
 #### Service continuation
 
