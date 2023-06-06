@@ -45,7 +45,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
 
 ## ​​Create a static route
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $1.
 3. Select **Static Routes** > **Create** to add a new route.
 4. Enter a descriptive name for your route in **Description**.
