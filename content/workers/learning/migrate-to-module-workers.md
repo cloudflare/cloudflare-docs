@@ -57,12 +57,19 @@ export default {
 
 Module Workers do not rely on any global bindings. However, Service Worker syntax accesses bindings on the global scope.
 
-Refer the following `TODO` KV namespace binding example. To create a `TODO` KV namespace binding:
+To understand bindings, refer the following `TODO` KV namespace binding example. To create a `TODO` KV namespace binding, you will:
 
-kv namespace - ID
-You worker - index.js
-binding - exists in wrangler.toml
-wrangler - binding: <TODO>, namespace: <ID>
+1. Create a KV namespace named `My Tasks` and receive an ID that you will use in your binding.
+2. Create a Worker.
+3. Find your Worker's `wrangler.toml` configuration file and add a KV namespace binding:
+
+```toml
+kv_namespaces = [
+  { binding = "TODO", id = "<ID>" }
+]
+```
+
+In the following sections, you will use your binding in Service Worker and module syntax.
 
 ### Bindings in Service Worker syntax
 
@@ -125,7 +132,7 @@ export { getTodos }
 
 ## Accessing event or context data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Module workers can access `waitUntil` via the `context` parameter. For a list of Module worker parameters, see [this list](/workers/runtime-apis/fetch-event/#parameters).
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Module workers can access `waitUntil` via the `context` parameter. Refer to [Module Worker parameters](/workers/runtime-apis/fetch-event/#parameters) for  more information.
 
 This example code:
 
