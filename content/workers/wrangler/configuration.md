@@ -704,8 +704,6 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-{{<render file="_nodejs-compat-local-dev.md">}}
-
 ### Add polyfills using Wrangler
 
 Add polyfills for subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.

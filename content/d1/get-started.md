@@ -196,7 +196,7 @@ After configuring your Worker, test your project locally.
 While in your project directory, test your database locally by running:
 
 ```sh
-$ wrangler dev --local --persist
+$ wrangler dev
 ```
 
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
