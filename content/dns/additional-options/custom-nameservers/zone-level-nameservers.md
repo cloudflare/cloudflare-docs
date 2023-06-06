@@ -37,7 +37,7 @@ To add zone custom nameservers via the API, use a [PATCH request](/api/operation
 
 ### For incoming zone transfers (Secondary DNS)
 
-If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone custom nameservers but will need to perform a few steps manually, after [steps 1-3 above](#using-the-dashboard) or after [using the API](#using-the-api).
+If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone custom nameservers. After [steps 1-3 above](#using-the-dashboard) or after [using the API](#using-the-api), you need to do the following:
 
 1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [API](/api/operations/zone-edit-zone) to get the `vanity_name_servers_ips`.
 2. At your primary DNS provider, add [`NS` records](/dns/manage-dns-records/reference/dns-record-types/#ns) and, on the subdomains that you used as ZCNS names, add `A/AAAA` records.
