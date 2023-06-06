@@ -43,4 +43,3 @@ Use Constellation from a Cloudflare Worker.
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
  
 {{</resource-group>}}
-
