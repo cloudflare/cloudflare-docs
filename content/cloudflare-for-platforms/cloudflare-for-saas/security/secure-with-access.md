@@ -1,5 +1,5 @@
 ---
-title: Access for SaaS
+title: Secure with Cloudflare Access
 pcx_content_type: how-to
 weight: 4
 ---
