@@ -86,7 +86,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-update-individual-filter">Update a filter</a>
+        <a href="/api/operations/filters-update-a-filter">Update a filter</a>
       </td>
       <td>
         <code class="InlineCode">
