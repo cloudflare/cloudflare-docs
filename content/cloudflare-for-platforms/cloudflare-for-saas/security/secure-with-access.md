@@ -2,6 +2,8 @@
 title: Secure with Cloudflare Access
 pcx_content_type: how-to
 weight: 4
+meta:
+  title: Secure with Cloudflare Access | Cloudflare for SaaS
 ---
 
 # Secure custom hostnames with Cloudflare Access
