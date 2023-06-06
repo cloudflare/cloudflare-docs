@@ -60,7 +60,6 @@ async function checkLinks() {
 
         const statusCode = await page.evaluate(() => {
           return {
-            status: document.querySelector("body") ? 200 : 404,
             url: window.location.href,
           };
         });
