@@ -9,7 +9,9 @@ layout: single
 
 # Create a new project with create-cloudflare-cli
 
-In this tutorial, you will learn how to create a new project using the `create-cloudflare-cli` tool. `create-cloudflare-cli`, or `c3`, is a command-line interface for rapidly creating and deploying projects to Cloudflare. `c3` can be thought of as a quick way to create and prototype an application, and once you've used it to create a project, you will use [`wrangler`](/workers/wrangler) to continue developing and deploying your application.
+In this tutorial, you will learn how to create a new project using the `create-cloudflare-cli` tool. `create-cloudflare-cli`, or `c3`, is a command-line interface for rapidly creating and deploying projects to Cloudflare. `c3` can be thought of as a quick way to create and prototype a new application using Cloudflare, and once you've used it to create a project, you will use [`wrangler`](/workers/wrangler) to continue developing and deploying your application.
+
+This tutorial focuses on creating a new Workers project using `c3`. If you're interested in using `c3` to create a new front-end application to deploy with Cloudflare Pages, check out the [C3 guide](https://developers.cloudflare.com/pages/get-started/c3/) in the Cloudflare Pages documentation.
 
 ## Prerequisites
 
@@ -32,13 +34,13 @@ The "Common Workers Functions" provides a number of example functions that can b
 - Redirects
 - Routing
 
+These functions are provided as a starting point for your application, and can be modified or removed as needed. The entrypoint to the application is `src/worker.ts`, which contains the logic for routing requests to the appropriate function.
+
 Selecting this option will create a new project directory, install the needed dependencies, and even deploy an initial version of the project to Cloudflare Workers.
 
 ## Editing the code
 
-We can create a new endpoint in the `router.ts` file in order to see what it takes to edit the newly created Workers application.
-
-In the below example, a new route `/hello` has been added to the `router.ts` file. This route will respond with a simple message.
+We can create a new endpoint in the `router.ts` file in order to see what it takes to edit the newly created Workers application.  In the below example, a new route `/hello` has been added to the `router.ts` file. This route will respond with a simple message.
 
 ```typescript
 ---
