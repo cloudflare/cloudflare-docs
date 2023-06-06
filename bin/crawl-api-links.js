@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 import core from "@actions/core";
 
-const navigationTimeout = 120000; // Set the navigation timeout to 60 seconds (60000 milliseconds)
+const navigationTimeout = 120000; // Set the navigation timeout to 120 seconds (120,000 milliseconds)
 
 function arrayToHTMLList(array) {
   let html = '<ul>';
@@ -50,7 +50,7 @@ async function checkLinks() {
         continue; // Skip if the pageLink is empty or has already been visited
       }
 
-      if (pageLink.includes("/api/operations/")) {
+      if (pageLink.includes("developers.cloudflare.com/api/operations/") || pageLink.startsWith("/api/operations/")) {
         console.log(`Evaluating link: ${pageLink}`);
         await page.goto(pageLink, {
           waitUntil: "networkidle0",
