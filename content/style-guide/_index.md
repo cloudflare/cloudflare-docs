@@ -1,9 +1,11 @@
 ---
-title: Style Guide
+title: Overview
 pcx_content_type: Content
 weight: 1
+meta:
+  title: Style Guide
 ---
 
-# Style Guide
+## Style Guide
 
-## Test 1 2 3
+{{<directory-listing>}}
