@@ -139,7 +139,7 @@ import { Client } from "pg";
 
 export interface Env {
   // This should be a valid Postgres connection string
-  // e.g "postgres://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs"
+  // For example, "postgres://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs"
   // Use `wrangler secret put DB_URL` to configure a Secret with your connection string
   DB_URL: string;
 }
