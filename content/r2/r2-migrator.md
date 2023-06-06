@@ -8,6 +8,12 @@ weight: 3
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
+{{<Aside type="note" header="Beta waitlist">}}
+
+If you are interested in joining the private beta waitlist for incremental migration, [fill out the form](https://docs.google.com/forms/d/e/1FAIpQLSeqOcV0d8fuLSdTULP2eB4AQb3jU8TG3wUGOKEkJ_OeLG5e4g/viewform).
+
+{{</Aside>}}
+
 Migration jobs:
 
 - Preserve custom object metadata from source bucket by copying them on the migrated objects on R2.
@@ -17,7 +23,7 @@ Migration jobs:
 
 ## When to use Super Slurper
 
-Using Super Slurper as part of your strategy can be a good choice if the cloud storage bucket you are migrating consists primarily of objects less than 10 GB (1000³ bytes). Objects greater than 10 GB will be skipped and need to be copied separately.
+Using Super Slurper as part of your strategy can be a good choice if the cloud storage bucket you are migrating consists primarily of objects less than 50 GB. Objects greater than 50 GB will be skipped and need to be copied separately.
 
 For migration use cases that do not meet the above criteria, we recommend using tools such as [rclone](/r2/examples/rclone/).
 

@@ -13,24 +13,24 @@ meta:
 Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
 
 - [What is a CDN?](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
-- [Understand the default file types Cloudflare caches](/cache/about/default-cache-behavior/#default-cached-file-extensions)
+- [Understand the default file types Cloudflare caches](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
 
 ## Make more resources cacheable
 
 Configure your settings to cache static HTML or cache anonymous page views of dynamic content.
 
 - [Speed up your site with caching best practices](/cache/troubleshooting/customize-caching/)
-- [Specify which resources to cache](/cache/best-practices/customize-cache/)
-- [Understand Origin Cache Control](/cache/about/cache-control/)
-- [Cache by device type (Enterprise only)](/cache/how-to/create-page-rules/#cache-by-device-type-enterprise-only)
+- [Specify which resources to cache](/cache/concepts/customize-cache/)
+- [Understand Origin Cache Control](/cache/concepts/cache-control/)
+- [Cache by device type (Enterprise only)](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
 ## Improve cache hit rates
 
 Include or exclude query strings, optimize cache keys, or enable tiered cache to improve hit rates and reduce traffic to your origin.
 
 - [Choose a cache level](/cache/how-to/set-caching-levels/)
-- [Enable Tiered Cache with Argo](/cache/how-to/enable-tiered-cache/)
-- [Configure custom cache keys (Enterprise only)](/cache/about/cache-keys/)
+- [Enable Tiered Cache with Argo](/cache/how-to/tiered-cache/#enable-tiered-cache)
+- [Configure custom cache keys (Enterprise only)](/cache/how-to/cache-keys/)
 - [Enable Prefetch URLs (Enterprise only)](/fundamentals/speed/prefetch-urls/)
 
 ## Secure your cache configuration
@@ -61,6 +61,6 @@ Review the list of Cloudflare features that function in this manner.
 
 Resolve common caching concerns.
 
-- [Learn about Cloudflare's cache response statuses](/cache/about/default-cache-behavior/#cloudflare-cache-responses)
+- [Learn about Cloudflare's cache response statuses](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses)
 - [Investigate Cloudflare's cache response with cURL](https://support.cloudflare.com/hc/articles/203118044#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)
 - [Diagnose Always Online issues](/cache/troubleshooting/always-online/)

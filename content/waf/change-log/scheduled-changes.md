@@ -24,22 +24,13 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-05-10</td>
-      <td>2023-05-22</td>
+      <td>2023-06-05</td>
+      <td>2023-06-12</td>
       <td>Block</td>
-      <td>100583</td>
-      <td>...dae05f0a</td>
-      <td>Sophos - Code Injection - CVE:CVE-2023-1671</td>
-      <td>New Detection</td>
-    </tr>
-    <tr>
-      <td>2023-05-10</td>
-      <td>2023-05-22</td>
-      <td>Disabled</td>
-      <td>100584</td>
-      <td>...dd1b7502</td>
-      <td>Oracle Opera - Code Injection - CVE:CVE-2023-21932</td>
-      <td>New Detection</td>
+      <td>100587</td>
+      <td>...269024be</td>
+      <td>Code Injection - CVE:CVE-2022-23529</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

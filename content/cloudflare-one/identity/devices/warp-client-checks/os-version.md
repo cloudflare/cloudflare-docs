@@ -34,7 +34,7 @@ The OS version must be specified as a valid Semver. For example, if your device 
 
 6. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/analytics/logs/posture-logs) that the OS version check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the OS version check is returning the expected results.
 
 ## Determine the OS version
 

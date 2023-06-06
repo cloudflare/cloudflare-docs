@@ -1,6 +1,6 @@
 ---
 title: Importing data
-weight: 1
+weight: 8
 pcx_content_type: concept
 ---
 

@@ -72,7 +72,7 @@ You can also use the back button near the zone name.
 
 Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones.
 
-Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/about/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
+Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/how-to/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
 
 ### Navigation
 

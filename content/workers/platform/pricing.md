@@ -116,6 +116,14 @@ Workers Logpush is only available on the Workers Paid plan.
 
 Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](/queues/platform/pricing/).
 
+## D1
+
+D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans. 
+
+{{<render file="_d1-pricing.md">}}
+
+Refer to [the D1 documentation](/d1/platform/pricing/) to learn more about how D1 is billed.
+
 ## Durable Objects
 
 Durable Objects are only available on the Workers Paid plan.
@@ -129,9 +137,9 @@ Durable Objects are only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
+1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `.accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. [Prefer using `state.acceptWebSocket()`](/workers/runtime-apis/durable-objects/#websockets-hibernation-api-beta), which will stop incurring duration charges once all event handlers finish running.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
-3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages.
+3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
 
 ### Durable Objects billing examples
 

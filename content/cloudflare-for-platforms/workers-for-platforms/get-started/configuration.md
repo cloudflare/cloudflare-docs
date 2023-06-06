@@ -103,7 +103,7 @@ You will use the Cloudflare API to upload the user Worker. This will upload the 
 Update the necessary fields and run the following command:
 
 1. Add your Cloudflare account email to the value of the `X-Auth-Email` header.
-2. Find your `<AUTH_KEY>` by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > user icon > **My Profile** > **API Tokens** > **Global API Key** > **View**.
+2. Find your `<AUTH_KEY>` by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > user icon > **My Profile** > **API Tokens** > **Global API Key** > **View**. 
 3. Add your Cloudflare account ID found in your site's **Overview**.
 4. Add the namespace name you created in step 2 to `<NAMESPACE_NAME>`.
 5. Add the script name `customer-worker-1` to `<SCRIPT_NAME>`.
@@ -122,7 +122,8 @@ async function handleRequest(request) {
 }"
 ```
 
-If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) and add the token to the `"Authorization: Bearer <API_TOKEN>"` header.
+If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) with **Workers Edit** permission. Select **Account**, **Workers Script**, and **Edit**. Then, add the token to the `"Authorization: Bearer <API_TOKEN>"` header. 
+
 
 ```bash
 curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \

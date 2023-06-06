@@ -15,6 +15,7 @@ export const OWNERS: Record<string, string[]> = {
   "argo-smart-routing": ["dcpena"],
   "automatic-platform-optimization": ["dcpena"],
   bots: ["patriciasantaana"],
+  "browser-rendering": ["deadlypants1973"],
   byoip: [], // TODO
   cache: ["angelampcosta"],
   "china-network": ["pedrosousa"],
@@ -57,7 +58,7 @@ export const OWNERS: Record<string, string[]> = {
   "ruleset-engine": ["pedrosousa"],
   "security-center": ["jason-cf"],
   spectrum: ["angelampcosta"],
-  ssl: ["kodster28"],
+  ssl: ["RebeccaTamachiro"],
   stream: ["dcpena"],
   support: ["jedecf"],
   tenant: ["kodster28"],
@@ -74,14 +75,14 @@ export const OWNERS: Record<string, string[]> = {
 };
 
 export const REVIEWERS: Record<string, string[]> = {
-  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit"], // todo: re-add "soheiokamoto", "tlozoot"
+  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit", "soheiokamoto", "tlozoot"],
   d1: ["elithrar", "rozenmd"],
-  "data-localization": [], // todo: re-add "soheiokamoto", "tlozoot"
+  "data-localization": ["soheiokamoto", "tlozoot"],
   radar: ["meddulla", "G4brym"],
-  logs: ["jherre", "bharatnc", "victor-perov"], // todo: re-add "soheiokamoto", "tlozoot"
+  logs: ["jherre", "bharatnc", "victor-perov", "soheiokamoto", "tlozoot"],
   pages: ["WalshyDev"],
   "pub-sub": ["CharlieBurnett", "elithrar"],
   queues: ["CharlieBurnett", "elithrar"],
-  turnstile: ["migueldemoura", "punkeel"], // todo: re-add "worenga"
+  turnstile: ["migueldemoura", "punkeel", "worenga"],
   "waiting-room": ["aolache"],
 };

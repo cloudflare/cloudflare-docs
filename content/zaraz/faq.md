@@ -33,6 +33,7 @@ If Zaraz is not loading, please verify the following:
 - The domain running Zaraz [is proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
 - Auto Injection is enabled in your [Zaraz Settings](/zaraz/reference/settings/#auto-inject-script).
 - Your website's HTML is valid and includes `<head>` and `</head>` tags.
+- You have at least [one enabled tool](/zaraz/get-started/add-tool/) configured in Zaraz.
 
 #### I'm seeing some data discrepancies. Is there a way to check what data reaches Zaraz?
 

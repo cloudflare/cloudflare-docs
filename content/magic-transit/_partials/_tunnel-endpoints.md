@@ -36,7 +36,7 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 
 ### Dashboard instructions
 
-1. Log in to your Cloudflare dashboard, and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
 3. From the **Tunnels** tab, select **Create**.
 4. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.

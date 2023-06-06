@@ -26,7 +26,7 @@ ___
 
 [分散サービス妨害攻撃](https://www.cloudflare.com/ddos)（DDoS）は、エンドユーザーがオンラインサービスを利用できないようにします。Cloudflareは、全プランのお客様に、レイヤー3、4、7におけるDDoS攻撃に対する定額制の軽減策を提供しています。攻撃規模によって請求額を増やすことも、攻撃の規模や種類、攻撃時間に上限を設けることもありません。
 
-Cloudflareのネットワークは、大規模な[DDoS攻撃](https://www.cloudflare.com/ddos)を自動的に監視および軽減するように構築されています。小規模のDDoS攻撃からWebサイトを保護するためにCloudflareでコンテンツをキャッシュするのが有効な方法ですが、キャッシュされないアセットについては、[手動でDDoS攻撃に対応する](https://support.cloudflare.com/hc/articles/200170196)必要があります。
+Cloudflareのネットワークは、大規模な[DDoS攻撃](https://www.cloudflare.com/ddos)を自動的に監視および軽減するように構築されています。小規模のDDoS攻撃からWebサイトを保護するためにCloudflareでコンテンツをキャッシュするのが有効な方法ですが、キャッシュされないアセットについては、[手動でDDoS攻撃に対応する](/ddos-protection/best-practices/respond-to-ddos-attacks/)必要があります。
 
 さらに、Cloudflareは小規模なDDoS 攻撃を軽減するお手伝いもしています。
 
@@ -87,7 +87,7 @@ ___
 
 ## 関連リソース
 
--   [DDoS攻撃に対応する](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS攻撃に対応する](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [ベストプラクティス：DDoS攻撃対策](https://support.cloudflare.com/hc/articles/200170166)
 -   [Cloudflare Logsを使用してDDoSトラフィックを調べる（Enterpriseプランのみ）](https://support.cloudflare.com/hc/ja/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [DDoS攻撃とは？](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
