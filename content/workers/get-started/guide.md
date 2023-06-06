@@ -8,7 +8,9 @@ meta:
 
 # Get started guide
 
-This guide will instruct you through setting up a Cloudflare account to deploying your first Worker. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
+This guide will instruct you through setting up a Cloudflare account to deploying your first Worker. 
+
+This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 
 {{<Aside type="note" header="Try the Playground">}}
 
