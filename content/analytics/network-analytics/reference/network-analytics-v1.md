@@ -42,11 +42,8 @@ ___
 
 You can access the **Network Analytics** view from your Cloudflare account’s Home page.
 
-To access the **Network Analytics** view, follow these steps:
-
-1.  Log in to your Cloudflare account.
-2.  If you have multiple accounts, select an account that has access to Magic Transit or Spectrum.
-3.  On the account’s **Home** page, click **Network Analytics**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account that has access to Magic Transit or Spectrum.
+2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
 {{<Aside type="note">}}
 Source IPs are stored for 30 days. Report periods older than 30 days do not include source IP data.
@@ -64,7 +61,7 @@ The headline and the side panels provide a summary of activity over the period s
 
 The headline provides the total packets or bits and the number of attacks detected and mitigated. When there is an attack in progress, the headline displays the maximum rate of packets (or bits) rather than the total count.
 
-To toggle your view of the data, click the **Packets** or **Bits** side panels.
+To toggle your view of the data, select the **Packets** or **Bits** side panels.
 
 ### Set the timeframe for the view
 
@@ -82,17 +79,17 @@ Choose a statistic from the drop-down list to toggle between plotting _Average r
 
 ### Show IP prefix advertisement/withdrawal events
 
-Enable the **Show annotations** toggle to show or hide annotations for advertised/withdrawn IP prefix events in the **Network Analytics** view. Click each annotation to get more details.
+Enable the **Show annotations** toggle to show or hide annotations for advertised/withdrawn IP prefix events in the **Network Analytics** view. Select each annotation to get more details.
 
 ![Toggle button for displaying annotations in Network Analytics chart](/support/static/hc-dash-Network_Analytics-show_annotations.png)
 
 ### Zoom into the Packets summary 
 
-Click and drag your mouse on a region of the chart to zoom in. Using this technique you can zoom into a time range as short as 3 minutes.
+Select and drag to zoom in on a region of the chart. Using this technique you can zoom into a time range as short as three minutes.
 
 ![Zooming into the Packets summary ](/support/static/unnamed.gif)
 
-To zoom out, click the **X** icon in the **time range** selector.
+To zoom out, select **X** in the **time range** selector.
 
 ___
 
@@ -100,13 +97,13 @@ ___
 
 You can apply multiple filters and exclusions to adjust the scope of the data displayed in Network Analytics.
 
-Filters affect all of the data displayed in the Network Analytics page.
+Filters affect all the data displayed in the Network Analytics page.
 
-There are two ways to filter Network Analytics data—use the **Add filter** button or click on one of the **stat filters**.
+There are two ways to filter Network Analytics data: use the **Add filter** button or select one of the stat filters.
 
 ### Use the Add filter button
 
-Click the **Add filter** button to open the **New filter** popover. Specify a field, an operator, and a value to complete your filter expression. Click **Apply** to update the view.
+Select **Add filter** to open the **New filter** popover. Specify a field, an operator, and a value to complete your filter expression. Select **Apply** to update the view.
 
 When applying filters, observe these guidelines:
 
@@ -118,7 +115,7 @@ When applying filters, observe these guidelines:
 
 To filter based on the type of data associated with one of the Network Analytics stats, use the **Filter** and **Exclude** buttons that display when you hover your pointer over the stat. 
 
-In this example, clicking the **Filter** button narrows the scope of the view to only traffic associated with the _Allow_ action.
+In this example, selecting **Filter** narrows the scope of the view to only traffic associated with the _Allow_ action.
 
 ### Create a Magic Firewall rule from the applied filters
 
@@ -140,15 +137,15 @@ Do the following:
 
 1. Apply one or more filters in Network Analytics.
 
-2. Click **Create Magic Firewall rule**. 
+2. Select **Create Magic Firewall rule**. 
 
-![Creating a Firewall Rule link in Network Analytics](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+    ![Link in Network Analytics to create a Magic Firewall rule](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
 
-The Magic Firewall rule editor displays with the selected filters and values.
+    The Magic Firewall rule editor displays with the selected filters and values.
 
 3. Review the rule definition in the Magic Firewall rule editor.
 
-4. Click **Add new**.
+4. Select **Add new**.
 
 ### Supported filter fields, operators, and values 
 
@@ -215,11 +212,11 @@ ___
 
 The Network Analytics **Activity log** shows up to 500 log events in the currently selected time range, paginated with 10 results per page per time range view. (The [GraphQL Analytics API](/analytics/graphql-api/) does not have this limitation.) 
 
-To display event details, click the expansion widget associated with the events.
+To display event details, select the expansion widget associated with the events.
 
 ### Configure columns
 
-To configure which columns display in the Activity log, click the **Edit columns** button. 
+To configure which columns display in the Activity log, select **Edit columns**. 
 
 This is particularly useful when you would like to identify a DDoS attack, during which you can specify the desired attributes such as IP addresses, max bit rate, and attack ID among others.
 
@@ -239,7 +236,7 @@ ___
 
 You can export up to 500 raw events from the Activity log at a time. This option is useful when you need to combine and analyze Cloudflare data with data stored in a separate system or database, such as a security information and event management system (SIEM).
 
-To export log data, click **Export**.
+To export log data, select **Export**.
 
 Choose either CSV or JSON format for rendering exported data. The downloaded file name will reflect the selected time range, using this pattern:
 
@@ -249,7 +246,7 @@ _network-analytics-attacks-\[start time\]-\[end time\].json_
 
 To print or download a snapshot report from **Network Analytics**, follow these steps:
 
-Click **Print report**. Your web browser's print interface displays options for printing or saving as a PDF.
+Select **Print report**. Your web browser's print interface displays options for printing or saving as a PDF.
 
 ___
 
