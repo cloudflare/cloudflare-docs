@@ -20,7 +20,7 @@ To get started with a specific use case, refer to the following learning paths:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
 
-{{<render file=_choose-team-name.md productFolder="cloudflare-one">}}
+{{<render file=_choose-team-name.md>}}
 
 Welcome to Cloudflare Zero Trust! You can now explore a list of one-click actions we have designed to help you kickstart your Zero Trust experience.
 
