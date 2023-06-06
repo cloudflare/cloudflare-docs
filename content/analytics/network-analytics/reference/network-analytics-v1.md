@@ -11,7 +11,7 @@ weight: 3
 
 {{<Aside type="note" header="Network Analytics v2 is now available">}}
 -   For more information on the Network Analytics v2 (NAv2) dashboard, refer to [Cloudflare Network Analytics](/analytics/network-analytics/).
--   There is also new version of the Network Analytics GraphQL API. If you are still using NAv1, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
+-   There is also a new version of the Network Analytics GraphQL API. If you are still using NAv1, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
 Access to Network Analytics requires the following:
