@@ -10,6 +10,10 @@ meta:
 
 Secure Web Gateway allows you to inspect DNS traffic and control which websites users can visit.
 
+{{<Aside type="note">}}
+For a more detailed guide to filtering DNS queries, refer to [Get started with DNS filtering](/learning-paths/dns-filtering/).
+{{</Aside>}}
+
 ## 1. Connect to Gateway
 
 ### Connect devices
