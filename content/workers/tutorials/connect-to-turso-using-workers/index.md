@@ -152,21 +152,21 @@ $ turso db tokens create my-db -e none
 # Will output a long text string (an encoded JSON Web Token)
 ```
 
-In order to keep this token secret:
+To keep this token secret:
 
-* You will create a `.dev.vars` file for local development. Don't commit this file to source control: you should add it to your `.gitignore` file if you are using Git.
-* You will also [create a Secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential:
+1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore` file if you are using Git.
+* You will also [create a Secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
 
-Create a new file called `.dev.vars` with the following structure, and paste in the authentication token (keep the quotes):
+First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
 
 ```
 ---
 filename: .dev.vars
 ---
-LIBSQL_DB_AUTH_TOKEN="<paste your token here>"
+LIBSQL_DB_AUTH_TOKEN="<YOUR_AUTH_TOKEN>"
 ```
 
-Save your changes to `.dev.vars`. Next, we'll store the authentication token as a secret for our production Worker to reference. Run the following `wrangler secret` command to create a Secret with your token:
+Save your changes to `.dev.vars`. Next, store the authentication token as a secret for your production Worker to reference. Run the following `wrangler secret` command to create a Secret with your token:
 
 ```sh
 # Ensure you specify the secret name exactly: your Worker will need to reference it later.
