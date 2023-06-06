@@ -87,8 +87,8 @@ If your Worker is making multiple round trip calls to a centralized database, yo
 
 4. Add the PlanetScale integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers**.
-    - Select your Worker.
+    - In **Account Home**, select **Workers & Pages**.
+    - In **Overview**, select your Worker.
     - Select **Settings** > **Integrations** > **PlanetScale**. 
     - Follow the setup flow, selecting the database created in step 1.
 
@@ -108,7 +108,11 @@ If your Worker is making multiple round trip calls to a centralized database, yo
         const config = {
           host: env.DATABASE_HOST,
           username: env.DATABASE_USERNAME,
-          password: env.DATABASE_PASSWORD
+          password: env.DATABASE_PASSWORD,
+			      fetch: (url, init) => {
+				    delete (init)["cache"];
+				    return fetch(url, init);
+          }
         }
         
         const conn = connect(config)
@@ -152,8 +156,8 @@ To learn more about PlanetScale, refer to [Planetscale's official documentation]
 
 4. Add the Supabase database integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers**.
-    - Select your Worker.
+    - In **Account Home**, select **Workers & Pages**.
+    - In **Overview**, select your Worker.
     - Select **Settings** > **Integrations** > **Supabase**. 
     - Follow the setup flow, selecting the database created in step 1.
 
@@ -220,8 +224,8 @@ To learn more about Supabase, refer to [Supabase's official documentation](https
 
 4. Add the Neon database integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers**.
-    - Select your Worker.
+    - In **Account Home**, select **Workers & Pages**.
+    - In **Overview**, select your Worker.
     - Select **Settings** > **Integrations** > **Neon**. 
     - Follow the setup flow, selecting the database created in step 1.
 

@@ -35,8 +35,8 @@ Smart Placement is available on all plans.
 To enable Smart Placement via the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Pages**.
-3. Select your Pages project.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Pages project.
 4. Select **Settings** > **Functions**.
 5. Under **Placement**, choose **Smart**.
 6. Send some initial traffic (approximately 20-30 requests) to your Pages Functions. It takes a few minutes after you have sent traffic to your Pages Function for Smart Placement to take effect.

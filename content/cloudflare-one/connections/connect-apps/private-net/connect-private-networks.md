@@ -35,8 +35,16 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
 2. Enable **Proxy** for TCP.
-3. (Recommended) Select **UDP** to proxy traffic to internal DNS resolvers.
-4. (Recommended) Select **ICMP** to enable diagnostic tools such as `ping` and `traceroute`.
+3. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
+4. (Recommended) To enable diagnostic tools such as `ping` and `traceroute`:
+    1. Select **ICMP**.
+    2. On Linux servers:
+
+    * Ensure that the Group ID for the `cloudflared` process is included in `/proc/sys/net/ipv4/ping_group_range`.
+    * If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
+    ```sh
+    $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
+    ```
 
 Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp).
 

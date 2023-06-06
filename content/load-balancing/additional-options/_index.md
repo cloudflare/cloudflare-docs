@@ -18,9 +18,8 @@ Beyond [creating a simple load balancer](/load-balancing/how-to/create-load-bala
 
 *   Bring load balancing to your TCP or UDP applications with [Cloudflare Spectrum](/load-balancing/additional-options/spectrum/)
 *   Further secure origin access with [Cloudflare Tunnel](/load-balancing/additional-options/cloudflare-tunnel/)
-*   Accelerate dynamic content with [Cloudflare Railgun](/load-balancing/additional-options/railgun/)
 
 ## Integrate with 3rd parties
 
 *   [Deploy containerized applications](/load-balancing/additional-options/deploy-containerized-applications/) across multiple clouds
-*   Increase visibility by [sending health check notifications to Pagerduty](/load-balancing/additional-options/pagerduty-integration/)
+*   Increase visibility by [sending health monitor notifications to Pagerduty](/load-balancing/additional-options/pagerduty-integration/)

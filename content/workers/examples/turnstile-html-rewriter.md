@@ -100,12 +100,12 @@ async function handlePost(request) {
     // Validate the token by calling the `/siteverify` API.
     let formData = new FormData();
 
-		// `secret_key` here is set using Wrangler secrets
+    // `secret_key` here is set using Wrangler secrets
     formData.append('secret', secret_key);
     formData.append('response', token);
     formData.append('remoteip', ip);
 
-	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
     const result = await fetch(url, {
         body: formData,
         method: 'POST',
@@ -116,9 +116,9 @@ async function handlePost(request) {
     if (!outcome.success) {
         return new Response('The provided Turnstile token was not valid!', { status: 401 });
     }
-		// The Turnstile token was successfuly validated. Proceed with your application logic.
+    // The Turnstile token was successfuly validated. Proceed with your application logic.
     // Validate login, redirect user, etc.
-	return await fetch(request)
+    return await fetch(request)
 }
 
 export default {

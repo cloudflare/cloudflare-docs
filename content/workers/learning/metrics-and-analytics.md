@@ -6,13 +6,17 @@ weight: 5
 
 # Metrics and analytics
 
-There are two graphical sources of information about your Workers traffic at a given time: Workers Metrics and zone-based Workers analytics. Workers metrics can help you diagnose issues and understand your Workers workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, go to **Workers** in your zone's Cloudflare dashboard to understand on a per-zone basis how much traffic your Worker is handling, and how many requests your site is getting.
+There are two graphical sources of information about your Workers traffic at a given time: Workers Metrics and zone-based Workers analytics. Workers metrics can help you diagnose issues and understand your Workers workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, go to **Workers & Pages** and select your Worker in your zone's Cloudflare dashboard to understand on a per-zone basis how much traffic your Worker is handling, and how many requests your site is getting.
 
 ---
 
 ## Workers metrics
 
-Workers metrics aggregate request data for an individual Worker script (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). Select **Workers** > **Manage Workers** > your Worker to view its metrics.
+Workers metrics aggregate request data for an individual Worker script (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). To view your Worker's metrics:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages**.
+3. In **Overview**, select your Worker to view its metrics.
 
 There are two metrics that can help you understand the health of your Worker in a given moment: requests success and error metrics, and invocation statuses.
 

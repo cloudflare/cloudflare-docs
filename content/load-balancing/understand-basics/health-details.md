@@ -8,13 +8,13 @@ weight: 5
 
 When we talk about dynamic load balancing, that means your load balancer only directs requests to servers that can handle the traffic.
 
-But how does your load balancer _know_ which servers can handle the traffic? We determine that through a system of monitors, health checks, and origin pools.
+But how does your load balancer _know_ which servers can handle the traffic? We determine that through a system of monitors, health monitors, and origin pools.
 
 ---
 
 ## Components
 
-Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3]. 
+Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health monitors[^3]. 
 
 {{<render file="_health-check-diagram.md">}}
 
@@ -28,9 +28,11 @@ Dynamic load balancing happens through a combination of [origin pools](/load-bal
 
 {{<Aside type="note">}}
 
-If **Health Check Regions** for a pool is set to **All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
+If **Health Monitor Regions** for a pool is set to **All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
 
 {{</Aside>}}
+
+Load balancing analytics and logs will only show global health changes.
 
 For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](/api/operations/account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
 
@@ -71,5 +73,5 @@ If a load balancer reaches **Critical** health and the pool serving as your fall
 
 
 [^1]: Groups that contain one or more origin servers.
-[^2]: Are attached to individual origin servers and issue health checks at regular intervals.
+[^2]: Are attached to individual origin servers and issue health monitor requests at regular intervals.
 [^3]: Which are issued by a monitor at regular interval and — depending on the monitor settings — return a **pass** or **fail** value to make sure an origin is still able to receive traffic.

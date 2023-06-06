@@ -11,8 +11,13 @@ rss: file
 ## 2023-05-16
 
 - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
-- You can now connect directly to databases from Workers, starting with [PostgreSQL](/workers/databases/connect-to-postgres/).
-- Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from your Worker directly.
+- We've added new [native database integrations](/workers/learning/integrations/databases/#native-database-integrations-beta) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
+- You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
+- The [R2 Migrator](/r2/r2-migrator/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
+
+## 2023-05-15
+
+- [Cursor](/workers/ai/), an experimental AI assistant, trained to answer questions about Cloudflare's Developer Platform, is now available to preview! Cursor can answer questions about Workers and the Cloudflare Developer Platform, and is itself built on Workers. You can read more about Cursor in the [announcement blog](https://blog.cloudflare.com/introducing-cursor-the-ai-assistant-for-docs/).
 
 ## 2023-05-12
 
@@ -637,7 +642,7 @@ New this week:
 Runtime release notes covering the past few weeks:
 
 - Increased total per-request `Cache.put()` limit to 5GiB.
-- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/about/default-cache-behavior/).
+- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/concepts/default-cache-behavior/).
 - Added a helpful error message explaining AES decryption failures.
 - Some overload errors were erroneously being reported as daemonDown (1105) errors. They have been changed to exceededCpu (1102) errors, which better describes their cause.
 - More “internal errors” were converted to useful user-facing errors.

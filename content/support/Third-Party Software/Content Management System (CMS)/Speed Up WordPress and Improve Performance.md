@@ -53,5 +53,5 @@ Due to HTTP/2 multiplexing requests, we advise against concatenating CSS or Java
 
 ### Advanced Performance Tools
 
--   Business and Enterprise customers can utilise Cloudflare's [Railgun Origin Network Optimizer](https://www.cloudflare.com/website-optimization/railgun/).
+-   Business and Enterprise customers can utilise Cloudflare's [Railgun Origin Network Optimizer](/railgun/) (deprecated).
 -   Enterprise users can utilise "Prefetching URLs From HTML Headers" and custom cache keys to enhance caching - contact your named Customer Success Engineer for help getting set-up or [reach out to our sales team](https://www.cloudflare.com/enterprise-free-trial/) if you aren't already an Enterprise customer.

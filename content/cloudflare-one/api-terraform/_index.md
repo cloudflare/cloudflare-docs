@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: API and Terraform
-weight: 8
+weight: 9
 ---
 
 # API and Terraform
@@ -16,7 +16,7 @@ Super Administrators can lock all settings as read-only in Zero Trust. Read-only
 
 To enable read-only mode:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **General**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Account**.
 2. Enable **API/Terraform read-only mode**.
 
 All users, regardless of [user permissions](/cloudflare-one/cloudflare-teams-roles-permissions/), will be prevented from making configuration changes through the UI.

@@ -27,7 +27,7 @@ You can also create a list from the dashboard from **Configurations** > **Lists*
 
 Endpoint devices do not operate as servers, which means:
 
-- They receive traffic from standard common ports — for example 80 or 443 — towards their ephemeral ports, above 32768 in modern operating systems (above 1025 in older Windows Server 2003 and Windows XP).
+- They receive traffic from standard common ports — for example `80` or `443` — towards their ephemeral ports, above `32768` in modern operating systems (above `1025` in older Windows Server 2003 and Windows XP).
 - Connections flow outwards, not inwards, and therefore do not receive TCP SYN or ACK packets.
 - They typically only need client TCP and UDP, with no requirement for ingress ICMP.
 
@@ -111,7 +111,7 @@ The following is an example of suggested rules, but you should only make changes
 
 **Rule ID**: 1 <br/>
 **Description**: Allows inbound HTTP/S traffic from the Internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
-**Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
+**Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
 **Action**: Allow <br/>
 
 **Rule ID**: 2 <br/>
@@ -131,7 +131,7 @@ For a list of Cloudflare's IP addresses, refer to [Cloudflare's IP addresses](ht
 ### Suggested rules for Cloudflare proxied traffic
 
 **Description**: Allow inbound HTTP/S traffic from Cloudflare with SYN or ACK <br/>
-**Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack) and ip.src in {173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14 172.64.0.0/13 131.0.72.0/22}` <br/>
+**Match**: `ip.proto eq "tcp" and ip.dst in $web_servers and tcp.dstport in {80 443} and not (tcp.flags.syn and tcp.flags.ack) and ip.src in {173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14 172.64.0.0/13 131.0.72.0/22}` <br/>
 **Action**: Allow <br/>
 
 ## Non-web servers

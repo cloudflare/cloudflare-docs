@@ -140,4 +140,4 @@ ___
 
 -   [Single Redirects](/rules/url-forwarding/single-redirects/)
 -   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
--   [Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial)](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-)
+-   [Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial)](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)

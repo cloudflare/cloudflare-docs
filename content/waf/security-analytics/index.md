@@ -35,7 +35,7 @@ To use Security Analytics:
     - For the zone dashboard, select your domain and go to **Security** > **Analytics**.
     - For the account dashboard, go to **Security Center** > **Security Analytics**.
 
-![The Security Analytics dashboard displaying the HTTP requests chart for the past 24 hours.](/waf/static/security-analytics/security-analytics-dashboard.png)
+![The Security Analytics dashboard displaying the HTTP requests chart for the past 24 hours.](/images/waf/security-analytics/security-analytics-dashboard.png)
 
 ## Adjusting displayed data
 
@@ -110,7 +110,7 @@ The main chart displays the following data for the selected time frame, accordin
 
 This section contains detailed log information for individual ([sampled](#final-remarks)) requests in the selected time frame.
 
-![The Sampled logs section of Security Analytics showing an expanded log entry with additional details.](/waf/static/security-analytics/security-analytics-sampled-logs.png)
+![The Sampled logs section of Security Analytics showing an expanded log entry with additional details.](/images/waf/security-analytics/security-analytics-sampled-logs.png)
 
 The displayed information includes:
 

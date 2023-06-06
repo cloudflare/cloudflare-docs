@@ -19,7 +19,7 @@ When your traffic is proxied through Cloudflare, Cloudflare can automatically st
 
 ### Caching
 
-Proxied traffic also benefits from the default optimizations of the Cloudflare [cache](/cache/). Cloudflare caches [certain types of resources](/cache/about/default-cache-behavior/#default-cached-file-extensions) automatically, which both speeds up your application's performance and reduces the overall number of requests.
+Proxied traffic also benefits from the default optimizations of the Cloudflare [cache](/cache/). Cloudflare caches [certain types of resources](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) automatically, which both speeds up your application's performance and reduces the overall number of requests.
 
 ### Hides origin IP address
 

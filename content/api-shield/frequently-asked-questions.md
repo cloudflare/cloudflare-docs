@@ -1,5 +1,5 @@
 ---
-pcx_content_type: FAQ
+pcx_content_type: faq
 title: FAQs
 weight: 5
 layout: list

@@ -49,8 +49,6 @@ For enhanced security, we recommend rolling your origin IP addresses at your hos
 
 Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate HTTP/1.1 specifications, they are not compatible with proxied DNS records.
 
-To solve this issue, we recommend using [Cloudflare Zero Trust](/cloudflare-one/).
-
 ---
 
 ## DNS-only records

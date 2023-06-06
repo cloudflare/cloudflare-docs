@@ -8,7 +8,7 @@ _build:
 The execution order of Rules products is the following:
 
 * [Origin Rules](/rules/origin-rules/)
-* [Cache Rules](/cache/about/cache-rules/)
+* [Cache Rules](/cache/how-to/cache-rules/)
 * [Configuration Rules](/rules/configuration-rules/)
 * [Single Redirects](/rules/url-forwarding/single-redirects/)
 * [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)

@@ -19,7 +19,7 @@ To create a new rate limiting rule:
 
 4. Enter a descriptive name for the rule in **Rule name**.
 
-    ![The Create rate limiting rule page in the Cloudflare dashboard](/waf/static/custom-rules/rate-limiting-create.png)
+    ![The Create rate limiting rule page in the Cloudflare dashboard](/images/waf/custom-rules/rate-limiting-create.png)
 
 5. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 

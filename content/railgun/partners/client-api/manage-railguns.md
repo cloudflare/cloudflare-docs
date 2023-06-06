@@ -6,6 +6,8 @@ weight: 2
 
 # Manage Railguns
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 Creating and activating a Railgun requires two API calls. First, a Railgun must be initialized using the `init` call. The activation API call is made by Railgun when the daemon is started and does not need to be made by a user.
 
 ## POST init
