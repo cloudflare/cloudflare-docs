@@ -30,15 +30,19 @@ Local Domain Fallback configuration only impacts where DNS requests get resolved
 
 ## Add a domain
 
-1. [Navigate](#view-local-domains) to the **Local Domain Fallback** page.
+1. Go to the [**Local Domain Fallback** page](#view-local-domains).
 
 2. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `\*.example.com`).
 
-3. Enter the DNS server(s) that should resolve that domain name. All servers are tried and the fastest response is used. It is best to always specify at least one DNS server that Local Domain Fallback should use for any domain you add. If a value is not specified, the WARP client will try to identify the DNS server (or servers) used on the device before it started, and use that server for each domain in the Local Domain Fallback list.
+3. Enter the DNS server(s) that should resolve that domain name.
+
+    All servers are tried and the fastest response is used. It is best to always specify at least one DNS server that Local Domain Fallback should use for any domain you add. If a value is not specified, the WARP client will try to identify the DNS server (or servers) used on the device before it started, and use that server for each domain in the Local Domain Fallback list.
 
 4. Enter an optional description and select **Save domain**.
 
-The domain will appear in the list of Local Domain entries.
+5. If your DNS server requires queries to originate from inside of its network (in other words, outside of the WARP tunnel), add the DNS server to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list.
+
+[Learn more](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests) about how WARP handles DNS requests.
 
 ## Delete a domain
 
