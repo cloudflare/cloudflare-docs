@@ -10,7 +10,7 @@ title: What will Cloudflare compress
 
 In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/about/default-cache-behavior/) and [auto-minification](https://support.cloudflare.com/hc/en-us/articles/200168196-How-do-I-minify-HTML-CSS-and-JavaScript-to-optimize-my-site-) of CSS, JS & HTML to speed up your site, Cloudflare also provides gzip and brotli compression to help site owners. 
 
-Cloudflare only compresses 2 error status codes, they are `403` and `404`. Other error status codes would not be compressed.
+For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. Responses with other error status codes will not be compressed.
 
 Cloudflare will return gzip or brotli encoded responses to compatible clients / browsers for the following content-types:
 
