@@ -60,7 +60,7 @@ ___
 
 ## Schritt 2: Aktivierung der **Web Application Firewall** (WAF)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Die WAF ist nur für Domains mit kostenpflichtigen Tarifen verfügbar.
 {{</Aside>}}
 
@@ -77,15 +77,15 @@ ___
 Cloudflares **Firewall**\-App erleichtert das Blockieren von Datenverkehr anhand der folgenden Methoden:
 
 **[IP Access Rules](/waf/tools/ip-access-rules/)** werden empfohlen, um mehrere IP-Adressen, /16- oder /24-IP-Bereiche oder AS-Nummern (ASNs) zu blockieren. 
-**[Firewall Rules](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)** werden empfohlen, um ein Land, einen gültigen IP-Bereich oder komplexere Angriffsmuster zu blockieren.
+**[Firewall Rules](/firewall/cf-dashboard/create-edit-delete-rules/)** werden empfohlen, um ein Land, einen gültigen IP-Bereich oder komplexere Angriffsmuster zu blockieren.
 **[Zone Lockdown](/waf/tools/zone-lockdown/)** wird empfohlen, um nur vertrauenswürdige IP-Adressen oder -Bereiche auf einen Teil Ihrer Website zu lassen.
 **[User Agent Blocking](/waf/tools/user-agent-blocking/)** wird empfohlen, um verdächtige [User-Agent-Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) für Ihre gesamte Domain zu blockieren.
 
 {{<Aside type="tip">}}
 [**Firewall Rules** haben
-Grenzen](https://developers.cloudflare.com/firewall/cf-firewall-rules/),
+Grenzen](/firewall/cf-firewall-rules/),
 sind aber flexibler und können einer [größeren Vielzahl an Feldern und
-Ausdrücken](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/)
+Ausdrücken](/firewall/cf-firewall-rules/fields-and-expressions/)
 zugeordnet werden als **IP Access Rules**.
 {{</Aside>}}
 
@@ -99,13 +99,10 @@ Firewall-Updates werden innerhalb von 2 Minuten wirksam.
 -   die Ressourcen, auf die bei dem Angriff zugegriffen wird, und
 -   allgemeine Merkmale des Angriffs (IP-Adressen, User-Agents, Länder oder ASNs usw.)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare bietet auch **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** an, um
-das Anfragevolumen an Ihren Server unter Kontrolle zu halten.  [**Rate
-Limiting** wird auf Nutzungsgrundlage
-berechnet](https://support.cloudflare.com/hc/en-us/articles/115000272247-Billing-for-Cloudflare-Rate-Limiting)
-und ist unabhängig vom Tariftyp.
+das Anfragevolumen an Ihren Server unter Kontrolle zu halten.
 {{</Aside>}}
 
 ___

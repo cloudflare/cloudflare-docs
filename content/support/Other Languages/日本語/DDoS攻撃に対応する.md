@@ -57,7 +57,7 @@ ___
 Cloudflareの**ファイアウォール**アプリは、次の方法でトラフィックのブロックを容易にします：
 
 -   [**IP Access Rules**](/waf/tools/ip-access-rules/) \-複数のIPアドレス、/16または/24のIPレンジ、あるいは自律システム番号（ASN）をブロックする場合に推奨されます。 
--   [**ファイアウォールルール**](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) \- 国、有効なIPレンジ、またはより複雑な攻撃パターンをブロックする場合に推奨されます。
+-   [**ファイアウォールルール**](/firewall/cf-dashboard/create-edit-delete-rules/) \- 国、有効なIPレンジ、またはより複雑な攻撃パターンをブロックする場合に推奨されます。
 
 -   [**Zone Lockdown**](/waf/tools/zone-lockdown/) \-信頼できる IPアドレスまたはサイトの一部のIPレンジのみを許可する場合に推奨されます。
 -   [**ユーザーエージェント**](/waf/tools/user-agent-blocking/) \-ドメイン全体の [不審なUser Agent Blocking](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) をブロックする場合に推奨されます。

@@ -31,13 +31,13 @@ Wrangler templates are git repositories. If you want to create your own template
 
 ## Workers Playground
 
-You can test how your Workers function will execute when it is deployed by using the [`dev` command](/workers/wrangler-legacy/commands/#dev):
+You can test how your Workers function will execute when it is deployed by using the [`dev` command](/workers/wrangler/commands/#dev):
 
 ```sh
 rustwasm-markdown-parser $ wrangler dev
 ```
 
-Using the `dev` command will establish a connection between localhost and an edge server that operates your Worker in development.
+Using the `dev` command will establish a connection between `localhost` and an global network server that operates your Worker in development.
 
 ## Building
 

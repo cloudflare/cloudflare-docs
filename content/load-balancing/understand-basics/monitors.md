@@ -10,11 +10,11 @@ weight: 2
 <br/>
 {{<render file="_health-check-diagram.md">}}
 
-Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
+Health monitor requests that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
 
 {{<Aside type="note">}}
 
-Health checks associated with load balancers are different from [**Standalone health checks**](/health-checks/).
+Health monitors associated with load balancers are different from [**Standalone health checks**](/health-checks/).
 
 {{</Aside>}}
 
@@ -22,7 +22,7 @@ Health checks associated with load balancers are different from [**Standalone he
 
 ## Properties
 
-For an up-to-date list of monitor properties, refer to [Monitor properties](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-list-monitors) in our API documentation.
+For an up-to-date list of monitor properties, refer to [Monitor properties](/api/operations/account-load-balancer-monitors-list-monitors) in our API documentation.
 
 ---
 
@@ -32,7 +32,7 @@ For step-by-step guidance, refer to [Create monitors](/load-balancing/how-to/cre
 
 ---
 
-## Health check regions
+## Health monitor regions
 
 When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can select multiple regions to increase reporting accuracy.
 
@@ -46,7 +46,7 @@ When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#cre
 
 ## Host header prioritization
 
-When a load balancer runs health checks, headers set on an origin override headers set on a monitor. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
+When a load balancer runs health monitor requests, headers set on an origin override headers set on a monitor. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 
 ---
 
@@ -56,10 +56,10 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
 
 | Command | Method | Endpoint |
 | --- | --- | --- |
-| [Create Monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors`|
-| [Delete Monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-delete-monitor) | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id` |
-| [List Monitors](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-list-monitors) | `GET` |  `accounts/:account_id/load_balancers/monitors` |
-| [Monitor Details](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-monitor-details) | `GET` |`accounts/:account_id/load_balancers/monitors/:id` |
-| [Overwrite specific properties](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-patch-monitor) | `PATCH` | `accounts/:account_id/load_balancers/monitors/:id` |
-| [Overwrite existing monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-update-monitor) | `PUT` | `accounts/:account_id/load_balancers/monitors/:id` |
-| [Preview Monitor](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-preview-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors/:id/preview` |
+| [Create Monitor](/api/operations/account-load-balancer-monitors-create-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors`|
+| [Delete Monitor](/api/operations/account-load-balancer-monitors-delete-monitor) | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [List Monitors](/api/operations/account-load-balancer-monitors-list-monitors) | `GET` |  `accounts/:account_id/load_balancers/monitors` |
+| [Monitor Details](/api/operations/account-load-balancer-monitors-monitor-details) | `GET` |`accounts/:account_id/load_balancers/monitors/:id` |
+| [Overwrite specific properties](/api/operations/account-load-balancer-monitors-patch-monitor) | `PATCH` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [Overwrite existing monitor](/api/operations/account-load-balancer-monitors-update-monitor) | `PUT` | `accounts/:account_id/load_balancers/monitors/:id` |
+| [Preview Monitor](/api/operations/account-load-balancer-monitors-preview-monitor) | `POST` | `accounts/:account_id/load_balancers/monitors/:id/preview` |

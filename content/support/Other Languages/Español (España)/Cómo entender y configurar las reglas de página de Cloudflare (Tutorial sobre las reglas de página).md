@@ -16,7 +16,7 @@ Puedes definir una regla de página para activar una o más acciones siempre que
 {{<Aside type="warning">}}
 Las reglas de página requieren un registro DNS \"[redireccionado
 mediante
-proxy](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)\"
+proxy](/dns/manage-dns-records/reference/proxied-dns-records)\"
 para que funcione la regla de tu página. Las reglas de página no se
 aplicarán a los nombres de servidor que no existan en el DNS o que no se
 dirijan a Cloudflare.
@@ -222,7 +222,7 @@ Usar siempre HTTPS
 
  | 
 
-Activa o desactiva la función **[Usar siempre HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https)** de la pestaña **Certificados de perímetro** en la aplicación **SSL/TLS** de Cloudflare. Si se activa, cualquier URL _http://_ se convierte en  _https://_ mediante redireccionamiento 301.
+Activa o desactiva la función **[Usar siempre HTTPS](/ssl/edge-certificates/additional-options/always-use-https)** de la pestaña **Certificados de perímetro** en la aplicación **SSL/TLS** de Cloudflare. Si se activa, cualquier URL _http://_ se convierte en  _https://_ mediante redireccionamiento 301.
 
 Si no aparece esta opción es porque aún no dispones de un **certificado de perímetro** activo.
 
@@ -250,7 +250,7 @@ Reescrituras automáticas HTTPS
 
  | 
 
-Activa o desactiva la función **Reescrituras automáticas HTTPS de Cloudflare** de la pestaña **certificado de perímetro** de la aplicación **SSL/TLS** de Cloudflare. [Más información](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites).
+Activa o desactiva la función **Reescrituras automáticas HTTPS de Cloudflare** de la pestaña **certificado de perímetro** de la aplicación **SSL/TLS** de Cloudflare. [Más información](/ssl/edge-certificates/additional-options/automatic-https-rewrites).
 
  | 
 
@@ -263,7 +263,7 @@ TTL de caché del navegador
 
  | 
 
-Controla el tiempo de validez de los recursos almacenados en caché por los navegadores de los clientes. Tanto la interfaz de usuario como la API de Cloudflare prohíben la configuración de **TTL de caché de navegador** a _0_ para los dominios que no son Enterprise. [Más información](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl).
+Controla el tiempo de validez de los recursos almacenados en caché por los navegadores de los clientes. Tanto la interfaz de usuario como la API de Cloudflare prohíben la configuración de **TTL de caché de navegador** a _0_ para los dominios que no son Enterprise. [Más información](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -307,7 +307,7 @@ Caché por tipo de dispositivo
 
  | 
 
-Separa el contenido en caché en función del tipo de dispositivo del visitante. [Mas información](https://developers.cloudflare.com/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only).
+Separa el contenido en caché en función del tipo de dispositivo del visitante. [Mas información](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only).
 
  | 
 
@@ -335,7 +335,7 @@ Clave de caché
 
 También conocida como _Clave de caché personalizada_.
 
-Controla específicamente qué variables incluir al decidir qué recursos almacenar en caché. Esto permite a los clientes determinar lo que se debe almacenar en la memoria caché basándose en algo más que la URL. [Más información](https://developers.cloudflare.com/cache/about/cache-keys).
+Controla específicamente qué variables incluir al decidir qué recursos almacenar en caché. Esto permite a los clientes determinar lo que se debe almacenar en la memoria caché basándose en algo más que la URL. [Más información](/cache/how-to/cache-keys/).
 
  | 
 
@@ -358,7 +358,7 @@ Aplica la memoria caché personalizada en función de la opción seleccionada:
 
 **Estándar:** almacena en la memoria caché todo el contenido estático que tiene una cadena de consulta.
 
-**Copiar todo en caché**: trata todo el contenido como estático y almacena en la memoria caché todos los tipos de archivos más allá del [contenido almacenado en caché predeterminado de Cloudflare](https://developers.cloudflare.com/cache/about/default-cache-behavior#default-cached-file-extensions). Respeta los encabezados de caché del servidor web de origen a menos que el **TTL de caché del perímetro** también se establezca en la regla de página. Cuando se combina con un **TTL de caché del perímetro** > _0_, **Copiar todo en caché** elimina las cookies de la respuesta del servidor web de origen.   
+**Copiar todo en caché**: trata todo el contenido como estático y almacena en la memoria caché todos los tipos de archivos más allá del [contenido almacenado en caché predeterminado de Cloudflare](/cache/concepts/default-cache-behavior/#default-cached-file-extensions). Respeta los encabezados de caché del servidor web de origen a menos que el **TTL de caché del perímetro** también se establezca en la regla de página. Cuando se combina con un **TTL de caché del perímetro** > _0_, **Copiar todo en caché** elimina las cookies de la respuesta del servidor web de origen.   
 
 
  | 
@@ -552,14 +552,14 @@ Encriptación oportunista
 
  | 
 
-Activa o desactiva la función **Encriptación oportunista de Cloudflare** de la pestaña **Certificados de perímetro** en la aplicación **SSL/TLS** de Cloudflare. [Más información](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/opportunistic-encryption).
+Activa o desactiva la función **Encriptación oportunista de Cloudflare** de la pestaña **Certificados de perímetro** en la aplicación **SSL/TLS** de Cloudflare. [Más información](/ssl/edge-certificates/additional-options/opportunistic-encryption).
 
  | 
 
 -   Todo
 
  |
-| Encabezado Origin Cache Control | [Origin Cache Control](https://developers.cloudflare.com/cache/about/cache-control) está activado por defecto en los dominios de los planes gratuito, Pro y Business y desactivado por defecto en los dominios Enterprise. | 
+| Encabezado Origin Cache Control | [Origin Cache Control](/cache/concepts/cache-control/) está activado por defecto en los dominios de los planes gratuito, Pro y Business y desactivado por defecto en los dominios Enterprise. | 
 
 -   Todo
 
@@ -583,7 +583,7 @@ Polish
 
  | 
 
-Aplica las opciones de la función **Polish** de la aplicación  **Velocidad** de Cloudflare. [Más información](https://developers.cloudflare.com/images/polish).
+Aplica las opciones de la función **Polish** de la aplicación  **Velocidad** de Cloudflare. [Más información](/images/polish).
 
  | 
 
@@ -689,7 +689,7 @@ SSL
 
  | 
 
-Opciones de control para la función **SSL** de la pestaña **Certificados de perímetro** en la aplicación **SSL/TLS** de Cloudflare. [Más información](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+Opciones de control para la función **SSL** de la pestaña **Certificados de perímetro** en la aplicación **SSL/TLS** de Cloudflare. [Más información](/ssl/origin-configuration/ssl-modes).
 
  | 
 
@@ -785,12 +785,12 @@ Ten en cuenta que `ejemplo.com/alguna-ruta/cloudflare.com` se guardará _sin_ un
 
 Si especificas un puerto en el campo **si la URL coincide** de una regla de página, debe ser uno de los siguientes:
 
--   Uno de los puertos HTTP/HTTPS [compatible con el proxy de Cloudflare](https://developers.cloudflare.com/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
--   Un puerto personalizado de una aplicación HTTPS de [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/).
+-   Uno de los puertos HTTP/HTTPS [compatible con el proxy de Cloudflare](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   Un puerto personalizado de una aplicación HTTPS de [Cloudflare Spectrum](/spectrum/).
 
 ### Uso de Page Rules con Workers
 
-Si la URL de la solicitud actual coincide tanto con una regla de página como con una [ruta personalizada de Workers](https://developers.cloudflare.com/workers/platform/routes), no se aplicarán algunos ajustes de Page Rules. Si necesitas más información sobre el uso de Page Rules con Workers, consulta [Workers: Page Rules](https://developers.cloudflare.com/workers/platform/workers-with-page-rules/) en la documentación para desarrolladores.
+Si la URL de la solicitud actual coincide tanto con una regla de página como con una [ruta personalizada de Workers](/workers/platform/routes), no se aplicarán algunos ajustes de Page Rules. Si necesitas más información sobre el uso de Page Rules con Workers, consulta [Workers: Page Rules](/workers/platform/workers-with-page-rules/) en la documentación para desarrolladores.
 
 ___
 

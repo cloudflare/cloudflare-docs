@@ -204,7 +204,7 @@ ___
 
  | 
 
-打开或关闭 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的**[始终使用 HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https)** 功能。启用后，任何 _http://_ URL 都会通过 301 重定向转换为 _https://_。
+打开或关闭 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的**[始终使用 HTTPS](/ssl/edge-certificates/additional-options/always-use-https)** 功能。启用后，任何 _http://_ URL 都会通过 301 重定向转换为 _https://_。
 
 如果此选项没有出现，这表示您没有生效的**边缘证书**。
 
@@ -232,7 +232,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-打开或关闭 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的 **Cloudflare 自动 HTTPS 重写**功能。[了解更多](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites)。
+打开或关闭 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的 **Cloudflare 自动 HTTPS 重写**功能。[了解更多](/ssl/edge-certificates/additional-options/automatic-https-rewrites)。
 
  | 
 
@@ -245,7 +245,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-控制客户端浏览器缓存的资源在多久时间内保持有效。对于非 Enterprise 域，Cloudflare UI 和 API 都会禁止将**浏览器缓存 TTL** 设置为 _0_。[了解更多](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl)。
+控制客户端浏览器缓存的资源在多久时间内保持有效。对于非 Enterprise 域，Cloudflare UI 和 API 都会禁止将**浏览器缓存 TTL** 设置为 _0_。[了解更多](/cache/how-to/edge-browser-cache-ttl/)。
 
  | 
 
@@ -289,7 +289,7 @@ _参见下文中的其他详细信息，以了解支持的少量正则表达式�
 
  | 
 
-根据访问者的设备类型，分隔缓存的内容。[了解更多](https://developers.cloudflare.com/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)。
+根据访问者的设备类型，分隔缓存的内容。[了解更多](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)。
 
  | 
 
@@ -302,7 +302,7 @@ Web 缓存欺骗防护
 
  | 
 
-防止 Web 缓存欺骗攻击，同时仍然允许缓存静态资产。此设置会验证 URL 的扩展部分是否匹配返回的 _Content-Type_。[了解更多](https://developers.cloudflare.com/cache/about/cache-deception-armor)。
+防止 Web 缓存欺骗攻击，同时仍然允许缓存静态资产。此设置会验证 URL 的扩展部分是否匹配返回的 _Content-Type_。[了解更多](/cache/cache-security/cache-deception-armor/)。
 
  | 
 
@@ -317,7 +317,7 @@ Web 缓存欺骗防护
 
 也称为_自定义缓存键_。
 
-专门用于控制在决定要缓存哪些资源时要包括的变量。这允许客户基于除了 URL 之外的其他内容来确定缓存内容。[了解更多](https://developers.cloudflare.com/cache/about/cache-keys)。
+专门用于控制在决定要缓存哪些资源时要包括的变量。这允许客户基于除了 URL 之外的其他内容来确定缓存内容。[了解更多](/cache/how-to/cache-keys/)。
 
  | 
 
@@ -340,7 +340,7 @@ Web 缓存欺骗防护
 
 **标准 -** 缓存具有查询字符串的所有静态内容。
 
-**全部缓存** \-  将所有内容视为静态内容，并缓存 [Cloudflare 默认缓存内容](https://developers.cloudflare.com/cache/about/default-cache-behavior#default-cached-file-extensions)之外的所有内容类型。尊重来自源 Web 服务器的缓存标头，除非页面规则中也设置了**边缘缓存 TTL**。与**边缘缓存 TTL** > _0_ 组合使用时，**全部缓存**会移除来自源 Web 服务器响应的 Cookie。  
+**全部缓存** \-  将所有内容视为静态内容，并缓存 [Cloudflare 默认缓存内容](/cache/concepts/default-cache-behavior#default-cached-file-extensions)之外的所有内容类型。尊重来自源 Web 服务器的缓存标头，除非页面规则中也设置了**边缘缓存 TTL**。与**边缘缓存 TTL** > _0_ 组合使用时，**全部缓存**会移除来自源 Web 服务器响应的 Cookie。  
 
 
  | 
@@ -533,14 +533,14 @@ Mirage
 
  | 
 
-打开或关闭 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的 **Cloudflare 随机加密**功能。[了解更多](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/opportunistic-encryption)。
+打开或关闭 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的 **Cloudflare 随机加密**功能。[了解更多](/ssl/edge-certificates/additional-options/opportunistic-encryption)。
 
  | 
 
 -   所有
 
  |
-| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](https://developers.cloudflare.com/cache/about/cache-control)，Enterprise 域则默认禁用此设置。 | 
+| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](/cache/concepts/cache-control/)，Enterprise 域则默认禁用此设置。 | 
 
 -   所有
 
@@ -564,7 +564,7 @@ Polish
 
  | 
 
-应用来自 **Cloudflare Speed** 应用的 **Polish** 功能的选项。[了解更多](https://developers.cloudflare.com/images/polish)。
+应用来自 **Cloudflare Speed** 应用的 **Polish** 功能的选项。[了解更多](/images/polish)。
 
  | 
 
@@ -670,7 +670,7 @@ SSL
 
  | 
 
-控制 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的 **SSL** 功能的各个选项。[了解更多](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes)。
+控制 **Cloudflare SSL/TLS** 应用中**边缘证书**选项卡的 **SSL** 功能的各个选项。[了解更多](/ssl/origin-configuration/ssl-modes)。
 
  | 
 
@@ -766,12 +766,12 @@ ___
 
 如果您在 Page Rule 的**如果 URL 匹配**字段中指定一个端口，则它必须是下列端口之一：
 
--   [与 Cloudflare 的代理兼容的](https://developers.cloudflare.com/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 端口之一。
--   [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/) HTTPS 应用程序的自定义端口。
+-   [与 Cloudflare 的代理兼容的](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 端口之一。
+-   [Cloudflare Spectrum](/spectrum/) HTTPS 应用程序的自定义端口。
 
 ### 将页面规则用于 Workers
 
-如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](https://developers.cloudflare.com/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](https://developers.cloudflare.com/workers/platform/workers-with-page-rules/)。
+如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/platform/workers-with-page-rules/)。
 
 ___
 

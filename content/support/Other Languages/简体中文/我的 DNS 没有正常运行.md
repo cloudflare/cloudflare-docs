@@ -40,7 +40,7 @@ ___
 -   根域（例如 _example.com_）
 -   任何现有的子域（例如，_www.example.com、blog.example.com_ 等）
 
-了解有关设置 A 记录和 CNAME [DNS 记录](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)的详细信息。
+了解有关设置 A 记录和 CNAME [DNS 记录](/dns/manage-dns-records/how-to/create-dns-records)的详细信息。
 
 ### 在将域添加到 Cloudflare 之前，未禁用 DNSSEC
 
@@ -52,4 +52,4 @@ ___
 
 ### 未解析的 IP 地址
 
-在极少数情况下，请求 URL 的客户端中的 DNS 解析器可能无法将 DNS 记录解析为有效的 IP 地址。请待一段时间后重新加载页面以查看问题是否消失。此问题与 Cloudflare 无关，但使用 [Cloudflare 的 DNS 解析服务](https://developers.cloudflare.com/1.1.1.1/setup/)可能会有所帮助。如需当前 DNS 解析器的其他帮助，请与您的主机提供商联系。
+在极少数情况下，请求 URL 的客户端中的 DNS 解析器可能无法将 DNS 记录解析为有效的 IP 地址。请待一段时间后重新加载页面以查看问题是否消失。此问题与 Cloudflare 无关，但使用 [Cloudflare 的 DNS 解析服务](/1.1.1.1/setup/)可能会有所帮助。如需当前 DNS 解析器的其他帮助，请与您的主机提供商联系。

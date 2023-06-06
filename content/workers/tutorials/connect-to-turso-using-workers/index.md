@@ -16,7 +16,7 @@ This tutorial will guide you on how to build globally distributed applications w
 Before continuing with this tutorial, you should have:
 
 * Successfully [created up your first Cloudflare Worker](/workers/get-started/guide/) and/or have deployed a Cloudflare Worker before.
-* Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers. 
+* Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers.
 * A [GitHub account](https://github.com/), required for authenticating to Turso.
 * A basic familiarity with installing and using command-line interface (CLI) applications.
 
@@ -202,23 +202,23 @@ Open `src/index.ts` and delete the existing template. Copy the below code exactl
 filename: src/index.ts
 ---
 
-import { Client as LibsqlClient, createClient } from '@libsql/client/web';
-import { Router, RouterType } from 'itty-router';
+import { Client as LibsqlClient, createClient } from "@libsql/client/web";
+import { Router, RouterType } from "itty-router";
 
 export interface Env {
-    // The following two variables come from the worker environment
+    // The environment variable containing your the URL for your Turso database.
     LIBSQL_DB_URL?: string;
+    // The Secret that contains the authentication token for your Turso database.
     LIBSQL_DB_AUTH_TOKEN?: string;
 
     // These objects are created before first use, then stashed here
-    client?: LibsqlClient;
+    // for future use
     router?: RouterType;
 }
 
 export default {
     async fetch(request: Request, env: Env): Promise<Response> {
         if (env.router === undefined) {
-            env.client = buildLibsqlClient(env);
             env.router = buildRouter(env);
         }
 
@@ -229,56 +229,53 @@ export default {
 function buildLibsqlClient(env: Env): LibsqlClient {
     const url = env.LIBSQL_DB_URL?.trim();
     if (url === undefined) {
-        throw new Error('LIBSQL_DB_URL env var is not defined')
+        throw new Error("LIBSQL_DB_URL env var is not defined");
     }
 
     const authToken = env.LIBSQL_DB_AUTH_TOKEN?.trim();
     if (authToken === undefined) {
-        throw new Error('LIBSQL_DB_AUTH_TOKEN env var is not defined')
+        throw new Error("LIBSQL_DB_AUTH_TOKEN env var is not defined");
     }
 
-	return createClient({url, authToken});
+    return createClient({ url, authToken });
 }
 
 function buildRouter(env: Env): RouterType {
-    const client = env.client!;
-
     const router = Router();
 
-    router.get('/users', async request => {
-        const rs = await client.execute('select * from example_users');
-        return new Response(
-            JSON.stringify(rs),
-            { headers: { 'Content-Type': 'application/json' } }
-        );
+    router.get("/users", async () => {
+        const client = buildLibsqlClient(env);
+        const rs = await client.execute("select * from example_users");
+        return Response.json(rs);
     });
 
-    router.get('/add-user', async request => {
-        const email = request.query.email
+    router.get("/add-user", async (request) => {
+        const client = buildLibsqlClient(env);
+        const email = request.query.email;
         if (email === undefined) {
-            return new Response('Missing email', { status: 400 });
+            return new Response("Missing email", { status: 400 });
         }
-        if (typeof email !== 'string') {
-            return new Response('email must be a single string', { status: 400 });
+        if (typeof email !== "string") {
+            return new Response("email must be a single string", { status: 400 });
         }
         if (email.length === 0) {
-            return new Response('email length must be > 0', { status: 400 });
+            return new Response("email length must be > 0", { status: 400 });
         }
 
         try {
             await client.execute({
-                sql: 'insert into example_users values (?)',
-                args: [ email ]
+                sql: "insert into example_users values (?)",
+                args: [email],
             });
         } catch (e) {
             console.error(e);
-            return new Response('database insert failed');
+            return new Response("database insert failed");
         }
 
-        return new Response('Added');
+        return new Response("Added");
     });
 
-    router.all('*', () => new Response('Not Found.', { status: 404 }));
+    router.all("*", () => new Response("Not Found.", { status: 404 }));
 
     return router;
 }

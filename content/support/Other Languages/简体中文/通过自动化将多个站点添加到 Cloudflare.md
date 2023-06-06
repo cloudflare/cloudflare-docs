@@ -27,7 +27,7 @@ ___
 -   您是代理商或 IT 咨询公司，并为您的客户管理多个域名（注意：您应该考虑 Cloudflare [合作伙伴计划](https://www.cloudflare.com/partners/)）
 -   您要将现有的一组网站转移到 Cloudflare
 
-使用 API，您可以快速地添加多个站点，特别是您已熟悉[如何更改名称服务器](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)或[添加 DNS 记录](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)的情况下。
+使用 API，您可以快速地添加多个站点，特别是您已熟悉[如何更改名称服务器](/dns/zone-setups/full-setup/setup)或[添加 DNS 记录](/dns/manage-dns-records/how-to/create-dns-records)的情况下。
 
 ___
 

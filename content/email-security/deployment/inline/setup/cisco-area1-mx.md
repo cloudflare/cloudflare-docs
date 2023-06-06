@@ -50,8 +50,9 @@ You need to configure the Incoming Relays section to tell IronPort to ignore ups
 
 ## 3. Update your domain MX records
 
-Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Area 1 hosts. This will have to be done for every domain where Area 1 will be the primary MX.
+Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Area 1 hosts. This will have to be done for every domain where Area 1 will be the primary MX. For example:
 
 {{<render file="_mx-deployment-values.md">}}
+{{<render file="_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).

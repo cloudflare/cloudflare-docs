@@ -34,4 +34,4 @@ To avoid these issues, enable [Automatic HTTPS Rewrites](/ssl/edge-certificates/
 
 If your entire application can support HTTPS traffic, enable [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/#encrypt-all-visitor-traffic).
 
-If only some parts of your application can support HTTPS traffic, set up [Forwarding Rules](/ssl/edge-certificates/additional-options/always-use-https/#encrypt-some-visitor-traffic) to redirect specific subfolders or subdomains to HTTPS.
+If only some parts of your application can support HTTPS traffic, use [Configuration Rules](/rules/configuration-rules/create-dashboard/) to selectively disable **Always Use HTTPS**.

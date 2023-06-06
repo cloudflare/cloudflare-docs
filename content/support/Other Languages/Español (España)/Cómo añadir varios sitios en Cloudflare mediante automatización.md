@@ -22,7 +22,7 @@ adicional se bloqueará hasta que se procesen.
 -   Eres una agencia o un consultor de TI y gestionas varios dominios en nombre de tus clientes (nota: nuestro [Programa de socios](https://www.cloudflare.com/partners/) podría interesarte).
 -   Estás trasladando un conjunto de sitios existentes a Cloudflare.
 
-Con la API, podrás añadir varios sitios de forma rápida y eficiente, especialmente si ya conoces [cómo cambiar tus servidores de nombres](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup) o [añadir un registro DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
+Con la API, podrás añadir varios sitios de forma rápida y eficiente, especialmente si ya conoces [cómo cambiar tus servidores de nombres](/dns/zone-setups/full-setup/setup) o [añadir un registro DNS](/dns/manage-dns-records/how-to/create-dns-records).
 
 ___
 

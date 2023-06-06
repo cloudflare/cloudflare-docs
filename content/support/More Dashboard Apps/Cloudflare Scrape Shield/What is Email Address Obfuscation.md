@@ -44,11 +44,11 @@ To prevent unexpected website behavior, email addresses are not obfuscated when 
 
 -   Any HTML tag attribute, except for the _href_ attribute of the _a_ tag.
 -   Other HTML tags:
-    -   _script_ tags: <script></script>
-    -   _noscript_ tags: <noscript></noscript>
-    -   _textarea_ tags: <textarea></textarea>
-    -   _xmp_ tags: <xmp></xmp>
-    -   _head_ tags: <head></head>
+    -   _script_ tags: `<script></script>`
+    -   _noscript_ tags: `<noscript></noscript>`
+    -   _textarea_ tags: `<textarea></textarea>`
+    -   _xmp_ tags: `<xmp></xmp>`
+    -   _head_ tags: `<head></head>`
 -   Any page that does not have a MIME type of "text/html" or "application/xhtml+xml"
 
 **Please Note** that Email Obfuscation will **not take affect** if you're using the `Cache-Control: no-transform` header.

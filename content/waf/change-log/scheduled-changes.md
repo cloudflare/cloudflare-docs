@@ -24,40 +24,13 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
+      <td>2023-06-05</td>
+      <td>2023-06-12</td>
       <td>Block</td>
-      <td>100546_BETA</td>
+      <td>100587</td>
+      <td>...269024be</td>
+      <td>Code Injection - CVE:CVE-2022-23529</td>
       <td>N/A</td>
-      <td>XSS - HTML Encoding</td>
-      <td>This rule will replace 100546</td>
-    </tr>
-    <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
-      <td>Block</td>
-      <td>100580</td>
-      <td>...dfc9b843</td>
-      <td>XSS - Error handling</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
-      <td>Block</td>
-      <td>100581</td>
-      <td>...2f26b3a7</td>
-      <td>Joomla - Information Disclosure - CVE:CVE-2023-23752</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-04-03</td>
-      <td>2023-04-10</td>
-      <td>Block</td>
-      <td>N/A</td>
-      <td>...602dabe0</td>
-      <td>XSS - JavaScript Events - Beta</td>
-      <td>This rule will replace ...602dabe0</td>
     </tr>
   </tbody>
 </table>

@@ -44,7 +44,7 @@ export default {
 };
 ```
 
-### Properties
+### Parameters
 
 {{<definitions>}}
 
@@ -100,11 +100,11 @@ export default {
 
   - Size of the email message content.
 
-- {{<code>}}setReject(reason{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}setReject(reason{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Reject this email message by returning a permanent SMTP error back to the connecting client, including the given reason.
 
-- {{<code>}}forward(rcptTo{{<param-type>}}string{{</param-type>}}, headers{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}forward(rcptTo{{<param-type>}}string{{</param-type>}}, headers{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Forward this email message to a verified destination address of the account. If you want, you can add extra headers to the email message. Only `X-*` headers are allowed.
   - When the promise resolves, the message is confirmed to be forwarded to a verified destination address.

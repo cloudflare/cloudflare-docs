@@ -22,8 +22,8 @@ Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view 
 
 {{</Aside>}}
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 const CSS = "body { color: red; }";
@@ -64,7 +64,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```js
 const CSS = "body { color: red; }";

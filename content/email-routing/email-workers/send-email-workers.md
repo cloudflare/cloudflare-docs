@@ -34,31 +34,21 @@ Refer to the example below to learn how to construct a Worker capable of sending
 import { EmailMessage } from "cloudflare:email";
 import { createMimeMessage } from "mimetext";
 
-function toReadableStream(value) {
- return new ReadableStream({
-   start(controller) {
-     var enc = new TextEncoder();
-     controller.enqueue(enc.encode(value));
-     controller.close();
-   },
- });
-}
-
 export default {
  async fetch(request, env) {
    const msg = createMimeMessage();
    msg.setSender({ name: "GPT-4", addr: "<SENDER>@example.com" });
    msg.setRecipient("<RECIPIENT>@example2.com");
    msg.setSubject("An email generated in a worker");
-   msg.setMessage(
-     "text/plain",
-     `Congratulations, you just sent an email from a worker.`
-   );
+   msg.addMessage({
+       contentType: 'text/plain',
+       data: `Congratulations, you just sent an email from a worker.`
+   });
 
    var message = new EmailMessage(
      "<SENDER>@example.com",
      "<RECIPIENT>@example.com",
-     toReadableStream(msg.asRaw())
+     msg.asRaw()
    );
    try {
      await env.SEB.send(message);

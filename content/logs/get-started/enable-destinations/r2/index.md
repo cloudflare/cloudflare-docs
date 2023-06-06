@@ -1,13 +1,13 @@
 ---
 pcx_content_type: how-to
-title: Enable Cloudflare R2 
+title: Enable Cloudflare R2
 weight: 40
 layout: single
 ---
 
 # Enable Logpush to Cloudflare R2
 
-Cloudflare Logpush supports pushing logs directly to R2 via the Cloudflare dashboard or via API. 
+Cloudflare Logpush supports pushing logs directly to R2 via the Cloudflare dashboard or via API.
 
 For more information about R2, refer to the [Cloudflare R2](/r2/) documentation.
 
@@ -18,7 +18,7 @@ Before getting started:
     1. Navigate to the R2 UI > **Create bucket**.
 
     2. Click **Manage R2 API Tokens**.
-    
+
     3. Select **Create API token**.
 
     4. Under **Permission**, select **Edit** permissions for your token.
@@ -45,7 +45,7 @@ Enable Logpush to R2 via the dashboard.
 
 3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Click **Connect a service** and a modal window will open.
+4.  Click **Add Logpush job** and a modal window will open.
 
 5.  Select the dataset you want to push to a storage service.
 

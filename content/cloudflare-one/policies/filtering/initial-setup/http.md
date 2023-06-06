@@ -14,7 +14,7 @@ Secure Web Gateway allows you to inspect HTTP traffic and control which websites
 
 To filter HTTP requests from a device:
 
-1. [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device .
+1. [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device .
 2. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 3. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
 4. Enable the Gateway proxy:
@@ -25,10 +25,7 @@ To filter HTTP requests from a device:
 
 ## 2. Verify device connectivity
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
-2. Under **Gateway logging**, enable activity logging for all HTTP logs.
-3. On your WARP-enabled device, open a browser and visit any website.
-4. In Zero Trust, navigate to **Logs** > **Gateway** > **HTTP**. Before building HTTP policies, make sure you see HTTP queries from the email associated with your device.
+{{<render file="gateway/_verify-connectivity.md" withParameters="HTTP">}}
 
 ## 3. Add recommended policies
 
@@ -44,7 +41,11 @@ This will help avoid any certificate pinning errors that may arise from an initi
 | ----------- | -------- | -------------- | -------------- |
 | Application | in       | Do Not Inspect | Do Not Inspect |
 
-{{<render file="gateway/_policies-recommended.md">}}
+### Block all security categories
+
+Block [known threats](/cloudflare-one/policies/filtering/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
+
+{{<render file="gateway/_block-security-categories.md">}}
 
 ## 4. Add optional policies
 

@@ -18,6 +18,9 @@ Any properties set on the event will override the default property on the waitin
 2.  Expand a waiting room  and select **Schedule event**.
 3.  Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
 4.  You can also enable the pre-queueing — in this case you need to define a pre-queueing time. And you can also select **Shuffle at event start** and all users in the pre-queue will be randomly admitted at event start.
+
+    {{<Aside type="note">}}Enabling pre-queuing will send all new users to your pre-queue during the pre-queueing time period. If you would like to also pre-queue users already active, make the pre-queueing time period longer than the session duration and disable session renewal in the **Settings** section. Once active users sessions expire, they will be placed into the pre-queue before your event starts.{{</Aside>}}
+
 5.  Select **Next**.
 6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base waiting room, the corresponding Event setting will update as well.
 
@@ -34,9 +37,9 @@ In your waiting room page, in the **Next Event** column you can visualize the da
 
 ## Create an event via API
 
-To create an event, make a [POST request](https://developers.cloudflare.com/api/operations/waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
+To create an event, make a [POST request](/api/operations/waiting-room-create-event) including [required and optional parameters](#parameters). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room/), you may want to add [relevant variables](https://developers.cloudflare.com/api/operations/waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
+If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room), you may want to add [relevant variables](/api/operations/waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
 
 {{<Aside type="note">}}
 
@@ -46,7 +49,7 @@ If you need to create overlapping events, use different waiting rooms.
 
 ### Parameters
 
-Though most parameters are identical to those in a regular waiting room, there are a few unique to creating an event. For a complete list of event settings, please refer to [Create an Event](https://developers.cloudflare.com/api/operations/waiting-room-create-event).
+Though most parameters are identical to those in a regular waiting room, there are a few unique to creating an event. For a complete list of event settings, please refer to [Create an Event](/api/operations/waiting-room-create-event).
 
 - `name` (required): Unique name with alphanumeric characters, hyphens, and underscores.
 - `event_start_time` (required): ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. Must occur at least 1 minute before `event_end_time`.
@@ -77,13 +80,13 @@ To set up a "lottery", include the [following parameters](#properties) in your A
 
 ## Preview an event configuration
 
-Since some properties set on an event will override the default property of a waiting room for the duration of an event, you should use the API to [preview an event configuration](https://developers.cloudflare.com/api/operations/waiting-room-preview-active-event-details) before it begins.
+Since some properties set on an event will override the default property of a waiting room for the duration of an event, you should use the API to [preview an event configuration](/api/operations/waiting-room-preview-active-event-details) before it begins.
 
 This command shows you the event's configuration as if it were active, meaning that inherited fields from the waiting room will display their current values.
 
 ## Edit an event
 
-To edit an event, use a [PATCH request](https://developers.cloudflare.com/api/operations/waiting-room-patch-event).
+To edit an event, use a [PATCH request](/api/operations/waiting-room-patch-event).
 
 ## Disable events
 
@@ -95,6 +98,6 @@ Additionally, events will not become active if a waiting room itself is **Disabl
 
 | Function                                                                      | Command  |
 | ----------------------------------------------------------------------------- | -------- |
-| [Get event details](https://developers.cloudflare.com/api/operations/waiting-room-event-details)   | `GET`    |
-| [List scheduled events](https://developers.cloudflare.com/api/operations/waiting-room-list-events) | `GET`    |
-| [Delete event](https://developers.cloudflare.com/api/operations/waiting-room-delete-event)         | `DELETE` |
+| [Get event details](/api/operations/waiting-room-event-details)   | `GET`    |
+| [List scheduled events](/api/operations/waiting-room-list-events) | `GET`    |
+| [Delete event](/api/operations/waiting-room-delete-event)         | `DELETE` |

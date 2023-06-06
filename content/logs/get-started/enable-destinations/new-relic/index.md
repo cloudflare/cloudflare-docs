@@ -21,7 +21,7 @@ To enable a Logpush service to New Relic via the dashboard:
 
 3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Select **Connect a service** and a modal window will open.
+4.  Select **Add Logpush job** and a modal window will open.
 
 5.  Select the dataset you want to push to a storage service.
 
@@ -155,5 +155,5 @@ Response:
 ```
 
  {{<Aside type="note" header="Note">}}
-To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/fundamentals/data-products/analytics-integrations/new-relic/).   
+To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/fundamentals/data-products/analytics-integrations/new-relic/).
 {{</Aside>}}

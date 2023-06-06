@@ -7,11 +7,11 @@ _build:
 
 {{<definitions>}}
 
-To create a zone subscription, send a [POST](https://developers.cloudflare.com/api/operations/zone-subscription-create-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint and include the following values:
+To create a zone subscription, send a [POST](/api/operations/zone-subscription-create-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint and include the following values:
 
 - `rate_plan` {{<type>}}object{{</type>}}
 
-    - Contains the zone plan corresponding to what customers would order in the dashboard. For a list of available values, refer to [Zone subscriptions](/tenant/reference/subscriptions/#zone-plans/).
+    - Contains the zone plan corresponding to what customers would order in the dashboard. For a list of available values, refer to [Zone subscriptions](/tenant/reference/subscriptions/#zone-plans).
 
 - `component_values` {{<type>}}array{{</type>}}
 

@@ -72,7 +72,7 @@ Once successful, you will receive an email from Cloudflare and be able to manage
 
 ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or registrar of a domain. If you modified your contact information, transferred registrars, or registered your domain in the last 60 days, Cloudflare will be unable to process your transfer immediately.
 
-You can leave the domain **In Progress** and Cloudflare will attempt to process the transfer until the 60-day window passes.
+You can leave the domain **In Progress** and Cloudflare will wait until after the 60-day window passes to attempt to process the transfer.
 
 {{<Aside type="note" header="Note">}}This information does not apply to `.uk` domains.{{</Aside>}}
 

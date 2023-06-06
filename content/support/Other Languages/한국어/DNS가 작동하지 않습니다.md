@@ -40,7 +40,7 @@ Cloudflare 대시보드의 **DNS** 앱에 필요한 DNS 레코드가 있는지 �
 -   루트 도메인(예: _example.com_)
 -   기존의 모든 하위 도메인(예: _www.example.com, blog.example.com_, 기타)
 
-A 및 CNAME [DNS 레코드](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) 설정 방법을 알아보세요.
+A 및 CNAME [DNS 레코드](/dns/manage-dns-records/how-to/create-dns-records) 설정 방법을 알아보세요.
 
 ### DNSSEC는 도메인이 Cloudflare에 추가된 후 비활성화됩니다
 
@@ -52,4 +52,4 @@ Cloudflare dashboard의 **DNS** 앱을 통해 DNS 레코드를 관리하지만 �
 
 ### 미확인 IP 주소
 
-드물지만, URL을 요청하는 클라이언트의 DNS 확인자가 DNS 레코드의 유효한 IP 주소를 확인하지 못할 수도 있습니다. 잠시 기다린 후 페이지를 다시 로드하여 문제가 사라졌는지 확인하세요.이 문제는 Cloudflare와 관련이 없지만, [Cloudflare의 DNS 확인자](https://developers.cloudflare.com/1.1.1.1/setup/)를 사용하면 도움이 될 수 있습니다.호스팅 공급자에게 현재 DNS 확인자에 대한 추가 도움을 요청하세요.
+드물지만, URL을 요청하는 클라이언트의 DNS 확인자가 DNS 레코드의 유효한 IP 주소를 확인하지 못할 수도 있습니다. 잠시 기다린 후 페이지를 다시 로드하여 문제가 사라졌는지 확인하세요.이 문제는 Cloudflare와 관련이 없지만, [Cloudflare의 DNS 확인자](/1.1.1.1/setup/)를 사용하면 도움이 될 수 있습니다.호스팅 공급자에게 현재 DNS 확인자에 대한 추가 도움을 요청하세요.

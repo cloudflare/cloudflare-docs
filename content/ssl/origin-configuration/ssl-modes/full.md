@@ -29,9 +29,26 @@ In addition to **Full** encryption, you can also set up [Authenticated Origin Pu
 
 ## Required setup
 
+### Prerequisites
+
 Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](https://support.cloudflare.com/hc/articles/115003011431#525error).
 
 {{<render file="_ssl-mode-errors.md">}}
+
+### Process
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-dash.md">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 

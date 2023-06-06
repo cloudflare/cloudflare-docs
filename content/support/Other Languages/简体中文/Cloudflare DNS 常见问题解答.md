@@ -63,7 +63,7 @@ ___
 
 ## 我在哪里更改我的域名服务器以指向 Cloudflare？
 
-在您的注册商处进行更改，其也有可能与您的主机是同一个供应商。如果您不知道您的域名注册商是谁，您可以通过 [WHOis 搜索](http://www.whois.net/)找到此信息。按照[将域名服务器更改成 Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup) 中的说明操作。
+在您的注册商处进行更改，其也有可能与您的主机是同一个供应商。如果您不知道您的域名注册商是谁，您可以通过 [WHOis 搜索](http://www.whois.net/)找到此信息。按照[将域名服务器更改成 Cloudflare](/dns/zone-setups/full-setup/setup) 中的说明操作。
 
 ___
 
@@ -107,13 +107,13 @@ ___
 
 默认情况下，您对 Cloudflare 区域文件所做的任何更改或添加都将在 5 分钟或更短时间内生效。请注意，您的本地 DNS 缓存可能需要更长时间才能更新；因此，完全完成传播可能需要超过 5 分钟。
 
-该设置是由 [DNS 记录](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)中的生存时间 (TTL) 值控制的。代理的记录会在 300 秒内更新（自动），而非代理记录的 TTL 可以自定义。
+该设置是由 [DNS 记录](/dns/manage-dns-records/how-to/create-dns-records)中的生存时间 (TTL) 值控制的。代理的记录会在 300 秒内更新（自动），而非代理记录的 TTL 可以自定义。
 
 ___
 
 ## Cloudflare 提供域名掩码吗？
 
-不，Cloudflare 不提供域名掩码或 DNS 重定向服务（您的主机提供商可能会为您提供此服务）。但我们通过[批量重定向](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/)提供 URL 转发。
+不，Cloudflare 不提供域名掩码或 DNS 重定向服务（您的主机提供商可能会为您提供此服务）。但我们通过[批量重定向](/rules/url-forwarding/bulk-redirects/)提供 URL 转发。
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 ## 我该设置 DNS 记录旁边的云图标为橙色还是灰色呢？
 
-默认情况下，只有处理 Web 流量（HTTP 和 HTTPS）的 A 和 CNAME 记录才能代理到 Cloudflare。所有其他 DNS 记录应切换为灰色云。若要了解更多详细信息，请参阅我们的[支持指南](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)。
+默认情况下，只有处理 Web 流量（HTTP 和 HTTPS）的 A 和 CNAME 记录才能代理到 Cloudflare。所有其他 DNS 记录应切换为灰色云。若要了解更多详细信息，请参阅我们的[支持指南](/dns/manage-dns-records/reference/proxied-dns-records)。
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 **解决方案**
 
-请确保参数是 `zone_id = data.cloudflare_zones.example_com.zones[0].id`。更详细的使用案例可以在[此](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) Github 线程中找到。
+请确保参数是 `zone_id = data.cloudflare_zones.example_com.zones[0].id`。更详细的使用案例可以在[此](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub 线程中找到。
 
 ___
 

@@ -18,7 +18,7 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 1. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 2. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
-3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device .
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device .
 
 ### Connect DNS locations
 
@@ -36,16 +36,17 @@ Gateway identifies locations differently depending on the DNS query protocol:
 
 ## 2. Verify device connectivity
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
-2. Under **Gateway logging**, enable activity logging for all DNS logs.
-3. On your WARP-enabled device, open a browser and visit any website.
-4. In Zero Trust, navigate to **Logs** > **Gateway** > **DNS**. Before building DNS policies, make sure you see DNS queries from the email associated with your device.
+{{<render file="gateway/_verify-connectivity.md" withParameters="DNS">}}
 
 ## 3. Add recommended policies
 
 To create a new DNS policy, navigate to **Gateway** > **Firewall Policies** > **DNS** in Zero Trust. We recommend adding the following policy:
 
-{{<render file="gateway/_policies-recommended.md">}}
+### Block all security categories
+
+Block [known threats](/cloudflare-one/policies/filtering/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
+
+{{<render file="gateway/_block-security-categories.md">}}
 
 ## 4. Add optional policies
 

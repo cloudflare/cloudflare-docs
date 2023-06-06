@@ -24,7 +24,7 @@ ___
 通过以下步骤设置您的 DNS 记录，以获得最大程度的保护：
 
 1.  [启用 Cloudflare 代理（橙色云）](https://support.cloudflare.com/hc/articles/200169626)
-2.  删除用于 FTP 或 SSH 的 DNS 记录，改为使用您的原始 IP 直接执行 FTP 或 SSH 请求。或者，通过 [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/getting-started/) 代理 FTP 和 SSH。
+2.  删除用于 FTP 或 SSH 的 DNS 记录，改为使用您的原始 IP 直接执行 FTP 或 SSH 请求。或者，通过 [Cloudflare Spectrum](/spectrum/getting-started/) 代理 FTP 和 SSH。
 3.  [将与您邮件服务器对应的 A、AAAA 或 CNAME 记录列入灰色云](https://support.cloudflare.com/hc/articles/200168876)
 4.  删除 Free、Pro 或 Business 域中的通配符记录，因为它们会暴露您的原始 IP 地址。[Cloudflare 仅保护 Enterprise 计划中的通配符记录](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries)。
 
@@ -51,5 +51,5 @@ ___
 ## 相关资源
 
 -   [了解 Cloudflare DDOS 防护](https://support.cloudflare.com/hc/articles/200172676)
--   [响应 DDoS 攻击](https://support.cloudflare.com/hc/articles/200170196)
+-   [响应 DDoS 攻击](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [什么是 DDoS 攻击？](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

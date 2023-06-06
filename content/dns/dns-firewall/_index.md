@@ -2,10 +2,6 @@
 pcx_content_type: overview
 title: DNS Firewall
 weight: 9
-product_grid:
-  show: true
-  title: DNS Firewall
-  group: Application security
 ---
 
 # DNS Firewall
@@ -18,7 +14,7 @@ Speed up and protect entire authoritative nameservers
 
 Cloudflare DNS Firewall proxies all DNS queries to your nameservers through Cloudflare’s global edge network. This action protects upstream nameservers from DDoS attacks and reduces load by caching DNS responses.
 
-![Diagram showing protection provided by DNS Firewall. For more details, read further.](/dns/static/dns-firewall-overview.png)
+![Diagram showing protection provided by DNS Firewall. For more details, read further.](/images/dns/dns-firewall-overview.png)
 
 DNS Firewall is for customers who need to speed up and protect entire authoritative nameservers. If you need to speed up and protect individual zones, see Cloudflare DNS [Zone Setups](/dns/zone-setups).
 

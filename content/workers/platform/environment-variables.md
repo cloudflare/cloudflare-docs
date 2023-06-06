@@ -5,7 +5,7 @@ title: Environment variables
 
 # Environment variables
 
-In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
+In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings.
 
 ## Environment variables with module Workers
 
@@ -51,7 +51,7 @@ console.log(STRIPE_TOKEN);
 //=> (env.production) "pk_xyz1234"
 ```
 
-If using [module Workers](/workers/learning/migrating-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the following example:
+If using [module Workers](/workers/learning/migrating-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the following example:
 
 ```ts
 export interface Env {
@@ -135,15 +135,16 @@ id = "<PRODUCTION KV NAMESPACEID>"
 
 ### Add environment variables via the dashboard
 
-Add environment variables by logging in to [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
+To add environment variables, such as `vars` and `secret`, via the dashboard:
 
-To add environment variables, such as `vars` and `secret`:
-
-1.  Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
-2.  Input a **Variable name** and its **value**, which will be made available to your Worker.
-3.  If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via Wrangler and the dashboard.
-4.  (Optional) To add multiple environment variables, select **Add variable**.
-5.  Select **Save** to implement your changes.
+1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Settings**.
+4. Under **Environment Variables**, select **Add variable**.
+5. Input a **Variable name** and its **value**, which will be made available to your Worker.
+6. If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via Wrangler and the dashboard.
+7. (Optional) To add multiple environment variables, select **Add variable**.
+8. Select **Save** to implement your changes.
 
 ![After selecting Add variable, you will be directed to an environment variables configuration page to set up your environment variable name and value](../media/env_variables_dash.png)
 
@@ -157,11 +158,13 @@ Do not select **Encrypt** when adding environment variables if your variable is 
 
 To add KV namespace bindings:
 
-1.  Go to your **Workers script** > **Settings** > **Add binding** under **KV Namespace Bindings**.
-2.  Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker script.
-3.  Next, select a **KV namespace** from the dropdown.
-4.  Select **Add binding** to add multiple bindings.
-5.  When you are finished, select **Save** to implement your changes.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** and in **Overview**, select your Worker.
+3. Select **Settings** > **Add binding** under **KV Namespace Bindings**.
+4. Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker.
+5. Next, select a **KV namespace** from the dropdown.
+6. Select **Add binding** to add multiple bindings.
+7. When you are finished, select **Save** to implement your changes.
 
 ![After selecting add binding, you will be directed to a configuration page to specify your Variable name and KV namespace to create your binding](../media/kv_namespace_bindings.png)
 

@@ -66,7 +66,7 @@ To enable HSTS using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To enable HSTS with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-security-header-(-hsts)-setting) request with the `value` object that includes your HSTS settings.
+To enable HSTS with the API, send a [`PATCH`](/api/operations/zone-settings-change-security-header-(-hsts)-setting) request with the `value` object that includes your HSTS settings.
  
 {{</tab>}}
 {{</tabs>}}

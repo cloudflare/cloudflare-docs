@@ -19,10 +19,10 @@ Use one of the following API endpoints:
 | [Update an account entry point ruleset][uep-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 | [Update a zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
-[ur-account]: https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-ruleset
-[ur-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-ruleset
-[uep-account]: https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-entry-point-ruleset
-[uep-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-entry-point-ruleset
+[ur-account]: /api/operations/updateAccountRuleset
+[ur-zone]: /api/operations/updateZoneRuleset
+[uep-account]: /api/operations/updateAccountEntrypointRuleset
+[uep-zone]: /api/operations/updateZoneEntrypointRuleset
 
 {{<Aside type="warning" header="Important">}}
 

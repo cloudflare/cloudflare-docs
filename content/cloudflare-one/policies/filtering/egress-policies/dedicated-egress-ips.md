@@ -64,10 +64,10 @@ To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](
 
 | Destination IP | Destination proxied by Cloudflare | Physical egress location                      | IP geolocation              |
 | -------------- | --------------------------------- | --------------------------------------------- | --------------------------- |
-| IPv6           | No                                | Egresses locally connected data center        | Matches dedicated egress IP |
-| IPv6           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
 | IPv4           | No                                | Egresses data center with dedicated egress IP | Matches dedicated egress IP |
 | IPv4           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
+| IPv6           | No                                | Egresses locally connected data center        | Matches dedicated egress IP |
+| IPv6           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
 
 #### IPv4
 

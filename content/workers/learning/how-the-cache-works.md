@@ -6,7 +6,7 @@ weight: 6
 
 # How the Cache works
 
-Workers was designed and built on top of Cloudflare's edge network to allow developers to interact directly with the Cloudflare cache. The cache can provide ephemeral, data center-local storage, as a convenient way to frequently access static or dynamic content.
+Workers was designed and built on top of Cloudflare's global network to allow developers to interact directly with the Cloudflare cache. The cache can provide ephemeral, data center-local storage, as a convenient way to frequently access static or dynamic content.
 
 By allowing developers to write to the cache, Workers provide a way to customize cache behavior on Cloudflare’s CDN. To learn about the benefits of caching, refer to the Learning Center’s article on [What is Caching?](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
@@ -75,7 +75,7 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
   - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
 
-- Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/create-cache-keys/). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
+- Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/cache-keys/#create-custom-cache-keys). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
 
 ---
 

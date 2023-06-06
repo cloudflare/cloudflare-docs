@@ -19,9 +19,10 @@ Refer to [Enable destinations](/logs/get-started/enable-destinations/) for the l
 
 The Cloudflare Logpush API allows you to configure and manage jobs via create, retrieve, update, and delete operations (CRUD).
 
-With Logpush, you can create a job to upload logs of the metadata Cloudflare collects in batches as soon as possible to your cloud service provider. The API allows one job per dataset per domain.
+With Logpush, you can create a job to upload logs of the metadata Cloudflare collects in batches as soon as possible to your cloud service provider. The default number of jobs that you can setup per dataset per domain is four, but you can setup more jobs depending on your plan and subscriptions.  
 
 {{<render file="_enable-read-permissions.md">}}
+<br/>
 
 To get started:
 

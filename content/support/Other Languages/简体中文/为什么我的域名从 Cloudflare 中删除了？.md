@@ -93,5 +93,5 @@ ___
 ## 相关资源
 
 -   [辅助域名服务器](https://support.cloudflare.com/hc/en-us/articles/360001356152-How-do-I-setup-and-manage-Secondary-DNS-)（Enterprise 功能）
--   [CNAME 设置](https://developers.cloudflare.com/dns/zone-setups/partial-setup)（Business 和 Enterprise 功能）
--   [如何将域名服务器更改为 Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)
+-   [CNAME 设置](/dns/zone-setups/partial-setup)（Business 和 Enterprise 功能）
+-   [如何将域名服务器更改为 Cloudflare](/dns/zone-setups/full-setup/setup)

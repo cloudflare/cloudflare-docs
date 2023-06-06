@@ -15,9 +15,9 @@ Los certificados de Cloudflare se priorizan según el [tipo de certificado](http
 
 -   [Custom SSL](https://support.cloudflare.com/hc/articles/200170466)
 -   [SSL exclusivo](https://support.cloudflare.com/hc/articles/228009108)
--   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)   
+-   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)
 
-Las excepciones respecto de la priorización general ocurren en función de la especificidad del nombre de host.  Los certificados que mencionan un nombre de host específico se prefieren a los certificados comodín.  Por ejemplo, un certificado Universal SSL que menciona de manera explícita _www.ejemplo.com_ tiene prioridad por encima de un certificado que coincide con el nombre de host _www_ a través de un comodín como _\*.ejemplo.com._  
+Las excepciones respecto de la priorización general ocurren en función de la especificidad del nombre de host.  Los certificados que mencionan un nombre de host específico se prefieren a los certificados comodín.  Por ejemplo, un certificado Universal SSL que menciona de manera explícita _www.ejemplo.com_ tiene prioridad por encima de un certificado que coincide con el nombre de host _www_ a través de un comodín como _\*.ejemplo.com._
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 ### ¿Qué significa comprobación de marca no válida de SSL?
 
-Algunos dominios no son elegibles para Universal SSL si contienen palabras que puedan entrar en conflicto con dominios registrados.  
+Algunos dominios no son elegibles para Universal SSL si contienen palabras que puedan entrar en conflicto con dominios registrados.
 
 Para solucionar este problema, puedes realizar lo siguiente:
 
@@ -147,10 +147,10 @@ ___
 
 ### ¿Cloudflare es compatible con la autenticación de clientes TLS?
 
-La autenticación de clientes TLS valida que un certificado presentado por un cliente esté firmado por el certificado raíz de la autoridad de certificación de la empresa.  Al validar este certificado en cada solicitud, el acceso puede limitarse a conexiones de clientes autorizados.  Para habilitar la autenticación de clientes TLS a través de Cloudflare, consulta nuestra documentación sobre [autenticación de TLS mutua](https://developers.cloudflare.com/access/setting-up-access/mtls/).
+La autenticación de clientes TLS valida que un certificado presentado por un cliente esté firmado por el certificado raíz de la autoridad de certificación de la empresa.  Al validar este certificado en cada solicitud, el acceso puede limitarse a conexiones de clientes autorizados.  Para habilitar la autenticación de clientes TLS a través de Cloudflare, consulta nuestra documentación sobre [autenticación de TLS mutua](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ___
 
-### ¿Cómo puedo activar Universal SSL con Github?  
+### ¿Cómo puedo activar Universal SSL con GitHub?
 
-Consulta la publicación del blog de Cloudflare sobre el [uso de Universal SSL de Cloudflare con páginas de Github](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/).
+Consulta la publicación del blog de Cloudflare sobre el [uso de Universal SSL de Cloudflare con páginas de GitHub](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/).

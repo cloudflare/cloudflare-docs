@@ -12,8 +12,8 @@ layout: example
 
 ## Redirect all requests to one URL
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -26,7 +26,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {
@@ -45,8 +45,8 @@ export default handler;
 
 ## Redirect requests from one domain to another
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -66,7 +66,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {

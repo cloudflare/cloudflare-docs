@@ -24,7 +24,7 @@ de GitHub.
 
 Cuando el [tráfico de tu sitio web se enruta a través de la red de Cloudflare](https://support.cloudflare.com/hc/articles/205177068), actuamos como un proxy inverso. Esto permite a Cloudflare acelerar el tiempo de carga de página enrutando los paquetes de manera más eficiente y almacenando en caché los recursos estáticos (imágenes, JavaScript, CSS, etc.). Como resultado, al responder las solicitudes y registrarlas, tu servidor de origen devuelve una [dirección IP de Cloudflare](https://www.cloudflare.com/ips/).
 
-Por ejemplo, si instalas aplicaciones que dependen de la dirección IP entrante del visitante original, se registra por defecto una dirección IP de Cloudflare. La dirección IP original del visitante aparece en un encabezado HTTP añadido denominado [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). Siguiendo nuestras [instrucciones del servidor web](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), puedes registrar la dirección IP original del visitante en tu servidor de origen. Si este encabezado HTTP no está disponible cuando las solicitudes llegan a tu servidor de origen, comprueba tu configuración de [Reglas de transformación](https://developers.cloudflare.com/rules/transform/) y [Transformaciones administradas](https://developers.cloudflare.com/rules/transform/managed-transforms/).
+Por ejemplo, si instalas aplicaciones que dependen de la dirección IP entrante del visitante original, se registra por defecto una dirección IP de Cloudflare. La dirección IP original del visitante aparece en un encabezado HTTP añadido denominado [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). Siguiendo nuestras [instrucciones del servidor web](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), puedes registrar la dirección IP original del visitante en tu servidor de origen. Si este encabezado HTTP no está disponible cuando las solicitudes llegan a tu servidor de origen, comprueba tu configuración de [Reglas de transformación](/rules/transform/) y [Transformaciones administradas](/rules/transform/managed-transforms/).
 
 El siguiente diagrama muestra las diferentes formas en las que se gestionan las direcciones IP con y sin Cloudflare.
 
@@ -112,11 +112,11 @@ estén interesados en compilar el paquete *mod\_cloudflare* , pueden
 de GitHub.
 {{</Aside>}}
 
-Hay dos métodos para instalar mod\_cloudflare: descargando la extensión de Apache de Github o añadiendo código a tu servidor web de origen.
+Hay dos métodos para instalar mod\_cloudflare: descargando la extensión de Apache de GitHub o añadiendo código a tu servidor web de origen.
 
-### Descarga de paquetes o scripts de Github
+### Descarga de paquetes o scripts de GitHub
 
-Si utilizas un servidor web Apache, puedes descargar mod\_cloudflare de [Github](https://github.com/cloudflare/mod_cloudflare).
+Si utilizas un servidor web Apache, puedes descargar mod\_cloudflare de [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Adición de código a tu servidor web de origen
 
@@ -383,5 +383,5 @@ ___
 
 ## Recursos relacionados
 
--   [encabezados de solicitud HTTP](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [Reglas de transformación](https://developers.cloudflare.com/rules/transform/)
+-   [encabezados de solicitud HTTP](/fundamentals/get-started/http-request-headers)
+-   [Reglas de transformación](/rules/transform/)

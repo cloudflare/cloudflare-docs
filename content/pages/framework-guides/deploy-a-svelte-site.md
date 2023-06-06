@@ -121,7 +121,10 @@ If you are using any adapter different from the default SvelteKit adapter, remem
 
 ## Deploy with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this authorization to deploy your projects from your GitHub account. You may narrow Cloudflare's access to specific repositories. However, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
@@ -164,7 +167,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file.
 
-To have the functionality equivalent to Pages Functions [`onRequests`](https://developers.cloudflare.com/pages/platform/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
+To have the functionality equivalent to Pages Functions [`onRequests`](/pages/platform/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
 
 ```ts
 ---

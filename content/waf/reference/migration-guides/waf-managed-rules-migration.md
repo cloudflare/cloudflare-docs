@@ -55,16 +55,16 @@ The OWASP version supporting WAF managed rules and WAF Managed Rules is quite di
 
 ### Configurations that will prevent you from updating
 
-If a zone has [URI-based WAF overrides](https://developers.cloudflare.com/api/operations/waf-overrides-list-waf-overrides) (only available via API), you will not have the option to migrate to WAF Managed Rules. To update to WAF Managed Rules you must:
+If a zone has [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides) (only available via API), you will not have the option to migrate to WAF Managed Rules. To update to WAF Managed Rules you must:
 
-1. Delete any existing URI-based WAF overrides using the [Delete a WAF override](https://developers.cloudflare.com/api/operations/waf-overrides-delete-a-waf-override) API operation.
+1. Delete any existing URI-based WAF overrides using the [Delete a WAF override](/api/operations/waf-overrides-delete-a-waf-override) API operation.
 2. Follow the update process described below.
 
 ### Cloudflare dashboard changes
 
 After the update process is complete, the Cloudflare dashboard will display the new WAF Managed Rules interface in **Security** > **WAF** > **Managed rules**, where you can deploy managed rulesets and adjust their configuration.
 
-![After migrating to WAF Managed Rules, the Cloudflare dashboard will display a new interface where you can deploy managed rulesets to your zone.](/waf/static/reference/waf-migration-dashboard-differences.png)
+![After migrating to WAF Managed Rules, the Cloudflare dashboard will display a new interface where you can deploy managed rulesets to your zone.](/images/waf/reference/waf-migration-dashboard-differences.png)
 
 Unlike the WAF managed rules, there is no global on/off setting to enable the WAF in the new interface. Instead, you deploy each managed ruleset individually in your zone.
 
@@ -74,9 +74,9 @@ For more information about configuring WAF Managed Rules in the dashboard, refer
 
 Once the migration is complete, the APIs for interacting with WAF managed rules **will stop working**. These APIs are the following:
 
-- [WAF packages](https://developers.cloudflare.com/api/operations/waf-packages-list-waf-packages)
-- [WAF rule groups](https://developers.cloudflare.com/api/operations/waf-rule-groups-list-waf-rule-groups)
-- [WAF rules](https://developers.cloudflare.com/api/operations/waf-rules-list-waf-rules)
+- [WAF packages](/api/operations/waf-packages-list-waf-packages)
+- [WAF rule groups](/api/operations/waf-rule-groups-list-waf-rule-groups)
+- [WAF rules](/api/operations/waf-rules-list-waf-rules)
 
 {{<Aside type="warning">}}
 If you have any integrations using the WAF managed rules APIs stated above, you must update them before migrating to the new WAF Managed Rules.
@@ -96,7 +96,7 @@ In phase 2 all zones are eligible for migration. The exact migration procedure v
 
 - **Enterprise** customers can enable the new WAF Managed Rules configuration while keeping the previous version of WAF managed rules enabled, allowing them to check the impact of the new WAF configuration. After reviewing the behavior of the new configuration and making any required adjustments to specific managed rules, Enterprise users can then finish the migration, which will disable the previous version of WAF managed rules.
 
-**Note:** Zones that have [URI-based WAF overrides](https://developers.cloudflare.com/api/operations/waf-overrides-list-waf-overrides), which you could only manage via API, will not be able to migrate immediately to the new WAF Managed Rules. You must delete these overrides before migrating.
+**Note:** Zones that have [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides), which you could only manage via API, will not be able to migrate immediately to the new WAF Managed Rules. You must delete these overrides before migrating.
 
 ### Phase 1 (since May 4, 2022)
 
@@ -113,7 +113,7 @@ In phase 1 the migration became available to a subset of eligible zones, which h
     - Page Rules configured with _Disable Security_.
     - Page Rules configured with _Web Application Firewall: Off_ or _Web Application Firewall: On._
 
-- The zone has no [URI-based WAF overrides](https://developers.cloudflare.com/api/operations/waf-overrides-list-waf-overrides) (only available via API).
+- The zone has no [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides) (only available via API).
 
 ___
 
@@ -129,11 +129,11 @@ You can start the WAF update in the Cloudflare dashboard or via API.
 
     If you are an Enterprise customer, the dashboard will show the following banner:
 
-    ![The migration banner displayed to Enterprise customers in WAF > Managed rules.](/waf/static/reference/waf-migration-ent-banner.png)
+    ![The migration banner displayed to Enterprise customers in WAF > Managed rules.](/images/waf/reference/waf-migration-ent-banner.png)
 
     If you are a Professional/Business customer, the dashboard will show the following banner:
 
-    ![The migration banner displayed to Pro/Business customers in WAF > Managed rules.](/waf/static/reference/waf-migration-biz-banner.png)
+    ![The migration banner displayed to Pro/Business customers in WAF > Managed rules.](/images/waf/reference/waf-migration-biz-banner.png)
 
 3. In the update banner, select **Review configuration**. This banner is only displayed in eligible zones.
 

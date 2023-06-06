@@ -5,6 +5,7 @@ product:
   title: Logs
   url: /logs/
   group: Cloudflare essentials
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Logs docs
@@ -20,3 +21,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: logs

@@ -40,7 +40,7 @@ Verifique se você tem os registros DNS necessários no aplicativo de **DNS** 
 -   O domínio raiz (por exemplo, _example.com_)
 -   Quaisquer subdomínios existentes (por exemplo, _www.example.com, blog.example.com_ etc.)
 
-Saiba mais sobre como configurar [registros DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) A e CNAME.
+Saiba mais sobre como configurar [registros DNS](/dns/manage-dns-records/how-to/create-dns-records) A e CNAME.
 
 ### O DNSSEC não foi desativado antes de o domínio ter sido adicionado à Cloudflare
 
@@ -52,4 +52,4 @@ Se você gerencia os registros DNS por meio do aplicativo de **DNS** no painel
 
 ### Endereço de IP não resolvido
 
-Raramente, pode ocorrer que o resolvedor de DNS do cliente que está solicitando o URL falhe ao resolver um registro DNS para um endereço de IP válido.  Recarregue a página após alguns minutos para ver se o problema desaparece. Esse problema não tem relação com a Cloudflare, mas utilizar o [resolvedor de DNS da Cloudflare](https://developers.cloudflare.com/1.1.1.1/setup/) pode ajudar. Entre em contato com o seu provedor de hospedagem para obter mais ajuda com o seu resolvedor de DNS atual.
+Raramente, pode ocorrer que o resolvedor de DNS do cliente que está solicitando o URL falhe ao resolver um registro DNS para um endereço de IP válido.  Recarregue a página após alguns minutos para ver se o problema desaparece. Esse problema não tem relação com a Cloudflare, mas utilizar o [resolvedor de DNS da Cloudflare](/1.1.1.1/setup/) pode ajudar. Entre em contato com o seu provedor de hospedagem para obter mais ajuda com o seu resolvedor de DNS atual.

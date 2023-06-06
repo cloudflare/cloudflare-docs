@@ -5,7 +5,7 @@ import * as navs from "./navlinks";
 
 declare global {
   interface Window {
-    // algolia; @see search.ts
+    docsearch: any;
     Coveo?: any;
   }
 }

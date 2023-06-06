@@ -41,7 +41,7 @@ Cloudflare Zone Lockdown is available on paid plans. The number of available Zon
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Issue a `POST` request for the [Create a Zone Lockdown rule](https://developers.cloudflare.com/api/operations/zone-lockdown-create-a-zone-lockdown-rule) operation.
+Issue a `POST` request for the [Create a Zone Lockdown rule](/api/operations/zone-lockdown-create-a-zone-lockdown-rule) operation.
 
 For example:
 
@@ -107,7 +107,7 @@ This example would not protect an internal wiki located on a different directory
 
 A visitor from an unauthorized IP will get the following error when there is a match for a Zone Lockdown rule:
 
-![Example of Error 1106 (access denied) received by a user accessing the zone from an unauthorized IP address](/waf/static/tools/zone-lockdown-rule-error-1106-access-denied.png)
+![Example of Error 1106 (access denied) received by a user accessing the zone from an unauthorized IP address](/images/waf/tools/zone-lockdown-rule-error-1106-access-denied.png)
 
 ---
 

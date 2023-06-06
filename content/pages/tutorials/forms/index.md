@@ -92,7 +92,7 @@ Because the `enctype` changed, the browser changes how it sends data to the serv
 
 The rest of this tutorial will focus on building an HTML form on Pages, including a Worker to receive and parse the form submissions.
 
-{{<Aside type="info" header="GitHub Repository">}}
+{{<Aside type="note" header="GitHub Repository">}}
 
 The source code for this example is [available on GitHub](https://github.com/cloudflare/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
 
@@ -329,5 +329,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
+- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-pages-functions/)
 - [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)

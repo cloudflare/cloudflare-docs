@@ -6,26 +6,28 @@
 {{- $productName :=  replace .Name ".yml" "" -}}
 {{- $productData := index $.Site.Data $productName -}}
 {{- with index $productData "product" -}}
-{{- $dataArray = $dataArray | append 
-(dict "group" .group "title" .title  "show" (default true .show) "url" 
-.url "wrap" (default false .wrap)) -}}
-{{- end -}}
-{{- end -}}
+{{- $additional_groups := slice -}}
+{{- range .additional_groups -}}
+  {{- $additional_groups = $additional_groups | append . -}}
 {{- end -}}
 
-{{- range .Site.Pages  -}}
-{{- $relpermalink := .RelPermalink -}}
-{{- with index .Params "product_grid"  -}}
-{{- $dataArray = $dataArray | append (dict "group" .group "title" .title 
- "show" (default false .show) "url" $relpermalink "wrap" (default false .wrap)) -}}
+{{- $dataArray = $dataArray | append 
+(dict "group" .group "title" .title  "show" (default true .show) "url" 
+.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) 
+"additional_groups" (default (slice) ($additional_groups))) -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
 {{- range $dataArray -}}
-{{- with .group -}}
+  {{- with .group -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
 
-{{ $availableOptions = $availableOptions | append . }}
-{{- end -}}
+  {{- range .additional_groups -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
+
 {{- end -}}
 
 {{- $availableOptions = $availableOptions | uniq | sort -}}
@@ -324,7 +326,16 @@
 }
 
 fieldset {
-  border-radius: 6px;
+  border: 0;
+}
+
+span a img {
+  display: inline-block;
+   vertical-align: middle;
+}
+
+[theme="dark"] span a img {
+  filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
 
 </style>
@@ -354,11 +365,20 @@ fieldset {
         <legend class="FilterLegend">Product Group</legend>
         {{- range $availableOptions -}}
         <div>
-          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="{{- . -}}">
+          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="product-group">
           <label class="CheckboxLabel" for="{{- . -}}">{{- . -}}</label>
         </div>
         {{- end -}}
     </fieldset>
+    <fieldset>
+      <legend class="FilterLegend">Enterprise preview
+        <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
+      </legend>
+      <div>
+        <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available">
+        <label class="CheckboxLabel" for="preview-available">True</label>
+      </div>
+  </fieldset>
     </div>
   </div>
     <div class="filter-footer">
@@ -375,7 +395,9 @@ fieldset {
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
           href="{{ .url }}"
-          data-product-group="{{ .group }}"
+          data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
+          data-preview-tryout="{{- .preview_tryout -}}"
+          style="display: none"
         >
           <span>{{ .title }}</span>
         </a>
@@ -387,6 +409,24 @@ fieldset {
   </div>
 
 <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedGroups = urlParams.get('product-group');
+  if (selectedGroups) {
+    const selectedGroupList = selectedGroups.split(',');
+    const productGroups = document.querySelectorAll('input[name="product-group"]');
+    productGroups.forEach((productGroup) => {
+      if (selectedGroupList.includes(productGroup.id)) {
+        productGroup.checked = true;
+      }
+    });
+  }
+
+  const previewMatch = urlParams.get('preview-available');
+  if (previewMatch) {
+    document.querySelector('input[name="preview-available"]').checked = true;
+  }
+
+  document.addEventListener('DOMContentLoaded', filterList);
   document.addEventListener('DOMContentLoaded', function() {
     // Listen for changes on all checkboxes
     let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
@@ -400,63 +440,50 @@ fieldset {
   });
 
 function filterList() {
-  let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
+  let checkedGroups = document.querySelectorAll('input[name="product-group"]:checked');
+  // obtain a single element, and count it as 1 checkbox if it exists
+  let checkedPreview = document.querySelector('input[name="preview-available"]:checked');
+  let numCheckboxes = checkedGroups.length + (checkedPreview ? 1 : 0);
   let searchBox = document.getElementById('search');
+  
   // Get all checked checkboxes
   let visibleItems = false;
   let checkedValues = [];
-  let numCheckboxes = 0;
-  for (let j = 0; j < checkboxes.length; j++) {
-    if (checkboxes[j].checked) {
-      checkedValues.push(checkboxes[j].id);
-      numCheckboxes++;
-    }
-  }
+  
   let filterButton = document.getElementById('filter-button');
   if (numCheckboxes === 0) {
     filterButton.innerText = "Filter Products";
   } else {
     let suffix = numCheckboxes > 1 ? 's' : '';
-    filterButton.innerText = `Filter Products (${numCheckboxes} group${suffix})`;
-  }
-  for (let j = 0; j < checkboxes.length; j++) {
-    if (checkboxes[j].checked) {
-      checkedValues.push(checkboxes[j].id);
-    }
+    filterButton.innerText = `Filter Products (${numCheckboxes} filter${suffix} applied)`;
   }
   
   // Get the value of the search box
   let searchTerm = searchBox.value.toLowerCase();
   let listItems = document.querySelectorAll('a[class="ProductGrid--link"]');
 
-  // If no checkboxes are checked and the search box is empty, show all list items
-  if (checkedValues.length === 0 && searchTerm === '') {
-    for (let k = 0; k < listItems.length; k++) {
+  // Filter based on supplied values
+  let groupIdValues = [];
+  for (let checkbox of checkedGroups) {
+    groupIdValues.push(checkbox.id);
+  }
+  let previewValue = '';
+  if (checkedPreview) {
+    previewValue = 'true';
+  }
+
+  for (let k = 0; k < listItems.length; k++) {
+    let groupTags = listItems[k].getAttribute('data-product-group').split("|").filter(x => x !== '');
+    let groupMatch = groupIdValues.length === 0 || groupTags.some(tag => groupIdValues.includes(tag));
+
+    let previewMatch = previewValue === '' || previewValue === listItems[k].getAttribute('data-preview-tryout');
+    let searchMatch = searchTerm === '' || listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0;
+    
+    if (groupMatch && searchMatch && previewMatch) {
       listItems[k].style.display = '';
       visibleItems = true;
-    }
-  } else if (checkedValues.length === 0 && searchTerm !== '') {
-  // If no checkboxes are checked and the search box is not empty, filter based on search
-    for (let k = 0; k < listItems.length; k++) {
-      let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-      if (searchMatch) {
-          listItems[k].style.display = '';
-          visibleItems = true;
-        } else {
-          listItems[k].style.display = 'none';
-        }
-    }
-  } else {
-    // Otherwise, hide all list items and show only the ones with matching data attributes and search terms
-    for (let k = 0; k < listItems.length; k++) {
-      let categoryMatch = (checkedValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-      let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-      if (categoryMatch && searchMatch) {
-        listItems[k].style.display = '';
-        visibleItems = true;
-      } else {
-        listItems[k].style.display = 'none';
-      }
+    } else {
+      listItems[k].style.display = 'none';
     }
   }
   // Trigger empty state message 
@@ -472,6 +499,23 @@ function filterList() {
     emptyStateMessage.style.display = "none";
     productGridContent.style.display = "grid";
   }
+
+  // Update URL parameters
+  const newUrl = new URL(window.location);
+
+  if (groupIdValues.length > 0) {
+    newUrl.searchParams.set('product-group', groupIdValues.join(','));
+  } else {
+    newUrl.searchParams.delete('product-group');
+  }
+
+  if (previewValue.length > 0) {
+    newUrl.searchParams.set('preview-available', previewValue);
+  } else {
+    newUrl.searchParams.delete('preview-available');
+  }
+
+  history.pushState({}, '', newUrl.toString());
 }
 
 function resetFilters() {

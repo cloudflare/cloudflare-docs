@@ -200,7 +200,7 @@ HTTPS 항상 사용
 
  | 
 
-**Cloudflare SSL/TLS** 앱의 **에지 인증서** 탭에 있는 **[항상 HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https)** 기능을 켜거나 끕니다. 활성화되면, 모든 _http://_ URL은 301 리디렉션을 통해 _https://_로 변환됩니다.
+**Cloudflare SSL/TLS** 앱의 **에지 인증서** 탭에 있는 **[항상 HTTPS](/ssl/edge-certificates/additional-options/always-use-https)** 기능을 켜거나 끕니다. 활성화되면, 모든 _http://_ URL은 301 리디렉션을 통해 _https://_로 변환됩니다.
 
 이 옵션이 표시되지 않으면 활성  **에지 인증서**가 없는 것입니다.
 
@@ -228,7 +228,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-**Cloudflare SSL/TLS** 앱의 **Edge 인증서** 탭에서 **Cloudflare 자동 HTTPS 재작성** 기능을 켜거나 끕니다.[자세히 알아보세요](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites).
+**Cloudflare SSL/TLS** 앱의 **Edge 인증서** 탭에서 **Cloudflare 자동 HTTPS 재작성** 기능을 켜거나 끕니다.[자세히 알아보세요](/ssl/edge-certificates/additional-options/automatic-https-rewrites).
 
  | 
 
@@ -241,7 +241,7 @@ Automatic HTTPS Rewrites
 
  | 
 
-클라이언트 브라우저가 캐시한 자원이 유효한 상태로 유지되는 기간을 제어합니다. Cloudflare UI 및 API 모두 Enterprise 도메인이 아닌 경우, **브라우저 캐시 TTL** 을 _0_으로 설정할 수 없습니다. [자세히 알아보세요](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl).
+클라이언트 브라우저가 캐시한 자원이 유효한 상태로 유지되는 기간을 제어합니다. Cloudflare UI 및 API 모두 Enterprise 도메인이 아닌 경우, **브라우저 캐시 TTL** 을 _0_으로 설정할 수 없습니다. [자세히 알아보세요](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -285,7 +285,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  | 
 
-방문자의 장치 유형에 따라 캐시하는 콘텐츠를 구분합니다. [자세히 알아보세요.](https://developers.cloudflare.com/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+방문자의 장치 유형에 따라 캐시하는 콘텐츠를 구분합니다. [자세히 알아보세요.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -298,7 +298,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  | 
 
-정적 자산의 캐시를 허용하면서 웹 캐시 속임수 공격으로부터 보호합니다. 이 설정은 URL의 확장이 반환된 _Content-Type_과 일치하는지 확인합니다.[자세히 알아보세요.](https://developers.cloudflare.com/cache/about/cache-deception-armor)
+정적 자산의 캐시를 허용하면서 웹 캐시 속임수 공격으로부터 보호합니다. 이 설정은 URL의 확장이 반환된 _Content-Type_과 일치하는지 확인합니다.[자세히 알아보세요.](/cache/cache-security/cache-deception-armor/)
 
  | 
 
@@ -313,7 +313,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
  _사용자 정의 캐시 키_라고도 합니다.
 
-어떤 자원을 캐시할지 결정할 때 포함할 변수를 구체적으로 제어합니다. 이를 통해, URL만이 아니라 다른 정보에 따라 어떤 것을 캐시할지 결정할 수 있습니다. [자세히 알아보세요](https://developers.cloudflare.com/cache/about/cache-keys).
+어떤 자원을 캐시할지 결정할 때 포함할 변수를 구체적으로 제어합니다. 이를 통해, URL만이 아니라 다른 정보에 따라 어떤 것을 캐시할지 결정할 수 있습니다. [자세히 알아보세요](/cache/how-to/cache-keys/).
 
  | 
 
@@ -336,7 +336,7 @@ _제한된 정규식 지원에 대해 학습하려면 아래의 세부 사항을
 
 **표준 -** 쿼리 문자열이 있는 모든 정적 콘텐츠를 캐시합니다.
 
-**모두 캐시** - 모든 콘텐츠를 정적인 것으로 간주하고 [Cloudflare 기본 캐시 콘텐츠](https://developers.cloudflare.com/cache/about/default-cache-behavior#default-cached-file-extensions) 이외의 모든 파일 유형을 캐시합니다. 페이지 규칙에서 **Edge Cache TTL**도 설정하지 않았다면, 원본 웹 서버의 캐시 헤더를 따릅니다. **Edge Cache TTL > 0과 결합된 경우**_0_,**모두 캐시**는 원본 웹 서버 응답에서 쿠키를 제거합니다.   
+**모두 캐시** - 모든 콘텐츠를 정적인 것으로 간주하고 [Cloudflare 기본 캐시 콘텐츠](/cache/concepts/default-cache-behavior#default-cached-file-extensions) 이외의 모든 파일 유형을 캐시합니다. 페이지 규칙에서 **Edge Cache TTL**도 설정하지 않았다면, 원본 웹 서버의 캐시 헤더를 따릅니다. **Edge Cache TTL > 0과 결합된 경우**_0_,**모두 캐시**는 원본 웹 서버 응답에서 쿠키를 제거합니다.   
 
 
  | 
@@ -529,14 +529,14 @@ Cloudflare **Speed** 앱의 **Cloudflare Mirage**를 켜거나 끕니다.[자세
 
  | 
 
-Cloudflare **SSL/TLS** 앱의 **에지 인증서** 탭에 있는 **Cloudflare 편의적 암호화** 기능을 켜거나 끕니다. [자세히 알아보세요](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/opportunistic-encryption).
+Cloudflare **SSL/TLS** 앱의 **에지 인증서** 탭에 있는 **Cloudflare 편의적 암호화** 기능을 켜거나 끕니다. [자세히 알아보세요](/ssl/edge-certificates/additional-options/opportunistic-encryption).
 
  | 
 
 -   전체
 
  |
-| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](https://developers.cloudflare.com/cache/about/cache-control)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
+| 원본 캐시 제어 | Free, Pro, Business 요금제 도메인의 경우 [원본 캐시 제어](/cache/concepts/cache-control/)가 기본적으로 활성화되어 있으며, Enterprise 요금제 도메인의 경우 기본적으로 비활성화되어 있습니다. | 
 
 -   전체
 
@@ -560,7 +560,7 @@ Polish
 
  | 
 
-Cloudflare  **Speed**  앱의  **Polish**  기능의 옵션을 적용합니다. [자세히 알아보세요](https://developers.cloudflare.com/images/polish).
+Cloudflare  **Speed**  앱의  **Polish**  기능의 옵션을 적용합니다. [자세히 알아보세요](/images/polish).
 
  | 
 
@@ -666,7 +666,7 @@ SSL
 
  | 
 
-Cloudflare **SSL/TLS** 앱에 있는 **에지 인증서** 탭의 **SSL** 기능에 대한 제어 옵션.[자세히 알아보세요.](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes)
+Cloudflare **SSL/TLS** 앱에 있는 **에지 인증서** 탭의 **SSL** 기능에 대한 제어 옵션.[자세히 알아보세요.](/ssl/origin-configuration/ssl-modes)
 
  | 
 
@@ -762,12 +762,12 @@ Page Rule을 저장할 때, Cloudflare는 **URL이 일치하는 경우** 필드�
 
 **If the URL matches** 필드 또는 Page Rule에서 포트를 지정하면 해당 포트는 다음 중 한 가지여야 합니다.
 
--   [Cloudflare 프록시와 호환되는](https://developers.cloudflare.com/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 포트 중 하나.
--   [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/) HTTPS 응용 프로그램의 사용자 지정 포트.
+-   [Cloudflare 프록시와 호환되는](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) HTTP/HTTPS 포트 중 하나.
+-   [Cloudflare Spectrum](/spectrum/) HTTPS 응용 프로그램의 사용자 지정 포트.
 
 ### Workers와 함께 Page Rules 사용하기
 
-현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](https://developers.cloudflare.com/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](https://developers.cloudflare.com/workers/platform/workers-with-page-rules/)를 참조하시기 바랍니다.
+현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/platform/workers-with-page-rules/)를 참조하시기 바랍니다.
 
 ___
 

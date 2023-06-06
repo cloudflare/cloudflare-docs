@@ -16,7 +16,7 @@ Cloudflare's CDN services can help cache your content across our giant global n
 
 Cloudflare's "[Bypass Cache on Cookie](https://support.cloudflare.com/hc/en-us/articles/236166048)" functionality allows non-logged-in pages to be fully cached by Cloudflare. This means your server can save time and resources by not having to regenerate pages where the HTML is effectively static, whilst not interfering with dynamic behaviour - as soon as a user logs-in to the WordPress dashboard or adds something to their WooCommerce, the Edge cache is bypassed.
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 This feature is available to Business and Enterprise users. Instructions
 on configuring this can be found in the article: [Caching Static HTML
 with
@@ -53,5 +53,5 @@ Due to HTTP/2 multiplexing requests, we advise against concatenating CSS or Java
 
 ### Advanced Performance Tools
 
--   Business and Enterprise customers can utilise Cloudflare's [Railgun Origin Network Optimizer](https://www.cloudflare.com/website-optimization/railgun/).
+-   Business and Enterprise customers can utilise Cloudflare's [Railgun Origin Network Optimizer](/railgun/) (deprecated).
 -   Enterprise users can utilise "Prefetching URLs From HTML Headers" and custom cache keys to enhance caching - contact your named Customer Success Engineer for help getting set-up or [reach out to our sales team](https://www.cloudflare.com/enterprise-free-trial/) if you aren't already an Enterprise customer.

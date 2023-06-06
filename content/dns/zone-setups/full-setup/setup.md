@@ -4,7 +4,6 @@ pcx_content_type: tutorial
 weight: 1
 meta:
   title: Change your nameservers (Full setup)
-structured_data: true
 ---
 
 # Change your nameservers (Full setup)
@@ -13,9 +12,7 @@ structured_data: true
 
 ---
 
-{{<how-to-step headingLevel=2 title="Before you begin" >}}
-
-{{<how-to-direction>}}
+## Before you begin
 
 Before update your domain nameservers, make sure that you:
 
@@ -25,10 +22,6 @@ Before update your domain nameservers, make sure that you:
   
 {{<render file="_dnssec-providers.md">}}
 
-{{</how-to-direction>}}
-
-{{<how-to-direction>}}
-
 {{<Aside type="note">}}
 
 If you do not already have a [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/), get one at-cost through [Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register).
@@ -37,27 +30,15 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{</Aside>}}
 
-{{</how-to-direction>}}
-
-{{</how-to-step>}}
-
 ---
 
-{{<how-to-step headingLevel=2 title="Add site to Cloudflare" >}}
-
-{{<how-to-direction>}}
+## Add site to Cloudflare
 
 In the Cloudflare dashboard, [add your domain](/fundamentals/get-started/setup/add-site/).
 
-{{</how-to-direction>}}
-
-{{</how-to-step>}}
-
 ---
 
-{{<how-to-step headingLevel=2 title="Review DNS records" >}}
-
-{{<how-to-direction>}}
+## Review DNS records
 
 When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a full setup, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
@@ -65,47 +46,29 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 {{<render file="_dns-scan-procedure.md">}}
 
-{{</how-to-direction>}}
-
-{{<how-to-tip>}}
-
 {{<render file="_dns-nxdomain-warning.md">}}
-
-{{</how-to-tip>}}
-
-{{</how-to-step>}}
 
 ---
 
-{{<how-to-step headingLevel=2 title="Update your nameservers" >}}
+## Update your nameservers
 
 {{<render file="_nameserver-preamble.md">}}
 
 {{<render file="_minimize-downtime-tip.md">}}
-
-{{<how-to-direction>}}
 
 ### Get nameserver names
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  On **Overview**, locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
 
-    ![Find nameserver names on the Overview page of your domain](/dns/static/nameserver-names.png)
+    ![Find nameserver names on the Overview page of your domain](/images/dns/nameserver-names.png)
 
 <br/>
 3. Keep this window open while you perform the next step.
 
-{{</how-to-direction>}}
-
-{{<how-to-tip>}}
-
 {{<Aside type="note">}}
 Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/zone-setups/reference/nameserver-assignment/).
 {{</Aside>}}
-
-{{</how-to-tip>}}
-
-{{<how-to-direction>}}
 
 ### Update your registrar
 
@@ -162,19 +125,11 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
   </div>
   </details>
 
-{{</how-to-direction>}}
-
-{{<how-to-tip>}}
-
 {{<Aside type="note">}}
 
 To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/troubleshooting/nameservers/). 
 
 {{</Aside>}}
-
-{{</how-to-tip>}}
-
-{{<how-to-direction>}}
 
 ### Verify changes
 
@@ -197,30 +152,16 @@ nslookup <DOMAIN_NAME> 1.1.1.1
 nslookup <DOMAIN_NAME> 8.8.8.8
 ```
 
-{{</how-to-direction>}}
-
-{{<how-to-tip>}}
-
 {{<Aside type="note">}}
 
 If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/troubleshooting/nameservers/) and check with your domain registrar.
 
 {{</Aside>}}
 
-{{</how-to-tip>}}
-
-{{</how-to-step>}}
-
 ---
 
-{{<how-to-step headingLevel=2 title="Re-enable DNSSEC" >}}
-
-{{<how-to-direction>}}
+## Re-enable DNSSEC
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
 
-You should now [enable DNSSEC](/dns/additional-options/dnssec/) to protect from domain spoofing.
-
-{{</how-to-direction>}}
-
-{{</how-to-step>}}
+You should now [enable DNSSEC](/dns/dnssec/) to protect from domain spoofing.

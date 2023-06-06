@@ -17,3 +17,8 @@ resources:
   discord: https://discord.com/channels/595317990191398933/1008691665688604783
   # Coming Soon:
   # dashboard_link: https://dash.cloudflare.com/?to=/:account/queues
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: queues

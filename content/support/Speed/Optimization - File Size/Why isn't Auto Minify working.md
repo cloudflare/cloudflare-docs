@@ -11,7 +11,7 @@ title: Why isn't Auto Minify working
 Once enabled, Cloudflare's Auto Minify will minify your HTML and your cached CSS and JS files. If you view the source of your files in your web browser or via a command line tool (such as cURL) and you do not see the code being minified, here are some things you should check:
 
 -   Only files that are served via your orange-clouded DNS records will be minified — this means that code on third-party domains that are not using Cloudflare will not be minified.
--   For CSS and JS only a cache `HIT` will be minified — [refer to Default Cache Behavior](/cache/about/default-cache-behavior) to check an individual file's cache status.
+-   For CSS and JS only a cache `HIT` will be minified — [refer to Default Cache Behavior](/cache/concepts/default-cache-behavior/) to check an individual file's cache status.
 -   The feature will deliberately skip minification for JS/CSS files with `.min` in the name.
 -   If your code has fatal syntax errors, Auto Minify may not be able to successfully minify the code — use syntax checkers (such as the ones recommended in this article) on your files to confirm this.
 -   We will not minify inline JS/CSS inside your HTML.

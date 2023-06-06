@@ -112,5 +112,5 @@ ___
 ## Verwandte Ressourcen
 
 -   [Sekundäre Nameserver](https://support.cloudflare.com/hc/en-us/articles/360001356152-How-do-I-setup-and-manage-Secondary-DNS-) (Enterprise-Feature)
--   [CNAME-Setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup) (Business- und Enterprise-Feature)
--   [So ändern Sie Nameserver auf Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)
+-   [CNAME-Setup](/dns/zone-setups/partial-setup) (Business- und Enterprise-Feature)
+-   [So ändern Sie Nameserver auf Cloudflare](/dns/zone-setups/full-setup/setup)

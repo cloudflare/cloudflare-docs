@@ -30,7 +30,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 5.  For **Advanced Actions**, click **Convert to CNAME DNS Setup**.
 
-    ![On your domain's overview page, click Convert to CNAME DNS Setup](/dns/static/dns_cname_setup.png)
+    ![On your domain's overview page, click Convert to CNAME DNS Setup](/images/dns/dns_cname_setup.png)
 
 6.  Click **Convert**.
 

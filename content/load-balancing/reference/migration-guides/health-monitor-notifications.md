@@ -26,7 +26,7 @@ First you should determine which pools are using notifications. It's often easie
 <summary>With code</summary>
 <div>
 
-Use the [Cloudflare API](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
+Use the [Cloudflare API](/api/operations/account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
 
 ```json
 ---
@@ -77,7 +77,7 @@ To find pools with existing notifications in the dashboard:
 2. Go to **Traffic** > **Load Balancing**.
 3. Click **Manage Pools**.
 4. On a pool, click **Edit**.
-5. For **Health Check Notifications**, check the value is toggled to **On** and an email address is present in the **Notification email address** field.
+5. For **Health Monitor Notifications**, check the value is toggled to **On** and an email address is present in the **Notification email address** field.
 
 </div>
 </details>
@@ -91,7 +91,7 @@ In this step, you should create new notifications to replace all of your existin
 
 <div>
 
-If using the Cloudflare API, [re-create all your existing notifications](https://developers.cloudflare.com/api/operations/notification-policies-create-a-notification-policy) with the following parameters specified:
+If using the Cloudflare API, [re-create all your existing notifications](/api/operations/notification-policies-create-a-notification-policy) with the following parameters specified:
 
 ```json
 "alert_type": "load_balancing_health_alert",
@@ -126,7 +126,7 @@ Though you can perform these steps in the dashboard, Cloudflare recommends you u
 
 <div>
 
-If using the Cloudflare API, we recently added a [`PATCH`](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
+If using the Cloudflare API, we recently added a [`PATCH`](/api/operations/account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
 ```json
 ---

@@ -82,15 +82,15 @@ ___
 -   一个不使用 Cloudflare 的外部域具有指向 Cloudflare 上活跃域的 CNAME 记录
 -   无法解析 DNS CNAME 记录的目标。
 -   您的 Cloudflare DNS 应用中的 CNAME 记录需要通过某一 DNS 提供商解析，但该提供商目前已离线。
--   为[自定义主机名（SSL for SaaS）](https://developers.cloudflare.com/ssl/ssl-for-saas)启用了 [Always Online](https://developers.cloudflare.com/cache/about/always-online)。
+-   为[自定义主机名（SSL for SaaS）](/ssl/ssl-for-saas)启用了 [Always Online](/cache/how-to/always-online/)。
 
 ### 解决方案
 
 非 Cloudflare 域无法 CNAME 到 Cloudflare 域，除非此非 Cloudflare 域已添加至 Cloudflare 帐户。
 
-试图直接访问用于 [Cloudflare CNAME 设置](https://developers.cloudflare.com/dns/zone-setups/partial-setup)的 DNS 记录也会导致错误 1001（示例：_www.example.com.cdn.cloudflare.net_）。
+试图直接访问用于 [Cloudflare CNAME 设置](/dns/zone-setups/partial-setup)的 DNS 记录也会导致错误 1001（示例：_www.example.com.cdn.cloudflare.net_）。
 
-如果使用[自定义主机名（SSL for SaaS）](https://developers.cloudflare.com/ssl/ssl-for-saas)，请禁用 [Always Online](https://developers.cloudflare.com/cache/how-to/enable-always-online)。
+如果使用[自定义主机名（SSL for SaaS）](/ssl/ssl-for-saas)，请禁用 [Always Online](/cache/how-to/always-online/#enable-always-online)。
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 ### 常见原因
 
-客户端或浏览器通过[服务器名称指示](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni)（SNI）发送的主机名与请求主机标头不匹配。
+客户端或浏览器通过[服务器名称指示](/fundamentals/glossary#server-name-indication-sni)（SNI）发送的主机名与请求主机标头不匹配。
 
 ### 解决方案
 
@@ -250,7 +250,7 @@ ___
 
 ### 解决方案
 
-要允许对另一个 Cloudflare 帐户中的域进行 CNAME 记录解析，CNAME 目标的域所有者必须使用 [Cloudflare for SaaS](https://www.cloudflare.com/saas/)，更具体而言就是我们的 [SSL for SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas/) 解决方案。
+要允许对另一个 Cloudflare 帐户中的域进行 CNAME 记录解析，CNAME 目标的域所有者必须使用 [Cloudflare for SaaS](https://www.cloudflare.com/saas/)，更具体而言就是我们的 [SSL for SaaS](/ssl/ssl-for-saas/) 解决方案。
 
 ___
 
@@ -278,8 +278,8 @@ Cloudflare 无法解析源 Web 服务器 IP 地址。
 
 -   缺少提及源站 IP 地址的 DNS _A 记录_。
 -   Cloudflare DNS 中的 _CNAME 记录_指向了无法解析的外部域。
--   Cloudflare [负载平衡器](https://developers.cloudflare.com/load-balancing/)默认、区域和回退池中的源站主机名不可解析。请使用配置有原始 IP 的后备池作为备份，以防所有其他池均不可用。
--   创建 CNAME 源站 Spectrum 应用程序时，首先需要在 Cloudflare DNS 端创建一个指向该源站的 CNAME。请参阅 [Spectrum CNAME 源站](https://developers.cloudflare.com/spectrum/how-to/cname-origins)了解更多详细信息
+-   Cloudflare [负载平衡器](/load-balancing/)默认、区域和回退池中的源站主机名不可解析。请使用配置有原始 IP 的后备池作为备份，以防所有其他池均不可用。
+-   创建 CNAME 源站 Spectrum 应用程序时，首先需要在 Cloudflare DNS 端创建一个指向该源站的 CNAME。请参阅 [Spectrum CNAME 源站](/spectrum/how-to/cname-origins)了解更多详细信息
 
 ### 解决方案
 
@@ -332,7 +332,7 @@ ___
 如果您是网站所有者：
 
 1.  从客户那里获取 1020 错误屏幕截图
-2.  搜索 Cloudflare **防火墙**应用程序的**概述**选项卡的[**防火墙事件日志**](https://developers.cloudflare.com/waf/analytics)，查找访问者的 1020 错误消息中是否有 **RayID** 或客户端 IP 地址。
+2.  搜索 Cloudflare **防火墙**应用程序的**概述**选项卡的[**防火墙事件日志**](/waf/analytics)，查找访问者的 1020 错误消息中是否有 **RayID** 或客户端 IP 地址。
 
 3\. 评估阻止原因，再更新**防火墙规则**或在 [**IP 访问规则**](https://support.cloudflare.com/hc/articles/217074967)中允许访问者的 IP 地址。
 
@@ -359,7 +359,7 @@ ___
 
 ### 常见原因
 
-由于域达到了 [Cloudflare Workers 的计划限值](https://developers.cloudflare.com/workers/platform/limits)，因此请求未得到服务。
+由于域达到了 [Cloudflare Workers 的计划限值](/workers/platform/limits)，因此请求未得到服务。
 
 ### 解决方案：
 
@@ -376,7 +376,7 @@ ___
 ### 解决方案
 
 -   **如果您是该网站的访问者**：请在几分钟后重试。
--   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)。
+-   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)。
 
 ___
 
@@ -450,7 +450,7 @@ ___
 
 ### 解决方案
 
-请确保您不会尝试修改任一[保留 HTTP 请求标头](https://developers.cloudflare.com/rules/transform#http-request-header-modification-rules)。
+请确保您不会尝试修改任一[保留 HTTP 请求标头](/rules/transform#http-request-header-modification-rules)。
 
 ___
 
@@ -463,7 +463,7 @@ ___
 ### 解决方案
 
 -   使用较短的值或表达式来定义标头值。
--   删除禁止字符。请参阅《开发人员文档》中的 [HTTP 请求标头名称和值的格式](https://developers.cloudflare.com/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values)，以进一步了解可接受的字符。
+-   删除禁止字符。请参阅《开发人员文档》中的 [HTTP 请求标头名称和值的格式](/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values)，以进一步了解可接受的字符。
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### 常见原因
 
-Cloudflare Worker 超过了 [CPU 时间限值](https://developers.cloudflare.com/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)。CPU 时间是执行代码（如循环或分析 JSON 等）所花费的时间。网络请求（获取、响应）所花费的时间不计入 CPU 时间。
+Cloudflare Worker 超过了 [CPU 时间限值](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)。CPU 时间是执行代码（如循环或分析 JSON 等）所花费的时间。网络请求（获取、响应）所花费的时间不计入 CPU 时间。
 
 ### 解决方案
 

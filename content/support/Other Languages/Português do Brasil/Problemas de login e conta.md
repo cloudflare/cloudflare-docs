@@ -143,7 +143,7 @@ ___
 
 ## Proteja uma conta comprometida
 
-Se perceber atividades suspeitas na sua conta Cloudflare, proteja-a seguindo o [passo a passo abaixo](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/):
+Se perceber atividades suspeitas na sua conta Cloudflare, proteja-a seguindo o [passo a passo abaixo](/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/):
 
 ___
 
@@ -152,7 +152,7 @@ ___
 Existem várias opções de login no [Painel de controle da Cloudflare](https://dash.cloudflare.com/login):
 
 -   **E-mail e senha**: insira o endereço de e-mail e a senha para entrar.
--   **Login único (SSO)**: insira o endereço de e-mail (desde que o admin tenha [configurado o SSO](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/dash-sso-apps/) como opção de login.
+-   **Login único (SSO)**: insira o endereço de e-mail (desde que o admin tenha [configurado o SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) como opção de login.
 -   **Entrar com a Apple**:
     -   _Mesmo e-mail da conta da Cloudflare como ID Apple_: é possível entrar com o e-mail e a senha ou fazer login com a Apple.
     -   _E-mail da conta da Cloudflare diferente como ID Apple_: criará uma conta da Cloudflare se você entrar com a Apple. Se você quiser fazer login em uma conta existente, [altere o endereço de e-mail](https://support.cloudflare.com/hc/pt-br/articles/203471284-Problemas-de-login-e-conta#12345679) para deixá-lo igual ao usado no ID Apple.

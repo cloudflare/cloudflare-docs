@@ -16,7 +16,7 @@ You can apply Gateway HTTP policies at the browser level by configuring a Proxy 
 
 ## Prerequisites
 
-Install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device.
+Install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device.
 
 ## 1. Generate a proxy endpoint
 
@@ -179,4 +179,4 @@ When a browser is connected to Gateway by a proxy endpoint, the browser does not
 
 ## Limitations
 
-At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
+At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.

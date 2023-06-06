@@ -12,7 +12,7 @@ title: Match SSL Cipher names from SSL Labs to Cloudflare naming conventions
 
 Sometimes a customer wants to disable all of the "WEAK" (UPPERCASE, yellow & **bold**) cipher suites in their [Qualys SSL Labs](https://www.ssllabs.com/ssltest/) report(s).
 
-They can use Cloudflare API: [Change ciphers setting](https://developers.cloudflare.com/api/operations/zone-settings-change-ciphers-setting) to change the required settings
+They can use Cloudflare API: [Change ciphers setting](/api/operations/zone-settings-change-ciphers-setting) to change the required settings
 
 But the problem arises when the SSL Labs naming conventions and Cloudflare naming conventions are not same
 

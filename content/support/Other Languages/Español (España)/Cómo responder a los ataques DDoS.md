@@ -53,7 +53,7 @@ ___
 
 ## Paso 2: Activar **Web Application Firewall** (WAF)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 El WAF solo está disponible para dominios de los planes pagos.
 {{</Aside>}}
 
@@ -70,16 +70,16 @@ ___
 La aplicación del **Firewall** de Cloudflare facilita el bloqueo del tráfico a través de los siguientes métodos:
 
 **[Reglas de acceso de IP](/waf/tools/ip-access-rules/)** \- Se recomiendan para el bloqueo de múltiples direcciones IP, rangos de IP de 16 o 24, o números de sistema autónomo (ASN). 
-**[Reglas de Firewall](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)** \- Se recomiendan para el bloqueo de un país, cualquier rango de IP válido o patrones de ataques más complejos.
+**[Reglas de Firewall](/firewall/cf-dashboard/create-edit-delete-rules/)** \- Se recomiendan para el bloqueo de un país, cualquier rango de IP válido o patrones de ataques más complejos.
 **[Bloqueo de zona](/waf/tools/zone-lockdown/)** \- Se recomienda para permitir solo direcciones IP o rangos de confianza a una parte de tu sitio.
 **[Bloqueo de agente-usuario:](/waf/tools/user-agent-blocking/)** se recomienda para el bloqueo de [encabezados de agentes-usuarios](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) sospechosos para todo tu dominio.
 
 {{<Aside type="tip">}}
 Las [**Reglas de Firewall** tienen
-límites](https://developers.cloudflare.com/firewall/cf-firewall-rules/) pero
+límites](/firewall/cf-firewall-rules/) pero
 son más flexibles y permiten coincidencias en una [mayor variedad de
 campos y
-expresiones](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/)que
+expresiones](/firewall/cf-firewall-rules/fields-and-expressions/)que
 las **Reglas de acceso de IP**.
 {{</Aside>}}
 
@@ -93,13 +93,10 @@ Para decidir qué país o IP bloquear o controlar, verifica tus archivos de regi
 -   los recursos a los que el ataque accede; y
 -   características comunes del ataque (direcciones IP, agentes usuarios, países, ASN, etc.).
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare también ofrece **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** para
-facilitar el control del flujo de solicitudes a tu servidor.  [**Rate
-Limiting** se factura en función del
-uso](https://support.cloudflare.com/hc/en-us/articles/115000272247-Billing-for-Cloudflare-Rate-Limiting) y
-es independiente del tipo de plan.
+facilitar el control del flujo de solicitudes a tu servidor.
 {{</Aside>}}
 
 ___

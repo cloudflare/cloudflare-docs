@@ -82,15 +82,15 @@ ___
 -   Cloudflareを使っていない外部ドメインに、Cloudflare上でアクティブなドメインへのCNAMEレコードがある。
 -   DNS CNAMEレコードの対象が解決していない。
 -   Cloudflare DNSアプリでCNAMEレコードが、現在オフラインになっているDNSプロバイダーを経由する解決策を必要としている。
--   [Always Online](https://developers.cloudflare.com/cache/about/always-online)が、[カスタムホスト名（SSL for SaaS）](https://developers.cloudflare.com/ssl/ssl-for-saas)ドメイン向けに有効になっている。
+-   [Always Online](/cache/how-to/always-online/)が、[カスタムホスト名（SSL for SaaS）](/ssl/ssl-for-saas)ドメイン向けに有効になっている。
 
 ### 解決方法
 
 非CloudflareドメインがCloudflareアカウントに追加されていないと、非CloudflareドメインにCNAMEができません。
 
-[Cloudflare CNAME のセットアップ](https://developers.cloudflare.com/dns/zone-setups/partial-setup)に使われるDNSレコードへの直接アクセスを試行すると、エラー1001が発生します（例_：www.example.com.cdn.cloudflare.net_）。
+[Cloudflare CNAME のセットアップ](/dns/zone-setups/partial-setup)に使われるDNSレコードへの直接アクセスを試行すると、エラー1001が発生します（例_：www.example.com.cdn.cloudflare.net_）。
 
-[カスタムホスト名（SSL for SaaS）](https://developers.cloudflare.com/ssl/ssl-for-saas)を使う場合は、[Always Online](https://developers.cloudflare.com/cache/how-to/enable-always-online)を無効にします。
+[カスタムホスト名（SSL for SaaS）](/ssl/ssl-for-saas)を使う場合は、[Always Online](/cache/how-to/always-online/#enable-always-online)を無効にします。
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 ### 考えられる原因
 
-[Server Name Indication](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni)（SNI）を介して、クライアントまたはブラウザが送信したホスト名が、リクエストホストヘッダーと一致しない。
+[Server Name Indication](/fundamentals/glossary#server-name-indication-sni)（SNI）を介して、クライアントまたはブラウザが送信したホスト名が、リクエストホストヘッダーと一致しない。
 
 ### 解決方法
 
@@ -250,7 +250,7 @@ ___
 
 ### 解決方法
 
-別のCloudflareアカウントでCNAMEレコードソリューションをドメインに許可するには、CNAMEターゲットのドメイン所有者が[Cloudflare for SaaS](https://www.cloudflare.com/saas/)を、具体的には当社の[SSL for SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas/)ソリューションを使用する必要があります。
+別のCloudflareアカウントでCNAMEレコードソリューションをドメインに許可するには、CNAMEターゲットのドメイン所有者が[Cloudflare for SaaS](https://www.cloudflare.com/saas/)を、具体的には当社の[SSL for SaaS](/ssl/ssl-for-saas/)ソリューションを使用する必要があります。
 
 ___
 
@@ -278,8 +278,8 @@ Cloudflareが、オリジンWebサーバーのIPアドレスを解決するこ�
 
 -   オリジンIPアドレスが示すDNS _Aレコード_がありません。
 -   Cloudflare DNSの_CNAME レコード_が解決できない外部ドメインを示しています。
--   Cloudflare [ロードバランサー](https://developers.cloudflare.com/load-balancing/) でオリジナルホスト名（CNAME）のデフォルト、リージョン、フォールバックプールが解決できません。他のプールが利用できない場合に備えて、オリジンIPと設定されたフォールバックプールをバックアップとして使用します。
--   CNAMEオリジンを使ってSpectrumアプリを作成する場合は、はじめに、Cloudflare DNSでオリジンを示すCNAMEを作成する必要があります。詳細については、[Spectrum CNAMEオリジン](https://developers.cloudflare.com/spectrum/how-to/cname-origins)をご覧ください。
+-   Cloudflare [ロードバランサー](/load-balancing/) でオリジナルホスト名（CNAME）のデフォルト、リージョン、フォールバックプールが解決できません。他のプールが利用できない場合に備えて、オリジンIPと設定されたフォールバックプールをバックアップとして使用します。
+-   CNAMEオリジンを使ってSpectrumアプリを作成する場合は、はじめに、Cloudflare DNSでオリジンを示すCNAMEを作成する必要があります。詳細については、[Spectrum CNAMEオリジン](/spectrum/how-to/cname-origins)をご覧ください。
 
 ### 解決方法
 
@@ -332,7 +332,7 @@ Webサイト所有者でない方は、受信した1020エラーメッセージ�
 Webサイト所有者の方の場合：
 
 1.  お客様から送信された1020エラーのスクリーンショットを取得します
-2.  **RayID**のためのCloudflareの**ファイアウォール**アプリにある「**概要**」タブ内の[**ファイアウォールイベントログ**](https://developers.cloudflare.com/waf/analytics)を検索するか、または訪問者の1020メッセージからのクライアントIPアドレスを検索します。
+2.  **RayID**のためのCloudflareの**ファイアウォール**アプリにある「**概要**」タブ内の[**ファイアウォールイベントログ**](/waf/analytics)を検索するか、または訪問者の1020メッセージからのクライアントIPアドレスを検索します。
 
 3\. ブロックの原因にアクセスし、**ファイアウォールルール**を更新するか、[**IP Access ルール**](https://support.cloudflare.com/hc/articles/217074967)にある訪問者のIPアドレスを許可リストに設定します。
 
@@ -359,7 +359,7 @@ ___
 
 ### 考えられる原因
 
-ドメインが、[Cloudflare Workers用のプラン制限](https://developers.cloudflare.com/workers/platform/limits)に達したため、リクエストが処理されませんでした。
+ドメインが、[Cloudflare Workers用のプラン制限](/workers/platform/limits)に達したため、リクエストが処理されませんでした。
 
 ### 解決方法：
 
@@ -376,7 +376,7 @@ CloudflareネットワークにあるWebサイト（`tunnel.example.com`）の�
 ### 解決方法
 
 -   **このWebサイトの訪問者の方は**：数分後にもう一度お試しください。
--   **Webサイトの所有者の方は**：_Cloudflare_が実行中であり、ネットワークにアクセスできることを確認してください。トンネルの[負荷分散](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)を有効化することもできます。
+-   **Webサイトの所有者の方は**：_Cloudflare_が実行中であり、ネットワークにアクセスできることを確認してください。トンネルの[負荷分散](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)を有効化することもできます。
 
 ___
 
@@ -450,7 +450,7 @@ HTTPリクエストヘッダー変更ルールが変更できないHTTPヘッダ
 
 ### 解決方法
 
-[留保されているHTTPリクエストヘッダー](https://developers.cloudflare.com/rules/transform#http-request-header-modification-rules)の一つを変更しようとしないでください。
+[留保されているHTTPリクエストヘッダー](/rules/transform#http-request-header-modification-rules)の一つを変更しようとしないでください。
 
 ___
 
@@ -463,7 +463,7 @@ ___
 ### 解決方法
 
 -   ヘッダー値の定義には、短い値または数式を使ってください。
--   使用が許可されていない文字を削除してください。開発者ドキュメントに記載されている[HTTPリクエストヘッダー名と値](https://developers.cloudflare.com/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values)を参照して、使用可能な文字に関する詳細情報をご覧ください。
+-   使用が許可されていない文字を削除してください。開発者ドキュメントに記載されている[HTTPリクエストヘッダー名と値](/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values)を参照して、使用可能な文字に関する詳細情報をご覧ください。
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### 考えられる原因
 
-Cloudflare Worker が[CPU時間制限](https://developers.cloudflare.com/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)を超過しています。CPU時間は、コード（たとえば、ループ、JSOの解析など）実行に費やす時間のことです。ネットワークリクエスト（フェッチング、レスポンディング）にかかった時間はCPU時間にカウントされません。
+Cloudflare Worker が[CPU時間制限](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)を超過しています。CPU時間は、コード（たとえば、ループ、JSOの解析など）実行に費やす時間のことです。ネットワークリクエスト（フェッチング、レスポンディング）にかかった時間はCPU時間にカウントされません。
 
 ### 解決方法
 

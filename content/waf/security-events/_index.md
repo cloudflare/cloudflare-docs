@@ -18,7 +18,7 @@ Users on a Free plan can view summarized security events by date in the **Activi
 *   **Top events by source**: Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
 *   **Activity log**: Summarizes security events by date to show the action taken and the applied Cloudflare security product.
 
-Security Events captures all traffic actioned or flagged by a Cloudflare security product, including features such as [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086).
+Security Events displays information about requests actioned or flagged by Cloudflare security products, including features such as [Browser Integrity Check](/support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/). Each incoming HTTP request might generate one or more security events. The Security Events dashboard only shows these events, not the HTTP requests themselves.
 
 ## Availability
 

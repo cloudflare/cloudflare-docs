@@ -27,7 +27,7 @@ ___
 -   代理店またはITコンサルタントであり、お客様に代わって複数のドメインを管理している場合（注：Cloudflareの[パートナープログラム](https://www.cloudflare.com/partners/)の利用をご検討ください）
 -   複数の既存サイトをCloudflareに移動しようとしている
 
-APIを使用することにより、複数のサイトを迅速に効率よく追加できます。特に、[ネームサーバーの変更方法](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)や[DNSレコードの追加方法](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)に精通している場合はお勧めします。
+APIを使用することにより、複数のサイトを迅速に効率よく追加できます。特に、[ネームサーバーの変更方法](/dns/zone-setups/full-setup/setup)や[DNSレコードの追加方法](/dns/manage-dns-records/how-to/create-dns-records)に精通している場合はお勧めします。
 
 ___
 

@@ -63,7 +63,7 @@ ___
 
 ## 이름 서버를 변경하여 Cloudflare를 가리키게 하려면 어디에서 작업해야 합니까?
 
-등록 기관에서 변경하세요. 등록 기관은 호스팅 공급자일 수도 있고 그렇지 않을 수도 있습니다. 도메인의 등록 기관이 어디인지 모르면 [WHOis 검색](http://www.whois.net/)을 통해 찾을 수 있습니다.[이름 서버를 Cloudflare로 변경](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)의 지침을 따르세요.
+등록 기관에서 변경하세요. 등록 기관은 호스팅 공급자일 수도 있고 그렇지 않을 수도 있습니다. 도메인의 등록 기관이 어디인지 모르면 [WHOis 검색](http://www.whois.net/)을 통해 찾을 수 있습니다.[이름 서버를 Cloudflare로 변경](/dns/zone-setups/full-setup/setup)의 지침을 따르세요.
 
 ___
 
@@ -107,13 +107,13 @@ ___
 
 기본적으로 Cloudflare 영역 파일에 대한 변경 사항이나 추가 사항은 5분 이내에 적용됩니다. 로컬 DNS 캐시는 업데이트에 시간이 더 걸릴 수 있습니다. 따라서 완전히 전파하는 데 5분이 넘을 수 있습니다.
 
-이 설정은 [DNS 레코드](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)의 TTL(Time-to-Live) 값에 의해 제어됩니다.프록시된 레코드는 300초(자동) 이내에 업데이트되지만 프록시되지 않은 레코드의 TTL은 사용자 정의할 수 있습니다.
+이 설정은 [DNS 레코드](/dns/manage-dns-records/how-to/create-dns-records)의 TTL(Time-to-Live) 값에 의해 제어됩니다.프록시된 레코드는 300초(자동) 이내에 업데이트되지만 프록시되지 않은 레코드의 TTL은 사용자 정의할 수 있습니다.
 
 ___
 
 ## Cloudflare는 도메인 마스킹을 제공합니까?
 
-아닙니다. Cloudflare는 도메인 마스킹이나 DNS 리디렉션 서비스를 제공하지 않습니다(호스팅 공급자가 제공할 수 있음).그러나 [대량 리디렉션](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/) 을 통한 URL 전달은 제공합니다.
+아닙니다. Cloudflare는 도메인 마스킹이나 DNS 리디렉션 서비스를 제공하지 않습니다(호스팅 공급자가 제공할 수 있음).그러나 [대량 리디렉션](/rules/url-forwarding/bulk-redirects/) 을 통한 URL 전달은 제공합니다.
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 ## DNS 레코드 옆의 구름 아이콘은 오렌지색이나 회색이어야 합니까?
 
-기본적으로 웹 트래픽을 처리하는 A 및 CNAME 레코드(HTTP 및 HTTPs)만 Cloudflare로 프록시 설정할 수 있습니다. 기타 다른 DNS 레코드는 회색 구름로 전환해야 합니다. 자세한 내용은 [지원 가이드](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)를 참조하세요.
+기본적으로 웹 트래픽을 처리하는 A 및 CNAME 레코드(HTTP 및 HTTPs)만 Cloudflare로 프록시 설정할 수 있습니다. 기타 다른 DNS 레코드는 회색 구름로 전환해야 합니다. 자세한 내용은 [지원 가이드](/dns/manage-dns-records/reference/proxied-dns-records)를 참조하세요.
 
 ___
 
@@ -203,7 +203,7 @@ Terraform을 Cloudflare API와 함께 사용할 때 `오류: DNS 레코드 생�
 
 **솔루션**
 
-인수 `zone_id = data.cloudflare_zones.example_com.zones[0].id`인지 확인하시기 바랍니다.더 자세한 사용 사례는 [이](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) Github 스레드에서 찾을 수 있습니다.
+인수 `zone_id = data.cloudflare_zones.example_com.zones[0].id`인지 확인하시기 바랍니다.더 자세한 사용 사례는 [이](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub 스레드에서 찾을 수 있습니다.
 
 ___
 

@@ -7,12 +7,6 @@ title: Understanding the Cloudflare Security Level
 # Understanding the Cloudflare Security Level
 
 ## Overview
---------
-
----
-## Understanding the Cloudflare Security Level
-
-## Overview
 
 **Security Level** uses the IP reputation of a visitor to decide whether to present a Managed Challenge page. Once the visitor enters the correct Managed Challenge, they receive the appropriate website resources. 
 
@@ -37,7 +31,7 @@ IP Reputation is calculated based on [Project Honeypot](https://www.projecthoney
 
 Cloudflare sets **Security Level** to _Medium_ by default.  Change the **Security Level** settings in **Security** > **Settings**. Also, the **Threat Score** values mentioned above are useful as **Field** criteria within [firewall rules](/firewall/cf-firewall-rules/) or [custom rules](/waf/custom-rules/)**. Security Level** is also configurable via Cloudflare [Page Rules](https://support.cloudflare.com/hc/articles/218411427#summary-of-page-rules-settings).
 
-To prevent bot IPs from attacking a website, a new website owner might set a _Medium_ or _High_ **Security Level** and lower [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) _5_ to _30_ minutes to ensure that Cloudflare is constantly protecting the site.  Alternatively, an experienced website administrator that is confident in their security settings might set **Security Level** to _Essentially Off_ or _Low_ while setting a higher [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) for a week, month, or even year to provide a less obtrusive visitor experience.
+To prevent bot IPs from attacking a website, a new website owner might set a _Medium_ or _High_ **Security Level** and lower [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) _5_ to _30_ minutes to ensure that Cloudflare is constantly protecting the site.  Alternatively, an experienced website administrator that is confident in their security settings might set **Security Level** to _Essentially Off_ or _Low_ while setting a higher [**Challenge Passage**](https://developers.cloudflare.com/fundamentals/get-started/concepts/cloudflare-challenges/) for a week, month, or even year to provide a less obtrusive visitor experience.
 
 Only use [**I'm Under Attack!**](https://support.cloudflare.com/hc/articles/200170076) mode when a website is under a DDoS attack.  **I'm Under Attack!** mode may affect some actions on your domain, such as your API traffic.  Set a custom **Security Level** for your API or any other part of your domain by creating a [**Page Rule**](https://support.cloudflare.com/hc/en-us/articles/200172336-How-do-I-create-a-PageRule-) for that portion of your site traffic.
 
@@ -47,4 +41,4 @@ ___
 
 -   [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/)
 -   [Understanding Cloudflare Under Attack Mode](https://support.cloudflare.com/hc/articles/200170076)
--   [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196)
+-   [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/)

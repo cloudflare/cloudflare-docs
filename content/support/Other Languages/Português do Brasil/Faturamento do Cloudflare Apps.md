@@ -7,14 +7,6 @@ title: Faturamento do Cloudflare Apps
 
 # Faturamento do Cloudflare Apps
 
-## Faturamento do Cloudflare Apps
-
-_Saiba mais sobre como funciona o faturamento do Cloudflare Apps._
-
-___
-
-## Visão geral
-
 Muitos aplicativos que fazem parte do Cloudflare Apps são gratuitos e você não será cobrado por eles.
 
 ![captura de tela da página inicial do Apps no painel Cloudflare](/support/static/hc-dash-apps_main_page.png)
