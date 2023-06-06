@@ -30,6 +30,54 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 
 Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
 
+### Configure opearting system for DoH
+
+<details>
+<summary>Windows 11</summary>
+<div>
+
+1. Locate the A and AAAA records associated with your location's DoH endpoint.
+
+   1. Acquire your subdomain.
+   2. In a terminal, run the following commands to obtain your A and AAAA records:
+
+   ```sh
+   $ nslookup -type=A <your-subdomain>.cloudlfare-gateway.com
+   ```
+
+   ```sh
+   $ nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
+   ```
+
+   3. Copy the resulting addresses.
+
+2. Add the addresses to your list of known DoH servers.
+
+   1. Run the following command for each address:
+
+   ```sh
+   $ Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
+   ```
+
+   2. Confirm the addresses were added with the following command:
+
+   ```sh
+   $ Get-DnsClientDohServerAddress
+   ```
+
+3. Configure your network settings.
+   1. In Windows, go to **Settings** > **Network & internet** > your active Internet connection.
+   2. Under **DNS server assignment**, select **Edit**.
+   3. Set the drop-down to _Manual_.
+   4. Enable **IPv4**.
+   5. In **Preferred DNS** and **Alternate DNS**, enter your IPv4 addresses.
+   6. Enable **IPv6**.
+   7. In **Preferred DNS** and **Alternate DNS**, enter your IPv6 addresses.
+   8. Set each instance of **DNS over HTTPS** to _On (automatic template)_.
+
+</div>
+</details>
+
 ## Filter DoH requests by user
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.
@@ -84,7 +132,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/o
      -H "Content-Type: application/json" \
 ```
 
-If you get an `access.api.error.service_token_not_found` error,  check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
 
 <details>
 <summary>Example response</summary>
@@ -238,4 +286,3 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </details>
 
 You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
-
