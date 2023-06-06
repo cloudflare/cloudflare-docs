@@ -438,7 +438,9 @@ The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) a
 
 ### Object location
 
-Not all Cloudflare locations host Durable Objects, so Objects may not be created in the same data center where they are first requested.
+A Durable Object is typically instantiated close to where the initial [`.get`](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub) is made. This may not be in the datacenter the user is connected to, but in most cases it will be in close proximity.
+
+You can also provide an explicit [location hint](/workers/runtime-apis/durable-objects/#providing-a-location-hint) and provide a preferred location when first creating the Durable Object. This can be useful in cases where objects are created programatically prior to user-interaction, or where the first client request is not representative of where the majority of requests to the object will come from.
 
 Currently, Durable Objects do not migrate between locations after initial creation. Cloudflare will be exploring automatic migration compatibility in the future.
 
