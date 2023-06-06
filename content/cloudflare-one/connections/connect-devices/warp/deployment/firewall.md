@@ -28,7 +28,7 @@ These are the IP addresses that the WARP client will connect to. All traffic fro
 - IPv6 Range: `2606:4700:100::/48`
 
 {{<Aside type="note">}}
-Before you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you may see the different IPv4 Range `162.159.192.0/24` of consumer WARP.
+Before you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for consumer WARP services ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust deployments.
 {{</Aside>}}
 
 ### WARP UDP ports
