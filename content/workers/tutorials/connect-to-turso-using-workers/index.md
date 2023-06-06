@@ -15,10 +15,10 @@ This tutorial will guide you on how to build globally distributed applications w
 
 Before continuing with this tutorial, you should have:
 
-- Successfully [created up your first Cloudflare Worker](/workers/get-started/guide/) and/or have deployed a Cloudflare Worker before.
-- Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers.
-- A [GitHub account](https://github.com/), required for authenticating to Turso.
-- A basic familiarity with installing and using command-line interface (CLI) applications.
+* Successfully [created up your first Cloudflare Worker](/workers/get-started/guide/) and/or have deployed a Cloudflare Worker before.
+* Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers.
+* A [GitHub account](https://github.com/), required for authenticating to Turso.
+* A basic familiarity with installing and using command-line interface (CLI) applications.
 
 ## Install the Turso CLI
 
@@ -111,10 +111,10 @@ $ cd worker-turso-ts
 
 In your project directory, `wrangler init` has generated the following files:
 
-- `wrangler.toml`: Your Wrangler configuration file.
-- `src/index.ts`: A minimal Hello World Worker written in TypeScript
-- `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
-- `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated in `wrangler init` command.
+* `wrangler.toml`: Your Wrangler configuration file.
+* `src/index.ts`: A minimal Hello World Worker written in TypeScript
+* `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
+* `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated in `wrangler init` command.
 
 For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevant. You will not need to edit the other files, and they should be left as is.
 
@@ -155,8 +155,7 @@ $ turso db tokens create my-db -e none
 To keep this token secret:
 
 1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore` file if you are using Git.
-
-- You will also [create a Secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
+* You will also [create a Secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
 
 First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
 
@@ -286,11 +285,11 @@ Save your `src/index.ts` file with your changes.
 
 Note:
 
-- The libSQL client library import '@libsql/client/web' must be imported exactly as shown when working with Cloudflare workers. The non-web import will not work in the Workers environment.
-- The `Env` interface contains the environment variable and secret you defined earlier.
-- The `Env` interface also caches the libSQL client object and router, which are created on the first request to the Worker.
-- The `/users` route fetches all rows from the `example_users` table you created in the Turso shell. It simply serializes the `ResultSet` object as JSON directly to the caller.
-- The `/add-user` route inserts a new row using a value provided in the query string.
+* The libSQL client library import '@libsql/client/web' must be imported exactly as shown when working with Cloudflare workers. The non-web import will not work in the Workers environment.
+* The `Env` interface contains the environment variable and secret you defined earlier.
+* The `Env` interface also caches the libSQL client object and router, which are created on the first request to the Worker.
+* The `/users` route fetches all rows from the `example_users` table you created in the Turso shell. It simply serializes the `ResultSet` object as JSON directly to the caller.
+* The `/add-user` route inserts a new row using a value provided in the query string.
 
 With your environment configured and your code ready, you will now test your Worker locally before you deploy.
 
@@ -299,7 +298,7 @@ With your environment configured and your code ready, you will now test your Wor
 To run a local instance of our Worker (entirely on your machine), run the following command:
 
 ```sh
-$ npx wrangler dev
+$ npx wrangler dev --local
 ```
 
 You should be able to review output similar to the following:
@@ -329,18 +328,14 @@ Connect to it and validate your Worker returns the email address you inserted wh
 You should see JSON similar to the following containing the data from the `example_users` table:
 
 ```json
-{
-  "columns": ["email"],
-  "rows": [{ "email": "foo@bar.com" }],
-  "rowsAffected": 0
-}
+{"columns":["email"],"rows":[{"email":"foo@bar.com"}],"rowsAffected":0}
 ```
 
 {{<Aside type="warning">}}
 If you see an error instead of a list of users, double check that:
 
-- You have entered the correct value for your `LIBSQL_DB_URL` in `wrangler.toml`.
-- You have set a secret called `LIBSQL_DB_AUTH_TOKEN` with your database authentication token.
+* You have entered the correct value for your `LIBSQL_DB_URL` in `wrangler.toml`.
+* You have set a secret called `LIBSQL_DB_AUTH_TOKEN` with your database authentication token.
 
 Both of these need to be present and match the variable names in your Worker's code.
 {{</Aside>}}
@@ -379,12 +374,12 @@ You have now published a Worker that can connect to your Turso database, query i
 
 To clean up the resources you created as part of this tutorial:
 
-- If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the published Worker.
-- You can also delete your Turso database via `turso db destroy my-db`.
+* If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the published Worker.
+* You can also delete your Turso database via `turso db destroy my-db`.
 
 ## Related resources
 
-- Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
-- Understand how to [debug your Cloudflare Worker](/workers/learning/debugging-workers/).
-- Join the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF).
-- Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).
+* Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
+* Understand how to [debug your Cloudflare Worker](/workers/learning/debugging-workers/).
+* Join the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF).
+* Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).

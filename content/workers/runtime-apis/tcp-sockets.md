@@ -16,7 +16,7 @@ The `connect()` function returns a TCP socket, with both a [readable](/workers/r
 `connect()` is provided as a [Runtime API](/workers/runtime-apis/), and is accessed by importing the `connect` function from `cloudflare:sockets`. This process is similar to how one imports built-in modules in Node.js. Refer to the following codeblock for an example of creating a TCP socket, writing to it, and returning the readable side of the socket as a response:
 
 ```typescript
-import { connect } from "cloudflare:sockets";
+import { connect } from 'cloudflare:sockets';
 
 export default {
   async fetch(req: Request) {
@@ -26,20 +26,16 @@ export default {
     try {
       const socket = connect(gopherAddr);
 
-      const writer = socket.writable.getWriter();
+      const writer = socket.writable.getWriter()
       const encoder = new TextEncoder();
       const encoded = encoder.encode(url.pathname + "\r\n");
       await writer.write(encoded);
 
-      return new Response(socket.readable, {
-        headers: { "Content-Type": "text/plain" },
-      });
+      return new Response(socket.readable, { headers: { "Content-Type": "text/plain" } });
     } catch (error) {
-      return new Response("Socket connection failed: " + error, {
-        status: 500,
-      });
+      return new Response("Socket connection failed: " + error, { status: 500 });
     }
-  },
+  }
 };
 ```
 
@@ -47,14 +43,13 @@ export default {
 
 - {{<code>}}connect(address: {{<type-link href="/workers/runtime-apis/tcp-sockets/#socketaddress">}}SocketAddress{{</type-link>}} | string, options?: {{<prop-meta>}}optional{{</prop-meta>}} {{<type-link href="/workers/runtime-apis/tcp-sockets/#socketoptions">}}SocketOptions{{</type-link>}}){{</code>}} : {{<type-link href="/workers/runtime-apis/tcp-sockets/#socket">}}`Socket`{{</type-link>}}
   - `connect()` accepts either a URL string or [`SocketAddress`](/workers/runtime-apis/tcp-sockets/#socketaddress) to define the hostname and port number to connect to, and an optional configuration object, [`SocketOptions`](/workers/runtime-apis/tcp-sockets/#socketoptions). It returns an instance of a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket).
-    {{</definitions>}}
+{{</definitions>}}
 
 ### `SocketAddress`
 
 {{<definitions>}}
 
 - `hostname` {{<type>}}string{{</type>}}
-
   - The hostname to connect to. Example: `cloudflare.com`.
 
 - `port` {{<type>}}number{{</type>}}
@@ -67,7 +62,6 @@ export default {
 {{<definitions>}}
 
 - `secureTransport` {{<type>}}"off" | "on" | "starttls"{{</type>}} — Defaults to `off`
-
   - Specifies whether or not to use [TLS](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) when creating the TCP socket.
   - `off` — Do not use TLS.
   - `on` — Use TLS.
@@ -84,19 +78,15 @@ export default {
 {{<definitions>}}
 
 - {{<code>}}readable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
-
   - Returns the readable side of the TCP socket.
 
 - {{<code>}}writeable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WriteableStream{{</type-link>}}
-
   - Returns the writable side of the TCP socket.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
-
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
 
 - `close()` {{<type>}}`Promise<void>`{{</type>}}
-
   - Closes the TCP socket. Both the readable and writable streams are forcibly closed.
 
 - {{<code>}}startTls(){{</code>}} : {{<type-link href="/workers/runtime-apis/tcp-sockets/#socket">}}Socket{{</type-link>}}
@@ -109,11 +99,11 @@ export default {
 Many TCP-based systems, including databases and email servers, require that clients use opportunistic TLS (otherwise known as [StartTLS](https://en.wikipedia.org/wiki/Opportunistic_TLS)) when connecting. In this pattern, the client first creates an insecure TCP socket, without TLS, and then upgrades it to a secure TCP socket, that uses TLS. The `connect()` API simplifies this by providing a method, `startTls()`, which returns a new `Socket` instance that uses TLS:
 
 ```typescript
-import { connect } from "cloudflare:sockets";
+import { connect } from "cloudflare:sockets"
 
 const address = {
   hostname: "example-postgres-db.com",
-  port: 5432,
+  port: 5432
 };
 const socket = connect(address, { secureTransport: "starttls" });
 const secureSocket = socket.startTls();
@@ -128,31 +118,23 @@ const secureSocket = socket.startTls();
 To handle errors when creating a new TCP socket, reading from a socket, or writing to a socket, wrap these calls inside `try..catch` blocks. The following example opens a connection to Google.com, initiates a HTTP request, and returns the response. If any of this fails and throws an exception, it returns a `500` response:
 
 ```typescript
-import { connect } from "cloudflare:sockets";
+import { connect } from 'cloudflare:sockets';
 const connectionUrl = { hostname: "google.com", port: 80 };
-export interface Env {}
+export interface Env { }
 export default {
-  async fetch(
-    req: Request,
-    env: Env,
-    ctx: ExecutionContext
-  ): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
       const socket = connect(connectionUrl);
       const writer = socket.writable.getWriter();
       const encoder = new TextEncoder();
       const encoded = encoder.encode("GET / HTTP/1.0\r\n\r\n");
       await writer.write(encoded);
-
-      return new Response(socket.readable, {
-        headers: { "Content-Type": "text/plain" },
-      });
+      
+      return new Response(socket.readable, { headers: { "Content-Type": "text/plain" } });
     } catch (error) {
-      return new Response(`Socket connection failed: ${error}`, {
-        status: 500,
-      });
+      return new Response(`Socket connection failed: ${error}`, { status: 500 });
     }
-  },
+  }
 };
 ```
 
@@ -161,7 +143,7 @@ export default {
 You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writeable sides of the socket.
 
 ```typescript
-import { connect } from "cloudflare:sockets";
+import { connect } from "cloudflare:sockets"
 
 const socket = connect({ hostname: "my-url.com", port: 70 });
 const reader = socket.readable.getReader();
@@ -172,7 +154,7 @@ const reader = socket.readable.getReader(); // This fails
 ```
 
 ## Considerations
-
+ 
 - Outbound TCP sockets to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are temporarily blocked, but will be re-enabled shortly.
 - TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/scheduled-event/), [`queue()`](/queues/platform/javascript-apis/#consumer)) or [`alarm()`](/workers/runtime-apis/durable-objects/#alarm-handler-method).
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
