@@ -34,7 +34,7 @@ Link rewriting applies to all email dispositions. If you have link actions set f
 
 ### Enable Email Link Isolation
 
-{{<Aside type="warning" header="Email Link Isolation and Microsoft O365">}}If you use Microsoft Office 365, you need to whitelist the URL `https://linkdefender.cloudflare.com` before enabling Email Link Isolation. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/tenant-allow-block-list-urls-configure?view=o365-worldwide) to learn how to whitelist a URL.{{</Aside>}}
+{{<Aside type="warning" header="Email Link Isolation and Microsoft O365">}}If you use Microsoft Office 365, you need to whitelist the URL `https://linkdefender.cloudflare.com` before enabling Email Link Isolation. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/tenant-allow-block-list-urls-configure) to learn how to whitelist a URL.{{</Aside>}}
 
 To enable Email Link Isolation you must have an [inline deployment](/email-security/deployment/inline/) for your Area 1 setup. Email Link Isolation is not available if Area 1 is deployed through [journaling or BCC](/email-security/deployment/api/setup/) setups.
 
