@@ -167,8 +167,6 @@ export default {
     ctx.waitUntil(triggerEvent(event));
   },
 };
-
-export default worker;
 ```
 
 ## Service Worker syntax
