@@ -52,7 +52,7 @@ You can customize the block page by making global changes that will show up ever
 
 To apply customizations to your block page:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **General**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Custom Pages**.
 2. Under **Block page**, enable the custom block page feature.
 3. Select **Customize**. Available global customizations include:
 
