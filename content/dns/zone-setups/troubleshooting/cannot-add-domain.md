@@ -20,7 +20,7 @@ If you do not disable **DNSSEC** before changing your nameservers, you might e
 -   DNS query response status is `SERVFAIL`.
 -   The domain remains in a [Pending status](/dns/zone-setups/reference/domain-status/).
 
-If you experience these issues, refer to [Configuring DNSSEC](/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](/dns/additional-options/dnssec/troubleshooting/).
+If you experience these issues, refer to [Configuring DNSSEC](/dns/dnssec) and [Troubleshooting DNSSEC](/dns/dnssec/troubleshooting/).
 
 ___
 

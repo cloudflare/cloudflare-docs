@@ -8,6 +8,8 @@ weight: 5
 
 Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. HTTP/3 inspection requires traffic to be proxied over UDP.
 
+Gateway applies HTTP policies to HTTP/3 traffic last. For more information, refer to the [order of enforcement](/cloudflare-one/policies/filtering/order-of-enforcement/#http3-traffic).
+
 ## Enable HTTP/3 inspection
 
 To enable HTTP/3 inspection:

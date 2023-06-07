@@ -52,7 +52,7 @@ Each DNS location is assigned a unique hostname for DNS over TLS (DoT). Gateway 
 
 ## DNS over HTTPS
 
-Each DNS ocation is assigned a unique hostname for DNS over HTTPS (DoH). Gateway will identify your location based on its DoH hostname.
+Each DNS location is assigned a unique hostname for DNS over HTTPS (DoH). Gateway will identify your location based on its DoH hostname.
 
 ### DoH subdomain
 
@@ -87,4 +87,4 @@ For example, if you want to block security threats for specific networks, you co
 
 **Action**: Block
 
-DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/analytics/logs/gateway-logs/).
+DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).

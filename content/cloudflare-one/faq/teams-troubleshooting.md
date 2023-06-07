@@ -151,17 +151,17 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 - Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
-## Connections are timing out after 270 seconds
+## My tunnel randomly disconnects
 
-Cloudflare enforces a 270-second idle timeout on TCP connections that go through the gateway. If there is no new data to send in either direction for 270 seconds, the proxy process drops the connection. This cannot be mitigated by Keep-Alive packets, as TCP is terminated in the gateway and a new connection is made to the upstream sever.
+Long-lived connections initiated through the Cloudflare Zero Trust platform, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) and contact Support.
 
 ## Tunnel connections fail with SSL error
 
 If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
 
-## My tunnel disconnects at random intervals
+## Tunnel connections fail with `Too many open files` error
 
-If your [Cloudflare Tunnel logs](/cloudflare-one/faq/cloudflare-tunnels-faq/#run-tunnel-with-debug-logging) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
+If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 

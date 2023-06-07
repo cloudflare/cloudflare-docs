@@ -12,8 +12,8 @@ When setting up your Pages project, you may encounter various errors that preven
 You can review build errors in your Pages build log. To access your build log:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, go to **Pages**.
-3. Select your Pages project > **View build**.
+2. In **Account Home**, go to **Workers & Pages**.
+3. In **Overview**, select your Pages project > **View build**.
 
 ![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](../media/pages-build-log.png)
 

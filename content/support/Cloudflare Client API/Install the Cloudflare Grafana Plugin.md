@@ -16,6 +16,18 @@ Installing the Cloudflare Grafana Plugin takes under 5 minutes and is the best 
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
 ](/support/static/hc-import-screen_shot_2017_02_09_at_11_34_40_am.png)
 
+
+## Requirements
+
+This is a very specific use case that requires that:
+* You have configured [DNS Firewall](https://developers.cloudflare.com/dns/dns-firewall/);
+* You have a [Full Setup](https://developers.cloudflare.com/dns/zone-setups/full-setup/)
+
+Otherwise, it won't collect any data here.
+
+
+
+## How to install
 ___
 
 1\. First you will [need to have a running version of Grafana](http://docs.grafana.org/installation/).
@@ -48,6 +60,8 @@ Alternatively, you may authenticate with your email address and [legacy API key
 6\. Now that you have configured the Cloudflare Grafana plugin with your account details, you can go to the main menu at the top and choose Cloudflare Grafana App > Zones or Cloudflare Grafana App > Virtual DNS if you are a Virtual DNS user.
 
 _Note: If you are running Grafana behind Cloudflare, to use the Grafana Cloudflare App you will need to grey cloud (in the DNS editor) the Grafana subdomain so that it does not route through Cloudflare. Otherwise you will receive the error: "DNS points to prohibited IP"._
+
+7\. To confirm if you are receiving data, we recommend to check first in the Cloudflare dashboard, when you need to gather the [DNS Analytics](https://developers.cloudflare.com/dns/additional-options/analytics/#analytics).
 
 **What can different plans see?**
 

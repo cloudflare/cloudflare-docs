@@ -65,7 +65,13 @@ Published my-worker
 
 #### Publishing to \*.workers.dev
 
-Your `*.workers.dev` subdomain allows you to deploy Workers [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**.
+Your `*.workers.dev` subdomain allows you to deploy Workers [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/). 
+
+To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages**.
+3. Find **Your subdomain** on the right-side menu and select **Change**.
 
 This `wrangler.toml` file has no environments defined and will publish `my-worker` to `my-worker.<your-subdomain>.workers.dev`:
 

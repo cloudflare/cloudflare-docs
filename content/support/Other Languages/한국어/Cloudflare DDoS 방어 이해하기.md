@@ -26,7 +26,7 @@ ___
 
  [DDoS(분산 서비스 거부 공격)](https://www.cloudflare.com/ddos) 이 있으면, 최종 사용자가 온라인 서비스를 사용할 수 없습니다.  Cloudflare의 모든 요금제는 계층 3, 4, 7 DDoS 공격을 무제한으로 완화합니다. Cloudflare는 공격 크기에 따라 요금을 청구하지 않으며 공격 크기, 유형, 기간에 제한을 두지 않습니다.
 
-Cloudflare의 네트워크는 대형 [DDoS 공격](https://www.cloudflare.com/ddos)을 자동 모니터링하고 완화하도록 구축됐습니다. Cloudflare에 콘텐츠를 캐시하면 웹사이트는 소형 DDoS 공격으로부터 보호되지만 캐시하지 않은 자산은 [수동으로 DDoS 공격에 대응](https://support.cloudflare.com/hc/articles/200170196)해야 합니다.
+Cloudflare의 네트워크는 대형 [DDoS 공격](https://www.cloudflare.com/ddos)을 자동 모니터링하고 완화하도록 구축됐습니다. Cloudflare에 콘텐츠를 캐시하면 웹사이트는 소형 DDoS 공격으로부터 보호되지만 캐시하지 않은 자산은 [수동으로 DDoS 공격에 대응](/ddos-protection/best-practices/respond-to-ddos-attacks/)해야 합니다.
 
 또한 Cloudflare는 소규모의 DDoS 공격 완화도 도와드립니다.
 
@@ -87,7 +87,7 @@ ___
 
 ## 관련 자료
 
--   [DDoS 공격에 대응하기](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS 공격에 대응하기](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [모범 사례: DDoS 예방 조치](https://support.cloudflare.com/hc/articles/200170166)
 -   [Cloudflare Logs를 사용한 DDoS 트래픽 조사(기업 요금제 전용)](https://support.cloudflare.com/hc/ko/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [DDoS 공격이란?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

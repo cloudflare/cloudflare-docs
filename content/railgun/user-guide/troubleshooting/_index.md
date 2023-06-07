@@ -6,4 +6,6 @@ weight: 6
 
 # Troubleshooting
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 {{<directory-listing>}}

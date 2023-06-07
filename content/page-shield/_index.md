@@ -9,7 +9,7 @@ meta:
 
 # Cloudflare Page Shield
 
-Page Shield allows you to take control of the scripts running on your websites.
+Page Shield is a comprehensive client-side security solution that allows you to ensure the safety of your website visitors' browser environment.
 
 ## Features
 

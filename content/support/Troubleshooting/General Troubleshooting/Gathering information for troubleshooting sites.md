@@ -36,17 +36,17 @@ Currently, only Chrome and Firefox can access the HAR feature by default. Other 
 
 2\. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab. 
 
-![HAR network tab screenshot from Chrome developer tools](/support/static/image.png)
+![HAR network tab screenshot from Chrome developer tools](/support/static/gathering_har_file_network.png)
 
 3\. Check **Preserve log**.
 
 4\. Click record.
 
-![HAR record button in chrome dev tools.](/support/static/image.png)
+![HAR record button in chrome dev tools.](/support/static/gathering_har_file_record.png)
 
 5\. Browse to the URL that causes issues. Once the issue is experienced, right click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
 
-![HAR save menu in Chrome developer tools.](/support/static/image.png)
+![HAR save menu in Chrome developer tools.](/support/static/gathering_har_file_save.png)
 
  6. Attach the HAR file to your support ticket.
 

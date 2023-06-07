@@ -48,7 +48,7 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 
 4. Enter your private key and select **Decrypt**.
 
-You will see the [ID of the matched DLP Profile](/api/operations/dlp-profiles-list-all-profiles) followed by the decrypted payload.
+You will see the [ID of the matched DLP Profile](/api/operations/dlp-profiles-list-all-profiles) followed by the decrypted payload. Note that DLP currently logs only the first match.
 
 {{<Aside type="note">}}
 Neither the key nor the decrypted payload will be stored by Cloudflare.

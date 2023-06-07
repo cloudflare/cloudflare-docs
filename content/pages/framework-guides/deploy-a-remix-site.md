@@ -18,9 +18,9 @@ $ npx create-remix@latest
 
 ```
 
-After running the above command, you will be prompted to name your project in your terminal and select your deploy method. This guide uses the _Cloudflare Pages_ deployment option.
+After running `npx create-remix@latest`, you will be prompted to answer configuration questions and select your deploy method. This guide uses Cloudflare Pages.
 
-By selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your Remix Project will generate a `functions/[[path]].js` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+After selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your Remix Project will generate a `functions/[[path]].js` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
 
 {{<Aside type="warning" header="Before you deploy">}}
 The `functions/[[path]].js` file will not be generated until you interact with Remix the first time, via `remix dev` or `remix build`. The `functions/[[path]].js` will not function as expected if you attempt to deploy your site before running `remix dev` or `remix build`.
@@ -40,7 +40,11 @@ $ npm run dev
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 

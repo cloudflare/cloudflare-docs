@@ -14,10 +14,10 @@ To deploy a managed ruleset to a phase, use the [Rulesets API](/ruleset-engine/r
 
 Use the following workflow to deploy a managed ruleset to a phase at the account level.
 
-1. Get your account ID.
-2. Get the ID of the managed ruleset you wish to deploy. Refer to [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) for details.
-3. Identify the phase where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
-4. Add a rule to the account-level phase entry point ruleset that executes the managed ruleset. Regarding the rule expression, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that it only applies to zones on an Enterprise plan.
+1. Get your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+2. Invoke the [List account rulesets](/api/operations/listAccountRulesets) API operation to obtain the available rulesets. Find the ruleset ID of the managed ruleset you wish to deploy.
+3. Identify the [phase](/ruleset-engine/about/phases/) where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, refer to the specific documentation for that product, or the [Phases list](/ruleset-engine/reference/phases-list/).
+4. Add a rule to the account-level phase entry point ruleset that executes the managed ruleset. Use parentheses to enclose any custom conditions in the rule expression and end your expression with `and cf.zone.plan eq "ENT"` so that it only applies to zones on an Enterprise plan.
 
 ### Example
 
@@ -88,9 +88,9 @@ header: Response
 
 Use the following workflow to deploy a managed ruleset to a phase at the zone level.
 
-1.  Get your zone ID.
-2.  Get the ID of the managed ruleset you wish to deploy. Refer to [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) for details.
-3.  Identify the phase where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
+1.  Get your [zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+2.  Invoke the [List account rulesets](/api/operations/listAccountRulesets) API operation to obtain the available rulesets. Managed rulesets exist at the account level, but you can deploy them to a zone. Find the ruleset ID of the managed ruleset you wish to deploy.
+3.  Identify the [phase](/ruleset-engine/about/phases/) where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, refer to the specific documentation for that product, or the [Phases list](/ruleset-engine/reference/phases-list/).
 4.  Add a rule to the zone-level phase entry point ruleset that executes the managed ruleset.
 
 ### Example
