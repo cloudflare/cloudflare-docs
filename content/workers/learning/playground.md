@@ -12,35 +12,33 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 ---
 
-## Hello world
+## Hello World
 
-When you arrive in the playground, you will see this default code:
+When you arrive in the Playground, you will see this default code:
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  return new Response('Hello world');
-}
+export default {
+  async fetch(request, env, ctx) {
+    return new Response('Hello World!');
+  },
+};
 ```
 
-This is the least complex Worker you can write. When the Worker receives a request, the `fetch` event is dispatched. [RespondWith](/workers/runtime-apis/fetch-event/#respondwith) intercepts the event, promising to return the result of the `handleRequest` function to the client. Finally, `handleRequest` is actually called, and it returns a text [response](/workers/runtime-apis/response/) of `"Hello world"` which is delivered back to the client.
+This is the least complex Worker you can write.
 
-Refer to the documentation for [`addEventListener`](/workers/runtime-apis/add-event-listener/) and [`FetchEvent`](/workers/runtime-apis/fetch-event/) to learn more.
+Refer to the documentation for [`FetchEvent`](/workers/runtime-apis/fetch-event/#syntax-module-worker) to learn more.
 
 ---
 
 ## Beyond hello world
 
-To get familiar with Workers, experiment with the Playground by borrowing [Examples](/workers/examples/) from the documentation. This will allow you to experience firsthand [what Workers can do](https://www.cloudflare.com/learning/serverless/why-use-serverless/).
+To get familiar with Workers, experiment with the Playground by borrowing [Examples](/workers/examples/) from the documentation. This will allow you to [experience what Workers can do](https://www.cloudflare.com/learning/serverless/why-use-serverless/).
 
 ---
 
 ## Using the Playground
 
-There are two versions of the Playground available: the [browser Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank) and the dashboard Playground, also known as the previewer.
+There are two versions of the Playground available: the [browser Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank) and the dashboard Playground, also known as the Quick Editor.
 
 To access the dashboard Playground:
 
@@ -48,13 +46,13 @@ To access the dashboard Playground:
 2. In **Account Home**, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Quick edit**.
 
-When you have code you are ready to test, select **Save and Deploy** to preview at the bottom of the script panel.
+When you have code you are ready to test, select **Save and deploy** to preview your code in **Preview**.
 
-Now you should be able to see a preview on the right side of that exact code running just as it would in a browser. Enter your website’s address in the right section to preview the Workers script running on that site.
+You should be able to see a preview of your code running just as it would in a browser. Enter your website’s address to preview the Worker running on that website.
 
-You can modify the script and click the preview button to view the effect on the request.
+You can modify the Worker code and select **Save and deploy** to view the effect on the request.
 
-To test a raw HTTP request — not in an HTML previewer, for example, to test a `POST` request — go to **HTTP**. To run the HTTP preview, select **Run Test**.
+To test a raw HTTP request — not in an HTML previewer, for example, to test a `POST` request — go to **HTTP**. To run the HTTP preview, select **Save and deploy**.
 
 ---
 
@@ -62,7 +60,7 @@ To test a raw HTTP request — not in an HTML previewer, for example, to test a 
 
 For debugging Workers inside the Playground, use the developer tools at the bottom of the Playground's preview panel. The developer tools for the Workers Playground works similar to the developer tools in Chrome or Firefox.
 
-### Network tab
+### Network
 
 **Network** shows the outgoing requests from your Workers script — that is, any calls to `fetch` inside your script.
 
@@ -72,7 +70,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ### Sources
 
-**Sources** displays the sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
+**Sources** displays the sources that make up your Workers script. Note that access to KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
 
 <!--
 
