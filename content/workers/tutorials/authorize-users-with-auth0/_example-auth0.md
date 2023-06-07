@@ -1,4 +1,4 @@
-Example of an Auth0 class that is compatible with module-style Workers.
+Example of an Auth0 class that is compatible with Workers using ES modules format.
 
 According to [Auth0's documentation](https://auth0.com/docs/secure/tokens/token-best-practices#jwt-validation):
 
