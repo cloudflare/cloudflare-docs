@@ -7,7 +7,7 @@ title: ScheduledEvent
 
 ## Background
 
-A `ScheduledEvent` is the event type for scheduled requests to a Worker. It is the `Object` passed through as the `event` when a Worker is invoked by a Worker's [Cron Trigger](/workers/platform/triggers/cron-triggers/). `ScheduledEvent` is supported in Workers written with [Service Worker syntax](#syntax-service-worker) and [Module Worker syntax](#syntax-module-worker).
+A `ScheduledEvent` is the event type for scheduled requests to a Worker. It is the `Object` passed through as the `event` when a Worker is invoked by a Worker's [Cron Trigger](/workers/platform/triggers/cron-triggers/). `ScheduledEvent` is supported in Workers written with [Service Worker syntax](#syntax-service-worker) and [ES modules syntax](#syntax-module-worker).
 
 {{<Aside type="note" header="Testing Scheduled Events">}}
 
@@ -25,9 +25,9 @@ $ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 ---
 
-## Syntax: Module Worker
+## Syntax: ES modules
 
-A `ScheduledEvent` can be handled in Workers functions written using the Module Worker syntax by adding a `scheduled` function to your module's exported handlers:
+A `ScheduledEvent` can be handled in Workers functions written using the [ES modules format](/workers/learning/migrate-to-module-workers/) by adding a `scheduled` function to your module's exported handlers:
 
 ```js
 export default {
@@ -55,10 +55,10 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - An object containing the bindings associated with your Module Worker, such as KV namespaces and Durable Objects.
+  - An object containing the bindings associated with your Worker using ES modules format, such as KV namespaces and Durable Objects.
 
 - `ctx` {{<type>}}object{{</type>}}
-  - An object containing the context associated with your Module Worker. Currently, this object just contains the `waitUntil` function.
+  - An object containing the context associated with your Worker using ES modules format. Currently, this object just contains the `waitUntil` function.
 
 {{</definitions>}}
 

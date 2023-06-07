@@ -1,20 +1,20 @@
 ---
 pcx_content_type: concept
-title: Migrate to module Workers
+title: Migrate to ES modules format
 weight: 9
 ---
 
-# Migrate to module Workers
+# Migrate to ES modules format
 
-This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) syntax to the new [Module Worker](https://blog.cloudflare.com/workers-javascript-modules/) format.
+This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) format to the [ES modules](https://blog.cloudflare.com/workers-javascript-modules/) format.
 
 ## Advantages of migrating
 
-There are several reasons you might want to migrate your Workers to the module syntax:
+There are several reasons to migrate your Workers to the ES modules format:
 
-1.  Developer Platform products, such as [Durable Objects](/workers/learning/using-durable-objects/), and other Workers features require the module syntax.
-2.  Module Workers do not rely on any global bindings, which means the Workers runtime does not need to set up fresh execution contexts, making Module Workers safer and faster to run.
-3.  Module Workers are ES Modules, which allows them to be shared and published to npm, for example. Module Workers can be imported by and composed within other Module Workers.
+1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/workers/learning/using-durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
+2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
+3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
 
 ## Migrate a simple Worker
 
@@ -37,7 +37,7 @@ addEventListener('fetch', event => {
 });
 ```
 
-Module Workers replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The example code above becomes:
+Workers using ES modules format replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The example code above becomes:
 
 ```js
 export default {
@@ -55,7 +55,7 @@ export default {
 
 [Bindings](/workers/platform/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
 
-Module Workers do not rely on any global bindings. However, Service Worker syntax accesses bindings on the global scope.
+Workers using ES modules format do not rely on any global bindings. However, Service Worker syntax accesses bindings on the global scope.
 
 To understand bindings, refer the following `TODO` KV namespace binding example. To create a `TODO` KV namespace binding, you will:
 
@@ -69,9 +69,15 @@ kv_namespaces = [
 ]
 ```
 
-In the following sections, you will use your binding in Service Worker and module syntax.
+In the following sections, you will use your binding in Service Worker and ES modules format.
 
-### Bindings in Service Worker syntax
+{{<Aside type="note" header="Reference KV from Durable Objects and Workers">}}
+
+To learn more about how to reference KV from Workers, refer to the [KV bindings documentation](/workers/runtime-apis/kv/#kv-bindings).
+
+{{</Aside>}}
+
+### Bindings in Service Worker format
 
 In Service Worker syntax, your `TODO` KV namespace binding is defined in the global scope of your Worker. Your `TODO` KV namespace binding is available to use anywhere in your Worker application's code.
 
@@ -93,11 +99,11 @@ async function getTodos() {
 }
 ```
 
-### Bindings in Module Worker syntax
+### Bindings in ES modules format
 
-In Module Worker syntax, bindings are only available inside the `env` parameter that is provided at the entrypoint to your Worker.
+In ES modules format, bindings are only available inside the `env` parameter that is provided at the entrypoint to your Worker.
 
-To access the `TODO` KV namespace binding in your module Worker code, the `env` parameter must be passed from the `fetch` handler in your module Worker to the `getTodos` function.
+To access the `TODO` KV namespace binding in your Worker code, the `env` parameter must be passed from the `fetch` handler in your Worker to the `getTodos` function.
 
 ```js
 ---
@@ -130,9 +136,9 @@ async function getTodos(env) {
 export { getTodos }
 ```
 
-## Accessing event or context data
+## Access `event` or `context` data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Module workers can access `waitUntil` via the `context` parameter. Refer to [Module Worker parameters](/workers/runtime-apis/fetch-event/#parameters) for  more information.
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/fetch-event/#parameters) for  more information.
 
 This example code:
 
@@ -163,19 +169,6 @@ const worker = {
 };
 
 export default worker;
-```
-
-## Configure your wrangler.toml
-
-To add support for module Workers to an existing Workers project, update your `wrangler.toml` file:
-
-```toml
-name = "my-worker"
-main = "src/index.js"
-
-# Uncomment if you have a build script.
-# [build]
-# command = "npm run build"
 ```
 
 ## Service Worker syntax
