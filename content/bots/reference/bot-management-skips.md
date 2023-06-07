@@ -28,7 +28,7 @@ Same zone edgeworker subrequests will not receive a bot score or have JavaScript
 
 ### Purge requests
 
-All `HTTP` Purge requests will not receive a bot score. 
+All HTTP purge requests will not receive a bot score. 
 
 ### Early hints cache requests
 
