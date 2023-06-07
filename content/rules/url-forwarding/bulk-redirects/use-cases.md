@@ -40,18 +40,19 @@ In this example, an old website was discontinued and replaced by a new one in a 
     - **Target URL**: `https://example.net/`
     - **Subpath matching**: Enabled
     - **Include subdomains**: Enabled
+    - **Preserve path suffix**: Disabled
 
 2.  Create a Bulk Redirect Rule that enables this list.
 
 This configuration will perform the following redirects:
 
-| Request URL                               | URL after redirect                        |
-| ----------------------------------------- | ----------------------------------------- |
-| `http://example.com/`                     | `https://example.net/`                    |
-| `https://example.com/`                    | `https://example.net/`                    |
-| `https://subdomain.example.com/`          | `https://example.net/`                    |
-| `https://example.com/my/path/to/page.htm` | `https://example.net/my/path/to/page.htm` |
-| `https://example.com/search?q=term`       | `https://example.net/search?q=term`       |
+| Request URL                               | URL after redirect     |
+| ----------------------------------------- | ---------------------- |
+| `http://example.com/`                     | `https://example.net/` |
+| `https://example.com/`                    | `https://example.net/` |
+| `https://subdomain.example.com/`          | `https://example.net/` |
+| `https://example.com/my/path/to/page.htm` | `https://example.net/` |
+| `https://example.com/search?q=term`       | `https://example.net/` |
 
 ## Redirect all requests from one country to another domain
 
