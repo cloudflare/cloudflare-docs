@@ -90,7 +90,7 @@ For more about this change and how to migrate existing API queries, refer to [th
 
 ### Create an unlimited number of live inputs
 
-Cloudflare Stream now has no limit on the number of [live inputs](/api/operations/stream-live-inputs-properties) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
+Cloudflare Stream now has no limit on the number of [live inputs](/api/operations/stream-live-inputs-retrieve-a-live-input) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
 
 For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
 
