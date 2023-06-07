@@ -12,7 +12,7 @@ There are instances in which Bot Management does not run and certain fields are 
 
 ### Internal services
 
-Requests to routes such as `/cdn-cgi/` are handled individually and will never run the Bot Management module. Email obfuscation, web analytics, trace requests, Managed Challenge, and JavaScript Challenge do not receive bot scores. Refer to the table below for some examples of internal services.
+Requests to routes such as `/cdn-cgi/` are handled individually and will never run the Bot Management module. Email obfuscation, web analytics, trace requests, Managed Challenge, and JavaScript Challenge do not receive bot scores. Refer to the table below for examples of internal services.
 
 | Route | Method |
 | --- | --- |
