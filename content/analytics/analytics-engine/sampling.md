@@ -80,7 +80,7 @@ The next observation is that these index values likely have a very different num
 
 ![In this graphic, each bar represents a user; the height of the bar is their total usage.](/images/analytics/total-usage.png)
 
-If we took a [simple random sample](https://en.wikipedia.org/wiki/Simple_random_sample) of one (1%) of this data, and we applied that to the whole population, you may be able to track your largest customers accurately — but you would lose visibility into what your smaller customers are doing:
+If we took a [simple random sample](https://en.wikipedia.org/wiki/Simple_random_sample) of one percent (1%) of this data, and we applied that to the whole population, you may be able to track your largest customers accurately — but you would lose visibility into what your smaller customers are doing:
 
 ![The same graphic as above, but now based on a 1% sample of the data.](/images/analytics/sample-data.png)
 
