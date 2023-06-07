@@ -41,7 +41,7 @@ Kysely is a type-safe and autocompletion-friendly typescript SQL query builder. 
 
 ### feathers-kysely
 
-The `feathers-kysely` database adapter follows the FeathersJS Query Syntax standard and works with any framework. It is built on the D1 adapter for Kysely and supports passing queries directly from client applications. Since the FeathersJS query syntax is a subset of MongoDB's, this is a great tool for MongoDB users to use Cloudflare D1 without previous SQL experience.
+The `feathers-kysely` database adapter follows the FeathersJS Query Syntax standard and works with any framework. It is built on the D1 adapter for Kysely and supports passing queries directly from client applications. Since the FeathersJS query syntax is a subset of MongoDB's syntax, this is a great tool for MongoDB users to use Cloudflare D1 without previous SQL experience.
 
 * [feathers-kysely on npm](https://www.npmjs.com/package/feathers-kysely)
 * [feathers-kysely on GitHub](https://github.com/marshallswain/feathers-kysely)
