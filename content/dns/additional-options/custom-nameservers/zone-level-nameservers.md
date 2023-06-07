@@ -29,7 +29,7 @@ To add zone custom nameservers to a specific zone:
 
 ### Using the API
 
-To add zone custom nameservers via the API, use a [PATCH request](/api/operations/zone-edit-zone) and specify the custom nameservers in the payload:
+To add zone custom nameservers via the API, use a [PATCH request](/api/operations/zones-0-patch) and specify the custom nameservers in the payload:
 
 ```txt
 "vanity_name_servers": ["ns1.example.com","ns2.example.com"]
@@ -39,7 +39,7 @@ To add zone custom nameservers via the API, use a [PATCH request](/api/operation
 
 If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone custom nameservers. After [steps 1-3 above](#using-the-dashboard) or after [using the API](#using-the-api), you need to do the following:
 
-1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [API](/api/operations/zone-edit-zone) to get the `vanity_name_servers_ips`.
+1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [API](/api/operations/zones-0-patch) to get the `vanity_name_servers_ips`.
 2. At your primary DNS provider, add [`NS` records](/dns/manage-dns-records/reference/dns-record-types/#ns) and, on the subdomains that you used as ZCNS names, add `A/AAAA` records.
 3. At your registrar, add the zone custom nameservers as your authoritative nameservers and as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt).
 
@@ -56,7 +56,7 @@ To remove zone custom nameservers (and their associated, read-only DNS records) 
 
 ### Using the API
 
-To remove zone custom nameservers (and their associated, read-only DNS records) via the API, use a [PATCH request](/api/operations/zone-edit-zone) and include an empty array in the payload:
+To remove zone custom nameservers (and their associated, read-only DNS records) via the API, use a [PATCH request](/api/operations/zones-0-patch) and include an empty array in the payload:
 
 ```txt
 "vanity_name_servers": []
