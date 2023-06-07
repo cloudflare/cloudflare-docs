@@ -46,10 +46,5 @@ For example, if your application is hosted on `internal.site.com`, the following
 
 ## Limitations
 
-The **Isolate application** setting is incompatible with the following Cloudflare products:
-
-- Automatic Platform Optimization (APO) for WordPress
-- Zaraz
-- Automatic Signed Exchanges (SXGs)
-
-If any of these products are enabled, you will see a `double isolation` error.
+- To isolate an Access application, your browser must [allow third-party cookies](/cloudflare-one/identity/authorization-cookie/#allow-third-party-cookies-in-the-browser) on the application domain.
+- [Automatic Signed Exchanges](/fundamentals/speed/signed-exchanges/enable-signed-exchange/), [Automatic Platform Optimization](/automatic-platform-optimization) and [Zaraz](/zaraz) are currently not supported and if enabled, should be disabled using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
