@@ -147,7 +147,7 @@ You can customize a variety of options for your waiting rooms.
         Add additional hostnames and/or paths to your waiting room coverage.
       </td>
       <td>
-        API only. Additional hostnames must be within the same zone.  Hostname and path combinations must be unique per waiting room.
+        API only. Additional hostnames must be within the same zone. Hostname and path combinations must be unique per waiting room.
       </td>
       <td></td>
     </tr>
