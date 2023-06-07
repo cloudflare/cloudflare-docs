@@ -20,4 +20,3 @@ These are the current alphas and betas relevant to the Cloudflare Workers platfo
 | Queues                        |               |              |  ✅          |[Docs](/queues)                                                             |
 | TCP Workers                   |               |            |     ✅         |[Docs](/workers/runtime-apis/tcp-sockets)             |
 | Workers Analytics Engine      |               |             | ✅            |[Docs](/analytics/analytics-engine/)               |
-| Workers Deployments           |               |             | ✅            |[Docs](/workers/platform/deployments)               |
