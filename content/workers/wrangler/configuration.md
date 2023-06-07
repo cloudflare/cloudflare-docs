@@ -251,9 +251,10 @@ Triggers allow you to define the `cron` expression to invoke your Worker's `sche
 
 {{<definitions>}}
 
-- `cron` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `crons` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - An array of `cron` expressions.
+  - To disable a Cron Trigger, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
 
 {{</definitions>}}
 
