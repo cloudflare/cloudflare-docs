@@ -162,7 +162,7 @@ async function triggerEvent(event) {
   console.log('cron processed', event.scheduledTime);
 }
 
-const worker = {
+export default {
   async scheduled(event, env, ctx) {
     ctx.waitUntil(triggerEvent(event));
   },
