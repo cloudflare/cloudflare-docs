@@ -46,7 +46,7 @@ If the parameter `ns_set` is omitted, the default set `1` will be assigned.
 
 2. If you are **not** using [Cloudflare Registrar](/registrar/), update the nameservers at your registrar to use the TCNS names. If you are using [Cloudflare Registrar](/registrar/), no further action is needed.
 
-To make these TCNS the default namerservers for all new zones added to your account from now on, use a [PUT command](/api/operations/accounts-update-account) on your account and set the value of `default_nameservers` to `custom.tenant`.
+To make these TCNS the default namerservers for all new zones added to your account from now on, use the [Update Account endpoint](/api/operations/accounts-update-account) and set the value of `default_nameservers` to `custom.tenant`.
 
 ### Disable tenant custom nameservers on a zone
 

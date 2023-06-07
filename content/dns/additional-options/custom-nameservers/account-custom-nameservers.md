@@ -34,7 +34,7 @@ If you are using [Cloudflare Registrar](/registrar/) for the zone that provides 
 
 {{<render file="_ns-set-omission-callout.md">}}
 
-To make these ACNS the default nameservers for all new zones added to your account from now on, use a [PUT command](/api/operations/accounts-update-account) on your account and set the value of `default_nameservers` to `custom.account`.
+To make these ACNS the default nameservers for all new zones added to your account from now on, use the [Update Account endpoint](/api/operations/accounts-update-account) and set the value of `default_nameservers` to `custom.account`.
 
 ### Remove account custom nameservers
 
@@ -59,7 +59,7 @@ If you are **not** using [Cloudflare Registrar](/registrar/) for the zone that p
     
     2.  Update the nameservers at the registrar to use the account custom nameserver names.
 
-To make these ACNS the default namerservers for all new zones added to your account from now on, use a [PUT command](/api/operations/accounts-update-account) on your account and set the value of `default_nameservers` to `custom.account`.
+To make these ACNS the default namerservers for all new zones added to your account from now on, use the [Update Account endpoint](/api/operations/accounts-update-account) and set the value of `default_nameservers` to `custom.account`.
 
 ### Remove account custom nameservers
 
