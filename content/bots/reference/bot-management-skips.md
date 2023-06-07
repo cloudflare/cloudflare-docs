@@ -33,4 +33,3 @@ All `HTTP` Purge requests will not receive a bot score.
 ### Early hints cache requests
 
 Early hints cache requests will not receive a bot score. 
-
