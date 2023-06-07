@@ -8,18 +8,23 @@ meta:
 
 # Sampling with Workers Analytics Engine
 
-Workers Analytics Engine offers the ability to write an extensive amount of data and retrieve it quickly, all at a minimal cost or even for free. To facilitate writing large amounts of data at a reasonable cost, we employ weighted adaptive [sampling](https://en.wikipedia.org/wiki/Sampling_(statistics)).
+Workers Analytics Engine offers the ability to write an extensive amount of data and retrieve it quickly, at minimal or no cost. To facilitate writing large amounts of data at a reasonable cost, Workers Analytics Engine employs weighted adaptive [sampling](https://en.wikipedia.org/wiki/Sampling_(statistics)).
 
-The idea behind sampling is that you do not need every single data point to answer many questions about a dataset. In fact, for a sufficiently large dataset, the [necessary sample size](https://select-statistics.co.uk/blog/importance-effect-sample-size/) does not depend on the size of the original population: it depends on the variance of your measure; the size of the subgroups you analyze; and how accurate your estimate must be.
+When utilizing sampling, you do not need every single data point to answer questions about a dataset. For a sufficiently large dataset, the [necessary sample size](https://select-statistics.co.uk/blog/importance-effect-sample-size/) does not depend on the size of the original population. Necessary sample size depends on the variance of your measure, the size of the subgroups you analyze, and how accurate your estimate must be.
 
-The implication for Analytics Engine is that we can compress very large datasets into many fewer observations, yet still answer most queries with very high accuracy. This enables us to offer an analytics service that can measure very high rates of usage, with unbounded cardinality, at a very low and predictable price.
+The implication for Analytics Engine is that we can compress very large datasets into many fewer observations, yet still answer most queries with very high accuracy. This enables us to offer an analytics service that can measure very high rates of usage, with unbounded cardinality, at a low and predictable price.
 
-At a high level, the way sampling works is that:
+At a high level, the way sampling works is:
 
 1. At write time, we sample if data points are written too quickly into one index.
 2. We sample again at query time if the query is too complex.
 
-Sampling is a complex subject, but, in the following sections, we will explain how sampling works, how to read sampled data, and how to pick your index such that your data is sampled in a usable way.
+In the following sections, you will learn:
+- [How sampling works](/analytics/analytics-engine/sampling/#how-sampling-works).
+- [How to read sampled data](/analytics/analytics-engine/sampling/#how-to-read-sampled-data).
+- [How is data sampled](/analytics/analytics-engine/sampling/#how-is-data-sampled).
+- [How Adaptive Bit Rate Sampling works](/analytics/analytics-engine/sampling/#adaptive-bit-rate-sampling-at-read-time).
+- [How to pick your index such that your data is sampled in a usable way](/analytics/analytics-engine/sampling/#how-to-select-an-index).
 
 ## How sampling works
 
@@ -49,7 +54,9 @@ The table below highlights the similarities between the how a mapping services h
  
 To effectively write queries and analyze the data, it is helpful to first learn how sampled data is read in Workers Analytics Engine.
 
-In Workers Analytics Engine, every event is recorded with a special field known as `_sample_interval`. The sample interval is the inverse of the sample rate. For instance, if a 1% sample rate is applied, the sample interval will be set to 100. In simple terms, the sample interval represents the number of data points that a given data point represents. It is analogous  to the area represented by each pixel in the mapping example.
+In Workers Analytics Engine, every event is recorded with the `_sample_interval` field. The sample interval is the inverse of the sample rate. For example, if a one percent (1%) sample rate is applied, the `sample_interval` will be set to `100`.
+
+Using the mapping example in simple terms, the sample interval represents the "number of unsampled data points" (kilometers or meters) that a given sampled data point (pixel) represents.
 
 The sample interval is a property associated with each individual row stored in Workers Analytics Engine. Due to the implementation of equitable sampling, the sample interval can vary for each row. As a result, when querying the data, you need to consider the sample interval field. Simply multiplying the query result by a constant sampling factor is not sufficient.
 
@@ -67,21 +74,21 @@ Note that the accuracy of results is not determined by the sample interval, simi
 
 ## How is data sampled
 
-To determine the sample interval for each event, we first need to observe that most analytics have some important type of subgroup that must be analyzed with accurate results. For instance, you may want to analyze user usage or traffic to specific hostnames. Analytics Engine users can define these groups by populating the `index` field when writing an event. This allows for more targeted and precise analysis within the specified groups.
+To determine the sample interval for each event, note that most analytics have some important type of subgroup that must be analyzed with accurate results. For example, you may want to analyze user usage or traffic to specific hostnames. Analytics Engine users can define these groups by populating the `index` field when writing an event. This allows for more targeted and precise analysis within the specified groups.
 
-The next observation is that these index values likely have a very different number of events written to them. In fact, the usage of most web services follows a [Pareto distribution](https://en.wikipedia.org/wiki/Pareto_distribution), meaning that the top few users will account for the vast majority of the usage. Pareto distributions are incredibly common and look like this:
+The next observation is that these index values likely have a very different number of events written to them. In fact, the usage of most web services follows a [Pareto distribution](https://en.wikipedia.org/wiki/Pareto_distribution), meaning that the top few users will account for the vast majority of the usage. Pareto distributions are common and look like this:
 
 ![In this graphic, each bar represents a user; the height of the bar is their total usage.](/images/analytics/total-usage.png)
 
-If we took a [simple random sample](https://en.wikipedia.org/wiki/Simple_random_sample) of 1% of this data, and we applied that to the whole population, you may be able to track your largest customers accurately — but you would lose visibility into what your smaller customers are doing:
+If we took a [simple random sample](https://en.wikipedia.org/wiki/Simple_random_sample) of one (1%) of this data, and we applied that to the whole population, you may be able to track your largest customers accurately — but you would lose visibility into what your smaller customers are doing:
 
 ![The same graphic as above, but now based on a 1% sample of the data.](/images/analytics/sample-data.png)
 
 Notice that the larger bars look more or less unchanged, and yet they are still quite accurate. But as you analyze smaller customers, results get [quantized](https://en.wikipedia.org/wiki/Quantization_(signal_processing)) and may even be rounded to 0 entirely.
 
-This shows that while a 1% (or even smaller) sample of a large population may be sufficient, we may need to store a larger proportion of events for a small population to get accurate results.
+This shows that while a one percent (1%) or even smaller sample of a large population may be sufficient, we may need to store a larger proportion of events for a small population to get accurate results.
 
-The way we do this is through a technique called equitable sampling. This means that we will equalize the number of events we store for each unique index value. For relatively uncommon index values, we may write all of the data points that we get via `writeDataPoint()`.  But if you write lots of data points to a single index value, we will start to sample.
+We do this through a technique called equitable sampling. This means that we will equalize the number of events we store for each unique index value. For relatively uncommon index values, we may write all of the data points that we get via `writeDataPoint()`.  But if you write lots of data points to a single index value, we will start to sample.
 
 Here is the same distribution, but now with (a simulation of) equitable sampling applied:
 
@@ -89,7 +96,7 @@ Here is the same distribution, but now with (a simulation of) equitable sampling
 
 You may notice that this graphic is very similar to the first graph. However, it only requires <10% of the data to be stored overall. The sample rate is actually much lower than 10% for the larger series (that is, we store larger sample intervals), but the sample rate is higher for the smaller series.
 
-Going back to our mapping analogy above: regardless of the map area shown, the total number of pixels in the map stays constant. Similarly, we always want to store a similar number of data points for each index value. However, the resolution of the map — how much area is represented by each pixel — will change based on the area being shown. Similarly here, the amount of data represented by each stored data point will vary, based on the total number of data points in the index.
+Refer back to the mapping analogy above. Regardless of the map area shown, the total number of pixels in the map stays constant. Similarly, we always want to store a similar number of data points for each index value. However, the resolution of the map — how much area is represented by each pixel — will change based on the area being shown. Similarly here, the amount of data represented by each stored data point will vary, based on the total number of data points in the index.
 
 ## Adaptive Bit Rate Sampling at Read Time
 
@@ -103,7 +110,7 @@ ABR offers a significant advantage by enabling us to consistently provide query 
 
 ## How to select an index
 
-In order to get accurate results with sampled data, it is critical to select an appropriate value to use as your index. The index should match how users will query and view data. For instance, if users frequently view data based on a specific device or hostname, it is recommended to incorporate those attributes into your index.
+In order to get accurate results with sampled data, select an appropriate value to use as your index. The index should match how users will query and view data. For example, if users frequently view data based on a specific device or hostname, it is recommended to incorporate those attributes into your index.
 
 The index has the following properties, which are important to consider when choosing an index:
 
