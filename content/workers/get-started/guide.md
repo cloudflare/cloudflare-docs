@@ -12,6 +12,12 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 
+{{<Aside type="note" header="Try the Playground">}}
+
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser against any site.
+
+{{</Aside>}}
+
 ## Get started in the dashboard
 
 By following this guide, you will create a Worker using the command line. To create your first Worker using the Cloudflare dashboard:
