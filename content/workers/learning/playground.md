@@ -24,7 +24,7 @@ export default {
 };
 ```
 
-This is the least complex Worker you can write.
+This is a simple Worker you can write.
 
 Refer to the documentation for [`FetchEvent`](/workers/runtime-apis/fetch-event/#syntax-module-worker) to learn more.
 
