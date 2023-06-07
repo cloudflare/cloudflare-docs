@@ -11,13 +11,13 @@ rss: file
 
 ### New experimental backend
 
-D1 has a new experimental storage backend that dramatically improves query throughput, latency and reliability. The experimental backend will become the default backend in the near future. To create a database using the experimental backend, use `wrangler` and set the `--experimental-backend` flag when creating a database: 
+D1 has a new experimental storage back end that dramatically improves query throughput, latency and reliability. The experimental back end will become the default back end in the near future. To create a database using the experimental backend, use `wrangler` and set the `--experimental-backend` flag when creating a database: 
 
 ```sh
 $ wrangler d1 create your-database --experimental-backend
 ```
 
-You can read more about the experimental backend in the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to-11/).
+Read more about the experimental back end in the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to-11/).
 
 ### Location hints
 
