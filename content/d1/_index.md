@@ -17,7 +17,7 @@ Create new serverless SQL databases to query from your Workers and Pages project
 
 {{</description>}}
 
-D1 is Cloudflare’s native serverless database. Create your first database by [following the getting started guide](/d1/get-started/), learn how to [importing data into a database](/d1/learning/importing-data/) or learn how to [query your database](/d1/platform/client-api/) directly from [Workers](/workers/) or [Pages](/pages/platform/functions/bindings/#d1-databases).
+D1 is Cloudflare’s native serverless database. Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/learning/importing-data/), and how to [query your database](/d1/platform/client-api/) directly from [Workers](/workers/) or [Pages](/pages/platform/functions/bindings/#d1-databases).
 
 {{<Aside type="warning" header="Open Alpha">}}
 
@@ -31,7 +31,7 @@ To report bugs or request features, go to the [Cloudflare Community Forums](http
  
 {{<feature header="Create your first database" href="/d1/get-started/">}}
 
-Learn how to create your first database, establish a schema, import data and query D1 directly from an application [built with Workers](/workers/).
+Learn how to create your first D1 database, establish a schema, import data and query D1 directly from an application [built with Workers](/workers/).
 
 {{</feature>}}
 
@@ -43,7 +43,7 @@ Build serverless applications and deploy instantly across the globe for exceptio
 
 {{<feature header="Pages" href="/pages/">}}
 
-Deploy dynamic front-end applications and host static sites using Pages.
+Deploy dynamic front-end applications in record time.
 
 {{</feature>}}
 
