@@ -81,6 +81,6 @@ To get a list of all TCNS names in your tenant account, use the following API re
 
 ```bash
 $ curl https://api.cloudflare.com/client/v4/tenants/{tenant_id}/custom_ns \
-  -- header "X-Auth-Email: <EMAIL>" \
-  -- header "X-Auth-Key: <KEY>" \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <KEY>"
 ```
