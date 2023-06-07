@@ -32,23 +32,23 @@ ___
 
 Cloudflare 机器人解决方案可以识别并缓解自动化流量，以保护您的域免受恶意机器人的危害。
 
-如需进一步了解这些机器人解决方案及其设置方法，请参阅[开发人员文档](https://developers.cloudflare.com/bots/)。
+如需进一步了解这些机器人解决方案及其设置方法，请参阅[开发人员文档](/bots/)。
 
 ___
 
-Cloudflare 使用多种方法来检测机器人，具体视不同计划而异。如需更多详细信息，请参阅 [Cloudflare 机器人产品](https://developers.cloudflare.com/bots/about/plans)。
+Cloudflare 使用多种方法来检测机器人，具体视不同计划而异。如需更多详细信息，请参阅 [Cloudflare 机器人产品](/bots/about/plans)。
 
 ___
 
 ## 怎样知道我的计划里包含哪些内容？
 
-要了解计划中包含的内容，请查阅我们的[开发人员文档](https://developers.cloudflare.com/bots/about/plans)。
+要了解计划中包含的内容，请查阅我们的[开发人员文档](/bots/about/plans)。
 
 ___
 
 ## 如何设置机器人产品？
 
-要了解如何设置机器人产品，请查阅我们的[开发人员文档](https://developers.cloudflare.com/bots/get-started)。
+要了解如何设置机器人产品，请查阅我们的[开发人员文档](/bots/get-started)。
 
 ___
 
@@ -59,7 +59,7 @@ Yandex 更新机器人的频率很高，在传播这些变化时，您可能会�
 **变通方法：**
 
 -   暂时禁用 WAF 托管规则（ID 100203），
--   或创建一个带有_绕过_ 操作的防火墙规则，当请求来自 **Yandex IP** 并且用户代理包含 **Yandex** 时，将绕过 WAF 托管规则。请参阅我们的[开发人员文档](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions)。
+-   或创建一个带有_绕过_ 操作的防火墙规则，当请求来自 **Yandex IP** 并且用户代理包含 **Yandex** 时，将绕过 WAF 托管规则。请参阅我们的[开发人员文档](/firewall/cf-firewall-rules/actions)。
 
 **解决方案：**
 
@@ -92,7 +92,7 @@ ___
 -   威胁分数（_cf.threat\_score_）是 Cloudflare 用来确定 IP 信誉的分数。范围是 0（好）到 100（差）。
 -   Bot Management 分数（_cf.bot\_management.score）_是 Cloudflare 在 Bot Management 中用来衡量请求是来自人类还是来自脚本的分数。分数范围从 1（机器人）到 99（人类）。低分表示请求来自脚本、API 服务或自动化代理。高分表示请求来自使用标准桌面或移动 Web 浏览器的人类。
 
-这些字段可通过 [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules) 使用。
+这些字段可通过 [Cloudflare Firewall Rules](/firewall/cf-firewall-rules) 使用。
 
 ___
 
@@ -104,7 +104,7 @@ Cloudflare 构建了一个良性自动化机器人允许列表，例如 Google S
 
 这个允许列表大体上基于反向 DNS 验证，也就是说，我们允许的 IP 确实与提出请求的服务相匹配。除此之外，Cloudflare 还使用包括 ASN 块和公共列表在内的多种验证方法。如果客户无法使用这些验证类型中的任何一种，我们将使用内部 Cloudflare 数据和机器学习来识别来自良性机器人的合法 IP 地址。
 
-要允许来自良性机器人的流量，请使用防火墙规则中的[已验证机器人](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#dynamic-fields)字段。
+要允许来自良性机器人的流量，请使用防火墙规则中的[已验证机器人](/ruleset-engine/rules-language/fields#dynamic-fields)字段。
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 Cloudflare 在 [Cloudflare Radar](https://radar.cloudflare.com/verified-bots) 中维护着一份经验证机器人的样本列表。
 
-作为机器人运营者，要想被 Cloudflare 列为已验证的机器人，您的机器人必须符合我们的[已验证的机器人公共政策](https://developers.cloudflare.com/bots/reference/verified-bots-policy/)。如果您的机器人符合此标准，请提交此[在线申请](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link)。
+作为机器人运营者，要想被 Cloudflare 列为已验证的机器人，您的机器人必须符合我们的[已验证的机器人公共政策](/bots/reference/verified-bots-policy/)。如果您的机器人符合此标准，请提交此[在线申请](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link)。
 
 ___
 
@@ -168,7 +168,7 @@ ___
 
 ## 相关资源
 
--   [Cloudflare Bot Management](https://developers.cloudflare.com/bots/)（开发人员文档）
--   [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules/)（开发人员文档）
+-   [Cloudflare Bot Management](/bots/)（开发人员文档）
+-   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)（开发人员文档）
 -   [Cloudflare Bot Management：机器学习和其他](https://blog.cloudflare.com/cloudflare-bot-management-machine-learning-and-more/)（Cloudflare 博客）
 -   [阻止机器人：机器学习的实践经验](https://blog.cloudflare.com/stop-the-bots-practical-lessons-in-machine-learning/)（Cloudflare 博客）

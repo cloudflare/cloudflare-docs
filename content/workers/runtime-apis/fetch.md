@@ -11,7 +11,7 @@ The `fetch` method is implemented on the `ServiceWorkerGlobalScope`. Refer to [M
 
 {{<Aside type="note">}}
 
-Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `FetchEvent` handler such as [`respondWith`](/workers/runtime-apis/fetch-event/#methods). Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
+Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `FetchEvent` handler such as [`respondWith`](/workers/runtime-apis/fetch-event/#respondwith). Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
 
 {{</Aside>}}
 
@@ -47,15 +47,13 @@ async function eventHandler(event) {
 
 {{<definitions>}}
 
-- {{<code>}}fetch(){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
+- {{<code>}}fetch(request, init {{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type-link href="/runtime-apis/response">}}Promise`<Response>`{{</type-link>}}
 
   - Fetch returns a promise to a Response.
 
 {{</definitions>}}
 
----
-
-## Properties
+### Parameters
 
 {{<definitions>}}
 

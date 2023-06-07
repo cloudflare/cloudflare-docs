@@ -9,7 +9,7 @@ weight: 4
 
 {{<Aside>}}
 
-Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/">Cloudflare Root Certificate</a> before creating HTTP policies.
+Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/">Cloudflare Root Certificate</a> before creating HTTP policies.
 
 {{</Aside>}}
 
@@ -37,6 +37,22 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 | ------------------ | -------- | ----------- | ------ |
 | Content Categories | in       | `Education` | Allow  |
 
+#### Untrusted certificates
+
+{{<Aside type="note">}}
+
+To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
+
+{{</Aside>}}
+
+The **Untrusted certificate action** determines how to handle insecure requests.
+
+| Option       | Action                                                                                                                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                          |
+| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust.                                                                                                                          |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom CA certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). |
+
 ### Block
 
 The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
@@ -58,7 +74,7 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 {{<Aside type="warning" header="Warning">}}
 
-When a Do Not Inspect rule is created for a given hostname, application, or app type, no traffic will be inspected.
+When a Do Not Inspect policy is created for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 
 {{</Aside>}}
 
@@ -132,6 +148,18 @@ Use this selector to match against a domain and all subdomains — for example,
 | ------- | ----------------------------------------------- |
 | Domain  | `any(http.request.domains[*] == "example.com")` |
 
+### Download and Upload File Type
+
+These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office documents, PDF files, and ZIP files.
+
+| UI name            | API example                                             |
+| ------------------ | ------------------------------------------------------- |
+| Download File Type | `http.download.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+
+| UI name          | API example                                           |
+| ---------------- | ----------------------------------------------------- |
+| Upload File Type | `http.upload.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+
 ### Download and Upload Mime Type
 
 These selectors depend on the `Content-Type` header being present in the request (for uploads) or response (for downloads).
@@ -184,7 +212,7 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 | -------------- | ------------------------------------------ |
 | Security Risks | `any(http.request.uri.category[*] in {1})` |
 
-For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories-1).
+For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories).
 
 ### Source Continent
 
@@ -195,6 +223,10 @@ The continent of the user making the request.
 
 The country of the user making the request.
 {{<render file="gateway/_source-country.md" withParameters="http.src_ip">}}
+
+### Source Internal IP
+
+{{<render file="gateway/_source-internal-ip.md" withParameters="HTTP;;http">}}
 
 ### Source IP
 

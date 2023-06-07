@@ -43,7 +43,7 @@ Enterpriseプランのドメインは、Cloudflareのダッシュボードない
 IPv6が無効になっている時でも、ドメインはTorネットワークを経由してIPv6トラフィックを受信することに留意してください。全てのIPv6トラフィックを完全に無効にするために：
 
 -   Cloudflareの **SSL/TLS** アプリにある**Edge 証明書**タブを介して、**オニオンルーティング**を無効にしてください。[Cloudflare Torサポートとオニオンルーティングについて](https://support.cloudflare.com/hc/articles/203306930)を読んでください。
--   `ip.src in {::/0}`フィルターを使用して、_0:0:0:0:0:0:0:0/0_をブロックするファイアウォールルールを使ってください。[Cloudflareでファイアウォールルール](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)を作成する方法を説明します。
+-   `ip.src in {::/0}`フィルターを使用して、_0:0:0:0:0:0:0:0/0_をブロックするファイアウォールルールを使ってください。[Cloudflareでファイアウォールルール](/firewall/cf-dashboard/create-edit-delete-rules/)を作成する方法を説明します。
 
 ___
 

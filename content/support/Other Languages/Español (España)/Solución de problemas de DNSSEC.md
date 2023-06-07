@@ -30,6 +30,11 @@ La respuesta DNS incluye dos registros:
 
 -   El _registro DNSKEY_ **256** es la clave pública llamada clave de firma de zonas y se utiliza para verificar las firmas de registro DNS para _A, MX, CNAME, SRV_, etc.
 
+{{<Aside type="note">}}
+Los detalles sobre la verificación de las firmas con la clave pública no
+se incluyen en el alcance de este artículo.
+{{</Aside>}}
+
 Cuando no se usa la opción _+short_ con _dig_, se autentica mediante DNSSEC una respuesta DNS si una marca **ad** aparece en el encabezado de respuesta:
 
 

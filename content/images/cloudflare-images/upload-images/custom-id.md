@@ -49,7 +49,7 @@ You will then receive a response similar to this:
 }
 ```
 
-You can use the custom ID feature with the ability to [serve images from custom domains](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains) for added flexibility.
+You can use the custom ID feature with the ability to [serve images from custom domains](/images/cloudflare-images/serve-images/serve-images-custom-domains/) for added flexibility.
 
 Refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn more about API tokens.
 

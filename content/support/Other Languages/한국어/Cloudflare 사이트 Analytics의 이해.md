@@ -98,11 +98,11 @@ DNS 탭에서 이용할 수 있는 지표 패널은 다음과 같습니다.
 
 ### 로그
 
-Logs 탭은 지표 기능이 아닙니다. 대신, Enterprise 요금제 고객은 [Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/) 서비스를 사용할 수 있습니다. Logpush를 사용하면, 선택한 분석 도구를 사용하여 데이터를 다운로드하고 분석할 수 있습니다.
+Logs 탭은 지표 기능이 아닙니다. 대신, Enterprise 요금제 고객은 [Cloudflare Logs Logpush](/logs/about/) 서비스를 사용할 수 있습니다. Logpush를 사용하면, 선택한 분석 도구를 사용하여 데이터를 다운로드하고 분석할 수 있습니다.
 
 ___
 
 ## 관련 자료
 
--   [Cloudflare Analytics: 개요](https://developers.cloudflare.com/analytics)
--   [Cloudflare Analytics GraphQL API](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics: 개요](/analytics)
+-   [Cloudflare Analytics GraphQL API](/analytics/)

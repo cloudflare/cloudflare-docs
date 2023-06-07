@@ -8,7 +8,7 @@ meta:
 
 # Page Shield alerts
 
-You can configure alerts for resources detected in your domain. Refer to [Configure Page Shield alerts](/page-shield/use-dashboard/configure-alerts/) for instructions.
+You can configure alerts for resources detected in your domain. Refer to [Configure Page Shield alerts](/page-shield/detection/configure-alerts/) for instructions.
 
 ## New resource alerts
 

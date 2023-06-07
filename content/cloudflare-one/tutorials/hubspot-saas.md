@@ -19,7 +19,7 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 
 ## Configure Cloudflare Access
 
-1.  On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
+1.  In Zero Trust, navigate to **Access** > **Applications** and create a SaaS application.
 
 1.  Set the **Application type** to _Hubspot_.
 

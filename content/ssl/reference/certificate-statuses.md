@@ -10,7 +10,7 @@ Certificates statuses show which stage of the issuance process each certificate 
 
 ## New certificates
 
-When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare’s edge:
+When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare’s global network:
 
 1.  Initializing
 2.  Pending Validation
@@ -54,12 +54,12 @@ When you use [client certificates](/ssl/client-certificates/), those client cert
 
 ### SSL/TLS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by [using the API](https://developers.cloudflare.com/api/operations/certificate-packs-get-certificate-pack).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by using the [Get Certificate Pack endpoint](/api/operations/certificate-packs-get-certificate-pack).
 
-For more details on certificate validation, refer to [Changing DCV method](/ssl/edge-certificates/changing-dcv-method/).
+For more details on certificate validation, refer to [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/).
 
 ### SSL for SaaS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by using the [Custom Hostname Details endpoint](/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
 
-For more details on certificate validation, refer to [Changing DCV method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+For more details on certificate validation, refer to [Issue and validate certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).

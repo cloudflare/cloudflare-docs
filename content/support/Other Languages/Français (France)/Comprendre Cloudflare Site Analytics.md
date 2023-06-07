@@ -98,11 +98,11 @@ Ce volet présente des indicateurs relatifs à Cloudflare Workers. Pour en savoi
 
 ### Fichiers journaux
 
-L’onglet Logs (Fichiers journaux) n’est pas une fonctionnalité proposant des indicateurs. Au lieu de cela, les clients ayant souscrit l’offre Enterprise peuvent activer le service [Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/). Vous pouvez utiliser Logpush pour télécharger et analyser les données avec l’outil de données analytiques de votre choix.
+L’onglet Logs (Fichiers journaux) n’est pas une fonctionnalité proposant des indicateurs. Au lieu de cela, les clients ayant souscrit l’offre Enterprise peuvent activer le service [Cloudflare Logs Logpush](/logs/about/). Vous pouvez utiliser Logpush pour télécharger et analyser les données avec l’outil de données analytiques de votre choix.
 
 ___
 
 ## Ressources associées
 
--   [Cloudflare Analytics : un bref aperçu](https://developers.cloudflare.com/analytics)
--   [L’API GraphQL Cloudflare Analytics](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics : un bref aperçu](/analytics)
+-   [L’API GraphQL Cloudflare Analytics](/analytics/)

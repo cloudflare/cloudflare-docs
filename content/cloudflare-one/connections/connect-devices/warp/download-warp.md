@@ -6,7 +6,7 @@ weight: 2
 
 # Download WARP
 
-You can download the WARP client from the Zero Trust dashboard. To do that, navigate to **Settings** > **Devices** and scroll down to **Download the WARP client**.
+You can download the WARP client from Zero Trust. To do that, go to **Settings** > **Downloads** and scroll down to **Download the WARP client**.
 
 Alternatively, download the client from one of the following links after checking requirements:
 
@@ -106,7 +106,7 @@ Alternatively, download the client from one of the following links after checkin
       <td>
         <strong>OS Ver</strong>
       </td>
-      <td>CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Debian 9, Debian 10, Debian 11</td>
+      <td>CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Ubuntu 22.04, Debian 9, Debian 10, Debian 11</td>
     </tr>
     <tr>
       <td>
@@ -182,4 +182,4 @@ Alternatively, download the client from one of the following links after checkin
   </tbody>
 </table>
 
-Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, please [refer to this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify that your device is supported.
+Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, [refer to this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify that your device is supported.

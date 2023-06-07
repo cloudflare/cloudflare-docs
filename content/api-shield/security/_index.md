@@ -33,6 +33,6 @@ The following table provides examples of how you might match Cloudflare products
 
 
 [Schema Validation]: /api-shield/security/schema-validation/
-[Anomaly Detection]: /api-shield/security/sequential-abuse-detection/
+[Anomaly Detection]: /api-shield/security/sequence-analytics/
 [Sensitive Data Detection (Beta)]: https://blog.cloudflare.com/data-loss-prevention/
 [Rate Limiting]: /waf/rate-limiting-rules/

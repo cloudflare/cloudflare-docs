@@ -173,10 +173,6 @@ _CNAME 레코드_의 예는 다음과 같습니다.
 
 올바로 설정되면, Squarespace DNS 설정 페이지에 '설정에 문제가 있습니다'가 나타납니다. **이것은 예상된 행동입니다**. 
 
-![이전 URL: https://support.cloudflare.com/hc/article_attachments/360039675171/squarespace_dns_settings.png
-Article IDs: 360020991331 | 벤더용 DNS 레코드를 Cloudflare에 추가하기
-](/support/static/hc-import-squarespace_dns_settings.png)
-
 이제 트래픽이 Cloudflare를 통해 전송되므로 Squarespace와 사이트 방문자는 Cloudflare IP 주소를 보게 됩니다. 이로서 Squarespace가 할당한 주소 대신 Cloudflare IP 주소가 반환되기 때문에 Squarespace 콘솔이 사이트 구성이 잘못됐다고 가정하게 됩니다. Cloudflare DNS가 올바로 구성됐다면(위 1~6단계) Squarespace 사이트는 이제 Cloudflare를 통해 작동해야 합니다.
 
 _example.com_이 사용자 지정 도메인인 경우 다음과 같은 DNS 레코드를 Cloudflare에 추가하세요.

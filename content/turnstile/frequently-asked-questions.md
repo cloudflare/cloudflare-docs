@@ -176,19 +176,26 @@ An HTML page rendered in a [WebView](https://github.com/react-native-webview/rea
 
 {{<faq-answer>}}
 
-Yes. Use the following sitekeys and secret keys for testing purposes:
+You can find special sitekeys to be used for testing in the [testing](/turnstile/reference/testing/) section.
 
-| Sitekey | Description |
-| --- | --- |
-| `1x00000000000000000000AA` | Always passes |
-| `2x00000000000000000000AB` | Always blocks |
-| `3x00000000000000000000FF` | Forces an interactive challenge |
+{{</faq-answer>}}
+{{</faq-item>}}
 
-|Secret key | Description |
-| --- | --- |
-| `1x0000000000000000000000000000000AA` | Always passes |
-| `2x0000000000000000000000000000000AA` | Always fails | 
-| `3x0000000000000000000000000000000AA` | Yields a "token already spent" error | 
+{{<faq-item>}}
+{{<faq-question level=2 text="Is there an API to create or manage Turnstile widgets?" >}}
+
+{{<faq-answer>}}
+
+Yes, you can refer to the [Turnstile API documentation](/api/operations/accounts-turnstile-widgets-list) to manage your widgets.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="I am seeing a 401 error in your console during a Turnstile security check, is this a problem?" >}}
+{{<faq-answer>}}
+
+You can safely ignore the error. It is requesting a [Private Access Token (PAT)](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/) that your device or browser does not support yet.
 
 {{</faq-answer>}}
 {{</faq-item>}}

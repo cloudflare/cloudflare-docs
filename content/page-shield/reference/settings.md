@@ -66,3 +66,7 @@ To disable Page Shield:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield** > **Settings**.
 3. Select **Disable Page Shield**.
+
+{{<Aside type="note">}}
+Disabling Page Shield will also disable all [policies](/page-shield/policies/). After reenabling Page Shield, reenable any required policies.
+{{</Aside>}}

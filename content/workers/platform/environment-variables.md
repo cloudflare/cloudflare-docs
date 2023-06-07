@@ -5,15 +5,15 @@ title: Environment variables
 
 # Environment variables
 
-In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
+In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings.
 
-## Environmental variables with module workers
+## Environment variables with Workers using ES modules format
 
-When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
+When deploying a Worker using ES modules format, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
 
 ## Environment variables via wrangler
 
-### Adding environment variables via wrangler
+### Add environment variables via Wrangler
 
 Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always plaintext values.
 
@@ -51,6 +51,23 @@ console.log(STRIPE_TOKEN);
 //=> (env.production) "pk_xyz1234"
 ```
 
+If using [Workers written in ES modules format](/workers/learning/migrate-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the following example:
+
+```ts
+export interface Env {
+  API_TOKEN: string;
+}
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
+    console.log(env.API_TOKEN)
+  }
+}
+```
+
 ### Add secrets to your project
 
 #### Secrets in development
@@ -86,13 +103,13 @@ filename: wrangler.toml
 # Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
 ```
 
-{{<Aside type="warning">}}
+{{<Aside type="warning" header="Use secrets for sensitive information">}}
 
-\* **Warning:** Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) instead.
+Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) instead.
 
 {{</Aside>}}
 
-### Adding KV namespaces via wrangler
+### Add KV namespaces via Wrangler
 
 KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv-namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
 
@@ -116,17 +133,18 @@ id = "<PRODUCTION KV NAMESPACEID>"
 
 ## Environment variables via the dashboard
 
-### Adding environment variables via the dashboard
+### Add environment variables via the dashboard
 
-Add environment variables by logging in to [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
+To add environment variables, such as `vars` and `secret`, via the dashboard:
 
-To add environment variables, such as `vars` and `secret`:
-
-1.  Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
-2.  Input a **Variable name** and its **value**, which will be made available to your Worker.
-3.  If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via Wrangler and the dashboard.
-4.  (Optional) To add multiple environment variables, select **Add variable**.
-5.  Select **Save** to implement your changes.
+1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Settings**.
+4. Under **Environment Variables**, select **Add variable**.
+5. Input a **Variable name** and its **value**, which will be made available to your Worker.
+6. If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via Wrangler and the dashboard.
+7. (Optional) To add multiple environment variables, select **Add variable**.
+8. Select **Save** to implement your changes.
 
 ![After selecting Add variable, you will be directed to an environment variables configuration page to set up your environment variable name and value](../media/env_variables_dash.png)
 
@@ -136,15 +154,17 @@ Do not select **Encrypt** when adding environment variables if your variable is 
 
 {{</Aside>}}
 
-### Adding KV namespace bindings via the dashboard
+### Add KV namespace bindings via the dashboard
 
 To add KV namespace bindings:
 
-1.  Go to your **Workers script** > **Settings** > **Add binding** under **KV Namespace Bindings**.
-2.  Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker script.
-3.  Next, select a **KV namespace** from the dropdown.
-4.  Select **Add binding** to add multiple bindings.
-5.  When you are finished, select **Save** to implement your changes.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** and in **Overview**, select your Worker.
+3. Select **Settings** > **Add binding** under **KV Namespace Bindings**.
+4. Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker.
+5. Next, select a **KV namespace** from the dropdown.
+6. Select **Add binding** to add multiple bindings.
+7. When you are finished, select **Save** to implement your changes.
 
 ![After selecting add binding, you will be directed to a configuration page to specify your Variable name and KV namespace to create your binding](../media/kv_namespace_bindings.png)
 
@@ -152,6 +172,6 @@ Your completed Workers dashboard, with environment variables and KV namespace bi
 
 ![After creating your environment variable and KV namespace binding, your dashboard will show a summary of variables and bindings you configured](../media/envvarssecret-detail-page.jpeg)
 
-## Comparing secrets and environment variables
+## Compare secrets and environment variables
 
 Secrets are environment variables. The difference is secret values are not visible within Wrangler or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.

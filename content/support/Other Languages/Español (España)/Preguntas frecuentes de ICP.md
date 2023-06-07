@@ -23,6 +23,10 @@ Un número de ICP (Proveedor de contenido de Internet) es un número de registro
 
 Se puede usar un número de ICP para múltiples sitios web propiedad de la misma compañía. Puedes usar el sitio web de MIIT para [verificar si un dominio ya tiene un número de ICP](http://www.beian.miit.gov.cn/publish/query/indexFirst.action).  
 
+{{<Aside type="note">}}
+El sitio web de MIIT solo está disponible en chino.
+{{</Aside>}}
+
 ## ¿Qué tipo de número de ICP necesito?
 
 Existen dos tipos de números de ICP emitidos por el Ministerio de Industria y Tecnología de la Información de China (MIIT) (Ministerio de Industria y Tecnología de la Información de la República Popular de China) a nivel de provincia:

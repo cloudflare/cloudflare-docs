@@ -59,8 +59,8 @@ To set up your policy:
     -   `www.example.com` (appearing in `"Resource": "arn:aws:s3:www.example.com/*"`) with the S3 bucket name for your subdomain URL.
     -   The placeholder IP addresses with the current list of [Cloudflare IP addresses](https://www.cloudflare.com/ips)
 
-```
-╰─➤  curl -I -L example.com
+```sh
+$ curl -I -L example.com
 HTTP/1.1 301 Moved Permanently
 Date: Tue, 23 Jan 2018 23:17:44 GMT
 Connection: keep-alive

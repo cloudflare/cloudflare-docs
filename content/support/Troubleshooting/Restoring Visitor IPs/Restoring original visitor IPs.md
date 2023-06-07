@@ -42,8 +42,8 @@ To install _mod\_remoteip_ on your Apache web server:
 
 1\. Enable _mod\_remoteip_ by issuing the following command:
 
-```
-sudo a2enmod remoteip
+```sh
+$ sudo a2enmod remoteip
 ```
 
 2\. Update the site configuration to include _RemoteIPHeader CF-Connecting-IP_, e.g. `/etc/apache2/sites-available/000-default.conf`
@@ -80,8 +80,8 @@ RemoteIPTrustedProxy 192.0.2.2 (example IP address)
 
 5\. Enable Apache configuration:
 
-```
-sudo a2enconf remoteip
+```sh
+$ sudo a2enconf remoteip
 Enabling conf remoteip.
 To activate the new configuration, you need to run:
 service apache2 reload
@@ -89,15 +89,15 @@ service apache2 reload
 
 6\. Test Apache configuration:
 
-```
-sudo apache2ctl configtest
+```sh
+$ sudo apache2ctl configtest
 Syntax OK
 ```
 
 7\. Restart Apache:
 
-```
-sudo systemctl restart apache2
+```sh
+$ sudo systemctl restart apache2
 ```
 
 {{<Aside type="note">}}
@@ -119,17 +119,19 @@ building the *mod\_cloudflare* package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 {{</Aside>}}
 
-There are two methods for installing mod\_cloudflare: by downloading the Apache extension from Github or by adding code to your origin web server.
+There are two methods for installing mod\_cloudflare: by downloading the Apache extension from GitHub or by adding code to your origin web server.
 
-### Downloading packets or scripts from Github
+### Downloading packets or scripts from GitHub
 
-If you are using an Apache web server, you can download mod\_cloudflare from [Github](https://github.com/cloudflare/mod_cloudflare).
+If you are using an Apache web server, you can download mod\_cloudflare from [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Adding code to your origin web server
 
 If you can't install mod\_cloudflare, or if there is no Cloudflare plugin available for your content management system platform to restore original visitor IP, add this code to your origin web server in or before the <body> tag on any page that needs the original visitor IPs:
 
-`<?php if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];?>`
+```php
+<?php if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];?>
+```
 
 This command will only make the IP address available to scripts that need it. It doesn’t store the IP in your actual server logs.
 
@@ -191,7 +193,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 ```
 IfModule cloudflare_module
 CloudFlareRemoteIPHeader X-Forwarded-For
-CloudFlareRemoteIPTrustedProxy __[insert your load balancer’s IP address]__
+CloudFlareRemoteIPTrustedProxy [insert your load balancer’s IP address]
 DenyAllButCloudFlare
 /IfModule
 ```
@@ -231,7 +233,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
 
-When using Railgun (or other reverse proxy software, such as Varnish), user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
+When using [Railgun](/railgun/) (deprecated) or other reverse proxy software such as Varnish, user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
 
 1.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
 2.  At the very end add:`CloudflareRemoteIPTrustedProxy railgun_address`So, if your Railgun server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
@@ -243,7 +245,7 @@ To have Lighttpd automatically rewrite the server IP for the access logs and for
 2.  Add the following code block anywhere in the **lighttpd.conf** file after the server modules list and then restart Lighttpd
 
 ```
-$HTTP["remoteip"] == "192.2.0.1 (example IP address)" 
+$HTTP["remoteip"] == "192.2.0.1 (example IP address)"
 {
 extforward.forwarder = ( "all" => "trust" )
 extforward.headers = ("CF-Connecting-IP")
@@ -253,7 +255,7 @@ extforward.headers = ("CF-Connecting-IP")
 ```
 
 {{<Aside type="tip">}}
-If your origin connects to the internet with IPv6,
+If your origin connects to the Internet with IPv6,
 **\$HTTP\[\"remoteip\"\]**, which is required for matching the remote IP
 ranges does not work when IPv6 is enabled. Using the above method will
 not work when trying to forward IP ranges. Add the following lines to
@@ -285,7 +287,9 @@ To have Tomcat7 automatically restore the original visitor IP to your access log
 
 As an example, you could add the below block to your `server.xml` file.
 
-`<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log." suffix=".txt" pattern="%{CF-Connecting-IP}i - %h %u %t - &quot;%r&quot; - %s - %b - %{CF-RAY}i"/>`
+```xml
+<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log." suffix=".txt" pattern="%{CF-Connecting-IP}i - %h %u %t - &quot;%r&quot; - %s - %b - %{CF-RAY}i"/>
+```
 
 Which would result in your logs looking like this:
 
@@ -387,11 +391,11 @@ In order to extract the original client IP in the X\_FORWARDD\_FOR header, you n
 
 HAProxy config:
 
-`acl from_cf src -f /path/to/CF_ips.lst`
-
-`acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found`
-
-`http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr`
+```
+acl from_cf src -f /path/to/CF_ips.lst
+acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+```
 
 ___
 

@@ -1,12 +1,11 @@
 ---
-title: Configure `rclone` for R2
-summary: Example of how to configure `rclone` to use R2.
+title: rclone
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `rclone` for R2
+
+{{<render file="_keys.md">}}<br>
 
 With [`rclone`](https://rclone.org/install/) installed, you may run [`rclone config`](https://rclone.org/s3/) to configure a new S3 storage provider. You will be prompted with a series of questions for the new provider details.
 

@@ -24,15 +24,14 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-03-06</td>
-      <td>2023-03-13</td>
+      <td>2023-06-05</td>
+      <td>2023-06-12</td>
       <td>Block</td>
-      <td>100575</td>
-      <td>...ad679b95</td>
-      <td>ZK Framework - Information Disclosure - CVE:CVE-2022-36537</td>
+      <td>100587</td>
+      <td>...269024be</td>
+      <td>Code Injection - CVE:CVE-2022-23529</td>
       <td>N/A</td>
     </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
-

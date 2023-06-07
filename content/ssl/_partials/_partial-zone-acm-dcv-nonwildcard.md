@@ -5,6 +5,11 @@ _build:
   list: never
 ---
 
-Non-wildcard hostname certificates will automatically renew as long as every hostname on the certificate is proxying traffic through Cloudflare.
+If every hostname on a non-wildcard certificate is [proxying traffic](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare, Cloudflare can automatically complete DCV on your behalf.
 
-However, if one or more of the hostnames on the certificate is not proxying through Cloudflare, the certificate will not issue and you will be required to complete DCV for each hostname not proxied - which will require manually updating the DCV token or proxying the hostname - in order for the certificate to renew.
+This applies to customers using [Universal](/ssl/edge-certificates/universal-ssl/) or [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
+
+If one of the hostnames on the certificate is not proxying traffic through Cloudflare, certificate issuance and renewal will vary based on the type of certificate you are using:
+
+- **Universal**: Perform DCV using one of the available [methods](/ssl/edge-certificates/changing-dcv-method/methods/).
+- **Advanced**: In most cases, you can opt for [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/), which greatly simplifies certificate management.

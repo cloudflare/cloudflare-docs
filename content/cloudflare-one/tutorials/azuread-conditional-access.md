@@ -27,7 +27,7 @@ We suggest naming the IdP integration after the target application, for example 
 2. Go to **Branding & properties**.
 
 3. In **Home page URL**, enter the hostname of the protected application.
-![Customer Management portal fields and home page URL](/cloudflare-one/static/zero-trust-security/azuread-access-policies/homepage-url.png)
+   ![Customer Management portal fields and home page URL](/cloudflare-one/static/zero-trust-security/azuread-access-policies/homepage-url.png)
 
 4. Return to the **Azure Active Directory** dashboard and go to **Enterprise applications**.
 
@@ -45,7 +45,7 @@ We suggest naming the IdP integration after the target application, for example 
 
 To enforce your Conditional Access policies on a Cloudflare Access application:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Create a new [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/).
 
@@ -57,10 +57,10 @@ To enforce your Conditional Access policies on a Cloudflare Access application:
 
 5. Finally, create an [Access policy](/cloudflare-one/policies/access/) to require logins from the selected IdP. For example:
 
-    | Action | Rule type | Selector | Value |
-    | ------ | --------- | -------- | ------|
-    | Allow  | Include   | Emails ending in | `@example.com` |
-    |        | Require   | Login methods    | `Azure AD • Azure AD - Customer management portal` |
+   | Action | Rule type | Selector         | Value                                              |
+   | ------ | --------- | ---------------- | -------------------------------------------------- |
+   | Allow  | Include   | Emails ending in | `@example.com`                                     |
+   |        | Require   | Login methods    | `Azure AD • Azure AD - Customer management portal` |
 
 Users will only be allowed access if they meet the criteria in your Azure AD Conditional Access policies.
 

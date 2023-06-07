@@ -6,7 +6,7 @@ weight: 21
 
 # Roles and permissions
 
-When creating a Cloudflare Zero Trust account, you will be given the Super Administrator role. As a Super Administrator, you can invite members to join your Zero Trust account and assign them different roles. There is no limit to the number of members which can be added to a given account. Any members with the proper permissions will be able to make configuration changes while actively logged into the Zero Trust dashboard (unless [read-only mode](/cloudflare-one/api-terraform/#set-dashboard-to-read-only) is enabled).
+When creating a Cloudflare Zero Trust account, you will be given the Super Administrator role. As a Super Administrator, you can invite members to join your Zero Trust account and assign them different roles. There is no limit to the number of members which can be added to a given account. Any members with the proper permissions will be able to make configuration changes while actively logged into Zero Trust (unless [read-only mode](/cloudflare-one/api-terraform/#set-dashboard-to-read-only) is enabled).
 
 To check the list of members in your account, or to manage roles and permissions, refer to our [Account setup](/fundamentals/account-and-billing/members/) documentation.
 
@@ -20,12 +20,12 @@ Only Super Administrators of Enterprise accounts will be able to assign or remov
 
 {{<table-wrap>}}
 
-|                                | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
-| ------------------------------ | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ | --- |
-| Super Administrator            | ✓           | ✓           | ✓            | ✓            | ✓              | ✓            | ✓            |
+|                                 | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
+| ------------------------------- | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ | --- |
+| Super Administrator             | ✓           | ✓           | ✓            | ✓            | ✓              | ✓            | ✓            |
 | Cloudflare Zero Trust           | ✓           | ✓           | ✓            | ✓            | ✓              | ✓            | -            |
-| Cloudflare Access         | ✓           | ✓           | ✓            | -            | ✓              | ✓            | -            | -   |
-| Cloudflare Gateway       | ✓           | -           | ✓            | ✓            | ✓              | ✓            | -            | -   |
+| Cloudflare Access               | ✓           | ✓           | ✓            | -            | ✓              | ✓            | -            | -   |
+| Cloudflare Gateway              | ✓           | -           | ✓            | ✓            | ✓              | ✓            | -            | -   |
 | Cloudflare Zero Trust Read Only | ✓           | -           | ✓            | -            | ✓              | ✓            | -            | -   |
 | Cloudflare Zero Trust Reporting | -           | -           | -            | -            | ✓              | ✓            | -            | -   |
 

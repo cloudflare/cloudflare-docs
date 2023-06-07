@@ -87,6 +87,10 @@ For example, in the configurations above, a connection to `range.example.com:100
 
 If IP Access rules are enabled for a Spectrum application, Cloudflare will respect the IP Access rules created under **Security** > **WAF** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
 
+## Argo Smart Routing
+
+Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Note that Argo Smart Routing is only available for TCP applications.
+
 ## Edge TLS Termination
 
 If you enable **Edge TLS Termination** for a Spectrum application, Cloudflare will encrypt traffic for the application at the Edge. The Edge TLS Termination toggle applies only to TCP applications.

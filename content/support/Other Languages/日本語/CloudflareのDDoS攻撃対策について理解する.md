@@ -26,17 +26,17 @@ ___
 
 [分散サービス妨害攻撃](https://www.cloudflare.com/ddos)（DDoS）は、エンドユーザーがオンラインサービスを利用できないようにします。Cloudflareは、全プランのお客様に、レイヤー3、4、7におけるDDoS攻撃に対する定額制の軽減策を提供しています。攻撃規模によって請求額を増やすことも、攻撃の規模や種類、攻撃時間に上限を設けることもありません。
 
-Cloudflareのネットワークは、大規模な[DDoS攻撃](https://www.cloudflare.com/ddos)を自動的に監視および軽減するように構築されています。小規模のDDoS攻撃からWebサイトを保護するためにCloudflareでコンテンツをキャッシュするのが有効な方法ですが、キャッシュされないアセットについては、[手動でDDoS攻撃に対応する](https://support.cloudflare.com/hc/articles/200170196)必要があります。
+Cloudflareのネットワークは、大規模な[DDoS攻撃](https://www.cloudflare.com/ddos)を自動的に監視および軽減するように構築されています。小規模のDDoS攻撃からWebサイトを保護するためにCloudflareでコンテンツをキャッシュするのが有効な方法ですが、キャッシュされないアセットについては、[手動でDDoS攻撃に対応する](/ddos-protection/best-practices/respond-to-ddos-attacks/)必要があります。
 
 さらに、Cloudflareは小規模なDDoS 攻撃を軽減するお手伝いもしています。
 
--   どのプランのゾーンでも、HTTPエラー率が、しきい値が毎秒1,000エラーの_High_（デフォルト）感度レベルを超える場合です。感度レベルは、[HTTP DDoS 攻撃対策マネージドルールセットを設定する](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http)ことで、下げることができます。
+-   どのプランのゾーンでも、HTTPエラー率が、しきい値が毎秒1,000エラーの_High_（デフォルト）感度レベルを超える場合です。感度レベルは、[HTTP DDoS 攻撃対策マネージドルールセットを設定する](/ddos-protection/managed-rulesets/http)ことで、下げることができます。
 
 -   Pro プラン、Business プラン、Enterprise プランのゾーンについて、Cloudflareはより高い精度の検出を行うために追加のチェックを行います。つまり、秒ごとのエラー率も通常のオリジントラフィックレベルの5倍以上が必要となります。
 
 Cloudflareでは、52X番台（内部サーバーエラー）と[530エラー](https://support.cloudflare.com/hc/articles/115003011431#530error)を除く53X番台のHTTPエラーすべてに基づいてエラー率を決定します。
 
-HTTP 攻撃の緩和が、HTTP DDoSイベントとして、ファイアウォール分析ダッシュボードで表示されます。こうしたイベントは、[Cloudflare Logs](https://developers.cloudflare.com/logs/)でも、利用できます。
+HTTP 攻撃の緩和が、HTTP DDoSイベントとして、ファイアウォール分析ダッシュボードで表示されます。こうしたイベントは、[Cloudflare Logs](/logs/)でも、利用できます。
 
 現在、HTTPエラー率に基づくDDoS 軽減に関して、お客様は特定のHTTPエラーコードを除外することはできません。
 
@@ -48,9 +48,9 @@ Cloudflare HTTP DDoS攻撃対策マネージドルールセットとは事前に
 
 正当なトラフィックの大きな急増が予想される場合、正当なトラフィックが攻撃のトラフィックとして誤認され、ブロックやチャレンジされたりする誤検知を回避するために、DDoS攻撃対策設定をカスタマイズすることをご検討ください。
 
-Cloudflare HTTP DDoS攻撃対策マネージドルールセットと利用できる設定について[Cloudflare開発者ポータル](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http)で詳しくお読みください。
+Cloudflare HTTP DDoS攻撃対策マネージドルールセットと利用できる設定について[Cloudflare開発者ポータル](/ddos-protection/managed-rulesets/http)で詳しくお読みください。
 
-HTTP DDoS 攻撃対策システムで適用されるアクションに関する詳細情報については、[HTTP DDoS 攻撃対策パラメーター：アクション](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http/override-parameters#action)をご参照ください。
+HTTP DDoS 攻撃対策システムで適用されるアクションに関する詳細情報については、[HTTP DDoS 攻撃対策パラメーター：アクション](/ddos-protection/managed-rulesets/http/override-parameters#action)をご参照ください。
 
 ___
 
@@ -58,9 +58,9 @@ ___
 
 CloudflareネットワークレイヤーDDoS 攻撃対策マネージドルールセットとは、事前に設定されたルールがセットになったもので、OSI 参照モデルのレベル３とレベル４で既知のDDoS攻撃ベクトルと一致するために使用されます。このルールセットはデフォルトで有効になっており、Cloudflareのお客様はすべてのプランでご利用いただけます。
 
-Cloudflareネットワークレイヤー DDoS攻撃対策マネージドルールセットと利用できる設定について[Cloudflare開発者ポータル](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network)で詳しくお読みください。
+Cloudflareネットワークレイヤー DDoS攻撃対策マネージドルールセットと利用できる設定について[Cloudflare開発者ポータル](/ddos-protection/managed-rulesets/network)で詳しくお読みください。
 
-L3/4 DDoS 攻撃対策システムで適用されるアクションに関する詳細情報については、[ネットワークレイヤー DDoS 攻撃対策パラメーター：アクション](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network/override-parameters#action)をご参照ください。
+L3/4 DDoS 攻撃対策システムで適用されるアクションに関する詳細情報については、[ネットワークレイヤー DDoS 攻撃対策パラメーター：アクション](/ddos-protection/managed-rulesets/network/override-parameters#action)をご参照ください。
 
 ___
 
@@ -79,7 +79,7 @@ ___
 Cloudflareがサイトを攻撃していると誤認される一般的なシナリオが2つあります：
 
 -   [オリジナルの訪問者のIPアドレスを復元](https://support.cloudflare.com/hc/ja/sections/200805497-Restoring-Visitor-IPs)しない限り、CloudflareのIPアドレスは、すべてのプロキシされたリクエストのサーバーログに表示されます。
--   攻撃者はCloudflareのIPアドレスをスプーフィングしています。[Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started/)を使用しない限り、Cloudflareは、[いくつかの特定のポートを介してのみトラフィックをWebサーバー（オリジンサーバー）に送信](https://support.cloudflare.com/hc/articles/200169156)します。
+-   攻撃者はCloudflareのIPアドレスをスプーフィングしています。[Cloudflare Spectrum](/spectrum/get-started/)を使用しない限り、Cloudflareは、[いくつかの特定のポートを介してのみトラフィックをWebサーバー（オリジンサーバー）に送信](https://support.cloudflare.com/hc/articles/200169156)します。
 
 Cloudflareはリバースプロキシであるため、ホスティングプロバイダーが[Cloudflare IPアドレス](https://www.cloudflare.com/ips/)から接続する攻撃のトラフィックを監視するのが理想です。その一方で、Cloudflareに属していないIPアドレスからの接続が確認できる場合、攻撃はオリジンWebサーバーに直接向けられています。Cloudflareは、トラフィックがCloudflareのネットワークをバイパスするため、オリジンIPアドレスに直接向けられた攻撃を阻止することはできません。
 
@@ -87,7 +87,7 @@ ___
 
 ## 関連リソース
 
--   [DDoS攻撃に対応する](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS攻撃に対応する](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [ベストプラクティス：DDoS攻撃対策](https://support.cloudflare.com/hc/articles/200170166)
 -   [Cloudflare Logsを使用してDDoSトラフィックを調べる（Enterpriseプランのみ）](https://support.cloudflare.com/hc/ja/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [DDoS攻撃とは？](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

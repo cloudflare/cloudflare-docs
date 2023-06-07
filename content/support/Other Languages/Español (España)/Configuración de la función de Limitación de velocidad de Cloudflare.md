@@ -15,17 +15,52 @@ La función de **Limitación de velocidad** de Cloudflare identifica y mitiga au
 
 Una vez que una dirección IPv4 individual o un rango de IPv6 /64 supera un umbral de regla, se bloquean más solicitudes al servidor web de origen con una respuesta HTTP 429, que incluye un encabezado **Reintentar más tarde** para indicar cuándo el cliente puede reanudar el envío de solicitudes.
 
+{{<Aside type="note">}}
+Para los clientes que utilizan la versión anterior de las reglas de
+limitación de velocidad (cuya documentación está en la base de
+conocimiento de Soporte de Cloudflare), los recursos almacenados en
+caché y los rastreadores conocidos de los motores de búsqueda están
+exentos de tus reglas de limitación de velocidad. Por lo tanto, no
+afectan a la clasificación [SEO de tu sitio
+web](/fundamentals/get-started/basic-tasks/improve-seo/).
+Sin embargo, si estás utilizando la [nueva versión de reglas de
+limitación de
+velocidad](/waf/rate-limiting-rules/)
+(cuya documentación está en nuestra sección de documentación para
+desarrolladores), debes asegurarte de que tus reglas de limitación de
+velocidad no afecten a los bots buenos conocidos, para que la
+clasificación SEO de tu sitio web no se vea afectada. Para más
+información, consulta [Mejorar el
+SEO](/fundamentals/get-started/basic-tasks/improve-seo/).
+{{</Aside>}}
+
+{{<Aside type="note">}}
+¿Intentas activar Limitación de velocidad? [Activar Limitación de
+velocidad](https://dash.cloudflare.com/?to=/:account/:zone/firewall/tools).
+{{</Aside>}}
+
 ___
 
 ## Análisis
 
-Puedes ver los análisis de la función limitación de velocidad en **Analytics** > **Seguridad**. Este análisis utiliza líneas continuas que representan el tráfico que coincide con las solicitudes simuladas y líneas discontinuas que representan las solicitudes reales bloqueadas. Los registros generados por una regla de limitación de velocidad solo son visibles para los clientes Enterprise a través de los [registros de Cloudflare](https://developers.cloudflare.com/logs/). 
+Puedes ver los análisis de la función limitación de velocidad en **Analytics** > **Seguridad**. Este análisis utiliza líneas continuas que representan el tráfico que coincide con las solicitudes simuladas y líneas discontinuas que representan las solicitudes reales bloqueadas. Los registros generados por una regla de limitación de velocidad solo son visibles para los clientes Enterprise a través de los [registros de Cloudflare](/logs/). 
 
 Cloudflare devuelve un error HTTP 429 para las solicitudes bloqueadas.  Los clientes Enterprise pueden consultar los detalles de las solicitudes bloqueadas por ubicación en **Códigos de estado** en el panel de control de análisis disponible en **Analytics** > **Tráfico**. 
+
+{{<Aside type="note">}}
+El error HTTP 429 incluye 429 respuestas devueltas desde el origen si el
+servidor web de origen también aplica su propia limitación de velocidad.
+{{</Aside>}}
 
 ___
 
 ## Prestaciones de la limitación de velocidad según plan
+
+{{<Aside type="note">}}
+**Limitación de velocidad** es un servicio adicional para todos los
+planes de cliente, disponible en **Seguridad** \> **WAF** \> **Reglas de
+limitación de velocidad**.
+{{</Aside>}}
 
 El número de reglas de limitación de velocidad permitidas depende del plan del dominio:
 
@@ -348,7 +383,6 @@ ___
 
 ## Recursos relacionados
 
--   [Facturación de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000272247)
--   [¿Cómo se notifica la limitación de velocidad en los registros de Enterprise Log Share (ELS)?](https://developers.cloudflare.com/logs/reference/log-fields)
+-   [¿Cómo se notifica la limitación de velocidad en los registros de Enterprise Log Share (ELS)?](/logs/reference/log-fields)
 -   [Resolución de problemas de la función de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configuración de la limitación de velocidad desde el panel de Cloudflare](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

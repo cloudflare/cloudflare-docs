@@ -79,6 +79,20 @@ ___
 
 A cada dominio activo de Cloudflare se le proporciona un [certificado Universal SSL](https://support.cloudflare.com/hc/articles/204151138). Si observas errores de SSL y no cuentas con un certificado de **tipo** _Universal_ dentro de la sección de **certificados perimetrales** de la aplicación **SSL/TLS** de Cloudflare para tu dominio, todavía no te proporcionaron el certificado Universal SSL.
 
+{{<Aside type="note">}}
+Los certificados SSL de Cloudflare solo se aplican al tráfico redirigido
+mediante proxy a través de Cloudflare. Si ocurren errores SSL solo para
+tus nombres de host que no se redirigen mediante proxy hacia Cloudflare,
+redirígelos a través de Cloudflare.
+
+-   Para dominios con configuración de DNS completo, haz clic en el
+    icono de nube gris junto al nombre de host DNS en tu aplicación
+    **DNS** de Cloudflare hasta que el icono sea de nube naranja.
+-   Para dominios con configuración de CNAME, revisa nuestra guía sobre
+    [añadir registros DNS a una configuración de
+    CNAME](https://support.cloudflare.com/hc/articles/360020615111#h_836723523521544131668686).
+{{</Aside>}}
+
 Nuestros proveedores de SSL verifican cada solicitud de certificado SSL antes de que Cloudflare pueda emitir un certificado para un nombre de dominio. Este proceso puede tomar entre 15 minutos y 24 horas. Nuestros proveedores de certificados SSL a veces marcan un nombre de dominio para revisiones adicionales.
 
 **Solución**
@@ -95,6 +109,14 @@ Si tu certificado SSL de Cloudflare no se emite en un plazo de 24 horas desde l
     -   una captura de pantalla de los errores que observas.
 
 Pausar temporalmente Cloudflare permitirá que el tráfico HTTPS se sirva de manera apropiada desde tu servidor web de origen mientras el equipo de asistencia investiga el problema.
+
+{{<Aside type="tip">}}
+Si tu dominio se encuentra en una [configuración de CNAME
+(parcial)](https://support.cloudflare.com/hc/articles/360020348832),
+sigue nuestra guía sobre el [suministro de Universal SSL de Cloudflare
+en una configuración de
+CNAME](https://support.cloudflare.com/hc/articles/360020615111#h_989980109291544055191509).
+{{</Aside>}}
 
 ___
 

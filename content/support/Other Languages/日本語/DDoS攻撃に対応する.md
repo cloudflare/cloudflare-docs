@@ -56,11 +56,11 @@ ___
 
 Cloudflareの**ファイアウォール**アプリは、次の方法でトラフィックのブロックを容易にします：
 
--   [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967) \-複数のIPアドレス、/16または/24のIPレンジ、あるいは自律システム番号（ASN）をブロックする場合に推奨されます。 
--   [**ファイアウォールルール**](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) \- 国、有効なIPレンジ、またはより複雑な攻撃パターンをブロックする場合に推奨されます。
+-   [**IP Access Rules**](/waf/tools/ip-access-rules/) \-複数のIPアドレス、/16または/24のIPレンジ、あるいは自律システム番号（ASN）をブロックする場合に推奨されます。 
+-   [**ファイアウォールルール**](/firewall/cf-dashboard/create-edit-delete-rules/) \- 国、有効なIPレンジ、またはより複雑な攻撃パターンをブロックする場合に推奨されます。
 
--   [**Zone Lockdown**](https://support.cloudflare.com/hc/en-us/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-) \-信頼できる IPアドレスまたはサイトの一部のIPレンジのみを許可する場合に推奨されます。
--   [**ユーザーエージェント**](https://support.cloudflare.com/hc/en-us/articles/115001856951-How-do-I-block-malicious-User-Agents-with-Cloudflare-) \-ドメイン全体の [不審なUser Agent Blocking](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) をブロックする場合に推奨されます。
+-   [**Zone Lockdown**](/waf/tools/zone-lockdown/) \-信頼できる IPアドレスまたはサイトの一部のIPレンジのみを許可する場合に推奨されます。
+-   [**ユーザーエージェント**](/waf/tools/user-agent-blocking/) \-ドメイン全体の [不審なUser Agent Blocking](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) をブロックする場合に推奨されます。
 
 どの国またはIPをブロックまたはチャレンジするかを決めるには、ログファイルを確認します。 ホスティングプロバイダーに連絡して、次の情報を入手してください：
 

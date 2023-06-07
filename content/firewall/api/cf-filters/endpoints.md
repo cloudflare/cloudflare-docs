@@ -23,7 +23,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 The Filters API endpoints require a value for `<ZONE_ID>`.
 
-To retrieve a list of zones associated with your account, use the [List Zones](https://developers.cloudflare.com/api/operations/zone-list-zones) operation and note the Zone ID associated with the domain for which you want to manage filters.
+To retrieve a list of zones associated with your account, use the [List Zones](/api/operations/zones-get) operation and note the Zone ID associated with the domain for which you want to manage filters.
 
 {{</Aside>}}
 
@@ -86,7 +86,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-update-individual-filter">Update a filter</a>
+        <a href="/api/operations/filters-update-a-filter">Update a filter</a>
       </td>
       <td>
         <code class="InlineCode">

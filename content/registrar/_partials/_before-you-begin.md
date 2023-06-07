@@ -9,7 +9,7 @@ _build:
 
 * Create [a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
 * [Add the domain](/fundamentals/get-started/setup/add-site/) you are transferring to your Cloudflare account.
-* [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records-in-cloudflare) in the Cloudflare dashboard.
+* [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) in the Cloudflare dashboard.
 * [Change your DNS name servers](/dns/zone-setups/full-setup/) to Cloudflare.
 * Disable DNSSEC by:
   * Removing the DS record at your current DNS host.

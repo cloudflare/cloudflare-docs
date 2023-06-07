@@ -6,6 +6,8 @@ weight: 4
 
 # Microsoft Endpoint Manager
 
+{{<render file="posture/_available-for-warp-with-gateway.md">}}
+
 Cloudflare Zero Trust can integrate with Microsoft Endpoint Manager and Intune to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
 
 ## Prerequisites
@@ -49,19 +51,13 @@ To retrieve those values:
 1. Select a polling frequency for how often Cloudflare Zero Trust should query Microsoft Graph API for information.
 1. Select **Save**.
 
-To ensure the values have been entered correctly, select **Test**.
+{{<render file="/posture/_test-posture-provider.md">}}
 
 ## 3. Configure the posture check
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
-1. Select **Add new**.
-1. Select the Microsoft Endpoint Manager provider.
-1. Configure the [device posture attribute](#microsoft-intune-device-attributes) you want to check.
-1. Select **Save**.
+{{<render file="posture/_configure-posture-check.md" withParameters="Microsoft Endpoint Manager">}}
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the service provider posture check is returning the expected results.
-
-## Microsoft Intune device attributes
+## Device posture attributes
 
 The Microsoft Endpoint Manager device posture check relies on information from the Microsoft Graph API. Refer to Microsoft's [ComplianceState](https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-compliancestate?view=graph-rest-1.0) and [List managedDevices](https://docs.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) documentation for a list of properties returned by the API.
 

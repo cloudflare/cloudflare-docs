@@ -8,7 +8,7 @@ weight: 9
 
 {{<Aside type="note">}}
 
-Many of these limits will increase during Queues' public beta period. [Follow our changelog](https://developers.cloudflare.com/queues/changelog/) or join the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) channel in our Developer Discord to keep up-to-date with changes.
+Many of these limits will increase during Queues' public beta period. [Follow our changelog](/queues/changelog/) or join the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) channel in our Developer Discord to keep up-to-date with changes.
 
 {{</Aside>}}
 
@@ -24,14 +24,14 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 | Maximum per-queue message throughput <sup>3</sup>  | 400 messages per second <sup>4</sup>    |
 | Maximum message retention period <sup>5</sup>      | 4 days (96 hours)                       | 
 | Maximum per-queue backlog size <sup>6</sup>        | 25GB                                    | 
+| Maximum concurrent consumer invocations            | 10                                      | 
 | Maximum consumer invocation duration               | 15 minutes (Refer to [Worker limits](/workers/platform/limits/#cpu-runtime).)  | 
-
 
 {{</table-wrap>}}
 
 Notes:
 
-* <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform).
+* <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 * <sup>2</sup> 1 KB is measured as 1000 bytes. Messages can include up to ~100 bytes of internal metadata that counts towards total message limits.
 * <sup>3</sup> The maximum message throughput per queue will continue to increase during the beta period.
 * <sup>4</sup> Exceeding the maximum message throughput will cause the `.send` and `.sendBatch` methods to throw an exception with a `Too Many Requests` error until your producer falls below the limit.

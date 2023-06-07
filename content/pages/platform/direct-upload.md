@@ -5,7 +5,7 @@ title: Direct Uploads
 
 # Direct Uploads
 
-Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare edge network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
+Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
 
 ## Upload methods
 
@@ -100,8 +100,10 @@ For step-by-step directions on how to use Wrangler and continuous integration to
 To deploy with drag and drop:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. In **Account Home**, select your account > **Pages**.
-3. Select **Create a project** > **Direct Upload** > enter your project name in the provided field > **Create project**. 
+2. In **Account Home**, select your account > **Workers & Pages**.
+3. Select **Create application** > **Pages** > **Upload assets**.
+4. Enter your project name in the provided field and drag and drop your assets.
+5. Select **Deploy**.
 
 Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
 

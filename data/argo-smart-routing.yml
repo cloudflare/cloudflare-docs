@@ -4,7 +4,8 @@ logo: <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://
 product:
   title: Argo Smart Routing
   url: /argo-smart-routing/
-  group: Performance
+  group: Application performance
+  preview_tryout: true
 
 resources:
   community: https://community.cloudflare.com/c/performance/argo/45
@@ -20,3 +21,8 @@ meta:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: argo-smart-routing

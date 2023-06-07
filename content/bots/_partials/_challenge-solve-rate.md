@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-The Challenge Solve Rate (CSR) is the percentage of issued challenges — Legacy CAPTCHA, JS Challenge, or Managed Challenge actions — that were solved. 
+The Challenge Solve Rate (CSR) is the percentage of issued challenges — Interactive Challenge, JS Challenge, or Managed Challenge actions — that were solved. 
 
 ```sql
 CSR = number of challenges solved / number of challenges issued

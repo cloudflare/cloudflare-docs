@@ -18,7 +18,7 @@ Dedicated egress IPs are static IP addresses that can be used to allowlist traff
 To start routing traffic through dedicated egress IPs:
 
 1. Contact your account team to obtain a dedicated egress IP.
-2. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Network**.
+2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 3. Enable **Proxy** for TCP.
 4. (Optional) Select **UDP**. This will allow HTTP/3 traffic to egress with your dedicated IPs.
 
@@ -61,6 +61,13 @@ When you enable dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 databa
 To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](https://www.maxmind.com/en/geoip2-precision-demo) and enter your dedicated egress IP.
 
 ### Egress location
+
+| Destination IP | Destination proxied by Cloudflare | Physical egress location                      | IP geolocation              |
+| -------------- | --------------------------------- | --------------------------------------------- | --------------------------- |
+| IPv4           | No                                | Egresses data center with dedicated egress IP | Matches dedicated egress IP |
+| IPv4           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
+| IPv6           | No                                | Egresses locally connected data center        | Matches dedicated egress IP |
+| IPv6           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
 
 #### IPv4
 

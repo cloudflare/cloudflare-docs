@@ -9,6 +9,15 @@ title: Almacenamiento en la memoria caché de HTML estático con WordPressWooCom
 
 ## Almacenamiento en la memoria caché de HTML estático con WordPress/WooCommerce
 
+{{<Aside type="note">}}
+Los clientes de todos los planes de Cloudflare pueden configurar el
+almacenamiento de archivos HTML en la memoria caché. Sin embargo, solo
+los clientes de los planes Business y Enterprise pueden omitir el
+almacenamiento del HTML en la memoria caché cada vez que se envía una
+cookie con una solicitud (configuración *Bypass Cache on Cookie* en
+**Crear Page Rules**).
+{{</Aside>}}
+
 **Los clientes de los planes Business y Enterprise de Cloudflare** pueden almacenar en la memoria caché vistas de páginas anónimas al usar WordPress con nuestra funcionalidad _Bypass Cache on Cookie_. Esto permite que el HTML estático se almacene en la memoria caché en nuestro perímetro, sin necesidad de que se regenere de una solicitud a otra. Este tutorial le permitirá realizar la configuración con WordPress y WooCommerce. 
 
 Los clientes Enterprise de Cloudflare pueden utilizar _claves de memoria caché personalizadas_ para potenciar su funcionamiento. Si desea obtener más información, póngase en contacto con el administrador del cliente.

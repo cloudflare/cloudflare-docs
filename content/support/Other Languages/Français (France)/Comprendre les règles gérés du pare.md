@@ -27,7 +27,7 @@ Les règles gérées sont disponibles pour les offres Pro, Business et Enterpris
 -   **Package : OWASP ModSecurity Core Rule Set**
 -   **Customer Requested Rules** 
 
-Vous pouvez consulter les menaces bloquées dans le **journal d'activité** de [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/), accessible via **Security** (Sécurité) > **Overview** (Vue d'ensemble).
+Vous pouvez consulter les menaces bloquées dans le **journal d'activité** de [Firewall Analytics](/waf/analytics/), accessible via **Security** (Sécurité) > **Overview** (Vue d'ensemble).
 
 ### Considérations importantes
 
@@ -38,7 +38,7 @@ Vous pouvez consulter les menaces bloquées dans le **journal d'activité** de [
 -   Les règles gérées analysent les réponses JSON pour identifier les vulnérabilités ciblées des API. L'analyse des charges utiles JSON est limitée à 128 Ko.
 -   Les règles gérées atténuent les techniques de remplissage. Voici nos recommandations :
     1.  Activez la règle _100048_. Cette règle protège désormais des attaques de type remplissage mais n'est pas déployée par défaut, car elle est à l'origine de faux positifs dans les environnements des clients. Il est toutefois important que les clients ajustent la configuration de leurs règles gérées. Cloudflare travaille à l'élaboration d'une meilleure solution sur le long terme.
-    2.  Créez une règle de pare-feu à l'aide d'[Expression Editor](https://developers.cloudflare.com/firewall/cf-dashboard/edit-expressions/#expression-editor) en fonction de la nécessité de vérifier les en-têtes et/ou les corps pour bloquer des charges utiles plus importantes (> 128 Ko). Veillez à tester votre règle de pare-feu en mode _Log_ (Journal) en premier lieu, car des faux positifs pourraient être générés.
+    2.  Créez une règle de pare-feu à l'aide d'[Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) en fonction de la nécessité de vérifier les en-têtes et/ou les corps pour bloquer des charges utiles plus importantes (> 128 Ko). Veillez à tester votre règle de pare-feu en mode _Log_ (Journal) en premier lieu, car des faux positifs pourraient être générés.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Cloudflare ne désactive pas certaines règles gérées spécifiques (_WP0025B_, _100043A_ et _100030_, par exemple) même si l'option **Managed rules** (Règles gérées) est sur _Off_ (Désactivé) dans le tableau de bord Cloudflare.
@@ -56,18 +56,18 @@ Par défaut, les règles gérées du pare-feu WAF sont entièrement gérées dep
 
 La définition des contenus suspects est subjective pour chaque site web.  Par exemple, la publication de code PHP sur votre site web est suspecte, sauf si votre site web enseigne le codage et invite les visiteurs à soumettre du code PHP.  Par conséquent, un site web comme celui-ci doit désactiver les règles gérées associées qui interfèrent avec le fonctionnement normal.
 
-Pour tester les faux positifs, configurez les règles gérées du pare-feu WAF en mode **Simulate** (Simuler). Elles enregistreront alors la réponse à d’éventuelles attaques, sans vérification ni blocage. Utilisez également le [**journal d'activité**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) de Firewall Analytics pour déterminer les règles gérées ayant généré les faux positifs.
+Pour tester les faux positifs, configurez les règles gérées du pare-feu WAF en mode **Simulate** (Simuler). Elles enregistreront alors la réponse à d’éventuelles attaques, sans vérification ni blocage. Utilisez également le [**journal d'activité**](/waf/analytics/paid-plans#activity-log) de Firewall Analytics pour déterminer les règles gérées ayant généré les faux positifs.
 
 En cas de faux positif dû à l'[ancien pare-feu WAF](https://support.cloudflare.com/hc/fr-fr/articles/200172016-Understanding-the-Cloudflare-Web-Application-Firewall-WAF-), plusieurs approches s'offrent à vous pour résoudre le problème :
 
 -   **Ajouter les adresses IP du client à la liste d’autorisation d’**[**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967) **:** Si le navigateur ou le client consulte le site depuis les mêmes adresses IP, il est recommandé de l’autoriser.
 -   **Désactiver la ou les** [**règles gérées**](https://support.cloudflare.com/hc/articles/200172016) : Cette opération empêche le blocage ou le test des faux positifs, mais réduit la sécurisation générale du site. Une requête bloquée par l'ID de règle _981176_ fait référence aux règles de l'OWASP. Réduisez la sensibilité OWASP pour résoudre le problème.
--   **Contourner les règles du pare-feu WAF en établissant une règle de pare-feu :** Créez une règle de pare-feu avec l'action **bypass** (contourner) pour désactiver des règles gérées du pare-feu WAF pour une combinaison spécifique de paramètres. Par exemple, [contournez les règles gérées](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/) pour une URL spécifique et une adresse IP ou un agent utilisateur spécifique.
+-   **Contourner les règles du pare-feu WAF en établissant une règle de pare-feu :** Créez une règle de pare-feu avec l'action **bypass** (contourner) pour désactiver des règles gérées du pare-feu WAF pour une combinaison spécifique de paramètres. Par exemple, [contournez les règles gérées](/firewall/cf-firewall-rules/actions/) pour une URL spécifique et une adresse IP ou un agent utilisateur spécifique.
 -   **(Déconseillé) Désactivez les règles gérées du pare-feu WAF pour le trafic vers une URL :** Réduit la sécurité sur le point de terminaison spécifique de l'URL.  Configuration via [Page Rules](https://support.cloudflare.com/hc/fr-fr/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-).
 
 En cas de faux positif dû au [nouveau pare-feu WAF](https://blog.cloudflare.com/new-cloudflare-waf/), plusieurs approches s'offrent à vous pour résoudre le problème :
 
-1.  **Ajouter une exception WAF :** Vous pouvez définir des exceptions WAF dans le [tableau de bord Cloudflare](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-dashboard) ou à l'aide de l'[API Rulesets](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-api) (Ensembles de règles).
+1.  **Ajouter une exception WAF :** Vous pouvez définir des exceptions WAF dans le [tableau de bord Cloudflare](/waf/managed-rulesets/waf-exceptions/define-dashboard) ou à l'aide de l'[API Rulesets](/waf/managed-rulesets/waf-exceptions/define-api) (Ensembles de règles).
 2.  **Désactiver la ou les** [**règles gérées**](https://support.cloudflare.com/hc/articles/200172016) : Cette opération empêche le blocage ou le test des faux positifs, mais réduit la sécurisation générale du site. Une requête bloquée par l'ID de règle _949110_ fait référence aux [nouvelles règles de l'OWASP](https://blog.cloudflare.com/new-cloudflare-waf/). Réduisez la sensibilité OWASP pour résoudre le problème.
 
 **Remarque :** si [vous contactez le support de Cloudflare](https://support.cloudflare.com/hc/articles/200172476) pour vérifier si une règle gérée du pare-feu WAF se déclenche comme prévu, [fournissez un fichier HAR](https://support.cloudflare.com/hc/articles/203118044#h_8c9c815c-0933-49c0-ac00-b700700efce7) capturé lors de l'envoi de la requête concernée.
@@ -87,8 +87,8 @@ Pour identifier les faux négatifs, consultez les journaux HTTP de votre serveur
     -   Par exemple, Cloudflare autorise par défaut les requêtes avec des agents utilisateurs vides. Pour bloquer les requêtes avec un agent utilisateur vide, configurez le **Mode** de la règle sur **Block** (Bloquer).
     -   Autre exemple : si vous cherchez à bloquer des attaques par injection SQL non atténuées, assurez-vous que les règles SQLi appropriées sont activées et attribuez la valeur **Block** (Bloquer) sous le groupe **Cloudflare Specials**.
 -   Les enregistrements DNS qui servent le trafic HTTP sont-ils traités en proxy par Cloudflare ?
--   Une [**règle de pare-feu** contourne-t-elle](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/#supported-actions) des règles gérées ? 
--   Un pays, un NSA, une plage d'adresses IP ou une adresse IP autorisés dans les [**règles d'accès IP**](https://support.cloudflare.com/hc/articles/217074967) ou les [**règles de pare-feu**](https://developers.cloudflare.com/firewall/cf-firewall-rules/) correspondent-ils au trafic de l'attaque ?
+-   Une [**règle de pare-feu** contourne-t-elle](/firewall/cf-firewall-rules/actions/#supported-actions) des règles gérées ? 
+-   Un pays, un NSA, une plage d'adresses IP ou une adresse IP autorisés dans les [**règles d'accès IP**](https://support.cloudflare.com/hc/articles/217074967) ou les [**règles de pare-feu**](/firewall/cf-firewall-rules/) correspondent-ils au trafic de l'attaque ?
 -   Le trafic malveillant est-il dirigé vers les adresses IP de votre serveur d’origine pour contourner la protection Cloudflare ? Bloquez tout le trafic à l’exception du trafic provenant des [adresses IP de Cloudflare](https://www.cloudflare.com/ips/) sur votre serveur web d’origine.
 
 ___
@@ -107,9 +107,9 @@ Lors de l’affichage d’un ensemble de règles, Cloudflare présente les actio
 -   _Disable_ (Désactiver) – désactive la règle spécifique dans le groupe.
 -   _Block_ (Bloquer) – la requête est ignorée.
 -   _Legacy CAPTCHA_ (CAPTCHA hérité) - le visiteur doit résoudre un défi CAPTCHA.
--   _Simulate_ (Simuler) – la demande est autorisée par l’intermédiaire du [**fichier journal d’activité**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log).
+-   _Simulate_ (Simuler) – la demande est autorisée par l’intermédiaire du [**fichier journal d’activité**](/waf/analytics/paid-plans#activity-log).
 
-Le [journal des modifications du pare-feu WAF](https://developers.cloudflare.com/waf/change-log/scheduled-changes/) de Cloudflare permet aux clients de suivre les modifications apportées à l'ensemble de règles **Cloudflare Managed Ruleset**.
+Le [journal des modifications du pare-feu WAF](/waf/change-log/scheduled-changes/) de Cloudflare permet aux clients de suivre les modifications apportées à l'ensemble de règles **Cloudflare Managed Ruleset**.
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 -   _Block_ (Bloquer) – la requête est ignorée.
 -   _Challenge_ (Défi) – le visiteur doit résoudre un défi CAPTCHA.
--   _Simulate_ (Simuler) – la demande est autorisée par l’intermédiaire du [**fichier journal d’activité**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log).
+-   _Simulate_ (Simuler) – la demande est autorisée par l’intermédiaire du [**fichier journal d’activité**](/waf/analytics/paid-plans#activity-log).
 
 Le score de sensibilité requis pour déclencher le pare-feu WAF pour une valeur **Sensitivity** (Sensibilité) spécifique est le suivant :
 
@@ -135,7 +135,7 @@ Pour les requêtes Ajax, les scores suivants sont appliqués à la place :
 -   _Medium_ (Moyen) – 80 et plus
 -   _High_ (Élevé) – 65 et plus
 
-Consultez le [fichier journal d’activité](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) pour connaître le score final ainsi que les individuelles règles déclenchées.
+Consultez le [fichier journal d’activité](/waf/analytics/paid-plans#activity-log) pour connaître le score final ainsi que les individuelles règles déclenchées.
 
 ### Contrôler le package OWASP de Cloudflare
 
@@ -152,6 +152,6 @@ ___
 
 ## Ressources associées
 
--   [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/)
--   [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
--   [Fichier journal des modifications de Cloudflare WAF](https://developers.cloudflare.com/waf/change-log/scheduled-changes/)
+-   [Firewall Analytics](/waf/analytics/)
+-   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
+-   [Fichier journal des modifications de Cloudflare WAF](/waf/change-log/scheduled-changes/)

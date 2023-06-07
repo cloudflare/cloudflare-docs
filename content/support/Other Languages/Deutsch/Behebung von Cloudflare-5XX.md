@@ -152,7 +152,7 @@ Fehler 520 tritt auf, wenn der Ursprungsserver eine leere, unbekannte oder unerw
 Eine schnelle Umgehung des Problems bei gleichzeitiger weiterer
 Untersuchung von 520-Fehlern besteht darin, entweder den DNS-Eintrag in
 der Cloudflare-**DNS**-App als [Nur
-DNS](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+DNS](/dns/manage-dns-records/reference/proxied-dns-records)
 zu kennzeichnen oder [Cloudflare vorübergehend zu
 deaktivieren](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753).
 {{</Aside>}}
@@ -199,7 +199,7 @@ Die beiden häufigsten Ursachen für 521-Fehler sind:
 -   Die Fehlerprotokolle des Ursprungswebservers müssen überprüft werden, um Abstürze oder Ausfälle von Webserver-Anwendungen zu identifizieren.
 -   Es muss bestätigt werden, dass [Cloudflare-IP-Adressen](https://www.cloudflare.com/ips) nicht blockiert sind oder Rate Limiting unterliegen
 -   Alle [Cloudflare-IP-Bereiche](https://www.cloudflare.com/ips) müssen in der Firewall Ihres Ursprungswebservers oder anderer Sicherheitssoftware erlaubt werden
--   Wenn Ihr **SSL/TLS-Modus** auf **Full** oder **Full (Strict**) eingestellt ist, muss bestätigt werden, dass ein [Cloudflare-Ursprungszertifikat](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) installiert ist
+-   Wenn Ihr **SSL/TLS-Modus** auf **Full** oder **Full (Strict**) eingestellt ist, muss bestätigt werden, dass ein [Cloudflare-Ursprungszertifikat](/ssl/origin-configuration/origin-ca) installiert ist
 -   Weitere Informationen zur Fehlerbehebung finden Sie in der [Cloudflare-Community](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461).
 
 ___
@@ -227,7 +227,7 @@ die Ressourcen-Anforderung nach Herstellung der Verbindung bestätigt
 -   Die IP-Adresse des Ursprungsservers in Ihrer Cloudflare-**DNS**\-App stimmt nicht mit der IP-Adresse überein, die zurzeit von Ihrem Hosting-Provider für Ihren Ursprungswebserver bereitgestellt wird.
 -   An Ihrem Ursprungswebserver wurden Pakete verworfen.
 
-Wenn Sie [Cloudflare Pages](https://developers.cloudflare.com/pages/) verwenden, müssen Sie sich vergewissern, dass Sie eine benutzerdefinierte Domain eingerichtet haben und dass Ihr CNAME-Eintrag auf Ihre benutzerdefinierte Pages-Domain verweist. Anweisungen zur Einrichtung einer benutzerdefinierten Pages-Domain finden Sie [hier](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain).
+Wenn Sie [Cloudflare Pages](/pages/) verwenden, müssen Sie sich vergewissern, dass Sie eine benutzerdefinierte Domain eingerichtet haben und dass Ihr CNAME-Eintrag auf Ihre benutzerdefinierte Pages-Domain verweist. Anweisungen zur Einrichtung einer benutzerdefinierten Pages-Domain finden Sie [hier](/pages/getting-started#adding-a-custom-domain).
 
 Wenn nichts des oben Aufgeführten zu einer Lösung führt, sollten Sie die folgenden Informationen von Ihrem Hosting-Provider oder Website-Administrator anfordern, bevor Sie sich [an den Cloudflare-Support wenden](https://support.cloudflare.com/hc/articles/200172476):
 
@@ -248,7 +248,7 @@ Fehler 523 tritt auf, wenn Cloudflare keinen Kontakt mit Ihrem Ursprungswebserve
 {{<Aside type="note">}}
 Wenn Ihr Hosting-Provider die IP-Adresse Ihres Ursprungswebservers
 häufig ändert, siehe Cloudflares Dokumentation zu [dynamischen
-DNS-Updates](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
+DNS-Updates](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
 {{</Aside>}}
 
 Wenn nichts des oben Aufgeführten zu einer Lösung führt, sollten Sie die folgenden Informationen von Ihrem Hosting-Provider oder Website-Administrator anfordern:
@@ -286,7 +286,7 @@ oder
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise-Kunden können den Timeout für Fehler 524 auf bis zu 6000 Sekunden erhöhen, indem der [Proxy-Lese-Timeout-API-Endpunkt](https://api.cloudflare.com/#zone-settings-change-proxy-read-timeout-setting) verwendet wird.
+-   Enterprise-Kunden können den Timeout für Fehler 524 auf bis zu 6000 Sekunden erhöhen, indem der [Proxy-Lese-Timeout-API-Endpunkt](/api/operations/zone-settings-change-proxy_read_timeout-setting) verwendet wird.
 -   Wenn Sie regelmäßig HTTP-Anfragen ausführen, die länger als 100 Sekunden dauern (z. B. umfangreiche Datenexporte), sollten Sie diese Prozesse in der Cloudflare-**DNS**\-App hinter eine Subdomain ohne Proxy (mit grauer Wolke) verschieben.
 -   Wenn Fehler 524 bei einer Domain auftritt, die Cloudflare-Railgun verwendet, vergewissern Sie sich, dass _lan.timeout_ höher eingestellt ist als der Standardwert von 30 Sekunden, und starten Sie dann den Railgun-Dienst neu.
 
@@ -297,7 +297,7 @@ ___
 Fehler 525 weisen darauf hin, dass der SSL-Handshake zwischen Cloudflare und dem Ursprungswebserver fehlgeschlagen ist. Fehler 525 tritt auf, wenn diese beiden Bedingungen erfüllt sind:
 
 1.  Der [SSL-Handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) zwischen Cloudflare und dem Ursprungswebserver schlägt fehl, und
-2.  [_Full_ oder _Full (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) **SSL** ist in der Registerkarte **Übersicht** Ihrer Cloudflare-**SSL/TLS**\-App eingestellt.
+2.  [_Full_ oder _Full (Strict)_](/ssl/origin-configuration/ssl-modes) **SSL** ist in der Registerkarte **Übersicht** Ihrer Cloudflare-**SSL/TLS**\-App eingestellt.
 
 **Lösung**
 
@@ -306,7 +306,7 @@ Fehler 525 weisen darauf hin, dass der SSL-Handshake zwischen Cloudflare und dem
 -   Kein gültiges SSL-Zertifikat installiert.
 -   Port 443 (oder ein anderer benutzerdefinierter sicherer Port) ist nicht offen.
 -   Kein [SNI](https://support.cloudflare.com/hc/articles/360026016272)\-Support
--   Die von Cloudflare akzeptierten [Verschlüsselungs-Suites](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) stimmen nicht mit den vom Ursprungswebserver unterstützten Verschlüsselungs-Suites überein
+-   Die von Cloudflare akzeptierten [Verschlüsselungs-Suites](/ssl/ssl-tls/cipher-suites) stimmen nicht mit den vom Ursprungswebserver unterstützten Verschlüsselungs-Suites überein
 
 {{<Aside type="tip">}}
 Wenn 525-Fehler zeitweise auftreten, sollten Sie die Fehlerprotokolle
@@ -320,8 +320,8 @@ Protokolliergrad](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 
 **Zusätzliche Überprüfungen**
 
--   Überprüfen Sie, ob an Ihrem Ursprungsserver ein Zertifikat installiert ist. Weitere Einzelheiten zur Durchführung einiger Tests finden Sie in [diesem Artikel](https://support.cloudflare.com/hc/de/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4). Falls Sie kein Zertifikat haben, können Sie unser kostenloses [Cloudflare-Ursprungsserver-CA-Zertifikat](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) erstellen und installieren. Mit Ursprungsserver-CA-Zertifikaten können Sie den Traffic zwischen Cloudflare und Ihrem Ursprungswebserver verschlüsseln.
--   [Überprüfen Sie die Cipher Suites](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites), die Ihr Server verwendet, um sicherzustellen, dass sie mit den von Cloudflare unterstützten Funktionen übereinstimmen.
+-   Überprüfen Sie, ob an Ihrem Ursprungsserver ein Zertifikat installiert ist. Weitere Einzelheiten zur Durchführung einiger Tests finden Sie in [diesem Artikel](https://support.cloudflare.com/hc/de/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4). Falls Sie kein Zertifikat haben, können Sie unser kostenloses [Cloudflare-Ursprungsserver-CA-Zertifikat](/ssl/origin-configuration/origin-ca) erstellen und installieren. Mit Ursprungsserver-CA-Zertifikaten können Sie den Traffic zwischen Cloudflare und Ihrem Ursprungswebserver verschlüsseln.
+-   [Überprüfen Sie die Cipher Suites](/ssl/ssl-tls/cipher-suites), die Ihr Server verwendet, um sicherzustellen, dass sie mit den von Cloudflare unterstützten Funktionen übereinstimmen.
 -   Überprüfen Sie die Fehlerprotokolle Ihres Servers anhand der Zeitstempel, zu denen Sie 525-Fehlermeldungen sehen, und überprüfen Sie, ob es Fehler gibt, die zum Zurücksetzen der Verbindung während des SSL-Handshakes führen könnten.
 
 ___
@@ -331,7 +331,7 @@ ___
 Fehler 526 tritt auf, wenn diese beiden Bedingungen erfüllt sind:
 
 1.  Cloudflare kann das SSL-Zertifikat an Ihrem Ursprungswebserver nicht validieren, und
-2.  [_Full SSL (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) **SSL** ist in der Registerkarte **Übersicht** Ihrer Cloudflare-**SSL/TLS**\-App eingestellt.
+2.  [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes#full-strict) **SSL** ist in der Registerkarte **Übersicht** Ihrer Cloudflare-**SSL/TLS**\-App eingestellt.
 
 **Lösung**
 
@@ -352,7 +352,7 @@ Bitten Sie Ihren Server-Administrator oder Hosting-Provider, die SSL-Zertifikate
 
 ![Der Bildschirm zeigt ein SSL-Zertifikat ohne Fehler.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-Wenn der Ursprungsserver ein selbstsigniertes Zertifikat verwendet, konfigurieren Sie die Domain für _Full_ _SSL_ anstatt _Full SSL (Strict)_. Siehe [empfohlene SSL-Einstellungen für Ihren Ursprung](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+Wenn der Ursprungsserver ein selbstsigniertes Zertifikat verwendet, konfigurieren Sie die Domain für _Full_ _SSL_ anstatt _Full SSL (Strict)_. Siehe [empfohlene SSL-Einstellungen für Ihren Ursprung](/ssl/origin-configuration/ssl-modes).
 
 ___
 
@@ -435,7 +435,7 @@ Wenn TLS/SSL-Fehler auftreten, überprüfen Sie Folgendes am Ursprungswebserver 
 -   Port 443 offen ist,
 -   vom Ursprungswebserver ein SSL-Zertifikat präsentiert wird,
 -   das SAN oder der allgemeine Name des SSL-Zertifikats des Ursprungswebservers den angeforderten Hostnamen enthält
--   **SSL** ist in der Registerkarte **Übersicht** der Cloudflare-**SSL/TLS**\-App auf [Full oder Full (Strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) eingestellt
+-   **SSL** ist in der Registerkarte **Übersicht** der Cloudflare-**SSL/TLS**\-App auf [Full oder Full (Strict)](/ssl/origin-configuration/ssl-modes) eingestellt
 
 {{<Aside type="tip">}}
 Wenn das SSL-Zertifikat Ihres Ursprungswebservers selbstsigniert ist,

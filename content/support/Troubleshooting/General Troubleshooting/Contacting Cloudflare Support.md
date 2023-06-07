@@ -6,8 +6,6 @@ title: Contacting Cloudflare Support
 
 # Contacting Cloudflare Support
 
-
-
 ## Guidelines for contacting Cloudflare support
 
 Cloudflare Support _cannot_ perform the following actions:
@@ -21,7 +19,7 @@ Cloudflare Support _cannot_ perform the following actions:
 card numbers, private keys, or API keys with Cloudflare.
 {{</Aside>}}
 
-Before notifying Cloudflare of an issue with your site, refer to the [Cloudflare Status Page](https://www.cloudflarestatus.com/). If reporting issues with your site, ensure to provide adequate details in the support ticket _(refer to_ [_Getting help with an issue_](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support#h_7b55d494-b84d-439b-8e60-e291a9fd3d16) _for more information)_.
+Before notifying Cloudflare of an issue with your site, refer to the [Cloudflare Status Page](https://www.cloudflarestatus.com/). If reporting issues with your site, ensure to provide adequate details in the support ticket _(refer to [Getting help with an issue](#getting-help-with-an-issue) for more information)_.
 
 ___
 
@@ -29,13 +27,10 @@ ___
 
 As a Cloudflare customer, you can contact Cloudflare for support via the community portal or by opening a support ticket, live chat, or phone. Support options can vary depending on your plan.
 
-| -- | Enterprise | Business | Pro | Free |
-| [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes | Yes | Recommended | Recommended |
-
 |   | Enterprise  | Business | Pro | Free |
 |---|---|---|---|---|
 |  [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes  | Yes  | Recommended  | Recommended  |
-| [Support Ticket](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support#h_7b55d494-b84d-439b-8e60-e291a9fd3d16)<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan. | Yes | Yes | Yes | No* |
+| [Support Ticket](#getting-help-with-an-issue)<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan. | Yes | Yes | Yes | No* |
 | **Chat**<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan. | Yes | Yes | No | No |
 | **Emergency Phone**<br/>Use phone support to reach out during emergencies such as site outages or DDoS attacks. | Yes | No | No | No |
 
@@ -51,7 +46,7 @@ _(For Enterprise Emergency Phone Support)_
 For account security, you must verify your identity and account ownership in the Cloudflare dashboard before discussing account settings and sensitive details with Cloudflare Support. There are two verification options:
 
 -   a single-use token that automatically refreshes every thirty (30) seconds, or
--   an [authenticator app token](https://support.cloudflare.com/hc/en-us/articles/200167906/#12345681) on your mobile device.
+-   an [authenticator app token](/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/#configure-totp-mobile-app-authentication-for-two-factor-cloudflare-login) on your mobile device.
 
 ### Authenticating your account
 
@@ -69,7 +64,7 @@ For account security, you must verify your identity and account ownership in the
 
 ![](/support/static/Emergency_Phone_Support.png)
 
-5\. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](https://support.cloudflare.com/hc/en-us/articles/200167906/#12345681) on the following screen. After configuration, the token code will appear in your mobile authentication application.
+5\. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/#configure-totp-mobile-app-authentication-for-two-factor-cloudflare-login) on the following screen. After configuration, the token code will appear in your mobile authentication application.
 
 6\. Wait until the Cloudflare Support agent asks for the code before sharing the verification token.
 
@@ -80,7 +75,7 @@ ___
 To submit a support ticket, follow these steps:
 
 1.  Browse to [https://dash.cloudflare.com/redirect?account=support](https://dash.cloudflare.com/redirect?account=support).
-2.  Enter the **email** and **password** for your Cloudflare account. Your email needs to be [verified](https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg) in order to submit a Support ticket.
+2.  Enter the **email** and **password** for your Cloudflare account. Your email needs to be [verified](/support/account-management-billing/common-account-questions/login-and-account-issues/#cannot-verify-your-email) in order to submit a Support ticket.
 3.  Select the appropriate account requiring assistance.
 4.  Verify that you are now in the Support Portal
 5.  Choose the category and subcategories that best define your issue
@@ -88,7 +83,7 @@ To submit a support ticket, follow these steps:
 7.  Enter a detailed summary of the issue you’re experiencing.
 8.  Review the right-hand panel of the Portal for recommended resources and for troubleshooting guides resulting from diagnostics run against your domain.
 9.  If the provided resources did not solve your issue, click Add more details to submit a ticket\*\*
-10.  Complete the ticket submission fields as completely as possible with the following information. _(__**Please note**_ _that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review_ [_Gathering information for troubleshooting sites_](https://support.cloudflare.com/hc/articles/203118044) _and make sure you include all needed information.)_
+10.  Complete the ticket submission fields as completely as possible with the following information. _(**Please note** that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) and make sure you include all needed information.)_
     -   A detailed description of the issue with the following information:
         -   Timestamp (UTC)
         -   ZoneName/ZoneID
@@ -101,7 +96,7 @@ To submit a support ticket, follow these steps:
         -   HAR files
         -   Screenshots
         -   Relevant logs from the origin web server
-        -   Output from [test tools](https://support.cloudflare.com/hc/articles/203118044) such as MTR, traceroute, dig/nslookup, and cURL
+        -   Output from [test tools](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) such as MTR, traceroute, dig/nslookup, and cURL
     -   Priority level, impact to service / production
     -   Any collaborators whom you wish to be cc’d on the ticket
 11.  Click **Submit Ticket**
@@ -179,5 +174,4 @@ Below are definitions of the priority levels Cloudflare assigns to tickets and t
 
 ### SLOs for other plans
 
--   Pro SLO - 5 days for all priority levels
--   Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).
+-   Pro and Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).

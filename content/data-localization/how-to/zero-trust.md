@@ -21,11 +21,13 @@ This allows your egress traffic to geolocate to the city selected in your [egres
 
 As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/connections/connect-devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)).
 
+{{<render file="gateway/_disable-udp.md" productFolder="cloudflare-one">}}
+
 #### Data Loss Prevention (DLP) 
 
-You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/) and encrypt them with your public key so that only you can examine them later.
+You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/) and encrypt them with your public key so that only you can examine them later.
 
-[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/#data-privacy).
+[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/#data-privacy).
 
 ### Network policies
 
@@ -52,8 +54,8 @@ By default, Cloudflare will store and deliver logs from data centers across our 
  Gateway Network | ✅ Log region can be configured to US | ✅ Logpush can be used from EU <br> 🚧 Logs and Analytics in the dashboard not yet available
 
 Customers also have the option to reduce the logs that Cloudflare stores:
-- You can [exclude PII from logs](/cloudflare-one/analytics/logs/gateway-logs/manage-pii/) 
-- You can [disable logging, or only log blocked requests](/cloudflare-one/analytics/logs/gateway-logs/#selective-logging).
+- You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/) 
+- You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/gateway-logs/#selective-logging).
 
 ## Access 
 

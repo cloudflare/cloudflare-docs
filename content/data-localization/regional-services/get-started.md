@@ -23,8 +23,11 @@ To use Regional Services, you need to first create a DNS record in the dashboard
     - European Union
     - India
     - Japan
-    - United States
+    - United States of America
     - FedRAMP Compliant
+    - ISO 27001 Certified European Union
+    - Germany
+    - Singapore
 
 ## Configure Regional Services via API
 
@@ -232,3 +235,7 @@ header: Response
 
 </div>
 </details>
+
+## Terraform support
+
+You can also configure Regional Services using Terraform. For more details, refer to the [`cloudflare_regional_hostname` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/regional_hostname) in the Terraform documentation.

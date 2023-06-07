@@ -202,7 +202,7 @@ Sempre use HTTPS
 
  | 
 
-Ative ou desative o recurso **[Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https)** da guia **Certificados de borda** no aplicativo **Cloudflare SSL/TLS** . Se ativado, qualquer URL _http://_ será convertido em _https://_ por meio de um redirecionamento 301.
+Ative ou desative o recurso **[Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https)** da guia **Certificados de borda** no aplicativo **Cloudflare SSL/TLS** . Se ativado, qualquer URL _http://_ será convertido em _https://_ por meio de um redirecionamento 301.
 
 Se essa opção não aparecer, você não possui um **Edge Certificate** ativo.
 
@@ -230,7 +230,7 @@ Reescrita Automática de HTTPS
 
  | 
 
-Ative ou desative o recurso **Reescrita Automática de HTTPS da Cloudflare** da guia **Certificados de borda** no aplicativo  **Cloudflare SSL/TLS** . [Saiba mais](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites).
+Ative ou desative o recurso **Reescrita Automática de HTTPS da Cloudflare** da guia **Certificados de borda** no aplicativo  **Cloudflare SSL/TLS** . [Saiba mais](/ssl/edge-certificates/additional-options/automatic-https-rewrites).
 
  | 
 
@@ -243,7 +243,7 @@ TTL de cache de navegador
 
  | 
 
-Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl).
+Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -287,7 +287,7 @@ Cache por tipo de dispositivo
 
  | 
 
-Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](https://developers.cloudflare.com/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -300,7 +300,7 @@ Armadura contra Fraude do Cache
 
  | 
 
-Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](https://developers.cloudflare.com/cache/about/cache-deception-armor)
+Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](/cache/cache-security/cache-deception-armor/)
 
  | 
 
@@ -315,7 +315,7 @@ Chave do cache
 
 Também conhecida como _Chave do cache Personalizada_ .
 
-Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](https://developers.cloudflare.com/cache/about/cache-keys).
+Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](/cache/how-to/cache-keys/).
 
  | 
 
@@ -338,7 +338,7 @@ A aplicação do caching personalizado com base na opção selecionada:
 
 **Standard —** armazena em cache todo o conteúdo estático que possui uma cadeia de consulta.
 
-**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](https://developers.cloudflare.com/cache/about/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
+**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
 
 
  | 
@@ -432,7 +432,7 @@ Desligar:
 -   [Rate Limiting (versão anterior)](https://support.cloudflare.com/hc/articles/115001635128)
 -   [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036)
 -   [Exclusão pelo servidor](https://support.cloudflare.com/hc/articles/200170036)
--   [Bloqueio de URL (zona)](https://support.cloudflare.com/hc/articles/115001595131)
+-   [Bloqueio de URL (zona)](/waf/tools/zone-lockdown/)
 -   [Regras gerenciadas do WAF (versão anterior)](https://support.cloudflare.com/hc/articles/200172016)
 
  | 
@@ -531,14 +531,14 @@ Criptografia Oportunística
 
  | 
 
-Ative ou desative o recurso **Criptografia Oportunística da Cloudflare** da guia **Certificados de borda** no aplicativo **SSL/TLS da Cloudflare** . [Saiba mais](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/opportunistic-encryption).
+Ative ou desative o recurso **Criptografia Oportunística da Cloudflare** da guia **Certificados de borda** no aplicativo **SSL/TLS da Cloudflare** . [Saiba mais](/ssl/edge-certificates/additional-options/opportunistic-encryption).
 
  | 
 
 -   Todos
 
  |
-| Controle do Cache de Origem | O [Controle de Cache de Origem](https://developers.cloudflare.com/cache/about/cache-control) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
+| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/concepts/cache-control/) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
 
 -   Todos
 
@@ -562,7 +562,7 @@ Polish
 
  | 
 
-Aplique opções do recurso **Polish** do aplicativo **Speed**  da Cloudflare. [Saiba mais](https://developers.cloudflare.com/images/polish).
+Aplique opções do recurso **Polish** do aplicativo **Speed**  da Cloudflare. [Saiba mais](/images/polish).
 
  | 
 
@@ -668,7 +668,7 @@ SSL
 
  | 
 
-Opções de controle para o recurso **SSL** da guia **Certificado de borda** no aplicativo **SSL/TLS** da Cloudflare. [Saiba mais](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+Opções de controle para o recurso **SSL** da guia **Certificado de borda** no aplicativo **SSL/TLS** da Cloudflare. [Saiba mais](/ssl/origin-configuration/ssl-modes).
 
  | 
 
@@ -764,12 +764,12 @@ Observe que `example.com/some-path/cloudflare.com` será salvo _sem_ a barra no 
 
 No campo **Se o URL corresponder** de uma regra de página, somente as portas a seguir podem ser especificadas:
 
--   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](https://developers.cloudflare.com/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
--   Uma porta personalizada de um aplicativo HTTPS do [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/).
+-   Uma das portas HTTP/HTTPS [compatíveis com o proxy da Cloudflare](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   Uma porta personalizada de um aplicativo HTTPS do [Cloudflare Spectrum](/spectrum/).
 
 ### Como usar Page Rules com o Workers
 
-Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](https://developers.cloudflare.com/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](https://developers.cloudflare.com/workers/platform/workers-with-page-rules/) na documentação para desenvolvedores.
+Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](/workers/platform/workers-with-page-rules/) na documentação para desenvolvedores.
 
 ___
 

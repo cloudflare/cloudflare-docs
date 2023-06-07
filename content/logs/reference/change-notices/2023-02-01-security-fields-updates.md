@@ -48,7 +48,7 @@ The following concepts are used below in the reviewed field descriptions:
   * `block`
   * `js_challenge`
   * `managed_challenge`
-  * `challenge` (_Legacy CAPTCHA_)
+  * `challenge` (_Interactive Challenge_)
 
 For more information on these actions, refer to the [Actions](/ruleset-engine/rules-language/actions/) reference in the Rules language documentation.
 
@@ -60,7 +60,7 @@ For more information on these actions, refer to the [Actions](/ruleset-engine/ru
 
 ## HTTP Requests dataset changes
 
-The following fields will be renamed in the [HTTP Requests](/logs/reference/log-fields/zone/firewall_events/) dataset according to the two-phase strategy outlined in the [timeline](#timeline):
+The following fields will be renamed in the [HTTP Requests](/logs/reference/log-fields/zone/http_requests/) dataset according to the two-phase strategy outlined in the [timeline](#timeline):
 
 {{<table-wrap>}}
 
@@ -70,7 +70,7 @@ New field name | Type | Description | Old field name<br>(removed on Aug 1, 2023)
 `SecurityRuleDescription`	| String | Rule description of the security rule that triggered a terminating action, if any. | `WAFRuleMessage`
 `SecurityAction` | String | Rule action of the security rule that triggered a terminating action, if any. | `WAFAction`
 `SecurityRuleIDs` | String Array | Array of security rule IDs that matched the request. | `FirewallMatchesRuleIDs`
-`SecurityActions` | String Array | Array of actions that Cloudflare security products performed on this request. | `FirewallMatchesActions`
+`SecurityActions` | String Array | Array of actions that Cloudflare security products performed on the request. | `FirewallMatchesActions`
 `SecuritySources` | String Array | Array of Cloudflare security products that matched the request. | `FirewallMatchesSources`
 
 {{</table-wrap>}}
@@ -96,8 +96,8 @@ The following fields will be added to the [Firewall Events](/logs/reference/log-
 
 Field name    | Type   | Description
 --------------|--------|--------------------------------------------
-`Description` | String | Rule description for this event.
-`Ref`         | String | User-defined rule reference for this event.
+`Description` | String | The description of the rule triggered by the request.
+`Ref`         | String | The user-defined identifier for the rule triggered by the request.
 
 {{</table-wrap>}}
 
@@ -120,7 +120,7 @@ Cloudflare will also add the following field to the `firewallEventsAdaptive`, `f
 
 Field name    | Type   | Description
 --------------|--------|-----------------------------
-`description` | String | Rule description for this event.
+`description` | String | The description of the rule triggered by the request.
 
 {{</table-wrap>}}
 
@@ -128,10 +128,36 @@ These new fields will become gradually available.
 
 For more information on the available datasets, refer to [GraphQL datasets](/analytics/graphql-api/features/data-sets/).
 
-## Update your SIEM systems
+## Update your Logpush jobs and SIEM systems
 
-You may need to update external filters or reports in your SIEM systems to reflect the renamed, added, or removed log fields.
+Cloudflare will not update existing Logpush jobs to use the renamed fields. You will need to update the jobs according to the instructions provided below.
 
-{{<Aside type="note" header="Additional storage requirements">}}
-Cloudflare Logs will have additional fields between the start of Phase 1 and the beginning of Phase 2, due to the field renaming strategy outlined in the overview section (add new fields first, remove old fields later). This means that each log entry will require additional storage space during this period.
-{{</Aside>}}
+After updating Logpush jobs, you may need to update external filters or reports in your SIEM systems to reflect the log field changes.
+
+### Update Logpush job in the dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Analytics & Logs** > **Logs**.
+3. Select **Edit** next to the Logpush job you wish to edit.
+4. Under **Select data fields**, update the fields in your job. The new security log fields are available under **General**.
+5. Select **Save changes**.
+
+### Update Logpush job via API
+
+Follow the instructions in [Updating log_pull options](/logs/tutorials/examples/example-logpush-curl/#step-6---updating-logpull_options) to update the fields in the Logpush job.
+
+### Update Logpush job via Terraform
+
+If you are already managing Logpush jobs via Terraform, update the `logpull_options` in your existing [`cloudflare_logpush_job`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/logpush_job) Terraform resource. For example:
+
+```diff
+  resource "cloudflare_logpush_job" "example_job" {
+    enabled             = true
+    zone_id             = "<ZONE_ID>"
+    name                = "My-logpush-job"
+-   logpull_options     = "fields=RayID,ClientIP,EdgeStartTimestamp,WAFAction,WAFProfile&timestamps=rfc3339"
++   logpull_options     = "fields=RayID,ClientIP,EdgeStartTimestamp,SecurityAction&timestamps=rfc3339"
+    destination_conf = "r2://cloudflare-logs/http_requests/date={DATE}?account-id=${var.account_id}&access-key-id=${cloudflare_api_token.logpush_r2_token.id}&secret-access-key=${sha256(cloudflare_api_token.logpush_r2_token.value)}"
+    dataset             = "http_requests"
+  }
+```

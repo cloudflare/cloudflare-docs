@@ -50,11 +50,15 @@ The following example illustrates a rule that blocks any visitor that does not p
 
 For the following example URL,
 
-_test.domain.com/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D_
+```
+test.domain.com/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D
+```
 
 The example firewall rule looks like:
 
-_(http.host eq "test.domain.com" and not is\_timed\_hmac\_valid\_v0("mysecrettoken", http.request.uri,10800, http.request.timestamp.sec,8))_
+```
+(http.host eq "test.domain.com" and not is\_timed\_hmac\_valid\_v0("mysecrettoken", http.request.uri,10800, http.request.timestamp.sec,8))
+```
 
 The components of this example firewall rule (using the example URL above) include:
 
@@ -69,22 +73,50 @@ To generate tokens for the paths using this Firewall Rule:
 ### Python 3.8
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import hmac</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import base64</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import urllib.parse</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import time</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">from hashlib import sha256</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">message = &quot;/download/cat.jpg&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">secret = &quot;mysecrettoken&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">separator = &quot;?verify=&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">timestamp = str(int(time.time()))</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">digest = hmac.new((secret).encode('utf8'), &quot;{}{}&quot;.format(message,timestamp).encode('utf8'), sha256)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">token = urllib.parse.quote_plus(base64.b64encode(digest.digest()))</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">print(&quot;{}{}{}-{}&quot;.format(message, separator, timestamp, token))</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+```python
+import hmac
+import base64
+import urllib.parse
+import time
+from hashlib import sha256
+message = "/download/cat.jpg"
+secret = "mysecrettoken"
+separator = "?verify="
+timestamp = str(int(time.time()))
+digest = hmac.new((secret).encode('utf8'), "{}{}".format(message,timestamp).encode('utf8'), sha256)
+token = urllib.parse.quote_plus(base64.b64encode(digest.digest()))
+print("{}{}{}-{}".format(message, separator, timestamp, token))
+```
 
 ### Python 2.7
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import hmac</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import base64</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import time</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import urllib</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">from hashlib import sha256</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">message = &quot;/download/cat.jpg&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">secret = &quot;mysecrettoken&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">separator = &quot;verify&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">timestamp = str(int(time.time()))</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">digest = hmac.new(secret, message + timestamp, sha256)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">param  = urllib.urlencode({separator: '%s-%s' % (timestamp, base64.b64encode(digest.digest()))})</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">print(&quot;{}{}&quot;.format(message, param))</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+```python
+import hmac
+import base64
+import time
+import urllib
+from hashlib import sha256
+message = "/download/cat.jpg"
+secret = "mysecrettoken"
+separator = "verify"
+timestamp = str(int(time.time()))
+digest = hmac.new(secret, message + timestamp, sha256)
+param  = urllib.urlencode({separator: '%s-%s' % (timestamp, base64.b64encode(digest.digest()))})
+print("{}{}".format(message, param))
+```
 
 ### PHP
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$message = &quot;/download/cat.jpg&quot;;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$secret = &quot;mysecrettoken&quot;;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$separator = &quot;?verify=&quot;;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$time   = time();</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$token  = $time . &quot;-&quot; . urlencode(base64_encode(hash_hmac(&quot;sha256&quot;, $message . $time, $secret, true)));</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">echo($message . $separator . $token);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
-
+```php
+$message = "/download/cat.jpg";
+$secret = "mysecrettoken";
+$separator = "?verify=";
+$time   = time();
+$token  = $time . "-" . urlencode(base64_encode(hash_hmac("sha256", $message . $time, $secret, true)));
+echo($message . $separator . $token);
+```
 ___
 
 ## Implement token creation
@@ -94,22 +126,42 @@ Implementing the token creation requires the following code entered at your orig
 ### PHP Version
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;?php</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">// Generate valid URL token$secret = &quot;thisisasharedsecret&quot;;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$time   = time();</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$token  = $time . &quot;-&quot; . urlencode(base64_encode(hash_hmac(&quot;sha256&quot;, &quot;/download/private.jpg$time&quot;, $secret, true)));param   = &quot;verify=&quot; . $token;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">?&gt;</span></div></span></span></span></code></pre>{{</raw>}}
+```php
+<?php
+// Generate valid URL token$secret = "thisisasharedsecret";
+$time   = time();
+$token  = $time . "-" . urlencode(base64_encode(hash_hmac("sha256", "/download/private.jpg$time", $secret, true)));param   = "verify=" . $token;
+?>
+```
 
 ### Python Version
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import hmac</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import base64</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import time</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">import urllib</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">from hashlib import sha256</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">secret = &quot;thisisasharedsecret&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">time   = str(int(time.time()))</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">digest = hmac.new(secret, &quot;/download/cat.jpg&quot; + time, sha256)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">param  = urllib.urlencode({'verify': '%s-%s' % (time, base64.b64encode(digest.digest()))})</span></div></span></span></span></code></pre>{{</raw>}}
+```python
+import hmac
+import base64
+import time
+import urllib
+from hashlib import sha256
+
+secret = "thisisasharedsecret"
+time   = str(int(time.time()))
+digest = hmac.new(secret, "/download/cat.jpg" + time, sha256)
+param  = urllib.urlencode({'verify': '%s-%s' % (time, base64.b64encode(digest.digest()))})
+```
 
 This will generate a URL parameter such as:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">verify=1484063137-IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D</span></div></span></span></span></code></pre>{{</raw>}}
+```
+verify=1484063137-IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D
+```
 
 Which you will then need to append to any URL under the domain.com/download/\* path. For example:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D</span></div></span></span></span></code></pre>{{</raw>}}
+```
+/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D
+```
 
 Please note that the token parameter needs to be the last parameter in the query string. You can test if URLs are being generated correctly on the server by enabling WAF managed rules on _Simulate_ and monitoring the activity log in **Security** > **Events**.

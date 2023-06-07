@@ -3,7 +3,7 @@ pcx_content_type: faq
 title: Getting started with Cloudflare Zero Trust
 weight: 2
 meta:
-    description: Review FAQs about getting started with Cloudflare Zero Trust.
+  description: Review FAQs about getting started with Cloudflare Zero Trust.
 structured_data: true
 ---
 
@@ -26,13 +26,13 @@ You can sign up today at [this link](https://dash.cloudflare.com/sign-up/teams).
 
 {{<faq-answer>}}
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in the Zero Trust dashboard under **Settings** > **General**.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in Zero Trust under **Settings** > **Custom Pages**.
 
 | team name        | team domain                             |
 | ---------------- | --------------------------------------- |
 | `your-team-name` | `<your-team-name>.cloudflareaccess.com` |
 
-You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. Cloudflare dashboard SSO does not currently support team name changes. 
+You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. Cloudflare dashboard SSO does not currently support team name changes.
 
 {{<Aside type="warning" header="Warning">}}
 If you change your team name, you need to update your organization’s identity providers (IdPs) and the WARP client to reflect the new team name in order to avoid any mismatch errors.
@@ -46,7 +46,7 @@ If you change your team name, you need to update your organization’s identity 
 
 {{<faq-answer>}}
 
-To make changes to your subscription, visit the Billing section under Account on the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/). You can change or cancel your subscription at any time. Just remember - if you downgrade your plan during a billing cycle, your downgraded pricing will apply in the next billing cycle. If you upgrade during a billing cycle, you will be billed for the upgraded plan at the moment you select it.
+To make changes to your subscription, visit the Billing section under Account in [Zero Trust](https://one.dash.cloudflare.com/). You can change or cancel your subscription at any time. Just remember - if you downgrade your plan during a billing cycle, your downgraded pricing will apply in the next billing cycle. If you upgrade during a billing cycle, you will be billed for the upgraded plan at the moment you select it.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -64,7 +64,7 @@ User seats can be removed for Access and Gateway at **My Team** > **Users**. Rem
 
 - **Access**: All active sessions for that user will be invalidated. A user will be able to log back into an application unless you create an [Access policy](/cloudflare-one/policies/access/) to block future logins from that user.
 
-- **Gateway**: All active devices for that user will be logged out of your Zero Trust organization, which stops all filtering and routing via the WARP client. A user will be able to re-enroll their device unless you create a [device enrollment policy](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) to block them.
+- **Gateway**: All active devices for that user will be logged out of your Zero Trust organization, which stops all filtering and routing via the WARP client. A user will be able to re-enroll their device unless you create a [device enrollment policy](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to block them.
 
 {{<Aside type="warning">}}
 

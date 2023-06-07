@@ -86,3 +86,8 @@ Una vez llegue el momento de la renovación, el uso del [comando](https://letsen
 -   No haya redirecciones aplicadas para esa dirección URL. 
 
 De forma opcional, la repetición de los pasos anteriores también emitirá un nuevo certificado.
+
+{{<Aside type="note">}}
+El cliente oficial todavía no admite el método de validación DNS; sin
+embargo, existen utilidades de terceros que utilizan este método.
+{{</Aside>}}

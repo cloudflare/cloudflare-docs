@@ -13,7 +13,28 @@ title: Cómo solucionar errores 1XXX de Clouflare
 
 Los errores que se describen en este documento pueden ocurrir al visitar un sitio web redirigido mediante proxy por Cloudflare. Consulta la [documentación de la API de Cloudflare](https://api.cloudflare.com/) si deseas más información sobre la API de Cloudflare o los errores del panel de control. Los errores HTTP 409, 530, 403 y 429 son los códigos de error de HTTP que se devuelven en el encabezado de estado de HTTP a modo de respuesta. Los errores 1XXX aparecen en el cuerpo HTML de la respuesta.
 
+{{<Aside type="note">}}
+Las **[páginas de errores
+personalizados](https://support.cloudflare.com/hc/articles/200172706)**
+de Cloudflare permiten a los clientes cambiar la apariencia de las
+páginas de error predeterminadas que se analizan en este artículo.
+{{</Aside>}}
+
 Si las soluciones para cada descripción de error que se muestran a continuación no resuelven el error, [ponte en contacto con Soporte de Cloudflare](https://support.cloudflare.com/hc/articles/200172476).
+
+{{<Aside type="note">}}
+Solo el propietario del sitio puede contactar con Cloudflare para
+recibir asistencia técnica. Busca información de contacto para un
+dominio a través de la [base de datos
+Whois](https://whois.icann.org/en/lookup).
+{{</Aside>}}
+
+{{<Aside type="note">}}
+Todos los usuarios de los planes Pro, Business y Enterprise disponen de
+soporte por correo electrónico. Los usuarios de los planes Business y
+Enterprise también tienen acceso a soporte por chat. Si necesitas más
+ayuda, consulta [nuestros planes](https://www.cloudflare.com/plans/).
+{{</Aside>}}
 
 ___
 
@@ -44,15 +65,15 @@ ___
 -   Un dominio externo que no está utilizando Cloudflare tiene un registro CNAME para un dominio activo en Cloudflare.
 -   El destino del registro CNAME del DNS no se resuelve.
 -   Un registro CNAME en tu aplicación DNS de Cloudflare requiere una solución a través de un proveedor de DNS que está actualmente desconectado.
--   [Always Online](https://developers.cloudflare.com/cache/about/always-online) está activado para un dominio de [nombre de servidor personalizado (SSL para SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas)).
+-   [Always Online](/cache/how-to/always-online/) está activado para un dominio de [nombre de servidor personalizado (SSL para SaaS](/ssl/ssl-for-saas)).
 
 ### Solución
 
 Un dominio que no es de Cloudflare no puede generar un registro CNAME para un dominio Cloudflare, salvo que el dominio que no es de Cloudflare se añada a una cuenta de Cloudflare.
 
-Intentar acceder directamente a los registros DNS utilizados para las [configuraciones CNAME de Cloudflare](https://developers.cloudflare.com/dns/zone-setups/partial-setup) también provoca un error 1001 (por ejemplo: _www.ejemplo.com.cdn.cloudflare.net_).
+Intentar acceder directamente a los registros DNS utilizados para las [configuraciones CNAME de Cloudflare](/dns/zone-setups/partial-setup) también provoca un error 1001 (por ejemplo: _www.ejemplo.com.cdn.cloudflare.net_).
 
-Desactiva [Always Online](https://developers.cloudflare.com/cache/how-to/enable-always-online) si utilizas [nombres de servidor personalizados (SSL para SaaS)](https://developers.cloudflare.com/ssl/ssl-for-saas).
+Desactiva [Always Online](/cache/how-to/always-online/#enable-always-online) si utilizas [nombres de servidor personalizados (SSL para SaaS)](/ssl/ssl-for-saas).
 
 ___
 
@@ -129,6 +150,10 @@ ___
 
 Un cliente de Cloudflare bloqueó el tráfico de tu cliente o navegador.
 
+{{<Aside type="note">}}
+El error 1006 también se origina en la aplicación **Workers** de Cloudflare en la pestaña **Vista previa** cuando un cliente usa **[Bloqueo de zona](/waf/tools/zone-lockdown/)** u otra función de seguridad de Cloudflare para bloquear las direcciones IP de la plataforma de Google Cloud de la que depende la pestaña **Vista previa**.
+{{</Aside>}}
+
 ### Solución
 
 Solicita al propietario del sitio web que investigue sus configuraciones de seguridad de Cloudflare o que permita la dirección IP de tu cliente. Como el propietario del sitio web bloqueó tu solicitud, el departamento de Soporte de Cloudflare no puede anular las configuraciones de seguridad de un cliente.
@@ -157,6 +182,12 @@ El propietario de un sitio web bloqueó tu solicitud por el navegador web de s
 
 Notifica al propietario del sitio web del bloqueo. Si no encuentras información para contactar con el propietario del sitio web, busca los datos de contacto del dominio en la [base de datos Whois](https://whois.icann.org/en/lookup). Los propietarios de sitios desactivan la  **comprobación de integridad** del **explorador** a través de la pestaña **Configuración** de la aplicación de  **firewall**.
 
+{{<Aside type="note">}}
+Como el propietario del sitio web realizó el bloqueo, el departamento de
+Soporte de Cloudflare no puede anular las configuraciones de seguridad
+de un cliente.
+{{</Aside>}}
+
 ___
 
 ## Error 1011: Acceso denegado (Hotlink denegado)
@@ -168,6 +199,12 @@ Una solicitud se hace para un recurso que utiliza [protección hotlink de Clo
 ### Solución
 
 Notifica al propietario del sitio web del bloqueo. Si no encuentras información para contactar con el propietario del sitio web, busca los datos de contacto del dominio en la [base de datos Whois](https://whois.icann.org/en/lookup).  La **protección Hotlink** se administra a través de la aplicación **Scrape Shield** de Cloudflare.
+
+{{<Aside type="note">}}
+Como el propietario del sitio web realizó el bloqueo, el departamento de
+Soporte de Cloudflare no puede anular las configuraciones de seguridad
+de un cliente.
+{{</Aside>}}
 
 ___
 
@@ -181,13 +218,19 @@ Un propietario de un sitio web prohíbe el acceso en función de la actividad m
 
 Actualiza tu software de antivirus y ejecuta un análisis completo del sistema. Cloudflare no puede anular las configuraciones de seguridad que el propietario del sitio ha establecido para el dominio. Para solicitar acceso al sitio web, ponte en contacto con el propietario del sitio para que permita tu dirección IP. Si no encuentras información para contactar con el propietario del sitio web, busca los datos de contacto del dominio en la [base de datos Whois](https://whois.icann.org/en/lookup).
 
+{{<Aside type="note">}}
+Como el propietario del sitio web realizó el bloqueo, el departamento de
+Soporte de Cloudflare no puede anular las configuraciones de seguridad
+de un cliente.
+{{</Aside>}}
+
 ___
 
 ## Error 1013: El nombre del servidor HTTP y el nombre de servidor TLS SNI no coinciden
 
 ### Causas habituales
 
-El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
+El nombre del servidor que envía el cliente o el navegador a través de la [indicación de nombre de servidor](/fundamentals/glossary#server-name-indication-sni) (SNI) no es compatible con el encabezado del servidor de la solicitud.
 
 ### Solución
 
@@ -210,9 +253,17 @@ ___
 
 Por defecto, Cloudflare prohíbe un _registro CNAME_ de DNS entre dominios en diferentes cuentas de Cloudflare. _Los registros CNAME_ se permiten dentro de un dominio (_www.ejemplo.com_ con CNAME a _api.ejemplo.com_) y entre zonas en la misma cuenta de usuario (_www.ejemplo.com_ con CNAME a _www.ejemplo.net_) o utilizando nuestra solución [Cloudflare para SaaS1](https://www.cloudflare.com/saas/).
 
+{{<Aside type="warning">}}
+[Cloudflare Apps](https://www.cloudflare.com/apps/) no es compatible por
+ahora con [SSL para
+SaaS](/ssl/ssl-for-saas/), por lo que
+cualquier aplicación que utilice un dominio configurado en nuestra
+solución para SaaS puede enviar un mensaje de error 1014.
+{{</Aside>}}
+
 ### Solución
 
-Para permitir la resolución del registro CNAME a un dominio en una cuenta de Cloudflare diferente, el propietario del dominio de destino CNAME debería utilizar [Cloudflare para SaaS](https://www.cloudflare.com/saas/), más específicamente nuestra solución [SSL para SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas/) .
+Para permitir la resolución del registro CNAME a un dominio en una cuenta de Cloudflare diferente, el propietario del dominio de destino CNAME debería utilizar [Cloudflare para SaaS](https://www.cloudflare.com/saas/), más específicamente nuestra solución [SSL para SaaS](/ssl/ssl-for-saas/) .
 
 ___
 
@@ -222,11 +273,27 @@ ___
 
 El propietario del sitio implementó la función de [limitación de velocidad](https://support.cloudflare.com/hc/articles/115001635128) que afecta el tráfico de tu visitante.
 
+{{<Aside type="note">}}
+*Imposible de purgar* es otro código de error 1015 que se relaciona con
+la [purga de caché de
+Cloudflare](/cache/how-to/purge-cache).
+Reintenta borrar la memoria caché y ponte en contacto con [Soporte de
+Cloudflare](https://support.cloudflare.com/hc/articles/200172476) si
+persiste el error.
+{{</Aside>}}
+
 ### Solución
 
 -   Si eres un visitante del sitio, ponte en contacto con el propietario del sitio para solicitar la exclusión de la función de limitación de velocidad de tu IP.
 -   Si eres el propietario del sitio, revisa los [umbrales de la función de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115001635128) y ajusta tu configuración de limitación de velocidad.
 -   Si tu limitación de velocidad bloquea las solicitudes en un periodo corto de tiempo, 1 segundo por ejemplo, trata de aumentar el periodo de tiempo a 10 segundos.
+
+{{<Aside type="tip">}}
+Si esperas que Cloudflare Worker supere los límites de velocidad
+consulta la [documentación de
+Workers](/workers/platform/limits) a
+modo de guía.
+{{</Aside>}}
 
 ___
 
@@ -240,8 +307,8 @@ Las causas más habituales del error 1016 son las siguientes:
 
 -   Falta el _registro A_ de DNS que menciona la dirección IP de origen.
 -   Un _registro CNAME_ en el DNS de Cloudflare apunta a un dominio externo irrecuperable.
--   Los nombres del servidor de origen (CNAME) en tu [Load Balancer](https://developers.cloudflare.com/load-balancing/) predeterminado de Cloudflare, la región y el conjunto de soluciones alternativas son irresolubles. Utiliza un grupo de servidores de reserva configurado con una dirección IP de origen como recurso por si el resto de grupos no estuvieran disponibles.
--   Cuando se crea una aplicación de Spectrum con un origen CNAME, primero debes crear un CNAME en el lado del DNS de Cloudflare que apunte al origen. Consulta [Orígenes de CNAME Spectrum](https://developers.cloudflare.com/spectrum/how-to/cname-origins) para más información.
+-   Los nombres del servidor de origen (CNAME) en tu [Load Balancer](/load-balancing/) predeterminado de Cloudflare, la región y el conjunto de soluciones alternativas son irresolubles. Utiliza un grupo de servidores de reserva configurado con una dirección IP de origen como recurso por si el resto de grupos no estuvieran disponibles.
+-   Cuando se crea una aplicación de Spectrum con un origen CNAME, primero debes crear un CNAME en el lado del DNS de Cloudflare que apunte al origen. Consulta [Orígenes de CNAME Spectrum](/spectrum/how-to/cname-origins) para más información.
 
 ### Solución
 
@@ -258,6 +325,10 @@ ___
 
 -   El dominio de Cloudflare se activó recientemente y existe un retraso que propaga las configuraciones del dominio a la red perimetral de Cloudflare.
 -   El dominio de Cloudflare se creó a través de un socio de Cloudflare (p. ej., un proveedor de hospedaje) y el DNS del proveedor falló.
+
+{{<Aside type="note">}}
+El error 1018 se devuelve a través de un código de respuesta HTTP 409.
+{{</Aside>}}
 
 ### Solución
 
@@ -294,9 +365,15 @@ Si no eres el propietario del sitio web, facilita una captura de pantalla al pro
 Si eres el propietario del sitio web:
 
 1.  Consigue una captura de pantalla del error 1020 de tu cliente
-2.  Busca en el [**Registro de eventos de firewall**](https://developers.cloudflare.com/waf/analytics) en la pestaña **Descripción general** de tu aplicación de **firewall** de Cloudflare para ver el **RayID** o la dirección IP del cliente en el mensaje de error 1020 del visitante.
+2.  Busca en el [**Registro de eventos de firewall**](/waf/analytics) en la pestaña **Descripción general** de tu aplicación de **firewall** de Cloudflare para ver el **RayID** o la dirección IP del cliente en el mensaje de error 1020 del visitante.
 
-3\. Evalúa la causa del bloqueo y actualiza la **Regla de firewall** o permite la dirección IP del visitante en las [**Reglas de acceso IP**](https://support.cloudflare.com/hc/articles/217074967).
+{{<Aside type="note">}}
+Convierte la indicación de fecha y hora de UTC (tiempo universal
+coordinado) del error 1020 a tu zona horaria local cuando busques en
+**Registro de eventos de firewall**.
+{{</Aside>}}
+
+3. Evalúa la causa del bloqueo y actualiza la **Regla de firewall** o permite la dirección IP del visitante en las [**Reglas de acceso IP**](https://support.cloudflare.com/hc/articles/217074967).
 
 ___
 
@@ -306,6 +383,10 @@ ___
 
 -   Si el propietario acaba de registrarse en Cloudflare, la información del sitio web puede tardar unos minutos en distribuirse por nuestra red global. Algo está mal en la configuración del sitio.
 -   Por lo general, esto sucede cuando las cuentas se han registrado con una organización asociada (por ejemplo, un proveedor de hospedaje) y el DNS del proveedor falla.
+
+{{<Aside type="note">}}
+El error 1018 se devuelve a través de un código de respuesta HTTP 409.
+{{</Aside>}}
 
 ### Solución
 
@@ -321,7 +402,7 @@ ___
 
 ### Causas habituales
 
-No se atiende una solicitud porque el dominio ha alcanzado [los límites del plan para la aplicación Cloudflare Workers](https://developers.cloudflare.com/workers/platform/limits).
+No se atiende una solicitud porque el dominio ha alcanzado [los límites del plan para la aplicación Cloudflare Workers](/workers/platform/limits).
 
 ### Solución:
 
@@ -338,7 +419,7 @@ Has solicitado una página en un sitio web (`tunnel.ejemplo.com`) que está en l
 ### Solución
 
 -   **Si eres un visitante del sitio web**: por favor, inténtalo de nuevo en unos minutos.
--   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para tu túnel.
+-   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para tu túnel.
 
 ___
 
@@ -412,7 +493,7 @@ Estás intentando modificar un encabezado HTTP cuyas reglas de modificación del
 
 ### Solución
 
-Asegúrate de que no estás intentando modificar uno de los [encabezados de solicitud HTTP reservados](https://developers.cloudflare.com/rules/transform#http-request-header-modification-rules).
+Asegúrate de que no estás intentando modificar uno de los [encabezados de solicitud HTTP reservados](/rules/transform#http-request-header-modification-rules).
 
 ___
 
@@ -425,7 +506,7 @@ El valor del encabezado agregado/modificado es demasiado largo o contiene caract
 ### Solución
 
 -   Utiliza un valor o una expresión más corta para definir el valor del encabezado.
--   Elimina los caracteres que no están permitidos. Consulta la sección [Formato de los nombres y valores de los encabezados de las solicitudes HTTP](https://developers.cloudflare.com/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values) en Documentación para desarrolladores para obtener más información sobre los caracteres permitidos.
+-   Elimina los caracteres que no están permitidos. Consulta la sección [Formato de los nombres y valores de los encabezados de las solicitudes HTTP](/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values) en Documentación para desarrolladores para obtener más información sobre los caracteres permitidos.
 
 ___
 
@@ -445,7 +526,7 @@ ___
 
 ### Causas habituales
 
-Cloudflare Worker supera el [Límite de tiempo de CPU](https://developers.cloudflare.com/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
+Cloudflare Worker supera el [Límite de tiempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
 
 ### Solución
 

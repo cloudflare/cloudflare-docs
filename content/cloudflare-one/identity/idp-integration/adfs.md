@@ -125,7 +125,7 @@ Now you’ll configure Cloudflare to recognize ADFS by extracting the _token-sig
 
 To export the certificate:
 
-1.  Within the ADFS management console, select the **Service** under AD FS and choose the **Certificates*** folder which contains the certificate to export.
+1.  Within the ADFS management console, select the **Service** under AD FS and choose the **Certificates\*** folder which contains the certificate to export.
 
 1.  In the **Certificates** card, right-click on the entry under **Token-signing**, and select **View certificate**. The **Certificates** window displays.
 
@@ -161,7 +161,7 @@ Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSi
 
 To enable Cloudflare Zero Trust to accept the claims and assertions sent from ADFS, follow these steps:
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

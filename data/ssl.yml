@@ -4,7 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M23.4
 product:
   title: SSL/TLS
   url: /ssl/
-  group: Security
+  group: Application performance
+  additional_groups: [Application security]
 
 meta:
   title: Cloudflare SSL/TLS docs
@@ -22,3 +23,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: ssl

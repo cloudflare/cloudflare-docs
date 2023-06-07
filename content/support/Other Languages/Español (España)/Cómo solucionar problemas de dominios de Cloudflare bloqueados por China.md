@@ -20,3 +20,8 @@ Para confirmar si tus IP de Cloudflare asociadas con tu dominio están bloqueada
 3\. La respuesta de la resolución de DNS para el dominio desde una ubicación en China.  Considera el uso de una herramienta como el [Analizador de DNS](https://dnschecker.org/).
 
 4\. El tipo de contenido que tiene tu sitio.  China censura ciertos contenidos que incluyen pornografía, juegos de azar y algunas discusiones políticas.
+
+{{<Aside type="note">}}
+La asistencia de Cloudflare solo puede confirmar si un dominio está
+bloqueado por China y no tiene control sobre el desbloqueo.
+{{</Aside>}}

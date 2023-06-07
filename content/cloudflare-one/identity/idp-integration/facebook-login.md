@@ -36,7 +36,7 @@ Use these steps to set up Facebook as your identity provider.
 
     ![Facebook Settings with App ID and App Secret highlighted](/cloudflare-one/static/documentation/identity/facebook/fb6.png)
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Authentication**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 
@@ -58,7 +58,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Save Changes**.
 
-To test that your connection is working, follow the steps on [SSO Integration](/cloudflare-one/identity/idp-integration/#test-idps-on-the-zero-trust-dashboard).
+To test that your connection is working, follow the steps on [SSO Integration](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust).
 
 ## Example API Configuration
 

@@ -21,14 +21,14 @@ verwenden (dokumentiert in Cloudflares Support KB), sind
 Cache-Ressourcen und bekannte Suchmaschinen-Crawler von Ihren
 Durchsatzbegrenzungsregeln ausgenommen. Daher haben sie keinen Einfluss
 auf das
-[SEO-Ranking](https://developers.cloudflare.com/fundamentals/get-started/task-guides/improve-seo/)
+[SEO-Ranking](/fundamentals/get-started/task-guides/improve-seo/)
 Ihrer Website. Wenn Sie jedoch die [neue Version der
-Durchsatzbegrenzungsregeln](https://developers.cloudflare.com/waf/rate-limiting-rules/)
+Durchsatzbegrenzungsregeln](/waf/rate-limiting-rules/)
 verwenden (dokumentiert in der Entwicklerdokumentation), sollten Sie
 darauf achten, dass Ihre Durchsatzbegrenzungsregeln keine bekannten
 guten Bots betreffen. Dies könnte sonst das SEO-Ranking Ihrer Website
 beeinträchtigen. Weitere Informationen finden Sie unter [SEO
-verbessern](https://developers.cloudflare.com/fundamentals/get-started/task-guides/improve-seo/).
+verbessern](/fundamentals/get-started/task-guides/improve-seo/).
 {{</Aside>}}
 
 {{<Aside type="note">}}
@@ -41,7 +41,7 @@ ___
 
 ## Analytics
 
-Sehen Sie sich die Durchsatzbegrenzungs-Analytics unter **Analytics** > **Sicherheit** an. Die Analytics der Durchsatzbegrenzung zeigen Traffic, der mit simulierten Anfragen übereinstimmt, anhand von durchgezogenen Linien und tatsächlich blockierte Anfragen anhand von gepunkteten Linien. Die von einer Durchsatzbegrenzungsregel erzeugten Protokolle sind nur für Enterprise-Kunden über [Cloudflare-Protokolle](https://developers.cloudflare.com/logs/) sichtbar. 
+Sehen Sie sich die Durchsatzbegrenzungs-Analytics unter **Analytics** > **Sicherheit** an. Die Analytics der Durchsatzbegrenzung zeigen Traffic, der mit simulierten Anfragen übereinstimmt, anhand von durchgezogenen Linien und tatsächlich blockierte Anfragen anhand von gepunkteten Linien. Die von einer Durchsatzbegrenzungsregel erzeugten Protokolle sind nur für Enterprise-Kunden über [Cloudflare-Protokolle](/logs/) sichtbar. 
 
 Cloudflare gibt bei blockierten Anfragen einen HTTP-429-Fehler zurück.  Details zu blockierten Anfragen pro Standort finden Enterprise-Kunden unter **Statuscodes** im Analytics-Dashboard, das unter **Analytics** > **Traffic** verfügbar ist. 
 
@@ -389,7 +389,6 @@ ___
 
 ## Verwandte Ressourcen
 
--   [Abrechnung für Cloudflare-Durchsatzbegrenzung](https://support.cloudflare.com/hc/articles/115000272247)
--   [Wie wird die Durchsatzbegrenzung in ELS (Enterprise Log Share) gemeldet?](https://developers.cloudflare.com/logs/reference/log-fields)
+-   [Wie wird die Durchsatzbegrenzung in ELS (Enterprise Log Share) gemeldet?](/logs/reference/log-fields)
 -   [Fehlerbehebung bei der Durchsatzbegrenzung von Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Durchsatzbegrenzung über die Cloudflare-API konfigurieren](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

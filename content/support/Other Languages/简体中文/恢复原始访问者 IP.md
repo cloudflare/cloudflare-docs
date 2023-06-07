@@ -26,7 +26,7 @@ ___
 
 当您的[网站流量路由经过 Cloudflare 网络](https://support.cloudflare.com/hc/articles/205177068) 时，我们充当反向代理。这允许 Cloudflare 通过更有效地路由数据包并缓存静态资源（图片、JavaScript、CSS 等）来加快页面加载时间。因此，在响应和记录请求时，您的源站会返回 [Cloudflare IP 地址](https://www.cloudflare.com/ips/)。
 
-例如，如果您安装的应用程序依赖于原始访问者的传入 IP 地址，则默认会记录 Cloudflare 的 IP 地址。原始访问者 IP 地址显示在名为 [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986) 的附加 HTTP 标头中。您可以按照我们的 [Web 服务器说明](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq)操作，在源服务器上记录原始访问者 IP 地址。如果此 HTTP 标头在请求到达您的源服务器时不可用，请检查您的[转换规则](https://developers.cloudflare.com/rules/transform/)和[管理转换](https://developers.cloudflare.com/rules/transform/managed-transforms/)配置。
+例如，如果您安装的应用程序依赖于原始访问者的传入 IP 地址，则默认会记录 Cloudflare 的 IP 地址。原始访问者 IP 地址显示在名为 [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986) 的附加 HTTP 标头中。您可以按照我们的 [Web 服务器说明](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq)操作，在源服务器上记录原始访问者 IP 地址。如果此 HTTP 标头在请求到达您的源服务器时不可用，请检查您的[转换规则](/rules/transform/)和[管理转换](/rules/transform/managed-transforms/)配置。
 
 下图演示了使用和不使用 Cloudflare 处理 IP 地址的不同方式。
 
@@ -97,11 +97,11 @@ ___
 
 ## mod\_cloudflare
 
-mod\_cloudflare 的安装方式有两种：从 Github 下载 Apache 扩展，或在您的原始 Web 服务器上添加代码。
+mod\_cloudflare 的安装方式有两种：从 GitHub 下载 Apache 扩展，或在您的原始 Web 服务器上添加代码。
 
-### 从 Github 下载数据包或脚本
+### 从 GitHub 下载数据包或脚本
 
-如果您使用的是 Apache Web 服务器，可以从 [Github](https://github.com/cloudflare/mod_cloudflare) 下载 mod\_cloudflare。
+如果您使用的是 Apache Web 服务器，可以从 [GitHub](https://github.com/cloudflare/mod_cloudflare) 下载 mod\_cloudflare。
 
 ### 添加代码到您的源站 Web 服务器
 
@@ -310,5 +310,5 @@ ___
 
 ## 相关资源
 
--   [HTTP 请求标头](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [转换规则](https://developers.cloudflare.com/rules/transform/)
+-   [HTTP 请求标头](/fundamentals/get-started/http-request-headers)
+-   [转换规则](/rules/transform/)

@@ -11,10 +11,10 @@ A device profile defines WARP client settings for a specific set of devices in y
 
 ## Create a new profile
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Profile settings** card, select **Create profile**.
 3. Enter any name for the profile.
-4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/policies/filtering/network-policies/#operators), and [Values](/cloudflare-one/policies/filtering/network-policies/#value).
+4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/policies/filtering/network-policies/#comparison-operators), and [Values](/cloudflare-one/policies/filtering/network-policies/#value).
 5. Configure [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-settings) for these devices.
 
 {{<Aside type="note">}}
@@ -35,15 +35,15 @@ $ warp-cli settings
 
 ## Selectors
 
-| Selector | Description| WARP mode required |
-| -------  | ---------- | -----------------  |
-| User email | Email address of a user <br /> `user-name@company.com` | Gateway with WARP |
-| User group emails | Email address of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br />  `contractors@company.com` | Gateway with WARP |
-| User group IDs | ID of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br /> `12jf495bhjd7893ml09o` | Gateway with WARP |
-| User group names | Name of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br />  `developers` | Gateway with WARP |
-| Operating system | `MacOS` | Any mode |
-| Operating system version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode |
-| Managed network | [Network location](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) of the device | Any mode |
+| Selector                 | Description                                                                                                                                      | WARP mode required |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| User email               | Email address of a user <br /> `user-name@company.com`                                                                                           | Gateway with WARP  |
+| User group emails        | Email address of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br /> `contractors@company.com`   | Gateway with WARP  |
+| User group IDs           | ID of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br /> `12jf495bhjd7893ml09o`                 | Gateway with WARP  |
+| User group names         | Name of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br /> `developers`                         | Gateway with WARP  |
+| Operating system         | `MacOS`                                                                                                                                          | Any mode           |
+| Operating system version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode           |
+| Managed network          | [Network location](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) of the device                              | Any mode           |
 
 ## Order of precedence
 

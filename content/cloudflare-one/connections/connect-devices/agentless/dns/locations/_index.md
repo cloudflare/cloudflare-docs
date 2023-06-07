@@ -11,7 +11,7 @@ DNS locations are usually physical entities like offices, homes, retail stores, 
 
 To add a DNS location to Gateway:
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
 
 2. Select **Add a DNS location**.
 
@@ -19,13 +19,13 @@ To add a DNS location to Gateway:
 
 4. Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Enterprise customers have the option of manually entering IPs.
 
-    You do not need the IPv4 address field if:
+   You do not need the IPv4 address field if:
 
-    - Your DNS location only uses IPv6.
-    - Users will be sending all DNS requests from this location using DNS over HTTPS via a browser.
-    - You will be deploying the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
+   - Your DNS location only uses IPv6.
+   - Users will be sending all DNS requests from this location using DNS over HTTPS via a browser.
+   - You will be deploying the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 
-    If any of the above apply to your case, select **Delete**.
+   If any of the above apply to your case, select **Delete**.
 
 {{<Aside type="note" header="Your IPv4 address is taken">}}
 
@@ -38,16 +38,17 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 {{</Aside>}}
 
 5. (Optional) Toggle the following settings:
-    - **Set as Default DNS Location** sets this location as the default in your DNS policy builder.
-    - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS name servers.
-    
-        [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.
+
+   - **Set as Default DNS Location** sets this location as the default in your DNS policy builder.
+   - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS name servers.
+
+     [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.
 
 6. Select **Add DNS location**.
 
 7. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 
-    ![DNS resolver setup instructions on the Zero Trust dashboard](/cloudflare-one/static/documentation/policies/location-setup-instructions.png)
+   ![DNS resolver setup instructions in Zero Trust](/cloudflare-one/static/documentation/policies/location-setup-instructions.png)
 
 8. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
 

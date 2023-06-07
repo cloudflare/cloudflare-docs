@@ -6,11 +6,11 @@ weight: 6
 
 # TLS decryption
 
-Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks. When you enable TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with the Cloudflare certificate.
+Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks. When you enable TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
 
 ## Enable TLS decryption
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
 2. Scroll down to **Firewall**.
 3. Turn on **TLS decryption**.
 4. (Optional) Select [**Enable only cipher suites and TLS versions compliant with FIPS 140-2**](#fips-compliance).
@@ -29,6 +29,8 @@ Gateway does not support TLS decryption for applications which use:
 Applications that use embedded certificates and mTLS authentication do not trust the Cloudflare certificate. For example, the vast majority of mobile applications use embedded certificates. Conversely, Cloudflare does not trust applications that use self-signed certificates instead of certificates signed by a public CA.
 
 If you try to perform TLS decryption, these applications may not load or may return an error. You can resolve the issue by [adding the Cloudflare certificate to the application](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) (if supported by the application) or by exempting the application from TLS decryption.
+
+To allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/policies/filtering/http-policies/#untrusted-certificates) to _Pass through_.
 
 To bypass TLS decryption, add a [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the application or domain. The HTTP policy builder provides a [list of trusted applications](/cloudflare-one/policies/filtering/initial-setup/http/#bypass-inspection-for-incompatible-applications) that are known to use embedded certificates. When accessing a Do Not Inspect site in the browser, you will see a **Your connection is not private** warning, which you can proceed through to connect.
 
@@ -50,16 +52,16 @@ When [FIPS compliance is enabled](#enable-tls-decryption), Gateway will only cho
 
 The following table lists the cipher suites Gateway uses for TLS decryption.
 
-| Cipher suite                | Default | FIPS-compliant |
-| ----------------------------|-------- | -------------- |
-|CHACHA20-POLY1305-SHA256     | ✅      | ✅      |
-|ECDHE-ECDSA-AES128-GCM-SHA256| ✅      | ✅      |
-|ECDHE-ECDSA-AES256-GCM-SHA384| ✅      | ✅      |
-|ECDHE-RSA-AES128-GCM-SHA256  | ✅      | ✅      |
-|ECDHE-RSA-AES256-GCM-SHA384  | ✅      | ✅      |
-|ECDHE-RSA-AES128-SHA         | ✅      | ❌      |
-|ECDHE-RSA-AES256-SHA384      | ✅      | ✅      |
-|AES128-GCM-SHA256            | ✅      | ✅      |
-|AES256-GCM-SHA384            | ✅      | ✅      |
-|AES128-SHA                   | ✅      | ❌      |
-|AES256-SHA                   | ✅      | ❌      |
+| Cipher suite                  | Default | FIPS-compliant |
+| ----------------------------- | ------- | -------------- |
+| CHACHA20-POLY1305-SHA256      | ✅      | ✅             |
+| ECDHE-ECDSA-AES128-GCM-SHA256 | ✅      | ✅             |
+| ECDHE-ECDSA-AES256-GCM-SHA384 | ✅      | ✅             |
+| ECDHE-RSA-AES128-GCM-SHA256   | ✅      | ✅             |
+| ECDHE-RSA-AES256-GCM-SHA384   | ✅      | ✅             |
+| ECDHE-RSA-AES128-SHA          | ✅      | ❌             |
+| ECDHE-RSA-AES256-SHA384       | ✅      | ✅             |
+| AES128-GCM-SHA256             | ✅      | ✅             |
+| AES256-GCM-SHA384             | ✅      | ✅             |
+| AES128-SHA                    | ✅      | ❌             |
+| AES256-SHA                    | ✅      | ❌             |

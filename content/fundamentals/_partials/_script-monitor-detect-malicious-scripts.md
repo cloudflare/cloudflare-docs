@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-For more information, refer to [Detecting malicious scripts](/page-shield/about/malicious-script-detection/).
+For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).

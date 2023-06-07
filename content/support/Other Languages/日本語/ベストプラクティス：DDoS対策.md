@@ -24,7 +24,7 @@ Cloudflareにサインアップしたら、以下の推奨事項に従って、�
 次の手順に従って、保護性能を最大化できるようにDNSレコードを設定します：
 
 1.  [Cloudflareプロキシを有効にします（オレンジ色の雲マーク）。](https://support.cloudflare.com/hc/articles/200169626)
-2.  FTPまたはSSH に使用されるDNSレコードを削除し、代わりにオリジンIPを使用してFTPリクエストまたはSSHリクエストを直接実行します。 あるいは、[Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/getting-started/)を介してFTPとSSHをプロキシします。
+2.  FTPまたはSSH に使用されるDNSレコードを削除し、代わりにオリジンIPを使用してFTPリクエストまたはSSHリクエストを直接実行します。 あるいは、[Cloudflare Spectrum](/spectrum/getting-started/)を介してFTPとSSHをプロキシします。
 3.  [メールサーバーに対応するAレコード、AAAAレコード、またはCNAMEレコードをグレー色の雲マークにする](https://support.cloudflare.com/hc/articles/200168876)
 4.  ワイルドカードレコードはオリジンIPアドレスを暴露するため、無料プラン、Proプラン、またはBusinessプランのドメイン内のワイルドカードレコードを削除します。[Cloudflareは、Enterpriseプランのドメインのワイルドカードレコードのみを保護します](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries)。
 
@@ -51,5 +51,5 @@ ___
 ## 関連リソース
 
 -   [CloudflareのDDoS保護について理解する](https://support.cloudflare.com/hc/articles/200172676)
--   [DDoS攻撃に対応する](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS攻撃に対応する](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [DDoS攻撃とは？](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

@@ -59,8 +59,6 @@ Start by creating a service account. If you already have one, you can skip this 
 
     Select **Authorize** when you are done.
 
-    ![Add the appropriate details to the configuration panel](/email-security/static/bec/gmail/step3-directory-config-panel.png)
-
 4. The Area 1 dashboard will redirect you to a Google login page. Select or enter the appropriate account to initiate the authentication process.
 
 5. Once authenticated, the system will show a dialog box with a list of the required permissions. Check all the checkboxes, and select **Continue** to authorize the change.

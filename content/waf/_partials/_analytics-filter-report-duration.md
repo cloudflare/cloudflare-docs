@@ -11,7 +11,7 @@ You can adjust the scope of analytics by manually entering filter conditions. Al
 
 To manually add a filter:
 
-1. Under **Security Events**, select **Add filter** .
+1. Under **Security Events**, select **Add filter**.
 2. Select a field, an operator, and a value. For example, to filter events by IP address, select *IP* for **Action**, select *equals* for the operator, and enter the IP address.
 3. Select **Apply**.
 

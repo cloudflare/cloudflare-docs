@@ -14,7 +14,7 @@ Permissions are segmented into three categories based on resource:
 
 Each category contains permission groups related to those resources. DNS permissions belong to the Zone category, while Billing permissions belong to the Account category. Below is a list of the available token permissions.
 
-To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://developers.cloudflare.com/api/operations/permission-groups-list-permission-groups) endpoint.
+To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](/api/operations/permission-groups-list-permission-groups) endpoint.
 
 ## User permissions
 
@@ -125,7 +125,7 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Bot Management Edit              | Grants write access to Bot Management.                                   |
 | Cache Purge                      | Grants access to purge cache.                                            |
 | DNS Read                         | Grants read access to DNS.                                               |
-| DNS Edit                         | Grants write access to DNS.                                              |
+| DNS Write                        | Grants write access to DNS.                                              |
 | Dynamic Redirect Read            | Grants read access to zone-level Single Redirects.                       |
 | Dynamic Redirect Edit            | Grants write access to zone-level Single Redirects.                      |
 | Email Routing Rules Read         | Grants read access to Email Routing Rules.                               |
@@ -148,8 +148,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | SSL and Certificates Edit        | Grants write access to SSL configuration and certificate management.     |
 | Sanitize Read                    | Grants read access to sanitization.                                      |
 | Sanitize Edit                    | Grants write access to sanitization.                                     |
-| Waiting Room Read               | Grants read access to Waiting Room.                                     |
-| Waiting Room Edit               | Grants write access to Waiting Room.                                    |
+| Waiting Room Read                | Grants read access to Waiting Room.                                      |
+| Waiting Room Edit                | Grants write access to Waiting Room.                                     |
 | Web3 Hostnames Read              | Grants read access to Web3 Hostnames.                                    |
 | Web3 Hostnames Edit              | Grants write access to Web3 Hostnames.                                   |
 | Workers Routes Read              | Grants read access to Cloudflare Workers and Workers KV Storage.         |

@@ -119,7 +119,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
     ![Enter the required information](/email-security/static/email-retraction/gmail/step22-clientid-oauth.png)
 
-23. Return to the Google Cloud Platform (GCP) console, and select **Service Accounts** to return to the service account screen.
+23. Return to the Google Cloud Platform (GCP) console, and select **IAM & Admin** > **Service Accounts** to return to the service account screen.
 
     ![Select Service accounts](/email-security/static/email-retraction/gmail/step23-service-accounts.png)
 
@@ -181,6 +181,10 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
 You must send copies of inbound email messages to Area 1 for inspection, so that Area 1 can automatically retract messages. Messages can be sent to Area 1 using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Area 1 is deployed as MX.
 
 {{<render file="_gmail-bcc-setup.md">}}
+
+### Geographic locations
+
+{{<render file="_bcc-table-geographic-locations.md">}}
 
 ## 6. Manual message retraction
 

@@ -27,6 +27,11 @@ Identificación de artículo: 115003614752 | Autenticación de correo electróni
 
 Al marcar "recordar este equipo", ese dispositivo/navegador no recibirá desafíos de AFM en 14 días. Después de 14 días, Cloudflare comenzará a verificar la dirección IP nuevamente para detectar inicios de sesión desde ese dispositivo/navegador.
 
+{{<Aside type="note">}}
+El correo electrónico de la AFM solo se puede deshabilitar cuando
+actives la autenticación en dos fases.
+{{</Aside>}}
+
 ___
 
 ## Resolución de problemas de la autenticación de factores múltiples

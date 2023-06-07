@@ -31,6 +31,11 @@ Reunir la siguiente información:
 4.  Hora de inicio (formato de ejemplo: 1529171100)
 5.  Hora de finalización (formato de ejemplo: 1529171100)
 
+{{<Aside type="tip">}}
+Para los fines de este tutorial, puedes usar el siguiente sitio web para
+convertir los horarios a Tiempo Unix: <https://www.epochconverter.com/>
+{{</Aside>}}
+
 ___
 
 ## Paso 2: Descargar y guardar los registros

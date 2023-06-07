@@ -96,7 +96,7 @@ Our SSL vendors verify each SSL certificate request before Cloudflare can issue 
 
 **Resolution**
 
-If your domain is on a [partial setup](/dns/zone-setups/partial-setup): Confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](/ssl/edge-certificates/custom-certificates/caa-records) to provision certificates for your domain. If [Universal SSL](/ssl/edge-certificates/universal-ssl) is disabled on your domain under the **Disable Universal SSL** section of the **Edge Certificates** tab in Cloudflare **SSL/TLS** app:
+If your domain is on a [partial setup](/dns/zone-setups/partial-setup): Confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](/ssl/edge-certificates/caa-records/) to provision certificates for your domain. If [Universal SSL](/ssl/edge-certificates/universal-ssl) is disabled on your domain under the **Disable Universal SSL** section of the **Edge Certificates** tab in Cloudflare **SSL/TLS** app:
 
 -   enable Universal SSL
 -   purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager)

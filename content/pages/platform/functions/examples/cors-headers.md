@@ -3,7 +3,7 @@ type: example
 summary: A Pages Functions for appending CORS headers.
 tags:
   - CORS
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Adding CORS headers
 weight: 1002
 layout: example

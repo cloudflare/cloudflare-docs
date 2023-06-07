@@ -5,7 +5,7 @@ difficulty: Intermediate
 pcx_content_type: tutorial
 title: Salesforce with Access for SaaS configuration
 meta:
-    description: Configure Salesforce as a SaaS application and then force logins to Salesforce through Cloudflare's Zero Trust rules.
+  description: Configure Salesforce as a SaaS application and then force logins to Salesforce through Cloudflare's Zero Trust rules.
 ---
 
 # Salesforce with Access for SaaS configuration
@@ -25,7 +25,7 @@ Admin access to a Salesforce account
 
 ## Set up Salesforce as a SaaS application in Cloudflare Zero Trust
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
 1.  Select the SaaS application type.
 1.  Next, select _Salesforce_ from the **Application** drop-down menu.
 1.  Fill the remaining fields as follows:
@@ -46,9 +46,9 @@ Admin access to a Salesforce account
 ## Enable Single Sign-On in Salesforce
 
 1.  In Salesforce, ensure your users have **Federation IDs**.
-{{<Aside>}}
-The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.
-{{</Aside>}}
+    {{<Aside>}}
+    The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.
+    {{</Aside>}}
 1.  Navigate to **Security Controls > Single Sign-On Settings**.
 1.  Set the following global settings:
     - **SAML Enabled:** true
@@ -63,7 +63,7 @@ The Federation ID is found under Manage Users > Users in Setup. The Federation I
     - **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step.
     - **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
     - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
-    - **Identity Provider Login URL**: This is the SSO endpoint provided in the Zero Trust dashboard for that application.
+    - **Identity Provider Login URL**: This is the SSO endpoint provided in Zero Trust for that application.
 1.  Click **Save**.
 1.  From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
 1.  At the bottom, find **Authentication Configuration**. Click **Edit** and select your Authentication Service you created.

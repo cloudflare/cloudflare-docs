@@ -112,8 +112,8 @@ ___
 
 In a terminal, use the following cURL. The header `'accept: text/html'` is important
 
-```
-% curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 | grep 'cf-cache-status\|cf-edge\|cf-apo-via'
+```sh
+$ curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 | grep 'cf-cache-status\|cf-edge\|cf-apo-via'
 < cf-cache-status: HIT
 < cf-apo-via: cache
 < cf-edge-cache: cache,platform=wordpress

@@ -10,12 +10,6 @@ layout: list
 
 Create custom rules in **Security** > **WAF** > **Custom rules**.
 
-{{<Aside type="note">}}
-
-This feature is only available for select customers on an Enterprise plan.
-
-{{</Aside>}}
-
 ## Create a custom rule
 
 To create a new custom rule:
@@ -24,13 +18,13 @@ To create a new custom rule:
 
 2. Select the **Websites** tab and choose the site for which you want to create a rule.
 
-3. Navigate to **Security** > **WAF** > **Custom rules**.
+3. Go to **Security** > **WAF** > **Custom rules**.
 
 4. Select **Create rule**.
 
 5. Enter a descriptive name for the rule in **Rule name**.
 
-    ![Custom rule creation page in the Cloudflare dashboard](/waf/static/custom-rules/firewall-custom-rule-create.png)
+    ![Custom rule creation page in the Cloudflare dashboard](/images/waf/custom-rules/firewall-custom-rule-create.png)
 
 6. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 

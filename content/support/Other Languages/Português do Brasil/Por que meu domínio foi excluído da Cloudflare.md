@@ -97,5 +97,5 @@ ___
 ## Recursos relacionados
 
 -   [Nameservers secundários](https://support.cloudflare.com/hc/en-us/articles/360001356152-How-do-I-setup-and-manage-Secondary-DNS-) (recurso do plano Enterprise)
--   [Configuração de CNAME](https://developers.cloudflare.com/dns/zone-setups/partial-setup) (recurso dos planos Business e Enterprise)
--   [Como alterar os nameservers para a Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)
+-   [Configuração de CNAME](/dns/zone-setups/partial-setup) (recurso dos planos Business e Enterprise)
+-   [Como alterar os nameservers para a Cloudflare](/dns/zone-setups/full-setup/setup)

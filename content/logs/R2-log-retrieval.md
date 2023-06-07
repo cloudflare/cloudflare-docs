@@ -11,7 +11,7 @@ Logs Engine gives you the ability to store your logs in R2 and query them direct
 ## Store logs in R2
 
 - Set up a [Logpush to R2](/logs/get-started/enable-destinations/r2/) job.
-- Create an [R2 access key](/r2/data-access/s3-api/tokens/) with at least R2 read permissions.
+- Create an [R2 access key](/r2/api/s3/tokens/) with at least R2 read permissions.
 - Ensure that you have Logshare read permissions.
 - Alternatively, create a Cloudflare API token with the following permissions:
     - Account scope
@@ -34,8 +34,8 @@ Alternatively, API tokens with Logs edit permissions can also be used for authen
 
 In addition to the required authentication headers mentioned, the following headers are required for the API to access logs stored in your R2 bucket. 
 
-`R2-access-key-id` (required) - [R2 Access Key Id](/r2/data-access/s3-api/tokens/)
-`R2-secret-access-key` (required) - [R2 Secret Access Key](/r2/data-access/s3-api/tokens/)
+`R2-access-key-id` (required) - [R2 Access Key Id](/r2/api/s3/tokens/)
+`R2-secret-access-key` (required) - [R2 Secret Access Key](/r2/api/s3/tokens/)
 
 ## List files
 

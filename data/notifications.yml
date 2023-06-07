@@ -1,0 +1,7 @@
+name: Notifications
+
+product:
+  title: Notifications
+  group: Cloudflare essentials
+  url: /fundamentals/notifications/
+  grid_placeholder: true

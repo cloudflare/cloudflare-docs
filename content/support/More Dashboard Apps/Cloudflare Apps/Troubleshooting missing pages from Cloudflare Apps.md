@@ -25,5 +25,3 @@ ___
 ## Manually add a page
 
 If you are not able to get the relevant areas of your site to appear, you can manually add a page to the install.
-
-![](/support/static/hc-import_installing_cloudflare_apps_one_page_only.png)

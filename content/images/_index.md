@@ -13,7 +13,9 @@ meta:
 Choose between Cloudflare Images, Cloudflare Image Resizing, and Polish, three products tailored to your different needs.
 {{</description>}}
 
-Clouflare Image Optimization is a suite of products tailored to your image-processing needs. For more information about the differences between each product, refer to the [Frequently Asked Questions section](/images/faq/#what-is-the-difference-between-cloudflare-images-and-image-resizing-products).
+Cloudflare Image Optimization is a suite of products tailored to your image-processing needs. For more information about the differences between each product, refer to the [Frequently Asked Questions section](/images/faq/#what-is-the-difference-between-cloudflare-images-and-image-resizing-products).
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ---
 

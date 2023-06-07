@@ -6,7 +6,7 @@ weight: 4
 
 # Values
 
-When an HTTP request reaches Cloudflare’s edge, Cloudflare creates a table of field–value pairs against which to match expressions. This table exists for as long as the current request is being processed.
+When an HTTP request reaches the Cloudflare global network, Cloudflare creates a table of field–value pairs against which to match expressions. This table exists for as long as the current request is being processed.
 
 The values that populate the lookup tables of the Rules language are drawn from a variety of sources:
 

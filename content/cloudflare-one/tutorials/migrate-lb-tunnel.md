@@ -67,7 +67,7 @@ This command will create a Tunnel object in your Cloudflare account that is repr
 
 ## Create a configuration file
 
-Next, configure your Tunnel. The example below consists of a web service that is available at port 8000. The ingress rule will send traffic that `cloudflared` receives for the specified hostname to that port. You can also connect [multiple service](/cloudflare-one/tutorials/multi-origin/) with a single instance of `cloudflared`.
+Next, configure your Tunnel. The example below consists of a web service that is available at port 8000. The ingress rule will send traffic that `cloudflared` receives for the specified hostname to that port. You can also connect [multiple services](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/) with a single instance of `cloudflared`.
 
 In the configuration file, you must specify the location of the credentials file generated previously when you created the Tunnel.
 

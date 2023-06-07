@@ -29,9 +29,9 @@ ___
 L’accès à Network Analytics nécessite les éléments suivants :
 
 -   Une offre Cloudflare Enterprise
--   Cloudflare [Magic Transit](https://developers.cloudflare.com/magic-transit/) ou [Spectrum](https://developers.cloudflare.com/spectrum/).
+-   Cloudflare [Magic Transit](/magic-transit/) ou [Spectrum](/spectrum/).
 
-L'écran **Network Analytics** de Cloudflare permet de suivre en temps quasi réel les tendances du trafic des couches réseau et transport et les attaques DDoS Network Analytics affiche des données au niveau des paquets et des bits, qui sont les mêmes que celles fournies par l'[API GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/).
+L'écran **Network Analytics** de Cloudflare permet de suivre en temps quasi réel les tendances du trafic des couches réseau et transport et les attaques DDoS Network Analytics affiche des données au niveau des paquets et des bits, qui sont les mêmes que celles fournies par l'[API GraphQL Analytics](/analytics/graphql-api/).
 
 ![Volet Analytics présentant la synthèse des paquets par type](/support/static/na-main-dashboard.png)
 
@@ -134,7 +134,7 @@ Dans cet exemple, en cliquant sur le bouton **Filtrer**, vous n'affichez que le 
 
 ### Créez une règle Magic Firewall à partir des filtres appliqués
 
-Vous pouvez créer une règle [Magic Firewall](https://developers.cloudflare.com/magic-firewall) afin de bloquer tout le trafic correspondant aux filtres sélectionnés dans Network Analytics. Les filtres pris en charge actuellement sont les suivants :
+Vous pouvez créer une règle [Magic Firewall](/magic-firewall) afin de bloquer tout le trafic correspondant aux filtres sélectionnés dans Network Analytics. Les filtres pris en charge actuellement sont les suivants :
 
 -   Destination IP (IP de destination)
 -   Protocole
@@ -463,7 +463,7 @@ ___
 
 ## Affichage du journal d’activité
 
-Le **journal des activités** d'analyse réseau affiche jusqu'à 500 événements dans la période définie, à raison de 10 résultats par page et par intervalle de temps. (L' [API GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/) n'a pas cette limitation.) 
+Le **journal des activités** d'analyse réseau affiche jusqu'à 500 événements dans la période définie, à raison de 10 résultats par page et par intervalle de temps. (L' [API GraphQL Analytics](/analytics/graphql-api/) n'a pas cette limitation.) 
 
 Pour afficher les détails des événements, cliquez sur le widget d’agrandissement associé aux événements.
 
@@ -520,9 +520,9 @@ ___
 
 ## Ressources associées
 
--   [Cloudflare Network Analytics v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [Migration de Network Analytics v1 vers Network Analytics v2](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [Cloudflare GraphQL API](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Cloudflare Network Analytics v2](/analytics/network-analytics/)
+-   [Migration de Network Analytics v1 vers Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [Cloudflare GraphQL API](/analytics/graphql-api/)
 -   [Cloudflare Analytics : un bref aperçu](https://support.cloudflare.com/hc/articles/360037684111)
 -   [Numéros de port et noms de service IANA](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -647,7 +647,7 @@ Lorsque vous consultez les fichiers journaux d’attaques du tableau de bord Clo
 -   Les journaux d’attaque sont stockés avec les informations d’horodatage de début et de fin, les statistiques de paquets et de bits pour les débits de données minimum, maximum et moyen, ainsi que les totaux, le type d’attaque et les mesures prises.
 -   Les adresses IP source sont considérées comme des informations personnelles identifiables. Par conséquent, Cloudflare les stocke pendant 30 jours seulement. Après 30 jours, les adresses IP sources sont supprimées et les fichiers journaux sont d’abord regroupés par groupes de 1 heure, puis de 1 jour. Les cumuls de 1 heure sont stockés pendant 6 mois. Les cumuls de 1 jour sont conservés pendant 1 an.
 
-Pour plus d’informations sur l’interrogation et l’accès aux données des fichiers journaux, veuillez consulter le site [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/limits).
+Pour plus d’informations sur l’interrogation et l’accès aux données des fichiers journaux, veuillez consulter le site [GraphQL Analytics API](/analytics/graphql-api/limits).
 
 ### Pourquoi Network Analytics indique-t-il que l'adresse IP de destination est indisponible ?
 

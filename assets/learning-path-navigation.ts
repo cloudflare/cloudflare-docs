@@ -117,5 +117,21 @@ import { learning_paths as paths } from "./json-collector";
         );
       }
     }
+
+    // Update links w/in the body content to keep the current context
+    const docContent =
+      document.getElementById("main");
+    const bodyLinks = docContent.getElementsByClassName("DocsMarkdown--link")
+    if (bodyLinks) {
+      for (const item of bodyLinks) {
+        const currentHref = item.getAttribute("href");
+        if (currentHref.includes('/learning-paths/modules/')) {
+        item.setAttribute(
+          "href",
+          currentHref + "?learning_path=" + currentLearningPath
+        );
+      }
+    }
+    }
   }
 })();

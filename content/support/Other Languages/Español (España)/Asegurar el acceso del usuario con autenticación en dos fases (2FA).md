@@ -13,9 +13,26 @@ title: Asegurar el acceso del usuario con autenticación en dos fases (2FA)
 
 La autenticación en dos fases (2FA) permite a los propietarios de cuentas agregar una capa adicional de seguridad de inicio de sesión a las cuentas de Cloudflare. Este paso de autenticación adicional requiere que proporciones algo que sepas, como una contraseña de Cloudflare y algo que tengas, como un código de autenticación de un dispositivo móvil. 
 
+{{<Aside type="note">}}
+Las cuentas de usuario de Cloudflare configuradas para utilizar el
+inicio de sesión único (SSO) no pueden configurar 2FA.
+{{</Aside>}}
+
 Para garantizar que puedas acceder de forma segura a tu cuenta, incluso sin acceder a tu dispositivo móvil, por ejemplo, un nuevo teléfono, Cloudflare también proporciona códigos de respaldo para descargar. 
 
+{{<Aside type="tip">}}
+Después de descargar tus códigos de respaldo, te recomendamos que los
+guardes en una ubicación segura.
+{{</Aside>}}
+
 Los superadministradores son los únicos usuarios que pueden habilitar 2FA en las cuentas de Cloudflare. Como propietario de la cuenta, se te asigna automáticamente la función de superadministrador. Una vez que se habilita 2FA, todos los miembros de la cuenta de Cloudflare deben configurar 2FA en sus dispositivos móviles.
+
+{{<Aside type="note">}}
+Los clientes de los planes gratuito, Pro y Business solo pueden tener un
+superadministrador. Los clientes Enterprise pueden tener más de un
+superadministrador y [asignar funciones de membresía
+adicionales](https://support.cloudflare.com/hc/articles/205065067).
+{{</Aside>}}
 
 ___
 

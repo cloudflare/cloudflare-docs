@@ -1,5 +1,5 @@
 ---
-title: Email Workers
+title: Email Workers (beta)
 pcx_content_type: concept
 layout: single
 weight: 4
