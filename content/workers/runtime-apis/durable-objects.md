@@ -9,7 +9,7 @@ Durable Objects are available to anyone with a Workers paid subscription. Enable
 
 ## Background
 
-Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform. A given namespace can support essentially unlimited Durable Objects, with each Object having access to a transactionally consistent key-value storage API.
+Durable Objects provide low-latency coordination and consistent storage for the Workers platform. A given namespace can support essentially unlimited Durable Objects, with each Object having access to a transactionally consistent key-value storage API.
 
 Durable Objects consist of two components: a class that defines a template for creating Durable Objects and a Workers script that instantiates and uses those Durable Objects. The class and the Workers script are linked together with a binding.
 
