@@ -6,11 +6,11 @@ weight: 11
 
 # Using Durable Objects
 
-Durable Objects provide low-latency coordination and consistent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
+Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
 
 - Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world. Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
 
-- The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
+- The transactional storage API provides strongly consistent key-value storage to the Durable Object. That storage is replicated for durability and availability, and does not go away until you explicitly delete it. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
 For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/durable-objects-open-beta/).
 
