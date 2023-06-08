@@ -359,17 +359,17 @@ The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter 
 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
 
-### {{<beta>}} WebSockets Hibernation API {{</beta>}}
+#### {{<beta>}}WebSockets Hibernation API{{</beta>}}
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events.
 
 The Hibernation API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/workers/learning/using-durable-objects/#alarms-in-durable-objects), to be removed from memory while keeping its WebSockets connected ("hibernation").
 
-{{ <Aside type="note"> }}
+{{<Aside type="note">}}
 
 A Durable Object that hibernates will not incur billable [Duration (GB-sec) charges](/workers/platform/pricing/#durable-objects). For applications with many long-lived Durable Objects and periodic WebSocket messages or events, using the Hibernation APIs can measurably reduce billable duration.
 
-{{ </Aside> }}
+{{</Aside>}}
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
