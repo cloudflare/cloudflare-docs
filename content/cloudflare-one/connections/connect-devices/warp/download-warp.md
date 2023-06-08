@@ -167,7 +167,7 @@ Alternatively, download the client from one of the following links after checkin
   </tbody>
 </table>
 
-[Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) or search for “1.1.1.1: Faster & Safer Internet”.
+[Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent) or search for “Cloudflare Zero Trust”.
 
 ## ChromeOS
 
