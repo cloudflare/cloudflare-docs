@@ -547,7 +547,6 @@ The `wrangler dev` command opens up a tunnel from your local development environ
 Durable Object metrics are powered by GraphQL, like other Workers metrics. Learn more about querying Workers data sets in this [tutorial](/analytics/graphql-api/tutorials/querying-workers-metrics/). The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. You can [use GraphQL introspection to get information on the fields exposed by each](/analytics/graphql-api/getting-started/explore-graphql-schema).
 
 ```
-# An example of GraphQL query for Durable Objects
   viewer {
     # Replace with your account tag, the 32 hex character id visible at the beginning of any url
     # when logged in to dash.cloudflare.com or under "Account ID" on the sidebar of the Workers & Pages Overview  
