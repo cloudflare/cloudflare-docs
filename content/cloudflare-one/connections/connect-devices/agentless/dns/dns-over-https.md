@@ -40,30 +40,30 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 
    1. Run the following command to obtain your `A` record values:
 
-   ```sh
-   $ nslookup -type=A <your-subdomain>.cloudflare-gateway.com
+   ```bash
+   nslookup -type=A <your-subdomain>.cloudflare-gateway.com
    ```
 
    2. Obtain your `AAAA` record values.
 
-   ```sh
-   $ nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
+   ```bash
+   nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
    ```
 
    3. Copy the resulting IP addresses.
 
 2. Add the addresses to your list of known DoH servers.
 
-   1. In an elevated terminal, run the following command for each address:
+   1. Run the following command for each address:
 
-   ```sh
-   $ Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
+   ```bash
+   Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
    ```
 
    2. Confirm the addresses were added.
 
-   ```sh
-   $ Get-DnsClientDohServerAddress
+   ```bash
+   Get-DnsClientDohServerAddress
    ```
 
 3. In Windows, go to **Settings** > **Network & internet** > your active Internet connection. This option may be either **Ethernet** or **Wi-Fi**.
@@ -85,19 +85,21 @@ Obtain the `A` and `AAAA` record values associated with your location's DoH endp
 
 1. Run the following command to obtain your `A` record values:
 
-```sh
-$ nslookup -type=A <your-subdomain>.cloudflare-gateway.com
+```bash
+nslookup -type=A <your-subdomain>.cloudflare-gateway.com
 ```
 
 2. Obtain your `AAAA` record values.
 
-```sh
-$ nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
+```bash
+nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 ```
 
 3. Copy the resulting IP addresses.
+4. [Add the addresses](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#add-a-new-doh-server-to-the-list-of-known-servers) to your list of known DoH servers.
+5. [Configure the DNS client](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configure-the-dns-client-to-support-doh) to support DoH.
 
-Next, use these values in [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
+For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
 </div>
 </details>
