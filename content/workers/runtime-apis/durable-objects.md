@@ -363,7 +363,11 @@ If the method fails with an uncaught exception, the exception will be thrown int
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow a Durable Object that is not currently running an event handler to be removed from memory while keeping its WebSockets connected ("hibernation").
 
-Hibernation does not persist WebSocket connections across [code updates](/workers/learning/using-durable-objects/#global-uniqueness). If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
+If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
+
+[Code updates](/workers/learning/using-durable-objects/#global-uniqueness) will disconnect all WebSockets.
+
+`wrangler dev` does not currently work with the Hibernation API.
 
 #### WebSocket extensions
 
