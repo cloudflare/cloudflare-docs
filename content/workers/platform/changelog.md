@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-05-26
+
+- A new [Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) (beta) has been added to [Durable Objects](/workers/learning/using-durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example: processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
+
 ## 2023-05-16
 
 - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
