@@ -167,7 +167,7 @@ Alternatively, download the client from one of the following links after checkin
   </tbody>
 </table>
 
-[Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent&hl=en_US&gl=US) or search for “Cloudflare One Agent”.
+[Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent) or search for “Cloudflare One Agent”.
 
 ## ChromeOS
 
