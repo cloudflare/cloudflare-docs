@@ -70,7 +70,7 @@ Cloudflare will also use the configured session identifiers to suggest rate limi
 
 For best results, allow at least 24 hours after adding endpoints before proceeding to the following steps. 
 
-We recommend proceeding with [additional configurations](link) if this is your first time setting up API Shield and have added your first API endpoints to Endpoint Management.
+We recommend proceeding with [additional configurations](/api-shield/get-started/#additional-configuration) if this is your first time setting up API Shield and have added your first API endpoints to Endpoint Management.
 
 ## Add rate limits to your most sensitive endpoints
 
