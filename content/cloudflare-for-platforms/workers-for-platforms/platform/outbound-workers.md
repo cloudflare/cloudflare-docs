@@ -5,7 +5,7 @@ title: Outbound Workers
 
 # Outbound Workers
 
-Outbound Workers sit between your customer’s Workers and the public Internet. They give you visibility into all outgoing `fetch()` requests from User Workers.
+Outbound Workers sit between your customer’s Workers and the public Internet. They give you visibility into all outgoing `fetch()` requests from user Workers.
 
 ![Outbound Workers diagram information](/images/cloudflare-for-platforms/outbound-worker-diagram.png)
 
@@ -22,7 +22,7 @@ Outbound Workers can be used to:
 To use Outbound Workers:
 
 1. Create a Worker intended to serve as your Outbound Worker.
-2. Outbound Worker can be specified as an optional parameter in the [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatch-namespace) binding in a projects [wrangler.toml](/workers/wrangler/configuration/). Optionally, to pass data from your Dispatch Worker to the Outbound Worker, the variable names must be specified under **parameters**.  
+2. Outbound Worker can be specified as an optional parameter in the [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatch-namespace) binding in a project [wrangler.toml](/workers/wrangler/configuration/). Optionally, to pass data from your dynamic dispatch Worker to the Outbound Worker, the variable names must be specified under **parameters**.  
 
 Make sure that you have `wrangler@3.3.0` or later [installed](/workers/wrangler/install-and-update/).
 
@@ -36,7 +36,7 @@ namespace = "<NAMESPACE_NAME>"
 outbound = {service = "<SERVICE_NAME>", parameters = [customer_name,url]}
 ```
 
-3. Edit your Dispatch Worker to call the Outbound Worker and declare variables to pass on `dispatcher.get()`.
+3. Edit your dynamic dispatch Worker to call the Outbound Worker and declare variables to pass on `dispatcher.get()`.
 
 ```js
 ---
@@ -69,7 +69,7 @@ export default {
 };
 ```
 
-4. The Outbound Worker will now be invoked on any `fetch()` requests from user Workers. The User Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
+4. The Outbound Worker will now be invoked on any `fetch()` requests from a user Worker. The user Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
 
 {{<Aside type ="note">}}
 
