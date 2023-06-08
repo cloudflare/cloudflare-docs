@@ -98,8 +98,8 @@ For reference information on rule actions available for Cloudflare products powe
         <td>
           <ul>
             <li>
-              Matching requests are exempt from challenge and block actions
-              triggered by other firewall rules content.
+              Matching requests are exempt from <em>Bypass</em>, <em>Block</em>, and challenge actions
+              triggered by other firewall rules.
             </li>
             <li>
               The scope of the <em>Allow</em> action is limited to firewall

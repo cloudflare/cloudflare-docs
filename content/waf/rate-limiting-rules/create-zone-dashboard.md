@@ -3,19 +3,11 @@ pcx_content_type: how-to
 type: overview
 title: Create in the dashboard for a zone
 weight: 14
+meta:
+  title: Create a rate limiting rule in the dashboard for a zone
 ---
 
-# Create rate limiting rules in the dashboard for a zone
-
-Create rate limiting rules for a zone in **Security** > **WAF** > **Rate limiting rules**.
-
-{{<Aside type="note">}}
-
-For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
-
-{{</Aside>}}
-
-## Create a rate limiting rule
+# Create a rate limiting rule in the dashboard for a zone
 
 To create a new rate limiting rule:
 
@@ -27,7 +19,7 @@ To create a new rate limiting rule:
 
 4. Enter a descriptive name for the rule in **Rule name**.
 
-    ![The Create rate limiting rule page in the Cloudflare dashboard](/waf/static/custom-rules/rate-limiting-create.png)
+    ![The Create rate limiting rule page in the Cloudflare dashboard](/images/waf/custom-rules/rate-limiting-create.png)
 
 5. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 

@@ -5,7 +5,7 @@ title: Durable Objects
 
 # Durable Objects
 
-Durable Objects are available to anyone with a Workers paid subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and opting in to pricing.
+Durable Objects are available to anyone with a Workers paid subscription. Enable Durable Objects for your account by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > going to **Workers & Pages** > selecting your Worker and in **Metrics**, opting in to pricing.
 
 ## Background
 
@@ -29,13 +29,20 @@ export class DurableObject {
 
 {{<definitions>}}
 
+### Parameters
+
+- `env`
+  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers (not using Modules syntax), these same bindings appear as global variables within the Workers script. Workers that export Durable Object classes always use the Modules syntax and have bindings delivered to the constructor rather than placed in global variables.
+
 - `state`
 
   - Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
 
+#### Properties of `state`
+
 - `state.id` {{<type>}}DurableObjectId{{</type>}}
 
-  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
+  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method. Inside a Durable Object, the `state.id.name` property is not defined. If you need access to the name, explicitly pass it in the fetch request to the Durable Object, for example, a query parameter in the URL. 
 
 - `state.waitUntil`
 
@@ -45,7 +52,7 @@ export class DurableObject {
 
   - Contains methods for accessing persistent storage via the transactional storage API. Refer to [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
-- {{<code>}}state.blockConcurrencyWhile(callback{{<param-type>}}Function(){{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}state.blockConcurrencyWhile(callback{{<param-type>}}Function(){{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Executes `callback()` (which may be `async`) while blocking any other events from being delivered to the object until the callback completes. This allows you to execute some code that performs I/O (such as a `fetch()`) with the guarantee that the object's state will not unexpectedly change as a result of concurrent events. All events that were not explicitly initiated as part of the callback itself will be blocked. This includes not only new incoming requests, but also responses to outgoing requests (such as `fetch()`) that were initiated outside of the callback. Once the callback completes, these events will be delivered.
 
@@ -54,9 +61,6 @@ export class DurableObject {
     If the callback throws an exception, the Object will be terminated and reset. This ensures that the Object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, wrap the body of your callback in a `try`/`catch` block to ensure it cannot throw an exception.
 
     The value returned by the callback becomes the value returned by `blockConcurrencyWhile()` itself.
-
-- `env`
-  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers (not using Modules syntax), these same bindings appear as global variables within the Workers script. Workers that export Durable Object classes always use the Modules syntax and have bindings delivered to the constructor rather than placed in global variables.
 
 {{</definitions>}}
 
@@ -131,7 +135,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 {{<definitions>}}
 
-- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<any>{{</type>}}
+- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<any>{{</type>}}
 
   - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.<br><br>
 
@@ -145,15 +149,15 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
       - If true, then the key/value will not be inserted into the in-memory cache. If the key is already in the cache, the cached value will be returned, but its last-used time will not be updated. Use this when you expect this key will not be used again in the near future. This flag is only a hint: it will never change the semantics of your code, but it may affect performance.
 
-- {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
+- {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
   - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Results in the Map will be sorted in increasing order of their UTF-8 encodings, with any requested keys that do not exist being omitted. Supports up to 128 keys at a time.
 
-    **Supported options:**
+    <br/>**Supported options:**
 
     Same as `get(key, options)`, above.
 
-- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}any{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}any{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 128 KiB (131072 bytes).<br><br>
 
@@ -175,33 +179,33 @@ If you invoke `put()` (or `delete()`) multiple times without performing any `awa
 The `put()` method returns a `Promise`, but most applications can discard this promise without `await`ing it. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such applications should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
 {{</Aside>}}
 
-- {{<code>}}put(entries{{<param-type>}}Object{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}put(entries{{<param-type>}}Object{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a maximum size of 2048 bytes and each value is limited to 128 KiB (131072 bytes).
 
-    **Supported options:** Same as `put(key, value, options)`, above.
+    <br/>**Supported options:** Same as `put(key, value, options)`, above.
 
-- {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Promise\<boolean>{{</type>}}
+- {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}Promise\<boolean>{{</type>}}
 
   - Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
-    **Supported options:** Same as `put()`, above.
+    <br/>**Supported options:** Same as `put()`, above.
 
-- {{<code>}}delete(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<number>{{</type>}}
+- {{<code>}}delete(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<number>{{</type>}}
 
   - Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
-    **Supported options:** Same as `put()`, above.
+    <br/>**Supported options:** Same as `put()`, above.
 
-- {{<code>}}list(){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
+- {{<code>}}list(){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
   - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/workers/platform/limits/). If that is a concern, pass options to `list` as documented below.
 
-- {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
+- {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
   - Returns keys and values associated with the current Durable Object according to the parameters in the provided options object.
 
-    **Supported options:**
+    <br/>**Supported options:**
 
     - {{<code>}}start{{<param-type>}}string{{</param-type>}}{{</code>}}
 
@@ -236,7 +240,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
       - Same as the option to `get()`, above.
 
-- {{<code>}}transaction(closure{{<param-type>}}Function(txn){{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}transaction(closure{{<param-type>}}Function(txn){{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
@@ -248,19 +252,19 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
-- {{<code>}}deleteAll(){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}deleteAll(){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
 
-    **Supported options:** Same as `put()`, above.
+    <br/>**Supported options:** Same as `put()`, above.
 
-- {{<code>}}getAlarm(){{</code>}} {{<type>}}Promise\<Number | null>{{</type>}}
+- {{<code>}}getAlarm(){{</code>}} : {{<type>}}Promise\<Number | null>{{</type>}}
 
   - Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns null.
 
-    **Supported options:** Like `get()` above, but without `noCache`.
+    <br/>**Supported options:** Like `get()` above, but without `noCache`.
 
-- {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Sets the current alarm time, accepting either a JS Date, or integer milliseconds since epoch.
 
@@ -268,13 +272,13 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     **Supported options:** Like `put()` above, but without `noCache`.
 
-- {{<code>}}deleteAlarm(){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}deleteAlarm(){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
 
-    **Supported options:** Like `put()` above, but without `noCache`.
+    <br/>**Supported options:** Like `put()` above, but without `noCache`.
 
-- {{<code>}}sync(){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}sync(){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Synchronizes any pending writes to disk.
 
@@ -290,6 +294,63 @@ The system calls the `alarm()` handler method when a scheduled alarm time is rea
 
 The method takes no parameters, does not return a result, and can be `async`.
 
+#### How to use the `alarm()` handler method
+
+In your Durable Object, the `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
+
+The example below implements an `alarm()` handler that wakes the Durable Object up once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
+
+```js
+export default {
+  async fetch(request, env) {
+    let id = env.BATCHER.idFromName("foo");
+    return await env.BATCHER.get(id).fetch(request);
+  },
+};
+
+const SECONDS = 1000;
+
+export class Batcher {
+  constructor(state, env) {
+    this.state = state;
+    this.storage = state.storage;
+    this.state.blockConcurrencyWhile(async () => {
+      let vals = await this.storage.list({ reverse: true, limit: 1 });
+      this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
+    });
+  }
+  async fetch(request) {
+    this.count++;
+
+    // If there is no alarm currently set, set one for 10 seconds from now
+    // Any further POSTs in the next 10 seconds will be part of this batch.
+    let currentAlarm = await this.storage.getAlarm();
+    if (currentAlarm == null) {
+      this.storage.setAlarm(Date.now() + 10 * SECONDS);
+    }
+
+    // Add the request to the batch.
+    await this.storage.put(this.count, await request.text());
+    return new Response(JSON.stringify({ queued: this.count }), {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+  }
+  async alarm() {
+    let vals = await this.storage.list();
+    await fetch("http://example.com/some-upstream-service", {
+      method: "POST",
+      body: Array.from(vals.values()),
+    });
+    await this.storage.deleteAll();
+    this.count = 0;
+  }
+}
+```
+
+The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
+
 ### `fetch()` handler method
 
 The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#accessing-a-durable-object-from-a-worker).
@@ -297,6 +358,46 @@ The system calls the `fetch()` method of a Durable Object namespace when an HTTP
 The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
+
+### WebSockets Hibernation API (beta)
+
+Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow a Durable Object that is not currently running an event handler to be removed from memory while keeping its WebSockets connected ("hibernation").
+
+If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
+
+[Code updates](/workers/learning/using-durable-objects/#global-uniqueness) will disconnect all WebSockets.
+
+#### WebSocket extensions
+
+- {{<code>}}webSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Keeps a copy of `value` in memory (not on disk) such that it will survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [storage api](/workers/runtime-apis/durable-objects/#transactional-storage-api) and pass the corresponding key to this method so it can be retrieved later.
+
+- {{<code>}}webSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
+
+  - Retrieve the most recent value passed to `serializeAttachment`, or null if none exists.
+
+#### `state` methods for WebSockets
+
+- {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. After calling this, the WebSocket is accepted, so its `send()` and `close()` methods can be used to send messages, but its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object instead. `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it. This API has a maximum of 32,768 WebSockets connected per Durable Object instance, but the cpu and memory usage of a given workload may further limit the practical number of simultaneous connections. 
+
+- {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}
+
+  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
+
+#### `webSocketMessage()` handler method
+
+The system calls the `webSocketMessage()` method when an accepted WebSocket receives a message. The method is not called for WebSocket control frames; the system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation. The method takes `(ws: WebSocket, message: String | ArrayBuffer)` as parameters. It does not return a result and can be `async`.
+
+#### `webSocketClose()` handler method
+
+The system calls the `webSocketClose()` method when a WebSocket is closed. The method takes `(ws: WebSocket, code: number, reason: string, wasClean: boolean)` as parameters. `wasClean` is true if the connection closed cleanly, false otherwise. The method does not return a result and can be `async`.
+
+#### `webSocketError()` handler method
+
+The system calls the `webSocketError()` method for any non-disconnection related errors. The method takes `(ws: WebSocket, error: any)` as parameters. It does not return a result and can be `async`.
 
 ---
 

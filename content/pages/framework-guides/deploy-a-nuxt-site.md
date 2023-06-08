@@ -31,7 +31,10 @@ $ npm run dev
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
@@ -43,7 +46,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | --------------------- | ------------------ |
 | Production branch     | `main`             |
 | Build command         | `npm run build`    |
-| Build directory       | `.output/public`   |
+| Build directory       | `dist`             |
 | Environment Variables | `NODE_VERSION: 17` |
 
 </div>

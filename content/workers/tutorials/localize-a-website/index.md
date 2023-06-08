@@ -155,7 +155,7 @@ class ElementHandler {
 }
 ```
 
-To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/wrangler-legacy/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
+To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/wrangler/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
 
 You can expand on this simple translation functionality to provide country-specific translations, based on the incoming request’s `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into your `ElementHandler`, you can retrieve a translated string in your user’s home language, provided that it is defined in `strings`.
 
@@ -165,7 +165,7 @@ To implement this:
 2.  Pass a `countryStrings` object into our `ElementHandler`, so that it can be used during the parsing process.
 3.  Grab the `Accept-Language` header from an incoming request, parse it, and pass the parsed language to `ElementHandler`.
 
-To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) NPM package:
+To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) npm package:
 
 ```sh
 ---

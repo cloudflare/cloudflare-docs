@@ -12,7 +12,7 @@ title: SSL FAQ
 
 Cloudflare certificates are prioritized by [](https://support.cloudflare.com/hc/articles/203295200)certificate type and also by most specific hostname.
 
-Exceptions to general prioritization occur based on hostname specificity.  Certificates that mention a specific hostname are preferred to wildcard certificates. For example, a Universal SSL certificate that explicitly mentions _www.example.com_ takes priority over a certificate that matches the _www_ hostname via a wildcard such as _\*.example.com._ 
+Exceptions to general prioritization occur based on hostname specificity.  Certificates that mention a specific hostname are preferred to wildcard certificates. For example, a Universal SSL certificate that explicitly mentions _www.example.com_ takes priority over a certificate that matches the _www_ hostname via a wildcard such as _\*.example.com._
 
 {{<Aside type="warning">}}
 When dealing with a child zone, a certificate uploaded whose subject or
@@ -43,7 +43,7 @@ ___
 
 ## What does SSL invalid brand check mean?
 
-Some domains are not eligible for the Universal SSL if they contain words that conflict with trademarked domains.  
+Some domains are not eligible for the Universal SSL if they contain words that conflict with trademarked domains.
 
 To resolve this issue, you can either:
 
@@ -117,7 +117,7 @@ TLS Client Authentication validates that a certificate presented by a client is 
 
 ___
 
-## How do I enable Universal SSL with Github?
+## How do I enable Universal SSL with GitHub?
 
 Refer to the Cloudflare blog post about [using Cloudflare's Universal SSL with GitHub Pages](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/).
 

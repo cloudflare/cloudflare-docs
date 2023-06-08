@@ -38,7 +38,9 @@ In this example, an old website was discontinued and replaced by a new one in a 
 
     - **Source URL**: `example.com/`
     - **Target URL**: `https://example.net/`
+    - **Subpath matching**: Enabled
     - **Include subdomains**: Enabled
+    - **Preserve path suffix**: Disabled
 
 2.  Create a Bulk Redirect Rule that enables this list.
 

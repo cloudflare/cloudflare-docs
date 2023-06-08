@@ -1,6 +1,6 @@
 ---
 title: Handle an alert
-pcx_content_type: best-practices
+pcx_content_type: tutorial
 weight: 2
 meta:
   title: Handle a Page Shield alert
@@ -19,7 +19,7 @@ Start by identifying the [detection system](/page-shield/how-it-works/malicious-
 3. Under **Active Scripts** or **Active Connections**, search for the resource mentioned on the alert you received.
 4. Select **Details** next to the resource you identified. The example screenshot below shows a malicious script resource.
 
-![Page Shield dialog box showing the details of a script considered malicious.](/page-shield/static/handle-alert-malicious-script-example.png)
+![Page Shield dialog box showing the details of a script considered malicious.](/images/page-shield/handle-alert-malicious-script-example.png)
 
 The details page will specify which detection system triggered the alert. Check the values of the following fields:
 

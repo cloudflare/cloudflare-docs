@@ -10,6 +10,10 @@ meta:
 
 Learn how to add new account members, edit or revoke their permissions and access, and resend verifications emails.
 
+{{<Aside type="note">}}
+{{<render file="_account-member-manage-limitation.md">}}
+{{</Aside>}}
+
 ## Add account members
 
 To add a member to your account:
@@ -27,7 +31,7 @@ To add a member to your account:
 6. Review the information, then select **Invite**.
 
 {{<Aside type="note">}}
-If a user already has an account with Cloudflare, you can also select **Direct Add** to add them to your account without sending an email invitation.
+If a user already has an account with Cloudflare and you have an Enterprise account, you can also select **Direct Add** to add them to your account without sending an email invitation.
 {{</Aside>}}
 
 ## Edit member permissions

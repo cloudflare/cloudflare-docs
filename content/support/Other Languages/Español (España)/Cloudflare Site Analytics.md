@@ -13,9 +13,9 @@ title: Cloudflare Site Analytics
 
 La aplicación (Site) **Analytics** del panel de control de Cloudflare es un componente importante de la línea general de productos de Cloudflare Analytics. En concreto, esta aplicación te da acceso a una amplia variedad de métricas, recabadas a nivel de sitio web o de dominio.
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Consulta [Cloudflare Analytics: vista
-rápida](https://support.cloudflare.com/hc/articles/360037684111https:// "Cloudflare Analytics: vista rápida")
+rápida](https://support.cloudflare.com/hc/articles/360037684111 "Cloudflare Analytics: vista rápida")
 que incluye información general sobre toda la oferta de análisis de
 Cloudflare. También podrás conocer las características de los datos que
 capturamos y procesamos.

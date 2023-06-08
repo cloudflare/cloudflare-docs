@@ -8,7 +8,7 @@ weight: 2
 
 ## Overview
 
-Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
+Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the Internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
 
 Public buckets can be set up in either one of two ways:
 
@@ -26,7 +26,7 @@ Domain access through a custom domain allows you to use Cloudflare Cache to acce
 
 {{<Aside type="note" header="Enabling cache for all file types">}}
 
-By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/about/default-cache-behavior/#default-cached-file-extensions)
+By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
 
 {{</Aside>}}
 

@@ -14,16 +14,16 @@ At this time, the CASB integration for Jira is only compatible with Jira Cloud a
 
 ## Integration prerequisites
 
-* A Jira Cloud plan (Free, Standard, Premium, Enterprise)
+- A Jira Cloud plan (Free, Standard, Premium, Enterprise)
 
-* Access to a Jira Cloud account with Site admin and/or Organization admin permissions
+- Access to a Jira Cloud account with Site admin and/or Organization admin permissions
 
 ## Integration permissions
 
 For the Jira Cloud integration to function, Cloudflare CASB requires the following permissions via an OAuth 2.0 app:
 
-* `read:jira-work`
-* `read:jira-user`
+- `read:jira-work`
+- `read:jira-user`
 
 These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Atlassian scopes documentation](https://developer.atlassian.com/cloud/jira/platform/scopes-for-oauth-2-3LO-and-forge-apps/).
 
@@ -38,7 +38,7 @@ To stay up-to-date with new CASB findings as they are added, bookmark this page 
 Flag user and third-party app access issues, including account misuse and users not following best practices.
 
 | Finding                                    | Severity |
-|--------------------------------------------|----------|
+| ------------------------------------------ | -------- |
 | Active Jira user with unknown account type | Low      |
 | Active third-party app with access         | Low      |
 | Inactive third-party app with access       | Low      |
@@ -49,5 +49,5 @@ Flag user and third-party app access issues, including account misuse and users 
 Identify files that could be potentially problematic and worth deeper investigation.
 
 | Finding                           | Severity |
-|-----------------------------------|----------|
+| --------------------------------- | -------- |
 | Jira Issue attachment over 512 MB | Medium   |

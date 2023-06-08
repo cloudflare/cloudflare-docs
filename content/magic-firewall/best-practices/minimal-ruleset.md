@@ -41,7 +41,7 @@ The information below covers traffic type, how the port is used, and reasons for
 | UDP source port `389` | Connection-less Lightweight Directory Access Protocol (CLDAP).| [Used in reflection attacks](https://blog.cloudflare.com/reflections-on-reflections/). |
 | UDP source port `111` | SunRPC. | Common attack vector. [Used in reflection attacks](https://blog.cloudflare.com/reflections-on-reflections/). |
 | UDP source port `19` | CHARGEN. | [Amplification attack vector](https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-port-11211/). |
-| UDP source port `11194` | OpenVPN. | Unless this is an authorized VPN in your environment, this common VPN should be blocked. |
+| UDP source port `1194` | OpenVPN. | Unless this is an authorized VPN in your environment, this common VPN should be blocked. |
 | UDP source port `3702` | Web Services Dynamic Discovery Multicast discovery protocol. (WS-Discovery.) | Vulnerable to exploiting for DDoS attacks. |
 | UDP source port `10001` | Ubiquiti Unifi discovery protocol. | Ubiquiti devices were exploited and used to conduct DDoS attacks on this port. |
 | UDP source port `20800` | Call of Duty. | [Commonly used in attacks](https://blog.cloudflare.com/reflections-on-reflections/). |

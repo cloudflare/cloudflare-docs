@@ -26,7 +26,7 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 ### 3. Next, define device enrollment permissions.
 
-Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 ### 4. Install the Cloudflare root certificate on your devices.
 
@@ -58,7 +58,7 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 ### 3. Next, define device enrollment permissions.
 
-Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 ### 4. (optional) Add a DNS location to Gateway.
 

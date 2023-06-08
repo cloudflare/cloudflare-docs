@@ -55,7 +55,7 @@ The process for removing the password depends on your operating system. The foll
 
 5.  Enter the original key password when prompted by the **openssl.exe** command window.
 
-6.  [Upload](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate/) the contents of the `key.pem` file to Cloudflare.
+6.  [Upload](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) the contents of the `key.pem` file to Cloudflare.
 
 </div>
 </details>

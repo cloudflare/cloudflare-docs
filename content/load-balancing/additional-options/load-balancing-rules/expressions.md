@@ -77,7 +77,7 @@ Compound expressions are easier to scan when displayed in the Expression Builder
 
 This Expression Builder screenshot shows the example compound expression described earlier. Compound expressions are easier to scan when displayed in the Expression Builder’s visual interface.
 
-![Example rule configuration visible in the Expression Builder](/load-balancing/static/images/rules-builder-1.png)
+![Example rule configuration visible in the Expression Builder](/images/load-balancing/rules-builder-1.png)
 
 The **Expression Preview** displays the expression in text:
 

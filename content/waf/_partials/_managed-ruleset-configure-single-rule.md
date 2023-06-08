@@ -15,6 +15,6 @@ To configure a rule in the Browse Managed Ruleset interface:
 
     In some managed rulesets, you can also change the status of a rule using the toggle next to the rule.
 
-    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset. In this interface you can override the behavior of specific rules.](/waf/static/waf-browse-rules.png)
+    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset. In this interface you can override the behavior of specific rules.](/images/waf/waf-browse-rules.png)
 
 4. Select **Next**, and then select **Save**.

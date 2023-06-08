@@ -28,8 +28,10 @@ You will also need the following information from your Primary DNS provider:
 
 - **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
 - **Zone transfer type**: Will zone transfers be full (AXFR) or incremental (IXFR)?
+- **TSIG name** (optional): A descriptive name of the TSIG following domain name syntax ([RFC 8945 section 4.2](https://datatracker.ietf.org/doc/html/rfc8945#section-4.2)).
+ {{<render file="_tsig-name-match.md">}}
 - **TSIG secret** (optional): The secret string used to authenticate zone transfers.
-- **TSIG Algorithm** (optional): The algorithm used to authenticate zone transfers.
+- **TSIG algorithm** (optional): The algorithm used to authenticate zone transfers.
 
 ### At Cloudflare
 
@@ -81,7 +83,7 @@ To create a peer server using the dashboard:
 
 ### Using the API
 
-To create a peer DNS server using the API, send a [POST](/api/operations/secondary-dns-(-peer)-create-peer) request.
+To create a peer DNS server using the API, send a [POST request](/api/operations/secondary-dns-(-peer)-create-peer).
 
 ## Step 3 - Create the Secondary Zone
 
@@ -106,7 +108,7 @@ To create a secondary zone using the dashboard:
 
 ### Using the API
 
-To create a secondary zone using the API, send a [POST](/api/operations/zone-create-zone) request with the `type` parameter set to `"secondary"`.
+To create a secondary zone using the API, send a [POST](/api/operations/secondary-dns-(-secondary-zone)-create-secondary-zone-configuration) request with the `type` parameter set to `"secondary"`.
 
 ## Step 4 - Update registrar
 

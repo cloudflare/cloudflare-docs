@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Applications and app types
-weight: 6
+weight: 7
 ---
 
 # Applications and app types

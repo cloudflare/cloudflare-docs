@@ -44,10 +44,11 @@ If you have a workflow that is limited by an upstream API and/or system, you may
 
 Concurrency settings can be configured in each projects' `wrangler.toml` file and/or the Cloudflare dashboard. To set concurrency settings in the Cloudflare dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select the **Workers** dropdown > **Queues**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** > **Queues**.
 3. Select your queue > **Settings**.
-4. Set **Maximum consumer invocations** to a value between `1` and `10`. This value represents the maximum number of concurrent consumer invocations available to your queue.
+4. Select **Edit Consumer** under Consumer details.
+5. Set **Maximum consumer invocations** to a value between `1` and `10`. This value represents the maximum number of concurrent consumer invocations available to your queue.
 
 To remove a fixed maximum value, select **auto (recommended)**.
 
@@ -57,7 +58,7 @@ Note that if you are writing messages to a queue faster than you can process the
 
 {{<Aside type="note">}}
 
-Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is currently only supported in `wrangler@beta` (`wrangler@0.0.0-ace46939` or greater). 
+Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is only supported in wrangler [`2.13.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%402.13.0) or greater. 
 
 {{</Aside>}}
 
@@ -95,5 +96,9 @@ When multiple consumer Workers are invoked, each Worker invocation incurs [durat
 
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).
+
+Billing for consumers follows the [Workers unbound usage model](/workers/platform/pricing/#usage-models) meaning a developer is billed for the request and the duration of the request. 
+
+### Example
 
 A consumer Worker that takes 2 seconds ([256 GB-seconds](/workers/platform/pricing/#workers-unbound-billing-examples)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).

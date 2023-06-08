@@ -1,6 +1,6 @@
 ---
 title: Backups
-weight: 2
+weight: 9
 pcx_content_type: concept
 ---
 
@@ -10,7 +10,7 @@ D1 has built-in support for creating and restoring backups of your databases, in
 
 ## Automatic backups
 
-D1 automatically backs up your databases every hour on your behalf. Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
+D1 automatically backs up your databases every hour on your behalf, and [retains backups for 24 hours](/d1/platform/limits/). Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
 
 To view and manage these backups, including any manual backups you have made, you can use the `d1 backup list <DATABASE_NAME>` command to list each backup.
 

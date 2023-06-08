@@ -1,5 +1,5 @@
 ---
-pcx_content_type: content
+pcx_content_type: how-to
 title: Managed Rulesets
 weight: 4
 meta:
@@ -54,7 +54,7 @@ After the association is complete, the JSON blob is added to the defined custom 
 
 4. Under **Field**, Select *Hostname*. Set the operator as *equals*. The complete expression should look like this, plus any logic you would like to add:
 
-![Rule expression](/cloudflare-for-platforms/static/rule-expression.png)
+![Rule expression](/images/cloudflare-for-platforms/rule-expression.png)
 
 5. Beneath **Value**, add the custom hostname.
 

@@ -153,28 +153,18 @@ Assigns a unique identifier to the device for the [device UUID posture check](/c
 
 **Value:** UUID for the device (for example, `496c6124-db89-4735-bc4e-7f759109a6f1`).
 
-## Authentication with service tokens
-
-{{<Aside>}}
-Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity-based rules.
-{{</Aside>}}
-
-Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a [service token](/cloudflare-one/identity/service-tokens/). Before you can authenticate clients using the service token, you must add a new rule to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) that includes the token, with the **Rule action** set to `Service Auth`.
-
-Both `auth_client_id` and `auth_client_secret` are required when using this authentication method.
-
 ### `auth_client_id`
 
-The automatically generated ID when you created your [service token](/cloudflare-one/identity/service-tokens/).
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_secret` parameter.
 
 **Value Type:** `string`
 
-**Value:** `Client ID` from your service token.
+**Value:** `Client ID` of the service token.
 
 ### `auth_client_secret`
 
-The automatically generated secret when you created your [service token](/cloudflare-one/identity/service-tokens/).
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_id` parameter.
 
 **Value Type:** `string`
 
-**Value:** `Client Secret` from your service token.
+**Value:** `Client Secret` of the service token.

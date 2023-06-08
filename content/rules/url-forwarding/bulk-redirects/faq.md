@@ -26,4 +26,4 @@ Use the `raw.http.request.full_uri` field both in the rule expression and in the
 
 ## Do Bulk Redirects take precedence over Page Rules?
 
-Yes. Bulk Redirects take precedence over Page Rules redirects.
+Yes. Bulk Redirects take precedence over Page Rules redirects. For more information on the execution order of Rules products, refer to [Execution order](/rules/url-forwarding/#execution-order).

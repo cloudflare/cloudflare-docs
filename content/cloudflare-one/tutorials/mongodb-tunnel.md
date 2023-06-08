@@ -39,7 +39,7 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
     ![MongoDB screen that shows how to add an application](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
-5.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/tutorials/country-rules/).
+5.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/identity/users/groups/).
 
     ![MongoDB screen that shows how to configure a rule](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 

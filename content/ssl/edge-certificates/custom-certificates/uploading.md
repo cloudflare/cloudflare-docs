@@ -66,7 +66,7 @@ To upload a custom SSL certificate in the dashboard:
 
 9.  Select **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
-10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/custom-certificates/caa-records/).
+10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/caa-records/).
 {{</tab>}}
 
 {{<tab label="api" no-code="true">}}
@@ -137,7 +137,7 @@ $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_cert
 
 {{<render file="_caa-records-definition.md">}}
 
-For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/custom-certificates/caa-records/).
+For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/caa-records/).
 
 {{</tab>}}
 {{</tabs>}}

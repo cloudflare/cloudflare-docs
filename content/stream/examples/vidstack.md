@@ -14,8 +14,8 @@ layout: example
 There's a few options to choose from when getting started with Vidstack. Follow any of the links
 below that makes the most sense with your current setup:
 
-- [NPM + HTML](#html)
-- [NPM + React](#react)
+- [npm + HTML](#html)
+- [npm + React](#react)
 - [CDN + HTML](#cdn)
 
 ## HTML

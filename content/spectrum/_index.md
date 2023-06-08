@@ -14,8 +14,6 @@ Spectrum provides security and acceleration for any [TCP](https://www.cloudflare
 
 {{<feature-table id="spectrum.spectrum">}}
 
-For information on how billing is calculated, refer to [Billing for Spectrum](https://support.cloudflare.com/hc/articles/360041721872) for an in-depth breakdown.
-
 ## Next steps
 
 <p>{{<button type="primary" href="/spectrum/get-started/">}}Get started{{</button>}}</p>

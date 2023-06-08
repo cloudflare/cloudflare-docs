@@ -97,11 +97,11 @@ ___
 
 ## mod\_cloudflare
 
-Há dois métodos para instalar o mod\_cloudflare: baixar a extensão Apache do Github ou adicionar código ao seu servidor web de origem.
+Há dois métodos para instalar o mod\_cloudflare: baixar a extensão Apache do GitHub ou adicionar código ao seu servidor web de origem.
 
-### Baixar pacotes ou scripts do Github
+### Baixar pacotes ou scripts do GitHub
 
-Se você estiver usando um servidor web Apache, você pode baixar o mod\_cloudflare do [Github](https://github.com/cloudflare/mod_cloudflare).
+Se você estiver usando um servidor web Apache, você pode baixar o mod\_cloudflare do [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Adicionar código ao seu servidor Web de origem
 
@@ -208,7 +208,7 @@ Do IIS 8.5 em diante, os registros de log personalizados são uma opção integr
 
 Para que o Tomcat7 restaure automaticamente o IP do visitante original nos seus registros de acesso e aplicativo, você precisará adicionar `%{CF-Connecting-IP}i` ao seu esquema de registros.
 
-Como exemplo, você pode adicionar o bloco abaixo ao seu arquivo server.xml 
+Como exemplo, você pode adicionar o bloco abaixo ao seu arquivo server.xml
 
 `<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log." suffix=".txt" pattern="%{CF-Connecting-IP}i - %h %u %t - &quot;%r&quot; - %s - %b - %{CF-RAY}i"/>`
 

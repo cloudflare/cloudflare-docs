@@ -14,48 +14,258 @@ Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is
 
 When using Page Rules with Workers, the following workflow is applied.
 
-1.  Request arrives at Cloudflare data center.
-2.  Cloudflare decides if this request is a Worker route.
-3.  Because this is a Worker route, Cloudflare disables a number of features, including some that would be set by Page Rules.
-4.  Page Rules run as part of normal request processing with some features now disabled.
-5.  Worker executes.
+1. Request arrives at Cloudflare data center.
+2. Cloudflare decides if this request is a Worker route. Because this is a Worker route, Cloudflare evaluates and disabled a number of features, including some that would be set by Page Rules.
+3. Page Rules run as part of normal request processing with some features now disabled.
+4. Worker executes.
+5. Worker makes a same-zone or other-zone subrequest. Because this is a Worker route, Cloudflare disables a number of features, including some that would be set by Page Rules.
+
+Page Rules are evaluated both at the client-to-Worker request stage (step 2) and the Worker subrequest stage (step 5).
 
 If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
 
-## Disabled Page Rules
+## Affected Page Rules
 
 The following Page Rules may not work as expected when an incoming request is matched to a Worker route:
 
 *   Always Online
-*   Always Use HTTPS
-*   Auto Minify
-*   Automatic HTTPS Rewrites
+*   [Always Use HTTPS](/workers/platform/workers-with-page-rules/#always-use-https)
+*   [Auto Minify](/workers/platform/workers-with-page-rules/#auto-minify)
+*   [Automatic HTTPS Rewrites](/workers/platform/workers-with-page-rules/#automatic-https-rewrites)
+*   [Browser Cache TTL](/workers/platform/workers-with-page-rules/#browser-cache-ttl)
+*   [Browser Integrity Check](/workers/platform/workers-with-page-rules/#browser-integrity-check)
+*   [Cache Deception Armor](/workers/platform/workers-with-page-rules/#cache-deception-armor)	
+*   [Cache Level](/workers/platform/workers-with-page-rules/#cache-level)
 *   Disable Apps
-*   Email Obfuscation
-*   Forwarding URL
+*   [Disable Zaraz](/workers/platform/workers-with-page-rules/#disable-zaraz)
+*   [Edge Cache TTL](/workers/platform/workers-with-page-rules/#edge-cache-ttl)
+*   [Email Obfuscation](/workers/platform/workers-with-page-rules/#email-obfuscation)
+*   [Forwarding URL](/workers/platform/workers-with-page-rules/#forwarding-url)
 *   Host Header Override
+*   [IP Geolocation Header](/workers/platform/workers-with-page-rules/#ip-geolocation-header)
 *   Mirage
-*   Rocket Loader
+*   [Origin Cache Control](/workers/platform/workers-with-page-rules/#origin-cache-control)
+*   [Rocket Loader](/workers/platform/workers-with-page-rules/#rocket-loader)
+*   [Security Level](/workers/platform/workers-with-page-rules/#security-level)
+*   [Server Side Excludes](/workers/platform/workers-with-page-rules/#server-side-excludes)
+*   [SSL](/workers/platform/workers-with-page-rules/#ssl)
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
 
 {{<Aside type="warning" header="Testing">}}
 
-Due to ongoing changes to the Workers runtime, detailed documentation on how these rules will be affected will be published following testing.
+Due to ongoing changes to the Workers runtime, detailed documentation on how these rules will be affected are updated following testing.
 
 {{</Aside>}}
 
 To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
 
+{{<Aside type="note" header="Same zone versus other zone">}}
+
+A same zone subrequest is a request the Worker makes to an orange-clouded hostname in the same zone the Worker runs on. Depending on your DNS configuration, any request that falls outside that definition may be considered an other zone request by the Cloudflare network.
+
+{{</Aside>}}
+
+### Always Use HTTPS
+
+{{<table-wrap>}}
+
+|     Page Rule    | Source     | Target     | Behavior       |
+| -----------------|------------|------------|----------------|
+| Always Use HTTPS | Client     | Worker     | Rule Respected |
+| Always Use HTTPS | Worker     | Same Zone  | Rule Ignored   |
+| Always Use HTTPS | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Auto Minify
+
+{{<table-wrap>}}
+
+|     Page Rule    | Source     | Target     | Behavior       |
+| -----------------|------------|------------|----------------|
+| Always Use HTTPS | Client     | Worker     | Rule Ignored   |
+| Always Use HTTPS | Worker     | Same Zone  | Rule Respected |
+| Always Use HTTPS | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Automatic HTTPS Rewrites
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Automatic HTTPS Rewrites | Client     | Worker     | Rule Ignored   |
+| Automatic HTTPS Rewrites | Worker     | Same Zone  | Rule Respected |
+| Automatic HTTPS Rewrites | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Browser Cache TTL
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Browser Cache TTL        | Client     | Worker     | Rule Ignored   |
+| Browser Cache TTL        | Worker     | Same Zone  | Rule Respected |
+| Browser Cache TTL        | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Browser Integrity Check
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Browser Integrity Check  | Client     | Worker     | Rule Respected |
+| Browser Integrity Check  | Worker     | Same Zone  | Rule Ignored   |
+| Browser Integrity Check  | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Cache Deception Armor
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Cache Deception Armor    | Client     | Worker     | Rule Respected |
+| Cache Deception Armor    | Worker     | Same Zone  | Rule Respected |
+| Cache Deception Armor    | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Cache Level
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Cache Level              | Client     | Worker     | Rule Respected |
+| Cache Level              | Worker     | Same Zone  | Rule Respected |
+| Cache Level              | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Disable Zaraz
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Disable Zaraz            | Client     | Worker     | Rule Respected |
+| Disable Zaraz            | Worker     | Same Zone  | Rule Respected |
+| Disable Zaraz            | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Edge Cache TTL
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Edge Cache TTL           | Client     | Worker     | Rule Respected |
+| Edge Cache TTL           | Worker     | Same Zone  | Rule Respected |
+| Edge Cache TTL           | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
 ### Email Obfuscation
 
-<details>
-<summary>Email Obfuscation</summary>
-<div>
+{{<table-wrap>}}
 
-When implementing the Email Obfuscation Page Rule be aware that Email Obfuscation will run on subrequests, but not on parent requests. If the subrequest is going to an external site and the subrequest URL does not match the Page Rule URL configured for your site, the Email Obfuscation Page Rule will not execute.
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Email Obfuscation        | Client     | Worker     | Rule Ignored   |
+| Email Obfuscation        | Worker     | Same Zone  | Rule Respected |
+| Email Obfuscation        | Worker     | Other Zone | Rule Ignored   |
 
-For example, if the subrequest is going to an external object storage bucket with the URL being something like `yoursite.cloudprovider.com`, which does not match the Page Rule configured for your site, the Email Obfuscation Page Rule will be skipped.
+{{</table-wrap>}}
 
-</div>
-</details>
+### Forwarding URL
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Forwarding URL           | Client     | Worker     | Rule Ignored   |
+| Forwarding URL           | Worker     | Same Zone  | Rule Respected |
+| Forwarding URL           | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### IP Geolocation Header
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| IP Geolocation Header    | Client     | Worker     | Rule Respected |
+| IP Geolocation Header    | Worker     | Same Zone  | Rule Respected |
+| IP Geolocation Header    | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Origin Cache Control
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Origin Cache Control     | Client     | Worker     | Rule Respected |
+| Origin Cache Control     | Worker     | Same Zone  | Rule Respected |
+| Origin Cache Control     | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Rocket Loader
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Rocket Loader            | Client     | Worker     | Rule Ignored   |
+| Rocket Loader            | Worker     | Same Zone  | Rule Ignored   |
+| Rocket Loader            | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Security Level
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Security Level           | Client     | Worker     | Rule Respected |
+| Security Level           | Worker     | Same Zone  | Rule Ignored   |
+| Security Level           | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### Server Side Excludes
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| Server Side Excludes     | Client     | Worker     | Rule Ignored   |
+| Server Side Excludes     | Worker     | Same Zone  | Rule Ignored   |
+| Server Side Excludes     | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}
+
+### SSL
+
+{{<table-wrap>}}
+
+|     Page Rule            | Source     | Target     | Behavior       |
+| -------------------------|------------|------------|----------------|
+| SSL                      | Client     | Worker     | Rule Respected |
+| SSL                      | Worker     | Same Zone  | Rule Respected |
+| SSL                      | Worker     | Other Zone | Rule Ignored   |
+
+{{</table-wrap>}}

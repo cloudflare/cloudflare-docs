@@ -28,7 +28,7 @@ The example below shows a TCP health check configuration for an application runn
 </summary>
 <div class="special-class" markdown="1">
 
-![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/spectrum/img/load-balancing/spectrum-tcp-check.png)
+![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/images/spectrum/spectrum-tcp-check.png)
 
 </div>
 </details>

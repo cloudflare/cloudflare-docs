@@ -498,7 +498,7 @@ cf: {image: {sharpen: 2}}
 
 #### `trim`
 
-Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, specify an object with four properties: `{top, right, bottom, left}`. Example:
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`. Example:
 
 ```js
 ---
@@ -511,7 +511,7 @@ trim=20;30;20;0
 ---
 header: Workers
 ---
-cf: {image: {trim: {"top": 12,  "right": 78, "bottom": 34, "left": 56,}}}
+cf: {image: {trim: {top: 12,  right: 78, bottom: 34, left: 56, width:678, height:678}}}
 ```
 
 #### `width`

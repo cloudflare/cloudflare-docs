@@ -26,7 +26,7 @@ You can sign up today at [this link](https://dash.cloudflare.com/sign-up/teams).
 
 {{<faq-answer>}}
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in Zero Trust under **Settings** > **General**.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in Zero Trust under **Settings** > **Custom Pages**.
 
 | team name        | team domain                             |
 | ---------------- | --------------------------------------- |
@@ -64,7 +64,7 @@ User seats can be removed for Access and Gateway at **My Team** > **Users**. Rem
 
 - **Access**: All active sessions for that user will be invalidated. A user will be able to log back into an application unless you create an [Access policy](/cloudflare-one/policies/access/) to block future logins from that user.
 
-- **Gateway**: All active devices for that user will be logged out of your Zero Trust organization, which stops all filtering and routing via the WARP client. A user will be able to re-enroll their device unless you create a [device enrollment policy](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) to block them.
+- **Gateway**: All active devices for that user will be logged out of your Zero Trust organization, which stops all filtering and routing via the WARP client. A user will be able to re-enroll their device unless you create a [device enrollment policy](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to block them.
 
 {{<Aside type="warning">}}
 

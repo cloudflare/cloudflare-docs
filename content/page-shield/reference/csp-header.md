@@ -19,8 +19,10 @@ If you [configured the CSP reporting endpoint](/page-shield/reference/settings/#
 content-security-policy-report-only: script-src 'none'; connect-src 'none'; report-uri <YOUR_HOSTNAME>/cdn-cgi/script_monitor/report?<QUERY_STRING>
 ```
 
-{{<Aside type="note">}}
-Configuring [log policies](/page-shield/policies/) will add other report-only directives.
+{{<Aside type="note" header="Notes">}}
+Cloudflare adds the CSP report-only HTTP header used to monitor webpages resources to a sample of sent responses.
+
+Configuring [log policies](/page-shield/policies/) will add other CSP report-only headers to responses. Cloudflare will not perform any sampling for these report-only headers related to customer-defined policies.
 {{</Aside>}}
 
 ## Related resources

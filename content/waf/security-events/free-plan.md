@@ -14,7 +14,7 @@ Security Events is available for your zone in **Security** > **Events**.
 
 You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed in the **Activity Log**.
 
-![Example of adding a new filter in Security Events for the Allow action](/waf/static/analytics-add-filter-free.png)
+![Example of adding a new filter in Security Events for the Allow action](/images/waf/events-add-filter-free.png)
 
 {{<render file="_analytics-filter-report-duration.md">}}
 

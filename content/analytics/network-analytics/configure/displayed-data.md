@@ -12,7 +12,7 @@ meta:
 
 To toggle your view of the data, click the **Total packet rate** or **Total bit rate** side panels.
 
-![Network Analytics side panels allowing you to use packets or bits as the base unit for the dashboard.](/analytics/static/images/network-analytics/high-level-metrics.png)
+![Network Analytics side panels allowing you to use packets or bits as the base unit for the dashboard.](/images/analytics/network-analytics/high-level-metrics.png)
 
 The selected metric will determine the base units (packets or bits) used in the several analytics panels displayed in the dashboard.
 
@@ -46,4 +46,4 @@ To filter based on the type of data associated with one of the Network Analytics
 
 Enable the **Show annotations** toggle to show or hide annotations for advertised/withdrawn IP prefix events in the **Network Analytics** view. Click each annotation to get more details.
 
-![Network Analytics chart displaying IP prefix-related annotations.](/analytics/static/images/network-analytics/view-annotations.png)
+![Network Analytics chart displaying IP prefix-related annotations.](/images/analytics/network-analytics/view-annotations.png)

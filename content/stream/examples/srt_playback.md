@@ -12,7 +12,7 @@ layout: example
 
 {{<render file="_prereqs_first_start_live_streaming.md">}}
 
-Copy the **SRT Playback URL** for your live input from the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs) or the [Stream API](/stream/stream-live/start-stream-live/#using-the-api), and paste it into the URL below, replacing `<SRT_PLAYBACK_URL>`:
+Copy the **SRT Playback URL** for your live input from the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs) or the [Stream API](/stream/stream-live/start-stream-live/#use-the-api), and paste it into the URL below, replacing `<SRT_PLAYBACK_URL>`:
 
 ```sh
 ---

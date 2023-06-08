@@ -6,7 +6,7 @@ weight: 41
 
 # Integrate with PagerDuty
 
-To integrate Cloudflare Health Check notifications with PagerDuty, follow the steps outlined in PagerDuty’s [Email Integration Guide](https://www.pagerduty.com/docs/guides/email-integration-guide/). If you do not have a PagerDuty account, you will first need to set that up.
+To integrate Cloudflare health monitor notifications with PagerDuty, follow the steps outlined in PagerDuty’s [Email Integration Guide](https://www.pagerduty.com/docs/guides/email-integration-guide/). If you do not have a PagerDuty account, you will first need to set that up.
 
 PagerDuty will generate an email address that will create incidents based on emails sent to that address. For help locating that email address, refer to the [PagerDuty documentation](https://www.pagerduty.com/docs/guides/email-integration-guide/).
 

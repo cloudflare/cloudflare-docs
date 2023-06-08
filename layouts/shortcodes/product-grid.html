@@ -6,18 +6,28 @@
 {{- $productName :=  replace .Name ".yml" "" -}}
 {{- $productData := index $.Site.Data $productName -}}
 {{- with index $productData "product" -}}
+{{- $additional_groups := slice -}}
+{{- range .additional_groups -}}
+  {{- $additional_groups = $additional_groups | append . -}}
+{{- end -}}
+
 {{- $dataArray = $dataArray | append 
 (dict "group" .group "title" .title  "show" (default true .show) "url" 
-.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) ) -}}
+.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) 
+"additional_groups" (default (slice) ($additional_groups))) -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
 
 {{- range $dataArray -}}
-{{- with .group -}}
+  {{- with .group -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
 
-{{ $availableOptions = $availableOptions | append . }}
-{{- end -}}
+  {{- range .additional_groups -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
+
 {{- end -}}
 
 {{- $availableOptions = $availableOptions | uniq | sort -}}
@@ -365,8 +375,8 @@ span a img {
         <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
-        <input class="ProductCheckboxItem" type="checkbox" id="true" name="preview-available">
-        <label class="CheckboxLabel" for="true">True</label>
+        <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available">
+        <label class="CheckboxLabel" for="preview-available">True</label>
       </div>
   </fieldset>
     </div>
@@ -385,8 +395,9 @@ span a img {
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
           href="{{ .url }}"
-          data-product-group="{{ .group }}"
-          data-preview-tryout="{{ .preview_tryout }}"
+          data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
+          data-preview-tryout="{{- .preview_tryout -}}"
+          style="display: none"
         >
           <span>{{ .title }}</span>
         </a>
@@ -398,6 +409,24 @@ span a img {
   </div>
 
 <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedGroups = urlParams.get('product-group');
+  if (selectedGroups) {
+    const selectedGroupList = selectedGroups.split(',');
+    const productGroups = document.querySelectorAll('input[name="product-group"]');
+    productGroups.forEach((productGroup) => {
+      if (selectedGroupList.includes(productGroup.id)) {
+        productGroup.checked = true;
+      }
+    });
+  }
+
+  const previewMatch = urlParams.get('preview-available');
+  if (previewMatch) {
+    document.querySelector('input[name="preview-available"]').checked = true;
+  }
+
+  document.addEventListener('DOMContentLoaded', filterList);
   document.addEventListener('DOMContentLoaded', function() {
     // Listen for changes on all checkboxes
     let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
@@ -412,8 +441,9 @@ span a img {
 
 function filterList() {
   let checkedGroups = document.querySelectorAll('input[name="product-group"]:checked');
-  let checkedPreview = document.querySelectorAll('input[name="preview-available"]:checked');
-  let numCheckboxes = checkedGroups.length + checkedPreview.length;
+  // obtain a single element, and count it as 1 checkbox if it exists
+  let checkedPreview = document.querySelector('input[name="preview-available"]:checked');
+  let numCheckboxes = checkedGroups.length + (checkedPreview ? 1 : 0);
   let searchBox = document.getElementById('search');
   
   // Get all checked checkboxes
@@ -437,27 +467,17 @@ function filterList() {
   for (let checkbox of checkedGroups) {
     groupIdValues.push(checkbox.id);
   }
-  let matchIdValues = [];
-  for (let checkbox of checkedPreview) {
-      matchIdValues.push(checkbox.id);
+  let previewValue = '';
+  if (checkedPreview) {
+    previewValue = 'true';
   }
 
   for (let k = 0; k < listItems.length; k++) {
-    let groupMatch = true;
-    let previewMatch = true;
-    let searchMatch = true;
+    let groupTags = listItems[k].getAttribute('data-product-group').split("|").filter(x => x !== '');
+    let groupMatch = groupIdValues.length === 0 || groupTags.some(tag => groupIdValues.includes(tag));
 
-    if (groupIdValues.length > 0) {
-      groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-    } 
-
-    if (matchIdValues.length > 0) {
-      previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
-    }
-
-    if (searchTerm !== '') {
-      searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-    }
+    let previewMatch = previewValue === '' || previewValue === listItems[k].getAttribute('data-preview-tryout');
+    let searchMatch = searchTerm === '' || listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0;
     
     if (groupMatch && searchMatch && previewMatch) {
       listItems[k].style.display = '';
@@ -479,6 +499,23 @@ function filterList() {
     emptyStateMessage.style.display = "none";
     productGridContent.style.display = "grid";
   }
+
+  // Update URL parameters
+  const newUrl = new URL(window.location);
+
+  if (groupIdValues.length > 0) {
+    newUrl.searchParams.set('product-group', groupIdValues.join(','));
+  } else {
+    newUrl.searchParams.delete('product-group');
+  }
+
+  if (previewValue.length > 0) {
+    newUrl.searchParams.set('preview-available', previewValue);
+  } else {
+    newUrl.searchParams.delete('preview-available');
+  }
+
+  history.pushState({}, '', newUrl.toString());
 }
 
 function resetFilters() {

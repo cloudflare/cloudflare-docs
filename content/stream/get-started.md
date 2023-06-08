@@ -102,8 +102,7 @@ The embed code above can also be found in the [Cloudflare dashboard](https://das
       src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?muted=true"
       title="Example Stream video"
       frame-border="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allow-full-screen></iframe>
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
   </div>
 </figure>
 

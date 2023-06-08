@@ -96,7 +96,7 @@ If you see increased traffic to a pool, you may need to shed additional traffic.
 
 If you need to shed additional pool traffic:
 
-1.  Follow the steps outlined in [Step 2](#step-2--shed-default-traffic-from-a-pool-from-a-pool).
+1.  Follow the steps outlined in [Step 2](#step-2--shed-default-traffic-from-a-pool).
     *   In the dashboard, increase the **Shed %** for **Default traffic** and/or **Session affinity traffic**.
     *   For the API, increase the value for `default_percent` and/or `session_percent`.
 

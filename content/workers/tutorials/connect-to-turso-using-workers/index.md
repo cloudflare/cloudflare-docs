@@ -16,7 +16,7 @@ This tutorial will guide you on how to build globally distributed applications w
 Before continuing with this tutorial, you should have:
 
 * Successfully [created up your first Cloudflare Worker](/workers/get-started/guide/) and/or have deployed a Cloudflare Worker before.
-* Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers. 
+* Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers.
 * A [GitHub account](https://github.com/), required for authenticating to Turso.
 * A basic familiarity with installing and using command-line interface (CLI) applications.
 
@@ -123,7 +123,7 @@ For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevan
 The Turso client library requires two pieces of information to make a connection:
 
 1. `LIBSQL_DB_URL` - The connection string for your Turso database.
-2. `LIBSQL_DB_AUTH_TOKEN` - The authentication token for your Turos database. This should be kept a secret, and not committed to source code.
+2. `LIBSQL_DB_AUTH_TOKEN` - The authentication token for your Turso database. This should be kept a secret, and not committed to source code.
 
 To get the URL for your database, run the following Turso CLI command, and copy the result:
 
@@ -152,7 +152,21 @@ $ turso db tokens create my-db -e none
 # Will output a long text string (an encoded JSON Web Token)
 ```
 
-You will now [create a secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidntial:
+To keep this token secret:
+
+1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore` file if you are using Git.
+* You will also [create a Secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
+
+First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
+
+```
+---
+filename: .dev.vars
+---
+LIBSQL_DB_AUTH_TOKEN="<YOUR_AUTH_TOKEN>"
+```
+
+Save your changes to `.dev.vars`. Next, store the authentication token as a secret for your production Worker to reference. Run the following `wrangler secret` command to create a Secret with your token:
 
 ```sh
 # Ensure you specify the secret name exactly: your Worker will need to reference it later.
@@ -188,23 +202,23 @@ Open `src/index.ts` and delete the existing template. Copy the below code exactl
 filename: src/index.ts
 ---
 
-import { Client as LibsqlClient, createClient } from '@libsql/client/web';
-import { Router, RouterType } from 'itty-router';
+import { Client as LibsqlClient, createClient } from "@libsql/client/web";
+import { Router, RouterType } from "itty-router";
 
 export interface Env {
-    // The following two variables come from the worker environment
+    // The environment variable containing your the URL for your Turso database.
     LIBSQL_DB_URL?: string;
+    // The Secret that contains the authentication token for your Turso database.
     LIBSQL_DB_AUTH_TOKEN?: string;
 
     // These objects are created before first use, then stashed here
-    client?: LibsqlClient;
+    // for future use
     router?: RouterType;
 }
 
 export default {
     async fetch(request: Request, env: Env): Promise<Response> {
         if (env.router === undefined) {
-            env.client = buildLibsqlClient(env);
             env.router = buildRouter(env);
         }
 
@@ -215,56 +229,53 @@ export default {
 function buildLibsqlClient(env: Env): LibsqlClient {
     const url = env.LIBSQL_DB_URL?.trim();
     if (url === undefined) {
-        throw new Error('LIBSQL_DB_URL env var is not defined')
+        throw new Error("LIBSQL_DB_URL env var is not defined");
     }
 
     const authToken = env.LIBSQL_DB_AUTH_TOKEN?.trim();
     if (authToken === undefined) {
-        throw new Error('LIBSQL_DB_AUTH_TOKEN env var is not defined')
+        throw new Error("LIBSQL_DB_AUTH_TOKEN env var is not defined");
     }
 
-	return createClient({url, authToken});
+    return createClient({ url, authToken });
 }
 
 function buildRouter(env: Env): RouterType {
-    const client = env.client!;
-
     const router = Router();
 
-    router.get('/users', async request => {
-        const rs = await client.execute('select * from example_users');
-        return new Response(
-            JSON.stringify(rs),
-            { headers: { 'Content-Type': 'application/json' } }
-        );
+    router.get("/users", async () => {
+        const client = buildLibsqlClient(env);
+        const rs = await client.execute("select * from example_users");
+        return Response.json(rs);
     });
 
-    router.get('/add-user', async request => {
-        const email = request.query.email
+    router.get("/add-user", async (request) => {
+        const client = buildLibsqlClient(env);
+        const email = request.query.email;
         if (email === undefined) {
-            return new Response('Missing email', { status: 400 });
+            return new Response("Missing email", { status: 400 });
         }
-        if (typeof email !== 'string') {
-            return new Response('email must be a single string', { status: 400 });
+        if (typeof email !== "string") {
+            return new Response("email must be a single string", { status: 400 });
         }
         if (email.length === 0) {
-            return new Response('email length must be > 0', { status: 400 });
+            return new Response("email length must be > 0", { status: 400 });
         }
 
         try {
             await client.execute({
-                sql: 'insert into example_users values (?)',
-                args: [ email ]
+                sql: "insert into example_users values (?)",
+                args: [email],
             });
         } catch (e) {
             console.error(e);
-            return new Response('database insert failed');
+            return new Response("database insert failed");
         }
 
-        return new Response('Added');
+        return new Response("Added");
     });
 
-    router.all('*', () => new Response('Not Found.', { status: 404 }));
+    router.all("*", () => new Response("Not Found.", { status: 404 }));
 
     return router;
 }
@@ -363,7 +374,7 @@ You have now published a Worker that can connect to your Turso database, query i
 
 To clean up the resources you created as part of this tutorial:
 
-* If you do not want to keep this Worker, run `wrangler delete worker-turso-ts` to delete the published Worker.
+* If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the published Worker.
 * You can also delete your Turso database via `turso db destroy my-db`.
 
 ## Related resources

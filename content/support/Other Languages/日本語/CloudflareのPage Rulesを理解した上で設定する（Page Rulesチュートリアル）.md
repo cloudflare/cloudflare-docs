@@ -245,7 +245,7 @@ Browser Cache TTL（ブラウザキャッシュTTL）
 
  | 
 
-クライアントブラウザでキャッシュされるリソースが有効な状態を維持できる時間を管理します。Cloudflare UIとAPIの両方で、Enterpriseプランではないお客様が**ブラウザCache TTL**を_0_に設定することは禁止されています。[詳細を見る](/cache/about/edge-browser-cache-ttl)。
+クライアントブラウザでキャッシュされるリソースが有効な状態を維持できる時間を管理します。Cloudflare UIとAPIの両方で、Enterpriseプランではないお客様が**ブラウザCache TTL**を_0_に設定することは禁止されています。[詳細を見る](/cache/how-to/edge-browser-cache-ttl/)。
 
  | 
 
@@ -289,7 +289,7 @@ _下記の追加詳細で、限定的な正規表現のサポートについて�
 
  | 
 
-訪問者のデバイスタイプに基づき、キャッシュするコンテンツを分けます。[詳細を見る](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)。
+訪問者のデバイスタイプに基づき、キャッシュするコンテンツを分けます。[詳細を見る](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)。
 
  | 
 
@@ -302,7 +302,7 @@ Cache Deception Armor
 
  | 
 
-静的アセットをキャッシュしておく一方で、Web Cache Deception攻撃から保護します。この設定では、URLの拡張子が戻された_Content-Type_と一致しているか検証します。[詳細を見る](/cache/about/cache-deception-armor)。
+静的アセットをキャッシュしておく一方で、Web Cache Deception攻撃から保護します。この設定では、URLの拡張子が戻された_Content-Type_と一致しているか検証します。[詳細を見る](/cache/cache-security/cache-deception-armor/)。
 
  | 
 
@@ -317,7 +317,7 @@ Cache Deception Armor
 
 _カスタムキャッシュキー_とも呼ばれています。
 
-キャッシュするリソースを決定する際、どの変数を含めるかを具体的に管理します。お客様は、URLだけではなく他の要素にも基づいてキャッシュするものを決定できます。[詳細を見る](/cache/about/cache-keys)。
+キャッシュするリソースを決定する際、どの変数を含めるかを具体的に管理します。お客様は、URLだけではなく他の要素にも基づいてキャッシュするものを決定できます。[詳細を見る](/cache/how-to/cache-keys/)。
 
  | 
 
@@ -340,7 +340,7 @@ _カスタムキャッシュキー_とも呼ばれています。
 
 **標準 -** クエリ文字列を持つ静的コンテンツ全てをキャッシュします。
 
-**すべてをキャッシュする**\- すべてのコンテンツを静的コンテンツとして扱い、[Cloudflareのデフォルトでキャッシュされたコンテンツ](/cache/about/default-cache-behavior#default-cached-file-extensions)を超えて、すべてのファイルタイプをキャッシュします。Page Ruleで **エッジCache TTL**を設定している場合を除き、オリジンWebサーバーからのCacheヘッダーを尊重します。**エッジCache TTL**\>_0__と組み合わせると、_**すべてをキャッシュする**では、オリジンWebサーバーのレスポンスからのCookieを削除します。  
+**すべてをキャッシュする**\- すべてのコンテンツを静的コンテンツとして扱い、[Cloudflareのデフォルトでキャッシュされたコンテンツ](/cache/concepts/default-cache-behavior#default-cached-file-extensions)を超えて、すべてのファイルタイプをキャッシュします。Page Ruleで **エッジCache TTL**を設定している場合を除き、オリジンWebサーバーからのCacheヘッダーを尊重します。**エッジCache TTL**\>_0__と組み合わせると、_**すべてをキャッシュする**では、オリジンWebサーバーのレスポンスからのCookieを削除します。  
 
 
  | 
@@ -540,7 +540,7 @@ Mirage
 -   すべて
 
  |
-| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/about/cache-control)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
+| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/concepts/cache-control/)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
 
 -   すべて
 

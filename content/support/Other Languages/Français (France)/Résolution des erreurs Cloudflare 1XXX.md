@@ -82,7 +82,7 @@ ___
 -   Un domaine externe qui n'utilise pas Cloudflare comporte un enregistrement CNAME renvoyant vers un domaine actif sur Cloudflare.
 -   La cible de l'enregistrement DNS CNAME n'est pas résolue.
 -   Un enregistrement CNAME dans votre application Cloudflare DNS nécessite une résolution via un fournisseur DNS actuellement hors ligne.
--   L'option [Always Online](/cache/about/always-online) (Toujours en ligne) est activée pour un domaine [Custom Hostnames (SSL for SaaS](/ssl/ssl-for-saas)).
+-   L'option [Always Online](/cache/how-to/always-online/) (Toujours en ligne) est activée pour un domaine [Custom Hostnames (SSL for SaaS](/ssl/ssl-for-saas)).
 
 ### Résolution
 
@@ -90,7 +90,7 @@ Un domaine hors de Cloudflare ne peut pas comporter un enregistrement CNAME renv
 
 Toute tentative d'accéder directement aux enregistrements DNS utilisés dans les [configurations CNAME de Cloudflare](/dns/zone-setups/partial-setup) entraîne également une erreur 1001 (exemple : _www.exemple.com.cdn.cloudflare.net_).
 
-Désactivez [Always Online](/cache/how-to/enable-always-online) (Toujours en ligne) si vous utilisez [Custom Hostnames (SSL for SaaS)](/ssl/ssl-for-saas).
+Désactivez [Always Online](/cache/how-to/always-online/#enable-always-online) (Toujours en ligne) si vous utilisez [Custom Hostnames (SSL for SaaS)](/ssl/ssl-for-saas).
 
 ___
 

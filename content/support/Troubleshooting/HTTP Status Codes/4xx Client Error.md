@@ -33,7 +33,9 @@ Not yet implemented by RFC standards but reserved for future use.
 
 If you're seeing a 403 error without Cloudflare branding, this is always returned directly from the origin web server, not Cloudflare, and is generally related to permission rules on your server. The top reasons for this error are:
 
-1\. Permission rules you have set or an error in the .htaccess rules you have set 2. Mod\_security rules. 3. IP Deny rules Since Cloudflare can not access your server directly, please contact your hosting provider for assistance with resolving 403 errors and fixing rules. You should make sure that [Cloudflare's IPs](https://www.cloudflare.com/ips) aren't being blocked. 
+1. Permission rules you have set or an error in the .htaccess rules you have set 
+2. Mod\_security rules. 
+3. IP Deny rules Since Cloudflare can not access your server directly, please contact your hosting provider for assistance with resolving 403 errors and fixing rules. You should make sure that [Cloudflare's IPs](https://www.cloudflare.com/ips) aren't being blocked. 
 
 Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [Understanding WAF managed rules (Web Application Firewall)](https://support.cloudflare.com/hc/en-us/articles/200172016). Cloudflare will also serve a 403 Forbidden response for SSL connections to sub/domains that aren't covered by any Cloudflare or uploaded SSL certificate.
 
@@ -108,7 +110,7 @@ Server denies the request because the resource failed to meet the conditions spe
 
 For an example of version control, a client is modifying an existing resource and thus sets the `If-Unmodified-Since` header to match the date that the client downloaded the resource and began edits. If the resource was edited (likely by another client) after this date and before the upload of the edits, this response will be generated since the date of the last edit will come after the date set in `If-Unmodified-Since` by the client.
 
-Cloudflare will serve this response. For more information, refer to: [ETag Headers](https://support.cloudflare.com/hc/en-us/articles/218505467)
+Cloudflare will serve this response. For more information, refer to: [ETag Headers](/cache/reference/etag-headers/)
 
 ### **413 Payload Too Large  (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 

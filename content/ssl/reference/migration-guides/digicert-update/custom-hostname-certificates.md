@@ -9,15 +9,11 @@ meta:
 
 # Custom hostnames
 
-On **January 23, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [custom hostname certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing custom hostname certificates.
+{{<render file="_digicert-offboarding-paused">}}
 
-On **January 31, 2023**, Cloudflare will stop using DigiCert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
+Before the hard deadline, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [custom hostname certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing custom hostname certificates.
 
-{{<Aside type="note">}}
-
-Though Cloudflare has paused the deadlines associated with DigiCert certificates, this will resume in the near future and - as such - affected customers should prepare their infrastructure for the switch.
-
-{{</Aside>}}
+After the hard deadline, Cloudflare will stop using DigiCert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
 
 ## Summary of changes
 
@@ -28,28 +24,28 @@ This table provides a summary of the differences between DigiCert and our other 
 | --- | --- | --- | --- |
 | Domain Control <br/> Validation (DCV) | To get a certificate issued for a wildcard custom hostname, one TXT DCV record is required to complete Domain Control Validation. | To get a certificate issued for a wildcard custom hostname, two TXT DCV records will be required to complete validation. | [Wildcard custom hostnames](#wildcard-custom-hostnames) will require additional DCV tokens. [Non-wildcard custom hostnames](#non-wildcard-custom-hostnames) will automatically renew as long as the hostname is proxying through Cloudflare. |
 | API | Customers can choose `“digicert”` as the issuing CA when using the [custom hostnames API](/api/operations/custom-hostname-for-a-zone-create-custom-hostname). | Customers can only choose `“lets_encrypt”` or `“google”` when using the [custom hostnames API](/api/operations/custom-hostname-for-a-zone-create-custom-hostname). | If you are currently using DigiCert as the issuing CA when creating custom hostnames, [switch your integration](#update-values) to use Let’s Encrypt or Google. |
-| DCV Methods | CNAME and Email DCV are available. | CNAME and Email DCV will be deprecated. Customers will be required to use [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) or [DNS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record) DCV. | When certificates come up for renewal that are using CNAME or Email DCV, Cloudflare will automatically choose HTTP DCV as the default method for non-wildcard custom hostnames and TXT DCV for wildcard custom hostnames. |
+| DCV Methods | CNAME and Email DCV are available. | CNAME and Email DCV will be deprecated. Customers will be required to use [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) or [DNS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV. | When certificates come up for renewal that are using CNAME or Email DCV, Cloudflare will automatically choose HTTP DCV as the default method for non-wildcard custom hostnames and TXT DCV for wildcard custom hostnames. |
 | Validity period | Custom hostname certificates have a 1 year validity period. | Custom hostnames certificates will have a 90 day validity period. | If you are using [wildcard custom hostnames](#wildcard-custom-hostnames), your customers will need to place DCV tokens at their DNS provider more frequently. [Non-wildcard custom hostname certificates](#non-wildcard-custom-hostnames) will automatically renew, as long as the hostname is actively proxying through Cloudflare. Cloudflare will handle the renewals at a more frequent rate. |
 {{</table-wrap>}}
 
 ## Domain Control Validation (DCV) updates
 
-CNAME and Email DCV will be deprecated on **January 23, 2023**, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/), [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/), or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV.
+CNAME and Email DCV will be deprecated, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/), [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/), or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV.
 
 Also, the maximum validity period for certificates will be decreased from 1 year to 90 days. This means that certificates will be renewed - and require DCV - more frequently.
 
 ## Required actions
 
-### Before January 23, 2023
+### Before hard deadline
 
 If your system integrates with the SSL for SaaS API to [create custom hostnames](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
-- The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
+- The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 
-### Before January 31, 2023
+### After the hard deadline
 
-We recommend that you migrate all your current custom hostnames away from DigiCert before January 31, 2023. This give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
+We recommend that you migrate all your current custom hostnames away from DigiCert before the hard deadline. This give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
 
 #### Identify certificates
 
@@ -72,8 +68,8 @@ You should [update](/cloudflare-for-platforms/cloudflare-for-saas/security/certi
     {{</Aside>}}
 
 - **DCV Method**: You can only update this value when your certificate is up for renewal. If your certificate was previously using **Email** or **CNAME** validation and you do not update this value, Cloudflare will automatically set your DCV method to **TXT** or **HTTP** when the custom hostname comes up for renewal. We will use **HTTP** validation for non-wildcard custom hostname renewals and TXT-based DCV for wildcard custom hostname renewals.
-    - *Dashboard*: Update the value for **Certificate validation method** to either be [**HTTP Validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [**TXT Validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record).
-    - *API*: Update the value sent in the `"method"` field under the SSL object to either be [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record).
+    - *Dashboard*: Update the value for **Certificate validation method** to either be [**HTTP Validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [**TXT Validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
+    - *API*: Update the value sent in the `"method"` field under the SSL object to either be [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 
 
 {{<Aside type="note">}}

@@ -123,8 +123,7 @@
           "title": "Change your nameservers"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/205359838",
+          "url_path": "/dns/zone-setups/troubleshooting/cannot-add-domain/",
           "title": "Cannot add domain to Cloudflare"
         }
       ]
@@ -288,8 +287,7 @@
           "title": "Cloudflare DNS"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360037684251",
+          "url_path": "/analytics/account-and-zone-analytics/zone-analytics/",
           "title": "Understanding Cloudflare Analytics"
         },
         {
@@ -317,19 +315,19 @@
           "title": "Purge cache"
         },
         {
-          "url_path": "/cache/about/cache-control/",
+          "url_path": "/cache/concepts/cache-control/",
           "title": "Cache control"
         },
         {
-          "url_path": "/cache/about/cache-rules/",
+          "url_path": "/cache/how-to/cache-rules/",
           "title": "Cache Rules"
         },
         {
-          "url_path": "/cache/about/default-cache-behavior/",
+          "url_path": "/cache/concepts/default-cache-behavior/",
           "title": "Default cache behavior"
         },
         {
-          "url_path": "/cache/best-practices/customize-cache/",
+          "url_path": "/cache/concepts/customize-cache/",
           "title": "Customize cache"
         }
       ]

@@ -16,7 +16,7 @@ Argo Smart Routing is a one-click solution to speed up your global traffic.
 To enable [Argo Smart Routing](https://dash.cloudflare.com/?to=/:account/:zone/traffic) in the dashboard:
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Traffic** > **Argo**.
+2. Go to **Traffic** > **Argo Smart Routing**.
 3. For **Argo Smart Routing**, switch the toggle to **On**.
 4. Provide your billing information.
 
@@ -44,4 +44,4 @@ You will need to already have a [billing profile](/fundamentals/account-and-bill
 
 [Cache](/cache/) works by storing a copy of website content at Cloudflare's data centers. Argo Tiered Cache divides these data centers into a hierarchy based on location. This allows Cloudflare to deliver content from data centers closest to your visitor.
 
-Argo Smart Routing and Argo Tiered Cache work together to provide the most efficient connection for visitors to your site. For more information, go to [Tiered Cache](/cache/about/tiered-cache/).
+Argo Smart Routing and Argo Tiered Cache work together to provide the most efficient connection for visitors to your site. For more information, go to [Tiered Cache](/cache/how-to/tiered-cache/).

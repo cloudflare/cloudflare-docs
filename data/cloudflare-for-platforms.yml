@@ -20,3 +20,8 @@ resources:
 externals:
   - title: Marketing page
     url: https://www.cloudflare.com/saas/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: cloudflare-for-platforms

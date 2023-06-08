@@ -43,7 +43,7 @@ All clients with this device profile will now switch to the new mode and its def
 
 4. Select **Manage**.
 
-5. You can exclude or include routes based on either their IP address or domain. When possbile we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](#domain-based-split-tunnels).
+5. You can exclude or include routes based on either their IP address or domain. When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](#domain-based-split-tunnels).
 
 {{<tabs labels="Add an IP | Add a domain">}}
 {{<tab label="add an ip" no-code="true">}}

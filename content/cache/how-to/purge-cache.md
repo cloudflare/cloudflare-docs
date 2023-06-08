@@ -5,7 +5,7 @@ pcx_content_type: concept
 
 # Purge cache
 
-You can purge cached resources by single-file (recommended), all cached content, or other options. 
+You can purge cached resources by single-file (recommended), all cached content, or other options.
 
 {{<feature-table id="cache.purge_cache">}}
 
@@ -25,7 +25,7 @@ The single-file purge rate limit for the Free subscription is 1000 urls/min. The
 
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
 
-- [Custom cache keys](/cache/about/cache-keys/)
+- [Custom cache keys](/cache/how-to/cache-keys/)
 - [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
 - Any of these request headers:
   - `X-Forwarded-Host`
@@ -73,7 +73,7 @@ Cache-tag purging makes multi-file purging easier because you can bulk purge by 
 2.  [Ensure your web traffic is proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
 3.  Cloudflare associates the tags in the `Cache-Tag HTTP` header with the content being cached.
 4.  Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](/api/operations/zone-purge).
-5.  Cloudflare forces a [cache miss](/cache/about/default-cache-behavior/#cloudflare-cache-responses) on content with the purged cache-tag.
+5.  Cloudflare forces a [cache miss](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) on content with the purged cache-tag.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -216,7 +216,7 @@ Take the following website as an example: `https://cloudflare.com/انشاء-م�
         <code>https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg</code>
       </td>
       <td colspan="5" rowspan="1">
-        <code>https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg</code> 
+        <code>https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg</code>
       </td>
     </tr>
     <tr>
@@ -248,11 +248,11 @@ As shown above, with URL normalization **ON**, visitors to the two URLs, `https:
 
 ## Purge cache key resources
 
-Purge resources that use Cache Keys via the [Cloudflare API](https://api.cloudflare.com/#zone-purge-files-by-url). If you use [Cloudflare’s Purge by URL](https://api.cloudflare.com/#zone-purge-files-by-url), include the headers and query strings that are in your custom Cache Key. 
+Purge resources that use Cache Keys via the [Cloudflare API](/api/operations/zone-purge). If you use [Cloudflare’s Purge by URL](/api/operations/zone-purge#purge-cached-content-by-url), include the headers and query strings that are in your custom Cache Key.
 
-Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/create-cache-keys/). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
+Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/cache-keys/#create-custom-cache-keys). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
 
-To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` cannot currently be purged. [Purge by Tag / Host](/api/operations/zone-purge) & [Purge Everything](https://api.cloudflare.com/#zone-purge-all-files) are not impacted by the use of custom Cache Keys.
+To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` cannot currently be purged. [Purge by Tag / Host](/api/operations/zone-purge#purge-cached-content-by-tag-host-or-prefix) and [Purge Everything](/api/operations/zone-purge#purge-all-cached-content) are not impacted by the use of custom Cache Keys.
 
 ### Purge by device type
 

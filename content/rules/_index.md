@@ -11,7 +11,7 @@ meta:
 
 {{<plan type="all">}}
 
-Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.
+{{<render file="_rules-definition.md">}}
 
 ---
 
@@ -57,7 +57,7 @@ Control incoming traffic by filtering requests to a zone. You can block or chall
 Define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 {{</related>}}
 
-{{<related header="Cache rules" href="/cache/about/cache-rules/" product="cache">}}
+{{<related header="Cache rules" href="/cache/how-to/cache-rules/" product="cache">}}
 Customize the cache properties of your HTTP requests.
 {{</related>}}
 

@@ -53,7 +53,7 @@ ___
 
 ## Paso 2: Activar **Web Application Firewall** (WAF)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 El WAF solo está disponible para dominios de los planes pagos.
 {{</Aside>}}
 
@@ -93,13 +93,10 @@ Para decidir qué país o IP bloquear o controlar, verifica tus archivos de regi
 -   los recursos a los que el ataque accede; y
 -   características comunes del ataque (direcciones IP, agentes usuarios, países, ASN, etc.).
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare también ofrece **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** para
-facilitar el control del flujo de solicitudes a tu servidor.  [**Rate
-Limiting** se factura en función del
-uso](https://support.cloudflare.com/hc/en-us/articles/115000272247-Billing-for-Cloudflare-Rate-Limiting) y
-es independiente del tipo de plan.
+facilitar el control del flujo de solicitudes a tu servidor.
 {{</Aside>}}
 
 ___

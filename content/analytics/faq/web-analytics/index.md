@@ -1,7 +1,8 @@
 ---
 pcx_content_type: faq
-title: Web Analytics FAQ
+title: Web Analytics FAQs
 layout: single
+weight: 7
 ---
 
 # Web Analytics FAQ
@@ -46,7 +47,7 @@ Since only one JS snippet can be rendered and used per page, you cannot have mul
 
 ### My website is proxied through Cloudflare, but Web Analytic's automatic setup is not working.
 
-If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information. 
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/concepts/cache-control/) for more information. 
 
 ---
 
@@ -83,6 +84,10 @@ No. However, if the root domain is the same, you can use the same site tag. For 
 No, you can only use the [automatic setup] with JS snippet injection if traffic to your domain is proxied through Cloudflare (orange-clouded).
 
 If you have a DNS-only domain, you will have to do a [manual setup] instead.
+
+### What prevents the JS Snippet from being added to a page?
+
+{{<render file="_web-analytics-troubleshooting.md">}}
 
 ---
 

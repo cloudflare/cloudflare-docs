@@ -1,18 +1,16 @@
 ---
 pcx_content_type: how-to
 title: Cloudflare dashboard SSO application
-weight: 4
+weight: 3
 ---
 
 # Set up Cloudflare dashboard SSO
 
-{{<Aside type="note">}}
-
-Only available to Enterprise customers on the Standard or Premium Success Plans.
-
-{{</Aside>}}
-
 By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
+
+## Availability
+
+{{<feature-table id="account.single_sign_on">}}
 
 ## Prerequisites
 
