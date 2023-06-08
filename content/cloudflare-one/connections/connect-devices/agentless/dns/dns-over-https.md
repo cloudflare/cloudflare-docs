@@ -97,7 +97,7 @@ nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 
 3. Copy the resulting IP addresses.
 4. [Add the addresses](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#add-a-new-doh-server-to-the-list-of-known-servers) to your list of known DoH servers.
-5. [Configure the DNS client](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configure-the-dns-client-to-support-doh) to support DoH.
+5. [Configure the Windows Server client](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configure-the-dns-client-to-support-doh) or [set up a Group Policy](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configuring-doh-through-group-policy) to use DoH.
 
 For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
