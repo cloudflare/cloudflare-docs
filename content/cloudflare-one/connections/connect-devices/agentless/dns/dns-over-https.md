@@ -30,7 +30,7 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 
 Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
 
-### Configure opearting system for DoH
+### Configure operating system for DoH
 
 <details>
 <summary>Windows 11</summary>
