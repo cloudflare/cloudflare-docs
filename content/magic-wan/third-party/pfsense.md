@@ -21,7 +21,7 @@ You may need to adjust the MSS on the LAN interface. With the selected IPsec enc
 
 Refer to the image below for guidance on which values to use.
 
-![General configuration dialog for interface setup for a policy based configuration](/magic-wan/static/pfsense-interface-config.png)
+![General configuration dialog for interface setup for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -39,7 +39,7 @@ Refer to the image below for guidance on which values to use.
 </summary>
  <div class="special-class" markdown="1">
 
-![pfSense IPsec phase 1 setting values for a policy based configuration](/magic-wan/static/pfsense-p1-settings.png)
+![pfSense IPsec phase 1 setting values for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-settings.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -49,7 +49,7 @@ Refer to the image below for guidance on which values to use.
 | **Interface**             | WAN                |
 | **Remote Gateway**        | &lt;Anycast IP provided by Cloudflare> |
 
-![pfSense IPsec phase 1 expiration and replacement values for a policy based configuration](/magic-wan/static/pfsense-p1-expiration-replacement.png)
+![pfSense IPsec phase 1 expiration and replacement values for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-expiration-replacement.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -66,7 +66,7 @@ Refer to the image below for guidance on which values to use.
 </summary>
  <div class="special-class" markdown="1">
 
- ![pfSense IPsec phase 1 setting values for a route based configuration](/magic-wan/static/pfsense-p1-settings.png)
+ ![pfSense IPsec phase 1 setting values for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-settings.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -76,7 +76,7 @@ Refer to the image below for guidance on which values to use.
 | **Interface**             | WAN                |
 | **Remote Gateway**        | &lt;Anycast IP provided by Cloudflare> |
 
- ![pfSense IPsec phase 1 expiration and replacement values for a route based configuration](/magic-wan/static/pfsense-p1-expiration-replacement.png)
+ ![pfSense IPsec phase 1 expiration and replacement values for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-expiration-replacement.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -95,7 +95,7 @@ Refer to the image below for guidance on which values to use.
  <div class="special-class" markdown="1">
  
 
-![pfSense IPsec phase 2 general information values](/magic-wan/static/pfsense-p2-general-info.png)
+![pfSense IPsec phase 2 general information values](/images/magic-wan/third-party/pfsense/pfsense-p2-general-info.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -105,7 +105,7 @@ Refer to the image below for guidance on which values to use.
 | **NAT/BINAT translation** | None               |
 | **Remote Network**        | Remote network available via the tunnel |
 
-![pfSense IPsec phase 2 key exchange values](/magic-wan/static/pfsense-p2-key-exchange.png)
+![pfSense IPsec phase 2 key exchange values](/images/magic-wan/third-party/pfsense/pfsense-p2-key-exchange.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -113,7 +113,7 @@ Refer to the image below for guidance on which values to use.
 | **Encryption Algorithm**  | ✔️ AES128-GCM, 128 bits |
 | **PFS key group**         | 14 (2048 bit)      |
 
-![pfSense IPsec phase 2 key exchange values](/magic-wan/static/pfsense-p2-expiration-replacement.png)
+![pfSense IPsec phase 2 key exchange values](/images/magic-wan/third-party/pfsense/pfsense-p2-expiration-replacement.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -130,9 +130,9 @@ Refer to the image below for guidance on which values to use.
 </summary>
  <div class="special-class" markdown="1">
 
-![pfSense IPsec phase 2 general information for a route based configuration](/magic-wan/static/pfsense-p2-general-info-route-based.png)
+![pfSense IPsec phase 2 general information for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p2-general-info-route-based.png)
 
-![pfSense IPsec phase 2 network settings for a route based configuration](/magic-wan/static/pfsense-p2-networks-route-based.png)
+![pfSense IPsec phase 2 network settings for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p2-networks-route-based.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -141,7 +141,7 @@ Refer to the image below for guidance on which values to use.
 | **Local Network**         | &lt;Local Tunnel Inside IP> |
 | **Remote Network**        | &lt;Remote Tunnel Inside IP>|
 
-![pfSense IPsec phase 2 key exchange values for a route based configuration](/magic-wan/static/pfsense-p2-key-exchange.png)
+![pfSense IPsec phase 2 key exchange values for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p2-key-exchange.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -149,7 +149,7 @@ Refer to the image below for guidance on which values to use.
 | **Encryption Algorithm**  | ✔️ AES128-GCM, 128 bits |
 | **PFS key group**         | 14 (2048 bit)      |
 
-![pfSense IPsec phase 2 key exchange values](/magic-wan/static/pfsense-p2-expiration-replacement.png)
+![pfSense IPsec phase 2 key exchange values](/images/magic-wan/third-party/pfsense/pfsense-p2-expiration-replacement.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -174,7 +174,7 @@ You may need to adjust the MSS on the LAN interface. With the selected IPsec enc
 
 Refer to the image below for guidance on which values to use.
 
-![General configuration dialog for interface setup for a policy based configuration](/magic-wan/static/pfsense-interface-config.png)
+![General configuration dialog for interface setup for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config.png)
 
 | Field                     | Value              |
 |---------------------------|--------------------|
@@ -186,15 +186,15 @@ Refer to the image below for guidance on which values to use.
 
 4. From the pfSense WebGUI, select **Interfaces** > **Assignments**.
 
-![pfSense interface assignment settings for route based configuration](/magic-wan/static/pfsense-interface-config-add-ipsec.png)
+![pfSense interface assignment settings for route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-add-ipsec.png)
 
 5. From **Available network ports**, select **+ Add**.
 
-![Adding an interface to a pfSense interface assignment with a route based configuration](/magic-wan/static/pfsense-interface-config-opt1.png)
+![Adding an interface to a pfSense interface assignment with a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-opt1.png)
 
 6. Under **Interface**, select **OPT1**.
 
-![pfSense interface general configuration settings for a route based configuration](/magic-wan/static/pfsense-interface-config-opt1-settings.png)
+![pfSense interface general configuration settings for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-opt1-settings.png)
 
 7. Ensure **Enable interface** is selected.
 8. For **Description**, add a description to help you identify the interface.
@@ -207,7 +207,7 @@ Refer to the image below for guidance on which values to use.
 2. On the **Static Routes** page, select **Add**.
 3. Create static routes for all network that will be routed via the tunnel with Gateway as the IPsec VTI interface.
 
-![pfSense interface routing configuration settings for a route based configuration](/magic-wan/static/pfsense-interface-config-routing-config.png)
+![pfSense interface routing configuration settings for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-routing-config.png)
 
 ### Firewall configuration
 

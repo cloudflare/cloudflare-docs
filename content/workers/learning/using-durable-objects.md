@@ -6,11 +6,11 @@ weight: 11
 
 # Using Durable Objects
 
-Durable Objects provide low-latency coordination and consistent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
+Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
 
 - Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world. Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
 
-- The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
+- The transactional storage API provides strongly consistent key-value storage to the Durable Object. That storage is replicated for durability and availability, and does not go away until you explicitly delete it. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
 For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/durable-objects-open-beta/).
 
@@ -438,7 +438,9 @@ The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) a
 
 ### Object location
 
-Not all Cloudflare locations host Durable Objects, so Objects may not be created in the same data center where they are first requested.
+A Durable Object is typically instantiated close to where the initial [`get()`](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub) is made. This may not be in the datacenter the user is connected to, but in most cases, it will be in close proximity.
+
+You can also provide an explicit [location hint](/workers/runtime-apis/durable-objects/#providing-a-location-hint) and submit a preferred location when first creating the Durable Object. This can be useful in cases where objects are created programmatically prior to user-interaction, or where the first client request is not representative of where the majority of requests to the object will come from.
 
 Currently, Durable Objects do not migrate between locations after initial creation. Cloudflare will be exploring automatic migration compatibility in the future.
 

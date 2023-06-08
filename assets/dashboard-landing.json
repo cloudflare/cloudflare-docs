@@ -315,7 +315,7 @@
           "title": "Purge cache"
         },
         {
-          "url_path": "/cache/about/cache-control/",
+          "url_path": "/cache/concepts/cache-control/",
           "title": "Cache control"
         },
         {
@@ -323,11 +323,11 @@
           "title": "Cache Rules"
         },
         {
-          "url_path": "/cache/about/default-cache-behavior/",
+          "url_path": "/cache/concepts/default-cache-behavior/",
           "title": "Default cache behavior"
         },
         {
-          "url_path": "/cache/best-practices/customize-cache/",
+          "url_path": "/cache/concepts/customize-cache/",
           "title": "Customize cache"
         }
       ]

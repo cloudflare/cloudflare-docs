@@ -12,6 +12,8 @@ The Data Localization Suite (DLS) is a set of products that helps customers who 
 
 DLS is currently available for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information about purchasing DLS.
 
+{{<render file="gateway/_disable-udp.md" productFolder="cloudflare-one">}}
+
 The Data Localization Suite consists of the following products:
 
 - [Key Management](/data-localization/key-management/)
@@ -63,7 +65,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Turnstile | ⚫️ | ✘ | ✘ |
 | | WAF/L7 Firewall | ✅ | ✅ | ✅ |
 | Developer Platform | Cloudflare Images | ⚫️ | ✘ | ✘ |
-| | Cloudflare Pages | ✘ | ✘ | ✘ |
+| | Cloudflare Pages | ✘ | ✅[^11] | ✘ |
 | | Durable Objects | ⚫️ | ✅[^7] | 🚧[^1] |
 | | R2 | ⚫️ | 🚧[^8] | 🚧[^1] |
 | | Stream | ⚫️ | ✘ | ✘ |
@@ -97,6 +99,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^8]:You can not yet specify region location for object storage; this is expected in 2023.
 [^9]:Argo cannot be used with Regional Services.
 [^10]:Argo cannot be used with Customer Metadata Boundary.
+[^11]:Only when using Custom Domain set to a region.
 [^12]:Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.
 [^13]:Logpush available with Customer Metadata Boundary for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.
 [^14]:Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.

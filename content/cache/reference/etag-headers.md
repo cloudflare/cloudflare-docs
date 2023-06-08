@@ -24,10 +24,10 @@ Without a Page Rule, Cloudflare preserves strong ETags set by the origin web ser
 
 -   the content is gzipped on the origin server,
 -   the origin sends the gzipped content with a strong ETag header, and
--   [Rocket Loader](/fundamentals/speed/rocket-loader/), [Minification](https://support.cloudflare.com/hc/articles/200168196), [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016), and [Railgun](/railgun/) features are disabled.
+-   [Rocket Loader](/fundamentals/speed/rocket-loader/), [Minification](https://support.cloudflare.com/hc/articles/200168196), [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016), and [Railgun](/railgun/) (deprecated) features are disabled.
 
 {{<Aside type="note">}}
-Enabling Strong ETags via Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, and Railgun.
+Enabling Strong ETags via Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, and Railgun (deprecated).
 {{</Aside>}}
 
 {{<Aside type="note">}}

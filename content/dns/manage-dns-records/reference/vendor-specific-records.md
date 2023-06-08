@@ -161,6 +161,12 @@ Then, set up your Squarespace DNS records:
 3. If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**.
 
 ![Screenshot of error warnings in squarespace](/support/static/hc-import-squarespace_dns_settings-test-2.png)
+  
+#### Pending domain owner verification
+  
+The `CNAME` record you added for `verify.squarespace.com` should be **DNS-only**.
+  
+If you proxy this record, Squarespace will not be able to verify your domain ownership and show you a `This website is pending domain owner verification` error. To fix the issue, [edit](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) the `CNAME` record and change the **Proxy status** to **DNS-only**.
 
 ### Tumblr custom domain
 

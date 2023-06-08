@@ -7,7 +7,7 @@ title: Languages
 
 ## Background
 
-Workers is a polyglot platform. You can write Workers in JavaScript, TypeScript, or any programming language that compiles to [WebAssembly](/workers/platform/web-assembly/).
+Workers is a polyglot platform. You can write Workers in JavaScript, TypeScript, or any programming language that compiles to [WebAssembly](/workers/platform/webassembly/).
 
 ## JavaScript / TypeScript
 
@@ -37,7 +37,7 @@ The Workers platform fully supports JavaScript standards, as defined by [TC39](h
 
 | Language | Details                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------- |
-| Rust     | [Guide](/workers/platform/web-assembly/rust/)                                                            |
+| Rust     | [Guide](/workers/platform/webassembly/rust/)                                                            |
 | C        | [Template](https://github.com/cloudflare/workers-sdk/tree/main/templates/experimental/worker-emscripten) |
 | Cobol    | [Template](https://github.com/cloudflare/cobol-worker-template)                                          |
 

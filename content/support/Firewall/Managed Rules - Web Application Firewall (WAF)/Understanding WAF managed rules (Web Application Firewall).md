@@ -52,7 +52,7 @@ Review threats blocked via the [Security Events](/waf/security-events/)' **Activ
 -   Managed rules parse JSON responses to identify vulnerabilities targeted at APIs. JSON payload parsing is limited to 128 KB.
 -   Managed rules mitigate padding techniques. We recommend the following:
     1.  Turn on rule _100048_. This rule now protects against padding type attacks, but it is not deployed by default as it causes many false positives in customer environments. It is, however, important that customers tune their managed rules configuration. Cloudflare is working on a better long term solution.
-    2.  Create a firewall rule using the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) depending on the need to check headers and/or body to block larger payload (> 128 KB). Make sure to test your firewall rule in _Log_ mode first as it could be prone to generating false positives.
+    2.  Create a firewall rule using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) depending on the need to check headers and/or body to block larger payload (> 128 KB). Make sure to test your firewall rule in _Log_ mode first as it could be prone to generating false positives.
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   There are a handful of managed rules that Cloudflare does not disable even if **Managed rules** is turned _Off_ in the Cloudflare dashboard, such as rule IDs _WP0025B_, _100043A_, and _100030._

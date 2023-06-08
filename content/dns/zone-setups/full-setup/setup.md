@@ -164,4 +164,4 @@ If you see unexpected results, refer to our [troubleshooting suggestions](/dns/z
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
 
-You should now [enable DNSSEC](/dns/additional-options/dnssec/) to protect from domain spoofing.
+You should now [enable DNSSEC](/dns/dnssec/) to protect from domain spoofing.

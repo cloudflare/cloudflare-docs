@@ -9,7 +9,7 @@ For a full list of properties, refer to [Create Load Balancer](/api/operations/l
 
 {{<Aside type="note">}}
 
-Since load balancers only exist on a zone — and not an account — you may need to get the zone `id` with the [List Zones](/api/operations/zone-list-zones) command.
+Since load balancers only exist on a zone — and not an account — you may need to get the zone `id` with the [List Zones](/api/operations/zones-get) command.
 
 {{</Aside>}}
 
