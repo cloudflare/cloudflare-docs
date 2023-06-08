@@ -548,7 +548,7 @@ Durable Object metrics are powered by GraphQL, like other Workers metrics. Learn
 
 ```
 # An example of GraphQL query for Durable Objects
-# Refer to the tutorial linked above for authentication
+Refer to the [Querying Workers Metrics with GraphQL](/analytics/graphql-api/tutorials/querying-workers-metrics/) tutorial for authentication
 {
   viewer {
     # Replace with your account tag, the 32 hex character id visible at the beginning of any url
