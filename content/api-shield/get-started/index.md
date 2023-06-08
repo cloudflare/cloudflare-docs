@@ -28,7 +28,7 @@ After setting up session identifiers and allowing some time for Cloudflare to le
 
 ## Upload a schema using Schema Validation (optional)
 
-Schema Validation protects your APIs by ensuring only requests matching your API Schema are allowed to communicate with your origin.
+Schema Validation protects your APIs by ensuring only requests matching your API schema are allowed to communicate with your origin.
 
 While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](https://developers.cloudflare.com/api-shield/reference/classic-schema-validation/). 
 
@@ -46,7 +46,7 @@ API Shield works with Cloudflare WAF’s [Sensitive Data Detection](https://deve
 A subscription is required for Sensitive Data Detection. Contact your account team if you are not entitled for Sensitive Data Detection.
 {{</Aside>}}
 
-You can identify endpoints returning sensitive data by the icon next to the path in a row. Expand the endpoint to see details on which rules were triggered and view more information by exploring events in **Firewall Events**.
+You can identify endpoints returning sensitive data by selecting the icon next to the path in a row. Expand the endpoint to see details on which rules were triggered and view more information by exploring events in **Firewall Events**.
 
 ## Add your discovered endpoints to Endpoint Management
 
@@ -76,7 +76,7 @@ We recommend proceeding with [additional configurations](/api-shield/get-started
 
 [Rate limiting rules](/waf/rate-limiting-rules/) allow you to define rate limits for requests matching an expression, and choose the action to perform when those rate limits are reached.
 
-You can observe Cloudflare suggested rate limits in **Endpoint Management** for endpoints using session identifiers. Unlike many security tools, these recommended rate limits are per-endpoint and per-session, not site-wide and not based on IP address. When creating a rule, it will be based on only traffic to that specific endpoint from unique visitors during their session. This feature allows you to be very specific and targeted with your rate limit enforcement, both lowering abusive traffic and false positives due to broadly scoped rules. 
+You can observe Cloudflare suggested rate limits in Endpoint Management for endpoints using session identifiers. Unlike many security tools, these recommended rate limits are per-endpoint and per-session, not site-wide and not based on IP address. When creating a rule, it will be based on only traffic to that specific endpoint from unique visitors during their session. This feature allows you to be very specific and targeted with your rate limit enforcement, both lowering abusive traffic and false positives due to broadly scoped rules. 
 
 ## Export learned schema from Endpoint Management
 
@@ -86,9 +86,9 @@ Learned schemas will always include the listed hostname in the servers section, 
 
 ### Import learned schema to Schema Validation
 
-By importing the learned schema, you can protect API endpoints found via API Discovery. In this way, you are protecting API Endpoints that were never previously possible to protect due to not knowing about their presence or schema.
+By importing the learned schema, you can protect API endpoints found via API Discovery. You can protect API endpoints that were never previously possible to protect due to not knowing about their presence or schema.
 
-You can import your learned schemas to Schema Validation 2 using the [API](/api-shield/security/schema-validation/) or the classic version of Schema Validation using the [Cloudflare dashboard](/api-shield/reference/classic-schema-validation/). Schema Validation 2 focuses on giving you granular control and lets you set mitigation actions for each endpoint individually. We will replace the classic Schema Validation system with a new UI for Schema Validation 2 in a future release.
+You can import your learned schemas to Schema Validation 2 using the [API](/api-shield/security/schema-validation/) or the classic version of Schema Validation using the [Cloudflare dashboard](/api-shield/reference/classic-schema-validation/). Schema Validation 2 focuses on giving you granular control and lets you set mitigation actions for each endpoint individually. 
 
 ## View Sequence Analytics
 
@@ -102,7 +102,7 @@ For more information, refer to [our blog post](https://blog.cloudflare.com/api-s
 
 ## Additional configuration
 
-### Set up JSON Web Tokens Validation
+### Set up JSON Web Tokens (JWT) Validation
 
 Use the Cloudflare API to configure [JSON Web Tokens Validation](/api-shield/security/jwt-validation/), which validates the integrity and validity of JWTs sent by clients to your API or web application. 
 
