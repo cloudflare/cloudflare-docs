@@ -6,7 +6,7 @@ weight: 41
 
 # Configure GraphQL client endpoint and HTTP headers
 
-1.  Launch [GraphiQL](https://graphql.org/swapi-graphql).
+1.  Launch [GraphiQL](https://www.gatsbyjs.com/docs/how-to/querying-data/running-queries-with-graphiql/).
 2.  Click **Edit HTTP Headers**.
     ![Clicking Edit HTTP Headers](/images/analytics/GraphiQL-edit-http-headers.png)
     The **Edit HTTP Headers** window appears.

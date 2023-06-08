@@ -24,12 +24,12 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2023-06-05</td>
+      <td>2023-06-12</td>
+      <td>Block</td>
+      <td>100587</td>
+      <td>...269024be</td>
+      <td>Code Injection - CVE:CVE-2022-23529</td>
       <td>N/A</td>
     </tr>
   </tbody>

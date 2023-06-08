@@ -57,7 +57,7 @@ ingress:
     path: \.(jpg|png|css|js)$
     service: https://localhost:8001
   # Rules can match the request's hostname to a wildcard character:
-  - hostname: '*.example.com'
+  - hostname: "*.example.com"
     service: https://localhost:8002
   # An example of a catch-all rule:
   - service: https://localhost:8003
@@ -89,17 +89,17 @@ ingress:
 
 With the catch-all rule, you can set `cloudflared` to respond to traffic with an HTTP status.
 
-| Service                 | Description                                                                                      | Example `service` value           |
-| ----------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------- |
-| HTTP/S                  | Incoming HTTP requests are proxied directly to your local service.                               | `https://localhost:8000`          |
-| HTTP over Unix socket | Just like HTTP, but using a Unix socket instead.                                               | `unix:/home/production/echo.sock` |
-| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                               | `unix+tls:/home/production/echo.sock` |
-| TCP                     | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`            |
-| SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use_cases/ssh/). | `ssh://localhost:22`              |
-| RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use_cases/rdp/). | `rdp://localhost:3389`            |
-| kubectl bastion mode    | `cloudflared` will act like a jumphost, allowing access to any local address.                    | `bastion`                         |
-| Hello World             | Test server for validating your Cloudflare Tunnel setup.                                         | `hello_world`                     |
-| HTTP status             | Responds to all requests with the given HTTP status.                                             | `http_status:404`                 |
+| Service                | Description                                                                                                               | Example `service` value               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| HTTP/S                 | Incoming HTTP requests are proxied directly to your local service.                                                        | `https://localhost:8000`              |
+| HTTP over Unix socket  | Just like HTTP, but using a Unix socket instead.                                                                          | `unix:/home/production/echo.sock`     |
+| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                                                         | `unix+tls:/home/production/echo.sock` |
+| TCP                    | TCP connections are proxied to your local service.                                                                        | `tcp://localhost:2222`                |
+| SSH                    | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use-cases/ssh/). | `ssh://localhost:22`                  |
+| RDP                    | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use-cases/rdp/). | `rdp://localhost:3389`                |
+| kubectl bastion mode   | `cloudflared` will act like a jumphost, allowing access to any local address.                                             | `bastion`                             |
+| Hello World            | Test server for validating your Cloudflare Tunnel setup.                                                                  | `hello_world`                         |
+| HTTP status            | Responds to all requests with the given HTTP status.                                                                      | `http_status:404`                     |
 
 ## Origin configuration
 
@@ -134,7 +134,9 @@ To set both top-level configurations and origin-specific configurations, you can
 
 - [access](#access)
 - [connectTimeout](#connecttimeout)
+- [noTLSVerify](#notlsverify)
 - [tlsTimeout](#tlstimeout)
+- [http2Origin](#http2origin)
 - [tcpKeepAlive](#tcpkeepalive)
 - [noHappyEyeballs](#nohappyeyeballs)
 - [keepAliveConnections](#keepaliveconnections)
@@ -142,7 +144,7 @@ To set both top-level configurations and origin-specific configurations, you can
 - [httpHostHeader](#httphostheader)
 - [originServerName](#originservername)
 - [caPool](#capool)
-- [noTLSVerify](#notlsverify)
+
 - [disableChunkedEncoding](#disablechunkedencoding)
 - [proxyAddress](#proxyaddress)
 - [proxyPort](#proxyport)
@@ -161,7 +163,7 @@ access:
   required: true
   teamName: <your-team-name>
   audTag:
-    - aud1 <Access-application-audience-tag> 
+    - aud1 <Access-application-audience-tag>
     - aud2 <Optional-additional-tags>
 ```
 
@@ -172,11 +174,23 @@ Default: `30s`
 Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to
 establish TLS, which is controlled by tlsTimeout.
 
+### noTLSVerify
+
+Default: `false`
+
+Disables TLS verification of the certificate presented by your origin. This will allow any certificate from the origin to be accepted.
+
 ### tlsTimeout
 
 Default: `10s`
 
 Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server.
+
+### http2Origin
+
+Default: `false`
+
+When enabled, `cloudflared` will attempt to connect to your origin server using HTTP/2.0 instead of HTTP/1.1. HTTP/2.0 is a faster protocol for high traffic origins but requires you to deploy an SSL certificate on the origin. We recommend using this setting in conjunction with [noTLSVerify](#notlsverify) so that you can use a self-signed certificate.
 
 ### tcpKeepAlive
 
@@ -219,12 +233,6 @@ Hostname that `cloudflared` should expect from your origin server certificate.
 Default: `""`
 
 Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
-
-### noTLSVerify
-
-Default: `false`
-
-Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 
 ### disableChunkedEncoding
 

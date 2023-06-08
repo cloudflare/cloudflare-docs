@@ -10,8 +10,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -25,7 +25,6 @@ export default {
     async function postDataBreach(request) {
       return await fetch(SOME_HOOK_SERVER, {
         method: "POST",
-        body: JSON.stringify(body),
         headers: {
           "content-type": "application/json;charset=UTF-8",
         },
@@ -86,7 +85,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {
@@ -100,7 +99,6 @@ const handler: ExportedHandler = {
     async function postDataBreach(request) {
       return await fetch(SOME_HOOK_SERVER, {
         method: "POST",
-        body: JSON.stringify(body),
         headers: {
           "content-type": "application/json;charset=UTF-8",
         },

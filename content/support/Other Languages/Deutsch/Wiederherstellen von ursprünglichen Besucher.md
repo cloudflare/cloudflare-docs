@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/200170786-Wiederherstellen-von-urspr%C3%BCnglichen-Besucher-IPs
-title: Wiederherstellen von ursprünglichen Besucher-IPs 
+title: Wiederherstellen von ursprünglichen Besucher-IPs
 ---
 
-# Wiederherstellen von ursprünglichen Besucher-IPs 
+# Wiederherstellen von ursprünglichen Besucher-IPs
 
 
 
@@ -110,11 +110,11 @@ von GitHub herunterladen](https://github.com/cloudflare/mod_cloudflare).
 {{</Aside>}}
 
 
-Sie können mod\_cloudflare auf zwei Arten installieren: indem Sie die Apache-Erweiterung von Github herunterladen oder indem Sie Code zu Ihrem Ursprungs-Webserver hinzufügen.
+Sie können mod\_cloudflare auf zwei Arten installieren: indem Sie die Apache-Erweiterung von GitHub herunterladen oder indem Sie Code zu Ihrem Ursprungs-Webserver hinzufügen.
 
-### Pakete oder Skripte von Github herunterladen
+### Pakete oder Skripte von GitHub herunterladen
 
-Wenn Sie einen Apache-Webserver verwenden, können Sie mod\_cloudflare von [Github](https://github.com/cloudflare/mod_cloudflare) herunterladen.
+Wenn Sie einen Apache-Webserver verwenden, können Sie mod\_cloudflare von [GitHub](https://github.com/cloudflare/mod_cloudflare) herunterladen.
 
 ### Hinzufügen von Code zu Ihrem Ursprungswebserver
 

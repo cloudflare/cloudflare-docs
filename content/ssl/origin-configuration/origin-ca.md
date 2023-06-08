@@ -1,7 +1,7 @@
 ---
 title: Origin CA certificates
 pcx_content_type: how-to
-weight: 4
+weight: 3
 meta:
   description: Origin Certificate Authority (CA) certificates allow you to encrypt traffic between Cloudflare and your origin web server, and reduce origin bandwidth consumption.
 ---
@@ -31,11 +31,11 @@ To create an Origin CA certificate in the dashboard:
 3.  Go to **SSL/TLS** > **Origin Server**.
 4.  Select **Create Certificate**.
 5.  Choose either:
-    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECDSA.
+    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
     - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
 6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone root and first level wildcard hostname are included by default.
-7.  Choose the [expiration date](#expiration).
-8.  Select **Next**.
+7.  Choose a **Certificate Validity** period.
+8.  Select **Create**.
 9.  Choose the **Key Format**:
     - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
     - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
@@ -65,8 +65,8 @@ To add an Origin CA certificate to your origin web server
 
   {{<Aside type="note">}}If you do not see your server in the list above, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
 
-3.  (Required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
-4.  Enable SSL and port 443 at your origin web server.
+3.  (Required for some) Upload the [Cloudflare CA root certificate](#cloudflare-origin-ca-root-certificate) to your origin server. This can also be referred to as the certificate chain.
+4.  Enable SSL and port `443` at your origin web server.
 
 ### 3. Change SSL/TLS mode
 
@@ -78,13 +78,6 @@ If all your origin hosts are protected by Origin CA certificates or publicly tru
 2.  For **SSL/TLS encryption mode**, select **Full (strict)**.
 
 If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
-
-### 4. (Required for some) Add Cloudflare Origin CA root certificates
-
-Some origin web servers require upload of the Cloudflare Origin CA root certificate. Use the following links to download either an ECC or an RSA version of the Cloudflare Origin CA root certificate:
-
-- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
-- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
 
 ## Revoke an Origin CA certificate
 
@@ -102,19 +95,22 @@ To revoke a certificate:
 
 ## Additional details
 
+### Cloudflare Origin CA root certificate
+
+Some origin web servers require upload of the Cloudflare Origin CA root certificate or certificate chain. Use the following links to download either an ECC or an RSA version and upload to your origin web server:
+
+- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
+- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
+
 ### Hostname and wildcard coverage
 
 Certificates may be generated with up to 100 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare Origin CA certificates.
 
 Wildcards may only cover one level, but can be used multiple times on the same certificate for broader coverage (for example, `*.example.com` and `*.secure.example.com` may co-exist).
 
-### Expiration
-
-By default, newly generated certificates are valid for 15 years. If you wish to generate shorter-lived certificates (for example, as short as seven days), use the [API](#api-calls).
-
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys).
+To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys/).
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |

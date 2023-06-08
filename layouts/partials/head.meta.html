@@ -17,7 +17,7 @@
   "Cloudflare essentials" "/core-services-preview.png"
   "Cloudflare One" "/zt-preview.png"
   "Developer platform" "/dev-products-preview.png"
-  "Network services" "/core-services-preview.png"
+  "Network security" "/core-services-preview.png"
   "Performance" "/core-services-preview.png"
   "Security" "/core-services-preview.png"
   -}}
@@ -123,10 +123,13 @@
   <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
 
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch-js/3.3.3/umd/index.js"
-    integrity="sha512-B04n6SO1wtH4RsIK/UGPnzokxldxXdy9FNFIGrXAa3rFUr0xzVuZHNRx4uile1ra9FkGDvMTB/XPxliN31OzbQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.4.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.4.0"></script>
+
+  {{- if $DATA.algolia -}}
+  <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
+  <meta name="docsearch:product" content="{{ $DATA.algolia.product }}" />
+  {{- end -}}
 
   {{- $coveo := index $.Context.Site.Params "coveo" -}}
   {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}

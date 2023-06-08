@@ -235,3 +235,7 @@ header: Response
 
 </div>
 </details>
+
+## Terraform support
+
+You can also configure Regional Services using Terraform. For more details, refer to the [`cloudflare_regional_hostname` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/regional_hostname) in the Terraform documentation.

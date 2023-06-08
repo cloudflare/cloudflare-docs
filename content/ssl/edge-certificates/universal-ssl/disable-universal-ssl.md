@@ -46,9 +46,29 @@ To disable Universal SSL in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To disable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/operations/universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": true` parameter.
+To disable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/operations/universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": false` parameter.
  
 {{</tab>}}
 {{</tabs>}}
 
 {{<Aside type="note">}}Even with Universal SSL disabled, some features such as [AMP Real URL](/fundamentals/speed/amp-real-ulr/) and [Signed Exchanges](/fundamentals/speed/signed-exchanges/) will still provision certificates for your domain.{{</Aside>}}
+
+## Re-enable Universal SSL
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To re-enable Universal SSL in the dashboard:
+
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2.  Select your domain.
+3.  Go to **SSL/TLS** > **Edge Certificates**.
+4.  For **Disable Universal SSL**, select **Enable Universal SSL**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To re-enable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/operations/universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": true` parameter.
+ 
+{{</tab>}}
+{{</tabs>}}

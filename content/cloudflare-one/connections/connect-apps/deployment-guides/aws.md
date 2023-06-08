@@ -13,7 +13,7 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
 ## Prerequisites
 
 - Navigate to [Zero Trust](https://one.dash.cloudflare.com/) and create a Cloudflare Zero Trust account.
-- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) into your Cloudflare Zero Trust account.
+- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) into your Cloudflare Zero Trust account.
 
 ## Create your environment
 

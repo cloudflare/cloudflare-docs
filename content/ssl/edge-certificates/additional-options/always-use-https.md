@@ -6,7 +6,11 @@ weight: 15
 
 # Always Use HTTPS
 
-Always Use HTTPS redirects all `http` requests to `https` for all subdomains and hosts in your application.
+Always Use HTTPS redirects all your visitor requests from `http` to `https`, for all subdomains and hosts in your application.
+
+{{<Aside>}}
+This process does not impact certificate validation. If you use [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/), you can still enable Always Use HTTPS.
+{{</Aside>}}
 
 Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 
@@ -42,6 +46,12 @@ To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/op
 {{</tabs>}}
 
 ### Encrypt some visitor traffic
+
+#### Configuration rules
+
+If only some parts of your application can support HTTPS traffic, use [Configuration Rules](/rules/configuration-rules/create-dashboard/) to selectively disable **Always Use HTTPS**.
+
+#### Redirects
 
 If you only want specific subdomains redirected to HTTPS, redirect on a URL basis using Cloudflare [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 

@@ -15,6 +15,20 @@
         }
       }
     },
+    "version_management": {
+      "title": "Version Management",
+      "link": "/version-management/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
     "zone_holds": {
       "title": "Zone holds",
       "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
@@ -122,7 +136,7 @@
     "link": "/cache/",
     "always_online": {
       "title": "Always Online",
-      "link": "/cache/about/always-online/",
+      "link": "/cache/how-to/always-online/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -144,7 +158,7 @@
     },
     "browser_cache_ttl": {
       "title": "Browser Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -154,12 +168,19 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "minimum": {
-          "title": "Minimum Browser Cache TTL",
+        "minimum_page_rules": {
+          "title": "Minimum Browser Cache TTL (Page Rules)",
           "free": "2 minutes",
           "pro": "2 minutes",
           "biz": "2 minutes",
           "ent": "30 seconds"
+        },
+        "minimum_cache_rules": {
+          "title": "Minimum Browser Cache TTL (Cache Rules)",
+          "free": "2 hours",
+          "pro": "1 hour",
+          "biz": "1 second",
+          "ent": "1 second"
         },
         "default": {
           "title": "Default Browser Cache TTL",
@@ -172,7 +193,7 @@
     },
     "cache_analytics": {
       "title": "Cache analytics",
-      "link": "/cache/about/cache-analytics/",
+      "link": "/cache/performance-review/cache-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -186,7 +207,7 @@
     },
     "cache_key": {
       "title": "Cache keys",
-      "link": "/cache/about/cache-keys/",
+      "link": "/cache/how-to/cache-keys/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -214,7 +235,7 @@
     },
     "cache_reserve": {
       "title": "Cache reserve",
-      "link": "/cache/about/cache-reserve/",
+      "link": "/cache/advanced-configuration/cache-reserve/",
       "paid_add_on": true,
       "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
@@ -230,7 +251,7 @@
     },
     "cache_rules": {
       "title": "Cache Rules",
-      "link": "/cache/about/cache-rules/",
+      "link": "/cache/how-to/cache-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -265,7 +286,7 @@
     },
     "crawler_hints": {
       "title": "Crawler Hints",
-      "link": "/cache/about/crawler-hints/",
+      "link": "/cache/advanced-configuration/crawler-hints/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -279,7 +300,7 @@
     },
     "csam": {
       "title": "CSAM Scanning Tool",
-      "link": "https://support.cloudflare.com/hc/articles/360046106112",
+      "link": "/cache/reference/csam-scanning/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -307,7 +328,7 @@
     },
     "edge_cache_ttl": {
       "title": "Edge Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -328,7 +349,7 @@
     },
     "etag_headers": {
       "title": "ETag Headers",
-      "link": "https://support.cloudflare.com/hc/articles/218505467",
+      "link": "/cache/reference/etag-headers/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -363,7 +384,7 @@
     },
     "query_string_sort": {
       "title": "Query string sort",
-      "link": "https://support.cloudflare.com/hc/articles/206776797",
+      "link": "/cache/advanced-configuration/query-string-sort/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -377,21 +398,49 @@
     },
     "tiered_cache": {
       "title": "Tiered cache",
-      "link": "/cache/about/tiered-cache/",
+      "link": "/cache/how-to/tiered-cache/",
       "properties": {
         "availability": {
-          "title": "Availability",
+          "title": "Tiered Cache",
           "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
+          "ent": "Yes"
+        },
+        "b_smart_topology": {
+          "title": "Smart Topology",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "c_generic_global_topology": {
+          "title": "Generic Global Topology",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "d_regional_tiered_cache": {
+          "title": "Regional Tiered Cache",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "z_custom_topology": {
+          "title": "Custom Topology",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
           "ent": "Yes"
         }
       }
     },
     "vary_for_images": {
       "title": "Vary for images",
-      "link": "/cache/about/vary-for-images/",
+      "link": "/cache/advanced-configuration/vary-for-images/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -523,7 +572,7 @@
     },
     "dnssec": {
       "title": "DNSSEC",
-      "link": "/dns/additional-options/dnssec/",
+      "link": "/dns/dnssec/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -593,11 +642,11 @@
         },
         "character_limit": {
           "title": "Character limit",
-          "free": 50,
-          "lite": 250,
-          "pro": 250,
-          "biz": 250,
-          "ent": 250
+          "free": 100,
+          "lite": 500,
+          "pro": 500,
+          "biz": 500,
+          "ent": 500
         },
         "number_per_record": {
           "title": "Comments per record",
@@ -676,6 +725,20 @@
           "ent": "Yes"
         }
       }
+    },
+    "subdomain_delegation": {
+      "title": "Subdomain delegation",
+      "link": "/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
     }
   },
   "email": {
@@ -727,7 +790,7 @@
     },
     "grpc": {
       "title": "gRPC",
-      "link": "https://support.cloudflare.com/hc/articles/360050483011",
+      "link": "/support/network/understanding-cloudflare-grpc-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -741,7 +804,7 @@
     },
     "http2": {
       "title": "HTTP/2",
-      "link": "https://support.cloudflare.com/hc/articles/200168076",
+      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -763,7 +826,7 @@
     },
     "http2_to_origin": {
       "title": "HTTP/2 to Origin",
-      "link": "/cache/how-to/enable-http2-to-origin/",
+      "link": "/cache/concepts/enable-http2-to-origin/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -777,7 +840,7 @@
     },
     "http3": {
       "title": "HTTP/3 (with QUIC)",
-      "link": "https://www.cloudflare.com/learning/performance/what-is-http3/",
+      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -791,7 +854,7 @@
     },
     "ip_geolocation": {
       "title": "IP Geolocation",
-      "link": "https://support.cloudflare.com/hc/articles/200168236",
+      "link": "/support/network/configuring-ip-geolocation/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -805,7 +868,7 @@
     },
     "ipv6": {
       "title": "IPv6 Compatibility",
-      "link": "https://support.cloudflare.com/hc/articles/229666767",
+      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -827,7 +890,7 @@
     },
     "max_upload_size": {
       "title": "Max upload size",
-      "link": "/cache/about/default-cache-behavior/",
+      "link": "/cache/concepts/default-cache-behavior/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -849,7 +912,7 @@
     },
     "onion_routing": {
       "title": "Onion Routing",
-      "link": "https://support.cloudflare.com/hc/articles/203306930",
+      "link": "/support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -863,7 +926,7 @@
     },
     "pseudo_ipv4": {
       "title": "Pseudo IPv4",
-      "link": "https://support.cloudflare.com/hc/articles/229666767",
+      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -905,7 +968,7 @@
     },
     "websockets": {
       "title": "WebSockets",
-      "link": "https://support.cloudflare.com/hc/articles/200169466",
+      "link": "/support/network/using-cloudflare-with-websockets/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1036,7 +1099,7 @@
     },
     "page_rules": {
       "title": "Page Rules",
-      "link": "https://support.cloudflare.com/hc/articles/218411427",
+      "link": "/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1363,11 +1426,11 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Certain Enterprise plans"
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
         },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
@@ -1577,7 +1640,7 @@
     "title": "Scrape Shield",
     "email_obfuscation": {
       "title": "Email Address Obfuscation",
-      "link": "https://support.cloudflare.com/hc/articles/200170016",
+      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1591,7 +1654,7 @@
     },
     "hotlink_protection": {
       "title": "Hotlink Protection",
-      "link": "https://support.cloudflare.com/hc/articles/200170026",
+      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1605,7 +1668,7 @@
     },
     "server_side_excludes": {
       "title": "Server-side Excludes",
-      "link": "https://support.cloudflare.com/hc/articles/200170036",
+      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1721,7 +1784,7 @@
     },
     "auto_minify": {
       "title": "Auto Minify",
-      "link": "https://support.cloudflare.com/hc/articles/200168196",
+      "link": "/support/speed/optimization-file-size/using-cloudflare-auto-minify/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1735,7 +1798,7 @@
     },
     "brotli": {
       "title": "Brotli compression",
-      "link": "https://support.cloudflare.com/hc/articles/200168396",
+      "link": "/support/speed/optimization-file-size/what-will-cloudflare-compress/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1749,7 +1812,7 @@
     },
     "early_hints": {
       "title": "Early Hints",
-      "link": "/cache/about/early-hints",
+      "link": "/cache/advanced-configuration/early-hints",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1808,7 +1871,7 @@
     },
     "mobile_redirect": {
       "title": "Mobile redirect",
-      "link": "https://support.cloudflare.com/hc/articles/200168336",
+      "link": "/support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1849,7 +1912,7 @@
       }
     },
     "railgun": {
-      "title": "Railgun",
+      "title": "Railgun (deprecated)",
       "link": "/railgun/",
       "properties": {
         "availability": {
@@ -2309,6 +2372,22 @@
         }
       }
     },
+    "delegated_dcv": {
+      "title": "Delegated DCV",
+      "link": "/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Delegated DCV is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).",
+          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
+        }
+      }
+    },
     "universal_certificates": {
       "title": "Universal Certificates",
       "link": "/ssl/edge-certificates/universal-ssl/",
@@ -2506,7 +2585,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": "Custom"
+          "ent": "1 (default)<br/><br/><em>With add-on</em><br/>Custom (can purchase more)"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2522,7 +2601,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO)<br/><br/><em>With add-on</em><br/>All options"
+          "ent": "First In First Out (FIFO) (default)<br/><br/><em>With add-on</em><br/>All options"
         },
         "disable_session_renewal": {
           "title": "Disable session renewal",
@@ -2661,6 +2740,15 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "consent_management": {
+          "title": "Consent Management",
+          "link": "/zaraz/consent-management/",
           "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",

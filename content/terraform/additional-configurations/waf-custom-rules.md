@@ -56,6 +56,9 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 }
 ```
 
+{{<render file="_add-new-rule.md" withParameters="custom rule">}}
+<br/>
+
 ## Account-level configurations
 
 ### Create and deploy a custom ruleset
@@ -84,6 +87,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
   }
 }
 ```
+
+{{<render file="_add-new-rule.md" withParameters="custom rule in the custom ruleset">}}
+<br/>
 
 The following configuration deploys the custom ruleset at the account level. It defines a dependency on the `account_firewall_custom_ruleset` resource and uses the ID of the created custom ruleset in `action_parameters`:
 
@@ -146,6 +152,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
   }
 }
 ```
+
+{{<render file="_add-new-rule.md" withParameters="rule">}}
+<br/>
 
 The following configuration deploys the custom ruleset. It defines a dependency on the `account_firewall_custom_ruleset_exposed_creds` resource and obtains the ID of the created custom ruleset:
 

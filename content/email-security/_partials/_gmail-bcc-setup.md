@@ -44,7 +44,7 @@ _build:
         3. In **Envelope recipient** select **Change envelope recipient**.
         4. In **Replace recipient** add the recipient BCC address. For example, `<customer_name>@journaling.mxrecord.io`. This address is specific to each customer tenant and can be found in your [Portal](https://horizon.area1security.com/support/service-addresses).
 
-        {{<Aside type="note">}}If you are located in India or the EU, or if GDPR applies to your organization, you will have to replace the `@mxrecord.io` domain in the BCC recipient with the appropriate record to process emails in the appropriate geographic location. Refer to the [Geographic locations](#geographic-locations) table for more information.{{</Aside>}}
+        {{<Aside type="note">}}If you are located in India or the EU, or if GDPR applies to your organization, you will have to replace the `@journaling.mxrecord.io` domain in the BCC recipient with the appropriate record to process emails in the appropriate geographic location. Refer to the [Geographic locations](#geographic-locations) table for more information.{{</Aside>}}
 
         5. Make sure that in **Spam and delivery options** > **Do not deliver spam to this recipient** is not checked.
         6. Under **Headers** select **Add X-Gm-Spam and X-Gm-Phishy headers**.

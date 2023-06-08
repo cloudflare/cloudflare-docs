@@ -19,12 +19,17 @@ There are three types of routes:
 
 ## Set up a route
 
+To add a route, you must have:
+
+1. An [active Cloudflare zone](/dns/zone-setups/).
+2. A Worker to invoke.
+3. An orange-clouded DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
+
 {{<Aside type="warning">}}
 Route setup will differ depending on if your application's origin is a Worker or not. If your Worker is your application's origin, use [Custom Domains](/workers/platform/triggers/custom-domains/).
 {{</Aside>}}
-If your Worker is not your application's origin, follow the instructions below to set up a route.
 
-Before setting up a route, you must have a valid, proxied (orange-clouded) domain or subdomain on your Cloudflare zone that points to your origin.
+If your Worker is not your application's origin, follow the instructions below to set up a route.
 
 {{<Aside type="note">}}
 Routes can also be created via the API. Refer to the [Workers Routes API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes) for more information.
@@ -32,15 +37,19 @@ Routes can also be created via the API. Refer to the [Workers Routes API documen
 
 ### Set up a route in the dashboard
 
+Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
+
 To set up a route in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers** and select your Worker.
+2. Go to **Workers & Pages** and in **Overview**, select your Worker.
 3. Go to **Triggers** > **Routes** > **Add route**.
 4. Enter the route and select the zone it applies to.
 5. Select **Add route**.
 
 ### Set up a route in `wrangler.toml`
+
+Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
 
 To configure a route using your `wrangler.toml` file, refer to the following example.
 
@@ -48,7 +57,7 @@ To configure a route using your `wrangler.toml` file, refer to the following exa
 routes = [
 	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
 	# or
-	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID" }
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
@@ -74,7 +83,7 @@ Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is config
 To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers**.
+2. In **Account Home**, select **Workers & Pages**.
 3. Select **Change** next to **Your subdomain**. The `name` field in your Worker configuration is used as the preview subdomain for the deployed Worker, (for example, `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.`).
 
 When you create your Worker, the `workers.dev` route is automatically set up. Review this in your Worker > **Triggers** > **Routes**.
@@ -171,7 +180,7 @@ There is a well-known bug associated with path matching concerning wildcards (`*
 
 #### Domains and subdomains must have a DNS Record
 
-All subdomains must have a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
+All domains and subdomains must have a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
 {{<Aside type="warning">}}
 

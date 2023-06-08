@@ -56,6 +56,9 @@ When you choose to challenge different bot categories with Bot Fight Mode or Sup
 
 You may also see Managed Challenge as a result of a [firewall rule](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
 
+This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
+
+To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 ___
 
 ## What is the difference between the threat score and bot management score?
@@ -78,6 +81,16 @@ Cloudflare has built an allowlist of good, automated bots, e.g. Google Search En
 This allowlist is large based on reverse DNS verification, meaning that the IPs we allow really match the requesting service. In addition to this, Cloudflare uses multiple validation methods including ASN blocks and public lists. If none of these validation types are available for a customer, we use internal Cloudflare data and machine learning to identify legitimate IP addresses from good bots.
 
 To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields#dynamic-fields) field in your firewall rule.
+
+___
+
+## Why might the ja3hash be empty in HTTP logs?
+
+The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:
+
+- Orange to Orange zones (Cloudflare Zone proxied to another Cloudflare Zone).
+
+- Worker sending requests within the same zone or to a zone that is not proxied (or a 3rd party).
 
 ___
 
@@ -120,10 +133,12 @@ ___
 ## What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?
 
 {{<Aside type="warning" header="Important considerations you need to be aware of before turning on BFM or SBFM">}}
+  
+-   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen. 
 
--   Super Bot Fight Mode is a high security feature intended to very quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen. If you turned on Super Bot Fight Mode during an attack, and the attack has subsided, we recommend either disabling the feature, using IP Access Rules to bypass BFM/SBFM or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+-   BFM has limited control. You cannot bypass or skip BFM using Firewall Rules or Page Rules. BFM will be disabled if there are any IP access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access Rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
--   The current version of BFM/SBFM has limited control. You can’t bypass or skip BFM/SBFM using Firewall Rules or Page Rules. SBFM can be bypassed with IP access "Allow" action rules. BFM will be disabled if there are any IP access rules present.
+-   SBFM can be bypassed with IP Access `Allow` action rules. You can use the Skip action in [Custom Rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
 
 {{</Aside>}}
 

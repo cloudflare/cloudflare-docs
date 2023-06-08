@@ -37,7 +37,7 @@ flowchart LR
 
 One common aspect of every SSL/TLS certificate is that they must have a fixed expiration date. If a certificate is expired, clients - such as your visitor's browser - will consider that a secure connection cannot be established, resulting in warnings or errors.
 
-Different [certificate authorities (CAs)](#certificate-authority-ca) support different validity periods. Cloudlfare works with them to guarantee that both [Universal](/ssl/edge-certificates/universal-ssl/) and [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) edge certificates are always renewed.
+Different [certificate authorities (CAs)](#certificate-authority-ca) support different validity periods. Cloudflare works with them to guarantee that both [Universal](/ssl/edge-certificates/universal-ssl/) and [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) edge certificates are always renewed.
 
 ## Certificate authority (CA)
 
@@ -49,7 +49,7 @@ As explained in the article about [what is an ssl certificate](https://www.cloud
 
 SSL/TLS certificates vary in terms of the level to which a CA has validated them. As explained in the article about [types of certificates](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/), SSL/TLS certificates can be DV (Domain Validated), OV (Organization Validated) or EV (Extended Validation).
 
-Certificates issued through Cloudflare - [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates - are Domain Validated (DV). You can [upload a custom certificate](/ssl/edge-certificates/custom-certificates/) if your organization needs OV or EV certificates.
+{{<render file="_validation-level-note.md">}}
 
 ## Origin pull
 

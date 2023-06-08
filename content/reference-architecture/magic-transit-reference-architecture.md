@@ -11,7 +11,7 @@ The purpose of this document is to describe the key architecture, functionalitie
 ## 2 What Is Magic Transit?
 Protecting network infrastructure from DDoS attacks demands a unique combination of strength and speed. Volumetric attacks can easily overwhelm hardware boxes and their bandwidth-constrained Internet links. And most cloud-based solutions redirect traffic to centralized scrubbing centers, which impacts network performance significantly. 
 
-Cloudflare Magic Transit provides DDoS protection and traffic acceleration for on-premise, cloud, and hybrid networks. With data centers spanning 250 cities and with over 100 Tbps in mitigation capacity, Magic Transit can detect and mitigate attacks close to their source of origin in under 3 seconds globally on average — all while routing traffic faster than the public Internet.
+Cloudflare Magic Transit provides DDoS protection and traffic acceleration for on-premise, cloud, and hybrid networks. With data centers spanning [hundreds of cities](https://www.cloudflare.com/network/) and  offering hundreds of Tbps in mitigation capacity, Magic Transit can detect and mitigate attacks close to their source of origin in under three seconds globally on average — all while routing traffic faster than the public Internet.
 
 ![Figure 1: Magic transit overview](/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-1.png)
 
@@ -22,7 +22,7 @@ At a high level, Magic Transit works as follows:
 * **Protect and Process:** All customer traffic is inspected for attacks. Advanced and automated mitigation techniques are applied immediately upon detecting an attack. Additional functions such as load balancing, next-generation firewall, content caching, and serverless compute are also available as a service.
 
 
-* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. More details specifically on tunnels and encapsulation can be found [here](/magic-transit/reference/tunnels-and-encapsulation/).
+* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. More details specifically on tunnels and encapsulation can be found [here](/magic-transit/reference/tunnels/).
 
 ### Baking resilience into our network using Anycast
 

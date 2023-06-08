@@ -44,7 +44,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 ### API
 
-Refer to the [Stream video details API documentation](/api/operations/stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
+Refer to the [Stream video details API documentation](/api/operations/stream-videos-retrieve-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
 
 ## Customize manifests by specifying available client bandwidth
 

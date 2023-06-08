@@ -42,5 +42,4 @@ ___
 
 ## Verwandte Ressourcen
 
--   [Cloudflare-Durchsatzbegrenzung konfigurieren](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/de/articles/115000272247)
--   [Abrechnung für Cloudflare-Durchsatzbegrenzung](https://support.cloudflare.com/hc/de/articles/115000272247)
+-   [Cloudflare-Durchsatzbegrenzung konfigurieren](https://support.cloudflare.com/hc/articles/115001635128)

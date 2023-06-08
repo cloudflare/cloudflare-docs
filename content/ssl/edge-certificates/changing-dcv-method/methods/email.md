@@ -20,8 +20,6 @@ With the [upcoming change](/ssl/reference/migration-guides/digicert-update/advan
 
 Based on your chosen Certificate Authority, you may not be able to use email verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
-{{<render file="_lets-encrypt-advanced-limitations.md">}}
-
 ## Setup
 
 ### Specify DCV method

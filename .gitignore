@@ -8,4 +8,4 @@ node_modules
 /dist
 /public
 /assets/jsconfig.json
-resources/_gen/images
+/resources/_gen/images

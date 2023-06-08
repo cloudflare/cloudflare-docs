@@ -119,11 +119,11 @@ building the *mod\_cloudflare* package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 {{</Aside>}}
 
-There are two methods for installing mod\_cloudflare: by downloading the Apache extension from Github or by adding code to your origin web server.
+There are two methods for installing mod\_cloudflare: by downloading the Apache extension from GitHub or by adding code to your origin web server.
 
-### Downloading packets or scripts from Github
+### Downloading packets or scripts from GitHub
 
-If you are using an Apache web server, you can download mod\_cloudflare from [Github](https://github.com/cloudflare/mod_cloudflare).
+If you are using an Apache web server, you can download mod\_cloudflare from [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Adding code to your origin web server
 
@@ -233,7 +233,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
 
-When using Railgun (or other reverse proxy software, such as Varnish), user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
+When using [Railgun](/railgun/) (deprecated) or other reverse proxy software such as Varnish, user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
 
 1.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
 2.  At the very end add:`CloudflareRemoteIPTrustedProxy railgun_address`So, if your Railgun server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
@@ -245,7 +245,7 @@ To have Lighttpd automatically rewrite the server IP for the access logs and for
 2.  Add the following code block anywhere in the **lighttpd.conf** file after the server modules list and then restart Lighttpd
 
 ```
-$HTTP["remoteip"] == "192.2.0.1 (example IP address)" 
+$HTTP["remoteip"] == "192.2.0.1 (example IP address)"
 {
 extforward.forwarder = ( "all" => "trust" )
 extforward.headers = ("CF-Connecting-IP")

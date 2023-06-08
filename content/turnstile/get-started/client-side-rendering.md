@@ -7,7 +7,7 @@ layout: single
 
 # Client-side render
 
-You can initialize and customize the Turnstile widget on your web page via implicit or explicit rendering. 
+You can initialize and customize the Turnstile widget on your web page via implicit or explicit rendering.
 
 ## Implicitly render the Turnstile widget
 
@@ -21,7 +21,7 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 ```
 </div>
 
-Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice. 
+Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
 
 {{<Aside type="note">}}
 
@@ -48,7 +48,7 @@ highlight: [4]
 <form action="/login" method="POST">
    <input type="text" placeholder="username"/>
    <input type="password" placeholder="password"/>
-   <div class="cf-turnstile" data-sitekey="<YOUR_SITE_KEY>"></div> 
+   <div class="cf-turnstile" data-sitekey="<YOUR_SITE_KEY>"></div>
    <button type="submit" value="Submit">Log in</button>
 </form>
 
@@ -64,7 +64,7 @@ A form is not protected by having a widget rendered. The corresponding token tha
 
 {{</Aside>}}
 
-### Disable implicit rendering 
+### Disable implicit rendering
 
 You can disable implicit rendering by replacing the script from:
 
@@ -74,27 +74,28 @@ To:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`
 
-When using this option, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.
+Or:
+
+`https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback`
+
+When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.  To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
+
+`https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
 
 ## Explicitly render the Turnstile widget
 
-1. Insert the JavaScript tag:
+1. Insert the JavaScript tag and the related code below. Ensure that you have renamed the class name of `.cf-turnstile` to `#example-container` (if you do not set the `render=explicit` query string option as shown above, it will still render otherwise). Once the script is embedded, you will have access to a global function with multiple callback options you can customize. For the following function to work properly, the page must contain an HTML element with ID `example-container`.
 
 <div>
 
 ```html
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
-<!-- OR and then call turnstile.ready(onloadTurnstileCallback) -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" defer></script>
 ```
 </div>
-
-2. Once the script is embedded, you will have access to a global function with multiple callback options you can customize. For the following function to work properly, the page must contain an HTML element with ID `example-container`.<br>The challenge can be invoked explicitly with the following JavaScript snippet:
 
 <div>
 
 ```javascript
-
 window.onloadTurnstileCallback = function () {
     turnstile.render('#example-container', {
         sitekey: '<YOUR_SITE_KEY>',
@@ -103,20 +104,41 @@ window.onloadTurnstileCallback = function () {
         },
     });
 };
-
-// if using synchronous loading, will be called once the DOM is ready
-turnstile.ready(onloadTurnstileCallback);
-
 ```
 </div>
 
-Turnstile can be programmatically loaded by invoking the `turnstile.render()` function in the global `window` object. 
+Or:
+
+<div>
+
+```html
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
+```
+</div>
+
+<div>
+
+```javascript
+// if using synchronous loading, will be called once the DOM is ready
+turnstile.ready(function () {
+    turnstile.render('#example-container', {
+        sitekey: '<YOUR_SITE_KEY>',
+        callback: function(token) {
+            console.log(`Challenge Success ${token}`);
+        },
+    });
+});
+```
+</div>
+
+Turnstile can be programmatically loaded by invoking the `turnstile.render()` function in the global `window` object.
 
 The `turnstile.render: function (container: string | HTMLElement, params: RenderParameters)` render takes an argument to a HTML widget.
 
 If the invocation is successful, the function returns a `widgetId (string)`. If the invocation is unsuccessful, the function returns `undefined`.
 
 Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
+
 
 ## Access a widget's state
 
@@ -138,7 +160,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is a network error. |
+| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). |
 | `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. Refer to [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
 | `expired-callback` | `data-expired-callback` | A JavaScript callback invoked when the token expires and does not reset the widget. |
 | `before-interactive-callback` | `data-before-interactive-callback` | A JavaScript callback invoked before the challenge enters interactive mode. |
