@@ -363,7 +363,7 @@ If the method fails with an uncaught exception, the exception will be thrown int
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events.
 
-The Hibernation APIs allow a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/workers/learning/using-durable-objects/#alarms-in-durable-objects), to be removed from memory while keeping its WebSockets connected ("hibernation").
+The Hibernation API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/workers/learning/using-durable-objects/#alarms-in-durable-objects), to be removed from memory while keeping its WebSockets connected ("hibernation").
 
 {{ <Aside type="note"> }}
 
@@ -390,7 +390,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 - {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. After calling this, the WebSocket is accepted, so its `send()` and `close()` methods can be used to send messages, but its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object instead. `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
+  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. After calling this, the WebSocket is accepted, so its `send()` and `close()` methods can be used to send messages. Its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object instead. `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
   - This API has a maximum of 32,768 WebSockets connected per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections. 
 
 - {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}
