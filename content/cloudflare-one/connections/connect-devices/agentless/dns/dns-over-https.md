@@ -36,15 +36,15 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 <summary>Windows 11</summary>
 <div>
 
-1. Obtain the A and AAAA records associated with your location's DoH endpoint.
+1. Obtain the A and AAAA record values associated with your location's DoH endpoint.
 
-   1. Run the following command to obtain your A records:
+   1. Run the following command to obtain your A record values:
 
    ```sh
    $ nslookup -type=A <your-subdomain>.cloudlfare-gateway.com
    ```
 
-   2. Obtain your AAAA records.
+   2. Obtain your AAAA record values.
 
    ```sh
    $ nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
@@ -73,6 +73,15 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 7. In **Preferred DNS** and **Alternate DNS**, enter the IPv4 addresses from your A record command. Set **DNS over HTTPS** to _On (automatic template)_.
 8. Enable **IPv6**.
 9. In **Preferred DNS** and **Alternate DNS**, enter the IPv6 addresses from your AAAA record command. Set **DNS over HTTPS** to _On (automatic template)_.
+
+</div>
+</details>
+
+<details>
+<summary>Windows Server 2022</summary>
+<div>
+
+First, obtain your A and AAAA record values. Then, follow [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
 </div>
 </details>
