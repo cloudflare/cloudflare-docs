@@ -81,7 +81,23 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 <summary>Windows Server 2022</summary>
 <div>
 
-First, obtain your A and AAAA record values. Then, follow [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
+Obtain the A and AAAA record values associated with your location's DoH endpoint.
+
+1. Run the following command to obtain your A record values:
+
+```sh
+$ nslookup -type=A <your-subdomain>.cloudlfare-gateway.com
+```
+
+2. Obtain your AAAA record values.
+
+```sh
+$ nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
+```
+
+3. Copy the resulting IP addresses.
+
+Next, use these values in [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
 </div>
 </details>
