@@ -36,12 +36,12 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 <summary>Windows 11</summary>
 <div>
 
-1. Obtain the A and AAAA record values associated with your location's DoH endpoint.
+1. Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
 
    1. Run the following command to obtain your A record values:
 
    ```sh
-   $ nslookup -type=A <your-subdomain>.cloudlfare-gateway.com
+   $ nslookup -type=A <your-subdomain>.cloudflare-gateway.com
    ```
 
    2. Obtain your AAAA record values.
@@ -86,13 +86,13 @@ Obtain the A and AAAA record values associated with your location's DoH endpoint
 1. Run the following command to obtain your A record values:
 
 ```sh
-$ nslookup -type=A <your-subdomain>.cloudlfare-gateway.com
+$ nslookup -type=A <your-subdomain>.cloudflare-gateway.com
 ```
 
 2. Obtain your AAAA record values.
 
 ```sh
-$ nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
+$ nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 ```
 
 3. Copy the resulting IP addresses.
