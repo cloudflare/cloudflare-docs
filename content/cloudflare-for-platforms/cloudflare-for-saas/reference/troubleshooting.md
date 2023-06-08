@@ -52,6 +52,8 @@ If a certificate issuance times out, the error message will indicate where the t
 
 To fix this error, send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) through the API or click the **refresh toggle** for the specific custom hostname in the dashboard.
 
+If the PATCH request or the refresh toggle are returning an error, then please delete the custom hostname and re-create it.
+
 ---
 
 ## Immediate validation checks
