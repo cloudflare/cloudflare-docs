@@ -36,44 +36,43 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 <summary>Windows 11</summary>
 <div>
 
-1. Locate the A and AAAA records associated with your location's DoH endpoint.
+1. Obtain the A and AAAA records associated with your location's DoH endpoint.
 
-   1. Acquire your subdomain.
-   2. In a terminal, run the following commands to obtain your A and AAAA records:
+   1. Run the following command to obtain your A records:
 
    ```sh
    $ nslookup -type=A <your-subdomain>.cloudlfare-gateway.com
    ```
 
+   2. Obtain your AAAA records.
+
    ```sh
    $ nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
    ```
 
-   3. Copy the resulting addresses.
+   3. Copy the resulting IP addresses.
 
 2. Add the addresses to your list of known DoH servers.
 
-   1. Run the following command for each address:
+   1. In an elevated terminal, run the following command for each address:
 
    ```sh
    $ Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
    ```
 
-   2. Confirm the addresses were added with the following command:
+   2. Confirm the addresses were added.
 
    ```sh
    $ Get-DnsClientDohServerAddress
    ```
 
-3. Configure your network settings.
-   1. In Windows, go to **Settings** > **Network & internet** > your active Internet connection.
-   2. Under **DNS server assignment**, select **Edit**.
-   3. Set the drop-down to _Manual_.
-   4. Enable **IPv4**.
-   5. In **Preferred DNS** and **Alternate DNS**, enter your IPv4 addresses.
-   6. Enable **IPv6**.
-   7. In **Preferred DNS** and **Alternate DNS**, enter your IPv6 addresses.
-   8. Set each instance of **DNS over HTTPS** to _On (automatic template)_.
+3. In Windows, go to **Settings** > **Network & internet** > your active Internet connection. This option may be either **Ethernet** or **Wi-Fi**.
+4. Under **DNS server assignment**, select **Edit**.
+5. In the drop-down menu, choose _Manual_.
+6. Enable **IPv4**.
+7. In **Preferred DNS** and **Alternate DNS**, enter the IPv4 addresses from your A record command. Set **DNS over HTTPS** to _On (automatic template)_.
+8. Enable **IPv6**.
+9. In **Preferred DNS** and **Alternate DNS**, enter the IPv6 addresses from your AAAA record command. Set **DNS over HTTPS** to _On (automatic template)_.
 
 </div>
 </details>
