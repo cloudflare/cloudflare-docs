@@ -548,7 +548,6 @@ Durable Object metrics are powered by GraphQL, like other Workers metrics. Learn
 
 ```
 # An example of GraphQL query for Durable Objects
-{
   viewer {
     # Replace with your account tag, the 32 hex character id visible at the beginning of any url
     # when logged in to dash.cloudflare.com or under "Account ID" on the sidebar of the Workers & Pages Overview  
