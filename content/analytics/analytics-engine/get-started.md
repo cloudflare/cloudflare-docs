@@ -25,21 +25,37 @@ To access your dataset from the Workers runtime, you need to create a binding us
 
 In this guide, we will show you how to start using a dataset.
 
-To define an Analytics Engine binding you must be using at least version 2.6.0 of Wrangler.
+{{<Aside type="note">}}
+  
+To define an Analytics Engine binding you must be using at least version 2.6.0 of [Wrangler](/workers/wrangler/install-and-update/).
+
+{{</Aside>}}
+
 Add the binding to your `wrangler.toml` file, for example:
 
 ```toml
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>" }
-]
+---
+filename: wrangler.toml
+---
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
 ```
 
-By default, the dataset name is the same as the binding name. If you want, you can also specify the dataset name:
+By default, the dataset name is the same as the binding name.
+
+* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables).
+* For example, `binding = "MY_DATASET"` or `binding = "metricsDataset"` would both be valid names for the binding.
+* Your binding is available in your Worker at `env.<BINDING_NAME>` and exposes the `writeMetric` method.
+
+If you want, you can also specify the dataset name:
 
 ```toml
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+---
+filename: wrangler.toml
+---
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
 ```
 
 Save the changes that you made to your `wrangler.toml` file. Republish your Worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
