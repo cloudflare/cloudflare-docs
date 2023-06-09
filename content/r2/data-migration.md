@@ -8,12 +8,6 @@ weight: 3
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
-{{<Aside type="note" header="Beta waitlist">}}
-
-If you are interested in joining the private beta waitlist for incremental migration, [fill out the form](https://docs.google.com/forms/d/e/1FAIpQLSeqOcV0d8fuLSdTULP2eB4AQb3jU8TG3wUGOKEkJ_OeLG5e4g/viewform).
-
-{{</Aside>}}
-
 Migration jobs:
 
 - Preserve custom object metadata from source bucket by copying them on the migrated objects on R2.
@@ -67,4 +61,4 @@ To create credentials with the correct permissions:
 
 3. Create a new user and attach the created policy to that user.
 
-You can now use both the Access Key ID and Secret Access Key when defining your source bucket. Refer to [Migrate data from Amazon S3 to R2](/r2/r2-migrator/#migrate-data-from-amazon-s3-to-r2) to learn more.
+You can now use both the Access Key ID and Secret Access Key when defining your source bucket. Refer to [Migrate data from Amazon S3 to R2](/r2/data-migration/#migrate-data-from-amazon-s3-to-r2) to learn more.
