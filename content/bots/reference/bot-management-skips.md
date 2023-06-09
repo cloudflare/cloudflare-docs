@@ -4,23 +4,22 @@ title: Bot Management skips
 weight: 0
 ---
 
-# Bot Management skips
+# Bot Management does not score a request
 
-There are instances in which Bot Management does not run and certain fields are not populated because it has been determined that running Bot Management would either be unnecessary or produce misleading results.
+There are instances in which Bot Management does not run and certain fields, such as the [JA3 field](/bots/concepts/ja3-fingerprint/) are not populated because it has been determined that running Bot Management would not be necessary .
 
-## Common reasons for Bot Management to skip
+## Common reasons for Bot Management to not score a request
 
-### Internal services
+### Requests to internal endpoints
+Requests such as `/cdn-cgi/` are handled individually and will never receive a Bot Management score. Email Obfuscation, Web Analytics, Trace Requests, Challenge Pages, and JavaScript Detections do not receive bot scores. Refer to the table below for some examples of internal endpoints.
 
-Requests to routes such as `/cdn-cgi/` are handled individually and will never run the Bot Management module. Email obfuscation, web analytics, trace requests, Managed Challenge, and JavaScript Challenge do not receive bot scores. Refer to the table below for examples of internal services.
-
-| Route | Method |
-| --- | --- |
-| `/cdn-cgi/rum` | `POST` | 
-| `/cdn-cgi/script_monitor/report` | `POST` |
-| `/cdn-cgi/trace` | `GET` |
-| `/cdn-cgi/challenge-platform/…` | `GET` |
-| `/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js` | `GET` |
+| Route |
+| --- |
+| `/cdn-cgi/rum` |
+| `/cdn-cgi/script_monitor/report` |
+| `/cdn-cgi/trace` |
+| `/cdn-cgi/challenge-platform/…` |
+| `/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js` |
 
 ### Same zone edgeworker and Grey Cloud sub-requests
 
