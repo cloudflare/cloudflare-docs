@@ -67,7 +67,7 @@ To apply customizations to your block page:
 
 ### Add a logo image
 
-You can include an external logo image to display on your custom block page. The block page resizes all images to 146x146 pixels. Images must have valid URLs no longer than 2048 characters. Accepted file types include SVG, PNG, JPEG, and GIF.
+You can include an external logo image to display on your custom block page. The block page resizes all images to 146x146 pixels. The URL must be valid and no longer than 2048 characters. Accepted file types include SVG, PNG, JPEG, and GIF.
 
 ### Allow users to email an administrator
 
