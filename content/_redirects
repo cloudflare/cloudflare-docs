@@ -661,6 +661,7 @@
 /r2/data-access/wrangler-cli/ /r2/buckets/create-buckets/ 301
 /r2/data-migration/ /r2/r2-migrator/ 301
 /r2/data-migration/r2-migrator/ /r2/r2-migrator/ 301
+/r2/r2-migrator/ /r2/data-migration/ 301
 /r2/learning/consistency/ /r2/reference/consistency/ 301
 /r2/learning/data-security/ /r2/reference/data-security/ 301
 /r2/learning/cors/ /r2/buckets/cors/ 301
