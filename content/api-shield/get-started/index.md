@@ -35,7 +35,7 @@ While not strictly required, uploading a pre-existing schema will offer the chan
 It is recommended to start with Schema Validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
 {{</Aside>}}
 
-If you do not have a schema to upload, continue in this guide to learn how to generate a schema with API Shield. 
+If you do not have a schema to upload, continue reading this guide to learn how to generate a schema with API Shield. 
 
 ## Enable the Sensitive Data Detection ruleset and accompanying rules
 
@@ -97,7 +97,7 @@ You can observe the top sequences in your API traffic that contain endpoints sto
 
 You should apply all possible API Shield protections (rate limiting suggestions, Schema Validation, JWT Validation, and mTLS) to API endpoints found in high correlation score sequences that make up the critical request flows in your application. You should also check their specific endpoint order with your development team.
 
-For more information, refer to [our blog post](https://blog.cloudflare.com/api-sequence-analytics).
+For more information, refer to [Detecting API abuse automatically using sequence analysis](https://blog.cloudflare.com/api-sequence-analytics) blog post.
 
 ## Additional configuration
 
