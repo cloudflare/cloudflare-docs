@@ -5,30 +5,19 @@ title: Code Conventions and Format
 
 ## Code Conventions and Format
 
-Use the conventions described in this topic throughout Cloudflare product content.
+Use the conventions described below throughout Cloudflare product content.
 
 ## Angle brackets ( < and > )
 
 Use angle brackets as a placeholder for variables you want the user to enter (except in URLs, where you should use curly braces for placeholders).
 
+For example:
 
-✅
-
-Type your user-specified domain in this format: https://<user-specified domain>.cloudflare.com
+Type your user-specified domain in this format: `https://<user-specified domain>.cloudflare.com`
 
 ```
 {
   "description": "<RULE_DESCRIPTION>"
-}
-```
-
-❌ 
-
-Type your user-specified domain in this format: https://{user-specified domain}.cloudflare.com
-
-```
-{
-  "description": "{rule_description}"
 }
 ```
 
@@ -38,14 +27,9 @@ Angle brackets that contain numbers separated by an ellipsis represent a range o
 
 Square brackets enclose optional items.
 
-✅
+For example:
 
 Specify a subsearch that starts with this search command: ``` tag=dns query [search tag=malware]. ```
-
-
-❌
-
-Type your user-specified domain in this format: https://[user-specified domain].cloudflare.com
 
 ## Curly braces ( { and } )
 
@@ -58,7 +42,7 @@ In placeholders inside a URL: ``` https://api.cloudflare.com/client/v4/organizat
 
 The > symbol leads you through nested menu items and dialog box options to a final action. The sequence **Options > Settings > General** directs you to pull down the **Options** menu, select the **Settings** item, and select **General** from the last dialog box. Do not use bold formatting for the > symbol (refer to "bold" in this table).
 
-## Tip icon	
+## Tip icon
 
 This icon denotes a tip, which alerts you to advisory information.
 
@@ -74,15 +58,15 @@ This icon denotes info, which alerts you to important information.
 
 This icon denotes a notice, which alerts you to take precautions to avoid data loss, loss of signal integrity, or degradation of performance.
 
-## Caution icon	
+## Caution icon
 
 This icon denotes a caution, which advise you to take precautions to avoid injury.
 
-## Blue text	
+## Blue text
 
 Text in this color indicates a link.
 
-## **bold**	
+## **bold**
 
 Use **bold** when referring to a clickable action or to highlight a title/name/etc in the UI. Bold text denotes items that you must select or click in the software, such as menu items, toggles, and dialog box options. Bold text denotes titles or names that are identifiers in the UI. Bold text also denotes a parameter name. 
 
@@ -90,7 +74,7 @@ Do not use for programs.
 
 In nested menus, use bold for the word not the symbol. Example: **Dashboard** > **This** > **That**
 
-## *italics*	
+## *italics*
 
 Use *italics* when referring to an option that customers can select from, like in dropdown menus.
 

@@ -58,7 +58,7 @@ You can align text in the columns to the left, right, or center by adding a colo
 ```
 | Syntax      | Description | Test Text     |
 | :---        |    :----:   |          ---: |
-| Header      | Title       | Here's this   |
+| Header      | Title       | Here is this  |
 | Paragraph   | Text        | And more      |
 ```
 
@@ -66,7 +66,7 @@ The rendered output looks like this:
 
 | Syntax      | Description | Test Text     |
 | :---        |    :----:   |          ---: |
-| Header      | Title       | Here's this   |
+| Header      | Title       | Here is this  |
 | Paragraph   | Text        | And more      |
 
 #### Formatting Text in Tables

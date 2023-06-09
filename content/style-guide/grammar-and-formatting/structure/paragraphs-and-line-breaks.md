@@ -16,10 +16,11 @@ This is the first sentence of the second paragraph.
 ```
 
 
-Line breaks in Markdown
+### Line breaks in Markdown
+
 Avoid line breaks when possible. Considering creating a separate paragraph, even inside numbered lists.
 
-If you need to add a line break, use the <br/> HTML element.
+If you need to add a line break, use the `<br/>` HTML element.
 
 Example inside a table:
 
@@ -28,7 +29,12 @@ Example inside a table:
 | Feature name<br/>Additional info | Yes     |
 ```
 
-Warning:
+This is how the table looks:
 
-Do not use two spaces at the end of a sentence to create a forced line break. Even though this Markdown syntax is supported, is it not immediately visible and we can easily miss these line breaks during peer reviews.
+| Feature                          | Enabled |
+|----------------------------------|---------|
+| Feature name<br/>Additional info | Yes     |
 
+{{<Aside type="warning">}}
+Do not use two spaces at the end of a sentence to create a forced line break. Although this Markdown syntax is supported, it is not immediately visible and can easily miss these line breaks during peer reviews. 
+{{</Aside>}}

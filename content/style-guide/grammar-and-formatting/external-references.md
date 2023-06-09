@@ -5,12 +5,12 @@ title: External References
 
 ## External References
 
-When referencing external resources, make sure you're linking to a trustworthy source that is recognized as an authority. 
+When referencing external resources, ensure that you are linking to a trustworthy source that is recognized as an authority. 
 
 For general websites, consider the following recommendations about the link text:
 
-- Use the website name if you're linking to the home page.
-- Use the page name if you're linking to a specific page.
+- Use the website name if you are linking to the home page.
+- Use the page name if you are linking to a specific page.
 - Authoritative sources for documents such as RFCs can have their own specific format for references, such as the RFC number.
 
 Note: When linking to a Cloudflare blog post, sometimes we use only "blog post" for the link text.
@@ -21,10 +21,10 @@ A Request for Comments (RFC) document is a formal document produced by different
 
 Use the following formatting when referencing an RFC:
 
-RFC <number>    (RFC, space, number up to four digits)
+    RFC <number>   
+    (RFC, space, number up to four digits)
 
-For example:
-CAA is a new DNS resource record type defined in RFC 6844.
+For example: CAA is a new DNS resource record type defined in RFC 6844.
 
 ## Links
 When linking to an RFC (or RFC section), consider using a link to the following website, which is the authoritative source according to IETF:
@@ -32,7 +32,7 @@ https://www.rfc-editor.org
 
 To get the link:
 
-1. Open the following URL and search for the RFC number: https://www.rfc-editor.org/rfc-index.html
+1. Go to [RFC Editor](https://www.rfc-editor.org/rfc-index.html) and search for the RFC number.
 2. Select HTML to open the HTML version.
 3. (optional) Navigate to a specific section, if necessary.
 4. Use the current URL as the link target in Dev Docs.

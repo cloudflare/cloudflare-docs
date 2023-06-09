@@ -13,11 +13,15 @@ Dashes look like hyphens, but are wider. An em dash is the widest type of dash. 
 
 In compound words: The most up-to-date software can be found here.
 To express ranges: It takes 24-48 hours for the data to upload.
-Note: never include whitespaces around a hyphen.
+{{<Aside type="note">}}
+ 
+Never include whitespaces around a hyphen.
+ 
+{{</Aside>}}
 
 Additional examples:
 
-|❌|✅|Rationale|
+|✅|❌|Rationale|
 |----|---|---|
 |Protect your Internet property from common vulnerabilities with our enterprise-class Web Application Firewall (WAF).| Protect your Internet property from common vulnerabilities with our enterprise class Web Application Firewall (WAF). | ‘Enterprise-class’ refers to the ability of something to scale with and handle the needs of large enterprises. A hyphen is necessary because the compound modifier comes before the noun. |
 |Our WAF is enterprise class. | Our WAF is enterprise-class. | ‘Enterprise class’ modifies ‘WAF.’ A hyphen is not necessary because the compound modifier comes after the noun. |
@@ -35,17 +39,17 @@ Cookies provide saved information about a user’s session to establish a “sta
 Alone, in place of a semicolon or colon: 
 
 Embed yourself in the team — the best results will come when trust is built.
-Note: Following AP style guides, and to improve readability, we include whitespaces before and after the em dash.
-Additional examples:
+{{<Aside type="note">}}
+Following AP style guides, and to improve readability, we include whitespaces before and after the em dash.
+Additional examples: 
+{{</Aside>}}
 
-|❌|✅|Rationale|
+|✅|❌|Rationale|
 |----|---|---|
 |The app has made security and privacy core to the company’s mission — and that’s why it chose Cloudflare to provide an extra layer of protection.|The app has made security and privacy core to the company’s mission—and that’s why it chose Cloudflare to provide an extra layer of protection.|An em dash with spaces on both sides is the appropriate way to distinguish the offset phrase at the end of this sentence.|
 |ACME has always looked deeply into two sources of traffic -- organic and direct traffic.|ACME has always looked deeply into two sources of traffic - organic and direct traffic.|A double dash is the appropriate way to clarify different types of traffic at the end of this sentence. A hyphen should not be used in place of a double dash.|
 
 Additional dash information:
-
-
 
 |Punctuation|Character/HTML Code|When to use in Cloudflare documentation | Justification| 
 |----|----|----|----|

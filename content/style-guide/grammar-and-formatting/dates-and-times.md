@@ -6,13 +6,14 @@ title: Dates and Times
 ## Dates and Times
 
 ### Product Content (including UI)
-To account for internationalization and inclusivity of all locales, use the ISO-8601 (YYYY-MM-DD HH:mm:ss) standard when writing dates and times as much as possible.
+To account for internationalization and inclusivity of all locales, use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard when writing dates and times as much as possible.
 
 ### Blogs
-Remember that our readership is international, so keep date formats international.
+Since our readership is international, keep date formats international.
 
 When mentioning dates in text, spell them out:
 
-On Tuesday, May 19, attackers targeted the company's servers.
-On February 11th, 2010, the company went public.
-For graphs, charts, and other visual assets use the ISO-8601 (YYYY-MM-DD HH:mm:ss) standard like we do for product content.
++ On Tuesday, May 19, attackers targeted the company's servers.
++ On February 11th, 2010, the company went public.
+
+For graphs, charts, and other visual assets use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard.

@@ -9,24 +9,38 @@ title: Compound Words
 
 Some are fairly frequent in our blog posts and product content. For the sake of consistency, we need to follow these conventions when using them:
 
-Change your nameservers to Cloudflare's. 
-
-✅ Nameserver, ❌ name server
-
-Add a *. SAN (wildcard) to the custom hostname certificate.
-
-✅ Hostname, ❌ host name
-
-
-Cloudflare updates the new setting across all of our data centers around the world.
-
-✅ data center, ❌ datacenter
-
-
-Select the Transfer lock checkbox before continuing the setup.
-
-✅ checkbox, 
-❌ check box
+<table>
+  <tr>
+    <th style="width:20%">✅</th>
+    <th style="width:20%">❌</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>Nameserver</td>
+    <td>Name servers</td>
+    <td>Change your nameservers to Cloudflare's.</td>
+  </tr>
+  <tr>
+    <td>Hostname</td>
+    <td>host name</td>
+    <td>Add a *. SAN (wildcard) to the custom hostname certificate.</td>
+  </tr>
+  <tr>
+    <td>Nameserver</td>
+    <td>Name servers</td>
+    <td>Change your nameservers to Cloudflare's.</td>
+  </tr>
+  <tr>
+    <td>data center</td>
+    <td>datacenter</td>
+    <td>Cloudflare updates the new setting across all of our data centers around the world.</td>
+  </tr>
+  <tr>
+    <td>checkbox</td>
+    <td>check box</td>
+    <td>Select the Transfer lock checkbox before continuing the setup.</td>
+  </tr>
+</table>
 
 When using compound words that have a preposition in them (think log in, or set up), they should be written as two separate words when they are verbs, and as one word when they are nouns.
 
@@ -52,7 +66,7 @@ This allows you to restore your data from the **backup**.
 
 Certain expressions should be hyphenated depending on their position and role in the sentence.
 
-As a general rule, when a compound word precedes a noun, it's called a **modifier** and should be hyphenated.
+As a general rule, when a compound word precedes a noun, it is called a **modifier** and should be hyphenated.
 When the same word comes after a verb, it has the role of an adverb and it should not be hyphenated.
 
 See these examples:

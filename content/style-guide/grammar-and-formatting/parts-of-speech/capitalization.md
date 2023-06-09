@@ -31,19 +31,64 @@ Each product, service, and feature should be properly spelled and capitalized wh
 
 ### Common capitalization conventions
 
-|Correct|Incorrect|Rationale|
-|-----------|---------|----------|
-|✅ CAPTCHA, reCAPTCHA | ❌ Captcha, captcha, recaptcha, Recaptcha | A **CAPTCHA** is a puzzle used to challenge users and ensure they are not bots. |
-|✅ cloud | ❌ Cloud, "cloud" | The **cloud** is a network of remote servers used to store and maintain data. |
-|✅ Cloudflare |  ❌ CloudFlare, CLOUDFLARE, cloudflare | **Cloudflare** is a great company to work for. |
-|✅ DDoS	| ❌ ddos, DDOS | A **DDoS** attack is a malicious attempt to disrupt normal traffic of a targeted server. |
-|✅ denial-of-service (DoS) | ❌ denial of service, Denial-of-Service, Denial-Of-Service, Denial of Service, dos, Dos, DOS | DDoS is a type of **DoS** attack. |
-| ✅ Enterprise ✅ enterprise | ❌ ent, ENT |Capitalized - Refers to the official Cloudflare **Enterprise** Plan or a customer on the **Enterprise** plan. Sentence-case - All Enterprise customers are enterprise companies, but not all enterprises are Enterprise customers. |
-| ✅ Internet | ❌ internet |Disabling this option may cause all devices to lose **Internet** connectivity. |
-| ✅ SSL	| ❌ ssl	| **SSL** is an encryption-based Internet security protocol. |
-| ✅ TLS	| ❌ tls	| **TLS** is a security protocol designed to facilitate privacy and data security for communications over the Internet.|
-| ✅ WAF	| ❌ waf	| **WAF** is a security system that helps protect web applications by filtering and monitoring HTTP traffic between a web application and the Internet. |
-| ✅ Zero Trust | ❌ zero trust | **Cloudflare** Access is a Zero Trust solution that secures inbound connections to your protected applications.|
+
+<table>
+  <tr>
+    <th style="width:20%">✅</th>
+    <th style="width:20%">❌</th>
+    <th>Rationale</th>
+  </tr>
+  <tr>
+    <td>CAPTCHA, reCAPTCHA</td>
+    <td>Captcha, captcha, recaptcha, Recaptcha</td>
+    <td>A <b>CAPTCHA</b> is a puzzle used to challenge users and ensure they are not bots.</td>
+  </tr>
+  <tr>
+    <td>cloud</td>
+    <td>Cloud, "cloud"</td>
+    <td>The <b>cloud</b> is a network of remote servers used to store and maintain data. </td>
+  </tr>
+  <tr>
+    <td>DDoS</td>
+    <td>ddos, DDOS</td>
+    <td>A <b>DDoS</b> attack is a malicious attempt to disrupt normal traffic of a targeted server.</td>
+  </tr>
+  <tr>
+    <td>denial-of-service (DoS)</td>
+    <td>denial of service, Denial-of-Service, Denial-Of-Service, Denial of Service, dos, Dos, DOS</td>
+    <td>DDoS is a type of <b>DoS</b> attack.</td>
+  </tr>
+  <tr>
+    <td>Enterprise, enterprise</td>
+    <td>ent, ENT</td>
+    <td>Capitalized - Refers to the official Cloudflare <b>Enterprise</b> Plan or a customer on the <b>Enterprise</b> plan. Sentence-case - All Enterprise customers are enterprise companies, but not all enterprises are Enterprise customers. </td>
+  </tr>
+  <tr>
+    <td>Internet</td>
+    <td>internet</td>
+    <td>Disabling this option may cause all devices to lose <b>Internet</b> connectivity.</td>
+  </tr>
+  <tr>
+    <td>SSL</td>
+    <td>ssl</td>
+    <td><b>SSL</b> is an encryption-based Internet security protocol.</td>
+  </tr>
+  <tr>
+    <td>TLS</td>
+    <td>tls</td>
+    <td><b>TLS</b> is a security protocol designed to facilitate privacy and data security for communications over the Internet..</td>
+  </tr>
+  <tr>
+    <td>WAF</td>
+    <td>waf</td>
+    <td><b>WAF</b> is a security system that helps protect web applications by filtering and monitoring HTTP traffic between a web application and the Internet. </td>
+  </tr>
+  <tr>
+    <td>Zero Trust</td>
+    <td>zero trust</td>
+    <td><b>Cloudflare</b> Access is a Zero Trust solution that secures inbound connections to your protected applications.</td>
+  </tr>
+</table>
 
 ### Headings
 
