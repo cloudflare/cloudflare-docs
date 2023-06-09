@@ -183,19 +183,19 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a maximum size of 2048 bytes and each value is limited to 128 KiB (131072 bytes).
 
-    <br/>**Supported options:** Same as `put(key, value, options)`, above.
+  <br/>**Supported options:** Same as `put(key, value, options)`, above.
 
 - {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}Promise\<boolean>{{</type>}}
 
   - Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
-    <br/>**Supported options:** Same as `put()`, above.
+  <br/>**Supported options:** Same as `put()`, above.
 
 - {{<code>}}delete(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<number>{{</type>}}
 
   - Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
-    <br/>**Supported options:** Same as `put()`, above.
+<br/>**Supported options:** Same as `put()`, above.
 
 - {{<code>}}list(){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
@@ -205,40 +205,40 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Returns keys and values associated with the current Durable Object according to the parameters in the provided options object.
 
-    <br/>**Supported options:**
+<br/>**Supported options:**
 
-    - {{<code>}}start{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}start{{</code>}}{{<param-type>}}string{{</param-type>}}
 
-      - Key at which the list results should start, inclusive.
+  - Key at which the list results should start, inclusive.
 
-    - {{<code>}}startAfter{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}startAfter{{</code>}}{{<param-type>}}string{{</param-type>}}
 
-      - Key after which the list results should start, exclusive. Cannot be used simultaneously with `start`.
+  - Key after which the list results should start, exclusive. Cannot be used simultaneously with `start`.
 
-    - {{<code>}}end{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}end{{</code>}}{{<param-type>}}string{{</param-type>}}
 
-      - Key at which the list results should end, exclusive.
+  - Key at which the list results should end, exclusive.
 
-    - {{<code>}}prefix{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}prefix{{</code>}}{{<param-type>}}string{{</param-type>}}
 
-      - Restricts results to only include key-value pairs whose keys begin with the prefix.
+  - Restricts results to only include key-value pairs whose keys begin with the prefix.
 
-    - {{<code>}}reverse{{</code>}}{{<param-type>}}boolean{{</param-type>}}
+- {{<code>}}reverse{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-      - If true, return results in descending order instead of the default ascending order.
-      - Note that enabling this does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
+  - If true, return results in descending order instead of the default ascending order.
+  - Note that enabling this does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
 
-    - {{<code>}}limit{{</code>}}{{<param-type>}}number{{</param-type>}}
+- {{<code>}}limit{{</code>}}{{<param-type>}}number{{</param-type>}}
 
-      - Maximum number of key-value pairs to return.
+  - Maximum number of key-value pairs to return.
 
-    - {{<code>}}allowConcurrency{{</code>}}{{<param-type>}}boolean{{</param-type>}}
+- {{<code>}}allowConcurrency{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-      - Same as the option to `get()`, above.
+  - Same as the option to `get()`, above.
 
-    - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
+- {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-      - Same as the option to `get()`, above.
+  - Same as the option to `get()`, above.
 
 - {{<code>}}transaction(closure{{<param-type>}}Function(txn){{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
@@ -248,21 +248,21 @@ The `put()` method returns a `Promise`, but most applications can discard this p
         {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
       </aside>
 
-  - {{<code>}}txn{{</code>}}
+- {{<code>}}txn{{</code>}}
 
-    - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
+  - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
 - {{<code>}}deleteAll(){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
 
-    <br/>**Supported options:** Same as `put()`, above.
+<br/>**Supported options:** Same as `put()`, above.
 
 - {{<code>}}getAlarm(){{</code>}} : {{<type>}}Promise\<Number | null>{{</type>}}
 
   - Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns null.
 
-    <br/>**Supported options:** Like `get()` above, but without `noCache()`.
+<br/>**Supported options:** Like `get()` above, but without `noCache()`.
 
 - {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
@@ -270,13 +270,13 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     If `setAlarm()` is called with a time equal to or before `Date.now()`,  the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
 
-    **Supported options:** Like `put()` above, but without `noCache()`.
+**Supported options:** Like `put()` above, but without `noCache()`.
 
 - {{<code>}}deleteAlarm(){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
 
-    <br/>**Supported options:** Like `put()` above, but without `noCache()`.
+<br/>**Supported options:** Like `put()` above, but without `noCache()`.
 
 - {{<code>}}sync(){{</code>}} : {{<type>}}Promise{{</type>}}
 
@@ -284,7 +284,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
-    **Supported options:** None.
+**Supported options:** None.
 
 {{</definitions>}}
 
