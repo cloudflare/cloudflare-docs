@@ -13,13 +13,19 @@ Requires [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolati
 
 With Access policies, you can require users to open self-hosted applications in a secure [remote browser](/cloudflare-one/policies/browser-isolation/). Because the remote browser is directly integrated into our Secure Web Gateway platform, [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) can be applied to isolated applications without needing to install the WARP client. This allows you to distribute internal applications to unmanaged users while retaining control over sensitive data.
 
+## Prerequisites
+
+Your browser must [allow third-party cookies](/cloudflare-one/identity/authorization-cookie/#allow-third-party-cookies-in-the-browser) on the application domain.
+
 ## Enable Browser Isolation
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Choose a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) and select **Configure**.
-3. Choose an [Allow policy](/cloudflare-one/policies/access/) and select **Configure**.
-4. Under **Additional settings**, turn on **Isolate application**.
-5. Save the policy.
+{{<render file="/_clientless-browser-isolation.md">}}
+
+3. Next, go to **Access** > **Applications**.
+4. Choose a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) and select **Configure**.
+5. Choose an [Allow policy](/cloudflare-one/policies/access/) and select **Configure**.
+6. Under **Additional settings**, turn on **Isolate application**.
+7. Save the policy.
 
 Browser Isolation is now enabled for users who match this policy. After the user logs into Access, the application will launch in a remote browser.
 
@@ -46,5 +52,4 @@ For example, if your application is hosted on `internal.site.com`, the following
 
 ## Limitations
 
-- To isolate an Access application, your browser must [allow third-party cookies](/cloudflare-one/identity/authorization-cookie/#allow-third-party-cookies-in-the-browser) on the application domain.
 - [Automatic Signed Exchanges](/fundamentals/speed/signed-exchanges/enable-signed-exchange/), [Automatic Platform Optimization](/automatic-platform-optimization) and [Zaraz](/zaraz) are currently not supported and if enabled, should be disabled using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
