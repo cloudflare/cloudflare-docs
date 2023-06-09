@@ -8,6 +8,13 @@ rss: file
 
 # Changelog
 
+## 2023-06-09
+
+- `AbortSignal.any()` is now available.
+- Updated V8 to 11.4.
+- The URLSearchParam `delete()` and `has()` methods now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change so is gated behind the new `urlsearchparams_delete_has_value_arg` and `url_standard` compatibility flags.
+- Added compatibility flag `strict_compression_checks` for additional DecompressionStream error checking.
+
 ## 2023-05-26
 
 - A new [Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) (beta) has been added to [Durable Objects](/workers/learning/using-durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
