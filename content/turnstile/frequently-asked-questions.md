@@ -199,3 +199,37 @@ You can safely ignore the error. It is requesting a [Private Access Token (PAT)]
 
 {{</faq-answer>}}
 {{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Do I need to display anything on the page when using Turnstile in Invisible mode?" >}}
+{{<faq-answer>}}
+
+To ensure you are in compliance with privacy laws coming into effect around the world, we recommend including the following on all sites issuing a Turnstile security challenge:
+
+```html
+This site is protected by <a href="https://www.cloudflare.com">Cloudflare</a> and its
+<a href="https://www.cloudflare.com/privacypolicy/">Privacy Policy</a> and
+<a href="https://www.cloudflare.com/website-terms/">Terms of Service</a> apply.
+```
+
+We also recommend integrating a notice into your Privacy Policy similar to the one directly below this answer.
+
+Note to sites with EU users:
+
+Navigating global privacy laws can be confusing, as the requirements differ depending on your jurisdiction and the jurisdiction of your users, so you should do your own analysis as to what is required based on your specific facts.
+
+For example: for users in the EU, this language is likely not required, as Cloudflare acts as a processor, and thus your site's terms and privacy policy apply, not ours. However, you should update your Privacy Policy to include a description of what data Cloudflare processes and under what basis, an in the sample text below.
+
+An alternate variant if you prefer to keep the same language globally would then be:
+
+```html
+This site is protected by <a href="https://www.cloudflare.com">Cloudflare</a> and its
+<a href="https://www.cloudflare.com/privacypolicy/">Privacy Policy</a> and
+<a href="https://www.cloudflare.com/website-terms/">Terms of Service</a> apply except as noted in our Privacy Policy.
+```
+(Linking to your own Privacy Policy in the final two words above.)
+
+**Note that this is not legal advice, and you should consult with qualified counsel in the jurisdictions in which you operate if you have further questions about your specific use case.**
+
+{{</faq-answer>}}
+{{</faq-item>}}
