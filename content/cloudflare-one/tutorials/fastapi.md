@@ -13,7 +13,7 @@ This tutorial covers how to connect Cloudflare and Fast API. A requirement is th
 
 ## 1. Create a validator
 
-1. Create a new file in your Fast API to validate the request, with the following code:
+1. Create a new file in your Fast API to validate the request. Name this file `cloudflare.py`, with the following code:
 ```python
 from fastapi import Request, HTTPException
 
@@ -77,12 +77,25 @@ def verify_token(request):
 ```
 
 ## 2. Use the Fast API depedancy to validate the JWT
+Make sure to import the file that you have created above in the file that includes the router.
 ```python
-router.include_router(
-    portal.router,
-    prefix="/",
+from fastapi import APIRouter, Depends, HTTPException
+from cloudflare import validate_cloudflare
+
+router = APIRouter(
+    prefix="/items",
+    tags=["items"],
     dependencies=[Depends(cloudflare.validate_cloudflare)]
+    responses={404: {"description": "Not found"}},
 )
+
+
+fake_items_db = {"plumbus": {"name": "Plumbus"}, "gun": {"name": "Portal Gun"}}
+
+
+@router.get("/")
+async def read_items():
+    return fake_items_db
 ```
 
 In your router, you can see import the functions you have created called `validate_cloudflare` and use it as a dependency in FastAPI. An example can be found on the official  [website of FastAPI](https://fastapi.tiangolo.com/tutorial/bigger-applications/#another-module-with-apirouter). 
