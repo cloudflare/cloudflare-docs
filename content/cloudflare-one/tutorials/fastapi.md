@@ -87,7 +87,7 @@ def verify_token(request):
 
 ## 2. Use the validation function in your app
 
-You can now add the validation function as a dependency in your FastAPI app. One way to do this is by creating an [`APIRouter` instance](https://fastapi.tiangolo.com/tutorial/bigger-applications/#another-module-with-apirouter). The following example executes the validation function each request made to paths that start with `/admin`:
+You can now add the validation function as a dependency in your FastAPI app. One way to do this is by creating an [`APIRouter` instance](https://fastapi.tiangolo.com/tutorial/bigger-applications/#another-module-with-apirouter). The following example executes the validation function on each request made to paths that start with `/admin`:
 
 ```python
 from fastapi import APIRouter, Depends, HTTPException
