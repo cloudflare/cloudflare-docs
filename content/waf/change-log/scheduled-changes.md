@@ -24,13 +24,22 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-06-05</td>
       <td>2023-06-12</td>
+      <td>2023-06-19</td>
       <td>Block</td>
-      <td>100587</td>
-      <td>...269024be</td>
-      <td>Code Injection - CVE:CVE-2022-23529</td>
+      <td>100589</td>
+      <td>...8559ddfa</td>
+      <td>File Inclusion - WEB-INF</td>
       <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2023-06-12</td>
+      <td>2023-06-19</td>
+      <td>Block</td>
+      <td>100587_BETA</td>
+      <td>...fd0b4522</td>
+      <td>Code Injection - CVE:CVE-2019-18889</td>
+      <td>This rule will replace 100587 in legacy WAF and will replace ...269024be on New WAF</td>
     </tr>
   </tbody>
 </table>
