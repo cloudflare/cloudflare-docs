@@ -30,7 +30,7 @@ rss: file
       <td>100589</td>
       <td>...8559ddfa</td>
       <td>File Inclusion - WEB-INF</td>
-      <td>N/A</td>
+      <td>This is a New Detection</td>
     </tr>
     <tr>
       <td>2023-06-12</td>
