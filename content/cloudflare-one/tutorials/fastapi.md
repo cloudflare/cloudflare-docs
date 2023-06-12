@@ -1,32 +1,41 @@
 ---
-updated: 2023-05-23
-category: 🔐 Zero Trust
+updated: 2023-06-09
+category: 🔐 Access
 pcx_content_type: tutorial
-title: Connect FastAPI with Cloudflare Zero Trust
+title: Validate the Access token with FastAPI
 ---
 
-# Connect FastAPI with Cloudflare Zero Trust
+# Validate the Access token with FastAPI
 
-This tutorial covers how to connect Cloudflare and Fast API. A requirement is that you have FastAPI installed.
+This tutorial covers how to validate that the [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is on requests made to FastAPI apps.
 
 **Time to complete:** 15 minutes
 
-## 1. Create a validator
+## Prerequisites
 
-1. Create a new file in your Fast API to validate the request, with the following code:
+- A [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) for your FastAPI app.
+- The [AUD tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application
+
+## 1. Create a validation function
+
+1. In your FastAPI project, create a new file called `cloudflare.py` that contains the following code:
+
 ```python
+---
+filename: cloudflare.py
+---
 from fastapi import Request, HTTPException
 
-# Your policies audience tag
+# The Application Audience (AUD) tag for your application
 POLICY_AUD = "XXXXX"
 
 # Your CF Access team domain
-TEAM_DOMAIN = "https://XXXXX.cloudflareaccess.com"
+TEAM_DOMAIN = "https://<your-team-name>.cloudflareaccess.com"
 CERTS_URL = "{}/cdn-cgi/access/certs".format(TEAM_DOMAIN)
 
 async def validate_cloudflare(request: Request):
     """
-    Validate the request is authenticated by Cloudflare Access.
+    Validate that the request is authenticated by Cloudflare Access.
     """
     if verify_token(request) != True:
         raise HTTPException(status_code=400, detail="Not authenticated properly!")
@@ -76,13 +85,22 @@ def verify_token(request):
 
 ```
 
-## 2. Use the Fast API depedancy to validate the JWT
-```python
-router.include_router(
-    portal.router,
-    prefix="/",
-    dependencies=[Depends(cloudflare.validate_cloudflare)]
-)
-```
+## 2. Use the validation function in your app
 
-In your router, you can see import the functions you have created called `validate_cloudflare` and use it as a dependency in FastAPI. An example can be found on the official  [website of FastAPI](https://fastapi.tiangolo.com/tutorial/bigger-applications/#another-module-with-apirouter). 
+You can now add the validation function as a dependency in your FastAPI app. One way to do this is by creating an [`APIRouter` instance](https://fastapi.tiangolo.com/tutorial/bigger-applications/#another-module-with-apirouter). The following example executes the validation function each request made to paths that start with `/admin`:
+
+```python
+from fastapi import APIRouter, Depends, HTTPException
+from cloudflare import validate_cloudflare
+
+router = APIRouter(
+    prefix="/admin",
+    tags=["admin"],
+    dependencies=[Depends(validate_cloudflare)]
+    responses={404: {"description": "Not found"}},
+)
+
+@router.get("/")
+async def root():
+    return {"message": "Hello World"}
+```
