@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Validate hostnames
+title: Hostname validation
 weight: 2
 ---
 
-# Validate hostnames
+# Hostname validation
 
 Before Cloudflare can proxy traffic through a custom hostname, we need to verify your customer's ownership of that hostname.
 
@@ -16,7 +16,7 @@ If a custom hostname is already on Cloudflare, using the [pre-validation methods
 
 ## Options
 
-If minimizing downtime is more important to you, check out our [pre-validation methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/pre-validation/).
+If minimizing downtime is more important to you, refer to our [pre-validation methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/pre-validation/).
 
 If ease of use for your customers is more important, review our [real-time validation methods](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/realtime-validation/).
 

@@ -25,7 +25,7 @@ DCV Delegation requires your customers to place a one-time record at their autho
 {{<render file="_txt-dcv-situation.md">}}
 <br/>
 
-- DCV Delegation (generally recommended)
+- [DCV Delegation](#setup) (generally recommended)
 - [Manual](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/)
 
 ---

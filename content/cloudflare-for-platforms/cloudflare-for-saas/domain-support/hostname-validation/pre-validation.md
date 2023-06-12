@@ -1,5 +1,5 @@
 ---
-pcx_content_type: configuration
+pcx_content_type: how-to
 title: Pre-validation
 weight: 1
 meta:
@@ -32,7 +32,7 @@ If your customer cannot update their authoritative DNS, you could also use [HTTP
 
 To set up `TXT` validation:
 
-1. When you [create a Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), save the `ownership_verification` information.
+1. When you [create a custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), save the `ownership_verification` information.
 
     ```json
     ---
@@ -57,7 +57,7 @@ To set up `TXT` validation:
     }
     ```
 
-2. Have your customer add a TXT record with that `name` and `value` at their authoritative DNS provider.
+2. Have your customer add a `TXT` record with that `name` and `value` at their authoritative DNS provider.
 3. After a few minutes, you will see the hostname status become **Active** in the UI.
 4. Once you activate the custom hostname, your customer can remove the `TXT` record.
 

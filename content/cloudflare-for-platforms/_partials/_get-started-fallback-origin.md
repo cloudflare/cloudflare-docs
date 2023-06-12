@@ -15,7 +15,7 @@ If you are an Enterprise customer, you can route custom hostnames to distinct or
 
 To create your fallback origin:
 
-1. [Create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a proxied `A`, `AAAA`, or `CNAME` record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+1. [Create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a proxied `A`, `AAAA`, or `CNAME` record pointing to the IP address of your fallback origin (where Cloudflare will send custom hostname traffic).
 
   {{<example>}}
 
@@ -25,7 +25,7 @@ To create your fallback origin:
 
   {{</example>}}
 
-2. Designate that record as your **fallback origin**.
+2. Designate that record as your fallback origin.
 
   {{<tabs labels="Dashboard | API">}}
   {{<tab label="dashboard" no-code="true">}}
@@ -34,7 +34,7 @@ To create your fallback origin:
   2. Select your account and zone.
   3. Go to **SSL/TLS** > **Custom Hostnames**. 
   4. For **Fallback Origin**, enter the hostname for your fallback origin.
-  5. Click **Add Fallback Origin**.
+  5. Select **Add Fallback Origin**.
   
   {{</tab>}}
   {{<tab label="api" no-code="true">}}
