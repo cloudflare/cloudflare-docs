@@ -18,20 +18,20 @@ async function run() {
     let label;
 
     switch (true) {
-      case changes <= parseInt(core.getInput('xs_max_size'), 10):
-        label = core.getInput('xs_label');
+      case changes <= parseInt(process.env.xs_max_size, 10):
+        label = process.env.xs_label;
         break;
-      case changes <= parseInt(core.getInput('s_max_size'), 10):
-        label = core.getInput('s_label');
+      case changes <= parseInt(process.env.s_max_size, 10):
+        label = process.env.s_label;
         break;
-      case changes <= parseInt(core.getInput('m_max_size'), 10):
-        label = core.getInput('m_label');
+      case changes <= parseInt(process.env.m_max_size, 10):
+        label = process.env.m_label;
         break;
-      case changes <= parseInt(core.getInput('l_max_size'), 10):
-        label = core.getInput('l_label');
+      case changes <= parseInt(process.env.l_max_size, 10):
+        label = process.env.l_label;
         break;
       default:
-        label = core.getInput('xl_label');
+        label = process.env.xl_label;
         break;
     }
 
