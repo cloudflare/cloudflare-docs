@@ -15,15 +15,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18.1
 
       - name: Install Dependencies
         run: npm install @actions/core @actions/github
 
-      - name: Check PR Size
-        if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
+      - name: Assign PR Size
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           xs_label: 'size/xs'
