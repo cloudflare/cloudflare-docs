@@ -11,7 +11,7 @@ In addition to enforcing mTLS authentication for your host, you can also forward
 
 ### Cloudflare API
 
-The most common approach to forwarding a certificate is to use the Cloudflare API to [Update an mTLS certificate's hostname settings](/api/operations/zone-level-access-mtls-authentication-update-an-mtls-certificate-settings).
+The most common approach to forwarding a certificate is to use the Cloudflare API to [update an mTLS certificate's hostname settings](/api/operations/zone-level-access-mtls-authentication-update-an-mtls-certificate-settings).
 
 ```bash
 ---
