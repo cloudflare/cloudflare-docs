@@ -1,14 +1,28 @@
-- name: Check PR Size
-  if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
-  run: node bin/label-pr-size.js
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    xs_label: 'size/xs'
-    xs_max_size: '10'
-    s_label: 'size/s'
-    s_max_size: '100'
-    m_label: 'size/m'
-    m_max_size: '500'
-    l_label: 'size/l'
-    l_max_size: '1000'
-    xl_label: 'size/xl'
+name: Label PR Size
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  label_pr_size:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR Size
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
+        run: node label-pr-size.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          xs_label: 'size/xs'
+          xs_max_size: '10'
+          s_label: 'size/s'
+          s_max_size: '100'
+          m_label: 'size/m'
+          m_max_size: '500'
+          l_label: 'size/l'
+          l_max_size: '1000'
+          xl_label: 'size/xl'
+
