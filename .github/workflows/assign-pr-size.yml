@@ -37,24 +37,26 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const context = github.context;
-
             const octokit = new github.GitHub(context.token);
-            const labels = octokit.issues.listLabelsOnIssue({
+
+            const { data: labels } = await octokit.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number
             });
 
-            labels.data.forEach(async (label) => {
-              if (label.name.startsWith("size")) {
-                await octokit.issues.removeLabel({
+            const sizeLabels = labels.filter(label => label.name.startsWith("size"));
+
+            if (sizeLabels.length > 0) {
+              await Promise.all(sizeLabels.map(label => {
+                return octokit.issues.removeLabel({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: context.issue.number,
                   name: label.name
                 });
-              }
-            });
+              }));
+            }
 
       - name: Apply size label to PR
         uses: actions/github-script@v4
