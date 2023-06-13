@@ -7,11 +7,12 @@ weight: 6
 
 # Wokers Analytics Engine FAQ
 
-Below you will find answers to our most commonly asked questions. 
+Below you will find answers to our most commonly asked questions.
 
 ## Sampling
 
 ### Could I just use many unique index values to get better unique counts?
+
 No, adding a large number of index values does not come without drawbacks. The tradeoff is that reading across many indices is slow.
 
 In practice, due to how ABR works, reading from many indices in one query will result in low-resolution data – possibly unusably low.
@@ -19,6 +20,7 @@ In practice, due to how ABR works, reading from many indices in one query will r
 On the other hand, if you pick a good index that aligns with how you read the data, your queries will run faster and you will get higher resolution results.
 
 ### What if I need to index on multiple values?
+
 It is possible to concatenate multiple values in your index field. So if you want to index on user ID and hostname, you can write, for example `“$userID:$hostname”` into your index field.
 
 Note that, based on your query pattern, it may make sense to write the same dataset with different indices. It is a common misconception that one should avoid "double-writing" data.
