@@ -23,13 +23,13 @@ async function run() {
 }
 
 async function getChangedSubFolders(octokit, owner, repo, prNumber) {
-    const response = await octokit.rest.pulls.listFiles({
+    const response = await octokit.rest.pulls.get({
       owner,
       repo,
       pull_number: prNumber
     });
   
-    const files = response.data;
+    const files = response.data.files;
     const changedFolders = new Set();
   
     for (const file of files) {
