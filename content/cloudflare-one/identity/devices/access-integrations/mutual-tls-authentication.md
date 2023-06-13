@@ -242,4 +242,6 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
    $ cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
    ```
 
-You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be [found on the Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template)
+You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be found on the [Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template).
+
+{{<render file="_forward-client-certificate.md" productFolder="ssl">}}
