@@ -9,8 +9,6 @@ weight: 6
 
 Below you will find answers to our most commonly asked questions. 
 
-- [Sampling](#sampling)
-
 ## Sampling
 
 ### Could I just use many unique index values to get better unique counts?
