@@ -33,6 +33,10 @@ jobs:
       - name: Check - Broken Links
         run: pnpm run crawl
         if: success()
+      
+      - name: Pull Request size labeler
+        uses: CodelyTV/pr-size-labeler@v1.8.1
+
 
       - name: Check - Broken header links
         uses: untitaker/hyperlink@0.1.27
