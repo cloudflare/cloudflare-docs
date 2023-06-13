@@ -9,8 +9,6 @@ layout: single
 
 # Handle form submissions with Airtable
 
-{{<render file="_tutorials-wrangler-v1-warning.md">}}
-
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -88,7 +86,7 @@ The `<form>` used in the example front-end UI builds on these basics, adding som
 
 The code for this form can be [found on GitHub](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for your serverless function URL, and the `method` attribute, which tells the form to submit information using the [HTTP `POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) method.
 
-Code is provided as an example below, including the first `<input>`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
+The code is provided as an example below, including the first `<input>`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
 
 ```html
 <form action="SERVERLESS_FN_URL" method="POST" class="...">
@@ -134,19 +132,6 @@ $ cd airtable-form-handler
 If you have chosen to work with the [sample codebase on GitHub](https://github.com/cloudflare/workers-airtable-form), you can find a sample function in the `worker` directory.
 
 {{</Aside>}}
-
-In the `wrangler.toml` file of your project's directory, add your Cloudflare account ID. [Refer to the Get started guide](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) to find your Cloudflare account ID.
-
-```toml
----
-filename: wrangler.toml
-highlight: [4]
----
-name = "airtable-form-handler"
-type = "javascript"
-
-account_id = "yourAccountId"
-```
 
 ## Configure an Airtable base
 
@@ -210,26 +195,20 @@ Before you continue, review the keys that you should have from Airtable:
 
 With your Airtable base set up, and the keys and IDs you need to communicate with the API ready, you will now set up your Workers function and persist data from your form into Airtable.
 
-In `index.js`, begin by setting up a simple Workers handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will redirect to `FORM_URL`, a constant representing your front-end form URL (for example, [airtable-form-example.pages.dev](https://airtable-form-example.pages.dev)):
+In `index.js`, begin by setting up a Workers handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will redirect to `FORM_URL`, a constant representing your front-end form URL (for example, [airtable-form-example.pages.dev](https://airtable-form-example.pages.dev)):
 
 ```js
 ---
 filename: index.js
 ---
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
-
-const FORM_URL = "https://airtable-form-example.pages.dev"
-
-async function handleRequest(request) {
-  const url = new URL(request.url)
-
-  if (url.pathname === "/submit") {
-    return submitHandler(request)
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url)
+    if (url.pathname === "/submit") {
+      await submitHandler(request, env)
+    }
+    return Response.redirect(env.FORM_URL)
   }
-
-  return Response.redirect(FORM_URL)
 }
 ```
 
@@ -239,13 +218,12 @@ The `submitHandler` has two functions. First, it will parse the form data coming
 ---
 filename: index.js
 ---
-const submitHandler = async request => {
+async function submitHandler (request, env) {
   if (request.method !== "POST") {
     return new Response("Method Not Allowed", {
       status: 405
     })
   }
-
   const body = await request.formData();
 
   const {
@@ -270,9 +248,7 @@ const submitHandler = async request => {
       "Message": message
     }
   }
-
-  await createAirtableRecord(reqBody)
-  return Response.redirect(FORM_URL)
+  await createAirtableRecord(env, reqBody)
 }
 ```
 
@@ -280,27 +256,30 @@ While the majority of this function is concerned with parsing the request body (
 
 The variable `reqBody` represents a collection of fields, which are key-value pairs for each column in your Airtable table. By formatting `reqBody` as an object with a collection of fields, you are creating a new record in your table with a value for each field.
 
-After you call `createAirtableRecord` (the function you will define next), you will redirect the client back to `FORM_URL`. This function can be changed, for example, to redirect to a Thank You page, or something similar.
-
-The `createAirtableRecord` function accepts a `body` parameter, which conforms to the Airtable API's required format — namely, a JavaScript object containing key-value pairs under `fields`, representing a single record to be created on your table:
+Then you call `createAirtableRecord` (the function you will define next). The `createAirtableRecord` function accepts a `body` parameter, which conforms to the Airtable API's required format — namely, a JavaScript object containing key-value pairs under `fields`, representing a single record to be created on your table:
 
 ```js
 ---
 filename: index.js
 ---
-const createAirtableRecord = body => {
-  return fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-      'Content-type': `application/json`
-    }
-  })
+async function createAirtableRecord(env, body) {
+  try {
+    const result = fetch(`https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(env.AIRTABLE_TABLE_NAME)}`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        Authorization: `Bearer ${env.AIRTABLE_API_TOKEN}`,
+        'Content-Type': 'application/json', 
+      }
+    })
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 }
 ```
 
-To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
+To make an authenticated request to Airtable, you need to provide four constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name**, and `FORM_URL` are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
 
 Add a `vars` table at the end of your `wrangler.toml` file:
 
@@ -310,14 +289,13 @@ filename: wrangler.toml
 highlight: [7]
 ---
 name = "workers-airtable-form"
-type = "javascript"
-
-account_id = "yourAccountId"
-workers_dev = true
+main = "src/index.js"
+compatibility_date = "2023-06-13"
 
 [vars]
 AIRTABLE_BASE_ID = "exampleBaseId"
 AIRTABLE_TABLE_NAME = "Form Submissions"
+FORM_URL = "https://airtable-form-example.pages.dev"
 ```
 
 With all these fields submitted, it is time to deploy your Workers serverless function and get your form communicating with it. First, publish your function:
