@@ -7,9 +7,10 @@ async function run() {
     const prNumber = github.context.payload.pull_request.number;
     const owner = github.context.repo.owner;
     const repo = github.context.repo.repo;
+    const files = github.context.payload.pull_request.changed_files
 
     // Get the changed sub-folders within the top-level /content folder
-    const changedFolders = await getChangedSubFolders(octokit, owner, repo);
+    const changedFolders = await getChangedSubFolders(files);
 
     // Remove existing changed folder labels
     await removeExistingLabels(octokit, owner, repo, prNumber);
@@ -22,14 +23,7 @@ async function run() {
   }
 }
 
-async function getChangedSubFolders(octokit, owner, repo, prNumber) {
-    const response = await octokit.rest.pulls.get({
-      owner,
-      repo,
-      pull_number: prNumber
-    });
-  
-    const files = response.data.files;
+function getChangedSubFolders(files) {
     const changedFolders = new Set();
   
     for (const file of files) {
@@ -44,7 +38,8 @@ async function getChangedSubFolders(octokit, owner, repo, prNumber) {
     }
   
     return Array.from(changedFolders);
-  }  
+  }
+  
 
 function getTopLevelFolder(path) {
   const parts = path.split('/');
