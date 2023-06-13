@@ -7,7 +7,7 @@ async function run() {
     const prNumber = github.context.payload.pull_request.number;
     const owner = github.context.repo.owner;
     const repo = github.context.repo.repo;
-    const files = github.context.payload.pull_request.changed_files
+    const pr = github.context.payload.pull_request;
 
     // Get the changed sub-folders within the top-level /content folder
     const changedFolders = await getChangedSubFolders(files);
@@ -23,7 +23,8 @@ async function run() {
   }
 }
 
-function getChangedSubFolders(files) {
+function getChangedSubFolders(pr) {
+    const files = pr.changed_files;
     const changedFolders = new Set();
   
     for (const file of files) {
@@ -39,6 +40,7 @@ function getChangedSubFolders(files) {
   
     return Array.from(changedFolders);
   }
+  
   
 
 function getTopLevelFolder(path) {
