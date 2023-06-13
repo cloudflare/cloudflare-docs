@@ -1,4 +1,3 @@
-import * as core from '@actions/core';
 import * as github from '@actions/github';
 
 function getTopLevelFolder(path) {
@@ -11,8 +10,7 @@ function getSubFolder(path) {
   return parts[1];
 }
 
-function getChangedSubFolders(pr) {
-  const files = pr.changed_files;
+function getChangedSubFolders(files) {
   const changedFolders = new Set();
 
   for (const file of files) {
@@ -36,9 +34,14 @@ async function run() {
     const octokit = github.getOctokit(token);
     const pr = ctx.payload.pull_request;
     const prNumber = pr.number;
+    const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
+        ...ctx.repo,
+        pull_number: pr.number,
+        per_page: 100
+      });
 
     // Get the changed sub-folders within the top-level /content folder
-    const changedFolders = getChangedSubFolders(pr);
+    const changedFolders = getChangedSubFolders(files);
 
     // ...
 
