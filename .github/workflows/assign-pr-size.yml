@@ -36,4 +36,3 @@ jobs:
           l_label: 'size/l'
           l_max_size: '1000'
           xl_label: 'size/xl'
-        working-directory: ${{ github.workspace }}
