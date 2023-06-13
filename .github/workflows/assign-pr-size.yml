@@ -20,7 +20,7 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install @actions/core
 
       - name: Check PR Size
         if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
