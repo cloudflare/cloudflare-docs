@@ -17,11 +17,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const ctx = github.context;
-            const octokit = github.getOctokit(ctx.token);
-            const pr = ctx.payload.pull_request;
+            const ctx = github;
+            const octokit = ctx.getOctokit(ctx.token);
+            const pr = ctx.context.payload.pull_request;
             const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
-              ...ctx.repo,
+              ...ctx.context.repo,
               pull_number: pr.number,
               per_page: 100
             });
@@ -56,14 +56,14 @@ jobs:
             
             if (currentLabels.includes(label)) {
               await octokit.rest.issues.removeLabel({
-                ...ctx.repo,
+                ...ctx.context.repo,
                 issue_number: pr.number,
                 name: label
               });
             }
             
             await octokit.rest.issues.addLabels({
-              ...ctx.repo,
+              ...ctx.context.repo,
               issue_number: pr.number,
               labels: [label]
             });
