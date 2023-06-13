@@ -10,7 +10,7 @@ async function run() {
     const pr = github.context.payload.pull_request;
 
     // Get the changed sub-folders within the top-level /content folder
-    const changedFolders = await getChangedSubFolders(files);
+    const changedFolders = await getChangedSubFolders(pr);
 
     // Remove existing changed folder labels
     await removeExistingLabels(octokit, owner, repo, prNumber);
