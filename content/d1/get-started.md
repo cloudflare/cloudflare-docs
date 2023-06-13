@@ -1,4 +1,4 @@
----
+--
 weight: 1
 title: Get started
 pcx_content_type: get-started
@@ -10,61 +10,93 @@ This guide will instruct you through:
 
 * Creating your first database using D1, Cloudflare’s native serverless SQL database.
 * Creating a schema and querying your database via the command-line.
-* Connecting a [Cloudflare Worker](/workers/) to your D1 database.
+* Connecting a [Cloudflare Worker](/workers/) to your D1 database to query it programmatically.
 
 This guide assumes you already have a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
 
-## 1. Install and authenticate Wrangler
+## 1. Prerequisites
 
-You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access D1.
+You will need to install [`create cloudflare`], which will also install [wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and creating D1 databases.
 
-* To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
+* To install these tools, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 * Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions.
 * Wrangler requires a Node version of `16.13.0` or later.
 
-Install Wrangler by running:
+We'll install these tools as part of creating a new project in the next step.
 
-```sh
-$ npm install -g wrangler
-```
-
-or install with `yarn`:
-
-```sh
-$ yarn global add wrangler
-```
-
-After installing Wrangler, if you are unauthenticated, you will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
-
-## 2. Create your Worker
+## 2. Create a new project
 
 {{<Aside type="note" header="New to Workers?">}}
+
 Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to setup your first Worker.
+
 {{</Aside>}}
 
-You will create a new Worker as the container for both your D1 database and the Worker application that you will use to query your database. Create a new Worker named `d1-tutorial` by running:
+You will create a new Workers project as the container for both your D1 database and the Worker application that you will use to query your database.
+
+Create a new project named `d1-tutorial` by running `npm create cloudflare` and answering the questions with the answers below:
+
+* name = `d1-tutorial` (this will be set for us)
+* type = `"Hello World" script`
+* typescript = `yes`
+* git = `yes`
+* deploy = `no` (we'll deploy our app later)
 
 ```sh
-$ wrangler init d1-tutorial -y
-
-# Outputs:
- ⛅️ wrangler
--------------------------------------------------------
-Using npm as package manager.
-✨ Created d1-tutorial/wrangler.toml
-✨ Initialized git repository at d1-tutorial
-✨ Created d1-tutorial/package.json
-✨ Created d1-tutorial/tsconfig.json
-✨ Created d1-tutorial/src/index.ts
-Your project will use Vitest to run your tests.
-✨ Created d1-tutorial/src/index.test.ts
+$ npm create cloudflare d1-tutorial
 ```
 
-This will create a new directory (`d1-tutorial`). Your new directory will include a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file which is how your `my-project` Worker will access your D1 database.
+```sh
+╭ Create an application with Cloudflare Step 1 of 3
+│
+├ Where do you want to create your application?
+│ dir d1-tutorial
+│
+├ What type of application do you want to create?
+│ type "Hello World" script
+│
+├ Do you want to use TypeScript?
+│ typescript yes
+│
+├ Copying files from "simple" template
+│
+├ Do you want to use git?
+│ git yes
+│
+╰ Application created
 
-{{<Aside type="note">}}
+╭ Installing dependencies Step 2 of 3
+│
+├ Installing dependencies
+│ installed via `npm install`
+│
+├ Committing new files
+│ git initial commit
+│
+╰ Dependencies Installed
 
-Indicating `-y` will answer affirmatively to all of Wrangler's initialization questions. This will create a `package.json` file, an `index.ts` file instead of a `index.js` file, and Wrangler will also generate a `tsconfig.json` file in the root of your project. It will also create a `fetch` handler instead of a `scheduled` handler.
+╭ Deploy with Cloudflare Step 3 of 3
+│
+├ Do you want to deploy your application?
+│ no deploying via `npm run deploy`
+│
+├  APPLICATION CREATED  Deploy your application with npm run deploy
+│
+│ Run the development server npm run start
+│ Deploy your application npm run deploy
+│ Read the documentation https://developers.cloudflare.com/workers
+│ Stuck? Join us at https://discord.gg/cloudflaredev
+│
+╰ See you again soon!
+```
+
+This will create a new directory (`d1-tutorial`). Your new directory will include both simple `src/worker.js` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file which is how your `d1-tutorial` Worker will access your D1 database.
+
+{{<Aside type="note" heading="Familiar with Workers?">}}
+
+If you're familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, you can initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare`.
+
+For example: `CI=true npm create cloudflare d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
 {{</Aside>}}
 
@@ -116,7 +148,7 @@ database_id = "<unique-ID-for-your-database>"
 
 Specifically:
 
-* The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker.
+* The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, we'll call it `DB` to keep it simple.
 * The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
 * Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/platform/client-api/) is exposed on this binding.
 
@@ -132,7 +164,7 @@ You can also bind your D1 database to a Pages Function. For more information, re
 
 ### Configure your D1 database
 
-With `wrangler.toml` configured properly, set up your database. You will use the following example `schema.sql` file to configure your database. Copy the following code and save it as a `schema.sql` file in the `my-project` Worker directory you created in step 2:
+With `wrangler.toml` configured properly, set up your database. You will use the following example `schema.sql` file to configure your database. Copy the following code and save it as a `schema.sql` file in the `d1-tutorial` Worker directory you created in step 2:
 
 ```sql
 ---
@@ -159,14 +191,18 @@ $ wrangler d1 execute <DATABASE_NAME> --local --command='SELECT * FROM Customers
 
 After you have set up your database, you will run an SQL query from within your Worker.
 
-First, go to your Worker project and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1. Paste the following code snippet into your `index.ts` file and, on the `env` parameter, replace `<BINDING_NAME>` with the binding name you set in step 4:
+First, go to your Worker project and open the `worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
+
+Paste the following code snippet into your `worker.ts` file (replacing the existing code) and on the `env` parameter, replace `<BINDING_NAME>` with the binding name you set in step 4:
 
 ```typescript
 ---
-filename: "src/index.ts"
+filename: "src/worker.ts"
 ---
 export interface Env {
-  <BINDING_NAME>: D1Database;
+  // If you set another name in wrangler.toml as the value for 'binding',
+  // replace "DB" with the variable name you defined.
+  DB: D1Database;
 }
 
 export default {
@@ -174,7 +210,8 @@ export default {
     const { pathname } = new URL(request.url);
 
     if (pathname === "/api/beverages") {
-      const { results } = await env.<BINDING_NAME>.prepare(
+      // If you didn't use "DB" as your binding name, change it here
+      const { results } = await env.DB.prepare(
         "SELECT * FROM Customers WHERE CompanyName = ?"
       )
         .bind("Bs Beverages")
@@ -189,23 +226,39 @@ export default {
 };
 ```
 
-After configuring your Worker, test your project locally.
+In the code above, we:
+
+* Define a binding to our D1 database in our TypeScript code. This binding matches the `binding` value we set in `wrangler.toml` under `[[d1_databases]]`
+* Query our database using `env.DB.prepare` to issue a [prepared query](/d1/platform/client-api/) with a placeholder (the `?` in the query).
+* Call `.bind()` to safely and securely bind a value to that placeholder. In a real application, we would allow a user to define the `CompanyName` they want to list results for. Using `.bind()` prevents users from executing arbitary SQL (known as "SQL injection") against our application and deleting or otherwise modifying your database.
+* Execute the query by calling `.all()` to return all rows (or none, if the query returns none)
+* Return our query results, if any, in JSON format with `Response.json(results)`
+
+After configuring your Worker, you can test your project locally before you deploy globally.
 
 ## 6. Develop locally with Wrangler
 
 While in your project directory, test your database locally by running:
 
 ```sh
-$ wrangler dev --local --persist
+$ wrangler dev
 ```
 
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
 
-To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL (for example, `localhost:8787/api/beverages`). After doing this, you should see your data being displayed in the browser.
+To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
 
 ## 7. Deploy your database
 
-To deploy your database to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps without the `--local` flag to give your Worker data to read.
+Before deploying your D1 database and Worker globally, you'll need to log in with your [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/). To log in, run the following command:
+
+```sh
+$ wrangler login
+```
+
+You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+
+To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps _without_ the `--local` flag to give your Worker data to read. This will create the database tables and import the data into the production version of your database, running on Cloudflare's global network.
 
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
@@ -222,10 +275,21 @@ $ wrangler d1 execute <DATABASE_NAME> --command='SELECT * FROM Customers'
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-$ wrangler publish
+$ wrangler deploy
+
+# Outputs:
+Total Upload: 0.19 KiB / gzip: 0.16 KiB
+Uploaded d1-tutorial (3.18 sec)
+Published d1-tutorial (6.29 sec)
+  https://d1-tutorial.YOURNAMEHERE.workers.dev
+Current Deployment ID: 1b680ecc-6f38-4be7-b982-063d425ef204
 ```
 
-By finishing this guide, you have created a D1 database, a Worker to access that database and deployed your project.
+You can now visit the URL for your newly created project to query your live database!
+
+For example, if the URL of your new Worker is `d1-tutorial.yourname.workers.dev`, accessing `https://d1-tutorial.yourname.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
+
+By finishing this tutorial, you have created a D1 database, a Worker to access that database and deployed your project globally!
 
 ## Next steps
 
