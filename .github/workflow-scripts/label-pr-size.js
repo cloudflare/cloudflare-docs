@@ -4,7 +4,8 @@ import * as github from '@actions/github';
 async function run() {
   try {
     const ctx = github.context;
-    const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
+    const token = core.getInput('github-token');
+    const octokit = github.getOctokit(token);
     const pr = ctx.payload.pull_request;
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
       ...ctx.repo,
@@ -12,30 +13,26 @@ async function run() {
       per_page: 100
     });
 
-    const xsLabel = core.getInput('xs_label');
-    const xsMaxSize = parseInt(core.getInput('xs_max_size'), 10);
-    const sLabel = core.getInput('s_label');
-    const sMaxSize = parseInt(core.getInput('s_max_size'), 10);
-    const mLabel = core.getInput('m_label');
-    const mMaxSize = parseInt(core.getInput('m_max_size'), 10);
-    const lLabel = core.getInput('l_label');
-    const lMaxSize = parseInt(core.getInput('l_max_size'), 10);
-    const xlLabel = core.getInput('xl_label');
-
     const changes = files.reduce((total, file) => total + file.changes, 0);
 
     let label;
 
-    if (changes <= xsMaxSize) {
-      label = xsLabel;
-    } else if (changes <= sMaxSize) {
-      label = sLabel;
-    } else if (changes <= mMaxSize) {
-      label = mLabel;
-    } else if (changes <= lMaxSize) {
-      label = lLabel;
-    } else {
-      label = xlLabel;
+    switch (true) {
+      case changes <= parseInt(core.getInput('xs_max_size'), 10):
+        label = core.getInput('xs_label');
+        break;
+      case changes <= parseInt(core.getInput('s_max_size'), 10):
+        label = core.getInput('s_label');
+        break;
+      case changes <= parseInt(core.getInput('m_max_size'), 10):
+        label = core.getInput('m_label');
+        break;
+      case changes <= parseInt(core.getInput('l_max_size'), 10):
+        label = core.getInput('l_label');
+        break;
+      default:
+        label = core.getInput('xl_label');
+        break;
     }
 
     const currentLabels = pr.labels.map((label) => label.name);
