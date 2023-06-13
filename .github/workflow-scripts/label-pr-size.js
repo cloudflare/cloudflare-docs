@@ -4,7 +4,7 @@ import * as github from '@actions/github';
 async function run() {
   try {
     const ctx = github.context;
-    const token = core.getInput('github-token');
+    const token = core.getInput('GITHUB_TOKEN');
     const octokit = github.getOctokit(token);
     const pr = ctx.payload.pull_request;
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
