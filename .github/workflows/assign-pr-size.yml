@@ -23,7 +23,6 @@ jobs:
         run: npm install @actions/core @actions/github
 
       - name: Assign PR Size
-        if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           xs_label: 'size/xs'
