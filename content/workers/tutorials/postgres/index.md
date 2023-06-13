@@ -9,7 +9,7 @@ layout: single
 
 # Connect to a PostgreSQL Database with Cloudflare Workers
 
-In this tutorial, you will learn how to create a Cloudflare Workers project and connect to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). We'll demonstrate this by creating a simple Workers application that interacts with a product database inside of PostgreSQL.
+In this tutorial, you will learn how to create a Cloudflare Workers project and connect to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). We'll demonstrate this by creating a Workers application that interacts with a product database inside of PostgreSQL.
 
 ## Prerequisites
 
@@ -132,7 +132,7 @@ await client.connect();
 
 ## Step 5: Interact with the products database
 
-To demonstrate how to interact with the products database, you will fetch data from the `products` table by creating a simple Worker that queries the table when a request is received.
+To demonstrate how to interact with the products database, you will fetch data from the `products` table by creating a Worker that queries the table when a request is received.
 
 {{<Aside type="note">}}
 
