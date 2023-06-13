@@ -20,7 +20,7 @@ Queues is currently in [Public Beta](https://blog.cloudflare.com/cloudflare-queu
 
 {{<Aside type="note">}}
 
-Before you can use Queues, you must enable it via [the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Paid Workers plan to enable Queues.
+Before you can use Queues, you must enable it via [the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Workers Paid plan to enable Queues.
 
 {{</Aside>}}
 
@@ -30,7 +30,7 @@ To enable Queues:
 2. Go to **Workers & Pages** > **Queues**.
 3. Select **Enable Queues Beta**.
 
-Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
+Queues is included in the monthly subscription cost of your Workers Paid plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
 
 ## 2. Install Wrangler
 
@@ -82,10 +82,10 @@ You will access your queue from a Worker, the producer Worker. You must create a
 To create a producer Worker, run:
 
 ```sh
-$ wrangler init <WORKER_NAME>
+$ npm create cloudflare@2 # or 'yarn create cloudflare'
 ```
 
-In your terminal, you will be asked a series of questions related to your project. For the question `Would you like to use TypeScript? (y/n)`, indicate `y`. This will create an `index.ts` file in your project directory's `src` folder where you will write the code needed for your Worker to access your queue.
+In your terminal, you will be asked a series of questions related to your project. For the question `What type of application do you want to create?`, indicate `"Hello World" script`. For the question `Would you like to use TypeScript? (y/n)`, indicate `y`. This will create an `index.ts` file in your project directory's `src` folder where you will write the code needed for your Worker to access your queue.
 
 ### Bind your producer Worker to your queue
 
@@ -117,11 +117,11 @@ filename: src/index.ts
 highlight: [8]
 ---
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     let log = {
-      url: req.url,
-      method: req.method,
-      headers: Object.fromEntries(req.headers),
+      url: request.url,
+      method: request.method,
+      headers: Object.fromEntries(request.headers),
     };
     await env.<MY_QUEUE>.send(log);
     return new Response('Success!');
@@ -130,6 +130,18 @@ export default {
 ```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
+
+Also add the queue to `Env` interface in `index.ts`.
+
+```ts
+---
+filename: src/index.ts
+highlight: [2]
+---
+export interface Env {
+   <MY_QUEUE>: Queue<any>;
+}
+```
 
 If this write fails, your Worker will return an error (raise an exception). If this write works, it will return `Success` back with a HTTP `200` status code to the browser.
 
@@ -140,7 +152,7 @@ In a production application, you would likely use a [`try-catch`](https://develo
 With your `wrangler.toml` file and `index.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
-$ wrangler publish
+$ wrangler deploy
 ```
 
 You should see output that resembles the below, with a `*.workers.dev` URL by default.
@@ -169,16 +181,16 @@ filename: src/index.ts
 highlight: [11]
 ---
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     let log = {
-      url: req.url,
-      method: req.method,
-      headers: Object.fromEntries(req.headers),
+      url: request.url,
+      method: request.method,
+      headers: Object.fromEntries(request.headers),
     };
     await env.<MY_QUEUE>.send(log);
     return new Response('Success!');
   },
-  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+  async queue(batch: MessageBatch<any>, env: Env): Promise<void> {
     let messages = JSON.stringify(batch.messages);
     console.log(`consumed from our queue: ${messages}`);
   },
@@ -221,7 +233,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 With your `wrangler.toml` file and `index.ts` file configured, publish your consumer Worker by running:
 
 ```sh
-$ wrangler publish
+$ wrangler deploy
 ```
 
 ## 6. Read messages from your queue
