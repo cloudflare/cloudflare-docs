@@ -1,115 +1,78 @@
+import * as core from '@actions/core';
 import * as github from '@actions/github';
+
+function getTopLevelFolder(path) {
+  const parts = path.split('/');
+  return parts[0];
+}
+
+function getSubFolder(path) {
+  const parts = path.split('/');
+  return parts[1];
+}
+
+function getChangedSubFolders(pr) {
+  const files = pr.changed_files;
+  const changedFolders = new Set();
+
+  for (const file of files) {
+    const path = file.filename;
+    const topLevelFolder = getTopLevelFolder(path);
+
+    // Check if the file is within the top-level /content folder
+    if (topLevelFolder === 'content') {
+      const subFolder = getSubFolder(path);
+      changedFolders.add(subFolder);
+    }
+  }
+
+  return Array.from(changedFolders);
+}
 
 async function run() {
   try {
+    const ctx = github.context;
     const token = process.env.GITHUB_TOKEN;
     const octokit = github.getOctokit(token);
-    const prNumber = github.context.payload.pull_request.number;
-    const owner = github.context.repo.owner;
-    const repo = github.context.repo.repo;
-    const pr = github.context.payload.pull_request;
-    const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
-        ...repo,
-        pull_number: pr.number,
-        per_page: 100
-      });
+    const pr = ctx.payload.pull_request;
+    const prNumber = pr.number;
 
     // Get the changed sub-folders within the top-level /content folder
-    const changedFolders = await getChangedSubFolders(files);
+    const changedFolders = getChangedSubFolders(pr);
 
-    // Remove existing changed folder labels
-    await removeExistingLabels(octokit, owner, repo, prNumber);
+    // ...
 
-    // Apply labels based on changed sub-folders
-    await applyFolderLabels(octokit, owner, repo, prNumber, changedFolders);
+    // Label the PR based on the changed sub-folders
+    await labelPRSubFolders(octokit, ctx.repo, prNumber, changedFolders);
+
+    // ...
   } catch (error) {
     console.error('An error occurred:', error);
     process.exit(1);
   }
 }
 
-function getChangedSubFolders(files) {
-    const changedFolders = new Set();
-  
-    for (const file of files) {
-      const path = file.filename;
-      const topLevelFolder = getTopLevelFolder(path);
-  
-      // Check if the file is within the top-level /content folder
-      if (topLevelFolder === 'content') {
-        const subFolder = getSubFolder(path);
-        changedFolders.add(subFolder);
-      }
+async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
+  const labelPrefix = 'product:';
+  const labelsToRemove = [];
+
+  for (const label of github.context.payload.pull_request.labels) {
+    if (label.name.startsWith(labelPrefix)) {
+      labelsToRemove.push(label.name);
     }
-  
-    return Array.from(changedFolders);
   }
-  
-  
 
-function getTopLevelFolder(path) {
-  const parts = path.split('/');
-  if (parts.length >= 2) {
-    return parts[1];
-  }
-  return null;
-}
-
-function getSubFolder(path) {
-  const parts = path.split('/');
-  if (parts.length >= 3) {
-    return parts[2];
-  }
-  return null;
-}
-
-async function removeExistingLabels(octokit, owner, repo, prNumber) {
-  const { data: labels } = await octokit.issues.listLabelsOnIssue({
-    owner,
-    repo,
-    issue_number: prNumber
+  await octokit.rest.issues.removeLabels({
+    ...repo,
+    issue_number: prNumber,
+    labels: labelsToRemove
   });
 
-  const changedFolderLabels = labels.filter(label => label.name.startsWith('product:'));
-
-  for (const label of changedFolderLabels) {
-    await octokit.issues.removeLabel({
-      owner,
-      repo,
-      issue_number: prNumber,
-      name: label.name
-    });
-  }
-}
-
-async function applyFolderLabels(octokit, owner, repo, prNumber, folders) {
-  const labelPrefix = 'product:';
-
-  for (const folder of folders) {
+  for (const folder of changedFolders) {
     const label = labelPrefix + folder;
 
-    // Check if the label already exists
-    const { data: existingLabel } = await octokit.issues.getLabel({
-      owner,
-      repo,
-      name: label
-    });
-
-    if (!existingLabel) {
-      // Create the label if it doesn't exist
-      await octokit.issues.createLabel({
-        owner,
-        repo,
-        name: label,
-        color: '0366d6',
-        description: `Changes to the ${folder} sub-folder in the /content folder`
-      });
-    }
-
-    // Add the label to the pull request
-    await octokit.issues.addLabels({
-      owner,
-      repo,
+    await octokit.rest.issues.addLabels({
+      ...repo,
       issue_number: prNumber,
       labels: [label]
     });
