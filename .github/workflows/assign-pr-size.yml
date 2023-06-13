@@ -1,27 +1,69 @@
-name: labeler
+name: Label PR Size
 
-on: [pull_request]
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  labeler:
+  label_pr_size:
     runs-on: ubuntu-latest
-    name: Label the PR size
+
     steps:
-      - uses: codelytv/pr-size-labeler@v1
+      - name: Check PR Size
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
+        uses: actions/github-script@v5
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          xs_label: 'size/xs'
-          xs_max_size: '10'
-          s_label: 'size/s'
-          s_max_size: '100'
-          m_label: 'size/m'
-          m_max_size: '500'
-          l_label: 'size/l'
-          l_max_size: '1000'
-          xl_label: 'size/xl'
-          fail_if_xl: 'false'
-          message_if_xl: >
-            This PR exceeds the recommended size of 1000 lines.
-            Please make sure you are NOT addressing multiple issues with one PR.
-            Note this PR might be rejected due to its size.
-          github_api_url: 'api.github.com'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const context = github.context;
+            const octokit = github.getOctokit(context.token);
+            const pr = context.payload.pull_request;
+            const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
+              ...context.repo,
+              pull_number: pr.number,
+              per_page: 100
+            });
+            
+            const xsLabel = 'size/xs';
+            const xsMaxSize = 10;
+            const sLabel = 'size/s';
+            const sMaxSize = 100;
+            const mLabel = 'size/m';
+            const mMaxSize = 500;
+            const lLabel = 'size/l';
+            const lMaxSize = 1000;
+            const xlLabel = 'size/xl';
+            
+            const changes = files.reduce((total, file) => total + file.changes, 0);
+            
+            let label;
+            
+            if (changes <= xsMaxSize) {
+              label = xsLabel;
+            } else if (changes <= sMaxSize) {
+              label = sLabel;
+            } else if (changes <= mMaxSize) {
+              label = mLabel;
+            } else if (changes <= lMaxSize) {
+              label = lLabel;
+            } else {
+              label = xlLabel;
+            }
+            
+            const currentLabels = pr.labels.map((label) => label.name);
+            
+            if (currentLabels.includes(label)) {
+              await octokit.rest.issues.removeLabel({
+                ...context.repo,
+                issue_number: pr.number,
+                name: label
+              });
+            }
+            
+            await octokit.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: pr.number,
+              labels: [label]
+            });
