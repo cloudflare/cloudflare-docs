@@ -24,9 +24,8 @@ jobs:
 
       - name: Check PR Size
         if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
-        run: node .github/workflow-scripts/label-pr-size.js
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           xs_label: 'size/xs'
           xs_max_size: '10'
           s_label: 'size/s'
@@ -36,3 +35,4 @@ jobs:
           l_label: 'size/l'
           l_max_size: '1000'
           xl_label: 'size/xl'
+        run: node .github/workflow-scripts/label-pr-size.js
