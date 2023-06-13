@@ -6,7 +6,6 @@
   "description": "Cloudflare Developer Docs",
   "scripts": {
     "algolia-crawl": "node bin/algolia-crawl.js",
-    "pr-size": "node bin/label-pr-size.js",
     "crawl-api-links": "node bin/crawl-api-links.js",
     "dev:hugo": "hugo -D -w",
     "dev:wrangler": "wrangler pages dev -- vite",

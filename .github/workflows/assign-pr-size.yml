@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Check PR Size
         if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
-        run: npm run label-pr-size
+        run: |
+          node .github/workflow-scripts/label-pr-size.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           xs_label: 'size/xs'
