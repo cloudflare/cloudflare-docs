@@ -9,7 +9,7 @@ async function run() {
     const repo = github.context.repo.repo;
     const pr = github.context.payload.pull_request;
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
-        ...ctx.repo,
+        ...repo,
         pull_number: pr.number,
         per_page: 100
       });
