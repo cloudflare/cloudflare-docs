@@ -22,30 +22,29 @@ async function run() {
   }
 }
 
-async function getChangedSubFolders(octokit, owner, repo) {
-  const response = await octokit.repos.compareCommits({
-    owner,
-    repo,
-    base: 'origin/production',
-    head: github.context.sha
-  });
-
-  const files = response.data.files;
-  const changedFolders = new Set();
-
-  for (const file of files) {
-    const path = file.filename;
-    const topLevelFolder = getTopLevelFolder(path);
-
-    // Check if the file is within the top-level /content folder
-    if (topLevelFolder === 'content') {
-      const subFolder = getSubFolder(path);
-      changedFolders.add(subFolder);
+async function getChangedSubFolders(octokit, owner, repo, prNumber) {
+    const response = await octokit.rest.pulls.listFiles({
+      owner,
+      repo,
+      pull_number: prNumber
+    });
+  
+    const files = response.data;
+    const changedFolders = new Set();
+  
+    for (const file of files) {
+      const path = file.filename;
+      const topLevelFolder = getTopLevelFolder(path);
+  
+      // Check if the file is within the top-level /content folder
+      if (topLevelFolder === 'content') {
+        const subFolder = getSubFolder(path);
+        changedFolders.add(subFolder);
+      }
     }
-  }
-
-  return Array.from(changedFolders);
-}
+  
+    return Array.from(changedFolders);
+  }  
 
 function getTopLevelFolder(path) {
   const parts = path.split('/');
