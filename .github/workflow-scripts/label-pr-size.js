@@ -36,20 +36,35 @@ async function run() {
     }
 
     const currentLabels = pr.labels.map((label) => label.name);
+    const sizeLabels = [
+      process.env.xs_label,
+      process.env.s_label,
+      process.env.m_label,
+      process.env.l_label,
+      process.env.xl_label
+    ];
 
-    if (currentLabels.includes(label)) {
+    // Remove previous size-related labels that are different from the current label
+    const labelsToRemove = currentLabels.filter((currentLabel) =>
+      sizeLabels.includes(currentLabel) && currentLabel !== label
+    );
+
+    for (const labelToRemove of labelsToRemove) {
       await octokit.rest.issues.removeLabel({
         ...ctx.repo,
         issue_number: pr.number,
-        name: label
+        name: labelToRemove
       });
     }
 
-    await octokit.rest.issues.addLabels({
-      ...ctx.repo,
-      issue_number: pr.number,
-      labels: [label]
-    });
+    // Add the current label
+    if (!currentLabels.includes(label)) {
+      await octokit.rest.issues.addLabels({
+        ...ctx.repo,
+        issue_number: pr.number,
+        labels: [label]
+      });
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
