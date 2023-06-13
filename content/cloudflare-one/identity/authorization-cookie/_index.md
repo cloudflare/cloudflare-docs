@@ -87,17 +87,56 @@ Do not use the Binding Cookie for non-browser based Access applications that rel
 
 The Cookie Path Attribute adds the application's path URL to the `CF_Authorization` cookie. When enabled, a user who logs in to `example.com/path1` must re-authenticate to access `example.com/path2`. When disabled, the `CF_Authorization` cookie is only scoped to the domain and subdomain.
 
-## Allow cross-site cookies in Firefox
+## Allow third-party cookies in the browser
 
-By default, Firefox Private Browsing mode blocks all cross-site cookies including the `CF_Authorization` cookie. For XHR requests to work in private windows, you will need to exempt your site and [team domain](/cloudflare-one/glossary/#team-domain) from the browser's tracking protection system.
+By default, some browsers block all third-party cookies in private browsing mode, including the `CF_Authorization` cookie. For XHR requests to work in private windows, you will need to exempt your application and [team domain](/cloudflare-one/glossary/#team-domain) from the browser's tracking protection system.
 
-To enable cross-site cookies in Firefox:
+To enable third-party cookies for an Access application:
 
-1. In Firefox, go to **Settings** > **Privacy & Security**.
+<details>
+<summary>Chrome</summary>
+<div>
+
+1. Go to **Settings** > **Privacy and security** > **Cookies and other site data**.
+2. Under **Sites that can always use cookies**, add the following URLs:
+    - Hostname of your Access application (for example, `https://jira.site.com`)
+    - `https://<your-team-name>.cloudflareaccess.com`
+
+</div>
+</details>
+
+<details>
+<summary>Safari</summary>
+<div>
+
+1. Go to **Safari** > **Settings** > **Privacy**.
+2. Deselect **Block all cookies**.
+
+</div>
+</details>
+
+<details>
+<summary>Firefox</summary>
+<div>
+
+1. Go to **Settings** > **Privacy & Security**.
 2. Scroll down to **Cookies and Site Data**.
 3. Select **Manage Exceptions**.
 4. Enter the URL of your Access application (for example, `https://jira.site.com`) and select **Allow**.
 5. Enter `https://<your-team-name>.cloudflareaccess.com` and select **Allow**.
 6. Select **Save Changes**.
 
-You can now make XHR requests to your Access application in Firefox Private Browsing mode.
+</div>
+</details>
+
+<details>
+<summary>Brave</summary>
+<div>
+
+1. Go to `brave://settings/cookies`.
+2. Under **Sites that can always use cookies**, add the following URLs:
+    - Hostname of your Access application (for example, `https://jira.site.com`)
+    - `https://<your-team-name>.cloudflareaccess.com`
+
+</div>
+</details>
