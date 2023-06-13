@@ -321,6 +321,8 @@ None of the options for this command are required. Many of these options can be 
 
 {{<Aside type="warning">}}
 
+As of Wrangler v3, `wrangler dev` is currently only supported by Debian 12 Bookworm-based distributions, macOS version 13 or greater, and Windows (x86-64 architecture). We are working to increase support for additional operating systems.
+
 When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
 
 - On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
