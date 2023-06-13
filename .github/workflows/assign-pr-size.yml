@@ -1,69 +1,14 @@
-name: Label PR Size
-
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-
-jobs:
-  label_pr_size:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check PR Size
-        if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const ctx = github;
-            const octokit = ctx.getOctokit(ctx.token);
-            const pr = ctx.context.payload.pull_request;
-            const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
-              ...ctx.context.repo,
-              pull_number: pr.number,
-              per_page: 100
-            });
-            
-            const xsLabel = 'size/xs';
-            const xsMaxSize = 10;
-            const sLabel = 'size/s';
-            const sMaxSize = 100;
-            const mLabel = 'size/m';
-            const mMaxSize = 500;
-            const lLabel = 'size/l';
-            const lMaxSize = 1000;
-            const xlLabel = 'size/xl';
-            
-            const changes = files.reduce((total, file) => total + file.changes, 0);
-            
-            let label;
-            
-            if (changes <= xsMaxSize) {
-              label = xsLabel;
-            } else if (changes <= sMaxSize) {
-              label = sLabel;
-            } else if (changes <= mMaxSize) {
-              label = mLabel;
-            } else if (changes <= lMaxSize) {
-              label = lLabel;
-            } else {
-              label = xlLabel;
-            }
-            
-            const currentLabels = pr.labels.map((label) => label.name);
-            
-            if (currentLabels.includes(label)) {
-              await octokit.rest.issues.removeLabel({
-                ...ctx.context.repo,
-                issue_number: pr.number,
-                name: label
-              });
-            }
-            
-            await octokit.rest.issues.addLabels({
-              ...ctx.context.repo,
-              issue_number: pr.number,
-              labels: [label]
-            });
+- name: Check PR Size
+  if: ${{ !contains(github.event.pull_request.labels.*.name, 'size/') }}
+  run: node bin/label-pr-size.js
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    xs_label: 'size/xs'
+    xs_max_size: '10'
+    s_label: 'size/s'
+    s_max_size: '100'
+    m_label: 'size/m'
+    m_max_size: '500'
+    l_label: 'size/l'
+    l_max_size: '1000'
+    xl_label: 'size/xl'
