@@ -1,4 +1,4 @@
-name: Label PR Size
+name: Add PR labels
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - synchronize
 
 jobs:
-  label_pr_size:
+  label_prs:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,7 @@ jobs:
       - name: Install Dependencies
         run: npm install @actions/core @actions/github
 
-      - name: Assign PR Size
+      - name: Add PR size
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           xs_label: 'size/xs'
@@ -35,3 +35,8 @@ jobs:
           l_max_size: '1000'
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
+
+      - name: Add product labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .github/workflow-scripts/label-products.js
