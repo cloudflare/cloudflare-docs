@@ -10,15 +10,15 @@ jobs:
       - uses: codelytv/pr-size-labeler@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          xs_label: 'size/xs'
+          size_xs: 'size/xs'
           xs_max_size: '10'
-          s_label: 'size/s'
+          size_s: 'size/s'
           s_max_size: '100'
-          m_label: 'size/m'
+          size_m: 'size/m'
           m_max_size: '500'
-          l_label: 'size/l'
+          size_l: 'size/l'
           l_max_size: '1000'
-          xl_label: 'size/xl'
+          size_xl: 'size/xl'
           fail_if_xl: 'false'
           message_if_xl: >
             This PR exceeds the recommended size of 1000 lines.
