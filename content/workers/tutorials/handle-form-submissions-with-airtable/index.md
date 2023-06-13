@@ -1,5 +1,5 @@
 ---
-updated: 2021-06-17
+updated: 2023-06-13
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -23,7 +23,7 @@ In this tutorial, you will use Workers and [Airtable](https://airtable.com) to p
 
 [The front-end portion of this site](https://airtable-form-example.pages.dev) does not require any specific React experience. It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JavaScript-heavy forms, such as with React or other front-end frameworks.
 
-## Create a form
+## Step 1: Create a form
 
 For this tutorial, you will be building a contact form. You can customize the fields, but the form this tutorial references will collect a first name, last name, email address, phone number, subject, and a message.
 
@@ -113,7 +113,7 @@ The code is provided as an example below, including the first `<input>`, to show
 
 If you would like to follow along with this example, you can directly copy the `<form>` code from the [`Form` component](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial.
 
-## Create a serverless function
+## Step 2: Create a serverless function
 
 To handle the form submission, you will create and deploy a Workers serverless function that parses the incoming form data and prepares it for submission to Airtable.
 
@@ -133,7 +133,7 @@ If you have chosen to work with the [sample codebase on GitHub](https://github.c
 
 {{</Aside>}}
 
-## Configure an Airtable base
+## Step 3: Configure an Airtable base
 
 When your serverless function is completed, it will send data up to an Airtable base via Airtable's REST API.
 
@@ -191,7 +191,7 @@ Before you continue, review the keys that you should have from Airtable:
 2.  **Airtable Base ID:** the alphanumeric base ID found at the top of your base's API page.
 3.  **Airtable API Key:** the private API key found in example API requests on the Airtable API documentation page.
 
-## Submit data to Airtable
+## Step 4: Submit data to Airtable
 
 With your Airtable base set up, and the keys and IDs you need to communicate with the API ready, you will now set up your Workers function and persist data from your form into Airtable.
 
@@ -304,7 +304,7 @@ With all these fields submitted, it is time to deploy your Workers serverless fu
 ---
 header: Publishing the serverless function
 ---
-$ wrangler publish
+$ npx wrangler deploy
 ✨  Built successfully, built project size is 10 KiB.
 ✨  Successfully published your script to
  https://workers-airtable-form.cloudflare.workers.dev
