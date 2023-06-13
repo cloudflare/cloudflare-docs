@@ -35,8 +35,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const context = github.context;
-            const octokit = new github.GitHub(context.token);
+            const octokit = github.getOctokit(context.token);
 
             const { data: labels } = await octokit.issues.listLabelsOnIssue({
               owner: context.repo.owner,
@@ -63,10 +62,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const sizeType = "${{ steps.calculate_size.outputs.sizeType }}";
-            const context = github.context;
+            const octokit = github.getOctokit(context.token);
 
-            const octokit = new github.GitHub(context.token);
-            octokit.issues.addLabels({
+            await octokit.issues.addLabels({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
