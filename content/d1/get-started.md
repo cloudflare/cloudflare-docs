@@ -1,4 +1,4 @@
---
+---
 weight: 1
 title: Get started
 pcx_content_type: get-started
