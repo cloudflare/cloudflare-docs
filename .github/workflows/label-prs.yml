@@ -26,7 +26,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node .github/workflow-scripts/label-products.js
-        continue-on-error: true
 
       - name: Add PR size
         env:
@@ -41,7 +40,6 @@ jobs:
           l_max_size: '1000'
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
-        continue-on-error: true
 
         - name: Annotate for spelling errors
           id: codespell
