@@ -59,26 +59,33 @@ jobs:
           
       - name: Check for Spelling Errors for Changed Files
         id: codespell
+        uses: codespell-project/actions-codespell@v1
+        with:
+          check_filenames: true
+          skip: nothing
+          path: ${{ env.CHANGED_FILES }}
+
+      - name: Extract Error Lines
+        if: failure()
         run: |
-          codespell_output=$(codespell --check-filenames --ignore-words-list .codespellignore --quiet ${{ env.CHANGED_FILES }} 2>&1 | tee codespell_output.txt)
-          warnings=$(echo "${codespell_output}" | grep -oP "^\[[A-Z]+\].*" | awk '{$1=""; print $0}')
-          echo "WARNINGS=$warnings" >> "$GITHUB_ENV"
+          error_lines=$(echo "${{ steps.codespell.outputs.codespell_output }}" | grep -e "^Error:" | awk '{$1=""; print $0}')
+          echo "ERROR_LINES=$error_lines" >> "$GITHUB_ENV"
 
-      - name: Log WARNINGS
-        run: echo ${{ env.WARNINGS }}
+      - name: Log ERROR_LINES
+        run: echo ${{ env.ERROR_LINES }}
 
-      - name: Create Comment on PR with Spell Check Warnings
-        if: ${{ env.WARNINGS != '' }}
+      - name: Create Comment on PR with Spell Check Errors
+        if: ${{ env.ERROR_LINES != '' }}
         uses: actions/github-script@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const warnings = process.env.WARNINGS || "";
-            const commentBody = `**Spell Check Warnings:**
+            const errorLines = process.env.ERROR_LINES || "";
+            const commentBody = `**Spell Check Errors:**
             
-            ${warnings}`;
+            ${errorLines}`;
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
