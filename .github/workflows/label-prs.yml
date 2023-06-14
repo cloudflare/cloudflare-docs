@@ -26,6 +26,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node .github/workflow-scripts/label-products.js
+        continue-on-error: true
 
       - name: Add PR size
         env:
