@@ -12,7 +12,7 @@ The Cloudflare One Agent supports all existing Zero Trust functionality. The und
 
 ## macOS, Windows, and Linux
 
-Cloudflare will release dedicated Cloudflare One agents for Windows, Mac and Linux at a later date. No action is required at this time. The existing Cloudflare WARP client will continue to support both Zero Trust and 1.1.1.1 w/ WARP functionality.
+No action is required for desktop clients at this time. The existing Cloudflare WARP client will continue to support both Zero Trust and 1.1.1.1 w/ WARP functionality.
 
 ## iOS and Android
 
