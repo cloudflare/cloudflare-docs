@@ -82,7 +82,7 @@ You will access your queue from a Worker, the producer Worker. You must create a
 To create a producer Worker, run:
 
 ```sh
-$ npm create cloudflare@2 # or 'yarn create cloudflare'
+$ npm create cloudflare@latest # or 'yarn create cloudflare'
 ```
 
 In your terminal, you will be asked a series of questions related to your project. For the question `What type of application do you want to create?`, indicate `"Hello World" script`. For the question `Would you like to use TypeScript? (y/n)`, indicate `y`. This will create an `index.ts` file in your project directory's `src` folder where you will write the code needed for your Worker to access your queue.
