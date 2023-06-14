@@ -74,7 +74,8 @@ jobs:
           script: |
             const warnings = ${{ steps.codespell.outputs.warnings }};
             const commentBody = `**Spell Check Warnings:**
-            \n${warnings}`;
+            
+            ${warnings}`;
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
