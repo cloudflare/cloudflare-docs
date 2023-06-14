@@ -30,9 +30,8 @@ Organizations can migrate their teams with minimal disruption in one of two mode
 
 If you downloaded and installed the WARP client manually, perform the following steps on your device:
 
-1. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/) the **Cloudflare One Agent**.
+1. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/#ios) the **Cloudflare One Agent**.
 2. Open the **Cloudflare One Agent** app to [re-enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) in your Zero Trust organization.
-3. Complete the authentication steps required by your organization.
 
 Once you have enrolled, the migration process is complete. If you do not wish to use the old 1.1.1.1 w/ WARP app for [personal browsing](#behavior-when-both-apps-are-installed), you may [uninstall](/cloudflare-one/connections/connect-devices/warp/remove-warp/#ios-and-android) it.
 
