@@ -33,7 +33,7 @@ or `yarn`:
 $ yarn create cloudflare
 ```
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard. When asked to choose a template, select the "Hello World Script" option.
 
 Once your project has been configured and scaffolded, you will be asked if you would like to deploy the project to Cloudflare. If you choose not to deploy, you can navigate to the newly created project folder to begin development. Otherwise, you'll be asked to authenticate (if not logged in already), and your project will be deployed.
 
@@ -104,7 +104,7 @@ $ wrangler secret put DB_PASSWORD
 
 Open your Worker's main file (e.g., `index.ts`) and import the `Client` class from the `pg` library:
 
-```javascript
+```typescript
 import { Client } from "pg";
 ```
 
@@ -112,14 +112,14 @@ In the `fetch` event handler, connect to the PostgreSQL database using your chos
 
 ### Using a connection string
 
-```javascript
+```typescript
 const client = new Client(env.DB_URL);
 await client.connect();
 ```
 
 ### Setting explicit parameters
 
-```javascript
+```typescript
 const client = new Client({
   user: env.DB_USERNAME,
   password: env.DB_PASSWORD,
@@ -151,7 +151,7 @@ CREATE TABLE products (
 
 Replace the existing code in your `index.ts` file with the following code:
 
-```javascript
+```typescript
 ---
 filename: index.ts
 --- 
@@ -199,7 +199,7 @@ As mentioned above, let's assume the `products` table has the following columns:
 
 Add the following code snippet inside the `fetch` event handler in your `index.ts` file, before the existing query code:
 
-```javascript
+```typescript
 ---
 filename: index.ts
 ---
@@ -240,7 +240,7 @@ Now, when you send a `POST` request to your Worker's URL with the `/products` pa
 
 Modify your existing deployment code to accommodate the new feature:
 
-```javascript
+```typescript
 ---
 filename: index.ts
 ---
