@@ -23,3 +23,7 @@ You can configure the tunnel health check target IP address by updating your [GR
 {{<render file="_icmp-mfirewall.md" productFolder="magic-transit">}}
 
 {{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/probe-construction/" >}}
+
+## Check for tunnel health in the dashboard
+
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
