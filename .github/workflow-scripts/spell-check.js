@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { execSync } from 'child_process';
+import { join } from 'path';
 
 async function run() {
   try {
@@ -26,7 +27,8 @@ async function run() {
 
     for (const file of filteredFiles) {
       // Run codespell on each file
-      const codespellCommand = `codespell ${file}`;
+      const filePath = join(ctx.payload.pull_request.base.repo.full_name, file);
+      const codespellCommand = `codespell ${filePath}`;
       
       const codespellOutput = execSync(codespellCommand).toString();
       console.log(codespellOutput)
