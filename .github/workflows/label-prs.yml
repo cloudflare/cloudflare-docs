@@ -43,7 +43,6 @@ jobs:
 
       - name: Run Spell Check
         run: |
-          run: |
           # Get the base branch commit hash
           BASE_SHA=$(git rev-parse ${{ github.base_sha }})
           
