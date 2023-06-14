@@ -26,7 +26,7 @@ By default, `cloudflared` prints logs to stdout and does not store logs on the s
 $ cloudflared tunnel --logfile mytunnel.log run <UUID>
 ```
 
-## View logs on a client
+## View logs on your local machine
 
 You can view real-time logs for a Cloudflare Tunnel via the dashboard or from any machine that has `cloudflared` installed. With remote log streams, you do not need to SSH into the server that is running the tunnel.
 
