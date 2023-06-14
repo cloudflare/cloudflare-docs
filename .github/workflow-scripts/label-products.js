@@ -65,8 +65,6 @@ async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
     }
   }
 
-  console.log(labelsToRemove)
-
   for (const labelToRemove of labelsToRemove) {
     await octokit.rest.issues.removeLabel({
       ...repo,
