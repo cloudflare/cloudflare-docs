@@ -22,32 +22,45 @@ async function run() {
     // Filter files by desired directory (e.g., 'content')
     const filteredFiles = files.filter(file => file.startsWith('content/'));
 
-    if (filteredFiles.length > 0) {
-      // Run codespell
-      const codespellCommand = `codespell --check-filenames --ignore-words-list .codespellignore --quiet ${filteredFiles.join(' ')}`;
+    const warnings = [];
+
+    for (const file of filteredFiles) {
+      // Run codespell on each file
+      const codespellCommand = `codespell --check-filenames --ignore-words-list .codespellignore --quiet ${file}`;
       const codespellOutput = execSync(codespellCommand).toString();
 
       if (codespellOutput.trim().length > 0) {
-        // Add comment to PR
-        const octokitWithToken = octokit.getOctokit(token);
-        const commentBody = `
-        Hi @${ctx.payload.pull_request.user.login},
-
-        I've noticed some spelling issues in your code. Please review and make the necessary corrections.
-
-        Here are the spelling errors detected by codespell:
-        ${codespellOutput}
-
-        Thank you!
-        `;
-
-        await octokitWithToken.issues.createComment({
-          owner,
-          repo,
-          issue_number: prNumber,
-          body: commentBody
+        const fileWarnings = codespellOutput.trim().split('\n');
+        warnings.push({
+          file,
+          fileWarnings,
         });
       }
+    }
+
+    if (warnings.length > 0) {
+      // Add comment to PR
+      const octokitWithToken = octokit.getOctokit(token);
+      let commentBody = 'Here are the spelling warnings:\n\n';
+
+      for (const { file, fileWarnings } of warnings) {
+        commentBody += `File: ${file}\n\n`;
+
+        for (const fileWarning of fileWarnings) {
+          commentBody += `- ${fileWarning}\n`;
+        }
+
+        commentBody += '\n';
+      }
+
+      commentBody += 'Thank you!\n';
+
+      await octokitWithToken.issues.createComment({
+        owner,
+        repo,
+        issue_number: prNumber,
+        body: commentBody,
+      });
     }
   } catch (error) {
     core.setFailed(error.message);
