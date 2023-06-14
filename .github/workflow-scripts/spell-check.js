@@ -31,6 +31,8 @@ async function run() {
         cwd: process.cwd(),
       }).toString();
 
+      console.log(codespellOutput)
+
       if (codespellOutput.trim().length > 0) {
         const fileWarnings = codespellOutput.trim().split('\n');
         warnings.push({
