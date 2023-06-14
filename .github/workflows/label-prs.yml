@@ -20,7 +20,7 @@ jobs:
           node-version: 18.1
 
       - name: Install Dependencies
-        run: npm install @actions/core @actions/github child_process
+        run: npm install @actions/core @actions/github
 
       - name: Add product labels
         env:
@@ -53,10 +53,11 @@ jobs:
           CHANGED_FILES=$(git diff --name-only $BASE_SHA...$PR_SHA)
           
           # Filter the changed files to include only text files
-          TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(md)$')
+          TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(txt|md|html|css|svg)$')
           
-          # Run codespell on the changed files
+          # Run codespell on the changed files and redirect the output to a file
           npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES > codespell_output.txt
+          
           # Check if the output file is empty or not
           if [ -s codespell_output.txt ]; then
             echo "Spelling issues found:"
