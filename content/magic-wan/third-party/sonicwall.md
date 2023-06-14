@@ -198,9 +198,4 @@ Health checks might take some time to stabilize after the configuration is chang
 
 ## 9. Verify tunnel status on Cloudflare dashboard
 
-You can check if your tunnels are healthy on the Cloudflare dashboard. 
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and choose your account. 
-2. Go to **Magic WAN** > **Tunnel health**, and select **View**.
-
-This dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogenous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
+{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic Transit** > **Tunnel health**" >}}

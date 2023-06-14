@@ -184,14 +184,9 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ## Verify tunnel status on Cloudflare dashboard
 
-You can check if your tunnels are healthy on the Cloudflare dashboard. 
+{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic Transit** > **Tunnel health**" >}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and choose your account. 
-2. Go to **Magic WAN** > **Tunnel health**, and select **View**.
-
-This dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogenous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
-
-To make Cloudflare health checks work:
+### Make Cloudflare health checks work
 
 1. The ICMP probe packet from Cloudflare must be the type ICMP request, with anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
 
@@ -209,7 +204,6 @@ curl --request PUT \
     }
 }'
 ```
-
 
 2. Go to **Configure** > **Network** > **Interfaces** > **Add alias**. Add the IP address provided by Cloudflare for the ICMP probe traffic. This is needed to prevent Sophos firewall from dropping them as spoof packets. This is not the same IP used to create VPN. This is the special IP address for probe traffic only.
 
