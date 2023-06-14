@@ -11,8 +11,7 @@ Many application-layer protocols are built on top of the Transmission Control Pr
 
 ## `connect()`
 
-The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [
-](/workers/runtime-apis/streams/writablestream/) stream of data. This allows you to read and write data on an ongoing basis, as long as the connection remains open.
+The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data. This allows you to read and write data on an ongoing basis, as long as the connection remains open.
 
 `connect()` is provided as a [Runtime API](/workers/runtime-apis/), and is accessed by importing the `connect` function from `cloudflare:sockets`. This process is similar to how one imports built-in modules in Node.js. Refer to the following codeblock for an example of creating a TCP socket, writing to it, and returning the readable side of the socket as a response:
 
