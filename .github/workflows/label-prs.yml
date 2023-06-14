@@ -58,6 +58,7 @@ jobs:
         run: echo ${{ env.CHANGED_FILES }}
           
       - name: 🔸 Check for Spelling Errors for Changed Files
+        id: codespell
         uses: codespell-project/actions-codespell@v1
         with:
           check_filenames: true
