@@ -63,3 +63,21 @@ jobs:
           check_filenames: true
           skip: nothing
           path: ${{ env.CHANGED_FILES }}
+
+      - name: Create Comment on PR with Spell Check Warnings
+        if: ${{ failure() }}
+        uses: actions/github-script@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const warnings = ${{ steps.codespell.outputs.warnings }};
+            const commentBody = `**Spell Check Warnings:**
+            \n${warnings}`;
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
+            });
