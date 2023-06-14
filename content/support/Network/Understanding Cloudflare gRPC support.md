@@ -44,6 +44,10 @@ domain](https://support.cloudflare.com/hc/articles/200169626) that hosts
 your gRPC endpoint.
 {{</Aside>}}
 
+{{<Aside type="note">}}
+[Full SSL/TLS encryption mode for domain](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca#3-change-ssltls-mode) that hosts your gRPC endpoint.
+{{</Aside>}}
+
 1.  Log in to your Cloudflare account.
 2.  Select the appropriate domain.
 3.  Click the **Network** app.
