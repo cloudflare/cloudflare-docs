@@ -51,8 +51,8 @@ jobs:
           exclude_file: content/support
       
       - name: Extract spelling errors
-      id: extract_errors
-      run: |
+        id: extract_errors
+        run: |
         echo "::set-output name=errors::$(cat ${{ steps.codespell.outputs.report }} | jq -r '.[] | [.file, .line, .offset, .context] | @tsv')"
 
       - name: Add comment to PR
