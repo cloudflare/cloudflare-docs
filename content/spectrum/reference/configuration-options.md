@@ -107,7 +107,7 @@ You can manage this through the Spectrum app at the Cloudflare dashboard, or usi
 
 {{<Aside type="note" header="Note">}}
 
-If you have the TLS termination setting configured to **off**, this means that Spectrum will then connect the eyeball directly to the origin, and the certificate that is presented in this case should be the certificate installed at your origin server, instead the Edge Certificate from Cloudflare.
+If you have the TLS termination setting configured to **off**, this means that Spectrum will then proxy connections to the origin without decrypting. The certificate that is presented in this case will be the certificate installed at your origin server, instead of the Edge Certificate from Cloudflare.
 
 {{</Aside>}}
 
