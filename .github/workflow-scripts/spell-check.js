@@ -12,12 +12,11 @@ async function run() {
     const repo = ctx.repo.repo;
 
     // List changed files
-    const filesResponse = await octokit.pulls.listFiles({
-      owner,
-      repo,
-      pull_number: pr.number,
-      per_page: 100
-    });
+    const filesResponse = await octokit.paginate(octokit.rest.pulls.listFiles, {
+        ...ctx.repo,
+        pull_number: pr.number,
+        per_page: 100
+      });
     const files = filesResponse.data.map(file => file.filename);
 
     // Filter files by desired directory (e.g., 'content')
