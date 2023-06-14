@@ -55,10 +55,8 @@ async function run() {
   }
 }
 
-const decodeLabelName = (labelName) => decodeURIComponent(labelName);
-
 async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
-  const labelPrefix = 'product%3A'; // Update the label prefix to the URL-encoded version
+  const labelPrefix = 'product:';
   const labelsToRemove = [];
 
   for (const label of github.context.payload.pull_request.labels) {
@@ -67,18 +65,18 @@ async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
     }
   }
 
-  for (const labelToRemove of labelsToRemove) {
-    const decodedLabel = decodeLabelName(labelToRemove);
+  console.log(labelsToRemove)
 
+  for (const labelToRemove of labelsToRemove) {
     await octokit.rest.issues.removeLabel({
       ...repo,
       issue_number: prNumber,
-      name: decodedLabel
+      name: labelToRemove
     });
   }
 
   for (const folder of changedFolders) {
-    const label = labelPrefix + encodeURIComponent(folder); // URL-decode the label before using it
+    const label = labelPrefix + folder;
 
     await octokit.rest.issues.addLabels({
       ...repo,
@@ -87,6 +85,5 @@ async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
     });
   }
 }
-
 
 run();
