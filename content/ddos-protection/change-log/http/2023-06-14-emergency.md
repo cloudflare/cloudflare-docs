@@ -1,18 +1,16 @@
 ---
+title: 2023-06-14 - Emergency
 pcx_content_type: changelog
-title: Scheduled changes
-weight: 2
+weight: 27960
 layout: list
 ---
 
-# Scheduled changes
+# 2023-06-14 - Emergency
 
 {{<table-wrap>}}
 <table style="width: 100%">
   <thead>
     <tr>
-      <th>Announcement Date</th>
-      <th>Change Date</th>
       <th>Rule ID</th>
       <th>Description</th>
       <th>Previous Action</th>
@@ -21,14 +19,12 @@ layout: list
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+<tr>
+      <td>...6fa59d23</td>
+      <td>HTTP requests that are very likely coming from bots.</td>
+      <td>ddos_dynamic</td>
+      <td>ddos_dynamic</td>
+      <td>Expand the filter to match more attacks.</td>
     </tr>
   </tbody>
 </table>
