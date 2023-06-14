@@ -56,4 +56,12 @@ jobs:
           TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(md)$')
           
           # Run codespell on the changed files
-          npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES
+          npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES > codespell_output.txt
+          # Check if the output file is empty or not
+          if [ -s codespell_output.txt ]; then
+            echo "Spelling issues found:"
+            cat codespell_output.txt
+            exit 1
+          else
+            echo "No spelling issues found."
+          fi
