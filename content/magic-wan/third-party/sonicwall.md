@@ -198,4 +198,4 @@ Health checks might take some time to stabilize after the configuration is chang
 
 ## 9. Verify tunnel status on Cloudflare dashboard
 
-{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic Transit** > **Tunnel health**" >}}
+{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic WAN** > **Tunnel health**" >}}
