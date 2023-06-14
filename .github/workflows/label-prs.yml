@@ -68,7 +68,7 @@ jobs:
 
       - name: Extract Error Lines
         run: |
-          error_lines=$(echo "${{ steps.codespell.outputs.codespell_output }}" | grep -e "^Error:" | awk '{$1=""; print $0}')
+          error_lines=$(echo "${{ steps.codespell.outputs }}" | grep -e "^Error:" | awk '{$1=""; print $0}')
           echo "ERROR_LINES=$error_lines" >> "$GITHUB_ENV"
 
       - name: Log ERROR_LINES
