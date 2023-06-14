@@ -9,6 +9,9 @@ on:
 jobs:
   label_prs:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
 
     steps:
       - name: Checkout Repository
