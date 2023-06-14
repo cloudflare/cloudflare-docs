@@ -14,6 +14,15 @@ If you want to forward or redirect traffic to a different URL, you have the foll
 -   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/): Define a large number (thousands or even millions) of essentially static URL redirects at the account level.
 -   [Page Rules](https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules#how-to): Should only be used when the other two options do not meet your use case.
 
+{{<Aside type="warning">}}
+Page Rules require a
+\"[proxied](/dns/manage-dns-records/reference/proxied-dns-records)\"
+DNS record for your page rule to work. Page Rules won\'t apply to
+hostnames that don\'t exist in DNS or aren\'t being directed to
+Cloudflare.
+If needed, you can create a dummy A record pointing to `192.0.2.1` or a dummy AAAA record pointing to `100::` under [the DNS tab of your Cloudflare Dashboard](/dns/manage-dns-records/how-to/create-dns-records/).
+{{</Aside>}}
+
 ___
 
 ## Redirect with Page Rules
@@ -43,11 +52,6 @@ To configure URL forwarding or redirects using Page Rules:
 ___
 
 ## Forwarding examples
-
-{{<Aside type="warning">}}
-Traffic must pass through Cloudflare for Page Rules to work. If you only
-use Cloudflare for DNS, Page Rules are not active.
-{{</Aside>}}
 
 Imagine you want site visitors to easily reach your website for a variety of URL patterns.  For instance, the Page Rule URL patterns _\*www.example.com/products_ and _\*example.com/products_ match:
 
