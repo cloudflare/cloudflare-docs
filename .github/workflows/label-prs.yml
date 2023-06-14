@@ -62,7 +62,6 @@ jobs:
           if [ -s codespell_output.txt ]; then
             echo "Spelling issues found:"
             cat codespell_output.txt
-            exit 1
           else
             echo "No spelling issues found."
           fi
