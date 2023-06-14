@@ -56,7 +56,7 @@ async function run() {
 }
 
 async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
-  const labelPrefix = 'product:';
+  const labelPrefix = 'product%3A'; // Update the label prefix to the URL-encoded version
   const labelsToRemove = [];
 
   for (const label of github.context.payload.pull_request.labels) {
@@ -65,16 +65,14 @@ async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
     }
   }
 
-  for (const labelToRemove of labelsToRemove) {
-    await octokit.rest.issues.removeLabel({
-      ...repo,
-      issue_number: prNumber,
-      name: labelToRemove
-    });
-  }
+  await octokit.rest.issues.removeLabels({
+    ...repo,
+    issue_number: prNumber,
+    labels: labelsToRemove
+  });
 
   for (const folder of changedFolders) {
-    const label = labelPrefix + folder;
+    const label = labelPrefix + encodeURIComponent(folder); // URL-decode the label before using it
 
     await octokit.rest.issues.addLabels({
       ...repo,

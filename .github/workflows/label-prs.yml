@@ -1,4 +1,4 @@
-name: Add PR labels
+name: PR helper
 
 on:
   pull_request:
