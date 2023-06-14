@@ -77,9 +77,9 @@ def verify_token(request):
             valid_token = True
             break
         except:
-            return responses.return_403("Error decoding token")
+            raise HTTPException(status_code=400, detail="Error decoding token")
     if not valid_token:
-        return responses.return_403("Invalid token")
+        raise HTTPException(status_code=400, detail="Invalid token")
 
     return True
 
