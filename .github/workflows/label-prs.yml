@@ -41,7 +41,6 @@ jobs:
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
 
-jobs:
   codespell:
     runs-on: ubuntu-latest
 
