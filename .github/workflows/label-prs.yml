@@ -41,19 +41,19 @@ jobs:
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
 
-        - name: Annotate for spelling errors
-          id: codespell
-          uses: codespell-project/actions-codespell@v1
-          with:
-            check_filenames: true
-            path: content
-            only_warn: 1
-            exclude_file: content/support
-        
-        - name: Extract spelling errors
-        id: extract_errors
-        run: |
-          echo "::set-output name=errors::$(cat ${{ steps.codespell.outputs.report }} | jq -r '.[] | [.file, .line, .offset, .context] | @tsv')"
+      - name: Annotate for spelling errors
+        id: codespell
+        uses: codespell-project/actions-codespell@v1
+        with:
+          check_filenames: true
+          path: content
+          only_warn: 1
+          exclude_file: content/support
+      
+      - name: Extract spelling errors
+      id: extract_errors
+      run: |
+        echo "::set-output name=errors::$(cat ${{ steps.codespell.outputs.report }} | jq -r '.[] | [.file, .line, .offset, .context] | @tsv')"
 
       - name: Add comment to PR
         uses: actions/github-script@v4
