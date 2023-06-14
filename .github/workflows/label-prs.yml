@@ -58,10 +58,9 @@ jobs:
           # Run codespell on the changed files and redirect the output to a file
           npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES > codespell_output.txt
           
-          # Check if the output file is empty or not
-          if [ -s codespell_output.txt ]; then
+          if [ -s ${{ github.workspace }}/codespell_output.txt ]; then
             echo "Spelling issues found:"
-            cat codespell_output.txt
+            cat ${{ github.workspace }}/codespell_output.txt
             exit 1
           else
             echo "No spelling issues found."
@@ -69,4 +68,4 @@ jobs:
           
       - name: Display error output
         if: failure()
-        run: cat codespell_output.txt
+        run: cat ${{ github.workspace }}/codespell_output.txt
