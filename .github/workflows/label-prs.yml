@@ -63,6 +63,9 @@ jobs:
           warnings=$(codespell ${{ env.CHANGED_FILES }} 2>&1 | tee codespell_output.txt | grep "^\[[A-Z]+\]" | awk '{$1=""; print $0}')
           echo "WARNINGS=$warnings" >> "$GITHUB_ENV"
 
+      - name: Log WARNINGS
+        run: echo ${{ env.WARNINGS }}
+
       - name: Create Comment on PR with Spell Check Warnings
         if: ${{ env.WARNINGS != '' }}
         uses: actions/github-script@v5
