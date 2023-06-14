@@ -43,7 +43,7 @@ Create a new project named `d1-tutorial` by running `npm create cloudflare` and 
 * deploy = `no` (we'll deploy our app later)
 
 ```sh
-$ npm create cloudflare d1-tutorial
+$ npm create cloudflare@latest d1-tutorial
 ```
 
 ```sh
