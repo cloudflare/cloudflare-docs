@@ -56,7 +56,7 @@ jobs:
           TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(txt|md|html|css|svg)$')
           
           # Run codespell on the changed files and redirect the output to a file
-          npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES > codespell_output.txt
+          npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES > ${{ github.workspace }}/codespell_output.txt
           
           if [ -s ${{ github.workspace }}/codespell_output.txt ]; then
             echo "Spelling issues found:"
