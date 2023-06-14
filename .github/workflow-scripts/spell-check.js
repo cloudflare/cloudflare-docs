@@ -7,16 +7,16 @@ async function run() {
     const ctx = github.context;
     const token = process.env.GITHUB_TOKEN;
     const octokit = github.getOctokit(token);
-    const pr = ctx.payload.pull_request;
+    const prNumber = ctx.payload.pull_request.number;
     const owner = ctx.repo.owner;
     const repo = ctx.repo.repo;
 
     // List changed files
-    const filesResponse = await octokit.paginate(octokit.rest.pulls.listFiles, {
-        ...ctx.repo,
-        pull_number: pr.number,
-        per_page: 100
-      });
+    const filesResponse = await octokit.rest.pulls.listFiles({
+      owner,
+      repo,
+      pull_number: prNumber,
+    });
     const files = filesResponse.data.map(file => file.filename);
 
     // Filter files by desired directory (e.g., 'content')
@@ -24,12 +24,16 @@ async function run() {
 
     if (filteredFiles.length > 0) {
       // Run codespell
-      const codespellCommand = `codespell --check-filenames --quiet ${filteredFiles.join(' ')}`;
+      const codespellCommand = `codespell --check-filenames --ignore-words-list .codespellignore --quiet ${filteredFiles.join(' ')}`;
       const codespellOutput = execSync(codespellCommand).toString();
 
       if (codespellOutput.trim().length > 0) {
         // Add comment to PR
+        const octokitWithToken = octokit.getOctokit(token);
         const commentBody = `
+        Hi @${ctx.payload.pull_request.user.login},
+
+        I've noticed some spelling issues in your code. Please review and make the necessary corrections.
 
         Here are the spelling errors detected by codespell:
         ${codespellOutput}
@@ -37,10 +41,10 @@ async function run() {
         Thank you!
         `;
 
-        await octokit.issues.createComment({
+        await octokitWithToken.issues.createComment({
           owner,
           repo,
-          issue_number: pr.number,
+          issue_number: prNumber,
           body: commentBody
         });
       }
