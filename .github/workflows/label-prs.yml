@@ -44,7 +44,7 @@ jobs:
       - name: Run Spell Check
         run: |
           # Get the list of changed files
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          CHANGED_FILES=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }})
           
           # Filter the changed files to include only text files
           TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(txt|md|html|css|svg)$')
