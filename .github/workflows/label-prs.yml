@@ -49,35 +49,4 @@ jobs:
           path: content
           only_warn: 1
           exclude_file: content/support
-      
-      - name: Extract spelling errors
-        id: extract_errors
-        run: |
-        echo "::set-output name=errors::$(cat ${{ steps.codespell.outputs.report }} | jq -r '.[] | [.file, .line, .offset, .context] | @tsv')"
-
-      - name: Add comment to PR
-        uses: actions/github-script@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          script: |
-            const errors = `${{ steps.extract_errors.outputs.errors }}`;
-            
-            if (errors.length > 0) {
-              const issueComment = `
-              
-              Here are the spelling errors detected by codespell:
-              ${errors}
-              
-              Please review the errors and make the necessary corrections.
-              
-              Thanks!
-              `;
-              github.issues.createComment({
-                issue_number: ${{ github.event.pull_request.number }},
-                owner: ${{ github.repository_owner }},
-                repo: ${{ github.repository }},
-                body: issueComment
-              });
-            }
 
