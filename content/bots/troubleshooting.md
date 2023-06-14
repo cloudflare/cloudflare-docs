@@ -7,6 +7,8 @@ weight: 11
 
 # Frequently Asked Questions
 
+Add some other words.
+
 ## How does Cloudflare detect bots?
 
 Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Plans](/bots/plans).
