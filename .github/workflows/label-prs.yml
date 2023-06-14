@@ -41,7 +41,7 @@ jobs:
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
 
-  codespell:
+  spell-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -64,31 +64,3 @@ jobs:
           check_filenames: true
           skip: nothing
           path: ${{ env.CHANGED_FILES }}
-          only_warn: 1
-
-      - name: Extract Error Lines
-        run: |
-          error_lines=$(echo "${{ steps.codespell.outputs }}" | grep -e "^Error:" | awk '{$1=""; print $0}')
-          echo "ERROR_LINES=$error_lines" >> "$GITHUB_ENV"
-
-      - name: Log ERROR_LINES
-        run: echo ${{ env.ERROR_LINES }}
-
-      - name: Create Comment on PR with Spell Check Errors
-        if: ${{ env.ERROR_LINES != '' }}
-        uses: actions/github-script@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const errorLines = process.env.ERROR_LINES || "";
-            const commentBody = `**Spell Check Errors:**
-            
-            ${errorLines}`;
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: commentBody
-            });
