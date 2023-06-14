@@ -103,6 +103,14 @@ Spectrum offers three modes of TLS termination: 'Flexible', 'Full', and 'Full (S
 
 TLS versions supported by Spectrum include TLS 1.1, TLS 1.2, and TLS 1.3.
 
+You can manage this through the Spectrum app at the Cloudflare dashboard, or using the [Spectrum API endpoint](/api/operations/spectrum-applications-update-spectrum-application-configuration-using-a-name-for-the-origin).
+
+{{<Aside type="note" header="Note">}}
+
+If you have the TLS termination setting configured to **off**, this means that Spectrum will then proxy connections to the origin without decrypting. The certificate that is presented in this case will be the certificate installed at your origin server, instead of the Edge Certificate from Cloudflare.
+
+{{</Aside>}}
+
 ## Origin TLS Termination
 
 Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/reference/cipher-suites/).
