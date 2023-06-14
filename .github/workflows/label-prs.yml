@@ -59,13 +59,11 @@ jobs:
           
       - name: 🔸 Check for Spelling Errors for Changed Files
         id: codespell
-        uses: codespell-project/actions-codespell@v1
-        with:
-          check_filenames: true
-          skip: nothing
-          path: ${{ env.CHANGED_FILES }}
+        run: |
+          warnings=$(codespell --check-filenames --ignore-words-list .codespellignore --quiet ${{ env.CHANGED_FILES }} 2>&1 | tee codespell_output.txt | grep "^\[[A-Z]+\]" | awk '{$1=""; print $0}')
+          echo "WARNINGS=$warnings" >> "$GITHUB_ENV"
 
-      - name: Create Comment on PR with Spell Check Warnings
+      - name: 🔸 Create Comment on PR with Spell Check Warnings
         if: ${{ failure() }}
         uses: actions/github-script@v5
         env:
@@ -73,7 +71,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const warnings = ${{ steps.codespell.outputs.warnings }};
+            const warnings = process.env.WARNINGS || "";
             const commentBody = `**Spell Check Warnings:**
             
             ${warnings}`;
