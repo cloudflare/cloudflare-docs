@@ -18,6 +18,7 @@ Page Rules require a
 DNS record for your page rule to work. Page Rules won\'t apply to
 hostnames that don\'t exist in DNS or aren\'t being directed to
 Cloudflare.
+If needed, you can create a dummy A record pointing to `192.0.2.1` or a dummy AAAA record pointing to `100::` under [the DNS tab of your Cloudflare Dashboard](/dns/manage-dns-records/how-to/create-dns-records/).
 {{</Aside>}}
 
 The default number of allowed page rules depends on the domain plan as shown below.
