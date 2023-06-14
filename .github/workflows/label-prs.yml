@@ -64,9 +64,9 @@ jobs:
           check_filenames: true
           skip: nothing
           path: ${{ env.CHANGED_FILES }}
+          only_warn: 1
 
       - name: Extract Error Lines
-        if: failure()
         run: |
           error_lines=$(echo "${{ steps.codespell.outputs.codespell_output }}" | grep -e "^Error:" | awk '{$1=""; print $0}')
           echo "ERROR_LINES=$error_lines" >> "$GITHUB_ENV"
