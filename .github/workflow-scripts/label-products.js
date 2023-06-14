@@ -55,6 +55,8 @@ async function run() {
   }
 }
 
+const decodeLabelName = (labelName) => decodeURIComponent(labelName);
+
 async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
   const labelPrefix = 'product%3A'; // Update the label prefix to the URL-encoded version
   const labelsToRemove = [];
@@ -66,10 +68,12 @@ async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
   }
 
   for (const labelToRemove of labelsToRemove) {
+    const decodedLabel = decodeLabelName(labelToRemove);
+
     await octokit.rest.issues.removeLabel({
       ...repo,
       issue_number: prNumber,
-      name: labelToRemove
+      name: decodedLabel
     });
   }
 
