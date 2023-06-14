@@ -55,7 +55,7 @@ You will be asked if you would like to deploy the project to Cloudflare.
 * If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project). 
 * If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
 
-In your project directory, C3 has generated the following files:
+In your project directory, C3 has generated the following:
 
 1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
 2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/learning/migrate-to-module-workers/) syntax.
@@ -65,7 +65,7 @@ In your project directory, C3 has generated the following files:
 
 ## 2. Develop with Wrangler CLI
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. Templates installed via C3 will have it installed in the project by default.
+The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. Templates installed via C3 will have it installed in the project by default.
 
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
@@ -83,7 +83,7 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 With your new project generated and running, you can begin to write and edit your code.
 
-Find the `src/worker.js` file. This file will be populated with the code below:
+Find the `src/worker.js` file. `worker.js` will be populated with the code below:
 
 ```js
 export default {
