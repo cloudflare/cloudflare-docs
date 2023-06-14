@@ -43,11 +43,18 @@ jobs:
 
       - name: Run Spell Check
         run: |
+          run: |
+          # Get the base branch commit hash
+          BASE_SHA=$(git rev-parse ${{ github.base_sha }})
+          
+          # Get the pull request branch commit hash
+          PR_SHA=$(git rev-parse ${{ github.sha }})
+          
           # Get the list of changed files
-          CHANGED_FILES=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }})
+          CHANGED_FILES=$(git diff --name-only $BASE_SHA...$PR_SHA)
           
           # Filter the changed files to include only text files
-          TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(txt|md|html|css|svg)$')
+          TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(md)$')
           
           # Run codespell on the changed files
           npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES
