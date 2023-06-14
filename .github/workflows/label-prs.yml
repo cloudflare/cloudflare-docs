@@ -41,13 +41,6 @@ jobs:
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
 
-  codespell:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -56,13 +49,7 @@ jobs:
       - name: Install codespell
         run: python -m pip install codespell
 
-      - name: Install Dependencies
-        run: npm install @actions/core @actions/github
-
-      - name: Run JavaScript
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.1
+      - name: Run spell check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node codespell-comment.js
+        run: node .github/workflow-scripts/spell-check.js
