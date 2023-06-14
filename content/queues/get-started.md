@@ -10,9 +10,17 @@ meta:
 
 Cloudflare Queues is a flexible messaging queue that allows you to queue messages for asynchronous processing. By following this guide, you will create your first queue, a Worker to publish messages to that queue, and a consumer Worker to consume messages from that queue.
 
-## Prerequisite: Create a Cloudflare account
+## Prerequisites
 
 In order to use Queues, you need a [Cloudflare account](/fundamentals/account-and-billing/account-setup/). If you already have an account, skip this step.
+
+You will also need to install C3 ([`create-cloudflare-cli`](https://www.npmjs.com/package/create-cloudflare)) to help you setup and deploy Workers to Cloudflare as fast as possible. C3 will also install [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and accessing Queues.
+
+To install `create-cloudflare`, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
+
+Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. 
+
+You will install these tools as part of creating a new project in step 2.
 
 ## 1. Enable Queues
 
@@ -32,32 +40,25 @@ To enable Queues:
 
 Queues is included in the monthly subscription cost of your Workers Paid plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
 
-## 2. Install Wrangler
+## 2. Create a Worker project
 
-You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access Queues.
+You will access your queue from a Worker, the producer Worker. You must create at least one producer Worker to publish messages onto your queue.
 
-To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
-
-Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. Install Wrangler by running:
+To create a producer Worker, run:
 
 ```sh
-$ npm install -g wrangler
+$ npm create cloudflare@latest # or 'yarn create cloudflare'
 ```
 
-or install with `yarn`:
+In your terminal, you will be asked a series of questions related to your project. 
 
-```sh
-$ yarn global add wrangler
-```
+1. Name your new Worker directory by specifying where you want to create your application.
+2. Select `"Hello World" script` as the type of application you want to create.
+3. Answer `yes` to using TypeScript.
+4. Answer `no` to using Git.
+5. Answer `no` to deploying your Worker.
 
-Queues requires Wrangler version `2.2.1` or higher. Run `wrangler version` to check your version:
-
-```sh
-$ wrangler --version
-2.2.1
-```
-
-With Wrangler installed, you will now create a queue.
+This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
 
 ## 3. Create a queue
 
@@ -73,21 +74,9 @@ Choose a name that is descriptive and relates to the types of messages you inten
 
 Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`), and must start and end with a letter or number.
 
-You cannot change your queue name after you have set it. After you create your queue, you will create a Worker to access it.
+You cannot change your queue name after you have set it. After you create your queue, you will set up your producer Worker to access it.
 
-## 4. Create a Worker project
-
-You will access your queue from a Worker, the producer Worker. You must create at least one producer Worker to publish messages onto your queue.
-
-To create a producer Worker, run:
-
-```sh
-$ npm create cloudflare@latest # or 'yarn create cloudflare'
-```
-
-In your terminal, you will be asked a series of questions related to your project. For the question `What type of application do you want to create?`, indicate `"Hello World" script`. For the question `Would you like to use TypeScript? (y/n)`, indicate `y`. This will create an `index.ts` file in your project directory's `src` folder where you will write the code needed for your Worker to access your queue.
-
-### Bind your producer Worker to your queue
+## 4. Set up your producer worker
 
 In order to expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/platform/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
 
@@ -101,7 +90,7 @@ To create a binding, open your newly generated `wrangler.toml` configuration fil
 
 Replace `YOUR_QUEUE_NAME` with the name of the queue you created in step 3. Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
-### Set up your producer Worker
+### Write your producer Worker
 
 You will now configure your producer Worker to create messages to publish to your queue. Your producer Worker will:
 
