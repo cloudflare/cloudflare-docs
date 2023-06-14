@@ -26,7 +26,7 @@ async function run() {
 
     for (const file of filteredFiles) {
       // Run codespell on each file
-      const codespellCommand = `codespell --check-filenames --ignore-words-list .codespellignore --quiet ${file}`;
+      const codespellCommand = `codespell ${file}`;
       const codespellOutput = execSync(codespellCommand).toString();
 
       if (codespellOutput.trim().length > 0) {
