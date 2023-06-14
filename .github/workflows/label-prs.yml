@@ -41,41 +41,25 @@ jobs:
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
+  codespell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 🔸 Get Changed Files from Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # get file names and separate them with space ' '
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | xargs -I {} sh -c 'echo "./{}"' | tr '\n' ' ')
+          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"          
+
+      - name: 🔸 Output Changed Files
+        run: echo ${{ env.CHANGED_FILES }}
+          
+      - name: 🔸 Check for Spelling Errors for Changed Files
+        uses: codespell-project/actions-codespell@v1
         with:
-          python-version: 3.7
-
-      - name: Install codespell
-        run: |
-          pip install codespell
-
-      - name: Run Spell Check
-        run: |
-          # Get the base branch commit hash
-          BASE_SHA=$(git rev-parse ${{ github.base_sha }})
-          
-          # Get the pull request branch commit hash
-          PR_SHA=$(git rev-parse ${{ github.sha }})
-          
-          # Get the list of changed files
-          CHANGED_FILES=$(git diff --name-only $BASE_SHA...$PR_SHA)
-          
-          # Filter the changed files to include only text files
-          TEXT_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(txt|md|html|css|svg)$')
-          
-          # Run codespell on the changed files and redirect the output to a file
-          npx codespell --skip="*.js,*.html,*.css,*.svg" $TEXT_FILES > ${{ github.workspace }}/codespell_output.txt
-          
-          # Check if the output file is empty or not
-          if [ -s ${{ github.workspace }}/codespell_output.txt ]; then
-            echo "Spelling issues found:"
-            cat ${{ github.workspace }}/codespell_output.txt
-            exit 1
-          else
-            echo "No spelling issues found."
-          fi
-          
-      - name: Display error output
-        if: failure()
-        run: cat ${{ github.workspace }}/codespell_output.txt
+          check_filenames: true
+          skip: nothing
+          path: ${{ env.CHANGED_FILES }}
