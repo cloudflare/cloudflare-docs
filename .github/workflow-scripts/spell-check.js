@@ -27,6 +27,7 @@ async function run() {
     for (const file of filteredFiles) {
       // Run codespell on each file
       const codespellCommand = `codespell ${file}`;
+      console.log(codespellOutput)
       const codespellOutput = execSync(codespellCommand).toString();
 
       if (codespellOutput.trim().length > 0) {
