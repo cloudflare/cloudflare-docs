@@ -20,7 +20,7 @@ jobs:
           node-version: 18.1
 
       - name: Install Dependencies
-        run: npm install @actions/core @actions/github path child_process
+        run: npm install @actions/core @actions/github child_process
 
       - name: Add product labels
         env:

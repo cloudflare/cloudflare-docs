@@ -1,7 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { execSync } from 'child_process';
-import { join } from 'path';
 
 async function run() {
   try {
@@ -27,11 +26,11 @@ async function run() {
 
     for (const file of filteredFiles) {
       // Run codespell on each file
-      const filePath = join(ctx.payload.pull_request.base.repo.full_name, file);
-      const codespellCommand = `codespell ${filePath}`;
-      
-      const codespellOutput = execSync(codespellCommand).toString();
-      console.log(codespellOutput)
+      const codespellCommand = `codespell --check-filenames ${file}`;
+      const codespellOutput = execSync(codespellCommand, {
+        cwd: process.cwd(),
+      }).toString();
+
       if (codespellOutput.trim().length > 0) {
         const fileWarnings = codespellOutput.trim().split('\n');
         warnings.push({
