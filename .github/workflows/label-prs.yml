@@ -41,6 +41,15 @@ jobs:
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
 
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install codespell
+        run: |
+          pip install codespell
+
       - name: Run Spell Check
         run: |
           # Get the base branch commit hash
