@@ -57,14 +57,14 @@ jobs:
       - name: 🔸 Output Changed Files
         run: echo ${{ env.CHANGED_FILES }}
           
-      - name: 🔸 Check for Spelling Errors for Changed Files
+      - name: Check for Spelling Errors for Changed Files
         id: codespell
         run: |
           warnings=$(codespell --check-filenames --ignore-words-list .codespellignore --quiet ${{ env.CHANGED_FILES }} 2>&1 | tee codespell_output.txt | grep "^\[[A-Z]+\]" | awk '{$1=""; print $0}')
           echo "WARNINGS=$warnings" >> "$GITHUB_ENV"
 
-      - name: 🔸 Create Comment on PR with Spell Check Warnings
-        if: ${{ failure() }}
+      - name: Create Comment on PR with Spell Check Warnings
+        if: ${{ env.WARNINGS != '' }}
         uses: actions/github-script@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
