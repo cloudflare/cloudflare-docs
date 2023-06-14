@@ -40,13 +40,6 @@ jobs:
           args: public/ --sources content/ --check-anchors
         continue-on-error: true
 
-      - name: Anotate for spelling errors
-        uses: codespell-project/actions-codespell@v1
-        with:
-          check_filenames: true
-          path: content
-          only_warn: 1
-
       
   # lint:
   #   name: Lint
