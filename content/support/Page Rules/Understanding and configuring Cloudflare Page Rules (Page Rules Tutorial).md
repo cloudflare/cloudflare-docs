@@ -25,7 +25,6 @@ Depending on the record type, you can use different values as the target as a pl
 www.example.com  A      192.0.2.1
 www.example.com  AAAA   2001:DB8::1
 www.example.com  CNAME  domain.example
-www.example.com  CNAME  domain.example
 ```
 
 We recommend only using reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure.
