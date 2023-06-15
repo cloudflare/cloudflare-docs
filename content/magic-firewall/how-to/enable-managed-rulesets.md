@@ -13,7 +13,7 @@ Before you can begin using managed rulesets with Magic Firewall, your account mu
 
 {{</Aside>}}
 
-To enable or disable a rule, you can specify which properties should be overriden. The overrides occur in the Managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset, but a single rule can contain multiple overrides.
+To enable or disable a rule, you can specify which properties should be overridden. The overrides occur in the Managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset, but a single rule can contain multiple overrides.
 
 You have multiple options for enabling rules:
 
@@ -32,7 +32,7 @@ To create a managed ruleset, you must first build a request with the following:
 
 Additionally, you need the properties you want to override. The properties you can override include:
 
-- `enabled`: This value can be set to `true` or `false`. When set to `true`, the rule matches packets and applies the rule's default action if the action is not overriden. When set to `false`, the rule is disabled and does not match any packets.
+- `enabled`: This value can be set to `true` or `false`. When set to `true`, the rule matches packets and applies the rule's default action if the action is not overridden. When set to `false`, the rule is disabled and does not match any packets.
 - `action`: The value can be set to `log` so the rule only produces logs instead of applying the rule's default action.
 
 The `enabled` and `action` properties for a rule are set in the Managed phase Managed kind ruleset. All rules in the Managed phase are currently disabled by default.
