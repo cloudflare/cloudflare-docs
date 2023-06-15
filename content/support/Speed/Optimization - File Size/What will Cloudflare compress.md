@@ -79,7 +79,7 @@ Cloudflare only supports the content types **gzip** towards your origin server
 Cloudflare's reverse proxy is also able to convert between compressed formats and uncompressed formats, meaning that it can pull content from a customer's origin server via gzip and serve it to clients uncompressed (or vice versa). This is done independently of caching.
 
 {{<Aside type="warning">}}
-Please note: The Accept-Encoding header is not respected and will be
+Please note: The `Accept-Encoding` header is not respected between Cloudflare and the origin and will be
 removed.
 {{</Aside>}}
 
