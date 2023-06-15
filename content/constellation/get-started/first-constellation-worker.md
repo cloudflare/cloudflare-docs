@@ -20,7 +20,7 @@ Before continuing, make sure you have:
 
 Generate a new Constellation project named `image-classifier` by running the [`create`](/constellation/platform/wrangler/#manage-projects) command. Then run `list` to review the details of your newly created project:
 
-```bash
+```sh
 $ npx wrangler constellation project create "image-classifier" ONNX
 $ npx wrangler constellation project list
 
@@ -33,13 +33,13 @@ $ npx wrangler constellation project list
 
 ## Create a new Worker
 
-Create a new [Worker](/workers/) named `image-classifier-worker`. You will install [Wrangler, the developer platform CLI, for Constellation](/constellation/platform/wrangler/#installation) which is still in beta.
+Create a new [Worker](/workers/) named `image-classifier-worker`. You will install [Wrangler, the developer platform CLI, for Constellation](/constellation/platform/wrangler/#installation).
 
-```bash
+```sh
 $ mkdir image-classifier-worker
 $ cd image-classifier-worker
 $ npm init -f
-$ npm install wrangler@beta --save-dev
+$ npm install wrangler --save-dev
 $ npx wrangler init
 ```
 
@@ -81,7 +81,7 @@ constellation = [
 
 In your `image-classifier-worker` Worker, install the [client API](/constellation/platform/client-api/) library:
 
-```bash
+```sh
 $ npm install @cloudflare/constellation --save-dev
 ```
 
@@ -89,7 +89,7 @@ $ npm install @cloudflare/constellation --save-dev
 
 Upload the pre-trained [SqueezeNet 1.1](https://github.com/onnx/models/blob/main/vision/classification/squeezenet/README.md) ONNX model to your `image-classifier` Constellation project:
 
-```bash
+```sh
 $ wget https://github.com/microsoft/onnxjs-demo/raw/master/docs/squeezenet1_1.onnx
 $ npx wrangler constellation model upload "image-classifier" "squeezenet11" squeezenet1_1.onnx
 $ npx wrangler constellation model list "image-classifier"
@@ -107,17 +107,16 @@ Take note of the `id` field as this will be the model ID.
 
 The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.org/) dataset. Make a new `src` folder in your `image-classifier-worker` project directory. Then download the the list of 1,000 image classes that SqueezeNet was trained for:
 
-```bash
+```sh
 $ mkdir src
-$ wget -O src/imagenet.ts \
-  https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
+$ wget -O src/imagenet.ts https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
 ```
 
 ## Install modules
 
 In your `image-classifier-worker` Worker, install [pngjs](https://github.com/pngjs/pngjs), a PNG decoder, and [string-to-stream](https://github.com/feross/string-to-stream):
 
-```bash
+```sh
 $ npm install string-to-stream --save-dev
 $ npm install pngjs --save-dev
 ```
@@ -282,7 +281,7 @@ export interface Env {
 
 In your `image-classifier-worker` Worker, download some test `224`x`244` PNG images you can use for tests.
 
-```bash
+```sh
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/8b78a6fb-44ac-4a97-121b-fb8f47f1e000/public -O cat.png
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/05c265ae-d3c0-4114-208b-a2d7709cc100/public -O house.png
 $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/4152ee23-f9af-4b21-a636-600e33883400/public -O mountain.png
@@ -292,14 +291,25 @@ $ wget https://imagedelivery.net/WPOeHKUnTTahhk4F5twuvg/4152ee23-f9af-4b21-a636-
 
 Start a local server to test your `image-classifier-worker` Worker by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
-```bash
+```sh
+$ npx wrangler dev --remote
+⬣ Listening at http://0.0.0.0:8787
+```
+
+{{<Aside type="note">}}
+
+If you're still using Wrangler v2 then run:
+
+```sh
 $ npx wrangler dev
 ⬣ Listening at http://0.0.0.0:8787
 ```
 
+{{</Aside>}}
+
 To classify some test images, run the following commands in your `image-classifier-worker` Worker:
 
-```bash
+```sh
 $ curl http://0.0.0.0:8787 -F file=@cat.png
 {"id":"n02124075","index":285,"name":"Egyptian cat","probability":0.5356272459030151}
 
@@ -316,7 +326,7 @@ Your image classifier is ready. Run it through other `224`x`244` PNG images of y
 
 When you are ready, deploy your Worker:
 
-```bash
+```sh
 $ npx wrangler publish
 ```
 
