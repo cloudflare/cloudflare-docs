@@ -55,7 +55,7 @@ You will also need a GitHub account and a repository for this tutorial. If you d
 
 First, create a webhook for your repository to post updates to your Worker. Inside of your Worker, you will then parse the updates. Finally, you will send a `POST` request to Twilio to send a text message to you.
 
-You can reference the finished code at this [GitHub repository](https://github.com/rickyrobinett/cloudflare-github-twilio-notifications).
+You can reference the finished code at this [GitHub repository](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/github-sms-notifications-using-twilio).
 
 ---
 
