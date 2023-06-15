@@ -8,37 +8,66 @@ meta:
 
 # Get started guide
 
-This guide will instruct you through setting up a Cloudflare account to deploying your first Worker. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
+This guide will instruct you through setting up and deploying your first Worker. 
+
+This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 
 {{<Aside type="note" header="Try the Playground">}}
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is a simple, instant way to preview and test a Workers script directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser against any site.
 
 {{</Aside>}}
 
+## Get started in the dashboard
+
+By following this guide, you will create a Worker using the command line. To create your first Worker using the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** > **Create application**.
+3. Select **Create Worker** > **Deploy**.
+
 ## 1. Create a new project
 
-C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible. To get started, open a terminal window and run with `npm`:
+C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible. To get started, ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
+
+Open a terminal window and run C3 with `npm`:
 
 ```sh
-$ npm create cloudflare
+$ npm create cloudflare@latest
 ```
 
 or `yarn`:
 
 ```sh
-$ yarn create cloudflare
+$ yarn create cloudflare@latest
 ```
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through a setup wizard.
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
-Once your project has been configured and scaffolded, you will be asked if you would like to deploy the project to Cloudflare. If you choose not to deploy, you can navigate to the newly created project folder to begin development. Otherwise, you'll be asked to authenticate (if not logged in already), and your project will be deployed.
+For the purpose of this guide, set up a basic Worker:
+
+1. Name your new Worker directory by specifying where you want to create your application.
+2. Select `"Hello World" script` as the type of application you want to create.
+3. Answer `no` to using TypeScript.
+
+You will be asked if you would like to deploy the project to Cloudflare. 
+
+* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project). 
+* If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
+
+In your project directory, C3 has generated the following:
+
+1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
+2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/learning/migrate-to-module-workers/) syntax.
+3. `package.json`: A minimal Node dependencies configuration file.
+4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
+5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
 
 ## 2. Develop with Wrangler CLI
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects. Projects created via C3 will install Wrangler in the project by default.
+The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. C3 will install Wrangler in projects by default.
 
-After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project folder to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
+After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
 ```js
 $ npx wrangler dev
@@ -58,17 +87,13 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 With your new project generated and running, you can begin to write and edit your code.
 
-After running the `wrangler init` command to generate your Worker, the `src/index.ts` file will be populated with the code below:
+Find the `src/worker.js` file. `worker.js` will be populated with the code below:
 
 ```js
 export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext
-  ): Promise<Response> {
-    return new Response("Hello World!");
-  },
+	async fetch(request, env, ctx) {
+		return new Response('Hello World!');
+	},
 };
 ```
 
@@ -92,16 +117,13 @@ The Workers runtime expects `fetch` events to return a `Response` object. In thi
 
 To review code changes in real time, rewrite the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
 
-To experiment with more Workers, run C3 again for more examples or refer to [Workers Examples](/workers/examples/) in our documentation.
+To experiment with more Workers code, refer to [Workers Examples](/workers/examples/).
 
 ## 4. Deploy your project
 
-If you did not deploy previously via C3, you can deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+If you did not deploy your Worker during [step 1](/workers/get-started/guide/#1-create-a-new-project), deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
----
-header: Deploy to workers.dev
----
 $ npx wrangler deploy
 ```
 
@@ -155,6 +177,6 @@ The code block consists of 4 parts:
 
 4. The `await worker.fetch()` function, for checking the response received corresponds with what you were expecting.
 
-## Next steps
+## Related resources
 
 To do more with Workers, explore the [Tutorials](/workers/tutorials/) and [Examples](/workers/examples/).

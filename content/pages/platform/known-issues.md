@@ -45,7 +45,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - When adding a custom domain, the domain will not verify if Cloudflare cannot validate a request for an SSL certificate on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/acme-challenge/*`.
 
-- [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to SSL for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
+- [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
 ## Pages Functions
 

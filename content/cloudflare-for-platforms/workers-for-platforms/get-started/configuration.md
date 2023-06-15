@@ -140,7 +140,7 @@ async function handleRequest(request) {
 
 ## 5. Test a request
 
-You will now send a request to the route your dispatch Worker is on. You should receive the response (`Hello world`) you created in your user Worker (`customer-worker-1`) that you call from your dynamic dispatch Worker (the Worker you made in step 3).
+You will now send a request to the route your dynamic dispatch Worker is on. You should receive the response (`Hello world`) you created in your user Worker (`customer-worker-1`) that you call from your dynamic dispatch Worker (the Worker you made in step 3).
 
 To test your user Worker:
 

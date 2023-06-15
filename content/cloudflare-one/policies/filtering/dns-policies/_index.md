@@ -73,6 +73,8 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
 
+{{<Aside>}}The Override action cannot be used with selectors evaluated after resolution, including **Authoritative Nameserver IP**, **Resolved IP**, and any DNS response values.{{</Aside>}}
+
 ### SafeSearch
 
 SafeSearch is a feature of search engines that helps you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children or at work.
@@ -187,7 +189,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Host
 
-Use this selector to match against only the hostname specified. — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
+Use this selector to match against only the hostname specified — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
 | UI name | API example                      |
 | ------- | -------------------------------- |

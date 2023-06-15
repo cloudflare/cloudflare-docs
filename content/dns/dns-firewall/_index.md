@@ -40,6 +40,6 @@ DNS Firewall provides the following benefits while allowing your organization to
 * Global distribution
 * Enhanced performance
 * Bandwidth savings
-* Rate limiting per data center
+* [Rate limiting per data center](/dns/dns-firewall/setup/#additional-options)
 * Minimum and maximum cache TTL specification
 * DNS [ANY](https://datatracker.ietf.org/doc/html/rfc8482) query type block

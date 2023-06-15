@@ -30,6 +30,80 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 
 Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
 
+### Configure operating system for DoH
+
+<details>
+<summary>Windows 11</summary>
+<div>
+
+1. Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
+
+   1. Run the following command to obtain your `A` record values:
+
+   ```bash
+   nslookup -type=A <your-subdomain>.cloudflare-gateway.com
+   ```
+
+   2. Obtain your `AAAA` record values.
+
+   ```bash
+   nslookup -type=AAAA <your-subdomain>.cloudlfare-gateway.com
+   ```
+
+   3. Copy the resulting IP addresses.
+
+2. Add the addresses to your list of known DoH servers.
+
+   1. Run the following command for each address:
+
+   ```bash
+   Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
+   ```
+
+   2. Confirm the addresses were added.
+
+   ```bash
+   Get-DnsClientDohServerAddress
+   ```
+
+3. In Windows, go to **Settings** > **Network & internet** > your active Internet connection. This option may be either **Ethernet** or **Wi-Fi**.
+4. Under **DNS server assignment**, select **Edit**.
+5. In the drop-down menu, choose _Manual_.
+6. Enable **IPv4**.
+7. In **Preferred DNS** and **Alternate DNS**, enter the IPv4 addresses from your `A` record command. Set **DNS over HTTPS** to _On (automatic template)_.
+8. Enable **IPv6**.
+9. In **Preferred DNS** and **Alternate DNS**, enter the IPv6 addresses from your `AAAA` record command. Set **DNS over HTTPS** to _On (automatic template)_.
+
+</div>
+</details>
+
+<details>
+<summary>Windows Server 2022</summary>
+<div>
+
+Obtain the `A` and `AAAA` record values associated with your location's DoH endpoint.
+
+1. Run the following command to obtain your `A` record values:
+
+```bash
+nslookup -type=A <your-subdomain>.cloudflare-gateway.com
+```
+
+2. Obtain your `AAAA` record values.
+
+```bash
+nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
+```
+
+3. Copy the resulting IP addresses.
+4. [Add the addresses](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#add-a-new-doh-server-to-the-list-of-known-servers) to your list of known DoH servers.
+5. [Configure the Windows Server client](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configure-the-dns-client-to-support-doh) or [set up a Group Policy](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support#configuring-doh-through-group-policy) to use DoH.
+
+For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
+
+</div>
+</details>
+
 ## Filter DoH requests by user
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.
@@ -84,7 +158,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/o
      -H "Content-Type: application/json" \
 ```
 
-If you get an `access.api.error.service_token_not_found` error,  check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
 
 <details>
 <summary>Example response</summary>
@@ -238,4 +312,3 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </details>
 
 You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
-
