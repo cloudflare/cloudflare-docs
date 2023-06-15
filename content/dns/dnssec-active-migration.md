@@ -17,9 +17,9 @@ This procedure involves cross-importing the zone signing keys (ZSKs) from one pr
 This is an advanced procedure and assume some familiarity with [DNS concepts](/dns/concepts/), [API operations](/fundamentals/api/), and basic setup steps. Assumed knowledge that is not detailed in this tutorial can be referenced through the linked content in each of the steps.
 
 ## Requirements
-* The provider you are migrating from must allow you to add DNSKEY records and use these records in responses to DNS queries.
+* The provider you are migrating from must allow you to add DNSKEY records on the zone apex and use these records in responses to DNS queries.
 
-## Step 1 - Set up Cloudflare
+## 1. Set up Cloudflare
 
 1. [Add your zone to Cloudflare](/fundamentals/get-started/setup/add-site/).
 
@@ -29,7 +29,7 @@ This is an advanced procedure and assume some familiarity with [DNS concepts](/d
 
     To import the zone file using the API, refer to the [Import DNS Records endpoint](/api/operations/dns-records-for-a-zone-import-dns-records).
 
-3. Go to **DNS**>**Settings**, and select **Enable DNSSEC**. Or use the following API request.
+3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following API request.
 
 ```bash
 curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec" \
@@ -49,7 +49,7 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 --data '{"dnssec_multi_signer": true}'
 ```
 
-## Step 2 - Cross-import ZSKs
+## 2. Cross-import ZSKs
 
 1. Add the ZSK of your previous provider to Cloudflare by creating a DNSKEY record on your zone.
 
@@ -86,14 +86,14 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
 3. Add Cloudflare's ZSK that you fetched in the previous step to your previous provider.
 
-## Step 3 - Set up registrar
+## 3. Set up registrar
 
 1. Add Cloudflare DS record to your registrar. You can see your Cloudflare DS record on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns) by going to **DNS** > **Settings** > **DS Record**.
 2. Add Cloudflare assigned nameservers to your registrar. You can see your Cloudflare nameservers by going to **DNS** > **Records**.
 
-At this point your zone is in a multi-signer DNSSEC setup.
+At this point your zone is in a [multi-signer DNSSEC setup].
 
-## Step 4 - Remove previous provider
+## 4. Remove previous provider
 
 1. Remove your previous provider's DS record from your registrar.
 2. Remove your previous provider's nameservers from your registrar.
