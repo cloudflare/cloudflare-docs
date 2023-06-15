@@ -299,7 +299,7 @@ With all these fields submitted, it is time to deploy your Workers serverless fu
 
 ```sh
 ---
-header: Publish your Worker
+header: Deploy your Worker
 ---
 $ npx wrangler deploy
 ```
