@@ -24,6 +24,8 @@ jobs:
 
       - name: Install Dependencies
         run: npm install --no-package-lock --ignore-scripts --omit=dev @actions/core @actions/github
+        
+      - name: list dependences
         run: npm list
 
       - name: Add product labels
