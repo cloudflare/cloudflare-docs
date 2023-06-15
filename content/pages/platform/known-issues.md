@@ -45,7 +45,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - When adding a custom domain, the domain will not verify if Cloudflare cannot validate a request for an SSL certificate on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/acme-challenge/*`.
 
-- [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to SSL for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
+- [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
 ## Pages Functions
 
@@ -60,8 +60,8 @@ Here are some known bugs and issues with Cloudflare Pages:
 If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams-access/)] for your preview deployments and your `*.pages.dev` domain, you must:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. From Account Home, select **Pages**.
-3. Select your Pages project.
+2. From Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Pages project.
 4. Go to **Settings** > **Enable access policy**.
 5. Select **Edit** on the Acccess policy created for your preview deployments.
 6. In Edit, go to **Overview**.

@@ -46,7 +46,7 @@ When testing against another origin, you may see either an IPv4 or IPv6 address.
 Dedicated egress IPs do not apply to:
 
 - DNS queries resolved through Gateway
-- Origins connected with Cloudflare Tunnel or Magic WAN
+- Zero Trust networks connected via Cloudflare Tunnel or Magic WAN
 
 These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
 

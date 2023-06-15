@@ -24,7 +24,7 @@ ___
 
 Une [attaque par déni de service distribué](https://www.cloudflare.com/ddos) (DDoS, Distributed Denial of Service) est une attaque qui cherche à rendre un service en ligne indisponible pour ses utilisateurs finaux. Pour toutes les offres, Cloudflare propose une atténuation illimitée des attaques DDoS des couches 3, 4 et 7. Cloudflare ne facture pas le service en fonction de l’ampleur de l’attaque et n’applique aucun plafond au regard de l’ampleur, du type ou de la durée de cette dernière.
 
-Le réseau de Cloudflare est conçu pour détecter et atténuer automatiquement les [attaques DDoS](https://www.cloudflare.com/ddos) importantes. La mise en cache de votre contenu sur Cloudflare protège également votre site web contre les attaques DDoS de moindre envergure, mais les actifs non mis en cache peuvent nécessiter des [opérations manuelles supplémentaires](https://support.cloudflare.com/hc/articles/200170196).
+Le réseau de Cloudflare est conçu pour détecter et atténuer automatiquement les [attaques DDoS](https://www.cloudflare.com/ddos) importantes. La mise en cache de votre contenu sur Cloudflare protège également votre site web contre les attaques DDoS de moindre envergure, mais les actifs non mis en cache peuvent nécessiter des [opérations manuelles supplémentaires](/ddos-protection/best-practices/respond-to-ddos-attacks/).
 
 Par ailleurs, Cloudflare aide à atténuer les attaques DDoS de moindre ampleur :
 
@@ -87,7 +87,7 @@ ___
 
 ## Ressources associées
 
--   [Répondre aux attaques DDoS](https://support.cloudflare.com/hc/articles/200170196)
+-   [Répondre aux attaques DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [Meilleures pratiques : Mesures de prévention contre les attaques DDoS](https://support.cloudflare.com/hc/articles/200170166)
 -   [Utilisation des fichiers journaux de Cloudflare pour enquêter sur le trafic d’une attaque DDoS (Enterprise uniquement)](https://support.cloudflare.com/hc/fr-fr/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [Qu’est-ce qu’une attaque DDoS ?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

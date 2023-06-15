@@ -32,7 +32,7 @@ To create a new custom rate limiting ruleset:
 
 6. In the rule creation page, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create rate limiting rule at the account level in the Cloudflare dashboard](/waf/static/custom-rules/rate-limiting-create-account.png)
+    ![Create rate limiting rule at the account level in the Cloudflare dashboard](/images/waf/custom-rules/rate-limiting-create-account.png)
 
 7. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 

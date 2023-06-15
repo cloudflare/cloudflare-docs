@@ -60,4 +60,4 @@ ___
 
 ## Related Resources
 
--   [Caching Cloudflare CDN](/cache/about/default-cache-behavior/)
+-   [Caching Cloudflare CDN](/cache/concepts/default-cache-behavior/)

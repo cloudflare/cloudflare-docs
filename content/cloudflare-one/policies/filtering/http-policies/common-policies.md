@@ -32,6 +32,8 @@ Block a section of a site without blocking the entire site. For example, you can
 
 {{<render file="gateway/_content-categories.md">}}
 
+{{<render file="gateway/_block-applications.md">}}
+
 {{<render file="gateway/_policies-optional.md">}}
 
 ## Skip inspection for groups of applications
@@ -72,14 +74,7 @@ When accessing origin servers with certificates not signed by a public certifica
 | -------- | -------- | ------------------- | -------------- |
 | Domain   | in       | `internal.site.com` | Do Not Inspect |
 
-## Block file types
-
-Block the upload or download of files based on their type.
-
-| Selector           | Operator | Value                                 | Logic | Action |
-| ------------------ | -------- | ------------------------------------- | ----- | ------ |
-| Upload File Type   | in       | Microsoft Office Word Document (docx) | And   | Block  |
-| Download File Type | in       | PDF (pdf)                             |       |        |
+{{<render file="gateway/_block-file-types.md">}}
 
 ## Block Google services
 

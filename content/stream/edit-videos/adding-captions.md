@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how to
+pcx_content_type: how-to
 title: Add captions
 weight: 5
 ---

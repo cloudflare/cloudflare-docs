@@ -73,6 +73,10 @@ These options allow you to create and name a new project from the CLI or dashboa
 
 ## Cleaning up your old application and assigning the domain
 
-After you have deployed your application, navigate to [Workers](https://dash.cloudflare.com/?to=/:account/workers) and remove your old Workers project by going to your **Workers project** > **Settings** > **Delete**.
+After you have deployed your Pages application, to delete your Worker:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Workers & Pages** and in **Overview**, select your Worker.
+3. Go to **Manage service** > **Delete**.
 
 With your Workers application removed, requests will go to your Pages application. You have successfully migrated your Workers Sites project to Cloudflare Pages by completing this guide.

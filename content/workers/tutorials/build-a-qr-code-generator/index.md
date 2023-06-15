@@ -63,7 +63,7 @@ When a Worker receives a `fetch` event, the script must use `event.respondWith` 
 
 ## Build
 
-Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, npm packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing serverless functions, you can use Workers to [build full applications](/workers/tutorials/build-a-slackbot/) using the same tooling and process as in this tutorial.
+Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, `npm` packages, and [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing serverless functions, you can use Workers to [build full applications](/workers/tutorials/build-a-slackbot/) using the same tooling and process as in this tutorial.
 
 The QR code generator you will build in this tutorial will be a serverless function that runs on a single route and receives requests. Each request will contain a text message (a URL, for example), which the function will encode into a QR code. The function will then respond with the QR code in PNG image format.
 
@@ -141,7 +141,7 @@ header: Installing the qr-image package
 $ npm install --save qr-image
 ```
 
-To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/wrangler-legacy/webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/wrangler-legacy/configuration/) in the Wrangler documentation.
+To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/wrangler/migration/v1-to-v2/eject-webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) in the Wrangler documentation.
 
 ```toml
 ---

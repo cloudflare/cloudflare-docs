@@ -48,7 +48,7 @@ An example URL with these four segments looks like:
 https://www.example.com:443/image.png?parameter1=value1
 ```
 
-The _scheme_ and _port_ segments are optional. If omitted, _scheme_ matches both _http://_ and _https://_ protocols. If no _port_ is specified, the rule will match all ports.
+The `scheme` and `port` segments are optional. If omitted, _scheme_ matches both `http://` and `https://` protocols. If no `port` is specified, the rule will match all ports.
 
 Finally, you can disable a page rule at any time. While a rule is disabled, actions won’t trigger, but the rule still appears in the **Rules** app in the **Page Rules** tab, is editable, and counts against the number of rules allowed for your domain. The _Save as Draft_ option creates a page rule that is disabled by default.
 
@@ -61,9 +61,9 @@ The steps to create a page rule are:
 1.  Log in to the Cloudflare dashboard.
 2.  Select the domain where you want to add the page rule.
 3.  Click the **Rules** app.
-4.  In the **Page Rules** tab**,** click **Create Page Rule**. The _Create Page Rule for <your domain>_ dialog opens.
-5.  Under **If the URL matches**, enter the URL or URL pattern that should match the rule. [_Learn more about wildcard matching_](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-#h_6N5SySNYCjYUUnCKnC1Ea6)
-6.  Next, under **Then the settings are:** click **+ Add a Setting** and select the desired setting from the dropdown. You can include more than one setting per rule. Learn more about settings in the [summary below](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-#h_18YTlvNlZET4Poljeih3TJ).
+4.  In the **Page Rules** tab, click **Create Page Rule**. The _Create Page Rule for <your domain>_ page opens.
+5.  Under **If the URL matches**, enter the URL or URL pattern that should match the rule. [_Learn more about wildcard matching_](#referencing-wildcard-matches)
+6.  Next, under **Then the settings are:** click **+ Add a Setting** and select the desired setting from the dropdown. You can include more than one setting per rule. Learn more about settings in the [summary below](#summary-of-page-rules-settings).
 7.  In the **Order** dropdown, specify the desired order: _First, Last_ or _Custom_.
 8.  To save, click one of the following options:
     -   **Save as Draft** to save the rule and leave it disabled.
@@ -78,7 +78,7 @@ for example, and this will work.
 
 {{<Aside type="tip">}}
 Consult [Recommended Page Rules to
-Consider](https://support.cloudflare.com/hc/en-us/articles/224509547 "Recommended Page Rules to Consider")
+Consider](/support/page-rules/recommended-page-rules-to-consider/)
 for ideas about the types of page rules you can create.
 {{</Aside>}}
 
@@ -119,14 +119,14 @@ _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/f
 
 ### Helpful tips
 
--   To match both _http_ and _https_, just write _example.com_. It is not necessary to write _\*example.com_.
--   To match every page on a domain, write _example.com/\*_. Just writing _example.com_ won’t work.
--   To match every page on a domain and it's subdomains, write \*_example.com/\*_. Just writing _example.com_ won’t work.
+-   To match both `http` and `https`, just write `example.com`. It is not necessary to write `*example.com`.
+-   To match every page on a domain, write `example.com/*`. Just writing _example.com_ won’t work.
+-   To match every page on a domain and it's subdomains, write `*_example.com/*`. Just writing _example.com_ won’t work.
 -   A wildcard (\*) in a Page Rule URL will match even if no characters are present, and may include any part of the URL, including the query string.
 
 ### Referencing wildcard matches
 
-You can reference a matched wildcard later using the _$X_ syntax. _X_ indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
+You can reference a matched wildcard later using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
 
 This is specifically useful with the _Forwarding URL_ setting. For example:
 
@@ -154,7 +154,7 @@ which ends up being forwarded to:
 http://example.com/images/cloud/flare.jpg
 ```
 
-To use a literal _$_ character in the forwarding URL, escape it by adding a backslash (\\) in front: _\\$_.
+To use a literal `$` character in the forwarding URL, escape it by adding a backslash (\\) in front: `\$`.
 
 {{<Aside type="warning">}}
 Avoid creating a redirect where the domain points to itself as the
@@ -176,41 +176,41 @@ Below is the full list of settings available, presented in the order that they a
 | **Setting** | **Description** | **Plans** |
 | --- | --- | --- |
 | Always Use HTTPS |  Turn on or off the **[Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https)** feature of the **Edge Certificates** tab in the **Cloudflare SSL/TLS** app. If enabled, any _http://_ URL is converted to _https://_ through a 301 redirect.<br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
-| Auto Minify | Indicate which file extensions to minify automatically. [Learn more](https://support.cloudflare.com/hc/articles/200168196). | All |
+| Auto Minify | Indicate which file extensions to minify automatically. [Learn more](/support/speed/optimization-file-size/using-cloudflare-auto-minify/). | All |
 | Automatic HTTPS Rewrites | Turn on or off the **Cloudflare Automatic HTTPS Rewrites** feature of the **Edge Certificates** tab in **Cloudflare SSL/TLS** app. [Learn more](/ssl/edge-certificates/additional-options/automatic-https-rewrites). | All |
-| Browser Cache TTL | Control how long resources cached by client browsers remain valid. The Cloudflare UI and API both prohibit setting **Browser Cache TTL** to _0_ for non-Enterprise domains. [Learn more](/cache/about/edge-browser-cache-ttl). | All |
+| Browser Cache TTL | Control how long resources cached by client browsers remain valid. The Cloudflare UI and API both prohibit setting **Browser Cache TTL** to _0_ for non-Enterprise domains. [Learn more](/cache/how-to/edge-browser-cache-ttl/). | All |
 | Browser Integrity Check | Inspect the visitor's browser for headers commonly associated with spammers and certain bots. [Learn more](https://support.cloudflare.com/hc/articles/200170086). | All |
 | Bypass Cache on Cookie | Bypass Cache and fetch resources from the origin server if a regular expression matches against a cookie name present in the request.<br/>If you add both this setting and the _Cache On Cookie_ setting to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_.<br/>_Refer to the Additional details below to learn about limited regular expression support._ | Business and Enterprise |
-| Cache By Device Type | Separate cached content based on the visitor’s device type. [Learn more.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only) | Enterprise |
-| Cache Deception Armor | Protect from web cache deception attacks while still allowing static assets to be cached. This setting verifies that the URL's extension matches the returned _Content-Type_. [Learn more.](/cache/about/cache-deception-armor)| All |
-| Cache Key | Also referred to as _Custom Cache Key_.<br/>Control specifically what variables to include when deciding which resources to cache. This allows customers to determine what to cache based on something other than just the URL. [Learn more](/cache/about/cache-keys). | Enterprise |
-| Cache Level | Apply custom caching based on the option selected:<br/>**Bypass** \- Cloudflare does not cache.<br/>**No Query String** - Delivers resources from cache when there is no query string.<br/>**Ignore Query String** \- Delivers the same resource to everyone independent of the query string.<br/>**Standard -** Caches all static content that has a query string.<br/>**Cache Everything** \-  Treats all content as static and caches all file types beyond the [Cloudflare default cached content](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respects cache headers from the origin web server unless **Edge Cache TTL** is also set in the Page Rule. When combined with an **Edge Cache TTL** > _0_, **Cache Everything** removes cookies from the origin web server response. | All |
+| Cache By Device Type | Separate cached content based on the visitor’s device type. [Learn more.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only) | Enterprise |
+| Cache Deception Armor | Protect from web cache deception attacks while still allowing static assets to be cached. This setting verifies that the URL's extension matches the returned _Content-Type_. [Learn more.](/cache/cache-security/cache-deception-armor/)| All |
+| Cache Key | Also referred to as _Custom Cache Key_.<br/>Control specifically what variables to include when deciding which resources to cache. This allows customers to determine what to cache based on something other than just the URL. [Learn more](/cache/how-to/cache-keys/). | Enterprise |
+| Cache Level | Apply custom caching based on the option selected:<br/>**Bypass** \- Cloudflare does not cache.<br/>**No Query String** - Delivers resources from cache when there is no query string.<br/>**Ignore Query String** \- Delivers the same resource to everyone independent of the query string.<br/>**Standard -** Caches all static content that has a query string.<br/>**Cache Everything** \-  Treats all content as static and caches all file types beyond the [Cloudflare default cached content](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respects cache headers from the origin web server unless **Edge Cache TTL** is also set in the Page Rule. When combined with an **Edge Cache TTL** > _0_, **Cache Everything** removes cookies from the origin web server response. | All |
 | Cache on Cookie | Apply the _Cache Everything_ option (_Cache Level_ setting) based on a regular expression match against a cookie name.<br/>If you add both this setting and _Bypass Cache on Cookie_ to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_. |  Business and above |
-| Cache TTL by Status Code | Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.   Setting cache TTL based on response status overrides the default cache behavior (standard caching) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a Cache Level of Cache Everything using a Page Rule . Setting no-store Cache-Control or a low TTL (using max-age/s-maxage) increases requests to origin web servers and decreases performance. [Learn more](https://support.cloudflare.com/hc/en-us/articles/360043842472-Configuring-cache-TTL-by-status-code). | Enterprise |
+| Cache TTL by Status Code | Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.   Setting cache TTL based on response status overrides the default cache behavior (standard caching) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a Cache Level of Cache Everything using a Page Rule . Setting no-store Cache-Control or a low TTL (using max-age/s-maxage) increases requests to origin web servers and decreases performance. [Learn more](/cache/how-to/configure-cache-status-code). | Enterprise |
 | Disable Apps | Turn off all active **Cloudflare Apps**. | All |
-| Disable Performance | Turn off [Auto Minify](https://support.cloudflare.com/hc/articles/200168196), [Rocket Loader](https://support.cloudflare.com/hc/articles/200168056), [Mirage](https://support.cloudflare.com/hc/articles/200403554), and [Polish](https://support.cloudflare.com/hc/articles/360000607372)| All|
-| Disable Railgun | Turn off the **Railgun** feature of the Cloudflare **Speed** app | Business and above |
-| Disable Security| Turn off [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016), [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128), [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036), [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016) | All |
-| Edge Cache TTL | Specify how long to cache a resource in the Cloudflare global network. _Edge Cache TTL_ isn't visible in response headers. | All |
-| Email Obfuscation | Turn on or off the **Cloudflare Email Obfuscation** feature of the **Cloudflare Scrape Shield** app. [Learn more.](https://support.cloudflare.com/hc/articles/200170016) | All |
-| Forwarding URL | Redirects one URL to another using an _HTTP 301/302 redirect_. _Refer to [Understand wildcard matching and referencing above](https://support.cloudflare.com/hc/articles/218411427#h_6N5SySNYCjYUUnCKnC1Ea6)._ | All |
-| Host Header Override | Apply a specific host header. [Learn more](https://support.cloudflare.com/hc/articles/206652947). | Enterprise |
+| Disable Performance | Turn off [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/), [Rocket Loader](/fundamentals/speed/rocket-loader/), [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/), and [Polish](/images/polish)| All|
+| Disable Railgun (deprecated) | Turn off the **Railgun** feature of the Cloudflare **Speed** app | Business and above |
+| Disable Security| Turn off [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), [Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/), [Scrape Shield](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/), [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/) | All |
+| Edge Cache TTL | Specify how long to cache a resource in the Cloudflare edge network. _Edge Cache TTL_ isn't visible in response headers. | All |
+| Email Obfuscation | Turn on or off the **Cloudflare Email Obfuscation** feature of the **Cloudflare Scrape Shield** app. [Learn more.](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/) | All |
+| Forwarding URL | Redirects one URL to another using an `HTTP 301/302 redirect`. _Refer to [Understand wildcard matching and referencing above](#understand-wildcard-matching-and-referencing)._ | All |
+| Host Header Override | Apply a specific host header. [Learn more](/support/page-rules/using-page-rules-to-rewrite-host-headers/). | Enterprise |
 | IP Geolocation Header | Cloudflare adds a _CF-IPCountry_ HTTP header containing the country code that corresponds to the visitor. | All |
-| Mirage | Turn on or off **Cloudflare Mirage** of the Cloudflare **Speed** app. [Learn more](https://support.cloudflare.com/hc/articles/200403554). | Pro and above |
+| Mirage | Turn on or off **Cloudflare Mirage** of the Cloudflare **Speed** app. [Learn more](/support/speed/optimization-delivery/configuring-cloudflare-mirage/). | Pro and above |
 | Opportunistic Encryption | Turn on or off the **Cloudflare Opportunistic Encryption** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app. [Learn more](/ssl/edge-certificates/additional-options/opportunistic-encryption). | All |
-| Origin Cache Control | [Origin Cache Control](/cache/about/cache-control) is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |
+| Origin Cache Control | [Origin Cache Control](/cache/concepts/cache-control/) is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |
 | Origin Error Page Pass-thru | Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin. | Enterprise |
-| Polish | Apply options from the **Polish** feature of the Cloudflare **Speed** app. [Learn more](/images/polish). | Pro and above |
-| Query String Sort | Turn on or off the reordering of query strings. When query strings have the same structure, caching improves. [Learn more](/cache/about/query-string-sort/). | Enterprise |
+| Polish | Apply options from the **Polish** feature of the Cloudflare **Speed** app. [Learn more](/images/polish/). | Pro and above |
+| Query String Sort | Turn on or off the reordering of query strings. When query strings have the same structure, caching improves. [Learn more](/cache/advanced-configuration/query-string-sort/). | Enterprise |
 | Resolve Override | Change the origin address to the value specified in this setting. [Learn more](https://support.cloudflare.com/hc/articles/206190798). | Enterprise |
 | Respect Strong ETags | Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. [Learn more](/cache/reference/etag-headers/). | Enterprise |
 | Response Buffering | Turn on or off whether Cloudflare should wait for an entire file from the origin server before forwarding it to the site visitor. By default, Cloudflare sends packets to the client as they arrive from the origin server. |  Enterprise |
-| Rocket Loader | Turn on or off **Cloudflare Rocket Loader** in the Cloudflare **Speed** app**.** [Learn more](https://support.cloudflare.com/hc/articles/200168056). | All |
-| Security Level | Control options for the **Security Level** feature from the **Security** app. [Learn more](https://support.cloudflare.com/hc/articles/200170056). | All |
-| Server Side Excludes | Turn on or off the **Server Side Excludes** feature of the Cloudflare **Scrape Shield** app. [Learn more](https://support.cloudflare.com/hc/articles/200170036). |  All |
+| Rocket Loader | Turn on or off **Cloudflare Rocket Loader** in the Cloudflare **Speed** app**.** [Learn more](/fundamentals/speed/rocket-loader/). | All |
+| Security Level | Control options for the **Security Level** feature from the **Security** app. [Learn more](/support/firewall/settings/understanding-the-cloudflare-security-level/). | All |
+| Server Side Excludes | Turn on or off the **Server Side Excludes** feature of the Cloudflare **Scrape Shield** app. [Learn more](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/). |  All |
 | SSL | Control options for the **SSL** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app. [Learn more](/ssl/origin-configuration/ssl-modes). | All |
-| True Client IP Header | Turn on or off the **True-Client-IP Header** feature of the Cloudflare **Network** app. [Learn more](https://support.cloudflare.com/hc/articles/206776727). | Enterprise |
-| Web Application Firewall (previous version) | Turn on or off **WAF managed rules** as defined in **Security** > **WAF** > **Managed rules**. [Learn more](https://support.cloudflare.com/hc/articles/200172016).<br/>You cannot enable or disable individual WAF managed rules via page rules. | Pro and above |
+| True Client IP Header | Turn on or off the **True-Client-IP Header** feature of the Cloudflare **Network** app. [Learn more](/support/network/understanding-the-true-client-ip-header/). | Enterprise |
+| Web Application Firewall (previous version) | Turn on or off **WAF managed rules** as defined in **Security** > **WAF** > **Managed rules**. [Learn more](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/).<br/>You cannot enable or disable individual WAF managed rules via page rules. | Pro and above |
 
 ___
 
@@ -228,7 +228,7 @@ When updating the same rule, you can remove one of the wildcard in the **If the 
 
 If you do so, the $2 placeholder reference a wildcard that does not exist anymore, and as such, an "_Error 500 (Internal server error)"_ is thrown when a URL triggers the page rule.
 
-**Resolution**: Update the Page Rule and remove the reference _$2_ to the second wildcard. If there is only one wildcard, then only _$1_ can be used.
+**Resolution**: Update the Page Rule and remove the reference `$2` to the second wildcard. If there is only one wildcard, then only `$1` can be used.
 
 ___
 
@@ -240,8 +240,8 @@ This setting is available to business and enterprise customers.
 
 The **Bypass Cache on Cookie** setting supports basic regular expressions (regex) as follows:
 
--   A pipe operator (represented by |) to match multiple cookies using _OR_ boolean logic. For example, bypass=.\*_|PHPSESSID=.\*_ would bypass the cache if either a cookie called bypass or PHPSESSID were set, regardless of the cookie's value.
--   The wildcard operator (represented by .\*), such that a rule value of “t.\*st=” would match both a cookie called test and one called teeest.
+-   A pipe operator (represented by |) to match multiple cookies using _OR_ boolean logic. For example, `bypass=.*|PHPSESSID=.*` would bypass the cache if either a cookie called bypass or PHPSESSID were set, regardless of the cookie's value.
+-   The wildcard operator (represented by .\*), such that a rule value of `t.*st=` would match both a cookie called test and one called teeest.
 
 Limitations include:
 
@@ -251,9 +251,9 @@ Limitations include:
 
 To learn how to configure **Bypass Cache on Cookie** with a variety of platforms, review these articles:
 
--   [Caching Anonymous Page Views with WordPress or WooCommerce](https://support.cloudflare.com/hc/articles/236166048)
--   [Caching Anonymous Page Views with Magento 1 and Magento 2](https://support.cloudflare.com/hc/articles/236168808)
--   [How do I cache static HTML?](https://support.cloudflare.com/hc/articles/202775670)
+-   [Caching Anonymous Page Views with WordPress or WooCommerce](/support/third-party-software/content-management-system-cms/caching-static-html-with-wordpresswoocommerce/)
+-   [Caching Anonymous Page Views with Magento 1 and Magento 2](/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/)
+-   [How do I cache static HTML?](/cache/concepts/customize-cache/)
 
 **Note:** If you add both this setting and the enterprise-only _Cache On Cookie_ setting to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_.
 
@@ -281,8 +281,8 @@ ___
 
 ## Related resources
 
--   [Recommended Page Rules to Consider](https://support.cloudflare.com/hc/articles/224509547)
--   [What subdomains are appropriate for orange/grey clouds?](https://support.cloudflare.com/hc/en-us/articles/200169626-What-subdomains-are-appropriate-for-orange-gray-clouds-)
--   [How do I use Cache Everything with Cloudflare?](https://support.cloudflare.com/hc/articles/202775670)
--   [How do I cache static HTML?](https://support.cloudflare.com/hc/articles/200172256)
--   [Offline error message when updating or accessing the admin section of my content management system](https://support.cloudflare.com/hc/articles/200169526)
+-   [Recommended Page Rules to Consider](/support/page-rules/recommended-page-rules-to-consider/)
+-   [What subdomains are appropriate for orange/grey clouds?](/dns/manage-dns-records/reference/proxied-dns-records/#limitations)
+-   [How do I use Cache Everything with Cloudflare?](/cache/concepts/customize-cache/)
+-   [How do I cache static HTML?](/cache/concepts/customize-cache/)
+-   [Offline error message when updating or accessing the admin section of my content management system](/support/third-party-software/content-management-system-cms/improving-web-security-for-content-management-systems-like-wordpress/)

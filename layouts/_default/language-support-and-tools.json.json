@@ -1,7 +1,7 @@
 {{- $files := slice -}}
 {{- range os.ReadDir "content/pages/_partials/_platform-language-support-and-tools" -}}
   {{- with $.Site.GetPage (path.Join "pages/_partials/_platform-language-support-and-tools/" .Name) -}}
-    {{- $files = $files | append (dict "major_version" .Params.major_version "enable_date" (time .Params.enable_date) "languages" .Params.languages "tools" .Params.tools "build_environment" .Params.build_environment) -}}
+    {{- $files = $files | append (dict "major_version" .Params.major_version "status" .Params.status "enable_date" (time .Params.enable_date) "languages" .Params.languages "tools" .Params.tools "build_environment" .Params.build_environment) -}}
   {{- end -}}
 {{- end -}}
 
