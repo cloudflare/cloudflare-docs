@@ -23,7 +23,7 @@ jobs:
           node-version: 18.1
 
       - name: Install Dependencies
-        run: npm install --ignore-scripts --omit=dev @actions/core @actions/github
+        run: npm install --no-package-lock --ignore-scripts --omit=dev @actions/core @actions/github
 
       - name: Add product labels
         env:
