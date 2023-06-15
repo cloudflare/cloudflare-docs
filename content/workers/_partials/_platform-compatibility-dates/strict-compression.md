@@ -13,4 +13,4 @@ enable_flag: "strict_compression_checks"
 disable_flag: "no_strict_compression_checks"
 ---
 
-Perform additional error checking in the Web Compression API and throw an error if a `DecompressionStream` has trailing data or gets closed before the full compressed data has been provided.
+Perform additional error checking in the Compression Streams API and throw an error if a `DecompressionStream` has trailing data or gets closed before the full compressed data has been provided.

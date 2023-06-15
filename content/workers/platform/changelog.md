@@ -13,7 +13,7 @@ rss: file
 - `AbortSignal.any()` is now available.
 - Updated V8 to 11.4.
 - The `URLSearchParams` class' `delete()` and `has()` methods now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change so is gated behind the new `urlsearchparams_delete_has_value_arg` and `url_standard` compatibility flags.
-- Added compatibility flag `strict_compression_checks` for additional `DecompressionStream` error checking.
+- Added compatibility flag [`strict_compression_checks`](/workers/platform/compatibility-dates/#strict-compression-error-checking) for additional `DecompressionStream` error checking.
 
 ## 2023-05-26
 
