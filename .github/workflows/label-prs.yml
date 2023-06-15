@@ -23,7 +23,10 @@ jobs:
           node-version: 18.1
 
       - name: Install Dependencies
-        run: npm install --no-package-lock --ignore-scripts --omit=dev @actions/core @actions/github
+        run: |
+          echo "@actions/core" >> package.json
+          echo "@actions/github" >> package.json
+          npm install
         
       - name: list dependences
         run: npm list
