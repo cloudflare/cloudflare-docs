@@ -8,6 +8,8 @@ meta:
 
 # Bringing Your Own IPs to Cloudflare
 
+TEST.
+
 With **Bringing Your Own IPs** (BYOIP), Cloudflare announces your IPs in all our locations. Use your IPs with Magic Transit, Spectrum, or CDN services.
 
 BYOIP is compatible with Magic Transit, Spectrum, and CDN services.
