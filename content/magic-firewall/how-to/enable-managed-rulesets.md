@@ -149,24 +149,24 @@ You can also use the dashboard to enable managed rulesets.
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Magic Firewall** > **Managed rules**.
 3. Select **Deploy managed ruleset**.
-4. The page will refresh and show you available rulesets configured by Cloudflare that are available to your account. Contact your account manager to get a list of all Magic Firewall Managed rulesets. Choose the ruleset you want with **Select ruleset**.
+4. The page will refresh and show you rulesets configured by Cloudflare that are available to your account. Choose the ruleset you want with **Select ruleset**. If you do not see the ruleset you want, contact your account manager to get a list of all Magic Firewall Managed rulesets.
 5. Under **Ruleset configuration**, configure the **Ruleset action** from the drop-down menu. Cloudflare recommends you change this setting to **Log** to evaluate how the ruleset impacts your traffic before deciding on an action. For more information, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 6. Still under **Ruleset configuration**, choose _Enabled_ from the dropdown-menu for the **Ruleset status**. This will apply an override to the default status of all the rules in the ruleset.
 7. Select **Deploy** to deploy the Magic Firewall Managed ruleset with no rule-level overrides.
 
 ### Add rule-level overrides
 
-If you implemented Cloudflare’s above recommendation for the ruleset configuration, the rules will be set to a **Log** action and an **Enabled** status.
+Applying a rule-level override allows you to customize the behavior of the managed ruleset. If you implemented Cloudflare’s above recommendation for the ruleset configuration, the rules will be set to a **Log** action and an **Enabled** status.
 
 On the other hand, if you did not apply Cloudflare’s recommendation in the previous step, the ruleset is implemented with all its defaults applied.
 
-To add rule-level overrides in the dashboard:
+ To add rule-level overrides in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Magic Firewall** > **Managed rules**.
 3. In front of **Magic Firewall Managed ruleset**, select **Manage**.
 4. Select **Browse rules**.
-5. In the rule you need to change, select an **Action** from the drop-down or **toggle** the rule to disable it.
+5. In the rule you need to change, select an **Action** from the drop-down to change its action, or use the toggle to disable or enable the rule.
 6. Select **Next**.
 7. Select **Save**.
 
