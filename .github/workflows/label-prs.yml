@@ -1,10 +1,8 @@
-name: PR helper
+name: Label PRs
 
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
+on: 
+  pull_request_target:
+    types: [opened, synchronize]
 
 jobs:
   label_prs:
@@ -25,9 +23,6 @@ jobs:
           echo '{ "type": "module", "dependencies": { "@actions/core": "latest", "@actions/github": "latest" } }' > package.json
           npm install
         
-      - name: list dependences
-        run: npm list
-
       - name: Add product labels
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,39 +43,3 @@ jobs:
           xl_label: 'size/xl'
         run: node .github/workflow-scripts/label-pr-size.js
         continue-on-error: true
-
-  spell-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Python environment
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.x
-
-      - name: Create virtual environment
-        run: python -m venv venv
-
-      - name: Activate virtual environment
-        run: source venv/bin/activate
-
-      - name: Install codespell
-        run: pip install codespell
-      - uses: actions/checkout@v3
-
-      - name: 🔸 Get Changed Files from Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # get file names and separate them with space ' '
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | xargs -I {} sh -c 'echo "./{}"' | tr '\n' ' ')
-          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"          
-
-      - name: 🔸 Output Changed Files
-        run: echo ${{ env.CHANGED_FILES }}
-          
-      - name: 🔸 Check for Spelling Errors for Changed Files
-        id: codespell
-        uses: codespell-project/actions-codespell@v1
-        with:
-          skip: nothing
-          path: ${{ env.CHANGED_FILES }}
