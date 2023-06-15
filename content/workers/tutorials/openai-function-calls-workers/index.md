@@ -217,7 +217,7 @@ const secondChatCompletion = await openai.createChatCompletion({
 return new Response(secondChatCompletion.data.choices[0].message.content);
 ```
 
-This one will look very similar to our first, but this time instead of passing the schema data about our function we're passing a message that contains the response we got back from our function. OpenAI will use this information to build it's response, which we'll output to the browswer.
+This one will look very similar to our first, but this time instead of passing the schema data about our function we're passing a message that contains the response we got back from our function. OpenAI will use this information to build it's response, which we'll output to the browser.
 
 Run our code again (`npx wrangler dev`) and open it in your browser. This will now show you OpenAI's response using real-time information from the website. You can try other websites and topics but updating the user's message in our two API calls.
 
