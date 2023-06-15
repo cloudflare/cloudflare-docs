@@ -146,7 +146,7 @@ rss: file
 ## 2022-05-19
 
 - R2 bindings: `contentEncoding`, `contentLanguage`, and `cacheControl` are now correctly rendered.
-- ReadableStream `pipeTo` and `pipeThrough` now support cancelation using `AbortSignal`.
+- ReadableStream `pipeTo` and `pipeThrough` now support cancellation using `AbortSignal`.
 - Calling `setAlarm()` in a DO with no `alarm()` handler implemented will now throw instead of failing silently. Calling `getAlarm()` when no `alarm()` handler is currently implemented will return null, even if an alarm was previously set on an old version of the DO class, as no execution will take place.
 - R2: Better runtime support for additional ranges.
 - R2 bindings now support ranges that have an `offset` and an optional `length`, a `length` and an optional `offset`, or a `suffix` (returns the last `N` bytes of a file).

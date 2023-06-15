@@ -36,9 +36,13 @@ Once your project has been configured and scaffolded, you will be asked if you w
 
 ## 2. Develop with Wrangler CLI
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects. Templates installed via C3 will have it installed in the project by default.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects. Projects created via C3 will install Wrangler in the project by default.
 
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project folder to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
+
+```js
+$ npx wrangler dev
+```
 
 {{<Aside type="note">}}
 
