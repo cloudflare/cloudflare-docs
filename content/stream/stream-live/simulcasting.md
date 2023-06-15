@@ -40,7 +40,7 @@ header: Response
 
 ## Control when you start and stop simulcasting
 
-You can enable and disable individual live outputs via the [API](/api/operations/stream-live-inputs-update-a-single-output-on-a-live-input) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
+You can enable and disable individual live outputs via the [API](/api/operations/stream-live-inputs-update-an-output) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
 
 - Start a live stream, but wait to start simulcasting to YouTube and Twitch until right before the content begins.
 - Stop simulcasting before the live stream ends, to encourage viewers to transition from a third-party service like YouTube or Twitch to a direct live stream.

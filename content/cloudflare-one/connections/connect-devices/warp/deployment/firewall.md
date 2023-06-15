@@ -20,12 +20,23 @@ All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTP
 
 {{<render file="_doh-ips.md">}}
 
+## Client authentication endpoint
+
+When you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow the following domains:
+
+- The IdP used to authenticate to Cloudflare Zero Trust
+- `<your-team-name>.cloudflareaccess.com`
+
 ## WARP ingress IP
 
 These are the IP addresses that the WARP client will connect to. All traffic from your device to the Cloudflare edge will go through these IP addresses.
 
 - IPv4 Range: `162.159.193.0/24`
 - IPv6 Range: `2606:4700:100::/48`
+
+{{<Aside type="note">}}
+Before you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for consumer WARP services ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust deployments.
+{{</Aside>}}
 
 ### WARP UDP ports
 
@@ -51,7 +62,7 @@ The following domains are used as part of our captive portal check:
 As part of establishing the WARP connection, the client will check the following URLs to validate a successful connection:
 
 - `engage.cloudflareclient.com` verifies general Internet connectivity outside of the WARP tunnel.
-- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel.
+- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add `connectivity.cloudflareclient.com` to your firewall allowlist.
 
 ## NEL reporting
 

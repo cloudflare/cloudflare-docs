@@ -8,12 +8,16 @@ rss: file
 
 # Changelog
 
+## 2023-05-26
+
+- A new [Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) (beta) has been added to [Durable Objects](/workers/learning/using-durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
+
 ## 2023-05-16
 
 - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
 - We've added new [native database integrations](/workers/learning/integrations/databases/#native-database-integrations-beta) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
 - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
-- The [R2 Migrator](/r2/r2-migrator/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
+- The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
 
 ## 2023-05-15
 

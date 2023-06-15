@@ -66,6 +66,8 @@ application/geo+json
 
 Cloudflare's global network can deliver content to website visitors using gzip compression, [Brotli compression](#enable-brotli-compression), or no compression, according to the values visitors provide in the `Accept-Encoding` request header.
 
+For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. For successful response status codes, Cloudflare will only compress responses if their status code is `200`. Responses with other status codes will not be compressed.
+
 ### Enable Brotli compression
 
 By default, Brotli compression is enabled for domain on Free and Pro plans and disabled for domains on Business and Enterprise plans.

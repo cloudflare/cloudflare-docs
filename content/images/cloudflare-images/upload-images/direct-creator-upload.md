@@ -35,7 +35,7 @@ You will receive a response similar to this:
 
 In the example above, `id` is a future image identifier that will be uploaded by a creator.
 
-A new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](/api/operations/cloudflare-images-list-images/), but  it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<IMAGE_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
+A new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](/api/operations/cloudflare-images-list-images), but  it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<IMAGE_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
 
 ```bash
 curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
