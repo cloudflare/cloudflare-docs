@@ -6,3 +6,7 @@ layout: single
 ---
 
 # Exact Data Match
+
+Exact Data Match (EDM) checks your data for exact matches.
+
+## Create a dataset
