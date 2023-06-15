@@ -2,7 +2,9 @@ name: Label PRs
 
 on: 
   pull_request_target:
-    types: [opened, synchronize]
+    types:
+      - opened
+      - synchronize
 
 jobs:
   label_prs:
