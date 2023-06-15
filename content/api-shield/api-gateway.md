@@ -7,6 +7,8 @@ weight: 4
 
 # API Gateway
 
+TEST.
+
 API Gateway is a package of features that will do everything for your APIs, including:
 
 - **Security**: Protect your API from malicious traffic with [API Discovery](/api-shield/security/api-discovery/), [Schema Validation](/api-shield/security/schema-validation/), [mTLS validation](/api-shield/security/mtls/), and more.
