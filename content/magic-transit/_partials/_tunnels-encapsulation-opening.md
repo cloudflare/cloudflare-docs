@@ -7,6 +7,7 @@ inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
 ---
 
 # GRE and IPsec tunnels
+
 ## Tunnels and encapsulation
 
 $1 uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec tunnels](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
