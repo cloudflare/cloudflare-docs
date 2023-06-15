@@ -26,7 +26,7 @@ You can add many third-party tools to Zaraz, and offload them from your website.
 {{</feature>}}
 
 {{<feature header="Custom Managed Components" href="/zaraz/get-started/add-custom-mc/">}}
-You can add Custom Managed Components to Zaraz, and run them as a tool.
+You can add Custom Managed Components to Zaraz and run them as a tool.
 {{</feature>}}
 
 {{<feature header="Web API" href="/zaraz/web-api/">}}
