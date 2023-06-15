@@ -8,9 +8,29 @@ weight: 17
 
 {{<render file="_session-affinity-definition.md">}}
 
-## Process
+## Cookie-based session affinity
 
 {{<render file="_session-affinity-process.md">}}
+
+## Session affinity by HTTP header
+
+Session affinity specifies the type of session affinity the load balancer should use unless specified as `"none"` or `"" (default)`.
+
+### Supported types
+
+**`"cookie"`**
+
+On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, a new origin server is calculated and used.
+
+**`"ip_cookie"`**
+
+This behaves similar to `"cookie"` except the initial origin selection is stable and based on the client's IP address.
+
+**`"header"`**
+
+The initial origin selection is stable and based on specific HTTP headers found in the first request. Subsequent requests, by clients with the same HTTP headers to the same load balancer, will be sent to the same origin server for the duration of the session and as long as the origin server remains healthy. If the origin server becomes unhealthy, a different stable origin server will be used until the original origin server recovers. A new origin server is calculated and used only after the session has not been used for `session_affinity_ttl` seconds.
+
+To enable session affinity by HTTP header, set the `session_affinity` value to `header` and `session_affinity_attributes.headers` must have at least one HTTP header name.
 
 ---
 
