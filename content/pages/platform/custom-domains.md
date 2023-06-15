@@ -39,7 +39,7 @@ If you are deploying to a subdomain, it is not necessary for your site to be a C
 
 {{<Aside type="note">}}
 
-If the zone is on the Enterprise plan, please make sure that the you [release the Zone Hold feature](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before adding the custom domain, as the Zone Hold feature would prevent the custom subdomain to activate.
+If the zone is on the Enterprise plan, make sure that the you [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain to activate.
 
 {{</Aside>}}
 
