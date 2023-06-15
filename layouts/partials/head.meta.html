@@ -75,6 +75,12 @@
   <meta name="twitter:description" content="{{ $description }}" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <!-- Add metadata for reporting -->
+  <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
+  <meta name="pcx_last_modified" content="{{- $.Context.Lastmod.Format "2006-01-02" -}}">
+  {{- with .Context.Params.last_reviewed -}}
+  <meta name="pcx_last_reviewed" content="{{ .Format "2006-01-02" }}" />
+  {{- end -}}
   {{- with .Context.Params.pcx_content_type -}}
   <meta name="pcx_content_type" content="{{ . }}" />
   {{- end -}}
