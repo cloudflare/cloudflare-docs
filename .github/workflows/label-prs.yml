@@ -23,10 +23,10 @@ jobs:
           node-version: 18.1
 
       - name: Create package.json and install packages
-        run: |
-          npm init -y
-          echo '{ "dependencies": { "@actions/core": "latest", "@actions/github": "latest" } }' > package.json
-          npm install
+       run: |
+        npm init -y
+        echo '{ "type": "module", "dependencies": { "@actions/core": "latest", "@actions/github": "latest" } }' > package.json
+        npm install
         
       - name: list dependences
         run: npm list
