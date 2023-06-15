@@ -24,9 +24,9 @@ jobs:
 
       - name: Create package.json and install packages
        run: |
-        npm init -y
-        echo '{ "type": "module", "dependencies": { "@actions/core": "latest", "@actions/github": "latest" } }' > package.json
-        npm install
+          npm init -y
+          echo '{ "type": "module", "dependencies": { "@actions/core": "latest", "@actions/github": "latest" } }' > package.json
+          npm install
         
       - name: list dependences
         run: npm list
