@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Multi-signer DNSSEC
-weight: 4
+weight: 3
 layout: single
 ---
 
