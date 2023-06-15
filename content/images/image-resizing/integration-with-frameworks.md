@@ -39,6 +39,8 @@ const MyImage = props => {
 };
 ```
 
+To avoid having to specify a custom loader for every `<Image/>` component, configure a global [loaderFile](https://nextjs.org/docs/pages/api-reference/components/image#loaderfile) for your Next.js app.
+
 {{<Aside type="note">}}
 
 For local development, you can enable [Resize images from any origin checkbox](/images/image-resizing/enable-image-resizing/) for your zone. Then, replace `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}` with an absolute URL path:
