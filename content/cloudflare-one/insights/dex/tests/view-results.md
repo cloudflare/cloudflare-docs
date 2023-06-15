@@ -23,7 +23,7 @@ To view an overview of test results for all devices:
 2. Select the **Tests** tab.
 3. Under **Application tests**, select a test to view detailed results.
 
-### View individual device
+### View an individual device
 
 To view analytics on a per-device level:
 
