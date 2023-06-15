@@ -34,7 +34,7 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 
 ## Technical requirements for GRE and IPsec tunnels
 
-Refer to [Tunnels and encapsulation]($6) to learn the technical requirements for GRE and IPsec tunnels used in Magic WAN.
+Refer to [Tunnels and encapsulation]($6) to learn about the technical requirements for GRE and IPsec tunnels used in Magic WAN.
 
 ## Add tunnels
 
