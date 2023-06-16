@@ -41,7 +41,7 @@ To view analytics on a per-device level:
 | Resource fetch time | Difference between the start and end time of the test. Calculated by adding the server response time + DNS response time. |
 | Server response time | Round-trip time for the device to receive a response from the target. |
 | DNS response time | Round-trip time for the DNS query to resolve. |
-| HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target.|
+| HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target. |
 
 ## Data retention
 
