@@ -74,7 +74,7 @@ ___
 
 To submit a support ticket, follow these steps:
 
-1.  Browse to [https://dash.cloudflare.com/redirect?account=support](https://dash.cloudflare.com/redirect?account=support).
+1.  Browse to [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
 2.  Enter the **email** and **password** for your Cloudflare account. Your email needs to be [verified](/support/account-management-billing/common-account-questions/login-and-account-issues/#cannot-verify-your-email) in order to submit a Support ticket.
 3.  Select the appropriate account requiring assistance.
 4.  Verify that you are now in the Support Portal
@@ -116,7 +116,7 @@ ___
 
 You can also use the **live chat** (Business and Enterprise plans, only) to ask specific questions that don’t require a lot of technical investigation:
 
-1.  Browse to [https://dash.cloudflare.com/redirect?account=support](https://dash.cloudflare.com/redirect?account=support).
+1.  Browse to [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
 2.  Enter the email and password for your Cloudflare account. Your email needs to be verified in order to chat live with us.
 3.  Select the appropriate account requiring assistance.
 4.  Click the **Help** icon in the bottom right corner of the screen
