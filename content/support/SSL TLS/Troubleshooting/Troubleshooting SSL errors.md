@@ -34,11 +34,11 @@ It is possible for [Cloudflare Support](https://support.cloudflare.com/hc/artic
 
 Otherwise, if SSL errors occur when using a newer browser, review these common SSL error causes:
 
--   [Redirect loop errors or HTTP 525 or 526 errors](https://support.cloudflare.com/hc/en-us/articles/200170566#h_7ec9ed4a-80ae-4fca-8be7-89a13c195d19)
--   [Only some of your subdomains return SSL errors](https://support.cloudflare.com/hc/en-us/articles/200170566#h_55e4d315-c60d-4798-9c4c-c75d9baed1b7)
--   [Your Cloudflare Universal SSL certificate is not active](https://support.cloudflare.com/hc/en-us/articles/200170566#h_122b94f3-ff14-4544-b5fa-8875e08ff5f0)
--   [OCSP response error](https://support.cloudflare.com/hc/en-us/articles/200170566#h_51354cf8-de93-4894-85e6-f0f7453d766d)
--   [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/en-us/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f)
+-   [Redirect loop errors or HTTP 525 or 526 errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#redirect-loop-errors-or-http-525-or-526-errors)
+-   [Only some of your subdomains return SSL errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#only-some-of-your-subdomains-return-ssl-errors)
+-   [Your Cloudflare Universal SSL certificate is not active](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#your-cloudflare-universal-ssl-certificate-is-not-active)
+-   [OCSP response error](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ocsp-response-error)
+-   [SSL expired or SSL mismatch errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ssl-expired-or-ssl-mismatch-errors)
 
 {{<Aside type="note">}}
 To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
@@ -51,11 +51,11 @@ ___
 
 **Symptom**
 
-Visitors observe [redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871) when browsing to your domain or observe HTTP [525](https://support.cloudflare.com/hc/articles/115003011431#525error) or [526](https://support.cloudflare.com/hc/articles/115003011431#526error) errors. These errors occur when the current Cloudflare SSL/TSL encryption mode in the Cloudflare **SSL/TLS** app is not compatible with your origin web server’s configuration. **Resolution**
+Visitors observe [redirect loop errors](/ssl/troubleshooting/too-many-redirects/) when browsing to your domain or observe HTTP [525](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-525-ssl-handshake-failed) or [526](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate) errors. These errors occur when the current Cloudflare SSL/TSL encryption mode in the Cloudflare **SSL/TLS** app is not compatible with your origin web server’s configuration. **Resolution**
 
-For redirect loops, refer to our guide on [troubleshooting redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871).
+For redirect loops, refer to our guide on [troubleshooting redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 
-To resolve HTTP [525](https://support.cloudflare.com/hc/articles/115003011431#525error) or [526](https://support.cloudflare.com/hc/articles/115003011431#526error) errors, follow the guidance in [SSL encryption modes](/ssl/origin-configuration/ssl-modes).
+To resolve HTTP [525](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-525-ssl-handshake-failed) or [526](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate) errors, follow the guidance in [SSL encryption modes](/ssl/origin-configuration/ssl-modes).
 
 .
 
@@ -104,8 +104,8 @@ If your domain is on a [partial setup](/dns/zone-setups/partial-setup): Confirm
 
 If your Cloudflare SSL certificate is not issued within 24 hours of Cloudflare domain activation:
 
--   If your origin web server has a valid SSL certificate, [temporarily pause Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753), and
--   [open a support ticket](https://support.cloudflare.com/hc/en-us/requests/new)  to provide the following information:
+-   If your origin web server has a valid SSL certificate, [temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/), and
+-   [open a support ticket](https://dash.cloudflare.com/?to=/:account/support)  to provide the following information:
     -   the affected domain name, and
     -   a screenshot of the errors you observe.
 
@@ -117,7 +117,7 @@ ___
 
 **Symptom** Visitors to your site observe an OCSP response error.
 
-**Resolution** This error is either caused by the browser version or an issue requiring attention by one of Cloudflare’s SSL vendors. In order to properly diagnose, [open a support ticket](https://support.cloudflare.com/hc/en-us/requests/new) with the following information provided by the visitor that observes the browser error:
+**Resolution** This error is either caused by the browser version or an issue requiring attention by one of Cloudflare’s SSL vendors. In order to properly diagnose, [open a support ticket](https://dash.cloudflare.com/?to=/:account/support) with the following information provided by the visitor that observes the browser error:
 
 1.  The output from [_https://aboutmybrowser.com/_](https://aboutmybrowser.com/)  
 2.  1.  The output of _https://example.com/cdn-cgi/trace_ from the visitor’s browser. Replace _example.com_  with your website’s domain name.
@@ -153,6 +153,6 @@ ___
 
 ## Related resources
 
--   [Redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871)
--   [Mixed content errors](https://support.cloudflare.com/hc/articles/200170476)
+-   [Redirect loop errors](/ssl/troubleshooting/too-many-redirects/)
+-   [Mixed content errors](/support/ssl-tls/troubleshooting/troubleshooting-mixed-content-errors/)
 -   [Determine if your browser supports SNI](https://caniuse.com/#feat=sni)
