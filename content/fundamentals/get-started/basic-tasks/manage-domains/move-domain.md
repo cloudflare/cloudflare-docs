@@ -14,7 +14,7 @@ You will have to move or transfer domains from one Cloudflare account to another
 
 * Lose access to your email address or Cloudflare account.
 
-* Registered a Cloudflare account with a typo in your emai.
+* Registered a Cloudflare account with a typo in your email.
 
 {{<Aside type="note">}}
 
