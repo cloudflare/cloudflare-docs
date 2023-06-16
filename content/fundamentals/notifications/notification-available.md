@@ -506,6 +506,175 @@ All Cloudflare plans.
 </div>
 </details>
 
+## Page Shield
+
+<details>
+<summary>Page Shield New Code Change Detection Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+Investigate to confirm it is an expected change.
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Domain Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when resources from new host domains appear in their domain.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Business plans or higher.
+
+**What should you do if you receive one?**
+
+Investigate to confirm it is an expected change.
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Malicious Domain Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when resources from a known malicious domain appear in their domain.
+
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Malicious Script Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
+
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Malicious URL Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when resources from a known malicious URL appear in their domain.
+
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Resources Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when new resources appear in their domain.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Business plans or higher.
+
+**What should you do if you receive one?**
+
+Investigate to confirm it is an expected change.
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Resource Exceeds Max URL Length Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when a resource's URL exceeds the maximum allowed length.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Business plans or higher.
+
+**What should you do if you receive one?**
+
+Manually check the resource.
+
+</div>
+</details>
+
 ## Route Leak Detection
 
 <details>
@@ -695,175 +864,6 @@ Authenticated Origin Pull
 
 **What should you do if you receive one?**
 Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/).
-
-</div>
-</details>
-
-## Page Shield
-
-<details>
-<summary>Page Shield New Code Change Detection Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-Investigate to confirm it is an expected change.
-
-</div>
-</details>
-
-<details>
-<summary>Page Shield New Domain Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when resources from new host domains appear in their domain.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Business plans or higher.
-
-**What should you do if you receive one?**
-
-Investigate to confirm it is an expected change.
-
-</div>
-</details>
-
-<details>
-<summary>Page Shield New Malicious Domain Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when resources from a known malicious domain appear in their domain.
-
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Page Shield New Malicious Script Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
-
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Page Shield New Malicious URL Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when resources from a known malicious URL appear in their domain.
-
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Page Shield New Resources Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when new resources appear in their domain.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Business plans or higher.
-
-**What should you do if you receive one?**
-
-Investigate to confirm it is an expected change.
-
-</div>
-</details>
-
-<details>
-<summary>Page Shield New Resource Exceeds Max URL Length Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when a resource's URL exceeds the maximum allowed length.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Business plans or higher.
-
-**What should you do if you receive one?**
-
-Manually check the resource.
 
 </div>
 </details>
