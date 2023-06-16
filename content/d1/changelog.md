@@ -7,6 +7,10 @@ rss: file
 
 # Changelog
 
+## 2023-06-16
+
+We've published new documentation describing how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
+
 ## 2023-05-19
 
 ### New experimental backend
