@@ -102,7 +102,7 @@ You have established the basic flow of the request. You will now set up a respon
 ```js
 ---
 filename: "worker.js"
-highlight: [7, 8, 9]
+highlight: [7, 8, 9, 10]
 ---
 export default {
   async fetch(request, env, ctx) {
@@ -163,7 +163,7 @@ By default, the QR code is generated as a PNG. Construct a new instance of `Resp
 ```js
 ---
 filename: "worker.js"
-highlight: [3, 5]
+highlight: [3, 4, 5]
 ---
 async function generateQRCode(request) {
   const { text } = await request.json()
@@ -247,7 +247,7 @@ To ensure the QR image shows up on the page, we need to pass in the generated `q
 ```js
 ---
 filename: "worker.js"
-highlight: [2, 4, 5, 6, 7]
+highlight: [6-9]
 ---
 async function generateQRCode(request) {
 	...
