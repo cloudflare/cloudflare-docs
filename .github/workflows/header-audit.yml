@@ -1,4 +1,4 @@
-name: Header audit
+name: CI
 
 on:
   pull_request:
@@ -31,17 +31,24 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=8192"
 
       - name: Check - Broken header links
-        id: broken-headers
+        id: link-check
         uses: untitaker/hyperlink@0.1.27
         with:
           args: public/ --sources content/ --check-anchors
-  
+        env:
+          STORE_ERRORS_PATH: ${{ runner.temp }}/link_check_errors.txt
+
   log-output:
     needs: compile
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     steps:
+      - name: Read Error Log
+        id: read-error-log
+        run: |
+          echo "::set-output name=errors::$(cat $STORE_ERRORS_PATH)"
+      
       - name: Log Output
         run: |
           echo "Link Check Output:"
-          echo "${{ steps.link-check.outputs.stderr }}"
+          echo "${{ steps.read-error-log.outputs.errors }}"
