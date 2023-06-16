@@ -26,7 +26,7 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 * Unless you are already an advanced user, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Actions](/firewall/cf-firewall-rules/actions/) to learn more about the basic elements of firewall rules.
 
-* To get started building your own firewall rules, refer to one of the following pages:
+* To start building your own firewall rules, refer to one of the following pages:
 
     * [Manage firewall rules in the dashboard](/firewall/cf-dashboard/create-edit-delete-rules/)
     * [Manage firewall rules via the APIs](/firewall/api/)
