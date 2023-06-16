@@ -58,6 +58,9 @@ The following parameters are optional:
 *  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
 *  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](/api/operations/waiting-room-list-waiting-rooms).
 *  `json_response_enabled` - If you are using this waiting room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and set `json_response_enabled` to `true`.
+* `cookie_suffix`: Customize the suffix of your waiting room cookie. Suffix will be added to `_cfwaitingroom`. This field is required when utilizing `additional_routes`.
+* `additional_routes`: Add additional hostnames and/or paths to your waiting room coverage.
+
 
 ## Example
 
