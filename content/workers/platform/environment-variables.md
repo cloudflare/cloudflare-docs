@@ -15,7 +15,7 @@ When deploying a Worker using ES modules format, any [bindings](/workers/platfor
 
 ### Add environment variables via Wrangler
 
-Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always either plaintext or json values represented using the [inline table toml syntax](https://toml.io/en/v1.0.0#inline-table).
+Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file. Environment variables are always plaintext or JSON values, represented using the [inline table toml syntax](https://toml.io/en/v1.0.0#inline-table).
 
 ```toml
 ---
