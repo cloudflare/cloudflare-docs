@@ -772,7 +772,7 @@ When an advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
-Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f) for more information.
+Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ssl-expired-or-ssl-mismatch-errors) for more information.
 
 </div>
 </details>
