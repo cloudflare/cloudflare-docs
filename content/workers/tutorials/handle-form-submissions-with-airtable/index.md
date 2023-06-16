@@ -17,10 +17,6 @@ In this tutorial, you will use [Cloudflare Workers](/workers/) and [Airtable](ht
 
 ![GIF of a complete Airtable and serverless function integration](example.gif)
 
-[The source for this project can be found on GitHub](https://github.com/cloudflare/workers-airtable-form). Note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)) and a serverless function for handling the interaction with Airtable.
-
-[The front-end portion of this site](https://airtable-form-example.pages.dev) does not require any specific React experience. It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JavaScript-heavy forms, such as with React or other front-end frameworks.
-
 ## 1. Create a form
 
 For this tutorial, you will be building a Workers function that handles input from a contact form. The form this tutorial references will collect a first name, last name, email address, phone number, message subject, and a message.
@@ -283,8 +279,6 @@ After you have deployed your new form (refer to the [HTML forms](/pages/tutorial
 ## Conclusion
 
 With this tutorial completed, you have created a Worker that can accept form submissions and persist them to Airtable. You have learned how to parse form data, set up environment variables, and use the `fetch` API to make requests to external services outside of your Worker.
-
-You can find the source for this project — both the front-end UI and the Worker that communicates with Airtable — [on GitHub](https://github.com/cloudflare/workers-airtable-form).
 
 ## Related resources
 
