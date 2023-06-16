@@ -12,7 +12,7 @@ meta:
 Cloudflare Snippets (alpha) provide a flexible way to customize the behavior of your website or application using short pieces of JavaScript code. Use snippets to customize HTTP response headers, implement JWT validation, define complex redirect functionality, and more.
 
 {{<Aside type="note">}}
-[Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/) to request access to Cloudflare Snippets. Cloudflare will soon start granting access to the alpha version.
+[Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/) to request access to Cloudflare Snippets.
 {{</Aside>}}
 
 ## Snippet elements
@@ -48,7 +48,7 @@ For more information, refer to our [blog post](https://blog.cloudflare.com/cloud
 
 ## Availability
 
-Cloudflare Snippets is currently in alpha, available upon request. [Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/).
+Cloudflare Snippets is available in Alpha. [Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/).
 
 {{<feature-table id="rules.snippets">}}
 
