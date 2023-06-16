@@ -699,10 +699,10 @@ Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configurati
 </div>
 </details>
 
-## Script Monitor
+## Page Shield
 
 <details>
-<summary>Script Monitor New Code Change Detection Alert</summary>
+<summary>Page Shield New Code Change Detection Alert</summary>
 <div>
 
 **Who is it for?**
@@ -725,12 +725,12 @@ Investigate to confirm it is an expected change.
 </details>
 
 <details>
-<summary>Script Monitor New Domain Alert</summary>
+<summary>Page Shield New Domain Alert</summary>
 <div>
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when JavaScript dependencies from new host domains appear in their domain.
+Page Shield customers who want to receive a notification when resources from new host domains appear in their domain.
 
 **Other options / filters**
 
@@ -748,12 +748,12 @@ Investigate to confirm it is an expected change.
 </details>
 
 <details>
-<summary>Script Monitor New Malicious Domain Alert</summary>
+<summary>Page Shield New Malicious Domain Alert</summary>
 <div>
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their domain.
+Page Shield customers who want to receive a notification when resources from a known malicious domain appear in their domain.
 
 {{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
 
@@ -773,7 +773,7 @@ Enterprise plans with paid add-on.
 </details>
 
 <details>
-<summary>Script Monitor New Malicious Script Alert</summary>
+<summary>Page Shield New Malicious Script Alert</summary>
 <div>
 
 **Who is it for?**
@@ -798,12 +798,12 @@ Enterprise plans with paid add-on.
 </details>
 
 <details>
-<summary>Script Monitor New Malicious URL Alert</summary>
+<summary>Page Shield New Malicious URL Alert</summary>
 <div>
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their domain.
+Page Shield customers who want to receive a notification when resources from a known malicious URL appear in their domain.
 
 {{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
 
@@ -823,12 +823,12 @@ Enterprise plans with paid add-on.
 </details>
 
 <details>
-<summary>Script Monitor New Scripts Alert</summary>
+<summary>Page Shield New Resources Alert</summary>
 <div>
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when new JavaScript dependencies appear in their domain.
+Page Shield customers who want to receive a notification when new resources appear in their domain.
 
 **Other options / filters**
 
@@ -846,12 +846,12 @@ Investigate to confirm it is an expected change.
 </details>
 
 <details>
-<summary>Script Monitor New Script Exceeds Max URL Length Alert</summary>
+<summary>Page Shield New Resource Exceeds Max URL Length Alert</summary>
 <div>
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when a script's URL exceeds the maximum allowed length.
+Page Shield customers who want to receive a notification when a resource's URL exceeds the maximum allowed length.
 
 **Other options / filters**
 
@@ -863,7 +863,7 @@ Business plans or higher.
 
 **What should you do if you receive one?**
 
-Manually check the script.
+Manually check the resource.
 
 </div>
 </details>
