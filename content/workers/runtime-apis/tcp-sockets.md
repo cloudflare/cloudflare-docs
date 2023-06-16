@@ -80,7 +80,7 @@ export default {
 - {{<code>}}readable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - Returns the readable side of the TCP socket.
 
-- {{<code>}}writeable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WriteableStream{{</type-link>}}
+- {{<code>}}writable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
@@ -140,7 +140,7 @@ export default {
 
 ## Close TCP connections
 
-You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writeable sides of the socket.
+You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writable sides of the socket.
 
 ```typescript
 import { connect } from "cloudflare:sockets"
