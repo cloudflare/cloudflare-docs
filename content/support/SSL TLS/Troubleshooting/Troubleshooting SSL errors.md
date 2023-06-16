@@ -34,11 +34,11 @@ It is possible for [Cloudflare Support](https://support.cloudflare.com/hc/artic
 
 Otherwise, if SSL errors occur when using a newer browser, review these common SSL error causes:
 
--   [Redirect loop errors or HTTP 525 or 526 errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#redirect-loop-errors-or-http-525-or-526-errors)
--   [Only some of your subdomains return SSL errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#only-some-of-your-subdomains-return-ssl-errors)
--   [Your Cloudflare Universal SSL certificate is not active](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#your-cloudflare-universal-ssl-certificate-is-not-active)
--   [OCSP response error](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ocsp-response-error)
--   [SSL expired or SSL mismatch errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ssl-expired-or-ssl-mismatch-errors)
+-   [Redirect loop errors or HTTP 525 or 526 errors](#redirect-loop-errors-or-http-525-or-526-errors)
+-   [Only some of your subdomains return SSL errors](#only-some-of-your-subdomains-return-ssl-errors)
+-   [Your Cloudflare Universal SSL certificate is not active](#your-cloudflare-universal-ssl-certificate-is-not-active)
+-   [OCSP response error](#ocsp-response-error)
+-   [SSL expired or SSL mismatch errors](#ssl-expired-or-ssl-mismatch-errors)
 
 {{<Aside type="note">}}
 To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
