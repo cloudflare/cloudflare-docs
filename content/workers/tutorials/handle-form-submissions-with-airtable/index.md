@@ -23,11 +23,11 @@ In this tutorial, you will use [Cloudflare Workers](/workers/) and [Airtable](ht
 
 ## 1. Create a form
 
-For this tutorial, you will be building a contact form. The form this tutorial references will collect a first name, last name, email address, phone number, message subject, and a message.
+For this tutorial, you will be building a Workers function that handles input from a contact form. The form this tutorial references will collect a first name, last name, email address, phone number, message subject, and a message.
 
 If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [HTML forms](/pages/tutorials/forms) tutorial.
 
-The simplified HTML markup for this form:
+A simplified example of the form we'll refer to is seen below. Note that the `action` parameter of the `<form>` tag should point to the deployed Workers application that you will build in this tutorial.
 
 ```html
 <form action="https://workers-airtable-form.signalnerve.workers.dev/submit" method="POST">
@@ -76,41 +76,6 @@ The simplified HTML markup for this form:
 </form>
 ```
 
-For example, if you fill in the `first_name` input with the text `"Hello"`, submitting the `<form>` via the Submit button will submit data to the `/new_submission` URL with the `first_name=Hello` request payload.
-
-The `<form>` used in the example front-end UI builds on these basics, adding some CSS classes via Tailwind CSS, and adding the fields needed for a Contact-style form: First name, Last name, Email, Phone, Subject, and Message.
-
-![The completed form in the front-end user interface](ui.png)
-
-The code for this form can be [found on GitHub](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for your serverless function URL, and the `method` attribute, which tells the form to submit information using the [HTTP `POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) method.
-
-The code is provided as an example below, including the first `<input>`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
-
-```html
-<form action="SERVERLESS_FN_URL" method="POST" class="...">
-  <div>
-    <label for="first_name" class="..."> First name </label>
-    <div class="...">
-      <input
-        type="text"
-        name="first_name"
-        id="first_name"
-        autocomplete="given-name"
-        placeholder="Ellen"
-        required
-        class="..."
-      />
-    </div>
-  </div>
-
-  <!-- Rest of form -->
-
-  <button type="submit" class="...">Submit</button>
-</form>
-```
-
-If you would like to follow along with this example, you can directly copy the `<form>` code from the [`Form` component](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial.
-
 ## 2. Create a Worker
 
 To handle the form submission, create and deploy a Worker that parses the incoming form data and prepares it for submission to Airtable.
@@ -134,9 +99,7 @@ When configuring your Worker:
 
 When your Worker is complete, it will send data up to an Airtable base via Airtable's REST API.
 
-If you do not have an Airtable account, create one (the free plan is sufficient to complete this tutorial). In Airtable's dashboard, create a new base by selecting **Start from scratch**:
-
-![Creating a new base in Airtable's user interface](new-base.png)
+If you do not have an Airtable account, create one (the free plan is sufficient to complete this tutorial). In Airtable's dashboard, create a new base by selecting **Start from scratch**.
 
 After you have created a new base, set it up for use with the front-end form. Delete the existing columns, and create six columns, with the following field types:
 
@@ -149,54 +112,45 @@ After you have created a new base, set it up for use with the front-end form. De
 | Subject      | "Single line text"  |
 | Message      | "Long text"         |
 
-The completed fields should look like the below screenshot in the Airtable dashboard. Note that the field names are case-sensitive. If you change the field names, you will need to exactly match your new field names in the API request you make to Airtable later in the tutorial.
+Note that the field names are case-sensitive. If you change the field names, you will need to exactly match your new field names in the API request you make to Airtable later in the tutorial. Finally, you can optionally rename your table -- by defaulte it will have a name like Table 1. In the below code, we assume the table has been renamed with a more descriptive name, like `Form Submissions`.
 
-![An example of the configured Airtable column headers in a table](columns.png)
+Next, navigate to [Airtable's API page](https://airtable.com/api) and select your new base. Note that you must be logged into Airtable to see your base information. In the API documentation page, find your **Airtable base ID**. 
 
-Finally, give your base's table a name. Right-click the table name at the top left of the screen (it will likely have a name like Table 1) and give it a more descriptive name, like `Form Submissions`.
+You will also need to create a **Personal access token** that you'll use to access your Airtable base. You can do so by visiting the [Personal access tokens](https://airtable.com/create/tokens) page on Airtable's website and creating a new token. Make sure that you configure the token in the following way:
 
-![Renaming the Airtable table inside of the user interface](form-submissions.png)
+- Scope: the `data.records:write` scope must be set on the token
+- Access: access should be granted to the base you have been working with in this tutorial
 
-With your new Airtable base set up, copy the values from Airtable's dashboard that you need to make API requests.
+The results access token should now be set in your application. To make the token available in your codebase, use the [`wrangler secret`](/workers/wrangler/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
 
-Refer to [Airtable's API page](https://airtable.com/api) and select your new base. In the API documentation page, find your **Airtable base ID** (the highlighted text in the below screenshot). You can also check the **Show API key** checkbox in the top right of the window, to easily access your Airtable API key from the same page.
-
-![The Airtable API documentation for a base, with the Airtable Base ID and a toggle for showing your Airtable API key highlighted](api-details.png)
-
-Further down the page, you will begin to see example requests, showing you how to authenticate with the Airtable API externally, by providing an `Authorization` header in the format `Bearer $API_KEY`. The key after `Bearer` is your Airtable API key — make sure to keep it a secret.
-
-![An example request in Airtable's API documentation, with the Airtable API key highlighted](api-key.png)
-
-To make this API key available in your codebase, use the [`wrangler secret`](/workers/wrangler/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
-
-Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
+Run `wrangler secret put`, passing `AIRTABLE_ACCESS_TOKEN` as the name of your secret:
 
 ```sh
 ---
-header: Set the `AIRTABLE_API_KEY` secret with Wrangler
+header: Set the `AIRTABLE_ACCESS_TOKEN` secret with Wrangler
 ---
-$ wrangler secret put AIRTABLE_API_KEY
-Enter the secret text you would like assigned to the variable AIRTABLE_API_KEY on the script named airtable-form-handler:
+$ wrangler secret put AIRTABLE_ACCESS_TOKEN
+Enter the secret text you would like assigned to the variable AIRTABLE_ACCESS_TOKEN on the script named airtable-form-handler:
 ******
 🌀  Creating the secret for script name airtable-form-handler
-✨  Success! Uploaded secret AIRTABLE_API_KEY.
+✨  Success! Uploaded secret AIRTABLE_ACCESS_TOKEN.
 ```
 
 Before you continue, review the keys that you should have from Airtable:
 
 1.  **Airtable Table Name**: The name for your table, like Form Submissions.
 2.  **Airtable Base ID**: The alphanumeric base ID found at the top of your base's API page.
-3.  **Airtable API Key**: The private API key found in example API requests on the Airtable API documentation page.
+3.  **Airtable Access Token**: A Personal Access Token created by the user to access information about your new Airtable base
 
 ## 4. Submit data to Airtable
 
 With your Airtable base set up, and the keys and IDs you need to communicate with the API ready, you will now set up your Worker to persist data from your form into Airtable.
 
-In `worker.js`, set up a Workers handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will redirect to `FORM_URL`, a constant representing your front-end form URL (for example, [airtable-form-example.pages.dev](https://airtable-form-example.pages.dev)):
+In `index.js`, replace the default code with a Workers fetch handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will return a `404 Not Found` response.
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export default {
   async fetch(request, env) {
@@ -204,7 +158,7 @@ export default {
     if (url.pathname === "/submit") {
       await submitHandler(request, env)
     }
-    return Response.redirect(env.FORM_URL)
+    return new Response('Not found', { status: 404 })
   }
 }
 ```
@@ -213,7 +167,7 @@ The `submitHandler` has two functions. First, it will parse the form data coming
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 async function submitHandler (request, env) {
   if (request.method !== "POST") {
@@ -247,6 +201,9 @@ async function submitHandler (request, env) {
   }
   await createAirtableRecord(env, reqBody)
 }
+
+// Existing code
+// export default ...
 ```
 
 While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.com/405).
@@ -257,7 +214,7 @@ Then you call `createAirtableRecord` (the function you will define next). The `c
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 async function createAirtableRecord(env, body) {
   try {
@@ -265,7 +222,7 @@ async function createAirtableRecord(env, body) {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
-        Authorization: `Bearer ${env.AIRTABLE_API_TOKEN}`,
+        Authorization: `Bearer ${env.AIRTABLE_ACCESS_TOKEN}`,
         'Content-Type': 'application/json', 
       }
     })
@@ -274,9 +231,13 @@ async function createAirtableRecord(env, body) {
     console.error(error);
   }
 }
+
+// Existing code
+// async function submitHandler
+// export default ...
 ```
 
-To make an authenticated request to Airtable, you need to provide four constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name**, and `FORM_URL` are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
+To make an authenticated request to Airtable, you need to provide four constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_ACCESS_TOKEN` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name**, and `FORM_URL` are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
 
 Add a `vars` table at the end of your `wrangler.toml` file:
 
@@ -286,13 +247,12 @@ filename: wrangler.toml
 highlight: [7]
 ---
 name = "workers-airtable-form"
-main = "src/worker.js"
+main = "src/index.js"
 compatibility_date = "2023-06-13"
 
 [vars]
 AIRTABLE_BASE_ID = "exampleBaseId"
 AIRTABLE_TABLE_NAME = "Form Submissions"
-FORM_URL = "https://airtable-form-example.pages.dev"
 ```
 
 With all these fields submitted, it is time to deploy your Workers serverless function and get your form communicating with it. First, publish your function:
