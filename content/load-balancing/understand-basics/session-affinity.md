@@ -30,7 +30,7 @@ The initial origin selection is stable and based on specific HTTP headers found 
 
 {{<Aside type="note">}}
 
-Sticky Zero Down-time Failover is not supported for session affinity by HTTP header.
+Sticky Zero-Downtime Failover is not supported for session affinity by HTTP header.
 
 {{</Aside>}}
 
