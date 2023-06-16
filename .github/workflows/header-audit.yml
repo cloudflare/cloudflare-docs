@@ -39,16 +39,16 @@ jobs:
           STORE_ERRORS_PATH: ${{ runner.temp }}/link_check_errors.txt
 
   log-output:
-  needs: compile
-  if: ${{ failure() }}
-  runs-on: ubuntu-latest
-  steps:
-    - name: Read Error Log
-      id: read-error-log
-      run: |
-        echo "::set-output name=errors::$(cat $STORE_ERRORS_PATH)"
-    
-    - name: Log Output
-      run: |
-        echo "Link Check Output:"
-        echo "$(cat $STORE_ERRORS_PATH)"
+    needs: compile
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read Error Log
+        id: read-error-log
+        run: |
+          echo "::set-output name=errors::$(cat $STORE_ERRORS_PATH)"
+      
+      - name: Log Output
+        run: |
+          echo "Link Check Output:"
+          echo "$(cat $STORE_ERRORS_PATH)"
