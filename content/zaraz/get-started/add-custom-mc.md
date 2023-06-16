@@ -24,7 +24,7 @@ If you don’t have a Managed Component yet, you can get started using `npm init
 ## Deploy a Managed Component to Cloudflare
 
 1. Open a terminal in your managed component’s root directory.
-2. From there, run `npx managed-component-to-cloudflare-worker dist/index.js your-managed-component`, which will ask you a few questions and deploy the Managed Component to a specialised Cloudflare Worker. Change the path to your `index.js` and the name of the component to your liking.
+2. From there, run `npx managed-component-to-cloudflare-worker dist/index.js your-managed-component`, which will deploy the Managed Component to a specialised Cloudflare Worker. Change the path to your `index.js` and the name of the component to your liking.
 3. Your Managed Component should now be visible on your account as a specialized Cloudflare Worker.
 
 ## Configure a Managed Component in Cloudflare
