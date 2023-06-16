@@ -242,26 +242,6 @@ const landing = `
 
 The `landing` variable, which is a static HTML string, sets up an `input` tag and a corresponding `button`, which calls the `generateQRCode` function. This function will make an HTTP `POST` request back to your Worker, allowing you to see the corresponding QR code image returned on the page.
 
-To ensure the QR image shows up on the page, we need to pass in the generated `qr_png` to the image element.
-
-```js
----
-filename: "worker.js"
-highlight: [6-9]
----
-async function generateQRCode(request) {
-	...
-	const qr_png = qr.imageSync(text || "https://workers.dev")
-
-	const landingWithQR = landing.replace(
-		'<img id="qr" src="#" />',
-		`<img id="qr" src="${qr_png}" />`
-	);
-
-	return new Response(qr_png, { headers });
-}
-```
-
 With the above steps complete, your Worker is ready. The full version of the code looks like this:
 
 ```js
@@ -288,11 +268,6 @@ async function generateQRCode(request) {
 	const { text } = await request.json()
 	const headers = { "Content-Type": "image/png" }
 	const qr_png = qr.imageSync(text || "https://workers.dev")
-
-	const landingWithQR = landing.replace(
-		'<img id="qr" src="#" />',
-		`<img id="qr" src="${qr_png}" />`
-	);
 
 	return new Response(qr_png, { headers });
 }
