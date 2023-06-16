@@ -314,6 +314,6 @@ $ wrangler deploy
 
 ## Related resources
 
-In this tutorial, you built and deployed a Worker application for generating QR codes. If you would like to see the full source code for this application, you can find it [on GitHub](https://github.com/codewithkristian/workers-qr-code-generator).
+In this tutorial, you built and deployed a Worker application for generating QR codes. If you would like to see the full source code for this application, you can find it [on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/examples/qr-code-generator).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).
