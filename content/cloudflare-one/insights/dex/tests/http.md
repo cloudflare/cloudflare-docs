@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: HTTP test
-weight: 2
+weight: 1
 ---
 
 # Run an HTTP test

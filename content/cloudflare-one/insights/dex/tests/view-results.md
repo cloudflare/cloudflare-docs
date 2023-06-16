@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Test results
-weight: 2
+weight: 3
 ---
 
 # Test results
@@ -42,6 +42,15 @@ To view analytics on a per-device level:
 | Server response time | Round-trip time for the device to receive a response from the target. |
 | DNS response time | Round-trip time for the DNS query to resolve. |
 | HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target. |
+
+### Traceroute
+
+| Data | Description |
+| ----------- | ----------- |
+| Round trip time | Round-trip time for the device to receive a response from the target. |
+| Number of hops | Number of routers encountered between the device and the target. |
+| Packet loss | Percentage of traceroute requests that failed to receive a response. |
+| Availability | Percentage of traceroute requests that reached the destination. |
 
 ## Data retention
 
