@@ -11,7 +11,7 @@ meta:
 Follow this tutorial to migrate an existing DNS zone to Cloudflare without having to disable DNSSEC.
 
 {{<Aside type="warning">}}
-This procedure involves cross-importing the zone signing keys (ZSKs) from one provider to the other. To learn more about this, consider this article [about multi-signer DNSSEC](/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
+This procedure involves cross-importing the zone signing keys (ZSKs) from one provider to the other. To learn more about this, consider this article [about multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 {{</Aside>}}
 
 This is an advanced procedure and assume some familiarity with [DNS concepts](/dns/concepts/), [API operations](/fundamentals/api/), and basic setup steps. Assumed knowledge that is not detailed in this tutorial can be referenced through the linked content in each of the steps.
@@ -94,7 +94,7 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 1. Add Cloudflare DS record to your registrar. You can see your Cloudflare DS record on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns) by going to **DNS** > **Settings** > **DS Record**.
 2. Add Cloudflare assigned nameservers to your registrar. You can see your Cloudflare nameservers by going to **DNS** > **Records**.
 
-At this point your zone is in a [multi-signer DNSSEC setup](/dnssec/multi-signer-dnssec/).
+At this point your zone is in a [multi-signer DNSSEC setup](/dns/dnssec/multi-signer-dnssec/).
 
 ## 4. Remove previous provider
 
