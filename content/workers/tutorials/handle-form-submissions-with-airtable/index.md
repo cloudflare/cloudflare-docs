@@ -61,7 +61,7 @@ A simplified example of the form we'll refer to is seen below. Note that the `ac
       Message
       <span>Max 500 characters</span>
     </label>
-    <textarea id="message" name="message" rows="4" placeholder="Tenetur optio quaerat expedita vero et illo. Tenetur nam explicabo dolor voluptatem eveniet. Commodi est beatae id voluptatum porro laudantium. Quam placeat accusamus vel officiis vel. Et perferendis dicta ut perspiciatis quos iste. Tempore autem molestias voluptates in sapiente enim doloremque." required></textarea>
+    <textarea id="message" name="message" rows="4" placeholder="Tenetur quaerat expedita vero et illo. Tenetur explicabo dolor voluptatem eveniet. Commodi est beatae id voluptatum porro laudantium. Quam placeat accusamus vel officiis vel. Et perferendis dicta ut perspiciatis quos iste. Tempore autem molestias voluptates in sapiente enim doloremque." required></textarea>
   </div>
 
   <div>
