@@ -25,7 +25,7 @@ To enable or disable **Rocket Loader** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Rocket Loader** with the API, send a [`PATCH`](/api/operations/zone-settings-change-rocket-loader-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Rocket Loader** with the API, send a [`PATCH`](/api/operations/zone-settings-change-rocket_loader-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{<render file="_rocket-loader-csp.md">}}
 

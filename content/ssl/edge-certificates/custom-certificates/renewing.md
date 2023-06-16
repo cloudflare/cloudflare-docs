@@ -20,6 +20,8 @@ When renewing a custom certificate, you can reuse a [previously generated CSR](/
 
 ## Expired certificates
 
-If a valid replacement is already available, Cloudflare will remove expiring custom certificates in the 24 hours before expiration. If no valid replacement is available, Cloudflare will remove the expiring custom certificate 30 minutes before it expires.
+If a valid replacement - covering some or all of the [SANs](/fundamentals/glossary/#subject-alternative-name-san) in the expiring custom certificate - is already available, Cloudflare will remove the expiring custom certificate in the 24 hours before expiration.
+
+If no valid replacement is available, Cloudflare will remove the custom certificate after it expires.
 
 Affected domains and subdomains will fall back to any other active certificate covering the hostnames on the expiring certificate.

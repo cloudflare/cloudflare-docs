@@ -15,6 +15,8 @@ Cloudflare Network Analytics v2 provides near real-time visibility into network 
 The Network Analytics logs refer to IP traffic of Magic Transit customer prefixes/leased IP addresses or Spectrum applications. These logs are not directly associated with the [zones](/fundamentals/get-started/concepts/accounts-and-zones/#zones) in your Cloudflare account.
 {{</Aside>}}
 
+For a technical deep-dive into Network Analytics v2, refer to our [blog post](https://blog.cloudflare.com/building-network-analytics-v2/).
+
 ## Related resources
 
 * [Cloudflare GraphQL API](/analytics/graphql-api/)

@@ -25,7 +25,6 @@ export default {
     async function postDataBreach(request) {
       return await fetch(SOME_HOOK_SERVER, {
         method: "POST",
-        body: JSON.stringify(body),
         headers: {
           "content-type": "application/json;charset=UTF-8",
         },
@@ -100,7 +99,6 @@ const handler: ExportedHandler = {
     async function postDataBreach(request) {
       return await fetch(SOME_HOOK_SERVER, {
         method: "POST",
-        body: JSON.stringify(body),
         headers: {
           "content-type": "application/json;charset=UTF-8",
         },

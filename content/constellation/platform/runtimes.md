@@ -16,7 +16,7 @@ Our vision is to support multiple runtimes. Currently, we only support the ONNX 
 
 Use Wrangler to list the models Cloudflare supports:
 
-```bash
+```sh
 $ npx wrangler constellation runtime list
 
 ┌──────┐
