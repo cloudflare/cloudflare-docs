@@ -39,13 +39,7 @@ ___
 Follow the instructions below to enable gRPC:
 
 {{<Aside type="note">}}
-[Orange-cloud the
-domain](https://support.cloudflare.com/hc/articles/200169626) that hosts
-your gRPC endpoint.
-{{</Aside>}}
-
-{{<Aside type="note">}}
-[Full SSL/TLS encryption mode for domain](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca#3-change-ssltls-mode) that hosts your gRPC endpoint.
+Make sure that the hostname that hosts your gRPC endpoint is set to [proxied (orange-cloud)](/dns/manage-dns-records/reference/proxied-dns-records/) and that you use at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/).
 {{</Aside>}}
 
 1.  Log in to your Cloudflare account.
