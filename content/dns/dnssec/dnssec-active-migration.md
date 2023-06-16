@@ -100,3 +100,18 @@ At this point your zone is in a [multi-signer DNSSEC setup](/dns/dnssec/multi-si
 
 1. Remove your previous provider's DS record from your registrar.
 2. Remove your previous provider's nameservers from your registrar.
+3. After waiting at least one and a half times the [TTL](https://www.cloudflare.com/learning/cdn/glossary/time-to-live-ttl/) of your previous provider DS record, you can remove the DNSKEY record (containing your previous provider ZSK) that you added to your Cloudflare zone in [step 2](#2-cross-import-zsks).
+
+{{<Aside type="note">}}
+
+You can find out the TTL of your previous provider DS record by running a `dig` command, as in the following example, or by using this [Dig Web Interface link](https://www.digwebinterface.com/?hostnames=multisigner.info&type=DS&useresolver=1.1.1.1).
+
+
+```bash
+$ dig multisigner.info ds +noall +answer
+multisigner.info.	3600	IN	DS	2371 13 2 227B4C7FF3E1D49D59BAF39BDA54CA0839DE700DD9896076AA3E6AD7 19A0CF55
+multisigner.info.	3600	IN	DS	48553 13 2 893709B51A9C53D011A4054B15FC5454BEDF68E739BB3B3FA1E333DA 7B8DACFE
+```
+In this example, both DS records have a TTL of `3600` seconds. Cloudflare's DS record always has the key tag set to `2371`, so the second line of the response is the DS record of the other provider.
+
+{{</Aside>}}
