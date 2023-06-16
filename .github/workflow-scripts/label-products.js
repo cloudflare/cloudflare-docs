@@ -83,14 +83,19 @@ async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
     }
   }
 
+  let newLabels = [];
   for (const labelToAdd of labelsToAdd) {
     if (!currentLabels.has(labelToAdd)) {
-      await octokit.rest.issues.addLabels({
-        ...repo,
-        issue_number: prNumber,
-        labels: [labelToAdd]
-      });
+      newLabels.push(labelToAdd);
     }
+  }
+  
+  if (newLabels.length > 0) {
+    await octokit.rest.issues.addLabels({
+      ...repo,
+      issue_number: prNumber,
+      labels: newLabels
+    });
   }
 }
 
