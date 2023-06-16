@@ -28,6 +28,12 @@ This behaves similar to `"cookie"` except the initial origin selection is stable
 
 The initial origin selection is stable and based on specific HTTP headers found in the first request. Subsequent requests, by clients with the same HTTP headers to the same load balancer, will be sent to the same origin server for the duration of the session and as long as the origin server remains healthy. If the origin server becomes unhealthy, a different stable origin server will be used until the original origin server recovers. A new origin server is calculated and used only after the session has not been used for `session_affinity_ttl` seconds.
 
+{{<Aside type="note">}}
+
+Sticky Zero Down-time Failover is not supported for session affinity by HTTP header.
+
+{{</Aside>}}
+
 ---
 
 ## Enabling Session Affinity from the Cloudflare dashboard
@@ -36,8 +42,8 @@ Enable Session Affinity when you [create or edit a load balancer](/load-balancin
 
 If you enable Session Affinity, choose one of the following options:
 
-- **By Cloudflare cookie only**: Sets a `CFLib` cookie to track the associated origin web server
-- **By Cloudflare cookie and Client IP fallback**: Sets a `CFLib` cookie, but also uses the client IP address when no session affinity cookie is provided
+- **By Cloudflare cookie only**: Sets a `cflib` cookie to track the associated origin web server
+- **By Cloudflare cookie and Client IP fallback**: Sets a `cflib` cookie, but also uses the client IP address when no session affinity cookie is provided
 
 {{<Aside type="warning" header="Important">}}
 

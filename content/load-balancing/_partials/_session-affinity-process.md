@@ -7,7 +7,7 @@ _build:
 
 Session Affinity automatically directs requests from the same client to the same origin web server:
 
-1.  When a client makes its first request, Cloudflare sets a `CFLib` cookie on the client (to track the associated origin web server).
+1.  When a client makes its first request, Cloudflare sets a `cflib` cookie on the client (to track the associated origin web server).
 2.  Subsequent requests by the same client are forwarded to that origin for the duration of the cookie and as long as the origin server remains healthy.
 3.  If the cookie expires or the origin server becomes unhealthy, Cloudflare sets a new cookie tracking the new failover origin.
 
@@ -15,12 +15,12 @@ Session Affinity automatically directs requests from the same client to the same
     flowchart LR
       accTitle: Session affinity process
       accDescr: Session affinity directs requests from the same client to the same server.
-     A[Client] --Request--> B{<code>CFLib</code> cookie set?}
+     A[Client] --Request--> B{<code>cflib</code> cookie set?}
      B -->|Yes| C[Route to previous server]
      C --> O2
      B ---->|No| E[Follow normal routing]
      E --> O2
-     E --Set <code>CFLib</code> cookie--> A
+     E --Set <code>cflib</code> cookie--> A
      subgraph P1 [Pool 1]
         O1[Origin 1]
         O2[Origin 2]
