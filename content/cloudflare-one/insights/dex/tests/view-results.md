@@ -15,7 +15,7 @@ You can use the results of a DEX test to monitor availability and performance fo
 - A test is enabled under **DEX** > **Tests**.
 - Admins have the [Cloudflare Zero Trust PII role](/cloudflare-one/cloudflare-teams-roles-permissions/#cloudflare-zero-trust-pii).
 
-### View all devices
+### View results for all devices
 
 To view an overview of test results for all devices:
 
@@ -23,7 +23,7 @@ To view an overview of test results for all devices:
 2. Select the **Tests** tab.
 3. Under **Application tests**, select a test to view detailed results.
 
-### View an individual device
+### View results for an individual device
 
 To view analytics on a per-device level:
 
@@ -52,4 +52,3 @@ Test results are stored for the following amount of time:
 | **Free**        | 24 hours   |
 | **Standard**    | 30 days    |
 | **Enterprise**  | 30 days    |
-
