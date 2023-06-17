@@ -8,12 +8,23 @@ rss: file
 
 # Changelog
 
+## 2023-06-09
+
+- `AbortSignal.any()` is now available.
+- Updated V8 to 11.4.
+- The `URLSearchParams` class' `delete()` and `has()` methods now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change so is gated behind the new `urlsearchparams_delete_has_value_arg` and `url_standard` compatibility flags.
+- Added compatibility flag `strict_compression_checks` for additional `DecompressionStream` error checking.
+
+## 2023-05-26
+
+- A new [Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) (beta) has been added to [Durable Objects](/workers/learning/using-durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
+
 ## 2023-05-16
 
 - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
 - We've added new [native database integrations](/workers/learning/integrations/databases/#native-database-integrations-beta) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
 - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
-- The [R2 Migrator](/r2/r2-migrator/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
+- The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
 
 ## 2023-05-15
 
@@ -146,7 +157,7 @@ rss: file
 ## 2022-05-19
 
 - R2 bindings: `contentEncoding`, `contentLanguage`, and `cacheControl` are now correctly rendered.
-- ReadableStream `pipeTo` and `pipeThrough` now support cancelation using `AbortSignal`.
+- ReadableStream `pipeTo` and `pipeThrough` now support cancellation using `AbortSignal`.
 - Calling `setAlarm()` in a DO with no `alarm()` handler implemented will now throw instead of failing silently. Calling `getAlarm()` when no `alarm()` handler is currently implemented will return null, even if an alarm was previously set on an old version of the DO class, as no execution will take place.
 - R2: Better runtime support for additional ranges.
 - R2 bindings now support ranges that have an `offset` and an optional `length`, a `length` and an optional `offset`, or a `suffix` (returns the last `N` bytes of a file).

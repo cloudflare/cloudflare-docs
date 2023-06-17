@@ -31,8 +31,10 @@ provider "cloudflare" {
   api_token = "<YOUR_API_TOKEN>"
 }
 
-resource "aws_s3_bucket" "cloudflare-bucket" {
-  bucket = "my-tf-test-bucket"
+resource "cloudflare_r2_bucket" "cloudflare-bucket" {
+  account_id = "<YOUR_ACCOUNT_ID>"
+  name       = "my-tf-test-bucket"
+  location   = "WEUR"
 }
 ```
 

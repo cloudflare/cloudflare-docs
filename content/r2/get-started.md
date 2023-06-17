@@ -62,5 +62,5 @@ You will receive a confirmation message after a successful upload.
 Cloudflare provides multiple ways for developers to access their R2 buckets:
 
 - [Workers Runtime API](/r2/api/workers/workers-api-usage/)
-- [S3 API compatibility](/r2/api/s3/tokens/)
+- [S3 API compatibility](/r2/api/s3/api/)
 - [Public buckets](/r2/buckets/public-buckets/)

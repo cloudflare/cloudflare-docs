@@ -22,10 +22,10 @@ All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTP
 
 ## Client authentication endpoint
 
-When you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow `<your-team-name>.cloudflareaccess.com` which will lookup the following IP addresses:.
+When you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow the following domains:
 
-- IPv4 Endpoints: `104.19.194.29` and `104.19.195.29`
-- IPv6 Endpoints: `2606:4700:300a::6813:c21d` and `2606:4700:300a::6813:c31d`
+- The IdP used to authenticate to Cloudflare Zero Trust
+- `<your-team-name>.cloudflareaccess.com`
 
 ## WARP ingress IP
 

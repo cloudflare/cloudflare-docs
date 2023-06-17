@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-06-06</td>
-      <td>2023-06-19</td>
-      <td>...6fa59d23</td>
-      <td>HTTP requests that are very likely coming from bots.</td>
-      <td>ddos_dynamic</td>
-      <td>ddos_dynamic</td>
-      <td>Allow the rule to trigger in more cases to catch more attacks.</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>
