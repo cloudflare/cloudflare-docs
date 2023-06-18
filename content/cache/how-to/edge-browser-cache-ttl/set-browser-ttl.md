@@ -38,3 +38,9 @@ The **Respect Existing Headers** option tells Cloudflare to honor the settings i
 For all plan types, you can set Browser Cache TTL to Respect Existing Headers at a zone level (zone setting) or you can use a Cache Rule. Setting Browser Cache TTL to Respect Existing Headers via Page Rule is currently an Enterprise-only zone feature. 
   
 {{</Aside>}}
+
+{{<Aside type="note" header="Keep In Mind">}}
+
+Setting a high Browser Cache TTL value can be dangers; After that the cached data can only be purged locally by the website visitor on its device. 
+
+{{</Aside>}}
