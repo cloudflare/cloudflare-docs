@@ -14,7 +14,6 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-You will need to install [`create cloudflare`], which will also install [wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and creating D1 databases.
 
 To continue:
 
@@ -23,7 +22,7 @@ To continue:
 3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
 
 
-## 2. Create a new project
+## 1. Create a Worker
 
 {{<Aside type="note" header="New to Workers?">}}
 
@@ -31,60 +30,17 @@ Refer to [How Workers works](/workers/learning/how-workers-works/) to learn abou
 
 {{</Aside>}}
 
-You will create a new Workers project as the container for both your D1 database and the Worker application that you will use to query your database.
+You will create a new Worker as the container for both your D1 database and the Worker application that you will use to query your database.
 
 Create a new project named `d1-tutorial` by running `npm create cloudflare` and answering the questions with the answers below:
 
-* name = `d1-tutorial` (this will be set for us)
-* type = `"Hello World" script`
-* typescript = `yes`
-* git = `yes`
-* deploy = `no` (we'll deploy our app later)
+* Your directory has been titled `d1-tutorial`.
+* Choose `"Hello World" script` for the type of application.
+* Select `yes` to using TypeScript.
+* Select `yes` to using Git.
+* Select `no` to deploying.
 
 
-```sh
-╭ Create an application with Cloudflare Step 1 of 3
-│
-├ Where do you want to create your application?
-│ dir d1-tutorial
-│
-├ What type of application do you want to create?
-│ type "Hello World" script
-│
-├ Do you want to use TypeScript?
-│ typescript yes
-│
-├ Copying files from "simple" template
-│
-├ Do you want to use git?
-│ git yes
-│
-╰ Application created
-
-╭ Installing dependencies Step 2 of 3
-│
-├ Installing dependencies
-│ installed via `npm install`
-│
-├ Committing new files
-│ git initial commit
-│
-╰ Dependencies Installed
-
-╭ Deploy with Cloudflare Step 3 of 3
-│
-├ Do you want to deploy your application?
-│ no deploying via `npm run deploy`
-│
-├  APPLICATION CREATED  Deploy your application with npm run deploy
-│
-│ Run the development server npm run start
-│ Deploy your application npm run deploy
-│ Read the documentation https://developers.cloudflare.com/workers
-│ Stuck? Join us at https://discord.gg/cloudflaredev
-│
-╰ See you again soon!
-```
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
 
