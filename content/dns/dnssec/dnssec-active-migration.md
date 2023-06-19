@@ -30,7 +30,7 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
     To import the zone file using the API, refer to the [Import DNS Records endpoint](/api/operations/dns-records-for-a-zone-import-dns-records).
 
-3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following API request.
+3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
 curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
@@ -40,7 +40,7 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 --data '{"status": "active"}'
 ```
 
-4. Enable multi-signer DNSSEC.
+4. Enable multi-signer DNSSEC using the following request. This step can only be achieved via the [API](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
 $ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \ 
@@ -53,6 +53,8 @@ $ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnss
 ## 2. Cross-import ZSKs
 
 1. Add the [ZSK](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) of your previous provider to Cloudflare by creating a DNSKEY record on your zone.
+
+You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/operations/dns-records-for-a-zone-create-dns-record), as in the following example.
 
 ```bash
 $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
@@ -87,11 +89,11 @@ Command line query example:
 $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
 
-3. Add Cloudflare's ZSK that you fetched in the previous step to your previous provider.
+3. Add Cloudflare's ZSK that you fetched in the last step to your previous provider.
 
 {{<Aside type="note">}}
 
-You can check that both providers are responding with both ZSKs by running a `dig` command, as in the following example, or by using this [Dig Web Interface link](https://www.digwebinterface.com/?hostnames=multisigner.info&type=DNSKEY&useresolver=1.1.1.1).
+You can check if both providers are responding with both ZSKs by running a `dig` command, as in the following example, or by using this [Dig Web Interface link](https://www.digwebinterface.com/?hostnames=multisigner.info&type=DNSKEY&useresolver=1.1.1.1).
 
 ```bash
 $ dig multisigner.info dnskey +noall +answer
