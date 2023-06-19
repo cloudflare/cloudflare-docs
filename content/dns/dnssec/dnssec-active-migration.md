@@ -11,7 +11,7 @@ meta:
 Follow this tutorial to migrate an existing DNS zone to Cloudflare without having to disable DNSSEC.
 
 {{<Aside type="warning">}}
-This procedure involves cross-importing the [zone signing keys (ZSKs)](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) from one provider to the other. To learn more about this, consider this article [about multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
+This procedure involves cross-importing the [zone signing keys (ZSKs)](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) from one provider to the other. To learn more about this, consider this article [about multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 {{</Aside>}}
 
 This is an advanced procedure and assume some familiarity with [DNS concepts](/dns/concepts/), [API operations](/fundamentals/api/), and basic setup steps. Assumed knowledge that is not detailed in this tutorial can be referenced through the linked content in each of the steps.
@@ -52,7 +52,7 @@ $ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnss
 
 ## 2. Cross-import ZSKs
 
-1. Add the [ZSK](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) of your previous provider to Cloudflare by creating a DNSKEY record on your zone.
+1. Add the [ZSK](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) of your previous provider to Cloudflare by creating a DNSKEY record on your zone.
 
 ```bash
 $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
