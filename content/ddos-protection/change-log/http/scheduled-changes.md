@@ -24,7 +24,6 @@ layout: list
     <tr>
       <td>2023-06-16</td>
       <td>2023-06-27</td>
-      <td>...95f78bf0</td>
       <td>...c86adf25</td>
       <td>HTTP requests with unusual HTTP headers or URI path (signature #38). Only for zones on PRO plan and above.</td>
       <td>N/A</td>
