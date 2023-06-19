@@ -11,15 +11,13 @@ Exact Data Match (EDM) allows you to scan your web traffic and SaaS applications
 
 All data in the uploaded spreadsheet is hashed before reaching Cloudflare. Traffic is compared to these hashes to detect matches.
 
-## Create an EDM dataset
-
-### Prepare a dataset
+## Prepare a dataset
 
 To prepare a dataset for EDM, input your desired data to a single-column spreadsheet. Spreadsheets can contain a maximum of 1,000 cells and should not contain a title cell.
 
 Accepted file formats for datasets include CSV and TXT.
 
-### Upload a new dataset
+## Upload a new dataset
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select **Create new dataset**.
@@ -28,7 +26,7 @@ Accepted file formats for datasets include CSV and TXT.
 
 To use this dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
-### Manage existing datasets
+## Manage existing datasets
 
 Because they are encrypted, EDM datasets are read-only. To update a dataset, you must upload a new file.
 
