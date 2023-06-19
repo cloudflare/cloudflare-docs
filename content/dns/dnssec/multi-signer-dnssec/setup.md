@@ -83,7 +83,7 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <KEY>' \
 --header 'Content-Type: application/json' \
--data '{
+--data '{
   "id": "use_apex_ns",
   "value": true
 }'
