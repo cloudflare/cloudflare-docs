@@ -12,46 +12,14 @@ Alternatively, download the client from one of the following links after checkin
 
 ## Windows
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>OS Ver</strong>
-      </td>
-      <td>Windows 10, Windows 11</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>OS Type</strong>
-      </td>
-      <td>64bit only</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>.NET Framework Min version</strong>
-      </td>
-      <td>4.7.2 or later</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>HD Space</strong>
-      </td>
-      <td>184MB</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Memory</strong>
-      </td>
-      <td>3MB</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Network Types</strong>
-      </td>
-      <td>WIFI or LAN</td>
-    </tr>
-  </tbody>
-</table>
+|                      |    |
+| ---------------------| ---|
+| **OS version**       | Windows 10, Windows 11|
+| **OS type**          | 64-bit only |
+| .NET Framework version | 4.7.2 or later |
+| **HD space**         | 184 MB |
+| **Memory**           | 3 MB |
+| **Network interface**| <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>|
 
 **[Windows Release Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release)**
 
@@ -59,85 +27,28 @@ Alternatively, download the client from one of the following links after checkin
 
 ## macOS
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>OS Ver</strong>
-      </td>
-      <td>Catalina, Big Sur, Monterey, Ventura</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>OS Type</strong>
-      </td>
-      <td>64bit only</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>HD Space</strong>
-      </td>
-      <td>75MB</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Memory</strong>
-      </td>
-      <td>35MB</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Network Types</strong>
-      </td>
-      <td>WIFI or LAN</td>
-    </tr>
-  </tbody>
-</table>
+|                      |    |
+| ---------------------| ---|
+| **OS version**       | Catalina, Big Sur, Monterey, Ventura|
+| **OS type**          | 64-bit only |
+| **HD space**         | 75 MB|
+| **Memory**           | 35 MB |
+| **Network interface**| <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>|
 
 **[macOS Release Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release)**
 
 **[macOS Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)**
 
 ## Linux
+|                      |    |
+| ---------------------| ---|
+| **OS version**       | CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Ubuntu 22.04, Debian 9, Debian 10, Debian 11|
+| **OS type**          | 64-bit only |
+| **HD space**         | 75 MB|
+| **Memory**           | 35 MB |
+| **Network interface**| <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>|
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>OS Ver</strong>
-      </td>
-      <td>CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Ubuntu 22.04, Debian 9, Debian 10, Debian 11</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>OS Type</strong>
-      </td>
-      <td>64bit only</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>HD Space</strong>
-      </td>
-      <td>75MB</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Memory</strong>
-      </td>
-      <td>35MB</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Network Types</strong>
-      </td>
-      <td>WIFI or LAN</td>
-    </tr>
-  </tbody>
-</table>
-
-**[Package Download](https://pkg.cloudflareclient.com/packages/cloudflare-warp)**
-
-**[APT/YUM Repository Setup](https://pkg.cloudflareclient.com/install)**
+**[Package repository](https://pkg.cloudflareclient.com/)**
 
 ## iOS
 

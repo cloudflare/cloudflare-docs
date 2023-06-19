@@ -57,13 +57,17 @@ To apply customizations to your block page:
 3. Select **Customize**. Available global customizations include:
 
    - Adding your organization's name
-   - Adding a logo
+   - Adding a [logo](#add-a-logo-image)
    - Adding a header text
    - Adding a global block message, which will be displayed above the policy-specific block message
    - Adding a [Mailto link](#allow-users-to-email-an-administrator)
    - Choosing a background color
 
 4. Select **Save**. Your customers will now see your custom block page when navigating to a blocked website.
+
+### Add a logo image
+
+You can include an external logo image to display on your custom block page. The block page resizes all images to 146x146 pixels. The URL must be valid and no longer than 2048 characters. Accepted file types include SVG, PNG, JPEG, and GIF.
 
 ### Allow users to email an administrator
 

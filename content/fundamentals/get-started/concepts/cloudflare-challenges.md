@@ -76,6 +76,10 @@ Challenges are not supported by Microsoft Internet Explorer.
 
 If your visitors encounter issues using a major browser besides Internet Explorer, they should upgrade their browser.
 
+### Mobile browsers
+
+Challenges are not supported for desktop mode on mobile browsers.
+
 ---
 
 ## Resolve a challenge

@@ -26,9 +26,22 @@ By default, `cloudflared` prints logs to stdout and does not store logs on the s
 $ cloudflared tunnel --logfile mytunnel.log run <UUID>
 ```
 
-## View logs on a client
+## View logs on your local machine
 
-You can view real-time logs for a Cloudflare Tunnel from any machine that has `cloudflared` installed. With this method, you do not need to SSH into the server that is running the tunnel.
+You can view real-time logs for a Cloudflare Tunnel via the dashboard or from any machine that has `cloudflared` installed. With remote log streams, you do not need to SSH into the server that is running the tunnel.
+
+### Dashboard
+
+#### Prerequisites
+
+- `cloudflared` version 2023.5.1 or higher is installed on the origin server.
+- The tunnel is active and able to receive requests.
+
+#### View logs
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels** and select your tunnel.
+2. Under **Connectors**, select the Connector ID for the `cloudflared` instance you want to view.
+3. Select **Begin log stream**.
 
 ### CLI
 
@@ -36,7 +49,7 @@ The `cloudflared` daemon can stream logs from any tunnel in your account to the 
 
 #### Prerequisites
 
-- `cloudflared` version 2023.5.0 or higher is installed on both your local machine and the origin server.
+- `cloudflared` version 2023.5.1 or higher is installed on both your local machine and the origin server.
 - The tunnel is active and able to receive requests.
 
 #### View logs

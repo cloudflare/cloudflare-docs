@@ -34,6 +34,7 @@ We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evalu
 {{<faq-answer>}}
 
 A full Turnstile Challenge Token Flow consists of a few things:
+
 * A challenge is rendered (issued).
 * A challenge is solved on the front end and a token is harvested (solved).
 * The token is passed to siteverify, and it is consumed (siteverified).

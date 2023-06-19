@@ -15,7 +15,7 @@ When deploying a Worker using ES modules format, any [bindings](/workers/platfor
 
 ### Add environment variables via Wrangler
 
-Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always plaintext values.
+Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file. Environment variables are always plaintext or JSON values, represented using the [inline table toml syntax](https://toml.io/en/v1.0.0#inline-table).
 
 ```toml
 ---
@@ -29,6 +29,7 @@ name = "my-worker-dev"
 [vars]
 API_TOKEN = "example_dev_token"
 STRIPE_TOKEN = "pk_xyz1234_test"
+SERVICE_X_DATA = { URL = "service-x-api.dev.example", API_KEY = "my-service-x-dev-api-key", MY_ID = 123 }
 
 # Override values for `--env production` usage
 [env.production]
@@ -36,9 +37,10 @@ name = "my-worker-production"
 [env.production.vars]
 API_TOKEN = "example_production_token"
 STRIPE_TOKEN = "pk_xyz1234"
+SERVICE_X_DATA = { URL = "service-x-api.prod.example", API_KEY = "my-service-x-prod-api-key", MY_ID = 123 }
 ```
 
-These environment variables can then be accessed within your Worker script as global variables. They will be plaintext strings.
+These environment variables can then be accessed within your Worker script as global variables. They will be either plaintext strings or json objects.
 
 ```js
 // Worker code:
@@ -49,6 +51,10 @@ console.log(API_TOKEN);
 console.log(STRIPE_TOKEN);
 //=> (default) "pk_xyz1234_test"
 //=> (env.production) "pk_xyz1234"
+
+console.log(JSON.stringify(SERVICE_X_DATA)):
+//=> (default) {"API_KEY":"my-service-x-dev-api-key","MY_ID":123,"URL":"service-x-api.dev.example"}
+//=> (env.production) {"API_KEY":"my-service-x-prod-api-key","MY_ID":123,"URL":"service-x-api.prod.example"}
 ```
 
 If using [Workers written in ES modules format](/workers/learning/migrate-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the following example:

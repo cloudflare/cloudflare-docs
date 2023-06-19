@@ -2,7 +2,7 @@
 pcx_content_type: concept
 type: overview
 title: Management and Monitoring
-weight: 3
+weight: 5
 ---
 
 # Endpoint Management

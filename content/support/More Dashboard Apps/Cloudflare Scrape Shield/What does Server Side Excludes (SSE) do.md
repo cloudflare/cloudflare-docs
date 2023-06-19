@@ -18,9 +18,13 @@ To enable SSE:
 2.  Go to **Scrape Shield**.
 3.  For **Server-side Excludes**, change the toggle to be **Enabled**.
 
-To exclude content from suspicious visitors, wrap the content in the following SSE tags: <!--sse--><!--/sse-->
+To exclude content from suspicious visitors, wrap the content in the following SSE tags:
 
-For example: <!--sse--> Bad visitors won't see my phone number, 555-555-5555 <!--/sse-->
+```
+<!--sse--><!--/sse-->
+```
+
+For example: `<!--sse-->` Bad visitors won't see my phone number, 555-555-5555 `<!--/sse-->`
 
 {{<Aside type="note">}}
 SSE only will work with HTML. If you have HTML minification enabled, you
