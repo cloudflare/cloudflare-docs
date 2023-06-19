@@ -9,13 +9,13 @@ layout: single
 
 Exact Data Match (EDM) allows you to scan your web traffic and SaaS applications for specific data defined in a custom dataset, such as names, addresses, phone numbers, credit card numbers, and more.
 
-All data in the uploaded spreadsheet is hashed before reaching Cloudflare. Traffic is compared to these hashes to detect matches.
+All data in uploaded datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to your dataset's hashes.
 
 ## Prepare a dataset
 
-To prepare a dataset for EDM, input your desired data to a single-column spreadsheet. Spreadsheets can contain a maximum of 1,000 cells and should not contain a title cell.
+To prepare a dataset for EDM, add your desired data to a single-column spreadsheet. Spreadsheets can contain a maximum of 1,000 cells. Title cells may result in false positives and should not be included.
 
-Accepted file formats for datasets include CSV and TXT.
+Accepted file formats include CSV and TXT.
 
 ## Upload a new dataset
 
