@@ -78,8 +78,6 @@ To enable Brotli compression:
 2. Go to **Speed** > **Optimization**.
 3. For **Brotli**, toggle the switch to **On**.
 
----
-
 ## Content compression from origin servers to the Cloudflare network
 
 When requesting content from your origin server, Cloudflare supports GZIP compression, Brotli compression, or no compression.
@@ -96,3 +94,18 @@ If you do not want a particular response from your origin to be encoded with GZI
 {{<Aside type="warning" header="Warning">}}
 Cloudflare will take into consideration the `Accept-Encoding` header value in website visitors' requests when sending responses to those visitors. However, when requesting content from your origin server, Cloudflare will send a different `Accept-Encoding` header, supporting GZIP and Brotli compression.
 {{</Aside>}}
+
+---
+
+## Notes about end-to-end compression
+
+Even when using the same compression algorithm end to end (between your origin server and Cloudflare, and between the Cloudflare global network and your website visitor), Cloudflare will need to decompress the response and compress it again if you enable any of the following options for the request:
+
+- Email Obfuscation
+- Rocket Loader
+- Server Side Excludes (SSE)
+- Mirage
+- HTML Minification (you can JavaScript and CSS with no impact)
+- Automatic HTTPS Rewrites
+
+To disable these features for specific paths, create a [Configuration Rule](/rules/configuration-rules/).
