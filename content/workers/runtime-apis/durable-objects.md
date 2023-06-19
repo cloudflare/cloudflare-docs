@@ -42,7 +42,7 @@ export class DurableObject {
 
 - `state.id` {{<type>}}DurableObjectId{{</type>}}
 
-  - The ID of this Durable Object. It can be converted into a hex string using its `toString()` method. Inside a Durable Object, the `state.id.name` property is not defined. If you need access to the name, explicitly pass it in the fetch request to the Durable Object, for example, a query parameter in the URL. 
+  - The ID of this Durable Object. It can be converted into a hex string using its `toString()` method. Inside a Durable Object, the `state.id.name` property is not defined. If you need access to the name, explicitly pass it in the fetch request to the Durable Object, for example, a query parameter in the URL.
 
 - `state.waitUntil`
 
@@ -165,7 +165,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - {{<code>}}allowUnconfirmed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. Refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post to learn more. 
+    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. Refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post to learn more.
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
@@ -290,7 +290,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `alarm()` handler method
 
-The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed. 
+The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed.
 
 The method takes no parameters, does not return a result, and can be `async`.
 
@@ -374,6 +374,8 @@ A Durable Object that hibernates will not incur billable [Duration (GB-sec) char
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
 [Code updates](/workers/learning/using-durable-objects/#global-uniqueness) will disconnect all WebSockets.
+
+`wrangler dev` does not currently work with the Hibernation API.
 
 #### WebSocket extensions
 
