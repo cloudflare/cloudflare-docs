@@ -6,28 +6,29 @@ weight: 3
 
 # Certificate Transparency Monitoring
 
-Certificate Transparency (CT) Monitoring sends you emails when certificates — including [backup certificates](/ssl/edge-certificates/universal-ssl/#backup-certificates) — are issued for your domain. This feature is in **public beta** and is opt-in.
+Certificate Transparency (CT) Monitoring is an [opt-in](#opt-in-and-out) feature in public beta that aims at improving security by allowing you to double-check any SSL/TLS certificates issued for your domain.
 
-{{<Aside type="note">}}
+CT Monitoring alerts are triggered not only by Cloudflare processes - including [backup certificates](/ssl/edge-certificates/backup-certificates/) -, but whenever a certificate that covers your monitored domain is issued by a [Certificate Authority (CA)](/ssl/concepts/#certificate-authority-ca) and added to a [public CT log](#how-ct-monitoring-works).
 
-If you use a shared certificate, you may receive notifications for domains or subdomains that do not belong to you.
+{{<Aside type="warning" header="Aspects to consider" >}}
+
+* If you use other services that automatically issue certificates for your domain or subdomains, this may trigger CT Monitoring emails as well.
+* If your domain is included in a shared certificate, you may receive notifications for domains or subdomains that do not belong to you but are included as [subject alternative names (SANs)](/fundamentals/glossary/#subject-alternative-name-san) together with your domain. You can use a tool like [Certificate Search](https://crt.sh/) to gather more information in such cases.
 
 {{</Aside>}}
 
----
+## How CT Monitoring works
 
-## Overview
+As explained in detail in the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/), this functionality goes beyond Cloudflare certificates. It is part of a greater project 
 
-Every website must have a certificate to be trusted by major browsers. A certificate is a proof of identity — it says that you are who you say you are. These certificates help browsers like Google Chrome "know" that a connection is secure before presenting content. Certificates are recorded in public **CT logs**, such as Google’s Argon log and Cloudflare’s Nimbus log.
+Certificates are recorded in public **CT logs**, such as Google’s Argon log and Cloudflare’s Nimbus log.
 
-If you enable Certificate Transparency (CT) Monitoring, Cloudflare will send you an email whenever your domain is recognized in a CT log. Usually, these certificates are legitimate and do not require further action. Cloudflare sends emails so you can double-check for yourself. If you use a shared certificate, you may receive emails for domains or subdomains that do not belong to you.
+If you enable Certificate Transparency (CT) Monitoring, Cloudflare will send you an email whenever your domain is recognized in a CT log. Usually, these certificates are legitimate and do not require further action.
 
 In rare cases, you may believe a certificate is illegitimate. This is when you should [take action](#how-to-take-action).
 
-{{<Aside type="note">}}
-
-For even more details, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/).
-
+{{<Aside type="note" header="Note:">}}
+CT monitoring does not detect phishing attempts. For example, for <code>cloudflare.com</code>, an alert would not trigger for a certificate issued for <code>cloudf1are.com</code> or <code>cloud-flare.com</code>.
 {{</Aside>}}
 
 ---
@@ -40,10 +41,6 @@ Alerts are turned off by default. If you want to receive alerts, go to [**SSL/TL
 
 To stop receiving alerts, disable **Certificate Transparency Monitoring** or remove your email from the feature card.
 
-{{<Aside type="note" header="Note:">}}
-CT monitoring does not detect phishing attempts. For example, for <code>cloudflare.com</code>, an alert would not trigger for a certificate issued for <code>cloudf1are.com</code> or <code>cloud-flare.com</code>.
-{{</Aside>}}
-
 ---
 
 ## Emails to be concerned about
@@ -54,8 +51,8 @@ Additionally, you should check whether the certificate was issued through Cloudf
 
 You _should_ take action when something is clearly wrong, such as if you:
 
-- Do not recognize the certificate issuer
-- Have recently noticed problems with your website
+- Do not recognize the certificate issuer.
+- Have recently noticed problems with your website.
 
 ---
 

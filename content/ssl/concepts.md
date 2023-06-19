@@ -50,6 +50,7 @@ As explained in the article about [what is an ssl certificate](https://www.cloud
 SSL/TLS certificates vary in terms of the level to which a CA has validated them. As explained in the article about [types of certificates](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/), SSL/TLS certificates can be DV (Domain Validated), OV (Organization Validated) or EV (Extended Validation).
 
 {{<render file="_validation-level-note.md">}}
+<br />
 
 ## Origin pull
 
