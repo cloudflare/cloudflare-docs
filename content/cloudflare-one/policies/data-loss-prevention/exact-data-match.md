@@ -15,9 +15,9 @@ All data in the uploaded spreadsheet is hashed before reaching Cloudflare. Traff
 
 ### Prepare a dataset
 
-Uploaded datasets can be a TXT or CSV file.
+To prepare a dataset for EDM, input your desired data to a single-column spreadsheet. Spreadsheets can contain a maximum of 1,000 cells and should not contain a title cell.
 
-When converting from a spreadsheet, you must remove column names.
+Accepted file formats for datasets include CSV and TXT.
 
 ### Upload a new dataset
 
@@ -26,7 +26,7 @@ When converting from a spreadsheet, you must remove column names.
 3. Upload a dataset.
 4. Select **Save**.
 
-You can now add this dataset as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
+To use this dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
 ### Manage existing datasets
 
