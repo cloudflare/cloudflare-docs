@@ -1,12 +1,14 @@
 ---
-title: Generated Columns
+title: Generated columns
 pcx_content_type: concept
 weight: 10
 ---
 
-# Generated Columns
+# Generated columns
 
-D1 allows you define generated columns: columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/learning/querying-json). This allows you to normalize your data as you write to it or read it from a table, making it easier to query and reducing the need for complex application logic.
+D1 allows you define generated columns: columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/learning/querying-json).
+
+This allows you to normalize your data as you write to it or read it from a table, making it easier to query and reducing the need for complex application logic.
 
 Generated columns can also have [indexes defined](/d1/learning/using-indexes/) against them, which can dramatically increase query performance over frequently queried fields.
 
