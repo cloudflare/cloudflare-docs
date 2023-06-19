@@ -28,12 +28,26 @@ Organizations can migrate their teams with minimal disruption in one of two mode
 
 ### Migrate manual deployments
 
-If you downloaded and installed the WARP client manually, perform the following steps on your device:
+If you downloaded and installed the WARP client manually, here are the recommended migration steps:
 
-1. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/#ios) the **Cloudflare One Agent**.
-2. Open the **Cloudflare One Agent** app to [re-enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) in your Zero Trust organization.
+1. Update the **1.1.1.1** app to the latest version. The update ensures that 1.1.1.1 can [co-exist](#what-to-do-with-the-old-app) with the new Cloudflare One Agent app. If you do not wish to keep both apps, you can go ahead and [uninstall 1.1.1.1](/cloudflare-one/connections/connect-devices/warp/remove-warp/#ios-and-android).
+2. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/#ios) the **Cloudflare One Agent** app.
+3. Install the Cloudflare One Agent: {{<render file="_enroll-ios-android.md">}}
+4. In the Cloudflare One Agent, turn on the switch to **Connected**.
 
-Once you have enrolled, the migration process is complete. If you do not wish to use the old 1.1.1.1 w/ WARP app for [personal browsing](#behavior-when-both-apps-are-installed), you may [uninstall](/cloudflare-one/connections/connect-devices/warp/remove-warp/#ios-and-android) it.
+If you enrolled the Cloudflare One Agent in the same Zero Trust organization as 1.1.1.1, you will be automatically logged out of Zero Trust on 1.1.1.1. The 1.1.1.1 app will revert to consumer mode, and the **Login with Cloudflare Zero Trust**  button on the old app will redirect to the new app.
+
+If you enrolled the Cloudflare One Agent in a different Zero Trust organization, you will remain logged into your other Zero Trust organization on 1.1.1.1.
+
+#### What to do with the old app
+
+While both 1.1.1.1 and Cloudflare One Agent can exist on the device, iOS and Android will only allow one of these applications to connect at a time.
+
+To access your company's resources, you must use the Cloudflare One Agent app.
+
+You can use the 1.1.1.1 app for personal browsing. When connected to 1.1.1.1 w/ WARP, your traffic will be encrypted and privately routed via Cloudflare's network, and your employer will not be able to see any of your browsing activity. To learn more about consumer WARP services, refer to [WARP client](/warp-client/).
+
+If you do not wish to use the old 1.1.1.1 app for personal browsing, you may [uninstall](/cloudflare-one/connections/connect-devices/warp/remove-warp/#ios-and-android) it.
 
 ### Migrate managed deployments
 
@@ -56,11 +70,3 @@ Once users have enrolled, the migration process is complete.
 ### Verify migration
 
 To check whether a user has migrated, go to **My Team** > **Devices**. A device enrolled through the Cloudflare One Agent will appear as a new device with a new device ID. Their old WARP client registration will remain as an inactive device.
-
-### Behavior when both apps are installed
-
-While both 1.1.1.1 and Cloudflare One Agent can exist on the device, iOS and Android will only allow one of these applications to run at a time.
-
-You can use the 1.1.1.1 app for personal browsing. When connected to 1.1.1.1 w/ WARP, your traffic will be encrypted and privately routed via Cloudflare's network, and your employer will not be able to see any of your browsing activity. To learn more about consumer WARP services, refer to [WARP client](/warp-client/).
-
-To access your company's resources, you must use the Cloudflare One Agent app.  Once you log into Zero Trust through the Cloudflare One Agent, you will be automatically logged out from 1.1.1.1. The **Login with Cloudflare Zero Trust**  button on the old app will redirect to the new app.

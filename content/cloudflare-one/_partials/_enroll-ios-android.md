@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-1. Launch the Cloudflare One Agent application.
+1. Launch the Cloudflare One Agent app.
 2. Select **Next**.
 3. Review the privacy policy and select **Accept**.
 4. Enter your [team name](/cloudflare-one/glossary/#team-name).
