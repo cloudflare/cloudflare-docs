@@ -28,11 +28,11 @@ To use this dataset, add it as an existing entry to a [custom DLP profile](/clou
 
 ## Manage existing datasets
 
-Because they are encrypted, EDM datasets are read-only. To update a dataset, you must upload a new file.
+Uploaded EDM datasets are encrypted and read-only. To update a dataset, you must upload a new file.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select the dataset you want to update.
 3. Select **Upload new file** and choose your updated dataset.
 4. Select **Save**.
 
-Upon saving, your new dataset will replace your old one.
+Your new dataset will replace the original dataset.
