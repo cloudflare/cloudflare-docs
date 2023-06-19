@@ -13,7 +13,7 @@ You should replace peer addresses with the Anycast IP addresses assigned to your
 
 The following is a Cisco IOS XE configuration example:
 
-```xml
+```txt
 crypto ikev2 proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
  encryption aes-cbc-256
  integrity sha512 sha384 sha256
@@ -100,12 +100,11 @@ interface GigabitEthernet2
  negotiation auto
  no mop enabled
  no mop sysid
-
 ```
 
 ## Diagnostic output: show crypto session detail
 
-```xml
+```txt
 cisco-csr1000v#show crypto session detail
 Crypto session current status
 
@@ -148,7 +147,7 @@ Peer: 172.64.###.### port 500 fvrf: (none) ivrf: (none)
 
 ## Diagnostic output: show crypto session remote `<ANYCAST 01>` detail
 
-```xml
+```txt
 cisco-csr1000v#show crypto session remote 162.159.###.### detail
 Crypto session current status
 
@@ -176,7 +175,7 @@ Peer: 162.159.###.### port 500 fvrf: (none) ivrf: (none)
 
 ## Diagnostic output: show crypto session remote `<ANYCAST 02>` detail
 
-```xml
+```txt
 cisco-csr1000v#show crypto session remote 172.64.###.### detail
 Crypto session current status
 
