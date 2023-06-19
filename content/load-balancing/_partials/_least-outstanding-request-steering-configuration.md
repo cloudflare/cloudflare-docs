@@ -7,7 +7,7 @@ _build:
 
 ```json
 ---
-header: Load Balancer
+header: Load Balancers
 ---
 {
  "steering_policy": "least_outstanding_requests"
