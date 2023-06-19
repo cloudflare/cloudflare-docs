@@ -30,15 +30,15 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 | Description                       | Address                            | Address                      |
 | --------------------------------- | ---------------------------------- | ---------------------------- |
-| NGFW External Interface           | `203.0.113.254/24`                 |                              |
-| NGFW Internal Interface           | `10.1.100.254/24`                  |                              |
-| Local Trust Subnet (LAN)          | `10.1.100.0/24`                    |                              |
-| NGFW Tunnel Interface 01          | `10.252.2.26/31` (Cloudflare side) | `10.252.2.27/31` (NGFW side) |
-| NGFW Tunnel Interface 02          | `10.252.2.28/31` (Cloudflare side) | `10.252.2.29/31` (NGFW side) |
+| NGFW external interface           | `203.0.113.254/24`                 |                              |
+| NGFW internal interface           | `10.1.100.254/24`                  |                              |
+| Local trust subnet (LAN)          | `10.1.100.0/24`                    |                              |
+| NGFW tunnel interface 01          | `10.252.2.26/31` (Cloudflare side) | `10.252.2.27/31` (NGFW side) |
+| NGFW tunnel interface 02          | `10.252.2.28/31` (Cloudflare side) | `10.252.2.29/31` (NGFW side) |
 | Magic WAN Anycast IP              | `162.159.66.164`                   | `172.64.242.164`             |
-| Magic WAN Health Check Anycast IP | `172.64.240.253`                   | `172.64.240.254`             |
-| VLAN0010 - Remote Magic WAN Site  | `10.1.10.0/24`                     |                              |
-| VLAN0020 - Remote Magic WAN Site  | `10.1.20.0/24`                     |                              |
+| Magic WAN health check Anycast IP | `172.64.240.253`                   | `172.64.240.254`             |
+| VLAN0010 - remote Magic WAN site  | `10.1.10.0/24`                     |                              |
+| VLAN0020 - remote Magic WAN site  | `10.1.20.0/24`                     |                              |
 
 ---
 
@@ -48,9 +48,9 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels). The following settings are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
-{{<Aside type="warning">}}Bidirectional health checks are required with Magic WAN. Configuration of the [tunnel health check settings](/magic-wan/how-to/run-tunnel-health-checks/) must incorporate custom target IP addresses for each tunnel. Additionally, Cloudflare recommendeds that you lower the rate at which health check probes are sent.{{</Aside>}}
+{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/how-to/run-tunnel-health-checks/) with Magic WAN. The settings for must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommendeds that you lower the rate at which health check probes are sent.{{</Aside>}}
 
-Bidirectional tunnel health check target IPs:
+These are the target IP addresses for bidirectional tunnel health checks:
 
 - `172.64.240.253`: Use with the primary IPsec tunnel.
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
@@ -58,24 +58,26 @@ Bidirectional tunnel health check target IPs:
 #### Add IPsec tunnels
 
 1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/#dashboard-instructions) instructions to create the required IPsec tunnels with the following options:
-  - **Tunnel name**: `SFO_IPSEC_TUN01`
-  - **Interface address**: `10.252.2.96/31`
-  - **Customer endpoint**: `203.0.113.254`
-  - `Cloudflare endpoint`: `162.159.66.164`
-  - **Health check rate**: _Low_ (default value is _Medium_)
-  - **Health check type**: _Reply_
-  - **Health check target**: _Custom_ (default is _Default_)
-  - **Target address**: `172.64.240.253`
+    - **Tunnel name**: `SFO_IPSEC_TUN01`
+    - **Interface address**: `10.252.2.96/31`
+    - **Customer endpoint**: `203.0.113.254`
+    - `Cloudflare endpoint`: `162.159.66.164`
+    - **Health check rate**: _Low_ (default value is _Medium_)
+    - **Health check type**: _Reply_
+    - **Health check target**: _Custom_ (default is _Default_)
+    - **Target address**: `172.64.240.253`
+
 2. Select **Add pre-shared key later** > **Add tunnels**.
+
 3. Repeat the process to create a second IPsec tunnel with the following options:
-  - **Tunnel name**: `SFO_IPSEC_TUN02`
-  - **Interface address**: `10.252.2.98/31`
-  - **Customer endpoint**: `203.0.113.254`
-  - **Cloudflare endpoint**: `172.64.242.164`
-  - **Health check rate**: _Low_ (default value is _Medium_)
-  - **Health check type**: _Reply_
-  - **Health check target**: _Custom_ (default is _Default_)
-  - **Target address**: `172.64.240.254`
+    - **Tunnel name**: `SFO_IPSEC_TUN02`
+    - **Interface address**: `10.252.2.98/31`
+    - **Customer endpoint**: `203.0.113.254`
+    - **Cloudflare endpoint**: `172.64.242.164`
+    - **Health check rate**: _Low_ (default value is _Medium_)
+    - **Health check type**: _Reply_
+    - **Health check target**: _Custom_ (default is _Default_)
+    - **Target address**: `172.64.240.254`
 
 #### Generate Pre-shared keys
 
@@ -86,54 +88,49 @@ When you create IPSec tunnels with the option **Add pre-shared key later**, the 
 1. Select **Edit** to edit the properties of each tunnel.
 2. Select **Generate a new pre-shared key** > **Update and generate pre-shared key**.
   ![Generatre a new pre-shared key for each of your IPsec tunnels](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
-3. Take note of the pre-shared key value for each of your IPsec tunnels, and select **Done**.
+3. Copy the pre-shared key value for each of your IPsec tunnels, and save these values somewhere safe. Then, select **Done**.
   ![Take note of your pre-shared key, and keep it in a safe place](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/05_magic_ipsec_tun_01_show_psk.png)
 
 #### IPsec identifier - FQDN (Fully Qualified Domain Name)
 
-The Cloudflare dashboard shows you the list of 
+After creating your IPsec tunnels, the Cloudflare dashboard will list them under the **Tunnels** tab. Select the arrow (**>**) on each of your IPsec tunnel to collect the FQDN ID value from each of them. The FQDN ID value will be required when configuring IKE Phase 1 on the Palo Alto Networks Next-Generation Firewall.
 
-Collect the FQDN ID value from each of the two tunnels as they will be required when configuring IKE Phase 1 on NGFW:
+![Take note of the FQDN ID value for each of your IPsec tunnels](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/08_magic_ipsec_tun_01_fqdn.png)
 
-##### Tunnel 1
-
-```xml
-28de99ee57424ee0a1591384193982fa.33145236.ipsec.cloudflare.com
-```
-
-![Magic IPsec Tunnel 01 - Obtain FQDN](./images/cloudflare_dash_ipsec/08_magic_ipsec_tun_01_fqdn.png)
-
-##### Tunnel 2
-
-```xml
-b87322b0915b47158667bf1653990e66.33145236.ipsec.cloudflare.com
-```
-
-![Magic IPsec Tunnel 02 - Obtain FQDN](./images/cloudflare_dash_ipsec/09_magic_ipsec_tun_02_fqdn.png)
 
 ### Magic Static Routes
 
-There is one subnet within the NGFW Trust_L3_Zone: 10.1.100.0/24
+If you refer to the [Environment section](#environment), you will notice there is one subnet within `Trust_L3_Zone`: `10.1.100.0/24`.
 
-Add two Magic Static Routes - one to each of the two Magic IPsec Tunnels configured in the previous section.
+Create a [static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
 
-![Magic Static Routes](./images/cloudflare_dash_ipsec/10_magic_ipsec_static_routes.png)
+#### Tunnel 01
 
-## Palo Alto Networks Next-Generation Firewall Configuration
+- **Description**: `SFO_VLAN100_01`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `SFO_IPSEC_TUN01`
+
+#### Tunnel 02
+
+- **Description**: `SFO_VLAN100_02`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `SFO_IPSEC_TUN02`
+
+![Add static routes for each of the IPsec tunnels you created in the previous step](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/10_magic_ipsec_static_routes.png)
+
+## Palo Alto Networks Next-Generation Firewall
 
 ### Tags
 
-While _Tags_ are optional, they can greatly improve object and policy visibility.
-
-The following color scheme was implemented in this configuration:
+While [Tags are optional](https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/policy/use-tags-to-group-and-visually-distinguish-objects/create-and-apply-tags), they can greatly improve object and policy visibility. The following color scheme was implemented in this configuration:
 
 | Tag                | Color  |
 | ------------------ | ------ |
-| Trust_L3_Zone      | Green  |
-| Untrust_L3_Zone    | Red    |
-| Cloudflare_L3_Zone | Orange |
+| `Trust_L3_Zone`      | Green  |
+| `Untrust_L3_Zone`    | Red    |
+| `Cloudflare_L3_Zone` | Orange |
 
-Command-Line
+Use the Palo Alto Networks Next-Generation Firewall command-Line to set the tags:
 
 ```bash
 set tag Trust_L3_Zone color color2
@@ -141,51 +138,53 @@ set tag Untrust_L3_Zone color color1
 set tag Cloudflare_L3_Zone color color6
 ```
 
----
-
 ### Objects
 
-The use of _Address_ and _Address Group_ objects wherever possible is strongly encouraged as they ensure that configuration elements that reference them are defined accurately and consistently.
+The use of **Address** and **Address Group** objects wherever possible is strongly encouraged as they ensure that configuration elements that reference them are defined accurately and consistently.
 
 Any configuration changes should be applied to the objects and will automatically be applied throughout the remainder of the configuration.
 
 #### Address Objects
 
-> _NOTE: Any objects without a netmask specified are /32_
+{{<Aside type="note">}}Any objects without a netmask specified are `/32`.{{</Aside>}}
 
-| Name                          | Type       | Address          | Tags               |
-| ----------------------------- | ---------- | ---------------- | ------------------ |
-| CF_Health_Check_Anycast_01    | IP Netmask | 172.64.240.253   | Cloudflare_L3_Zone |
-| CF_Health_Check_Anycast_02    | IP Netmask | 172.64.240.254   | Cloudflare_L3_Zone |
-| CF_Magic_WAN_Anycast_01       | IP Netmask | 162.159.66.164   | Cloudflare_L3_Zone |
-| CF_Magic_WAN_Anycast_02       | IP Netmask | 172.64.242.164   | Cloudflare_L3_Zone |
-| CF_MWAN_IPsec_VTI_01_Local    | IP Netmask | 10.252.2.27/31   | Cloudflare_L3_Zone |
-| CF_MWAN_IPsec_VTI_01_Remote   | IP Netmask | 10.252.2.26      | Cloudflare_L3_Zone |
-| CF_MWAN_IPsec_VTI_02_Local    | IP Netmask | 10.252.2.29/31   | Cloudflare_L3_Zone |
-| CF_MWAN_IPsec_VTI_02_Remote   | IP Netmask | 10.252.2.28      | Cloudflare_L3_Zone |
-| CF_WARP_Client_Prefix         | IP Netmask | 100.96.0.0/12    | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_01            | IP Netmask | 173.245.48.0/20  | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_02            | IP Netmask | 103.21.244.0/22  | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_03            | IP Netmask | 103.22.200.0/22  | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_04            | IP Netmask | 103.31.4.0/22    | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_05            | IP Netmask | 141.101.64.0/18  | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_06            | IP Netmask | 108.162.192.0/18 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_07            | IP Netmask | 190.93.240.0/20  | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_08            | IP Netmask | 188.114.96.0/20  | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_09            | IP Netmask | 197.234.240.0/22 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_10            | IP Netmask | 198.41.128.0/17  | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_11            | IP Netmask | 162.158.0.0/15   | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_12            | IP Netmask | 104.16.0.0/13    | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_13            | IP Netmask | 104.24.0.0/14    | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_14            | IP Netmask | 172.64.0.0/13    | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_15            | IP Netmask | 131.0.72.0/22    | Cloudflare_L3_Zone |
-| Internet_L3_203-0-113-254--24 | IP Netmask | 203.0.113.254/24 | Untrust_L3_Zone    |
-| VLAN0010_10-1-10-0--24        | IP Netmask | 10.1.10.0/24     | Cloudflare_L3_Zone |
-| VLAN0020_10-1-20-0--24        | IP Netmask | 10.1.20.0/24     | Cloudflare_L3_Zone |
-| VLAN0100_10-1-100-0--24       | IP Netmask | 10.1.100.0/24    | Trust_L3_Zone      |
-| VLAN0100_L3_10-1-100-254--24  | IP Netmask | 10.1.10.254/24   | Trust_L3_Zone      |
+{{<table-wrap>}}
 
-##### Command-Line
+| Name                            | Type       | Address            | Tags                 |
+| ------------------------------- | ---------- | ------------------ | -------------------- |
+| `CF_Health_Check_Anycast_01`    | IP Netmask | `172.64.240.253`   | `Cloudflare_L3_Zone` |
+| `CF_Health_Check_Anycast_02`    | IP Netmask | `172.64.240.254`   | `Cloudflare_L3_Zone` |
+| `CF_Magic_WAN_Anycast_01`       | IP Netmask | `162.159.66.164`   | `Cloudflare_L3_Zone` |
+| `CF_Magic_WAN_Anycast_02`       | IP Netmask | `172.64.242.164`   | `Cloudflare_L3_Zone` |
+| `CF_MWAN_IPsec_VTI_01_Local`    | IP Netmask | `10.252.2.27/31`   | `Cloudflare_L3_Zone` |
+| `CF_MWAN_IPsec_VTI_01_Remote`   | IP Netmask | `10.252.2.26`      | `Cloudflare_L3_Zone` |
+| `CF_MWAN_IPsec_VTI_02_Local`    | IP Netmask | `10.252.2.29/31`   | `Cloudflare_L3_Zone` |
+| `CF_MWAN_IPsec_VTI_02_Remote`   | IP Netmask | `10.252.2.28`      | `Cloudflare_L3_Zone` |
+| `CF_WARP_Client_Prefix`         | IP Netmask | `100.96.0.0/12`    | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_01`            | IP Netmask | `173.245.48.0/20`  | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_02`            | IP Netmask | `103.21.244.0/22`  | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_03`            | IP Netmask | `103.22.200.0/22`  | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_04`            | IP Netmask | `103.31.4.0/22`    | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_05`            | IP Netmask | `141.101.64.0/18`  | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_06`            | IP Netmask | `108.162.192.0/18` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_07`            | IP Netmask | `190.93.240.0/20`  | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_08`            | IP Netmask | `188.114.96.0/20`  | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_09`            | IP Netmask | `197.234.240.0/22` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_10`            | IP Netmask | `198.41.128.0/17`  | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_11`            | IP Netmask | `162.158.0.0/15`   | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_12`            | IP Netmask | `104.16.0.0/13`    | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_13`            | IP Netmask | `104.24.0.0/14`    | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_14`            | IP Netmask | `172.64.0.0/13`    | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_15`            | IP Netmask | `131.0.72.0/22`    | `Cloudflare_L3_Zone` |
+| `Internet_L3_203-0-113-254--24` | IP Netmask | `203.0.113.254/24` | `Untrust_L3_Zone`    |
+| `VLAN0010_10-1-10-0--24`        | IP Netmask | `10.1.10.0/24`     | `Cloudflare_L3_Zone` |
+| `VLAN0020_10-1-20-0--24`        | IP Netmask | `10.1.20.0/24`     | `Cloudflare_L3_Zone` |
+| `VLAN0100_10-1-100-0--24`       | IP Netmask | `10.1.100.0/24`    | `Trust_L3_Zone`      |
+| `VLAN0100_L3_10-1-100-254--24`  | IP Netmask | `10.1.10.254/24`   | `Trust_L3_Zone`      |
+
+{{</table-wrap>}}
+
+Use the Palo Alto Networks Next-Generation Firewall command-Line to set the objects:
 
 ```bash
 set address CF_Health_Check_Anycast_01 ip-netmask 172.64.240.253
@@ -248,52 +247,54 @@ set address VLAN0100_L3_10-1-100-254--24 ip-netmask 10.1.100.254/24
 set address VLAN0100_L3_10-1-100-254--24 tag Trust_L3_Zone
 ```
 
-#### Address Group Objects
+#### Address Group object
 
-The _Address Group_ object used in this configuration provides a single object representing the entire Cloudflare IPv4 public address space.
+The **Address Group** object used in this configuration provides a single object representing the entire Cloudflare IPv4 public address space.
 
-| Name                       | Type   | Addresses          | Tags               |
-| -------------------------- | ------ | ------------------ | ------------------ |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_01 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_02 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_03 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_04 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_05 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_06 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_07 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_08 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_09 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_10 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_11 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_12 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_13 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_14 | Cloudflare_L3_Zone |
-| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_15 | Cloudflare_L3_Zone |
+{{<table-wrap>}}
 
-##### Command-Line
+| Name                         | Type   | Addresses            | Tags                 |
+| ---------------------------- | ------ | -------------------- | -------------------- |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_01` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_02` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_03` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_04` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_05` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_06` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_07` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_08` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_09` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_10` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_11` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_12` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_13` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_14` | `Cloudflare_L3_Zone` |
+| `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_15` | `Cloudflare_L3_Zone` |
+
+{{</table-wrap>}}
+
+Use the Palo Alto Networks Next-Generation Firewall command-Line to set the address group object:
 
 ```bash
 set address-group Cloudflare_IPv4_Static_Grp static [ Cloudflare_IPv4_01 Cloudflare_IPv4_02 Cloudflare_IPv4_03 Cloudflare_IPv4_04 Cloudflare_IPv4_05 Cloudflare_IPv4_06 Cloudflare_IPv4_07 Cloudflare_IPv4_08 Cloudflare_IPv4_09 Cloudflare_IPv4_10 Cloudflare_IPv4_11 Cloudflare_IPv4_12 Cloudflare_IPv4_13 Cloudflare_IPv4_14 Cloudflare_IPv4_15 ]
 set address-group Cloudflare_IPv4_Static_Grp tag Cloudflare_L3_Zone
 ```
 
-> NOTE: While not covered by this guide, it is also possible to use External Dynamic Lists to automatically obtain the most current list of Cloudflare IPv4 addresses by periodically polling https://www.cloudflare.com/ips-v4.
+{{<Aside type="note">}}While not covered by this tutorial, it is also possible to use External Dynamic Lists to automatically obtain the most current list of Cloudflare IPv4 addresses by periodically polling [https://www.cloudflare.com/ips-v4](https://www.cloudflare.com/ips-v4).{{</Aside>}}
 
----
+### Interface Mgmt - Network Profiles
 
-### Interface Mgmt (Network Profiles)
+**Interface Mgmt** profiles control what traffic is allowed _to_ the firewall, as opposed to _through_ the firewall.
 
-_Interface Mgmt Profiles_ control what traffic is allowed TO the firewall as opposed to THROUGH the firewall.
+Adding an Interface Mgmt profile to the tunnel interfaces will provide the ability to ping the Virtual Tunnel Interface on your firewall(s).
 
-Adding an _Interface Mgmt Profile_ to the tunnel interfaces will provide the ability to ping the Virtual Tunnel Interface on your firewall(s).
+Define an Interface Management Profile to allow ping:
 
-Define an _Interface Mgmt Profile_ to allow ping:
+![Interface Mgmt Profile](/images/magic-wan/third-party/palo-alto/panw_interfaces/01_int_mgmt_prof.png)
 
-![Interface Mgmt Profile](./images/panw_interfaces/01_int_mgmt_prof.png)
+![Interface Mgmt Profile](/images/magic-wan/third-party/palo-alto/panw_interfaces/02_int_mgmt_prof.png)
 
-![Interface Mgmt Profile](./images/panw_interfaces/02_int_mgmt_prof.png)
-
-##### Command-Line
+You can also use the command line:
 
 ```bash
 set network profiles interface-management-profile Allow_Ping userid-service no
