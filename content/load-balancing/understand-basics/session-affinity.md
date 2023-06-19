@@ -14,7 +14,7 @@ weight: 17
 
 ## Session affinity by type
 
-Session affinity specifies the type of session affinity the load balancer should use unless specified as `"none"` or `"" (default)`.
+Session affinity specifies the type of session affinity the load balancer should use unless specified as `"none"` or `""` (default).
 
 ### "cookie"
 
@@ -30,7 +30,7 @@ The initial origin selection is stable and based on specific HTTP headers found 
 
 {{<Aside type="note">}}
 
-Sticky Zero-Downtime Failover is not supported for session affinity by HTTP header.
+[Sticky Zero-Downtime Failover](/load-balancing/understand-basics/session-affinity/#zero-downtime-failover) is not supported for session affinity by HTTP header.
 
 {{</Aside>}}
 
