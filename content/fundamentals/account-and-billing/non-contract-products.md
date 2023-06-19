@@ -1,17 +1,21 @@
 ---
 pcx_content_type: reference
-title: Non-contract services
+title: Preview services
 weight: 4
 layout: list
 ---
 
-# Non-contract services
+# Preview services
 
-With Cloudflare non-contract services, contracted customers can get full access to certain products and features, free of metered usage fees, limits, and certain other restrictions.
+Contracted customers can try certain products and features for 30 days.
+
+Once you enable the product or feature, it will not be an officially contracted service until you purchase it. Cloudflare will reach out in case you have any questions or feedback, and provide you with a sales quote if you are enjoying the product.
+
+You may cancel at any time before the 30 days ends by reaching out to your sales team for assistance.
 
 ## Available features and products
 
-To enable a non-contract service, use the **Dashboard link** in the following table. Then, select **Enable**. And that’s it! You will have instant access to the product or feature you selected so you can begin determining if it’s right for your business’ needs.
+To enable a preview service, use the **Dashboard link** in the following table. Then, select **Enable**. And that’s it! You will have instant access to the product or feature you selected so you can begin determining if it’s right for your business’ needs.
 
 | Name                               | Dashboard link                                                                                              | Docs                                                                       | Community                                                                                           |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -28,10 +32,6 @@ To enable a non-contract service, use the **Dashboard link** in the following ta
 | Web3                               | [Web3 dashboard](https://dash.cloudflare.com/?to=/:account/:zone/web3)                                      | [Web3 docs](/web3/)                                                        | [Web3 discord](https://discord.gg/cloudflaredev)                 |
 | Workers                            | [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers)                                      | [Workers docs](/workers/)                                                  | [Workers discord](https://discord.com/invite/cloudflaredev)                                         |
 | Zero Trust                         | [Zero Trust dashboard](https://one.dash.cloudflare.com/)                                                    | [Zero Trust docs](/cloudflare-one/)                                        | [Zero Trust community](https://community.cloudflare.com/c/security/access/51)                       |
-
-Once you enable the product or feature, it will not be an officially contracted service until you purchase it. Cloudflare will reach out in case you have any questions or feedback, and provide you with a sales quote if you are enjoying the product.
-
-To get started, check out our product docs and visit the various Cloudflare communities highlighted above.
 
 ## Recommendations
 
