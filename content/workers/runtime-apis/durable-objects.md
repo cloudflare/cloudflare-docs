@@ -399,6 +399,20 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
 
+- {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Sets an application level auto-response that doesn't wake hibernated WebSockets. `state.setWebSocketAutoResponse` receives a `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` as an argument, enabling any WebSocket attached to this object to automatically reply with `response` when it receives the specified `request`. `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the websocket from hibernation, thereby preventing unnecessary duration charges.
+  - Both `request` and `response` are limited to 2048 characters each.
+  - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Doing so, will stop an actor from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
+
+- {{<code>}}state.getWebSocketAutoResponse(){{</code>}} : {{<type>}}Object | null{{</type>}}
+
+  - Gets the `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` currently set, or `null` if there's none. Each `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` object provides methods for `getRequest()` and  `getResponse()`.
+
+- {{<code>}}state.getWebSocketAutoResponseTimestamp(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Date | null{{</type>}}
+
+  - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
+
 #### `webSocketMessage()` handler method
 
 The system calls the `webSocketMessage()` method when an accepted WebSocket receives a message. The method is not called for WebSocket control frames; the system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation. The method takes `(ws: WebSocket, message: String | ArrayBuffer)` as parameters. It does not return a result and can be `async`.
