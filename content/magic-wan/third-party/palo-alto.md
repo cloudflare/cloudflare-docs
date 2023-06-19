@@ -1,10 +1,1339 @@
 ---
 pcx_content_type: integration-guide
 title: Palo Alto
-_build:
-  publishResources: false
-  render: never
-  list: never
+meta:
+  title: Palo Alto Networks Next-Generation Firewall
 ---
 
-# Palo Alto
+# Palo Alto Networks Next-Generation Firewall
+
+This tutorial includes the steps required to configure Magic IPsec Tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare Magic WAN.
+
+## Software version tested:
+- PAN-OS 9.1.14-h4
+
+Layer 3 Deployment
+
+## Use Cases
+
+Magic WAN: Connecting two or more locations with RFC-1918 private non-routable address space
+
+Magic WAN with Cloudflare Zero Trust (Gateway Egress): Same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+
+## Assumptions
+
+This documentation assumes you have a standalone Palo Alto Networks Next-Generation Firewall with two network interfaces - one in a "trust" security zone (Trust_L3_Zone) with an RFC-1918 non-Internet routable IP address (internal network), the other in an "untrust" security zone (Untrust_L3_Zone) with a legally routable IP address (Internet facing).
+
+Additionally, there must be a default gateway set on the Virtual Router (default) pointing to your Internet Service Provider(s) router.
+
+## Environment
+
+The following IP addresses are used throughout this documentation. Any legally routable IP addresses have been replaced with IPv4 Address Blocks Reserved for Documentation (RFC5737) addresses within the 203.0.113.0/24 subnet.
+
+https://www.rfc-editor.org/rfc/rfc5737.txt
+
+| Description                       | Address                          | Address                    |
+| --------------------------------- | -------------------------------- | -------------------------- |
+| NGFW External Interface           | 203.0.113.254/24                 |                            |
+| NGFW Internal Interface           | 10.1.100.254/24                  |                            |
+| Local Trust Subnet (LAN)          | 10.1.100.0/24                    |                            |
+| NGFW Tunnel Interface 01          | 10.252.2.26/31 (Cloudflare side) | 10.252.2.27/31 (NGFW side) |
+| NGFW Tunnel Interface 02          | 10.252.2.28/31 (Cloudflare side) | 10.252.2.29/31 (NGFW side) |
+| Magic WAN Anycast IP              | 162.159.66.164                   | 172.64.242.164             |
+| Magic WAN Health Check Anycast IP | 172.64.240.253                   | 172.64.240.254             |
+| VLAN0010 - Remote Magic WAN Site  | 10.1.10.0/24                     |                            |
+| VLAN0020 - Remote Magic WAN Site  | 10.1.20.0/24                     |                            |
+
+---
+
+## Cloudflare Magic WAN
+
+### Magic IPsec Tunnels
+
+Use the Cloudflare Dashboard or API to configure two IPsec Tunnels. The following settings are used for the IPsec tunnels referenced throughout the remainder of this guide.
+
+> _IMPORTANT: Bi-Directional Health Checks are required with Magic WAN - configuration of the Tunnel Health Check settings must incorporate custom target IP addresses for each tunnel. Additionally, it is recommended to lower the rate at which health check probes are sent._
+
+Bidirectional Tunnel Health Check Target IPs:
+
+- 172.64.240.253 - use with the primary IPsec tunnel
+- 172.64.240.254 - use with the secondary IPsec tunnel
+
+##### Tunnel 1
+
+```xml
+Tunnel name: SFO_IPSEC_TUN01
+Interface address: 10.252.2.96/31
+Customer endpoint: 203.0.113.254
+Cloudflare endpoint: 162.159.66.164
+Health check rate: Low (default value is Medium)
+Health check type: Reply
+Health check target: Custom (default is Default)
+Target address: 172.64.240.253
+```
+
+![Magic IPsec Tunnel 01 - SFO_IPSEC_TUN01](./images/cloudflare_dash_ipsec/01_magic_ipsec_tun_01.png)
+
+##### Tunnel 2
+
+```xml
+Tunnel name: SFO_IPSEC_TUN02
+Interface address: 10.252.2.98/31
+Customer endpoint: 203.0.113.254
+Cloudflare endpoint: 172.64.242.164
+Health check rate: Low (default value is Medium)
+Health check type: Reply
+Health check target: Custom (default is Default)
+Target address: 172.64.240.254
+```
+
+![Magic IPsec Tunnel 02 - SFO_IPSEC_TUN02](./images/cloudflare_dash_ipsec/02_magic_ipsec_tun_02.png)
+
+##### Generate Pre-Shared Keys
+
+If you selected the _Add pre-shared key later_ option, you will see a warning indicator:
+
+![Magic IPsec Tunnels - No PSK](./images/cloudflare_dash_ipsec/03_magic_ipsec_tun_no_psk.png)
+
+Edit the properties of each tunnel - choose _Generate a new pre-shared key_, then select _Update and generate pre-shared key_:
+
+##### Tunnel 1
+
+![Magic IPsec Tunnel 01 - Generate PSK](./images/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
+
+Ensure you document the pre-shared key value:
+
+![Magic IPsec Tunnel 01 - Display PSK](./images/cloudflare_dash_ipsec/05_magic_ipsec_tun_01_show_psk.png)
+
+##### Tunnel 2
+
+![Magic IPsec Tunnel 02 - Generate PSK](./images/cloudflare_dash_ipsec/06_magic_ipsec_tun_02_gen_psk.png)
+
+Ensure you document the pre-shared key value:
+
+![Magic IPsec Tunnel 02 - Display PSK](./images/cloudflare_dash_ipsec/07_magic_ipsec_tun_02_show_psk.png)
+
+#### IPsec Identifier - FQDN (Fully Qualified Domain Name)
+
+Collect the FQDN ID value from each of the two tunnels as they will be required when configuring IKE Phase 1 on NGFW:
+
+##### Tunnel 1
+
+```xml
+28de99ee57424ee0a1591384193982fa.33145236.ipsec.cloudflare.com
+```
+
+![Magic IPsec Tunnel 01 - Obtain FQDN](./images/cloudflare_dash_ipsec/08_magic_ipsec_tun_01_fqdn.png)
+
+##### Tunnel 2
+
+```xml
+b87322b0915b47158667bf1653990e66.33145236.ipsec.cloudflare.com
+```
+
+![Magic IPsec Tunnel 02 - Obtain FQDN](./images/cloudflare_dash_ipsec/09_magic_ipsec_tun_02_fqdn.png)
+
+### Magic Static Routes
+
+There is one subnet within the NGFW Trust_L3_Zone: 10.1.100.0/24
+
+Add two Magic Static Routes - one to each of the two Magic IPsec Tunnels configured in the previous section.
+
+![Magic Static Routes](./images/cloudflare_dash_ipsec/10_magic_ipsec_static_routes.png)
+
+## Palo Alto Networks Next-Generation Firewall Configuration
+
+### Tags
+
+While _Tags_ are optional, they can greatly improve object and policy visibility.
+
+The following color scheme was implemented in this configuration:
+
+| Tag                | Color  |
+| ------------------ | ------ |
+| Trust_L3_Zone      | Green  |
+| Untrust_L3_Zone    | Red    |
+| Cloudflare_L3_Zone | Orange |
+
+Command-Line
+
+```bash
+set tag Trust_L3_Zone color color2
+set tag Untrust_L3_Zone color color1
+set tag Cloudflare_L3_Zone color color6
+```
+
+---
+
+### Objects
+
+The use of _Address_ and _Address Group_ objects wherever possible is strongly encouraged as they ensure that configuration elements that reference them are defined accurately and consistently.
+
+Any configuration changes should be applied to the objects and will automatically be applied throughout the remainder of the configuration.
+
+#### Address Objects
+
+> _NOTE: Any objects without a netmask specified are /32_
+
+| Name                          | Type       | Address          | Tags               |
+| ----------------------------- | ---------- | ---------------- | ------------------ |
+| CF_Health_Check_Anycast_01    | IP Netmask | 172.64.240.253   | Cloudflare_L3_Zone |
+| CF_Health_Check_Anycast_02    | IP Netmask | 172.64.240.254   | Cloudflare_L3_Zone |
+| CF_Magic_WAN_Anycast_01       | IP Netmask | 162.159.66.164   | Cloudflare_L3_Zone |
+| CF_Magic_WAN_Anycast_02       | IP Netmask | 172.64.242.164   | Cloudflare_L3_Zone |
+| CF_MWAN_IPsec_VTI_01_Local    | IP Netmask | 10.252.2.27/31   | Cloudflare_L3_Zone |
+| CF_MWAN_IPsec_VTI_01_Remote   | IP Netmask | 10.252.2.26      | Cloudflare_L3_Zone |
+| CF_MWAN_IPsec_VTI_02_Local    | IP Netmask | 10.252.2.29/31   | Cloudflare_L3_Zone |
+| CF_MWAN_IPsec_VTI_02_Remote   | IP Netmask | 10.252.2.28      | Cloudflare_L3_Zone |
+| CF_WARP_Client_Prefix         | IP Netmask | 100.96.0.0/12    | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_01            | IP Netmask | 173.245.48.0/20  | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_02            | IP Netmask | 103.21.244.0/22  | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_03            | IP Netmask | 103.22.200.0/22  | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_04            | IP Netmask | 103.31.4.0/22    | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_05            | IP Netmask | 141.101.64.0/18  | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_06            | IP Netmask | 108.162.192.0/18 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_07            | IP Netmask | 190.93.240.0/20  | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_08            | IP Netmask | 188.114.96.0/20  | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_09            | IP Netmask | 197.234.240.0/22 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_10            | IP Netmask | 198.41.128.0/17  | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_11            | IP Netmask | 162.158.0.0/15   | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_12            | IP Netmask | 104.16.0.0/13    | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_13            | IP Netmask | 104.24.0.0/14    | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_14            | IP Netmask | 172.64.0.0/13    | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_15            | IP Netmask | 131.0.72.0/22    | Cloudflare_L3_Zone |
+| Internet_L3_203-0-113-254--24 | IP Netmask | 203.0.113.254/24 | Untrust_L3_Zone    |
+| VLAN0010_10-1-10-0--24        | IP Netmask | 10.1.10.0/24     | Cloudflare_L3_Zone |
+| VLAN0020_10-1-20-0--24        | IP Netmask | 10.1.20.0/24     | Cloudflare_L3_Zone |
+| VLAN0100_10-1-100-0--24       | IP Netmask | 10.1.100.0/24    | Trust_L3_Zone      |
+| VLAN0100_L3_10-1-100-254--24  | IP Netmask | 10.1.10.254/24   | Trust_L3_Zone      |
+
+##### Command-Line
+
+```bash
+set address CF_Health_Check_Anycast_01 ip-netmask 172.64.240.253
+set address CF_Health_Check_Anycast_01 tag Cloudflare_L3_Zone
+set address CF_Health_Check_Anycast_02 ip-netmask 172.64.240.254
+set address CF_Health_Check_Anycast_02 tag Cloudflare_L3_Zone
+set address CF_Magic_WAN_Anycast_01 ip-netmask 162.159.66.164
+set address CF_Magic_WAN_Anycast_01 tag Cloudflare_L3_Zone
+set address CF_Magic_WAN_Anycast_02 ip-netmask 172.64.242.164
+set address CF_Magic_WAN_Anycast_02 tag Cloudflare_L3_Zone
+set address CF_MWAN_IPsec_VTI_01_Local ip-netmask 10.252.2.27/31
+set address CF_MWAN_IPsec_VTI_01_Local tag Cloudflare_L3_Zone
+set address CF_MWAN_IPsec_VTI_02_Local ip-netmask 10.252.2.29/31
+set address CF_MWAN_IPsec_VTI_02_Local tag Cloudflare_L3_Zone
+set address CF_MWAN_IPsec_VTI_01_Remote ip-netmask 10.252.2.26
+set address CF_MWAN_IPsec_VTI_01_Remote tag Cloudflare_L3_Zone
+set address CF_MWAN_IPsec_VTI_02_Remote ip-netmask 10.252.2.28
+set address CF_MWAN_IPsec_VTI_02_Remote tag Cloudflare_L3_Zone
+set address CF_WARP_Client_Prefix ip-netmask 100.96.0.0/12
+set address CF_WARP_Client_Prefix tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_01 ip-netmask 173.245.48.0/20
+set address Cloudflare_IPv4_01 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_02 ip-netmask 103.21.244.0/22
+set address Cloudflare_IPv4_02 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_03 ip-netmask 103.22.200.0/22
+set address Cloudflare_IPv4_03 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_04 ip-netmask 103.31.4.0/22
+set address Cloudflare_IPv4_04 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_05 ip-netmask 141.101.64.0/18
+set address Cloudflare_IPv4_05 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_06 ip-netmask 108.162.192.0/18
+set address Cloudflare_IPv4_06 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_07 ip-netmask 190.93.240.0/20
+set address Cloudflare_IPv4_07 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_08 ip-netmask 188.114.96.0/20
+set address Cloudflare_IPv4_08 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_09 ip-netmask 197.234.240.0/22
+set address Cloudflare_IPv4_09 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_10 ip-netmask 198.41.128.0/17
+set address Cloudflare_IPv4_10 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_11 ip-netmask 162.158.0.0/15
+set address Cloudflare_IPv4_11 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_12 ip-netmask 104.16.0.0/13
+set address Cloudflare_IPv4_12 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_13 ip-netmask 104.24.0.0/14
+set address Cloudflare_IPv4_13 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_14 ip-netmask 172.64.0.0/13
+set address Cloudflare_IPv4_14 tag Cloudflare_L3_Zone
+set address Cloudflare_IPv4_15 ip-netmask 131.0.72.0/22
+set address Cloudflare_IPv4_15 tag Cloudflare_L3_Zone
+set address Internet_L3_203-0-113-254--24 ip-netmask 203.0.113.254/24
+set address Internet_L3_203-0-113-254--24 tag Untrust_L3_Zone
+set address VLAN0010_10-1-10-0--24 ip-netmask 10.1.10.0/24
+set address VLAN0010_10-1-10-0--24 tag Trust_L3_Zone
+set address VLAN0020_10-1-20-0--24 ip-netmask 10.1.20.0/24
+set address VLAN0020_10-1-20-0--24 tag Trust_L3_Zone
+set address VLAN0100_10-1-100-0--24 ip-netmask 10.1.100.0/24
+set address VLAN0100_10-1-100-0--24 tag Trust_L3_Zone
+set address VLAN0100_L3_10-1-100-254--24 ip-netmask 10.1.100.254/24
+set address VLAN0100_L3_10-1-100-254--24 tag Trust_L3_Zone
+```
+
+#### Address Group Objects
+
+The _Address Group_ object used in this configuration provides a single object representing the entire Cloudflare IPv4 public address space.
+
+| Name                       | Type   | Addresses          | Tags               |
+| -------------------------- | ------ | ------------------ | ------------------ |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_01 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_02 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_03 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_04 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_05 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_06 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_07 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_08 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_09 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_10 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_11 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_12 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_13 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_14 | Cloudflare_L3_Zone |
+| Cloudflare_IPv4_Static_Grp | Static | Cloudflare_IPv4_15 | Cloudflare_L3_Zone |
+
+##### Command-Line
+
+```bash
+set address-group Cloudflare_IPv4_Static_Grp static [ Cloudflare_IPv4_01 Cloudflare_IPv4_02 Cloudflare_IPv4_03 Cloudflare_IPv4_04 Cloudflare_IPv4_05 Cloudflare_IPv4_06 Cloudflare_IPv4_07 Cloudflare_IPv4_08 Cloudflare_IPv4_09 Cloudflare_IPv4_10 Cloudflare_IPv4_11 Cloudflare_IPv4_12 Cloudflare_IPv4_13 Cloudflare_IPv4_14 Cloudflare_IPv4_15 ]
+set address-group Cloudflare_IPv4_Static_Grp tag Cloudflare_L3_Zone
+```
+
+> NOTE: While not covered by this guide, it is also possible to use External Dynamic Lists to automatically obtain the most current list of Cloudflare IPv4 addresses by periodically polling https://www.cloudflare.com/ips-v4.
+
+---
+
+### Interface Mgmt (Network Profiles)
+
+_Interface Mgmt Profiles_ control what traffic is allowed TO the firewall as opposed to THROUGH the firewall.
+
+Adding an _Interface Mgmt Profile_ to the tunnel interfaces will provide the ability to ping the Virtual Tunnel Interface on your firewall(s).
+
+Define an _Interface Mgmt Profile_ to allow ping:
+
+![Interface Mgmt Profile](./images/panw_interfaces/01_int_mgmt_prof.png)
+
+![Interface Mgmt Profile](./images/panw_interfaces/02_int_mgmt_prof.png)
+
+##### Command-Line
+
+```bash
+set network profiles interface-management-profile Allow_Ping userid-service no
+set network profiles interface-management-profile Allow_Ping ping yes
+```
+
+---
+
+### Network Interfaces
+
+#### Ethernet
+
+NGFW is configured with two Ethernet interfaces:
+
+| Interface   | Interface Type | IP Address       | Virtual Router |
+| ----------- | -------------- | ---------------- | -------------- |
+| ethernet1/1 | Layer3         | 10.1.100.254/24  | default        |
+| ethernet1/2 | Layer3         | 203.0.113.254/24 | default        |
+
+###### ethernet1/1 - Trust_L3_Zone
+
+![ethernet1/1 - Page 1](./images/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
+
+![ethernet1/1 - Page 2](./images/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
+
+![ethernet1/1 - Page 3](./images/panw_interfaces/Ethernet_Interfaces/03_ethernet-1-1_page3.png)
+
+###### ethernet1/2 - Unrust_L3_Zone
+
+![ethernet1/2 - Page 1](./images/panw_interfaces/Ethernet_Interfaces/04_ethernet-1-2_page1.png)
+
+![ethernet1/2 - Page 2](./images/panw_interfaces/Ethernet_Interfaces/05_ethernet-1-2_page2.png)
+
+![ethernet1/2 - Page 3](./images/panw_interfaces/Ethernet_Interfaces/06_ethernet-1-2_page3.png)
+
+###### Ethernet Interfaces Overview
+
+![Ethernet Interfaces - Overview](./images/panw_interfaces/Ethernet_Interfaces/07_ethernet_interfaces_overview.png)
+
+##### Command-Line
+
+```bash
+set network interface ethernet ethernet1/1 layer3 ndp-proxy enabled no
+set network interface ethernet ethernet1/1 layer3 lldp enable no
+set network interface ethernet ethernet1/1 layer3 ip VLAN0100_L3_10-1-100-254--24
+set network interface ethernet ethernet1/1 layer3 interface-management-profile Mgmt_Services
+set network interface ethernet ethernet1/2 layer3 ndp-proxy enabled no
+set network interface ethernet ethernet1/2 layer3 lldp enable no
+set network interface ethernet ethernet1/2 layer3 ip Internet_L3_203-0-113-254--24
+set network interface ethernet ethernet1/2 layer3 interface-management-profile Allow_Ping
+set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss enable yes
+set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss ipv4-mss-adjustment 64
+```
+
+#### Tunnel Interfaces
+
+Two tunnel interfaces are required for establishing IPsec Tunnels to Cloudflare Magic WAN - one to each of the two Cloudflare Anycast IP addresses.
+
+Ensure the Allow_Ping Interface Mgmt Profile is bound to both tunnel adapters.
+
+> NOTE: MTU is set to 1450 - this value may need to be adjusted for optimal performance on your network.
+
+###### tunnel.1 - Cloudflare_L3_Zone
+
+![tunnel.1 - Page 1](./images/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
+
+![tunnel.1 - Page 2](./images/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
+
+![tunnel.1 - Page 3](./images/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
+
+###### tunnel.2 - Cloudflare_L3_Zone
+
+![tunnel.2 - Page 1](./images/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
+
+![tunnel.2 - Page 2](./images/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
+
+![tunnel.2 - Page 3](./images/panw_interfaces/Tunnel_Interfaces/06_tunnel_2_page3.png)
+
+###### Tunnel Interfaces - Overview
+
+![Tunnel Interfaces - Overview](./images/panw_interfaces/Tunnel_Interfaces/07_tunnel_interfaces_overview.png)
+
+##### Command-Line
+
+```bash
+set network interface tunnel units tunnel.1 ip CF_MWAN_IPsec_VTI_01_Local
+set network interface tunnel units tunnel.1 mtu 1450
+set network interface tunnel units tunnel.1 interface-management-profile Allow_Ping
+set network interface tunnel units tunnel.2 ip CF_MWAN_IPsec_VTI_02_Local
+set network interface tunnel units tunnel.2 mtu 1450
+set network interface tunnel units tunnel.2 interface-management-profile Allow_Ping
+```
+
+---
+
+### Zones
+
+The NGFW used in this documentation includes the following zones and corresponding network interfaces.
+
+| Zone               | Interface   | Interface |
+| ------------------ | ----------- | --------- |
+| Trust_L3_Zone      | ethernet1/1 |           |
+| Untrust_L3_Zone    | ethernet1/2 |           |
+| Cloudflare_L3_Zone | tunnel.1    | tunnel.2  |
+
+The tunnel interfaces are placed in a separate Zone to facilitate the configuration of more granular security policies. The use of any other zone for the tunnel interfaces will require adapting the configuration commensurate.
+
+> _NOTE: Any Magic WAN protected networks that are not local should be considered part of the **Cloudflare_L3_Zone**._
+
+![Trust_L3_Zone](./images/panw_zones/01_trust_zone.png)
+
+![Untrust_L3_Zone](./images/panw_zones/02_untrust_zone.png)
+
+![Cloudflare_L3_Zone](./images/panw_zones/03_cloudflare_zone.png)
+
+![Tunnel Interfaces - Overview](./images/panw_zones/04_zones_overview.png)
+
+##### Command-Line
+
+```bash
+set zone Trust_L3_Zone network layer3 ethernet1/1
+set zone Untrust_L3_Zone network layer3 ethernet1/2
+set zone Cloudflare_L3_Zone network layer3 [ tunnel.1 tunnel.2 ]
+```
+
+---
+
+### Apply Changes
+
+This would be a good time to save and commit the configuration changes made thus far. Once complete, make sure you test basic connectivity to/from the firewall.
+
+---
+
+### IKE Crypto Profile
+
+Add a new IKE Crypto Profile to support the required parameters for Phase 1
+
+Multiple DH Groups and Authentication settings are defined in the desired order - NGFW will automatically negotiate the optimal settings based on specified values.
+
+| Name              | Option                        | Value                |
+| ----------------- | ----------------------------- | -------------------- |
+| CF_IKE_Crypto_CBC | DH Group                      | group14 group5       |
+|                   | Authentication                | sha512 sha384 sha256 |
+|                   | Encryption                    | aes-256-cbc          |
+|                   | Key Lifetime                  | 8 Hours              |
+|                   | IKEv2 Authentication Multiple | 0                    |
+
+![IKE Crypto Profile - CF_IKE_Crypto_Prof](./images/panw_ipsec_tunnels/01_ike_crypto_profile.png)
+
+##### Command-Line
+
+```bash
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC hash [ sha512 sha384 sha256 ]
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC dh-group [ group14 group5 ]
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC encryption aes-256-cbc
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC authentication-multiple 0
+```
+
+### IPsec Crypto Profile
+
+Add a new IPsec Crypto Profile to support the required parameters for Phase 2
+
+Multiple Authentication settings are defined in the desired order - NGFW will automatically negotiate the optimal settings based on specified values.
+
+| Name                | Option         | Value       |
+| ------------------- | -------------- | ----------- |
+| CF_IPsec_Crypto_CBC | Encryption     | aes-256-cbc |
+|                     | Authentication | sha256 sha1 |
+|                     | DH Group       | group14     |
+|                     | Lifetime       | 1 Hour      |
+
+![IPsec Crypto Profile - CF_IPsec_Crypto_Prof](./images/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
+
+##### Command-Line
+
+```bash
+set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC esp authentication [ sha256 sha1 ]
+set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC esp encryption aes-256-cbc
+set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC lifetime hours 1
+set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC dh-group group14
+```
+
+### IKE Gateways
+
+Two IKE Gateways are defined to establish the two Magic IPsec Tunnels to Cloudflare.
+
+#### General Tab
+
+- Version: Ensure the IKE Gateways are based on IKEv2 Only Mode
+
+- Pre-Shared Key: can be obtained from the Cloudflare Dashboard - value is unique per tunnel
+
+- Local Identification: FQDN (hostname) - obtain value from the Cloudflare Dashboard - value is unique per tunnel
+
+- Peer Identification: None
+
+#### Advanced Tab
+
+- IKE Crypto Profile: Select CF_IKE_Crypto_CBC
+
+- Liveness Check
+  - The default value for the Liveness Check (5 seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
+
+> NOTE: Any other settings not specified should be left at their default values. Any deviation may lead to undesirable behavior and are not supported.
+
+###### Tunnel 1: CF_Magic_WAN_IKE_01
+
+![IKE Gateway - CF_Magic_WAN_IKE_01](./images/panw_ipsec_tunnels/03_ike_gw01_page1.png)
+
+Make sure you select the correct IKE Crypto Profile: **CF_IKE_Crypto_CBC**
+
+![IKE Gateway - CF_Magic_WAN_IKE_01](./images/panw_ipsec_tunnels/04_ike_gw01_page2.png)
+
+###### Tunnel 2: CF_Magic_WAN_IKE_02
+
+![IKE Gateway - CF_Magic_WAN_IKE_02](./images/panw_ipsec_tunnels/05_ike_gw02_page1.png)
+
+Make sure you select the correct IKE Crypto Profile: **CF_IKE_Crypto_CBC**
+
+![IKE Gateway - CF_Magic_WAN_IKE_02](./images/panw_ipsec_tunnels/06_ike_gw02_page2.png)
+
+##### Command-Line
+
+###### Tunnel 1: CF_Magic_WAN_IKE_01
+
+```xml
+set network ike gateway CF_Magic_WAN_IKE_01 protocol ikev1 dpd enable yes
+set network ike gateway CF_Magic_WAN_IKE_01 protocol ikev2 dpd enable yes
+set network ike gateway CF_Magic_WAN_IKE_01 protocol ikev2 ike-crypto-profile CF_IKE_Crypto_CBC
+set network ike gateway CF_Magic_WAN_IKE_01 protocol version ikev2
+set network ike gateway CF_Magic_WAN_IKE_01 local-address ip Internet_L3_203-0-113-254--24
+set network ike gateway CF_Magic_WAN_IKE_01 local-address interface ethernet1/2
+set network ike gateway CF_Magic_WAN_IKE_01 protocol-common nat-traversal enable no
+set network ike gateway CF_Magic_WAN_IKE_01 protocol-common fragmentation enable no
+set network ike gateway CF_Magic_WAN_IKE_01 peer-address ip CF_Magic_WAN_Anycast_01
+set network ike gateway CF_Magic_WAN_IKE_01 authentication pre-shared-key key -AQ==Xdcd9ir5o5xhjuIH---------------------HsRoVf+M0TTG4ja3EzulN37zMOwGs
+set network ike gateway CF_Magic_WAN_IKE_01 local-id id 28de99ee57424ee0a1591384193982fa.33145236.ipsec.cloudflare.com
+set network ike gateway CF_Magic_WAN_IKE_01 local-id type fqdn
+set network ike gateway CF_Magic_WAN_IKE_01 disabled no
+```
+
+###### Tunnel 2: CF_Magic_WAN_IKE_02
+
+```xml
+set network ike gateway CF_Magic_WAN_IKE_02 protocol ikev1 dpd enable yes
+set network ike gateway CF_Magic_WAN_IKE_02 protocol ikev2 dpd enable yes
+set network ike gateway CF_Magic_WAN_IKE_02 protocol ikev2 ike-crypto-profile CF_IKE_Crypto_CBC
+set network ike gateway CF_Magic_WAN_IKE_02 protocol version ikev2
+set network ike gateway CF_Magic_WAN_IKE_02 local-address ip Internet_L3_203-0-113-254--24
+set network ike gateway CF_Magic_WAN_IKE_02 local-address interface ethernet1/2
+set network ike gateway CF_Magic_WAN_IKE_02 protocol-common nat-traversal enable no
+set network ike gateway CF_Magic_WAN_IKE_02 protocol-common fragmentation enable no
+set network ike gateway CF_Magic_WAN_IKE_02 peer-address ip CF_Magic_WAN_Anycast_02
+set network ike gateway CF_Magic_WAN_IKE_02 authentication pre-shared-key key -AQ==rvwEulxx7wLBl---------------------swSeJPXxxM2cfPbt7q4HZZGZZ8
+set network ike gateway CF_Magic_WAN_IKE_02 local-id id b87322b0915b47158667bf1653990e66.33145236.ipsec.cloudflare.com
+set network ike gateway CF_Magic_WAN_IKE_02 local-id type fqdn
+set network ike gateway CF_Magic_WAN_IKE_02 disabled no
+```
+
+### IPsec Tunnels
+
+With the IKE Gateways defined, the next step is to configure two IPsec Tunnels - one corresponding to each of the two IKE Gateways configured in the previous section.
+
+> Proxy IDs: Do not configure Proxy IDs. Magic IPsec Tunnels are based on the Route-Based VPN model. Proxy IDs are used with Policy-Based VPNs.
+
+> NOTE: Cloudflare Magic IPsec Tunnels require Replay Protection is DISABLED (visible under Advanced Options).
+
+NOTE: Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are NGFW devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec Tunnels based on IKEv1 (Magic IPsec Tunnels are based on IKEv2). Please ensure Tunnel Monitor is DISABLED as it can cause undesirable results.
+
+![IPsec Tunnel - CF_Magic_WAN_IPsec_01](./images/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
+
+![IPsec Tunnel - CF_Magic_WAN_IPsec_01](./images/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
+
+![IPsec Tunnel - CF_Magic_WAN_IPsec_02](./images/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
+
+![IPsec Tunnel - CF_Magic_WAN_IPsec_02](./images/panw_ipsec_tunnels/10_ipsec_tun02_page2.png)
+
+##### Command-Line
+
+###### Tunnel 1: CF_Magic_WAN_IPsec_01
+
+```xml
+set network tunnel ipsec CF_Magic_WAN_IPsec_01 auto-key ike-gateway CF_Magic_WAN_IKE_01
+set network tunnel ipsec CF_Magic_WAN_IPsec_01 auto-key ipsec-crypto-profile CF_IPsec_Crypto_CBC
+set network tunnel ipsec CF_Magic_WAN_IPsec_01 tunnel-monitor destination-ip 10.252.2.26
+set network tunnel ipsec CF_Magic_WAN_IPsec_01 tunnel-monitor tunnel-monitor-profile default
+set network tunnel ipsec CF_Magic_WAN_IPsec_01 tunnel-interface tunnel.1
+set network tunnel ipsec CF_Magic_WAN_IPsec_01 anti-replay no
+set network tunnel ipsec CF_Magic_WAN_IPsec_01 disabled no
+```
+
+###### Tunnel 2: CF_Magic_WAN_IPsec_02
+
+```xml
+set network tunnel ipsec CF_Magic_WAN_IPsec_02 auto-key ike-gateway CF_Magic_WAN_IKE_02
+set network tunnel ipsec CF_Magic_WAN_IPsec_02 auto-key ipsec-crypto-profile CF_IPsec_Crypto_CBC
+set network tunnel ipsec CF_Magic_WAN_IPsec_02 tunnel-monitor destination-ip 10.252.2.28
+set network tunnel ipsec CF_Magic_WAN_IPsec_02 tunnel-monitor tunnel-monitor-profile default
+set network tunnel ipsec CF_Magic_WAN_IPsec_02 tunnel-interface tunnel.2
+set network tunnel ipsec CF_Magic_WAN_IPsec_02 anti-replay no
+set network tunnel ipsec CF_Magic_WAN_IPsec_02 disabled no
+```
+
+### Apply Changes
+
+This would be a good time to save and commit the configuration changes made thus far. Once complete, make sure you test basic connectivity across the IPsec tunnels.
+
+---
+
+### IPsec Tunnel Connectivity Tests
+
+This is a good time to ensure the IPsec tunnels have been established and validate basic connectivity.
+
+> NOTE: Tunnel Health Checks will not function until Security Policies and Policy-Based Forwarding are configured. This series of tests is focused on testing IPsec connectivity exclusively.
+
+#### Verify IKE Phase 1 Communications
+
+The first step is to verify IKE Phase 1 completed successfully.
+
+##### Syntax
+
+```bash
+show vpn ike-sa gateway [value]
+```
+
+###### Example - CF_Magic_WAN_IKE_01
+
+```xml
+admin@panvm03> show vpn ike-sa gateway CF_Magic_WAN_IKE_01
+
+There is no IKEv1 phase-1 SA found.
+
+There is no IKEv1 phase-2 SA found.
+
+IKEv2 SAs
+Gateway ID      Peer-Address           Gateway Name           Role SN       Algorithm             Established     Expiration      Xt Child  ST
+
+----------      ------------           ------------           ---- --       ---------             -----------     ----------      -- -----  --
+
+2               162.159.66.164         CF_Magic_WAN_IKE_01    Init 67       PSK/DH14/A256/SHA256  Jun.04 21:09:13 Jun.05 05:09:13 0  1      Established
+
+IKEv2 IPsec Child SAs
+Gateway Name           TnID     Tunnel                    ID       Parent   Role SPI(in)  SPI(out) MsgID    ST
+
+------------           ----     ------                    --       ------   ---- -------  -------- -----    --
+
+CF_Magic_WAN_IKE_01    2        CF_Magic_WAN_IPsec_01     322550   67       Init FCAEE176 1EF41BA9 000007B4 Mature
+
+Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
+```
+
+###### Example - CF_Magic_WAN_IKE_02
+
+```xml
+admin@panvm03> show vpn ike-sa gateway CF_Magic_WAN_IKE_02
+
+There is no IKEv1 phase-1 SA found.
+
+There is no IKEv1 phase-2 SA found.
+
+
+IKEv2 SAs
+Gateway ID      Peer-Address           Gateway Name           Role SN       Algorithm             Established     Expiration      Xt Child  ST
+
+----------      ------------           ------------           ---- --       ---------             -----------     ----------      -- -----  --
+
+3               172.64.242.164         CF_Magic_WAN_IKE_02    Init 66       PSK/DH14/A256/SHA256  Jun.04 20:37:42 Jun.05 04:37:42 0  2      Established
+
+IKEv2 IPsec Child SAs
+Gateway Name           TnID     Tunnel                    ID       Parent   Role SPI(in)  SPI(out) MsgID    ST
+
+------------           ----     ------                    --       ------   ---- -------  -------- -----    --
+
+CF_Magic_WAN_IKE_02    3        CF_Magic_WAN_IPsec_02     323145   66       Init B6EDA356 43F71BC5 00000A52 Mature
+
+Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
+```
+
+#### Troubleshooting IKE Phase 1 Communications
+
+Magic IPsec Tunnels expect the customer-side of the VPN is the initiator of the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
+
+##### Syntax
+
+```xml
+test vpn ike-sa gateway [value]
+```
+
+###### Example - CF_Magic_WAN_IKE_01
+
+```xml
+admin@panvm03> test vpn ike-sa gateway CF_Magic_WAN_IKE_01
+
+Start time: Jun.05 00:30:29
+Initiate 1 IKE SA.
+```
+
+Repeat the show command for the respective tunnel to ensure the IKE SA(s) display as expected.
+
+###### Example - CF_Magic_WAN_IKE_02
+
+```xml
+admin@panvm03> test vpn ike-sa gateway CF_Magic_WAN_IKE_02
+
+Start time: Jun.05 00:30:33
+Initiate 1 IKE SA.
+```
+
+Repeat the show command for the respective tunnel to ensure the IKE SA(s) display as expected.
+
+#### Verify IPsec Phase 2 Communications
+
+The next test to ensure the IPsec tunnels are established is to ping the remote Virtual Tunnel Interface (Cloudflare side) from the NGFW command-line. Ensure you specify the source IP address of the ping from the local side of the Virtual Tunnel Interface:
+
+##### Syntax
+
+```xml
+show vpn ipsec-sa tunnel [value]
+```
+
+###### Example - CF_Magic_WAN_IPsec_01
+
+```xml
+admin@panvm03> show vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_01
+
+GwID/client IP  TnID   Peer-Address           Tunnel(Gateway)                                Algorithm          SPI(in)  SPI(out) life(Sec/KB)             remain-time(Sec)
+
+--------------  ----   ------------           ---------------                                ---------          -------  -------- ------------             ----------------
+
+2               2      162.159.66.164         CF_Magic_WAN_IPsec_01(CF_Magic_WAN_IKE_01)     ESP/A256/SHA256    B5D09AB8 9FA69407 3600/Unlimited           3445
+
+Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
+```
+
+###### Example - CF_Magic_WAN_IPsec_02
+
+```xml
+admin@panvm03> show vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_02
+
+GwID/client IP  TnID   Peer-Address           Tunnel(Gateway)                                Algorithm          SPI(in)  SPI(out) life(Sec/KB)             remain-time(Sec)
+
+--------------  ----   ------------           ---------------                                ---------          -------  -------- ------------             ----------------
+
+3               3      172.64.242.164         CF_Magic_WAN_IPsec_02(CF_Magic_WAN_IKE_02)     ESP/A256/SHA256    CAEA6F09 EC6ACC7A 3600/Unlimited           3361
+
+Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
+```
+
+#### Troubleshooting IPsec Phase 2 Communications
+
+Magic IPsec Tunnels expect the customer-side of the VPN is the initiator of the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
+
+##### Syntax
+
+```xml
+test vpn ipsec-sa tunnel [value]
+```
+
+###### Example - CF_Magic_WAN_IPsec_01
+
+```xml
+admin@panvm03> test vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_01
+
+Start time: Jun.05 00:37:50
+Initiate 1 IPsec SA for tunnel CF_Magic_WAN_IPsec_01.
+```
+
+Repeat the show command for the respective tunnel to ensure the IPsec SA(s) display as expected.
+
+###### Example - CF_Magic_WAN_IPsec_02
+
+```xml
+admin@panvm03> test vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_02
+
+Start time: Jun.05 00:38:52
+Initiate 1 IPsec SA for tunnel CF_Magic_WAN_IPsec_02.
+```
+
+Repeat the show command for the respective tunnel to ensure the IPsec SA(s) display as expected.
+
+#### Ping Remote Virtual Tunnel Interfaces
+
+Use ping to source traffic from the IP address of the Virtual Tunnel Interface on NGFW to the IP address of the Virtual Tunnel Interface on the Cloudflare side of the IPsec tunnel.
+
+> _NOTE: The Interface address is defined with a /31 netmask. There have been isolated cases where NGFW exhibited issues with using ping to verify connectivity between the local and remote Virtual Tunnel Interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a /30 netmask, or contact Palo Alto Networks support for assistance._
+
+##### Syntax
+
+```xml
+ping source [value src IP] host [value dst IP]
+```
+
+###### Example - Tunnel 1
+
+```xml
+admin@panvm03> ping source 10.252.2.27 host 10.252.2.26
+PING 10.252.2.26 (10.252.2.26) from 10.252.2.27 : 56(84) bytes of data.
+64 bytes from 10.252.2.26: icmp_seq=1 ttl=64 time=2.71 ms
+64 bytes from 10.252.2.26: icmp_seq=2 ttl=64 time=2.03 ms
+64 bytes from 10.252.2.26: icmp_seq=3 ttl=64 time=1.98 ms
+64 bytes from 10.252.2.26: icmp_seq=4 ttl=64 time=1.98 ms
+^C
+--- 10.252.2.26 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3002ms
+rtt min/avg/max/mdev = 1.980/2.180/2.719/0.312 ms
+```
+
+###### Example - Tunnel 2
+
+```xml
+admin@panvm03> ping source 10.252.2.29 host 10.252.2.28
+PING 10.252.2.28 (10.252.2.28) from 10.252.2.29 : 56(84) bytes of data.
+64 bytes from 10.252.2.28: icmp_seq=1 ttl=64 time=2.90 ms
+64 bytes from 10.252.2.28: icmp_seq=2 ttl=64 time=1.92 ms
+64 bytes from 10.252.2.28: icmp_seq=3 ttl=64 time=1.76 ms
+64 bytes from 10.252.2.28: icmp_seq=4 ttl=64 time=1.97 ms
+^C
+--- 10.252.2.28 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3003ms
+rtt min/avg/max/mdev = 1.765/2.141/2.900/0.446 ms
+```
+
+---
+
+### Virtual Router
+
+While we will leverage Policy-Based Forwarding to implement policy-based routing, it is still a good idea to configure routing on the Virtual Router.
+
+Cloudflare Magic WAN implements Equal Cost Multi-Path (ECMP) Routing to steer traffic across Magic IPsec Tunnels. The default behavior is to load balance traffic equally across both tunnels.
+
+_NOTE: ECMP is disabled on NGFW by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window._
+
+#### ECMP
+
+First, ensure the General tab displays both the Ethernet and tunnel interfaces. If any of the interfaces are not displayed, either use Add to specify the missing interface(s), or visit the Interfaces menu to ensure the relevant Virtual Router is selected.
+
+Open the settings for the default Virtual Router and select the ECMP tab.
+
+Click the checkboxes next to Enable, Symmetric Return, and Strict Source Path (all 3 checkboxes should be selected).
+
+Change the _Method_ under _Load Balance_ from _IP Modulo_ to _Weighted Round Robin_ and add both tunnel interfaces. Ensure the weights match the weights defined in Magic WAN Static Routes (reference the Cloudflare Dashboard).
+
+![Virtual Router - ECMP](./images/panw_ipsec_tunnels/01_ike_crypto_profile.png)
+
+##### Command-Line
+
+```xml
+set network virtual-router default ecmp algorithm weighted-round-robin interface tunnel.1 weight 100
+set network virtual-router default ecmp algorithm weighted-round-robin interface tunnel.2 weight 100
+set network virtual-router default ecmp enable yes
+set network virtual-router default ecmp symmetric-return yes
+set network virtual-router default ecmp strict-source-path yes
+```
+
+#### Static Routes
+
+Add two static routes for each Magic WAN Protected Network - one for each of the two tunnel interfaces.
+
+NOTE: NGFW will not allow for configuring two routes to the same destination with equal metrics - even if they reference different interfaces and ECMP is enabled. The examples provided here use Metric 10 for the route via interface tunnel.1 and Metric 11 for the route via interface tunnel.2.
+
+The environment used for this documentation assumes two Magic WAN Protected Networks:
+
+- VLAN0010: 10.1.10.0/24
+
+- VLAN0020: 10.1.20.0/24
+
+###### VLAN0010 (10.1.10.0/24) via tunnel.1
+
+![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](./images/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
+
+###### VLAN0010 (10.1.10.0/24) via tunnel.2
+
+![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](./images/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
+
+###### VLAN0020 (10.1.20.0/24) via tunnel.1
+
+![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](./images/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
+
+###### VLAN0020 (10.1.20.0/24) via tunnel.2
+
+![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](./images/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
+
+##### Command-Line
+
+###### VLAN0010 - 10.1.10.0/24
+
+```xml
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 bfd profile None
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 interface tunnel.1
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 metric 10
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 destination VLAN0010_10-1-10-0--24
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 route-table unicast
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 bfd profile None
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 interface tunnel.2
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 metric 11
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 destination VLAN0010_10-1-10-0--24
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 route-table unicast
+```
+
+###### VLAN0020 - 10.1.20.0/24
+
+```xml
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 bfd profile None
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 interface tunnel.1
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 metric 10
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 destination VLAN0020_10-1-20-0--24
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 route-table unicast
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun02 nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun02 bfd profile None
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun02 interface tunnel.2
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun02 metric 11
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun02 destination VLAN0020_10-1-20-0--24
+set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun02 route-table unicast
+```
+
+---
+
+### Magic Health Checks
+
+Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random metals across the global Cloudflare anycast network. These ICMP probes are unique in that an ICMP Reply packet is sent (as opposed to an ICMP Request).
+
+> NOTE: The construct of the security policies may seem counter-intuitive - this is due to the use of ICMP Reply probes. As long as you adhere to the recommended policies in this documentation, the bi-directional health checks will work as expected.
+
+Cloudflare Magic WAN customers must configure the Magic IPsec Tunnels to use custom anycast IP addresses for the health check endpoints:
+
+- CF_Health_Check_Anycast_01: 172.64.240.253
+
+- CF_Health_Check_Anycast_02: 172.64.240.254
+
+#### Security Policy - Tunnel Health Checks
+
+We must define a rule to allow the ICMP Reply probes as NGFW's default behavior will drop the Health Checks.
+
+> NOTE: Cloudflare Health Checks are sent from random metals across the global Cloudflare edge network and can originate from any addresses within the Cloudflare IPv4 address space represented by the **Cloudflare_IPv4_Static_Grp**.
+
+![Bidirectioanl Health Check Rule - General](./images/panw_security_rules/01_bidirect_hc_general.png)
+
+![Bidirectioanl Health Check Rule - Source](./images/panw_security_rules/02_bidirect_hc_source.png)
+
+![Bidirectioanl Health Check Rule - Destination](./images/panw_security_rules/03_bidirect_hc_dest.png)
+
+![Bidirectioanl Health Check Rule - Apps](./images/panw_security_rules/04_bidirect_hc_apps.png)
+
+![Bidirectioanl Health Check Rule - Service/URL Category](./images/panw_security_rules/05_bidirect_hc_service-url.png)
+
+![Bidirectioanl Health Check Rule - Action](./images/panw_security_rules/06_bidirect_hc_action.png)
+
+##### Command-Line
+
+```xml
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC to Cloudflare_L3_Zone
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC from Cloudflare_L3_Zone
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC source [ CF_Health_Check_Anycast_01 CF_Health_Check_Anycast_02 ]
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC destination Cloudflare_IPv4_Static_Grp
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC source-user any
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC category any
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC application [ icmp ping ]
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC service application-default
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC hip-profiles any
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC action allow
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC rule-type universal
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC description "Permit bidirectional HCs"
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC disabled no
+set rulebase security rules Cloudflare_Tunnel_Bidirect_HC log-end yes
+```
+
+> _NOTE: Logging is enabled on the rule to permit Heath Checks. While the amount of bandwidth consumed by Heath Checks is negligible, the flows generate a significant number of log entries. You may want to disable logging on this rule once in production and only enable it if any troubleshooting becomes necessary._
+
+#### Policy-Based Forwarding - Tunnel Health Checks
+
+Traffic matching the Security Rule defined in the last step must be routed symmetrically across the tunnel the ingress traffic was received through.
+
+Two Policy-Based Forwarding rules ensure the traffic is routed accordingly.
+
+Ensure the following:
+
+Source Zone: **Cloudflare_L3_Zone**
+Source Addresses: **CF_Health_Check_Anycast_01** & **CF_Health_Check_Anycast_02**
+
+Destination Zone: **Cloudflare_L3_Zone**
+Destination Addresses: **Cloudflare_IPv4_Static_Grp**
+
+Application: **icmp** & **ping**
+
+![Bidirectional Health Checks via tunnel.1 - General](./images/panw_pbf/01_pbf_hc_01_general.png)
+
+![Bidirectional Health Checks via tunnel.1 - Source](./images/panw_pbf/02_pbf_hc_01_source.png)
+
+![Bidirectional Health Checks via tunnel.1 - Destination](./images/panw_pbf/03_pbf_hc_01_dest-app-service.png)
+
+![Bidirectional Health Checks via tunnel.1 - Forwarding](./images/panw_pbf/04_pbf_hc_01_forwarding.png)
+
+![Bidirectional Health Checks via tunnel.2 - General](./images/panw_pbf/05_pbf_hc_02_general.png)
+
+![Bidirectional Health Checks via tunnel.2 - Source](./images/panw_pbf/06_pbf_hc_02_source.png)
+
+![Bidirectional Health Checks via tunnel.2 - Destination](./images/panw_pbf/07_pbf_hc_02_dest-app-service.png)
+
+![Bidirectional Health Checks via tunnel.2 - Forwarding](./images/panw_pbf/08_pbf_hc_02_forwarding.png)
+
+##### Command-Line
+
+###### Tunnel 01:
+
+```xml
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 action forward egress-interface tunnel.1
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 from zone Cloudflare_L3_Zone
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 enforce-symmetric-return enabled no
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 source CF_Health_Check_Anycast_01
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 destination Cloudflare_IPv4_Static_Grp
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 source-user any
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 application any
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 service any
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 tag Cloudflare_L3_Zone
+```
+
+###### Tunnel 02:
+
+```xml
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 action forward egress-interface tunnel.2
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 from zone Cloudflare_L3_Zone
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 enforce-symmetric-return enabled no
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 source CF_Health_Check_Anycast_02
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 destination Cloudflare_IPv4_Static_Grp
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 source-user any
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 application any
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 service any
+set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 tag Cloudflare_L3_Zone
+```
+
+### Troubleshooting Tunnel Health Checks
+
+#### Security Policy
+
+Use the Traffic log viewer to ensure that the Health Check traffic is allowed. Start with adding a rule to filter the logs based on the name of the Security Policy rule permitting the applicable traffic.
+
+```xml
+rule eq Cloudflare_Tunnel_Bidirect_HC
+```
+
+![Bidirectional Health Check Logging - Filter by Rule Name](./images/panw_logging/02_logging_tunnel_hc_filter_rulename.png)
+
+If you do not see any traffic matching the filter, replace the filter with one that displays log entries based on the addresses associated with the CF_Health_Check_Anycast_01 and CF_Health_Check_Anycast_02 Address objects.
+
+```xml
+( addr.src in 172.64.240.253 ) or ( addr.src in 172.64.240.254 )
+```
+
+![Bidirectional Health Check Logging - Filter by Health Check Anycast IPs](./images/panw_logging/01_logging_tunnel_hc_filter_ip.png)
+
+#### Policy-Based Forwarding
+
+Troubleshooting Policy-Based Forwarding can be a bit challenging. The ideal way to determine if traffic is flowing through the intended path is to select the detailed view for a log entry.
+
+- Click on the magnifying glass next to one of the log entries with source IP address 172.64.240.253
+
+- Traffic originating from CF_Health_Check_Anycast_01 (172.64.240.253) should ingress and egress interface tunnel.1
+
+![Bidirectional Health Check Logging - tunnel.1](./images/panw_logging/03_logging_tunnel_hc_tun01.png)
+
+- Click on the magnifying glass next to one of the log entries with source IP address 172.64.240.254
+
+- Traffic originating from CF_Health_Check_Anycast_02 (172.64.240.254) should ingress and egress interface tunnel.2
+
+![Bidirectional Health Check Logging - tunnel.2](./images/panw_logging/04_logging_tunnel_hc_tun02.png)
+
+If the traffic is not ingressing/egressing the same interface, you likely have an issue with the Policy-Based Forwaring rule(s) not matching.
+
+---
+
+### Security Policies - Production Traffic
+
+As mentioned earlier, this document includes examples for two different use-cases:
+
+- Magic WAN: permit traffic between two or more locations with RFC-1918 private non-routable address space
+
+- Magic WAN with Cloudflare Zero Trust (Gateway Egress): same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+
+#### Magic WAN Only
+
+Rules must be defined to facilitate traffic from the trust network to the Magic WAN Protected Sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
+
+- From Trust to Magic WAN Protected sites
+
+- From Magic WAN Protected Sites to Trust
+
+![Trust to Magic WAN - General](./images/panw_security_rules/07_trust_to_mwan_general.png)
+
+![Trust to Magic WAN - Source](./images/panw_security_rules/08_trust_to_mwan_source.png)
+
+![Trust to Magic WAN - Destination](./images/panw_security_rules/09_trust_to_mwan_dest.png)
+
+![Trust to Magic WAN - Applications](./images/panw_security_rules/10_trust_to_mwan_apps.png)
+
+![Trust to Magic WAN - Services/URL Categories](./images/panw_security_rules/11_trust_to_mwan_service-url.png)
+
+![Trust to Magic WAN - Action](./images/panw_security_rules/12_trust_to_mwan_action.png)
+
+##### Command-Line - Trust to Magic WAN Protected Sites
+
+```xml
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow to Cloudflare_L3_Zone
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow from Trust_L3_Zone
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow source VLAN0100_10-1-100-0--24
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow destination [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow source-user any
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow category any
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow application any
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow service application-default
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow hip-profiles any
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow action allow
+set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type universal
+```
+
+![Magic WAN to Trust - General](./images/panw_security_rules/13_mwan_to_trust_general.png)
+
+![Magic WAN to Trust - Source](./images/panw_security_rules/14_mwan_to_trust_source.png)
+
+![Magic WAN to Trust - Destination](./images/panw_security_rules/15_mwan_to_trust_dest.png)
+
+![Magic WAN to Trust - Applications](./images/panw_security_rules/16_mwan_to_trust_apps.png)
+
+![Magic WAN to Trust - Services/URL Categories](./images/panw_security_rules/17_mwan_to_trust_service-url.png)
+
+![Magic WAN to Trust - Action](./images/panw_security_rules/18_mwan_to_trust_action.png)
+
+##### Command-Line - Magic WAN Protected Sites to Trust
+
+```xml
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow to Trust_L3_Zone
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow from Cloudflare_L3_Zone
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow source [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow destination VLAN0100_10-1-100-0--24
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow source-user any
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow category any
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow application any
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow service application-default
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow hip-profiles any
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow action allow
+set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow rule-type universal
+```
+
+### Policy-Based Forwarding - Production Traffic
+
+Whether traffic ingresses or egresses NGFW, It is important to ensure that traffic is routed symmetrically. This is accomplished through the use of Policy-Based Forwarding.
+
+Policy-Based Forwarding rules are only required for egress traffic.
+
+Any traffic destined for Magic WAN Protected Sites or Magic WAN Protected Sites + Gateway Egress must be routed across the IPsec tunnels.
+
+> _NOTE: Security Rules match traffic flows based on source and destination Zone. Policy Based Forwarding rules are applied per interface - therefore, two Policy-Based Forwarding rules are required for every one Security Rule - one for tunnel.1 and one for tunnel.2._
+
+###### Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.1
+
+![PBF: Trust to Magic WAN via tunnel.1 - General](./images/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
+
+![PBF: Trust to Magic WAN via tunnel.1 - Source](./images/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
+
+![PBF: Trust to Magic WAN via tunnel.1 - Destinations](./images/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
+
+![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](./images/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
+
+###### Command-Line - Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.1
+
+```xml
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 action forward egress-interface tunnel.1
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 from zone Trust_L3_Zone
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 enforce-symmetric-return enabled no
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 source VLAN0100_10-1-100-0--24
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 destination [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 source-user any
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 application any
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 service any
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 disabled no
+set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
+```
+
+###### Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.2
+
+![PBF: Trust to Magic WAN via tunnel.2 - General](./images/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
+
+![PBF: Trust to Magic WAN via tunnel.2 - Source](./images/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
+
+![PBF: Trust to Magic WAN via tunnel.2 - Destinations](./images/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
+
+![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](./images/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
+
+###### Command-Line - Policy-Based Forwarding - tunnel.2
+
+```xml
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 action forward egress-interface tunnel.2
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 from zone Trust_L3_Zone
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 enforce-symmetric-return enabled no
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 source VLAN0100_10-1-100-0--24
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 destination [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 source-user any
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 application any
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 service any
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 disabled no
+set rulebase pbf rules PBF_Magic_WAN_Sites_02 negate-destination no
+```
+
+## Magic WAN with Cloudflare Zero Trust (Gateway Egress)
+
+This section covers adding in support for the use of Cloudflare Gateway for Secure Web Gateway functions. Adding Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering.
+
+This use case can be supported in one of two ways:
+
+- Option 1
+
+  - Security Rule: Extend the scope of the **Trust_to_Cloudflare_Magic_WAN_Allow** rule to allow _ANY_ destination address
+  - Policy-Based Forwarding: Extend the scope of **PBF_Magic_WAN_Sites_01** and **PBF_Magic_WAN_Sites_02** to allow _ANY_ destination address
+
+- Option 2
+  - Security Rule: Add a new rule below **Trust_to_Cloudflare_Magic_WAN_Allow** called **Trust_to_MWAN_Gateway_Egress_Allow** to allow traffic to any destination address _EXCEPT_ for the Magic WAN Protected Sites (using the Negate option)
+  - Policy-Based Forwarding: Add a new rule below **PBF_Magic_WAN_Sites_01** and **PBF_Magic_WAN_Sites_02** to allow any destination address _EXCEPT_ for the Magic WAN Protected Sites (using the Negate option)
+
+The following examples are based on Option 2.
+
+> _NOTE: This example assumes the Security Rules and Policy-Based Forwarding rules from the previous sections have been configured and are directly above the rules configured in this section._
+
+> _NOTE: Traffic from Trust to the Internet would typically be defined as **Trust_L3_Zone** to **Untrust_L3_Zone**. However, since egress Internet traffic will be routed through the Magic IPsec tunnels, the rule must reference **Trust_L3_Zone** to **Cloudflare_L3_Zone**._
+
+###### Security Rule: Trust to Gateway Egress
+
+![Trust to MWAN Egress - General](./images/panw_mwan_egress/01_trust_mwan_egress_general.png)
+
+![Trust to MWAN Egress - Source](./images/panw_mwan_egress/02_trust_mwan_egress_source.png)
+
+![Trust to MWAN Egress - Destination](./images/panw_mwan_egress/03__trust_mwan_egress_destination.png)
+
+![Trust to MWAN Egress - Applications](./images/panw_mwan_egress/04_trust_mwan_egress_apps.png)
+
+![Trust to MWAN Egress - Services/URL Categories](./images/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
+
+![Trust to MWAN Egress - Action](./images/panw_mwan_egress/06_trust_mwan_egress_actions.png)
+
+###### Command-Line - Security Rule: Trust to Gateway Egress
+
+```xml
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow to Cloudflare_L3_Zone
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow from Trust_L3_Zone
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow source any
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow destination [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow source-user any
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow category any
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow application any
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow service application-default
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow hip-profiles any
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow action allow
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow rule-type universal
+set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destination yes
+```
+
+###### Policy-Based Forwarding: Trust to Gateway Egress via tunnel.1
+
+![PBF: Trust to Magic WAN Egress via tunnel.1 - General](./images/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
+
+![PBF: Trust to Magic WAN via tunnel.1 - Source](./images/panw_mwan_egress/02_trust_mwan_egress_source.png)
+
+![PBF: Trust to Magic WAN via tunnel.1 - Destinations](./images/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
+
+![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](./images/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
+
+##### Command-Line - Policy-Based Forwarding: Trust to Gateway Egress via tunnel.1
+
+```xml
+set rulebase pbf rules PBF_MWAN_Egress_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
+set rulebase pbf rules PBF_MWAN_Egress_01 action forward egress-interface tunnel.1
+set rulebase pbf rules PBF_MWAN_Egress_01 from zone Trust_L3_Zone
+set rulebase pbf rules PBF_MWAN_Egress_01 enforce-symmetric-return enabled no
+set rulebase pbf rules PBF_MWAN_Egress_01 source VLAN0100_10-1-100-0--24
+set rulebase pbf rules PBF_MWAN_Egress_01 destination [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
+set rulebase pbf rules PBF_MWAN_Egress_01 source-user any
+set rulebase pbf rules PBF_MWAN_Egress_01 application any
+set rulebase pbf rules PBF_MWAN_Egress_01 service any
+set rulebase pbf rules PBF_MWAN_Egress_01 disabled no
+set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
+```
+
+###### Policy-Based Forwarding: Trust to Gateway Egress via tunnel.2
+
+![PBF: Trust to Magic WAN Egress via tunnel.2 - General](./images/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
+
+![PBF: Trust to Magic WAN via tunnel.2 - Source](./images/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
+
+![PBF: Trust to Magic WAN via tunnel.2 - Destinations](./images/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
+
+![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](./images/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
+
+##### Command-Line - Policy-Based Forwarding: Trust to Gateway Egress via tunnel.2
+
+```xml
+set rulebase pbf rules PBF_MWAN_Egress_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
+set rulebase pbf rules PBF_MWAN_Egress_02 action forward egress-interface tunnel.2
+set rulebase pbf rules PBF_MWAN_Egress_02 from zone Trust_L3_Zone
+set rulebase pbf rules PBF_MWAN_Egress_02 enforce-symmetric-return enabled no
+set rulebase pbf rules PBF_MWAN_Egress_02 source VLAN0100_10-1-100-0--24
+set rulebase pbf rules PBF_MWAN_Egress_02 destination [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
+set rulebase pbf rules PBF_MWAN_Egress_02 source-user any
+set rulebase pbf rules PBF_MWAN_Egress_02 application any
+set rulebase pbf rules PBF_MWAN_Egress_02 service any
+set rulebase pbf rules PBF_MWAN_Egress_02 disabled no
+set rulebase pbf rules PBF_MWAN_Egress_02 negate-destination yes
+```
+
+## Troubleshooting
+
+PAN-OS 9.1 Administrators Guide - Interpret VPN Error Messages
+https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/vpns/set-up-site-to-site-vpn/interpret-vpn-error-messages
+
+PAN-OS 10.2 Administrators Guide - Interpret VPN Error Messages
+https://docs.paloaltonetworks.com/pan-os/10-2/pan-os-admin/vpns/set-up-site-to-site-vpn/interpret-vpn-error-messages
