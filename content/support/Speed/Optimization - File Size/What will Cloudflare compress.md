@@ -86,6 +86,7 @@ If your origin server responds to a Cloudflare request using GZIP/Brotli compres
 
 * You include a `Content-Encoding` header in your server response mentioning the compression being used (`gzip` or `br`).
 * The client supports the compression algorithm.
+* You do not enable Cloudflare features that change the response content (refer to [Notes about end-to-end compression](#notes-about-end-to-end-compression) for details).
 
 Cloudflare's reverse proxy can also convert between compressed formats and uncompressed formats. Cloudflare can receive content from your origin server with GZIP or Brotli compression and serve it to visitors uncompressed (or vice versa), independently of caching.
 
@@ -101,11 +102,11 @@ Cloudflare will take into consideration the `Accept-Encoding` header value in we
 
 Even when using the same compression algorithm end to end (between your origin server and Cloudflare, and between the Cloudflare global network and your website visitor), Cloudflare will need to decompress the response and compress it again if you enable any of the following options for the request:
 
-- Email Obfuscation
-- Rocket Loader
-- Server Side Excludes (SSE)
-- Mirage
-- HTML Minification (you can JavaScript and CSS with no impact)
-- Automatic HTTPS Rewrites
+- [Email Address Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
+- [Rocket Loader](/fundamentals/speed/rocket-loader/)
+- [Server Side Excludes (SSE)](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/)
+- [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/)
+- [HTML Minification](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) (you can minify JavaScript and CSS without any impact)
+- [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
 
 To disable these features for specific paths, create a [Configuration Rule](/rules/configuration-rules/).
