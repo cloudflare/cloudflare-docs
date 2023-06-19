@@ -8,6 +8,11 @@ rss: file
 
 # Changelog
 
+## 2023-06-19
+
+- TCP Sockets now report better errors when a connection cannot be established.
+- Updated V8 to 11.5.
+
 ## 2023-06-09
 
 - `AbortSignal.any()` is now available.
