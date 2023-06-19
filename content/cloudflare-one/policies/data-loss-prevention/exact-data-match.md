@@ -9,7 +9,7 @@ layout: single
 
 Exact Data Match (EDM) allows you to scan your web traffic and SaaS applications for specific data defined in a custom dataset, such as names, addresses, phone numbers, credit card numbers, and more.
 
-All data in uploaded datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to your dataset's hashes.
+All data in uploaded datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset.
 
 ## Prepare a dataset
 
@@ -21,7 +21,7 @@ Accepted file formats include CSV and TXT.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select **Create new dataset**.
-3. Upload a dataset.
+3. Upload your dataset.
 4. Select **Save**.
 
 To use this dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
