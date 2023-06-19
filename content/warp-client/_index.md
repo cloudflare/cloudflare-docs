@@ -17,7 +17,7 @@ Connect to the Internet faster and in a more secure way.
 
 The Cloudflare WARP client allows individuals to have a faster, more secure, and more private experience online. The WARP client sits between your device and the Internet, and has several connection modes to better suit different needs.
 
-If you are using the WARP client with Cloudflare Zero Trust, refer to the [Zero Trust documentation](/cloudflare-one/connections/connect-devices/warp/).
+This documentation is for the consumer version of WARP. If you are using WARP with Cloudflare Zero Trust, refer to the [Zero Trust documentation](/cloudflare-one/connections/connect-devices/warp/).
 
 ## Features
 
