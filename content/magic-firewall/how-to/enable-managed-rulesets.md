@@ -160,7 +160,7 @@ Applying a rule-level override allows you to customize the behavior of the manag
 
 On the other hand, if you did not apply Cloudflare’s recommendation in the previous step, the ruleset is implemented with all its defaults applied.
 
- To add rule-level overrides in the dashboard:
+To add rule-level overrides in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Magic Firewall** > **Managed rules**.
