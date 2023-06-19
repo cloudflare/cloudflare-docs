@@ -10,7 +10,6 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
-- [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
@@ -90,25 +89,6 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
     {{</definitions>}}
-
----
-
-## generate
-
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
-
-```sh
-$ wrangler generate [name] [template]
-```
-
-{{<definitions>}}
-
-- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
-- `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
-
-{{</definitions>}}
 
 ---
 
