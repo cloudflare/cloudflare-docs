@@ -6,11 +6,13 @@ title: What will Cloudflare compress
 
 # What will Cloudflare compress?
 
+Cloudflare supports content compression both when delivering content to your website visitors and when requesting content from your origin server.
 
+## Content compression from the Cloudflare network to website visitors
 
-In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/concepts/default-cache-behavior/) and [auto-minification](https://support.cloudflare.com/hc/en-us/articles/200168196-How-do-I-minify-HTML-CSS-and-JavaScript-to-optimize-my-site-) of CSS, JS & HTML to speed up your site, Cloudflare also provides gzip and brotli compression to help site owners. 
+In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/concepts/default-cache-behavior/) and [auto-minifying](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) CSS, JavaScript, and HTML content to speed up your site, Cloudflare supports gzip and Brotli compression when delivering content to website visitors.
 
-Cloudflare will return gzip or brotli encoded responses to compatible clients / browsers for the following content-types:
+If supported by visitors' web browsers, Cloudflare will return gzip or Brotli-encoded responses for the following content types:
 
 ```
 text/html
@@ -32,8 +34,8 @@ application/x-httpd-cgi
 text/xml
 application/xml
 application/xml+rss
-application/vnd.api+json 
-application/x-protobuf 
+application/vnd.api+json
+application/x-protobuf
 application/json
 multipart/bag
 multipart/mixed
@@ -55,39 +57,42 @@ application/eot
 application/font
 application/font-sfnt
 application/wasm
-application/javascript-binast 
-application/manifest+json 
+application/javascript-binast
+application/manifest+json
 application/ld+json
 application/graphql+json
 application/geo+json
 ```
 
-If you do not want a particular response from your origin to be encoded, you can disable this by setting `cache-control: no-transform` at your origin web server.
+Cloudflare's global network can deliver content to website visitors using gzip compression, [Brotli compression](#enable-brotli-compression), or no compression, according to the values visitors provide in the `Accept-Encoding` request header.
 
-___
+For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. For successful response status codes, Cloudflare will only compress responses if their status code is `200`. Responses with other status codes will not be compressed.
 
-## Does Cloudflare compress resources?
+### Enable Brotli compression
 
-Yes, Cloudflare applies **gzip** and **brotli** compression to some types of content. We also gzip items based on the browser's UserAgent to help speed up page loading time.
+By default, Brotli compression is enabled for domain on Free and Pro plans and disabled for domains on Business and Enterprise plans.
 
-If you're already using gzip we will honor your gzip settings as long as you're passing the details in a header from your web server for the files.
+To enable Brotli compression:
 
-Cloudflare only supports the content types **gzip** towards your origin server and can also only deliver content either **gzip compressed**, **brotli compressed**, or **not compressed**.
+1. [Log in to the Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+2. Go to **Speed** > **Optimization**.
+3. For **Brotli**, toggle the switch to **On**.
 
-Cloudflare's reverse proxy is also able to convert between compressed formats and uncompressed formats, meaning that it can pull content from a customer's origin server via gzip and serve it to clients uncompressed (or vice versa). This is done independently of caching.
+---
 
-{{<Aside type="warning">}}
-Please note: The Accept-Encoding header is not respected and will be
-removed.
+## Content compression from origin servers to the Cloudflare network
+
+When requesting content from your origin server, Cloudflare currently supports gzip compression or no compression.
+
+If your origin server responds to a Cloudflare request using gzip compression, we will keep the same compression in the response sent to the website visitor if:
+
+* You include a `Content-Encoding` header in your server response mentioning gzip compression.
+* The client supports the compression algorithm.
+
+Cloudflare's reverse proxy can also convert between compressed formats and uncompressed formats. Cloudflare can receive content from your origin server with gzip compression and serve it to visitors uncompressed (or vice versa), independently of caching.
+
+If you do not want a particular response from your origin to be encoded with gzip/Brotli when delivered to website visitors, you can disable this by including a `cache-control: no-transform` HTTP header in the response from your origin web server.
+
+{{<Aside type="warning" header="Warning">}}
+Cloudflare will take into consideration the `Accept-Encoding` header value in website visitors' requests when sending responses to those visitors. However, when requesting content from your origin server, Cloudflare will send a different `Accept-Encoding` header, supporting only gzip compression.
 {{</Aside>}}
-
-___
-
-## Enable Brotli compression
-
-By default, Brotli is enabled for domain on Free and Pro plans and disabled for domains on Business and Enterprise plans.
-
-1.  [Log in to the Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-2.  Click the **Speed** app.
-3.  Click the **Optimization** tab.
-4.  Toggle the Brotli switch to **On**.

@@ -1,14 +1,17 @@
 ---
 pcx_content_type: how-to
-title: Using a Worker as your origin
+title: Workers as your fallback origin
 weight: 4
+meta:
+  title: Workers as your fallback origin
+  description: Learn how to use a Worker as the fallback origin for your SaaS zone.
 ---
 
-# Using a Worker as your origin
+# Workers as your fallback origin
 
 If you are building your application on [Cloudflare Workers](/workers/), you can use a Worker as the origin for your SaaS zone (also known as your fallback origin).
 
-1.  In your SaaS zone, [create and set a fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin-and-cname-target). Ensure the fallback origin only has an [originless DNS record](/dns/troubleshooting/faq/#what-ip-should-i-use-for-parked-domain--redirect-only--originless-setup):
+1.  In your SaaS zone, [create and set a fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin). Ensure the fallback origin only has an [originless DNS record](/dns/troubleshooting/faq/#what-ip-should-i-use-for-parked-domain--redirect-only--originless-setup):
 
     - **Example**: `service.example.com AAAA 100::`
 

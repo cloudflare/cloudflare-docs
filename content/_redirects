@@ -599,11 +599,15 @@
 /cloudflare-for-platforms/cloudflare-for-saas/getting-started/ /cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/ 301
 /cloudflare-for-saas/ssl/reference/common-api-calls/ /cloudflare-for-platforms/cloudflare-for-saas/start/common-api-calls/ 301
 /cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/ 301
-/cloudflare-for-saas/ssl/common-tasks/hostname-verification/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/ 301
+/cloudflare-for-saas/ssl/common-tasks/hostname-verification/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/ 301
+
 /cloudflare-for-saas/ssl/custom-certificates/certificate-signing-requests/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
 /cloudflare-for-saas/related-products/early-hints-for-saas/ /cloudflare-for-platforms/cloudflare-for-saas/performance/early-hints-for-saas/ 301
-/cloudflare-for-saas/ssl/reference/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/ 301
+/cloudflare-for-saas/ssl/reference/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/ 301
 /cloudflare-for-saas/ssl/hostname-specific-behavior/custom-metadata/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/start/hostname-verification-backoff-schedule/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/backoff-schedule/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/ 301
 /cloudflare-for-saas/ssl/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/ 301
 /cloudflare-for-saas/ssl/reference/versioning/ /cloudflare-for-platforms/cloudflare-for-saas/reference/versioning/ 301
 # Includes dynamic redirects listed at bottom
@@ -659,8 +663,7 @@
 /r2/data-access/s3-api/presigned-urls/ /r2/api/s3/presigned-urls/ 301
 /r2/buckets/presigned-urls/ /r2/api/s3/presigned-urls/ 301
 /r2/data-access/wrangler-cli/ /r2/buckets/create-buckets/ 301
-/r2/data-migration/ /r2/r2-migrator/ 301
-/r2/data-migration/r2-migrator/ /r2/r2-migrator/ 301
+/r2/r2-migrator/ /r2/data-migration/ 301
 /r2/learning/consistency/ /r2/reference/consistency/ 301
 /r2/learning/data-security/ /r2/reference/data-security/ 301
 /r2/learning/cors/ /r2/buckets/cors/ 301

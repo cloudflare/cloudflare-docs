@@ -117,7 +117,7 @@ If the query returns no rows, then first() will return ```null```.
 
 If the query returns rows, but ```column``` does not exist, then first() will throw the ```D1_ERROR``` exception.
 
-### await stmt.all( [column] )
+### await stmt.all()
 Returns all rows and metadata.
 
 ```js

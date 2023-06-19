@@ -37,6 +37,8 @@ Because this feature restricts WARP to just applications configured to use the l
 
 This will enable the **WARP via Local Proxy** option in the **WARP Settings** menu.
 
+If you enable [FIPS compliance](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance) for TLS decryption, you must [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers. Otherwise, HTTP/3 traffic will bypass inspection by the WARP client.
+
 ## WARP+
 
 While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ subscribers get access to a larger network. More cities to connect to means you are likely to be closer to a Cloudflare data center – which can reduce the latency between your device and Cloudflare, and improve your browsing speed. As a result, sites load faster, both for those on the Cloudflare network and those that are not.

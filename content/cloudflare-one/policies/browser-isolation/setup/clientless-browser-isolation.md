@@ -10,9 +10,8 @@ Clientless Web Isolation allows users to securely navigate high risk or sensitiv
 
 ## Set up Clientless Web Isolation
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Settings** > **Browser Isolation**.
-2. Toggle on **Clientless Web Isolation**.
-3. To configure permissions, click **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+{{<render file="/_clientless-browser-isolation.md">}}
+3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
 
 ## Use the remote browser
 
