@@ -74,4 +74,4 @@ While for most cases you do not have to worry about this list or how it is used 
 
 Depending on your organization requirements, or if you have to troubleshoot an issue with your certificates, for example, you might come across the terms root certificate, intermediate certificate and leaf certificate.
 
-These terms refer to the way in which the certificate presented to a client - the leaf certificate - has to be traceable back to a trusted certificate authority (CA) certificate - the [root certificate](https://en.wikipedia.org/wiki/Root_certificate). This process is structured arround a [chain of trust](https://en.wikipedia.org/wiki/Chain_of_trust).
+These terms refer to the way in which the certificate presented to a client - the leaf certificate - has to be traceable back to a trusted certificate authority (CA) certificate - the [root certificate](https://en.wikipedia.org/wiki/Root_certificate). This process is structured around a [chain of trust](https://en.wikipedia.org/wiki/Chain_of_trust).
