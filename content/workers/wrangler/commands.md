@@ -10,9 +10,9 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
-- [`d1`](#d1) - Interact with D1.
-- [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
+- [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
+- [`d1`](#d1) - Interact with D1.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`delete`](#delete) - Delete your Worker from Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
@@ -90,7 +90,181 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
     {{</definitions>}}
 
+--- 
+
+## dev
+
+Start a local server for developing your Worker.
+
+```sh
+$ wrangler dev [SCRIPT] [OPTIONS]
+```
+
+{{<Aside type="note">}}
+
+None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+
+As of Wrangler v3, `wrangler dev` is currently only supported by Debian 12 Bookworm-based distributions, macOS version 13 or greater, and Windows (x86-64 architecture). We are working to increase support for additional operating systems.
+
+When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
+
+- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
+- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+
+{{</Aside>}}
+
+{{<definitions>}}
+
+- `SCRIPT` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker.
+- `--name` {{<type>}}string{{</type>}}
+  - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and show a preview of the script without modification. Particularly useful when using custom builds.
+- `--env` {{<type>}}string{{</type>}}
+  - Perform on a specific environment.
+- `--compatibility-date` {{<type>}}string{{</type>}}
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
+- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
+  - Flags to use for compatibility checks.
+- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
+  - Use the latest version of the Workers runtime.
+- `--ip` {{<type>}}string{{</type>}}
+  - IP address to listen on, defaults to `localhost`.
+- `--port` {{<type>}}number{{</type>}}
+  - Port to listen on.
+- `--inspector-port` {{<type>}}number{{</type>}}
+  - Port for devtools to connect to.
+- `--routes`, `--route` {{<type>}}string[]{{</type>}}
+  - Routes to upload.
+  - For example: `--route example.com/*`.
+- `--host` {{<type>}}string{{</type>}}
+  - Host to forward requests to, defaults to the zone of project.
+- `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
+  - Protocol to listen to requests on.
+- `--local-upstream` {{<type>}}string{{</type>}}
+  - Host to act as origin in local mode, defaults to `dev.host` or route.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
+- `--site` {{<type>}}string{{</type>}}
+  - Root folder of static assets for Workers Sites.
+- `--site-include` {{<type>}}string[]{{</type>}}
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
+- `--site-exclude` {{<type>}}string[]{{</type>}}
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+- `--upstream-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: https){{</prop-meta>}}
+  - Protocol to forward requests to host on.
+- `--var` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to replace global identifiers in your code.
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--tsconfig` {{<type>}}string{{</type>}}
+  - Path to a custom `tsconfig.json` file.
+- `--minify` {{<type>}}boolean{{</type>}}
+  - Minify the script.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
+- `--persist-to` {{<type>}}string{{</type>}}
+  - Specify directory to use for local persistence.
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Develop against remote resources and data stored on Cloudflare's network.
+- `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}}
+  - Specify Wrangler's logging level.
+
+{{</definitions>}}
+
+```sh
+~/my-worker $ wrangler dev
+⬣ Listening at http://localhost:8787
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```
+
+`wrangler dev` is a way to locally test your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+
 ---
+
+## deploy
+
+Deploy your Worker to Cloudflare.
+
+```sh
+$ wrangler deploy [SCRIPT] [OPTIONS]
+```
+
+{{<Aside type="note">}}
+
+None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
+
+{{</Aside>}}
+
+{{<definitions>}}
+
+- `SCRIPT` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker.
+- `--name` {{<type>}}string{{</type>}}
+  - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and directly deploy script without modification. Particularly useful when using custom builds.
+- `--env` {{<type>}}string{{</type>}}
+  - Perform on a specific environment.
+- `--outdir` {{<type>}}string{{</type>}}
+  - Path to directory where Wrangler will write the bundled Worker files.
+- `--compatibility-date` {{<type>}}string{{</type>}}
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
+- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
+  - Flags to use for compatibility checks.
+- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
+  - Use the latest version of the Workers runtime.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler deploy --name personal_blog --assets dist/ --latest`.
+- `--site` {{<type>}}string{{</type>}}
+  - Root folder of static assets for Workers Sites.
+- `--site-include` {{<type>}}string[]{{</type>}}
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
+- `--site-exclude` {{<type>}}string[]{{</type>}}
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+- `--var` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to replace global identifiers in your code.
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
+  - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/platform/triggers/cron-triggers/#examples).
+- `--routes`, `--route` {{<type>}}string[]{{</type>}}
+  - Routes where this Worker will be deployed.
+  - For example: `--route example.com/*`.
+- `--tsconfig` {{<type>}}string{{</type>}}
+  - Path to a custom `tsconfig.json` file.
+- `--minify` {{<type>}}boolean{{</type>}}
+  - Minify the bundled script before deploying.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
+- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
+- `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
+  - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
+
+{{</definitions>}}
+
+--- 
 
 ## d1
 
@@ -282,180 +456,6 @@ $ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--local` {{<type>}}boolean{{</type>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
     {{</definitions>}}
-
----
-
-## dev
-
-Start a local server for developing your Worker.
-
-```sh
-$ wrangler dev [SCRIPT] [OPTIONS]
-```
-
-{{<Aside type="note">}}
-
-None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
-
-{{</Aside>}}
-
-{{<Aside type="warning">}}
-
-As of Wrangler v3, `wrangler dev` is currently only supported by Debian 12 Bookworm-based distributions, macOS version 13 or greater, and Windows (x86-64 architecture). We are working to increase support for additional operating systems.
-
-When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
-
-- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
-- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
-
-{{</Aside>}}
-
-{{<definitions>}}
-
-- `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker.
-- `--name` {{<type>}}string{{</type>}}
-  - Name of the Worker.
-- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Skip Wrangler's build steps and show a preview of the script without modification. Particularly useful when using custom builds.
-- `--env` {{<type>}}string{{</type>}}
-  - Perform on a specific environment.
-- `--compatibility-date` {{<type>}}string{{</type>}}
-  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
-  - Flags to use for compatibility checks.
-- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Use the latest version of the Workers runtime.
-- `--ip` {{<type>}}string{{</type>}}
-  - IP address to listen on, defaults to `localhost`.
-- `--port` {{<type>}}number{{</type>}}
-  - Port to listen on.
-- `--inspector-port` {{<type>}}number{{</type>}}
-  - Port for devtools to connect to.
-- `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes to upload.
-  - For example: `--route example.com/*`.
-- `--host` {{<type>}}string{{</type>}}
-  - Host to forward requests to, defaults to the zone of project.
-- `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
-  - Protocol to listen to requests on.
-- `--local-upstream` {{<type>}}string{{</type>}}
-  - Host to act as origin in local mode, defaults to `dev.host` or route.
-- `--assets` {{<type>}}string{{</type>}}
-  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
-- `--site` {{<type>}}string{{</type>}}
-  - Root folder of static assets for Workers Sites.
-- `--site-include` {{<type>}}string[]{{</type>}}
-  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` {{<type>}}string[]{{</type>}}
-  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
-- `--upstream-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: https){{</prop-meta>}}
-  - Protocol to forward requests to host on.
-- `--var` {{<type>}}key:value[]{{</type>}}
-  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
-  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--define` {{<type>}}key:value[]{{</type>}}
-  - Array of `key:value` pairs to replace global identifiers in your code.
-  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
-  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--tsconfig` {{<type>}}string{{</type>}}
-  - Path to a custom `tsconfig.json` file.
-- `--minify` {{<type>}}boolean{{</type>}}
-  - Minify the script.
-- `--node-compat` {{<type>}}boolean{{</type>}}
-  - Enable node.js compatibility.
-- `--persist-to` {{<type>}}string{{</type>}}
-  - Specify directory to use for local persistence.
-- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Develop against remote resources and data stored on Cloudflare's network.
-- `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
-- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}}
-  - Specify Wrangler's logging level.
-
-{{</definitions>}}
-
-```sh
-~/my-worker $ wrangler dev
-⬣ Listening at http://localhost:8787
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-```
-
-`wrangler dev` is a way to locally test your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
-
----
-
-## deploy
-
-Deploy your Worker to Cloudflare.
-
-```sh
-$ wrangler deploy [SCRIPT] [OPTIONS]
-```
-
-{{<Aside type="note">}}
-
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
-
-{{</Aside>}}
-
-{{<definitions>}}
-
-- `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker.
-- `--name` {{<type>}}string{{</type>}}
-  - Name of the Worker.
-- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Skip Wrangler's build steps and directly deploy script without modification. Particularly useful when using custom builds.
-- `--env` {{<type>}}string{{</type>}}
-  - Perform on a specific environment.
-- `--outdir` {{<type>}}string{{</type>}}
-  - Path to directory where Wrangler will write the bundled Worker files.
-- `--compatibility-date` {{<type>}}string{{</type>}}
-  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` {{<type>}}string[]{{</type>}}
-  - Flags to use for compatibility checks.
-- `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Use the latest version of the Workers runtime.
-- `--assets` {{<type>}}string{{</type>}}
-  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler deploy --name personal_blog --assets dist/ --latest`.
-- `--site` {{<type>}}string{{</type>}}
-  - Root folder of static assets for Workers Sites.
-- `--site-include` {{<type>}}string[]{{</type>}}
-  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` {{<type>}}string[]{{</type>}}
-  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
-- `--var` {{<type>}}key:value[]{{</type>}}
-  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
-  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--define` {{<type>}}key:value[]{{</type>}}
-  - Array of `key:value` pairs to replace global identifiers in your code.
-  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
-  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/platform/triggers/cron-triggers/#examples).
-- `--routes`, `--route` {{<type>}}string[]{{</type>}}
-  - Routes where this Worker will be deployed.
-  - For example: `--route example.com/*`.
-- `--tsconfig` {{<type>}}string{{</type>}}
-  - Path to a custom `tsconfig.json` file.
-- `--minify` {{<type>}}boolean{{</type>}}
-  - Minify the bundled script before deploying.
-- `--node-compat` {{<type>}}boolean{{</type>}}
-  - Enable node.js compatibility.
-- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
-- `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
-  - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
-
-{{</definitions>}}
 
 ---
 
