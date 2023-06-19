@@ -14,10 +14,19 @@ In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/conce
 
 ```mermaid
 flowchart LR
-        accTitle: Compressed responses sent to website visitor
-        accDescr: Cloudflare can send responses to visitors using GZIP compression, Brotli compression, or no compression.
-        A[Visitor browser]--Request-->B((Cloudflare))
-        B--"Response<br>(GZIP / Brotli / No compression)"-->A
+accTitle: Compressed responses sent to website visitor
+accDescr: Cloudflare can send responses to visitors using GZIP compression, Brotli compression, or no compression.
+
+A[Visitor browser]
+B((Cloudflare))
+C[(Origin server)]
+
+A == "Request" ==> B -.-> C
+C -.-> B == "Response<br>(GZIP / Brotli / No compression)" ==> A
+
+style A stroke-width: 3px
+style B stroke: orange,fill: orange
+style C stroke-dasharray: 5 5
 ```
 
 If supported by visitors' web browsers, Cloudflare will return GZIP or Brotli-encoded responses for the following content types:
@@ -92,10 +101,19 @@ When requesting content from your origin server, Cloudflare supports GZIP compre
 
 ```mermaid
 flowchart LR
-        accTitle: Compressed responses sent from the origin server
-        accDescr: Cloudflare accepts responses from origin server using GZIP compression, Brotli compression, or no compression.
-        A((Cloudflare))--"Request<br>Accept-Encoding: gzip, br"-->B[(Origin server)]
-        B--"Response<br>(GZIP / Brotli / No compression)"-->A
+accTitle: Compressed responses sent from the origin server
+accDescr: Cloudflare accepts responses from origin server using GZIP compression, Brotli compression, or no compression.
+
+A[Visitor browser]
+B((Cloudflare))
+C[(Origin server)]
+
+A -.-> B == "Request<br>Accept-Encoding: gzip, br" ==> C
+C == "Response<br>(GZIP / Brotli / No compression)" ==> B -.-> A
+
+style A stroke-dasharray: 5 5
+style B stroke: orange,fill: orange
+style C stroke-width: 3px
 ```
 
 If your origin server responds to a Cloudflare request using GZIP/Brotli compression, we will keep the same compression in the response sent to the website visitor if:
