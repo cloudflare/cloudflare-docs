@@ -5,7 +5,7 @@ weight: 3
 layout: single
 ---
 
-# Exact Data Match
+{{<beta>}}Exact Data Match{{</beta>}}
 
 Exact Data Match (EDM) allows you to scan your web traffic and SaaS applications for specific data defined in a custom dataset, such as names, addresses, phone numbers, credit card numbers, and more.
 
