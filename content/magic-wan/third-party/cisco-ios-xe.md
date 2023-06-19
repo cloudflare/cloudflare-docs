@@ -5,16 +5,13 @@ title: Cisco IOS XE
 
 # Cisco IOS XE
 
-This tutorial contains a configuration example for setting up an IPsec tunnel between Cisco IOS XE and Cloudflare. 
+This tutorial contains a configuration example for setting up an IPsec tunnel between Cisco IOS XE and Cloudflare. For this tutorial, the tested Cisco IOS XE software was version 17.03.07.
 
-**Tested version:**
-Cisco IOS XE Software, Version 17.03.07
+You should replace peer addresses with the Anycast IP addresses assigned to your account. For example:
+- **Anycast 01**: `162.159.###.###`
+- **Anycast 02**: `172.64.###.###`
 
-Replace peer addresses with the Anycast IP addresses assigned to your account:
-- Anycast 01: `162.159.###.###`
-- Anycast 02: `172.64.###.###`
-
-The following is a Cisco IOS XE example tutorial:
+The following is a Cisco IOS XE configuration example:
 
 ```xml
 crypto ikev2 proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
@@ -106,7 +103,7 @@ interface GigabitEthernet2
 
 ```
 
-## Diagnostic Output - show crypto session detail
+## Diagnostic output: show crypto session detail
 
 ```xml
 cisco-csr1000v#show crypto session detail
@@ -149,7 +146,7 @@ Peer: 172.64.###.### port 500 fvrf: (none) ivrf: (none)
         Outbound: #pkts enc'ed 0 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2701
 ```
 
-## Diagnostic Output: show crypto session remote `<ANYCAST 01>` detail
+## Diagnostic output: show crypto session remote `<ANYCAST 01>` detail
 
 ```xml
 cisco-csr1000v#show crypto session remote 162.159.###.### detail
@@ -177,7 +174,7 @@ Peer: 162.159.###.### port 500 fvrf: (none) ivrf: (none)
         Outbound: #pkts enc'ed 0 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2655
 ```
 
-## Diagnostic Output: show crypto session remote `<ANYCAST 02>` detail
+## Diagnostic output: show crypto session remote `<ANYCAST 02>` detail
 
 ```xml
 cisco-csr1000v#show crypto session remote 172.64.###.### detail
