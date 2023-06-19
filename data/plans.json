@@ -1409,13 +1409,22 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "managed_rulesets": {
+        "managed_rulesets_request": {
           "title": "Other WAF managed rulesets",
           "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
+          "ent": "Yes"
+        },
+        "managed_rulesets_response": {
+          "title": "Cloudflare Sensitive Data Detection (Beta)",
+          "summary": "Enterprise-only",
+          "link": "/waf/managed-rules/",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
           "ent": "Yes"
         }
       }
