@@ -12,6 +12,11 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
+- [`deployments`](#deployments) - Retrieve details for recent deployments.
+- [`rollback`](#rollback) - Rollback to a recent deployment. (beta)
+
+
+
 - [`d1`](#d1) - Interact with D1.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`delete`](#delete) - Delete your Worker from Cloudflare.
@@ -27,8 +32,6 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
-- [`deployments`](#deployments) - Retrieve details for recent deployments.
-- [`rollback`](#rollback) - Rollback to a recent deployment.
 - [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
@@ -265,6 +268,131 @@ None of the options for this command are required. Also, many can be set in your
 {{</definitions>}}
 
 --- 
+
+## deployments
+
+{{<Aside type="note">}}
+Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+{{</Aside>}}
+
+For more information about deployments and how they work, refer to [Deployments](/workers/platform/deployments).
+
+### list
+
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
+
+```sh
+$ wrangler deployments list
+```
+
+{{<definitions>}}
+
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+    {{</definitions>}}
+
+Example output:
+
+```sh
+Deployment ID:  y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+Created on:     2022-11-11T15:49:08.117218Z
+Author:         example@cloudflare.com
+Source:         Dashboard
+
+Deployment ID:  91943f34-4802-4af7-a350-b5894c73ff34
+Created on:     2022-11-11T15:50:08.117218Z
+Author:         example@cloudflare.com
+Source:         Dashboard
+
+Deployment ID:  31d8f2f0-fba3-4ce9-8427-933f42541b56
+Created on:     2022-11-11T15:51:08.117218Z
+Author:         example@cloudflare.com
+Source:         Rollback from Wrangler 🤠
+Rollback from:  y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+Message:        This is a message submitted on rollback
+
+Deployment ID:  7c2761da-5a45-4cb2-9448-a662978e3a59
+Created on:     2022-11-11T15:52:08.117218Z
+Author:         example@cloudflare.com
+Source:         Rollback from Dashboard 🖥️
+Rollback from:  31d8f2f0-fba3-4ce9-8427-933f42541b56
+
+Deployment ID:  e81fe980-7622-6e1d-740b-1457de3e07e2
+Created on:     2022-11-11T15:53:20.79936Z
+Author:         example@cloudflare.com
+Source:         Wrangler
+🟩 Active
+```
+
+### view <deployment-id>
+
+Retrieve details for the specified deployment, or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
+
+```sh
+$ wrangler deployments view [DEPLOYMENT_ID]
+```
+
+{{<definitions>}}
+
+- `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The ID of the deployment you wish to view.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+    {{</definitions>}}
+
+Example output:
+
+```sh
+Deployment ID:      07d7143d-0284-427e-ba22-2d5e6e91b479
+Created on:         2023-03-02T21:05:15.622446Z
+Author:             example@cloudflare.com
+Source:             Upload from Wrangler 🤠
+------------------------------------------------------------
+Author ID:          e5a3ca86e08fb0940d3a05691310bb42
+Usage Model:        bundled
+Handlers:           fetch
+Compatibility Date: 2022-10-03
+--------------------------bindings--------------------------
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "testr2"
+
+[[kv_namespaces]]
+id = "79300c6d17eb4180a07270f450efe53f"
+binding = "MY_KV"
+```
+
+## rollback
+
+Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
+
+There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/platform/deployments#rollbacks) for more information.
+
+{{<Aside type="warning">}}
+A rollback will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
+{{</Aside>}}
+
+```sh
+$ wrangler rollback [DEPLOYMENT_ID]
+```
+
+{{<definitions>}}
+
+- `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The ID of the deployment you wish to view.
+- `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
+    {{</definitions>}}
+
+Example output:
+
+```sh
+🚧 `wrangler rollback` is a beta command. Please report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose
+Successfully rolled back to deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
+Current Deployment ID: 04d22369-6e55-49ff-944a-d21e216d9f3e
+```
+
+---
 
 ## d1
 
@@ -1541,132 +1669,6 @@ Retrieve your user information and test your authentication configuration.
 ```sh
 $ wrangler whoami
 ```
-
----
-
-## deployments
-
-{{<Aside type="note">}}
-Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
-{{</Aside>}}
-
-For more information about deployments and how they work, refer to [Deployments](/workers/platform/deployments).
-
-### list
-
-Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
-
-```sh
-$ wrangler deployments list
-```
-
-{{<definitions>}}
-
-- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
-
-Example output:
-
-```sh
-Deployment ID:  y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-Created on:     2022-11-11T15:49:08.117218Z
-Author:         example@cloudflare.com
-Source:         Dashboard
-
-Deployment ID:  91943f34-4802-4af7-a350-b5894c73ff34
-Created on:     2022-11-11T15:50:08.117218Z
-Author:         example@cloudflare.com
-Source:         Dashboard
-
-Deployment ID:  31d8f2f0-fba3-4ce9-8427-933f42541b56
-Created on:     2022-11-11T15:51:08.117218Z
-Author:         example@cloudflare.com
-Source:         Rollback from Wrangler 🤠
-Rollback from:  y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-Message:        This is a message submitted on rollback
-
-Deployment ID:  7c2761da-5a45-4cb2-9448-a662978e3a59
-Created on:     2022-11-11T15:52:08.117218Z
-Author:         example@cloudflare.com
-Source:         Rollback from Dashboard 🖥️
-Rollback from:  31d8f2f0-fba3-4ce9-8427-933f42541b56
-
-Deployment ID:  e81fe980-7622-6e1d-740b-1457de3e07e2
-Created on:     2022-11-11T15:53:20.79936Z
-Author:         example@cloudflare.com
-Source:         Wrangler
-🟩 Active
-```
-
-### view <deployment-id>
-
-Retrieve details for the specified deployment, or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
-
-```sh
-$ wrangler deployments view [DEPLOYMENT_ID]
-```
-
-{{<definitions>}}
-
-- `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the deployment you wish to view.
-- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
-
-Example output:
-
-```sh
-Deployment ID:      07d7143d-0284-427e-ba22-2d5e6e91b479
-Created on:         2023-03-02T21:05:15.622446Z
-Author:             example@cloudflare.com
-Source:             Upload from Wrangler 🤠
-------------------------------------------------------------
-Author ID:          e5a3ca86e08fb0940d3a05691310bb42
-Usage Model:        bundled
-Handlers:           fetch
-Compatibility Date: 2022-10-03
---------------------------bindings--------------------------
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "testr2"
-
-[[kv_namespaces]]
-id = "79300c6d17eb4180a07270f450efe53f"
-binding = "MY_KV"
-```
-
-## rollback
-
-Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
-
-There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/platform/deployments#rollbacks) for more information.
-
-{{<Aside type="warning">}}
-A rollback will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
-{{</Aside>}}
-
-```sh
-$ wrangler rollback [DEPLOYMENT_ID]
-```
-
-{{<definitions>}}
-
-- `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the deployment you wish to view.
-- `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
-    {{</definitions>}}
-
-Example output:
-
-```sh
-🚧 `wrangler rollback` is a beta command. Please report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose
-Successfully rolled back to deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
-Current Deployment ID: 04d22369-6e55-49ff-944a-d21e216d9f3e
-```
-
 ---
 
 ## dispatch namespace
