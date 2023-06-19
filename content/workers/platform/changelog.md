@@ -10,7 +10,7 @@ rss: file
 
 ## 2023-06-19
 
-- TCP Sockets now report better errors when a connection cannot be established.
+- The [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) now reports clearer errors when a connection cannot be established.
 - Updated V8 to 11.5.
 
 ## 2023-06-09
