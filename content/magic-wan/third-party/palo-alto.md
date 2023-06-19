@@ -7,42 +7,38 @@ meta:
 
 # Palo Alto Networks Next-Generation Firewall
 
-This tutorial includes the steps required to configure Magic IPsec Tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare Magic WAN.
+This tutorial includes the steps required to configure Magic IPsec Tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare Magic WAN through a Layer 3 deployment.
 
 ## Software version tested:
 - PAN-OS 9.1.14-h4
 
-Layer 3 Deployment
-
 ## Use Cases
-
-Magic WAN: Connecting two or more locations with RFC-1918 private non-routable address space
-
-Magic WAN with Cloudflare Zero Trust (Gateway Egress): Same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+- **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway Egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
 ## Assumptions
 
-This documentation assumes you have a standalone Palo Alto Networks Next-Generation Firewall with two network interfaces - one in a "trust" security zone (Trust_L3_Zone) with an RFC-1918 non-Internet routable IP address (internal network), the other in an "untrust" security zone (Untrust_L3_Zone) with a legally routable IP address (Internet facing).
+This documentation assumes you have a standalone Palo Alto Networks Next-Generation Firewall with two network interfaces: 
+- One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918]((https://datatracker.ietf.org/doc/html/rfc1918)) non-Internet routable IP address (internal network); 
+- The other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
 
-Additionally, there must be a default gateway set on the Virtual Router (default) pointing to your Internet Service Provider(s) router.
+Additionally, there must be a default gateway set on the Virtual Router (default) pointing to the router of your Internet service provider(s).
 
 ## Environment
 
-The following IP addresses are used throughout this documentation. Any legally routable IP addresses have been replaced with IPv4 Address Blocks Reserved for Documentation (RFC5737) addresses within the 203.0.113.0/24 subnet.
+The following IP addresses are used throughout this tutorial. Any legally routable IP addresses have been replaced with IPv4 Address Blocks Reserved for Documentation ([RFC5737](https://datatracker.ietf.org/doc/html/rfc5737)) addresses within the `203.0.113.0/24` subnet.
 
-https://www.rfc-editor.org/rfc/rfc5737.txt
-
-| Description                       | Address                          | Address                    |
-| --------------------------------- | -------------------------------- | -------------------------- |
-| NGFW External Interface           | 203.0.113.254/24                 |                            |
-| NGFW Internal Interface           | 10.1.100.254/24                  |                            |
-| Local Trust Subnet (LAN)          | 10.1.100.0/24                    |                            |
-| NGFW Tunnel Interface 01          | 10.252.2.26/31 (Cloudflare side) | 10.252.2.27/31 (NGFW side) |
-| NGFW Tunnel Interface 02          | 10.252.2.28/31 (Cloudflare side) | 10.252.2.29/31 (NGFW side) |
-| Magic WAN Anycast IP              | 162.159.66.164                   | 172.64.242.164             |
-| Magic WAN Health Check Anycast IP | 172.64.240.253                   | 172.64.240.254             |
-| VLAN0010 - Remote Magic WAN Site  | 10.1.10.0/24                     |                            |
-| VLAN0020 - Remote Magic WAN Site  | 10.1.20.0/24                     |                            |
+| Description                       | Address                            | Address                      |
+| --------------------------------- | ---------------------------------- | ---------------------------- |
+| NGFW External Interface           | `203.0.113.254/24`                 |                              |
+| NGFW Internal Interface           | `10.1.100.254/24`                  |                              |
+| Local Trust Subnet (LAN)          | `10.1.100.0/24`                    |                              |
+| NGFW Tunnel Interface 01          | `10.252.2.26/31` (Cloudflare side) | `10.252.2.27/31` (NGFW side) |
+| NGFW Tunnel Interface 02          | `10.252.2.28/31` (Cloudflare side) | `10.252.2.29/31` (NGFW side) |
+| Magic WAN Anycast IP              | `162.159.66.164`                   | `172.64.242.164`             |
+| Magic WAN Health Check Anycast IP | `172.64.240.253`                   | `172.64.240.254`             |
+| VLAN0010 - Remote Magic WAN Site  | `10.1.10.0/24`                     |                              |
+| VLAN0020 - Remote Magic WAN Site  | `10.1.20.0/24`                     |                              |
 
 ---
 
@@ -50,70 +46,52 @@ https://www.rfc-editor.org/rfc/rfc5737.txt
 
 ### Magic IPsec Tunnels
 
-Use the Cloudflare Dashboard or API to configure two IPsec Tunnels. The following settings are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels). The following settings are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
-> _IMPORTANT: Bi-Directional Health Checks are required with Magic WAN - configuration of the Tunnel Health Check settings must incorporate custom target IP addresses for each tunnel. Additionally, it is recommended to lower the rate at which health check probes are sent._
+{{<Aside type="warning">}}Bidirectional health checks are required with Magic WAN. Configuration of the [tunnel health check settings](/magic-wan/how-to/run-tunnel-health-checks/) must incorporate custom target IP addresses for each tunnel. Additionally, Cloudflare recommendeds that you lower the rate at which health check probes are sent.{{</Aside>}}
 
-Bidirectional Tunnel Health Check Target IPs:
+Bidirectional tunnel health check target IPs:
 
-- 172.64.240.253 - use with the primary IPsec tunnel
-- 172.64.240.254 - use with the secondary IPsec tunnel
+- `172.64.240.253`: Use with the primary IPsec tunnel.
+- `172.64.240.254`: Use with the secondary IPsec tunnel.
 
-##### Tunnel 1
+#### Add IPsec tunnels
 
-```xml
-Tunnel name: SFO_IPSEC_TUN01
-Interface address: 10.252.2.96/31
-Customer endpoint: 203.0.113.254
-Cloudflare endpoint: 162.159.66.164
-Health check rate: Low (default value is Medium)
-Health check type: Reply
-Health check target: Custom (default is Default)
-Target address: 172.64.240.253
-```
+1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/#dashboard-instructions) instructions to create the required IPsec tunnels with the following options:
+  - **Tunnel name**: `SFO_IPSEC_TUN01`
+  - **Interface address**: `10.252.2.96/31`
+  - **Customer endpoint**: `203.0.113.254`
+  - `Cloudflare endpoint`: `162.159.66.164`
+  - **Health check rate**: _Low_ (default value is _Medium_)
+  - **Health check type**: _Reply_
+  - **Health check target**: _Custom_ (default is _Default_)
+  - **Target address**: `172.64.240.253`
+2. Select **Add pre-shared key later** > **Add tunnels**.
+3. Repeat the process to create a second IPsec tunnel with the following options:
+  - **Tunnel name**: `SFO_IPSEC_TUN02`
+  - **Interface address**: `10.252.2.98/31`
+  - **Customer endpoint**: `203.0.113.254`
+  - **Cloudflare endpoint**: `172.64.242.164`
+  - **Health check rate**: _Low_ (default value is _Medium_)
+  - **Health check type**: _Reply_
+  - **Health check target**: _Custom_ (default is _Default_)
+  - **Target address**: `172.64.240.254`
 
-![Magic IPsec Tunnel 01 - SFO_IPSEC_TUN01](./images/cloudflare_dash_ipsec/01_magic_ipsec_tun_01.png)
+#### Generate Pre-shared keys
 
-##### Tunnel 2
+When you create IPSec tunnels with the option **Add pre-shared key later**, the Cloudflare dashboard will show you a warning indicator:
 
-```xml
-Tunnel name: SFO_IPSEC_TUN02
-Interface address: 10.252.2.98/31
-Customer endpoint: 203.0.113.254
-Cloudflare endpoint: 172.64.242.164
-Health check rate: Low (default value is Medium)
-Health check type: Reply
-Health check target: Custom (default is Default)
-Target address: 172.64.240.254
-```
+![Magic IPsec Tunnels - No PSK](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/03_magic_ipsec_tun_no_psk.png)
 
-![Magic IPsec Tunnel 02 - SFO_IPSEC_TUN02](./images/cloudflare_dash_ipsec/02_magic_ipsec_tun_02.png)
+1. Select **Edit** to edit the properties of each tunnel.
+2. Select **Generate a new pre-shared key** > **Update and generate pre-shared key**.
+  ![Generatre a new pre-shared key for each of your IPsec tunnels](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
+3. Take note of the pre-shared key value for each of your IPsec tunnels, and select **Done**.
+  ![Take note of your pre-shared key, and keep it in a safe place](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/05_magic_ipsec_tun_01_show_psk.png)
 
-##### Generate Pre-Shared Keys
+#### IPsec identifier - FQDN (Fully Qualified Domain Name)
 
-If you selected the _Add pre-shared key later_ option, you will see a warning indicator:
-
-![Magic IPsec Tunnels - No PSK](./images/cloudflare_dash_ipsec/03_magic_ipsec_tun_no_psk.png)
-
-Edit the properties of each tunnel - choose _Generate a new pre-shared key_, then select _Update and generate pre-shared key_:
-
-##### Tunnel 1
-
-![Magic IPsec Tunnel 01 - Generate PSK](./images/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
-
-Ensure you document the pre-shared key value:
-
-![Magic IPsec Tunnel 01 - Display PSK](./images/cloudflare_dash_ipsec/05_magic_ipsec_tun_01_show_psk.png)
-
-##### Tunnel 2
-
-![Magic IPsec Tunnel 02 - Generate PSK](./images/cloudflare_dash_ipsec/06_magic_ipsec_tun_02_gen_psk.png)
-
-Ensure you document the pre-shared key value:
-
-![Magic IPsec Tunnel 02 - Display PSK](./images/cloudflare_dash_ipsec/07_magic_ipsec_tun_02_show_psk.png)
-
-#### IPsec Identifier - FQDN (Fully Qualified Domain Name)
+The Cloudflare dashboard shows you the list of 
 
 Collect the FQDN ID value from each of the two tunnels as they will be required when configuring IKE Phase 1 on NGFW:
 
