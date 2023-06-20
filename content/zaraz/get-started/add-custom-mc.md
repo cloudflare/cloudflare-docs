@@ -64,3 +64,13 @@ As with regular tools, it is recommended that you [create the triggers](/zaraz/g
 While your tool is now configured, it needs to have actions defined before it can work. Depending on the tool you chose, Cloudflare Zaraz might automatically create a `Pageview` action. Refer to [Create actions](/zaraz/get-started/create-actions/) to learn how to create additional actions.
 
 Custom Managed Components can be customized with all the settings you expect from the ones you can choose from in the dashboard.
+
+## Unsupported Features
+
+As of now, Custom Managed Components do not support the use of the following features yet:
+
+- Widgets
+- Embeds
+- Proxy
+- Route
+- Serve
