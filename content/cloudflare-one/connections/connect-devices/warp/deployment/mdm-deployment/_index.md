@@ -168,5 +168,4 @@ If your MDM tool does not support XML, you may need to convert the XML to JSON. 
 }
 ```
 
-
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each value.
