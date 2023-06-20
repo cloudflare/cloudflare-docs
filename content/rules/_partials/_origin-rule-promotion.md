@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: param1
+inputParameters: originRuleUrl
 ---
 
 {{<Aside type="note">}}
