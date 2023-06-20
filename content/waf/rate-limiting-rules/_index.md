@@ -13,9 +13,10 @@ Rate limiting rules allow you to define rate limits for requests matching an exp
 
 ## Rule parameters
 
-Like other rules evaluated by Cloudflare's Ruleset Engine, rate limiting rules have an associated **expression** and an **action**.
+Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), rate limiting rules have the following basic parameters:
 
-The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the rate reaches the specified limit.
+* An [expression](/ruleset-engine/rules-language/expressions/) that specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
+* An [action](/ruleset-engine/rules-language/actions/) that specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the rate reaches the specified limit.
 
 Besides these two parameters, rate limiting rules require the following additional parameters:
 
@@ -29,6 +30,8 @@ Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for mo
 Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
 ## Important remarks
+
+* Rate limiting rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to the [actions reference](/ruleset-engine/rules-language/actions/).
 
 * Rate limiting rules are not designed to allow a precise number of requests to reach the origin server. In some situations, there may be a delay (up to a few seconds) between detecting a request and updating internal counters. Due to this delay, excess requests could still reach the origin server before Cloudflare enforces a mitigation action (such as blocking or challenging) in our global network.
 
@@ -77,10 +80,10 @@ To configure rate limiting rules in the Cloudflare dashboard, refer to the follo
 
 You can also configure rate limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/) for more information.
 
-{{</content-column>}}
-
 ---
 
 ## Related resources
 
-For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting](/support/firewall/tools/configuring-cloudflare-rate-limiting/).
+For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/).
+
+{{</content-column>}}
