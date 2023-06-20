@@ -31,6 +31,7 @@ To begin, complete the following steps in your current registrar to transfer you
 - [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/258/84/what-should-i-do-to-transfer-a-domain-from-namecheap/)
 - [Network Solutions](https://customerservice.networksolutions.com/prweb/PRAuth/webkm/help/article/KC-474/networksolutions)
 - [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
+- [Google](https://support.google.com/domains/answer/3251178?hl=en)
 
 ### 1. Log in to your registrar account
 

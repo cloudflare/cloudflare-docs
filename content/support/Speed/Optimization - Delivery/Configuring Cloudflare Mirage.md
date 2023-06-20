@@ -14,18 +14,18 @@ Mirage image optimization is currently available for Pro, Business, and Enterpri
 
 It accelerates image loading by:
 
--   Automatically resizing images using Javascript (by analyzing visitor connection and device type)
+-   Automatically resizing images using JavaScript (by analyzing visitor connection and device type)
 -   Virtualizing images, so visitors on poor connections get a smaller version at a lower resolution until they can access a higher bandwidth connection
 -   Streamlining image requests, so visitors can see optimized images immediately
 -   Acting as a lazy loader, turning all images into load on demand
 
 {{<Aside type="note">}}
 Mirage, like Rocket Loader, is a feature that is applied to a
-customer\'s website through client-side javascript. This means we modify
-the HTML response and insert the javascript code for the browser to
+customer's website through client-side JavaScript. This means we modify
+the HTML response and insert the JavaScript code for the browser to
 execute, which is how the optimization is applied. This also means
 disabling Mirage is not done by disabling the feature by the path of the
-image (we don\'t apply any optimization on the server-side), rather it
+image (we don't apply any optimization on the server-side), rather it
 is done by disabling by the path of the page that loads the image
 (stopping the script from being inserted in the first page).
 {{</Aside>}}
@@ -66,7 +66,7 @@ ajax.cloudflare.com enter the following:
 
 Once enabled Mirage will be active on the entire website.
 
-You can use Cloudflare **Page Rules** to apply Mirage to specific pages or URLs only on your site. To access and configure your page rules, go to the **Rules >** **Page Rules** in the Cloudflare dashboard. 
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
 ___
 
