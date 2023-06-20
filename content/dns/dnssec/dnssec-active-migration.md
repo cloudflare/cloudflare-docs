@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: tutorial
 title: Migration tutorial
 weight: 5
 meta: 
