@@ -25,7 +25,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
 3. Enter a name and optional description for the profile.
 4. Add custom or existing detection entries.
 
-    {{<render file="_dlp-entries.md">}}
+   {{<render file="_dlp-entries.md">}}
 
 5. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
 6. Select **Save profile**.

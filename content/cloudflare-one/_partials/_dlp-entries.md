@@ -24,9 +24,11 @@ _build:
 <details>
 <summary>Add existing entries</summary>
 <div class="special-class" markdown="1">
+Existing entries include [predefined detection entries](/predefined-profiles/) and [Exact Data Match datasets](/cloudflare-one/policies/data-loss-prevention/exact-data-match/).
 
-1. Select **Add existing entries**. Choose which entries to want to add, then select **Confirm**.
-2. To save the detection entry, select **Done**.
+1. Select **Add existing entries**.
+2. Choose which entries to want to add, then select **Confirm**.
+3. To save the detection entry, select **Done**.
 
 </div>
 </details>
