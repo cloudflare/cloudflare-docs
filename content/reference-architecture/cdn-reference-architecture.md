@@ -217,7 +217,7 @@ Using [Image Resizing](/images/image-resizing/) with Cache Reserve will not resu
 
 ### Cache Reserve topology
 
-Figure 7 illustrates how Cache Reserve can help reduce load on an origin server while also helping repopulate cache stores in both upper and lower tier data centers.
+Figure 7 illustrates how Cache Reserve can help reduce load on an origin server while also repopulating cache stores in both upper and lower tier data centers.
 
 ![Figure 7: Cloudflare CDN with Argo Tiered Cache, Argo Smart Routing, and Cache Reserve enabled
 ](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-7.png)
