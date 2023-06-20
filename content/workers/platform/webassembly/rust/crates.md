@@ -8,11 +8,11 @@ meta:
 
 # `workers-rs` Supported Rust Crates
 
-This document outlines popular Rust crates which have been confirmed to work on Workers when using `workers-rs` (or in some cases just `wasm-bindgen`),
-and any custom configuration that was required.
-This is not an exhaustive list, many Rust crates can be compiled to the `wasm32-unknown-unknown` target that is supported by Workers.
+This document outlines popular Rust crates which have been confirmed to work on Workers when using [`workers-rs`](https://github.com/cloudflare/workers-rs) (or in some cases just `wasm-bindgen`), to write Workers in WebAssembly.
+Each example includes any custom configuration that is required.
+This is not an exhaustive list, many Rust crates can be compiled to the [`wasm32-unknown-unknown`](https://doc.rust-lang.org/rustc/platform-support/wasm64-unknown-unknown.html) target that is supported by Workers.
 In some cases this may require disabling default features or enabling a Wasm-specific feature. Finally, it is important to carefully
-consider the addition of new dependencies, as this can significantly increase bundle size.
+consider the addition of new dependencies, as this can significantly increase the [size](/workers/platform/limits/#worker-size) of your Worker.
 
 ## `time`
 
@@ -21,13 +21,13 @@ Many crates which have been made Wasm-friendly, will use the `time` crate instea
 ## `tracing`
 
 Tracing can be enabled by using the `tracing-web` crate and the `time` feature for `tracing-subscriber`. 
-Due to timing limitations on Workers, spans will have identical start and end times unless they encompass I/O.
+Due to [timing limitations](/workers/learning/security-model/#step-1-disallow-timers-and-multi-threading) on Workers, spans will have identical start and end times unless they encompass I/O.
 
 [See Example](https://github.com/kflansburg/workers-rs/tree/main/examples/tracing).
 
 ## `reqwest`
 
-The `reqwest` library can be compiled to Wasm, and hooks into the JavaScript `fetch` API automatically using `wasm-bindgen`. 
+The [`reqwest` library](https://docs.rs/reqwest/latest/reqwest/) can be compiled to Wasm, and hooks into the JavaScript `fetch` API automatically using `wasm-bindgen`. 
 
 ## `tokio-postgres`
 
