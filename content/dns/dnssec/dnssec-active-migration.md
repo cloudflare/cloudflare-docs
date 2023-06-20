@@ -77,6 +77,7 @@ $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_r
 2. Get Cloudfare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
 
 API example:
+
 ```bash
 $ curl --request https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
 --header 'X-Auth-Email: <EMAIL>' \
@@ -93,11 +94,34 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 
 {{<Aside type="note">}}
 
-You can check if both providers are responding with both ZSKs by running a `dig` command, as in the following example, or by using this [Dig Web Interface link](https://www.digwebinterface.com/?hostnames=multisigner.info&type=DNSKEY&useresolver=1.1.1.1).
+You can check if both providers are responding with both ZSKs by running one `dig` command for each, as in the following example. You can also use [Dig Web Interface](https://www.digwebinterface.com/?type=DNSKEY).
 
 ```bash
-$ dig multisigner.info dnskey +noall +answer
+$ dig <ZONE_NAME> dnskey @<PREVIOUS_PROVIDER_NAMESERVER> +noall +answer
+
+$ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer
 ```
+
+Both queries should return both ZSKs (identified with tag `256`).
+
+<details>
+<summary>Example</summary>
+<div>
+
+```bash
+$ dig multisigner.info dnskey @dns1.p01.nsone.net. +noall +answer
+multisigner.info.    3600    IN    DNSKEY    257 3 13 t+4D<bla_bla_bla>JBmA==
+multisigner.info.    3600    IN    DNSKEY    256 3 13 pxEU<bla_bla_bla>0xOg==
+multisigner.info.    3600    IN    DNSKEY    256 3 13 oJM<bla_bla_bla>XhSA==
+
+$ dig multisigner.info dnskey @ashley.ns.cloudflare.com +noall +answer
+multisigner.info.    3600    IN    DNSKEY    257 3 13 mdss<bla_bla_bla>eKGQ==
+multisigner.info.    3600    IN    DNSKEY    256 3 13 oJM<bla_bla_bla>XhSA==
+multisigner.info.    3600    IN    DNSKEY    256 3 13 pxEU<bla_bla_bla>0xOg==
+```
+</div>
+</details>
+
 {{</Aside>}}
 
 ## 3. Set up registrar
@@ -115,14 +139,14 @@ At this point your zone is in a [multi-signer DNSSEC setup](/dns/dnssec/multi-si
 
 {{<Aside type="note">}}
 
-You can find out the TTL of your previous provider DS record by running a `dig` command, as in the following example, or by using this [Dig Web Interface link](https://www.digwebinterface.com/?hostnames=multisigner.info&type=DS&useresolver=1.1.1.1).
-
+You can find out the TTL of your previous provider DS record by running a `dig` command, as in the following example, or by using this [Dig Web Interface link](https://www.digwebinterface.com/?type=DS).
 
 ```bash
 $ dig multisigner.info ds +noall +answer
 multisigner.info.	3600	IN	DS	2371 13 2 227B4C7FF3E1D49D59BAF39BDA54CA0839DE700DD9896076AA3E6AD7 19A0CF55
 multisigner.info.	3600	IN	DS	48553 13 2 893709B51A9C53D011A4054B15FC5454BEDF68E739BB3B3FA1E333DA 7B8DACFE
 ```
+
 In this example, both DS records have a TTL of `3600` seconds. Cloudflare's DS record always has the key tag set to `2371`, so the second line of the response is the DS record of the other provider.
 
 {{</Aside>}}
