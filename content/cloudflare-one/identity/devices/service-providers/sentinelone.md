@@ -3,6 +3,7 @@ pcx_content_type: how-to
 title: SentinelOne
 weight: 4
 layout: single
+hidden: true
 ---
 
 # SentinelOne
