@@ -2,6 +2,7 @@
 // ~> Run `npm run build` to produce `index.js`
 
 import * as github from '@actions/github';
+import * as core from '@actions/core';
 
 function getTopLevelFolder(path: string): string {
   const parts = path.split('/');
@@ -33,7 +34,7 @@ function getChangedSubFolders(files: any[]): string[] {
 async function run(): Promise<void> {
   try {
     const ctx = github.context;
-    const token = process.env.GITHUB_TOKEN;
+    const token = core.getInput('GITHUB_TOKEN', { required: true });
     const octokit = github.getOctokit(token);
     const pr = ctx.payload.pull_request;
     const prNumber = pr.number;
