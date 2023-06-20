@@ -65,7 +65,7 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 {{<Aside type="note" heading="Changes in wrangler v3">}}
 
-By default, in wrangler `3.0.0` and above, data is persisted across each run of `wrangler dev`. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
+By default, in Wrangler v3 and above, data is persisted across each run of `wrangler dev`. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
 
 {{</Aside>}}
 
@@ -73,9 +73,9 @@ Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific loca
 
 Users of wrangler `2.x` must use the `--persist` flag: previous versions of wrangler did not persist data by default.
 
-## Programmatically testing
+## Test programmatically
 
-Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. You can run [migrations](/d1/platform/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
+Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/platform/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
 
 Given the below `wrangler.toml` configuration:
 
@@ -100,8 +100,8 @@ $ wrangler d1 migrations apply your-database --local
 
 The following example shows how to use Wrangler's `unstable_dev()` API to:
 
-* Run migrations against your local test database, as defined by `preview_database_id`
-* Make a request to an endpoint defined in your Worker - in this example, `/api/users/?limit=2`
+* Run migrations against your local test database, as defined by `preview_database_id`.
+* Make a request to an endpoint defined in your Worker. This example uses `/api/users/?limit=2`.
 * Validate the returned results match, including the `Response.status` and the JSON our API returns.
 
 ```ts
