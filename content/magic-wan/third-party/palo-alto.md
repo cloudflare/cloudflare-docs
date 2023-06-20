@@ -288,7 +288,7 @@ set address-group Cloudflare_IPv4_Static_Grp tag Cloudflare_L3_Zone
 
 Adding an Interface Mgmt profile to the tunnel interfaces will provide the ability to ping the Virtual Tunnel Interface on your firewall(s).
 
-Define an Interface Management Profile to allow ping:
+You can define an Interface Management Profile to allow ping from the dashboard:
 
 ![Interface Mgmt Profile](/images/magic-wan/third-party/palo-alto/panw_interfaces/01_int_mgmt_prof.png)
 
@@ -301,40 +301,38 @@ set network profiles interface-management-profile Allow_Ping userid-service no
 set network profiles interface-management-profile Allow_Ping ping yes
 ```
 
----
-
 ### Network Interfaces
 
-#### Ethernet
-
-NGFW is configured with two Ethernet interfaces:
+Palo Alto Networks Next-Generation Firewall (NGFW) is configured with two Ethernet interfaces:
 
 | Interface   | Interface Type | IP Address       | Virtual Router |
 | ----------- | -------------- | ---------------- | -------------- |
-| ethernet1/1 | Layer3         | 10.1.100.254/24  | default        |
-| ethernet1/2 | Layer3         | 203.0.113.254/24 | default        |
+| ethernet1/1 | Layer3         | `10.1.100.254/24`  | default        |
+| ethernet1/2 | Layer3         | `203.0.113.254/24` | default        |
 
-###### ethernet1/1 - Trust_L3_Zone
+#### Set up via dashboard
 
-![ethernet1/1 - Page 1](./images/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
+Follow the guidance on the images below to set up the Ethernet interfaces through the dashboard.
 
-![ethernet1/1 - Page 2](./images/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
+**ethernet1/1: `Trust_L3_Zone`**
 
-![ethernet1/1 - Page 3](./images/panw_interfaces/Ethernet_Interfaces/03_ethernet-1-1_page3.png)
+![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
+![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
+![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/03_ethernet-1-1_page3.png)
 
-###### ethernet1/2 - Unrust_L3_Zone
+**ethernet1/2: `Untrust_L3_Zone`**
 
-![ethernet1/2 - Page 1](./images/panw_interfaces/Ethernet_Interfaces/04_ethernet-1-2_page1.png)
+![Set up ethernet1/2 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/04_ethernet-1-2_page1.png)
+![Set up ethernet1/2 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/05_ethernet-1-2_page2.png)
+![Set up ethernet1/2 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/06_ethernet-1-2_page3.png)
 
-![ethernet1/2 - Page 2](./images/panw_interfaces/Ethernet_Interfaces/05_ethernet-1-2_page2.png)
+After setting up your Ethernet interfaces, they should show up on the overview page:
 
-![ethernet1/2 - Page 3](./images/panw_interfaces/Ethernet_Interfaces/06_ethernet-1-2_page3.png)
+![Ethernet Interfaces - Overview](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/07_ethernet_interfaces_overview.png)
 
-###### Ethernet Interfaces Overview
+#### Set up via command line
 
-![Ethernet Interfaces - Overview](./images/panw_interfaces/Ethernet_Interfaces/07_ethernet_interfaces_overview.png)
-
-##### Command-Line
+You can also use the command line to set up the Ethernet interfaces.
 
 ```bash
 set network interface ethernet ethernet1/1 layer3 ndp-proxy enabled no
@@ -349,35 +347,35 @@ set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss enable yes
 set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss ipv4-mss-adjustment 64
 ```
 
-#### Tunnel Interfaces
+### Tunnel interfaces
 
-Two tunnel interfaces are required for establishing IPsec Tunnels to Cloudflare Magic WAN - one to each of the two Cloudflare Anycast IP addresses.
+Establishing IPsec Tunnels to Cloudflare Magic WAN requires two tunnel interfaces - one to each of the two Cloudflare Anycast IP addresses. You also have to ensure that `Allow_Ping` is bound to both tunnel adapters in **Advanced** > **Managementt Profile**.
 
-Ensure the Allow_Ping Interface Mgmt Profile is bound to both tunnel adapters.
+Review the images below for more information.
 
-> NOTE: MTU is set to 1450 - this value may need to be adjusted for optimal performance on your network.
+{{<Aside type="note">}}MTU is set to `1450`. This value may need to be adjusted for optimal performance on your network.{{</Aside>}}
 
-###### tunnel.1 - Cloudflare_L3_Zone
+#### Set up via dash
 
-![tunnel.1 - Page 1](./images/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
+##### tunnel.1 - Cloudflare_L3_Zone
 
-![tunnel.1 - Page 2](./images/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
+![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
+![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
+![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
 
-![tunnel.1 - Page 3](./images/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
+##### tunnel.2 - Cloudflare_L3_Zone
 
-###### tunnel.2 - Cloudflare_L3_Zone
+![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
+![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
+![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/06_tunnel_2_page3.png)
 
-![tunnel.2 - Page 1](./images/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
+After setting up your Tunnel interfaces, they should show up on the overview page:
 
-![tunnel.2 - Page 2](./images/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
+![Tunnel Interfaces - Overview](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/07_tunnel_interfaces_overview.png)
 
-![tunnel.2 - Page 3](./images/panw_interfaces/Tunnel_Interfaces/06_tunnel_2_page3.png)
+#### Set up via command line
 
-###### Tunnel Interfaces - Overview
-
-![Tunnel Interfaces - Overview](./images/panw_interfaces/Tunnel_Interfaces/07_tunnel_interfaces_overview.png)
-
-##### Command-Line
+You can also set up your Tunnels in the command line:
 
 ```bash
 set network interface tunnel units tunnel.1 ip CF_MWAN_IPsec_VTI_01_Local
@@ -392,7 +390,7 @@ set network interface tunnel units tunnel.2 interface-management-profile Allow_P
 
 ### Zones
 
-The NGFW used in this documentation includes the following zones and corresponding network interfaces.
+The Palo Alto Networks Next-Generation Firewall (NGFW) used to create this tutorial includes the following zones and corresponding network interfaces:
 
 | Zone               | Interface   | Interface |
 | ------------------ | ----------- | --------- |
@@ -400,19 +398,18 @@ The NGFW used in this documentation includes the following zones and correspondi
 | Untrust_L3_Zone    | ethernet1/2 |           |
 | Cloudflare_L3_Zone | tunnel.1    | tunnel.2  |
 
-The tunnel interfaces are placed in a separate Zone to facilitate the configuration of more granular security policies. The use of any other zone for the tunnel interfaces will require adapting the configuration commensurate.
+The tunnel interfaces are placed in a separate Zone to facilitate the configuration of more granular security policies. The use of any other zone for the tunnel interfaces will require adapting the configuration accordingly.
 
-> _NOTE: Any Magic WAN protected networks that are not local should be considered part of the **Cloudflare_L3_Zone**._
+{{<Aside type="note">}}Any Magic WAN protected networks that are not local should be considered part of the `Cloudflare_L3_Zone`.{{</Aside>}}
 
-![Trust_L3_Zone](./images/panw_zones/01_trust_zone.png)
+Review the images below for more details:
 
-![Untrust_L3_Zone](./images/panw_zones/02_untrust_zone.png)
+![The Palo Alto interface showing the Trust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
+![The Palo Alto interface showing the Untrust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
+![The Palo Alto interface showing the Cloudflare_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/03_cloudflare_zone.png)
+![The Palo Alto interface showing the Tunnel Interfaces overview section](/images/magic-wan/third-party/palo-alto/panw_zones/04_zones_overview.png)
 
-![Cloudflare_L3_Zone](./images/panw_zones/03_cloudflare_zone.png)
-
-![Tunnel Interfaces - Overview](./images/panw_zones/04_zones_overview.png)
-
-##### Command-Line
+You can also use the command line to associate zones and interfaces:
 
 ```bash
 set zone Trust_L3_Zone network layer3 ethernet1/1
@@ -424,27 +421,25 @@ set zone Cloudflare_L3_Zone network layer3 [ tunnel.1 tunnel.2 ]
 
 ### Apply Changes
 
-This would be a good time to save and commit the configuration changes made thus far. Once complete, make sure you test basic connectivity to/from the firewall.
+This would be a good time to save and commit the configuration changes made thus far. Once complete, make sure you test basic connectivity to and from the firewall.
 
----
+### IKE Crypto Profile Phase 1
 
-### IKE Crypto Profile
+Add a new IKE Crypto Profile to support the required parameters for Phase 1.
 
-Add a new IKE Crypto Profile to support the required parameters for Phase 1
+Multiple DH Groups and Authentication settings are defined in the desired order. Palo Alto Networks Next-Generation Firewall (NGFW) will automatically negotiate the optimal settings based on specified values.
 
-Multiple DH Groups and Authentication settings are defined in the desired order - NGFW will automatically negotiate the optimal settings based on specified values.
+| Name                | Option                        | Value                                |
+| ------------------- | ----------------------------- | ------------------------------------ |
+| `CF_IKE_Crypto_CBC` | DH Group                      | `group14` <br> `group5`              |
+|                     | Authentication                | `sha512` <br> `sha384` <br> `sha256` |
+|                     | Encryption                    | `aes-256-cbc`                        |
+|                     | Key Lifetime                  | 8 hours                              |
+|                     | IKEv2 Authentication Multiple | `0`                                  |
 
-| Name              | Option                        | Value                |
-| ----------------- | ----------------------------- | -------------------- |
-| CF_IKE_Crypto_CBC | DH Group                      | group14 group5       |
-|                   | Authentication                | sha512 sha384 sha256 |
-|                   | Encryption                    | aes-256-cbc          |
-|                   | Key Lifetime                  | 8 Hours              |
-|                   | IKEv2 Authentication Multiple | 0                    |
+![IKE Crypto Profile you need to set up on your device for Phase 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/01_ike_crypto_profile.png)
 
-![IKE Crypto Profile - CF_IKE_Crypto_Prof](./images/panw_ipsec_tunnels/01_ike_crypto_profile.png)
-
-##### Command-Line
+You can also set up the crypto profile for Phase 1 via the command line:
 
 ```bash
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC hash [ sha512 sha384 sha256 ]
@@ -454,22 +449,22 @@ set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC lifetime h
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC authentication-multiple 0
 ```
 
-### IPsec Crypto Profile
+### IPsec Crypto Profile Phase 2
 
-Add a new IPsec Crypto Profile to support the required parameters for Phase 2
+Add a new IPsec Crypto Profile to support the required parameters for Phase 2.
 
-Multiple Authentication settings are defined in the desired order - NGFW will automatically negotiate the optimal settings based on specified values.
+Multiple Authentication settings are defined in the desired order. Palo Alto Networks Next-Generation Firewall (NGFW) will automatically negotiate the optimal settings based on specified values.
 
-| Name                | Option         | Value       |
-| ------------------- | -------------- | ----------- |
-| CF_IPsec_Crypto_CBC | Encryption     | aes-256-cbc |
-|                     | Authentication | sha256 sha1 |
-|                     | DH Group       | group14     |
-|                     | Lifetime       | 1 Hour      |
+| Name                | Option         | Value                |
+| ------------------- | -------------- | -------------------- |
+| CF_IPsec_Crypto_CBC | Encryption     | `aes-256-cbc`        |
+|                     | Authentication | `sha256` <br> `sha1` |
+|                     | DH Group       | `group14`            |
+|                     | Lifetime       | 1 hour               |
 
-![IPsec Crypto Profile - CF_IPsec_Crypto_Prof](./images/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
+![IPsec Crypto Profile you need to set up on your device](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
 
-##### Command-Line
+You can also set up the IPsec crypto profile for Phase 2 via the command line:
 
 ```bash
 set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC esp authentication [ sha256 sha1 ]
