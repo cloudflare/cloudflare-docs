@@ -6,10 +6,6 @@ title: Understanding Cloudflare Hotlink Protection
 
 # Understanding Cloudflare Hotlink Protection
 
-
-
-## Overview
-
 Hotlink Protection prevents your images from being used by other sites. This can reduce the bandwidth consumed by your origin server.
 
 When Cloudflare receives an image request for your site, we check to ensure the request did not originate from visitors on another site. Visitors to your domain will still be able to download and view images.
@@ -27,6 +23,17 @@ does not include your website domain name (and is not blank).
 > /dev/null\
 > \< HTTP/1.1 403 Forbidden
 {{</Aside>}}
+
+## Enable Hotlink Protection
+
+To enable Hotlink Protection on your website:
+
+1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2.  Select your account and website.
+3.  Go to **Scrape Shield**.
+4.  For **Hotlink Protection**, switch the toggle to **On**.
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
 ___
 
