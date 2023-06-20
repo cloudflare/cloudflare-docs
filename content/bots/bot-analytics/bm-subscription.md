@@ -26,10 +26,10 @@ To use Bot Analytics, open the Cloudflare dashboard and select **Security** > **
 
 Bot Management customers can use Bot Analytics to:
 
-- Understand traffic during [your onboarding phase](/learning-paths/bot-management/)
-- Tune firewall rules to be effective but not overly aggressive
-- Study recent attacks to find trends and detailed information
-- Learn more about Cloudflare’s detection engines with real data
+- Understand traffic during [your onboarding phase](/learning-paths/bot-management/).
+- Tune firewall rules to be effective but not overly aggressive.
+- Study recent attacks to find trends and detailed information.
+- Learn more about Cloudflare’s detection engines with real data.
 
 ## API
 

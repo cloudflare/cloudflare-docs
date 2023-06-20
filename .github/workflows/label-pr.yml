@@ -1,0 +1,25 @@
+name: Label PRs
+
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+on: 
+  pull_request_target:
+    types: [opened, synchronize, edited]
+
+jobs:
+  label_products:
+    name: Label products
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/label-products
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  label_size:
+    name: Label size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/label-size
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
