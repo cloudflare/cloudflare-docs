@@ -207,7 +207,7 @@ There are three main criteria to match for content to be considered cacheable vi
 2. TTL is set to at least 10 hours. This can be set by any method from the previous paragraph.
 3. The Content-Length header must be used in the response header. Note that this means the [Transfer-Method “chunked”](/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/) will prevent Cache Reserve from being populated.
 
-When combined with Argo Tiered Caching and Argo Smart Routing, Cache Reserve can be a powerful tool for increasing cache hits and in-turn reducing load on origin servers while also improving performance by bringing the content closer to the end user.
+When combined with Argo Tiered Caching and Argo Smart Routing, Cache Reserve can be a powerful tool for increasing cache hits and in turn reducing load on origin servers while also improving performance by bringing the content closer to the end user.
 
 {{<Aside type="note">}}
  
