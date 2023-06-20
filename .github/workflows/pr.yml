@@ -14,3 +14,21 @@ jobs:
       - uses: ./.github/actions/assign-pr
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  label_products:
+    name: Label products
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/label-products
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  label_size:
+    name: Label size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/label-size
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
