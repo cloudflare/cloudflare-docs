@@ -9,8 +9,6 @@ layout: single
 
 You can deploy the WARP client in different modes to control the types of traffic sent to Cloudflare Gateway. The WARP mode determines which Zero Trust features are available on the device.
 
-| Mode | DNS Filtering | HTTP Filtering
-
 ### Gateway with WARP (default)
 
 This mode is best suited for organizations that want to use advanced firewall/proxy functionalities and enforce device posture rules.
