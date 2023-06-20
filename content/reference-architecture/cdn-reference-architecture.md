@@ -205,7 +205,7 @@ Cache Reserve has a retention period of 30 days which means it will hold cached 
 There are three main criteria to match for content to be considered cacheable via Cache Reserve:
 1. The content must be cacheable. See the [Cache documentation](/cache/) for more details on cacheable content.
 2. TTL is set to at least 10 hours. This can be set by any method from the previous paragraph.
-3. The Content-Length header must be used in the response header. Please note, this means that the [Transfer-Method “chunked”](/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/) will prevent Cache Reserve from being populated.
+3. The Content-Length header must be used in the response header. Note that this means the [Transfer-Method “chunked”](/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/) will prevent Cache Reserve from being populated.
 
 When combined with Argo Tiered Caching and Argo Smart Routing, Cache Reserve can be a powerful tool for increasing cache hits and in-turn reducing load on origin servers while also improving performance by bringing the content closer to the end user.
 
