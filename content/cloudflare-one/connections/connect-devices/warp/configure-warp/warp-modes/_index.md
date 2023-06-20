@@ -9,6 +9,8 @@ layout: single
 
 You can deploy the WARP client in different modes to control the types of traffic sent to Cloudflare Gateway. The WARP mode determines which Zero Trust features are available on the device.
 
+| Mode | DNS Filtering | HTTP Filtering
+
 ### Gateway with WARP (default)
 
 This mode is best suited for organizations that want to use advanced firewall/proxy functionalities and enforce device posture rules.
@@ -25,6 +27,21 @@ This mode is best suited for organizations that only want to apply DNS filtering
 | ------------- | -------------- | ---------------- |
 | Yes | No | DNS policies |
 
+### Secure Web Gateway without DNS filtering
+
+This mode is best suited for organizations that want to proxy network and HTTP traffic but keep their existing DNS filtering software.
+
+| DNS filtering | HTTP filtering | Features enabled |
+| ------------- | -------------- | ---------------- |
+| No | Yes | HTTP policies, Browser Isolation, identity-based policies, device posture checks, AV scanning, and Data Loss Prevention |
+
+{{<Aside type="note">}}
+
+- This mode disables [domain-based split tunneling](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels) and [local domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/).
+- Only available on Windows, Linux, and macOS.
+
+{{</Aside>}}
+
 ### Proxy mode
 
 This mode is best suited for organizations that want to filter traffic directed to specific applications.
@@ -35,8 +52,8 @@ This mode is best suited for organizations that want to filter traffic directed 
 
 {{<Aside type="note">}}
 
- * Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
- * This mode is only available on Windows, Linux, and macOS.
+- Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
+- Only available on Windows, Linux, and macOS.
 
 {{</Aside>}}
 
