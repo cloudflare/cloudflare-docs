@@ -14,13 +14,11 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-
 To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
 3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
-
 
 ## 1. Create a Worker
 
@@ -32,7 +30,14 @@ Refer to [How Workers works](/workers/learning/how-workers-works/) to learn abou
 
 You will create a new Worker as the container for both your D1 database and the Worker application that you will use to query your database.
 
-Create a new project named `d1-tutorial` by running `npm create cloudflare` and answering the questions with the answers below:
+Create a new project named `d1-tutorial` by running:
+
+```sh
+$ npm create cloudflare
+
+```
+
+When setting up your `d1-tutorial` Worker, answering the questions as below:
 
 * Your directory has been titled `d1-tutorial`.
 * Choose `"Hello World" script` for the type of application.
@@ -40,11 +45,9 @@ Create a new project named `d1-tutorial` by running `npm create cloudflare` and 
 * Select `yes` to using Git.
 * Select `no` to deploying.
 
-
-
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
 
-* A `"Hello World"` `src/worker.js` [Worker](/workers/get-started/guide/#3-write-code).
+* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.js` 
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -55,9 +58,9 @@ For example: `CI=true npm create cloudflare d1-tutorial --type=simple --git --ts
 
 {{</Aside>}}
 
-## 3. Create a database
+## 2. Create a database
 
-A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
+A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familiar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
 
 To create your first D1 database, change into the directory you just created for your Workers project:
 
@@ -84,7 +87,7 @@ database_id = "<unique-ID-for-your-database>"
 
 This will create a new D1 database, and output the [binding](/workers/platform/bindings/) configuration needed in the next step.
 
-## 4. Bind your Worker to your D1 database
+## 3. Bind your Worker to your D1 database
 
 You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/platform/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
@@ -115,7 +118,7 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 You can also bind your D1 database to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#d1-databases).
 
-## 5. Run a query against your D1 database
+## 4. Run a query against your D1 database
 
 ### Configure your D1 database
 
@@ -185,7 +188,7 @@ In the code above, you:
 
 * Define a binding to our D1 database in our TypeScript code. This binding matches the `binding` value we set in `wrangler.toml` under `[[d1_databases]]`
 * Query our database using `env.DB.prepare` to issue a [prepared query](/d1/platform/client-api/) with a placeholder (the `?` in the query).
-* Call `.bind()` to safely and securely bind a value to that placeholder. In a real application, we would allow a user to define the `CompanyName` they want to list results for. Using `.bind()` prevents users from executing arbitary SQL (known as "SQL injection") against our application and deleting or otherwise modifying your database.
+* Call `.bind()` to safely and securely bind a value to that placeholder. In a real application, we would allow a user to define the `CompanyName` they want to list results for. Using `.bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against our application and deleting or otherwise modifying your database.
 * Execute the query by calling `.all()` to return all rows (or none, if the query returns none)
 * Return our query results, if any, in JSON format with `Response.json(results)`
 
@@ -203,7 +206,7 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 
 To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
 
-## 7. Deploy your database
+## 6. Deploy your database
 
 Before deploying your D1 database and Worker globally, log in with your Cloudflare account by running:
 
@@ -231,18 +234,12 @@ Finally, deploy your Worker to make your project accessible on the Internet. To 
 
 ```sh
 $ wrangler deploy
-
-# Outputs:
-Total Upload: 0.19 KiB / gzip: 0.16 KiB
-Uploaded d1-tutorial (3.18 sec)
-Published d1-tutorial (6.29 sec)
-  https://d1-tutorial.YOURNAMEHERE.workers.dev
-Current Deployment ID: 1b680ecc-6f38-4be7-b982-063d425ef204
+# Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
 ```
 
 You can now visit the URL for your newly created project to query your live database.
 
-For example, if the URL of your new Worker is `d1-tutorial.yourname.workers.dev`, accessing `https://d1-tutorial.yourname.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
+For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
 
 By finishing this tutorial, you have created a D1 database, a Worker to access that database and deployed your project globally.
 
