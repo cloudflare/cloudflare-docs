@@ -1,21 +1,21 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170036-What-does-Server-Side-Excludes-SSE-do-
-title: What does Server Side Excludes (SSE) do?
+title: What does Server-side Excludes (SSE) do?
 ---
 
-# What does Server Side Excludes (SSE) do?
+# What does Server-side Excludes (SSE) do?
 
-If there is sensitive content on your website that you want visible to real visitors, but that you want to hide from suspicious visitors, wrap the content with Cloudflare Server-Side Excludes (SSE) tags.
+If there is sensitive content on your website that you want visible to real visitors, but that you want to hide from suspicious visitors, wrap the content with Cloudflare Server-side Excludes (SSE) tags.
 
-## Enable Server Side Excludes
+## Enable Server-side Excludes
 
-To enable Server Side Excludes on your website:
+To enable Server-side on your website:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2.  Select your account and website.
 3.  Go to **Scrape Shield**.
-4.  For **Server Side Excludes**, switch the toggle to **On**.
+4.  For **Server-side**, switch the toggle to **On**.
 
 {{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
