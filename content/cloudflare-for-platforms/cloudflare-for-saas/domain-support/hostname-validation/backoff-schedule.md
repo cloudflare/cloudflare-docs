@@ -1,14 +1,16 @@
 ---
 pcx_content_type: reference
-title: Hostname verification backoff schedule
+title: Backoff schedule
 weight: 3
+meta:
+    title: Backoff schedule | Hostname validation
 ---
 
-# Hostname verification backoff schedule
+# Hostname validation backoff schedule
 
-After you create a custom hostname, Cloudflare has to [verify that hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/).
+After you create a custom hostname, Cloudflare has to [validate that hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/).
 
-Attempts to verify a Custom Hostname are distributed over 7 days (a total of 75 retries). The function that determines the next check varies based on the number of attempts:
+Attempts to validate a Custom Hostname are distributed over 7 days (a total of 75 retries). The function that determines the next check varies based on the number of attempts:
 
 - For the first 10 attempts:
 

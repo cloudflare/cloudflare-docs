@@ -150,7 +150,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Worker.
+  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/platform/environment-variables/).
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -531,11 +531,11 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
 ```
 
 ### mTLS Certificates

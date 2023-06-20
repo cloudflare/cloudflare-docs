@@ -40,7 +40,7 @@ Cloudflare recommends ordering your rules from most specific to least
 specific.
 {{</Aside>}}
 
-A page rule matches a URL pattern based on the following format (comprised of five segments): <scheme>://<hostname><:port>/<path>?<query\_string>
+A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
 
 An example URL with these four segments looks like:
 
@@ -188,9 +188,10 @@ Below is the full list of settings available, presented in the order that they a
 | Cache on Cookie | Apply the _Cache Everything_ option (_Cache Level_ setting) based on a regular expression match against a cookie name.<br/>If you add both this setting and _Bypass Cache on Cookie_ to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_. |  Business and above |
 | Cache TTL by Status Code | Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.   Setting cache TTL based on response status overrides the default cache behavior (standard caching) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a Cache Level of Cache Everything using a Page Rule . Setting no-store Cache-Control or a low TTL (using max-age/s-maxage) increases requests to origin web servers and decreases performance. [Learn more](/cache/how-to/configure-cache-status-code). | Enterprise |
 | Disable Apps | Turn off all active **Cloudflare Apps**. | All |
-| Disable Performance | Turn off [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/), [Rocket Loader](/fundamentals/speed/rocket-loader/), [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/), and [Polish](/images/polish)| All|
-| Disable Railgun (deprecated) | Turn off the **Railgun** feature of the Cloudflare **Speed** app | Business and above |
-| Disable Security| Turn off [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), [Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/), [Scrape Shield](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/), [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/) | All |
+| Disable Performance | Turn off [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/), [Rocket Loader](/fundamentals/speed/rocket-loader/), [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/), and [Polish](/images/polish). | All |
+| Disable Railgun (deprecated) | Turn off the **Railgun** feature of the Cloudflare **Speed** app. | Business and above |
+| Disable Security| Turn off [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), [Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/), [Scrape Shield](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/), [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/). | All |
+| Disable Zaraz | Turn off [Zaraz](/zaraz/). | All |
 | Edge Cache TTL | Specify how long to cache a resource in the Cloudflare edge network. _Edge Cache TTL_ isn't visible in response headers. | All |
 | Email Obfuscation | Turn on or off the **Cloudflare Email Obfuscation** feature of the **Cloudflare Scrape Shield** app. [Learn more.](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/) | All |
 | Forwarding URL | Redirects one URL to another using an `HTTP 301/302 redirect`. _Refer to [Understand wildcard matching and referencing above](#understand-wildcard-matching-and-referencing)._ | All |

@@ -29,6 +29,7 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 | Object size                     | 5 TiB per object<sup>1</sup>           |
 | Maximum upload size<sup>3</sup> | 5 GiB<sup>2</sup>                      |
 | Maximum upload parts            | 10,000                                |
+| Maximum custom domains per bucket | 50                                |
 
 {{</table-wrap>}}
 

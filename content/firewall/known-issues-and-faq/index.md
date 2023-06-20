@@ -54,7 +54,7 @@ _Threat Score_ as configured by **Security Level** is based on:
 - _Low_ - for scores greater than 24
 - _Essentially off_ - for scores greater than 49
 
-Enabling a high threat score for sensitive areas, like comment form pages or login forms, can add an effective level of protection. Integrating _Threat Score_ with firewall rules is advantageous because you can specify an Interactive Challenge vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
+Enabling a high threat score for sensitive areas - like comment form pages or login forms - can add an effective level of protection. Integrating _Threat Score_ with firewall rules is advantageous because you can specify an Interactive Challenge vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
 
 ### How do I create an exception to exclude certain requests from being blocked or challenged?
 
