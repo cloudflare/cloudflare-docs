@@ -1,9 +1,7 @@
 name: Label PRs
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
-on: 
-  pull_request_target:
-    types: [opened, reopened, synchronize, edited]
+on: [pull_request_target]
 
 jobs:
   label_products:

@@ -6,11 +6,11 @@ on:
     types: [opened, reopened]
 
 jobs:
-  label_products:
-    name: Label products
+  compile:
+    name: Assign PCX
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/label-products
+      - uses: ./.github/actions/assign-pr
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
