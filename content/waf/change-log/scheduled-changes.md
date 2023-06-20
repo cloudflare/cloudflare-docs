@@ -48,7 +48,7 @@ rss: file
       <td>100590BETA</td>
       <td>...c1e42497</td>
       <td>VMware - Remote Code Execution - CVE:CVE-2023-20887</td>
-      <td>This rule will replace 100590 in legacy WAF and will replace ...6f9bfc13 on New WAF</td>
+      <td>This rule will replace 100590 in legacy WAF and ...6f9bfc13 on New WAF</td>
     </tr>
   </tbody>
 </table>
