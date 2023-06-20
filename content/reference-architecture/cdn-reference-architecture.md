@@ -211,7 +211,7 @@ When combined with Argo Tiered Caching and Argo Smart Routing, Cache Reserve can
 
 {{<Aside type="note">}}
  
-Using [Image Resizing](/images/image-resizing/) with Cache Reserve will not result in resized images being stored in Cache Reserve since Image Resizing takes place after reading from Cache Reserve. Resized images will be cached in other available tiers when they are served after resizing.
+Using [Image Resizing](/images/image-resizing/) with Cache Reserve will not result in resized images being stored in Cache Reserve because Image Resizing takes place after reading from Cache Reserve. Resized images will be cached in other available tiers when they are served after resizing.
  
 {{</Aside>}}
 
