@@ -202,7 +202,7 @@ While Cache Reserve can function without Argo Tiered Cache enabled, it is recomm
 
 Cache Reserve has a retention period of 30 days which means it will hold cached content for 30 days regardless of cached headers or TTL policy. The TTL policy still affects the content’s freshness which means when content cache TTL expires inside of Cache Reserve, the content will need to be revalidated by checking the origin for any updates. The TTL policy can be set by any number of methods, such as `Cache-Control`, `CDN-Cache-Control` response headers, Edge Cache TTL, cache TTL by status code, or Cache Rules. Every time cache is read from Cache Reserve, the retention timer is reset to 30 days. After 30 days, if the cached content has not been read from Cache Reserve, the cache will be deleted.
 
-There are 3 main criteria to match for content to be considered cacheable via Cache Reserve:
+There are three main criteria to match for content to be considered cacheable via Cache Reserve:
 1. The content must be cacheable. See the [Cache documentation](/cache/) for more details on cacheable content.
 2. TTL is set to at least 10 hours. This can be set by any method from the previous paragraph.
 3. The Content-Length header must be used in the response header. Please note, this means that the [Transfer-Method “chunked”](/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/) will prevent Cache Reserve from being populated.
