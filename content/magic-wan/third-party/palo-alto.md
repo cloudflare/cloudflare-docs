@@ -355,7 +355,7 @@ Review the images below for more information.
 
 {{<Aside type="note">}}MTU is set to `1450`. This value may need to be adjusted for optimal performance on your network.{{</Aside>}}
 
-#### Set up via dash
+#### Set up via dashboard
 
 ##### tunnel.1 - Cloudflare_L3_Zone
 
@@ -386,8 +386,6 @@ set network interface tunnel units tunnel.2 mtu 1450
 set network interface tunnel units tunnel.2 interface-management-profile Allow_Ping
 ```
 
----
-
 ### Zones
 
 The Palo Alto Networks Next-Generation Firewall (NGFW) used to create this tutorial includes the following zones and corresponding network interfaces:
@@ -416,8 +414,6 @@ set zone Trust_L3_Zone network layer3 ethernet1/1
 set zone Untrust_L3_Zone network layer3 ethernet1/2
 set zone Cloudflare_L3_Zone network layer3 [ tunnel.1 tunnel.2 ]
 ```
-
----
 
 ### Apply Changes
 
@@ -475,48 +471,43 @@ set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC dh-gro
 
 ### IKE Gateways
 
-Two IKE Gateways are defined to establish the two Magic IPsec Tunnels to Cloudflare.
+Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make sure to define the following values:
 
-#### General Tab
+- **General tab**
+  - **Version**: _IKEv2 only mode_. Make sure both IKE Gateways are based only on this setting.
+  - **Pre-Shared Key**: This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.
+  - **Local Identification**: _FQDN (hostname)_. You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.
+  - **Peer Identification**: _None_
 
-- Version: Ensure the IKE Gateways are based on IKEv2 Only Mode
+- **Advanced Tab**
+  - **IKE Crypto Profile**: _CF_IKE_Crypto_CBC_
+  - **Liveness Check**: The default value for the Liveness Check (5 seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
 
-- Pre-Shared Key: can be obtained from the Cloudflare Dashboard - value is unique per tunnel
+{{<Aside type="note">}}Any other settings not specified should be left at their default values. Any deviation may lead to undesirable behavior and are not supported.{{</Aside>}}
 
-- Local Identification: FQDN (hostname) - obtain value from the Cloudflare Dashboard - value is unique per tunnel
+#### Set up via dashboard
 
-- Peer Identification: None
+**Tunnel 1 settings: `CF_Magic_WAN_IKE_01`**
 
-#### Advanced Tab
+![IKE gateway settings for tunnel 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/03_ike_gw01_page1.png)
 
-- IKE Crypto Profile: Select CF_IKE_Crypto_CBC
+Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 
-- Liveness Check
-  - The default value for the Liveness Check (5 seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
+![IKE gateway settings for tunnel 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/04_ike_gw01_page2.png)
 
-> NOTE: Any other settings not specified should be left at their default values. Any deviation may lead to undesirable behavior and are not supported.
+**Tunnel 2 settings: `CF_Magic_WAN_IKE_02`**
 
-###### Tunnel 1: CF_Magic_WAN_IKE_01
+![IKE gateway settings for tunnel 2](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/05_ike_gw02_page1.png)
 
-![IKE Gateway - CF_Magic_WAN_IKE_01](./images/panw_ipsec_tunnels/03_ike_gw01_page1.png)
+Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 
-Make sure you select the correct IKE Crypto Profile: **CF_IKE_Crypto_CBC**
+![IKE gateway settings for tunnel 2](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/06_ike_gw02_page2.png)
 
-![IKE Gateway - CF_Magic_WAN_IKE_01](./images/panw_ipsec_tunnels/04_ike_gw01_page2.png)
+#### Set up via command line
 
-###### Tunnel 2: CF_Magic_WAN_IKE_02
+**Tunnel 1 settings: `CF_Magic_WAN_IKE_01`**
 
-![IKE Gateway - CF_Magic_WAN_IKE_02](./images/panw_ipsec_tunnels/05_ike_gw02_page1.png)
-
-Make sure you select the correct IKE Crypto Profile: **CF_IKE_Crypto_CBC**
-
-![IKE Gateway - CF_Magic_WAN_IKE_02](./images/panw_ipsec_tunnels/06_ike_gw02_page2.png)
-
-##### Command-Line
-
-###### Tunnel 1: CF_Magic_WAN_IKE_01
-
-```xml
+```bash
 set network ike gateway CF_Magic_WAN_IKE_01 protocol ikev1 dpd enable yes
 set network ike gateway CF_Magic_WAN_IKE_01 protocol ikev2 dpd enable yes
 set network ike gateway CF_Magic_WAN_IKE_01 protocol ikev2 ike-crypto-profile CF_IKE_Crypto_CBC
@@ -532,9 +523,9 @@ set network ike gateway CF_Magic_WAN_IKE_01 local-id type fqdn
 set network ike gateway CF_Magic_WAN_IKE_01 disabled no
 ```
 
-###### Tunnel 2: CF_Magic_WAN_IKE_02
+**Tunnel 2 settings: `CF_Magic_WAN_IKE_02`**
 
-```xml
+```bash
 set network ike gateway CF_Magic_WAN_IKE_02 protocol ikev1 dpd enable yes
 set network ike gateway CF_Magic_WAN_IKE_02 protocol ikev2 dpd enable yes
 set network ike gateway CF_Magic_WAN_IKE_02 protocol ikev2 ike-crypto-profile CF_IKE_Crypto_CBC
@@ -554,25 +545,25 @@ set network ike gateway CF_Magic_WAN_IKE_02 disabled no
 
 With the IKE Gateways defined, the next step is to configure two IPsec Tunnels - one corresponding to each of the two IKE Gateways configured in the previous section.
 
-> Proxy IDs: Do not configure Proxy IDs. Magic IPsec Tunnels are based on the Route-Based VPN model. Proxy IDs are used with Policy-Based VPNs.
+#### Prerequisites
 
-> NOTE: Cloudflare Magic IPsec Tunnels require Replay Protection is DISABLED (visible under Advanced Options).
+There are a few prerequisites you should be aware of before continuing:
+- Do not configure Proxy IDs. Magic IPsec Tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
+- Disable Replay Protection, under the Advanced Options.
+- Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec Tunnels based on IKEv1 (Magic IPsec Tunnels are based on IKEv2).
 
-NOTE: Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are NGFW devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec Tunnels based on IKEv1 (Magic IPsec Tunnels are based on IKEv2). Please ensure Tunnel Monitor is DISABLED as it can cause undesirable results.
+#### Set up via dashboard
 
-![IPsec Tunnel - CF_Magic_WAN_IPsec_01](./images/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
+![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
+![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
+![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
+![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/10_ipsec_tun02_page2.png)
 
-![IPsec Tunnel - CF_Magic_WAN_IPsec_01](./images/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
+#### Set up via command line
 
-![IPsec Tunnel - CF_Magic_WAN_IPsec_02](./images/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
+**Tunnel 1 settings: `CF_Magic_WAN_IPsec_01`**
 
-![IPsec Tunnel - CF_Magic_WAN_IPsec_02](./images/panw_ipsec_tunnels/10_ipsec_tun02_page2.png)
-
-##### Command-Line
-
-###### Tunnel 1: CF_Magic_WAN_IPsec_01
-
-```xml
+```bash
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 auto-key ike-gateway CF_Magic_WAN_IKE_01
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 auto-key ipsec-crypto-profile CF_IPsec_Crypto_CBC
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 tunnel-monitor destination-ip 10.252.2.26
@@ -582,9 +573,9 @@ set network tunnel ipsec CF_Magic_WAN_IPsec_01 anti-replay no
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 disabled no
 ```
 
-###### Tunnel 2: CF_Magic_WAN_IPsec_02
+**Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`**
 
-```xml
+```bash
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 auto-key ike-gateway CF_Magic_WAN_IKE_02
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 auto-key ipsec-crypto-profile CF_IPsec_Crypto_CBC
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 tunnel-monitor destination-ip 10.252.2.28
@@ -598,27 +589,23 @@ set network tunnel ipsec CF_Magic_WAN_IPsec_02 disabled no
 
 This would be a good time to save and commit the configuration changes made thus far. Once complete, make sure you test basic connectivity across the IPsec tunnels.
 
----
+### IPsec tunnel connectivity tests
 
-### IPsec Tunnel Connectivity Tests
+This is a good time to ensure the IPsec tunnels are established and to validate basic connectivity.
 
-This is a good time to ensure the IPsec tunnels have been established and validate basic connectivity.
-
-> NOTE: Tunnel Health Checks will not function until Security Policies and Policy-Based Forwarding are configured. This series of tests is focused on testing IPsec connectivity exclusively.
+{{<Aside type="note">}}Tunnel health checks will not function until Security Policies and Policy-Based Forwarding are configured. This series of tests is focused on testing IPsec connectivity exclusively.{{</Aside>}}
 
 #### Verify IKE Phase 1 Communications
 
-The first step is to verify IKE Phase 1 completed successfully.
-
-##### Syntax
+The first step is to verify IKE Phase 1 completed successfully:
 
 ```bash
 show vpn ike-sa gateway [value]
 ```
 
-###### Example - CF_Magic_WAN_IKE_01
+**Example for `CF_Magic_WAN_IKE_01`**
 
-```xml
+```bash
 admin@panvm03> show vpn ike-sa gateway CF_Magic_WAN_IKE_01
 
 There is no IKEv1 phase-1 SA found.
@@ -642,9 +629,9 @@ CF_Magic_WAN_IKE_01    2        CF_Magic_WAN_IPsec_01     322550   67       Init
 Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
 ```
 
-###### Example - CF_Magic_WAN_IKE_02
+**Example for `CF_Magic_WAN_IKE_02`**
 
-```xml
+```bash
 admin@panvm03> show vpn ike-sa gateway CF_Magic_WAN_IKE_02
 
 There is no IKEv1 phase-1 SA found.
