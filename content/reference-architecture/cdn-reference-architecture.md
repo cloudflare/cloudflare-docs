@@ -196,7 +196,7 @@ With the Cloudflare CDN, Argo Smart Routing is used when:
 
 ## Cache Reserve
 
-Expanding on the idea of Argo Tiered Cache, Cache Reserve further utilizes the scale and speed of the Cloudflare network while additionally leveraging R2, Cloudflare’s persistent object storage, to cache content even longer. Cache Reserve helps customers reduce bills by eliminating egress fees from origins while also providing multiple layers of resiliency and protection to make sure that content is reliably available which improves website performance by having content load faster. Basically, Cache Reserve is an additional higher tier of cache with longer retention duration.
+Expanding on the idea of Argo Tiered Cache, Cache Reserve further utilizes the scale and speed of the Cloudflare network while additionally leveraging R2, Cloudflare’s persistent object storage, to cache content even longer. Cache Reserve helps customers reduce bills by eliminating egress fees from origins while also providing multiple layers of resiliency and protection to make sure that content is reliably available, which improves website performance by having content load faster. Basically, Cache Reserve is an additional higher tier of cache with longer retention duration.
 
 While Cache Reserve can function without Argo Tiered Cache enabled, it is recommended that Argo Tiered Cache be enabled with Cache Reserve. Argo Tiered Cache will funnel, and potentially eliminate, requests to Cache Reserve which eliminates redundant read operations and redundant storage of cached content reducing egress and storage fees. Enabling Cache Reserve via the Cloudflare dashboard will check and provide a warning if you try to use Cache Reserve without Argo Tiered Cache enabled.
 
