@@ -96,7 +96,57 @@ Migrations can be run locally as part of your CI/CD setup by passing the `--loca
 $ wrangler d1 migrations apply your-database --local
 ```
 
-Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for more details on how to use the API.
+### Usage example
+
+The following example shows how to use Wrangler's `unstable_dev()` API to:
+
+* Run migrations against your local test database, as defined by `preview_database_id`
+* Make a request to an endpoint defined in your Worker - in this example, `/api/users/?limit=2`
+* Validate the returned results match, including the `Response.status` and the JSON our API returns.
+
+```ts
+---
+filename: index.test.ts
+---
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
+
+describe("Test D1 Worker endpoint", () => {
+  let worker: UnstableDevWorker;
+
+  beforeAll(async () => {
+    // Optional: Run any migrations to set up your `--local` database
+    // By default, this will default to the preview_database_id
+    execSync(
+      `NO_D1_WARNING=true wrangler d1 migrations apply db --local`
+    );
+    
+    worker = await unstable_dev("src/worker.ts", {
+      experimental: { disableExperimentalWarning: true },
+    });
+  });
+
+  afterAll(async () => {
+    await worker.stop();
+  });
+
+  it("should return an array of users", async () => {
+    // Our expected results
+    const expectedResults = `{"results": [{"user_id": 1234, "email": "foo@example.com"},{"user_id": 6789, "email": "bar@example.com"}]}`
+    // Pass an optional URL to fetch to trigger any routing within your Worker
+    const resp = await worker.fetch("/api/users/?limit=2");
+    if (resp) {
+      // https://jestjs.io/docs/expect#tobevalue
+      expect(resp.status).toBe(200)
+      const data = await resp.json();
+      // https://jestjs.io/docs/expect#tomatchobjectobject
+      expect(data).toMatchObject(expectedResults)
+    }
+  });
+});
+```
+
+Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for more details on how to use the API within your tests.
 
 ## Related resources
 
