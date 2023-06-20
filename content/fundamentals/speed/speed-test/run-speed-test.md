@@ -25,7 +25,7 @@ weight: 2
 
 ### Recommendations
 
-Observatory shows you a **Recommendations** tab, depending on the results from testing your website. The **Recommendations** section shows you the opportunities to improve your website that were identified based on the Lighthouse audits and recommends Cloudflare features or products that will help you improve those metrics. We also show you the potential savings you are getting by enabling the recommended features or products.
+Observatory shows you a **Recommendations** tab, depending on the results from testing your website. The **Recommendations** section shows you the opportunities to improve your website that were identified based on the Lighthouse audits and recommends Cloudflare features or products that will help you improve those metrics. We also show you the potential savings you will get by enabling the recommended features or products.
 
 ### Trend and History report
 
@@ -43,7 +43,7 @@ Refer to [Understand test results](/fundamentals/speed/speed-test/test-results/)
 
 ### Information collected
 
-RUM uses a lightweight JavaScript beacon to collect the information Observatory uses. It does not use any client-side state, such as cookies or localStorage, to collect usage metrics.
+RUM uses a lightweight JavaScript beacon to collect the information Observatory uses. It does not use any client-side state, such as cookies or `localStorage`, to collect usage metrics.
 
 ## Quotas
 
