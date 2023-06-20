@@ -63,11 +63,90 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 ## Persist data
 
-**By default, in wrangler `3.0.0` and above, data is persisted across each run of `wrangler dev`**. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
+{{<Aside type="note" heading="Changes in wrangler v3">}}
+
+By default, in Wrangler v3 and above, data is persisted across each run of `wrangler dev`. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
+
+{{</Aside>}}
 
 Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific location. This can be useful when working in a team (allowing you to share) the same copy, when deploying via CI/CD (to ensure the same starting state), or as a way to keep data when migrating across machines.
 
 Users of wrangler `2.x` must use the `--persist` flag: previous versions of wrangler did not persist data by default.
+
+## Test programmatically
+
+Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/platform/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
+
+Given the below `wrangler.toml` configuration:
+
+```toml
+---
+filename: wrangler.toml
+---
+[[ d1_databases ]]
+binding = "DB" # i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
+database_name = "your-database" # the name of your D1 database, set when created
+database_id = "<UUID>" # The unique ID of your D1 database, returned when you create your database or run `
+preview_database_id = "local-test-db" # A user-defined ID for your local test database.
+```
+
+Migrations can be run locally as part of your CI/CD setup by passing the `--local` flag to `wrangler`:
+
+```sh
+$ wrangler d1 migrations apply your-database --local
+```
+
+### Usage example
+
+The following example shows how to use Wrangler's `unstable_dev()` API to:
+
+* Run migrations against your local test database, as defined by `preview_database_id`.
+* Make a request to an endpoint defined in your Worker. This example uses `/api/users/?limit=2`.
+* Validate the returned results match, including the `Response.status` and the JSON our API returns.
+
+```ts
+---
+filename: index.test.ts
+---
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
+
+describe("Test D1 Worker endpoint", () => {
+  let worker: UnstableDevWorker;
+
+  beforeAll(async () => {
+    // Optional: Run any migrations to set up your `--local` database
+    // By default, this will default to the preview_database_id
+    execSync(
+      `NO_D1_WARNING=true wrangler d1 migrations apply db --local`
+    );
+    
+    worker = await unstable_dev("src/worker.ts", {
+      experimental: { disableExperimentalWarning: true },
+    });
+  });
+
+  afterAll(async () => {
+    await worker.stop();
+  });
+
+  it("should return an array of users", async () => {
+    // Our expected results
+    const expectedResults = `{"results": [{"user_id": 1234, "email": "foo@example.com"},{"user_id": 6789, "email": "bar@example.com"}]}`
+    // Pass an optional URL to fetch to trigger any routing within your Worker
+    const resp = await worker.fetch("/api/users/?limit=2");
+    if (resp) {
+      // https://jestjs.io/docs/expect#tobevalue
+      expect(resp.status).toBe(200)
+      const data = await resp.json();
+      // https://jestjs.io/docs/expect#tomatchobjectobject
+      expect(data).toMatchObject(expectedResults)
+    }
+  });
+});
+```
+
+Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for more details on how to use the API within your tests.
 
 ## Related resources
 
