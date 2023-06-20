@@ -37,11 +37,11 @@ To solve this error, you can either do less work per request, or send fewer requ
 
 ### Error: Your account is generating too much load on Durable Objects. Please back off and try again later.
 
-There is a limit on how quickly you can [create new objects or lookup different existing objects](/durable-objects/create-durable-objects). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
+There is a limit on how quickly you can [create new objects or lookup different existing objects](/durable-objects/learning/create-durable-objects/). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
 
 ### Error: Durable Object reset because its code was updated.
 
-Refer to [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness). "Reset" in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
+Refer to [Global Uniqueness](/durable-objects/learning/limitations/#global-uniqueness). "Reset" in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
 
 ### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 
