@@ -23,16 +23,24 @@ Bullet points help the reader's eye focus on a list of important elements.
 
 However, as with any other aspect of writing, they should be used mindfully. Below is a list of when you should and should not resort to bullet points.
 
-❌ Do not use bullet points:
-
-+ To outline **processes** (prefer numbered lists)
-+ To **explain** your reasoning (it is a blog post, not a list of system requirements)
-
-✅ Use bullet points:
-
-+ To list **facts**
-+ To list **data**
-+ To list **options**
+<table>
+    <tr>
+        <th width=50%>❌ Do not use bullet points</th>
+        <th>✅ Use bullet points</th>
+    </tr>
+    <tr>
+        <th>To outline <b>processes</b> (prefer numbered lists)</th>
+        <th>To list <b>facts</b></th>
+    </tr>
+    <tr>
+        <th>To explain your reasoning (it is a blog post, not a list of system requirements)</th>
+        <th>To list data</th>
+    </tr>
+    <tr>
+        <th>---</th>
+        <th>To list options</th>
+    </tr>
+</table>
 
 ## Bulleted Lists
 

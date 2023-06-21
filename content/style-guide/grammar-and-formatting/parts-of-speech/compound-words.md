@@ -69,7 +69,7 @@ Certain expressions should be hyphenated depending on their position and role in
 As a general rule, when a compound word precedes a noun, it is called a **modifier** and should be hyphenated.
 When the same word comes after a verb, it has the role of an adverb and it should not be hyphenated.
 
-See these examples:
+Examples:
 
 |Modifiers|Adverbs|
 |----|-----|

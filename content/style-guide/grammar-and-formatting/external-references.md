@@ -13,7 +13,8 @@ For general websites, consider the following recommendations about the link text
 - Use the page name if you are linking to a specific page.
 - Authoritative sources for documents such as RFCs can have their own specific format for references, such as the RFC number.
 
-Note: When linking to a Cloudflare blog post, sometimes we use only "blog post" for the link text.
+{{<Aside type="note">}}When linking to a Cloudflare blog post, sometimes we use only "blog post" for the link text.
+{{</Aside>}}
 
 ## Referencing RFCs
 
@@ -24,7 +25,7 @@ Use the following formatting when referencing an RFC:
 RFC <number>
 (RFC, space, number up to four digits)
 
-For example: CAA is a new DNS resource record type defined in RFC 6844.
+Example: CAA is a new DNS resource record type defined in RFC 6844.
 
 ## Links
 

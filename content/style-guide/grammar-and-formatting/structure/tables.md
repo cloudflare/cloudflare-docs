@@ -20,7 +20,7 @@ Here are some tips when creating tables:
 
 Tables display pieces of information that have some sort of relationship.
 
-For example:
+Example:
 
 + Dates and descriptions, like a changelog
 + A list of products with attributes

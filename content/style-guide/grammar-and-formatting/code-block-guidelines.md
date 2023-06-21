@@ -54,6 +54,19 @@ Use `json` for **commands containing more than one line of JSON** (for example, 
 
 ## Terminal prompts
 
+### For "json" blocks
+
+Use the `json` language for:
+
++ **JSON blocks or fragments.**
+
+{{<Aside type="note">}}JSON fragments may appear with a red background in GitHub because they are not valid JSON. Make it clear in the documentation that it is a fragment and not an entire piece of valid JSON content.
+{{</Aside>}}
+
++ **Multi-line `cURL` commands with a body**, usually with a -d or --data command-line argument.
+These are usually `POST` requests, and we should provide syntax highlighting for the essential part of the request, which is usually the body.
+You can do a case-by-case evaluation of commands with a single line of JSON content — use either `json` or `bash` syntax highlighting.
+
 ### For "sh" blocks
 
 Use "**`$`** "(dollar sign, space) or "**FOLDER_NAME $** " (folder name, space, dollar sign, space).
@@ -126,16 +139,3 @@ Examples:
 + `yaml` (alias: `yml`)
 
 Different capitalizations of the languages above are also supported (but not recommended). For example, JavaScript will be rendered using the javascript language, and HTML will use the html language.
-
-## Notes about JSON code blocks
-
-Use the `json` language for:
-
-+ **JSON blocks or fragments.**
-
-{{<Aside type="note">}}JSON fragments may appear with a red background in GitHub because they are not valid JSON. Make it clear in the documentation that it is a fragment and not an entire piece of valid JSON content.
-{{</Aside>}}
-
-+ **Multi-line `cURL` commands with a body**, usually with a -d or --data command-line argument.
-These are usually `POST` requests, and we should provide syntax highlighting for the essential part of the request, which is usually the body.
-You can do a case-by-case evaluation of commands with a single line of JSON content — use either `json` or `bash` syntax highlighting.

@@ -7,32 +7,38 @@ title: Numbers and Units of Measurement
 
 **Be consistent in your use of numbers.** Use numerals for numbers. When you write about numbers used in examples or UI, duplicate them exactly as they appear in the UI. In all other content, follow the guidelines below.
 
-+ In body text, spell out whole numbers from zero through nine.
-    + For example: We have added three more servers.
-+ For numbers greater than or equal to 10, use digits.
-    + For example: The message is 32 bytes long, [...]
-+ For analytics, display metrics with numerals.
-+ Use commas for numbers with more than 3 digits (no spaces). Note the differences in numerical punctuation for translation.
-    + 300
-    + 1,000
-    + 7,465
+In body text, spell out whole numbers from zero through nine.
+
++ Example: We have added three more servers.
+
+For numbers greater than or equal to 10, use digits.
+
++ Example: The message is 32 bytes long, [...]
+
+For analytics, display metrics with numerals.
+Use commas for numbers with more than 3 digits (no spaces). Note the differences in numerical punctuation for translation.
+
++ 300
++ 1,000
++ 7,465
 
 ## Using k to indicate thousands
 
-+ Do not put a space between the number and k.
-+ Add a noun to indicate what the number measures, and to make clear that you are not using k as an abbreviation for *kilobytes*.
+Do not put a space between the number and k.
 
-For example: On this plan, you are limited to 55k download operations and 20k upload operations per day.
+Add a noun to indicate what the number measures, and to make clear that you are not using k as an abbreviation for *kilobytes*.
+
++ Example: On this plan, you are limited to 55k download operations and 20k upload operations per day.
 
 ## Units of measurement
 
 Units of measurement can occur in two different contexts.
 
-### As nouns: 
+### As nouns
 
-The storage provider landscape has become highly competitive with many providers capable of providing **petabyte** (and **exabyte**) scale content storage at extremely low cost-per-**gigabyte**. 	
+The storage provider landscape has become highly competitive with many providers capable of providing **petabyte** (and **exabyte**) scale content storage at extremely low cost-per-**gigabyte**.
 
-### As modifiers of numbers: 
+### As modifiers of numbers
 
 Many CPU architectures either do not allow execution of the machine code, which is unaligned in memory (**4 KB** for x86 systems)
 
@@ -44,7 +50,6 @@ In general, only abbreviate units of measurements when they modify specific quan
 |10 cm|10 cms|Unit symbols should unaltered in the plural.|
 
 **Always include a space between a numerical value and the corresponding unit of measurement.** Although both formats are widely used, the metric system standardized the use of a space before a unit of measurement and should be used as a guideline to keep content consistent and clear.
-
 
 |✅|❌|Rationale|
 |---|---|---|
