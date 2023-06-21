@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-06-21
+
+- When the [`brotli_content_encoding`](/workers/platform/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime can now decode subrequest response bodies that are encoded using the ([Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression)) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+
 ## 2023-06-19
 
 - The [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) now reports clearer errors when a connection cannot be established.
