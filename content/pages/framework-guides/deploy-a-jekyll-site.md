@@ -82,15 +82,11 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 </div>
 
-Add an [environment variable](/pages/platform/build-configuration/#environment-variables) that matches the Ruby version that you are using locally. Set this as `RUBY_VERSION` on both your preview and production deployments. Below, `3.1.3` is used as an example:
-
-<div>
+Add an [environment variable](/pages/platform/language-support-and-tools/) that matches the Ruby version that you are using locally. Set this as `RUBY_VERSION` on both your preview and production deployments. Below, `3.1.3` is used as an example:
 
 | Environment variable | Value          |
 | -------------------- | -------------- |
 | `RUBY_VERSION`       | `3.1.3`        |
-
-</div>
 
 After configuring your site, you can begin your first deployment. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site before deploying it.
 
