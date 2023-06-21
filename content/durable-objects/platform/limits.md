@@ -12,7 +12,7 @@ Durable Objects are only available on the Workers Paid plan.
 | Feature                                    | Limit                                             |
 | ------------------------------------------ | --------------------------------------------------|
 |  Number of objects                         | unlimited (within an account or of a given class) |
-|  Storage per account                       | 50 GB (can be raised by contacting Cloudflare)    |
+|  Storage per account                       | 50 GB (can be raised by contacting Cloudflare) <sup>1</sup>   |
 |  Storage per class                         | unlimited                                         |
 |  Storage per object                        | unlimited                                         |
 |  Key size                                  | 2 KiB(2048 bytes)                                 |
