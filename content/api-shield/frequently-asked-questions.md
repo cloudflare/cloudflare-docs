@@ -1,7 +1,7 @@
 ---
-pcx_content_type: FAQ
+pcx_content_type: faq
 title: FAQs
-weight: 4
+weight: 7
 layout: list
 ---
 # Frequently Asked Questions

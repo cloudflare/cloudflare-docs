@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Radar
 ---
 
-{{<beta>}}Cloudflare Radar{{</beta>}}
+# Cloudflare Radar
 
 {{<description>}}
 Get access to Cloudflare's data on global Internet traffic.
@@ -27,10 +27,10 @@ Data available via Radar API endpoints is made available under the [CC BY-NC 4.0
 
 ## Features
 
-{{<feature header="Make your first API request" href="/radar/get-started/first-request/">}}
+{{<feature header="Make your first API request" href="/radar/get-started/first-request/" cta="Make your first API request">}}
 Start learning how to use Radar's API by making your first request.
 {{</feature>}}
 
-{{<feature header="Compare data" href="/radar/get-started/making-comparisons/">}}
+{{<feature header="Compare data" href="/radar/get-started/making-comparisons/" cta="Compare data">}}
 What to know before making comparisons between locations, [autonomous systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) and more.
 {{</feature>}}

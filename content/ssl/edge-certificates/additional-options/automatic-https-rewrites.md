@@ -6,8 +6,7 @@ weight: 14
 
 # Automatic HTTPS Rewrites
 
-{{<render file="_automatic-https-rewrites-definition.md">}}
-<br/>
+Automatic HTTPS Rewrites prevents end users from seeing "mixed content" errors by rewriting URLs from `http` to `https` for resources or links on your web site that can be served with HTTPS.
 
 ## Availability
 
@@ -33,16 +32,18 @@ For security reasons, this feature will run on URLs pointing to `localhost` if t
 To enable **Automatic HTTPS Rewrites** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
 3.  For **Automatic HTTPS Rewrites**, switch the toggle to **On**.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-automatic-https-rewrites-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](/api/operations/zone-settings-change-automatic-https-rewrites-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
  
 {{</tab>}}
 {{</tabs>}}
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
 ## Limitations
 

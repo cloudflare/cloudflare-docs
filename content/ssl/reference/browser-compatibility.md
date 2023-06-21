@@ -2,11 +2,13 @@
 pcx_content_type: reference
 title: Browser compatibility
 weight: 6
+meta:
+    description: Review information about browser compatibility for the different Cloudflare SSL offerings.
 ---
 
 # Browser compatibility
 
-Cloudflare attempts to provide compatibility for as wide a range of user agents (browsers, API clients, etc.) as possible. The specific set of supported browsers differs by SSL product, however. See below for specific details.
+Cloudflare attempts to provide compatibility for as wide a range of user agents (browsers, API clients, etc.) as possible. However, the specific set of supported browsers differs by SSL product. Consider the following sections for details.
 
 ## Universal SSL
 
@@ -32,10 +34,10 @@ Universal SSL certificates issued for Free plan zones require user agents that s
 - Opera 8 (with TLS 1.1 enabled)
 - Google Chrome v5.0.342.0
 - Safari 2.1
-- Mobile Browsers
 
-**Mobile Safari for iOS 4.0**:
+**Mobile Browsers**:
 
+- Mobile Safari for iOS 4.0
 - Android 3.0 (Honeycomb) and later
 - Windows Phone 7
 
@@ -47,7 +49,7 @@ Paid plans provide additional compatibility with older browsers/operating system
 
 ## Other products
 
-| Feature/Product                  | Custom (Legacy IP) | Custom Certificates | Advanced Certificates | SSL for SaaS |
+| Feature/Product                  | Custom (Legacy IP) | Custom Certificates | Advanced Certificates | Cloudflare for SaaS |
 | -------------------------------- | ------------------ | ------------------- | --------------------- | ------------ |
 | Clients using ECDSA key exchange | ✅                 | ✅                  | ✅                    | ✅           |
 | Clients using RSA key exchange   | ✅                 | ✅                  | ✅                    | ✅           |

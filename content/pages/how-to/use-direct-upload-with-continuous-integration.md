@@ -108,7 +108,7 @@ After you have generated your Cloudflare API token and found your account ID in 
 
 To add environment variables, in the CircleCI web application:
 
-1. Go to your project's settings.
+1. Go to your Pages project > **Settings**.
 2. Select **Projects** in the side menu.
 3. Select the ellipsis (...) button in the project's row. You will see the option to add environment variables.
 4. Select **Environment Variables** > **Add Environment Variable**.
@@ -189,4 +189,4 @@ env:
   - CLOUDFLARE_API_TOKEN: { $CLOUDFLARE_API_TOKEN }
 ```
 
-In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler 2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler v2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.

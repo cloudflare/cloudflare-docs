@@ -8,9 +8,9 @@ meta:
 
 # Use tag overrides to set WordPress rules to Block
 
-Follow the steps below to create a rule that executes a Managed Ruleset and defines an override for rules with a specific tag.
+Follow the steps below to create a rule that executes a managed ruleset and defines an override for rules with a specific tag.
 
-1.  [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a Managed Ruleset.
+1.  [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a managed ruleset.
 2.  [Configure a tag override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets a specified action for all rules with a given tag.
 
 The example below uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to perform the two steps in a single `PUT` request.

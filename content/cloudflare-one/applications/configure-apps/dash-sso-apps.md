@@ -1,55 +1,54 @@
 ---
 pcx_content_type: how-to
 title: Cloudflare dashboard SSO application
-weight: 4
+weight: 3
 ---
 
-# Cloudflare dashboard SSO application
+# Set up Cloudflare dashboard SSO
 
-By adding a **Dashboard SSO application** to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice.
+By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
 
-Once you have configured SSO, every user that wants to login with Dashboard SSO will need to also be a Cloudflare user. If the account does not exist, the request will not forward the authentication phase to the Identity Provider. Refer to [Managing Cloudflare account access](/fundamentals/account-and-billing/account-setup/manage-account-members/) for information on adding users to your Cloudflare account.
+## Availability
 
-{{<Aside type="note">}}
+{{<feature-table id="account.single_sign_on">}}
 
-Dashboard SSO is only available to Enterprise customers on the Standard or Premium Success Plans.
+## Prerequisites
+
+All users in your email domain must exist as a member in your Cloudflare account and IdP.  To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/account-and-billing/members/).
+
+{{<Aside>}}
+
+Cloudflare dashboard SSO does not support users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
 
 {{</Aside>}}
 
-## Set up dashboard SSO
+## 1. Set up an IdP
 
-### Step 1 — Launch Cloudflare Zero Trust
+Add an IdP to Cloudflare Zero Trust by following [our detailed instructions](/cloudflare-one/identity/idp-integration/).
 
-To log in to Cloudflare Zero Trust directly, go to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and select your account.
+Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust).
 
-To log in through the Cloudflare dashboard:
+## 2. Contact your account team
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-1.  Log in to the [Zero Trust dashboard](/cloudflare-one/setup/#start-from-the-cloudflare-dashboard).
+Ask your account team to approve and create your SSO domain. An SSO domain is the email domain associated with the members in your Cloudflare account. For example, if your SSO domain is configured for emails ending in `@yourcompany.com`, a member with email `@test.com` would not see the **Log in with SSO** option and would have to enter their username and password.
 
-### Step 2 — Set up an IdP
+Once your SSO domain is approved, a new **SSO App** application will appear under **Access** > **Applications**. The application is pre-configured with `allow email domain` as the default rule and your IdP as the authentication providers.
 
-Configure an IdP following [our detailed instructions](/cloudflare-one/identity/idp-integration/).
+### SSO domain requirements
 
-Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/identity/idp-integration/#test-idps-on-the-teams-dashboard).
+- The email domain must belong to your organization. Public email providers such as `@gmail.com` are not allowed.
+- Every user with that email domain must be an employee in your organization. For example, university domains such as `@harvard.edu` are not allowed because they include student emails.
+- Your SSO domain can include multiple email domains.
 
-### Step 3 — Contact your account team
+## 3. Enable dashboard SSO
 
-Ask your account team to approve your SSO domain.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+2. In the **Cloudflare dashboard SSO** card, set your email domain to **Enabled**. This action can only be performed by Super Administrators.
+3. Do not log out or close your browser window. Instead, open a different browser or an incognito window.
+4. In the [Cloudflare dashboard](https://dash.cloudflare.com), log in with your email address from your SSO domain.
+5. If you can log in successfully, you have successfully set up your dashboard SSO application.
+6. If you cannot log in successfully:
 
-### Step 4 — Test and enable your application
-
-To test and enable your SSO application:
-
-1.  Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
-1.  Navigate to **Settings** > **Authentication**.
-1.  In the **Cloudflare dashboard SSO** section, find your email domain.
-1.  Set the toggle value to **Enabled**. This action can only be performed by Account Super Administrators.
-1.  **Do not** log out or close your browser window. Instead, open a different browser or an incognito window.
-1.  Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com) and log in with your email address from your SSO domain.
-1.  If you can log in successfully, you have successfully set up your SSO application.
-1.  If you cannot log in successfully:
-
-    1.  Return to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
-    2.  For **Cloudflare dashboard SSO**, set your email domain to **Disabled**.
-    3.  [Re-configure your IdP](/cloudflare-one/identity/idp-integration/).
+   1. Return to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Settings** > **Authentication**.
+   2. For **Cloudflare dashboard SSO**, set your email domain to **Disabled**.
+   3. [Re-configure your IdP](/cloudflare-one/identity/idp-integration/).

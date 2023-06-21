@@ -22,13 +22,31 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-12-06</td>
-      <td>2022-12-19</td>
-      <td>...cd1b2ec7</td>
-      <td>BETA - HTTP requests causing a high request rate to authentication endpoints.</td>
+      <td>2023-06-16</td>
+      <td>2023-06-27</td>
+      <td>...c86adf25</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #38). Only for zones on PRO plan and above.</td>
       <td>log</td>
-      <td>block</td>
-      <td>Improve the accuracy of the rule to detect more attacks</td>
+      <td>ddos_dynamic</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>2023-06-16</td>
+      <td>2023-06-27</td>
+      <td>...95f78bf0</td>
+      <td>HTTP requests trying to impersonate browsers (pattern #2).</td>
+      <td>log</td>
+      <td>ddos_dynamic</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>2023-06-19</td>
+      <td>2023-06-27</td>
+      <td>...22807318</td>
+      <td>HTTP requests from known botnets.</td>
+      <td>log</td>
+      <td>ddos_dynamic</td>
+      <td>Detect new attacks from identified botnets.</td>
     </tr>
   </tbody>
 </table>

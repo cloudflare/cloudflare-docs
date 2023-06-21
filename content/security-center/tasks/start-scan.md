@@ -13,5 +13,5 @@ Additionally, if your account has at least one Business or Enterprise zone, or i
 To manually start a scan:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2.  Go to **Account Home** > **Security Center** > **Infrastructure**.
-3.  Click **Scan now**.
+2.  Go to Account Home > **Security Center** > **Infrastructure**.
+3.  Select **Scan now**.

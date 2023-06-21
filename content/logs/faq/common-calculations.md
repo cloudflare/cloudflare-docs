@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Common calculations
 weight: 4
+meta:
+    description: Learn more about calculating bytes served by the origin and bandwidth usage.
 ---
 
 [❮ Back to FAQ](/logs/faq/)

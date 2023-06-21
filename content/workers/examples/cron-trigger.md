@@ -9,30 +9,29 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/sw | js/esm">}}
-{{<tab label="js/sw" default="true">}}
-
-```js
-addEventListener("scheduled", (event) => {
-  event.waitUntil(triggerEvent(event.scheduledTime));
-});
-
-async function triggerEvent(scheduledTime) {
-  // Fetch some data
-  // Update API
-  console.log("cron processed");
-}
-```
-{{</tab>}}
-{{<tab label="js/esm">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
-	async scheduled(controller, env, ctx) {
-		console.log('cron processed');
-	},
+  async scheduled(controller, env, ctx) {
+    console.log("cron processed");
+  },
 };
 ```
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+const handler: ExportedHandler = {
+  async scheduled(controller, env, ctx) {
+    console.log("cron processed");
+  },
+};
+export default handler;
+```
+
 {{</tab>}}
 {{</tabs>}}
 

@@ -9,6 +9,8 @@ layout: single
 
 # Create a serverless, globally distributed REST API with Fauna
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -21,7 +23,7 @@ In this tutorial you learn how to store and retrieve data in your Cloudflare Wor
 - How to use Wrangler to store secrets securely.
 - How to use [Worktop][worktop] to add routing to your Workers.
 
-Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop and reason about your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
+Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
 
 ![Fauna architecture connecting to Cloudflare's network to create super fast applications](./media/fauna-cf-workers-diagram.jpg)
 
@@ -100,7 +102,7 @@ You must publish a version of your project before storing your server secret in 
 
 ### Adding your Fauna secret as an environment variable
 
-After creating and deploying your Worker, store your Fauna client [secret](/workers/wrangler/cli-wrangler/commands/#put) safely with the following command:
+After creating and deploying your Worker, store your Fauna client [secret](/workers/wrangler/commands/#put-3) safely with the following command:
 
 ```sh
 ---
@@ -870,7 +872,7 @@ export function getFaunaError(error) {
 
 ## Cleaning up
 
-To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers** > **Manage Workers** > **your Worker** > **Settings** > **Delete**:
+To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage Service** > **Delete**:
 
 ![Delete your Worker by following the steps above](./media/delete-worker.png)
 
@@ -909,6 +911,6 @@ If you would like to speak directly with a Fauna expert about building your appl
 [fauna-github]: https://github.com/fauna-labs/fauna-workers
 [http-status-codes]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 [worktop]: https://github.com/lukeed/worktop
-[wrangler-dev]: /workers/wrangler/cli-wrangler/commands/#dev
+[wrangler-dev]: /workers/wrangler/commands/#dev
 [wrangler-init]: /workers/wrangler/commands/#init
-[wrangler-publish]: /workers/wrangler/cli-wrangler/commands/#publish
+[wrangler-publish]: /workers/wrangler/commands/#publish

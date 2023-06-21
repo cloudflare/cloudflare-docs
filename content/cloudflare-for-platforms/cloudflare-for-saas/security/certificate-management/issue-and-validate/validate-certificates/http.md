@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: HTTP
-weight: 2
+weight: 3
 meta:
     title: HTTP domain control validation (DCV)
 ---
@@ -36,7 +36,7 @@ Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/s
 <summary>What happens after you create the custom hostname</summary>
 <div>
  
-{{<render file="../../ssl/_partials/_cname-cert-verification.md">}}
+{{<render file="_cname-cert-verification.md" productFolder="ssl" >}}
  
 </div>
  
@@ -57,7 +57,7 @@ If you would like to complete the issuance process before asking your customer t
 {{<render file="_ssl-for-saas-create-hostname.md">}}
 <br>
  
-- [**API**](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
+- [**API**](/api/operations/custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
  
 At your origin, make the `http_body` available in a TXT record at the path specified in `http_url`. This path should also be publicly accessible to anyone on the Internet so your CA can access it.

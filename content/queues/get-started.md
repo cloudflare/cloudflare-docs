@@ -27,10 +27,10 @@ Before you can use Queues, you must enable it via [the Cloudflare dashboard](htt
 To enable Queues:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Workers** > [**Queues**](https://dash.cloudflare.com/?to=/:account/workers/queues).
+2. Go to **Workers & Pages** > **Queues**.
 3. Select **Enable Queues Beta**.
 
-Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/pricing/) for more details.
+Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
 
 ## 2. Install Wrangler
 
@@ -53,7 +53,7 @@ $ yarn global add wrangler
 Queues requires Wrangler version `2.2.1` or higher. Run `wrangler version` to check your version:
 
 ```sh
-wrangler --version
+$ wrangler --version
 2.2.1
 ```
 
@@ -66,12 +66,12 @@ To use queues, you need to create at least one queue to publish messages to and 
 To create a queue, run:
 
 ```sh
-wrangler queues create <MY_FIRST_QUEUE>
+$ wrangler queues create <MY_FIRST_QUEUE>
 ```
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`. 
 
-Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`) and underscores (`_`).
+Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`), and must start and end with a letter or number.
 
 You cannot change your queue name after you have set it. After you create your queue, you will create a Worker to access it.
 
@@ -111,18 +111,23 @@ You will now configure your producer Worker to create messages to publish to you
 
 In your Worker project directory, open the `src` folder and add the following to your `index.ts` file:
 
-```toml
+```ts
 ---
 filename: src/index.ts
-highlight: [4]
+highlight: [8]
 ---
 export default {
- async fetch(request: Request, env: Environment): Promise<Response> {
-   let log = await request.json();
-   await env.<MY_QUEUE>.send(log);
-   return new Response("Success!");
- }
- ```
+  async fetch(req: Request, env: Environment): Promise<Response> {
+    let log = {
+      url: req.url,
+      method: req.method,
+      headers: Object.fromEntries(req.headers),
+    };
+    await env.<MY_QUEUE>.send(log);
+    return new Response('Success!');
+  },
+};
+```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
 
@@ -158,22 +163,26 @@ In this guide, you will create a consumer Worker and use it to log and inspect t
 
 To create a consumer Worker, open your `index.ts` file and add the following `queue` handler to your existing `fetch` handler:
 
-```sh
+```ts
 ---
 filename: src/index.ts
-highlight: [4]
+highlight: [11]
 ---
 export default {
- async fetch(request: Request, env: Environment): Promise<Response> {
-   let log = await request.json();
-   await env.<MY_QUEUE>.send(log);
-   return new Response("Success!");
- }
- async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-   let messages = JSON.stringify(batch.messages)
-   console.log(`consumed from our queue: ${messages}`)
- }
-}
+  async fetch(req: Request, env: Environment): Promise<Response> {
+    let log = {
+      url: req.url,
+      method: req.method,
+      headers: Object.fromEntries(req.headers),
+    };
+    await env.<MY_QUEUE>.send(log);
+    return new Response('Success!');
+  },
+  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+    let messages = JSON.stringify(batch.messages);
+    console.log(`consumed from our queue: ${messages}`);
+  },
+};
 ```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
@@ -205,7 +214,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 
 `max_batch_size` (defaults to 10) helps to reduce the amount of times your consumer Worker needs to be called. Instead of being called for every message, it will only be called after 10 messages have entered the queue.
 
-`max_batch_timeout` (defaults to 5 seconds) helps to reduce wait time. If the producer Worker is not sending up to 10 messages to the queue for the consumer Worker to be called, the consumer Worker will be called every 10 seconds to receive messages that are waiting in the queue.
+`max_batch_timeout` (defaults to 5 seconds) helps to reduce wait time. If the producer Worker is not sending up to 10 messages to the queue for the consumer Worker to be called, the consumer Worker will be called every 5 seconds to receive messages that are waiting in the queue.
 
 ### Publish your consumer Worker
 

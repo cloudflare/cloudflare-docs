@@ -1,6 +1,6 @@
 ---
 title: Minimal ruleset
-pcx_content_type: concept
+pcx_content_type: configuration
 weight: 2
 meta:
   title: Minimal suggested ruleset
@@ -33,25 +33,25 @@ This is a suggested list and not an exhaustive list. Review your environment and
 
 The information below covers traffic type, how the port is used, and reasons for blocking the port.
 
-| Traffic                    | Port use                                                                                                          | Reason to block                                                                                                            |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| UDP source port 0          | Reserved port. Should not be used by applications                                                                 | Invalid as a legitimate traffic source port. Commonly used in DDoS attacks.                                                |
-| UDP source port 1900       | Simple Service Discovery Protocol (SSDP). Allows universal plug and play devices to send and receive information. | [SSDP DDoS attacks](https://www.cloudflare.com/learning/ddos/ssdp-ddos-attack/) exploit Universal Plug and Play protocols. |
-| UDP source port 11211      | Memcached. A database caching system designed to speed up websites and networks.                                  | [Memcached DDos Attacks](https://www.cloudflare.com/learning/ddos/memcached-ddos-attack/)                                  |
-| UDP source port 389        | Connection-less Lightweight Directory Access Protocol (CLDAP)                                                     | [Used in reflection attacks](https://blog.cloudflare.com/reflections-on-reflections/).                                     |
-| UDP source port 111        | Sunrpc                                                                                                            | Common attack vector. [Used in reflection attacks](https://blog.cloudflare.com/reflections-on-reflections/).               |
-| UDP source port 19         | CHARGEN                                                                                                           | [Amplification attack vector](https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-port-11211/)         |
-| UDP source port 11194      | OpenVPN                                                                                                           | Unless this is an authorized VPN in your environment, this common VPN should be blocked.                                   |
-| UDP source port 3702       | Web Services Dynamic Discovery Multicast discovery protocol. (WS-Discovery.)                                      | Vulnerable to exploiting for DDoS attacks.                                                                                 |
-| UDP source port 10001      | Ubiquiti Unifi discovery protocol                                                                                 | Ubiquiti devices were exploited and used to conduct DDoS attacks on this port.                                             |
-| UDP source port 20800      | Call of Duty                                                                                                      | [Commonly used in attacks](https://blog.cloudflare.com/reflections-on-reflections/).                                       |
-| UDP source ports 161 & 162 | SNMP                                                                                                              | Vulnerable to exploiting for DDoS attacks                                                                                  |
-| UDP source port 137        | Netbios                                                                                                           | NetBios allows file sharing over networks. If configured improperly, can expose file systems.                              |
-| UDP source port 27005      | SRCDS                                                                                                             | Used in [amplication attacks](https://blog.cloudflare.com/reflections-on-reflections/).                                    |
-| UDP source port 520        | Routing Information Protocol (RIP)                                                                                | Internal routing protocol. Not required on Internet WAN access.                                                            |
-| TCP source port 0          | Reserved port. Should not be used by applications.                                                                | Commonly used in DDoS attacks. Invalid as a legitimate traffic source port.                                                |
-| TCP source port 0          | FTP                                                                                                               | Commonly used for attacks.                                                                                                 |
-| TCP source port 3306       | MYSQL open source database                                                                                        | Used as attack vector in DDoS attacks.                                                                                     |
+| Traffic | Port use | Reason to block |
+| ------- | -------- | --------------- |
+| UDP source port `0` | Reserved port. Should not be used by applications. | Invalid as a legitimate traffic source port. Commonly used in DDoS attacks. |
+| UDP source port `1900` | Simple Service Discovery Protocol (SSDP). Allows universal plug and play devices to send and receive information. | [SSDP DDoS attacks](https://www.cloudflare.com/learning/ddos/ssdp-ddos-attack/) exploit Universal Plug and Play protocols. |
+| UDP source port `11211` | Memcached. A database caching system designed to speed up websites and networks. | [Memcached DDos Attacks](https://www.cloudflare.com/learning/ddos/memcached-ddos-attack/). |
+| UDP source port `389` | Connection-less Lightweight Directory Access Protocol (CLDAP).| [Used in reflection attacks](https://blog.cloudflare.com/reflections-on-reflections/). |
+| UDP source port `111` | SunRPC. | Common attack vector. [Used in reflection attacks](https://blog.cloudflare.com/reflections-on-reflections/). |
+| UDP source port `19` | CHARGEN. | [Amplification attack vector](https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-port-11211/). |
+| UDP source port `1194` | OpenVPN. | Unless this is an authorized VPN in your environment, this common VPN should be blocked. |
+| UDP source port `3702` | Web Services Dynamic Discovery Multicast discovery protocol. (WS-Discovery.) | Vulnerable to exploiting for DDoS attacks. |
+| UDP source port `10001` | Ubiquiti Unifi discovery protocol. | Ubiquiti devices were exploited and used to conduct DDoS attacks on this port. |
+| UDP source port `20800` | Call of Duty. | [Commonly used in attacks](https://blog.cloudflare.com/reflections-on-reflections/). |
+| UDP source ports `161` and `162` | SNMP. | Vulnerable to exploiting for DDoS attacks. |
+| UDP source port `137` | Netbios. | NetBios allows file sharing over networks. If configured improperly, can expose file systems. |
+| UDP source port `27005` | SRCDS. | Used in [amplication attacks](https://blog.cloudflare.com/reflections-on-reflections/). |
+| UDP source port `520` | Routing Information Protocol (RIP). | Internal routing protocol. Not required on Internet WAN access. |
+| TCP source port `0` | Reserved port. Should not be used by applications. | Commonly used in DDoS attacks. Invalid as a legitimate traffic source port. |
+| TCP source port `0` | FTP. | Commonly used for attacks. |
+| TCP source port `3306` | MYSQL open source database. | Used as attack vector in DDoS attacks. |
 
 ## Other common traffic to consider
 

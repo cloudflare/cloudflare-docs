@@ -16,7 +16,7 @@ Cloudflare Access supports this requirement in the form of Signed AuthN requests
 
 To set up Signed AuthN requests:
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

@@ -6,4 +6,6 @@ meta:
     title: Learning
 ---
 
+# Learning
+
 {{<directory-listing>}}

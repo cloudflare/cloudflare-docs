@@ -9,6 +9,8 @@ layout: single
 
 # GitHub SMS notifications using Twilio
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -51,9 +53,9 @@ You can reference the finished code at this [GitHub repository](https://github.c
 
 To start, configure a GitHub webhook to post to your Worker when there is an update to the repository:
 
-1.  Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
+1.  Go to your GitHub repository's **Settings** > **Webhooks** > **Add webhook**.
 
-2.  Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/workers/get-started/guide/#6-preview-your-project) file and then [running `wrangler publish` in your command line](/workers/get-started/guide/#8-publish-your-project) to generate a live URL for your Worker.
+2.  Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/workers/wrangler/configuration/#zone-id-route) file and then [running `wrangler publish` in your command line](/workers/wrangler/commands/#publish) to generate a live URL for your Worker.
 
 3.  In the **Content type** dropdown, select _application/json_.
 
@@ -225,7 +227,7 @@ async function sendText(message) {
 }
 ```
 
-To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/cli-wrangler/commands/#put) in your command line.
+To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/commands/#put-3) in your command line.
 
 ```sh
 $ wrangler secret put ACCOUNT_SID

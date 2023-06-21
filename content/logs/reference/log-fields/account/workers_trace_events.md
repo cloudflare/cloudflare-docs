@@ -22,5 +22,6 @@ The descriptions below detail the fields available for `workers_trace_events`.
 | Logs | List of console messages emitted during the invocation. | array[object] |
 | Outcome | The outcome of the worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em>. | string |
 | ScriptName | The Cloudflare Worker script name. | string |
+| ScriptTags | A list of user-defined tags used to categorize the Worker. | array[string] |
 
 {{</table-wrap>}}

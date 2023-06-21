@@ -39,6 +39,21 @@ Kysely is a type-safe and autocompletion-friendly typescript SQL query builder. 
 * [Kysely GitHub](https://github.com/koskimas/kysely)
 * [D1 adapter](https://github.com/aidenwallis/kysely-d1)
 
+### feathers-kysely
+
+The `feathers-kysely` database adapter follows the FeathersJS Query Syntax standard and works with any framework. It is built on the D1 adapter for Kysely and supports passing queries directly from client applications. Since the FeathersJS query syntax is a subset of MongoDB's syntax, this is a great tool for MongoDB users to use Cloudflare D1 without previous SQL experience.
+
+* [feathers-kysely on npm](https://www.npmjs.com/package/feathers-kysely)
+* [feathers-kysely on GitHub](https://github.com/marshallswain/feathers-kysely)
+
+### Drizzle ORM
+
+Drizzle ORM is a TypeScript ORM for SQL databases designed with maximum type safety in mind. It also comes with an automatic migrations generation tool. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
+
+* [GitHub](https://github.com/drizzle-team/drizzle-orm)
+* [D1 example](https://github.com/drizzle-team/drizzle-orm/tree/main/examples/cloudflare-d1)
+* [SQLite API surface](https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-orm/src/sqlite-core/README.md)
+
 ## Feedback
 
 To report a bug or file feature requests for these community projects, create an issue directly on the project's repository. 

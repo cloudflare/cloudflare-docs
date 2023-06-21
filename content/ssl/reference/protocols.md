@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: TLS protocols
 weight: 3
+meta:
+    description: Cloudflare supports a variety of TLS protocols, ranging from TLS 1.0 to TLS 1.3.
 ---
 
 # TLS protocols

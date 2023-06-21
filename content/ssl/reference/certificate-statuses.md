@@ -6,11 +6,11 @@ weight: 8
 
 # Certificate statuses
 
-Certificates statuses tell you the state of each certificate.
+Certificates statuses show which stage of the issuance process each certificate is in.
 
 ## New certificates
 
-When you create a [new certificate](/ssl/edge-certificates/), it moves through the various stages as it progresses to Cloudflare’s edge:
+When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare’s global network:
 
 1.  Initializing
 2.  Pending Validation
@@ -18,9 +18,9 @@ When you create a [new certificate](/ssl/edge-certificates/), it moves through t
 4.  Pending Deployment
 5.  Active
 
-Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** within five minutes. If you see any errors, you or your customer may need to take additional actions to validate the certificate.
+Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** after the validation is completed. If you see any errors, you or your customer may need to take additional actions to validate the certificate.
 
-If you deactivate a certificate, that certificate will go to a **Deactivating** and then an **Inactive** status.
+If you deactivate a certificate, it will become a **Deactivating** and then an **Inactive** status.
 
 ## Custom certificates
 
@@ -39,18 +39,35 @@ When you create certificates in your [staging environment](/ssl/edge-certificate
 - **Deactivating**: Your staging certificate is in the process of becoming **Inactive**.
 - **Inactive**: Your staging certificate is not at the edge, but you can deploy it if needed.
 
+## Client certificates
+
+When you use [client certificates](/ssl/client-certificates/), those client certificates have their own set of statuses:
+
+- **Active**: The client certificate is active.
+- **Revoked**: The client certificate is revoked.
+- **Pending Reactivation**: The client certificate was revoked, but it is being restored.
+- **Pending Revocation**: The client certificate was active, but it is being revoked.
+
 ---
 
 ## Monitor certificate statuses
 
 ### SSL/TLS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by [using the API](https://developers.cloudflare.com/api/operations/certificate-packs-get-certificate-pack).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by using the [Get Certificate Pack endpoint](/api/operations/certificate-packs-get-certificate-pack).
 
-For more details on certificate validation, refer to [Changing DCV method](/ssl/edge-certificates/changing-dcv-method/).
+For more details on certificate validation, refer to [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/).
 
 ### SSL for SaaS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by using the [Custom Hostname Details endpoint](/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
 
-For more details on certificate validation, refer to [Changing DCV method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+For more details on certificate validation, refer to [Issue and validate certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+
+### Via the command line
+
+To view certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/)).
+
+```sh
+$ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
+```

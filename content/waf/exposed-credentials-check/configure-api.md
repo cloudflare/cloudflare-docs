@@ -8,15 +8,13 @@ weight: 4
 
 Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
-*   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/reference/exposed-credentials-check/#configure-via-api).
+*   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
 *   Create custom rules that check for exposed credentials.
 
 ## Create a custom rule checking for exposed credentials
 
 {{<Aside type="note">}}
-
-This feature is only available to customers on an Enterprise plan.
-
+This feature requires account-level WAF, which is available to Enterprise customers with a paid add-on.
 {{</Aside>}}
 
 You can create rules that check for exposed credentials using the [Rulesets API](/ruleset-engine/rulesets-api/). Include these rules in a custom ruleset, which you must create at the account level, and then deploy the custom ruleset to a phase.
@@ -55,6 +53,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
   "rules": [
     {
       "action": "log",
+      "description": "Exposed credential check on login.php page",
       "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
       "exposed_credential_check": {
         "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
@@ -70,7 +69,7 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 ```json
 ---
-highlight: [14,15,16,17]
+highlight: [15,16,17,18]
 ---
 {
   "result": {
@@ -84,6 +83,7 @@ highlight: [14,15,16,17]
         "id": "<CUSTOM_RULE_ID>",
         "version": "1",
         "action": "log",
+        "description": "Exposed credential check on login.php page",
         "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
         "exposed_credential_check": {
           "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
@@ -129,6 +129,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
           }
         }
       },
+      "description": "Exposed credential check on login endpoint with JSON body",
       "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
       "exposed_credential_check": {
         "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
@@ -148,7 +149,7 @@ The response returns the created ruleset. Note the presence of the following ele
 
 ```json
 ---
-highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
+highlight: [12,13,14,15,16,17,18,19,20,23,24,25,26]
 ---
 {
   "result": {
@@ -170,6 +171,7 @@ highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
             }
           }
         },
+        "description": "Exposed credential check on login endpoint with JSON body",
         "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
         "exposed_credential_check": {
           "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
@@ -189,4 +191,6 @@ highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
 }
 ```
 
-After creating a custom ruleset, deploy it to a phase so that it executes. Refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/) for more information.
+## Next steps
+
+After creating a custom ruleset, deploy it to the `http_request_firewall_custom` phase at the account level so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).

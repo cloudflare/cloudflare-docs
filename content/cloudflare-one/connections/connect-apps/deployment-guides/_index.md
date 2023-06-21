@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Tunnel administration
-weight: 5
+weight: 6
 ---
 
 # Deploying `cloudflared`

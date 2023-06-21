@@ -9,6 +9,8 @@ layout: single
 
 # Use Workers KV directly from Rust
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 In this tutorial, you will learn how to read and write to Workers KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers KV API.
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -322,7 +324,7 @@ pub async fn handle(kv: WorkersKvJs, req: JsValue) -> Result<Response, JsValue> 
 }
 ```
 
-You can use [`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) to test the Worker:
+You can use [`wrangler dev`](/workers/wrangler/commands/#dev) to test the Worker:
 
 ```sh
 $ curl 'localhost:8787/foo'

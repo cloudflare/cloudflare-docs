@@ -19,11 +19,11 @@ To enable the Cloudflare Logpush service:
 
 1.  Log in to the Cloudflare dashboard.
 
-2.  Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise account or domain you want to use with Logpush.
 
-3.  Go to **Analytics** > **Logs**.
+3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Add Logpush job**. A modal window opens where you will need to complete several steps.
 
 5.  Select the dataset you want to push to a storage service.
 
@@ -45,11 +45,12 @@ To enable the Cloudflare Logpush service:
 
 Once connected, Cloudflare lists Google Cloud Storage as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
-## Manage via API
+## Create and get access to a GCS bucket
 
 Cloudflare uses Google Cloud Identity and Access Management (IAM) to gain access to your bucket. The Cloudflare IAM service account needs admin permission for the bucket.
 
 {{<render file="_enable-read-permissions.md">}}
+<br/>
 
 To enable Logpush to GCS:
 

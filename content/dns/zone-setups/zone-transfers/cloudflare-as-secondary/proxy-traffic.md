@@ -36,11 +36,11 @@ To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, [
 
 ### Using the API
 
-To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, send a [POST](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record) request with the `proxied` status as `true`. Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
+To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, send a [POST](/api/operations/dns-records-for-a-zone-create-dns-record) request with the `proxied` status as `true`. Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
 
 ## `CNAME` record on the zone apex
 
-You can also add a `CNAME` record on the zone apex (supported through [CNAME Flattening](/dns/additional-options/cname-flattening/)) and either proxy that record or keep it on DNS Only.
+You can also add a `CNAME` record on the zone apex (supported through [CNAME Flattening](/dns/cname-flattening/)) and either proxy that record or keep it on DNS Only.
 
 Once you create a `CNAME` record at the apex, existing `A` or `AAAA` records on the zone apex will be deactivated. You can view those deactivated records by clicking **View Inactive Records**. To re-activate the `A` or `AAAA` records at the root, remove the `CNAME` record.
 

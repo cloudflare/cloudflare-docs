@@ -16,11 +16,14 @@ body:
         - Argo Smart Routing
         - Automatic Platform Optimization
         - Bots
+        - Browser Rendering
         - BYOIP
         - Cache
         - China Network
         - Client IP Geolocation
         - Cloudflare for Platforms
+        - Constellation
+        - Data Localization
         - DDoS Protection
         - DNS
         - Email Routing
@@ -41,6 +44,7 @@ body:
         - Pub/Sub
         - Queues
         - R2
+        - Radar
         - Railgun
         - Randomness Beacon
         - Reference Architecture
@@ -51,6 +55,7 @@ body:
         - Spectrum
         - SSL
         - Stream
+        - Support
         - Tenant
         - Terraform
         - Time Services

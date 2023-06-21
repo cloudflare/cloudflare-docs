@@ -19,8 +19,8 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 ## Enable Proxy Protocol v1 for TCP
 
 1.  Log in to the Cloudflare dashboard
-2.  Click **Spectrum**.
-3.  Locate the application that will use the PROXY protocol and click **Configure**.
+2.  Select **Spectrum**.
+3.  Locate the application that will use the PROXY protocol and select **Configure**.
 4.  From the dropdown, select **PROXY Protocol v1**.
 
 When TCP applications are configured to use **PROXY Protocol v1**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol plain-text header.
@@ -42,8 +42,8 @@ An example PROXY Protocol line for an IPv6 address would look like:
 ## Enabling Proxy Protocol v2 for TCP/UDP
 
 1.  Log in to the Cloudflare dashboard
-2.  Click **Spectrum**.
-3.  Locate the application that will use the PROXY protocol and click **Configure**.
+2.  Select **Spectrum**.
+3.  Locate the application that will use the PROXY protocol and select **Configure**.
 4.  From the dropdown, select **PROXY Protocol v2**.
 
 When TCP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
@@ -114,7 +114,7 @@ A PROXY Protocol binary header for a IPv6 incoming address has the format:
 
 When using UDP (currently an early access feature), the client source IP and port information can be obtained by using Simple Proxy Protocol, a lightweight protocol developed specifically for UDP.
 
-To enable it, click **Configure** on a Spectrum application and toggle the setting for Simple Proxy Protocol to **On**.
+To enable it, select **Configure** on a Spectrum application and toggle the setting for Simple Proxy Protocol to **On**.
 
 Simple Proxy Protocol dictates that your origin must also prepend packets meant for the client with the same header, including original client source information. This is done to validate that packets coming in are in fact intended for the client.
 

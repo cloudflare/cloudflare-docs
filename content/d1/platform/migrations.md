@@ -11,49 +11,11 @@ Database migrations are a way of versioning your database. Each migration is sto
 
 Currently, the migrations system aims to be simple yet effective. With the current implementation, you can:
 
-* Create an empty migration file.
-* List unapplied migrations.
-* Apply remaining migrations.
+- [Create](/workers/wrangler/commands/#migrations-create) an empty migration file.
+- [List](/workers/wrangler/commands/#migrations-list) unapplied migrations.
+- [Apply](/workers/wrangler/commands/#migrations-apply) remaining migrations.
 
 Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run.
-
-### Create a migration
-
-To create a new migration, run the following command with your database name applied:
-
-```sh
-$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_FILENAME>"
-```
-
-This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your version. This will make it easier for you to find your version in the `migrations` folder. An example filename looks like:
-
-`0000_create_user_table.sql`
-
-The filename will include a version number and the migration filename you specified above.
-
-### List migrations
-
-To view a list of unapplied migration files in your `migrations` folder, run:
-
-```sh
-$ wrangler d1 migrations list <DATABASE_NAME>
-```
-
-### Apply migrations
-
-To apply any unapplied migrations, run:
-
-```sh
-$ wrangler d1 migrations apply <DATABASE_NAME>
-```
-
-This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured. 
-
-The progress of each migration will be printed in the console.
-
-When running the apply command in a CI/CD environment or another non-interactive command line, the confirmation step will be skipped, but the backup will still be captured.
-
-If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
 
 ## Wrangler customizations
 
@@ -75,8 +37,8 @@ migrations_dir = "<FOLDER_NAME>" # Customize this value to rename the `migration
 
 These are some of the features we plan to add in the future:
 
-* **Down migration**: The same way that apply builds up the database, there will be a way to go down migrations or rollback changes.
-* **Fake migrations**: Mark a migration as already applied without changing the database.
-* **Apply only a specific migration**: Apply only a specific migration without going through the sequential order.
+- **Down migration**: The same way that apply builds up the database, there will be a way to go down migrations or rollback changes.
+- **Fake migrations**: Mark a migration as already applied without changing the database.
+- **Apply only a specific migration**: Apply only a specific migration without going through the sequential order.
 
-To request more features or to contribute directly to the Wrangler2 project, go to the [wrangler2 repository](https://github.com/cloudflare/wrangler2).
+To request more features or to contribute directly to the Wrangler project, go to the [Wrangler repository](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler).

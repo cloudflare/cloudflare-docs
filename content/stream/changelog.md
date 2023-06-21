@@ -2,15 +2,65 @@
 pcx_content_type: changelog
 title: Changelog
 weight: 11
+rss: file
 ---
 
 # Changelog
+
+## 2023-05-16
+
+### Multiple audio tracks now generally available
+
+Stream supports adding multiple audio tracks to an existing video.
+
+For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/) to get started.
+
+## 2023-04-26
+
+### Player Enhancement Properties
+
+Cloudflare Stream now supports player enhancement properties.
+
+With player enhancements, you can modify your video player to incorporate elements of your branding, such as your logo, and customize additional options to present to your viewers.
+
+For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/player-enhancements/) to get started.
+
+## 2023-03-21
+
+### Limits for downloadable MP4s for live recordings
+
+Previously, generating a download for a live recording exceeding four hours resulted in failure.
+
+To fix the issue, now video downloads are only available for live recordings under four hours. Live recordings exceeding four hours can still be played but cannot be downloaded. 
+
+## 2023-01-04
+
+### Earlier detection (and rejection) of non-video uploads
+
+Cloudflare Stream now detects non-video content on upload using [the POST API](/stream/uploading-videos/upload-video-file/) and returns a 400 Bad Request HTTP error with code `10059`.
+
+Previously, if you or one of your users attempted to upload a file that is not a video (ex: an image), the request to upload would appear successful, but then fail to be encoded later on.
+
+With this change, Stream responds to the upload request with an error, allowing you to give users immediate feedback if they attempt to upload non-video content.
 
 ## 2022-12-08
 
 ### Faster mp4 downloads of live recordings
 
-Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/).
+Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](/stream/stream-live/download-stream-live-videos/).
+
+## 2022-11-29
+
+### Multiple audio tracks (closed beta)
+
+Stream now supports adding multiple audio tracks to an existing video upload. This allows you to:
+
+- Provide viewers with audio tracks in multiple languages
+- Provide dubbed audio tracks, or audio commentary tracks (ex: Director’s Commentary)
+- Allow your users to customize the customize the audio mix, by providing separate audio tracks for music, speech or other audio tracks.
+- Provide Audio Description tracks to ensure your content is accessible. ([WCAG 2.0 Guideline 1.2 1](https://www.w3.org/TR/WCAG20/#media-equiv-audio-desc-only))
+
+To request an invite to the beta, refer to [this post](https://community.cloudflare.com/t/new-in-beta-support-for-multiple-audio-tracks/439629).
 
 ## 2022-11-22
 
@@ -22,7 +72,7 @@ Cloudflare Stream now supports [VP9](https://developers.google.com/media/vp9) wh
 
 ### Reduced time to start WebRTC streaming and playback with Trickle ICE
 
-Cloudflare Stream's [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-05.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
+Cloudflare Stream's [WHIP](https://datatracker.ietf.org/doc/draft-ietf-wish-whip/) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
 
 For more, refer to [the docs](/stream/webrtc-beta/).
 
@@ -30,7 +80,7 @@ For more, refer to [the docs](/stream/webrtc-beta/).
 
 ### Deprecating the "per-video" Analytics API
 
-The [“per-video” analytics API](/stream/getting-analytics/fetching-per-video-analytics/) is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
+The “per-video” analytics API is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
 
 The GraphQL Analytics API provides the same functionality and more, with additional filters and metrics, as well as the ability to fetch data about multiple videos in a single request. Queries are faster, more reliable, and built on a shared analytics system that you can [use across many Cloudflare products](/analytics/graphql-api/features/data-sets/).
 
@@ -40,7 +90,7 @@ For more about this change and how to migrate existing API queries, refer to [th
 
 ### Create an unlimited number of live inputs
 
-Cloudflare Stream now has no limit on the number of [live inputs](https://developers.cloudflare.com/api/operations/stream-live-inputs-properties) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
+Cloudflare Stream now has no limit on the number of [live inputs](/api/operations/stream-live-inputs-retrieve-a-live-input) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
 
 For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
 
@@ -101,7 +151,7 @@ You can now change the start and end times of a video uploaded to Cloudflare Str
 
 ### Live inputs
 
-The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://developers.cloudflare.com/api/operations/stream-live-inputs-list-live-inputs).
+The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](/api/operations/stream-live-inputs-list-live-inputs).
 
 ## 2022-05-24
 
@@ -287,7 +337,7 @@ Cloudflare Stream now delivers video using 3-10x less bandwidth, with no reducti
 
 ### Tus support for direct creator uploads
 
-You can now use the [tus protocol](/stream/uploading-videos/direct-creator-uploads/#using-tus-recommended-for-videos-over-200mb) when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.
+You can now use the [tus protocol](/stream/uploading-videos/direct-creator-uploads/#advanced-upload-flow-using-tus-for-large-videos) when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.
 
 In addition, all uploads to Cloudflare Stream made using tus are now faster and more reliable as part of this change.
 

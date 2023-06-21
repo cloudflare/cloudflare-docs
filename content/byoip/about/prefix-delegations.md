@@ -11,18 +11,18 @@ The effect of a delegation depends on the service used with the prefix. Currentl
 
 ## CDN
 
-CDN delegations only have an effect if you are using [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) in addition to BYOIP + CDN. In this example, Account A is using BYOIP + CDN and SSL for SaaS. Account A can validate and serve traffic for a custom hostname on any of the IPs in its prefix. If Account A delegates some or all of the prefix to Account B, Account B may also validate and serve traffic for custom hostnames on those IPs as well. This is very useful if you use SSL for SaaS but manage different configurations in different accounts. All the accounts can use the IPs through a delegation.
+CDN delegations only have an effect if you are using [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) in addition to BYOIP + CDN. In this example, Account A is using BYOIP + CDN and Cloudflare for SaaS. Account A can validate and serve traffic for a custom hostname on any of the IPs in its prefix. If Account A delegates some or all of the prefix to Account B, Account B may also validate and serve traffic for custom hostnames on those IPs as well. This is very useful if you use Cloudflare for SaaS but manage different configurations in different accounts. All the accounts can use the IPs through a delegation.
 
 ## API calls for prefix delegations
 
-API calls for delegations can be found at [Prefix Delegations](https://developers.cloudflare.com/api/operations/ip-address-management-prefix-delegation-list-prefix-delegations).
+API calls for delegations can be found at [Prefix Delegations](/api/operations/ip-address-management-prefix-delegation-list-prefix-delegations).
 
 ## Dashboard for prefix delegations
 
-1.  From **Account Home**, click **IP Prefixes**.
-2.  Click **Edit** to modify a prefix. **Edit IP Prefixes** displays.
-3.  At the bottom of the page, click **Add Delegation**. Other accounts your user is a part of will auto-load when you create the delegation.
-4.  When you are done, click **Save**.
+1.  Go to Account Home > **IP Addresses** > **IP Prefixes**.
+2.  Select **Edit** to modify a prefix. **Edit IP Prefixes** displays.
+3.  At the bottom of the page, select **Add Delegation**. Other accounts your user is a part of will auto-load when you create the delegation.
+4.  When you are done, select **Save**.
 
 {{<Aside>}}
 

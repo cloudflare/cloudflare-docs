@@ -6,4 +6,6 @@ meta:
     title: Platform
 ---
 
+# Platform
+
 {{<directory-listing>}}

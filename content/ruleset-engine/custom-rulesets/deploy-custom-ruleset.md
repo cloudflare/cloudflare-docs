@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Deploy a custom ruleset
 weight: 4
+meta:
+  description: Learn how to deploy a custom ruleset to your Cloudflare account.
 ---
 
 # Deploy a custom ruleset

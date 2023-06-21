@@ -16,7 +16,7 @@ At this stage, WAF content scanning API endpoints may change on short notice.
 
 {{</Aside>}}
 
-When enabled, content scanning will attempt to detect content objects such as uploaded files and scan them for malicious signatures like malware. The scan results, along with additional metadata, will be exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
+When enabled, content scanning attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
 
 ## Default configuration
 
@@ -111,6 +111,7 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
     (cf.waf.content_scan.has_obj and cf.bot_management.score lt 10)
     ```
 
+For additional examples, refer to [Example rules](#example-rules).
 
 ---
 
@@ -161,6 +162,26 @@ When enabled, WAF content scanning provides the following fields you can use in 
     The possible values are: <code>clean</code>, <code>suspicious</code>, and <code>malicious</code>.</td>
   </tr>
 </table>
+
+---
+
+## Example rules
+
+The following custom rule example logs all requests with at least one uploaded content object:
+* Expression: `cf.waf.content_scan.has_obj`
+* Action: _Log_
+
+The following example blocks requests addressed at `/upload.php` that contain at least one uploaded content object considered malicious:
+* Expression: `cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload.php"`
+* Action: _Block_
+
+The following example blocks requests addressed at `/upload` with uploaded content objects that are not PDF files:
+* Expression: `any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"`
+* Action: _Block_
+
+The following example blocks requests addressed at `/upload` with uploaded content objects over 500 KB in size:
+* Expression: `any(cf.waf.content_scan.obj_sizes[*] > 500000) and http.request.uri.path eq "/upload"`
+* Action: _Block_
 
 ---
 

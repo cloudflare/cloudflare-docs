@@ -11,6 +11,6 @@ Use Cloudflare Waiting Room to create a holding area where users can queue to ac
 To access Waiting Room on the Cloudflare dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your application.
-2.  Click **Traffic** > **Waiting Rooms**.
+2.  Select **Traffic** > **Waiting Room**.
 
 Use the dashboard to [create, edit, update, and delete](/waiting-room/how-to/) waiting rooms.

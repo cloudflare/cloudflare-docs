@@ -24,31 +24,25 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Prerequisites
 
-- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels) to route traffic to a private IP space.
+- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) to route traffic to a private IP space.
 - `cloudflared` must be connected to Cloudflare from your target private network.
 - Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
 
 ## Enable UDP support
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
 1.  Scroll down to Firewall settings.
 1.  Ensure the Proxy is enabled and both TCP and UDP are selected.
 
 ## Create a Local Domain Fallback entry
 
-Next, we need to create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry.
-
-1.  Remain in **Network Settings** and scroll further down to **Local Domain Fallback**.
-
-1.  Click **Manage**.
-
-1.  Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
+Next, we need to [create a Local Domain Fallback entry](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
 
 ![Local Domain Fallback panel displaying example data.](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 
 {{<Aside type="note">}}
 
-While on the Network Settings page, ensure that **Split Tunnels** are configured to include traffic to private IPs and hostnames in the traffic sent by WARP to Cloudflare. For guidance on how to do that, refer to [these instructions](/cloudflare-one/connections/connect-apps/private-net/#optional-ensure-that-traffic-can-reach-your-network).
+Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#3-route-private-network-ips-through-warp).
 
 {{</Aside>}}
 
@@ -82,7 +76,7 @@ Both `dig` commands will fail if the WARP client is disabled in your end user's 
 
 Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
 
-- Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Zero Trust dashboard.
+- Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in Zero Trust.
 
 - Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
 

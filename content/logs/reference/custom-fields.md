@@ -195,7 +195,7 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 ## Enable custom rules via dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select the domain you want to use.
-2. Go to **Analytics** > **Logs**.
+2. Go to **Analytics & Logs** > **Logs**.
 3. In the **Custom Fields** section, select **Edit Custom Fields**.
 4. Select **Set new Custom Field**. 
 5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**. 
@@ -205,3 +205,4 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 * You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.
 * The maximum length of custom field data is 8 KB. Any data over this limit will be truncated.
+* For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.

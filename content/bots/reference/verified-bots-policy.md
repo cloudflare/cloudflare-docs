@@ -119,3 +119,7 @@ If any of the requirements to validate are breached, a service will be removed f
 * The disclosed purpose of the service does not reflect on the traffic. 
 
 {{</Aside>}}
+
+## Online Application
+
+To submit a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link). The waiting time is up to several weeks for verified bot requests to be evaluated.

@@ -5,5 +5,7 @@ node_modules
 *.log
 *.backup
 
+/dist
 /public
 /assets/jsconfig.json
+/resources/_gen/images

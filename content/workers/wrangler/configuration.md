@@ -8,6 +8,10 @@ weight: 3
 
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker.
 
+{{<Aside type="warning">}}
+Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+{{</Aside>}}
+
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
 ## Sample `wrangler.toml` configuration
@@ -146,7 +150,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Worker.
+  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/platform/environment-variables/).
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -247,9 +251,10 @@ Triggers allow you to define the `cron` expression to invoke your Worker's `sche
 
 {{<definitions>}}
 
-- `cron` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `crons` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - An array of `cron` expressions.
+  - To disable a Cron Trigger, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
 
 {{</definitions>}}
 
@@ -297,6 +302,40 @@ watch_dir = "build_watch_dir"
 
 ## Bindings
 
+### D1 databases
+
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/platform/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
+
+To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the database. This a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
+
+- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[d1_databases]]
+binding = "PROD_DB"
+database_name = "test-db"
+database_id = "c020574a-5623-407b-be0c-cd192bab9545"
+```
+
 ### Durable Objects
 
 [Durable Objects](/workers/learning/using-durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
@@ -319,7 +358,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The service environment of the `script_name` to bind to.
+  - The environment of the `script_name` to bind to.
 
 {{</definitions>}}
 
@@ -455,7 +494,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
 
 {{</definitions>}}
 
@@ -492,12 +531,62 @@ Example:
 
 ```toml
 ---
+filename: wrangler.toml
+---
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
+```
+
+### mTLS Certificates
+
+To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
+
+To create a [binding](/workers/platform/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the certificate.
+
+- `certificate_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the certificate. Wrangler displays this via the `mtls-certificate upload` and `mtls-certificate list` commands.
+
+{{</definitions>}}
+
+Example of a `wrangler.toml` configuration that includes an mTLS certificate binding:
+
+```toml
+---
 header: wrangler.toml
 ---
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+mtls_certificates = [
+    { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" }
 ]
 ```
+
+mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
+
+### Email bindings
+
+{{<render file="_send-emails-workers-intro.md" productFolder="/email-routing/" withParameters="Then, assign an array to the object `send_email` with the type of email binding you need.">}}
+
+
+{{<definitions>}}
+
+- `type` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Defines that you are creating bindings for sending emails from your Worker.
+
+- `attribute` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Defines the type of binding. Refer to [Types of bindings](/email-routing/email-workers/send-email-workers/#types-of-bindings) for more information.
+
+{{</definitions>}}
+
+{{<render file="_types-bindings.md" productFolder="/email-routing/">}}
 
 ## Bundling
 
@@ -590,7 +679,7 @@ local_protocol = "http"
 
 ### Environmental variables
 
-When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`.
+When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
 
 This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
@@ -598,14 +687,38 @@ This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 ---
 header: .dev.vars
 ---
-SECRET_KEY = "value"
+SECRET_KEY=value
 ```
 
 ## Node compatibility
 
-You can add experimental Node compatibility to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
+If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of node.js APIs to your own code.
 
-It is not possible to polyfill all Node APIs or behaviours, but it is possible to polyfill some of them. APIs such as `fs` cannot be replicated as Workers has no concept of a filesystem.
+### Use runtime APIs directly
+
+A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
+
+```toml
+---
+header: wrangler.toml
+---
+compatibility_flags = [ "nodejs_compat" ]
+```
+
+{{<render file="_nodejs-compat-local-dev.md">}}
+
+### Add polyfills using Wrangler
+
+Add polyfills for subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
+
+```toml
+---
+header: wrangler.toml
+---
+node_compat = true
+```
+
+It is not possible to polyfill all Node APIs or behaviors, but it is possible to polyfill some of them.
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
@@ -623,11 +736,11 @@ Consider using [Cloudflare Pages](/pages/) for hosting static applications inste
 
   - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file.
 
-- `include` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An exclusive list of `.gitignore`-style patterns that match file  or directory names from your bucket location. Only matched items will be uploaded.
 
-- `exclude` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `exclude` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   -  A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
 
@@ -668,10 +781,12 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-It is a recommended best practice to treat `wrangler.toml` as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
+We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler. 
+
+If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml` file, which will help ensure your `wrangler.toml` file is always up to date.
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler 1 [deprecation guide](/workers/wrangler/migration/deprecations/#other-deprecated-behaviour).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behaviour).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

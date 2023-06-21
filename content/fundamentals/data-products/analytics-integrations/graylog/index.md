@@ -73,7 +73,7 @@ Once decompressed, the integration package includes:
 
 **Note:** If your Graylog cluster is running in a VPC, you may need to add the _AWSLambdaVPCAccessExecutionRole_ managed role to allow the Lambda function to route traffic to the VPC.
 
-4.  Once you've created the Lambda function, upload the function code **_graylog-s3-lambda.jar_** downloaded in [Task 1](#task1).  Specify the following method for the Handler: _org.graylog.integrations.s3.GraylogS3Function::handleRequest_.
+4.  Once you've created the Lambda function, upload the function code **_graylog-s3-lambda.jar_** downloaded in [Task 1](#task-1---preparation).  Specify the following method for the Handler: _org.graylog.integrations.s3.GraylogS3Function::handleRequest_.
 
 5.  Specify at least the following required environment variables to configure the Lambda function for your Graylog cluster:
 
@@ -85,12 +85,12 @@ Once decompressed, the integration package includes:
     - **LOG_LEVEL** _(optional - defaults to INFO)_ - The level of detail to include in the CloudWatch logs generated from the Lambda function. Supported values are _OFF_, _ERROR_, _WARN_, _INFO_, _DEBUG_, _TRACE_, and _ALL_. Increase the logging level to help with troubleshooting. See [Defining Custom Log Levels in Code](https://logging.apache.org/log4j/2.0/manual/customloglevels.html) for more information.
     - **CLOUDFLARE_LOGPUSH_MESSAGE_FIELDS** _(optional - defaults to all)_ - The fields to parse from the message. Specify as a comma-separated list of field names.
     - **CLOUDFLARE_LOGPUSH_MESSAGE_SUMMARY_FIELDS** _(optional - defaults to ClientRequestHost, ClientRequestPath, OriginIP, ClientSrcPort, EdgeServerIP, EdgeResponseBytes)_ - The fields to include in the message summary that appears above the parsed fields at the top of each message in Graylog. Specify as a comma-separated list of field names.
-      ![List of required Graylog environment variables](/fundamentals/static/images/graylog/screenshots/graylog-environment-variables.png)
+      ![List of required Graylog environment variables](/images/fundamentals/graylog/screenshots/graylog-environment-variables.png)
 
       **Note:** More configuration variables are available to fine-tune the function configuration in the Graylog Lambda S3 [README](https://github.com/Graylog2/graylog-s3-lambda/blob/master/README.md#step-2-specify-configuration) file.
 
-6.  Create an AWS S3 Trigger for the Lambda function so that the function can process each Cloudflare log field that is written. Specify the same S3 bucket from [Task 1](#task1) and choose the _All object create events_ option. Any other desired file filters can be applied here.
-    ![Add trigger dialog with an example AWS S3 Trigger](/fundamentals/static/images/graylog/screenshots/aws-s3-add-trigger.png)
+6.  Create an AWS S3 Trigger for the Lambda function so that the function can process each Cloudflare log field that is written. Specify the same S3 bucket from [Task 1](#task-1---preparation) and choose the _All object create events_ option. Any other desired file filters can be applied here.
+    ![Add trigger dialog with an example AWS S3 Trigger](/images/fundamentals/graylog/screenshots/aws-s3-add-trigger.png)
 
 7.  If your Graylog cluster is located within a VPC, you will need to [configure your Lambda function to access resources in a VPC](https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html). You may also need to create a [VPC endpoint for the AWS S3 service](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html#create-vpc-endpoint). This allows the Lambda function to access S3 directly when running in a VPC.
 
@@ -112,27 +112,27 @@ Cloudflare dashboards.
 
 The following components install with the content pack:
 
-- Cloudflare dashboards ([Task 4](#task4)).
+- Cloudflare dashboards ([Task 4](#task-4---view-the-cloudflare-dashboards)).
 - A Cloudflare GELF (TCP) input that allows Graylog to receive Cloudflare logs.
 - A Cloudflare message [stream](https://docs.graylog.org/en/3.1/pages/streams.html).
 - [Pipeline](https://docs.graylog.org/en/3.1/pages/pipelines/pipelines.html) rules that help to process and parse Cloudflare log fields.
 
 To import the content pack:
 
-1.  Locate the _cloudflare-logpush-content-pack.json_ file that you downloaded and extracted in [Task 1](#task1).
+1.  Locate the _cloudflare-logpush-content-pack.json_ file that you downloaded and extracted in [Task 1](#task-1---preparation).
 
 2.  In Graylog, go to **System** > **Content Packs** and click **Upload** in the top right. Once uploaded, the Cloudflare Logpush content pack will appear in the list of uploaded content packs.
-    ![Uploading Graylog content packs](/fundamentals/static/images/graylog/screenshots/graylog-content-packs.png)
+    ![Uploading Graylog content packs](/images/fundamentals/graylog/screenshots/graylog-content-packs.png)
 
 3.  Click **Install**.
-    ![Installing Graylog content packs](/fundamentals/static/images/graylog/screenshots/graylog-content-packs-uploaded.png)
+    ![Installing Graylog content packs](/images/fundamentals/graylog/screenshots/graylog-content-packs-uploaded.png)
 
 4.  In the **Install** dialog, enter an optional install comment, and verify that the correct values are entered for all configuration parameters.
 
     - A path is required for the MaxMind™️ database, available at <https://dev.maxmind.com/geoip/>.
-    - A path is also required for the _Threat Lookup_ CSV file, extracted in [Task 1](#task1).
+    - A path is also required for the _Threat Lookup_ CSV file, extracted in [Task 1](#task-1---preparation).
 
-    ![Adding an install comment and configuring parameters in Install Dialog screen](/fundamentals/static/images/graylog/screenshots/graylog-content-pack-install.png)
+    ![Adding an install comment and configuring parameters in Install Dialog screen](/images/fundamentals/graylog/screenshots/graylog-content-pack-install.png)
 
 5.  Once installed, your Graylog cluster will be ready to receive Cloudflare logs from the Lambda function.
 
@@ -151,7 +151,7 @@ Use this dashboard to:
 - Monitor the most important web traffic metrics of your websites and applications on the Cloudflare network
 - View which countries and IPs your traffic is coming from, and analyze the breakdown between mobile and desktop traffic, protocol, methods, and content types
 
-![Visualizing Cloudflare log metrics in the Graylog dashboard](/fundamentals/static/images/graylog/dashboards/snapshot-cloudflare-dashboard-graylog.png)
+![Visualizing Cloudflare log metrics in the Graylog dashboard](/images/fundamentals/graylog/dashboards/snapshot-cloudflare-dashboard-graylog.png)
 
 ### Cloudflare - Security
 
@@ -162,7 +162,7 @@ Use this dashboard to:
 - Monitor the most important security and threat metrics for your websites and applications
 - Fine-tune and configure your IP firewall
 
-![Visualizing an analysis of Cloudflare threat traffic in the Graylog dashboard](/fundamentals/static/images/graylog/dashboards/security-cloudflare-dashboard-graylog.png)
+![Visualizing an analysis of Cloudflare threat traffic in the Graylog dashboard](/images/fundamentals/graylog/dashboards/security-cloudflare-dashboard-graylog.png)
 
 ### Cloudflare - Performance
 
@@ -173,7 +173,7 @@ Use this dashboard to:
 - Monitor caching behavior and identify misconfigurations
 - Improve configuration and caching ratio
 
-![Visualizing Cloudflare Performance metrics in the Graylog dashboard](/fundamentals/static/images/graylog/dashboards/performance-cloudflare-dashboard-graylog.png)
+![Visualizing Cloudflare Performance metrics in the Graylog dashboard](/images/fundamentals/graylog/dashboards/performance-cloudflare-dashboard-graylog.png)
 
 ### Cloudflare - Reliability
 
@@ -184,7 +184,7 @@ Use this dashboard to:
 - Investigate errors on your websites and applications by viewing edge and origin response status codes
 - Further analyze errors based on status codes by countries, client IPs, hostnames, and other metrics
 
-![Graylog dashboard Cloudflare Reliability](/fundamentals/static/images/graylog/dashboards/reliability-cloudflare-dashboard-graylog.png)
+![Graylog dashboard Cloudflare Reliability](/images/fundamentals/graylog/dashboards/reliability-cloudflare-dashboard-graylog.png)
 
 ### Cloudflare - Bots
 
@@ -192,7 +192,7 @@ Use this dashboard to detect and mitigate bad bots so that you can prevent crede
 
 {{<Aside type="note" header="Note">}}
 
-To get bot requests identified correctly, use only one firewall rule, configured with the action _Legacy CAPTCHA_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
+To get bot requests identified correctly, use only one firewall rule, configured with the action _Interactive Challenge_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
 
 {{</Aside>}}
 
@@ -201,4 +201,4 @@ Use this dashboard to:
 - Investigate bot activity on your website and prevent content scraping, checkout fraud, spam registration, and other malicious activities.
 - Use insight to tune Cloudflare to prevent bots from excessive usage and abuse across websites, applications, and API endpoints.
 
-![Graylog dashboard Cloudflare Bot Management](/fundamentals/static/images/graylog/dashboards/bot-management-cloudflare-dashboard-graylog.png)
+![Graylog dashboard Cloudflare Bot Management](/images/fundamentals/graylog/dashboards/bot-management-cloudflare-dashboard-graylog.png)

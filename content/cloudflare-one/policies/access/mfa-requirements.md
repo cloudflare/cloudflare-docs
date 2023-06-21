@@ -13,10 +13,11 @@ This feature is only available if you are using the following identity providers
 - Okta
 - Azure AD
 - OpenID Connect (OIDC)
+- SAML
 
 To enforce an MFA requirement to an application:
 
-1.  On the Zero Trust dashboard, navigate to **Access > Applications**.
+1.  In Zero Trust, navigate to **Access > Applications**.
 
 1.  Find the application for which you want to enforce MFA and click **Edit**. Alternatively, [create a new application](/cloudflare-one/applications/configure-apps/).
 

@@ -19,7 +19,7 @@ Pairing-based cryptography is based on bilinear groups `(𝔾1,𝔾2,𝔾𝑡)`,
 - **Non-degeneracy:** `𝑒≠1`
 
 - **Computability:** There exists an efficient algorithm to compute `𝑒`.
-  Drand currently uses the Barreto-Naehrig curve BN256.
+  drand currently uses the Barreto-Naehrig curve BN256.
 
 ## BLS Signatures
 
@@ -71,10 +71,22 @@ Thanks to the properties of Lagrange interpolation, the value of `𝜎` is indep
 
 In summary, a threshold BLS signature, `𝜎`, exhibits all properties required for publicly-verifiable, unbiasable, unpredictable, and distributed randomness.
 
+### `𝔾1/𝔾2` swap
+
+In the above, `𝔾1` and `𝔾2` could be swapped. The implication is on the relative size of public key and signatures. The first drand chains are constructed as described above, with signatures on `𝔾2` and public keys on `𝔾1`. Signature size is 96 bytes, and public key size is 48 bytes.
+
+Certain applications prefer smaller signatures at the cost of a larger public key. This is why certain drand beacons have signatures on `𝔾1` and public key on `𝔾2`. Such a change is reffered to as `𝔾1/𝔾2 swap`.
+
 ## Chained Randomness
 
-The drand randomness beacon operates in discrete rounds, `𝑟`. In every round, drand produces a new random value using threshold BLS signatures linked together into a chain of randomness. To extend this chain of randomness, each drand participant, `𝑖`, creates in round `𝑟` the partial BLS signature, `𝜎𝑟𝑖` on the message `𝑚=𝐻(𝑟∥𝜎𝑟−1)` where, `𝜎𝑟−1` denotes the (full) BLS threshold signature from round `𝑟−1` and `𝐻`, a cryptographic hash function.
+The drand randomness beacon operates in discrete rounds, `𝑟`. In every round, drand beacons configured to use chained randomness produce a new random value using threshold BLS signatures linked together into a chain of randomness. To extend this chain of randomness, each drand participant, `𝑖`, creates in round `𝑟` the partial BLS signature, `𝜎𝑟𝑖` on the message `𝑚=𝐻(𝑟∥𝜎𝑟−1)` where, `𝜎𝑟−1` denotes the (full) BLS threshold signature from round `𝑟−1` and `𝐻`, a cryptographic hash function.
 
 Once at least `𝑡` participants have broadcasted their partial signatures, `𝜎𝑟𝑖`, on `𝑚`, anyone can recover the full BLS threshold signature, `𝜎𝑟` that corresponds to the random value of round `𝑟`. After this, drand nodes move to round `𝑟+1` and reiterate the process.
 
 For round `𝑟=0`, drand participants sign a seed fixed during drand setup. This process ensures that every new random value depends on all previously generated signatures. Since the signature is deterministic, there is also no possibility for an adversary forking the chain and presenting two distinct signatures `𝜎𝑟` and `𝜎′𝑟` in a given round `𝑟` to generate inconsistencies in the systems relying on public randomness.
+
+## Unchained Randomness
+
+drand beacons can also be configured to use unchained randomness. To extend this chain of randomness, each drand participant, `𝑖`, creates in round `𝑟` the partial BLS signature, `𝜎𝑟𝑖` on the message `𝑚=𝐻(𝑟)` where `𝐻` a cryptographic hash function.
+
+This process allows for a direct precomputation of message `𝑚` for round `𝑟=i`.

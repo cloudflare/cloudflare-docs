@@ -30,11 +30,11 @@ To enable the Cloudflare Logpush service:
 
 1.  Log in to the Cloudflare dashboard.
 
-2.  Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise account or domain you want to use with Logpush.
 
-3.  Go to **Analytics** > **Logs**.
+3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Add Logpush job**. A modal window opens where you will need to complete several steps.
 
 5.  Select the dataset you want to push to a storage service.
 

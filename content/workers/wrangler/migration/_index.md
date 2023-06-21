@@ -1,18 +1,10 @@
 ---
-title: Migration
-pcx_content_type: navigation
-weight: 30
+title: Migrations
+pcx_content_type: how-to
 meta:
   title: Migration
 ---
 
-# Migrate from Wrangler 1
-
-{{<Aside type="note">}}
-
-Wrangler 2 is a major update to Wrangler.
-Find out more about how to migrate from Wrangler 1.
-
-{{</Aside>}}
+# Migrations
 
 {{<directory-listing>}}

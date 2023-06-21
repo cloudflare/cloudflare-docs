@@ -8,11 +8,13 @@ meta:
 
 # Best practices for Railgun and a load balancer
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 If you are looking to use Cloudflare Railgun to optimize the load times of dynamic (non-cached) content and you currently use a load balancer, a firewall, or a NAT scheme in front of your application, review the following configurations and best practices associated with each setup.
 
 ## Single origin, multiple web servers, single Railgun listener
 
-![Diagram describing how a single Railgun client should be placed in front of the load balancer, firewall or NAT.](/railgun/static/single-railgun-listener.png)
+![Diagram describing how a single Railgun client should be placed in front of the load balancer, firewall or NAT.](/images/railgun/single-railgun-listener.png)
 
 Cloudflare recommends installing the [Railgun client](/railgun/user-guide/set-up/) (`rg-listener`) in front of the load balancer/firewall/NAT scheme, as shown in illustration above.
 
@@ -32,7 +34,7 @@ If connectivity to the `rg-listener` cannot be established from the Cloudflare e
 
 ## Single origin, multiple web servers, multiple Railgun listeners
 
-![It is also possible to have multiple Railgun listeners behind the load balancer, and have Railgun accelerate dynamic content.](/railgun/static/multiple-railgun-listeners.png)
+![It is also possible to have multiple Railgun listeners behind the load balancer, and have Railgun accelerate dynamic content.](/images/railgun/multiple-railgun-listeners.png)
 
 It is also possible to put multiple `rg-listeners` behind the load balancer and have Railgun accelerate dynamic content. This setup provides additional fault tolerance for the Railgun service.
 

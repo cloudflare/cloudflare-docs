@@ -110,7 +110,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 </div>
 </details>
 
-## Disable Railgun
+## Disable Railgun (deprecated)
 
 Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
 
@@ -382,7 +382,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## SXG
 
-Enable or disable [Signed Exchanges (SXG)](/fundamentals/signed-exchanges/signed-exchanges/) [^16] for matching requests.
+Enable or disable [Signed Exchanges (SXG)](/fundamentals/speed/signed-exchanges/) [^16] for matching requests.
 
 <details>
 <summary>API information</summary>
@@ -412,9 +412,9 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 [^4]: Cloudflare Apps is a platform for sharing high-quality apps that are easy to use by anyone with a website.
 
-[^5]: Railgun is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
+[^5]: Railgun (deprecated) is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
 
-[^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to Cloudflare’s edge.
+[^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 
 [^7]: Hotlink Protection prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
 

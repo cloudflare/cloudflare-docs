@@ -14,7 +14,7 @@ Cloudflare supports DoT on standard port `853` and is compliant with [RFC7858](h
 
 Each Gateway DNS location has a unique DoT hostname. DNS locations and corresponding DoT hostnames have policies associated with them.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Gateway** > **DNS Locations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Gateway** > **DNS Locations**.
 2. If you have more than one location set up, you will see a list of all your locations.
 3. Expand the location card for the location whose DoT hostname you'd like to retrieve.
 4. Get the **DoT hostname** for the location.
@@ -32,7 +32,7 @@ Depending on your operating system, you can choose from a variety of standalone 
 To configure your DoT client, enter the following IP address and the DoT hostname for your location (for example, `9y65g5srsm.cloudflare-gateway.com`):
 
 ```text
-Hostname: <DoT hostname> 
+Hostname: <DoT hostname>
 IP address: 162.159.36.5
 ```
 

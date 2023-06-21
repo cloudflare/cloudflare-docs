@@ -45,6 +45,8 @@ const secretValue = env.SECRET_NAME;
 
 Then use the secret value to authenticate with the external service. For example, if the external service requires an API key for authentication, include it in your request headers.
 
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+
 ## Tips
 
 * Use the Cache API to cache data from the third party API. This allows you to optimize cacheable requests made to the API. Integrating with third party APIs from Cloudflare Workers adds additional functionality and features to your application.

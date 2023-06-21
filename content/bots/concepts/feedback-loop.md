@@ -9,7 +9,7 @@ The Bot Feedback Loop is a way for customers to send Cloudflare direct feedback 
 
 ## Availability
 
-Anyone who has access to Bot Analytics is able to submit feedback. This includes Enterprise Bot Management customers, as well as Business and Enterprise customers who use Super Bot Fight Mode. Visit [Plans](/bots/plans/) for more information.
+Bot Feedback Loop is available for Enterprise Bot Management customers. Visit [Plans](/bots/plans/) for more information.
 
 ## False Positive
 
@@ -143,12 +143,12 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 | --- | --- | --- | --- |
 | `type` | string |  The feedback report type. | `false_positive` |
 | `description` | string | The feedback report description with  more details on the issue. | Legitimate customers having low scores. |
-| `expression` | string | The wirefilter expression matching reported requests. | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` | 
-| `first_request_seen_at` | string | The time range start when the first request has been seen, RFC3339 format. |  `2022-08-01T00:00:00Z` | 
-| `last_request_seen_at` | string | The time range end when the last request has been seen, RFC3339 format. | `2022-08-10T00:00:00Z` | 
-| `requests` | integer | The total number of reported requests. | `100` | 
-| `requests_by_score` | object | The requests breakdown by score. | See example below. | 
-| `requests_by_score_src` | object | Requests breakdown by score source. | See example below. | 
+| `expression` | string | The wirefilter expression matching reported requests. | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` |
+| `first_request_seen_at` | string | The time range start when the first request has been seen, RFC 3339 format. |  `2022-08-01T00:00:00Z` |
+| `last_request_seen_at` | string | The time range end when the last request has been seen, RFC 3339 format. | `2022-08-10T00:00:00Z` |
+| `requests` | integer | The total number of reported requests. | `100` |
+| `requests_by_score` | object | The requests breakdown by score. | See example below. |
+| `requests_by_score_src` | object | Requests breakdown by score source. | See example below. |
 | `requests_by_attribute` | object | Requests breakdown by attribute (optional). | See example below. |
 
 `requests_by_score`
@@ -211,11 +211,24 @@ We appreciate any comments you wish to leave in the description field that might
 
 ## Recommendations after submitting a false positive
 
-After submitting a false positive, you can explicitly allow the traffic if you are confident that this traffic source cannot be used for abuse in the future. To allow traffic, you can create a **Custom Rule** or **Firewall Rule** with an `allow` action that matches the characteristics of your false positive report. We recommend any allow rule that you create uses the most narrow possible scope, including restricting the request methods and URIs that the expected traffic has access to, in order to limit potential abuse.  
+{{<Aside>}}
+
+**Note**: The instructions below apply to Enterprise subscription with Bot Management only.
+
+{{</Aside>}}
+
+After submitting a false positive, you can explicitly allow the traffic if you are confident that this traffic source cannot be used for abuse in the future. To allow traffic, you can create a **Firewall Rule** with an [allow](/firewall/cf-firewall-rules/actions/) action or **Custom Rule** with a [Skip the remaining custom rules](/waf/custom-rules/skip/options/) action that matches the characteristics of your false positive report. We recommend any allow or skip rule that you create uses the most narrow possible scope, including restricting the request methods and URIs that the expected traffic has access to, in order to limit potential abuse.   
+
+* Allowing a **[JA3 fingerprint](/bots/concepts/ja3-fingerprint/)**:  If you want to allow access to a stable software client that does not come from a dedicated IP, you can do so by looking up the JA3 fingerprint(s) used by that client in the Bot Analytics dashboard, and creating a **Custom Rule** or **Firewall Rule** to allow traffic based on that JA3 fingerprint. JA3 fingerprints will only match a client’s TLS library, so be cautious in looking for both overlap with other clients and with variation based on the operating system. <br><br>Cloudflare does not recommend relying on JA3 rules for mobile applications that may be abused. If you have questions about how to securely allow traffic from your mobile application, please contact your account team. 
+
+{{<Aside>}}
+
+**Note**: The instructions below apply to Enterprise subscription with Bot Management, Bot Fight Mode and Super Bot Fight Mode.
+
+{{</Aside>}}
 
 * Allowing an **IP address**: Only use an IP address to allow traffic if the IP is a dedicated resource that belongs only to the traffic source you wish to allow. <br>If the traffic you want to allow shares an IP with other traffic sources, or if the IP changes frequently, consider an alternative to allowing by IP address.
 
-* Allowing a **[JA3 fingerprint](/bots/concepts/ja3-fingerprint/)**:  If you want to allow access to a stable software client that does not come from a dedicated IP, you can do so by looking up the JA3 fingerprint(s) used by that client in the Bot Analytics dashboard, and creating a **Custom Rule** or **Firewall Rule** to allow traffic based on that JA3 fingerprint. JA3 fingerprints will only match a client’s TLS library, so be cautious in looking for both overlap with other clients and with variation based on the operating system. <br><br>Cloudflare does not recommend relying on JA3 rules for mobile applications that may be abused. If you have questions about how to securely allow traffic from your mobile application, please contact your account team. 
 
 ## Recommendations after submitting a false negative
 

@@ -8,12 +8,7 @@ meta:
 
 # Cloudflare Security Center
 
-Cloudflare Security Center brings together our suite of security products, our security expertise, and unique Internet intelligence as a unified security intelligence solution. Security Center enables you to strengthen your security posture by:
-
-*   Mapping your cyber attack surface
-*   Providing asset inventory and discovery
-*   Identifying potential security risks, misconfigurations, and vulnerabilities
-*   Helping you to mitigate these risks through remediation in a few clicks
+{{<render file="_security-center-definition.md">}}
 
 ## Main features
 
@@ -35,4 +30,4 @@ The frequency of security scans depends on your Cloudflare plan — refer to [Sc
 
 ## Limitation
 
-*   Users with a [Administrator Read Only](/fundamentals/account-and-billing/account-setup/account-roles/#enterprise-roles) role cannot access the Cloudflare Security Center.
+*   Users with a [Administrator Read Only](/fundamentals/account-and-billing/members/roles/#account-scoped-roles) role cannot access the Cloudflare Security Center.

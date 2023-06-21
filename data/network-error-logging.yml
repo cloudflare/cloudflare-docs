@@ -5,6 +5,8 @@ product:
   title: Network Error Logging
   url: /network-error-logging/
   wrap: true
+  group: Network security
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Network Error Logging docs
@@ -17,3 +19,8 @@ meta:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: network-error-logging

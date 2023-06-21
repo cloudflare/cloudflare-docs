@@ -24,7 +24,7 @@ There are several elements involved in the configuration and use of the Ruleset 
 
 To view existing rulesets and their properties, refer to [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
 
-For more information on deploying Managed Rulesets and defining overrides, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
+For more information on deploying managed rulesets and defining overrides, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/).
 
 For more information on creating and deploying custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
 

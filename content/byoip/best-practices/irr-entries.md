@@ -50,7 +50,7 @@ Each routing registry has its own set of IRR entry instructions. This table prov
     </tr>
     <tr>
       <td>RADB</td>
-      <td><a href="https://www.radb.net/faq">https://www.radb.net/faq</a></td>
+      <td><a href="https://www.radb.net/support/">https://www.radb.net/support/</a></td>
     </tr>
     <tr>
       <td>RIPE</td>

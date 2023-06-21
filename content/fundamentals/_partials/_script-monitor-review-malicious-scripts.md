@@ -5,6 +5,6 @@ _build:
   list: never
 ---
 
-Review the information in the Page Shield dashboard about the detected malicious scripts, and eventually update the pages where the scripts were detected.
+Review the information in the Page Shield dashboard about the detected malicious resources, and eventually update the pages where those resources were detected.
 
-For more information, refer to [Review scripts considered malicious](/page-shield/use-dashboard/review-malicious-scripts/).
+For more information, refer to [Review scripts and connections considered malicious](/page-shield/detection/review-malicious-scripts/).

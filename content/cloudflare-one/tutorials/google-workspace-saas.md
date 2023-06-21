@@ -11,17 +11,17 @@ This tutorial covers how to configure Cloudflare Access as a single sign-on prov
 
 **Time to complete:** 15 minutes
 
-## 1. Create an application on the Zero Trust Dashboard
+## 1. Create an application in Zero Trust
 
-1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and navigate to **Access** > **Applications**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) and navigate to **Access** > **Applications**.
 
 2. Select **SaaS application**.
 
 3. Fill in the following information:
-    - **Application**: _Google_.
-    - **Entity ID**: `google.com`
-    - **Assertion Consumer Service URL**: `https://www.google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
-    - **Name ID Format**: _Email_.
+   - **Application**: _Google_.
+   - **Entity ID**: `google.com`
+   - **Assertion Consumer Service URL**: `https://www.google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
+   - **Name ID Format**: _Email_.
 
 {{<Aside type="warning">}}
 When you put your Google Workspace behind Access, users will not be able to log in using [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/) as an identity provider.
@@ -36,11 +36,11 @@ When you put your Google Workspace behind Access, users will not be able to log 
 1. Copy and then paste your **Public key** into a text editor.
 2. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`. For example,
 
-    ```txt
-    -----BEGIN CERTIFICATE-----
-    <PUBLIC_KEY>
-    -----END CERTIFICATE-----
-    ```
+   ```txt
+   -----BEGIN CERTIFICATE-----
+   <PUBLIC_KEY>
+   -----END CERTIFICATE-----
+   ```
 
 3. Set the file extension as `.crt` and save.
 
@@ -51,9 +51,9 @@ When you put your Google Workspace behind Access, users will not be able to log 
 3. Select **Third-party SSO profile for your organization**.
 4. Enable **Set up SSO with third-party identity provider**.
 5. Fill in the following information:
-    - **Sign-in page URL**: Copy and then paste your **SSO endpoint** from the Zero Trust dashboard.
-    - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust [team name](/cloudflare-one/glossary/#team-name).
-    - **Verification certificate**: Upload the certificate file containing your public key.
+   - **Sign-in page URL**: Copy and then paste your **SSO endpoint** from Zero Trust.
+   - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+   - **Verification certificate**: Upload the certificate file containing your public key.
 6. (Optional) Enable **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your Google Workspace domain (`google.com/a/<your_domain.com>` instead of the standard `google.com`).
 
 ## 4. Test the integration

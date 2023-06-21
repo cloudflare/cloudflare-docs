@@ -44,7 +44,7 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO interface with SAML2.0 sign on method, Issuer URL, and X.509 Certificate](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-7.png)
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

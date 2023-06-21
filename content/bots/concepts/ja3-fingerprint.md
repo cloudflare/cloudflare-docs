@@ -5,7 +5,7 @@ title: JA3 Fingerprint
 
 # JA3 Fingerprint
 
-A [**JA3 Fingerprint**](https://github.com/salesforce/ja3) helps you profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
+{{<render file="_ja3-fingerprint.md">}}
 
 {{<Aside type="note" header="Note">}}
 

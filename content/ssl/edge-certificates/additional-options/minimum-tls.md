@@ -6,12 +6,15 @@ weight: 13
 
 # Minimum TLS Version
 
-Transport Layer Security (TLS) guarantees encrypted communications between a client and a web server via HTTPS. It replaces the now deprecated Secured Sockets Layer (SSL) protocol. When web traffic is encrypted with TLS, users see a green padlock in their browser window, near the URL box.
-
-{{<render file="_minimum-tls-definition.md">}}
-<br/>
+Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
 For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed to connect.
+
+{{<Aside type="warning">}}
+Minimum TLS Version currently applies to the whole zone. If you need different minimum TLS versions for specific hostnames or paths, consider the following alternatives:
+* Use [subdomain setups](/dns/zone-setups/subdomain-setup/) to manage Cloudflare settings for one or more subdomains separately.
+* Use [Workers](/workers/examples/block-on-tls/) to set a different behavior based on the TLS version of incoming requests.
+{{</Aside>}}
 
 You can use the API to [configure cipher suites](/ssl/reference/cipher-suites/).
 
@@ -36,7 +39,7 @@ To update this setting in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To update your **Minimum TLS Version** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-minimum-tls-version-setting) request with the `value` parameter specifying your preferred minimum version.
+To update your **Minimum TLS Version** with the API, send a [`PATCH`](/api/operations/zone-settings-change-minimum-tls-version-setting) request with the `value` parameter specifying your preferred minimum version.
  
 {{</tab>}}
 {{</tabs>}}

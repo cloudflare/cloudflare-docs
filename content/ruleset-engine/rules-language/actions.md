@@ -33,14 +33,14 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
   <tbody>
     <tr>
       <td>
-        <strong>Legacy CAPTCHA</strong><br />
+        <strong>Interactive Challenge</strong><br />
         <br />
         API value:<br />
         <code>challenge</code>
       </td>
       <td>
         <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
-        <p>The client that made the request must pass a CAPTCHA challenge.</p>
+        <p>The client that made the request must pass an interactive challenge.</p>
         <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
       </td>
       <td>Yes</td>
@@ -79,9 +79,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         </p>
         <ul>
           <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
-          <li>Present an invisible proof of work challenge to the browser.</li>
           <li>Show a custom interactive challenge (such as click a button).</li>
-          <li>Show a CAPTCHA challenge.</li>
         </ul>
       </td>
       <td>Yes</td>
@@ -157,7 +155,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       <td>
         <p>
           Executes the rules in the ruleset specified in the rule configuration. You can specify a
-          Managed Ruleset or a custom ruleset to execute.
+          managed ruleset or a custom ruleset to execute.
         </p>
         <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns.</p>
       </td>

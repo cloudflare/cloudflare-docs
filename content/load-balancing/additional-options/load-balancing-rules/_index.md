@@ -8,7 +8,7 @@ meta:
 
 # Custom rules
 
-Use load balancing rules to customize the behavior of your load balancer. For example, create a rule that selects an origin pool based on the URI path of an HTTP request.
+{{<render file="_custom-rules-definition.md">}}
 
 ## More details
 

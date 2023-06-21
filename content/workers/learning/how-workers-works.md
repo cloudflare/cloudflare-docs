@@ -28,7 +28,7 @@ A single runtime can run hundreds or thousands of isolates, seamlessly switching
   {{<architecture-diagram>}}
 </figure>
 
-Unlike other serverless providers which use [containerized processes](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) each running an instance of a language runtime, Workers pays the overhead of a JavaScript runtime once on the start of an edge container. Workers processes are able to run essentially limitless scripts with almost no individual overhead by creating an isolate for each Workers function call. Any given isolate can start around a hundred times faster than a Node process on a container or virtual machine. Notably, on startup isolates consume an order of magnitude less memory.
+Unlike other serverless providers which use [containerized processes](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) each running an instance of a language runtime, Workers pays the overhead of a JavaScript runtime once on the start of a container. Workers processes are able to run essentially limitless scripts with almost no individual overhead by creating an isolate for each Workers function call. Any given isolate can start around a hundred times faster than a Node process on a container or virtual machine. Notably, on startup isolates consume an order of magnitude less memory.
 
 A given isolate has its own scope, but isolates are not necessarily long-lived. An isolate may be spun down and evicted for a number of reasons:
 
@@ -44,6 +44,18 @@ If you are interested in how Cloudflare handles security with the Workers runtim
 
 Most Workers scripts are a variation on the default Workers flow:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    return new Response('Hello worker!', { status: 200 });
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
@@ -53,6 +65,8 @@ async function handleRequest(request) {
   return new Response('Hello worker!', { status: 200 });
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's runtimes, the Workers script is passed a [`FetchEvent`](/workers/runtime-apis/fetch-event/) argument to the event handler defined in the script. From there you can generate a [`Response`](/workers/runtime-apis/response/) by computing a response on the spot, calling to another server using [`fetch`](/workers/runtime-apis/fetch/), etc.. The CPU cycles needed to get to the point of the `respondWith` call all contribute to the compute time. For example, a `setInterval` timeout does not consume CPU cycles while waiting.
 

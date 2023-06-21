@@ -24,6 +24,7 @@ layout: home
       <div class="CoveoDynamicFacetManager">
         <div class="CoveoDynamicFacet" data-title="Source" data-field="@customer_facing_source" data-id="source" data-number-of-values="" data-sort-criteria="score"></div>
         <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="5" data-sort-criteria="occurrences"></div>
+        <div class="CoveoDynamicFacet" data-title="Product group" data-field="@pcx_product_group" data-number-of-values="5" data-sort-criteria="occurrences"></div>
         <div class="CoveoDynamicFacet" data-field="@language" data-number-of-values="" data-title="Language" data-sort-criteria="score"></div>
       </div>
     </div>
@@ -36,6 +37,10 @@ layout: home
       <div class="CoveoTriggers"></div>
       <div class="CoveoBreadcrumb"></div>
       <div class="CoveoDidYouMean"></div>
+      <div class="coveo-tab-section">
+        <a class="CoveoTab" data-id="Docs" data-caption="Product docs" data-expression="@customer_facing_source==(&quot;Product documentation&quot;)"></a>
+        <a class="CoveoTab" data-id="Other" data-caption="Other resources" data-expression="NOT @customer_facing_source==(&quot;Product documentation&quot;, &quot;API documentation&quot;)"></a>
+      </div>
       <div class="coveo-results-header">
         <div class="coveo-summary-section">
           <span class="CoveoQuerySummary"><div class="coveo-show-if-no-results"></div></span>

@@ -175,8 +175,10 @@ async function websocket(url) {
 
 ## WebSocket compression
 
-Cloudflare Workers does not currently support WebSocket compression. This means that, unlike browsers, using `new WebSocket(url)` in a Worker will not set the `Sec-WebSocket-Extensions: permessage-deflate` header.
+Cloudflare Workers provides experimental support for WebSocket compression via the `web_socket_compression` compatibility flag. Refer to [Experimental Changes](/workers/platform/compatibility-dates/#experimental-changes) for more information.
+
+Without this compatibility flag, the Workers runtime will strip or ignore the `Sec-WebSocket-Extensions: permessage-deflate` header on all inbound and outbound WebSocket requests.
 
 ## Durable Objects and WebSocket state
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Refer to [Durable Objects](/workers/learning/using-durable-objects/) to get started.
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Refer to [Durable Objects](/workers/learning/using-durable-objects/) to get started, and prefer using the Durable Objects [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) rather than the `.accept` method described above.

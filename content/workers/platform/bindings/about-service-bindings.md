@@ -11,13 +11,13 @@ A Service binding allows you to send HTTP requests to another Worker without tho
 
 Service bindings allow you to:
 
-* Segment multiple use cases into separate Workers Services that can be explicitly invoked from your code.
+* Segment multiple use cases into separate Workers that can be explicitly invoked from your code.
 * Achieve better composability on the Workers platform using service-oriented architecture.
-* Create private microservices, to be conditionally invoked from other edge-facing services.
+* Create private microservices, to be conditionally invoked from other global network-facing services.
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
-More details are available in our [Runtime API Documentation for Service bindings](/workers/runtime-apis/service-bindings).
+For more information, refer to the [Runtime API documentation for Service bindings](/workers/runtime-apis/service-bindings).
 
 ![Service bindings are a zero-cost abstraction](/workers/platform/bindings/media/service-bindings-comparison.png)
 
@@ -27,9 +27,10 @@ More details are available in our [Runtime API Documentation for Service binding
 
 To manage a Workers Service binding:
 
-1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
-2. Select your **Worker**.
-3. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker.
+4. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**. 
 
 ### Wrangler
 
@@ -42,7 +43,7 @@ services = [
 ```
 The `wrangler.toml` options are:
 
-* `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [Module syntax](/workers/learning/migrating-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
+* `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [ES modules format](/workers/learning/migrate-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
 * `service`: Name of the target Worker you would like to communicate with. This Worker should be on your account.
 
 ### `wrangler.toml` example
@@ -56,7 +57,7 @@ services = [
 ]
 ```
 
-In the example above, the Service bindings for the `authentication` and `logout` Workers are accessible in code via `env.auth` and `env.logout`, respectively (when using Module syntax), or globally at `auth` and `logout` (when using Service Worker syntax).
+In the example above, the Service bindings for the `authentication` and `logout` Workers are accessible in code via `env.auth` and `env.logout`, respectively (when using ES modules format), or globally at `auth` and `logout` (when using Service Worker syntax).
 
 ### Local development
 
@@ -68,9 +69,13 @@ Service bindings are available in your Worker code under the `<BINDING_NAME>` sp
 
 ### Connected Workers
 
-Workers bound to your Worker will be listed in [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
+To review Workers bound to your Worker in the Cloudflare dashboard:
 
-![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers > Triggers](/workers/platform/bindings/media/service-bindings-triggers.png)
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** and in **Overview**, select your **Worker**.
+3. Go to **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
+
+![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers & Pages > your Worker > Triggers](/workers/platform/bindings/media/service-bindings-triggers.png)
 
 ## Compose an example Worker
 
@@ -80,7 +85,12 @@ In the following example, you will create a `gateway` Worker that invokes an `au
 
 First, you will create both a `gateway` and `auth` Worker. Once they are set up, go to the `gateway` Worker. In order to bind and call the [authentication](#authentication-workers-service) Worker, the `gateway` Worker needs to set up a Service binding. 
 
-To manage Service bindings, go to Account Home > [**Workers**](https://dash.cloudflare.com/?zone=workers) > your **Worker** > **Settings**> **Variables** > **Service bindings** > **Edit variables**.
+To manage Service bindings:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**. 
+3. Select your Worker > **Settings**.
+4. In **Variables**, find **Service bindings** > **Edit variables**.
 
 ![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](/workers/platform/bindings/media/service-bindings.png)
 
@@ -116,7 +126,7 @@ In this setup, only the `gateway` Worker is exposed to the Internet and privatel
 
 ### Authentication Workers Service
 
-The following authentication Workers Service code responds with a status code `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` secret binding. Note that you implement `fetch` here, since a Service binding will invoke FetchEvent on the target Worker.
+The following authentication Worker code responds with a status code `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` secret binding. Note that you implement `fetch` here, since a Service binding will invoke `FetchEvent` on the target Worker.
 
 ```js
 export default {
@@ -131,9 +141,9 @@ export default {
 };
 ```
 
-This `auth` Workers Service does not need to have a `*.workers.dev` or other public endpoint. The `auth` Workers Service is accessed through a Service binding from the `gateway` Worker directly. The authentication Worker is, effectively, a private Worker Service.
+This `auth` Worker does not need to have a `*.workers.dev` or other public endpoint. The `auth` Workers is accessed through a Service binding from the `gateway` Worker directly. The authentication Worker is, effectively, a private Worker Service.
 
 ## Related resources
 
-- [Runtime API Documentation](/workers/runtime-apis/service-bindings)
+- [Runtime API documentation](/workers/runtime-apis/service-bindings)
 - [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)

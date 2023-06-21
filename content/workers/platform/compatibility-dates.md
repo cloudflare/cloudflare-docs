@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Compatibility dates
 layout: compatibility-dates
+rss: https://github.com/cloudflare/cloudflare-docs/commits/production/content/workers/_partials/_platform-compatibility-dates.atom
 outputs:
   - html
   - json
@@ -45,6 +46,21 @@ compatibility_flags = [ "formdata_parser_supports_files" ]
 This example enabled the specific flag `formdata_parser_supports_files`, which is described below. As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but specifying it in this way enables it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
 
 Most developers will not need to use `compatibility_flags`; instead, Cloudflare recommends only specifying `compatibility_date`. `compatibility_flags` can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
+
+### Node.js compatibility flag
+
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
+
+```toml
+---
+header: wrangler.toml
+---
+compatibility_flags = [ "nodejs_compat" ]
+```
+
+{{<render file="_nodejs-compat-local-dev.md">}}
+
+As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 ## Change history
 

@@ -73,6 +73,7 @@ $ sudo ss -lntup
 The result should be only the services currently active on the machine:
 
 <!-- ![Just Services](/cloudflare-one/static/zero-trust-security/gitlab/just-services.png) -->
+
 ```bash
 $ sudo ss -lntup
 Netid   State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process
@@ -135,7 +136,7 @@ For GitLab, start by building two policies. Users will connect to GitLab in a co
 
 Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the **Applications** page in the Zero Trust Dashboard. Select **Add an application**.
+Once enabled, navigate to the **Applications** page in Zero Trust. Select **Add an application**.
 
 Choose self-hosted from the options presented.
 
@@ -309,4 +310,4 @@ Cloudflare Tunnel will continue to run outbound-only connections and I can avoid
 
 ## View logs
 
-You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Zero Trust Dashboard.
+You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in Zero Trust.

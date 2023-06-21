@@ -27,8 +27,8 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 ## Create a Zero Trust policy
 
-1. To create a new application, go to the Zero Trust dashboard. From the sidebar, select the **Applications** page. Select **Add an application**.
-![Location of 'Add an application' button above Application list](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
+1. To create a new application, go to Zero Trust. From the sidebar, select the **Applications** page. Select **Add an application**.
+   ![Location of 'Add an application' button above Application list](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
 1. On the next page, choose **Self-hosted**.
 
@@ -79,7 +79,7 @@ $ cloudflared tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels) to serve traffic.
+You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) to serve traffic.
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
@@ -112,10 +112,10 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 2. Select **Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
 3. For **Target**, input the ID of your Tunnel followed by `.cfargotunnel.com`. For example:
-  
-  ```txt
-    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
-  ```
+
+```txt
+  6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+```
 
 4. Select **Save**.
 

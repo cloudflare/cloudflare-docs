@@ -18,9 +18,9 @@ The Cloudflare dashboard provides the following settings to manage URL normaliza
 
   - Selects the type of normalization to perform:
 
-    - _RFC-3986_ – Applies URL normalization strictly according to [RFC-3986](https://datatracker.ietf.org/doc/html/rfc3986).
+    - _RFC-3986_ – Applies URL normalization strictly according to [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986).
 
-    - _Cloudflare_ – In addition to what is defined in RFC-3986, applies the following URL normalization techniques:
+    - _Cloudflare_ – In addition to what is defined in RFC 3986, applies the following URL normalization techniques:
 
       - Normalize back slashes (`\`) into forward slashes (`/`).
       - Merge successive forward slashes (for example, `//` will be normalized to `/`).

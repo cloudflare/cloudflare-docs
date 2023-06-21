@@ -10,7 +10,7 @@ Each client supports the following set of parameters as part of their deployment
 
 {{<Aside type="note">}}
 
-Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your `mdm.xml` or `com.cloudflare.warp.plist` files).
+Most of the parameters listed below are also configurable in Zero Trust under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your `mdm.xml` or `com.cloudflare.warp.plist` files).
 
 {{</Aside>}}
 
@@ -28,11 +28,11 @@ Instructs the client to register the device with your organization. Registration
 
 ## Required for DNS-only policy enforcement
 
-This field is only required to enforce DNS policies when deploying the client in DoH-only mode.
+This field is used to enforce DNS policies when deploying the client in DoH-only mode. 
 
 ### `gateway_unique_id`
 
-Instructs the client to direct all DNS queries to a specific Gateway DNS location. This value is only necessary if deploying without a team name or in an organization with multiple DNS locations.
+Instructs the client to direct all DNS queries to a specific [Gateway DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/). This value is only necessary if deploying without a [team name](#organization) or in an organization with multiple DNS locations.  If you do not supply a DoH subdomain, we will automatically use the default Gateway DNS location for your organization.
 
 **Value Type:** `string`
 
@@ -48,10 +48,10 @@ Allows you to choose the operational mode of the client.
 
 **Value:**
 
-- `1dot1` &mdash; Gateway enforcement of DNS policies only through [DoH](/cloudflare-one/glossary/#doh). All other traffic is handled by your device's default mechanisms.
+- `1dot1` &mdash; Gateway enforcement of DNS policies only through [DoH](/cloudflare-one/glossary/#doh-subdomain). All other traffic is handled by your device's default mechanisms.
 - `warp` &mdash; (default) All traffic sent through [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
 
-New service modes such as **Proxy only** are not supported as a value and must be configured in the Zero Trust dashboard.
+New service modes such as **Proxy only** are not supported as a value and must be configured in Zero Trust.
 
 ### `onboarding`
 
@@ -111,10 +111,6 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 
 ### `override_api_endpoint`
 
-{{<Aside type="note">}}
-Requires WARP version 2022.10.0.0 or later.
-{{</Aside>}}
-
 Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) used by the WARP client to communicate with the client orchestration API. If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
 This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all API traffic to a new IP.
@@ -126,10 +122,6 @@ This functionality is intended for use with a Cloudflare China local network par
 The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
 
 ### `override_doh_endpoint`
-
-{{<Aside type="note">}}
-Requires WARP version 2022.10.0.0 or later.
-{{</Aside>}}
 
 Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) used by the WARP client to resolve DNS queries via DNS over HTTPS (DoH). If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
@@ -143,10 +135,6 @@ The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will 
 
 ### `override_warp_endpoint`
 
-{{<Aside type="note">}}
-Requires WARP version 2022.10.0.0 or later.
-{{</Aside>}}
-
 Overrides the [IP address and UDP port](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge.  If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
 This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all WARP traffic to a new IP.
@@ -157,36 +145,26 @@ This functionality is intended for use with a Cloudflare China local network par
 
 The string must be a valid IPv4 or IPv6 socket address (containing the IP address and port number), otherwise the WARP client will fail to parse the entire MDM file.
 
-## Authentication with service tokens
+### `unique_client_id`
 
-{{<Aside>}}
-Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity-based rules.
-{{</Aside>}}
+Assigns a unique identifier to the device for the [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid).
 
-Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a [service token](/cloudflare-one/identity/service-tokens/). Before you can authenticate clients using the service token, you must add a new rule to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) that includes the token, with the **Rule action** set to `Service Auth`.
+**Value Type:** `string`
 
-Both `auth_client_id` and `auth_client_secret` are required when using this authentication method.
+**Value:** UUID for the device (for example, `496c6124-db89-4735-bc4e-7f759109a6f1`).
 
 ### `auth_client_id`
 
-The automatically generated ID when you created your [service token](/cloudflare-one/identity/service-tokens/).
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_secret` parameter.
 
 **Value Type:** `string`
 
-**Value:** `Client ID` from your service token.
+**Value:** `Client ID` of the service token.
 
 ### `auth_client_secret`
 
-The automatically generated secret when you created your [service token](/cloudflare-one/identity/service-tokens/).
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_id` parameter.
 
 **Value Type:** `string`
 
-**Value:** `Client Secret` from your service token.
-
-## Frequently Asked Questions
-
-- **What happens if I don't supply a Gateway DoH subdomain?**
-  If you specify an `organization`, we will automatically use the default DNS location specified in Gateway.
-
-- **How do I obtain logs in the event of an issue with client?**
-  The macOS and Windows clients installations each contain an application in their installed folders called `warp-diag` that can be used to obtain logs.
+**Value:** `Client Secret` of the service token.

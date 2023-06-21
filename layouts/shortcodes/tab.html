@@ -1,11 +1,5 @@
-{{- $label := replace (.Get "label") "/" "-"}} 
+{{- $label := replace (.Get "label") "/" "-"}}
 {{- $default := .Get "default" -}}
 {{- $noCode := .Get "no-code" -}}
 
-{{ if eq $default "true"}}
-<div class="tab tab-default" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | markdownify }}</div>
-{{ else if eq $noCode "true" }}
-<div class="tab noCodeTab" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | .Page.RenderString }}</div>
-{{ else }}
-<div class="tab" id="tab-{{$label}}-UNIQUE_ID">{{ $.Inner | markdownify }}</div>
-{{ end }}
+<div class="tab {{ if eq $default "true" }}tab-default{{ end }} {{ if eq $noCode "true" }}noCodeTab{{ end }}" id="tab-{{ $label }}-UNIQUE_ID">{{ $.Inner | .Page.RenderString }}</div>

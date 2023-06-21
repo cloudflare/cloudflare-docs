@@ -45,10 +45,11 @@ html {
 }
 
 .pathGrid {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin-top: 2em;
+    padding-top: 3em;
+    margin-bottom: 3em;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
 }
 
 .pathGrid a {
@@ -65,14 +66,24 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: .5em;
-    max-width: 100%;
+    padding: 1em;
+    max-width: 90%;
     margin-bottom: 1em;
-    height: 10em;
+    height: 12em;
 }
 
 [theme=dark] .individualPath {
     border: 2px solid #242628;
+}
+
+@media (max-width: 1000px) {
+    .pathGrid {
+        display: flex;
+        flex-direction: column;
+    }
+    .individualPath {
+        height: 14em;
+    }
 }
 
 .pathHeading {
@@ -99,9 +110,13 @@ html {
 }
 
 .background {
-    margin-top: 0px;
+    margin-top: 3em;
     display: flex;
     flex-direction: column;
+}
+
+.learningPathModule:first-of-type {
+    margin-top: .5em;
 }
 
 .learningPathModule {
@@ -109,15 +124,15 @@ html {
     flex-direction: column;
     width: 90%;
     margin-top: 3em;
-    border: 1px solid #242628;
+    border: .25px solid #242628;
     padding: 0em 1em 1em 1.75em;
-    border-radius: .5em;
+    border-radius: 1em;
     background: linear-gradient(var(--background-color),
     rgba(var(--background-color-rgb)));
 }
 
 [theme=dark] .learningPathModule {
-    border: 1px solid #f3f3f4;
+    border: .25px solid #f3f3f4;
     background-color: rgb(var(--background-color-rgb));
 }
 
@@ -151,6 +166,31 @@ html {
     align-self: center;
 }
 
+.Button-is-docs-primary .DocsMarkdown--link-content {
+    color: #fff;
+}
+
+[theme="dark"] .getStarted {
+    color: #1d1f20;
+}
+
+[theme="dark"] .getStartedButton {
+    background: #e06d10 !important;
+}
+
+.Button-is-docs-secondary .DocsMarkdown--link-content {
+    color: #1d1f20;
+}
+
+[theme="dark"] .Button-is-docs-secondary .DocsMarkdown--link-content {
+    color: #fff;
+}
+
+.learningNavigation {
+    width: 9em;
+    text-align: center;
+}
+
 .background a,
 .viewOtherPaths a {
     color: #0055DC;
@@ -163,31 +203,37 @@ html {
     color: #ff9e40;
 }
 
-details div ul li {
+.pathDetails div ul li {
     list-style: none;
     padding-left: 0;
     border-bottom: .5px solid #242628;
 }
 
-[theme=dark] details div ul li {
+[theme=dark] .pathDetails div ul li {
     border-bottom: .5px solid #f3f3f4;
 }
 
 @media (min-width: 599px) {
-    details div ul li {
+    .pathDetails div ul li {
         line-height: 4;
+    }
+    .readingTime {
+        margin-top: -2em; 
+        font-size: .8em;
     }
 }
 
 @media (max-width: 599px) {
-    details div ul li {
-        line-height: 1.5;
+    .pathDetails div ul li {
+        line-height: 2;
+        margin-bottom: 3em;
+    }
+    .readingTime {
+        margin-top: 0em; 
+        font-size: .8em;
     }
     .learningPathModule {
         padding-left: 1em;
-    }
-    .individualPath {
-        height: 12em;
     }
 }
 
@@ -200,3 +246,54 @@ details div ul li {
 label {
     margin-left: .5em;
 }
+
+.progressIndicator {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    max-width: 80%;
+}
+
+@media (max-width: 768px) {
+
+    .progressIndicator {
+        max-width: 100%;
+    }
+}
+
+.timeEstimate {
+    margin-top: -.75em;
+    padding-bottom: 1em;
+    font-size: .9em;
+}
+
+.learningSummary a {
+    text-decoration: none;
+    color: inherit;
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: 0.08;
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+  --border-bottom-color-alpha: 0.3;
+  --background-color: rgba(
+    var(--background-color-rgb),
+    var(--background-color-alpha)
+  );
+  background-color: var(--background-color);
+  border-bottom: 1px solid
+    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+  }
+  
+  .learningSummary a:hover {
+    --background-color-alpha: 0.2;
+  }
+  
+  [theme="dark"] .learningSummary a {
+    --background-color-alpha: 0.03;
+    --border-bottom-color-rgb: var(--orange-rgb);
+    --border-bottom-color-alpha: 0.35;
+    color: var(--code-orange);
+  }
+  
+  [theme="dark"] .learningSummary a:hover {
+    --background-color-alpha: 0.1;
+  }

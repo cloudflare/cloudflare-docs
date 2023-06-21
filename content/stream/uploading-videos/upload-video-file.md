@@ -59,7 +59,7 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 
 ### Supported options in "Upload-Metadata"
 
-Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://developers.cloudflare.com/api/operations/stream-videos-list-videos).
+Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](/api/operations/stream-videos-list-videos).
 
 {{<definitions>}}
 
@@ -85,7 +85,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 {{</definitions>}}
 
-### Additional supported headers
+### Set creator property
 
 Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
 
@@ -207,7 +207,7 @@ var options = {
     Authorization: 'Bearer <API_TOKEN>',
   },
   chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
-  resume: true,
+  retryDelays: [0, 3000, 5000, 10000, 20000], // Indicates to tus-js-client the delays after which it will retry if the upload fails
   metadata: {
     filename: 'test.mp4',
     filetype: 'video/mp4',

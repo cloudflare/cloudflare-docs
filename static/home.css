@@ -191,6 +191,14 @@
 .SiteHeader---shadow-cover {
     left: 0;
     right: 0;
+    background-color: var(--background-color);
+}
+
+.SiteHeader--container {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
     max-width: var(--docs-max-page-width);
     margin-left: auto;
     margin-right: auto
@@ -316,7 +324,7 @@
 
 html[is-site-page] .DocsContent {
     padding-top: 3rem;
-    padding-bottom: 8rem
+    padding-bottom: 2rem
 }
 
 .Stripe {
@@ -351,7 +359,6 @@ html[is-site-page] .DocsContent {
 .ProductGrid {
     max-width: 100%;
     margin: 0 auto;
-    padding: 0 2rem
 }
 
 .ProductGrid--content {
@@ -381,7 +388,7 @@ html[is-site-page] .DocsContent {
 
 .ProductGrid--link span {
     white-space: nowrap;
-    font-weight: 600;
+    font-weight: 450;
     line-height: 1.25
 }
 
@@ -415,10 +422,6 @@ html[is-site-page] .DocsContent {
 .ProductGrid--link svg path,
 .ProductGrid--link svg rect {
     fill: #6d767b
-}
-
-[theme=dark] .ProductGrid--link span {
-    font-weight: 500
 }
 
 [theme=dark] .ProductGrid--link svg path,
@@ -471,20 +474,21 @@ html[is-site-page] .DocsContent {
 }
 
 @media (min-width:768px) {
-.HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-    background-repeat: no-repeat;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 0 0px .5px white inset;
-}
+    .HeroImage {
+        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
+        background-repeat: no-repeat;
+        margin: 0 auto;
+        position: relative;
+        box-shadow: 0 0 0px .5px white inset;
+        margin-top: 3em;
+    }
 }
 
 @media (min-width:768px) {
-[theme=dark] .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
-    box-shadow: 0 0 0px .5px #1d1f20 inset;
-}
+    [theme=dark] .HeroImage {
+        background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
+        box-shadow: 0 0 0px .5px #1d1f20 inset;
+    }
 }
 
 @media (max-width:768px) {
@@ -495,34 +499,50 @@ html[is-site-page] .DocsContent {
 
 @media (min-width:768px) {
     .ZTHeroImage {
-        background-image: url("/zt-light-background-image.svg");
+        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         background-repeat: no-repeat;
         margin: 0 auto;
         position: relative;
         box-shadow: 0 0 0px .5px white inset;
+        margin-top: 3em;
     }
-    }
-    
-    @media (min-width:768px) {
+}
+
+@media (min-width:768px) {
     [theme=dark] .ZTHeroImage {
-        background-image: url("/zt-dark-background-image.svg");
+        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
+}
+
+@media (max-width:768px) {
+    .ZTHeroImage {
+        background-image: none;
     }
-    
-    @media (max-width:768px) {
-        .ZTHeroImage {
-            background-image: none;
-        }
-    }
+}
 
 .HeroBlockGrid {
-    padding-left: .75em;
-    padding-top: 2em;
-    max-width: 90%;
+    padding: 40px 0;
+    background: #e2f5fa;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: start;
+    align-content: center;
+    gap: 6em;
+}
+
+.HeroBlockGrid--full-bleed {
+    box-shadow: 0 0 0 100vmax #e2f5fa;
+    clip-path: inset(0 -100vmax);
+}
+
+[theme=dark] .HeroBlockGrid {
+    background: #222629;
+}
+
+[theme=dark] .HeroBlockGrid--full-bleed {
+    box-shadow: 0 0 0 100vmax #222629;
+    clip-path: inset(0 -100vmax);
 }
 
 .HeroBlockGrid>* {
@@ -530,11 +550,18 @@ html[is-site-page] .DocsContent {
 }
 
 .HeroBlock {
-    width: 28em;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2em;
+    margin-top: 1.5em;
+}
+
+.HeroBlock--content p {
+    width: 20em;
+}
+
+.HeroBlock--content .DocsMarkdown--link-content {
+    text-decoration: none;
 }
 
 .HeroBlock--content>:first-child {
@@ -550,15 +577,47 @@ html[is-site-page] .DocsContent {
     overflow: hidden
 }
 
-[theme=light] .HeroBlock [id^=twitter-widget] {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1) !important
+.HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    border: none;
+    background-color: inherit;
+}
+
+.HeroBlock .DocsMarkdown--link-external-icon {
+    display: none;
+}
+
+.DocsMarkdown .HeroBlock h2 {
+    font-size: 1.2em;
+}
+
+.DocsMarkdown .HeroBlock img {
+    height: 25px;
+    display: inline-flex;
+    margin-bottom: -5px;
+}
+
+[theme=dark] .DocsMarkdown .HeroBlock img {
+    filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
+}
+
+[theme=dark] .HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: var(--code-orange);
+    background: inherit;
+    border-bottom-color: var(--code-orange);
+}
+
+@media (max-width:768px) {
+    .HeroBlockGrid {
+        gap: 1.8em;
+    }
 }
 
 .QuadBlockGrid {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    justify-content: left;
+    justify-content: start;
     margin-top: 1.5em;
 }
 
@@ -569,12 +628,127 @@ html[is-site-page] .DocsContent {
     margin-right: auto;
     padding-left: .4em;
     padding-right: .4em;
-    align-items: center;
-    justify-content: center;
 }
 
-.QuadBlockGrid a {
+/* Docs-wide style overrides for quadblock link */
+.QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    background-color: inherit;
+    border-bottom-color: #000;
+}
+
+.QuadBlock .DocsMarkdown--link-external-icon {
+    display: none;
+}
+
+[theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    color: #fff;
+    background-color: inherit;
+    border-bottom-color: #fff;
+}
+
+.QuadBlockGrid a,
+.ViewProducts a {
     color: inherit;
+    text-decoration: none;
+}
+
+
+.Recommendation {
+    border-top: 1px solid #b6b6b6;
+    padding: 80px 0;
+}
+
+.RecommendedContentGrid {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+}
+
+.RecommendationTitle {
+    padding-bottom: .8em;
+}
+
+.RecommendedContentBlock {
+    padding-bottom: 4em;
+}
+
+.RecommendedContentBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: #0051C3;
+    background: inherit;
+    border-bottom-color: #0051C3;
+}
+
+[theme=dark] .RecommendedContentBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: var(--code-orange);
+    background: inherit;
+    border-bottom-color: var(--code-orange);
+}
+
+.RecommendedContentWithCard {
+    padding: 1em;
+    margin: 1em;
+    height: 20em;
+    width: 20%;
+    border: 1px solid #b6b6b6;
+    border-radius: 6px;
+}
+
+[theme=dark] .RecommendedContentWithCard {
+    border: 1px solid var(--code-orange);
+}
+
+.RecommendedContentTitle {
+    font-size: 1.3em;
+}
+
+.RecommendedContentDescription {
+    font-size: .85em;
+    align-self: flex-start;
+}
+
+@media (max-width:1200px) {
+    .RecommendedContentGrid {
+        flex-direction: column;
+        gap: .8em;
+    }
+
+    .RecommendedContentWithCard {
+        width: 75%;
+        margin: 0;
+        height: auto;
+    }
+
+    .RecommendedContentDescription {
+        font-size: 1em;
+    }
+}
+
+@media (max-width:768px) {
+    .RecommendedContentGrid {
+        margin-bottom: .8em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6em;
+    }
+
+    .RecommendedContentWithCard {
+        width: 100%;
+        height: unset;
+        margin: .6em .2em;
+    }
+
+    .RecommendedContentTitle {
+        font-size: 1.5em;
+    }
+
+    .RecommendedContentDescription {
+        width: unset;
+        height: unset;
+        font-size: 1em;
+    }
 }
 
 .CommunityBlock {
@@ -582,8 +756,7 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: .75em;
-    padding-right: 3.5em;
+    padding-right: 1.5em;
     align-items: center;
     justify-content: center;
 }
@@ -595,150 +768,110 @@ html[is-site-page] .DocsContent {
     }
 }
 
+.CommunityBlock--content {
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+}
+
 .CommunityBlock img {
-    height: 2.5em;
-    width: 2.5em;
-    padding-bottom: .5em;
-    align-content: center;
+    height: 1.6em;
 }
 
 [theme=dark] .CommunityBlock img {
     filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
 
+.HeaderBlock {
+    padding-bottom: 40px;
+}
+
 .TriBlockGrid {
     display: flex;
     flex-wrap: wrap;
-    padding-left: .75em;
-    padding-right: .75em;
-    margin-top: 3.5em;
-    margin-bottom: 1em;
+    margin-top: 40px;
+    margin-bottom: 80px;
     justify-content: space-between;
 }
 
-.TriBlock {    
-    display: flex;
-    width: 20em;
-    height: 18em;
-    background: #f3f3f4;
-    padding: .5em 2em;
-    margin-bottom: 1em;
+.TriBlock {
+    border-left: 5px solid #F6821F;
+    padding: .5em 1.8em;
+    height: 22em;
+    width: 15em;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1100px) {
     .TriBlock {
         width: unset;
+        margin-bottom: 20px;
     }
 
     .TriBlockGrid {
         display: inline-block;
         width: 100%;
+        margin-top: 1em;
+        padding: 0;
     }
 }
 
-[theme=dark] .TriBlock {
-    background: #242628
-}
-
 .TriBlock a {
-    font-size: .90em;
-    color: #0055DC;
+    font-size: 16px;
+    color: #313131;
     --background-color: transparent;
-    --border-bottom-color-rgb: 0, 85, 220;
-    --border-bottom-color-alpha: .3;
+    --border-bottom-color-rgb: 0, 0, 0;
+    --border-bottom-color-alpha: 1;
 }
 
 [theme=dark] .TriBlock a {
     text-decoration: none;
+    color: #fff;
+    --border-bottom-color-rgb: 256, 256, 256;
 }
 
-.TriBlock ul li {
-    list-style-type: none;
-    padding: 0; /* Remove padding */
-    margin-top: 0px;
-    margin-left: 0px;
-}
-
-.TriBlockHeader {
+.TriBlock li {
     display: flex;
-    justify-content:flex-start;
-    align-items:baseline;
+    align-items: stretch;
+    gap: 10px;
+    padding: 6px 0;
+}
+
+.TriBlock li p {
+    margin-bottom: initial;
+}
+
+.TriBlock img {
+    height: 25px;
 }
 
 .TriBlockHeader p {
     font-size: 1.25em;
-    font-weight: bold;
-    padding: .5em 0 .75em .5em;
+    font-weight: 500;
+    padding: .5em 0 .5em 0;
 }
 
 /* Docs-wide style overrides for tri */
 
 .DocsMarkdown .TriBlock ul {
     padding-left: 0;
+    margin-bottom: 1em;
 }
 
 .DocsMarkdown .TriBlockHeader p {
     margin-bottom: 0;
 }
 
-[theme=dark] .TriBlockHeader img {
-    filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+[theme=dark] .TriBlock img {
+    filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
 
-.FeaturedContentSectionTitle {
-    padding-left:.75em;
-    margin-bottom: 2em;
+
+.rssList a {
+    color: #0055DC;
 }
 
-.FeaturedContentGrid {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: .75em;
-    padding-right: .75em;
-    margin-top: 2em;
-    margin-bottom: 1em;
-    justify-content: space-between;
-}
-
-.FeaturedContentBlock {
-    display: flex;
-    width: 16em;
-    height: 18em;
-    background: #f3f3f4;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    padding-bottom: .5em;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-top: 1.25em;
-}
-
-@media (max-width:570px)  {
-    .FeaturedContentBlock {
-        width: unset;
-    };
-}
-
-[theme=dark] .FeaturedContentBlock {
-    background: #242628
-}
-
-.FeatureContentHeader {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items:flex-end;
-    height: 16.5em;
-}
-
-.FeatureContentTitle {
-    font-weight: bold;
-    align-self: flex-start;
-}
-
-.FeaturedContentDescription {
-    font-size: .85em;
-    align-self: flex-start;
+[theme=dark] .rssList a {
+    color: #ff9e40;
 }
 
 .ConnectHeader {
@@ -753,22 +886,189 @@ html[is-site-page] .DocsContent {
     border-top: 1px solid white;
 }
 
-.ViewProducts {
-    padding-left: .75em;
-    padding-right: .75em;
-    padding-top: .5em;
-    max-width: 100%;
+.SiteFooter {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    flex-wrap: wrap;
+    max-width: var(--docs-max-page-width);
+    margin-left: auto;
+    margin-right: auto;
+    gap: 6em;
+    padding: 2.6rem var(--docs-content-gap) 3.5rem;
 }
 
-.StartHere a {
-    font-size:2em;
+.SiteFooterItem ul,
+a {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     color: inherit;
 }
 
-.HomeTitle {
-    padding-left: .75em;
-    padding-top: 3em;
-    line-height: 5em;
+.SiteFooterItem li {
+    padding-top: .4em;
+}
+
+.SiteFooterHeader {
+    font-size: 1em;
+    font-weight: 600;
+    padding-bottom: .6em;
+}
+
+@media (max-width:768px) {
+    .SiteFooter {
+        flex-direction: column;
+        gap: 2em;
+        padding: 2em 1em;
+        padding-top: 0;
+    }
+
+    .SiteFooterItem li {
+        padding: 0;
+    }
+}
+
+.FeaturedContentSection {
+    margin-top: 2em;
+}
+
+.FeatureContentGrid {
+    display: flex;
+    gap: 2em;
+    align-items: flex-end;
+    margin-bottom: 3em;
+}
+
+.FeaturedContentBlock {
+    padding-top: 80px;
+}
+
+.FeatureContentWithImage {
+    margin: 0 30px;
+}
+
+.FeatureContentWithCard {
+    padding: 1em;
+    margin: 1em;
+    height: 20em;
+    width: 30em;
+    border: 1px solid #c8c6c6;
+    border-radius: 6px;
+}
+
+.FeatureContentDescription {
+    font-size: .85em;
+    width: 16em;
+    align-self: flex-start;
+}
+
+.FeatureContentTitle {
+    font-size: 1.3em;
+}
+
+.FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: #0051C3;
+    background: inherit;
+    border-bottom-color: #0051C3;
+}
+
+[theme=dark] .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: var(--code-orange);
+    background: inherit;
+    border-bottom-color: var(--code-orange);
+}
+
+.ZeroTrustImage {
+    content: url('./zero-trust-light.svg');
+}
+
+[theme=dark] .ZeroTrustImage {
+    content: url('./zero-trust-dark.svg');
+}
+
+.DeveloperPlatformImage {
+    content: url('./developer-platform-light.svg');
+}
+
+[theme=dark] .DeveloperPlatformImage {
+    content: url('./developer-platform-dark.svg');
+}
+
+@media (max-width:768px) {
+    .FeaturedContentSection {
+        margin-top: 5em;
+    }
+
+    .FeatureContentGrid {
+        margin-bottom: .8em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6em;
+    }
+
+    .featured--zero-trust {
+        flex-direction: column-reverse;
+    }
+
+    .FeatureContentWithCard {
+        width: 100%;
+        height: unset;
+        margin: .6em .2em;
+    }
+
+    .FeatureContentWithImage {
+        width: unset;
+        margin: .6em .2em;
+    }
+
+    .FeatureContentTitle {
+        font-size: 1.5em;
+    }
+
+    .FeatureContentDescription {
+        width: unset;
+        height: unset;
+        font-size: 1em;
+    }
+}
+
+.subTitle {
+    font-size: 1.3em;
+    font-weight: 400;
+    padding-left: .1em;
+    color: #131313;
+}
+
+[theme=dark] .subTitle {
+    color: #fff;
+}
+
+.StartHere {
+    font-size: 1.8em;
+    font-weight: 400;
+    padding-top: 1em;
+    text-decoration: underline;
+    color: #131313;
+}
+
+[theme=dark] .StartHere {
+    color: #fff;
+}
+
+.leading {
+    font-size: 2.5em;
+    padding: 1em 0;
+    line-height: 20px;
+    font-weight: 400;
+    color: #313131;
+}
+
+[theme=dark] .leading {
+    color: #fff;
 }
 
 @font-face {
@@ -1528,6 +1828,16 @@ html {
 
 .Button-is-docs-secondary {
     background: var(--gray-9)
+}
+
+.Button-is-docs-tertiary {
+    background: #0051C3;
+    color: #fff;
+}
+
+[theme=dark] .Button-is-docs-tertiary {
+    background: #0051C3;
+    color: #fff;
 }
 
 [theme=dark] .Button-is-docs-secondary {
@@ -2463,6 +2773,49 @@ html {
     vertical-align: initial;
     font-size: .8em;
     top: -.5em
+}
+
+.DocsToolbar--theme-toggle {
+    display: flex;
+}
+
+#MobileSearch {
+    background: var(--background-color);
+    border-radius: 5px;
+    border: none;
+    color: var(--color);
+    cursor: pointer;
+    height: 28px;
+    margin-right: .8em;
+    width: 28px;
+}
+
+@media (min-width: 768px) {
+    #MobileSearch {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    #MobileSearch {
+        width: 40px;
+    }
+
+    #MobileSearch svg {
+        width: 24px;
+    }
+}
+
+#MobileSearch:hover {
+    background: rgba(var(--gray-6-rgb), .7);
+}
+
+[theme="dark"] #MobileSearch {
+    background: none;
+}
+
+[theme="dark"] #MobileSearch:hover {
+    background: rgba(var(--gray-2-rgb), .7)
 }
 
 .Superscript,
@@ -4330,7 +4683,7 @@ code .DocsMarkdown--prop-meta {
 }
 
 .DocsMarkdown blockquote:before {
-    quotes: "\201C""\201D";
+    quotes: "\201C" "\201D";
     content: open-quote;
     position: absolute;
     top: .05em;
@@ -4830,196 +5183,106 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsSearch {
     --text-indent: calc(var(--docs-content-gap) + 1px);
-    height: var(--docs-header-height)
+    height: var(--docs-header-height);
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.DocsSearch--input,
-.DocsSearch--input-wrapper {
-    position: relative;
-    height: 100%
-}
-
-@media (min-width: 769px) {
-.DocsSearch--input-wrapper:focus-within {
-    --highlight-opacity: 0.2;
-    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
-  }
-
-  .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-  
-  .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-  
-  .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-
-  [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-  
-  [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-  
-  [theme="dark"] .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
-}
-
-.DocsSearch--input {
-    color: inherit;
+#algolia {
     width: 100%;
-    border: 0;
-    padding: 0 var(--text-indent) .05em;
-    background: transparent;
-    outline: none;
-    z-index: 2
 }
 
-@-moz-document url-prefix() {
-    .DocsSearch--input {
-        letter-spacing: 0
-    }
+.DocSearch-Container {
+    z-index: 999;
 }
 
-.DocsSearch--input::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .45);
-    opacity: 1
+[theme="dark"] .DocSearch-Container {
+    background: rgba(var(--background-color-rgb), .7);
 }
 
-.DocsSearch--input:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .45);
-    opacity: 1
+.DocSearch-Reset {
+    color: rgb(var(--gray-0-rgb));
 }
 
-.DocsSearch--input::placeholder {
-    color: rgba(var(--color-rgb), .45);
-    opacity: 1
+.DocSearch-Hit-Tree {
+    height: var(--docsearch-hit-height) !important;
+    width: 24px;
 }
 
-[theme=dark] .DocsSearch--input::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .55)
+.DocSearch-Search-Icon,
+.DocSearch-Container svg,
+.DocSearch-Logo svg {
+    height: auto;
+    width: auto;
 }
 
-[theme=dark] .DocsSearch--input:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .55)
+[theme="dark"] .DocSearch-Logo svg>* {
+    fill: white;
 }
 
-[theme=dark] .DocsSearch--input::placeholder {
-    color: rgba(var(--color-rgb), .55)
+.DocSearch-Screen-Icon svg {
+    height: auto;
+    width: auto;
+    margin: 0 auto;
 }
 
-.DocsSearch--input-icon {
-    position: absolute;
-    top: 0;
-    bottom: .05em;
-    margin-top: auto;
-    margin-bottom: auto;
-    left: 2.2em;
-    height: .8823529411em;
-    width: .8823529411em;
-    pointer-events: none;
-    opacity: .5;
-    transition: color .3s ease, opacity .3s ease;
-    z-index: 3
-}
-
-.DocsSearch--input-wrapper:focus-within .DocsSearch--input-icon {
-    color: var(--orange);
-    opacity: 1
-}
-
-.DocsSearch--input-bottom-border {
-    position: absolute;
-    left: 0;
-    width: 50%;
-    bottom: 0;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(var(--color-rgb), .07) 0, rgba(var(--color-rgb), .07) calc(100% - 6em), rgba(var(--color-rgb), 0))
-}
-
-[theme=dark] .DocsSearch--input {
-    background: linear-gradient(90deg, rgba(var(--shadow-color-rgb), .1) 0, rgba(var(--shadow-color-rgb), .1) calc(30% - 6em), rgba(var(--shadow-color-rgb), 0) 30%)
-}
-
-[theme=dark] .DocsSearch--input-bottom-border {
-    bottom: -1px
-}
-
-[theme=dark] .DocsSearch--input-bottom-border:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -1px;
-    width: 100%;
-    bottom: 0;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(var(--shadow-color-rgb), .5) 0, rgba(var(--shadow-color-rgb), .5) calc(100% - 6em), rgba(var(--shadow-color-rgb), 0))
-}
-
-.DocsSearch .ds-suggestion {
-    display: block;
-    --horizontal-padding: 1em;
-    padding: var(--suggestion-item-vertical-padding) var(--horizontal-padding);
-    margin: 0 calc(var(--horizontal-padding)*-1);
-    border-radius: .25em
-}
-
-.DocsSearch .ds-suggestion.ds-cursor {
-    background: rgba(var(--gray-5-rgb), .2)
-}
-
-[theme=dark] .DocsSearch .ds-suggestion.ds-cursor {
-    background: rgba(var(--gray-6-rgb), .15)
-}
-
+/* hide docssearch on mobile */
 @media (max-width:768px) {
-    .DocsSearch {
-        pointer-events: all
+    #algolia {
+        display: none;
     }
+}
 
-    .DocsSearch--input:not(:focus) {
-        padding: 0;
-        opacity: 0
-    }
+.DocsSearch-Modal {
+    top: 48px;
+}
 
-    .DocsSearch[is-focused] {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        --text-indent: 3rem;
-        z-index: 2
-    }
+/* dark */
+[theme=dark] .DocsSearch {
+    --docsearch-searchbox-background: var(--background-color);
+}
 
-    .DocsSearch--input-icon {
-        left: 15px;
-        height: 15px;
-        width: 15px
-    }
+[theme=dark] .DocSearch-Button .DocSearch-Search-Icon {
+    color: var(--color);
+}
 
-    .DocsSearch--input-wrapper:focus-within .DocsSearch--input-icon {
-        left: 19px
-    }
+[theme=dark] .DocSearch-Button-Placeholder {
+    color: var(--color);
+}
 
-    .DocsSearch[is-focused] .DocsSearch--input-wrapper {
-        background: var(--background-color);
-        height: var(--docs-header-height)
-    }
+[theme=dark] .DocSearch-Title {
+    color: rgb(var(--background-color-rgb));
+}
 
-    .DocsSearch--input-bottom-border {
-        display: none
-    }
+.DocSearch-Button,
+.DocSearch-Button:hover {
+    transition: background-color 0.3s ease;
+}
+
+.DocSearch-Button {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 95%;
+}
+
+[theme=dark] .DocSearch-Button {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[theme=dark] .DocSearch-Button:hover {
+    --docsearch-searchbox-focus-background: rgba(var(--color-rgb), .05);
+    box-shadow: none;
+}
+
+[theme=dark] .DocSearch-Button-Key {
+    --docsearch-key-gradient: rgba(var(--color-rgb), .05);
+    --docsearch-muted-color: var(--color);
+    box-shadow: none;
+}
+
+.DocSearch-Button {
+    margin: 0 48px 0 16px;
 }
 
 .DocsMobileHeader {
@@ -5192,8 +5455,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     }
 }
 
-.DocsFooter--content {
-    display: flex
+.DocsFooter--content div {
+    margin-bottom: 1em;
 }
 
 @media (max-width:414px) {
@@ -5490,5 +5753,64 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .slashPlaceholder {
-      visibility: hidden;
+    visibility: hidden;
+}
+
+.legalInformation {
+    max-width: var(--docs-max-page-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2.6rem var(--docs-content-gap) 3.5rem;
+    text-align: center;
+}
+
+.legalInformation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.legalInformation li {
+    display: inline-block;
+    padding: 0 0.5rem 1rem;
+}
+
+@media (min-width:900px) {
+    .legalInformation li {
+        padding-left: 0;
+    }
+
+    .legalInformation li+li:before {
+        content: "|";
+        padding-right: .5rem;
+    }
+
+    .legalInformation {
+        text-align: left;
+    }
+}
+
+/* Highly specific override rules to make the cookie prefs button stylistically consistent */
+html #ot-sdk-btn.ot-sdk-show-settings {
+    color: inherit;
+    border: none !important;
+    transition: none !important;
+    padding: 0 !important;
+    line-height: inherit !important;
+    font-size: inherit !important;
+
+    background-color: transparent !important;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+html #ot-sdk-btn.ot-sdk-show-settings:hover {
+    color: inherit;
+}
+
+.md__image {
+  display: inline;
+  margin: 0 10px 0 0;
 }

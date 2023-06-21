@@ -14,11 +14,11 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Create account ruleset][cr-account] | `POST /accounts/<ACCOUNT_ID>/rulesets` |
-| [Create zone ruleset][cr-zone] | `POST /zones/<ZONE_ID>/rulesets` |
+| [Create an account ruleset][cr-account] | `POST /accounts/<ACCOUNT_ID>/rulesets` |
+| [Create a zone ruleset][cr-zone] | `POST /zones/<ZONE_ID>/rulesets` |
 
-[cr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset
-[cr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset
+[cr-account]: /api/operations/createAccountRuleset
+[cr-zone]: /api/operations/createZoneRuleset
 
 The following parameters are required:
 
@@ -130,7 +130,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
 
 ## Example - Create a zone-level phase entry point ruleset
 
-The following example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
+The following example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a managed ruleset.
 
 {{<Aside type="note">}}
 
@@ -148,7 +148,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 -d '{
   "name": "Zone-level phase entry point",
   "kind": "zone",
-  "description": "This ruleset executes a Managed Ruleset.",
+  "description": "This ruleset executes a managed ruleset.",
   "rules": [
     {
       "action": "execute",
@@ -174,7 +174,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
   "result": {
     "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
-    "description": "This ruleset executes a Managed Ruleset.",
+    "description": "This ruleset executes a managed ruleset.",
     "kind": "zone",
     "version": "1",
     "rules": [

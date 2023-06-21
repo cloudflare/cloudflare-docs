@@ -5,15 +5,12 @@ languageCode = "en"
 DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
 enableRobotsTXT = false
-
+summaryLength = 30
 disableAliases = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
 enableEmoji = true
 enableGitInfo = true
-
-# TODO
-rssLimit = 10
 
 paginate = 12 # default 10
 paginatePath = "page" # default
@@ -43,3 +40,10 @@ tutorial_token = "xxa5a7d4c9-db72-424d-860d-ae68ff7f60ac"
 		lineNoStart = 1
 		lineNos = false
 		hl_Lines = ""
+
+[security]
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$', '^CF_PAGES_BRANCH$']
+
+[build]
+  noJSConfigInAssets = true

@@ -30,5 +30,3 @@ Now that Area 1 has been authorized to access and retrieve directory information
     ![You can protect an entire group of users. The protection markers will turn green to show that protection is active](/email-security/static/bec/o365/step6-protect-group.png)
 
 7. You can also protect individual users. Select the three-dots button next to each user you want to protect, and then select **Protect**.
-
-    ![You can also protect just one user](/email-security/static/bec/o365/step7-protect-user.png)

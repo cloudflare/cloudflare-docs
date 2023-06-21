@@ -2,6 +2,8 @@
 title: What is a filter?
 pcx_content_type: concept
 weight: 1
+meta:
+  description: A filter is a way of setting up if (traffic matches certain criteria), then do something.
 ---
 
 # What is a filter?

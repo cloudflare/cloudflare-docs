@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Jamf
 weight: 2
+meta:
+    description: Learn how to deploy Cloudflare WARP using Jamf.
 ---
 
 # Deploy WARP using Jamf
@@ -50,7 +52,7 @@ The WARP client, known in the App Store as [1.1.1.1: Faster Internet](https://ap
 
 ### Prerequisites
 
-Create an [XML file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-ios) with your custom deployment preferences.
+Create an [XML file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#ios) with your custom deployment preferences.
 
 ### Configure Jamf for iOS
 

@@ -53,6 +53,10 @@ When you disable a load balancer, requests to a specific hostname depend on your
 
 In both cases, disabling your load balancer prevents traffic from going to any associated origin or fallback pools.
 
+If you already have an existing `A`, `AAAA`, or `CNAME` record, be aware that the change may take some time to propagate due to [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) and any record changes is affected, as your local DNS cache may take longer to update.
+
+
+
 ## SSL/TLS coverage
 
 Due to internal limitations, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
@@ -61,9 +65,9 @@ As a current workaround for a domain or first-level subdomain (`lb.example.com`)
 
 For example, if your load balancer hostname was `lb.example.com`, you could create the following record solely for the purpose of SSL/TLS coverage.
 
-| Type |   LB  | IPv4 address | Proxy status |
+| Type |  Name | IPv4 address | Proxy status |
 | ---- | ----- | ------------ | ------------ |
-| A    | `www` | `192.0.2.1`  | Proxied      |
+| A    | `lb` | `192.0.2.1`  | Proxied      |
 
 Based on the [priority order](#priority-order), it would not receive any traffic because it is as equally specific as the LB hostname.
 

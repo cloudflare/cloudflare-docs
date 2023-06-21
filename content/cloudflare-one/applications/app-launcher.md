@@ -22,7 +22,7 @@ By default, the App Launcher is disabled. To enable it, you must configure a pol
 
 To enable the App Launcher:
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 2. Under the **App Launcher** card, select **Manage**.
 

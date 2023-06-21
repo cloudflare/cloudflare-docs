@@ -1,39 +1,40 @@
 ---
-title: Configure R2 with Terraform
-summary: Example of how to configure R2 with Terraform.
+title: Terraform
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure R2 with Terraform
 
-With [`terraform`](https://www.terraform.io/downloads) installed, create `main.tf` and copy the content below replacing with your Account ID and R2 credentials.
+{{<render file="_keys.md">}}<br>
+
+This example shows how to configure R2 with Terraform using the [Cloudflare provider](https://github.com/cloudflare/terraform-provider-cloudflare).
+
+{{<Aside type="note" header="Note for using AWS provider">}}
+
+When using the Cloudflare Terraform provider, you can only manage buckets. To configure items such as CORS and object lifecycles, you will need to use the [AWS Provider](/r2/examples/terraform-aws/).
+
+{{</Aside>}}
+
+With [`terraform`](https://developer.hashicorp.com/terraform/downloads) installed, create `main.tf` and copy the content below replacing with your API Token.
 
 ```hcl
 terraform {
   required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "4.20.1"
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+      version = "~> 4"
     }
   }
 }
 
-provider "aws" {
-  access_key = <R2 Access Key>
-  secret_key = <R2 Secret Key>
-  skip_credentials_validation = true
-  skip_region_validation = true
-  skip_requesting_account_id = true
-  endpoints {
-    s3 = "https://<account id>.r2.cloudflarestorage.com"
-  }
+provider "cloudflare" {
+  api_token = "<YOUR_API_TOKEN>"
 }
 
-
-resource "aws_s3_bucket" "cloudflare-bucket" {
-  bucket = "my-tf-test-bucket"
+resource "cloudflare_r2_bucket" "cloudflare-bucket" {
+  account_id = "<YOUR_ACCOUNT_ID>"
+  name       = "my-tf-test-bucket"
+  location   = "WEUR"
 }
 ```
 

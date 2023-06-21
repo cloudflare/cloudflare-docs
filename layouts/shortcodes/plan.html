@@ -1,4 +1,18 @@
 {{ $map := dict "enterprise" "Enterprise-only" "pro" "Pro and above" "business"
 "Business and above" "all" "Available on all plans" "paid" "Available on paid plans"
-"add-on" "Add-on feature" }}
+"add-on" "Add-on feature" "ent-add-on" "Enterprise-only paid add-on"}}
+
+{{ with .Get "id" }}
+
+{{- $plan_json := $.Site.Data.plans -}}
+{{- $id := split .  "." -}}
+
+{{- $info :=  index $plan_json $id -}}
+
+<div class="DocsMarkdown--plan">{{ $info | string | markdownify }}</div>
+
+{{ else }}
+
 <div class="DocsMarkdown--plan">{{ index $map (.Get "type") }}</div>
+
+{{ end }}

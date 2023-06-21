@@ -48,22 +48,24 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ?2 AND age = ?1').bind
 ```
 
 ## Type conversion
-Type conversion from Javascript inputs to D1 inputs is as follows:
 
+D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the client API to their associated D1 types. The type conversion is as follows:
 
-| Javascript | D1 |
-| ----- | ----- |
-| null | `NULL` |
-| Number | `REAL` |
-| Number[^1] | `INTEGER` |
-| String | `TEXT` |
-| ArrayBuffer | `BLOB` |
+| JavaScript          | D1          |
+| ------------------- | ----------- |
+| null                | `NULL`      |
+| Number              | `REAL`      |
+| Number <sup>1</sup> | `INTEGER`   |
+| String              | `TEXT`      |
+| Boolean <sup>2</sup>| `INTEGER`   |
+| ArrayBuffer         | `BLOB`      |
+| undefined           | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
 
-`[^1]`: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
-
-* Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`.
+* <sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) are not currently supported in the API yet. JavaScript integers are safe up to [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+* <sup>2</sup> Booleans will be cast to an `INTEGER` type where 1 is `TRUE` and 0 is `FALSE`.
 
 ## Return object
+
 The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js
@@ -115,7 +117,7 @@ If the query returns no rows, then first() will return ```null```.
 
 If the query returns rows, but ```column``` does not exist, then first() will throw the ```D1_ERROR``` exception.
 
-### await stmt.all( [column] )
+### await stmt.all()
 Returns all rows and metadata.
 
 ```js
@@ -246,6 +248,22 @@ console.log(old);
     duration: 29,
   }
 }
+*/
+```
+
+## Searching with LIKE
+
+Perform a search using SQL's `LIKE` operator:
+
+```js
+const { results } = await env.DB.prepare(
+  "SELECT * FROM Customers WHERE CompanyName LIKE ?"
+)
+  .bind("%eve%")
+  .all();
+console.log("results: ", results);
+/*
+results:  [...]
 */
 ```
 
@@ -384,6 +402,7 @@ try {
 | Message | Cause |
 | ---- | ---- |
 | `D1_ERROR` | Generic error |
+| `D1_TYPE_ERROR` | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null` | 
 | `D1_COLUMN_NOTFOUND` | Column not found |
 | `D1_DUMP_ERROR` | Database dump error |
 | `D1_EXEC_ERROR` | Exec error in line x: y error |

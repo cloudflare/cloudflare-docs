@@ -1,6 +1,7 @@
 ---
 hidden: true
 title: Player API
+pcx_content_type: reference
 ---
 
 # Player API

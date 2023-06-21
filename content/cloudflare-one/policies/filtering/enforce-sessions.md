@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
 title: WARP session duration
-weight: 7
+weight: 12
 ---
 
 # Enforce WARP session duration
 
-Cloudflare Zero Trust allows you to enforce session durations on Gateway Network and HTTP policies. Once a session expires, a user will be prompted to re-authenticate with the identity provider they used to enroll in the WARP client.
+Cloudflare Zero Trust allows you to enforce session durations on Gateway Network and HTTP policies. Once a session expires, a user will be prompted to re-authenticate with the identity provider they used to enroll in the WARP client. If you do not enforce a session duration, WARP sessions will be unlimited by default.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ Ensure that traffic can reach your IdP and `<your-team-name>.cloudflareaccess.co
 
 You can configure a WARP session for any Allow policy. To configure a session:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to either **Gateway** > **Policies** > **Network** or **Gateway** > **Policies** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to either **Gateway** > **Firewall Policies** > **Network** or **Gateway** > **Firewall Policies** > **HTTP**.
 2. Create a policy and select the _Allow_ action. Alternatively, choose any existing _Allow_ policy.
 3. Under **Step 4 - Configure policy settings**, select **Edit** next to **Enforce WARP client session duration**.
 4. Enter a session expiration time in `1h30m0s` format and save.

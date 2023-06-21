@@ -21,3 +21,7 @@ Generally, you are allowed to edit all zone-level configurations except for the 
 For the most up-to-date list of these settings, start [editing settings within a version](/version-management/how-to/versions/#change-settings-in-a-version) in the Cloudflare dashboard.
 
 {{</Aside>}}
+
+## Limitations
+
+{{<render file="_product-limitations.md">}}

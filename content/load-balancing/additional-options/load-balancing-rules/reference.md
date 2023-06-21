@@ -16,7 +16,7 @@ If you use the wrong set of fields, you might see unexpected behavior from load 
 | [Proxied-only fields](#proxied-only-fields) | `PROXIED ONLY` | The values accessible only when the load balancer's traffic is proxied. |
 | [Unproxied-only fields](#unproxied-only-fields) | `NON-PROXIED ONLY` | The values accessible only when the load balancer's traffic is not proxied (DNS-only traffic). |
 
-![Choose load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
+![Choose load balancer fields based on the proxy status header](/images/load-balancing/proxy-status.png)
 
 For a step-by-step guide for creating a rule using the UI's Expression Builder, see [Create a load balancing rule](/load-balancing/additional-options/load-balancing-rules/create-rules/). Note that there are a few fields that are still API-only and not present in the UI.
 
@@ -184,6 +184,44 @@ Many of these fields are referenced from the [Rules language documentation](/rul
         </p>
         <p>Example value:
         <br /><code class="InlineCode">{"search": ["red+apples"]}</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-uri-args-names">
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
+      <td>(API-only)</td>
+      <td>
+        <p>Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
+        </p>
+        <p>When a name repeats, the array contains multiple items in the order that they appear in the request.
+        </p>
+        <p><em>Decoding:</em> no decoding performed
+        <br /><em>Non-ASCII:</em> preserved
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">any(http.request.uri.args.names[*] == "search")</code>
+        </p>
+        <p>Example value:
+        <br /><code class="InlineCode">["search"]</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-uri-args-values">
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-values"><code>http.request.uri.args.values</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
+      <td>(API-only)</td>
+      <td>
+        <p>Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
+        </p>
+        <p>Duplicated values are listed multiple times.
+        </p>
+        <p><em>Decoding:</em> no decoding performed
+        <br /><em>Non-ASCII:</em> preserved
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">any(http.request.uri.args.values[*] == "red+apples")</code>
+        </p>
+        <p>Example value:
+        <br /><code class="InlineCode">["red+apples"]</code>
         </p>
       </td>
     </tr>

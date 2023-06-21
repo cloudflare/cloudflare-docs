@@ -1,9 +1,11 @@
 ---
+pcx_content_type: navigation
 title: Enterprise Bot Management
-pcx_content_type: get-started
+external_link: /learning-paths/bot-management/
 weight: 4
-meta:
-  title: Get started with Bot Management for Enterprise
+_build:
+  publishResources: false
+  render: never
 ---
 
 # Get started with Bot Management for Enterprise
@@ -20,11 +22,14 @@ This Enterprise product provides the most flexibility to customers by:
 
 ## Enable Bot Management for Enterprise
 
-Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write firewall rules, but others use Bot Analytics or perform custom actions using our Workers platform.
+To enable [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/security/bots) for Enterprise:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **Bots**.
+3. Select **Enable**.
 
 ### Before you begin
 
-- Make sure you have purchased Bot Management for Enterprise (should be visible at **Security** > **Bots**).
 - Review the following concepts:
 
   - [Bot score](/bots/concepts/bot-score/): Learn how Cloudflare scores bot requests.
@@ -51,7 +56,7 @@ For **automated** traffic, sort through the IP addresses, ASNs, and other data p
 
 Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12.
 
-![Example of a bot score distribution](/bots/static/bot-score-distribution.png)
+![Example of a bot score distribution](/images/bots/bot-score-distribution.png)
 
 At the end of your analysis, you should:
 
@@ -121,3 +126,7 @@ Some automated traffic is good! To allow good bots like Google or Bing, use the 
 ### Mobile traffic
 
 To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your firewall rules.
+
+### `Skip` action
+
+{{<render file="_flexible-sbfm.md">}}

@@ -2,13 +2,13 @@
 pcx_content_type: navigation
 type: overview
 title: Security
-weight: 1
+weight: 3
 layout: list
 ---
 
 # Security
 
-Cloudflare offers the following features to help secure your APIs: 
+Cloudflare offers the following features to help secure your APIs:
 
 {{<directory-listing>}}
 
@@ -27,12 +27,12 @@ The following table provides examples of how you might match Cloudflare products
 | Broken Function Level Authorization| [Schema Validation] |
 | Mass Assignment| [Schema Validation], [Anomaly Detection], [Rate Limiting] |
 | Security Misconfiguration| [Schema Validation], [Sensitive Data Detection (Beta)] |
-| Injection| [Schema Validation], [WAF Rulesets](/waf/managed-rulesets/) |
+| Injection| [Schema Validation], [WAF Managed Rules](/waf/managed-rules/) |
 | Improper Assets Management| [Discovery](/api-shield/security/api-discovery/) |
 | Insufficient Logging & Monitoring| [Discovery SIEM integration](/logs/get-started/enable-destinations/), [Management and Monitoring](/api-shield/management-and-monitoring/)|
 
 
 [Schema Validation]: /api-shield/security/schema-validation/
-[Anomaly Detection]: /api-shield/security/sequential-abuse-detection/
+[Anomaly Detection]: /api-shield/security/sequence-analytics/
 [Sensitive Data Detection (Beta)]: https://blog.cloudflare.com/data-loss-prevention/
 [Rate Limiting]: /waf/rate-limiting-rules/

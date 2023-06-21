@@ -75,7 +75,7 @@ To set up JumpCloud SAML as your identity provider:
 
     ![JumpCloud Application dialog with group added to application](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

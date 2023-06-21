@@ -10,51 +10,99 @@ weight: 1001
 layout: example
 ---
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
 ```js
-// Service configured to receive logs
-const LOG_URL = 'https://log-service.example.com/';
+export default {
+  async fetch(request, env, ctx) {
+    // Service configured to receive logs
+    const LOG_URL = "https://log-service.example.com/";
 
-function postLog(data) {
-  return fetch(LOG_URL, {
-    method: 'POST',
-    body: data,
-  });
-}
-
-async function handleRequest(event) {
-  let response;
-
-  try {
-    response = await fetch(event.request);
-    if (!response.ok && !response.redirected) {
-      const body = await response.text();
-      throw new Error(
-        'Bad response at origin. Status: ' +
-          response.status +
-          ' Body: ' +
-          // Ensure the string is small enough to be a header
-          body.trim().substring(0, 10)
-      );
+    async function postLog(data) {
+      return await fetch(LOG_URL, {
+        method: "POST",
+        body: data,
+      });
     }
-  } catch (err) {
-    // Without event.waitUntil(), your fetch() to Cloudflare's
-    // logging service may or may not complete
-    event.waitUntil(postLog(err.toString()));
-    const stack = JSON.stringify(err.stack) || err;
 
-    // Copy the response and initialize body to the stack trace
-    response = new Response(stack, response);
+    let response;
 
-    // Add the error stack into a header to find out what happened
-    response.headers.set('X-Debug-stack', stack);
-    response.headers.set('X-Debug-err', err);
-  }
-  return response;
-}
-
-addEventListener('fetch', event => {
-  // Have any uncaught errors thrown go directly to origin
-  event.passThroughOnException();
-  event.respondWith(handleRequest(event));
-});
+    try {
+      response = await fetch(request);
+      if (!response.ok && !response.redirected) {
+        const body = await response.text();
+        throw new Error(
+          "Bad response at origin. Status: " +
+            response.status +
+            " Body: " +
+            // Ensure the string is small enough to be a header
+            body.trim().substring(0, 10)
+        );
+      }
+    } catch (err) {
+      // Without ctx.waitUntil(), your fetch() to Cloudflare's
+      // logging service may or may not complete
+      ctx.waitUntil(postLog(err.toString()));
+      const stack = JSON.stringify(err.stack) || err;
+      // Copy the response and initialize body to the stack trace
+      response = new Response(stack, response);
+      // Add the error stack into a header to find out what happened
+      response.headers.set("X-Debug-stack", stack);
+      response.headers.set("X-Debug-err", err);
+    }
+    return response;
+  },
+};
 ```
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+const handler: ExportedHandler = {
+  async fetch(request, env, ctx) {
+    // Service configured to receive logs
+    const LOG_URL = "https://log-service.example.com/";
+
+    async function postLog(data) {
+      return await fetch(LOG_URL, {
+        method: "POST",
+        body: data,
+      });
+    }
+
+    let response;
+
+    try {
+      response = await fetch(request);
+      if (!response.ok && !response.redirected) {
+        const body = await response.text();
+        throw new Error(
+          "Bad response at origin. Status: " +
+            response.status +
+            " Body: " +
+            // Ensure the string is small enough to be a header
+            body.trim().substring(0, 10)
+        );
+      }
+    } catch (err) {
+      // Without ctx.waitUntil(), your fetch() to Cloudflare's
+      // logging service may or may not complete
+      ctx.waitUntil(postLog(err.toString()));
+      const stack = JSON.stringify(err.stack) || err;
+      // Copy the response and initialize body to the stack trace
+      response = new Response(stack, response);
+      // Add the error stack into a header to find out what happened
+      response.headers.set("X-Debug-stack", stack);
+      response.headers.set("X-Debug-err", err);
+    }
+    return response;
+  },
+};
+
+export default handler;
+```
+
+{{</tab>}}
+{{</tabs>}}

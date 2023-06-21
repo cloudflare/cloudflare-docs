@@ -205,7 +205,7 @@ The JSON object properties for a rule are defined as follows:
         given tag.
       </td>
       <td>Array of strings</td>
-      <td>Read-only. Only available in rules of Managed Rulesets.</td>
+      <td>Read-only. Only available in WAF Managed Rules.</td>
     </tr>
     <tr>
       <td>

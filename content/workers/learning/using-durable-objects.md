@@ -6,23 +6,28 @@ weight: 11
 
 # Using Durable Objects
 
-Durable Objects provide low-latency coordination and consistent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
+Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
 
 - Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world. Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
 
-- The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
+- The transactional storage API provides strongly consistent key-value storage to the Durable Object. That storage is replicated for durability and availability, and does not go away until you explicitly delete it. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
-For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
+For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/durable-objects-open-beta/).
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
 
 [The Workers community on Discord](https://discord.gg/cloudflaredev) has a #durable-objects channel where you can ask questions, show off what you are building, and discuss Durable Objects with other developers.
 
-## Using Durable Objects
+## Use Durable Objects
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
-To start, enable Durable Objects for your account by logging in to [the Cloudflare dashboard](https://dash.cloudflare.com/) > **Workers** > **Durable Objects**.
+To start, enable Durable Objects for your account by purchasing Workers Paid:
+
+ 1. Log in to [the Cloudflare dashboard](https://dash.cloudflare.com/).
+ 2. Go to **Workers & Pages** and in **Overview**, select your Worker. 
+ 3. In your Worker, scroll down to **Durable Objects** > **Learn more** > **View Paid Plan**.
+ 4. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
 There are three steps to creating and using a Durable Object:
 
@@ -30,7 +35,7 @@ There are three steps to creating and using a Durable Object:
 - [Instantiating and communicating with a Durable Object](#instantiating-and-communicating-with-a-durable-object) from another Worker via the [Fetch](/workers/runtime-apis/durable-objects/#fetch-handler-method) API.
 - [Uploading the Durable Object and Worker](#uploading-a-durable-object-worker) to Cloudflare's servers using Wrangler.
 
-## Writing a class that defines a Durable Object
+## Write a class that defines a Durable Object
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
@@ -64,7 +69,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 {{</Aside>}}
 
-### Accessing Persistent Storage from a Durable Object
+### Access Persistent Storage from a Durable Object
 
 Durable Objects gain access to a [persistent storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) via the first parameter passed to the Durable Object constructor. While access to a Durable Object is single-threaded, it is important to remember that request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
 
@@ -122,7 +127,7 @@ export class Counter {
 }
 ```
 
-A given instance of a Durable Object may share global memory with other instances of the same class. In the example above, using a global variable `value` instead of the instance variable `this.value` would be incorrect. Two different instances of `Counter` will each have their own separate memory for `this.value`, but might share memory for the global variable `value`, leading to unexpected results. Because of this, it is best to avoid global variables.
+A given instance of a Durable Object may share global memory with other instances defined in the same script. In the example above, using a global variable `value` instead of the instance variable `this.value` would be incorrect. Two different instances of `Counter` will each have their own separate memory for `this.value`, but might share memory for the global variable `value`, leading to unexpected results. Because of this, it is best to avoid global variables.
 
 {{<Aside type="note" header="Built-in caching">}}
 
@@ -138,7 +143,7 @@ As part of Durable Objects, Workers can act as WebSocket endpoints – including
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there is no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-For more information, refer to [Using WebSockets](/workers/learning/using-websockets/). For an example of WebSockets in action within Durable Objects, review the [example chat application](https://github.com/cloudflare/workers-chat-demo).
+Durable Objects can use the web standard APIs described in [Using WebSockets](/workers/learning/using-websockets/). When using a Durable Object to terminate a WebSocket (as opposed to using it as a WebSocket client) the [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) has significant advantages and should be preferred over the web standard APIs. For an example of WebSockets in action within Durable Objects, review the [example chat application](https://github.com/cloudflare/workers-chat-demo) or the [example chat application using the Hibernation API](https://github.com/cloudflare/workers-chat-demo/tree/hibernation).
 
 
 ### Alarms in Durable Objects
@@ -155,7 +160,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
 
-## Instantiating and communicating with a Durable Object
+## Instantiate and communicate with a Durable Object
 
 Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings work similarly to KV bindings and must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 
@@ -227,7 +232,7 @@ In the above example, you used a string-derived object ID by calling the `idFrom
 
 {{</Aside>}}
 
-## Uploading a Durable Object Worker
+## Upload a Durable Object Worker
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
@@ -235,7 +240,7 @@ You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-
 
 {{</Aside>}}
 
-The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/workers/wrangler/), the Workers CLI. You can start with one of our templates, the simplest of which can be used by running:
+To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. Start with one of our templates, the simplest of which can be used by running:
 
 ```sh
 $ git clone https://github.com/cloudflare/durable-objects-template
@@ -251,11 +256,11 @@ This will create a directory for your project with basic configuration and a sin
 
 The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler publish`](/workers/wrangler/commands/) command.
 
-### Specifying the main module
+### Specify the main module
 
-Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. Refer to the [modules section of the custom builds documentation](/workers/wrangler/configuration/#modules) for more details.
+Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. Refer to the [modules section of the custom builds documentation](/workers/wrangler/custom-builds/) for more details.
 
-### Configuring Durable Object bindings
+### Configure Durable Object bindings
 
 Durable Objects bindings can be configured in `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
@@ -300,10 +305,16 @@ durable_objects.bindings = [
 ]
 ```
 
-### Configuring Durable Object classes with migrations
+### Configure Durable Object classes with migrations
 
-When you make changes to your list of Durable Objects classes, you must initiate a migration process. A migration is informing the Workers platform of the changes and provide it with instructions on how to deal with those changes.
+You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
 
+{{<Aside type="note">}}
+
+Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler publish`](/workers/wrangler/commands/). This is true even for changes to how code interacts with persistent storage. Because of [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness) you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
+
+{{</Aside>}}
+  
 The most common migration performed is a new class migration, which informs the system that a new Durable Object class is being uploaded.
 
 Migrations can also be used for transferring stored data between two Durable Object classes:
@@ -423,11 +434,13 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
-[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler 2](/workers/wrangler/compare-v1-v2/) will emit a warning in that case. 
+[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler](/workers/wrangler/) will emit a warning in that case. 
 
 ### Object location
 
-Not all Cloudflare locations host Durable Objects, so Objects may not be created in the same data center where they are first requested.
+A Durable Object is typically instantiated close to where the initial [`get()`](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub) is made. This may not be in the datacenter the user is connected to, but in most cases, it will be in close proximity.
+
+You can also provide an explicit [location hint](/workers/runtime-apis/durable-objects/#providing-a-location-hint) and submit a preferred location when first creating the Durable Object. This can be useful in cases where objects are created programmatically prior to user-interaction, or where the first client request is not representative of where the majority of requests to the object will come from.
 
 Currently, Durable Objects do not migrate between locations after initial creation. Cloudflare will be exploring automatic migration compatibility in the future.
 
@@ -527,13 +540,44 @@ export class Counter {
 
 [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler tail`](/workers/wrangler/commands/#tail) are both available to help you debug your Durable Objects.
 
-The `wrangler dev` command opens up a tunnel from your local development environment to Cloudflare's network edge, letting you test your Durable Objects code in the Workers environment as you write it.
+The `wrangler dev` command opens up a tunnel from your local development environment to Cloudflare's global network, letting you test your Durable Objects code in the Workers environment as you write it.
 
 `wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
 ### GraphQL Analytics
 
 Durable Object metrics are powered by GraphQL, like other Workers metrics. Learn more about querying Workers data sets in this [tutorial](/analytics/graphql-api/tutorials/querying-workers-metrics/). The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. You can [use GraphQL introspection to get information on the fields exposed by each](/analytics/graphql-api/getting-started/explore-graphql-schema).
+### Example of GraphQL query for Durable Objects
+
+Refer to the [Querying Workers Metrics with GraphQL](/analytics/graphql-api/tutorials/querying-workers-metrics/) tutorial for authentication
+
+```
+  viewer {
+    # Replace with your account tag, the 32 hex character id visible at the beginning of any url
+    # when logged in to dash.cloudflare.com or under "Account ID" on the sidebar of the Workers & Pages Overview  
+    accounts(filter: {accountTag: "your account tag here"}) {
+      # Replace dates with a recent date
+      durableObjectsInvocationsAdaptiveGroups(filter: {date_gt: "2023-05-23"}, limit: 1000) {
+        sum {
+          # Any other fields found through introspection can be added here
+          requests
+          responseBodySize
+        }
+      }
+      durableObjectsPeriodicGroups(filter: {date_gt: "2023-05-23"}, limit: 1000) {
+        sum {
+          cpuTime
+        }
+      }
+      durableObjectsStorageGroups(filter: {date_gt: "2023-05-23"}, limit: 1000) {
+        max {
+          storedBytes
+        }
+      }
+    }
+  }
+}
+```
 
 ### Common errors
 
@@ -566,3 +610,7 @@ Refer to [Global Uniqueness](/workers/learning/using-durable-objects/#global-uni
 #### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 
 To prevent indefinite blocking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+
+#### Error: Your account is doing too many concurrent storage operations. Please back off and try again later.
+
+Besides the suggested approach of backing off, also consider changing your code to use `state.storage.get(keys Array<string>)` rather than multiple individual `state.storage.get(key)` calls where possible.

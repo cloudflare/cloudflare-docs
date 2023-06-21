@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Setup
-weight: 2
+weight: 1
 meta:
    title: Set up incoming zone transfers (Cloudflare as Secondary)
 ---
@@ -28,8 +28,10 @@ You will also need the following information from your Primary DNS provider:
 
 - **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
 - **Zone transfer type**: Will zone transfers be full (AXFR) or incremental (IXFR)?
+- **TSIG name** (optional): A descriptive name of the TSIG following domain name syntax ([RFC 8945 section 4.2](https://datatracker.ietf.org/doc/html/rfc8945#section-4.2)).
+ {{<render file="_tsig-name-match.md">}}
 - **TSIG secret** (optional): The secret string used to authenticate zone transfers.
-- **TSIG Algorithm** (optional): The algorithm used to authenticate zone transfers.
+- **TSIG algorithm** (optional): The algorithm used to authenticate zone transfers.
 
 ### At Cloudflare
 
@@ -46,7 +48,7 @@ If you want [DNSSEC](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) av
 
 - **Hidden primary**: Since Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries, Cloudflare can sign records on the fly.
 - **Pre-signed zones**: If your primary DNS provider signs records and transfers out the signatures, Cloudflare serves records and DNSSEC signatures as is without doing any signing. Cloudflare only supports NSEC records (and not NSEC3 records) and this setup does not support [Secondary Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/).
-- **Multi-signer DNSSEC**: Both Cloudflare and your primary DNS provider know the signing keys of the other provider and perform their own online signing in accordance with [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
+- **Multi-signer DNSSEC**: Both Cloudflare and your primary DNS provider know the signing keys of the other provider and perform their own online signing in accordance with [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 
 ---
 
@@ -81,7 +83,7 @@ To create a peer server using the dashboard:
 
 ### Using the API
 
-To create a peer DNS server using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-peer)-create-peer) request.
+To create a peer DNS server using the API, send a [POST request](/api/operations/secondary-dns-(-peer)-create-peer).
 
 ## Step 3 - Create the Secondary Zone
 
@@ -106,7 +108,7 @@ To create a secondary zone using the dashboard:
 
 ### Using the API
 
-To create a secondary zone using the API, send a [POST](https://developers.cloudflare.com/api/operations/zone-create-zone) request with the `type` parameter set to `"secondary"`.
+To create a secondary zone using the API, send a [POST](/api/operations/secondary-dns-(-secondary-zone)-create-secondary-zone-configuration) request with the `type` parameter set to `"secondary"`.
 
 ## Step 4 - Update registrar
 

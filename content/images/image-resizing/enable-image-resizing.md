@@ -18,3 +18,7 @@ To use Image Resizing you first need to enable it via the **Speed** app on your 
 If you are using Image Resizing in a Worker, you need to include the appropriate logic in your Worker code to prevent resizing images from any origin. Unchecking this option in the dash does not apply to image resizing requests coming from Cloudflare Workers.
 
 {{</Aside>}}
+
+## Usage-based notifications
+
+{{<render file="_ubb-recommendation.md" productFolder="fundamentals">}}

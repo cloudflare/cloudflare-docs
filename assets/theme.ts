@@ -3,16 +3,17 @@
   let btn: HTMLInputElement;
   let media: MediaQueryList | void;
 
-  if (document.readyState !== 'loading') init();
-  else addEventListener('DOMContentLoaded', init);
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
 
-  btn = document.querySelector('#ThemeToggle')!;
+  btn = document.querySelector("#ThemeToggle")!;
   tooEarly = !btn;
 
   function setter(isDark: boolean) {
     try {
-      let theme = isDark ? 'dark' : 'light';
-      document.documentElement.setAttribute('theme', theme);
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
       localStorage.theme = JSON.stringify({ theme });
 
       if (btn) {
@@ -24,14 +25,22 @@
     } catch (err) {
       // security error
     }
+    // set tooltip text
+    if (isDark) {
+      document.getElementById("ThemeToggle--tooltip").innerHTML =
+        "Set theme to light (⇧+D)";
+    } else {
+      document.getElementById("ThemeToggle--tooltip").innerHTML =
+        "Set theme to dark (⇧+D)";
+    }
   }
 
   function init() {
-    btn = btn || document.querySelector('#ThemeToggle')!;
-    btn.addEventListener('change', () => setter(!!btn.checked));
+    btn = btn || document.querySelector("#ThemeToggle")!;
+    btn.addEventListener("change", () => setter(!!btn.checked));
 
     // Shift+D for toggle
-    addEventListener('keydown', ev => {
+    addEventListener("keydown", (ev) => {
       if (ev.target !== document.body) return;
       if (ev.which === 68 && ev.shiftKey) {
         ev.preventDefault();
@@ -41,8 +50,8 @@
   }
 
   try {
-    media = window.matchMedia('(prefers-color-scheme:dark)');
-    media.onchange = ev => setter(ev.matches);
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
   } catch (err) {
     // no support
   }

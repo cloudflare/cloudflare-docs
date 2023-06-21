@@ -13,7 +13,7 @@ Workers Logpush requires a Wrangler version of `2.2.0` or higher. Check your ver
 
 To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
 
-1. Sign in to the [Cloudflare dashboard](https://dash.cloudflare.com). 
+1. Log in the [Cloudflare dashboard](https://dash.cloudflare.com). 
 2. Select your account and scroll down to **Manage Account** > **Members**.
 3. Check your account permissions. Roles with Logpush configuration access are different than Workers permissions. Super Administrators, Administrators, and the Log Share roles have full access to Logpush.
  
@@ -75,6 +75,6 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 
 The `logs` and `exceptions` fields have the following limits in place.
 
-* Message size: Maximum of 150 characters per log line
+* Message size: Maximum of 300 characters per log line
 * Array limit: 20 elements
 * Log message array: A nested array with a limit of three elements

@@ -212,13 +212,7 @@ The following table represents the comparison operators that are supported and e
 
 The filter field has limits of approximately 30 operators and 1000 bytes. Anything exceeding this value will return an error.
 
-{{<Aside type="note" header="Note">}}
-Filtering is not supported on the following data types: `objects`, `array[int]`, `array[object]`.
-
-For the Firewall events dataset, the following fields are not supported: Action, Kind, MatchIndex, Metadata, OriginatorRayID, RuleID and Source.
-
-For the Gateway HTTP dataset, the following fields are not supported: Downloaded File Names, Uploaded File Names.
-{{</Aside>}}
+{{<render file="_filtering-limitations.md">}}
 
 ## Logical Operators
 
@@ -263,8 +257,8 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 To set filters through the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the domain you want to use.
-2. Go to **Analytics** > **Logs**.
-3. Select **Connect a service**. A modal window will open.
+2. Go to **Analytics & Logs** > **Logs**.
+3. Select **Add Logpush job**. A modal window will open.
 4. Select the dataset you want to push to a storage service.
 5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
 6. You need to select  a [Field](/logs/reference/log-fields/), an [Operator](/logs/reference/filters/#logical-operators), and a **Value**.

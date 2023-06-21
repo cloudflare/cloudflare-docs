@@ -3,17 +3,17 @@ pcx_content_type: concept
 title: Branch build controls
 ---
 
-## Branch build controls 
+# Branch build controls 
 
 When connected to your git source, Pages allows you to control which environments and branches you would like to automatically build. By default, Pages will trigger a build any time you commit to either your production or preview environment. However, with branch build controls, you can configure automatic deployments to suit your preference on a per project basis.
 
-### Skip builds
+## Skip builds
 
 Without any configuration required, you can choose to skip a build and deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]` or `[CF-Pages-Skip]` flag as a prefix in your commit message, Pages will omit that build/deployment. The prefixes are case insensitive. 
 
 However, if you would like to configure your project’s settings for automatic deployments without having to use CI Skip, go to your Pages project > **Settings** > **Build & deployments** and select the configuration option for either the production deployment or the preview deployment.
 
-### Production branch control 
+## Production branch control 
 
 To configure deployment options, go to your Pages project > **Settings** > **Builds & deployments** > **Configure Production deployments**. Pages will default to setting your production environment to the branch you first push, but you can set your production to another branch if you choose. 
 
@@ -21,7 +21,7 @@ You can also enable or disable automatic deployment behavior on the production b
 
 ![Configure your preview deployments by following the steps above](../media/configure-preview-deployment.png)
 
-### Preview branch control 
+## Preview branch control 
 
 When configuring automatic builds for preview deployments, there are three options to choose from. 
 
@@ -31,7 +31,7 @@ When configuring automatic builds for preview deployments, there are three optio
 
 ![Choose what kind of preview deployment you need for your Pages project in the Cloudflare dashboard](../media/include-preview-brances.png)
 
-#### Custom preview branch control  
+### Custom preview branch control  
 
 By selecting **Custom branches**, you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. The configuration fields can be filled in two ways: 
 
@@ -48,7 +48,7 @@ By selecting **Custom branches**, you can specify branches you wish to include a
 
 Pages will process the exclude configuration first, then go to the include configuration. If a branch does not match either then it will be skipped.
 
-#### Wildcards
+### Wildcards
 
 A wildcard (`*`) is a character that is used within rules. It can be placed alone to match anything or placed at the start or end of a rule to allow for better control over branch configuration. A wildcard will match zero or more characters. 
 

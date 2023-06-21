@@ -19,6 +19,7 @@
 
     <main class="DocsBody">
       <div id="docs-content" data-reach-skip-nav-content></div>
+      {{- partial "breadcrumbs" . -}}
 
       <div class="DocsContent"  id="main" page-type="{{ $type }}">
         <article class="DocsMarkdown">
@@ -43,9 +44,11 @@
                   <span class="DocsTutorials--column-text">Difficulty</span>
                 </div>
 
+                {{- if eq .Params.length true -}}
                 <div class="DocsTutorials--column" data-column="length">
                   <span class="DocsTutorials--column-text">Length</span>
                 </div>
+                {{- end -}}
               </div>
             </div>
 
@@ -80,12 +83,14 @@
                       {{ .Params.difficulty }}
                     </div>
 
+                    {{- if eq .Params.length true -}}
                     <div class="DocsTutorials--column" data-column="length">
                       <div class="DocsTutorials--length-bar">
                         {{- $percent := (mul (div .WordCount $max_words) 100) -}}
                         <div class="DocsTutorials--length-bar-inner" style="width: {{ $percent }}%"></div>
                       </div>
                     </div>
+                    {{- end -}}
                   </div>
                 {{- end -}}
               {{- end -}}

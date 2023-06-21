@@ -1,12 +1,21 @@
 ---
 pcx_content_type: reference
 title: Identity-based policies
-weight: 6
+weight: 9
 ---
 
 # Identity-based policies
 
-With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client, and the user to be enrolled in your organization via the WARP client.
+With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
+
+## Gateway identity checks
+
+Gateway checks identity when a user logs in or re-authenticates. To check your users' identities and require re-authentication at regular intervals, you can [enforce a WARP client session duration](/cloudflare-one/policies/filtering/enforce-sessions/).
+
+If you add or remove a user from a group in your IdP, Gateway will not detect these changes until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
+
+- Log out from an Access-protected application and log back in.
+- In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
 
 ## Identity-based selectors
 
@@ -20,7 +29,7 @@ Specify a value from the SAML Attribute Assertion.
 
 ### User Email
 
-Use this selector to create identity-based DNS rules based on a user’s email.
+Use this selector to create identity-based Gateway rules based on a user’s email.
 
 | UI name    | API example value                           |
 | ---------- | ------------------------------------------- |
@@ -28,7 +37,7 @@ Use this selector to create identity-based DNS rules based on a user’s email.
 
 ### User Group IDs
 
-Use this selector to create identity-based DNS rules based on an IdP group ID of which the user is configured as a member in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP group ID of which the user is configured as a member in the IdP.
 
 | UI name        | API example                                    |
 | -------------- | ---------------------------------------------- |
@@ -36,7 +45,7 @@ Use this selector to create identity-based DNS rules based on an IdP group ID of
 
 ### User Group Email
 
-Use this selector to create identity-based DNS rules based on an IdP group email address of which the user is configured as a member in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP group email address of which the user is configured as a member in the IdP.
 
 | UI name          | API example                                       |
 | ---------------- | ------------------------------------------------- |
@@ -44,7 +53,7 @@ Use this selector to create identity-based DNS rules based on an IdP group email
 
 ### User Group Names
 
-Use this selector to create identity-based DNS rules based on an IdP group name of which the user is configured as a member in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP group name of which the user is configured as a member in the IdP.
 
 | UI name          | API example                             |
 | ---------------- | --------------------------------------- |
@@ -52,7 +61,7 @@ Use this selector to create identity-based DNS rules based on an IdP group name 
 
 ### User Name
 
-Use this selector to create identity-based DNS rules based on an IdP username for a particular user in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP username for a particular user in the IdP.
 
 | UI name   | API example                    |
 | --------- | ------------------------------ |
@@ -72,11 +81,17 @@ Because IdPs expose user groups in different formats, reference the list below t
 
 ### Azure AD
 
-| Selector       | Value                  |
-| -------------- | ------------------------------ |
+| Selector       | Value                                 |
+| -------------- | ------------------------------------- |
 | User Group IDs | `61503835-b6fe-4630-af88-de551dd59a2` |
 
-The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#using-azuread-groups) for an Azure group.
+**Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#azure-groups-in-zero-trust-policies) for an Azure group.
+
+If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
+
+| Selector       | Value                                 |
+| -------------- | ------------------------------------- |
+| User Group Names | `SCIM group` |
 
 ### GitHub
 
@@ -92,31 +107,30 @@ The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azurea
 
 ### Okta (OIDC)
 
+If you added Okta as an [OIDC provider](/cloudflare-one/identity/idp-integration/okta/), use the User Group Names selector:
+
 | Selector         | Value       |
 | ---------------- | ----------- |
 | User Group Names | `Marketing` |
 
+The Okta OIDC integration supports user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups).
+
 ### Okta (SAML)
 
-| Selector         | Attribute name  | Attribute value  |
-| ---------------- | --------------- |----------------- |
-| SAML Attributes  | `name`          |`Marketing`       |
+If you added Okta as a [SAML provider](/cloudflare-one/identity/idp-integration/okta-saml/), use the SAML Attributes selector:
 
-### Generic IdP
+| Selector        | Attribute name | Attribute value |
+| --------------- | -------------- | --------------- |
+| SAML Attributes | `groups`       | `Marketing`     |
 
-If your IdP is not listed above, here is how you can determine which Gateway selector to use:
+### Generic SAML IdP
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Groups**.
-2. Click **Add a Group**.
-3. In the **Include** dropdown, select your IdP group.
+For a [generic SAML provider](/cloudflare-one/identity/idp-integration/generic-saml/), use the SAML Attribute selector:
 
-    A text field will appear and prompt for either group names, group IDs, or SAML attributes. In the example below, we see that Okta groups will use the _User Group Names_ selector in Gateway.
-    ![Determining the Gateway selector for an Okta group](/cloudflare-one/static/documentation/policies/identity-selector-group-names.png)
+| Selector        | Attribute name | Attribute value |
+| --------------- | -------------- | --------------- |
+| SAML Attributes | `department`    | `Marketing`     |
 
-{{<Aside type="note">}}
-Gateway retrieves a user's IdP data at the time of login. Therefore, if you add or remove a user from a group in your IdP, Gateway will not detect these changes until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
+### Generic OIDC IdP
 
-- Log out from an Access-protected application and log back in.
-- In their WARP client settings, click **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
-{{</Aside>}}
-
+Custom OIDC claims are not supported in Gateway policies.

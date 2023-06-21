@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: 1.1.1.1 Public DNS Resolver
+meta:
+  description: Learn more about Cloudflare's commitment to privacy with the 1.1.1.1 Public DNS Resolver.
 ---
 
 # 1.1.1.1 Public DNS Resolver
@@ -112,7 +114,7 @@ Cloudflare will only store the following aggregated data:
 
 Cloudflare may store the aggregated data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
 
-# What about requests for content blocking?
+## What about requests for content blocking?
 
 Cloudflare does not block or filter any content through the 1.1.1.1 Public DNS Resolver, which is designed for direct, fast DNS resolution, not for blocking or filtering content. Cloudflare does block and filter malware and adult content through 1.1.1.1 for Families, which is designed to help individuals protect their home networks.
 

@@ -8,7 +8,7 @@ weight: 2
 
 {{<Aside type="note">}}
 
-This feature is only available if your account has at least one zone on a Professional or higher plan. For more information, see our [plans page](https://www.cloudflare.com/plans/).
+This feature is only available if your account has at least one paid feature. For more information, see our [plans page](https://www.cloudflare.com/plans/).
 
 {{</Aside>}}
 
@@ -34,13 +34,20 @@ After selecting **Save and Test**, your webhook should now be configured as a de
 
 When Cloudflare sends you a webhook, it will have the following schema:
 
-```txt
+```json
 {
-    "text": Hello World! This is a test message sent from https://cloudflare.com. If you can see this, your webhook is configured properly.
+    "text": "Hello World! This is a test message sent from https://cloudflare.com. If you can see this, your webhook is configured properly."
 }
 ```
 
 In the above example, `"text"` will vary depending on the alert that was fired.
+
+
+### Limitations of generic webhooks
+
+Cloudflare generic webhook notifications will only be dispatched to a publicly resolvable IP address on port 80 or 443.
+
+If you want to receive the generic webhook notification on a private IP address or different port you can either receive and forward the notification using [Workers](/workers/) or set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to route to your connected application.
 
 ### Use generic webhooks with Workers
 

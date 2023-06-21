@@ -17,7 +17,8 @@ The following products and features are available on the Cloudflare China Networ
 | CDN | [Caching](/cache/) | Core cache features. Static cache only. |
 | CDN | [Image Resizing](/images/) | Optimize image format at the edge to fit a domain’s layout. |
 | [DDoS Protection](/ddos-protection/) | Layer 7 (HTTP/HTTPS) DDoS protection | Layer 7 (application layer) protection against DDoS attacks such as HTTP flood attacks, WordPress Pingback attacks, HULK attacks, and LOIC attacks. |
-| [Web Application Firewall (WAF)](/waf/) | WAF Managed Rulesets | Custom rules, pre-configured OWASP rulesets, and Cloudflare Managed Rulesets. |
+| [Web Application Firewall (WAF)](/waf/) | WAF Managed Rules | Pre-configured OWASP rulesets and Cloudflare managed rulesets. |
+| [Web Application Firewall (WAF)](/waf/) | WAF custom rules | Custom WAF rules. |
 | [Web Application Firewall (WAF)](/waf/) | Rate Limiting | Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached. |
 | [Bot Management](/bots/) | Bot detection and mitigation | Provides bot identification and protection for a domain. |
 | [Argo Smart Routing](/argo-smart-routing/) | Layer 7 smart routing | Layer 7 (application layer) traffic smart-routed more efficiently to origin. |
@@ -26,7 +27,7 @@ The following products and features are available on the Cloudflare China Networ
 
 | Product | Feature | Description |
 |---|---|---|
-| [Workers](/workers/) | Serverless computing | A serverless execution environment running on Cloudflare’s edge network. |
+| [Workers](/workers/) | Serverless computing | A serverless execution environment running on the Cloudflare global network. |
 
 ## Network services
 

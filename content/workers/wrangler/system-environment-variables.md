@@ -4,7 +4,7 @@ title: System Environment Variables
 weight: 5
 ---
 
-## System Environment Variables
+# System Environment Variables
 
 System Environment Variables are local environment variables that can change Wrangler's behavior. There are three ways to set System Environment Variables:
 
@@ -14,7 +14,7 @@ System Environment Variables are local environment variables that can change Wra
 
 3. Set the values in your shell environment. For example, if you are using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
-### Supported environment variables
+## Supported environment variables
 
 Wrangler supports the following environment variables:
 
@@ -22,7 +22,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_ACCOUNT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The account ID for the Workers related account, can be [found in the Cloudflare dashboard](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), can usually be inferred by Wrangler.
+  - The [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for the Workers related account.
 
 - `CLOUDFLARE_API_TOKEN` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -42,15 +42,15 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_API_BASE_URL` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The default value is https://api.cloudflare.com/client/v4.
+  - The default value is `"https://api.cloudflare.com/client/v4"`.
 
 - `WRANGLER_LOG` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`.
+  - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default.
 
 {{</definitions>}}
 
-### Example `.env` file
+## Example `.env` file
 
 The following is an example `.env` file:
 
@@ -63,7 +63,7 @@ CLOUDFLARE_API_BASE_URL=https://api.cloudflare.com/client/v4
 WRANGLER_LOG=debug
 ```
 
-### Deprecated global variables
+## Deprecated global variables
 
 The following variables are deprecated. Use the new variables listed above to prevent any issues or unwanted messaging.
 

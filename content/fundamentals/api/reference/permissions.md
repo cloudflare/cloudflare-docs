@@ -14,7 +14,7 @@ Permissions are segmented into three categories based on resource:
 
 Each category contains permission groups related to those resources. DNS permissions belong to the Zone category, while Billing permissions belong to the Account category. Below is a list of the available token permissions.
 
-To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://developers.cloudflare.com/api/operations/permission-groups-list-permission-groups) endpoint.
+To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](/api/operations/permission-groups-list-permission-groups) endpoint.
 
 ## User permissions
 
@@ -32,7 +32,6 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 ## Account permissions
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
-
 
 | Name                                                         | Description                                                                                           |
 | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
@@ -60,10 +59,12 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Account Settings Edit                                        | Grants write access to Account resources, account membership, and account level features.             |
 | Account WAF Read                                             | Grants read access to Account WAF.                                                                    |
 | Account WAF Edit                                             | Grants write access to Account WAF.                                                                   |
-| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
-| Cloudflare Tunnel Edit                                       | Grants access to create and delete Cloudflare Tunnels.                                                |
 | Billing Read                                                 | Grants read access to billing profile, subscriptions, and access to fetch invoices and entitlements.  |
 | Billing Edit                                                 | Grants write access to billing profile, subscriptions, and access to fetch invoices and entitlements. |
+| Cloudflare Pages Read                                        | Grants access to view Cloudflare Pages projects.                                                      |
+| Cloudflare Pages Edit                                        | Grants access to create, edit and delete Cloudflare Pages projects.                                   |
+| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
+| Cloudflare Tunnel Edit                                       | Grants access to create and delete Cloudflare Tunnels.                                                |
 | DDoS Protection Read                                         | Grants read access to DDoS protection.                                                                |
 | DDoS Protection Edit                                         | Grants write access to DDoS protection.                                                               |
 | DNS Firewall Read                                            | Grants read access to DNS Firewall.                                                                   |
@@ -74,8 +75,8 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | IP Prefixes: Edit                                            | Grants access to read/write IP prefix settings.                                                       |
 | Images Read                                                  | Grants read access to Images.                                                                         |
 | Images Edit                                                  | Grants write access to upload Images.                                                                 |
-| L4 DDoS Managed Ruleset Read                                 | Grants read access to L4 DDoS Managed Ruleset.                                                        |
-| L4 DDoS Managed Ruleset Edit                                 | Grants write access to L4 DDoS Managed Ruleset.                                                       |
+| L4 DDoS Managed Ruleset Read                                 | Grants read access to L4 DDoS managed ruleset.                                                        |
+| L4 DDoS Managed Ruleset Edit                                 | Grants write access to L4 DDoS managed ruleset.                                                       |
 | Load Balancing: Monitors and Pools Read                      | Grants read access to account level load balancer resources.                                          |
 | Load Balancing: Monitors and Pools Edit                      | Grants write access to account level load balancer resources.                                         |
 | Logs Read                                                    | Grants read access to logs using Logpull or Instant Logs.                                             |
@@ -123,15 +124,15 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Bot Management Edit              | Grants write access to Bot Management.                                   |
 | Cache Purge                      | Grants access to purge cache.                                            |
 | DNS Read                         | Grants read access to DNS.                                               |
-| DNS Edit                         | Grants write access to DNS.                                              |
+| DNS Write                        | Grants write access to DNS.                                              |
 | Dynamic Redirect Read            | Grants read access to zone-level Single Redirects.                       |
 | Dynamic Redirect Edit            | Grants write access to zone-level Single Redirects.                      |
 | Email Routing Rules Read         | Grants read access to Email Routing Rules.                               |
 | Email Routing Rules Edit         | Grants write access to Email Routing Rules.                              |
 | Firewall Services Read           | Grants read access to Firewall resources.                                |
 | Firewall Services Edit           | Grants write access to Firewall resources.                               |
-| HTTP DDoS Managed Ruleset Read   | Grants read access to HTTP DDoS Managed Ruleset.                         |
-| HTTP DDoS Managed Ruleset Edit   | Grants write access to HTTP DDoS Managed Ruleset.                        |
+| HTTP DDoS Managed Ruleset Read   | Grants read access to HTTP DDoS managed ruleset.                         |
+| HTTP DDoS Managed Ruleset Edit   | Grants write access to HTTP DDoS managed ruleset.                        |
 | Health Checks Read               | Grants read access to Health Checks.                                     |
 | Health Checks Edit               | Grants write access to Health Checks.                                    |
 | Load Balancers Read              | Grants read access to load balancers and associated resources.           |
@@ -146,8 +147,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | SSL and Certificates Edit        | Grants write access to SSL configuration and certificate management.     |
 | Sanitize Read                    | Grants read access to sanitization.                                      |
 | Sanitize Edit                    | Grants write access to sanitization.                                     |
-| Waiting Room Read               | Grants read access to Waiting Room.                                     |
-| Waiting Room Edit               | Grants write access to Waiting Room.                                    |
+| Waiting Room Read                | Grants read access to Waiting Room.                                      |
+| Waiting Room Edit                | Grants write access to Waiting Room.                                     |
 | Web3 Hostnames Read              | Grants read access to Web3 Hostnames.                                    |
 | Web3 Hostnames Edit              | Grants write access to Web3 Hostnames.                                   |
 | Workers Routes Read              | Grants read access to Cloudflare Workers and Workers KV Storage.         |

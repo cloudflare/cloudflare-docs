@@ -20,7 +20,9 @@ For zone scoped datasets, tokens must be zone scoped. For account scoped dataset
 
 ## Roles
 
-**Super Administrators**, **Administrators** and the **Log Share** roles have full access to Logpull, Logpush and Instant Logs.
+**Super Administrator**, **Administrator** and the **Log Share** roles have full access to Logpull, Logpush and Instant Logs. 
+
+Only roles with **Log Share** edit permissions can read and configure Logpush jobs because job configurations may contain sensitive information.
 
 The **Administrator Read only** and **Log Share Reader** roles only have access to Instant Logs and Logpull. This role does not have permissions to view the configuration of Logpush jobs.
 
@@ -33,4 +35,4 @@ To check the list of members in your account, or to manage roles and permissions
 3.  Enter a member’s email address to add them to your account, and click **Invite**.
 4.  Alternatively, scroll down to the **Members** card to find a list of members with their status and role.
 
-For more information, refer to [Managing roles within your Cloudflare account](/fundamentals/account-and-billing/account-setup/manage-account-members/).
+For more information, refer to [Managing roles within your Cloudflare account](/fundamentals/account-and-billing/members/).

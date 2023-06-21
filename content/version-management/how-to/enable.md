@@ -9,7 +9,9 @@ meta:
 # Enable Version Management
 
 {{<render file="_enable-versioning.md">}}
-<br/>
 
 {{<render file="_enable-default-creation.md">}}
-<br/>
+
+## Disable Version Management
+
+There is no option on the UI to disable Zone Versioning. To disable it, [contact Customer Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).

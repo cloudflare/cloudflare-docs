@@ -5,6 +5,7 @@ layout: overview
 weight: 1
 meta:
   title: Cloudflare Web Application Firewall
+  description: The Cloudflare Web Application Firewall (WAF) provides automatic protection from vulnerabilities and the flexibility to create custom rules.
 ---
 
 # Cloudflare Web Application Firewall
@@ -20,7 +21,6 @@ Get automatic protection from vulnerabilities and the flexibility to create cust
 ## Features
 
 {{<feature header="Custom rules" href="/waf/custom-rules/">}}
-{{<plan type="enterprise">}}
 Create your own custom rules to protect your website and your APIs from malicious incoming traffic. Use advanced features like [WAF attack score](/waf/about/waf-attack-score/) and [uploaded content scanning](/waf/about/content-scanning/) in your custom rules.
 {{</feature>}}
 
@@ -28,8 +28,8 @@ Create your own custom rules to protect your website and your APIs from maliciou
 Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.
 {{</feature>}}
 
-{{<feature header="Managed Rulesets" href="/waf/managed-rulesets/">}}
-Enable the pre-configured WAF Managed Rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
+{{<feature header="Managed rules" href="/waf/managed-rules/">}}
+Enable the pre-configured managed rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
 {{</feature>}}
 
 {{<feature header="Exposed credential checks" href="/waf/exposed-credentials-check/">}}
@@ -41,7 +41,7 @@ Review mitigated requests (rule matches) using an intuitive interface. Tailor yo
 {{</feature>}}
 
 {{<feature header="Security Analytics" href="/waf/security-analytics/" cta="Explore Security Analytics">}}
-{{<plan type="enterprise">}}
+{{<plan type="business">}}
 Displays information about all incoming HTTP requests, including those not affected by security measures.
 {{</feature>}}
 
@@ -52,7 +52,7 @@ Displays information about all incoming HTTP requests, including those not affec
 {{<resource-group>}}
 
 {{<resource header="WAF managed rules (previous version)" href="https://support.cloudflare.com/hc/articles/200172016" icon="documentation-clipboard">}}
-Documentation on the previous implementation of WAF Managed Rulesets.
+Documentation on the previous implementation of WAF managed rules.
 {{</resource>}}
 
 {{<resource header="Firewall rules" href="/firewall/" icon="documentation-clipboard">}}

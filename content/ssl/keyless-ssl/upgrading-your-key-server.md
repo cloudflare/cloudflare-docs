@@ -6,6 +6,8 @@ weight: 4
 
 # Upgrade your key server
 
+Periodically, you may need to update your key server when using Cloudflare's Keyless SSL.
+
 To upgrade your key server:
 
 1.  Back up the contents of `/etc/keyless`.

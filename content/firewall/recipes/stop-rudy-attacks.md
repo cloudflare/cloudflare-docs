@@ -41,7 +41,7 @@ The expressions are combined using the `and` operator. When an HTTP POST request
       <td>
         <code>
           http.request.method eq "POST" and http.request.uri.path matches
-          "(comment|conversation|event poll)create" and not http.cookie matches
+          "(comment|conversation|event|poll)/create" and not http.cookie matches
           "auth_session=[0-9a-zA-Z]{32}-[0-9]{10}-[0-9a-z]{6}"
         </code>
       </td>

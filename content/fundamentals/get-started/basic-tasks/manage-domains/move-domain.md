@@ -14,6 +14,8 @@ You will have to move or transfer domains from one Cloudflare account to another
 
 * Lose access to your email address or Cloudflare account.
 
+* Registered a Cloudflare account with a typo in your email.
+
 {{<Aside type="note">}}
 
 If you have [two-factor authentication (2FA)](https://support.cloudflare.com/hc/articles/200167906) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
@@ -31,7 +33,10 @@ To transfer a domain from one Cloudflare account to another, you will need:
 
 {{<Aside type="warning">}}
 
-Before transferring an active Cloudflare domain to another Cloudflare account, you must remove any [DNSSEC configurations](/dns/additional-options/dnssec/) and [add-ons or subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/).
+Before transferring an active Cloudflare domain to another Cloudflare account, you must remove any [DNSSEC configurations](/dns/dnssec/) and [add-ons or subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/).
+
+We also recommend [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) the DNS records of your zone while it is in the previous account. Then, you can [import](/dns/manage-dns-records/how-to/import-and-export/#import-records) the correct DNS records into the new account.
+If you miss this step, Cloudflare will import your proxied dns records might experience a [1000 error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/). 
 
 {{</Aside>}}
 
@@ -53,6 +58,6 @@ Once the Cloudflare network recognizes the nameserver change, the domain in the 
 
 ## Issue new certificates
 
-SSL/TLS certificates associated with your previous Cloudflare account will not be transfered to your new account. If your site requires an SSL/TLS certificate prior to domain transfer, refer to [Minimize downtime](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#minimize-downtime).
+SSL/TLS certificates associated with your previous Cloudflare account will not be transferred to your new account. If your site requires an SSL/TLS certificate prior to domain transfer, refer to [Minimize downtime](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#minimize-downtime).
 
 You can order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) prior to transferring your domain. Once issued, the certificate will enter **Holding Deployment** status until the domain is active. ACM certificates will automatically deploy to active domains. For more information, refer to [Custom certificates](/ssl/reference/certificate-statuses/#custom-certificates).

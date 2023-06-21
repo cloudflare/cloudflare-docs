@@ -17,8 +17,10 @@ which contains minutely aggregates of Network Analytics attack activity.
 {{<Aside type="warning" header="Warning">}}
 
 This tutorial uses Network Analytics v1 (NAv1) nodes. These nodes are planned to
-be deprecated on March 31, 2022. For more information on migrating from Network
+be deprecated on 2023-08-01. For more information on migrating from Network
 Analytics v1 to Network Analytics v2, refer to the [migration guide][5].
+
+[5]: /analytics/graphql-api/migration-guides/network-analytics-v2/
 
 {{</Aside>}}
 
@@ -363,5 +365,4 @@ else:
 [2]: /analytics/graphql-api/getting-started/authentication/api-token-auth/
 [3]: /analytics/graphql-api/getting-started/querying-basics/
 [4]: https://pandas.pydata.org/pandas-docs/stable/index.html
-[5]: /analytics/graphql-api/migration-guides/network-analytics-v2/
 [6]: https://www.splunk.com

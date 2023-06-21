@@ -21,6 +21,10 @@ Review definitions for Cloudflare Zero Trust terms.
 
 [Cloudflare Gateway](https://www.cloudflare.com/products/zero-trust/gateway/) is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
+## Cloudflare CASB
+
+[Cloudflare CASB](https://www.cloudflare.com/products/zero-trust/casb/) provides comprehensive visibility and control over SaaS apps so you can easily prevent data leaks and compliance violations. With Cloudflare CASB, you can detect insider threats, Shadow IT, risky data sharing, and bad actors.
+
 ## Cloudflare Tunnel
 
 [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/) (formerly _Argo Tunnel_) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
@@ -127,7 +131,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca/) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+{{<render file="_origin-certificate-definition.md" productFolder="fundamentals">}}
 
 ## policy
 
@@ -147,7 +151,7 @@ A protocol, or technical standard, for using a desktop computer remotely. RDP wa
 
 _Security Assertion Markup Language_
 
-A standardized way to tell external applications and services that a user is who they say they are. SAML makes single sign-on ([SSO](#SSO)) technology possible by providing a way to authenticate a user once and then communicate that authentication to multiple applications.
+A standardized way to tell external applications and services that a user is who they say they are. SAML makes single sign-on ([SSO](#sso)) technology possible by providing a way to authenticate a user once and then communicate that authentication to multiple applications.
 
 ## SASE
 
@@ -191,13 +195,13 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 
 ## team name
 
-The customizable portion of your [team domain](#team-domain). You can view your team name in the Cloudflare Zero Trust dashboard under **Settings** > **General**.
+The customizable portion of your [team domain](#team-domain). You can view your team name in Cloudflare Zero Trust under **Settings** > **Custom Pages**.
 
 | team domain                             | team name        |
 | --------------------------------------- | ---------------- |
 | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
 
-To learn about the consequences of changing your team name, refer to the [FAQ](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name).
+To learn about the consequences of changing your team name, refer to the [FAQ](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name).
 
 ## Terraform
 

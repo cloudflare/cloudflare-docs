@@ -8,7 +8,15 @@ meta:
 
 # How Workers for Platforms works
 
-Workers for Platforms is built on top of [Cloudflare Workers](/workers/). The same security and performance models apply to applications that use Workers for Platforms. Workers for Platforms extends the capabilities of Workers for SaaS businesses that want to deploy Worker scripts on behalf of their customers or that want to let their users write Worker scripts directly.
+Workers for Platforms is built on top of [Cloudflare Workers](/workers/). The same [security and performance models used by Workers](/workers/learning/security-model/) apply to applications that use Workers for Platforms. 
+
+The Workers configuration API was initially built around managing a relatively small number of Workers on each account. This leads to some difficulties when using Workers as a platform for your own users, including: 
+
+* Frequently needing to increase script limits.
+* Adding an ever-increasing number of routes. 
+* Managing logic in a central place if your own logic is supposed to come before your customers' logic.
+
+Workers for Platforms extends the capabilities of Workers for SaaS businesses that want to deploy Worker scripts on behalf of their customers or that want to let their users write Worker scripts directly.
 
 ## Architecture
 
@@ -16,7 +24,7 @@ Workers for Platforms introduces a new architecture model as outlined on this pa
 
 ### Dispatch namespace
 
-A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any User Worker in a namespace.
+A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any user Worker in a namespace.
 
 {{<Aside type="note" header="Best practice">}}
 
@@ -40,7 +48,7 @@ User Workers are written by your end users (end developers). End developers depl
 
 Below you will find an example request lifecycle in the Workers for Platforms architecture.
 
-![The request lifecycle is described below.](../media/wfp.png)
+![The request lifecycle is described below.](/images/cloudflare-for-platforms/workers-for-platforms.png)
 
 In the above diagram:
 

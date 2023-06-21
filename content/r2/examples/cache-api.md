@@ -1,14 +1,11 @@
 ---
-title: Using R2 with the Cache API
-summary: Use the Cache API to store objects from R2 in Cloudflare's cache.
-type: example
-tags:
-  - Cache API
-  - R2
-pcx_content_type: configuration
-weight: 1001
-layout: example
+title: Use the Cache API
+pcx_content_type: how-to
 ---
+
+# Use the Cache API
+
+Use the Cache API to store R2 objects in Cloudflare's cache
 
 ```js
 

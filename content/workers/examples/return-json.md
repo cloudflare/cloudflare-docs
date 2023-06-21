@@ -12,20 +12,47 @@ weight: 2
 layout: example
 ---
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
 ```js
-addEventListener('fetch', event => {
-  const data = {
-    hello: 'world',
-  };
+export default {
+  async fetch(request) {
+    const data = {
+      hello: "world",
+    };
 
-  const json = JSON.stringify(data, null, 2);
+    const json = JSON.stringify(data, null, 2);
 
-  return event.respondWith(
-    new Response(json, {
+    return new Response(json, {
       headers: {
-        'content-type': 'application/json;charset=UTF-8',
+        "content-type": "application/json;charset=UTF-8",
       },
-    })
-  );
-});
+    });
+  },
+};
 ```
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+const handler: ExportedHandler = {
+  async fetch(request: Request) {
+    const data = {
+      hello: "world",
+    };
+
+    const json = JSON.stringify(data, null, 2);
+
+    return new Response(json, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+  },
+};
+```
+
+{{</tab>}}
+{{</tabs>}}

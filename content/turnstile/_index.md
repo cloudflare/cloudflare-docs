@@ -11,7 +11,7 @@ meta:
 
 Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
 
-![Turnstile Overview](/turnstile/static/images/turnstile-overview.png)
+![Turnstile Overview](/images/turnstile/turnstile-overview.png)
 
 Turnstile leverages the same technology behind our [Managed Challenge](https://blog.cloudflare.com/end-cloudflare-captcha/), but opens it to anyone not currently utilizing the Cloudflare network. In contrast to our Challenge page offerings, Turnstile allows the customer to run challenges anywhere on their site in a less-intrusive way without requiring the use of Cloudflare’s CDN.
 
@@ -22,6 +22,8 @@ With Turnstile, we adapt the actual challenge outcome to the individual visitor/
 Turnstile also includes machine learning models that detect common features of end visitors who were able to pass a challenge before. The computational hardness of those initial challenges may vary by visitor, but is targeted to run fast.
 
 Customers are able to choose the widget type via Turnstile. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
+
+Turnstile can be embedded in various forms in an application, from a visual widget to a completely invisible widget running in the background.
 
 Turnstile [widget types](/turnstile/reference/widget-types/) include:
 
@@ -36,4 +38,4 @@ Turnstile [widget types](/turnstile/reference/widget-types/) include:
 
 Turnstile is currently in open beta and available as a free tool for all customers.
 
-For the beta, customers are limited to 1 million siteverify calls per month. Customers who need additional requests can upgrade to [Enterprise Bot Management](/bots/get-started/bm-subscription/).
+For the beta, customers are limited to 1 million calls to the siteverify verification endpoint per month per site. Customers who need additional requests can upgrade to [Enterprise Bot Management](/bots/plans/bm-subscription/).

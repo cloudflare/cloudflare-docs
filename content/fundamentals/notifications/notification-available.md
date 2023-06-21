@@ -37,7 +37,7 @@ Purchase of Access.
 
 **What should you do if you receive one?**
 
-Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflare.com/) under **Configuration** > **Service Auth**.
+Refresh your service token in the [Teams dashboard](https://one.dash.cloudflare.com/) under **Configuration** > **Service Auth**.
 
 </div>
 </details>
@@ -284,7 +284,7 @@ Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 **Who is it for?**
 
-Customers who want to be warned about changes to server health as determined by [health checks](https://support.cloudflare.com/hc/articles/4404867308429).
+Customers who want to be warned about changes to server health as determined by [health checks](/health-checks/).
 
 **Other options / filters**
 
@@ -302,7 +302,7 @@ Pro plans or higher.
 
 **What should you do if you receive one?**
 
-Review your [health check analytics](https://support.cloudflare.com/hc/articles/4404867308429#analytics).
+Review your [health check analytics](/health-checks/health-checks-analytics/#common-error-codes).
 
 </div>
 </details>
@@ -352,11 +352,11 @@ Multiple filters available:
 
 - Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
 - Customers can also choose the trigger that fires the notification. Available options are:
-  - *Health status trigger*:
+  - _Health status trigger_:
     - Becomes unhealthy or healthy
     - Becomes unhealthy
     - Becomes healthy
-  - *Event source trigger*:
+  - _Event source trigger_:
     - Health status changes in either pool or origin
     - Health status changes in pool
     - Health status changes in origin
@@ -382,7 +382,6 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 
 This is for any customer who uses Logpush and wants to monitor their job health.
 
-
 **Other options / filters**
 
 - Notification Name
@@ -398,7 +397,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working.  You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
+In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working. You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
 
 </div>
 </details>
@@ -507,6 +506,175 @@ All Cloudflare plans.
 </div>
 </details>
 
+## Page Shield
+
+<details>
+<summary>Page Shield New Code Change Detection Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+Investigate to confirm it is an expected change.
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Domain Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when resources from new host domains appear in their domain.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Business plans or higher.
+
+**What should you do if you receive one?**
+
+Investigate to confirm it is an expected change.
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Malicious Domain Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when resources from a known malicious domain appear in their domain.
+
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Malicious Script Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
+
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Malicious URL Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when resources from a known malicious URL appear in their domain.
+
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Resources Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when new resources appear in their domain.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Business plans or higher.
+
+**What should you do if you receive one?**
+
+Investigate to confirm it is an expected change.
+
+</div>
+</details>
+
+<details>
+<summary>Page Shield New Resource Exceeds Max URL Length Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when a resource's URL exceeds the maximum allowed length.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+Business plans or higher.
+
+**What should you do if you receive one?**
+
+Manually check the resource.
+
+</div>
+</details>
+
 ## Route Leak Detection
 
 <details>
@@ -528,6 +696,35 @@ Purchase of BYOIP.
 **What should you do if you receive one?**
 
 Confirm your traffic is healthy: reach out to your transit providers to ensure you are behaving as expected and ask them to follow up with any providers accepting the unauthorized routes.
+
+</div>
+</details>
+
+## Scheduled Maintenance
+
+<details>
+<summary>Maintenance Notification</summary>
+<div>
+
+**Who is it for?**
+
+Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
+
+Specifically, the notification lets you know when maintenance on a data center has been scheduled, changed, or canceled.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar.
+
+During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
 
 </div>
 </details>
@@ -575,7 +772,7 @@ When an advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
-Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f) for more information.
+Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ssl-expired-or-ssl-mismatch-errors) for more information.
 
 </div>
 </details>
@@ -598,7 +795,7 @@ Authenticated Origin Pull.
 
 **What should you do if you receive one?**
 
-Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 </div>
 </details>
@@ -667,175 +864,6 @@ Authenticated Origin Pull
 
 **What should you do if you receive one?**
 Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/).
-
-</div>
-</details>
-
-## Script Monitor
-
-<details>
-<summary>Script Monitor New Code Change Detection Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-Investigate to confirm it is an expected change.
-
-</div>
-</details>
-
-<details>
-<summary>Script Monitor New Domain Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when JavaScript dependencies from new host domains appear in their domain.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Business plans or higher.
-
-**What should you do if you receive one?**
-
-Investigate to confirm it is an expected change.
-
-</div>
-</details>
-
-<details>
-<summary>Script Monitor New Malicious Domain Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their domain.
-
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Script Monitor New Malicious Script Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
-
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Script Monitor New Malicious URL Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their domain.
-
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Enterprise plans with paid add-on.
-
-**What should you do if you receive one?**
-
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
-
-</div>
-</details>
-
-<details>
-<summary>Script Monitor New Scripts Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when new JavaScript dependencies appear in their domain.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Business plans or higher.
-
-**What should you do if you receive one?**
-
-Investigate to confirm it is an expected change.
-
-</div>
-</details>
-
-<details>
-<summary>Script Monitor New Script Exceeds Max URL Length Alert</summary>
-<div>
-
-**Who is it for?**
-
-Page Shield customers who want to receive a notification when a script's URL exceeds the maximum allowed length.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Business plans or higher.
-
-**What should you do if you receive one?**
-
-Manually check the script.
 
 </div>
 </details>
@@ -922,6 +950,54 @@ Review the information in [Security Events](/waf/security-events/paid-plans/) to
 </div>
 </details>
 
+## Tunnel
+
+<details>
+<summary>Tunnel Creation or Deletion Event</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to receive a notification when Cloudflare Tunnels are created or deleted in their account.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+No direct call to action.
+
+</div>
+</details>
+
+<details>
+<summary>Tunnel Health Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/).
+
+</div>
+</details>
+
 ## Web Analytics
 
 <details>
@@ -943,54 +1019,6 @@ All plans.
 **What should you do if you receive one?**
 
 No action required. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.
-
-</div>
-</details>
-
-## Workers
-
-<details>
-<summary>Workers Usage Report</summary>
-<div>
-
-**Who is it for?**
-
-Developers using Workers, especially those on the Unbound usage model.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Workers subscription (free or paid).
-
-**What should you do if you receive one?**
-
-Check any recent changes to your script or its external dependencies. Usage reports inform users of a sharp increase (25% or more) in key metrics like CPU time.
-
-</div>
-</details>
-
-<details>
-<summary>Workers Weekly Summary</summary>
-<div>
-
-**Who is it for?**
-
-Developers using Workers.
-
-**Other options / filters**
-
-None.
-
-**Included with**
-
-Workers subscription (free or paid).
-
-**What should you do if you receive one?**
-
-No action is usually required. This notification gives users a high-level overview of their key Workers’ metrics without having to check the dashboard. Possible metrics include account usage and per-worker usage.
 
 </div>
 </details>

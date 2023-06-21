@@ -12,9 +12,9 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 
 All included usage is on a monthly basis.
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
   
-All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing. 
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
 
@@ -25,7 +25,7 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 |          | Free plan                  | Paid Plan - Bundled                | Paid plan - Unbound                               |
 | -------- | -------------------------- | ---------------------------------- | ------------------------------------------------- |
 | Requests<sup>1</sup> | 100,000 / day              | 10 million / month, +$0.50/million | 1 million / month, + $0.15/million                |
-| Duration | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
+| Duration | 10 ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
 
 {{</table-wrap>}}
 
@@ -41,9 +41,20 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 #### Default usage model
 
-When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. You may change your default Usage Model account-wide by going to the **Account Home** > **Workers** > **Overview** > **Default Usage Model** > **Change**. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
+When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. To change your default account-wide Usage Model:
 
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. Find **Default Usage Model** on the right-side menu > **Change**. 
+
+Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
+
+You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/configuration/) in your `wranger.toml` file and in the dashboard.
+
+To change the Usage Model for individual Workers:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
 
 ### Same features
 
@@ -103,7 +114,15 @@ Workers Logpush is only available on the Workers Paid plan.
 
 ## Queues
 
-Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/pricing/).
+Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](/queues/platform/pricing/).
+
+## D1
+
+D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans. 
+
+{{<render file="_d1-pricing.md">}}
+
+Refer to [the D1 documentation](/d1/platform/pricing/) to learn more about how D1 is billed.
 
 ## Durable Objects
 
@@ -118,9 +137,9 @@ Durable Objects are only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
+1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `.accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. [Prefer using `state.acceptWebSocket()`](/workers/runtime-apis/durable-objects/#websockets-hibernation-api), which will stop incurring duration charges once all event handlers finish running.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
-3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages.
+3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
 
 ### Durable Objects billing examples
 
@@ -184,6 +203,12 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 5.  Each alarm write is billed as a single write request unit.
 
 Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
+
+## Service bindings
+
+Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+
+For more information on how service bindings work, refer to [About Service bindings](/workers/platform/bindings/about-service-bindings/).
 
 ## Fine Print
 

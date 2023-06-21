@@ -16,6 +16,10 @@ Cloudflare visualizes the metadata collected by our products in the Cloudflare d
 
 [Cloudflare Web Analytics](/analytics/web-analytics/) provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
 
+## Account and zone analytics
+
+[Account and zone analytics](/analytics/account-and-zone-analytics/) provides details about the requests and traffic related to your Cloudflare accounts and zones.
+
 ## Cloudflare Network Analytics
 
 [Cloudflare Network Analytics](/analytics/network-analytics/) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.

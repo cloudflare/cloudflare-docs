@@ -6,13 +6,17 @@ weight: 5
 
 # Metrics and analytics
 
-There are two graphical sources of information about your Workers traffic at a given time: Workers Metrics and zone-based Workers analytics. Workers metrics can help you diagnose issues and understand your Workers workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, go to **Workers** in your zone's Cloudflare dashboard to understand on a per-zone basis how much traffic your Worker is handling, and how many requests your site is getting.
+There are two graphical sources of information about your Workers traffic at a given time: Workers Metrics and zone-based Workers analytics. Workers metrics can help you diagnose issues and understand your Workers workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, go to **Workers & Pages** and select your Worker in your zone's Cloudflare dashboard to understand on a per-zone basis how much traffic your Worker is handling, and how many requests your site is getting.
 
 ---
 
 ## Workers metrics
 
-Workers metrics aggregate request data for an individual Worker script (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). Select **Workers** > **Manage Workers** > **your Worker** to view its metrics.
+Workers metrics aggregate request data for an individual Worker script (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). To view your Worker's metrics:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages**.
+3. In **Overview**, select your Worker to view its metrics.
 
 There are two metrics that can help you understand the health of your Worker in a given moment: requests success and error metrics, and invocation statuses.
 
@@ -47,19 +51,26 @@ Worker invocation statuses indicate whether a Worker script executed successfull
 
 ² The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Worker code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](https://www.cloudflarestatus.com/).
 
-To further investigate exceptions, use [wrangler tail](/workers/wrangler/commands/#tail).
+To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/#tail).
 
 ### CPU Time per execution
 
 The CPU Time per execution chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-runtime) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
 
-### Duration per execution
+### Execution duration
 
 The Duration per execution chart shows historical [duration](/workers/platform/limits/#duration) per Worker execution. The data is broken down into relevant quantiles, similar to the CPU time chart. Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). Understanding duration on your Worker is especially useful when you are intending to do a significant amount of computation on the Worker itself.
 
 Workers on the [Bundled Usage Model](/workers/platform/pricing/#usage-models) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like `fetch` requests, and waiting on responses.
 
-### Egress Data
+### Request duration
+
+The request duration per execution chart is currently only available when your Worker has [Smart Placement](/workers/platform/smart-placement) enabled. Request duration shows how long it took your Worker to respond to requests, including execution duration and network latency. 
+
+The data shows the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis. 
+
+
+### Egress data
 
 The egress data chart shows the total amount of data sent out of the Worker over the selected time period. The data is broken into subrequest and response body to help with understanding when and where the data is being sent out from.
 
@@ -98,4 +109,4 @@ This chart shows historical data for all scripts on a zone broken down by succes
 
 ## GraphQL
 
-Worker script metrics are powered by GraphQL. Learn more about querying our data sets in this [tutorial](/analytics/graphql-api/tutorials/querying-workers-metrics/).
+Worker script metrics are powered by GraphQL. Learn more about querying our data sets in the [Querying Workers Metrics with GraphQL tutorial](/analytics/graphql-api/tutorials/querying-workers-metrics/).

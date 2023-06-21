@@ -1,6 +1,5 @@
 ---
 pcx_content_type: how-to
-type: overview
 title: HTTP Strict Transport Security (HSTS)
 weight: 4
 layout: list
@@ -8,8 +7,7 @@ layout: list
 
 # HTTP Strict Transport Security (HSTS)
 
-{{<render file="_hsts-definition.md">}}
-<br/>
+HSTS protects HTTPS web servers from downgrade attacks. These attacks redirect web browsers from an HTTPS web server to an attacker-controlled server, allowing bad actors to compromise user data and cookies.
 
 HSTS adds an HTTP header that directs [compliant web browsers](/ssl/reference/browser-compatibility/) to:
 
@@ -59,16 +57,16 @@ To enable HSTS using the dashboard:
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2.  Select your website.
 3.  Go to **SSL/TLS** > **Edge Certificates**.
-4.  For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
-5.  Read the dialog and click **I understand**.
-6.  Click **Next**.
+4.  For **HTTP Strict Transport Security (HSTS)**, select **Enable HSTS**.
+5.  Read the dialog and select **I understand**.
+6.  Select **Next**.
 7.  Configure the [HSTS settings](#configuration-settings).
-8.  Click **Save**.
+8.  Select **Save**.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To enable HSTS with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-security-header-(-hsts)-setting) request with the `value` object that includes your HSTS settings.
+To enable HSTS with the API, send a [`PATCH`](/api/operations/zone-settings-change-security-header-(-hsts)-setting) request with the `value` object that includes your HSTS settings.
  
 {{</tab>}}
 {{</tabs>}}
@@ -80,10 +78,10 @@ To disable HSTS on your website:
 1.  Log in to the Cloudflare dashboard and select your account.
 2.  Select your website.
 3.  Go to **SSL/TLS** > **Edge Certificates**.
-4.  For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
+4.  For **HTTP Strict Transport Security (HSTS)**, select **Enable HSTS**.
 5.  Set the **Max Age Header** to **0 (Disable)**.
 6.  If you previously enabled the **No-Sniff** header and want to remove it, set it to **Off**.
-7.  Click **Save**.
+7.  Select **Save**.
 
 ## Configuration settings
 

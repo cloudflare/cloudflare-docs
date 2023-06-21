@@ -34,7 +34,7 @@ Note that you can use any subset of `𝑡-of-𝑛` shares to perform Lagrange in
 
 SSS scheme assumes that the dealer is honest, but this may not always hold in practice. A Verifiable Secret Sharing (VSS) scheme protects against malicious dealers by enabling participants to verify that their shares are consistent with those dealt to other nodes, ensuring that the shared secret can be correctly reconstructed later.
 
-Drand uses Feldman’s VSS scheme, an extension of SSS. Let `𝔾` denote a cyclic group of prime order `𝑝` in which computing discrete logarithms is intractable. A _cyclic group_ means there exists a generator, `𝑔`, so that any element `𝑥∈𝔾` can be written as `𝑥=𝑔𝑎` for some `𝑎∈{0,…,𝑝−1}`.
+drand uses Feldman’s VSS scheme, an extension of SSS. Let `𝔾` denote a cyclic group of prime order `𝑝` in which computing discrete logarithms is intractable. A _cyclic group_ means there exists a generator, `𝑔`, so that any element `𝑥∈𝔾` can be written as `𝑥=𝑔𝑎` for some `𝑎∈{0,…,𝑝−1}`.
 
 ### Share Distribution
 
@@ -46,7 +46,7 @@ The recovery of secret `𝑠` works the same as regular SSS, except that verifie
 
 ## Distributed Key Generation (DKG)
 
-Although VSS schemes protect against a malicious dealer, the dealer still knows the secret. To create a collectively shared secret `𝑠` so no individual node gets any information about it, participants can use a DKG protocol. Drand uses Pedersen’s DKG scheme, which runs `𝑛` instances of Feldman’s VSS in parallel and on top of additional verification steps.
+Although VSS schemes protect against a malicious dealer, the dealer still knows the secret. To create a collectively shared secret `𝑠` so no individual node gets any information about it, participants can use a DKG protocol. drand uses Pedersen’s DKG scheme, which runs `𝑛` instances of Feldman’s VSS in parallel and on top of additional verification steps.
 
 ### Share Distribution
 

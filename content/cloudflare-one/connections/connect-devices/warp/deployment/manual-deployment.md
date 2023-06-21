@@ -10,36 +10,25 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 ## Prerequisites
 
-* [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on user devices.
-* [Install the WARP client](/warp-client/get-started/) on user devices.
+- [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/) on user devices.
+- [Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
 
-## Log in from Windows and macOS
+## Enroll a device manually
 
-1. Click on the Cloudflare logo in the menu bar.
-2. Click the gear icon.
-3. Navigate to **Preferences** > **Account**.
-4. Click **Login with Cloudflare for Teams**.
-5. Enter your [team name](/cloudflare-one/glossary/#team-name).
-6. Complete the authentication steps required by your organization.
+### Windows and macOS
+
+{{<render file="_enroll-windows-mac.md">}}
 
 The device is now protected by your organization's Zero Trust policies.
 
-## Log in from Linux
+### Linux
 
-1. Open a terminal window.
-2. Run `warp-cli teams-enroll <your team name>` to enroll into Cloudflare Zero Trust using your organization's [team name](/cloudflare-one/glossary/#team-name).
-3. Complete the authentication steps required by your organization in the browser window that opens.
-4. Return to your terminal window and run `warp-cli enable-always-on` to toggle WARP to always stay connected.
+{{<render file="_enroll-linux.md">}}
 
 The device is now protected by your organization's Zero Trust policies. For more information on all available Linux commands, run `warp-cli --help`.
 
-## Log in from iOS, Android, and ChromeOS
+### iOS, Android, and ChromeOS
 
-1. Find the 1.1.1.1 application and tap to launch it.
-2. Tap the menu bar icon.
-3. Tap **Account**.
-4. Tap **Login with Cloudflare for Teams**.
-5. Enter your [team name](/cloudflare-one/glossary/#team-name).
-6. Complete the authentication steps required by your organization.
+{{<render file="_enroll-ios-android.md">}}
 
 The device is now protected by your organization's Zero Trust policies.

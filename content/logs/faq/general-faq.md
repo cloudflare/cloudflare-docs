@@ -2,6 +2,8 @@
 pcx_content_type: faq
 tittle: General FAQ
 weight: 1
+meta:
+    description: Review frequently asked questions about Cloudflare Logs.
 ---
 
 [❮ Back to FAQ](/logs/faq/)
@@ -33,3 +35,8 @@ Not at this time. Talk to your Cloudflare account team or [Cloudflare Support](h
 Only 2 types of cache purge requests can be found in the logs:
 - Purge Everything requests are logged in the [Audit Log](/logs/reference/log-fields/account/audit_logs/).
 - For the Purge by URL requests, an entry is logged in the [HTTP Request](/logs/reference/log-fields/zone/http_requests/) where the Cache Status is **PURGE**.
+
+## At which stage are HTTP requests logged?
+
+Requests are logged only after they successfully reach our proxy.
+It means that requests failing during the TCP or TLS handshake between the client and the Cloudflare proxy will not be available in the logs.
