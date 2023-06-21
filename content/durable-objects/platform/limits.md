@@ -22,7 +22,11 @@ Durable Objects are only available on the Workers Paid plan.
 
 
 
-Durable Objects scale well across Objects, but each object is inherently single-threaded. A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload.
+Durable Objects can scale horizontally across many Objects. Each individual Object is inherently single-threaded.
+
+An individual object has a soft limit of 1000 requests per second. A simple get on a small value that directly returns the response may realize a higher request throughput.
+
+Correspondingly, an object that (for example) serializes and/or deserializes large JSON values or performs larger `list()` operations may be more limited in terms of request throughput. An object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/platform/troubleshooting/#error-durable-object-is-overloaded) error to the caller.
 
 Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate Durable Objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account. If you need more storage, contact your account team.
 
