@@ -1,11 +1,11 @@
 ---
-title: Grammar and Formatting
+title: Grammar and formatting
 pcx_content_type: Content
 weight: 1
 meta:
   title: Style Guide
 ---
 
-# Grammar and Formatting
+# Grammar and formatting
 
 {{<directory-listing>}}

@@ -1,10 +1,10 @@
 ---
 pcx_content_type: Concept
-title: Punctuation Marks and Symbols
+title: Punctuation marks and symbols
 weight: 1
 
 ---
 
-# Punctuation Marks and Symbols
+# Punctuation marks and symbols
 
 {{<directory-listing>}}
