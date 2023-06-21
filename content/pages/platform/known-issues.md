@@ -30,7 +30,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
 
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is available.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/platform/functions/) are available as an equivalent to Netlify's Serverless Functions.
 
 ## Custom Domains
 
