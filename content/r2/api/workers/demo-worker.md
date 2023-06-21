@@ -12,23 +12,6 @@ interface Env {
   MY_BUCKET: R2Bucket
 }
 
-function parseRange(encoded: string | null): undefined | { offset: number, end: number, length: number } {
-  if (encoded === null) {
-    return
-  }
-
-  const parts = encoded.split("bytes=")[1]?.split("-") ?? []
-  if (parts.length !== 2) {
-    throw new Error('Not supported to skip specifying the beginning/ending byte at this time')
-  }
-
-  return {
-    offset: Number(parts[0]),
-    end:    Number(parts[1]),
-    length: Number(parts[1]) + 1 - Number(parts[0]),
-  }
-}
-
 function objectNotFound(objectName: string): Response {
   return new Response(`<html><body>R2 object "<b>${objectName}</b>" not found</body></html>`, {
     status: 404,
@@ -66,9 +49,8 @@ export default {
       }
 
       if (request.method === 'GET') {
-        const range = parseRange(request.headers.get('range'))
         const object = await env.MY_BUCKET.get(objectName, {
-          range,
+          range: request.headers,
           onlyIf: request.headers,
         })
 
@@ -79,10 +61,10 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
-        if (range) {
-          headers.set("content-range", `bytes ${range.offset}-${range.end}/${object.size}`)
+        if (object.range) {
+          headers.set("content-range", `bytes ${object.range.offset}-${object.range.end}/${object.size}`)
         }
-        const status = object.body ? (range ? 206 : 200) : 304
+        const status = object.body ? (request.headers.get("range") !== null ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
           status
