@@ -8,6 +8,8 @@ title: Using Page Rules to rewrite Host Headers
 
 Customers can rewrite Host Headers using the Cloudflare **Rules** app. This feature is currently available for domains on the Enterprise plan.
 
+{{<render file="_origin-rule-promotion.md" productFolder="rules" withParameters="/rules/origin-rules/features/#host-header">}}
+
 A common use case for this functionality is when your content is hosted on an Amazon S3 bucket. Amazon has designed their system to only accept host headers that have the same name as the bucket hosting your content. In this way, a request to "Host: your-domain.com" must be rewritten to “Host: your-bucket.s3.amazonaws.com", or else the request will be denied.
 
 {{<Aside type="note">}}

@@ -58,6 +58,7 @@ async function run() {
 async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
   const labelPrefix = 'product:';
   const labelsToRemove = [];
+  const labelsToAdd = [];
 
   for (const label of github.context.payload.pull_request.labels) {
     if (label.name.startsWith(labelPrefix)) {
@@ -65,23 +66,38 @@ async function labelPRSubFolders(octokit, repo, prNumber, changedFolders) {
     }
   }
 
-  for (const labelToRemove of labelsToRemove) {
-    await octokit.rest.issues.removeLabel({
-      ...repo,
-      issue_number: prNumber,
-      name: labelToRemove
-    });
-  }
-
   for (const folder of changedFolders) {
     const label = labelPrefix + folder;
+    labelsToAdd.push(label);
+  }
 
+  const currentLabels = new Set(github.context.payload.pull_request.labels.map(label => label.name));
+
+  for (const labelToRemove of labelsToRemove) {
+    if (!labelsToAdd.includes(labelToRemove)) {
+      await octokit.rest.issues.removeLabel({
+        ...repo,
+        issue_number: prNumber,
+        name: labelToRemove
+      });
+    }
+  }
+
+  let newLabels = [];
+  for (const labelToAdd of labelsToAdd) {
+    if (!currentLabels.has(labelToAdd)) {
+      newLabels.push(labelToAdd);
+    }
+  }
+  
+  if (newLabels.length > 0) {
     await octokit.rest.issues.addLabels({
       ...repo,
       issue_number: prNumber,
-      labels: [label]
+      labels: newLabels
     });
   }
 }
+
 
 run();

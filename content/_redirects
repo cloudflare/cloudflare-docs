@@ -642,6 +642,7 @@
 /support/account-management-billing/billing-cloudflare-add-on-services/ /support/account-management-billing/billing-add-on-service/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
 /support/third-party-software/content-management-system-cms/modified_drupal/ /support/third-party-software/content-management-system-cms/caching-html-with-drupal/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /support/more-dashboard-apps/cloudflare-scrape-shield/ 301
 
 # r2
 /r2/platform/s3-compatibility/ /r2/api/s3/api/ 301

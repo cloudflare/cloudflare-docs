@@ -17,6 +17,8 @@ The available Notification features vary according to your plan:
 * Free plans can set up email-based Notifications.
 * Business and higher plans can also [access PagerDuty](/fundamentals/notifications/create-notifications/create-pagerduty/).
 * Professional and higher plans can also [use webhooks](/fundamentals/notifications/create-notifications/configure-webhooks/).
+  
+The notification service only works on the [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) domains because Cloudflare needs enough information necessary to decide if we need to trigger a notification or not.
 
 {{<Aside type="note" header="Note">}}
 

@@ -16,7 +16,7 @@ If these issues occur while using HTTP DCV, review the following settings:
 
 - **Cloudflare Firewall Rules**: Review your [firewall rules](/waf/custom-rules/) to ensure that your rules _do not_ enable interactive challenge on the validation URL
 
-- **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](https://support.cloudflare.com/hc/articles/200170076) and [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
+- **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](https://support.cloudflare.com/hc/articles/200170076), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
 
 - **Authoritative DNS provider**: Check your settings at your authoritative DNS provider to make sure that:
 
