@@ -16,21 +16,21 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
 ## Getting started
 
-1.  Create a directory that will contain the assets in the root of your project (for example, `./public`)
-2.  Add configuration to your `wrangler.toml` file to point to it.
+1. Create a directory that will contain the assets in the root of your project (for example, `./public`)
+2. Add configuration to your `wrangler.toml` file to point to it.
 
-    ```toml
-    [site]
-    bucket = "./public" # Add the directory with your static assets!
-    ```
+   ```toml
+   [site]
+   bucket = "./public" # Add the directory with your static assets!
+   ```
 
-3.  Install the `@cloudflare/kv-asset-handler` package in your project:
+3. Install the `@cloudflare/kv-asset-handler` package in your project:
 
-    ```sh
-    $ npm i -D @cloudflare/kv-asset-handler
-    ```
+   ```sh
+   $ npm i -D @cloudflare/kv-asset-handler
+   ```
 
-4.  Import the `getAssetFromKV()` function into your Worker script and use it to respond with static assets.
+4. Import the `getAssetFromKV()` function into your Worker script and use it to respond with static assets.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -89,11 +89,11 @@ async function handleEvent(event) {
 {{</tab>}}
 {{</tabs>}}
 
-    For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
+   For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
 
-5.  Run `wrangler dev` or `wrangler publish` as you would normally with your Worker project.
-    Wrangler will automatically upload the assets found in the configured directory.
+5. Run `wrangler dev` or `wrangler publish` as you would normally with your Worker project.
+   Wrangler will automatically upload the assets found in the configured directory.
 
-    ```sh
-    $ wrangler publish
-    ```
+   ```sh
+   $ wrangler publish
+   ```
