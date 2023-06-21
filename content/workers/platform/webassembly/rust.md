@@ -155,12 +155,12 @@ To access platform features such as bindings, Wasm Workers must be able to acces
 This interoperability is achieved using [`wasm-bindgen`](https://rustwasm.github.io/wasm-bindgen/), which provides the glue code needed to import runtime APIs to, and export event handlers from, the Wasm module. `wasm-bindgen` also provides [`js-sys`](https://docs.rs/js-sys/latest/js_sys/), which implements types for interacting with JavaScript objects. In practice, this is an implementation detail, as `workers-rs`'s API handles conversion to and from JavaScript objects, and interaction with imported JavaScript runtime APIs for you.
 
 {{<Aside type="note">}}
-If you are using `wasm-bindgen` without `workers-rs` / `worker-build`, then you will need to patch the JavaScript that it emits.
-This is because when you import a `wasm` file in Workers, you get a `WebAssembly.Module` instead of a `WebAssembly.Instance` for
-performance and security reasons.
+If you are using `wasm-bindgen` without `workers-rs` / `worker-build`, then you will need to patch the JavaScript that it emits. This is because when you import a `wasm` file in Workers, you get a `WebAssembly.Module` instead of a `WebAssembly.Instance` for performance and security reasons.
+
+To patch the JavaScript that `wasm-bindgen` emits:
 
 1. Run `wasm-pack build --target bundler` as you normally would.
-2. Patch the JavaScript file that it produces (here we assume the file is called `mywasmlib.js`):
+2. Patch the JavaScript file that it produces (the following code block assumes the file is called `mywasmlib.js`):
 ```js
 import * as imports from "./mywasmlib_bg.js";
  
@@ -176,7 +176,7 @@ if ((typeof process !== 'undefined') && (process.release.name === 'node')) {
  
 export * from "./mywasmlib_bg.js";
 ```
-3. In your Worker script, import the function and use it directly:
+3. In your Worker entrypoint, import the function and use it directly:
 ```js
 import { myFunction } from "path/to/mylib.js";
 ```
