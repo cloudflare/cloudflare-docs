@@ -654,8 +654,26 @@ There are a few prerequisites you should be aware of before continuing:
 
 #### Set up via dashboard
 
+**Tunnel 1 settings: `CF_Magic_WAN_IPsec_01`**
+
+Name                | Option         | Value
+------------------- | -------------- | --------------------
+`CF_Magic_WAN_IPsec_01` | Tunnel interface | `tunnel.1`
+&nbsp;  | IKE Gateway | _CF_Magic_WAN_IKE_01_
+&nbsp;  | IPsec Crypto Profile | _CF_IKE_Crypto_CBC_
+&nbsp;  | Enable Replay Protection | **Disable**
+
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
+
+**Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`**
+Name                | Option         | Value
+------------------- | -------------- | --------------------
+`CF_Magic_WAN_IPsec_02` | Tunnel interface | `tunnel.2`
+&nbsp;  | IKE Gateway | _CF_Magic_WAN_IKE_02_
+&nbsp;  | IPsec Crypto Profile | _CF_IKE_Crypto_CBC_
+&nbsp;  | Enable Replay Protection | **Disable**
+
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/10_ipsec_tun02_page2.png)
 
