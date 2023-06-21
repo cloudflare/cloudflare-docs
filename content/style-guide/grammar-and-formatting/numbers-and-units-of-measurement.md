@@ -56,7 +56,7 @@ In general, only abbreviate units of measurements when they modify specific quan
 |128 GB|128 gb, 128gb, 128GB|Units of measurement should always be capitalized and spaced out from their corresponding numerical values.|
 |This network has a capacity of over **30 Tbps.**|This network has a capacity of over 30Tbps.|Adding a space between ‘30’ and ‘Tbps’ makes this sentence easier to read.|
 
-## Physical Distance
+## Physical distance
 
 |Measurement|Example|
 |---|---|
@@ -64,7 +64,7 @@ In general, only abbreviate units of measurements when they modify specific quan
 |feet, meters|At 2625 **meters** (8612 **feet**) above sea level, Bogotá (Colombia) is one of the four highest capital cities in the world. Now, it is also home to Cloudflare's 149th data center.|
 |miles|Despite having a unique place on the map of the United States, and its significant distance from other cities (900 **miles** to Dallas; 1,000 **miles** to Chicago, 1,000 **miles** to Los Angeles), Denver has not always been a major point of regional interconnection.|
 
-## Digital Storage
+## Digital storage
 
 |Measurement|Example|
 |---|---|

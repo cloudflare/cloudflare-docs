@@ -13,7 +13,7 @@ Dependent clauses that start a sentence, end with a comma [(learn more)](https:/
 
 Example: After you open the file, save it to your desktop with a different name.
 
-## Oxford Comma
+## Oxford comma
 
 Use the Oxford comma. The Oxford comma should break up lists of three or more items in a sentence.
 

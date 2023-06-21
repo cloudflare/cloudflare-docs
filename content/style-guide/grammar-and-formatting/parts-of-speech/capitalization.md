@@ -89,4 +89,4 @@ Each product, service, and feature should be properly spelled and capitalized wh
 
 ## Headings
 
-For headings, only the first letter should be capitalized. Normal capitalization rules still apply to the rest of the sentence.
+For headings, only the first letter of the first word should be capitalized. Normal capitalization rules still apply to the rest of the sentence.

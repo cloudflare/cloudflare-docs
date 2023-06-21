@@ -37,12 +37,12 @@ However, as with any other aspect of writing, they should be used mindfully. Bel
         <th>To list data</th>
     </tr>
     <tr>
-        <th>---</th>
+        <th>-</th>
         <th>To list options</th>
     </tr>
 </table>
 
-## Bulleted Lists
+## Bulleted lists
 
 + Do not punctuate bullet points unless each item is a full sentence.
 
@@ -53,7 +53,7 @@ However, as with any other aspect of writing, they should be used mindfully. Bel
 
 + Refer to [The best way to use bullet points](https://thewritinghabit.blog/2016/08/22/best-way-to-use-bullet-points/) for additional guidance.
 
-### Bulleted List Checklist
+### Bulleted list checklist
 
 When you find yourself creating a list of bullet points, go through this checklist:
 

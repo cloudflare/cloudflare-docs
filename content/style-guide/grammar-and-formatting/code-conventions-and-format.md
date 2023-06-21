@@ -66,7 +66,7 @@ This icon denotes a caution, which advises you to take precautions to avoid inju
 
 Text in this color indicates a link.
 
-## **bold**
+## **Bold**
 
 Use **bold** when referring to a clickable action or to highlight a title or name in the UI. Bold text denotes items that you must select or click in the software, identifiers in the UI, or parameter names.
 
@@ -76,13 +76,13 @@ In nested menus, use bold for the word not the symbol.
 
 Example: **Dashboard** > **This** > **That**
 
-## *italics*
+## *Italics*
 
 Use *italics* when referring to an option that customers can select from, like in dropdown menus.
 
 Do not use italics when referring to the state of a toggle - for example, enabled/disabled should not be italicized. 
 
-## `monospace`
+## `Monospace`
 
 ``` `text in between backticks` ```
 
