@@ -288,13 +288,21 @@ set address-group Cloudflare_IPv4_Static_Grp tag Cloudflare_L3_Zone
 
 Adding an Interface Mgmt profile to the tunnel interfaces will provide the ability to ping the Virtual Tunnel Interface on your firewall(s).
 
+#### Set up via dashboard
+
 You can define an Interface Management Profile to allow ping from the dashboard:
+
+1. Go to **Network Profiles** > **Interface Mgmt**.
+2. In the **Network** tab select **Add**.
+3. Create a profile to allow Ping, and in the **Network Services** group select **Ping**.
 
 ![Interface Mgmt Profile](/images/magic-wan/third-party/palo-alto/panw_interfaces/01_int_mgmt_prof.png)
 
 ![Interface Mgmt Profile](/images/magic-wan/third-party/palo-alto/panw_interfaces/02_int_mgmt_prof.png)
 
-You can also use the command line:
+#### Set up via command line
+
+You can also use the command line to alloq ping:
 
 ```bash
 set network profiles interface-management-profile Allow_Ping userid-service no
@@ -316,11 +324,34 @@ Follow the guidance on the images below to set up the Ethernet interfaces throug
 
 **ethernet1/1: `Trust_L3_Zone`**
 
+Name            | Option             | Value
+--------------- | ------------------ | ---
+**ethernet1/1** | Interface Type     | _Layer3_
+&nbsp;          | Netflow Profile    | _None_
+**Config**      | Virtual Router     | _default_
+&nbsp;          | Security Zone      | _Trust_L3_Zone_
+**IPv4**        | Type               | **Static**
+&nbsp;          | IP                 | `VLAN0100_L3_10-1-100-254--24` <br> address object
+**Advanced**    | Management Profile | _Mgmt_Services_
+
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/03_ethernet-1-1_page3.png)
 
 **ethernet1/2: `Untrust_L3_Zone`**
+
+Name              | Option              | Value
+----------------- | ------------------- | ---
+**ethernet1/2**   | Interface Type      | _Layer3_
+&nbsp;            | Netflow Profile     | _None_
+**Config**        | Virtual Router      | _default_
+&nbsp;            | Security Zone       | _Untrust_L3_Zone_
+**IPv4**          | Type                | **Static**
+&nbsp;            | IP                  | `Internet_L3_203-0-113-254--24` <br> address object
+**Advanced**      | Management Profile  | _Allow_Ping_
+&nbsp;            | MTU                 | `576 - 1500`
+&nbsp;            | Adjust TCP MSS      | **Enable**
+&nbsp;            | IPv4 MSS Adjustment | `64`
 
 ![Set up ethernet1/2 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/04_ethernet-1-2_page1.png)
 ![Set up ethernet1/2 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/05_ethernet-1-2_page2.png)
@@ -359,11 +390,29 @@ Review the images below for more information.
 
 ##### tunnel.1 - Cloudflare_L3_Zone
 
+Name              | Option              | Value
+----------------- | ------------------- | ---
+**tunnel.1**      | Netflow Profile     | _None_
+**Config**        | Virtual Router      | _default_
+&nbsp;            | Security Zone       | _Cloudflare_L3_Zone_
+**IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_01_Local` <br> address object
+**Advanced**      | Management Profile  | _Allow_Ping_
+&nbsp;            | MTU                 | `1450`
+
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
 
 ##### tunnel.2 - Cloudflare_L3_Zone
+
+Name              | Option              | Value
+----------------- | ------------------- | ---
+**tunnel.2**      | Netflow Profile     | _None_
+**Config**        | Virtual Router      | _default_
+&nbsp;            | Security Zone       | _Cloudflare_L3_Zone_
+**IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_02_Local` <br> address object
+**Advanced**      | Management Profile  | _Allow_Ping_
+&nbsp;            | MTU                 | `1450`
 
 ![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
 ![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
@@ -400,12 +449,37 @@ The tunnel interfaces are placed in a separate Zone to facilitate the configurat
 
 {{<Aside type="note">}}Any Magic WAN protected networks that are not local should be considered part of the `Cloudflare_L3_Zone`.{{</Aside>}}
 
-Review the images below for more details:
+#### Set up via dashboard
+
+Name              | Option                  | Value
+----------------- | ----------------------- | ---
+**Trust_L3_zone** | Log setting             | _None_
+&nbsp;            | Type                    | _Layer3_
+&nbsp;            | Interfaces              | **ethernet1/1**
+&nbsp;            | Zone Protection Profile | _None_
 
 ![The Palo Alto interface showing the Trust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
+
+Name                | Option                  | Value
+------------------- | ----------------------- | ---
+**Untrust_L3_zone** | Log setting             | _None_
+&nbsp;              | Type                    | _Layer3_
+&nbsp;              | Interfaces              | **ethernet1/2*
+&nbsp;              | Zone Protection Profile | _Untrust_Zone_Prof_
+
 ![The Palo Alto interface showing the Untrust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
+
+Name                   | Option                  | Value
+---------------------- | ----------------------- | ---
+**Cloudflare_L3_zone** | Log setting             | _None_
+&nbsp;                 | Type                    | _Layer3_
+&nbsp;                 | Interfaces              | **tunnel.1** <br> **tunnel.2**
+&nbsp;                 | Zone Protection Profile | _None_
+
 ![The Palo Alto interface showing the Cloudflare_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/03_cloudflare_zone.png)
 ![The Palo Alto interface showing the Tunnel Interfaces overview section](/images/magic-wan/third-party/palo-alto/panw_zones/04_zones_overview.png)
+
+#### Set up via command line
 
 You can also use the command line to associate zones and interfaces:
 
@@ -425,6 +499,8 @@ Add a new IKE Crypto Profile to support the required parameters for Phase 1.
 
 Multiple DH Groups and Authentication settings are defined in the desired order. Palo Alto Networks Next-Generation Firewall (NGFW) will automatically negotiate the optimal settings based on specified values.
 
+#### Set up via dashboard
+
 | Name                | Option                        | Value                                |
 | ------------------- | ----------------------------- | ------------------------------------ |
 | `CF_IKE_Crypto_CBC` | DH Group                      | `group14` <br> `group5`              |
@@ -434,6 +510,8 @@ Multiple DH Groups and Authentication settings are defined in the desired order.
 |                     | IKEv2 Authentication Multiple | `0`                                  |
 
 ![IKE Crypto Profile you need to set up on your device for Phase 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/01_ike_crypto_profile.png)
+
+#### Set up via command line
 
 You can also set up the crypto profile for Phase 1 via the command line:
 
@@ -451,6 +529,8 @@ Add a new IPsec Crypto Profile to support the required parameters for Phase 2.
 
 Multiple Authentication settings are defined in the desired order. Palo Alto Networks Next-Generation Firewall (NGFW) will automatically negotiate the optimal settings based on specified values.
 
+#### Set up via dashboard
+
 | Name                | Option         | Value                |
 | ------------------- | -------------- | -------------------- |
 | CF_IPsec_Crypto_CBC | Encryption     | `aes-256-cbc`        |
@@ -459,6 +539,8 @@ Multiple Authentication settings are defined in the desired order. Palo Alto Net
 |                     | Lifetime       | 1 hour               |
 
 ![IPsec Crypto Profile you need to set up on your device](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
+
+#### Set up via command line
 
 You can also set up the IPsec crypto profile for Phase 2 via the command line:
 
@@ -473,34 +555,52 @@ set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC dh-gro
 
 Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make sure to define the following values:
 
-- **General tab**
-  - **Version**: _IKEv2 only mode_. Make sure both IKE Gateways are based only on this setting.
-  - **Pre-Shared Key**: This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.
-  - **Local Identification**: _FQDN (hostname)_. You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.
-  - **Peer Identification**: _None_
-
-- **Advanced Tab**
-  - **IKE Crypto Profile**: _CF_IKE_Crypto_CBC_
-  - **Liveness Check**: The default value for the Liveness Check (5 seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
-
 {{<Aside type="note">}}Any other settings not specified should be left at their default values. Any deviation may lead to undesirable behavior and are not supported.{{</Aside>}}
 
 #### Set up via dashboard
 
 **Tunnel 1 settings: `CF_Magic_WAN_IKE_01`**
 
+{{<Aside type="note">}}Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.{{</Aside>}}
+
+{{<table-wrap>}}
+
+Tab      | Option               | Value
+-------- | -------------------- | --------------------
+General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting.
+&nbsp;   | Local IP Address     | `Internet_L3_203-0-113-254--24`
+&nbsp;   | Peer address         | `CF_Magic_WAN_Anycast_01`
+&nbsp;   | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. 
+&nbsp;   | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.
+&nbsp;   | Peer Identification  | _None_
+Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_
+&nbsp;   | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
+
+{{</table-wrap>}}
+
 ![IKE gateway settings for tunnel 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/03_ike_gw01_page1.png)
-
-Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
-
 ![IKE gateway settings for tunnel 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/04_ike_gw01_page2.png)
 
 **Tunnel 2 settings: `CF_Magic_WAN_IKE_02`**
 
+{{<Aside type="note">}}Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.{{</Aside>}}
+
+{{<table-wrap>}}
+
+Tab      | Option               | Value
+-------- | -------------------- | --------------------
+General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting.
+&nbsp;   | Local IP Address     | `Internet_L3_203-0-113-254--24`
+&nbsp;   | Peer address         | `CF_Magic_WAN_Anycast_02`
+&nbsp;   | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. 
+&nbsp;   | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.
+&nbsp;   | Peer Identification  | _None_
+Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_
+&nbsp;   | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
+
+{{</table-wrap>}}
+
 ![IKE gateway settings for tunnel 2](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/05_ike_gw02_page1.png)
-
-Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
-
 ![IKE gateway settings for tunnel 2](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/06_ike_gw02_page2.png)
 
 #### Set up via command line
@@ -1097,25 +1197,22 @@ set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow rule-type univer
 
 ### Policy-based forwarding - production traffic
 
-Whether traffic ingresses or egresses NGFW, It is important to ensure that traffic is routed symmetrically. This is accomplished through the use of Policy-Based Forwarding.
+Whether traffic ingresses or egresses ​​Palo Alto Networks Next-Generation Firewall​​, it is important to ensure that traffic is routed symmetrically. This is accomplished through the use of Policy-Based Forwarding.
 
 Policy-Based Forwarding rules are only required for egress traffic.
 
-Any traffic destined for Magic WAN Protected Sites or Magic WAN Protected Sites + Gateway Egress must be routed across the IPsec tunnels.
+Any traffic destined for Magic WAN protected sites or Magic WAN protected sites with Gateway egress must be routed across the IPsec tunnels.
 
-> _NOTE: Security Rules match traffic flows based on source and destination Zone. Policy Based Forwarding rules are applied per interface - therefore, two Policy-Based Forwarding rules are required for every one Security Rule - one for tunnel.1 and one for tunnel.2._
+{{<Aside type="note">}}Security rules match traffic flows based on source and destination zone. Policy-based forwarding rules are applied per interface. Therefore, two policy-based forwarding rules are required for every one security rule - one for `tunnel.1` and one for `tunnel.2`.{{</Aside>}}
 
-###### Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.1
+#### Policy-based forwarding - Magic WAN Production Traffic via `tunnel.1`
 
-![PBF: Trust to Magic WAN via tunnel.1 - General](./images/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
+![PBF: Trust to Magic WAN via tunnel.1 - General](/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Source](/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Destinations](/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
 
-![PBF: Trust to Magic WAN via tunnel.1 - Source](./images/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
-
-![PBF: Trust to Magic WAN via tunnel.1 - Destinations](./images/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
-
-![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](./images/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
-
-###### Command-Line - Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.1
+#### Command line - Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.1
 
 ```xml
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
