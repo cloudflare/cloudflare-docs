@@ -599,6 +599,8 @@ This is a good time to ensure the IPsec tunnels are established and to validate 
 
 The first step is to verify IKE Phase 1 completed successfully:
 
+**Syntax**
+
 ```bash
 show vpn ike-sa gateway [value]
 ```
@@ -658,49 +660,47 @@ Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
 
 #### Troubleshooting IKE Phase 1 Communications
 
-Magic IPsec Tunnels expect the customer-side of the VPN is the initiator of the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
+Magic IPsec Tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
 
-##### Syntax
+**Syntax**
 
-```xml
+```bash
 test vpn ike-sa gateway [value]
 ```
 
-###### Example - CF_Magic_WAN_IKE_01
+**Example for `CF_Magic_WAN_IKE_01`**
 
-```xml
+```bash
 admin@panvm03> test vpn ike-sa gateway CF_Magic_WAN_IKE_01
 
 Start time: Jun.05 00:30:29
 Initiate 1 IKE SA.
 ```
 
-Repeat the show command for the respective tunnel to ensure the IKE SA(s) display as expected.
+**Example for `CF_Magic_WAN_IKE_02`**
 
-###### Example - CF_Magic_WAN_IKE_02
-
-```xml
+```bash
 admin@panvm03> test vpn ike-sa gateway CF_Magic_WAN_IKE_02
 
 Start time: Jun.05 00:30:33
 Initiate 1 IKE SA.
 ```
 
-Repeat the show command for the respective tunnel to ensure the IKE SA(s) display as expected.
+Repeat these commands for the respective tunnel to ensure the IKE SA(s) display as expected.
 
 #### Verify IPsec Phase 2 Communications
 
-The next test to ensure the IPsec tunnels are established is to ping the remote Virtual Tunnel Interface (Cloudflare side) from the NGFW command-line. Ensure you specify the source IP address of the ping from the local side of the Virtual Tunnel Interface:
+To ensure the IPsec tunnels are established, ping the remote Virtual Tunnel Interface (Cloudflare side) from the​ command line on the Palo Alto Networks Next-Generation Firewall. Ensure you specify the source IP address of the ping from the local side of the Virtual Tunnel Interface:
 
-##### Syntax
+**Syntax**
 
-```xml
+```bash
 show vpn ipsec-sa tunnel [value]
 ```
 
-###### Example - CF_Magic_WAN_IPsec_01
+**Example for `CF_Magic_WAN_IPsec_01`**
 
-```xml
+```bash
 admin@panvm03> show vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_01
 
 GwID/client IP  TnID   Peer-Address           Tunnel(Gateway)                                Algorithm          SPI(in)  SPI(out) life(Sec/KB)             remain-time(Sec)
@@ -712,9 +712,9 @@ GwID/client IP  TnID   Peer-Address           Tunnel(Gateway)                   
 Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
 ```
 
-###### Example - CF_Magic_WAN_IPsec_02
+**Example for `CF_Magic_WAN_IPsec_02`**
 
-```xml
+```bash
 admin@panvm03> show vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_02
 
 GwID/client IP  TnID   Peer-Address           Tunnel(Gateway)                                Algorithm          SPI(in)  SPI(out) life(Sec/KB)             remain-time(Sec)
@@ -728,51 +728,49 @@ Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
 
 #### Troubleshooting IPsec Phase 2 Communications
 
-Magic IPsec Tunnels expect the customer-side of the VPN is the initiator of the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
+Magic IPsec Tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
 
-##### Syntax
+**Syntax**
 
-```xml
+```bash
 test vpn ipsec-sa tunnel [value]
 ```
 
-###### Example - CF_Magic_WAN_IPsec_01
+**Example for `CF_Magic_WAN_IPsec_01`**
 
-```xml
+```bash
 admin@panvm03> test vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_01
 
 Start time: Jun.05 00:37:50
 Initiate 1 IPsec SA for tunnel CF_Magic_WAN_IPsec_01.
 ```
 
-Repeat the show command for the respective tunnel to ensure the IPsec SA(s) display as expected.
+**Example for `CF_Magic_WAN_IPsec_02`**
 
-###### Example - CF_Magic_WAN_IPsec_02
-
-```xml
+```bash
 admin@panvm03> test vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_02
 
 Start time: Jun.05 00:38:52
 Initiate 1 IPsec SA for tunnel CF_Magic_WAN_IPsec_02.
 ```
 
-Repeat the show command for the respective tunnel to ensure the IPsec SA(s) display as expected.
+Repeat these commands for the respective tunnel to ensure the IPsec SA(s) display as expected.
 
 #### Ping Remote Virtual Tunnel Interfaces
 
-Use ping to source traffic from the IP address of the Virtual Tunnel Interface on NGFW to the IP address of the Virtual Tunnel Interface on the Cloudflare side of the IPsec tunnel.
+Use ping to source traffic from the IP address of the Virtual Tunnel Interface on Palo Alto Networks Next-Generation Firewall (NGFW) to the IP address of the Virtual Tunnel Interface on the Cloudflare side of the IPsec tunnel.
 
-> _NOTE: The Interface address is defined with a /31 netmask. There have been isolated cases where NGFW exhibited issues with using ping to verify connectivity between the local and remote Virtual Tunnel Interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a /30 netmask, or contact Palo Alto Networks support for assistance._
+{{<Aside type="note">}}The interface address is defined with a `/31` netmask. There have been isolated cases where NGFW exhibited issues with using ping to verify connectivity between the local and remote Virtual Tunnel Interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a `/30` netmask, or contact Palo Alto Networks support for assistance.{{</Aside>}}
 
-##### Syntax
+**Syntax**
 
-```xml
+```bash
 ping source [value src IP] host [value dst IP]
 ```
 
-###### Example - Tunnel 1
+**Example for - Tunnel 1**
 
-```xml
+```bash
 admin@panvm03> ping source 10.252.2.27 host 10.252.2.26
 PING 10.252.2.26 (10.252.2.26) from 10.252.2.27 : 56(84) bytes of data.
 64 bytes from 10.252.2.26: icmp_seq=1 ttl=64 time=2.71 ms
@@ -785,9 +783,9 @@ PING 10.252.2.26 (10.252.2.26) from 10.252.2.27 : 56(84) bytes of data.
 rtt min/avg/max/mdev = 1.980/2.180/2.719/0.312 ms
 ```
 
-###### Example - Tunnel 2
+**Example for Tunnel 2**
 
-```xml
+```bash
 admin@panvm03> ping source 10.252.2.29 host 10.252.2.28
 PING 10.252.2.28 (10.252.2.28) from 10.252.2.29 : 56(84) bytes of data.
 64 bytes from 10.252.2.28: icmp_seq=1 ttl=64 time=2.90 ms
@@ -800,31 +798,29 @@ PING 10.252.2.28 (10.252.2.28) from 10.252.2.29 : 56(84) bytes of data.
 rtt min/avg/max/mdev = 1.765/2.141/2.900/0.446 ms
 ```
 
----
-
 ### Virtual Router
 
-While we will leverage Policy-Based Forwarding to implement policy-based routing, it is still a good idea to configure routing on the Virtual Router.
+While we will leverage policy-based forwarding to implement policy-based routing, it is still a good idea to configure routing on the Virtual Router.
 
-Cloudflare Magic WAN implements Equal Cost Multi-Path (ECMP) Routing to steer traffic across Magic IPsec Tunnels. The default behavior is to load balance traffic equally across both tunnels.
+Cloudflare Magic WAN implements equal-cost multi-path (ECMP) routing to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
 
-_NOTE: ECMP is disabled on NGFW by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window._
+{{<Aside type="note">}}ECMP is disabled on the ​​Palo Alto Networks Next-Generation Firewall by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window.{{</Aside>}}
 
-#### ECMP
+#### Enable ECMP
 
-First, ensure the General tab displays both the Ethernet and tunnel interfaces. If any of the interfaces are not displayed, either use Add to specify the missing interface(s), or visit the Interfaces menu to ensure the relevant Virtual Router is selected.
+First, ensure the General tab displays both the Ethernet and tunnel interfaces. If any of the interfaces are not displayed, either use **Add** to specify the missing interface(s), or visit the Interfaces menu to ensure the relevant Virtual Router is selected.
 
-Open the settings for the default Virtual Router and select the ECMP tab.
+![Make sure the Ethernet and tunnel interfaces show up in Virtual Router](/images/magic-wan/third-party/palo-alto/panw_virtual_router/01_virtual_router_interfaces.png)
 
-Click the checkboxes next to Enable, Symmetric Return, and Strict Source Path (all 3 checkboxes should be selected).
+1. Open the **Router settings** for the default Virtual Router and select the **ECMP** tab.
+2. Select the checkboxes next to **Enable**, **Symmetric Return**, and **Strict Source Path** (all three checkboxes should be selected).
+3. Under **Load Balance**, change the **Method** from _IP Modulo_ to _Weighted Round Robin_ and add both tunnel interfaces. Ensure the weights match the weights defined in Magic WAN Static Routes (reference the Cloudflare Dashboard).
 
-Change the _Method_ under _Load Balance_ from _IP Modulo_ to _Weighted Round Robin_ and add both tunnel interfaces. Ensure the weights match the weights defined in Magic WAN Static Routes (reference the Cloudflare Dashboard).
+![Make sure all checkboxes are selected](/images/magic-wan/third-party/palo-alto/panw_virtual_router/02_virtual_router_ecmp.png)
 
-![Virtual Router - ECMP](./images/panw_ipsec_tunnels/01_ike_crypto_profile.png)
+You can also use the command line to make these changes:
 
-##### Command-Line
-
-```xml
+```bash
 set network virtual-router default ecmp algorithm weighted-round-robin interface tunnel.1 weight 100
 set network virtual-router default ecmp algorithm weighted-round-robin interface tunnel.2 weight 100
 set network virtual-router default ecmp enable yes
@@ -832,39 +828,39 @@ set network virtual-router default ecmp symmetric-return yes
 set network virtual-router default ecmp strict-source-path yes
 ```
 
-#### Static Routes
+#### Add static routes
 
 Add two static routes for each Magic WAN Protected Network - one for each of the two tunnel interfaces.
 
-NOTE: NGFW will not allow for configuring two routes to the same destination with equal metrics - even if they reference different interfaces and ECMP is enabled. The examples provided here use Metric 10 for the route via interface tunnel.1 and Metric 11 for the route via interface tunnel.2.
+{{<Aside type="note">}}Palo Alto Networks Next-Generation Firewall will not allow for configuring two routes to the same destination with equal metrics - even if they reference different interfaces and ECMP is enabled. The examples provided here use Metric 10 for the route via interface tunnel.1 and Metric 11 for the route via interface tunnel.2.{{</Aside>}}
 
-The environment used for this documentation assumes two Magic WAN Protected Networks:
+The environment used for this tutorial assumes two Magic WAN Protected Networks:
+- **VLAN0010**: `10.1.10.0/24`
+- **VLAN0020**: `10.1.20.0/24`
 
-- VLAN0010: 10.1.10.0/24
+Refer to the images below for the settings needed:
 
-- VLAN0020: 10.1.20.0/24
+**VLAN0010 (`10.1.10.0/24`) via tunnel.1**
 
-###### VLAN0010 (10.1.10.0/24) via tunnel.1
+![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
 
-![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](./images/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
+**VLAN0010 (`10.1.10.0/24`) via tunnel.2**
 
-###### VLAN0010 (10.1.10.0/24) via tunnel.2
+![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
 
-![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](./images/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
+**VLAN0020 (`10.1.20.0/24`) via tunnel.1**
 
-###### VLAN0020 (10.1.20.0/24) via tunnel.1
+![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
 
-![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](./images/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
+**VLAN0020 (`10.1.20.0/24`) via tunnel.2**
 
-###### VLAN0020 (10.1.20.0/24) via tunnel.2
+![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
 
-![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](./images/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
+You can also configure these settings via command line:
 
-##### Command-Line
+**VLAN0010 - `10.1.10.0/24`**
 
-###### VLAN0010 - 10.1.10.0/24
-
-```xml
+```bash
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 bfd profile None
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 interface tunnel.1
@@ -879,9 +875,9 @@ set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 route-table unicast
 ```
 
-###### VLAN0020 - 10.1.20.0/24
+**VLAN0020 - `10.1.20.0/24`**
 
-```xml
+```bash
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 bfd profile None
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 interface tunnel.1
@@ -896,41 +892,34 @@ set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun02 route-table unicast
 ```
 
----
-
 ### Magic Health Checks
 
-Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random metals across the global Cloudflare anycast network. These ICMP probes are unique in that an ICMP Reply packet is sent (as opposed to an ICMP Request).
+Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random servers across Cloudflare's global anycast network. These ICMP probes are unique in that an ICMP reply packet is sent (as opposed to an ICMP Request).
 
-> NOTE: The construct of the security policies may seem counter-intuitive - this is due to the use of ICMP Reply probes. As long as you adhere to the recommended policies in this documentation, the bi-directional health checks will work as expected.
+{{<Aside type="note">}}The construct of the security policies may seem counter-intuitive - this is due to the use of ICMP reply probes. As long as you adhere to the recommended policies in this documentation, the bi-directional health checks will work as expected.{{</Aside>}}
 
-Cloudflare Magic WAN customers must configure the Magic IPsec Tunnels to use custom anycast IP addresses for the health check endpoints:
+Cloudflare Magic WAN customers must configure IPsec tunnels to use custom anycast IP addresses for the health check endpoints:
+- **CF_Health_Check_Anycast_01**: `172.64.240.253`
+- **CF_Health_Check_Anycast_02**: `172.64.240.254`
 
-- CF_Health_Check_Anycast_01: 172.64.240.253
+#### Security Policy - Tunnel health checks
 
-- CF_Health_Check_Anycast_02: 172.64.240.254
+You must define a rule to allow the ICMP reply probes as Palo Alto Networks Next-Generation Firewall's default behavior will drop the health checks.
 
-#### Security Policy - Tunnel Health Checks
+{{<Aside type="note">}}Cloudflare health checks are sent from random servers across Cloudflare's global network and can originate from any addresses within the Cloudflare IPv4 address space represented by the **Cloudflare_IPv4_Static_Grp**.{{</Aside>}}
 
-We must define a rule to allow the ICMP Reply probes as NGFW's default behavior will drop the Health Checks.
+Review the images below to learn what settings to use.
 
-> NOTE: Cloudflare Health Checks are sent from random metals across the global Cloudflare edge network and can originate from any addresses within the Cloudflare IPv4 address space represented by the **Cloudflare_IPv4_Static_Grp**.
+![Bidirectioanl Health Check Rule - General](/images/magic-wan/third-party/palo-alto/panw_security_rules/01_bidirect_hc_general.png)
+![Bidirectioanl Health Check Rule - Source](/images/magic-wan/third-party/palo-alto/panw_security_rules/02_bidirect_hc_source.png)
+![Bidirectioanl Health Check Rule - Destination](/images/magic-wan/third-party/palo-alto/panw_security_rules/03_bidirect_hc_dest.png)
+![Bidirectioanl Health Check Rule - Apps](/images/magic-wan/third-party/palo-alto/panw_security_rules/04_bidirect_hc_apps.png)
+![Bidirectioanl Health Check Rule - Service/URL Category](/images/magic-wan/third-party/palo-alto/panw_security_rules/05_bidirect_hc_service-url.png)
+![Bidirectioanl Health Check Rule - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/06_bidirect_hc_action.png)
 
-![Bidirectioanl Health Check Rule - General](./images/panw_security_rules/01_bidirect_hc_general.png)
+You can also configure these settings via the command line:
 
-![Bidirectioanl Health Check Rule - Source](./images/panw_security_rules/02_bidirect_hc_source.png)
-
-![Bidirectioanl Health Check Rule - Destination](./images/panw_security_rules/03_bidirect_hc_dest.png)
-
-![Bidirectioanl Health Check Rule - Apps](./images/panw_security_rules/04_bidirect_hc_apps.png)
-
-![Bidirectioanl Health Check Rule - Service/URL Category](./images/panw_security_rules/05_bidirect_hc_service-url.png)
-
-![Bidirectioanl Health Check Rule - Action](./images/panw_security_rules/06_bidirect_hc_action.png)
-
-##### Command-Line
-
-```xml
+```bash
 set rulebase security rules Cloudflare_Tunnel_Bidirect_HC to Cloudflare_L3_Zone
 set rulebase security rules Cloudflare_Tunnel_Bidirect_HC from Cloudflare_L3_Zone
 set rulebase security rules Cloudflare_Tunnel_Bidirect_HC source [ CF_Health_Check_Anycast_01 CF_Health_Check_Anycast_02 ]
@@ -947,45 +936,33 @@ set rulebase security rules Cloudflare_Tunnel_Bidirect_HC disabled no
 set rulebase security rules Cloudflare_Tunnel_Bidirect_HC log-end yes
 ```
 
-> _NOTE: Logging is enabled on the rule to permit Heath Checks. While the amount of bandwidth consumed by Heath Checks is negligible, the flows generate a significant number of log entries. You may want to disable logging on this rule once in production and only enable it if any troubleshooting becomes necessary._
+{{<Aside type="note">}}Logging is enabled on the rule to permit heath checks. While the amount of bandwidth consumed by health checks is negligible, the flows generate a significant number of log entries. You may want to disable logging on this rule once in production, and only enable it if any troubleshooting becomes necessary.{{</Aside>}}
 
-#### Policy-Based Forwarding - Tunnel Health Checks
+#### Policy-based forwarding - tunnel health checks
 
-Traffic matching the Security Rule defined in the last step must be routed symmetrically across the tunnel the ingress traffic was received through.
+Traffic matching the Security Rule defined in the last step must be routed symmetrically across the tunnel the ingress traffic was received through. Two policy-based forwarding rules ensure the traffic is routed accordingly.
 
-Two Policy-Based Forwarding rules ensure the traffic is routed accordingly.
+Ensure have the following:
+- **Source Zone**: `Cloudflare_L3_Zone`
+- **Source Addresses**: `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02`
+- **Destination Zone**: `Cloudflare_L3_Zone`
+- **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
+- **Application**: `icmp` and `ping`
 
-Ensure the following:
+![Bidirectional Health Checks via tunnel.1 - General](/images/magic-wan/third-party/palo-alto/panw_pbf/01_pbf_hc_01_general.png)
+![Bidirectional Health Checks via tunnel.1 - Source](/images/magic-wan/third-party/palo-alto/panw_pbf/02_pbf_hc_01_source.png)
+![Bidirectional Health Checks via tunnel.1 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/03_pbf_hc_01_dest-app-service.png)
+![Bidirectional Health Checks via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/04_pbf_hc_01_forwarding.png)
+![Bidirectional Health Checks via tunnel.2 - General](/images/magic-wan/third-party/palo-alto/panw_pbf/05_pbf_hc_02_general.png)
+![Bidirectional Health Checks via tunnel.2 - Source](/images/magic-wan/third-party/palo-alto/panw_pbf/06_pbf_hc_02_source.png)
+![Bidirectional Health Checks via tunnel.2 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/07_pbf_hc_02_dest-app-service.png)
+![Bidirectional Health Checks via tunnel.2 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/08_pbf_hc_02_forwarding.png)
 
-Source Zone: **Cloudflare_L3_Zone**
-Source Addresses: **CF_Health_Check_Anycast_01** & **CF_Health_Check_Anycast_02**
+You can also configure these settings via command line:
 
-Destination Zone: **Cloudflare_L3_Zone**
-Destination Addresses: **Cloudflare_IPv4_Static_Grp**
+**Tunnel 01**
 
-Application: **icmp** & **ping**
-
-![Bidirectional Health Checks via tunnel.1 - General](./images/panw_pbf/01_pbf_hc_01_general.png)
-
-![Bidirectional Health Checks via tunnel.1 - Source](./images/panw_pbf/02_pbf_hc_01_source.png)
-
-![Bidirectional Health Checks via tunnel.1 - Destination](./images/panw_pbf/03_pbf_hc_01_dest-app-service.png)
-
-![Bidirectional Health Checks via tunnel.1 - Forwarding](./images/panw_pbf/04_pbf_hc_01_forwarding.png)
-
-![Bidirectional Health Checks via tunnel.2 - General](./images/panw_pbf/05_pbf_hc_02_general.png)
-
-![Bidirectional Health Checks via tunnel.2 - Source](./images/panw_pbf/06_pbf_hc_02_source.png)
-
-![Bidirectional Health Checks via tunnel.2 - Destination](./images/panw_pbf/07_pbf_hc_02_dest-app-service.png)
-
-![Bidirectional Health Checks via tunnel.2 - Forwarding](./images/panw_pbf/08_pbf_hc_02_forwarding.png)
-
-##### Command-Line
-
-###### Tunnel 01:
-
-```xml
+```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 action forward egress-interface tunnel.1
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 from zone Cloudflare_L3_Zone
@@ -998,9 +975,9 @@ set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 service any
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 tag Cloudflare_L3_Zone
 ```
 
-###### Tunnel 02:
+**Tunnel 02**
 
-```xml
+```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 action forward egress-interface tunnel.2
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 from zone Cloudflare_L3_Zone
@@ -1013,77 +990,74 @@ set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 service any
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 tag Cloudflare_L3_Zone
 ```
 
-### Troubleshooting Tunnel Health Checks
+### Troubleshooting tunnel health checks
 
 #### Security Policy
 
-Use the Traffic log viewer to ensure that the Health Check traffic is allowed. Start with adding a rule to filter the logs based on the name of the Security Policy rule permitting the applicable traffic.
+Use the Traffic log viewer to ensure that the health check traffic is allowed. Start by adding a rule to filter the logs based on the name of the Security Policy rule permitting the applicable traffic.
 
-```xml
+**Filter by rule name**
+
+```bash
 rule eq Cloudflare_Tunnel_Bidirect_HC
 ```
 
-![Bidirectional Health Check Logging - Filter by Rule Name](./images/panw_logging/02_logging_tunnel_hc_filter_rulename.png)
+![Bidirectional health check logging - Filter by rule name](/images/magic-wan/third-party/palo-alto/panw_logging/02_logging_tunnel_hc_filter_rulename.png)
 
-If you do not see any traffic matching the filter, replace the filter with one that displays log entries based on the addresses associated with the CF_Health_Check_Anycast_01 and CF_Health_Check_Anycast_02 Address objects.
+If you do not see any traffic matching the filter, replace the filter with one that displays log entries based on the addresses associated with the `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02` Address objects.
 
-```xml
+**Filter by health check anycast IPs**
+
+```bash
 ( addr.src in 172.64.240.253 ) or ( addr.src in 172.64.240.254 )
 ```
 
-![Bidirectional Health Check Logging - Filter by Health Check Anycast IPs](./images/panw_logging/01_logging_tunnel_hc_filter_ip.png)
+![Bidirectional health check logging - filter by health check anycast IPs](/images/magic-wan/third-party/palo-alto/panw_logging/01_logging_tunnel_hc_filter_ip.png)
 
-#### Policy-Based Forwarding
+#### Policy-based forwarding
 
-Troubleshooting Policy-Based Forwarding can be a bit challenging. The ideal way to determine if traffic is flowing through the intended path is to select the detailed view for a log entry.
+Troubleshooting policy-based dorwarding can be a bit challenging. The ideal way to determine if traffic is flowing through the intended path is to select the detailed view for a log entry.
 
-- Click on the magnifying glass next to one of the log entries with source IP address 172.64.240.253
+1. Select the magnifying glass next to one of the log entries with source IP address `172.64.240.253`.
 
-- Traffic originating from CF_Health_Check_Anycast_01 (172.64.240.253) should ingress and egress interface tunnel.1
+2. Traffic originating from `CF_Health_Check_Anycast_01` (`172.64.240.253`) should ingress and egress interface `tunnel.1`.
 
-![Bidirectional Health Check Logging - tunnel.1](./images/panw_logging/03_logging_tunnel_hc_tun01.png)
+![Bidirectional Health Check Logging - tunnel.1](/images/magic-wan/third-party/palo-alto/panw_logging/03_logging_tunnel_hc_tun01.png)
 
-- Click on the magnifying glass next to one of the log entries with source IP address 172.64.240.254
+3. Select the magnifying glass next to one of the log entries with source IP address `172.64.240.254`.
 
-- Traffic originating from CF_Health_Check_Anycast_02 (172.64.240.254) should ingress and egress interface tunnel.2
+4. Traffic originating from `CF_Health_Check_Anycast_02` (`172.64.240.254`) should ingress and egress interface `tunnel.2`.
 
-![Bidirectional Health Check Logging - tunnel.2](./images/panw_logging/04_logging_tunnel_hc_tun02.png)
+![Bidirectional Health Check Logging - tunnel.2](/images/magic-wan/third-party/palo-alto/panw_logging/04_logging_tunnel_hc_tun02.png)
 
-If the traffic is not ingressing/egressing the same interface, you likely have an issue with the Policy-Based Forwaring rule(s) not matching.
-
----
+If the traffic is not ingressing/egressing the same interface, you likely have an issue with the policy-based forwaring rule(s) not matching.
 
 ### Security Policies - Production Traffic
 
-As mentioned earlier, this document includes examples for two different use-cases:
+As mentioned earlier, this tutorial includes examples for two different use-cases:
 
-- Magic WAN: permit traffic between two or more locations with RFC-1918 private non-routable address space
+- **Magic WAN**: permit traffic between two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway Egress)**: same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
-- Magic WAN with Cloudflare Zero Trust (Gateway Egress): same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+#### Magic WAN only
 
-#### Magic WAN Only
+Rules must be defined to facilitate traffic from the trust network to the Magic WAN protected sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
 
-Rules must be defined to facilitate traffic from the trust network to the Magic WAN Protected Sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
+- From Trust to Magic WAN protected sites
+- From Magic WAN protected sites to Trust
 
-- From Trust to Magic WAN Protected sites
+**Trust to Magic WAN**
 
-- From Magic WAN Protected Sites to Trust
+![Trust to Magic WAN - General](/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
+![Trust to Magic WAN - Source](/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
+![Trust to Magic WAN - Destination](/images/magic-wan/third-party/palo-alto/panw_security_rules/09_trust_to_mwan_dest.png)
+![Trust to Magic WAN - Applications](/images/magic-wan/third-party/palo-alto/panw_security_rules/10_trust_to_mwan_apps.png)
+![Trust to Magic WAN - Services/URL Categories](/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
+![Trust to Magic WAN - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
 
-![Trust to Magic WAN - General](./images/panw_security_rules/07_trust_to_mwan_general.png)
+You can also use the command line to define the rule Trust to Magic WAN protected sites:
 
-![Trust to Magic WAN - Source](./images/panw_security_rules/08_trust_to_mwan_source.png)
-
-![Trust to Magic WAN - Destination](./images/panw_security_rules/09_trust_to_mwan_dest.png)
-
-![Trust to Magic WAN - Applications](./images/panw_security_rules/10_trust_to_mwan_apps.png)
-
-![Trust to Magic WAN - Services/URL Categories](./images/panw_security_rules/11_trust_to_mwan_service-url.png)
-
-![Trust to Magic WAN - Action](./images/panw_security_rules/12_trust_to_mwan_action.png)
-
-##### Command-Line - Trust to Magic WAN Protected Sites
-
-```xml
+```bash
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow to Cloudflare_L3_Zone
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow from Trust_L3_Zone
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow source VLAN0100_10-1-100-0--24
@@ -1096,22 +1070,18 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow hip-profiles any
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow action allow
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type universal
 ```
+**Magic WAN to Trust**
 
-![Magic WAN to Trust - General](./images/panw_security_rules/13_mwan_to_trust_general.png)
+![Magic WAN to Trust - General](/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
+![Magic WAN to Trust - Source](/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
+![Magic WAN to Trust - Destination](/images/magic-wan/third-party/palo-alto/panw_security_rules/15_mwan_to_trust_dest.png)
+![Magic WAN to Trust - Applications](/images/magic-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
+![Magic WAN to Trust - Services/URL Categories](/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
+![Magic WAN to Trust - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
 
-![Magic WAN to Trust - Source](./images/panw_security_rules/14_mwan_to_trust_source.png)
+You can also use the command line to define the rule Magic WAN protected sites to Trust:
 
-![Magic WAN to Trust - Destination](./images/panw_security_rules/15_mwan_to_trust_dest.png)
-
-![Magic WAN to Trust - Applications](./images/panw_security_rules/16_mwan_to_trust_apps.png)
-
-![Magic WAN to Trust - Services/URL Categories](./images/panw_security_rules/17_mwan_to_trust_service-url.png)
-
-![Magic WAN to Trust - Action](./images/panw_security_rules/18_mwan_to_trust_action.png)
-
-##### Command-Line - Magic WAN Protected Sites to Trust
-
-```xml
+```bash
 set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow to Trust_L3_Zone
 set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow from Cloudflare_L3_Zone
 set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow source [ VLAN0010_10-1-10-0--24 VLAN0020_10-1-20-0--24 ]
@@ -1125,7 +1095,7 @@ set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow action allow
 set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow rule-type universal
 ```
 
-### Policy-Based Forwarding - Production Traffic
+### Policy-based forwarding - production traffic
 
 Whether traffic ingresses or egresses NGFW, It is important to ensure that traffic is routed symmetrically. This is accomplished through the use of Policy-Based Forwarding.
 
