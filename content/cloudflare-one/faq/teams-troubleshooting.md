@@ -216,4 +216,4 @@ To fix the issue with a local group policy:
 {{</tab>}}
 {{</tabs>}}
 
-- **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list. Traffic to Microsoft will be excluded from WARP and no longer visible in Gateway.
+- **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.
