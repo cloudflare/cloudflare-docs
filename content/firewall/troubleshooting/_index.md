@@ -6,6 +6,6 @@ weight: 5
 
 # Troubleshooting
 
-The following topics are useful for troubleshooting Firewall issues.
+The following topics are useful for troubleshooting firewall issues.
 
 {{<directory-listing>}}
