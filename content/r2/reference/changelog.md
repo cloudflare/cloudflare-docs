@@ -6,6 +6,19 @@ rss: file
 
 # Changelog
 
+## 2023-06-16
+
+- Fixed a bug where calling [GetBucket](https://developers.cloudflare.com/api/operations/r2-get-bucket) on a non-existent bucket would return a 500 instead of a 404.
+- Improved S3 compatibility for ListObjectsV1, now nextmarker is only set when truncated is true.
+- The R2 worker bindings now support parsing conditional headers with multiple etags. These etags can now be strong, weak or a wildcard. Previously the bindings only accepted headers containing a single strong etag.
+- S3 putObject now supports sha256 and sha1 checksums. These were already supported by the R2 worker bindings
+- CopyObject in the S3 compatible api now supports Cloudflare specific headers which allow the copy operation to be conditional on the state of the destination object.
+
+## 2023-04-01
+
+- [GetBucket](https://developers.cloudflare.com/api/operations/r2-get-bucket) is now available for use through the Cloudflare API.
+- [Location hints](https://developers.cloudflare.com/r2/buckets/data-location/) can now be set when creating a bucket, both through the S3 API, and the dashboard.
+
 ## 2023-03-16
 
 - The ListParts API has been implemented and is available for use.
