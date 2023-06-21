@@ -20,9 +20,7 @@ Cloudflare Snippets (alpha) provide a flexible way to customize the behavior of 
 To create and deploy a snippet you must define the following elements:
 
 * **Snippet**: Contains a name and the JavaScript code that will be executed as part of the request handling process.
-* **Snippet rule**: Contains a filter expression that will define for which requests the snippet will run.
-
-A snippet can run on every request or only on certain requests, based on various criteria such as bot score, country of origin, or a cookie.
+* **Snippet rule**: Contains a [filter expression](/ruleset-engine/rules-language/expressions/) that will define for which requests the snippet will run.
 
 {{<Aside type="note">}}
 Currently, each snippet can only be associated with one snippet rule.
@@ -32,9 +30,9 @@ Currently, each snippet can only be associated with one snippet rule.
 
 For each incoming request, Cloudflare evaluates the expression of each snippet rule defined in the zone checking for a match based on the request properties. Snippets are defined for each zone.
 
- A snippet can run on every request or only on certain requests, based on various criteria such as bot score, country of origin, or a cookie.
+A snippet can run on every request or only on certain requests, based on various criteria such as bot score, country of origin, or a cookie.
 
- Multiple snippets may run on the same request if their rule expressions match. This means that you could have a snippet adding an HTTP header and another snippet rewriting the URL, and they would both run if their corresponding expression matches the incoming request. Each snippet receives the modified request from the previous snippet and applies new modifications to it.
+Multiple snippets may run on the same request if their rule expressions match. This means that you could have a snippet adding an HTTP header and another snippet rewriting the URL, and they would both run if their corresponding expression matches the incoming request. Each snippet receives the modified request from the previous snippet and applies new modifications to it.
 
 For each snippet rule whose expression matches the incoming request, the corresponding snippet code will be scheduled for execution. Cloudflare will apply the following logic for each snippet rule:
 
