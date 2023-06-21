@@ -41,10 +41,10 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Data Loss Prevention
 
-| Feature                            | Limit   |
-| ---------------------------------- | ------- |
-| Custom profile entries             | 25      |
-| Cells per Exact Data Match dataset | 100,000 |
+| Feature                | Limit   |
+| ---------------------- | ------- |
+| Custom entries         | 25      |
+| Exact Data Match cells | 100,000 |
 
 ## Cloudflare Tunnel
 
