@@ -26,13 +26,6 @@ secure location.
 
 As the user account owner, you are automatically assigned the [Super Administrator](https://support.cloudflare.com/hc/en-us/articles/205065067#12345682) role. Once 2FA is enabled, all Cloudflare account members are required to configure 2FA on their mobile devices.
 
-{{<Aside type="note">}}
-Free, Pro, and Business customers can only have one Super Administrator.
-Enterprise customers can have more than one Super Administrator and
-[assign additional membership
-roles](https://support.cloudflare.com/hc/articles/205065067).
-{{</Aside>}}
-
 ___
 
 ## Enable two-factor authentication for your Cloudflare account
