@@ -6,9 +6,13 @@ weight: 16
 
 # Transactional storage API
 
-The transactional storage API is accessible via [the `state.storage` object](#durable-object-class-definition) passed to the Durable Object constructor.
+The transactional storage API allows you to achieve consistent key-value storage. 
 
-### Methods
+You can access the transactional storage API via the [`state.storage`](/durable-objects/get-started/#2-write-a-class-that-defines-a-durable-object) object passed to the Durable Object constructor.
+
+## Methods
+
+The transactional storage API comes with several methods.
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
 
@@ -44,23 +48,35 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - {{<code>}}allowUnconfirmed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. Refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post to learn more. 
+    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. 
+    
+    - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. 
+    
+    - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. 
+    
+    - Refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post to learn more. 
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-    - If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. Use `noCache()` if the key will not be used again in the near future. This flag is only a hint: it will never change the semantics of your code, but it may affect performance. In particular, if you `get()` the key before the write to disk has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
+    - If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. 
+    
+    - Use `noCache()` if the key will not be used again in the near future. `noCache()` will never change the semantics of your code, but it may affect performance. 
+    
+    - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
 {{<Aside type="note" header="Automatic write coalescing">}}
-If you invoke `put()` (or `delete()`) multiple times without performing any `await`s in the meantime, the operations will automatically be combined and submitted atomically. In case of a machine failure, either all of the writes will have been stored to disk or none of them will have.
+If you invoke `put()` (or `delete()`) multiple times without performing any `await` in the meantime, the operations will automatically be combined and submitted atomically. In case of a machine failure, either all of the writes will have been stored to disk or none of them will have.
 {{</Aside>}}
 
 {{<Aside type="note" header="Write buffer behavior">}}
-The `put()` method returns a `Promise`, but most applications can discard this promise without `await`ing it. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such applications should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
+The `put()` method returns a `Promise`, but most applications can discard this promise without using `await`. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a large number of `put()` without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such applications should use `await` on the `Promise` returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Using `await` will disable automatic write coalescing.
 {{</Aside>}}
 
 - {{<code>}}put(entries{{<param-type>}}Object{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
-  - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a maximum size of 2048 bytes and each value is limited to 128 KiB (131072 bytes).
+  - Takes an Object and stores each of its keys and values to storage. 
+  - Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. 
+  - Supports up to 128 key-value pairs at a time. Each key is limited to a maximum size of 2048 bytes and each value is limited to 128 KiB (131072 bytes).
 
   <br/>**Supported options:** Same as `put(key, value, options)`, above.
 
@@ -78,7 +94,11 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}list(){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
-  - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/workers/platform/limits/). If that is a concern, pass options to `list` as documented below.
+  - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings. 
+  
+  - The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. 
+  
+  - Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/durable-objects/platform/limits/). If that is a concern, pass options to `list` as documented below.
 
 - {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
@@ -161,19 +181,19 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Synchronizes any pending writes to disk.
 
-    This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+  - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed()`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
 **Supported options:** None.
 
 {{</definitions>}}
 
-### `alarm()` handler method
+## `alarm()` handler method
 
 The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed. 
 
 The method takes no parameters, does not return a result, and can be `async`.
 
-#### How to use the `alarm()` handler method
+### How to use the `alarm()` handler method
 
 In your Durable Object, the `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
 
@@ -230,9 +250,9 @@ export class Batcher {
 
 The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
 
-### `fetch()` handler method
+## `fetch()` handler method
 
-The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#accessing-a-durable-object-from-a-worker).
+The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](/durable-objects/learning/access-durable-object-from-a-worker/).
 
 The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
 

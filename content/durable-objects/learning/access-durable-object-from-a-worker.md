@@ -10,7 +10,7 @@ To access a Durable Object from a Worker, you must first configure the Worker wi
 
 Namespace bindings allow you to generate Object IDs and connect to Objects.
 
-### Generate IDs randomly
+## Generate IDs randomly
 
 ```js
 let id = OBJECT_NAMESPACE.newUniqueId();
@@ -30,13 +30,13 @@ When you construct a new unique ID, the system knows that the same ID will not b
 
 {{</Aside>}}
 
-### Derive IDs from names
+## Derive IDs from names
 
 ```js
 let id = OBJECT_NAMESPACE.idFromName(name);
 ```
 
-#### Parameters
+### Parameters
 
 {{<definitions>}}
 
@@ -55,13 +55,13 @@ After the object has been accessed the first time, location information will be 
 
 {{</Aside>}}
 
-### Parse previously-created IDs from strings
+## Parse previously-created IDs from strings
 
 ```js
 let id = OBJECT_NAMESPACE.idFromString(hexId);
 ```
 
-#### Parameters
+### Parameters
 
 {{<definitions>}}
 
