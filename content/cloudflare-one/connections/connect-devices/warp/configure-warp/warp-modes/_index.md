@@ -27,7 +27,7 @@ This mode is best suited for organizations that only want to apply DNS filtering
 
 ### Secure Web Gateway without DNS filtering
 
-This mode is best suited for organizations that want to proxy network and HTTP traffic but keep their existing DNS filtering software.
+This mode is best suited for organizations that want to proxy network and HTTP traffic but keep their existing DNS filtering software. DNS traffic is handled by the default mechanism on your device.
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- |
@@ -35,7 +35,7 @@ This mode is best suited for organizations that want to proxy network and HTTP t
 
 {{<Aside type="note">}}
 
-- This mode disables all features that rely on WARP DNS resolution, including DNS policies, [domain-based split tunneling](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels), and [local domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/).
+- This mode disables all features that rely on WARP for DNS resolution, including [domain-based split tunneling](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels), and [local domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/).
 - Only available on Windows, Linux, and macOS.
 
 {{</Aside>}}
