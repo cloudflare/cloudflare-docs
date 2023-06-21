@@ -35,7 +35,7 @@ This mode is best suited for organizations that want to proxy network and HTTP t
 
 {{<Aside type="note">}}
 
-- This mode disables [domain-based split tunneling](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels) and [local domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/).
+- This mode disables all features that rely on WARP DNS resolution, including DNS policies, [domain-based split tunneling](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels), and [local domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/).
 - Only available on Windows, Linux, and macOS.
 
 {{</Aside>}}
