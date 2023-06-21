@@ -1,5 +1,6 @@
 ---
 title: Licenses
+pcx_content_type: reference
 hidden: true
 ---
 

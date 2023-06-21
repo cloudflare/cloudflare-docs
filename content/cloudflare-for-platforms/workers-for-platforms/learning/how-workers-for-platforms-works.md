@@ -24,7 +24,7 @@ Workers for Platforms introduces a new architecture model as outlined on this pa
 
 ### Dispatch namespace
 
-A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any User Worker in a namespace.
+A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any user Worker in a namespace.
 
 {{<Aside type="note" header="Best practice">}}
 

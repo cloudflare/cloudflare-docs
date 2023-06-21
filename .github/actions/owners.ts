@@ -83,6 +83,7 @@ export const REVIEWERS: Record<string, string[]> = {
   pages: ["WalshyDev"],
   "pub-sub": ["CharlieBurnett", "elithrar"],
   queues: ["CharlieBurnett", "elithrar"],
+  support: ["shanecloudflare", "zeinjaber", "rprice74", "ngayerie"],
   turnstile: ["migueldemoura", "punkeel", "worenga"],
   "waiting-room": ["aolache"],
 };

@@ -26,5 +26,6 @@ If the custom hostname is not proxying traffic through Cloudflare, then the cust
 <br>
 
 {{<render file="_update-dcv-method.md">}}
+<br/>
 
 After this step, follow the normal steps for [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).

@@ -22,7 +22,7 @@ To deepen your understanding of the risks and vulnerabilities associated with ca
 
 Review the caching configuration for your origin web server and ensure you are caching files that are static and do not depend on user input in any way. To learn more about Cloudflare caching, review:
 
-- [Which file extensions does Cloudflare cache for static content?](/cache/about/default-cache-behavior/)
+- [Which file extensions does Cloudflare cache for static content?](/cache/concepts/default-cache-behavior/)
 - [How Do I Tell Cloudflare What to Cache?](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-everything)
 
 ## Do not trust data in HTTP headers
@@ -40,6 +40,6 @@ Cloudflare caches contents of GET request bodies, but they are not included in t
 
 To keep informed about Internet security threats, Cloudflare recommends that you monitor web security advisories on a regular basis. Some of the more popular advisories include:
 
-- [Drupal Security Advisories](http://content.cloudflare.com/dZ0O0ckIN00C000S0h020X0)
-- [Symfony Security Advisories](http://content.cloudflare.com/o02lI00iN00c0X000CSZ0O0)
-- [Zend Security Advisories](http://content.cloudflare.com/AN0j00XS20IZc0000O0m00C)
+- [Drupal Security Advisories](https://www.drupal.org/security)
+- [Symfony Security Advisories](https://symfony.com/blog/category/security-advisories)
+- [Zend Security Advisories](https://framework.zend.com/security/advisories)

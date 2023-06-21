@@ -22,7 +22,7 @@ Cloudflare never limits or caps DNS queries, but the pricing depends on your pla
 
 For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries.
 
-For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote. Any overages will not be charged.
+For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 {{<render file="_dnssec-providers.md">}}
 
-For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/additional-options/dnssec/).
+For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
 
 ___
 
@@ -175,7 +175,7 @@ ___
 
 ## Why am I getting hundreds of random DNS records after adding my domain?
 
-This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record).
+This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 You can also:
 1. [Remove your domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.

@@ -25,7 +25,7 @@ In the newsfeed example above, if `http://www.example.com/newsfeed` is a script 
 
 - If the returned `Content-Type` is `application/octet-stream`, the extension does not matter because that is typically a signal to instruct the browser to save the asset instead of to display it.
 - Cloudflare allows `.jpg` to be served as `image/webp` or `.gif` as `video/webm` and other cases that we think are unlikely to be attacks.
-- Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/cache/about/cache-control/). A `Cache-Control` header from the origin,  [Edge Cache TTL Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) or Browser Cache TTL zone setting may override the protection.
+- Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/cache/concepts/cache-control/). A `Cache-Control` header from the origin,  [Edge Cache TTL Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) or Browser Cache TTL zone setting may override the protection.
 
 ## Enable Cache Deception Armor
 

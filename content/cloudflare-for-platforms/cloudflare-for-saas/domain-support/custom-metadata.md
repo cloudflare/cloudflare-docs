@@ -1,7 +1,9 @@
 ---
 pcx_content_type: concept
 title: Custom metadata
-weight: 3
+weight: 5
+meta:
+  description: Configure per-hostname settings such as URL rewriting and custom headers.
 ---
 
 # Custom metadata
@@ -27,7 +29,7 @@ Please speak with your Solutions Engineer to discuss additional logic and requir
 
 ## Submitting custom metadata
 
-You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a `PATCH` request to the specific hostname ID to set metadata for that hostname, for example:
+You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a [`PATCH` request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to the specific hostname ID to set metadata for that hostname, for example:
 
 ```bash
 $ curl -sXPATCH \

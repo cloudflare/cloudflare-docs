@@ -1,20 +1,14 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/206190798-Using-Resolve-Override-in-Page-Rules
 title: Using Resolve Override in Page Rules
 ---
 
 # Using Resolve Override in Page Rules
 
+Cloudflare Page Rules allows you to override the URL or IP address of a request. This feature is currently available for domains on the Enterprise plan.
 
-
-## Overview
-
-Cloudflare Page Rules allows you to override the URL or IP address of a request.
-
-{{<Aside type="note">}}
-This feature is only available to Enterprise users.
-{{</Aside>}}
+{{<render file="_origin-rule-promotion.md" productFolder="rules" withParameters="/rules/origin-rules/features/#dns-record">}}
 
 A common use case for this functionality is when you are serving an application from the URI (e.g. mydomain.com/app). In this case the 'app' may live on another server and may even be hosted by a third party. Requests to this endpoint must be directed to the server for that third party application. You can specify a CNAME host.
 
@@ -28,7 +22,7 @@ ___
 
 To configure a resolve override in Page Rules, do the following:
 
-1\. [Create a DNS record](https://support.cloudflare.com/hc/articles/360019093151#h_60566325041543261564371) (either CNAME or A record) for your domain.
+1. [Create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) (either CNAME or A record) for your domain.
 
 -   This example shows a CNAME record setup to point to `domain.s3.amazonaws.com`.
     -   **Type:** CNAME
@@ -43,7 +37,7 @@ To configure a resolve override in Page Rules, do the following:
     -   **TTL:** Auto
     -   **Proxy status:** Proxied (orange cloud icon)
 
-2\. [Create a Page Rule](https://support.cloudflare.com/hc/articles/218411427#h_38Gq7mduJiXIjpVLxp3q19) to override a URL or an IP address.
+2. [Create a Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#create-a-page-rule) to override a URL or an IP address.
 
 -   The following example Page Rule configuration would send all requests from a folder (`/app`) to an AWS S3 bucket:
     -   **If the URL matches:** `example.com/app/*`

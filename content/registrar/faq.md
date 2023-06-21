@@ -155,6 +155,10 @@ In summary, here is what will happen after a domain expires:
 - **Day 71 - 75:** Pending Delete Period.
 
 {{</faq-answer>}}
+
+{{<Aside type="note" header="Note">}}Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.{{</Aside>}}
+
+
 {{</faq-item>}}
 
 ---

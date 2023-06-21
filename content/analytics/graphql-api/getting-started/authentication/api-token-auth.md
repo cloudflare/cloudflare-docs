@@ -87,7 +87,7 @@ Once you have validated your API token configuration, click **Create Token**.
 
 When you create a new token, a confirmation page displays that includes your token and a custom `curl` command.
 
-![Page displaying your API token and the `curl`command to test your token](/images/analytics/api-token-confirmation-page.png)
+![Page displaying your API token and the `curl`command to test your token](/images/fundamentals/api/token-complete.png)
 
 To copy the token to your device's clipboard, click the **Copy** button.
 

@@ -12,7 +12,7 @@ Cloudflare supports CORS by:
 - Identifying cached assets based on the `Host` Header, `Origin` Header, URL path, and query. This allows different resources to use the same `Host` header but different `Origin` headers.
 - Passing `Access-Control-Allow-Origin` headers from the origin server to the browser.
 
-The `Access-Control-Allow-Origin` header allows servers to specify rules for sharing their resources with external domains. When a server receives a request to access a resource, it responds with a value for the `Access-Control-Allow-Origin` header. `Access-Control-Allow-Origin` headers are often applied to [cacheable content](/cache/about/default-cache-behavior/). A web server may respond with different `Access-Control` headers depending on the `Origin` header sent in the request.
+The `Access-Control-Allow-Origin` header allows servers to specify rules for sharing their resources with external domains. When a server receives a request to access a resource, it responds with a value for the `Access-Control-Allow-Origin` header. `Access-Control-Allow-Origin` headers are often applied to [cacheable content](/cache/concepts/default-cache-behavior/). A web server may respond with different `Access-Control` headers depending on the `Origin` header sent in the request.
 
 ## Add or change CORS headers
 

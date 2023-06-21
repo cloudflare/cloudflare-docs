@@ -91,7 +91,7 @@ $ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/workers
 Possible placement states include:
 - _(not present)_: The Worker has not been analyzed for Smart Placement yet.
 - `INSUFFICIENT_INVOCATIONS`: Not enough requests for Smart Placement to make a placement decision.
-- `NO_VALID_HOSTS`: The Worker does not send subrequests to [back-end services supported by Smart Placement](/workers/platform/smart-placement/#supported-backend-services).
+- `NO_VALID_HOSTS`: The Worker does not send subrequests to [back-end services supported by Smart Placement](/workers/platform/smart-placement/#supported-back-end-services).
 - `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid back-end services.
 - `SUCCESS`: The Worker has been successfully analyzed and will be optimized by Smart Placement.
 
@@ -116,7 +116,7 @@ We may remove the `cf-placement` header before Smart Placement enters general av
 
 ## Best practices
 
-If you are building full-stack applications on Workers, we reccomend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/runtime-apis/service-bindings/) to connect your front-end logic and back-end logic Workers. 
+If you are building full-stack applications on Workers, we recommend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/runtime-apis/service-bindings/) to connect your front-end logic and back-end logic Workers. 
 
 ![Smart Placement and Service Bindings](../media/smart-placement-service-bindings.png)
 

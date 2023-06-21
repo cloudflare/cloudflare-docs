@@ -35,7 +35,7 @@ Alternatively, download the latest release directly.
 Download and install `cloudflared` via Homebrew:
 
 ```sh
-$ brew install cloudflared
+$ brew install cloudflare/cloudflare/cloudflared
 ```
 
 Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
@@ -103,9 +103,6 @@ sc.exe start <unique-name>
 
 ## Deprecated versions
 
-Cloudflare currently supports versions of `cloudflared` 2020.5.1 and later. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1. You can read more about upgrading `cloudflared` in our [developer documentation](/cloudflare-one/connections/connect-apps/install-and-setup/installation/#update-cloudflared).
+Cloudflare supports the previous year of `cloudflared` releases. For example, if the [latest version](https://github.com/cloudflare/cloudflared/releases) is `2023.5.1`, version `2022.5.1` and later are supported. Deprecated versions may be impacted by breaking changes unrelated to feature availability.
 
-| Version(s)                 | Deprecation status  |
-| -------------------------- | ------------------- |
-| 2020.5.1 and later         | Supported           |
-| Versions prior to 2020.5.1 | No longer supported |
+To update `cloudflared`, refer to [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/#update-cloudflared).

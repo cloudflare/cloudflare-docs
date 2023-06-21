@@ -340,7 +340,7 @@ Web 缓存欺骗防护
 
 **标准 -** 缓存具有查询字符串的所有静态内容。
 
-**全部缓存** \-  将所有内容视为静态内容，并缓存 [Cloudflare 默认缓存内容](/cache/about/default-cache-behavior#default-cached-file-extensions)之外的所有内容类型。尊重来自源 Web 服务器的缓存标头，除非页面规则中也设置了**边缘缓存 TTL**。与**边缘缓存 TTL** > _0_ 组合使用时，**全部缓存**会移除来自源 Web 服务器响应的 Cookie。  
+**全部缓存** \-  将所有内容视为静态内容，并缓存 [Cloudflare 默认缓存内容](/cache/concepts/default-cache-behavior#default-cached-file-extensions)之外的所有内容类型。尊重来自源 Web 服务器的缓存标头，除非页面规则中也设置了**边缘缓存 TTL**。与**边缘缓存 TTL** > _0_ 组合使用时，**全部缓存**会移除来自源 Web 服务器响应的 Cookie。  
 
 
  | 
@@ -540,7 +540,7 @@ Mirage
 -   所有
 
  |
-| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](/cache/about/cache-control)，Enterprise 域则默认禁用此设置。 | 
+| 源缓存控制 | Free、Pro 和 Business 域默认启用[源站缓存控制](/cache/concepts/cache-control/)，Enterprise 域则默认禁用此设置。 | 
 
 -   所有
 

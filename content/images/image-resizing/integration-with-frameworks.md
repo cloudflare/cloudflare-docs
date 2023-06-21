@@ -8,7 +8,50 @@ weight: 9
 
 ## Next.js
 
-Image Resizing can be used automatically with Next.js' [`next/image` component](https://nextjs.org/docs/api-reference/next/image). With a [custom loader](https://nextjs.org/docs/api-reference/next/image#loader) which applies Cloudflare Image Resizing, `next/image` will set an optimal width and quality for a given client.
+Image Resizing can be used automatically with the Next.js [`<Image />` component](https://nextjs.org/docs/api-reference/next/image).
+
+To use Image Resizing, define a global image loader or multiple custom loaders for each `<Image />` component.
+
+Next.js will request the image with the correct parameters for width and quality.
+
+Image Resizing will be responsible for caching and serving an optimal format to the client.
+
+### Global Loader
+
+To use Image Resizing with **all** your app's images, define a global [loaderFile](https://nextjs.org/docs/pages/api-reference/components/image#loaderfile) for your app.
+
+Add the following settings to the **next.config.js** file located at the root our your Next.js application.
+
+```js
+module.exports = {
+  images: {
+    loader: 'custom',
+    loaderFile: './imageLoader.js',
+  },
+}
+```
+
+Next, create the `imageLoader.js` file in the specified path (relative to the root of your Next.js application).
+
+```js
+const normalizeSrc = src => {
+  return src.startsWith('/') ? src.slice(1) : src;
+};
+
+export default function cloudflareLoader ({ src, width, quality }) {
+  const params = [`width=${width}`];
+  if (quality) {
+    params.push(`quality=${quality}`);
+  }
+  const paramsString = params.join(',');
+  return `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
+};
+```
+
+### Custom Loaders
+
+Alternatively, define a loader for each `<Image />` component.
+
 
 ```js
 import Image from 'next/image';
