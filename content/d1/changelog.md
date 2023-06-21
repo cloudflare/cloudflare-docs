@@ -7,6 +7,14 @@ rss: file
 
 # Changelog
 
+## 2023-06-28
+
+### Metrics and analytics
+
+You can now view [per-database metrics](/d1/platform/metrics-analytics/) via both the Cloudflare dashboard and the [GraphQL Analytics API](/analytics/graphql-api/).
+
+D1 currently exposes read & writes per second, query response size, and query latency percentiles.
+
 ## 2023-05-19
 
 ### New experimental backend
