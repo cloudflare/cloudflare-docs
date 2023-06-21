@@ -53,7 +53,7 @@ export default async function (manager) {
 ## Configure a Managed Component in Cloudflare
 
 {{<Aside type="note">}}
-As with regular tools, it is recommended that you [create the triggers](/zaraz/get-started/create-trigger/) you need first, if the Custom Managed Component you are adding needs to start actions different from the default `Pageview` trigger.
+As with regular tools, it is recommended that you [create the triggers](/zaraz/get-started/create-trigger/) you need first, if the Custom Managed Component you are adding needs to start actions using firing triggers different from the default `Pageview` trigger.
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
