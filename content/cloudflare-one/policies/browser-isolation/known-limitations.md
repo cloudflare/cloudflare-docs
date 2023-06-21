@@ -23,7 +23,7 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 
 ## Multifactor authentication
 
-[Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN. These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Therefore, they will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/policies/browser-isolation/setup/) such as WARP.
+[Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN. These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Therefore, they will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/policies/browser-isolation/setup/) such as [isolated Access applications](/cloudflare-one/policies/access/isolate-application/).
 
 ## Isolating SAML applications
 
