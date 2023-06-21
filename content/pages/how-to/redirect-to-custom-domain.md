@@ -3,31 +3,33 @@ pcx_content_type: how-to
 title: Redirecting *.pages.dev to a Custom Domain
 ---
 
-# Redirecting *.pages.dev to a Custom Domain
+# Redirect *.pages.dev to a custom domain
 
-In this guide, you will learn how to redirect your `*.pages.dev` subdomain to your Custom Domain (`example.com`). This is a common question and can be achieved by using [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
-To do this:
+## Background
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/pages/view/:pages-project/domains), and select your account and Pages Project.
-2. Ensure that your custom domain is listed in the **Custom domains** section. If it is not, add it by clicking **Set up a custom domain**.
+Learn how to use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) to redirect your `*.pages.dev` subdomain to your custom domain (`example.com`). You may want to do this to ensure that your site's content is served only on the custom domain, and not the `*.pages.dev` site automatically generated on your first Pages deployment.
 
-![Ensure custom domain has been added to Pages](/pages/how-to/media/custom-domain-dash.png)
+## Set up
 
-3. Next, go to **Account Home** > **Bulk Redirects** > **Create a new Bulk Redirects list** > **Create new list**.
+To set up a redirect to a custom domain:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/pages/view/:pages-project/domains), and select your account.
+2. Select **Workers & Pages** and select your Pages application.
+3. Go to **Custom domains** and make sure that your custom domain is listed. If it is not, add it by clicking **Set up a custom domain**.
+4. Go to **Account Home** > **Bulk Redirects**.
+5. Select **Create a new Bulk Redirects list** > **Create new list**.
 
 ![Create a new Bulk redirects list](/pages/how-to/media/create_a_new_bulk_redirect_list.png)
 
-4. In the content type, select **Redirect**. 
-5. Add your `*.pages.dev` Project Subdomain as your source URL.
-6. Add your target custom domain URL. Note that you must include `https://` before the apex domain. 
-7. Select **Edit parameters** > select **Preserve query string**, **Subpath matching** and **Preserve path suffix**.
-8. *Optional*: Tick the **Include subdomains** box. This will automatically redirect all of the preview URLs to your custom domain.
+6. In the content type, select **Redirect**. 
+7. Add your application's `*.pages.dev` subdomain as your source URL.
+8. Add your target custom domain URL. Note that you must include `https://` before the apex domain. 
+9. Select **Edit parameters** and select **Preserve query string**, **Subpath matching** and **Preserve path suffix**.
 
-![Follow the steps above to correctly configure your list](/pages/how-to/media/pages-dev-redirect-parameters.png)
-
-9. Select **Add to list**.
-10. Go to **Bulk Redirects** > **Create Bulk Redirects** > select your list > **Save and Deploy**.
+*Optional*: Tick the **Include subdomains** box. This will automatically redirect all of the preview URLs to your custom domain.
+10. Select **Add to list**.
+11. Go to **Bulk Redirects** > **Create Bulk Redirects** > select your list > **Save and Deploy**.
 
 ![Create a new Bulk redirects](/pages/how-to/media/create_new_bulk_redirect.png)
 
