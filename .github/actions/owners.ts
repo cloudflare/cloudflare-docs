@@ -60,7 +60,7 @@ export const OWNERS: Record<string, string[]> = {
   spectrum: ["angelampcosta"],
   ssl: ["RebeccaTamachiro"],
   stream: ["dcpena"],
-  support: ["jedecf", "shanecloudflare", "zeinjaber", "rprice74", "ngayerie"],
+  support: ["jedecf"],
   tenant: ["kodster28"],
   terraform: ["ranbel"],
   "time-services": ["kodster28"],
@@ -83,6 +83,7 @@ export const REVIEWERS: Record<string, string[]> = {
   pages: ["WalshyDev"],
   "pub-sub": ["CharlieBurnett", "elithrar"],
   queues: ["CharlieBurnett", "elithrar"],
+  support: ["shanecloudflare", "zeinjaber", "rprice74", "ngayerie"],
   turnstile: ["migueldemoura", "punkeel", "worenga"],
   "waiting-room": ["aolache"],
 };
