@@ -6,7 +6,7 @@ weight: 15
 
 # Loading a Custom Managed Component
 
-Zaraz supports loading custom third-party tools using [Managed Components](https://managedcomponents.dev/). These can be Managed Components that you have developed yourself or that were developed by others. Using Custom Managed Components with Zaraz is done by converting them into a specialized Cloudflare Worker running in your account.
+Zaraz supports loading custom third-party tools using [Managed Components](https://managedcomponents.dev/). These can be Managed Components that you have developed yourself or that were developed by others. Using Custom Managed Components with Zaraz is done by converting them into a Cloudflare Worker running in your account.
 
 If you are new to Managed Components, we recommend you get started with [creating your own Managed Component](https://managedcomponents.dev/getting-started/quickstart) or check out [our demo Managed Component](https://github.com/managed-components/demo).
 
@@ -48,21 +48,21 @@ export default async function (manager) {
 
 1. Open a terminal in your managed component’s root directory.
 2. From there, run `npx managed-component-to-cloudflare-worker ./index.js my-new-counter-mc`, which will deploy the Managed Component to a specialised Cloudflare Worker. Change the path to your `index.js` and the name of the component to your liking.
-3. Your Managed Component should now be [visible on your account](https://dash.cloudflare.com/redirect?account=/workers-and-pages) as a specialized Cloudflare Worker.
+3. Your Managed Component should now be [visible on your account](https://dash.cloudflare.com/redirect?account=/workers-and-pages) as a Cloudflare Worker prefixed with `custom-mc`.
 
 ## Configure a Managed Component in Cloudflare
 
+{{<Aside type="note">}}
 As with regular tools, it is recommended that you [create the triggers](/zaraz/get-started/create-trigger/) you need first, if the Custom Managed Component you are adding needs to start actions different from the default `Pageview` trigger.
+{{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Zaraz** > **Tools Configuration** > [**Third-party tools**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/tools-config/tools/catalog).
-3. Select **Add new tool** and choose **Custom MC** from the tools library page. Select **Continue** to confirm your selection.
+3. Select **Add new tool** and choose **Custom Managed Component** from the tools library page. Select **Continue** to confirm your selection.
 4. In **Select Custom MC**, choose a Custom Managed Component that you have deployed to your account, such as `my-new-counter-mc`. Select **Continue**.
 5. In **Permissions**, select the permissions you want to grant the Custom Managed Component. If you run an untrusted Managed Component, pay close attention to what permissions you are granting. Select **Continue**.
-6. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the code of the Managed Component. You can add settings and default fields, as well as use [variables you have previously set up](/zaraz/get-started/create-variables/). Select the `+` sign in the drop-down menu and scroll to **Variables**.
+6. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the code of the Managed Component. You can add settings and default fields, as well as use [variables you have previously set up](/zaraz/get-started/create-variables/).
 7. Select **Save**.
-
-While your tool is now configured, it needs to have actions defined before it can work. Depending on the tool you chose, Cloudflare Zaraz might automatically create a `Pageview` action. Refer to [Create actions](/zaraz/get-started/create-actions/) to learn how to create additional actions.
 
 While your tool is now configured, it does not have any actions associated with it yet. Adding new actions will tell Zaraz when to contact your Managed Component, and what information to send to it. When adding actions, make sure to verify the Action Type you are using. The types `pageview` and `event` are the most commonly used ones, but you can add any action type to match the event listeners your Managed Component is using. Learn how to [create additional actions](/zaraz/get-started/create-actions/).
 
