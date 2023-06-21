@@ -1119,6 +1119,27 @@
         }
       }
     },
+    "snippets": {
+      "title": "Snippets (alpha)",
+      "link": "/rules/snippets/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "rules": {
+          "title": "Number of snippets",
+          "free": 5,
+          "pro": 10,
+          "biz": 25,
+          "ent": 50
+        }
+      }
+    },
     "single_redirects": {
       "title": "Single Redirects",
       "link": "/rules/url-forwarding/single-redirects/",
@@ -1409,13 +1430,40 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "managed_rulesets": {
-          "title": "Other WAF managed rulesets",
+        "managed_ruleset_1": {
+          "title": "Cloudflare Managed Ruleset",
           "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
+          "ent": "Yes"
+        },
+        "managed_ruleset_2": {
+          "title": "Cloudflare OWASP Core Ruleset",
+          "summary": "Available on paid plans",
+          "link": "/waf/managed-rules/",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "managed_ruleset_3": {
+          "title": "Cloudflare Exposed Credentials Check",
+          "summary": "Available on paid plans",
+          "link": "/waf/managed-rules/",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "managed_rulesets_response": {
+          "title": "Cloudflare Sensitive Data Detection (Beta)",
+          "summary": "Enterprise-only",
+          "link": "/waf/managed-rules/",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
           "ent": "Yes"
         }
       }

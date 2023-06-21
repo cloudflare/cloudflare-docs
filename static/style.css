@@ -5245,7 +5245,8 @@ pre {
   }
 }
 
-/* Beta pill */
+/* Alpha, Beta, and Deprecated pills */
+.DocsMarkdown-alpha,
 .DocsMarkdown-beta,
 .DocsMarkdown-deprecated {
   display: flex;
@@ -5281,6 +5282,12 @@ pre {
 .DocsMarkdown--pill-tab {
   top: 0;
   margin-left: 0.8em;
+}
+
+.DocsMarkdown--pill-alpha {
+  width: 47px;
+  background: var(--orange-8);
+  color: var(--orange-1);
 }
 
 .DocsMarkdown--pill-beta {

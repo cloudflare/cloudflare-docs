@@ -7,7 +7,7 @@
   "scripts": {
     "algolia-crawl": "node bin/algolia-crawl.js",
     "crawl-api-links": "node bin/crawl-api-links.js",
-    "dev:hugo": "hugo -D -w",
+    "dev:hugo": "hugo --environment development -D -w",
     "dev:wrangler": "wrangler pages dev -- vite",
     "dev:vite": "vite",
     "dev": "concurrently --kill-others \"npm run dev:hugo\" \"npm run dev:vite\"",
