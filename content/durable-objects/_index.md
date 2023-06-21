@@ -21,7 +21,7 @@ A serverless approach to storage and state.
 
 {{<plan type="paid">}}
 
-Durable Objects are Cloudflare's storage and coordination solution. Durable Objects provide you with scalable compute and permanent, consistent storage. With Durable Objects, you can coordinate requests without accessing the storage. 
+Durable Objects are Cloudflare's storage and coordination solution. Durable Objects provide you with scalable compute and permanent, consistent storage. With Durable Objects, you can coordinate requests without accessing storage. 
 
 Durable Objects come with global uniqueness and transactional storage API that simplifies data access and grants low-latency coordination. You can use Durable Objects to facilitate real-time chat, collaborative editing, video conferencing, game sessions and more.
 
