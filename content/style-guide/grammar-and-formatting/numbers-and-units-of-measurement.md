@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: Numbers and Units of Measurement
 ---
 
-## Numbers and Units of Measurement
+# Numbers and Units of Measurement
 
 **Be consistent in your use of numbers.** Use numerals for numbers. When you write about numbers used in examples or UI, duplicate them exactly as they appear in the UI. In all other content, follow the guidelines below.
 
@@ -17,7 +17,7 @@ title: Numbers and Units of Measurement
     + 1,000
     + 7,465
 
-### Using k to indicate thousands
+## Using k to indicate thousands
 
 + Do not put a space between the number and k.
 + Add a noun to indicate what the number measures, and to make clear that you are not using k as an abbreviation for *kilobytes*.
@@ -30,7 +30,7 @@ Units of measurement can occur in two different contexts.
 
 ### As nouns: 
 
-Fast forward to 2020 and the storage provider landscape has become highly competitive with many providers capable of providing **petabyte** (and **exabyte**) scale content storage at extremely low cost-per-**gigabyte**. 	
+The storage provider landscape has become highly competitive with many providers capable of providing **petabyte** (and **exabyte**) scale content storage at extremely low cost-per-**gigabyte**. 	
 
 ### As modifiers of numbers: 
 
@@ -51,7 +51,7 @@ In general, only abbreviate units of measurements when they modify specific quan
 |128 GB|128 gb, 128gb, 128GB|Units of measurement should always be capitalized and spaced out from their corresponding numerical values.|
 |This network has a capacity of over **30 Tbps.**|This network has a capacity of over 30Tbps.|Adding a space between ‘30’ and ‘Tbps’ makes this sentence easier to read.|
 
-### Physical Distance
+## Physical Distance
 
 |Measurement|Example|
 |---|---|
@@ -59,7 +59,7 @@ In general, only abbreviate units of measurements when they modify specific quan
 |feet, meters|At 2625 **meters** (8612 **feet**) above sea level, Bogotá (Colombia) is one of the four highest capital cities in the world. Now, it is also home to Cloudflare's 149th data center.|
 |miles|Despite having a unique place on the map of the United States, and its significant distance from other cities (900 **miles** to Dallas; 1,000 **miles** to Chicago, 1,000 **miles** to Los Angeles), Denver has not always been a major point of regional interconnection.|
 
-### Digital Storage
+## Digital Storage
 
 |Measurement|Example|
 |---|---|

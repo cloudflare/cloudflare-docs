@@ -3,12 +3,13 @@ pcx_content_type: Concept
 title: Dates and Times
 ---
 
-## Dates and Times
+# Dates and Times
 
-### Product Content (including UI)
-To account for internationalization and inclusivity of all locales, use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard when writing dates and times as much as possible.
+## Product Content
 
-### Blogs
+To account for internationalization and inclusivity of all locales, use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard when writing dates and times as much as possible. This includes content in the UI/dashboard.
+
+## Blogs
 Since our readership is international, keep date formats international.
 
 When mentioning dates in text, spell them out:

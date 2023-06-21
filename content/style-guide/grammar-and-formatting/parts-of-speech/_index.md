@@ -5,6 +5,6 @@ weight: 1
 
 ---
 
-## Parts of Speech
+# Parts of Speech
 
 {{<directory-listing>}}

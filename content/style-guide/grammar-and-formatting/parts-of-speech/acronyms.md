@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: Acronyms
 ---
 
-## Acronyms
+# Acronyms
 
 **Define new and unfamiliar terms.** Acronyms and abbreviations can have an adverse effect on clarity, voice, and SEO. When writing or editing, some  terms might be unfamiliar to some or all of the audience. When you spot a such an unfamiliar term, take one of the following tactics:
 

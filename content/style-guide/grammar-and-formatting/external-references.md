@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: External References
 ---
 
-## External References
+# External References
 
 When referencing external resources, ensure that you are linking to a trustworthy source that is recognized as an authority. 
 
@@ -21,12 +21,13 @@ A Request for Comments (RFC) document is a formal document produced by different
 
 Use the following formatting when referencing an RFC:
 
-    RFC <number>   
-    (RFC, space, number up to four digits)
+RFC <number>
+(RFC, space, number up to four digits)
 
 For example: CAA is a new DNS resource record type defined in RFC 6844.
 
 ## Links
+
 When linking to an RFC (or RFC section), consider using a link to the following website, which is the authoritative source according to IETF:
 https://www.rfc-editor.org
 
@@ -35,7 +36,7 @@ To get the link:
 1. Go to [RFC Editor](https://www.rfc-editor.org/rfc-index.html) and search for the RFC number.
 2. Select HTML to open the HTML version.
 3. (optional) Navigate to a specific section, if necessary.
-4. Use the current URL as the link target in Dev Docs.
+4. Use the current URL as the link target in Developer Documentation.
 
 URL example:
 https://www.rfc-editor.org/rfc/rfc6844.html

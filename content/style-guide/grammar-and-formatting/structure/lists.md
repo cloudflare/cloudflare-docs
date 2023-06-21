@@ -2,7 +2,7 @@
 pcx_content_type: Concept
 title: Lists
 ---
-## Lists
+# Lists
 
 There are three types of lists:
 

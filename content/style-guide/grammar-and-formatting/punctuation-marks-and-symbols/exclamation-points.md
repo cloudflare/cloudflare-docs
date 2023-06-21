@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: Exclamation Points
 ---
 
-## Exclamation points
+# Exclamation points
 
 Avoid using exclamation points in most writing!
 

@@ -3,13 +3,11 @@ pcx_content_type: Concept
 title: Capitalization
 ---
 
-## Capitalization
+# Capitalization
 
 **Capitalize names of Cloudflare products, services, and features.**
 
-Each product, service, and feature should be properly spelled and capitalized when used in any content, both to ensure consistency across all channels and to differentiate common performance and security technologies (e.g. load balancing, bot management, and web application firewalls) from specific Cloudflare solutions (e.g. Cloudflare Load Balancing, Cloudflare Bot Management, and Cloudflare Web Application Firewall).
-
-
+Each product, service, and feature should be properly spelled and capitalized when used in any content, both to ensure consistency across all channels and to differentiate common performance and security technologies (for example: load balancing, bot management, and web application firewalls) from specific Cloudflare solutions (for example: Cloudflare Load Balancing, Cloudflare Bot Management, and Cloudflare Web Application Firewall).
 
 | ✅ | ❌ | Rationale |
 |-----|----|--------|
@@ -29,8 +27,7 @@ Each product, service, and feature should be properly spelled and capitalized wh
 + Capitalize only the first word when at the beginning of a sentence:  *Waiting rooms are enabled on all subpaths, meaning you might be sending more traffic to your waiting room than anticipated.*
 + Capitalize only the first word when it’s the title of a subsection: *### Waiting room template*
 
-### Common capitalization conventions
-
+## Common capitalization conventions
 
 <table>
   <tr>
@@ -90,6 +87,6 @@ Each product, service, and feature should be properly spelled and capitalized wh
   </tr>
 </table>
 
-### Headings
+## Headings
 
 For headings, only the first letter should be capitalized. Normal capitalization rules still apply to the rest of the sentence.

@@ -3,9 +3,9 @@ pcx_content_type: Concept
 title: Symbols in UI Element Names
 ---
 
-## Symbols in UI Element Names
+# Symbols in UI Element Names
 
-### Icons or non-alphabetic characters
+## Icons or non-alphabetic characters
 
 Button names and the labels of other UI elements may include icons or symbols that are not alphabetical or numerical. For example, a button named **+ Add element** starts with a plus sign.
 
@@ -14,12 +14,14 @@ When writing these names or labels in procedural instructions, do not include th
 Possible exceptions:
 
 + **The button has no text other than the symbol (For example, just "+")**. 
+
     + Keep the symbol in the instructions.
 
 + **The button has no text other than the symbol and the instructions are for the UI of a third-party product**.
+
     + Keep the symbol in the instructions.
 
-### Ellipses
+## Ellipses
 
 An ellipsis is a set of three dots (...) that might be used as a variable or wildcard. For example, a **Save As...** menu item might display a dialog box where you can save a file in different places.
 

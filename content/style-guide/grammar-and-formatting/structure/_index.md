@@ -5,6 +5,6 @@ weight: 1
 
 ---
 
-## Structure
+# Structure
 
 {{<directory-listing>}}

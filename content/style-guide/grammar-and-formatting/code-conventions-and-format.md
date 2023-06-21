@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: Code Conventions and Format
 ---
 
-## Code Conventions and Format
+# Code Conventions and Format
 
 Use the conventions described below throughout Cloudflare product content.
 
@@ -40,7 +40,7 @@ In placeholders inside a URL: ``` https://api.cloudflare.com/client/v4/organizat
 
 ## >
 
-The > symbol leads you through nested menu items and dialog box options to a final action. The sequence **Options > Settings > General** directs you to pull down the **Options** menu, select the **Settings** item, and select **General** from the last dialog box. Do not use bold formatting for the > symbol (refer to "bold" in this table).
+The > symbol leads you through nested menu items and dialog box options to a final action. The sequence **Options > Settings > General** directs you to pull down the **Options** menu, select the **Settings** item, and select **General** from the last dialog box. Do not use bold formatting for the > symbol.
 
 ## Tip icon
 
@@ -60,7 +60,7 @@ This icon denotes a notice, which alerts you to take precautions to avoid data l
 
 ## Caution icon
 
-This icon denotes a caution, which advise you to take precautions to avoid injury.
+This icon denotes a caution, which advises you to take precautions to avoid injury.
 
 ## Blue text
 
@@ -68,11 +68,13 @@ Text in this color indicates a link.
 
 ## **bold**
 
-Use **bold** when referring to a clickable action or to highlight a title/name/etc in the UI. Bold text denotes items that you must select or click in the software, such as menu items, toggles, and dialog box options. Bold text denotes titles or names that are identifiers in the UI. Bold text also denotes a parameter name. 
+Use **bold** when referring to a clickable action or to highlight a title or name in the UI. Bold text denotes items that you must select or click in the software, identifiers in the UI, or parameter names.
 
-Do not use for programs.
+Do not bold use for programs.
 
-In nested menus, use bold for the word not the symbol. Example: **Dashboard** > **This** > **That**
+In nested menus, use bold for the word not the symbol.
+
+Example: **Dashboard** > **This** > **That**
 
 ## *italics*
 
@@ -84,7 +86,9 @@ Do not use italics when referring to the state of a toggle - for example, enable
 
 ``` `text in between backticks` ```
 
-Text in this font denotes text or characters that you should enter from the keyboard, sections of code, programming examples, and syntax examples. This font is also used for the proper names of drives, paths, directories, programs, subprograms, devices, functions, operations, variables, files, API commands, and extensions. Examples of elements we monospace:
+Text in this font denotes text or characters that you should enter from the keyboard, sections of code, programming examples, and syntax examples. This font is also used for the proper names of drives, paths, directories, programs, subprograms, devices, functions, operations, variables, files, API commands, and extensions. 
+
+## Examples of elements we monospace:
 
 + IP addresses and ranges. Example: Change your system + DNS servers to use `127.0.1.1`.
 + Port numbers. Example: Requests are redirected through the HTTP service (port `80`).

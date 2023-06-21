@@ -3,17 +3,13 @@ pcx_content_type: Concept
 title: Abbreviations
 ---
 
-## Abbreviations
+# Abbreviations
 
 Abbreviations include acronyms, initialisms, shortened words, and contractions (in most contexts, the technical distinction between acronyms and initialisms isn’t relevant; it’s fine to use the word *acronym* to refer to both).
 
-### Long and short versions of a word
+## Long and short versions of a word
 
-Some words have a long version and a short version. Examples include:
-
-+ application and app
-+ demonstration and demo
-+ synchronize and sync
+Some words have a long version and a short version, such as "application" and "app", "demonstration" and "demo", "synchronize" and "sync".
 
 The short versions of the words are not abbreviations, and if you use them, you do not need to put a period after them.
 
@@ -21,7 +17,7 @@ If you are not sure whether a word is an abbreviation or just a short version of
 
 If a standard term in the Cloudflare dashboard is the long version of a word, use that over the shorter version to maintain consistency and distinctions. For example, customer *applications* on Cloudflare for Teams are not shortened to *apps*. Depending on the use case, application might be the preferred term, especially due to translation.
 
-### When to spell out a term
+## When to spell out a term
 
 In general, when an abbreviation is likely to be unfamiliar to the audience, spell out the first mention of the term and immediately follow with the abbreviation, in parentheses. For all subsequent mentions of the abbreviation, use the abbreviation by itself.
 
@@ -67,25 +63,8 @@ Follow these guidelines:
 While similar, these two Latin abbreviations carry very different meanings. 
 
 + **e.g.** stands for **exempli gratia**.
-    Use this when introducing examples for something you have just mentioned. This is similar to "for example", or "like".
+    Use this when introducing examples for something you have just mentioned. It can be replaced with "for example", or "like".
     + Cloudflare products (**e.g.**, Zero Trust, Magic Transit, etc.) offer network security and reliability.
 + **i.e.** stands for **id est**.
-    Quite literally, it means "that is" (that = id, est = is). It is like saying "in other words".
+    Quite literally, it means "that is" (that = id, est = is). It can be replaced with "that is" or "in other words".
     + The median compression ratio achieved by Railgun was 0.65% (**i.e.**, the page was reduced to 0.65% of its size).
-
-When you are not sure which one to use, remember this:
-
-+ e.g., can be replaced with "like"
-    + Cloudflare products (like Zero Trust and Magic Transit) offer network security and reliability.
-    
-    Yes, it still works! ✅
-    + Cloudflare products (that is, Zero Trust and Magic Transit) offer network security and reliability.
-    
-    Not the same meaning ❌
-+ i.e., can be replaced with "that is"
-    + The median compression ratio achieved by Railgun was 0.65% (that is, the page was reduced to 0.65% of its size).
-    
-    Yes, it still works! ✅
-    + The median compression ratio achieved by Railgun was 0.65% (like the page was reduced to 0.65% of its size).
-    
-    Sounds weird ❌

@@ -5,6 +5,6 @@ weight: 1
 
 ---
 
-## Punctuation Marks and Symbols
+# Punctuation Marks and Symbols
 
 {{<directory-listing>}}

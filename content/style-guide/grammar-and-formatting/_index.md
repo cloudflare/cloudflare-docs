@@ -6,6 +6,6 @@ meta:
   title: Style Guide
 ---
 
-## Grammar and Formatting
+# Grammar and Formatting
 
 {{<directory-listing>}}

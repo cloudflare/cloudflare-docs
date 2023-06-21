@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: Prepositions
 ---
 
-## Prepositions
+# Prepositions
 
 You can put a preposition at the end of a sentence, but do not do it often. Your sentences can sound stilted if you try to avoid putting the preposition at the end.
 

@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: Sentence Structure
 ---
 
-## Sentence Structure
+# Sentence Structure
 
 Fifteen words or fewer is a good rule of thumb for readability. You can use the [Hemingway App](https://hemingwayapp.com/) to check length and reading level. Break up longer or difficult-to-read sentences into shorter chunks.
 

@@ -3,11 +3,11 @@ pcx_content_type: Concept
 title: Compound Words
 ---
 
-## Compound Words
+# Compound Words
 
 ## Whitespace
 
-Some are fairly frequent in our blog posts and product content. For the sake of consistency, we need to follow these conventions when using them:
+Whitespace is used in our blog posts and product content. For the sake of consistency, follow these conventions when using them:
 
 <table>
   <tr>
@@ -71,18 +71,8 @@ When the same word comes after a verb, it has the role of an adverb and it shoul
 
 See these examples:
 
-### Modifiers
-
-Keep **up-to-date** passwords secured and safe.
-
-**Day-to-day** maintenance means any daily processes which must be implemented for the equipment.
-
-This allows us to implement **state-of-the-art** security for our customers.
-
-### Adverbs
-
-Keep passwords safe by staying **up to date**
-
-The duration of a maintenance session will vary from **day to day**.
-
-This approach to authentication was the **state of the art** until a couple years ago.
+|Modifiers|Adverbs|
+|----|-----|
+|Keep **up-to-date** passwords secured and safe.|Keep passwords safe by staying **up to date**|
+|**Day-to-day** maintenance means any daily processes which must be implemented for the equipment.|The duration of a maintenance session will vary from **day to day**.|
+|This allows us to implement **state-of-the-art** security for our customers.|This approach to authentication was the **state of the art** until a couple years ago.|

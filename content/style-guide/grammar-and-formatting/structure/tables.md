@@ -3,33 +3,33 @@ pcx_content_type: Concept
 title: Tables
 ---
 
-## Tables
+# Tables
 
-Tables and lists can significantly reduce complexity. Look for opportunities to create tables and lists in documentation where appropriate.
+Using tables to simplify content and data provides a comprehensive way to arrange design, structure, outlines, pattern, or order. It is a great tool for comparisons, breakdowns, lists, functions, and descriptions.
 
-### Tables
+Here are some tips when creating tables:
 
-Using tables to simplify content and data provides a comprehensive way to arrange design, structure, outlines, pattern, or order. It is a great tool for comparisons, breakdowns, lists, functions, and descriptions. Here are some tips when creating tables:
-
-+ Label column headers
-+ Label row headers if appropriate. 
++ Label column headers.
++ Label row headers if appropriate.
 + Avoid merged cells. When cells are merged, it impacts how a screen reader navigates the page.
 + Avoid too much text.
 + Aim for parallelism within the column.
 + Keep tables as simple and as small as possible. 
 
-#### When to use tables
+## When to use tables
 
-Tables display pieces of information that have some sort of relationship. For example:
+Tables display pieces of information that have some sort of relationship.
+
+For example:
 
 + Dates and descriptions, like a changelog
 + A list of products with attributes
 
-#### When not to use tables
+## When not to use tables
 
 + Do not use tables to format a page. 
 
-#### Markdown Examples
+## Markdown Examples
 
 **Add a table** 
 
@@ -51,7 +51,7 @@ The rendered output looks like this:
 
  Tip: Creating tables with hyphens and pipes can be tedious. To speed up the process, try using the [Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables). 
 
-### Alignment
+## Alignment
 
 You can align text in the columns to the left, right, or center by adding a colon (:) to the left, right, or on both side of the hyphens within the header row.
 
@@ -69,17 +69,17 @@ The rendered output looks like this:
 | Header      | Title       | Here is this  |
 | Paragraph   | Text        | And more      |
 
-#### Formatting Text in Tables
+## Formatting Text in Tables
 
 You can format the text within tables. For example, you can add links, code, and emphasis. 
 
 You can’t add headings, blockquotes, lists, horizontal rules, images, or HTML tags.
 
-#### Escaping Pipe Characters in Tables
+## Escaping Pipe Characters in Tables
 
 You can display a pipe (|) character in a table by using its HTML character code ("&#124;").
 
-### HTML Examples
+## HTML Examples
 
 For complex tables, consider using HTML. The following example is created with HTML:
 

@@ -3,27 +3,16 @@ pcx_content_type: Concept
 title: File Types and Extensions
 ---
 
-## File Types and Extensions
+# File Types and Extensions
 
 You can refer both to file types and file extensions in documentation:
 
-+ Referring to file types: Accepted file formats are JSON and YAML. 
-+ Referring to file extensions: Upload the `.txt` file to the dashboard.
++ File types: Accepted file formats are JSON and YAML. 
++ File extensions: Upload the `.txt` file to the dashboard.
 
-When referring to a specific file type, always:
+When referring to a specific file type: always use regular text formatting, write the file type in uppercase, and avoid the initial dot (you are referring to the file type, not the file extension).
 
-+ use regular text formatting
-+ write the file type in uppercase
-+ avoid the initial dot (you are referring to the file type, not the file extension)
-
-When referring to a specific extension, always:
-
-+ monospace the file extension
-+ include a dot
-+ write the extension in lowercase
-+ always specify a noun after mentioning a file extension, e.g. "file" or "file extension". Don't leave the extension hanging
-    + ✅ Download the `.txt` file.
-    + ❌ Download the `.txt`.
+When referring to a specific extension: always monospace the file, include a dot, write the extension in lowercase, and always specify a noun after mentioning a file extension (for example: "file" or "file extension"). Do not the extension hanging. 
 
 Other examples:
 

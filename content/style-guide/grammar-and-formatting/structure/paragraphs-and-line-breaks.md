@@ -3,9 +3,9 @@ pcx_content_type: Concept
 title: Paragraphs and Line Breaks
 ---
 
-## Paragraphs and Line Breaks
+# Paragraphs and Line Breaks
 
-### Paragraphs in Markdown
+## Paragraphs in Markdown
 
 To start a new paragraph, leave an empty line (with no spaces) before adding the new paragraph content.
 
@@ -16,7 +16,7 @@ This is the first sentence of the second paragraph.
 ```
 
 
-### Line breaks in Markdown
+## Line breaks in Markdown
 
 Avoid line breaks when possible. Considering creating a separate paragraph, even inside numbered lists.
 

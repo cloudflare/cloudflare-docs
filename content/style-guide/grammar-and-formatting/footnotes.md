@@ -3,7 +3,7 @@ pcx_content_type: Concept
 title: Footnotes
 ---
 
-## Footnotes
+# Footnotes
 
 Footnotes are useful when you want to provide additional context about an item but that context would greatly distract from the flow of reading through the document (legal disclaimers, pricing, etc.).
 
