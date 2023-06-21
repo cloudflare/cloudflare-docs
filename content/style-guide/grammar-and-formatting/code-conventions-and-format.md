@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Code Conventions and Format
+title: Code conventions and format
 ---
 
-# Code Conventions and Format
+# Code conventions and format
 
 Use the conventions described below throughout Cloudflare product content.
 

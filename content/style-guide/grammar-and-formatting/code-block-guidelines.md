@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Code Block Guidelines
+title: Code block guidelines
 ---
 
-# Code Block Guidelines (language, command prompts)
+# Code block guidelines (language, command prompts)
 
 ## Fenced code blocks - basic Markdown syntax
 

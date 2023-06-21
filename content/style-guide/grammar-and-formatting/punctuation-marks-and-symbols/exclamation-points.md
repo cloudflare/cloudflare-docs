@@ -1,6 +1,6 @@
 ---
 pcx_content_type: Concept
-title: Exclamation Points
+title: Exclamation points
 ---
 
 # Exclamation points

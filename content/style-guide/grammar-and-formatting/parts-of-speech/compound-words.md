@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Compound Words
+title: Compound words
 ---
 
-# Compound Words
+# Compound words
 
 ## Whitespace
 

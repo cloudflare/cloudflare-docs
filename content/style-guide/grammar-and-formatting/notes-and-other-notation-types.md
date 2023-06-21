@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Notes and Other Notation Types
+title: Notes and other notation types
 ---
 
-# Notes and Other Notation Types
+# Notes and other notation types
 
 + Use a **warning** to alert a reader to behavior that could impact the security of a users network or break functionality. You can call out product requirements, limitations, and specifications so that users see them loud and clearly.
 

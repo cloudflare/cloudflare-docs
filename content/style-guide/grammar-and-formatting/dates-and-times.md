@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Dates and Times
+title: Dates and times
 ---
 
-# Dates and Times
+# Dates and times
 
 ## Product content
 

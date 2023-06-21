@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Symbols in UI Element Names
+title: Symbols in UI element names
 ---
 
-# Symbols in UI Element Names
+# Symbols in UI element names
 
 ## Icons or non-alphabetic characters
 

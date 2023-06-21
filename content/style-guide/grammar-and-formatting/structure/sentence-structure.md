@@ -1,6 +1,6 @@
 ---
 pcx_content_type: Concept
-title: Sentence Structure
+title: Sentence structure
 ---
 
 # Sentence structure

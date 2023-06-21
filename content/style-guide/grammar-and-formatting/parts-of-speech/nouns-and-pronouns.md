@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Nouns and Pronouns
+title: Nouns and pronouns
 ---
 
-# Nouns and Pronouns
+# Nouns and pronouns
 
 Refer to the customer in the second person. Where this is not possible, use gender neutral pronouns. Do not use “one” as a pronoun.
 

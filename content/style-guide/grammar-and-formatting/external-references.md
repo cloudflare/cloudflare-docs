@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: External References
+title: External references
 ---
 
-# External References
+# External references
 
 When referencing external resources, ensure that you are linking to a trustworthy source that is recognized as an authority. 
 

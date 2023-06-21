@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Paragraphs and Line Breaks
+title: Paragraphs and line breaks
 ---
 
-# Paragraphs and Line Breaks
+# Paragraphs and line breaks
 
 ## Paragraphs in Markdown
 

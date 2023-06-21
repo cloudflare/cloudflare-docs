@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: File Types and Extensions
+title: File types and extensions
 ---
 
-# File Types and Extensions
+# File types and extensions
 
 You can refer both to file types and file extensions in documentation:
 

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Quotation Marks
+title: Quotation marks
 ---
 
-# Quotation Marks
+# Quotation marks
 
 In general, avoid the 's construction to show possession by an inanimate object. Doing so personifies the object.
 

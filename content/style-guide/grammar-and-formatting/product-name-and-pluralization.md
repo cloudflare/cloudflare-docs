@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Product Name and Pluralization
+title: Product name and pluralization
 ---
 
-# Product Name and Pluralization
+# Product name and pluralization
 
 Product names should follow a noun-verb agreement such that the verb is singular.
 

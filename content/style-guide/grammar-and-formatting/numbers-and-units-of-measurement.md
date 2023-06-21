@@ -1,9 +1,9 @@
 ---
 pcx_content_type: Concept
-title: Numbers and Units of Measurement
+title: Numbers and units of measurement
 ---
 
-# Numbers and Units of Measurement
+# Numbers and units of measurement
 
 **Be consistent in your use of numbers.** Use numerals for numbers. When you write about numbers used in examples or UI, duplicate them exactly as they appear in the UI. In all other content, follow the guidelines below.
 
