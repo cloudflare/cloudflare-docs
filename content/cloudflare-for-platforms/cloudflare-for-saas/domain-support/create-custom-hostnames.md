@@ -17,10 +17,14 @@ To create a custom hostname:
 
 {{<render file="_create-custom-hostname.md">}}
 
+{{<render file="_create-custom-hostname-limitations.md">}}
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 {{<render file="_create-custom-hostname-api.md">}}
+
+{{<render file="_create-custom-hostname-limitations.md">}}
 
 {{</tab>}}
 {{</tabs>}}
@@ -28,12 +32,5 @@ To create a custom hostname:
 {{<Aside type="note">}}
 
 {{<render file="_issue-certs-preamble.md">}}
-
-{{</Aside>}}
-
-{{<Aside type="note">}}
-
-The Minimum TLS Version for a Custom Hostnames defaults to 1.0, not to the zone Minimum TLS Version!
-You can set a higher Minimum TLS Version when creating the Custom Hostname, or you can edit it afterward.
 
 {{</Aside>}}
