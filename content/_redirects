@@ -656,7 +656,7 @@
 /r2/data-access/workers-api/workers-api-usage/ /r2/api/workers/workers-api-usage/ 301
 /r2/data-access/workers-api/workers-multipart-usage/ /r2/api/workers/workers-multipart-usage/ 301
 /r2/data-access/workers-api/workers-api-reference/ /r2/api/workers/workers-api-reference/ 301
-/r2/examples/demo-worker/ /r2/api/workers/demo-worker/ 301
+/r2/api/workers/demo-worker/ /r2/examples/demo-worker/ 301
 /r2/data-access/s3-api/ /r2/api/s3/ 301
 /r2/data-access/s3-api/api/ /r2/api/s3/api/ 301
 /r2/data-access/s3-api/extensions/ /r2/api/s3/extensions/ 301

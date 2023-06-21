@@ -1,9 +1,9 @@
 ---
-title: Use R2 in a Worker
+title: Expose an R2 bucket to the Internet via a Worker
 pcx_content_type: configuration
 ---
 
-# Use R2 in a Worker
+# Expose an R2 bucket to the Internet via a Worker
 
 Below is an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
 
