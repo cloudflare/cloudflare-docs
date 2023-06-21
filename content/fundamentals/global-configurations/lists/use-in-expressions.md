@@ -10,7 +10,7 @@ meta:
 
 ## Expression Builder
 
-To use a list in the [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder):
+To use a list in the [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder):
 
 1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
@@ -22,7 +22,7 @@ To use a list in the [Expression Builder](/firewall/cf-dashboard/edit-expression
 
 ## Expression Editor
 
-To use a list in the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor), specify the `in` operator and use `$<list_name>` to specify the name of the list.
+To use a list in the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor), specify the `in` operator and use `$<list_name>` to specify the name of the list.
 
 Examples:
 

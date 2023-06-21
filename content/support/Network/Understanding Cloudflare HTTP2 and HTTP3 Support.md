@@ -33,13 +33,13 @@ ___
 
 HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better. Enable HTTP/3 via the Cloudflare **Network** app. 
 
-For more information, refer to the [Learning center](https://www.cloudflare.com/learning/performance/what-is-http3/).
+For more information, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/performance/what-is-http3/).
 
 ___
 
 ## Server Push
 
-The Server Push feature allows origin web servers to send resources to the client or web browser without waiting to for the client to discover they are needed. In practice, this protocol feature was hard to leverage and could sometimes make page load times worse. [Early Hints](/cache/about/early-hints/) has emerged as a replacement solution that avoids some of the pitfalls of Server Push.
+The Server Push feature allows origin web servers to send resources to the client or web browser without waiting to for the client to discover they are needed. In practice, this protocol feature was hard to leverage and could sometimes make page load times worse. [Early Hints](/cache/advanced-configuration/early-hints/) has emerged as a replacement solution that avoids some of the pitfalls of Server Push.
 
 Server Push is available for all Cloudflare plans but only over HTTP/2. Cloudflare does not support Server Push for HTTP/3.
 

@@ -101,7 +101,7 @@ mod\_cloudflare를 설치하는 방법에는 2가지가 있습니다. 하나는 
 
 ### Github에서 패킷/스크립트 다운로드
 
-Apache 웹 서버를 사용하는 경우, [Github](https://github.com/cloudflare/mod_cloudflare)에서 mod\_cloudflare를 다운로드할 수 있습니다.
+Apache 웹 서버를 사용하는 경우, [GitHub](https://github.com/cloudflare/mod_cloudflare)에서 mod\_cloudflare를 다운로드할 수 있습니다.
 
 ### 원본 웹 서버에 코드 추가
 

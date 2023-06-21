@@ -24,31 +24,31 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-04-24</td>
-      <td>2023-05-01</td>
-      <td>Block</td>
-      <td>100582</td>
-      <td>...18585d20</td>
-      <td>vBulletin - Code Injection - CVE:CVE-2023-25135</td>
-      <td>New detection</td>
+      <td>2023-06-19</td>
+      <td>2023-06-26</td>
+      <td>Disabled</td>
+      <td>100008NS</td>
+      <td>...7bc0259f</td>
+      <td>Command Injection - Netcat - Body</td>
+      <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-04-24</td>
-      <td>2023-05-01</td>
-      <td>Block</td>
-      <td>100534_BETA</td>
-      <td>...1e9b5f8c</td>
-      <td>Webshell Activity - Beta</td>
-      <td>This will replace 100534 and ...49e6b538</td>
+      <td>2023-06-19</td>
+      <td>2023-06-26</td>
+      <td>Disabled</td>
+      <td>100008G</td>
+      <td>...fb982fd6</td>
+      <td>SQLi - Libinject with Body Inspection</td>
+      <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-04-24</td>
-      <td>2023-05-01</td>
+      <td>2023-06-19</td>
+      <td>2023-06-26</td>
       <td>Block</td>
-      <td>100558_BETA</td>
-      <td>...f6a96bd1</td>
-      <td>Malware, Web Shell - Beta</td>
-      <td>This will replace 100558 and ...8b036974</td>
+      <td>100590BETA</td>
+      <td>...c1e42497</td>
+      <td>VMware - Remote Code Execution - CVE:CVE-2023-20887</td>
+      <td>This rule will replace 100590 in legacy WAF and ...6f9bfc13 on New WAF</td>
     </tr>
   </tbody>
 </table>

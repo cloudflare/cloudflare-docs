@@ -33,4 +33,4 @@ For troubleshooting a specific pool's health, use the [Pool Health Details](/api
 If you notice that healthy pools are being marked unhealthy:
 
 - Review [how origins and pools become unhealthy](/load-balancing/understand-basics/health-details/).
-- Refer to the [Troubleshooting guide](https://support.cloudflare.com/hc/articles/4407016052493).
+- Refer to the [Troubleshooting guide](/load-balancing/troubleshooting/load-balancing-faq/).

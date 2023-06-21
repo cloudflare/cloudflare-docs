@@ -26,8 +26,8 @@ Next, add a custom domain under your Pages project for your desired custom domai
 To do this:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. In Account Home, go to **Pages**.
-3. Select your project.
+2. In Account Home, go to **Workers & Pages**.
+3. Select your Pages project.
 4. Select **Custom domains** > **Setup a custom domain**.
 5. Input the domain you would like to use, such as `staging.example.com`
 6. Select **Continue** > **Activate domain**

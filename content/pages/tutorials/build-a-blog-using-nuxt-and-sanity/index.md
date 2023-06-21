@@ -15,7 +15,7 @@ In this tutorial, you will build a blog application using Nuxt.js and Sanity.io 
 
 ## Prerequisites
 
-- A recent version of [NPM](https://docs.npmjs.com/getting-started) on your computer
+- A recent version of [npm](https://docs.npmjs.com/getting-started) on your computer
 - A [Sanity.io](https://www.sanity.io) account
 
 ## Creating a new Sanity project
@@ -24,7 +24,7 @@ To begin, create a new Sanity project, using one of Sanity's templates, the blog
 
 ### Installing Sanity and configuring your dataset
 
-Create your new Sanity project by installing the `@sanity/cli` client from NPM, and running `sanity init` in your terminal:
+Create your new Sanity project by installing the `@sanity/cli` client from npm, and running `sanity init` in your terminal:
 
 ```sh
 ---
@@ -86,7 +86,7 @@ $ npx create-nuxt-app blog
 
 Importantly, ensure that you select a rendering mode of **Universal (SSR / SSG)** and a deployment target of **Static (Static/JAMStack hosting)**, while going through the setup process.
 
-After you have completed your project, `cd` into your new project, and start a local development server by running `yarn dev` (or, if you chose NPM as your package manager, `npm run dev`):
+After you have completed your project, `cd` into your new project, and start a local development server by running `yarn dev` (or, if you chose npm as your package manager, `npm run dev`):
 
 ```sh
 ---
@@ -276,7 +276,7 @@ When visiting, for example, `/hello-world`, Nuxt will take the incoming slug `he
 
 You have rendered the `post` title for our blog, but you are still missing the content of the blog post itself. To render this, import the [`sanity-blocks-vue-component`](https://github.com/rdunk/sanity-blocks-vue-component) package, which takes Sanity's [Portable Text](https://www.sanity.io/docs/presenting-block-text) format and renders it as a Vue component.
 
-First, install the NPM package:
+First, install the npm package:
 
 ```sh
 ---
@@ -423,7 +423,11 @@ Publishing your project with Cloudflare Pages is an easy, two-step process: firs
 
 To push your project to GitHub, [create a new repository](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
-After you've pushed your project to GitHub, deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
+After you have pushed your project to GitHub, deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
@@ -440,4 +444,4 @@ By completing this guide, you have successfully deployed your own blog, powered 
 - Blog front end: https://github.com/signalnerve/nuxt-sanity-blog
 - Sanity dataset: https://github.com/signalnerve/sanity-blog-schema
 
-If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more](/pages/tutorials/build-an-api-with-workers/).
+If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more](/pages/tutorials/build-an-api-with-pages-functions/).

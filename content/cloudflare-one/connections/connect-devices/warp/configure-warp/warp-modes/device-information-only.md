@@ -25,7 +25,7 @@ To set up Device Information Only mode:
 
 4. For **Service mode**, select **Device Information Only**.
 
-5. Next, [enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) into your Zero Trust organization.
+5. Next, [enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) into your Zero Trust organization.
 
    When enrolled in Device Information Only mode, the WARP client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
 

@@ -3,12 +3,10 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
   title: Cloudflare Workers
 ---
-
-{{<content-column>}}
 
 # Cloudflare Workers
 
@@ -83,5 +81,3 @@ Cloudflare Queues integrates with Cloudflare Workers to allow developers to send
 {{<resource header="Works on Workers" href="https://workers.cloudflare.com/works" icon="learning-center-book">}}Explore third-party packages that work on Workers, submitted by Cloudflare users.{{</resource>}}
  
 {{</resource-group>}}
-
-{{</content-column>}}

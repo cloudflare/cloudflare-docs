@@ -8,6 +8,8 @@ weight: 1
 
 The following policies are commonly used to secure HTTP traffic.
 
+Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
+
 ## Block sites
 
 Block attempts to reach sites by hostname or URL paths. Different approaches may be required based on how a site is organized.
@@ -29,6 +31,8 @@ Block a section of a site without blocking the entire site. For example, you can
 | URL      | matches regex | `/r/gaming` | Block  |
 
 {{<render file="gateway/_content-categories.md">}}
+
+{{<render file="gateway/_block-applications.md">}}
 
 {{<render file="gateway/_policies-optional.md">}}
 
@@ -70,14 +74,7 @@ When accessing origin servers with certificates not signed by a public certifica
 | -------- | -------- | ------------------- | -------------- |
 | Domain   | in       | `internal.site.com` | Do Not Inspect |
 
-## Block file types
-
-Block the upload or download of files based on their type.
-
-| Selector           | Operator | Value                                 | Logic | Action |
-| ------------------ | -------- | ------------------------------------- | ----- | ------ |
-| Upload File Type   | in       | Microsoft Office Word Document (docx) | And   | Block  |
-| Download File Type | in       | PDF (pdf)                             |       |        |
+{{<render file="gateway/_block-file-types.md">}}
 
 ## Block Google services
 
@@ -109,5 +106,3 @@ Block file downloads from Gmail.
 | ---------------- | -------- | --------------------------------------- | ----- | ------ |
 | Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
 | URL Path & Query | is       | `/attachment/u/0`                       |       |        |
-
-Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.

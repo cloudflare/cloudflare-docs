@@ -9,7 +9,7 @@ The following APIs from the [Node.js runtime](https://nodejs.org/en/about) are a
 
 {{<directory-listing>}}
 
-Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the NPM packages you depend on.
+Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the npm packages you depend on.
 
 ```js
 // Do this:
@@ -48,7 +48,7 @@ For additional options, refer to the list of [Pages-specific CLI commands](/work
 
 To enable Node.js for your Pages Function from the Cloudflare dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Pages** and select your Pages project.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** and in **Overview**, select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
 4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.

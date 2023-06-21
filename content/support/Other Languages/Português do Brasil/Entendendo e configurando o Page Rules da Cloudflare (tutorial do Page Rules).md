@@ -243,7 +243,7 @@ TTL de cache de navegador
 
  | 
 
-Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](/cache/about/edge-browser-cache-ttl).
+Controle por quanto tempo os recursos armazenados em cache pelos navegadores clientes permanecem válidos. A interface do usuário e a API da Cloudflare proíbem a configuração de **Cache do navegador TTL** como _0_ para domínios que não sejam empresariais. [Saiba mais](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -287,7 +287,7 @@ Cache por tipo de dispositivo
 
  | 
 
-Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+Separe o conteúdo em cache com base no tipo de dispositivo do visitante. [Saiba mais.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -300,7 +300,7 @@ Armadura contra Fraude do Cache
 
  | 
 
-Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](/cache/about/cache-deception-armor)
+Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](/cache/cache-security/cache-deception-armor/)
 
  | 
 
@@ -315,7 +315,7 @@ Chave do cache
 
 Também conhecida como _Chave do cache Personalizada_ .
 
-Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](/cache/about/cache-keys).
+Controle especificamente quais variáveis incluir ao decidir quais recursos armazenar em cache. Isso permite que os clientes determinem o que armazenar em cache com base em algo que não seja apenas a URL. [Saiba mais](/cache/how-to/cache-keys/).
 
  | 
 
@@ -338,7 +338,7 @@ A aplicação do caching personalizado com base na opção selecionada:
 
 **Standard —** armazena em cache todo o conteúdo estático que possui uma cadeia de consulta.
 
-**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
+**Coloque tudo em cache** –  trata todo o conteúdo como estático e armazena em cache todos os tipos de arquivos além do [conteúdo da Cloudflare armazenado em cache por padrão](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respeita os cabeçalhos do cache do servidor de origem, a não ser que a **Edge Cache TTL** também esteja configurada na regra de página. Quando combinada com uma **Edge Cache TTL** > _0_, **Cache Everything** remove os cookies da resposta do servidor Web de origem.   
 
 
  | 
@@ -538,7 +538,7 @@ Ative ou desative o recurso **Criptografia Oportunística da Cloudflare** da g
 -   Todos
 
  |
-| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/about/cache-control) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
+| Controle do Cache de Origem | O [Controle de Cache de Origem](/cache/concepts/cache-control/) é ativado por padrão nos domínios Gratuito, Pro e Business e desabilitado por padrão nos domínios Enterprise. | 
 
 -   Todos
 

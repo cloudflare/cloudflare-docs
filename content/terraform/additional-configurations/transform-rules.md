@@ -38,6 +38,7 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
   description = ""
   kind        = "zone"
   phase       = "http_request_transform"
+
   rules {
     action = "rewrite"
     action_parameters {
@@ -53,6 +54,9 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
   }
 }
 ```
+
+{{<render file="_add-new-rule.md" withParameters="Rewrite URL Rule">}}
+<br/>
 
 For more information on rewriting URLs, refer to [Rewrite URL Rules](/rules/transform/url-rewrite/).
 
@@ -71,6 +75,7 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
   description = ""
   kind        = "zone"
   phase       = "http_request_late_transform"
+
   rules {
     action = "rewrite"
     action_parameters {
@@ -96,6 +101,9 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
 }
 ```
 
+{{<render file="_add-new-rule.md" withParameters="Request Header Modification Rule">}}
+<br/>
+
 For more information on modifying request headers, refer to [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/).
 
 ## Create an HTTP Response Header Modification Rule
@@ -113,6 +121,7 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
   description = ""
   kind        = "zone"
   phase       = "http_response_headers_transform"
+
   rules {
     action = "rewrite"
     action_parameters {
@@ -137,5 +146,8 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
   }
 }
 ```
+
+{{<render file="_add-new-rule.md" withParameters="Response Header Modification Rule">}}
+<br/>
 
 For more information on modifying response headers, refer to [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/).

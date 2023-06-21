@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPath;;ipSecProductPath
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath
 ---
 
 #  Configure tunnel endpoints
@@ -26,17 +26,21 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 
 ## IPsec tunnels
 
-You can use [IPsec]($4) as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's global network and define static routes to direct traffic down the correct tunnel.
+You can [use IPsec]($4) as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's global network and define static routes to direct traffic down the correct tunnel.
 
 You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API make sure you already have an [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) before you begin.
 
 {{<Aside type="note" header="Note">}}$2 only supports Internet Key Exchange version 2 (IKEv2).{{</Aside>}}
 
+## Technical requirements for GRE and IPsec tunnels
+
+Refer to [Tunnels and encapsulation]($6) to learn about the technical requirements for GRE and IPsec tunnels used in $2.
+
 ## Add tunnels
 
 ### Dashboard instructions
 
-1. Log in to your Cloudflare dashboard, and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
 3. From the **Tunnels** tab, select **Create**.
 4. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
@@ -210,3 +214,9 @@ You will receive a response like the following:
 
 </div>
 </details>
+
+## Next steps
+
+Now that you have set up your tunnel endpoints, you need to configure [static routes]($5) to route your traffic through Cloudflare.
+
+Refer to [Tunnels]($6) for more information on how $2 tunnels work.

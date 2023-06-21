@@ -20,11 +20,13 @@ If you need to re-add the domain in a different account, make sure the current s
 
     * Refer to [Check if your nameservers are pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605) to confirm that your nameservers no longer point to Cloudflare.
 
-* At your registrar, make sure you do not have a **DS** DNS record. This record enables [DNSSEC](/dns/additional-options/dnssec/) and could prevent your DNS records from being changed.
+* At your registrar, make sure you do not have a **DS** DNS record. This record enables [DNSSEC](/dns/dnssec/) and could prevent your DNS records from being changed.
 
 ### Actions within Cloudflare
 
 * [Cancel active add-on subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/).
+
+* [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#step-4---delete-a-job)
 
 * If you use Cloudflare Registrar:
 

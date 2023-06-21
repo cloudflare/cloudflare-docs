@@ -66,3 +66,9 @@ The following managed rulesets run in a response phase:
   </tbody>
 </table>
 {{</table-wrap>}}
+
+## Availability
+
+The managed rulesets you can deploy depend on your Cloudflare plan.
+
+{{<feature-table id="security.waf_a_managed_rules" skipAvailability="true">}}

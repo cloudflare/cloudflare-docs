@@ -182,7 +182,7 @@ El error es confuso, ya que al parecer está en la sintaxis del código del clie
 
 **Solución**
 
-Comprobar el argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Se puede encontrar un caso de uso más detallado en [este](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) hilo de Github.
+Comprobar el argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Se puede encontrar un caso de uso más detallado en [este](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) hilo de GitHub.
 
 ___
 

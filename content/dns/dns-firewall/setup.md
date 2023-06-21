@@ -60,3 +60,9 @@ Confirm that your nameservers are functioning correctly by running a `dig` comma
 ### Update security policies
 
 Configure security policy in your DNS servers and Firewall to allow only [Cloudflare IPs](https://cloudflare.com/ips) and TCP/UDP port 53.
+
+## Additional options
+
+When you [use the API](#using-the-api), you can also specify other parameters, such as rate limit (in queries per second per data center). You can find the parameters descriptions and examples in the [API documentation](/api/operations/dns-firewall-create-dns-firewall-cluster).
+
+To configure rate limiting and other options for already existing clusters, use the [Update DNS Firewall Cluster](/api/operations/dns-firewall-update-dns-firewall-cluster) endpoint.

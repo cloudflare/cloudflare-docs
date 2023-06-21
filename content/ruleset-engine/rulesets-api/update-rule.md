@@ -181,7 +181,7 @@ curl -X PATCH \
   "position": {
     "index": 3
   }
-}
+}'
 ```
 
 In this case, the new rule order would be:

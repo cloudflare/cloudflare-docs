@@ -113,7 +113,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 {{<Aside type="note">}}
 
-If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
+If curl returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
 
 {{</Aside>}}
 
@@ -179,4 +179,4 @@ When a browser is connected to Gateway by a proxy endpoint, the browser does not
 
 ## Limitations
 
-At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
+At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.

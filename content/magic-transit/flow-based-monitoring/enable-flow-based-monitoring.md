@@ -5,7 +5,7 @@ title: Enable Flow-based monitoring alerts
 
 # Enable Flow-based monitoring alerts
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
 3. Locate **Magic Transit** in the list and choose **Select** to add a **Flow-based Monitoring: Volumetric Attack** notification.
 4. Enter a name and description for the notification.

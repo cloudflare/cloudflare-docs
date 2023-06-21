@@ -3,10 +3,10 @@ title: Create a waiting room
 pcx_content_type: how-to
 weight: 1
 meta:
-  title: Create a waiting room 
+  title: Create a waiting room
 ---
 
-# Create a waiting room 
+# Create a waiting room
 
 A waiting room can be created from the dashboard or via API.
 
@@ -20,7 +20,7 @@ A waiting room can be created from the dashboard or via API.
 4.  Select **Next**.
 5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using this waiting room to manage traffic for your mobile app or API, enable the JSON response toggle. Make sure that you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) for your client (mobile or web app).
 6.  Select **Next**.
-7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room/).
+7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room).
 8.  Select **Save**. Your new waiting room will be enabled by default.
 
 
@@ -58,6 +58,9 @@ The following parameters are optional:
 *  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
 *  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](/api/operations/waiting-room-list-waiting-rooms).
 *  `json_response_enabled` - If you are using this waiting room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and set `json_response_enabled` to `true`.
+* `cookie_suffix`: Customize the suffix of your waiting room cookie. Suffix will be added to `_cfwaitingroom`. This field is required when utilizing `additional_routes`.
+* `additional_routes`: Add additional hostnames and/or paths to your waiting room coverage.
+
 
 ## Example
 

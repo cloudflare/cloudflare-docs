@@ -69,7 +69,11 @@ If you are not using a framework, leave the **Build command** field blank.
 
 ## Environment variables
 
-If your project makes use of environment variables to build your site, you can provide custom environment variables by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
+If your project makes use of environment variables to build your site, provide custom environment variables:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages** > in **Overview**,select your Pages project.
+3. Select **Settings** > **Environment variables**.
 
 The following system environment variables are injected by default (but can be overridden):
 
@@ -79,3 +83,7 @@ The following system environment variables are injected by default (but can be o
 | `CF_PAGES_COMMIT_SHA` | `<sha1-hash-of-current-commit>`       | Passing current commit ID to error reporting, for example, Sentry                       |
 | `CF_PAGES_BRANCH`     | `<branch-name-of-current-deployment>` | Customizing build based on branch, for example, disabling debug logging on `production` |
 | `CF_PAGES_URL`        | `<url-of-current-deployment>`         | Allowing build tools to know the URL the page will be deployed at                       |
+
+## Language support and tools
+
+Moved to [Language support and tools](/pages/platform/language-support-and-tools/).

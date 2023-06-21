@@ -203,7 +203,7 @@ Terraform을 Cloudflare API와 함께 사용할 때 `오류: DNS 레코드 생�
 
 **솔루션**
 
-인수 `zone_id = data.cloudflare_zones.example_com.zones[0].id`인지 확인하시기 바랍니다.더 자세한 사용 사례는 [이](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) Github 스레드에서 찾을 수 있습니다.
+인수 `zone_id = data.cloudflare_zones.example_com.zones[0].id`인지 확인하시기 바랍니다.더 자세한 사용 사례는 [이](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub 스레드에서 찾을 수 있습니다.
 
 ___
 

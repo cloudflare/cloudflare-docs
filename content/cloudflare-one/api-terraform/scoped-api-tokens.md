@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Scoped API tokens
-weight: 4
+weight: 3
 ---
 
 # Scoped API tokens

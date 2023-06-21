@@ -12,7 +12,7 @@ This section covers how to create, renew, and revoke a service token.
 
 ## Create a service token
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access** > **Service Auth** > **Service Tokens**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
 
 2. Select **Create Service Token**.
 
@@ -31,7 +31,7 @@ You can now use the service token in your [Access policies](/cloudflare-one/poli
 
 ## Connect your service to Access
 
-To authenticate to an Access application using your service token, add the following to the headers of any request:
+To authenticate to an Access application using your service token, add the following to the headers of any HTTP request:
 
 `CF-Access-Client-Id: <Client ID>`
 

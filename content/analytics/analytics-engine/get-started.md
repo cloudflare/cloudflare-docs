@@ -12,10 +12,10 @@ There are four steps to get started with Workers Analytics Engine:
 
 ## 1. Enable Analytics Engine for your account
 
-* Log into the Cloudflare dashboard.
-* Navigate to the **Workers** page.
-* Click **Set up** in the right hand side bar.
-* Click **Enable Analytics Engine**
+* Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+* Go to **Workers & Pages**.
+* In **Overview**, find **Analytics Engine** in the right side bar and select **Set up**.
+* Select **Enable Analytics Engine**
 
 ## 2. Configure your dataset and binding in Wrangler
 
@@ -25,22 +25,40 @@ To access your dataset from the Workers runtime, you need to create a binding us
 
 In this guide, we will show you how to start using a dataset.
 
-To define an Analytics Engine binding you must be using at least version 2.6.0 of Wrangler.
+{{<Aside type="note">}}
+  
+To define an Analytics Engine binding you must be using at least version 2.6.0 of [Wrangler](/workers/wrangler/install-and-update/).
+
+{{</Aside>}}
+
 Add the binding to your `wrangler.toml` file, for example:
 
 ```toml
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>" }
-]
+---
+filename: wrangler.toml
+---
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
 ```
 
-By default, the dataset name is the same as the binding name. If you want, you can also specify the dataset name:
+By default, the dataset name is the same as the binding name.
+
+* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables).
+* For example, `binding = "MY_DATASET"` or `binding = "metricsDataset"` would both be valid names for the binding.
+* Your binding is available in your Worker at `env.<BINDING_NAME>` and exposes the `writeMetric` method.
+
+If you want, you can also specify the dataset name:
 
 ```toml
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+---
+filename: wrangler.toml
+---
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
 ```
+
+Save the changes that you made to your `wrangler.toml` file. Republish your Worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
 
 ## 3. Write data from your Worker
 
@@ -63,6 +81,30 @@ This is how it translates into code:
   }
 ```
 
+Besides writing static data points, a common use case of Workers Analytics Engine is to capture information about incoming HTTP requests.
+
+In the runtime API documentation, you can find  information about the [variables](/workers/runtime-apis/request/). Because these variables are already available in the runtime, you will not need to define them. In other words, you can directly use `request.cf.<variable name>` as a blob or double field. Using this adaptation of this Worker [example](/workers/examples/geolocation-hello-world/) template, you can write the geolocation variables to Analytics Engine.
+
+```js
+env.<EXAMPLE_DATASET>.writeDataPoint({
+  'blobs': [ 
+    request.cf.colo, 
+    request.cf.country, 
+    request.cf.city, 
+    request.cf.region, 
+    request.cf.timezone
+  ],
+  'doubles': [
+    request.cf.metroCode, 
+    request.cf.longitude, 
+    request.cf.latitude
+  ],
+  'indexes': [
+    request.cf.postalCode
+  ] 
+});
+```
+
 In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their blobs and doubles in the binding, and then use these names when writing data points in the runtime.
 
 ## 4. Query data using GraphQL and SQL API
@@ -74,6 +116,8 @@ The GraphQL API powers our dashboard and is better suited for building interacti
 SQL API is better suited for writing ad hoc queries and integrating with external tools like Grafana. At this time, the SQL API only supports the `SELECT` statement and a limited subset of SQL functionality.
 
 The SQL API is available as an HTTP endpoint at `https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql` using the `POST` and `GET` method. You need to include an `Authorization: Bearer _____` token where the underscores should be replaced with a Cloudflare [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission.
+
+If you prefer a graphical interface, you can use [Postman](https://www.postman.com/) to connect to the SQL API endpoint and run your query. Postman is an application that can be used to test APIs. You can use the endpoint mentioned above using the `POST` and `GET` methods.
 
 ### Example of querying data with the SQL API
 
@@ -119,10 +163,10 @@ GROUP BY t, city
 ORDER BY t, avg_humidity DESC
 ```
 
-This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
+This query first rounds the `timestamp` field to the nearest five minutes. Then, it groups by that field and city and calculates the average humidity in each city for a five minute period.
 
 Refer to [Querying Workers Analytics Engine from Grafana](/analytics/analytics-engine/grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
 
 ## Limits
 
-Cloudflare will accept up to twenty blobs, twenty doubles, and one index per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes. Finally, there is also a limit of 25 writes per request.
+Cloudflare will accept up to twenty blobs, twenty doubles, and one index per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 96 bytes. Finally, there is also a limit of 25 writes per request.

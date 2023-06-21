@@ -64,7 +64,7 @@ If a zone has [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-o
 
 After the update process is complete, the Cloudflare dashboard will display the new WAF Managed Rules interface in **Security** > **WAF** > **Managed rules**, where you can deploy managed rulesets and adjust their configuration.
 
-![After migrating to WAF Managed Rules, the Cloudflare dashboard will display a new interface where you can deploy managed rulesets to your zone.](/waf/static/reference/waf-migration-dashboard-differences.png)
+![After migrating to WAF Managed Rules, the Cloudflare dashboard will display a new interface where you can deploy managed rulesets to your zone.](/images/waf/reference/waf-migration-dashboard-differences.png)
 
 Unlike the WAF managed rules, there is no global on/off setting to enable the WAF in the new interface. Instead, you deploy each managed ruleset individually in your zone.
 
@@ -129,11 +129,11 @@ You can start the WAF update in the Cloudflare dashboard or via API.
 
     If you are an Enterprise customer, the dashboard will show the following banner:
 
-    ![The migration banner displayed to Enterprise customers in WAF > Managed rules.](/waf/static/reference/waf-migration-ent-banner.png)
+    ![The migration banner displayed to Enterprise customers in WAF > Managed rules.](/images/waf/reference/waf-migration-ent-banner.png)
 
     If you are a Professional/Business customer, the dashboard will show the following banner:
 
-    ![The migration banner displayed to Pro/Business customers in WAF > Managed rules.](/waf/static/reference/waf-migration-biz-banner.png)
+    ![The migration banner displayed to Pro/Business customers in WAF > Managed rules.](/images/waf/reference/waf-migration-biz-banner.png)
 
 3. In the update banner, select **Review configuration**. This banner is only displayed in eligible zones.
 

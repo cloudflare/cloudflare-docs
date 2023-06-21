@@ -107,7 +107,7 @@ If you are building a native app, the example code above can run within a [WkWeb
 
 ## Debugging WebRTC
 
-- **Chrome**: Navigate to `chrome://webrtc-internals` tov view detailed logs and graphs.
+- **Chrome**: Navigate to `chrome://webrtc-internals` to view detailed logs and graphs.
 - **Firefox**: Navigate to `about:webrtc` to view information about WebRTC sessions, similar to Chrome.
 - **Safari**: To enable WebRTC logs, from the inspector, open the settings tab (cogwheel icon), and set WebRTC logging to "Verbose" in the dropdown menu.
 

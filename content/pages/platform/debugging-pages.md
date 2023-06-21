@@ -12,8 +12,8 @@ When setting up your Pages project, you may encounter various errors that preven
 You can review build errors in your Pages build log. To access your build log:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, go to **Pages**.
-3. Select your Pages project > **View build**.
+2. In **Account Home**, go to **Workers & Pages**.
+3. In **Overview**, select your Pages project > **View build**.
 
 ![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](../media/pages-build-log.png)
 
@@ -24,10 +24,10 @@ Possible errors in your build log are included in the following sections.
 Possible errors in this step could be caused by improper installation during Git integration.
 
 To fix this in GitHub:
-1. Log in to your Github account.
+1. Log in to your GitHub account.
 2. Go to **Settings**  from your user icon > find **Applications** under Integrations.
 3. Find **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
-4. Re-authorize your Github user/organisation on the Cloudflare dashboard.
+4. Re-authorize your GitHub user/organisation on the Cloudflare dashboard.
 
 To fix this in GitLab:
 1. Log in to your GitLab account.

@@ -2,6 +2,7 @@
 title: Overview
 type: overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
   title: Cloudflare R2 
@@ -67,7 +68,7 @@ A suite of products tailored to your image-processing needs.
 
 {{<resource header="Pricing" href="/r2/pricing" icon="price">}} Understand pricing for free and paid tier rates. {{</resource>}}
 
-{{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
+{{<resource header="Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
 
 {{<resource header="Twitter" href="https://twitter.com/cloudflaredev" icon="twitter">}} Learn about product announcements, new tutorials, and what is new in Cloudflare Workers. {{</resource>}}
 

@@ -47,6 +47,10 @@ For user convenience, [create a bookmark](/cloudflare-one/applications/bookmarks
 IdP sessions are not shared between the non-isolated IdP and the Clientless Web Isolation IdP. Users will be prompted to establish an additional session with their IdP.
 {{</Aside>}}
 
+#### Add the application to Access
+
+Configure a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) in Cloudflare Access and [enable browser isolation](/cloudflare-one/policies/access/isolate-application/) in the application settings.
+
 #### Isolate both Identity Provider and Service Provider 
 
 The HTTP `405` error does not occur when both the IdP and SP are isolated.

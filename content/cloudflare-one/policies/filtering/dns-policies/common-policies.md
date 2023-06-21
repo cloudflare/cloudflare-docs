@@ -8,7 +8,9 @@ weight: 1
 
 The following policies are commonly used to secure DNS traffic.
 
-{{<render file="gateway/_content-categories.md">}}
+Refer to the [DNS policies page](/cloudflare-one/policies/filtering/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
+
+{{<render file="gateway/_recommended-dns-policies.md">}}
 
 {{<render file="/gateway/_policies-optional.md">}}
 
@@ -31,14 +33,6 @@ The following example includes two policies. The first policy allows the specifi
 | ------------------ | -------- | --------------- | ------ |
 | Content Categories | in       | Social Networks | Block  |
 
-## Block sites by top-level domain
-
-Block sites with a specific top-level domain (TLD).
-
-| Selector | Operator      | Value     | Action |
-| -------- | ------------- | --------- | ------ |
-| Domain   | matches regex | `[.]fail` | Block  |
-
 ## Control IP version
 
 Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/filtering/egress-policies/) to control which IP address is used to egress to the origin server.
@@ -60,5 +54,3 @@ Force users to connect with IPv6.
 | ----------------- | -------- | ----------- | ----- | ------ |
 | Query Record Type | is       | A           | And   | Block  |
 | Domain            | is       | example.com |       |        |
-
-Refer to the [DNS policies page](/cloudflare-one/policies/filtering/dns-policies/) for a comprehensive list of other selectors, operators, and actions.

@@ -16,7 +16,7 @@ The custom rules interface allows you to:
 - Enable or disable rules
 - Reorder rules
 
-![The Custom rules tab in the dashboard, listing three example rules](/waf/static/custom-rules/custom-rules-tab.png)
+![The Custom rules tab in the dashboard, listing three example rules](/images/waf/custom-rules/custom-rules-tab.png)
 
 ## Manage custom rules
 
