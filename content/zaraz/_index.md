@@ -25,7 +25,7 @@ Offload third-party tools and services to the cloud and improve the speed and se
 You can add many third-party tools to Zaraz, and offload them from your website.
 {{</feature>}}
 
-{{<feature header="Custom Managed Components" href="/zaraz/get-started/add-custom-mc/">}}
+{{<feature header="Custom Managed Components" href="/zaraz/advanced/load-custom-managed-component/">}}
 You can add Custom Managed Components to Zaraz and run them as a tool.
 {{</feature>}}
 
