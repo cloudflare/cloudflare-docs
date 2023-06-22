@@ -13,7 +13,7 @@ layout: single
 
 ## Overview
 
-In this tutorial, you will learn to use [OpenAI function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with JavaScript and Cloudflare Workers. Your Worker will interact with the OpenAI API to define a function in your code, have OpenAI tell you when to call that function and share those results with OpenAI to continue that conversation. For our example, we'll allow users to specify real-time data that needs to be pulled from a URL.
+In this tutorial, you will learn to use [OpenAI function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with JavaScript and Cloudflare Workers. Your Worker application will interact with the OpenAI API to define a function in your Worker code, have OpenAI tell you when to call that function and share those results with OpenAI to continue that conversation. For this guide, you will allow users to specify real-time data that needs to be pulled from a URL.
 
 You will learn how to:
 
