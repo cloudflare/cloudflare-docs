@@ -228,7 +228,7 @@ Run our code again (`npx wrangler dev`) and open it in your browser. This will n
 If you want to deploy your application, you can run the `npx wrangler publish` command to deploy your Workers script:
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 You can reference the finished code [on GitHub](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/openai-function-calling).
