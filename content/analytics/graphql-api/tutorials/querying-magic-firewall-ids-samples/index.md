@@ -3,7 +3,7 @@ pcx_content_type: tutorial
 title: Querying Magic Firewall Intrusion Detection System (IDS) samples with GraphQL
 ---
 
-# Querying Magic Firewall Intrusion Detection System (IDS) Samples with GraphQL
+# Querying Magic Firewall Intrusion Detection System (IDS) samples with GraphQL
 
 In this example, we are going to use the GraphQL Analytics API to query for IDS Samples over a specified time period.
 
