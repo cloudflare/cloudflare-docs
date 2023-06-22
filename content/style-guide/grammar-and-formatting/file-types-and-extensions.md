@@ -14,7 +14,7 @@ When referring to a specific file type: always use regular text formatting, writ
 
 When referring to a specific extension: always monospace the file, include a dot, write the extension in lowercase, and always specify a noun after mentioning a file extension (for example: "file" or "file extension"). Do not the extension hanging. 
 
-Additional notes:
+Additional examples:
 
 + The accepted file formats are YAML (files with a `.yml` or `.yaml` file extension) and JSON (files with a `.json` file extension).
 + Additionally, this plist can be wrapped in a `.mobileconfig` file.
