@@ -34,13 +34,13 @@ jobs:
           fi
 
       - name: Create Issue if Unused Files Found
-        if: steps.find-files.outputs.unused_files
-        env:
-          UNUSED_FILES: ${{ steps.find-files.outputs.unused_files }}
-        run: |
-          # Create the issue and reference the unused_files variable
-          echo "The following files are not referenced in any markdown file:\n${UNUSED_FILES}" > unused_files.txt
-          curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
-            -d "{\"title\": \"Unused Image Files Found\", \"body\": \"$(cat unused_files.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
+  if: steps.find-files.outputs.unused_files
+  env:
+    UNUSED_FILES: ${{ steps.find-files.outputs.unused_files }}
+  run: |
+    # Create the issue and reference the unused_files variable
+    echo "How to address this issue:\n1. Check each string using the Find/Replace within your local IDE.\n2. Remove the specified files.\n3. Create a PR with \"closes #${{ github.event.issue.number }}\" in the description.\n\n(if you remove images that are referenced, the Compiles step will actually fail because you'll be introducing broken links)\n\nThe following files are not referenced in any markdown file:\n${UNUSED_FILES}\n\n" > issue_body.txt
+    curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      -H "Accept: application/vnd.github+json" \
+      "https://api.github.com/repos/your-username/your-repo/issues" \
+      -d "{\"title\": \"Unused Files Found\", \"body\": \"$(cat issue_body.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
