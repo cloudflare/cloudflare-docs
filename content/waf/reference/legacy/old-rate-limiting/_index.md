@@ -127,9 +127,12 @@ Rule mitigations consist of mitigation action and ban duration.
 Rate limit actions are based on the domain plan as mentioned in [Availability](#availability):
 
 - **Block**: Cloudflare issues an `HTTP 429` error when the threshold is exceeded.
-- **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **JS Challenge**: Visitor must pass a Cloudflare JavaScript Challenge. If passed, Cloudflare allows the request.
+- **Managed Challenge (recommended)**: Visitor must pass a challenge dynamically chosen by Cloudflare based on the characteristics of the request. If passed, Cloudflare allows the request.
+- **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **Log**: Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
+
+For more information on challenge actions, refer to [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/).
 
 #### Ban duration
 
