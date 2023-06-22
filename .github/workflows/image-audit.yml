@@ -1,0 +1,33 @@
+name: File Check
+
+on:
+  push:
+    branches:
+      - production  # Adjust the branch name as needed
+
+jobs:
+  file-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Find Unused Files
+        run: |
+          # Find all .png and .svg files
+          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \))
+          
+          # Check if files are referenced in any markdown file
+          UNUSED_FILES=""
+          for FILE in $FILES; do
+            if ! grep -q -r -F --exclude-dir=.github "$FILE" --include="*.md" .; then
+              UNUSED_FILES+="$FILE\n"
+            fi
+          done
+          
+          # If there are unused files, fail the workflow and display them
+          if [ -n "$UNUSED_FILES" ]; then
+            echo -e "The following files are not referenced in any markdown file:\n$UNUSED_FILES"
+            exit 1
+          fi
