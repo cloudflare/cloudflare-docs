@@ -1,4 +1,4 @@
-name: File Check
+name: Image audit
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: "0 0 1 * *"
 
 jobs:
-  file-check:
+  image-audit:
     runs-on: ubuntu-latest
 
     steps:
