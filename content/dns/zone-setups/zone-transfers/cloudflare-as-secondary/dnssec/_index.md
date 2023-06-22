@@ -6,9 +6,9 @@ meta:
     title: DNSSEC for Secondary DNS
 ---
 
-# Use DNSSEC with incoming zone transfers
+# DNSSEC for incoming zone transfers
 
-If you want [DNSSEC](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) available for your secondary zone, you will need one of the following setups (reach out to your account team for more details):
+[DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to also enable DNSSEC for records served by Cloudflare.
 
 - **Hidden primary**: Since Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries, Cloudflare can sign records on the fly.
 - **Pre-signed zones**: If your primary DNS provider signs records and transfers out the signatures, Cloudflare serves records and DNSSEC signatures as is without doing any signing. Cloudflare only supports NSEC records (and not NSEC3 records) and this setup does not support [Secondary Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/).
