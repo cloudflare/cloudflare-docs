@@ -216,6 +216,8 @@ The filter field has limits of approximately 30 operators and 1000 bytes. Anythi
 
 ## Logical Operators
 
+- Logical operators are optional, but if used, it must contain the `where` key.
+
 - Filters can be connected using `AND`, `OR` logical operators.
 
 - Logical operators can be nested.
