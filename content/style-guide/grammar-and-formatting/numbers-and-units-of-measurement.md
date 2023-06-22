@@ -71,7 +71,7 @@ In general, only abbreviate units of measurements when they modify specific quan
 |Bit (b)|Typical RSA key sizes are 1,024 or 2,048 or 4,096 **bits**.|
 |Byte (B)|Here is a small program that creates a lot of garbage. Once a second it asks for a byte array of between 5,000,000 and 10,000,000 **bytes**.|
 |Kilobyte (KB)|Internally, ACME never stores objects that are larger than a configured size (32 **kilobytes**, by default). Many CPU architectures either do not allow execution of the machine code, which is unaligned in memory (4 **KB** for x86 systems).|
-|Megabyte (MB)|To do that, we extracted one batch of records from ACME and ran some benchmarks on it. All batches are around 1 **MB** uncompressed, 600 records in each on average. Additionally, we had a two **megabyte** maximum size for values. We’ve increased the limit for values to ten **megabytes**.|
+|Megabyte (MB)|To do that, we extracted one batch of records from ACME and ran some benchmarks on it. All batches are around 1 **MB** uncompressed, 600 records in each on average. Additionally, we had a two **megabyte** maximum size for values. We have increased the limit for values to ten **megabytes**.|
 |Gigabyte (GB)|Pro plans will be able to use up to 5 **gigabytes** for free each month. Biz plans can go up to 10 **GB** for free.|
 |Terabyte (TB)|Fortunately, I came across Cloudflare. In the month of October alone, CloudFlare has saved us about 1.54 **TB**. That is 500 **terabytes**, 500 million **megabytes**, or approximately the equivalent data contained in 1 billion books.|
 |Petabyte (PB)| PB|

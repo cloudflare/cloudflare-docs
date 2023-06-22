@@ -25,7 +25,7 @@ Each product, service, and feature should be properly spelled and capitalized wh
 **When to waiting room(s) lower-case and in singular or plural:**
 + Used as an object: *Your waiting room will begin queueing all visitors and will not allow any visitors to the path protected by your waiting room.*
 + Capitalize only the first word when at the beginning of a sentence:  *Waiting rooms are enabled on all subpaths, meaning you might be sending more traffic to your waiting room than anticipated.*
-+ Capitalize only the first word when it’s the title of a subsection: *### Waiting room template*
++ Capitalize only the first word when it is the title of a subsection: *### Waiting room template*
 
 ## Common capitalization conventions
 

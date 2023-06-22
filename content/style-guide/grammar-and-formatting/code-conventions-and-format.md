@@ -11,7 +11,7 @@ Use the conventions described below throughout Cloudflare product content.
 
 Use angle brackets as a placeholder for variables you want the user to enter (except in URLs, where you should use curly braces for placeholders).
 
-For example:
+Example:
 
 Type your user-specified domain in this format: `https://<user-specified domain>.cloudflare.com`
 
@@ -27,7 +27,7 @@ Angle brackets that contain numbers separated by an ellipsis represent a range o
 
 Square brackets enclose optional items.
 
-For example:
+Example:
 
 Specify a subsearch that starts with this search command: ``` tag=dns query [search tag=malware]. ```
 

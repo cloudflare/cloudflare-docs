@@ -5,7 +5,7 @@ title: Abbreviations
 
 # Abbreviations
 
-Abbreviations include acronyms, initialisms, shortened words, and contractions (in most contexts, the technical distinction between acronyms and initialisms isn’t relevant; it’s fine to use the word *acronym* to refer to both).
+Abbreviations include acronyms, initialisms, shortened words, and contractions (in most contexts, the technical distinction between acronyms and initialisms is not relevant; it is fine to use the word *acronym* to refer to both).
 
 ## Long and short versions of a word
 
