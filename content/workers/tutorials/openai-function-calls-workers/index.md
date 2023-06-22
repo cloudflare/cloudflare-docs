@@ -50,7 +50,7 @@ Inside of your new `openai-function-calling-workers` directory, `src/worker.js` 
 
 You will also need a OpenAI account and API key for this tutorial. If you do not have one, [create a new OpenAI account](https://platform.openai.com/signup) and [create an API key](https://platform.openai.com/account/api-keys) to continue with this tutorial. Make sure to store you API key somewhere safe so you can use it later.
 
-## Making a request to OpenAI
+## Make a request to OpenAI
 
 With your local environment set up, we'll start by making our first request to OpenAI. We'll be using the OpenAI node library to interact with the OpenAI API. In addition, we'll be using with the axios-fetch adapter to allow us to use OpenAI's node library on the edge. You can install them both with `npm`:
 ```sh
