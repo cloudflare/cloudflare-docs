@@ -973,13 +973,43 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 **VLAN0010 (`10.1.10.0/24`) via tunnel.2**
 
+| Name                       | Option           | Value                         |
+| -------------------------- | ---------------- | ----------------------------- |
+| `Magic_WAN_VLAN0010_Tun02` | Destination      | _VLAN0010_10-1-10-0--24_      |
+|                            | Inteface         | _tunnel.2_                    |
+|                            | Next hop         | _IP Address_                  |
+|                            |                  | _CF_MWAN_IPsec_VTI_02_Remote_ |
+|                            | Metric           | `11`                          |
+|                            | Route Table      | _Unicast_                     |
+|                            | BFD Profile      | _Disable BFD_                 |
+
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
 
 **VLAN0020 (`10.1.20.0/24`) via tunnel.1**
 
+| Name                       | Option           | Value                         |
+| -------------------------- | ---------------- | ----------------------------- |
+| `Magic_WAN_VLAN0020_Tun01` | Destination      | _VLAN0020_10-1-10-0--24_      |
+|                            | Inteface         | _tunnel.1_                    |
+|                            | Next hop         | _IP Address_                  |
+|                            |                  | _CF_MWAN_IPsec_VTI_01_Remote_ |
+|                            | Metric           | `10`                          |
+|                            | Route Table      | _Unicast_                     |
+|                            | BFD Profile      | _Disable BFD_                 |
+
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
 
 **VLAN0020 (`10.1.20.0/24`) via tunnel.2**
+
+| Name                       | Option           | Value                         |
+| -------------------------- | ---------------- | ----------------------------- |
+| `Magic_WAN_VLAN0020_Tun02` | Destination      | _VLAN0020_10-1-10-0--24_      |
+|                            | Inteface         | _tunnel.2_                    |
+|                            | Next hop         | _IP Address_                  |
+|                            |                  | _CF_MWAN_IPsec_VTI_01_Remote_ |
+|                            | Metric           | `11`                          |
+|                            | Route Table      | _Unicast_                     |
+|                            | BFD Profile      | _Disable BFD_                 |
 
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
 
@@ -1021,11 +1051,11 @@ set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0
 
 ### Magic Health Checks
 
-Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random servers across Cloudflare's global anycast network. These ICMP probes are unique in that an ICMP reply packet is sent (as opposed to an ICMP Request).
+Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random servers across Cloudflare's global Anycast network. These ICMP probes are unique in that an ICMP reply packet is sent (as opposed to an ICMP Request).
 
 {{<Aside type="note">}}The construct of the security policies may seem counter-intuitive - this is due to the use of ICMP reply probes. As long as you adhere to the recommended policies in this documentation, the bi-directional health checks will work as expected.{{</Aside>}}
 
-Cloudflare Magic WAN customers must configure IPsec tunnels to use custom anycast IP addresses for the health check endpoints:
+Cloudflare Magic WAN customers must configure IPsec tunnels to use custom Anycast IP addresses for the health check endpoints:
 - **CF_Health_Check_Anycast_01**: `172.64.240.253`
 - **CF_Health_Check_Anycast_02**: `172.64.240.254`
 
@@ -1035,7 +1065,27 @@ You must define a rule to allow the ICMP reply probes as Palo Alto Networks Next
 
 {{<Aside type="note">}}Cloudflare health checks are sent from random servers across Cloudflare's global network and can originate from any addresses within the Cloudflare IPv4 address space represented by the **Cloudflare_IPv4_Static_Grp**.{{</Aside>}}
 
-Review the images below to learn what settings to use.
+**Setup via dashboard**
+
+{{<table-wrap>}}
+
+| Name                            | Option             | Value                                                              |
+| ------------------------------- | ------------------ | ------------------------------------------------------------------ |
+| `Cloudflare_Tunnel_Bidirect_HC` | Rule Type          | _universal (Default)_                                              |
+|                                 | Description        | `Permit bidirectional HCs`                                         |
+|                                 | Group Rules By Tag | _None_                                                             |
+| Source tab                      | Source zone        | **Cloudflare_L3_Zone**                                             |
+|                                 | Source address     | **CF_Health_Check_Anycast_01** <br> **CF_Health_Check_Anycast_02** |
+| Destination tab                 | Destination zone   | **Cloudflare_L3_Zone**                                             |
+|                                 | Destination address| **Cloudflare_IPv4_Static_grp**                                     |
+| Application tab                 | Applications       | **icmp** <br> **ping**                                             |
+| Actions tab                     | Action             | _Allow_                                                            |
+|                                 | Action setting     | **Log at Session End**                                             |
+|                                 | Profile type       | _None_                                                             |
+|                                 | Schedule           | _None_                                                             |
+|                                 | QoS Marking        | _None_                                                             |
+
+{{</table-wrap>}}
 
 ![Bidirectioanl Health Check Rule - General](/images/magic-wan/third-party/palo-alto/panw_security_rules/01_bidirect_hc_general.png)
 ![Bidirectioanl Health Check Rule - Source](/images/magic-wan/third-party/palo-alto/panw_security_rules/02_bidirect_hc_source.png)
@@ -1044,7 +1094,7 @@ Review the images below to learn what settings to use.
 ![Bidirectioanl Health Check Rule - Service/URL Category](/images/magic-wan/third-party/palo-alto/panw_security_rules/05_bidirect_hc_service-url.png)
 ![Bidirectioanl Health Check Rule - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/06_bidirect_hc_action.png)
 
-You can also configure these settings via the command line:
+**Setup via command line**
 
 ```bash
 set rulebase security rules Cloudflare_Tunnel_Bidirect_HC to Cloudflare_L3_Zone
@@ -1076,18 +1126,55 @@ Ensure have the following:
 - **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
 - **Application**: `icmp` and `ping`
 
+**Set up via dashboard tunnel.1**
+
+{{<table-wrap>}}
+
+| Name                             | Option              | Value                          |
+| -------------------------------- | ------------------  | ------------------------       |
+| `PBF_Cloudflare_Health_Check_01` | Tags                | _Cloudflare_L3_Zone_           |
+|                                  | Group Rules By Tag  | _None_                         |
+| Source tab                       | Type                | _Zone_                         |
+|                                  | Zone                | **Cloudflare_L3_Zone**         |
+|                                  | Source Address      | **CF_Health_Check_Anycast_01** |
+| Destination/Application tab      | Destination Address | **Cloudflare_IPv4_Static_grp** |
+| Forwarding tab                   | Action              | _Forward_                      |
+|                                  | Egress interface    | _tunnel.1_                     |
+|                                  | Next Hop            | _IP Address_                   |
+|                                  |                     | _CF_MWAN_IPsec_VTI_01_Remote_  |
+
+{{</table-wrap>}}
+
 ![Bidirectional Health Checks via tunnel.1 - General](/images/magic-wan/third-party/palo-alto/panw_pbf/01_pbf_hc_01_general.png)
 ![Bidirectional Health Checks via tunnel.1 - Source](/images/magic-wan/third-party/palo-alto/panw_pbf/02_pbf_hc_01_source.png)
 ![Bidirectional Health Checks via tunnel.1 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/03_pbf_hc_01_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/04_pbf_hc_01_forwarding.png)
+
+**Set up via dashboard tunnel.2**
+
+{{<table-wrap>}}
+
+| Name                             | Option              | Value                          |
+| -------------------------------- | ------------------- | ------------------------       |
+| `PBF_Cloudflare_Health_Check_02` | Tags                | _Cloudflare_L3_Zone_           |
+|                                  | Group Rules By Tag  | _None_                         |
+| Source tab                       | Type                | _Zone_                         |
+|                                  | Zone                | **Cloudflare_L3_Zone**         |
+|                                  | Source Address      | **CF_Health_Check_Anycast_02** |
+| Destination/Application tab      | Destination Address | **Cloudflare_IPv4_Static_grp** |
+| Forwarding tab                   | Action              | _Forward_                      |
+|                                  | Egress interface    | _tunnel.2_                     |
+|                                  | Next Hop            | _IP Address_                   |
+|                                  |                     | _CF_MWAN_IPsec_VTI_02_Remote_  |
+
+{{</table-wrap>}}
+
 ![Bidirectional Health Checks via tunnel.2 - General](/images/magic-wan/third-party/palo-alto/panw_pbf/05_pbf_hc_02_general.png)
 ![Bidirectional Health Checks via tunnel.2 - Source](/images/magic-wan/third-party/palo-alto/panw_pbf/06_pbf_hc_02_source.png)
 ![Bidirectional Health Checks via tunnel.2 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/07_pbf_hc_02_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.2 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/08_pbf_hc_02_forwarding.png)
 
-You can also configure these settings via command line:
-
-**Tunnel 01**
+**Set up via command line tunnel.1**
 
 ```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
@@ -1102,7 +1189,7 @@ set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 service any
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 tag Cloudflare_L3_Zone
 ```
 
-**Tunnel 02**
+**Set up via command line tunnel.2**
 
 ```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
@@ -1133,17 +1220,17 @@ rule eq Cloudflare_Tunnel_Bidirect_HC
 
 If you do not see any traffic matching the filter, replace the filter with one that displays log entries based on the addresses associated with the `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02` Address objects.
 
-**Filter by health check anycast IPs**
+**Filter by health check Anycast IPs**
 
 ```bash
 ( addr.src in 172.64.240.253 ) or ( addr.src in 172.64.240.254 )
 ```
 
-![Bidirectional health check logging - filter by health check anycast IPs](/images/magic-wan/third-party/palo-alto/panw_logging/01_logging_tunnel_hc_filter_ip.png)
+![Bidirectional health check logging - filter by health check Anycast IPs](/images/magic-wan/third-party/palo-alto/panw_logging/01_logging_tunnel_hc_filter_ip.png)
 
 #### Policy-based forwarding
 
-Troubleshooting policy-based dorwarding can be a bit challenging. The ideal way to determine if traffic is flowing through the intended path is to select the detailed view for a log entry.
+Troubleshooting policy-based forwarding can be a bit challenging. The ideal way to determine if traffic is flowing through the intended path is to select the detailed view for a log entry.
 
 1. Select the magnifying glass next to one of the log entries with source IP address `172.64.240.253`.
 
@@ -1157,7 +1244,7 @@ Troubleshooting policy-based dorwarding can be a bit challenging. The ideal way 
 
 ![Bidirectional Health Check Logging - tunnel.2](/images/magic-wan/third-party/palo-alto/panw_logging/04_logging_tunnel_hc_tun02.png)
 
-If the traffic is not ingressing/egressing the same interface, you likely have an issue with the policy-based forwaring rule(s) not matching.
+If the traffic is not ingressing/egressing the same interface, you likely have an issue with the policy-based forwarding rule(s) not matching.
 
 ### Security Policies - Production Traffic
 
@@ -1174,6 +1261,8 @@ Rules must be defined to facilitate traffic from the trust network to the Magic 
 - From Magic WAN protected sites to Trust
 
 **Trust to Magic WAN**
+
+
 
 ![Trust to Magic WAN - General](/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
 ![Trust to Magic WAN - Source](/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
