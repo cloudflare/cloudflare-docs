@@ -10,22 +10,22 @@ pcx_content_type: get-started
 
 This guide will instruct you through:
 
-* Writing a class that defines a Durable Object.
-* Instantiating and communicationg with a Durable Object from another Worker via the Fetch API.
-* Uploading the Durable Object and Worker to Cloudflare's servers using Wrangler. 
+- Writing a class that defines a Durable Object.
+- Instantiating and communicationg with a Durable Object from another Worker via the Fetch API.
+- Uploading the Durable Object and Worker to Cloudflare's servers using Wrangler. 
 
-This guide assumes you already have a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+This guide assumes you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](/fundamentals/account-and-billing/account-setup/create-account/) before continuining.
 
-## 1. Enable Durable Objects
+## Prerequisites
 
 You can enable Durable Objects for your account by purchasing Workers paid plan.
 
- 1. Log in to [the Cloudflare dashboard](https://dash.cloudflare.com/).
+ 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
  2. Go to **Workers & Pages** and in **Overview**, select your Worker. 
  3. In your Worker, scroll down to **Durable Objects** > **Learn more** > **View Paid Plan**.
  4. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
- ## 2. Write a class that defines a Durable Object
+ ## 1. Write a class that defines a Durable Object
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
@@ -39,7 +39,7 @@ export class DurableObjectExample {
 
 Note this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
-Workers communicate with a Durable Object via the Fetch API. Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The difference is that for Durable Objects the fetch handler is defined as a method on the class.
+Workers communicate with a Durable Object via the [Fetch API](/workers/runtime-apis/fetch/). Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
 
 ```js
 export class DurableObjectExample {
@@ -59,11 +59,13 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 {{</Aside>}}
 
-## 3. Instantiate and communicate with a Durable Object
+## 2. Instantiate and communicate with a Durable Object
 
-Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings work similarly to KV bindings and must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
+Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. 
 
-A binding is defined in the `wrangler.toml` file of your Worker project’s directory.
+This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings work similarly to KV bindings and must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
+
+You can define a binding in the `wrangler.toml` file of your Worker project’s directory.
 
 {{<Aside type="note" header="What is a binding?">}}
 
@@ -73,13 +75,15 @@ You can declare a variable name in your `wrangler.toml` file that will be bound 
 
 {{</Aside>}}
 
-A Worker talks to a Durable Object through a stub object. The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` method sends HTTP [Requests](/workers/runtime-apis/request/) to the instance.
+A Worker talks to a Durable Object through a [stub](/durable-objects/learning/create-durable-objects/). 
 
-The fetch handler in the example below implements the Worker that talks to the Durable Object. Note that the fetch handler is written using a new kind of Workers syntax based on ES Modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the Service Worker syntax.
+The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` method sends HTTP [requests](/workers/runtime-apis/request/) to the instance.
+
+The fetch handler in the example below implements the Worker that communicates to the Durable Object. Note that the fetch handler is written using a new kind of Workers syntax based on ES Modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the Service Worker syntax.
 
 We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) for convenience, but it is not required.
 
-ES Modules differ from regular JavaScript files in that they have imports and exports. When [writing the class that defines a Durable Object](/durable-objects/get-started/#2-write-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when creating your class. To implement a fetch handler, export a method named `fetch()` in an `export default {}` block.
+ES Modules differ from regular JavaScript files in that they have imports and exports. For example, [to write a class that defines a Durable Object](/durable-objects/get-started/#2-write-a-class-that-defines-a-durable-object), you use `export class DurableObjectExample`. To implement a fetch handler, export a method named `fetch()` in an `export default {}` block.
 
 ### Example of the fetch handler implementation
 
@@ -125,19 +129,19 @@ export default {
 };
 ```
 
-Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/durable-objects/learning/access-durable-object-from-a-worker/).
+Refer to [Access a Durable Object from a Worker](/durable-objects/learning/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
 
 {{<Aside type="note" header="String-derived IDs versus system-generated IDs">}}
 
-In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. Refer to the [API reference documentation](/durable-objects/learning/access-durable-object-from-a-worker/) for more information.
+In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere to access the object again later. Refer to the [API reference documentation](/durable-objects/learning/access-durable-object-from-a-worker/) for more information.
 
 {{</Aside>}}
 
-## 4. Upload a Durable Object Worker
+## 3. Upload a Durable Object Worker
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
-You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-update/) in order to manage Durable Objects.
+You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-update/) to manage Durable Objects.
 
 {{</Aside>}}
 
@@ -151,16 +155,15 @@ $ wrangler dev
 
 The template will create a directory for your project with basic configuration and a single JavaScript source file already set up. Try the [Durable Objects Rollup ES Modules template](https://github.com/cloudflare/durable-objects-rollup-esm) if you want to use the ES modules, the [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm) if you want to use TypeScript, or the [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs) if you want to bundle external dependencies with your code using Rollup or Webpack.
 
-
 The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler publish`](/workers/wrangler/commands/) command.
 
 ### Specify the main module
 
 Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. Refer to the [modules section of the custom builds documentation](/workers/wrangler/custom-builds/) for more details.
 
-### Configure Durable Object bindings
+## 4. Configure Durable Object bindings
 
-Durable Objects bindings can be configured in `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
+You can configure Durable Objects bindings in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
 ```toml
 [durable_objects]
@@ -169,9 +172,8 @@ bindings = [
 ]
 ```
 
-The `[durable_objects]` section has one subsection:
+The `[durable_objects]` section has one subsection called `bindings`, an array of tables. Each table contains the following fields:
 
-- `bindings` - An array of tables, each table can contain the below fields.
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
   - `script_name` - Optional. Defaults to the current [environment's](/workers/platform/environments/) script.
@@ -187,7 +189,7 @@ durable_objects.bindings = [
 ]
 ```
 
-Because Wrangler [appends the environment name to the top-level name](/workers/platform/environments/#naming) when publishing, for a Worker named `worker-name` the above example is equivalent to:
+Because Wrangler appends the [environment name](/workers/platform/environments/#naming) to the top-level name when publishing, for a Worker named `worker-name` the above example is equivalent to:
 
 ```toml
 [env.staging]
@@ -196,7 +198,9 @@ durable_objects.bindings = [
 ]
 ```
 
-Note that `"EXAMPLE_CLASS"` in the staging environment is bound to a different script name compared to the top-level `"EXAMPLE_CLASS"` binding, and will therefore access different objects with different persistent storage. If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
+`"EXAMPLE_CLASS"` in the staging environment is bound to a different script name compared to the top-level `"EXAMPLE_CLASS"` binding, and will therefore access different objects with different persistent storage. 
+
+If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
 
 ```toml
 [env.another]
@@ -205,7 +209,7 @@ durable_objects.bindings = [
 ]
 ```
 
-### Configure Durable Object classes with migrations
+## 5. Configure Durable Object classes with migrations
 
 You must initiate a migration process when you create a new Durable Object class, rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
 
@@ -239,7 +243,9 @@ Running a delete migration will delete all Durable Object instances associated w
 
 ### Durable Object migrations in `wrangler.toml`
 
-Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. Migrations require a migration tag, which is defined by the `tag` property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. 
+
+Migrations require a migration tag, which is defined by the `tag` property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
@@ -298,7 +304,7 @@ The list of CLI migration arguments that can be added to `wrangler publish` is a
 --transfer-class <from script> <from class> <to class>
 ```
 
-## 5. Test your Durable Objects project
+## 6. Test your Durable Objects project
 
 If you copy the `DurableObjectExample` and fetch handler code from above into a generated Wrangler project, publish it using a `--new-class` migration, and make a request to it, you will notice that your request was stored in a Durable Object:
 
@@ -306,7 +312,5 @@ If you copy the `DurableObjectExample` and fetch handler code from above into a 
 $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.workers.dev/ --data "important data!"
 ***.***.***.*** stored important data!
 ```
-
-As you write Durable Objects, find more helpful details in the [Durable Objects](/durable-objects/) documentation.
 
 [Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.

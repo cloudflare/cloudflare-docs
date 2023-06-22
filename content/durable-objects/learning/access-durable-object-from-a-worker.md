@@ -16,13 +16,13 @@ Namespace bindings allow you to generate Object IDs and connect to Objects.
 let id = OBJECT_NAMESPACE.newUniqueId();
 ```
 
-The `newUniqueId()` method on a Durable Object namespace creates a new Object ID randomly. This method will never return the same ID twice, and thus, it is guaranteed that the Object does not yet exist and has never existed at the time the method returns.
+The `newUniqueId()` method on a Durable Object namespace creates a new Object ID randomly. `newUniqueId()` will never return the same ID twice, and thus, it is guaranteed that the Object does not yet exist and has never existed at the time the method returns.
 
-When generating an ID randomly, you need to store the ID somewhere to be able to reach the same object again in the future. For example, you can store the ID in Workers KV, in an external database, or in a cookie in the user's browser.
+When generating an ID randomly, you need to store the ID somewhere to reach the same Object again in the future. For example, you can store the ID in Workers KV, in an external database, or in a cookie in the user's browser.
 
-Unique IDs are unguessable, therefore, you can use unique IDs in URL-based access control.
+Unique IDs are unguessable. You can use unique IDs in URL-based access control.
 
-To store the ID in external storage, use its `toString()` method to convert it into a hexadecimal string and `OBJECT_NAMESPACE.idFromString()` to convert the string back into an ID later.
+To store the ID in external storage, use its `toString()` method to convert it into a hexadecimal string, and `OBJECT_NAMESPACE.idFromString()` to convert the string back into an ID later.
 
 {{<Aside type="note" header="Unique IDs perform best">}}
 

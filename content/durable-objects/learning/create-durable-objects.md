@@ -8,9 +8,13 @@ weight: 16
 
 A Durable Object is a client object used to send requests to a remote Durable Object.
 
-A Durable Object is created using `OBJECT_NAMESPACE.get(id)`.
+`OBJECT_NAMESPACE.get(id)` creates a Durable Object.
 
-Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. However, due to random network disruptions or other transient issues, an Object may become disconnected from its remote Object. A disconnected Object is a permanently broken stub. In this scenario, all in-flight calls and future calls will fail with exceptions. To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Object, keeping in mind that there are no ordering guarantees between requests to the new Object versus the old one. If ordering is not a concern, you can create a new Object for every request.
+Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. 
+
+However, due to random network disruptions or other transient issues, an Object may become disconnected from its remote Object. A disconnected Object is a permanently broken Object. In this scenario, all in-flight calls and future calls will fail with exceptions. 
+
+To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Object, keeping in mind that there are no ordering guarantees between requests to the new Object compared to the old one. If ordering is not a concern, you can create a new Object for every request.
 
 {{<Aside type="note" header="E-order">}}
 
@@ -31,13 +35,13 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 - `id` {{<type>}}DurableObjectId{{</type>}}
   - An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this namespace.
 
+  - This method constructs an Object, which is a local client that provides access to a remote Durable Object.
+
+  - If the remote Object does not already exist, it will be created. Thus, there will always be an Object accessible from the stub.
+
+  - This method always returns the Object immediately, before it has connected to the remote Object. This allows you to begin making requests to the Object right away, without waiting for a network round trip.
+
 {{</definitions>}}
-
-This method constructs an Object, which is a local client that provides access to a remote Durable Object.
-
-If the remote Object does not already exist, it will be created. Thus, there will always be an Object accessible from the stub.
-
-This method always returns the stub immediately, before it has connected to the remote object. This allows you to begin making requests to the object right away, without waiting for a network round trip.
 
 ## Provide a location hint
 
@@ -49,7 +53,7 @@ To manually create Durable Objects in another location, provide an optional `loc
 let durableObjectStub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
 ```
 
-The following `locationHint` are supported. Hints are a best effort and not a guarantee. Durable Objects do not currently run in all of the locations below. The closest nearby region will be used until those locations are fully supported.
+The following locations are supported. Hints are a best effort and not a guarantee. Durable Objects do not currently run in all of the locations below. The closest nearby region will be used until those locations are fully supported.
 
 | Location Hint Parameter  | Location              |
 | ------------------------ | --------------------- |
@@ -65,15 +69,17 @@ The following `locationHint` are supported. Hints are a best effort and not a gu
 
 <sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
 
-## Restrict objects to a jurisdiction
+## Restrict Durable Objects to a jurisdiction
 
-Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). To use a jurisdiction, first create a jursidictional subnamespace:
+Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). 
+
+To use a jurisdiction, first create a jursidictional subnamespace:
 
 ```js
 let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');
 ```
 
-A jurisdictional subnamespace works exactly like a normal Durable Object namespace (`OBJECT_NAMESPACE` above), except that IDs created within them permanently encode the jurisdiction that was used to create the subnamespace. Additionally, the `idFromString` and `get` methods will throw an exception if the IDs passed into them are not within the subnamespace's jurisdiction. Once you have a subnamespace you can use all of the namespace methods documented above.
+A jurisdictional subnamespace works like a normal Durable Object namespace (`OBJECT_NAMESPACE` above), except that IDs created within them permanently encode the jurisdiction that was used to create the subnamespace. Additionally, the `idFromString` and `get` methods will throw an exception if the IDs passed into them are not within the subnamespace's jurisdiction. Once you have a subnamespace you can use all of the namespace methods documented above.
 
 To create a new Object ID that will only run and persist data within the jurisdiction:
 
@@ -136,9 +142,13 @@ let response = await durableObjectStub.fetch(request);
 let response = await durableObjectStub.fetch(url, options);
 ```
 
-The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the stub points.
+The `fetch()` method of a stub has the exact same signature as the global [`fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the Object points.
 
-Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be propagated to the caller's `fetch()` promise. Furthermore, if an uncaught exception is thrown by the Durable Object's `fetch()` handler, then the exception propagated to the caller's `fetch()` promise will include a property `.remote`, which will be set to `True`. If the caller's `fetch()` failed as a result of being unable to reach the Durable Object, the exception thrown to the caller's `fetch()` will not have the `.remote` property, indicating the exception was not generated remotely.
+Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be propagated to the caller's `fetch()` promise. 
+
+If an uncaught exception is thrown by the Durable Object's `fetch()` handler, then the exception propagated to the caller's `fetch()` promise will include a `.remote` property, which will be set to `True`. 
+
+If the caller's `fetch()` failed as a result of being unable to reach the Durable Object, the exception thrown to the caller's `fetch()` will not have the `.remote` property, indicating the exception was not generated remotely.
 
 ## List Durable Objects
 
