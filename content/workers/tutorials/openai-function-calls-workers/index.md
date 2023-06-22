@@ -102,7 +102,7 @@ For local development, we'll also want to place this value in our `.dev.vars` fi
 OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 ```
 
-Now, we'll make our request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) with our functions argument to indicate that we're enabling [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with this request.
+Now, make your request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) with your functions argument to indicate that you are enabling [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with this request.
 ```js
 try{
   const chatCompletion = await openai.createChatCompletion({
