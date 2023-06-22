@@ -116,4 +116,8 @@ To deploy a custom root certificate:
 
 Once `binding_status` changes to `active`, Gateway will sign your traffic using the custom root certificate and private key. If you disable the custom certificate, Gateway will revert to the default Cloudflare certificate.
 
-If Gateway presents an **HTTP Response Code: 526** after deploying your custom certificate, you can [troubleshoot errors](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website).
+{{<Aside type="note" header="Troubleshooting">}}
+
+If Gateway presents an **HTTP Response Code: 526** after deploying your custom certificate, you can [troubleshoot errors with our FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website).
+
+{{</Aside>}}
