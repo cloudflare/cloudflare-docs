@@ -15,6 +15,9 @@ meta:
     needed—all without needing to learn the Cloudflare APIs
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: true 
 
 externals:
   - title: GitHub @cloudflare/terraform-provider-cloudflare

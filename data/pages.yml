@@ -12,6 +12,9 @@ meta:
     static and JAMstack sites
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: true 
 
 resources:
   community: https://community.cloudflare.com/c/developers/cloudflare-pages/69

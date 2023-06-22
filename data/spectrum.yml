@@ -12,6 +12,9 @@ meta:
   description: DDoS protection for everything.
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: true 
 
 resources:
   community: https://community.cloudflare.com/c/website-application-performance/spectrum/48

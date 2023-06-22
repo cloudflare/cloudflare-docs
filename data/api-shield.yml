@@ -12,7 +12,10 @@ meta:
   description: Protect your APIs from simple and sophisticated attacks using
     Cloudflare API Shield products.
   author: '@cloudflare'
-  
+
+pcx_reporting:
+  active: true
+  full_content_strategy: true
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield

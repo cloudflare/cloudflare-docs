@@ -12,6 +12,10 @@ meta:
   description: Control and interact with a headless browser instance programmatically.
   author: '@cloudflare'
 
+pcx_reporting:
+  active: true
+  full_content_strategy: false
+
 resources:
   community: https://community.cloudflare.com/tag/browser-rendering
 

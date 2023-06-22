@@ -11,6 +11,10 @@ meta:
   description: Stop brand impersonation.
   author: '@cloudflare'
  
+pcx_reporting:
+  active: true
+  full_content_strategy: false
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

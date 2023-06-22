@@ -12,6 +12,9 @@ meta:
     loading speed and security of your website.
   author: '@cloudflare'
   
+pcx_reporting:
+  active: false
+  full_content_strategy: true 
 
 resources:
   community: https://community.cloudflare.com/c/developers/zaraz/67

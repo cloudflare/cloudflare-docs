@@ -15,6 +15,9 @@ meta:
     aggregated for your account.
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: true
 
 externals:
   - title: Cloudflare homepage

@@ -13,6 +13,9 @@ meta:
     download times.
   author: '@cloudflare'
   
+pcx_reporting:
+  active: false
+  full_content_strategy: false 
 
 externals:
   - title: Cloudflare homepage

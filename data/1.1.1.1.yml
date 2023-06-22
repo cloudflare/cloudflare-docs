@@ -10,7 +10,10 @@ meta:
   title: Cloudflare 1.1.1.1 docs
   description: A blazing fast DNS resolver built for private browsing.
   author: '@cloudflare'
-  
+
+pcx_reporting:
+  active: false
+  full_content_strategy: true
 
 resources:
   community: https://community.cloudflare.com/c/reliability/dns-1111/47

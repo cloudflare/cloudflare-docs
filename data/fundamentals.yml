@@ -13,6 +13,9 @@ meta:
     span Cloudflare products.
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: true
 
 externals:
   - title: How Cloudflare works

@@ -12,6 +12,9 @@ meta:
     managed DNS platform to meet your needs.
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: true
 
 resources:
   community: https://community.cloudflare.com/tags/c/reliability/7/none

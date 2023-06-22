@@ -10,7 +10,10 @@ meta:
   title: Cloudflare Queues
   description: Reliably send and receive messages without the egress fees.
   author: "@cloudflare"
-  
+
+pcx_reporting:
+  active: true
+  full_content_strategy: true   
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40

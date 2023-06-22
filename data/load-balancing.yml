@@ -13,6 +13,9 @@ meta:
     health, and apply geographic control with Cloudflare Load Balancing
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: true
 
 resources:
   community: https://community.cloudflare.com/tag/loadbalancing

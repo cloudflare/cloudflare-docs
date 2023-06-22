@@ -11,6 +11,9 @@ meta:
   description: Learning paths guide you through modules and projects so you can get started with Cloudflare as quickly as possible.
   author: '@cloudflare'
   
+pcx_reporting:
+  active: true
+  full_content_strategy: false
 
 externals:
   - title: All learning paths
