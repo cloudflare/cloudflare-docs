@@ -222,7 +222,7 @@ This one will look very similar to our first, but this time instead of passing t
 
 Run your code again by running `npx wrangler dev` and open it in your browser. This will now show you OpenAI's response using real-time information from the website. You can try other websites and topics by updating the user's message in your two API calls.
 
-## What's next?
+## Next steps
 
 If you want to deploy your application, you can run the `npx wrangler publish` command to deploy your Workers script:
 
