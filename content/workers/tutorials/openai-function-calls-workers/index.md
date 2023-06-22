@@ -31,7 +31,7 @@ Start by using `npm create cloudflare` to create a Worker project in the command
 ---
 header: Create a project
 ---
-$ npm create cloudflare
+$ npm create cloudflare@latest
 ```
 
 For setup you'll select the following options:
