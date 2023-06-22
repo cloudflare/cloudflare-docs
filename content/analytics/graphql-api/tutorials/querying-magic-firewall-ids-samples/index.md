@@ -7,7 +7,7 @@ title: Querying Magic Firewall Intrusion Detection System (IDS) samples with Gra
 
 In this example, we are going to use the GraphQL Analytics API to query for IDS Samples over a specified time period.
 
-The following API call will request IDS Samples over a one hour period, and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your account tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
+The following API call will request IDS samples over a one hour period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>`, `<CLOUDFLARE_EMAIL>`, and `<CLOUDFLARE_API_KEY>` with your account tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
 
 ## API Call
 
