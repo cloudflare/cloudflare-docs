@@ -1,5 +1,5 @@
 ---
-title: Security reports
+title: Security reports (beta)
 pcx_content_type: concept
 weight: 5
 meta:
