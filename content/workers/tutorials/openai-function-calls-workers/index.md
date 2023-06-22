@@ -224,7 +224,7 @@ Run your code again by running `npx wrangler dev` and open it in your browser. T
 
 ## Next steps
 
-If you want to deploy your application, you can run the `npx wrangler publish` command to deploy your Workers script:
+To deploy your application, run the `npx wrangler deploy` command to deploy your Worker application:
 
 ```sh
 $ npx wrangler deploy
