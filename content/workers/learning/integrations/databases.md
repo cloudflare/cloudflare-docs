@@ -169,7 +169,7 @@ To learn more about PlanetScale, refer to [Planetscale's official documentation]
 
 6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.
 
-    ```sql 
+    ```js 
     import { createClient } from '@supabase/supabase-js';
 
     export default {
@@ -237,7 +237,7 @@ To learn more about Supabase, refer to [Supabase's official documentation](https
 
 6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been automatically added as secrets to your Worker through the integration.
 
-    ```sql 
+    ```js 
     import { Client } from '@neondatabase/serverless';
 
     export default {
@@ -253,6 +253,67 @@ To learn more about Supabase, refer to [Supabase's official documentation](https
     ```
 
 To learn more about Neon, refer to [Neon's official documentation](https://neon.tech/docs/introduction).
+
+### Upstash
+
+[Upstash](https://upstash.com/) is a serverless database with Redis API. It aims to simplify the process of building and scaling real-time applications by providing a serverless database infrastructure.
+
+1. To set up an integration with Upstash, you to have an existing Upstash database to connect to. [Create a Upstash database](https://docs.upstash.com/redis#create-a-database) or [load data from an existing database to Upstash](https://docs.upstash.com/redis/howto/connectclient).
+
+2. Insert some data to your Upstash database. You can add data to your Upstash database in two ways:
+  - Use the CLI directy from your Upstash console
+  - Alternatively, install `redis-cli` locally and run the following commands. 
+
+  ```sh
+  ➜ set GB "Ey up?"
+  OK
+  ➜
+  set US "Yo, what’s up?"
+  OK
+  ➜
+  set NL "Hoi, hoe gaat het?"
+  OK
+  ➜
+  set DE "Was ist los?"
+  OK
+  ```
+
+3. Add the Upstash database integration to your Worker:
+    - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    - In **Account Home**, select **Workers & Pages**.
+    - In **Overview**, select your Worker.
+    - Select **Settings** > **Integrations** > **Upstash**. 
+    - Follow the setup flow, selecting the database created in step 1.
+
+4. In your Worker, install the `@upstash/redis`, a HTTP client to connect to your database and start manipulating data:
+
+    ```
+    npm install @upstash/redis
+    ```
+
+5. The following example shows how to make a query to your Upstash database in a Worker. The credentials needed to connect to Upstash have been automatically added as secrets to your Worker through the integration.
+
+  ```
+  import { Redis } from "@upstash/redis/cloudflare";
+
+  export default {
+    async fetch(request, env) {
+      const redis = Redis.fromEnv(env);
+
+      const country = request.headers.get("cf-ipcountry");
+      if (country) {
+        const greeting = await redis.get(country);
+        if (greeting) {
+          return new Response(greeting);
+        }
+      }
+
+      return new Response("Hello!");
+    },
+  };
+  ```
+
+To learn more about Upstash, refer to [Upstash's official documentation](https://docs.upstash.com/redis).
 
 ### FAQs
 
