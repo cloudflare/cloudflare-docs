@@ -107,7 +107,7 @@ query{
 
 Use the example below to display the total number of packets and bits for the top 10 traffic streams that MFW IDS has detected in the last hour.
 
-By setting verdict to drop and outcome as pass, we are filtering for traffic that was marked as a detection (i.e. verdict was drop) but was not dropped (i.e. outcome was pass). This is because currently, MFW IDS only detects malicious traffic but does NOT drop the traffic.
+By setting `verdict` to `drop` and `outcome` as `pass`, we are filtering for traffic that was marked as a detection (i.e. verdict was drop) but was not dropped (for example, outcome was `pass`). This is because currently, Magic Firewall IDS only detects malicious traffic but does not drop the traffic.
 
 For each stream, display the:
 
