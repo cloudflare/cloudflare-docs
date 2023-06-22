@@ -84,7 +84,7 @@ To visualize and discover potential issues with DNSSEC:
 
 Below is an example of how dnsviz.net will display incorrect delegation when no valid DNSKEY records are provided by the authoritative nameserver to match the DS record published by the TLD nameserver: 
 
-![Incorrect delegation when no valid DNSKEY records are provided](/support/static/troubleshoot_dnssec-example_no_rrsig.png)
+![Incorrect delegation when no valid DNSKEY records are provided](/images/support/troubleshoot_dnssec-example_no_rrsig.png)
 
 ___
 
