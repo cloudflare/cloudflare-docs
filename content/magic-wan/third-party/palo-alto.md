@@ -388,30 +388,30 @@ Review the images below for more information.
 
 #### Set up via dashboard
 
-##### `tunnel.1` - Cloudflare_L3_Zone
+##### tunnel.1 - `Cloudflare_L3_Zone`
 
 | Name              | Option              | Value                                            |
 | ----------------- | ------------------- | ------------------------------------------------ |
 | **tunnel.1**      | Netflow Profile     | _None_                                           |
-| **Config**        | Virtual Router      | _default_                                        |
+| **Config tab**    | Virtual Router      | _default_                                        |
 |                   | Security Zone       | _Cloudflare_L3_Zone_                             |
-| **IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_01_Local` <br> address object |
-| **Advanced**      | Management Profile  | _Allow_Ping_                                     |
+| **IPv4 tab**      | IP                  | `CF_MWAN_IPsec_VTI_01_Local` <br> address object |
+| **Advanced tab**  | Management Profile  | _Allow_Ping_                                     |
 |                   | MTU                 | `1450`                                           |
 
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
 
-##### tunnel.2 - Cloudflare_L3_Zone
+##### tunnel.2 - `Cloudflare_L3_Zone`
 
 | Name              | Option              | Value                                            |
 | ----------------- | ------------------- | ------------------------------------------------ |
 | **tunnel.2**      | Netflow Profile     | _None_                                           |
-| **Config**        | Virtual Router      | _default_                                        |
+| **Config tab**    | Virtual Router      | _default_                                        |
 |                   | Security Zone       | _Cloudflare_L3_Zone_                             |
-| **IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_02_Local` <br> address object |
-| **Advanced**      | Management Profile  | _Allow_Ping_                                     |
+| **IPv4 tab**      | IP                  | `CF_MWAN_IPsec_VTI_02_Local` <br> address object |
+| **Advanced tab**  | Management Profile  | _Allow_Ping_                                     |
 |                   | MTU                 | `1450`                                           |
 
 ![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
@@ -424,7 +424,7 @@ After setting up your Tunnel interfaces, they should show up on the overview pag
 
 #### Set up via command line
 
-You can also set up your Tunnels in the command line:
+You can also set up your tunnels in the command line:
 
 ```bash
 set network interface tunnel units tunnel.1 ip CF_MWAN_IPsec_VTI_01_Local
@@ -439,11 +439,11 @@ set network interface tunnel units tunnel.2 interface-management-profile Allow_P
 
 The Palo Alto Networks Next-Generation Firewall (NGFW) used to create this tutorial includes the following zones and corresponding network interfaces:
 
-| Zone               | Interface   | Interface |
-| ------------------ | ----------- | --------- |
-| Trust_L3_Zone      | ethernet1/1 |           |
-| Untrust_L3_Zone    | ethernet1/2 |           |
-| Cloudflare_L3_Zone | tunnel.1    | tunnel.2  |
+| Zone                 | Interface   | Interface |
+| -------------------- | ----------- | --------- |
+| `Trust_L3_Zone`      | ethernet1/1 |           |
+| `Untrust_L3_Zone`    | ethernet1/2 |           |
+| `Cloudflare_L3_Zone` | tunnel.1    | tunnel.2  |
 
 The tunnel interfaces are placed in a separate Zone to facilitate the configuration of more granular security policies. The use of any other zone for the tunnel interfaces will require adapting the configuration accordingly.
 
@@ -658,7 +658,7 @@ There are a few prerequisites you should be aware of before continuing:
 
 | Name                    | Option                   | Value |
 | ----------------------- | ------------------------ | --------------------- |
-| `CF_Magic_WAN_IPsec_01` | Tunnel interface         | `tunnel.1`            |
+| `CF_Magic_WAN_IPsec_01` | Tunnel interface         | tunnel.1            |
 |                         | IKE Gateway              | _CF_Magic_WAN_IKE_01_ |
 |                         | IPsec Crypto Profile     | _CF_IKE_Crypto_CBC_   |
 |                         | Enable Replay Protection | **Disable**           |
@@ -670,7 +670,7 @@ There are a few prerequisites you should be aware of before continuing:
 
 | Name                    | Option                   | Value                  |
 | ----------------------- | ------------------------ | ---------------------  |
-| `CF_Magic_WAN_IPsec_02` | Tunnel interface         | `tunnel.2`             |
+| `CF_Magic_WAN_IPsec_02` | Tunnel interface         | tunnel.2             |
 |                         | IKE Gateway              | _CF_Magic_WAN_IKE_02_  |
 |                         | IPsec Crypto Profile     | _CF_IKE_Crypto_CBC_    |
 |                         | Enable Replay Protection | **Disable**            |
@@ -985,7 +985,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
 
-##### VLAN0020 (`10.1.20.0/24`) via `tunnel.1`
+##### VLAN0020 (`10.1.20.0/24`) via tunnel.1
 
 | Name                       | Option           | Value                         |
 | -------------------------- | ---------------- | ----------------------------- |
@@ -999,7 +999,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
 
-##### VLAN0020 (`10.1.20.0/24`) via `tunnel.2`
+##### VLAN0020 (`10.1.20.0/24`) via tunnel.2
 
 | Name                       | Option           | Value                         |
 | -------------------------- | ---------------- | ----------------------------- |
@@ -1126,7 +1126,7 @@ Ensure have the following:
 - **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
 - **Application**: `icmp` and `ping`
 
-##### Set up via dashboard `tunnel.1`
+##### Set up via dashboard tunnel.1
 
 {{<table-wrap>}}
 
@@ -1150,7 +1150,7 @@ Ensure have the following:
 ![Bidirectional Health Checks via tunnel.1 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/03_pbf_hc_01_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/04_pbf_hc_01_forwarding.png)
 
-##### Set up via dashboard `tunnel.2`
+##### Set up via dashboard tunnel.2
 
 {{<table-wrap>}}
 
@@ -1174,7 +1174,7 @@ Ensure have the following:
 ![Bidirectional Health Checks via tunnel.2 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/07_pbf_hc_02_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.2 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/08_pbf_hc_02_forwarding.png)
 
-##### Set up via command line `tunnel.1`
+##### Set up via command line tunnel.1
 
 ```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
@@ -1189,7 +1189,7 @@ set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 service any
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 tag Cloudflare_L3_Zone
 ```
 
-##### Set up via command line `tunnel.2`
+##### Set up via command line tunnel.2
 
 ```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
@@ -1234,13 +1234,13 @@ Troubleshooting policy-based forwarding can be a bit challenging. The ideal way 
 
 1. Select the magnifying glass next to one of the log entries with source IP address `172.64.240.253`.
 
-2. Traffic originating from `CF_Health_Check_Anycast_01` (`172.64.240.253`) should ingress and egress interface `tunnel.1`.
+2. Traffic originating from `CF_Health_Check_Anycast_01` (`172.64.240.253`) should ingress and egress interface tunnel.1.
 
 ![Bidirectional Health Check Logging - tunnel.1](/images/magic-wan/third-party/palo-alto/panw_logging/03_logging_tunnel_hc_tun01.png)
 
 3. Select the magnifying glass next to one of the log entries with source IP address `172.64.240.254`.
 
-4. Traffic originating from `CF_Health_Check_Anycast_02` (`172.64.240.254`) should ingress and egress interface `tunnel.2`.
+4. Traffic originating from `CF_Health_Check_Anycast_02` (`172.64.240.254`) should ingress and egress interface tunnel.2.
 
 ![Bidirectional Health Check Logging - tunnel.2](/images/magic-wan/third-party/palo-alto/panw_logging/04_logging_tunnel_hc_tun02.png)
 
@@ -1354,9 +1354,9 @@ Policy-based forwarding rules are only required for egress traffic.
 
 Any traffic destined for Magic WAN protected sites or Magic WAN protected sites with Gateway egress must be routed across the IPsec tunnels.
 
-{{<Aside type="note">}}Security rules match traffic flows based on source and destination zone. Policy-based forwarding rules are applied per interface. Therefore, two policy-based forwarding rules are required for every one security rule - one for `tunnel.1` and one for `tunnel.2`.{{</Aside>}}
+{{<Aside type="note">}}Security rules match traffic flows based on source and destination zone. Policy-based forwarding rules are applied per interface. Therefore, two policy-based forwarding rules are required for every one security rule - one for tunnel.1 and one for tunnel.2.{{</Aside>}}
 
-#### Dashboard - policy-based forwarding - Magic WAN production traffic via `tunnel.1`
+#### Dashboard - policy-based forwarding - Magic WAN production traffic via tunnel.1
 
 {{<table-wrap>}}
 
@@ -1379,7 +1379,7 @@ Any traffic destined for Magic WAN protected sites or Magic WAN protected sites 
 ![PBF: Trust to Magic WAN via tunnel.1 - Destinations](/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
 ![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
 
-#### Command line - policy-based forwarding - Magic WAN production traffic via `tunnel.1`
+#### Command line - policy-based forwarding - Magic WAN production traffic via tunnel.1
 
 ```bash
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
@@ -1395,7 +1395,7 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 disabled no
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 ```
 
-#### Dashboard - policy-based forwarding - Magic WAN production traffic via `tunnel.2`
+#### Dashboard - policy-based forwarding - Magic WAN production traffic via tunnel.2
 
 {{<table-wrap>}}
 
@@ -1418,7 +1418,7 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 ![PBF: Trust to Magic WAN via tunnel.2 - Destinations](/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
 ![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
 
-#### Command line - policy-based dorwarding - `tunnel.2`
+#### Command line - policy-based dorwarding - tunnel.2
 
 ```bash
 set rulebase pbf rules PBF_Magic_WAN_Sites_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
@@ -1501,7 +1501,7 @@ set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow rule-type univers
 set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destination yes
 ```
 
-### Policy-based forwarding: Trust to Gateway egress via `tunnel.1`
+### Policy-based forwarding: Trust to Gateway egress via tunnel.1
 
 #### Dashboard
 
@@ -1540,7 +1540,7 @@ set rulebase pbf rules PBF_MWAN_Egress_01 disabled no
 set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
 ```
 
-### Policy-based forwarding: Trust to Gateway egress via `tunnel.2`
+### Policy-based forwarding: Trust to Gateway egress via tunnel.2
 
 #### Dashboard
 
