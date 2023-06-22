@@ -17,24 +17,24 @@ jobs:
         uses: actions/checkout@v2
 
        - name: Find Unused Files
-        id: find-files
-        run: |
-          # Find all .png and .svg files, excluding those in the ./static directory
-          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -not -path "./static/*")
-          
-          # Check if files are referenced in any markdown file
-          UNUSED_FILES=""
-          for FILE in $FILES; do
-            FILENAME=$(basename "$FILE")
-            if ! grep -q -r -F --exclude-dir=.github "$FILENAME" --include="*.md" .; then
-              UNUSED_FILES+="$FILE\n"
+         id: find-files
+         run: |
+            # Find all .png and .svg files, excluding those in the ./static directory
+            FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -not -path "./static/*")
+            
+            # Check if files are referenced in any markdown file
+            UNUSED_FILES=""
+            for FILE in $FILES; do
+              FILENAME=$(basename "$FILE")
+              if ! grep -q -r -F --exclude-dir=.github "$FILENAME" --include="*.md" .; then
+                UNUSED_FILES+="$FILE\n"
+              fi
+            done
+            
+            # If there are unused files, output them
+            if [ -n "$UNUSED_FILES" ]; then
+              echo "::set-output name=unused_files::$UNUSED_FILES"
             fi
-          done
-          
-          # If there are unused files, output them
-          if [ -n "$UNUSED_FILES" ]; then
-            echo "::set-output name=unused_files::$UNUSED_FILES"
-          fi
 
       - name: Create Issue if Unused Files Found
         if: steps.find-files.outputs.unused_files
