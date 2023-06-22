@@ -174,7 +174,7 @@ The above function does not exist. You need to create it. Use a node library cal
 npm install cheerio
 ```
 
-With cheerio installed, we can import it at the top of our file and immediately create our `read_website_content` function:
+With cheerio installed, import it at the top of your ___ file and immediately create your `read_website_content` function:
 ```js
 import cheerio from "cheerio"; 
 
