@@ -23,6 +23,14 @@ Worker Variables are a special type of variable that generates value dynamically
 
 Your variable is now ready to be used with tools and triggers.
 
+## Variables Types and combinations
+
+Variables types can be very flexible with different combinations as needed:
+1. It can be a self-defined variable name + a predefined variable value. 
+2. It can be a self-defined variable name + a self-defined variable value.
+3. It can be a predefined variable with predefined name/type/value, only need to click the plus sign in the relevant field and then select a predefined variable. 
+4. It can be a concatenated variable, between self defined variable values or predefined variable values.
+   
 ## Next steps
 
 Refer to [Add a third-party tool](/zaraz/get-started/add-tool/) and [Create a trigger](/zaraz/get-started/create-trigger/) for more information on how to add a variable to tools and triggers.
