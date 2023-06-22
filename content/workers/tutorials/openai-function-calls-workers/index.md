@@ -139,7 +139,7 @@ Review the arguments you are passing to OpenAI:
 
 * **model**: The model you want OpenAI to use for your request.
 * **messages**: A list containing the messages that are part of the conversation happening. In this guide, you only have one user message asking what is happening in the NBA today.
-* **functions**: A list containing all the functions that we're telling OpenAI about. In this case, we only have one function. Our function has the following properties:
+* **functions**: A list containing all the functions that you are telling OpenAI about. In this guide, you only have one function. Your function has the following properties:
     * **name**: The name of our function. We'll be calling ours `read_website_content`.
     * **description**: A short description that lets OpenAI know what our function does. We're letting OpenAI know that our function reads the content on a given website.
     * **parameters**: The parameters that the function can accept described as JSON Schema object. We'll have one parameter called url.
