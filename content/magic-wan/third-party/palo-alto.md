@@ -1080,7 +1080,7 @@ You must define a rule to allow the ICMP reply probes as Palo Alto Networks Next
 |                                 | Destination address| **Cloudflare_IPv4_Static_grp**                                     |
 | Application tab                 | Applications       | **icmp** <br> **ping**                                             |
 | Actions tab                     | Action             | _Allow_                                                            |
-|                                 | Action setting     | **Log at Session End**                                             |
+|                                 | Log setting        | **Log at Session End**                                             |
 |                                 | Profile type       | _None_                                                             |
 |                                 | Schedule           | _None_                                                             |
 |                                 | QoS Marking        | _None_                                                             |
@@ -1130,18 +1130,18 @@ Ensure have the following:
 
 {{<table-wrap>}}
 
-| Name                             | Option              | Value                          |
-| -------------------------------- | ------------------  | ------------------------       |
-| `PBF_Cloudflare_Health_Check_01` | Tags                | _Cloudflare_L3_Zone_           |
-|                                  | Group Rules By Tag  | _None_                         |
-| Source tab                       | Type                | _Zone_                         |
-|                                  | Zone                | **Cloudflare_L3_Zone**         |
-|                                  | Source Address      | **CF_Health_Check_Anycast_01** |
-| Destination/Application tab      | Destination Address | **Cloudflare_IPv4_Static_grp** |
-| Forwarding tab                   | Action              | _Forward_                      |
-|                                  | Egress interface    | _tunnel.1_                     |
-|                                  | Next Hop            | _IP Address_                   |
-|                                  |                     | _CF_MWAN_IPsec_VTI_01_Remote_  |
+| Name                                | Option              | Value                          |
+| --------------------------------    | ------------------  | ------------------------       |
+| `PBF_Cloudflare_Health_Check_01`    | Tags                | _Cloudflare_L3_Zone_           |
+|                                     | Group Rules By Tag  | _None_                         |
+| Source tab                          | Type                | _Zone_                         |
+|                                     | Zone                | **Cloudflare_L3_Zone**         |
+|                                     | Source Address      | **CF_Health_Check_Anycast_01** |
+| Destination/Application/Service tab | Destination Address | **Cloudflare_IPv4_Static_grp** |
+| Forwarding tab                      | Action              | _Forward_                      |
+|                                     | Egress interface    | _tunnel.1_                     |
+|                                     | Next Hop            | _IP Address_                   |
+|                                     |                     | _CF_MWAN_IPsec_VTI_01_Remote_  |
 
 {{</table-wrap>}}
 
@@ -1154,18 +1154,18 @@ Ensure have the following:
 
 {{<table-wrap>}}
 
-| Name                             | Option              | Value                          |
-| -------------------------------- | ------------------- | ------------------------       |
-| `PBF_Cloudflare_Health_Check_02` | Tags                | _Cloudflare_L3_Zone_           |
-|                                  | Group Rules By Tag  | _None_                         |
-| Source tab                       | Type                | _Zone_                         |
-|                                  | Zone                | **Cloudflare_L3_Zone**         |
-|                                  | Source Address      | **CF_Health_Check_Anycast_02** |
-| Destination/Application tab      | Destination Address | **Cloudflare_IPv4_Static_grp** |
-| Forwarding tab                   | Action              | _Forward_                      |
-|                                  | Egress interface    | _tunnel.2_                     |
-|                                  | Next Hop            | _IP Address_                   |
-|                                  |                     | _CF_MWAN_IPsec_VTI_02_Remote_  |
+| Name                                | Option              | Value                          |
+| --------------------------------    | ------------------- | ------------------------       |
+| `PBF_Cloudflare_Health_Check_02`    | Tags                | _Cloudflare_L3_Zone_           |
+|                                     | Group Rules By Tag  | _None_                         |
+| Source tab                          | Type                | _Zone_                         |
+|                                     | Zone                | **Cloudflare_L3_Zone**         |
+|                                     | Source Address      | **CF_Health_Check_Anycast_02** |
+| Destination/Application/service tab | Destination Address | **Cloudflare_IPv4_Static_grp** |
+| Forwarding tab                      | Action              | _Forward_                      |
+|                                     | Egress interface    | _tunnel.2_                     |
+|                                     | Next Hop            | _IP Address_                   |
+|                                     |                     | _CF_MWAN_IPsec_VTI_02_Remote_  |
 
 {{</table-wrap>}}
 
@@ -1356,16 +1356,32 @@ Any traffic destined for Magic WAN protected sites or Magic WAN protected sites 
 
 {{<Aside type="note">}}Security rules match traffic flows based on source and destination zone. Policy-based forwarding rules are applied per interface. Therefore, two policy-based forwarding rules are required for every one security rule - one for `tunnel.1` and one for `tunnel.2`.{{</Aside>}}
 
-#### Policy-based forwarding - Magic WAN Production Traffic via `tunnel.1`
+#### Dashboard - policy-based forwarding - Magic WAN production traffic via `tunnel.1`
+
+{{<table-wrap>}}
+
+| Name                                  | Option              | Value                                                      |
+| ------------------------------------- | ------------------- | ---------------------------------------------------------- |
+| `PBF_Magic_WAN_sites_01`              | Group Rules by Tag  | _None_                                                     |
+| Source tab                            | Type                | _Zone_                                                     |
+|                                       | Zone                | **Trust_L3_Zone**                                          |
+|                                       | Source Address      | **VLAN0100_10-1-100-0--24**                                |
+| Destination/Application/Service tab   | Destination Address | **VLAN0010_10-1-10-0--24** <br> **VLAN0020_10-1-20-0--24** |
+| Forwarding tab                        | Action              | _Forward_                                                  |
+|                                       | Egress Interface    | _tunnel.1_                                                 |
+|                                       | Next hop            | _IP Address_                                               |
+|                                       |                     | _CF_MWAN_IPsec_VTI_01_Remote_                              |
+
+{{</table-wrap>}}
 
 ![PBF: Trust to Magic WAN via tunnel.1 - General](/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
 ![PBF: Trust to Magic WAN via tunnel.1 - Source](/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
 ![PBF: Trust to Magic WAN via tunnel.1 - Destinations](/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
 ![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
 
-#### Command line - Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.1
+#### Command line - policy-based forwarding - Magic WAN production traffic via `tunnel.1`
 
-```xml
+```bash
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 action forward egress-interface tunnel.1
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 from zone Trust_L3_Zone
@@ -1379,19 +1395,32 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 disabled no
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 ```
 
-###### Policy-Based Forwarding - Magic WAN Production Traffic via tunnel.2
+#### Dashboard - policy-based forwarding - Magic WAN production traffic via `tunnel.2`
 
-![PBF: Trust to Magic WAN via tunnel.2 - General](./images/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
+{{<table-wrap>}}
 
-![PBF: Trust to Magic WAN via tunnel.2 - Source](./images/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
+| Name                                  | Option              | Value                                                      |
+| ------------------------------------- | ------------------- | ---------------------------------------------------------- |
+| `PBF_Magic_WAN_sites_02`              | Group Rules by Tag  | _None_                                                     |
+| Source tab                            | Type                | _Zone_                                                     |
+|                                       | Zone                | **Trust_L3_Zone**                                          |
+|                                       | Source Address      | **VLAN0100_10-1-100-0--24**                                |
+| Destination/Application/Service tab   | Destination Address | **VLAN0010_10-1-10-0--24** <br> **VLAN0020_10-1-20-0--24** |
+| Forwarding tab                        | Action              | _Forward_                                                  |
+|                                       | Egress Interface    | _tunnel.2_                                                 |
+|                                       | Next hop            | _IP Address_                                               |
+|                                       |                     | _CF_MWAN_IPsec_VTI_02_Remote_                              |
 
-![PBF: Trust to Magic WAN via tunnel.2 - Destinations](./images/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
+{{</table-wrap>}}
 
-![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](./images/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
+![PBF: Trust to Magic WAN via tunnel.2 - General](/images/magic-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Source](/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Destinations](/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
 
-###### Command-Line - Policy-Based Forwarding - tunnel.2
+#### Command line - policy-based dorwarding - `tunnel.2`
 
-```xml
+```bash
 set rulebase pbf rules PBF_Magic_WAN_Sites_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
 set rulebase pbf rules PBF_Magic_WAN_Sites_02 action forward egress-interface tunnel.2
 set rulebase pbf rules PBF_Magic_WAN_Sites_02 from zone Trust_L3_Zone
@@ -1407,42 +1436,57 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_02 negate-destination no
 
 ## Magic WAN with Cloudflare Zero Trust (Gateway Egress)
 
-This section covers adding in support for the use of Cloudflare Gateway for Secure Web Gateway functions. Adding Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering.
+This section covers adding in support for the use of Cloudflare Gateway. Adding Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering.
 
 This use case can be supported in one of two ways:
 
-- Option 1
+- **Option 1**
+  - **Security Rule**: Extend the scope of the `Trust_to_Cloudflare_Magic_WAN_Allow` rule to allow any destination address.
+  - **Policy-Based Forwarding**: Extend the scope of `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address.
 
-  - Security Rule: Extend the scope of the **Trust_to_Cloudflare_Magic_WAN_Allow** rule to allow _ANY_ destination address
-  - Policy-Based Forwarding: Extend the scope of **PBF_Magic_WAN_Sites_01** and **PBF_Magic_WAN_Sites_02** to allow _ANY_ destination address
-
-- Option 2
-  - Security Rule: Add a new rule below **Trust_to_Cloudflare_Magic_WAN_Allow** called **Trust_to_MWAN_Gateway_Egress_Allow** to allow traffic to any destination address _EXCEPT_ for the Magic WAN Protected Sites (using the Negate option)
-  - Policy-Based Forwarding: Add a new rule below **PBF_Magic_WAN_Sites_01** and **PBF_Magic_WAN_Sites_02** to allow any destination address _EXCEPT_ for the Magic WAN Protected Sites (using the Negate option)
+- **Option 2**
+  - **Security Rule**: Add a new rule below `Trust_to_Cloudflare_Magic_WAN_Allow` called `Trust_to_MWAN_Gateway_Egress_Allow` to allow traffic to any destination address except for the Magic WAN Protected Sites (using the Negate option).
+  - **Policy-Based Forwarding**: Add a new rule below `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address except for the Magic WAN Protected Sites (using the Negate option).
 
 The following examples are based on Option 2.
 
-> _NOTE: This example assumes the Security Rules and Policy-Based Forwarding rules from the previous sections have been configured and are directly above the rules configured in this section._
+{{<Aside type="note">}}
+This example assumes the security rules and policy-based forwarding rules from the previous sections have been configured and are directly above the rules configured in this section.
 
-> _NOTE: Traffic from Trust to the Internet would typically be defined as **Trust_L3_Zone** to **Untrust_L3_Zone**. However, since egress Internet traffic will be routed through the Magic IPsec tunnels, the rule must reference **Trust_L3_Zone** to **Cloudflare_L3_Zone**._
+Also,traffic from Trust to the Internet would typically be defined as `Trust_L3_Zone` to `Untrust_L3_Zone`. However, since egress Internet traffic will be routed through the Magic IPsec tunnels, the rule must reference `Trust_L3_Zone` to `Cloudflare_L3_Zone`.
+{{</Aside>}}
 
-###### Security Rule: Trust to Gateway Egress
+### Security Rule: Trust to Gateway Egress
 
-![Trust to MWAN Egress - General](./images/panw_mwan_egress/01_trust_mwan_egress_general.png)
+#### Dashboard
 
-![Trust to MWAN Egress - Source](./images/panw_mwan_egress/02_trust_mwan_egress_source.png)
+{{<table-wrap>}}
 
-![Trust to MWAN Egress - Destination](./images/panw_mwan_egress/03__trust_mwan_egress_destination.png)
+| Name                                 | Option             | Value                                                                      |
+| --------------------------------     | -------------      | ------------------------------------------------------------------         |
+| `Trust_to_MWAN_Gateway_Egress_Allow` | Rule Type          | _universal (default)_                                                      |
+|                                      | Group Rules By Tag | _None_                                                                     |
+| Source tab                           | Source zone        | **Trust_L3_Zone**                                                          |
+| Destination tab                      | Destination zone   | **Cloudflare_L3_Zone**                                                     |
+|                                      | Destination address| **VLAN0010_10-1-10-0--24** <br> **VLAN0020_10-1-20-0--24** <br> **Negate** |
+| Actions tab                          | Action             | _Allow_                                                                    |
+|                                      | Log setting        | **Log at Session End**                                                     |
+|                                      | Profile type       | _None_                                                                     |
+|                                      | Schedule           | _None_                                                                     |
+|                                      | QoS Marking        | _None_                                                                     |
 
-![Trust to MWAN Egress - Applications](./images/panw_mwan_egress/04_trust_mwan_egress_apps.png)
+{{</table-wrap>}}
 
-![Trust to MWAN Egress - Services/URL Categories](./images/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
+![Trust to MWAN Egress - General](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/01_trust_mwan_egress_general.png)
+![Trust to MWAN Egress - Source](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
+![Trust to MWAN Egress - Destination](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/03__trust_mwan_egress_destination.png)
+![Trust to MWAN Egress - Applications](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/04_trust_mwan_egress_apps.png)
+![Trust to MWAN Egress - Services/URL Categories](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
+![Trust to MWAN Egress - Action](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/06_trust_mwan_egress_actions.png)
 
-![Trust to MWAN Egress - Action](./images/panw_mwan_egress/06_trust_mwan_egress_actions.png)
+#### Command line
 
-###### Command-Line - Security Rule: Trust to Gateway Egress
-
-```xml
+```bash
 set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow to Cloudflare_L3_Zone
 set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow from Trust_L3_Zone
 set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow source any
@@ -1457,19 +1501,32 @@ set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow rule-type univers
 set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destination yes
 ```
 
-###### Policy-Based Forwarding: Trust to Gateway Egress via tunnel.1
+### Policy-based forwarding: Trust to Gateway egress via `tunnel.1`
 
-![PBF: Trust to Magic WAN Egress via tunnel.1 - General](./images/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
+#### Dashboard
 
-![PBF: Trust to Magic WAN via tunnel.1 - Source](./images/panw_mwan_egress/02_trust_mwan_egress_source.png)
+{{<table-wrap>}}
 
-![PBF: Trust to Magic WAN via tunnel.1 - Destinations](./images/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
+| Name                                | Option              | Value                                                                      |
+| --------------------------------    | -------------       | ------------------------------------------------------------------         |
+| `PBF_MWAN_Egress01`                 | Group Rules By Tag  | _None_                                                                     |
+| Source tab                          | Source zone         | **Trust_L3_Zone**                                                          |
+| Destination/Application/Service tab | Destination Address | **VLAN0010_10-1-10-0--24** <br> **VLAN0020_10-1-20-0--24** <br> **Negate** |
+| Forwarding tab                      | Action              | _Forward_                                                                  |
+|                                     | Egress Interface    | _tunnel.1_                                                                 |
+|                                     | Next hop            | _IP Address_                                                               |
+|                                     |                     | _CF_MWAN_IPsec_VTI_01_Remote_                                              |
 
-![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](./images/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
+{{</table-wrap>}}
 
-##### Command-Line - Policy-Based Forwarding: Trust to Gateway Egress via tunnel.1
+![PBF: Trust to Magic WAN Egress via tunnel.1 - General](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Source](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Destinations](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
 
-```xml
+#### Command line
+
+```bash
 set rulebase pbf rules PBF_MWAN_Egress_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
 set rulebase pbf rules PBF_MWAN_Egress_01 action forward egress-interface tunnel.1
 set rulebase pbf rules PBF_MWAN_Egress_01 from zone Trust_L3_Zone
@@ -1483,19 +1540,33 @@ set rulebase pbf rules PBF_MWAN_Egress_01 disabled no
 set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
 ```
 
-###### Policy-Based Forwarding: Trust to Gateway Egress via tunnel.2
+### Policy-based forwarding: Trust to Gateway egress via `tunnel.2`
 
-![PBF: Trust to Magic WAN Egress via tunnel.2 - General](./images/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
+#### Dashboard
 
-![PBF: Trust to Magic WAN via tunnel.2 - Source](./images/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
+{{<table-wrap>}}
 
-![PBF: Trust to Magic WAN via tunnel.2 - Destinations](./images/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
+| Name                                | Option              | Value                                                                      |
+| --------------------------------    | -------------       | ------------------------------------------------------------------         |
+| `PBF_MWAN_Egress02`                 | Group Rules By Tag  | _None_                                                                     |
+| Source tab                          | Source zone         | **Trust_L3_Zone**                                                          |
+|                                     | Source address      | **VLAN0100_10-1-100-0--24**                                                |
+| Destination/Application/Service tab | Destination Address | **VLAN0010_10-1-10-0--24** <br> **VLAN0020_10-1-20-0--24** <br> **Negate** |
+| Forwarding tab                      | Action              | _Forward_                                                                  |
+|                                     | Egress Interface    | _tunnel.2_                                                                 |
+|                                     | Next hop            | _IP Address_                                                               |
+|                                     |                     | _CF_MWAN_IPsec_VTI_02_Remote_                                              |
 
-![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](./images/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
+{{</table-wrap>}}
 
-##### Command-Line - Policy-Based Forwarding: Trust to Gateway Egress via tunnel.2
+![PBF: Trust to Magic WAN Egress via tunnel.2 - General](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Source](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Destinations](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
 
-```xml
+#### Command line
+
+```bash
 set rulebase pbf rules PBF_MWAN_Egress_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
 set rulebase pbf rules PBF_MWAN_Egress_02 action forward egress-interface tunnel.2
 set rulebase pbf rules PBF_MWAN_Egress_02 from zone Trust_L3_Zone
@@ -1511,8 +1582,4 @@ set rulebase pbf rules PBF_MWAN_Egress_02 negate-destination yes
 
 ## Troubleshooting
 
-PAN-OS 9.1 Administrators Guide - Interpret VPN Error Messages
-https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/vpns/set-up-site-to-site-vpn/interpret-vpn-error-messages
-
-PAN-OS 10.2 Administrators Guide - Interpret VPN Error Messages
-https://docs.paloaltonetworks.com/pan-os/10-2/pan-os-admin/vpns/set-up-site-to-site-vpn/interpret-vpn-error-messages
+Cloudflare recommends you consult [PAN-OS 9.1 Administrators Guide - Interpret VPN Error Messages](https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/vpns/set-up-site-to-site-vpn/interpret-vpn-error-messages) and [PAN-OS 10.2 Administrators Guide - Interpret VPN Error Messages](https://docs.paloaltonetworks.com/pan-os/10-2/pan-os-admin/vpns/set-up-site-to-site-vpn/interpret-vpn-error-messages) for general troubleshooting.
