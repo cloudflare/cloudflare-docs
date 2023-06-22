@@ -198,7 +198,7 @@ Use filters to select the events to include and/or remove from your logs. For mo
 
 ## Sampling rate
 
-Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
+Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
 
 ## Max Upload Parameters
 
