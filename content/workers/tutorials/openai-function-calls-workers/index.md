@@ -158,7 +158,7 @@ Function calling intelligently determines what content to pass in the argument. 
 
 ## Building your `read_website_content()` function
 
-Now, we'll add the code to call our function when OpenAI tells us we need to:
+Add the code to call your function when OpenAI determines you need to:
 ```js
  let websiteContent;
 
