@@ -169,7 +169,7 @@ Add the code to call your function when OpenAI determines you need to:
  }
 ```
 
-We're getting close, but that function doesn't exist so we need to create it. We're going to use a node library called [cheerio](https://github.com/cheeriojs/cheerio) to the websites content. We can start by npm installing it:
+The above function does not exist. You need to create it. Use a node library called [`cheerio`](https://github.com/cheeriojs/cheerio) to the websites content. Run `npm` to install `cheerio`:
 ```sh
 npm install cheerio
 ```
