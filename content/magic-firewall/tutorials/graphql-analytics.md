@@ -144,7 +144,7 @@ query{
 }
 ```
 
-Alternatively, to see all traffic that was analyzed, but grouped into malicious traffic and other traffic, the example below can be used. The response will contain two entries for each 5 minute timestamp. verdict will be set to drop for malicious traffic, and verdict will be set to pass for traffic that did not match any of the IDS rules.
+Alternatively, to inspect all traffic that was analyzed, but grouped into malicious traffic and other traffic, the example below can be used. The response will contain two entries for each five minute timestamp. `verdict` will be set to `drop` for malicious traffic, and `verdict` will be set to `pass` for traffic that did not match any of the IDS rules.
 
 ```graphql
 query{
