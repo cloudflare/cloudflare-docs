@@ -192,7 +192,7 @@ async function read_website_content(url) {
 }
 ```
 
-In this function, we take the url that we received back from OpenAI and we use JavaScript's [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to pull the content of the website, and then cheerio to pull out only the text of the website. We then create a JSON object for the response.
+In this function, you take the URL that you received back from OpenAI and use JavaScript's [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to pull the content of the website. Then, your function will use `cheerio` to pull out only the text of the website. You then create a JSON object for the response.
 
 With this in place, we can run our code again to see that we're properly calling our function and pulling website data:
 ```sh
