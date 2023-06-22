@@ -6,7 +6,7 @@ meta:
   title: Least Outstanding Request steering
 ---
 
-## Least Outstanding Request Steering
+## Least Outstanding Request steering
 
 {{<render file="_least-outstanding-request-steering-definition.md">}}
 
