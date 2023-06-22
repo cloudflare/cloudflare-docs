@@ -537,12 +537,12 @@ Multiple Authentication settings are defined in the desired order. Palo Alto Net
 
 #### Set up via dashboard
 
-| Name                | Option         | Value                |
-| ------------------- | -------------- | -------------------- |
-| CF_IPsec_Crypto_CBC | Encryption     | `aes-256-cbc`        |
-|                     | Authentication | `sha256` <br> `sha1` |
-|                     | DH Group       | `group14`            |
-|                     | Lifetime       | 1 hour               |
+| Name                  | Option         | Value                    |
+| -------------------   | -------------- | --------------------     |
+| `CF_IPsec_Crypto_CBC` | Encryption     | **aes-256-cbc**          |
+|                       | Authentication | **sha256** <br> **sha1** |
+|                       | DH Group       | **group14**              |
+|                       | Lifetime       | 1 hour                   |
 
 ![IPsec crypto profile you need to set up on your device](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
 
@@ -559,9 +559,9 @@ set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC dh-gro
 
 ### IKE Gateways
 
-Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make sure to define the following values:
-
 {{<Aside type="note">}}Any other settings not specified should be left at their default values. Any deviation may lead to undesirable behavior and are not supported.{{</Aside>}}
+
+Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make sure to define the following values:
 
 #### Set up via dashboard
 
