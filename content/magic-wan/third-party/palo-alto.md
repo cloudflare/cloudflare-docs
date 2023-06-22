@@ -1260,9 +1260,25 @@ Rules must be defined to facilitate traffic from the trust network to the Magic 
 - From Trust to Magic WAN protected sites
 - From Magic WAN protected sites to Trust
 
-**Trust to Magic WAN**
+**Trust to Magic WAN dashboard**
 
+{{<table-wrap>}}
 
+| Name                                  | Option              | Value                                                      |
+| ------------------------------------- | ------------------- | ---------------------------------------------------------- |
+| `Trust_to_Cloudflare_Magic_WAN_Allow` | Rule Type           | _universal (default)_                                      |
+|                                       | Group Rules by Tag  | _None_                                                     |
+| Source tab                            | Source Zone         | **Trust_L3_Zone**                                          |
+|                                       | Source Address      | **VLAN0100_10-1-100-0--24**                                |
+| Destination tab                       | Destination Zone    | **Cloudflare_L3_Zone**                                     |
+|                                       | Destination Address | **VLAN0010_10-1-10-0--24** <br> **VLAN0020_10-1-20-0--24** |
+| Actions tab                           | Action              | _Allow_                                                    |
+|                                       | Log Setting         | **Log at Session End**                                     |
+|                                       | Profile type        | _None_                                                     |
+|                                       | Schedule            | _None_                                                     |
+|                                       | QoS Marking         | _None_                                                     |
+
+{{</table-wrap>}}
 
 ![Trust to Magic WAN - General](/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
 ![Trust to Magic WAN - Source](/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
@@ -1271,7 +1287,7 @@ Rules must be defined to facilitate traffic from the trust network to the Magic 
 ![Trust to Magic WAN - Services/URL Categories](/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
 ![Trust to Magic WAN - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
 
-You can also use the command line to define the rule Trust to Magic WAN protected sites:
+**Trust to Magic WAN command line**
 
 ```bash
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow to Cloudflare_L3_Zone
@@ -1286,7 +1302,26 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow hip-profiles any
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow action allow
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type universal
 ```
-**Magic WAN to Trust**
+
+**Magic WAN to Trust dashboard**
+
+{{<table-wrap>}}
+
+| Name                                  | Option              | Value                                                      |
+| ------------------------------------- | ------------------- | ---------------------------------------------------------- |
+| `Cloudflare_Magic_WAN_to_Trust_Allow` | Rule Type           | _universal (default)_                                      |
+|                                       | Group Rules by Tag  | _None_                                                     |
+| Source tab                            | Source Zone         | **Cloudflare_L3_Zone**                                     |
+|                                       | Source Address      | **VLAN0010_10-1-10-0--24** <br> **VLAN0020_10-1-20-0--24** |
+| Destination tab                       | Destination Zone    | **Trust_L3_Zone**                                          |
+|                                       | Destination Address | **VLAN0100_10-1-100-0--24**                                |
+| Actions tab                           | Action              | _Allow_                                                    |
+|                                       | Log Setting         | **Log at Session End**                                     |
+|                                       | Profile type        | _None_                                                     |
+|                                       | Schedule            | _None_                                                     |
+|                                       | QoS Marking         | _None_                                                     |
+
+{{</table-wrap>}}
 
 ![Magic WAN to Trust - General](/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
 ![Magic WAN to Trust - Source](/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
@@ -1295,7 +1330,7 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type univer
 ![Magic WAN to Trust - Services/URL Categories](/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
 ![Magic WAN to Trust - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
 
-You can also use the command line to define the rule Magic WAN protected sites to Trust:
+**Magic WAN to Trust command line**
 
 ```bash
 set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow to Trust_L3_Zone
@@ -1313,9 +1348,9 @@ set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow rule-type univer
 
 ### Policy-based forwarding - production traffic
 
-Whether traffic ingresses or egresses ​​Palo Alto Networks Next-Generation Firewall​​, it is important to ensure that traffic is routed symmetrically. This is accomplished through the use of Policy-Based Forwarding.
+Whether traffic ingresses or egresses ​​Palo Alto Networks Next-Generation Firewall​​, it is important to ensure that traffic is routed symmetrically. This is accomplished through the use of policy-based dorwarding.
 
-Policy-Based Forwarding rules are only required for egress traffic.
+Policy-based forwarding rules are only required for egress traffic.
 
 Any traffic destined for Magic WAN protected sites or Magic WAN protected sites with Gateway egress must be routed across the IPsec tunnels.
 
