@@ -6,7 +6,7 @@ weight: 16
 
 # Persistent Storage from a Durable Object
 
-Durable Objects gain access to a persistent [transactional storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) via the first parameter passed to the Durable Object constructor. 
+Durable Objects gain access to a persistent [transactional storage API](/durable-objects/api/transactional-storage-api/) via the first parameter passed to the Durable Object constructor. 
 
 While access to a Durable Object is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
 
@@ -26,7 +26,7 @@ export class DurableObjectExample {
 }
 ```
 
-The Durable Objects [transactional storage API]((/workers/runtime-apis/durable-objects/#transactional-storage-api)) employs several techniques to help you avoid common storage bugs:
+The Durable Objects [transactional storage API](/durable-objects/api/transactional-storage-api/) employs several techniques to help you avoid common storage bugs:
 
 - Each individual storage operation is strictly ordered with respect to all others. Even if the operation completes asynchronously (requiring you to `await` a promise), results will always be accurate as of the time the operation was invoked.
 
