@@ -19,7 +19,7 @@ In der Regel liegt das Problem an einer Anfrage von HTTP-Ressourcen von einer We
 
 Wenn Ihre Website alle Ressourcen sicher über HTTPS lädt, sehen Besucher normalerweise ein Schlosssymbol (normalerweise ein grünes Schloss) in der Adressleiste ihres Browsers:
 
-![green-lock-icon.png](/support/static/green-lock-icon.png)
+![green-lock-icon.png](/images/support/green-lock-icon.png)
 
 Dies deutet darauf hin, dass Ihre Website über ein funktionsfähiges SSL-Zertifikat verfügt und alle von der Website geladenen Ressourcen über HTTPS geladen werden. Das grüne Schloss gibt den Benutzern die Sicherheit, dass ihre Verbindung sicher ist. Eine der [Ursachen für gemischten Inhalt](https://support.cloudflare.com/hc/de/articles/200170476-Behebung-von-Fehlern-durch-gemischten-Inhalt-#h_a6c5a05b-baba-4f88-a75c-d61f206366ed) ist, dass anstelle des grünen Schlosssymbols verschiedene Symbole angezeigt werden.
 
@@ -42,11 +42,11 @@ Nachstehend finden Sie Hinweise darauf, dass Ihr Webbrowser gemischte Inhalte f�
 
 Bei Warnungen zu gemischten Inhalten lädt der Webbrowser die Ressourcen, aber Benutzer sehen nicht das grüne Schlosssymbol in der URL. Warnmeldungen werden in den Debug-Tools des Browsers angezeigt:
 
-![mixed-content-warning.png](/support/static/mixed-content-warning.png)
+![mixed-content-warning.png](/images/support/mixed-content-warning.png)
 
 Bei Fehlern durch gemischte Inhalte verweigert der Browser das Laden der Ressourcen über eine unsichere Verbindung:
 
-![mixed-content-error.png](/support/static/mixed-content-error.png)
+![mixed-content-error.png](/images/support/mixed-content-error.png)
 
 Informationen zur Verwendung der Debug-Tools des Browsers zum Auffinden dieser Probleme finden Sie in der Dokumentation zu [Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content) und [Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content). Alternativ können Sie Ihre Seitenquelle anzeigen und bestimmte Verweise auf _http://_ für Pfade zu anderen Ressourcen suchen.
 

@@ -56,7 +56,7 @@ Als Vertreter einer Firma müssen Sie darüber hinaus Folgendes einreichen:
 
 ## Was muss ich tun, nachdem ich eine ICP-Nummer erhalten habe?
 
-Wenn Sie die ICP-Nummer und das Zertifikat erhalten haben, laden Sie es bitte unten auf der Homepage Ihrer Website hoch. Ein Beispiel dazu finden Sie unten: ![](/support/static/Screen_Shot_2015-09-13_at_7.12.19_PM.png)
+Wenn Sie die ICP-Nummer und das Zertifikat erhalten haben, laden Sie es bitte unten auf der Homepage Ihrer Website hoch. Ein Beispiel dazu finden Sie unten: ![](/images/support/Screen_Shot_2015-09-13_at_7.12.19_PM.png)
 
 -   什么是ICP网站备案，为什么网站必须备案才能在中国大陆运营？
     
@@ -79,7 +79,7 @@ Wenn Sie die ICP-Nummer und das Zertifikat erhalten haben, laden Sie es bitte un
     
     申请ICP备案的流程如下所示：
     
-    ![](/support/static/icp.png)
+    ![](/images/support/icp.png)
     
     所需文件材料
     
@@ -110,7 +110,7 @@ Wenn Sie die ICP-Nummer und das Zertifikat erhalten haben, laden Sie es bitte un
 
 申请ICP备案的流程如下所示：
 
-![](/support/static/icp.png)
+![](/images/support/icp.png)
 
 所需文件材料
 

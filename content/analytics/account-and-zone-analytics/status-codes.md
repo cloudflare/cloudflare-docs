@@ -21,7 +21,7 @@ Users may also see `100x` errors which are not reported. These will be displayed
 {{</Aside>}}
 
 ![Error analytics by Cloudflare data center
-](/support/static/hc-import-web_traffic_status_codes.png)
+](/images/support/hc-import-web_traffic_status_codes.png)
 
 ___
 
@@ -75,6 +75,6 @@ The status codes section shows:
 You can filter out specific error(s) by selecting one or more in the legend. Once you select an error it will be greyed out in the drop-down menu, and the error will no longer display as part of the graph.
 
 ![Error analytics by Cloudflare data center
-](/support/static/hc-import-status_codes_error_by_data_center.png)
+](/images/support/hc-import-status_codes_error_by_data_center.png)
 
 In this example, by clicking on `404` in the legend we removed it from being displayed in the UI.

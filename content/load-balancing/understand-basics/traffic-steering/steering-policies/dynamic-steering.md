@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Dynamic
-weight: 4
+weight: 3
 meta:
   title: Dynamic steering
 ---

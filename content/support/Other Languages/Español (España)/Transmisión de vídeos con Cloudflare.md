@@ -74,7 +74,7 @@ Si necesitas más información sobre el contenido que está entregando tu zona (
 -   Usuarios de Cache Analytics: abre la pestaña **Caching** en el panel de control para filtrar por tipo de contenido e identificar el tipo de tráfico que estás transmitiendo. 
 -   Usuarios sin Cache Analytics: abra la pestaña **Analytics** en el panel de control y selecciona la sección **Rendimiento** para obtener información sobre el contenido que estás entregando.
 
-![Cache Analytics: identifica el tipo de tráfico que se está transmitiendo](/support/static/traffic-types.png)
+![Cache Analytics: identifica el tipo de tráfico que se está transmitiendo](/images/support/traffic-types.png)
 
 ## ¿Aún tienes dudas? Contacta con el soporte técnico
 
