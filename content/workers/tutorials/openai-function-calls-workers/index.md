@@ -140,9 +140,9 @@ Review the arguments you are passing to OpenAI:
 * **model**: The model you want OpenAI to use for your request.
 * **messages**: A list containing the messages that are part of the conversation happening. In this guide, you only have one user message asking what is happening in the NBA today.
 * **functions**: A list containing all the functions that you are telling OpenAI about. In this guide, you only have one function. Your function has the following properties:
-    * **name**: The name of our function. We'll be calling ours `read_website_content`.
-    * **description**: A short description that lets OpenAI know what our function does. We're letting OpenAI know that our function reads the content on a given website.
-    * **parameters**: The parameters that the function can accept described as JSON Schema object. We'll have one parameter called url.
+    * **name**: The name of your function. You will be calling yours `read_website_content`.
+    * **description**: A short description that lets OpenAI know what your function does. You are letting OpenAI know that your function reads the content on a given website.
+    * **parameters**: The parameters that the function can accept described as a JSON Schema object. You will have one parameter called `url`.
 
 After our request to OpenAI completes, we're logging the message back to confirm it's telling us to call our function. Run your code with `npx wrangler dev` and open it in a browser by pressing `b`. You should see the following in your terminal log:
 ```sh
