@@ -29,7 +29,7 @@ Start by using `npm create cloudflare` to create a Worker project in the command
 
 ```sh
 ---
-header: Create a project
+header: Create a Worker project
 ---
 $ npm create cloudflare@latest
 ```
