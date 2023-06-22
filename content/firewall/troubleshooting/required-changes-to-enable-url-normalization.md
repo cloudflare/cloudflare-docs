@@ -1,10 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360057896851-Required-Firewall-Rule-changes-to-enable-URL-normalization
-title: Required Firewall Rule changes to enable URL normalization
+title: Required firewall rule changes to enable URL normalization
 ---
 
-# Required Firewall Rule changes to enable URL normalization
+# Required firewall rule changes to enable URL normalization
 
 On 2021-04-08, Cloudflare announced [URL normalization](/rules/normalization/), a feature that protects zones by normalizing HTTP request URI paths.
 
