@@ -1316,11 +1316,6 @@ If sampling persists after using options to filter messages, consider using [ins
 
 Configure Cloudflare Pages.
 
-{{<Aside type="warning">}}
-The `wrangler pages ...` commands are in beta.<br>
-Report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose.
-{{</Aside>}}
-
 ### `dev`
 
 Develop your full stack Pages application locally.

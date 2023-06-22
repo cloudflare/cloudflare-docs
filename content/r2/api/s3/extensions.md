@@ -96,4 +96,24 @@ The XML response contains a `NextContinuationToken` and `IsTruncated` elements a
 
 ### Conditional operations in `PutObject`
 
-`PutObject` supports [conditional uploads](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests) via the [`If-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match), [`If-None-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match), [`If-Modified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since), and [`If-Unmodified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Unmodified-Since) headers. These headers behave similarly to how `GetObject` and `HeadObject` interpret these headers, rejecting uploads with `304 NotModified` or `412 PreconditionFailed` error codes when an upload is not necessary or the preceding state does not match, respectively.
+`PutObject` supports [conditional uploads](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests) via the [`If-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match), [`If-None-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match), [`If-Modified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since), and [`If-Unmodified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Unmodified-Since) headers. These headers will cause the `PutObject` operation to be rejected with `412 PreconditionFailed` error codes when the preceding state of the object that is being written to does not match the specified conditions.
+
+### Conditional operations in `CopyObject` for the destination object
+
+{{<Aside type="note">}}
+This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
+{{</Aside>}}
+
+`CopyObject` already supports conditions that relate to the source object through the `x-amz-copy-source-if-...` headers as part of our compliance with the S3 API. In addition to this, R2 supports an R2 specific set of headers that allow the `CopyObject` operation to be conditional on the target object:
+
+- `cf-copy-destination-if-match`
+- `cf-copy-destination-if-none-match`
+- `cf-copy-destination-if-modified-since`
+- `cf-copy-destination-if-unmodified-since`
+
+These headers work akin to the similarly named conditional headers supported on `PutObject`. When the preceding state of the destination object to does not match the specified conditions the `CopyObject` operation will be rejected with a `412 PreconditionFailed` error codes.
+
+#### Non-atomicity relative to `x-amz-copy-source-if`
+
+The the `x-amz-copy-source-if-...` headers are guaranteed to be checked when the source object for the copy operation is selected, and the `cf-copy-destination-if-...` headers are guaranteed to be checked when the object is committed to the bucket state.
+However, the time at which the source object is selected for copying, and the point in time when the destination object is committed to the bucket state is not necessarily the same. This means that the `cf-copy-destination-if-...` headers are not atomic in relation to the `x-amz-copy-source-if...` headers.

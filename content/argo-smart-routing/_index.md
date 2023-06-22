@@ -33,7 +33,7 @@ Argo Smart Routing includes comprehensive analytics to compare performance impro
 
 ## Related products
 
-{{<related header="Argo Tiered Cache" href="/cache/how-to/tiered-cache/" product="cache">}}
+{{<related header="Tiered Cache" href="/cache/how-to/tiered-cache/" product="cache">}}
 Increase cache hit ratios to reduce requests to your origin server.
 {{</related>}}
 

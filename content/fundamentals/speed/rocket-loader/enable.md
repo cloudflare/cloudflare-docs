@@ -31,3 +31,5 @@ To enable or disable **Rocket Loader** with the API, send a [`PATCH`](/api/opera
 
 {{</tab>}}
 {{</tabs>}}
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}

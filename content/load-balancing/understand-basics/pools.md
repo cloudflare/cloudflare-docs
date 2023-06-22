@@ -49,3 +49,15 @@ The Cloudflare API supports the following commands for pools. Examples are given
 | [Overwrite existing pool](/api/operations/account-load-balancer-pools-update-pool) | `PUT` | `accounts/:account_id/load_balancers/pools/:id` |
 | [Preview Pool](/api/operations/account-load-balancer-pools-preview-pool) | `POST` | `account/:account_id/load_balancers/pools/:id/preview` |
 | [List Pool References](/api/operations/account-load-balancer-pools-list-pool-references) | `GET` | `accounts/:account_id/load_balancers/pools/:id/references` |
+
+## Least Outstanding Request Steering
+
+{{<render file="_least-outstanding-request-steering-definition.md">}}
+
+### Configure via the API
+
+{{<render file="_least-outstanding-request-steering-configuration.md">}}
+
+### Limitations
+
+{{<render file="_least-outstanding-request-steering-limitations.md">}}

@@ -183,3 +183,37 @@ ResolveUnicastSingleLabel=yes
 ```sh
 $ sudo systemctl restart systemd-resolved.service
 ```
+
+## Windows incorrectly shows `No Internet access` when WARP is enabled.
+
+Windows runs network connectivity checks that can sometimes fail due to how the WARP client configures the local DNS proxy on the device. This can result in a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. However, some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
+
+There are two options to resolve the issue:
+
+- **Option 1**: In Windows, configure the Network Connectivity Status Indicator (NCSI) to detect the WARP DNS server.
+{{<tabs labels="Registry key | Group policy">}}
+{{<tab label="registry key" no-code="true">}}
+
+To fix the issue with a registry key:
+
+```bash
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator" /v UseGlobalDNS /t REG_DWORD /d 1 /f
+```
+
+{{</tab>}}
+{{<tab label="group policy" no-code="true">}}
+
+To fix the issue with a local group policy:
+1. Open `gpedit.msc`.
+2. Go to **Computer Configuration** > **Administrative Templates** > **Network** > **Network Connectivity Status Indicator**.
+3. Enable **Specify Global DNS**.
+4. Update group policy settings on the device:
+  ```bash
+  gpupdate /force
+  ```
+5. Reboot the device.
+
+{{</tab>}}
+{{</tabs>}}
+
+- **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.

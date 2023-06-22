@@ -107,17 +107,21 @@ If you enabled user and group synchronization with [SCIM](/cloudflare-one/identi
 
 ### Okta (OIDC)
 
+If you added Okta as an [OIDC provider](/cloudflare-one/identity/idp-integration/okta/), use the User Group Names selector:
+
 | Selector         | Value       |
 | ---------------- | ----------- |
 | User Group Names | `Marketing` |
 
-The Okta IdP supports user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups).
+The Okta OIDC integration supports user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups).
 
 ### Okta (SAML)
 
+If you added Okta as a [SAML provider](/cloudflare-one/identity/idp-integration/okta-saml/), use the SAML Attributes selector:
+
 | Selector        | Attribute name | Attribute value |
 | --------------- | -------------- | --------------- |
-| SAML Attributes | `name`         | `Marketing`     |
+| SAML Attributes | `groups`       | `Marketing`     |
 
 ### Generic SAML IdP
 
@@ -125,7 +129,7 @@ For a [generic SAML provider](/cloudflare-one/identity/idp-integration/generic-s
 
 | Selector        | Attribute name | Attribute value |
 | --------------- | -------------- | --------------- |
-| SAML Attributes | `name`         | `Marketing`     |
+| SAML Attributes | `department`    | `Marketing`     |
 
 ### Generic OIDC IdP
 
