@@ -72,6 +72,9 @@ export default {
 
 Above `export default`, add the imports for `openai` and `axios-fetch`:
 ```js
+---
+filename: worker.js
+---
 import { Configuration, OpenAIApi } from "openai";
 import fetchAdapter from "@vespaiach/axios-fetch-adapter";
 ```
@@ -79,6 +82,9 @@ import fetchAdapter from "@vespaiach/axios-fetch-adapter";
 Within your `fetch` function, set up the configuration and instantiate your `OpenAIApi` client:
 
 ```js
+---
+filename: worker.js
+---
 async fetch(request, env, ctx) {
   const configuration = new Configuration({
         apiKey: env.OPENAI_API_KEY,
@@ -104,6 +110,9 @@ OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 
 Now, make your request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) with your functions argument to indicate that you are enabling [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with this request.
 ```js
+---
+filename: worker.js
+---
 try{
   const chatCompletion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo-0613",
@@ -146,6 +155,7 @@ Review the arguments you are passing to OpenAI:
 
 After your request to OpenAI completes, you are logging the message back to confirm it is telling you to call your function. Run your code with `npx wrangler dev` and open it in a browser by pressing `b`. You should see the following in your terminal log:
 
+After our request to OpenAI completes, we're logging the message back to confirm it's telling us to call our function. Run your code with `npx wrangler dev` and open it in a browser by pressing `b` on your keyboard after the `npx wrangler dev` command prompts you in terminal. You should see the following in your terminal log:
 ```sh
 Object {
   name: read_website_content,
@@ -160,6 +170,9 @@ Function calling intelligently determines what content to pass in the argument. 
 
 Add the code to call your function when OpenAI determines you need to:
 ```js
+---
+filename: worker.js
+---
  let websiteContent;
 
  if(msg.function_call.name === "read_website_content") {
@@ -174,8 +187,11 @@ The above function does not exist. You need to create it. Use a node library cal
 npm install cheerio
 ```
 
-With cheerio installed, import it at the top of your ___ file and immediately create your `read_website_content` function:
+With cheerio installed, import it at the top of your `worker.js` file and immediately create your `read_website_content` function:
 ```js
+---
+filename: worker.js
+---
 import cheerio from "cheerio"; 
 
 async function read_website_content(url) {
@@ -194,7 +210,7 @@ async function read_website_content(url) {
 
 In this function, you take the URL that you received back from OpenAI and use JavaScript's [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to pull the content of the website. Then, your function will use `cheerio` to pull out only the text of the website. You then create a JSON object for the response.
 
-With this __ in place, run your code again to review that you are properly calling your function and pulling website data:
+With this function in place, run your code again to review that you are properly calling your function and pulling website data:
 ```sh
 npx wrangler dev
 ```
@@ -203,8 +219,11 @@ When you open a browser, you should see the log of the website content in your t
 
 ## Send your function response back to OpenAI
 
-The last part of your application is returning the data you got back from your ___ function to OpenAI and having it answer the user's original question. Right after you log `websiteContent`, make a second call to the chat completion API:
+The last part of your application is returning the data you got back from your `worker.js` function to OpenAI and having it answer the user's original question. Right after you log `websiteContent`, make a second call to the chat completion API:
 ```js
+---
+filename: worker.js
+---
 const secondChatCompletion = await openai.createChatCompletion({
   model: "gpt-3.5-turbo-0613",
   messages: [
@@ -221,7 +240,7 @@ const secondChatCompletion = await openai.createChatCompletion({
 return new Response(secondChatCompletion.data.choices[0].message.content);
 ```
 
-This <proper noun needed> will look similar to <proper noun needed> first.This time, instead of passing the schema data about your function, you are passing a message that contains the response you got back from your function. OpenAI will use this information to build its response, which you will output to the browser.
+This request to OpenAI will look similar to first request. But this time, instead of passing the schema data about your function, you are passing a message that contains the response you got back from your function. OpenAI will use this information to build its response, which you will output to the browser.
 
 Run your code again by running `npx wrangler dev` and open it in your browser. This will now show you OpenAI's response using real-time information from the website. You can try other websites and topics by updating the user's message in your two API calls.
 
