@@ -8,7 +8,7 @@ meta:
 
 # GraphQL Analytics
 
-Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to rules matching your traffic. This contains both rules you configured in the Magic Firewall dashboard, and the rules managed by Cloudflare as a part of [MFW Managed rules](/magic-firewall/how-to/enable-managed-rulesets/) and [MFW IDS](/magic-firewall/about/ids/) features.
+Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to rules matching your traffic. This contains both rules you configured in the Magic Firewall dashboard, and the rules managed by Cloudflare as a part of [Magic Firewall Managed rules](/magic-firewall/how-to/enable-managed-rulesets/) and [Magic Firewall IDS](/magic-firewall/about/ids/) features.
 
 Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
 
