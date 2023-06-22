@@ -5445,6 +5445,10 @@ pre {
   background-color: #2f3133;
 }
 
+.littlefoot__button {
+  max-width: 3em;
+}
+
 .littlefoot-footnote__button {
   max-width: 3em;
 }
