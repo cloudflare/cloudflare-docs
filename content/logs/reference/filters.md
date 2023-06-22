@@ -216,8 +216,6 @@ The filter field has limits of approximately 30 operators and 1000 bytes. Anythi
 
 ## Logical Operators
 
-- Logical operators are optional, but if used, it must contain the `where` key.
-
 - Filters can be connected using `AND`, `OR` logical operators.
 
 - Logical operators can be nested.
@@ -234,7 +232,7 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 
 ## Setting filters via API or dashboard
 
-Filters can be set via API or the Cloudflare dashboard.
+Filters can be set via API or the Cloudflare dashboard. Note that using a filter is optional, but if used, it must contain the `where` key.
 
 ### API
 
