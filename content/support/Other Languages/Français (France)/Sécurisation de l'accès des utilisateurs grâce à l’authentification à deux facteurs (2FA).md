@@ -32,7 +32,7 @@ Activer l’authentification à deux facteurs sur votre compte Cloudflare :
 
 4\. Défilez vers le bas jusqu'à la section **Two-Factor Authentication** et basculez sur _On_.
 
-![2FA_enable.png](/support/static/2FA_enable.png)
+![2FA_enable.png](/images/support/2FA_enable.png)
 
 ___
 
@@ -51,13 +51,13 @@ Pour activer l’authentification à deux facteurs :
 
 -   Si vous ne parvenez pas à scanner le code QR, cliquez sur **Can't scan QR code (Impossible de scanner le code QR)**, puis suivez les étapes de la procédure de configuration manuelle de votre application d'authentification..
 
-![2FA_scan_QR_code.png](/support/static/2FA_scan_QR_code.png)
+![2FA_scan_QR_code.png](/images/support/2FA_scan_QR_code.png)
 
 3\. Saisissez votre mot de passe et cliquez à nouveau sur **Next** pour voir vos codes de vérification de secours.
 
 4\. Après avoir téléchargé vos codes de secours, nous vous recommandons de les enregistrer en lieu sûr. Vous pouvez cliquer sur **Download** (Télécharger), **Print** (Imprimer), ou **Copy** (Copier) pour sauvegarder les codes. Cliquez ensuite sur **Next**.
 
-![2FA_review_and_backup_codes_v2.png](/support/static/2FA_review_and_backup_codes_v2.png)
+![2FA_review_and_backup_codes_v2.png](/images/support/2FA_review_and_backup_codes_v2.png)
 
 Vous pouvez renouveler vos codes de secours à l'écran suivant ou à tout moment dans l'onglet **Authentication**. 
 
@@ -65,7 +65,7 @@ Vous pouvez renouveler vos codes de secours à l'écran suivant ou à tout momen
 
 6\. Vous pouvez également demander de nouveaux codes de secours. Cliquez sur **regenerate them now** (renouveler les maintenant) pour enregistrer de nouveaux codes de secours pour l’authentification à deux facteurs.
 
-![2FA_configuration_complete.png](/support/static/2FA_configuration_complete.png)
+![2FA_configuration_complete.png](/images/support/2FA_configuration_complete.png)
 
 ___
 
@@ -85,7 +85,7 @@ Pour désactiver l’authentification à deux facteurs sur votre compte Cloudfla
 
 5\. Saisissez votre mot de passe, un code d'application d'authentification ou un code de secours, puis cliquez sur **Disable** (Désactiver).
 
-![2FA_disable.png](/support/static/2FA_disable.png)
+![2FA_disable.png](/images/support/2FA_disable.png)
 
 ___
 
@@ -101,7 +101,7 @@ Lors de la configuration de l’authentification à deux facteurs, il vous a ét
 
 3\. Saisissez le code de secours sur l'écran de connexion, puis cliquez sur **Log in**.
 
-![2FA_backup_code_login_annontated.png](/support/static/2FA_backup_code_login_annontated.png)
+![2FA_backup_code_login_annontated.png](/images/support/2FA_backup_code_login_annontated.png)
 
 4\. Si vous utilisez un code de secours, il devient invalide.
 
