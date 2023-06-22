@@ -1012,7 +1012,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 | Name                       | Option           | Value                         |
 | -------------------------- | ---------------- | ----------------------------- |
 | `Magic_WAN_VLAN0020_Tun02` | Destination      | _VLAN0020_10-1-20-0--24_      |
-|                            | Inteface         | _tunnel.2_                    |
+|                            | Interface         | _tunnel.2_                    |
 |                            | Next hop         | _IP Address_                  |
 |                            |                  | _CF_MWAN_IPsec_VTI_02_Remote_ |
 |                            | Metric           | `11`                          |
