@@ -1,7 +1,9 @@
 ---
 pcx_content_type: concept
-title: DNSSEC options for Secondary DNS
+title: DNSSEC options
 layout: single
+meta:
+    title: DNSSEC for Secondary DNS
 ---
 
 # Use DNSSEC with incoming zone transfers
