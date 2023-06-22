@@ -1,9 +1,9 @@
 name: File Check
 
 on:
-  push:
+  pull_request:
     branches:
-      - production  # Adjust the branch name as needed
+      - production
 
 jobs:
   file-check:
