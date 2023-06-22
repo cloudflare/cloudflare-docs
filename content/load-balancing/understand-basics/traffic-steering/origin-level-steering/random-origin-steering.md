@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Random
 weight: 2
+meta:
+  title: Random steering
 ---
 
 # Random steering

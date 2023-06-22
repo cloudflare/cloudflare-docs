@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Hash
 weight: 3
+meta:
+  title: Hash steering
 ---
 
 # Hash steering

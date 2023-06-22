@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Least Outstanding Request
+weight: 5
+meta:
+  title: Least Outstanding Request steering
 ---
 
 ## Least Outstanding Request Steering

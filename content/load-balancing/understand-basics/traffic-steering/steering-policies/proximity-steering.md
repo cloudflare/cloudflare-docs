@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Proximity
-weight: 5
+weight: 4
 meta:
   title: Proximity steering
 ---
