@@ -40,6 +40,8 @@ For setup, select the following options:
 * For `Do you want to use TypeScript?`, choose `no`.
 * For `Do you want to deploy your application?`, choose `yes`.
 
+Go to your new `openai-function-calling-workers` Worker project:
+
 ```sh
 $ cd openai-function-calling-workers
 ```
