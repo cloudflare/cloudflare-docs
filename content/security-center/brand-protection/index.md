@@ -1,18 +1,18 @@
 ---
-pcx_content_type: how-to
-title: Add Brand Protection (beta)
-weight: 4
+pcx_content_type: concept
+title: Brand Protection (beta)
+weight: 6
 ---
 
-{{<beta>}} Add Brand Protection {{</beta>}}
-
-Common misspellings (`cloudfalre.com`) and concatenation of services (`cloudflare-okta.com`) are often registered by attackers to trick unsuspecting victims into submitting private information such as passwords. Brand Protection gives you the ability to search for new domains that may be attempting to impersonate your brand. Our system allows you to save search queries that run continuously and alert you if any new domains match those queries.
+{{<beta>}} Brand Protection {{</beta>}}
 
 {{<Aside type="note">}}
 
 While the Brand Protection tool is in beta, you will need to request access by filling in the [sign-up form](http://cloudflare.com/lp/brandprotection).
 
 {{</Aside>}}
+
+Common misspellings (`cloudfalre.com`) and concatenation of services (`cloudflare-okta.com`) are often registered by attackers to trick unsuspecting victims into submitting private information such as passwords. Brand Protection gives you the ability to search for new domains that may be attempting to impersonate your brand. Our system allows you to save search queries that run continuously and alert you if any new domains match those queries.
 
 ## Domain search
 
@@ -31,7 +31,7 @@ If a brand phrase or search term has less than five characters, you can only cho
 6. Select **Apply**. This will create a preview of the most recent results matching your query.
 7. You can select **Save query** to monitor it in the future and perform other actions, such as delete, clone and set up alerts, according to your paid plan limits.
 
-In the section **Monitored queries**, you can check all the queries that you selected to monitor. You can delete, clone, or create notifications for a query. Refer to [Brand Protection Alerts](/security-center/tasks/brand-protection/#brand-protection-alerts) to set up notifications.
+In the section **Monitored queries**, you can check all the queries that you selected to monitor. You can delete, clone, or create notifications for a query. Refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts) to set up notifications.
 
 ## Investigate a query
 
@@ -63,6 +63,6 @@ You can also set up the alerts from your [Notifications](/fundamentals/notificat
 
 Manage your notifications in the **All notifications** tab. You can disable, edit, delete, or test them. 
 
-## Limits
+## Limitations
 
 While this product is in beta, all Cloudflare paid plans have access to the functionality with limits according to the plans. Professional and Business customers have access to a limited number of private scans and on-demand searches, while Enterprise customers and Cloudforce One subscribers will have higher limits and the ability to save queries and create notifications for when there are new domain matches.
