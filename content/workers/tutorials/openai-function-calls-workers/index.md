@@ -9,7 +9,6 @@ layout: single
 
 # OpenAI GPT function calling with JavaScript and Cloudflare Workers 
 
-
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
