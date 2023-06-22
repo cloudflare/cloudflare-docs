@@ -32,7 +32,7 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "accountTag": "CLOUDFLARE_ACCOUNT_ID",
+    "accountTag": "<CLOUDFLARE_ACCOUNT_ID>",
     "filter": {
       "datetime_geq": "2023-06-20T11:00:00.000Z",
       "datetime_leq": "2023-06-20T12:00:00.000Z",
