@@ -445,33 +445,39 @@ The Palo Alto Networks Next-Generation Firewall (NGFW) used to create this tutor
 | `Untrust_L3_Zone`    | ethernet1/2 |           |
 | `Cloudflare_L3_Zone` | tunnel.1    | tunnel.2  |
 
-The tunnel interfaces are placed in a separate Zone to facilitate the configuration of more granular security policies. The use of any other zone for the tunnel interfaces will require adapting the configuration accordingly.
+The tunnel interfaces are placed in a separate zone to facilitate the configuration of more granular security policies. The use of any other zone for the tunnel interfaces will require adapting the configuration accordingly.
 
 {{<Aside type="note">}}Any Magic WAN protected networks that are not local should be considered part of the `Cloudflare_L3_Zone`.{{</Aside>}}
 
 #### Set up via dashboard
 
+##### `Trust_L3_zone`
+
 | Name              | Option                  | Value           |
 | ----------------- | ----------------------- | --------------- |
-| **Trust_L3_zone** | Log setting             | _None_          | 
+| `Trust_L3_zone`   | Log setting             | _None_          | 
 |                   | Type                    | _Layer3_        |
 |                   | Interfaces              | **ethernet1/1** |
 |                   | Zone Protection Profile | _None_          |
 
 ![The Palo Alto interface showing the Trust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
 
+##### `Untrust_L3_zone`
+
 | Name                | Option                  | Value               |
 | ------------------- | ----------------------- | ------------------- |
-| **Untrust_L3_zone** | Log setting             | _None_              |
+| `Untrust_L3_zone`   | Log setting             | _None_              |
 |                     | Type                    | _Layer3_            |
-|                     | Interfaces              | **ethernet1/2*      |
+|                     | Interfaces              | **ethernet1/2**      |
 |                     | Zone Protection Profile | _Untrust_Zone_Prof_ |
 
 ![The Palo Alto interface showing the Untrust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
 
+##### `Cloudflare_L3_zone`
+
 | Name                   | Option                  | Value                          |
 | ---------------------- | ----------------------- | ------------------------------ |
-| **Cloudflare_L3_zone** | Log setting             | _None_                         |
+| `Cloudflare_L3_zone`   | Log setting             | _None_                         |
 |                        | Type                    | _Layer3_                       |
 |                        | Interfaces              | **tunnel.1** <br> **tunnel.2** |
 |                        | Zone Protection Profile | _None_                         |
@@ -493,23 +499,23 @@ set zone Cloudflare_L3_Zone network layer3 [ tunnel.1 tunnel.2 ]
 
 This would be a good time to save and commit the configuration changes made thus far. Once complete, make sure you test basic connectivity to and from the firewall.
 
-### IKE Crypto Profile Phase 1
+### IKE crypto profile Phase 1
 
-Add a new IKE Crypto Profile to support the required parameters for Phase 1.
+Add a new IKE crypto profile to support the required parameters for Phase 1.
 
-Multiple DH Groups and Authentication settings are defined in the desired order. Palo Alto Networks Next-Generation Firewall (NGFW) will automatically negotiate the optimal settings based on specified values.
+Multiple DH groups and authentication settings are defined in the desired order. Palo Alto Networks Next-Generation Firewall (NGFW) will automatically negotiate the optimal settings based on specified values.
 
 #### Set up via dashboard
 
-| Name                | Option                        | Value                                |
-| ------------------- | ----------------------------- | ------------------------------------ |
-| `CF_IKE_Crypto_CBC` | DH Group                      | `group14` <br> `group5`              |
-|                     | Authentication                | `sha512` <br> `sha384` <br> `sha256` |
-|                     | Encryption                    | `aes-256-cbc`                        |
-|                     | Key Lifetime                  | 8 hours                              |
-|                     | IKEv2 Authentication Multiple | `0`                                  |
+| Name                | Option                        | Value                                      |
+| ------------------- | ----------------------------- | ------------------------------------       |
+| `CF_IKE_Crypto_CBC` | DH Group                      | **group14** <br> **group5**                |
+|                     | Authentication                | **sha512** <br> **sha384** <br> **sha256** |
+|                     | Encryption                    | **aes-256-cbc**                            |
+|                     | Key Lifetime                  | 8 hours                                    |
+|                     | IKEv2 Authentication Multiple | `0`                                        |
 
-![IKE Crypto Profile you need to set up on your device for Phase 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/01_ike_crypto_profile.png)
+![IKE crypto profile you need to set up on your device for Phase 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/01_ike_crypto_profile.png)
 
 #### Set up via command line
 
@@ -523,9 +529,9 @@ set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC lifetime h
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC authentication-multiple 0
 ```
 
-### IPsec Crypto Profile Phase 2
+### IPsec crypto profile Phase 2
 
-Add a new IPsec Crypto Profile to support the required parameters for Phase 2.
+Add a new IPsec crypto profile to support the required parameters for Phase 2.
 
 Multiple Authentication settings are defined in the desired order. Palo Alto Networks Next-Generation Firewall (NGFW) will automatically negotiate the optimal settings based on specified values.
 
@@ -538,7 +544,7 @@ Multiple Authentication settings are defined in the desired order. Palo Alto Net
 |                     | DH Group       | `group14`            |
 |                     | Lifetime       | 1 hour               |
 
-![IPsec Crypto Profile you need to set up on your device](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
+![IPsec crypto profile you need to set up on your device](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
 
 #### Set up via command line
 
@@ -573,7 +579,7 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 |          | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.  |
 |          | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
 |          | Peer Identification  | _None_ |
-| Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_ |
+| Advanced | IKE crypto profile   | _CF_IKE_Crypto_CBC_ |
 |          | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 {{</table-wrap>}}
@@ -595,7 +601,7 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 |          | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.  |
 |          | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
 |          | Peer Identification  | _None_ |
-| Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_ |
+| Advanced | IKE crypto profile   | _CF_IKE_Crypto_CBC_ |
 |          | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 {{</table-wrap>}}
@@ -660,7 +666,7 @@ There are a few prerequisites you should be aware of before continuing:
 | ----------------------- | ------------------------ | --------------------- |
 | `CF_Magic_WAN_IPsec_01` | Tunnel interface         | tunnel.1            |
 |                         | IKE Gateway              | _CF_Magic_WAN_IKE_01_ |
-|                         | IPsec Crypto Profile     | _CF_IKE_Crypto_CBC_   |
+|                         | IPsec crypto profile     | _CF_IKE_Crypto_CBC_   |
 |                         | Enable Replay Protection | **Disable**           |
 
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
@@ -672,7 +678,7 @@ There are a few prerequisites you should be aware of before continuing:
 | ----------------------- | ------------------------ | ---------------------  |
 | `CF_Magic_WAN_IPsec_02` | Tunnel interface         | tunnel.2             |
 |                         | IKE Gateway              | _CF_Magic_WAN_IKE_02_  |
-|                         | IPsec Crypto Profile     | _CF_IKE_Crypto_CBC_    |
+|                         | IPsec crypto profile     | _CF_IKE_Crypto_CBC_    |
 |                         | Enable Replay Protection | **Disable**            |
 
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
