@@ -19,7 +19,6 @@ meta:
 
 {{<button-group>}}
   {{<button type="primary" href="/security-center/get-started/">}}Get started{{</button>}}
-  {{<button type="secondary" href="/security-center/about/">}}Learn more{{</button>}}
 {{</button-group>}}
 
 ***
