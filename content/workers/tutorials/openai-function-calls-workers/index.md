@@ -203,7 +203,7 @@ When you open a browser, you should see the log of the website content in your t
 
 ## Send your function response back to OpenAI
 
-The last part of our application is returning the data we got back from our function to OpenAI and having it answer the user's original question. Right after we log `websiteContent`, we'll make a second call to the chat completion API:
+The last part of your application is returning the data you got back from your ___ function to OpenAI and having it answer the user's original question. Right after you log `websiteContent`, make a second call to the chat completion API:
 ```js
 const secondChatCompletion = await openai.createChatCompletion({
   model: "gpt-3.5-turbo-0613",
