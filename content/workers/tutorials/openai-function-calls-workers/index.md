@@ -70,7 +70,7 @@ export default {
 };
 ```
 
-Above export default, add the imports for openai and axios-fetch:
+Above `export default`, add the imports for `openai` and `axios-fetch`:
 ```js
 import { Configuration, OpenAIApi } from "openai";
 import fetchAdapter from "@vespaiach/axios-fetch-adapter";
