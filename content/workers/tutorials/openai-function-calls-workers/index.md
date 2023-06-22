@@ -58,7 +58,7 @@ npm install openai
 npm install @vespaiach/axios-fetch-adapter
 ```
 
-Initially, your generated `worker.js` should look like this:
+Initially, your generated `worker.js` file should look like this:
 ```js
 ---
 filename: worker.js
