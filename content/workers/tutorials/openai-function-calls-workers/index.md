@@ -201,7 +201,7 @@ npx wrangler dev
 
 When you open a browser, you should see the log of the website content in your terminal.
 
-## Sending our function response back to OpenAI
+## Send your function response back to OpenAI
 
 The last part of our application is returning the data we got back from our function to OpenAI and having it answer the user's original question. Right after we log `websiteContent`, we'll make a second call to the chat completion API:
 ```js
