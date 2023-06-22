@@ -8,9 +8,7 @@ meta:
 
 # Deploy a custom certificate
 
-{{<Aside type="note">}}
-Only available on Enterprise plans.
-{{</Aside>}}
+{{<plan type="enterprise">}}
 
 Enterprise customers who do not wish to install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) have the option to upload their own root certificate to Cloudflare. Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time.
 
