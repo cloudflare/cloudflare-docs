@@ -1,7 +1,7 @@
 ---
 title: Migration guides
 pcx_content_type: navigation
-weight: 6
+weight: 4
 layout: single
 meta:
   description: Reference guides for users migrating from deprecated Cloudflare products to the Cloudflare WAF.
