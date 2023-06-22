@@ -7,18 +7,18 @@ meta:
 
 # Palo Alto Networks Next-Generation Firewall
 
-This tutorial includes the steps required to configure Magic IPsec Tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare Magic WAN through a Layer 3 deployment.
+This tutorial includes the steps required to configure IPsec tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare Magic WAN through a Layer 3 deployment.
 
-## Software version tested:
+## Software version tested
 - PAN-OS 9.1.14-h4
 
 ## Use Cases
 - **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
-- **Magic WAN with Cloudflare Zero Trust (Gateway Egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+- **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
 ## Assumptions
 
-This documentation assumes you have a standalone Palo Alto Networks Next-Generation Firewall with two network interfaces: 
+This tutorial assumes you have a standalone NGFW with two network interfaces: 
 - One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918]((https://datatracker.ietf.org/doc/html/rfc1918)) non-Internet routable IP address (internal network); 
 - The other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
 
@@ -46,14 +46,14 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 ### Magic IPsec Tunnels
 
-Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels). The following settings are used for the IPsec tunnels referenced throughout the remainder of this guide.
-
-{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/how-to/run-tunnel-health-checks/) with Magic WAN. The settings for must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommendeds that you lower the rate at which health check probes are sent.{{</Aside>}}
+Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels). The settings mentioned in the how-to below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
 These are the target IP addresses for bidirectional tunnel health checks:
 
 - `172.64.240.253`: Use with the primary IPsec tunnel.
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
+
+{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/how-to/run-tunnel-health-checks/) with Magic WAN. The settings for must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommendeds that you lower the rate at which health check probes are sent.{{</Aside>}}
 
 #### Add IPsec tunnels
 
@@ -61,7 +61,7 @@ These are the target IP addresses for bidirectional tunnel health checks:
     - **Tunnel name**: `SFO_IPSEC_TUN01`
     - **Interface address**: `10.252.2.96/31`
     - **Customer endpoint**: `203.0.113.254`
-    - `Cloudflare endpoint`: `162.159.66.164`
+    - **Cloudflare endpoint**: `162.159.66.164`
     - **Health check rate**: _Low_ (default value is _Medium_)
     - **Health check type**: _Reply_
     - **Health check target**: _Custom_ (default is _Default_)
@@ -294,7 +294,7 @@ You can define an Interface Management Profile to allow ping from the dashboard:
 
 1. Go to **Network Profiles** > **Interface Mgmt**.
 2. In the **Network** tab select **Add**.
-3. Create a profile to allow Ping, and in the **Network Services** group select **Ping**.
+3. Create profiles to allow Ping, and in the **Network Services** group select **Ping**.
 
 ![Interface Mgmt Profile](/images/magic-wan/third-party/palo-alto/panw_interfaces/01_int_mgmt_prof.png)
 
@@ -302,7 +302,7 @@ You can define an Interface Management Profile to allow ping from the dashboard:
 
 #### Set up via command line
 
-You can also use the command line to alloq ping:
+You can also use the command line to allow ping:
 
 ```bash
 set network profiles interface-management-profile Allow_Ping userid-service no
@@ -322,33 +322,33 @@ Palo Alto Networks Next-Generation Firewall (NGFW) is configured with two Ethern
 
 Follow the guidance on the images below to set up the Ethernet interfaces through the dashboard.
 
-**ethernet1/1: `Trust_L3_Zone`**
+##### ethernet1/1: `Trust_L3_Zone`
 
-| Name            | Option             | Value                                              |
-| --------------- | ------------------ | -------------------------------------------------- |
-| **ethernet1/1** | Interface Type     | _Layer3_                                           |
-|                 | Netflow Profile    | _None_                                             |
-| **Config**      | Virtual Router     | _default_                                          |
-|                 | Security Zone      | _Trust_L3_Zone_                                    |
-| **IPv4**        | Type               | **Static**                                         |
-|                 | IP                 | `VLAN0100_L3_10-1-100-254--24` <br> address object |
-| **Advanced**    | Management Profile | _Mgmt_Services_                                    |
+| Name             | Option             | Value                                              |
+| ---------------  | ------------------ | -------------------------------------------------- |
+| **ethernet1/1**  | Interface Type     | _Layer3_                                           |
+|                  | Netflow Profile    | _None_                                             |
+| **Config tab**   | Virtual Router     | _default_                                          |
+|                  | Security Zone      | _Trust_L3_Zone_                                    |
+| **IPv4 tab**     | Type               | **Static**                                         |
+|                  | IP                 | `VLAN0100_L3_10-1-100-254--24` <br> address object |
+| **Advanced tab** | Management Profile | _Mgmt_Services_                                    |
 
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/03_ethernet-1-1_page3.png)
 
-**ethernet1/2: `Untrust_L3_Zone`**
+##### ethernet1/2: `Untrust_L3_Zone`
 
 | Name              | Option              | Value                                               |
 | ----------------- | ------------------- | --------------------------------------------------- |
 | **ethernet1/2**   | Interface Type      | _Layer3_                                            |
 |                   | Netflow Profile     | _None_                                              |
-| **Config**        | Virtual Router      | _default_                                           |
+| **Config tab**    | Virtual Router      | _default_                                           |
 |                   | Security Zone       | _Untrust_L3_Zone_                                   |
-| **IPv4**          | Type                | **Static**                                          |
+| **IPv4 tab**      | Type                | **Static**                                          |
 |                   | IP                  | `Internet_L3_203-0-113-254--24` <br> address object |
-| **Advanced**      | Management Profile  | _Allow_Ping_                                        |
+| **Advanced tab**  | Management Profile  | _Allow_Ping_                                        |
 |                   | MTU                 | `576 - 1500`                                        |
 |                   | Adjust TCP MSS      | **Enable**                                          |
 |                   | IPv4 MSS Adjustment | `64`                                                |
@@ -388,7 +388,7 @@ Review the images below for more information.
 
 #### Set up via dashboard
 
-##### tunnel.1 - Cloudflare_L3_Zone
+##### `tunnel.1` - Cloudflare_L3_Zone
 
 | Name              | Option              | Value                                            |
 | ----------------- | ------------------- | ------------------------------------------------ |
@@ -559,7 +559,7 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 
 #### Set up via dashboard
 
-**Tunnel 1 settings: `CF_Magic_WAN_IKE_01`**
+##### Tunnel 1 settings: `CF_Magic_WAN_IKE_01`
 
 {{<Aside type="note">}}Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.{{</Aside>}}
 
@@ -581,7 +581,7 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 ![IKE gateway settings for tunnel 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/03_ike_gw01_page1.png)
 ![IKE gateway settings for tunnel 1](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/04_ike_gw01_page2.png)
 
-**Tunnel 2 settings: `CF_Magic_WAN_IKE_02`**
+##### Tunnel 2 settings: `CF_Magic_WAN_IKE_02`
 
 {{<Aside type="note">}}Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.{{</Aside>}}
 
@@ -605,7 +605,7 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 
 #### Set up via command line
 
-**Tunnel 1 settings: `CF_Magic_WAN_IKE_01`**
+##### Tunnel 1 settings: `CF_Magic_WAN_IKE_01`
 
 ```bash
 set network ike gateway CF_Magic_WAN_IKE_01 protocol ikev1 dpd enable yes
@@ -623,7 +623,7 @@ set network ike gateway CF_Magic_WAN_IKE_01 local-id type fqdn
 set network ike gateway CF_Magic_WAN_IKE_01 disabled no
 ```
 
-**Tunnel 2 settings: `CF_Magic_WAN_IKE_02`**
+##### Tunnel 2 settings: `CF_Magic_WAN_IKE_02`
 
 ```bash
 set network ike gateway CF_Magic_WAN_IKE_02 protocol ikev1 dpd enable yes
@@ -654,7 +654,7 @@ There are a few prerequisites you should be aware of before continuing:
 
 #### Set up via dashboard
 
-**Tunnel 1 settings: `CF_Magic_WAN_IPsec_01`**
+##### Tunnel 1 settings: `CF_Magic_WAN_IPsec_01`
 
 | Name                    | Option                   | Value |
 | ----------------------- | ------------------------ | --------------------- |
@@ -666,7 +666,7 @@ There are a few prerequisites you should be aware of before continuing:
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
 
-**Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`**
+##### Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`
 
 | Name                    | Option                   | Value                  |
 | ----------------------- | ------------------------ | ---------------------  |
@@ -680,7 +680,7 @@ There are a few prerequisites you should be aware of before continuing:
 
 #### Set up via command line
 
-**Tunnel 1 settings: `CF_Magic_WAN_IPsec_01`**
+##### Tunnel 1 settings: `CF_Magic_WAN_IPsec_01`
 
 ```bash
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 auto-key ike-gateway CF_Magic_WAN_IKE_01
@@ -692,7 +692,7 @@ set network tunnel ipsec CF_Magic_WAN_IPsec_01 anti-replay no
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 disabled no
 ```
 
-**Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`**
+##### Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`
 
 ```bash
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 auto-key ike-gateway CF_Magic_WAN_IKE_02
@@ -718,13 +718,13 @@ This is a good time to ensure the IPsec tunnels are established and to validate 
 
 The first step is to verify IKE Phase 1 completed successfully:
 
-**Syntax**
+##### Syntax
 
 ```bash
 show vpn ike-sa gateway [value]
 ```
 
-**Example for `CF_Magic_WAN_IKE_01`**
+##### Example for `CF_Magic_WAN_IKE_01`
 
 ```bash
 admin@panvm03> show vpn ike-sa gateway CF_Magic_WAN_IKE_01
@@ -750,7 +750,7 @@ CF_Magic_WAN_IKE_01    2        CF_Magic_WAN_IPsec_01     322550   67       Init
 Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
 ```
 
-**Example for `CF_Magic_WAN_IKE_02`**
+##### Example for `CF_Magic_WAN_IKE_02`
 
 ```bash
 admin@panvm03> show vpn ike-sa gateway CF_Magic_WAN_IKE_02
@@ -781,13 +781,13 @@ Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
 
 Magic IPsec Tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
 
-**Syntax**
+##### Syntax
 
 ```bash
 test vpn ike-sa gateway [value]
 ```
 
-**Example for `CF_Magic_WAN_IKE_01`**
+##### Example for `CF_Magic_WAN_IKE_01`
 
 ```bash
 admin@panvm03> test vpn ike-sa gateway CF_Magic_WAN_IKE_01
@@ -796,7 +796,7 @@ Start time: Jun.05 00:30:29
 Initiate 1 IKE SA.
 ```
 
-**Example for `CF_Magic_WAN_IKE_02`**
+##### Example for `CF_Magic_WAN_IKE_02`
 
 ```bash
 admin@panvm03> test vpn ike-sa gateway CF_Magic_WAN_IKE_02
@@ -811,13 +811,13 @@ Repeat these commands for the respective tunnel to ensure the IKE SA(s) display 
 
 To ensure the IPsec tunnels are established, ping the remote Virtual Tunnel Interface (Cloudflare side) from the​ command line on the Palo Alto Networks Next-Generation Firewall. Ensure you specify the source IP address of the ping from the local side of the Virtual Tunnel Interface:
 
-**Syntax**
+##### Syntax
 
 ```bash
 show vpn ipsec-sa tunnel [value]
 ```
 
-**Example for `CF_Magic_WAN_IPsec_01`**
+##### Example for `CF_Magic_WAN_IPsec_01`
 
 ```bash
 admin@panvm03> show vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_01
@@ -831,7 +831,7 @@ GwID/client IP  TnID   Peer-Address           Tunnel(Gateway)                   
 Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
 ```
 
-**Example for `CF_Magic_WAN_IPsec_02`**
+##### Example for `CF_Magic_WAN_IPsec_02`
 
 ```bash
 admin@panvm03> show vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_02
@@ -849,13 +849,13 @@ Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
 
 Magic IPsec Tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
 
-**Syntax**
+##### Syntax
 
 ```bash
 test vpn ipsec-sa tunnel [value]
 ```
 
-**Example for `CF_Magic_WAN_IPsec_01`**
+##### Example for `CF_Magic_WAN_IPsec_01`
 
 ```bash
 admin@panvm03> test vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_01
@@ -864,7 +864,7 @@ Start time: Jun.05 00:37:50
 Initiate 1 IPsec SA for tunnel CF_Magic_WAN_IPsec_01.
 ```
 
-**Example for `CF_Magic_WAN_IPsec_02`**
+##### Example for `CF_Magic_WAN_IPsec_02`
 
 ```bash
 admin@panvm03> test vpn ipsec-sa tunnel CF_Magic_WAN_IPsec_02
@@ -881,13 +881,13 @@ Use ping to source traffic from the IP address of the Virtual Tunnel Interface o
 
 {{<Aside type="note">}}The interface address is defined with a `/31` netmask. There have been isolated cases where NGFW exhibited issues with using ping to verify connectivity between the local and remote Virtual Tunnel Interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a `/30` netmask, or contact Palo Alto Networks support for assistance.{{</Aside>}}
 
-**Syntax**
+##### Syntax
 
 ```bash
 ping source [value src IP] host [value dst IP]
 ```
 
-**Example for - Tunnel 1**
+##### Example for Tunnel 1
 
 ```bash
 admin@panvm03> ping source 10.252.2.27 host 10.252.2.26
@@ -902,7 +902,7 @@ PING 10.252.2.26 (10.252.2.26) from 10.252.2.27 : 56(84) bytes of data.
 rtt min/avg/max/mdev = 1.980/2.180/2.719/0.312 ms
 ```
 
-**Example for Tunnel 2**
+##### Example for Tunnel 2
 
 ```bash
 admin@panvm03> ping source 10.252.2.29 host 10.252.2.28
@@ -957,7 +957,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 - **VLAN0010**: `10.1.10.0/24`
 - **VLAN0020**: `10.1.20.0/24`
 
-**VLAN0010 (`10.1.10.0/24`) via tunnel.1**
+##### VLAN0010 (`10.1.10.0/24`) via tunnel.1
 
 | Name                       | Option           | Value                         |
 | -------------------------- | ---------------- | ----------------------------- |
@@ -971,7 +971,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
 
-**VLAN0010 (`10.1.10.0/24`) via tunnel.2**
+##### VLAN0010 (`10.1.10.0/24`) via tunnel.2
 
 | Name                       | Option           | Value                         |
 | -------------------------- | ---------------- | ----------------------------- |
@@ -985,7 +985,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
 
-**VLAN0020 (`10.1.20.0/24`) via tunnel.1**
+##### VLAN0020 (`10.1.20.0/24`) via `tunnel.1`
 
 | Name                       | Option           | Value                         |
 | -------------------------- | ---------------- | ----------------------------- |
@@ -999,7 +999,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
 
-**VLAN0020 (`10.1.20.0/24`) via tunnel.2**
+##### VLAN0020 (`10.1.20.0/24`) via `tunnel.2`
 
 | Name                       | Option           | Value                         |
 | -------------------------- | ---------------- | ----------------------------- |
@@ -1015,7 +1015,7 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 You can also configure these settings via command line:
 
-**VLAN0010 - `10.1.10.0/24`**
+##### VLAN0010 - `10.1.10.0/24`
 
 ```bash
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun01 nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
@@ -1032,7 +1032,7 @@ set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0010_Tun02 route-table unicast
 ```
 
-**VLAN0020 - `10.1.20.0/24`**
+##### VLAN0020 - `10.1.20.0/24`
 
 ```bash
 set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0020_Tun01 nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
@@ -1065,7 +1065,7 @@ You must define a rule to allow the ICMP reply probes as Palo Alto Networks Next
 
 {{<Aside type="note">}}Cloudflare health checks are sent from random servers across Cloudflare's global network and can originate from any addresses within the Cloudflare IPv4 address space represented by the **Cloudflare_IPv4_Static_Grp**.{{</Aside>}}
 
-**Setup via dashboard**
+##### Setup via dashboard
 
 {{<table-wrap>}}
 
@@ -1094,7 +1094,7 @@ You must define a rule to allow the ICMP reply probes as Palo Alto Networks Next
 ![Bidirectioanl Health Check Rule - Service/URL Category](/images/magic-wan/third-party/palo-alto/panw_security_rules/05_bidirect_hc_service-url.png)
 ![Bidirectioanl Health Check Rule - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/06_bidirect_hc_action.png)
 
-**Setup via command line**
+##### Setup via command line
 
 ```bash
 set rulebase security rules Cloudflare_Tunnel_Bidirect_HC to Cloudflare_L3_Zone
@@ -1126,7 +1126,7 @@ Ensure have the following:
 - **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
 - **Application**: `icmp` and `ping`
 
-**Set up via dashboard tunnel.1**
+##### Set up via dashboard `tunnel.1`
 
 {{<table-wrap>}}
 
@@ -1150,7 +1150,7 @@ Ensure have the following:
 ![Bidirectional Health Checks via tunnel.1 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/03_pbf_hc_01_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.1 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/04_pbf_hc_01_forwarding.png)
 
-**Set up via dashboard tunnel.2**
+##### Set up via dashboard `tunnel.2`
 
 {{<table-wrap>}}
 
@@ -1174,7 +1174,7 @@ Ensure have the following:
 ![Bidirectional Health Checks via tunnel.2 - Destination](/images/magic-wan/third-party/palo-alto/panw_pbf/07_pbf_hc_02_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.2 - Forwarding](/images/magic-wan/third-party/palo-alto/panw_pbf/08_pbf_hc_02_forwarding.png)
 
-**Set up via command line tunnel.1**
+##### Set up via command line `tunnel.1`
 
 ```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
@@ -1189,7 +1189,7 @@ set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 service any
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_01 tag Cloudflare_L3_Zone
 ```
 
-**Set up via command line tunnel.2**
+##### Set up via command line `tunnel.2`
 
 ```bash
 set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 action forward nexthop ip-address CF_MWAN_IPsec_VTI_02_Remote
@@ -1210,7 +1210,7 @@ set rulebase pbf rules PBF_Cloudflare_Healthcheck_02 tag Cloudflare_L3_Zone
 
 Use the Traffic log viewer to ensure that the health check traffic is allowed. Start by adding a rule to filter the logs based on the name of the Security Policy rule permitting the applicable traffic.
 
-**Filter by rule name**
+##### Filter by rule name
 
 ```bash
 rule eq Cloudflare_Tunnel_Bidirect_HC
@@ -1220,7 +1220,7 @@ rule eq Cloudflare_Tunnel_Bidirect_HC
 
 If you do not see any traffic matching the filter, replace the filter with one that displays log entries based on the addresses associated with the `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02` Address objects.
 
-**Filter by health check Anycast IPs**
+##### Filter by health check Anycast IPs
 
 ```bash
 ( addr.src in 172.64.240.253 ) or ( addr.src in 172.64.240.254 )
@@ -1260,7 +1260,7 @@ Rules must be defined to facilitate traffic from the trust network to the Magic 
 - From Trust to Magic WAN protected sites
 - From Magic WAN protected sites to Trust
 
-**Trust to Magic WAN dashboard**
+##### Trust to Magic WAN dashboard
 
 {{<table-wrap>}}
 
@@ -1287,7 +1287,7 @@ Rules must be defined to facilitate traffic from the trust network to the Magic 
 ![Trust to Magic WAN - Services/URL Categories](/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
 ![Trust to Magic WAN - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
 
-**Trust to Magic WAN command line**
+##### Trust to Magic WAN command line
 
 ```bash
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow to Cloudflare_L3_Zone
@@ -1303,7 +1303,7 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow action allow
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type universal
 ```
 
-**Magic WAN to Trust dashboard**
+##### Magic WAN to Trust dashboard
 
 {{<table-wrap>}}
 
@@ -1330,7 +1330,7 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type univer
 ![Magic WAN to Trust - Services/URL Categories](/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
 ![Magic WAN to Trust - Action](/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
 
-**Magic WAN to Trust command line**
+##### Magic WAN to Trust command line
 
 ```bash
 set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow to Trust_L3_Zone
