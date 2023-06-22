@@ -6,7 +6,7 @@ weight: 1
 
 # Migrating to the new WAF Managed Rules
 
-On May 4, 2022, Cloudflare started phase 1 of the WAF migration from [WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Phase 2, available since September 19, 2022, allows the remaining zones to migrate to WAF Managed Rules.
+On May 4, 2022, Cloudflare started phase 1 of the WAF migration from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Phase 2, available since September 19, 2022, allows the remaining zones to migrate to WAF Managed Rules.
 
 You can start the update process for a zone in the Cloudflare dashboard or via API. Currently, the update process is always started by you. **The migration is irreversible** — once you update to the new WAF Managed Rules, you cannot go back to using WAF managed rules.
 

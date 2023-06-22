@@ -36,7 +36,7 @@ Currently, **Managed Challenge** actions are available in the following security
 
 - [IP Access Rules](/waf/tools/ip-access-rules/)
 - [User Agent Blocking](/waf/tools/user-agent-blocking/)
-- [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128)
+- [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)
 - [Custom rules](/waf/custom-rules/)
 - [WAF Managed Rules](/waf/managed-rules/)
 - [Rate limiting rules](/waf/rate-limiting-rules/)

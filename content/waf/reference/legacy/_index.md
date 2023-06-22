@@ -9,6 +9,6 @@ meta:
 
 # Documentation for legacy features
 
-Refer to the following pages for more information on WAF features that have been deprecated:
+Refer to the following pages for more information on legacy features that have been deprecated:
 
 {{<directory-listing>}}
