@@ -171,7 +171,7 @@ Rate Limiting features a one-click **Protect your login** tool that creates a ru
 
 3. Select **Create rate limiting rule**. A dialog opens where you specify the details of your new rule.
 
-    ![Create rate limiting rule pop-up dialog with an example rule configuration. The rule will block requests from IP addresses that exceed 150 requests per minute for one hour.](/support/static/previous-rate-limiting-create-rule.png)
+    ![Create rate limiting rule pop-up dialog with an example rule configuration. The rule will block requests from IP addresses that exceed 150 requests per minute for one hour.](/images/waf/reference/legacy/old-rate-limiting-create-rule.png)
 
 4. Enter a descriptive name for the rule in **Rule Name**.
 
@@ -210,7 +210,7 @@ To configure your advanced criteria for a new or existing rule, follow these ste
 
 1. Expand **Advanced Criteria**.
 
-    ![Available fields when configuring Advanced Criteria for a rate limiting rule.](/support/static/previous-rate-limiting-advanced-criteria.png)
+    ![Available fields when configuring Advanced Criteria for a rate limiting rule.](/images/waf/reference/legacy/old-rate-limiting-advanced-criteria.png)
 
 2. Select a value from **Method(s)**. The default value is _ANY_, which matches all HTTP methods.
 
@@ -236,7 +236,7 @@ To configure a plain text or JSON response:
 
 1. Expand **Advanced Response**.
 
-    ![Available fields when configuring an Advance Response for a rate limiting rule.](/support/static/previous-rate-limiting-advanced-response.png)
+    ![Available fields when configuring an Advance Response for a rate limiting rule.](/images/waf/reference/legacy/old-rate-limiting-advanced-response.png)
 
 2. Select a **Response type** format other than the default: _Custom JSON_ or _Custom TEXT_.
 
@@ -294,7 +294,7 @@ ___
 
 2. In **Bypass rule for these URLs**, enter the URL(s) to exempt from the rate limiting rule. Enter each URL on its own line. An HTTP or HTTPS specified in the URL is automatically removed when the rule is saved and instead applies to both HTTP and HTTPS.
 
-    ![Configuring two URLs to bypass for a rate limiting rule (one per line).](/support/static/previous-rate-limiting-bypass.png)
+    ![Configuring two URLs to bypass for a rate limiting rule (one per line).](/images/waf/reference/legacy/old-rate-limiting-bypass.png)
 
 3. (Optional) Configure additional rate limiting features, based on your plan.
 
