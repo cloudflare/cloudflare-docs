@@ -5266,6 +5266,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     width: 95%;
 }
 
+.DocSearch-Button-Key {
+    padding: 0;
+}
+
 [theme=dark] .DocSearch-Button {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -5811,6 +5815,6 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 }
 
 .md__image {
-  display: inline;
-  margin: 0 10px 0 0;
+    display: inline;
+    margin: 0 10px 0 0;
 }
