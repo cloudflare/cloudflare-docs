@@ -261,20 +261,15 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
 1. To set up an integration with Upstash, you to have an existing Upstash database to connect to. [Create a Upstash database](https://docs.upstash.com/redis#create-a-database) or [load data from an existing database to Upstash](https://docs.upstash.com/redis/howto/connectclient).
 
 2. Insert some data to your Upstash database. You can add data to your Upstash database in two ways:
-  - Use the CLI directy from your Upstash console
+  - Use the CLI directly from your Upstash console
   - Alternatively, install `redis-cli` locally and run the following commands. 
 
   ```sh
   ➜ set GB "Ey up?"
   OK
-  ➜
-  set US "Yo, what’s up?"
+  ➜ set US "Yo, what’s up?"
   OK
-  ➜
-  set NL "Hoi, hoe gaat het?"
-  OK
-  ➜
-  set DE "Was ist los?"
+  ➜ set NL "Hoi, hoe gaat het?"
   OK
   ```
 
