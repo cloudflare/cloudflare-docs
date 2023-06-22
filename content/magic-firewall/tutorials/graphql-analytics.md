@@ -111,9 +111,9 @@ By setting `verdict` to `drop` and `outcome` as `pass`, we are filtering for tra
 
 For each stream, display the:
 
-- Source and destination IP addresses
-- Ingress Cloudflare data centers that received it
-- Total traffic volume in bits and packets received within the hour
+- Source and destination IP addresses.
+- Ingress Cloudflare data centers that received it.
+- Total traffic volume in bits and packets received within the hour.
 
 ```graphql
 query{
