@@ -19,7 +19,7 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 ## Assumptions
 
 This tutorial assumes you have a standalone NGFW with two network interfaces: 
-- One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918]((https://datatracker.ietf.org/doc/html/rfc1918)) non-Internet routable IP address (internal network); 
+- One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network); 
 - The other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
 
 Additionally, there must be a default gateway set on the Virtual Router (default) pointing to the router of your Internet service provider(s).
