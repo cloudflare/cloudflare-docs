@@ -571,16 +571,17 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 
 {{<table-wrap>}}
 
-| Tab      | Option               | Value |
-| -------- | -------------------- | -------------------- |
-| General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting. |
-|          | Local IP Address     | `Internet_L3_203-0-113-254--24` |
-|          | Peer address         | `CF_Magic_WAN_Anycast_01` |
-|          | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.  |
-|          | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
-|          | Peer Identification  | _None_ |
-| Advanced | IKE crypto profile   | _CF_IKE_Crypto_CBC_ |
-|          | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
+| Tab              | Option               | Value                                                                                                         |
+| --------         | -------------------- | --------------------                                                                                          |
+| **General tab**  | Name                 | `CF_Magic_WAN_IKE_01`                                                                                         |
+|                  | Version              | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting.                           |
+|                  | Local IP Address     | `Internet_L3_203-0-113-254--24`                                                                               |
+|                  | Peer address         | `CF_Magic_WAN_Anycast_01`                                                                                     |
+|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.                        |
+|                  | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|                  | Peer Identification  | _None_                                                                                                        |
+| **Advanced tab** | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_                                                                                           |
+|                  | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 {{</table-wrap>}}
 
@@ -593,16 +594,17 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 
 {{<table-wrap>}}
 
-| Tab      | Option               | Value |
-| -------- | -------------------- | -------------------- |
-| General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting. |
-|          | Local IP Address     | `Internet_L3_203-0-113-254--24` |
-|          | Peer address         | `CF_Magic_WAN_Anycast_02` |
-|          | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.  |
-|          | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
-|          | Peer Identification  | _None_ |
-| Advanced | IKE crypto profile   | _CF_IKE_Crypto_CBC_ |
-|          | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
+| Tab              | Option               | Value                                                                                                         |
+| --------         | -------------------- | --------------------                                                                                          |
+| **General tab**  | Name                 | `CF_Magic_WAN_IKE_02`                                                                                         |
+|                  | Version              | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting.                           |
+|                  | Local IP Address     | `Internet_L3_203-0-113-254--24`                                                                               |
+|                  | Peer address         | `CF_Magic_WAN_Anycast_02`                                                                                     |
+|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.                        |
+|                  | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|                  | Peer Identification  | _None_                                                                                                        |
+| **Advanced tab** | IKE crypto profile   | _CF_IKE_Crypto_CBC_                                                                                           |
+|                  | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 {{</table-wrap>}}
 
@@ -654,9 +656,9 @@ With the IKE Gateways defined, the next step is to configure two IPsec Tunnels -
 #### Prerequisites
 
 There are a few prerequisites you should be aware of before continuing:
-- Do not configure Proxy IDs. Magic IPsec Tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
+- Do not configure Proxy IDs. Magic WAN IPsec tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
 - Disable Replay Protection, under the Advanced Options.
-- Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec Tunnels based on IKEv1 (Magic IPsec Tunnels are based on IKEv2).
+- Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec tunnels based on IKEv1 (Magic WAN IPsec tunnels are based on IKEv2).
 
 #### Set up via dashboard
 
@@ -718,7 +720,7 @@ This would be a good time to save and commit the configuration changes made thus
 
 This is a good time to ensure the IPsec tunnels are established and to validate basic connectivity.
 
-{{<Aside type="note">}}Tunnel health checks will not function until Security Policies and Policy-Based Forwarding are configured. This series of tests is focused on testing IPsec connectivity exclusively.{{</Aside>}}
+{{<Aside type="note">}}Tunnel health checks will not function until security policies and policy-based forwarding are configured. This series of tests is focused on testing IPsec connectivity exclusively.{{</Aside>}}
 
 #### Verify IKE Phase 1 Communications
 
@@ -785,7 +787,7 @@ Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
 
 #### Troubleshooting IKE Phase 1 Communications
 
-Magic IPsec Tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
+Magic WAN IPsec tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
 
 ##### Syntax
 
@@ -853,7 +855,7 @@ Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
 
 #### Troubleshooting IPsec Phase 2 Communications
 
-Magic IPsec Tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
+Magic WAN IPsec tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
 
 ##### Syntax
 
@@ -881,11 +883,11 @@ Initiate 1 IPsec SA for tunnel CF_Magic_WAN_IPsec_02.
 
 Repeat these commands for the respective tunnel to ensure the IPsec SA(s) display as expected.
 
-#### Ping Remote Virtual Tunnel Interfaces
+#### Ping Remote Virtual Tunnel interfaces
 
-Use ping to source traffic from the IP address of the Virtual Tunnel Interface on Palo Alto Networks Next-Generation Firewall (NGFW) to the IP address of the Virtual Tunnel Interface on the Cloudflare side of the IPsec tunnel.
+Use ping to source traffic from the IP address of the Virtual Tunnel interface on Palo Alto Networks Next-Generation Firewall (NGFW) to the IP address of the Virtual Tunnel Interface on the Cloudflare side of the IPsec tunnel.
 
-{{<Aside type="note">}}The interface address is defined with a `/31` netmask. There have been isolated cases where NGFW exhibited issues with using ping to verify connectivity between the local and remote Virtual Tunnel Interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a `/30` netmask, or contact Palo Alto Networks support for assistance.{{</Aside>}}
+{{<Aside type="note">}}The interface address is defined with a `/31` netmask. There have been isolated cases where NGFW exhibited issues with using ping to verify connectivity between the local and remote Virtual Tunnel interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a `/30` netmask, or contact Palo Alto Networks support for assistance.{{</Aside>}}
 
 ##### Syntax
 
@@ -927,7 +929,7 @@ rtt min/avg/max/mdev = 1.765/2.141/2.900/0.446 ms
 
 While we will leverage policy-based forwarding to implement policy-based routing, it is still a good idea to configure routing on the Virtual Router.
 
-Cloudflare Magic WAN implements equal-cost multi-path (ECMP) routing to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
+Cloudflare Magic WAN implements [equal-cost multi-path (ECMP) routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing) to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
 
 {{<Aside type="note">}}ECMP is disabled on the ​​Palo Alto Networks Next-Generation Firewall by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window.{{</Aside>}}
 
