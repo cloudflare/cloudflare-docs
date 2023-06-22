@@ -21,7 +21,8 @@ jobs:
           # Check if files are referenced in any markdown file
           UNUSED_FILES=""
           for FILE in $FILES; do
-            if ! grep -q -r -F --exclude-dir=.github "$FILE" --include="*.md" .; then
+            FILENAME=$(basename "$FILE")
+            if ! grep -q -r -F --exclude-dir=.github "$FILENAME" --include="*.md" .; then
               UNUSED_FILES+="$FILE\n"
             fi
           done
