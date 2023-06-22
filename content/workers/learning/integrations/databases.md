@@ -22,6 +22,7 @@ Use Cloudflare Workers to connect your application to external databases, such a
 | [Mongo](https://www.mongodb.com/developer/products/atlas/cloudflare-worker-rest-api/) | No | [realm-web](https://www.mongodb.com/docs/realm/web/)         | API via client library |
 | [Prisma](https://www.prisma.io/docs/guides/deployment/deployment-guides/deploying-to-cloudflare-workers) | No |  [prisma](https://github.com/prisma/prisma)         | API via client library |
 | [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/learning/integrations/databases/#neon) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
+| [Upstash](https://docs.upstash.com/redis/quickstarts/cloudflareworkers) | Yes | [@upstash-redis](https://github.com/upstash/upstash-redis) | API via client library |
 | [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No | API | GraphQL API via fetch() |
 
 {{</table-wrap>}}
@@ -261,17 +262,17 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
 1. To set up an integration with Upstash, you to have an existing Upstash database to connect to. [Create a Upstash database](https://docs.upstash.com/redis#create-a-database) or [load data from an existing database to Upstash](https://docs.upstash.com/redis/howto/connectclient).
 
 2. Insert some data to your Upstash database. You can add data to your Upstash database in two ways:
-  - Use the CLI directly from your Upstash console
-  - Alternatively, install `redis-cli` locally and run the following commands. 
+    - Use the CLI directly from your Upstash console
+    - Alternatively, install `redis-cli` locally and run the following commands. 
 
-  ```sh
-  ➜ set GB "Ey up?"
-  OK
-  ➜ set US "Yo, what’s up?"
-  OK
-  ➜ set NL "Hoi, hoe gaat het?"
-  OK
-  ```
+    ```sh
+    ➜ set GB "Ey up?"
+    OK
+    ➜ set US "Yo, what’s up?"
+    OK
+    ➜ set NL "Hoi, hoe gaat het?"
+    OK
+    ```
 
 3. Add the Upstash database integration to your Worker:
     - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
