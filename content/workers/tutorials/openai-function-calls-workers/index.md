@@ -158,9 +158,11 @@ One of the things I already love about function calling is how it intelligently 
 
 Now, we'll add the code to call our function when OpenAI tells us we need to:
 ```js
+ let websiteContent;
+
  if(msg.function_call.name === "read_website_content") {
     const url = JSON.parse(msg.function_call.arguments).url;
-    const websiteContent = await read_website_content(url);
+    websiteContent = await read_website_content(url);
     console.log(websiteContent);
  }
 ```
