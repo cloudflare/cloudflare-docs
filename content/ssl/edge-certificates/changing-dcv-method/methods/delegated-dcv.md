@@ -26,6 +26,10 @@ You should use Delegated DCV when all of the following conditions are true:
 - Your zone is not using multiple CDN providers.
 - The Certificate Authority is either Google or Let's Encrypt
 
+{{<Aside type="note" header="Delegated DCV and origin certificates">}}
+As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare Origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
+{{</Aside>}}
+
 ## Setup
 
 To set up Delegated DCV:
