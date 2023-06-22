@@ -14,4 +14,4 @@ Security Insights provides you with a list of insights, covering different areas
 *   Cloudflare Access configuration
 *   Cloudflare WAF configuration
 
-For more information on the available operations in the **Security Insights** tab, refer to [Review Security Insights](/security-center/security-insights/review-insights/).
+For more information on available operations for Security Insights, refer to [Review Security Insights](/security-center/security-insights/review-insights/).

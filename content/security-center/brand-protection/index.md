@@ -31,7 +31,7 @@ If a brand phrase or search term has less than five characters, you can only cho
 6. Select **Apply**. This will create a preview of the most recent results matching your query.
 7. You can select **Save query** to monitor it in the future and perform other actions, such as delete, clone and set up alerts, according to your paid plan limits.
 
-In the section **Monitored queries**, you can check all the queries that you selected to monitor. You can delete, clone, or create notifications for a query. Refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts) to set up notifications.
+In the section **Monitored queries**, you can check all the queries that you selected to monitor. You can delete, clone, or create notifications for a query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications.
 
 ## Investigate a query
 
