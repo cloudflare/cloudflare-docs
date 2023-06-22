@@ -156,7 +156,7 @@ Object {
 
 Function calling intelligently determines what content to pass in the argument. Take note that you did not specify your `messages` `content` as `"what's happening on nba.com today?"`, but instead asked `"What's happening in the NBA today?"`. OpenAI determined that "https://www.nba.com" was the right URL to pass to your function.
 
-## Building our read_website_content() function
+## Building your `read_website_content()` function
 
 Now, we'll add the code to call our function when OpenAI tells us we need to:
 ```js
