@@ -135,7 +135,7 @@ return new Response('Hello World!');
 }
 ```
 
-Let's break down the arguments we're passing to OpenAI:
+Review the arguments you are passing to OpenAI:
 
 * **model**: The model we want OpenAI to use for our request.
 * **messages**: A list containing the messages that are part of the conversation happening. In this case, we only have one user message asking what's happening in the NBA today.
