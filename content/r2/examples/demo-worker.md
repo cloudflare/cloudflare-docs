@@ -7,7 +7,7 @@ pcx_content_type: configuration
 
 Below is an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
 
-For a simpler guide level explanation of how to use R2 in a worker, see [use R2 in a worker](/r2/api/workers/workers-api-usage/)
+For a simpler guide level explanation of how to use R2 in a worker, refer to [use R2 in a Worker](/r2/api/workers/workers-api-usage/).
 
 ```ts
 interface Env {
