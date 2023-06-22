@@ -324,15 +324,15 @@ Follow the guidance on the images below to set up the Ethernet interfaces throug
 
 **ethernet1/1: `Trust_L3_Zone`**
 
-Name            | Option             | Value
---------------- | ------------------ | ---
-**ethernet1/1** | Interface Type     | _Layer3_
-&nbsp;          | Netflow Profile    | _None_
-**Config**      | Virtual Router     | _default_
-&nbsp;          | Security Zone      | _Trust_L3_Zone_
-**IPv4**        | Type               | **Static**
-&nbsp;          | IP                 | `VLAN0100_L3_10-1-100-254--24` <br> address object
-**Advanced**    | Management Profile | _Mgmt_Services_
+| Name            | Option             | Value                                              |
+| --------------- | ------------------ | -------------------------------------------------- |
+| **ethernet1/1** | Interface Type     | _Layer3_                                           |
+|                 | Netflow Profile    | _None_                                             |
+| **Config**      | Virtual Router     | _default_                                          |
+|                 | Security Zone      | _Trust_L3_Zone_                                    |
+| **IPv4**        | Type               | **Static**                                         |
+|                 | IP                 | `VLAN0100_L3_10-1-100-254--24` <br> address object |
+| **Advanced**    | Management Profile | _Mgmt_Services_                                    |
 
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
 ![Set up ethernet1/1 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
@@ -340,18 +340,18 @@ Name            | Option             | Value
 
 **ethernet1/2: `Untrust_L3_Zone`**
 
-Name              | Option              | Value
------------------ | ------------------- | ---
-**ethernet1/2**   | Interface Type      | _Layer3_
-&nbsp;            | Netflow Profile     | _None_
-**Config**        | Virtual Router      | _default_
-&nbsp;            | Security Zone       | _Untrust_L3_Zone_
-**IPv4**          | Type                | **Static**
-&nbsp;            | IP                  | `Internet_L3_203-0-113-254--24` <br> address object
-**Advanced**      | Management Profile  | _Allow_Ping_
-&nbsp;            | MTU                 | `576 - 1500`
-&nbsp;            | Adjust TCP MSS      | **Enable**
-&nbsp;            | IPv4 MSS Adjustment | `64`
+| Name              | Option              | Value                                               |
+| ----------------- | ------------------- | --------------------------------------------------- |
+| **ethernet1/2**   | Interface Type      | _Layer3_                                            |
+|                   | Netflow Profile     | _None_                                              |
+| **Config**        | Virtual Router      | _default_                                           |
+|                   | Security Zone       | _Untrust_L3_Zone_                                   |
+| **IPv4**          | Type                | **Static**                                          |
+|                   | IP                  | `Internet_L3_203-0-113-254--24` <br> address object |
+| **Advanced**      | Management Profile  | _Allow_Ping_                                        |
+|                   | MTU                 | `576 - 1500`                                        |
+|                   | Adjust TCP MSS      | **Enable**                                          |
+|                   | IPv4 MSS Adjustment | `64`                                                |
 
 ![Set up ethernet1/2 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/04_ethernet-1-2_page1.png)
 ![Set up ethernet1/2 on the dashboard](/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/05_ethernet-1-2_page2.png)
@@ -390,14 +390,14 @@ Review the images below for more information.
 
 ##### tunnel.1 - Cloudflare_L3_Zone
 
-Name              | Option              | Value
------------------ | ------------------- | ---
-**tunnel.1**      | Netflow Profile     | _None_
-**Config**        | Virtual Router      | _default_
-&nbsp;            | Security Zone       | _Cloudflare_L3_Zone_
-**IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_01_Local` <br> address object
-**Advanced**      | Management Profile  | _Allow_Ping_
-&nbsp;            | MTU                 | `1450`
+| Name              | Option              | Value                                            |
+| ----------------- | ------------------- | ------------------------------------------------ |
+| **tunnel.1**      | Netflow Profile     | _None_                                           |
+| **Config**        | Virtual Router      | _default_                                        |
+|                   | Security Zone       | _Cloudflare_L3_Zone_                             |
+| **IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_01_Local` <br> address object |
+| **Advanced**      | Management Profile  | _Allow_Ping_                                     |
+|                   | MTU                 | `1450`                                           |
 
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
 ![Set up tunnel 1](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
@@ -405,14 +405,14 @@ Name              | Option              | Value
 
 ##### tunnel.2 - Cloudflare_L3_Zone
 
-Name              | Option              | Value
------------------ | ------------------- | ---
-**tunnel.2**      | Netflow Profile     | _None_
-**Config**        | Virtual Router      | _default_
-&nbsp;            | Security Zone       | _Cloudflare_L3_Zone_
-**IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_02_Local` <br> address object
-**Advanced**      | Management Profile  | _Allow_Ping_
-&nbsp;            | MTU                 | `1450`
+| Name              | Option              | Value                                            |
+| ----------------- | ------------------- | ------------------------------------------------ |
+| **tunnel.2**      | Netflow Profile     | _None_                                           |
+| **Config**        | Virtual Router      | _default_                                        |
+|                   | Security Zone       | _Cloudflare_L3_Zone_                             |
+| **IPv4**          | IP                  | `CF_MWAN_IPsec_VTI_02_Local` <br> address object |
+| **Advanced**      | Management Profile  | _Allow_Ping_                                     |
+|                   | MTU                 | `1450`                                           |
 
 ![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
 ![Set up tunnel 2](/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
@@ -451,30 +451,30 @@ The tunnel interfaces are placed in a separate Zone to facilitate the configurat
 
 #### Set up via dashboard
 
-Name              | Option                  | Value
------------------ | ----------------------- | ---
-**Trust_L3_zone** | Log setting             | _None_
-&nbsp;            | Type                    | _Layer3_
-&nbsp;            | Interfaces              | **ethernet1/1**
-&nbsp;            | Zone Protection Profile | _None_
+| Name              | Option                  | Value           |
+| ----------------- | ----------------------- | --------------- |
+| **Trust_L3_zone** | Log setting             | _None_          | 
+|                   | Type                    | _Layer3_        |
+|                   | Interfaces              | **ethernet1/1** |
+|                   | Zone Protection Profile | _None_          |
 
 ![The Palo Alto interface showing the Trust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
 
-Name                | Option                  | Value
-------------------- | ----------------------- | ---
-**Untrust_L3_zone** | Log setting             | _None_
-&nbsp;              | Type                    | _Layer3_
-&nbsp;              | Interfaces              | **ethernet1/2*
-&nbsp;              | Zone Protection Profile | _Untrust_Zone_Prof_
+| Name                | Option                  | Value               |
+| ------------------- | ----------------------- | ------------------- |
+| **Untrust_L3_zone** | Log setting             | _None_              |
+|                     | Type                    | _Layer3_            |
+|                     | Interfaces              | **ethernet1/2*      |
+|                     | Zone Protection Profile | _Untrust_Zone_Prof_ |
 
 ![The Palo Alto interface showing the Untrust_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
 
-Name                   | Option                  | Value
----------------------- | ----------------------- | ---
-**Cloudflare_L3_zone** | Log setting             | _None_
-&nbsp;                 | Type                    | _Layer3_
-&nbsp;                 | Interfaces              | **tunnel.1** <br> **tunnel.2**
-&nbsp;                 | Zone Protection Profile | _None_
+| Name                   | Option                  | Value                          |
+| ---------------------- | ----------------------- | ------------------------------ |
+| **Cloudflare_L3_zone** | Log setting             | _None_                         |
+|                        | Type                    | _Layer3_                       |
+|                        | Interfaces              | **tunnel.1** <br> **tunnel.2** |
+|                        | Zone Protection Profile | _None_                         |
 
 ![The Palo Alto interface showing the Cloudflare_L3_Zone](/images/magic-wan/third-party/palo-alto/panw_zones/03_cloudflare_zone.png)
 ![The Palo Alto interface showing the Tunnel Interfaces overview section](/images/magic-wan/third-party/palo-alto/panw_zones/04_zones_overview.png)
@@ -565,16 +565,16 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 
 {{<table-wrap>}}
 
-Tab      | Option               | Value
--------- | -------------------- | --------------------
-General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting.
-&nbsp;   | Local IP Address     | `Internet_L3_203-0-113-254--24`
-&nbsp;   | Peer address         | `CF_Magic_WAN_Anycast_01`
-&nbsp;   | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. 
-&nbsp;   | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.
-&nbsp;   | Peer Identification  | _None_
-Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_
-&nbsp;   | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
+| Tab      | Option               | Value |
+| -------- | -------------------- | -------------------- |
+| General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting. |
+|          | Local IP Address     | `Internet_L3_203-0-113-254--24` |
+|          | Peer address         | `CF_Magic_WAN_Anycast_01` |
+|          | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.  |
+|          | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|          | Peer Identification  | _None_ |
+| Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_ |
+|          | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 {{</table-wrap>}}
 
@@ -587,16 +587,16 @@ Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_
 
 {{<table-wrap>}}
 
-Tab      | Option               | Value
--------- | -------------------- | --------------------
-General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting.
-&nbsp;   | Local IP Address     | `Internet_L3_203-0-113-254--24`
-&nbsp;   | Peer address         | `CF_Magic_WAN_Anycast_02`
-&nbsp;   | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. 
-&nbsp;   | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.
-&nbsp;   | Peer Identification  | _None_
-Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_
-&nbsp;   | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations.
+| Tab      | Option               | Value |
+| -------- | -------------------- | -------------------- |
+| General  |  Version             | _IKEv2 only mode_. <br> Make sure both IKE Gateways are based only on this setting. |
+|          | Local IP Address     | `Internet_L3_203-0-113-254--24` |
+|          | Peer address         | `CF_Magic_WAN_Anycast_02` |
+|          | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.  |
+|          | Local Identification | _FQDN (hostname)_. <br> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|          | Peer Identification  | _None_ |
+| Advanced | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_ |
+|          | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 {{</table-wrap>}}
 
@@ -656,23 +656,24 @@ There are a few prerequisites you should be aware of before continuing:
 
 **Tunnel 1 settings: `CF_Magic_WAN_IPsec_01`**
 
-Name                | Option         | Value
-------------------- | -------------- | --------------------
-`CF_Magic_WAN_IPsec_01` | Tunnel interface | `tunnel.1`
-&nbsp;  | IKE Gateway | _CF_Magic_WAN_IKE_01_
-&nbsp;  | IPsec Crypto Profile | _CF_IKE_Crypto_CBC_
-&nbsp;  | Enable Replay Protection | **Disable**
+| Name                    | Option                   | Value |
+| ----------------------- | ------------------------ | --------------------- |
+| `CF_Magic_WAN_IPsec_01` | Tunnel interface         | `tunnel.1`            |
+|                         | IKE Gateway              | _CF_Magic_WAN_IKE_01_ |
+|                         | IPsec Crypto Profile     | _CF_IKE_Crypto_CBC_   |
+|                         | Enable Replay Protection | **Disable**           |
 
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
 
 **Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`**
-Name                | Option         | Value
-------------------- | -------------- | --------------------
-`CF_Magic_WAN_IPsec_02` | Tunnel interface | `tunnel.2`
-&nbsp;  | IKE Gateway | _CF_Magic_WAN_IKE_02_
-&nbsp;  | IPsec Crypto Profile | _CF_IKE_Crypto_CBC_
-&nbsp;  | Enable Replay Protection | **Disable**
+
+| Name                    | Option                   | Value                  |
+| ----------------------- | ------------------------ | ---------------------  |
+| `CF_Magic_WAN_IPsec_02` | Tunnel interface         | `tunnel.2`             |
+|                         | IKE Gateway              | _CF_Magic_WAN_IKE_02_  |
+|                         | IPsec Crypto Profile     | _CF_IKE_Crypto_CBC_    |
+|                         | Enable Replay Protection | **Disable**            |
 
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
 ![Set up the IPsec tunnel](/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/10_ipsec_tun02_page2.png)
@@ -956,9 +957,17 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 - **VLAN0010**: `10.1.10.0/24`
 - **VLAN0020**: `10.1.20.0/24`
 
-Refer to the images below for the settings needed:
-
 **VLAN0010 (`10.1.10.0/24`) via tunnel.1**
+
+| Name                       | Option           | Value                         |
+| -------------------------- | ---------------- | ----------------------------- |
+| `Magic_WAN_VLAN0010_Tun01` | Destination      | _VLAN0010_10-1-10-0--24_      |
+|                            | Inteface         | _tunnel.1_                    |
+|                            | Next hop         | _IP Address_                  |
+|                            |                  | _CF_MWAN_IPsec_VTI_01_Remote_ |
+|                            | Metric           | `10`                          |
+|                            | Route Table      | _Unicast_                     |
+|                            | BFD Profile      | _Disable BFD_                 |
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](/images/magic-wan/third-party/palo-alto/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
 
