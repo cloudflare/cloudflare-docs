@@ -34,7 +34,7 @@ header: Create a Worker project
 $ npm create cloudflare@latest
 ```
 
-For setup you'll select the following options:
+For setup, select the following options:
 * *Where do you want to create your application?* openai-function-calling-workers 
 * *What type of application do you want to create?* "Hello World" script
 * *Do you want to use TypeScript?* no
