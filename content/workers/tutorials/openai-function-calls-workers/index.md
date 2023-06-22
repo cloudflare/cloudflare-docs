@@ -76,7 +76,7 @@ import { Configuration, OpenAIApi } from "openai";
 import fetchAdapter from "@vespaiach/axios-fetch-adapter";
 ```
 
-Now within our `fetch` function we'll set up the configuration and instantiate our OpenAIApi client.
+Within your `fetch` function, set up the configuration and instantiate your `OpenAIApi` client:
 
 ```js
 async fetch(request, env, ctx) {
