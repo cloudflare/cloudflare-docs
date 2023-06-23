@@ -10,7 +10,6 @@ meta:
   title: Cloudflare Turnstile docs
   description: Turnstile is Cloudflare's smart CAPTCHA alternative. 
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/turnstile

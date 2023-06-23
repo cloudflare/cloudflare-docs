@@ -10,8 +10,10 @@ meta:
 
 Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
-{{<Aside type="note">}}
 For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
+
+{{<Aside type="note">}}
+Using Cloudflare Origin CA certificates do not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 {{</Aside>}}
 
 ## Availability

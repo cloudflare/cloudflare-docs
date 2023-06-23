@@ -22,7 +22,7 @@ Cloudflare never limits or caps DNS queries, but the pricing depends on your pla
 
 For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries.
 
-For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote. Any overages will not be charged.
+For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
 
 ___
 

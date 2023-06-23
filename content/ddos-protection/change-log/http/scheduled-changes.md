@@ -26,8 +26,8 @@ layout: list
       <td>2023-06-27</td>
       <td>...c86adf25</td>
       <td>HTTP requests with unusual HTTP headers or URI path (signature #38). Only for zones on PRO plan and above.</td>
-      <td>N/A</td>
       <td>log</td>
+      <td>ddos_dynamic</td>
       <td></td>
     </tr>
     <tr>
@@ -35,8 +35,8 @@ layout: list
       <td>2023-06-27</td>
       <td>...95f78bf0</td>
       <td>HTTP requests trying to impersonate browsers (pattern #2).</td>
-      <td>N/A</td>
       <td>log</td>
+      <td>ddos_dynamic</td>
       <td></td>
     </tr>
     <tr>

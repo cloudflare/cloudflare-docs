@@ -17,13 +17,13 @@ Cloudflare desafiará cualquier intento de inicio de sesión si el usuario propo
 
 ![URL anterior: https://support.cloudflare.com/hc/article_attachments/360035322751/account_access_email.png
 Identificación de artículo: 115003614752 | Autenticación de correo electrónico de factores múltiples
-](/support/static/hc-import-account_access_email.png)
+](/images/support/hc-import-account_access_email.png)
 
 Cloudflare desafía el inicio de sesión a través del envío de un código único al correo electrónico que tenemos en el archivo de la cuenta. Este código caduca en 30 minutos. Una vez que se proporciona el código correcto a través del panel de control, esa IP se registrará y los intentos de inicio de sesión adicionales desde esa dirección IP no se cuestionarán durante 90 días.
 
 ![URL anterior: https://support.cloudflare.com/hc/article_attachments/360035323072/login_authentication.png
 Identificación de artículo: 115003614752 | Autenticación de correo electrónico de factores múltiples
-](/support/static/hc-import-login_authentication.png)
+](/images/support/hc-import-login_authentication.png)
 
 Al marcar "recordar este equipo", ese dispositivo/navegador no recibirá desafíos de AFM en 14 días. Después de 14 días, Cloudflare comenzará a verificar la dirección IP nuevamente para detectar inicios de sesión desde ese dispositivo/navegador.
 

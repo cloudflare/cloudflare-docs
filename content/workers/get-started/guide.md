@@ -8,7 +8,7 @@ meta:
 
 # Get started guide
 
-This guide will instruct you through setting up and deploying your first Worker. 
+This guide will instruct you through setting up and deploying your first Worker.
 
 This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 
@@ -50,14 +50,14 @@ For the purpose of this guide, set up a basic Worker:
 2. Select `"Hello World" script` as the type of application you want to create.
 3. Answer `no` to using TypeScript.
 
-You will be asked if you would like to deploy the project to Cloudflare. 
+You will be asked if you would like to deploy the project to Cloudflare.
 
-* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project). 
+* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 * If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
 
 In your project directory, C3 has generated the following:
 
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
+1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
 2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/learning/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).

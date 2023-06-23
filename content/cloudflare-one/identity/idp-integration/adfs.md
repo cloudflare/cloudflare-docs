@@ -61,7 +61,7 @@ To create a Relying Party Trust:
 
 1.  Click **Next**. The **Configure Identifiers** step displays.
 
-    ![Add relying party trust wizard with callback URL pasted into open form field](/cloudflare-one/static/documentation/identity/adfs/adfs-7.png)
+    ![Add relying party trust wizard with callback URL pasted into open form field](/images/cloudflare-one/identity/adfs/adfs-7.png)
 
 1.  Paste your callback URL in the **Relying party trust identifier** field.
 
@@ -129,7 +129,7 @@ To export the certificate:
 
 1.  In the **Certificates** card, right-click on the entry under **Token-signing**, and select **View certificate**. The **Certificates** window displays.
 
-    ![Certificates window with token-signing certificate selected](/cloudflare-one/static/documentation/identity/adfs/adfs-16.png)
+    ![Certificates window with token-signing certificate selected](/images/cloudflare-one/identity/adfs/adfs-16.png)
 
 1.  Click the **Details** tab, and select the **Copy to File** option.
 

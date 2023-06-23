@@ -17,4 +17,4 @@ title: Page Ruleを使ってホストヘッダの書き換え
 
 ここで、指定されたURLと一致するリクエストは全て、**ホストヘッダーオーバーライド**テキストボックスに入ったものにオーバーライドしたホストヘッダーがあります。以下の例を参照してください。
 
-![Page Ruleホストヘッダーのオーバーライド](/support/static/cf-page-rules-host-header-override.png)
+![Page Ruleホストヘッダーのオーバーライド](/images/support/cf-page-rules-host-header-override.png)

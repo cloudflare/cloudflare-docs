@@ -26,7 +26,7 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
     4. Upload the `cloudflare_warp.mobileconfig` file you previously downloaded.
     5. Save the custom profile.
 
-    ![Configuring custom profile for WARP in Kandji](/cloudflare-one/static/documentation/connections/custom-profile.png)
+    ![Configuring custom profile for WARP in Kandji](/images/cloudflare-one/connections/custom-profile.png)
 
 4. Add a custom app:
 
