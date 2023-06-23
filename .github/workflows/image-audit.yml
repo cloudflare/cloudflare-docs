@@ -1,6 +1,9 @@
 name: Image audit
 
 on:
+  pull_request:
+      branches:
+        - production
   workflow_dispatch:
   schedule:
     - cron: "0 0 1 * *"
@@ -11,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Find Unused Files
         id: find-files
@@ -44,3 +47,28 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
             -d "{\"title\": \"Unused Image Files Found\", \"body\": \"$(cat unused_files.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
+
+      - name: Create Pull Request
+        if: steps.find-files.outputs.unused_files
+        env:
+          ISSUE_NUMBER: ${{ steps.create-issue.outputs.issue_number }}
+        run: |
+          # Create a new branch
+          git checkout -b image-cleanup
+
+          # Delete the unused files
+          echo "${{ steps.find-files.outputs.unused_files }}" | while IFS= read -r FILE; do
+            git rm "$FILE"
+          done
+
+          # Commit the changes
+          git commit -m "Remove unused image files"
+
+          # Push the branch
+          git push origin image-cleanup
+
+          # Create a pull request
+          curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/cloudflare/cloudflare-docs/pulls" \
+            -d "{\"title\": \"Remove Unused Image Files\", \"body\": \"This PR removes the unused image files identified in issue #${{ env.ISSUE_NUMBER }}.\", \"head\": \"image-cleanup\", \"base\": \"main\"}"
