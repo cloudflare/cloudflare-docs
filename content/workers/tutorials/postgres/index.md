@@ -7,54 +7,62 @@ title: Connect to a PostgreSQL Database with Cloudflare Workers
 layout: single
 ---
 
-# Connect to a PostgreSQL Database with Cloudflare Workers
+# Connect to a PostgreSQL database with Cloudflare Workers
 
-In this tutorial, you will learn how to create a Cloudflare Workers project and connect to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). We'll demonstrate this by creating a Workers application that interacts with a product database inside of PostgreSQL.
+In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
 
 ## Prerequisites
 
-Before you start, make sure you have:
+To continue:
 
-- A Cloudflare account - if you don't have one, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
-- Node.js and `npm` installed on your machine.
-- Access to a PostgreSQL database.
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
+4. Make sure you have access to a PostgreSQL database.
 
-## Step 1: Create a new project
+## 1. Create a Worker application
 
-First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Cloudflare Workers project. To do this, open a terminal window and run the following command:
+First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker application. To do this, open a terminal window and run the following command:
 
 ```sh
-$ npm create cloudflare
+$ npm create cloudflare@latest
 ```
 
 or `yarn`:
 
 ```sh
-$ yarn create cloudflare
+$ yarn create cloudflare@latest
 ```
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard. When asked to choose a template, select the "Hello World Script" option.
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
 
-Once your project has been configured and scaffolded, you will be asked if you would like to deploy the project to Cloudflare. If you choose not to deploy, you can navigate to the newly created project folder to begin development. Otherwise, you'll be asked to authenticate (if not logged in already), and your project will be deployed.
+To continue with this guide:
 
-## Step 2: Add the PostgreSQL connection library
+1. Give your new Worker application a name.
+2. Select `"Hello World" Worker` for the type of application.
+3. Choose `Yes` to using TypeScript.
+4. Select `No` to deploying your application. 
 
-To connect to a PostgreSQL database, you will need the `pg` library. In your project folder, run the following command to install the library:
+If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
+
+## 2. Add the PostgreSQL connection library
+
+To connect to a PostgreSQL database, you will need the `pg` library. In your Worker application directory, run the following command to install the library:
 
 ```sh
 $ npm install pg
 ```
 
-Make sure you are using `pg` (node-postgres) version `8.11.0` or higher, as earlier versions do not support the Cloudflare Workers TCP Sockets API.
+Make sure you are using `pg` (node-postgres) version `8.11.0` or higher, as earlier versions do not support the Cloudflare Workers [TCP Sockets API](/workers/runtime-apis/tcp-sockets/).
 
-## Step 3: Configure the connection to the PostgreSQL database
+## 3. Configure the connection to the PostgreSQL database
 
-In this step, choose one of the two methods to connect to your PostgreSQL database:
+Choose one of the two methods to connect to your PostgreSQL database:
 
-1. [Using a connection string](#using-a-connection-string)
-2. [Setting explicit parameters](#setting-explicit-parameters)
+1. [Use a connection string](#using-a-connection-string).
+2. [Set explicit parameters](#setting-explicit-parameters).
 
-### Using a connection string
+### Use a connection string
 
 Create a connection string with the format:
 
@@ -74,9 +82,9 @@ $ wrangler secret put DB_URL
 ✨ Success! Uploaded secret DB_URL
 ```
 
-### Setting explicit parameters
+### Set explicit parameters
 
-Configure each database parameter as an [environment variable](/workers/platform/environment-variables/) via the [dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Here's an example:
+Configure each database parameter as an [environment variable](/workers/platform/environment-variables/) via the [Cloudflare dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
 
 ```toml
 ---
@@ -100,24 +108,24 @@ $ wrangler secret put DB_PASSWORD
 ✨ Success! Uploaded secret DB_PASSWORD
 ```
 
-## Step 4: Connect to the PostgreSQL database in the Worker
+## 4. Connect to the PostgreSQL database in the Worker
 
-Open your Worker's main file (e.g., `index.ts`) and import the `Client` class from the `pg` library:
+Open your Worker's main file (for example, `worker.ts`) and import the `Client` class from the `pg` library:
 
 ```typescript
 import { Client } from "pg";
 ```
 
-In the `fetch` event handler, connect to the PostgreSQL database using your chosen method, either the connection string or the explicit parameters:
+In the `fetch` event handler, connect to the PostgreSQL database using your chosen method, either the connection string or the explicit parameters.
 
-### Using a connection string
+### Use a connection string
 
 ```typescript
 const client = new Client(env.DB_URL);
 await client.connect();
 ```
 
-### Setting explicit parameters
+### Set explicit parameters
 
 ```typescript
 const client = new Client({
@@ -130,13 +138,13 @@ const client = new Client({
 await client.connect();
 ```
 
-## Step 5: Interact with the products database
+## 5. Interact with the products database
 
 To demonstrate how to interact with the products database, you will fetch data from the `products` table by creating a Worker that queries the table when a request is received.
 
 {{<Aside type="note">}}
 
-If you're following along in your own PostgreSQL instance, set up the `products` using the following SQL `CREATE TABLE` statement. This statement defines the columns and their respective data types for the `products` table:
+If you are following along in your own PostgreSQL instance, set up the `products` using the following SQL `CREATE TABLE` statement. This statement defines the columns and their respective data types for the `products` table:
 
 ```sql
 CREATE TABLE products (
@@ -153,7 +161,7 @@ Replace the existing code in your `index.ts` file with the following code:
 
 ```typescript
 ---
-filename: index.ts
+filename: worker.ts
 --- 
 export default {
   async fetch(
@@ -179,29 +187,31 @@ export default {
 };
 ```
 
-This code establishes a connection to the PostgreSQL database and queries the `products` table, returning the results as a JSON response.
+This code establishes a connection to the PostgreSQL database within your Worker application and queries the `products` table, returning the results as a JSON response.
 
-## Step 6: Deploy the Worker
+## 6. Deploy your Worker
 
-If you haven't already deployed the project, use the following command to deploy the Worker:
+Run the following command to deploy your Worker:
 
 ```sh
 $ npx wrangler deploy
 ```
 
-Now you can interact with your PostgreSQL products database using your Cloudflare Worker. Whenever a request is made to your Worker's URL, it will fetch data from the `products` table and return it as a JSON response. You can modify the query as needed to retrieve the desired data from your products database.
+Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-## Step 7: Insert a new row into the products database
+After deploying, you can interact with your PostgreSQL products database using your Cloudflare Worker. Whenever a request is made to your Worker's URL, it will fetch data from the `products` table and return it as a JSON response. You can modify the query as needed to retrieve the desired data from your products database.
+
+## 7. Insert a new row into the products database
 
 To insert a new row into the `products` table, create a new API endpoint in your Worker that handles a `POST` request. When a `POST` request is received with a JSON payload, the Worker will insert a new row into the `products` table with the provided data.
 
-As mentioned above, let's assume the `products` table has the following columns: `id`, `name`, `description`, and `price`.
+Assume the `products` table has the following columns: `id`, `name`, `description`, and `price`.
 
-Add the following code snippet inside the `fetch` event handler in your `index.ts` file, before the existing query code:
+Add the following code snippet inside the `fetch` event handler in your `worker.ts` file, before the existing query code:
 
 ```typescript
 ---
-filename: index.ts
+filename: worker.ts
 ---
 const url = new URL(request.url);
 if (request.method === "POST" && url.pathname === "/products") {
@@ -238,11 +248,11 @@ This code snippet does the following:
 
 Now, when you send a `POST` request to your Worker's URL with the `/products` path and a JSON payload, the Worker will insert a new row into the `products` table with the provided data.
 
-Modify your existing deployment code to accommodate the new feature:
+Modify your existing Worker code to accommodate the new feature:
 
 ```typescript
 ---
-filename: index.ts
+filename: worker.ts
 ---
 if (request.method === "POST" && url.pathname === "/products") {
   // (Insert a new row as detailed in the code snippet above)
@@ -267,10 +277,11 @@ You can now use your Cloudflare Worker to insert new rows into the `products` ta
 }
 ```
 
-## Conclusion and next steps
 
-Congratulations! You've successfully created a Cloudflare Worker that connects to a PostgreSQL database and handles fetching data and inserting new rows into a products table. This is just the beginning of what you can achieve with Cloudflare Workers and databases.
+You have successfully created a Cloudflare Worker that connects to a PostgreSQL database and handles fetching data and inserting new rows into a products table.
 
-For more inspiration, check out additional tutorials in our [tutorials section](/workers/tutorials) and explore the database features in the [Databases documentation](/workers/databases).
+## Next steps
+
+To build more with databases and Workers, refer to [Tutorials](/workers/tutorials) and explore the [Databases documentation](/workers/databases).
 
 If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
