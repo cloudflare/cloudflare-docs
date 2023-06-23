@@ -3,7 +3,7 @@ updated: 2023-06-12
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Connect to a PostgreSQL Database with Cloudflare Workers
+title: Connect to a PostgreSQL database with Cloudflare Workers
 layout: single
 ---
 
@@ -173,7 +173,7 @@ CREATE TABLE products (
 
 {{</Aside>}}
 
-Replace the existing code in your `index.ts` file with the following code:
+Replace the existing code in your `worker.ts` file with the following code:
 
 ```typescript
 ---
