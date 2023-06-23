@@ -10,7 +10,7 @@ When a Tunnel is run, cloudflared will automatically spin up a metrics server. T
 
 By default, the port that metrics are sent to is randomly selected and can be found by viewing Tunnels logs as seen below: 
 
-![Default Metrics Port](/cloudflare-one/static/documentation/connections/connect-apps/grafana/metrics-port.png)
+![Default Metrics Port](/images/cloudflare-one/connections/connect-apps/grafana/metrics-port.png)
 
 The port is highlighted in the above image.
 
@@ -107,6 +107,6 @@ Create a new dashboard and then in the upper right corner of the page click the 
 
 Select the above metric names in the metrics drop down to populate a graph with them. 
 
-![Grafana query](/cloudflare-one/static/documentation/connections/connect-apps/grafana/grafana-ops.png)
+![Grafana query](/images/cloudflare-one/connections/connect-apps/grafana/grafana-ops.png)
 
 Operations can be added to the queries to modify what is displayed. For example, showing all tunnel requests to showing all tunnel requests over a recent period of time, such as a day rather than all tunnel requests since metrics began reporting.

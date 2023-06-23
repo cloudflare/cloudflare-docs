@@ -53,7 +53,7 @@ For this tutorial, you will need:
 
     The **Name ID Format** must be set to: Email.
 
-    ![Fields configured using information copied from an AWS account.](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-application.png)
+    ![Fields configured using information copied from an AWS account.](/images/cloudflare-one/zero-trust-security/aws-sso-saas/aws-application.png)
 
 1.  (Optional) Additional Attribute Statements can be passed from your IdP to AWS SSO. More information about AWS Attribute mapping can be found at [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
 
@@ -90,7 +90,7 @@ For this tutorial, you will need:
 
 1.  Set Provisioning to _Manual_.
 
-    ![AWS settings panel demonstrating correct settings for manual provisioning.](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
+    ![AWS settings panel demonstrating correct settings for manual provisioning.](/images/cloudflare-one/zero-trust-security/aws-sso-saas/aws-settings.png)
 
     {{<Aside type="warning" header="Important">}}
 

@@ -8,7 +8,7 @@ weight: 1
 
 Cloudflare Access allows you to secure your web applications by acting as an identity aggregator, or proxy. Users can only log in to the application if they meet the criteria you want to introduce.
 
-![Cloudflare Access verifies a user's identity before granting access to your application.](/cloudflare-one/static/documentation/applications/diagram-saas.jpg)
+![Cloudflare Access verifies a user's identity before granting access to your application.](/images/cloudflare-one/applications/diagram-saas.jpg)
 
 You can protect two types of web applications: SaaS and self-hosted.
 
