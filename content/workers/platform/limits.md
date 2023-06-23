@@ -333,6 +333,6 @@ Durable Objects have been built such that the number of Objects in the system do
 
 ---
 
-## Format limitations on Using Image Resizing with Workers 
+## Image Resizing with Workers 
 
-It will be the same Limitations when using Image Resizing without workers. Please refer here: [Format limitations](/images/image-resizing/format-limitations/#limits-per-format).
+When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on limits.
