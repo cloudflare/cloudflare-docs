@@ -2,9 +2,15 @@
 pcx_content_type: how-to
 title: Transfer a .UK domain to Cloudflare
 weight: 3
+meta:
+    title: Learn how to transfer a .UK domain to Cloudflare.
 ---
 
 # Transfer a .UK domain to Cloudflare
+
+{{<render file="_requirements.md">}}
+
+---
 
 ## Prerequisites
 

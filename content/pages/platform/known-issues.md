@@ -30,7 +30,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
 
-- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/platform/functions/) are available as an equivalent to Netlify's Serverless Functions.
 
 ## Custom Domains
 
@@ -49,7 +49,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 ## Pages Functions
 
-- [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
+- [Functions](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
 
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
@@ -63,7 +63,7 @@ If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams
 2. From Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Pages project.
 4. Go to **Settings** > **Enable access policy**.
-5. Select **Edit** on the Acccess policy created for your preview deployments.
+5. Select **Edit** on the Access policy created for your preview deployments.
 6. In Edit, go to **Overview**.
 7. In the **Subdomain** field, delete the wildcard (`*`) and select **Save application**. You may need to change the **Application name** at this step to avoid an error.
 

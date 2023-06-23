@@ -41,6 +41,10 @@ Customize Cloudflare configuration settings for matching incoming requests.
 Customize the compression applied to responses from Cloudflare's global network to your website visitors, based on the file extension and content type.
 {{</feature>}}
 
+{{<feature header="Snippets" href="/rules/snippets/">}}
+Customize the behavior of your website or application using short pieces of JavaScript code.
+{{</feature>}}
+
 {{<feature header="Custom error responses" href="/rules/custom-error-responses/" cta="Configure custom error responses">}}
 Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
 {{</feature>}}
@@ -63,6 +67,10 @@ Define rate limits for requests matching an expression, and the action to perfor
 
 {{<related header="Cache rules" href="/cache/how-to/cache-rules/" product="cache">}}
 Customize the cache properties of your HTTP requests.
+{{</related>}}
+
+{{<related header="Workers" href="/workers/" product="workers">}}
+Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
 {{</related>}}
 
 ---

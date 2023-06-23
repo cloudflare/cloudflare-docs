@@ -94,7 +94,7 @@ Sortieren nach HTTP-525-Antworten, Ausgabe in eine Datei mit der Bezeichnung els
 
 Die Struktur _:525,_ (Doppelpunkt, Statuscode, Komma) ist eindeutig für das _EdgeResponseStatus_\-Feld. Wenn Sie einfach nach dem HTTP-Statuscode _525_ ohne Doppelpunkt und abschließendes Komma suchen, würden auch Protokolleinträge eingeschlossen, die die Ziffernfolge _525_ in anderen Feldern wie z. B. in _EdgeStartTimeStamp_ haben, das viele Zahlen enthält, zu denen auch die Ziffernfolge _525_ gehören könnte.
 
-![](/support/static/12.png)
+![](/images/support/12.png)
 
 Hinweis: Die Ausgabedateien (els-200.txt und els-525.txt) sind im ursprünglichen Zustand nicht gut lesbar. Um sie in einem besser lesbaren Format zu sehen, sollten Sie im folgenden Befehl „jq“ verwenden:
 
@@ -113,7 +113,7 @@ In diesem Beispiel zählen wir Anfragen nach SSL-Protokollversion, die durch das
 
 **Beispielausgaben:**
 
-![](/support/static/11.png)
+![](/images/support/11.png)
 
 Die Felder _ClientRequestURI, ClientIP, ClientRequestUserAgent, ClientCountry_ und _ClientRequestHost_ sind gewöhnlich am nützlichsten zum Auffinden von Angriffsmustern in diesen Protokollen.
 

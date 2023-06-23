@@ -53,7 +53,7 @@ If you need more information about the content your zone is serving (e.g. conten
 -   Cache Analytics users: Open the **Caching tab** on the Dashboard to filter by content type and identify the type of traffic you are transferring. 
 -   Users without Cache Analytics: Open the **Analytics tab** on the Dashboard and select the **Performance** section for information about the content you are serving.
 
-![Cache Analytics - Identify type of traffic being transferred](/support/static/traffic-types.png)
+![Cache Analytics - Identify type of traffic being transferred](/images/support/traffic-types.png)
 
 ## Still have questions? Contact support
 

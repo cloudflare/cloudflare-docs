@@ -113,18 +113,10 @@ function parse(filename: string): string | void {
       const pcx_and_reviewers = new Set([...PCX, ...reviewers]);
       pcx_and_reviewers.delete(author); // no self-review
       console.log('~> request PCX team review');
-      return await client.rest.pulls.requestReviewers({
-        repo: repository.name,
-        owner: repository.owner.login,
-        pull_number: prnumber,
-        /**
-         * We SKIP the "@cloudflare/pcx" handle because of
-         * stupid GITHUB_TOKEN/PAT permission issues. Assign all
-         * PCX team members manually instead, effectively the same.
-         * @see https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users
-         * @todo figure out how to use `team_reviewers: ['pcx']` instead.
-         */
-        reviewers: [...pcx_and_reviewers]
+      return await client.rest.issues.addLabels({
+        ...github.context.repo,
+        issue_number: prnumber,
+        labels: ["pcx_team_review"]
       });
     }
 
