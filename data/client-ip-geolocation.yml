@@ -12,10 +12,6 @@ meta:
     world a given client is located, even if their true client IP address is
     obscured by our proxy systems.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: false
-  full_content_strategy: false
 
 externals:
   - title: Cloudflare home

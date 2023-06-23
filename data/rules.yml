@@ -10,10 +10,6 @@ meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming requests, change Cloudflare settings, or trigger actions.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: true 
 
 resources:
   community: https://community.cloudflare.com/c/general/rules/66

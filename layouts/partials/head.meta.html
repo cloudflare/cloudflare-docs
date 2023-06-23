@@ -113,14 +113,6 @@
   <meta name="pcx_content_group" content="{{$productGroup}}" />
   {{- end -}}
 
-  {{- if isset $DATA.pcx_reporting "active" -}}
-  <meta name="pcx_active_product" content="{{- $DATA.pcx_reporting.active -}}" />
-  {{- end -}}
-
-  {{- if isset $DATA.pcx_reporting "full_content_strategy" -}}
-  <meta name="pcx_full_content_strategy" content="{{- $DATA.pcx_reporting.full_content_strategy -}}" />
-  {{- end -}}
-
     <!--Add rss feed links if specified-->
   {{ with $.Context.Params.rss -}}
   {{ if eq . "folder" }}

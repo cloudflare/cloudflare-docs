@@ -13,10 +13,6 @@ meta:
     to protect your domain from bad bots.
   author: '@cloudflare'
 
-pcx_reporting:
-  active: true
-  full_content_strategy: true
-
 resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/bots

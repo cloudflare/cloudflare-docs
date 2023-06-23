@@ -12,10 +12,6 @@ meta:
     entire networks while ensuring the performance of legitimate traffic is not
     compromised.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: true
 
 resources:
   community: https://community.cloudflare.com/tag/ddos

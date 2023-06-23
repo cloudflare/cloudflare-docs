@@ -10,10 +10,6 @@ meta:
   title: Cloudflare Health Checks docs
   description: Standalone Health Checks monitors an IP address or hostname for origin servers or applications.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: true
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/health-checks

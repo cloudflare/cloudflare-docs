@@ -14,10 +14,6 @@ meta:
     products tailored to your different needs.
   author: '@cloudflare'
 
-pcx_reporting:
-  active: false
-  full_content_strategy: true  
-
 resources:
   community: https://community.cloudflare.com/c/developers/images
   dashboard_link: https://dash.cloudflare.com/?to=/:account/images

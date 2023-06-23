@@ -11,10 +11,6 @@ meta:
   description: A managed gateway service that implements the Oblivious HTTP IETF standard
    and improves client privacy.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: false 
 
 externals:
   - title: Introductory blog

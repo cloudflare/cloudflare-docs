@@ -12,10 +12,6 @@ meta:
   description: Run machine learning models with Cloudflare Workers.
   author: '@cloudflare'
 
-pcx_reporting:
-  active: true
-  full_content_strategy: false
-
 resources:
   community: https://community.cloudflare.com/tag/constellation
 

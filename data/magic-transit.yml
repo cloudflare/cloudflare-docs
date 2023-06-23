@@ -12,10 +12,6 @@ meta:
     protection, traffic acceleration, and much more from every Cloudflare data
     center—for on-premise, cloud-hosted, and hybrid networks.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: true
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-transit

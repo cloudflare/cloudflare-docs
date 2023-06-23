@@ -12,10 +12,6 @@ meta:
   description: Cloudflare Fundamentals provides information about features that
     span Cloudflare products.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: true
 
 externals:
   - title: How Cloudflare works

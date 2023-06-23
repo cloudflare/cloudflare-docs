@@ -10,10 +10,6 @@ meta:
   title: Cloudflare Radar docs
   description: Investigate Internet usage around the world using Cloudflare's data.
   author: '@CloudflareRadar'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: false 
 
 resources:
   community: https://community.cloudflare.com/tag/cloudflareradar

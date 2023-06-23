@@ -14,10 +14,6 @@ meta:
     configuration issues.
   author: '@cloudflare'
 
-pcx_reporting:
-  active: true
-  full_content_strategy: true   
-
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/security-center
 

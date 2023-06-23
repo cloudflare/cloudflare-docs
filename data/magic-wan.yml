@@ -14,10 +14,6 @@ meta:
     and control through one simple user interface.
   author: '@cloudflare'
 
-pcx_reporting:
-  active: true
-  full_content_strategy: true  
-
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-wan
   learning_center: https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/

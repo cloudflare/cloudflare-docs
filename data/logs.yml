@@ -13,10 +13,6 @@ meta:
     processed by our network. Find out about the connecting client, Cloudflare's
     actions, and the response from the origin server
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: true
-  full_content_strategy: true
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/analytics/logs

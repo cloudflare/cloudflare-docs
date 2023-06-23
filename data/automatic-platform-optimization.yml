@@ -13,10 +13,6 @@ meta:
     site from our edge network, ensuring customers see improved performance when
     visiting your site.
   author: '@cloudflare'
-  
-pcx_reporting:
-  active: false
-  full_content_strategy: true
 
 externals:
   - title: Cloudflare homepage
