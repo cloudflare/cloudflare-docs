@@ -24,7 +24,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
         <div class="large-img">
 
-        ![Defang suspicious emails](/images/email-security/deployment/inline-setup/o365-area1-mx/use-cases/defang-suspicious.png)
+        ![Defang suspicious emails](/email-security/static/flexible-partial-images/o365-area1-mx/defang-suspicious.png)
 
         </div>
 
@@ -35,7 +35,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
         <div class="large-img">
 
-        ![Enable Email Link Isolation](/images/email-security/deployment/inline-setup/o365-area1-mx/use-cases/step4-enterprise-advantage-customer.png)
+        ![Enable Email Link Isolation](/email-security/static/flexible-partial-images/o365-area1-mx/step4-enterprise-advantage-customer.png)
 
         </div>
 
