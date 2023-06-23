@@ -50,7 +50,7 @@ Set these configurations by passing an argument to your [Wrangler](/workers/wran
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
-4. Configure your Production and Preview compatiblity flags as needed.
+4. Configure your Production and Preview compatibility flags as needed.
 
 Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) and [R2](/r2/) from within your Pages project by configuring [bindings](/pages/platform/functions/bindings/).
 
