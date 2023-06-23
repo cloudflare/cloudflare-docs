@@ -76,7 +76,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 20. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
 
-21. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permisisons, you will see a success page from Cloudflare Access.
+21. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
 
 ## Test your connection
 

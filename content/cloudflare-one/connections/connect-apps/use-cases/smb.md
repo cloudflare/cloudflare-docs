@@ -46,7 +46,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 1. In the Finder menu, select **Go** > **Connect to Server**.
 2. Enter `smb://<smb-server-ip-address>/sambashare`.
 
-   ![Connect to SMB server in macOS](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/smb-connect.png)
+   ![Connect to SMB server in macOS](/images/cloudflare-one/connections/connect-apps/use-cases/smb-connect.png)
 
 3. Sign in with the username and password created while setting up the server.
 
