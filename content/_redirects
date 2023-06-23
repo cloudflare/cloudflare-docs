@@ -253,6 +253,7 @@
 /dns/faq/ /dns/troubleshooting/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#dnssec /dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/ 301
 /support/dns/ /dns/ 301
 /support/dns/advanced-topics/ /dns/ 301
 /support/dns/dnssec/ /dns/dnssec/ 301

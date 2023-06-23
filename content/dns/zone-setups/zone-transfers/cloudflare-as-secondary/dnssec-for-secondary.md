@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: DNSSEC options
-layout: single
+weight: 3
 meta:
     title: DNSSEC for Secondary DNS
 ---
