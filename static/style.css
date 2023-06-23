@@ -3793,6 +3793,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   --border-color: rgba(var(--color-rgb), 0.1);
 }
 
+.DocsMarkdown table.Small {
+  font-size: 87%;
+}
+
 .DocsMarkdown table a {
   --background-color-rgb: var(--orange-rgb);
   --background-color-alpha: 0.08;
@@ -3890,6 +3894,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   border-top: 0;
   border-bottom-left-radius: 0.25em;
   border-bottom-right-radius: 0.25em;
+}
+
+.DocsMarkdown details summary+div.NoPadding {
+  padding: 0 0.6em;
 }
 
 .DocsMarkdown details[open] {
