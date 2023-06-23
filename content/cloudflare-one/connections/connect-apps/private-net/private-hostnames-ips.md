@@ -38,7 +38,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 Next, we need to [create a Local Domain Fallback entry](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
 
-![Local Domain Fallback panel displaying example data.](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
+![Local Domain Fallback panel displaying example data.](/images/cloudflare-one/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 
 {{<Aside type="note">}}
 
@@ -52,7 +52,7 @@ Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as 
 
 Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
 
-![Example of terminal output after updating cloudflared to the latest version.](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/update-cfd.png)
+![Example of terminal output after updating cloudflared to the latest version.](/images/cloudflare-one/secure-origin-connections/warp-to-tunnel-internal-dns/update-cfd.png)
 
 You can now resolve requests through the internal DNS server you set up in your private network.
 
