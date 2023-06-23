@@ -34,7 +34,7 @@ The following fields are commonly used in expressions of Compression Rules:
 
 {{<table-wrap>}}
 
-Field in [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) | Field name
+Field in [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) | Field name
 ----------------------|-----------
 _Media Type_ | [`http.response.content_type.media_type`](/ruleset-engine/rules-language/fields/#field-http-response-content_type-media_type)
 _File extension_ | [`http.request.uri.path.extension`](/ruleset-engine/rules-language/fields/#field-http-request-uri-path-extension)
