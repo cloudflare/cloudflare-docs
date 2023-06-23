@@ -20,7 +20,8 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 
 This tutorial assumes you have a standalone NGFW with two network interfaces: 
 - One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network); 
-- The other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
+- And the other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
+
 
 Additionally, there must be a default gateway set on the Virtual Router (default) pointing to the router of your Internet service provider(s).
 
@@ -53,7 +54,8 @@ These are the target IP addresses for bidirectional tunnel health checks:
 - `172.64.240.253`: Use with the primary IPsec tunnel.
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
 
-{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/how-to/run-tunnel-health-checks/) with Magic WAN. The settings for must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommendeds that you lower the rate at which health check probes are sent.{{</Aside>}}
+{{<Aside type="warning">}}You need to [configure bidirectional health checks](/magic-wan/how-to/run-tunnel-health-checks/) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.{{</Aside>}}
+
 
 #### Add IPsec tunnels
 
@@ -249,7 +251,8 @@ set address VLAN0100_L3_10-1-100-254--24 tag Trust_L3_Zone
 
 #### Address Group object
 
-The **Address Group** object used in this configuration provides a single object representing the entire Cloudflare IPv4 public address space.
+The **Address Group** object used in this configuration provides a single object representation of the entire Cloudflare IPv4 public address space.
+
 
 {{<table-wrap>}}
 
@@ -497,7 +500,8 @@ set zone Cloudflare_L3_Zone network layer3 [ tunnel.1 tunnel.2 ]
 
 ### Apply Changes
 
-This would be a good time to save and commit the configuration changes made thus far. Once complete, make sure you test basic connectivity to and from the firewall.
+This would be a good time to save and commit the configuration changes made so far. Once complete, make sure you test basic connectivity to and from the firewall.
+
 
 ### IKE crypto profile Phase 1
 
@@ -887,7 +891,8 @@ Repeat these commands for the respective tunnel to ensure the IPsec SA(s) displa
 
 Use ping to source traffic from the IP address of the Virtual Tunnel interface on Palo Alto Networks Next-Generation Firewall (NGFW) to the IP address of the Virtual Tunnel Interface on the Cloudflare side of the IPsec tunnel.
 
-{{<Aside type="note">}}The interface address is defined with a `/31` netmask. There have been isolated cases where NGFW exhibited issues with using ping to verify connectivity between the local and remote Virtual Tunnel interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a `/30` netmask, or contact Palo Alto Networks support for assistance.{{</Aside>}}
+{{<Aside type="note">}}The interface address is defined with a `/31` netmask. There have been isolated cases where NGFW exhibited issues when using ping to verify connectivity between the local and remote Virtual Tunnel interfaces. This behavior can vary depending on the version of PAN-OS installed on the firewall. If you encounter this issue, either switch to a `/30` netmask, or contact Palo Alto Networks support for assistance.{{</Aside>}}
+
 
 ##### Syntax
 
@@ -1059,7 +1064,8 @@ set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0
 
 ### Magic health checks
 
-Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random servers across Cloudflare's global Anycast network. These ICMP probes are unique in that an ICMP reply packet is sent (as opposed to an ICMP Request).
+Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random servers across Cloudflare's global Anycast network. These ICMP probes are unique because an ICMP reply packet is sent (as opposed to an ICMP Request).
+
 
 {{<Aside type="note">}}The construct of the security policies may seem counter-intuitive - this is due to the use of ICMP reply probes. As long as you adhere to the recommended policies in this documentation, the bi-directional health checks will work as expected.{{</Aside>}}
 
@@ -1265,8 +1271,10 @@ As mentioned earlier, this tutorial includes examples for two different use-case
 
 Rules must be defined to facilitate traffic from the trust network to the Magic WAN protected sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
 
-- From Trust to Magic WAN protected sites
-- From Magic WAN protected sites to Trust
+- From Trust to Magic WAN protected sites.
+
+- From Magic WAN protected sites to Trust.
+
 
 ##### Trust to Magic WAN dashboard
 
