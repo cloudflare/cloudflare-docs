@@ -53,3 +53,5 @@ Get alerted when calendars in your Microsoft 365 account have their permissions 
 | Microsoft File Shared Company Wide Read Only        | Medium   |
 | Microsoft Folder Shared Company Wide Read and Write | Medium   |
 | Microsoft Folder Shared Company Wide Read Only      | Medium   |
+
+{{<render file="casb/_dlp-mip.md">}}
