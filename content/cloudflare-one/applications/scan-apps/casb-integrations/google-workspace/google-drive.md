@@ -1,0 +1,56 @@
+---
+pcx_content_type: reference
+title: Google Drive
+rss: file
+weight: 1
+---
+
+# Google Drive
+
+The Google Workspace integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
+
+## Integration prerequisites
+
+- A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
+- [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace
+
+## Integration permissions
+
+For the Google Drive integration to function, Cloudflare CASB requires the following Google API permissions:
+
+- `https://www.googleapis.com/auth/admin.directory.domain.readonly`
+- `https://www.googleapis.com/auth/admin.directory.user.readonly`
+- `https://www.googleapis.com/auth/admin.directory.user.security`
+- `https://www.googleapis.com/auth/calendar`
+- `https://www.googleapis.com/auth/cloud-platform.read-only`
+- `https://www.googleapis.com/auth/drive.readonly`
+- `https://www.googleapis.com/auth/gmail.settings.basic`
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Google Workspace Admin SDK Directory API](https://developers.google.com/admin-sdk/directory/v1/guides/authorizing).
+
+## Security findings
+
+The Google Drive integration currently scans for the following findings, or security risks.
+
+To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+
+### File sharing
+
+| Finding                                       | Severity | Description                                                                                               |
+| --------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| File Publicly Accessible Read and Write       | Critical | A Google Drive file is publicly accessible on the Internet that anyone can read or write.                 |
+| File Publicly Accessible Read Only            | High     | A Google Drive file is publicly accessible on the Internet that anyone can read.                          |
+| File Shared Outside Company Read and Write    | High     | A Google Drive file is shared with another organization or outside party with read and write permissions. |
+| File Shared Outside Company Read Only         | Medium   | A Google Drive file is shared with another organization or outside party with read permissions.           |
+| File Shared Company Wide Read and Write       | Medium   | A Google Drive file is shared with the entire company with read and write permissions.                    |
+| File Shared Company Wide Read Only            | Medium   | A Google Drive file is shared with the entire company with read permissions.                              |
+| Google Workspace Calendar Publicly Accessible | Medium   | A user's Google Calendar is publicly accessible on the Internet that anyone can read.                     |
+
+### Data Loss Prevention (optional)
+
+These findings will only appear if you [added DLP profiles](/cloudflare-one/applications/scan-apps/casb-dlp/) to your CASB integration.
+
+| Finding                                                        | Severity | Description                                                                                |
+| -------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------ |
+| File Publicly Accessible Read and Write with DLP Profile match | Critical | A Google Drive file contains sensitive data that anyone on the Internet can read or write. |
+| File Publicly Accessible Read Only with DLP Profile match      | Critical | A Google Drive file contains sensitive data that anyone on the Internet can read.          |
