@@ -6,6 +6,10 @@ rss: file
 
 # Changelog
 
+## 2023-06-21
+
+- [Multipart ETags](/r2/objects/multipart-objects/#etags) are now MD5 hashes.
+
 ## 2023-06-16
 
 - Fixed a bug where calling [GetBucket](https://developers.cloudflare.com/api/operations/r2-get-bucket) on a non-existent bucket would return a 500 instead of a 404.
@@ -110,7 +114,7 @@ rss: file
 ## 2022-08-17
 
 - The S3 `DeleteObjects` operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 `DeleteObject` operation was not affected by this.
-- Fixed presigned URL support for the S3 `ListBuckets` and `ListObjects` operations. 
+- Fixed presigned URL support for the S3 `ListBuckets` and `ListObjects` operations.
 
 ## 2022-08-06
 
