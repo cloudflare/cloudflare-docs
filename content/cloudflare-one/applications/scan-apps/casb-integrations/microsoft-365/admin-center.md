@@ -66,5 +66,3 @@ Identify and get alerted about the third-party apps that have access to at least
 | App Not Certified By Microsoft | Low      |
 | App Not Attested By Published  | Low      |
 | App Disabled By Microsoft      | Low      |
-
-{{<render file="casb/_dlp-mip.md">}}

@@ -73,5 +73,3 @@ Get alerted when users set their email to be forwarded externally. This can eith
 | Active Message Rule Forwards Externally As Attachment | Low      |
 | Active Message Rule Forwards Externally               | Low      |
 | Active Message Rule Redirects Externally              | Low      |
-
-{{<render file="casb/_dlp-mip.md">}}
