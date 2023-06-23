@@ -73,7 +73,7 @@ Set up a "lottery" system to reward all users who enter into the queue prior to 
 
 Users who reach your application **during the prequeue period** are [randomly assigned](/waiting-room/reference/queueing-methods/#random) a place in line when the event starts. If the event uses [FIFO ordering](/waiting-room/reference/queueing-methods/#first-in-first-out-fifo), users who reach your application **after the prequeue period** are assigned places after users from the prequeue.
 
-To set up a "lottery", include the [following parameters](#properties) in your API request:
+To set up a "lottery", include the [following parameters](#parameters) in your API request:
 
 - `prequeue_start_time`
 - `shuffle_at_event_start`

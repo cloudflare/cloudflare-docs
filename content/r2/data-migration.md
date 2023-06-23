@@ -80,4 +80,4 @@ To create credentials with the correct permissions:
 
 3. Create a new user and attach the created policy to that user.
 
-You can now use both the Access Key ID and Secret Access Key when defining your source bucket. Refer to [Migrate data from Amazon S3 to R2](/r2/data-migration/#migrate-data-from-amazon-s3-to-r2) to learn more.
+You can now use both the Access Key ID and Secret Access Key when defining your source bucket.
