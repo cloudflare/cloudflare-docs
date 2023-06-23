@@ -25,6 +25,6 @@ To activate IP advertisement via the Cloudflare dashboard, refer to [Configure d
 
 To activate IP advertisement via the API, refer to the [IP Address Management Dynamic Advertisement API](/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status).
 
-### Magic Network Monitoring Rules
+### Magic Network Monitoring rules
 
-To create Magic Network Monitoring rules with auto advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](/magic-transit/how-to/auto-advertise-prefixes/).
+To create Magic Network Monitoring rules with auto-advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](/magic-transit/how-to/auto-advertise-prefixes/).
