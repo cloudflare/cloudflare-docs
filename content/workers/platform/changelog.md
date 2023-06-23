@@ -17,7 +17,7 @@ rss: file
 
 - `AbortSignal.any()` is now available.
 - Updated V8 to 11.4.
-- Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class' now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/platform/compatibility-dates/#new-url-parser-implementation) compatibility flags.
+- Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/platform/compatibility-dates/#new-url-parser-implementation) compatibility flags.
 - Added compatibility flag [`strict_compression_checks`](/workers/platform/compatibility-dates/#strict-compression-error-checking) for additional `DecompressionStream` error checking.
 
 ## 2023-05-26
