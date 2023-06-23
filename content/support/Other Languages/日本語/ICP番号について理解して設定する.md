@@ -53,10 +53,4 @@ Webサイトの種類や会社の登録先となる省によっては、すべ�
 
 ICP番号と証明書を受け取ったら、ICP番号をWebサイトのホームページ下部に追加します。 
 
-![旧URL： https://support.cloudflare.com/hc/article_attachments/360040367132/baidu_home_page.png 記事ID：209714777 | ICP番号について理解して設定する](/support/static/hc-import-baidu_home_page.png)
-
-___
-
-## 関連リソース
-
-[CloudflareとYunjiasuのどちらを選ぶべきか？](https://support.cloudflare.com/hc/articles/209156358)
+![旧URL： https://support.cloudflare.com/hc/article_attachments/360040367132/baidu_home_page.png 記事ID：209714777 | ICP番号について理解して設定する](/images/support/hc-import-baidu_home_page.png)

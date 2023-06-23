@@ -70,9 +70,11 @@ You can also use the back button near the zone name.
 
 ## Zones
 
-Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones.
+Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones[^1]. Use your zone to monitor security and performance, update configurations, and apply zone-level products and services.
 
-Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/about/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
+Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/how-to/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
+
+
 
 ### Navigation
 
@@ -83,3 +85,5 @@ Once you are within a zone, items within the sidebar will be zone-related produc
 If you need to change to another zone, use the forward arrow next to the zone name or by go back to the homepage of your account.
 
 ![Use the forward button near the account name to switch between zones in an account](/images/fundamentals/get-started/zone-navigation.png)
+
+[^1]: Similar to [DNS zones](https://www.cloudflare.com/learning/dns/glossary/dns-zone/), but with additional capabilities.

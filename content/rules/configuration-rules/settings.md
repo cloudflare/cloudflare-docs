@@ -110,7 +110,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 </div>
 </details>
 
-## Disable Railgun
+## Disable Railgun (deprecated)
 
 Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
 
@@ -412,7 +412,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 [^4]: Cloudflare Apps is a platform for sharing high-quality apps that are easy to use by anyone with a website.
 
-[^5]: Railgun is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
+[^5]: Railgun (deprecated) is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
 
 [^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 

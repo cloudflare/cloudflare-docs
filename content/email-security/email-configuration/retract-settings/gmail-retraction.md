@@ -182,6 +182,10 @@ You must send copies of inbound email messages to Area 1 for inspection, so that
 
 {{<render file="_gmail-bcc-setup.md">}}
 
+### Geographic locations
+
+{{<render file="_bcc-table-geographic-locations.md">}}
+
 ## 6. Manual message retraction
 
 {{<render file="_manual-retraction.md">}}

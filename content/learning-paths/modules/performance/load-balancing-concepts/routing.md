@@ -15,7 +15,7 @@ This is a concept known as routing.
 
 Generally, there are five questions involved with routing:
 
-1. By default, how does the load balancer distributes requests to pools?
+1. By default, how does the load balancer distribute requests to pools?
 2. By default, how do pools distribute requests to individual servers?
 3. Within a pool, which servers are healthy?
 4. Within a load balancer, which pools are healthy?

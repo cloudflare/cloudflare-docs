@@ -29,7 +29,7 @@ WordPress.com does not guarantee the IP address will never change. For maximum u
 
 5\. Remove the A records.
 
-![Example of completed CNAME record setup.](/support/static/add-cname-wp.png)
+![Example of completed CNAME record setup.](/images/support/add-cname-wp.png)
 
 Congratulations! Your site is now accelerated and protected by Cloudflare.
 

@@ -4486,7 +4486,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin: 0 auto;
 }
 
-[theme="dark"] .DocSearch-Logo svg > * {
+[theme="dark"] .DocSearch-Logo svg>* {
   fill: white;
 }
 
@@ -4495,6 +4495,13 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   #algolia {
     display: none;
   }
+}
+
+.DocSearch-Search-Icon,
+.DocSearch-Container svg,
+.DocSearch-Logo svg {
+  height: auto;
+  width: auto;
 }
 
 /* dark */
@@ -5238,7 +5245,8 @@ pre {
   }
 }
 
-/* Beta pill */
+/* Alpha, Beta, and Deprecated pills */
+.DocsMarkdown-alpha,
 .DocsMarkdown-beta,
 .DocsMarkdown-deprecated {
   display: flex;
@@ -5269,6 +5277,17 @@ pre {
   font-size: 12px;
   line-height: 150%;
   /* identical to box height, or 18px */
+}
+
+.DocsMarkdown--pill-tab {
+  top: 0;
+  margin-left: 0.8em;
+}
+
+.DocsMarkdown--pill-alpha {
+  width: 47px;
+  background: var(--orange-8);
+  color: var(--orange-1);
 }
 
 .DocsMarkdown--pill-beta {
@@ -5424,6 +5443,10 @@ pre {
 
 [theme="dark"] .DocsMarkdown--resource:hover {
   background-color: #2f3133;
+}
+
+.littlefoot__button {
+  max-width: 3em;
 }
 
 .littlefoot-footnote__button {

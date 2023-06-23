@@ -111,7 +111,7 @@ Refer to [Supported formats and limitations](/images/image-resizing/format-limit
 
 ### Resizing failed and I received an error response with a code. What does it mean?
 
-Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information on how to troubleshoot some of the more common issues, including error responses.
+Refer to [Troubleshoot Image Resizing problems](/images/image-resizing/troubleshooting/) for more information on how to troubleshoot some of the more common issues, including error responses.
 
 ### Are Image Resizing errors billed?
 
@@ -122,7 +122,7 @@ Cloudflare considers some Image Resizing request errors for billing. Below is a 
 * `9413`: Image too big.
 * `9511`: Unsupported image format.
 
-Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information about these error codes.
+Refer to [Troubleshoot Image Resizing problems](/images/image-resizing/troubleshooting/) for more information about these error codes.
 
 ### Why does upscaling a PNG with Workers increase its file size?
 
@@ -138,4 +138,4 @@ This is expected behaviour when upscaling a PNG file with transparency, due to t
 
 ### How can I troubleshoot common `Cf-Polished` statuses?
 
-Refer to the [Troubleshoot common Cf-Polished statuses](https://support.cloudflare.com/hc/articles/4412244347917) page were you can find a list of common `Cf-Polished` statuses and how to troubleshoot them.
+Refer to the [Troubleshoot common Cf-Polished statuses](/images/polish/cf-polished-statuses/) page were you can find a list of common `Cf-Polished` statuses and how to troubleshoot them.

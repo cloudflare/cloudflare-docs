@@ -172,17 +172,17 @@ Podrías reenviar:
 a:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/support/static/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/images/support/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 Esta regla coincidiría con:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/support/static/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/images/support/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 que termina siendo reenviado a:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/support/static/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/images/support/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 Para usar un carácter literal _$_ en la URL de reenvío, sortéalo añadiendo una barra invertida (\\) delante: _\\$_.
 
@@ -263,7 +263,7 @@ TTL de caché del navegador
 
  | 
 
-Controla el tiempo de validez de los recursos almacenados en caché por los navegadores de los clientes. Tanto la interfaz de usuario como la API de Cloudflare prohíben la configuración de **TTL de caché de navegador** a _0_ para los dominios que no son Enterprise. [Más información](/cache/about/edge-browser-cache-ttl).
+Controla el tiempo de validez de los recursos almacenados en caché por los navegadores de los clientes. Tanto la interfaz de usuario como la API de Cloudflare prohíben la configuración de **TTL de caché de navegador** a _0_ para los dominios que no son Enterprise. [Más información](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -307,7 +307,7 @@ Caché por tipo de dispositivo
 
  | 
 
-Separa el contenido en caché en función del tipo de dispositivo del visitante. [Mas información](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only).
+Separa el contenido en caché en función del tipo de dispositivo del visitante. [Mas información](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only).
 
  | 
 
@@ -335,7 +335,7 @@ Clave de caché
 
 También conocida como _Clave de caché personalizada_.
 
-Controla específicamente qué variables incluir al decidir qué recursos almacenar en caché. Esto permite a los clientes determinar lo que se debe almacenar en la memoria caché basándose en algo más que la URL. [Más información](/cache/about/cache-keys).
+Controla específicamente qué variables incluir al decidir qué recursos almacenar en caché. Esto permite a los clientes determinar lo que se debe almacenar en la memoria caché basándose en algo más que la URL. [Más información](/cache/how-to/cache-keys/).
 
  | 
 
@@ -358,7 +358,7 @@ Aplica la memoria caché personalizada en función de la opción seleccionada:
 
 **Estándar:** almacena en la memoria caché todo el contenido estático que tiene una cadena de consulta.
 
-**Copiar todo en caché**: trata todo el contenido como estático y almacena en la memoria caché todos los tipos de archivos más allá del [contenido almacenado en caché predeterminado de Cloudflare](/cache/about/default-cache-behavior#default-cached-file-extensions). Respeta los encabezados de caché del servidor web de origen a menos que el **TTL de caché del perímetro** también se establezca en la regla de página. Cuando se combina con un **TTL de caché del perímetro** > _0_, **Copiar todo en caché** elimina las cookies de la respuesta del servidor web de origen.   
+**Copiar todo en caché**: trata todo el contenido como estático y almacena en la memoria caché todos los tipos de archivos más allá del [contenido almacenado en caché predeterminado de Cloudflare](/cache/concepts/default-cache-behavior/#default-cached-file-extensions). Respeta los encabezados de caché del servidor web de origen a menos que el **TTL de caché del perímetro** también se establezca en la regla de página. Cuando se combina con un **TTL de caché del perímetro** > _0_, **Copiar todo en caché** elimina las cookies de la respuesta del servidor web de origen.   
 
 
  | 
@@ -559,7 +559,7 @@ Activa o desactiva la función **Encriptación oportunista de Cloudflare** de 
 -   Todo
 
  |
-| Encabezado Origin Cache Control | [Origin Cache Control](/cache/about/cache-control) está activado por defecto en los dominios de los planes gratuito, Pro y Business y desactivado por defecto en los dominios Enterprise. | 
+| Encabezado Origin Cache Control | [Origin Cache Control](/cache/concepts/cache-control/) está activado por defecto en los dominios de los planes gratuito, Pro y Business y desactivado por defecto en los dominios Enterprise. | 
 
 -   Todo
 
@@ -735,11 +735,11 @@ ___
 
 **Causa principal**: puede deberse a un problema de configuración en una regla de página. Cuando se crea una regla de página que utiliza dos comodines, como una regla de _Reenvío de URL_, es posible crear una regla que mencione el segundo comodín con el marcador de posición $2. Véase el ejemplo siguiente:
 
-![Ejemplo de configuración de regla de página con dos comodines. La URL de reenvío contiene un marcador de posición $2, que se sustituirá por el contenido que coincida con el segundo ](/support/static/page-rule-create.png)
+![Ejemplo de configuración de regla de página con dos comodines. La URL de reenvío contiene un marcador de posición $2, que se sustituirá por el contenido que coincida con el segundo ](/images/support/page-rule-create.png)
 
 Al actualizar la misma regla, puedes eliminar uno de los comodines en el campo **Si la URL coincide** y guardarlo. Véase el ejemplo siguiente:
 
-![Configuración incorrecta de la regla de página con un solo comodín, pero que sigue utilizando el marcador de posición $2 en la URL de reenvío. Esta configuración hace que ](/support/static/page-rule-update.png)
+![Configuración incorrecta de la regla de página con un solo comodín, pero que sigue utilizando el marcador de posición $2 en la URL de reenvío. Esta configuración hace que ](/images/support/page-rule-update.png)
 
 Si lo haces, el marcador de posición $2 mencionará a un comodín que ya no existe y, por lo tanto, aparecerá un "_Error 500 (error interno del servidor)"_ cuando una URL active la regla de la página.
 

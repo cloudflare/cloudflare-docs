@@ -30,3 +30,5 @@ If your account satisfies all the requirements, follow the steps below to enable
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Speed** > **Optimization**.
 3. Scroll to **Automatic Signed Exchanges (SXGs)** and enable it.
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}

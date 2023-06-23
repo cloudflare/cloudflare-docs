@@ -8,8 +8,8 @@ _build:
 ```mermaid
     flowchart LR
       accTitle: Load balancing monitor flow
-      accDescr: Monitors issue health checks, which validate the current status of servers within each origin pool.
-      Monitor -- Healthcheck ----> Origin2
+      accDescr: Monitors issue health monitor requests, which validate the current status of servers within each origin pool.
+      Monitor -- Health Monitor ----> Origin2
       Origin2 -- Response ----> Monitor
       subgraph Origin pool
       Origin1((Origin 1))

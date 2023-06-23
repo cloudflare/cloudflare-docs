@@ -93,7 +93,7 @@ Organiza por respuesta de HTTP 525, envía al archivo con el nombre de els-525.t
 
 El patrón _:525,_ (dos puntos, código de estado, coma) es exclusivo del campo _EdgeResponseStatus_. La simple búsqueda del código de estado HTTP _525_ sin dos puntos y coma también incluiría entradas de registro que tienen el patrón _525_ en otros campos como _EdgeStartTimeStamp_, por ejemplo, que contiene muchos números y también puede contener la secuencia de números _525_.
 
-![](/support/static/12.png)
+![](/images/support/12.png)
 
 Nota:los archivos de salida (els-200.txt y els-525.txt) no son legibles así como están. Para visualizarlos en un formato legible, usa jq en el siguiente comando:
 
@@ -112,7 +112,7 @@ En este ejemplo, contamos las solicitudes por versión de protocolo SSL, que se 
 
 **Resultado del ejemplo:**
 
-![](/support/static/11.png)
+![](/images/support/11.png)
 
 Los campos _ClientRequestURI, ClientIP, ClientRequestUserAgent, ClientCountry_ y _ClientRequestHost_ son, por lo general, los más útiles para encontrar los patrones de los ataques en estos registros.
 

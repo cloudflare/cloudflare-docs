@@ -36,13 +36,7 @@ To use Version Management, the following must all be true:
 - Your zone is on an Enterprise plan.
 - Your zone is in an [active](/dns/zone-setups/reference/domain-status/) state.
 - Your zone uses [WAF managed rules](https://support.cloudflare.com/hc/articles/5995821690637).
+- Your zone has migrated to use [Custom Rules](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) instead of Firewall Rules.
 - Your account uses the [new WAF](https://blog.cloudflare.com/new-cloudflare-waf/) (if not, contact your account team).
-- Your user account must have an API Key provisioned (if not, [view your API Key](/fundamentals/api/get-started/keys/#view-your-api-key)).
+- Your user account must have an API Key provisioned (if not, [view your API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key)).
 - You must use the dashboard to manage versioning.
-  
-{{<Aside type="note">}}
- 
-Currently, API support is not available for versioning. Deploying Workers used by zones with versioning enabled via Wrangler is also not supported.
- 
-{{</Aside>}}
-
