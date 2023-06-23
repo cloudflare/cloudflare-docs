@@ -3,11 +3,11 @@ updated: 2023-06-15
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Access an R2 bucket
+title: Securely access and upload assets with Cloudflare R2
 layout: single
 ---
 
-# Access an R2 Bucket
+# Securely access and upload assets with Cloudflare R2
 
 This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2) bucket.
 
@@ -116,13 +116,11 @@ The code written above fetches and returns data from the R2 bucket when a `GET` 
 
 Next, you will add the ability to upload to your R2 bucket using authentication. To securely authenticate your upload requests, use [Wrangler's secret capability](/workers/wrangler/commands/#secret). Wrangler was installed when you ran the `create cloudflare@latest` command.
 
-First, upload the secret using the Wrangler CLI:
+Create a secret value of your choice -- for instance, a random string or password. Using the Wrangler CLI, add the secret to your project as `AUTH_SECRET`:
 
 ```sh
 $ wrangler secret put AUTH_SECRET
 ```
-
-Here, `AUTH_SECRET` is the name of a secret value of your choice. You'll be prompted to enter the secret value right after you execute this command in your terminal.
 
 Now, you'll add a new code path that handles a PUT HTTP request. This new code will check that the previously uploaded secret is correctly used for authentication, and then upload to R2 using `MY_BUCKET.put(key, data)`:
 
