@@ -6,9 +6,9 @@ meta:
   title: Compression Rules examples
 ---
 
-# Compression Rules examples
+# Compression rule examples
 
-The following examples cover common patterns for configuring Compression Rules.
+The following examples cover common patterns for configuring compression rules.
 
 ## Do not apply compression to AVIF images
 
