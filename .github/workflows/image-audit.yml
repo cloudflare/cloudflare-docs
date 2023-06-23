@@ -19,9 +19,9 @@ jobs:
       - name: Find Unused Files
         id: find-files
         run: |
-          # Find all .png and .svg files in the /content and /assets folders
-          FILES=$(find /content /assets -type f \( -name "*.png" -o -name "*.svg" \) -not -path "./static/*")
-          
+          # Find all .png and .svg files, excluding those in the ./static directory
+          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -not -path "./static/*")
+
           # Check if files are referenced in any markdown file
           UNUSED_FILES=""
           for FILE in $FILES; do
@@ -30,7 +30,7 @@ jobs:
               UNUSED_FILES+="$FILE\n"
             fi
           done
-          
+
           # If there are unused files, output them
           if [ -n "$UNUSED_FILES" ]; then
             echo "::set-output name=unused_files::$UNUSED_FILES"
@@ -54,14 +54,18 @@ jobs:
           ISSUE_NUMBER: ${{ steps.create-issue.outputs.issue_number }}
         run: |
           # Create a new branch with the date-appended name
-          BRANCH_NAME="image-cleanup-$(bash -c 'date +%Y%m%d')"
+          BRANCH_NAME="image-cleanup-$(date +%Y%m%d)"
 
           git checkout -b $BRANCH_NAME
 
           # Delete the unused files
           while IFS= read -r FILE; do
-            git rm --cached "$FILE"
-            rm "$FILE"
+            if [ -f "$FILE" ]; then
+              git rm --cached "$FILE"
+              rm "$FILE"
+            else
+              echo "File not found: $FILE"
+            fi
           done <<< "${{ steps.find-files.outputs.unused_files }}"
 
           # Commit the changes
@@ -74,4 +78,4 @@ jobs:
           curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/cloudflare/cloudflare-docs/pulls" \
-            -d "{\"title\": \"Remove Unused Image Files\", \"body\": \"This PR removes the unused image files identified in issue #${{ env.ISSUE_NUMBER }}.\", \"head\": \"$BRANCH_NAME\", \"base\": \"main\"}"
+            -d "{\"title\": \"Remove Unused Image Files\", \"body\": \"This PR removes the unused image files identified in issue #${{ env.ISSUE_NUMBER }}.\", \"head\": \"$BRANCH_NAME\", \"base\": \"production\"}"
