@@ -1,9 +1,8 @@
 ---
-title: Network Interconnect
-pcx_content_type: tutorial
-weight: 10
-meta:
-  title: Network Interconnect and Magic Transit
+title: Magic Network Monitoring
+pcx_content_type: concept
+weight: 7
 ---
+# Magic Network Monitoring
 
-_magic-transit-integration
+{{<render file="_magic-transit-integration.md" productFolder="magic-network-monitoring">}}
