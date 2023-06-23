@@ -9,19 +9,22 @@ layout: single
 
 # Access an R2 Bucket
 
-This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access from and upload files to a [Cloudflare R2](/r2) bucket.
+This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2) bucket.
 
 ## Prerequisites
 
-- A Cloudflare account - if you don't have one, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
-- Node.js and npm installed.
+To continue:
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
 
 ## Create a new project
 
 First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Cloudflare Workers project. To do this, open a terminal window and run the following command:
 
 ```sh
-$ npm create cloudflare
+$ npm create cloudflare@latest
 ```
 
 or `yarn`:
@@ -30,18 +33,25 @@ or `yarn`:
 $ yarn create cloudflare
 ```
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard. When asked to choose a template, select the "Hello World Script" option.
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard. 
 
-Once your project has been configured and scaffolded, you will be asked if you would like to deploy the project to Cloudflare. If you choose not to deploy, you can navigate to the newly created project folder to begin development. Otherwise, you'll be asked to authenticate (if not logged in already), and your project will be deployed.
+To continue with this guide:
+
+1. Give your new Worker application a name.
+2. Select `"Hello World" Worker` for the type of application.
+3. Select `Yes` to using TypeScript.
+4. Select `No` to deploying your application. 
+
+If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 
 ## Create an R2 Bucket
 
-Before you integrate R2 Bucket access into your project, an R2 bucket must be created:
+Before you integrate R2 bucket access into your Worker application, an R2 bucket must be created:
 
 ```sh
 $ wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
-Replace `<YOUR_BUCKET_NAME>` with the name you want to assign to your bucket. You can list your account's R2 buckets to verify that a new bucket has been added:
+Replace `<YOUR_BUCKET_NAME>` with the name you want to assign to your bucket. List your account's R2 buckets to verify that a new bucket has been added:
 
 ```sh
 $ wrangler r2 bucket list
@@ -49,9 +59,9 @@ $ wrangler r2 bucket list
 
 ## Configure access to an R2 Bucket
 
-Your new R2 bucket is ready, and next, we need to use it inside your Workers project. 
+After your new R2 bucket is ready, use it inside your Worker project. 
 
-You'll do this by modifying the `wrangler.toml` configuration file to include this bucket information. Add the following lines:
+Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an [R2 bucket binding](/workers/platform/bindings/#r2-bucket-bindings). Add the following R2 bucket binding to your `wrangler.toml` file:
 
 ```toml
 [[r2_buckets]]
@@ -59,19 +69,19 @@ binding = 'MY_BUCKET'
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Replace `<YOUR_BUCKET_NAME>` with the name of your R2 bucket.
+Give your R2 bucket binding name. Replace `<YOUR_BUCKET_NAME>` with the name of your R2 bucket.
 
-Your application can now access your R2 bucket using the `MY_BUCKET` variable, and you can perform CRUD (Create, Read, Update, Delete) operations on the contents of the bucket.
+Your Worker application can now access your R2 bucket using the `MY_BUCKET` variable. You can now perform CRUD (Create, Read, Update, Delete) operations on the contents of the bucket.
 
 ## Fetch from an R2 Bucket
 
-Our next step is to implement the functionalities for the worker to interact with the R2 bucket, i.e., fetching files from the bucket and uploading files to the bucket.
+After setting up an R2 bucket binding, you will implement the functionalities for the Worker to interact with the R2 bucket, such as, fetching files from the bucket and uploading files to the bucket.
 
-To fetch files from the R2 bucket, you can use the `BINDING.get` function. In the below example, the R2 binding is called `MY_BUCKET`. Using `.get(key)`, you can retrieve an asset based on the URL pathname as the key. In this example, the URL pathname is `/image.png`, and the asset key is `image.png`.
+To fetch files from the R2 bucket, use the `BINDING.get` function. In the below example, the R2 bucket binding is called `MY_BUCKET`. Using `.get(key)`, you can retrieve an asset based on the URL pathname as the key. In this example, the URL pathname is `/image.png`, and the asset key is `image.png`.
 
 ```ts
 ---
-filename: index.ts
+filename: worker.ts
 ---
 export default {
   async fetch(request: Request, env: any) {
@@ -95,13 +105,13 @@ export default {
   },
 };
 ```
-The code written above fetches and returns data from the R2 bucket when a GET request is made to the worker using a specific URL path.
+The code written above fetches and returns data from the R2 bucket when a `GET` request is made to the Worker application using a specific URL path.
 
 ## Upload securely to an R2 Bucket
 
-Next, you'll add the ability to upload to your R2 bucket using authentication. To securely authenticate your upload requests, we'll use Wrangler's secret capability.
+Next, you will add the ability to upload to your R2 bucket using authentication. To securely authenticate your upload requests, use [Wrangler's secret capability](/workers/wrangler/commands/#secret). Wrangler was installed when you ran the `create cloudflare@latest` command.
 
-Firstly, you need to upload the secret using the Wrangler CLI:
+First, upload the secret using the Wrangler CLI:
 
 ```sh
 $ wrangler secret put AUTH_SECRET
@@ -113,7 +123,7 @@ Now, you'll add a new code path that handles a PUT HTTP request. This new code w
 
 ```ts
 ---
-filename: index.ts
+filename: worker.ts
 ---
 export default {
   async fetch(request: Request, env: any) {
@@ -140,9 +150,9 @@ export default {
 
 This approach ensures that only clients who provide a valid bearer token, via the `Authorization` header equal to the `AUTH_SECRET` value, will be permitted to upload to the R2 bucket. If you used a different binding name than `AUTH_SECRET`, replace it in the code above.
 
-## Deploy your project
+## Deploy your Worker application
 
-After completing your Cloudflare Worker project, it's now time to deploy it to Cloudflare. Make sure you're in your project directory, then run:
+After completing your Cloudflare Worker project, deploy it to Cloudflare. Make sure you are in your Worker application directory that you created for this tutorial, then run:
 
 ```sh
 $ npx wrangler deploy
@@ -151,8 +161,8 @@ Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.w
 
 ## Conclusion and next steps
 
-Congratulations! You've successfully created a Cloudflare Worker that allows you to interact with an R2 bucket, including uploading and downloading files. You can now use this as a starting point for your own projects.
+You have successfully created a Cloudflare Worker that allows you to interact with an R2 bucket to accomplish tasks such as uploading and downloading files. You can now use this as a starting point for your own projects.
 
-For more inspiration, check out additional tutorials in our [tutorials section](/workers/tutorials) and explore what else you can do with [R2](/r2).
+To build more with R2 and Workers, refer to [Tutorials](/workers/tutorials) and the [R2 documentation](/r2).
 
 If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
