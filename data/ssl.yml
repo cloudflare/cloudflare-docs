@@ -14,7 +14,6 @@ meta:
     performance and security company to offer free SSL/TLS protection.
   author: '@cloudflare'
   
-
 resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/
