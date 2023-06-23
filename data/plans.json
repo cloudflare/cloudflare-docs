@@ -491,7 +491,7 @@
           "ent": 10
         },
         "c_other_custom_lists": {
-          "title": "Other custom lists (hostnames)",
+          "title": "Other custom lists (hostnames, ASNs)",
           "link": "/fundamentals/global-configurations/lists/custom-lists/",
           "free": 0,
           "pro": 10,
