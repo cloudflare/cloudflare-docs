@@ -5349,7 +5349,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 [theme=dark] .DocsMobileTitleHeader {
-    background: var(--gray-05)
+    background: var(--gray-05);
+    color: green;
 }
 
 @media (min-width:769px) {
