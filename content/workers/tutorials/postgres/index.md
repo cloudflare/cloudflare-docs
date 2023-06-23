@@ -64,7 +64,7 @@ Choose one of the two methods to connect to your PostgreSQL database:
 
 ### Use a connection string
 
-Create a connection string with the format:
+A connection string contains all the information needed to connect to a database. It is a URL that contains the following information:
 
 ```
 postgresql://username:password@host:port/database
@@ -72,7 +72,7 @@ postgresql://username:password@host:port/database
 
 Replace `username`, `password`, `host`, `port`, and `database` with the appropriate values for your PostgreSQL database.
 
-Next, set your connection string as a [secret](/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
+Set your connection string as a [secret](/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
 
 ```sh
 $ wrangler secret put DB_URL
@@ -113,6 +113,9 @@ $ wrangler secret put DB_PASSWORD
 Open your Worker's main file (for example, `worker.ts`) and import the `Client` class from the `pg` library:
 
 ```typescript
+---
+filename: worker.ts
+---
 import { Client } from "pg";
 ```
 
@@ -121,6 +124,9 @@ In the `fetch` event handler, connect to the PostgreSQL database using your chos
 ### Use a connection string
 
 ```typescript
+---
+filename: worker.ts
+---
 const client = new Client(env.DB_URL);
 await client.connect();
 ```
@@ -128,6 +134,9 @@ await client.connect();
 ### Set explicit parameters
 
 ```typescript
+---
+filename: worker.ts
+---
 const client = new Client({
   user: env.DB_USERNAME,
   password: env.DB_PASSWORD,
@@ -140,7 +149,7 @@ await client.connect();
 
 ## 5. Interact with the products database
 
-To demonstrate how to interact with the products database, you will fetch data from the `products` table by creating a Worker that queries the table when a request is received.
+To demonstrate how to interact with the products database, you will fetch data from the `products` table by querying the table when a request is received.
 
 {{<Aside type="note">}}
 
