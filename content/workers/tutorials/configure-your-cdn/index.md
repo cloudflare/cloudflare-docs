@@ -9,7 +9,7 @@ layout: single
 
 # Securely access and upload assets with Cloudflare R2
 
-This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2) bucket.
+This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2) bucket. Cloudflare R2 allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 ## Prerequisites
 
@@ -19,9 +19,9 @@ To continue:
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
 3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
 
-## Create a new project
+## Create a Worker application
 
-First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Cloudflare Workers project. To do this, open a terminal window and run the following command:
+First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker. To do this, open a terminal window and run the following command:
 
 {{<tabs labels="NPM | Yarn">}}
 {{<tab label="npm" no-code="true">}}
@@ -49,7 +49,7 @@ To continue with this guide:
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 
-## Create an R2 Bucket
+## Create an R2 bucket
 
 Before you integrate R2 bucket access into your Worker application, an R2 bucket must be created:
 
@@ -62,9 +62,9 @@ Replace `<YOUR_BUCKET_NAME>` with the name you want to assign to your bucket. Li
 $ wrangler r2 bucket list
 ```
 
-## Configure access to an R2 Bucket
+## Configure access to an R2 bucket
 
-After your new R2 bucket is ready, use it inside your Worker project. 
+After your new R2 bucket is ready, use it inside your Worker application. 
 
 Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an [R2 bucket binding](/workers/platform/bindings/#r2-bucket-bindings). Add the following R2 bucket binding to your `wrangler.toml` file:
 
@@ -74,11 +74,11 @@ binding = 'MY_BUCKET'
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Give your R2 bucket binding name. Replace `<YOUR_BUCKET_NAME>` with the name of your R2 bucket.
+Give your R2 bucket binding name. Replace `<YOUR_BUCKET_NAME>` with the name of the R2 bucket you created earlier. 
 
 Your Worker application can now access your R2 bucket using the `MY_BUCKET` variable. You can now perform CRUD (Create, Read, Update, Delete) operations on the contents of the bucket.
 
-## Fetch from an R2 Bucket
+## Fetch from an R2 bucket
 
 After setting up an R2 bucket binding, you will implement the functionalities for the Worker to interact with the R2 bucket, such as, fetching files from the bucket and uploading files to the bucket.
 
@@ -112,7 +112,7 @@ export default {
 ```
 The code written above fetches and returns data from the R2 bucket when a `GET` request is made to the Worker application using a specific URL path.
 
-## Upload securely to an R2 Bucket
+## Upload securely to an R2 bucket
 
 Next, you will add the ability to upload to your R2 bucket using authentication. To securely authenticate your upload requests, use [Wrangler's secret capability](/workers/wrangler/commands/#secret). Wrangler was installed when you ran the `create cloudflare@latest` command.
 
@@ -122,7 +122,7 @@ Create a secret value of your choice -- for instance, a random string or passwor
 $ wrangler secret put AUTH_SECRET
 ```
 
-Now, you'll add a new code path that handles a PUT HTTP request. This new code will check that the previously uploaded secret is correctly used for authentication, and then upload to R2 using `MY_BUCKET.put(key, data)`:
+Now, add a new code path that handles a `PUT` HTTP request. This new code will check that the previously uploaded secret is correctly used for authentication, and then upload to R2 using `MY_BUCKET.put(key, data)`:
 
 ```ts
 ---
@@ -162,9 +162,10 @@ $ npx wrangler deploy
 ```
 Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-## Conclusion and next steps
 
 You have successfully created a Cloudflare Worker that allows you to interact with an R2 bucket to accomplish tasks such as uploading and downloading files. You can now use this as a starting point for your own projects.
+
+## Next steps
 
 To build more with R2 and Workers, refer to [Tutorials](/workers/tutorials) and the [R2 documentation](/r2).
 
