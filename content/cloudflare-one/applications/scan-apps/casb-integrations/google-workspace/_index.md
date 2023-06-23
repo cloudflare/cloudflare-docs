@@ -8,6 +8,10 @@ rss: file
 
 The Google Workspace integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
 
+This integration covers the following Google Workspace products:
+
+{{<directory-listing>}}
+
 ## Integration prerequisites
 
 - A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
