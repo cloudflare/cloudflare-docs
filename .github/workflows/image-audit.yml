@@ -52,23 +52,26 @@ jobs:
         if: steps.find-files.outputs.unused_files
         env:
           ISSUE_NUMBER: ${{ steps.create-issue.outputs.issue_number }}
+          BRANCH_NAME: image-cleanup-$(date +%Y%m%d)
         run: |
-          # Create a new branch
-          git checkout -b image-cleanup
+          # Create a new branch with the date-appended name
+          git checkout -b $BRANCH_NAME
 
           # Delete the unused files
-          echo "${{ steps.find-files.outputs.unused_files }}" | while IFS= read -r FILE; do
-            git rm "$FILE"
-          done
+          while IFS= read -r FILE; do
+            git rm --cached "$FILE"
+            rm "$FILE"
+          done <<< "${{ steps.find-files.outputs.unused_files }}"
 
           # Commit the changes
           git commit -m "Remove unused image files"
 
           # Push the branch
-          git push origin image-cleanup
+          git push origin $BRANCH_NAME
 
           # Create a pull request
           curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/cloudflare/cloudflare-docs/pulls" \
-            -d "{\"title\": \"Remove Unused Image Files\", \"body\": \"This PR removes the unused image files identified in issue #${{ env.ISSUE_NUMBER }}.\", \"head\": \"image-cleanup\", \"base\": \"main\"}"
+            -d "{\"title\": \"Remove Unused Image Files\", \"body\": \"This PR removes the unused image files identified in issue #${{ env.ISSUE_NUMBER }}.\", \"head\": \"$BRANCH_NAME\", \"base\": \"main\"}"
+
