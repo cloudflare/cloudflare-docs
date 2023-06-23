@@ -14,14 +14,18 @@ You can integrate the following SaaS applications with Cloudflare CASB:
 - [Dropbox](dropbox/)
 - [GitHub](github/)
 - [Google Workspace](google-workspace/)
+
   - [Google Drive](google-workspace/google-drive/)
   - [Gmail](google-workspace/gmail/)
   - [Google Admin](google-workspace/google-admin/)
   - [Google Calendar](google-workspace/google-calendar/)
+
 - [Microsoft 365](microsoft-365/)
+
   - [Admin Center](microsoft-365/admin-center/)
   - [OneDrive](microsoft-365/onedrive/)
   - [SharePoint](microsoft-365/sharepoint/)
   - [Outlook](microsoft-365/outlook/)
+
 - [Salesforce](salesforce/)
 - [Slack](slack/)
