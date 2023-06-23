@@ -3,3 +3,8 @@ https://:project.pages.dev/*
 
 /*
   Link: </style.css>; rel=preload; as=style
+  Link: </home.css>; rel=preload; as=style
+  Link: https://cdn.cookielaw.org/scripttemplates/otSDKStub.js; rel=preload; as=script
+  Link: https://cdn.cookielaw.org/consent/d3bba612-bde9-4daa-93e3-a78dab7d1a86/OtAutoBlock.js; rel=preload; as=script
+  Link: https://cdn.jsdelivr.net/npm/@docsearch/css@3.4.0; rel=preload; as=style
+  Link: https://cdn.jsdelivr.net/npm/@docsearch/js@3.4.0; rel=preload; as=script
