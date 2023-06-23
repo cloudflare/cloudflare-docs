@@ -12,8 +12,8 @@ You can use the results of a DEX test to monitor availability and performance fo
 
 ### Prerequisites
 
-- A test is enabled under **DEX** > **Tests**.
-- Admins have the [Cloudflare Zero Trust PII role](/cloudflare-one/cloudflare-teams-roles-permissions/#cloudflare-zero-trust-pii).
+- At least one test has been created under **DEX** > **Tests**.
+- Admins has at least the [Cloudflare Zero Trust Reporting role](/https://developers.cloudflare.com/cloudflare-one/cloudflare-teams-roles-permissions/#zero-trust-roles).
 
 ### View results for all devices
 
@@ -50,5 +50,5 @@ Test results are stored for the following amount of time:
 | Zero Trust plan | Duration   |
 | --------------- | ---------- |
 | **Free**        | 24 hours   |
-| **Standard**    | 30 days    |
-| **Enterprise**  | 30 days    |
+| **Standard**    | 15 days    |
+| **Enterprise**  | 15 days    |
