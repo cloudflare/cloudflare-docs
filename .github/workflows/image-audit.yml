@@ -48,10 +48,8 @@ jobs:
             "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
             -d "{\"title\": \"Unused Image Files Found\", \"body\": \"$(cat unused_files.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
 
-      - name: Create Pull Request
+      - name: Delete Unused Files
         if: steps.find-files.outputs.unused_files
-        env:
-          ISSUE_NUMBER: ${{ steps.create-issue.outputs.issue_number }}
         run: |
           # Create a new branch with the date-appended name
           BRANCH_NAME="image-cleanup-$(date +%Y%m%d)"
@@ -74,6 +72,10 @@ jobs:
           # Push the branch
           git push origin $BRANCH_NAME
 
+      - name: Create Pull Request
+        if: steps.find-files.outputs.unused_files
+        env:
+          ISSUE_NUMBER: ${{ steps.create-issue.outputs.issue_number }}
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -81,7 +83,12 @@ jobs:
           title: "Remove Unused Image Files"
           body: |
             This PR removes the unused image files identified in issue #${{ env.ISSUE_NUMBER }}.
-          branch: $BRANCH_NAME
+            How to address this issue:
+            1. Check each string using the Find/Replace within your local IDE.
+            2. Remove the specified files.
+            3. Create a PR with "closes #${{ env.ISSUE_NUMBER }}" in the description.
+            (If you remove images that are referenced, the Compile step will actually fail because you'll be introducing broken links.)
+          branch: "image-cleanup-$(date +%Y%m%d)"
           branch-suffix: timestamp
           labels: "image cleanup"
           base: production
