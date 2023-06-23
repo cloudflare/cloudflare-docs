@@ -87,7 +87,7 @@ You can specify your cloud service provider destination via the required **desti
 As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination.
 {{</Aside>}}
 
-*  **Cloudflare R2**: bucket path + account ID + R2 access key ID + R2 secret access key; for example: `r2://<BUCKET_PATH>/account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>`
+*  **Cloudflare R2**: bucket path + account ID + R2 access key ID + R2 secret access key; for example: `r2://<BUCKET_PATH>?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>`
 *   **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<REGION>[&sse=AES256]`
 *   **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
 *   **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
@@ -198,7 +198,7 @@ Use filters to select the events to include and/or remove from your logs. For mo
 
 ## Sampling rate
 
-Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
+Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
 
 ## Max Upload Parameters
 

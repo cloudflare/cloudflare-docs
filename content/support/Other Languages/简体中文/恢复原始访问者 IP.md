@@ -30,7 +30,7 @@ ___
 
 下图演示了使用和不使用 Cloudflare 处理 IP 地址的不同方式。
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 ___
 

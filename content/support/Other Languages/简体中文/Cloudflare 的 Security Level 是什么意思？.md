@@ -18,7 +18,7 @@ title: Cloudflare 的 Security Level 是什么意思？
 
 您可以在 Cloudflare 控制面板的**Firewall**选项中调整域的**Security Level**。
 
-![firewall-app.png](/support/static/firewall-app.png)
+![firewall-app.png](/images/support/firewall-app.png)
 
 Cloudflare 建议从中等安全级别（默认设置）开始，以充分保护您的站点。
 

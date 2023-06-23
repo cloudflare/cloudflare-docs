@@ -23,7 +23,7 @@ title: 如何自定义 Cloudflare 错误页面？
 
 概述
 
-![](/support/static/Screenshot_2015-04-16_15.08.04.png)
+![](/images/support/Screenshot_2015-04-16_15.08.04.png)
 
 Cloudflare 拥有多种[错误代码](https://support.cloudflare.com/hc/en-us/sections/200820298-Error-Pages)，用于区分特定问题。默认情况下，这些错误页面会提到 Cloudflare；但是，[作为付费客户](https://www.cloudflare.com/plans)，您可以自定义和标记这些错误页面。拥有自定义错误页面有助于为用户提供页面一致性的体验，即使在页面加载错误的情况下也是如此。
 
@@ -61,7 +61,7 @@ Cloudflare 拥有多种[错误代码](https://support.cloudflare.com/hc/en-us/se
 发布  
 完成自定义错误页面后，您需要将其发布到我们的服务器。这可以通过按下每个可自定义错误旁边的“Customize”按钮来完成。按“Customize”按钮后，将显示一个弹出窗口，要求您提供自定义错误页面的 URL。
 
-![](/support/static/2016-08-12-160547_517x352_scrot.png)
+![](/images/support/2016-08-12-160547_517x352_scrot.png)
 
 当您输入自定义错误页面的 URL 并点击“发布”按钮时，我们会一次性请求自定义错误页面，然后将其存储在我们的服务器上。
 

@@ -40,7 +40,7 @@ You can view real-time logs for a Cloudflare Tunnel via the dashboard or from an
 #### View logs
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels** and select your tunnel.
-2. Under **Connectors**, select the Connector ID for the `cloudflared` instance you want to view.
+2. In the sidebar, select the **Connector ID** for the `cloudflared` instance you want to view.
 3. Select **Begin log stream**.
 
 ### CLI

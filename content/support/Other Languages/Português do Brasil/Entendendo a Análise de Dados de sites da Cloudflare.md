@@ -27,11 +27,11 @@ Para ver as métricas do seu site:
 
 Depois de carregado, o aplicativo Análise de Dados exibe um conjunto de guias para **Tráfego**, **Segurança**, **Performance**, **DNS**, **Workers** e **Logs** (somente domínios Enterprise). Para entender as várias métricas disponíveis, consulte _Analise as métricas do seu site_ abaixo.
 
-![IU do aplicativo de Análise de Dados no Painel de controle da Cloudflare exibindo dados de tráfego da web](/support/static/hc-dash-analytics-dashboard_overview.png)
+![IU do aplicativo de Análise de Dados no Painel de controle da Cloudflare exibindo dados de tráfego da web](/images/support/hc-dash-analytics-dashboard_overview.png)
 
 Os planos Pro, Business e Empresarial veem a análise de dados da web mais recente na guia Tráfego.
 
-![Captura de tela da interface do usuário no painel da Análise de Dados da Cloudflare para clientes Pro, Business e Empresariais.](/support/static/hc-dash-analytics-web_traffic.png)
+![Captura de tela da interface do usuário no painel da Análise de Dados da Cloudflare para clientes Pro, Business e Empresariais.](/images/support/hc-dash-analytics-web_traffic.png)
 
 ___
 

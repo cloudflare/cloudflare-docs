@@ -89,7 +89,7 @@ If IP Access rules are enabled for a Spectrum application, Cloudflare will respe
 
 ## Argo Smart Routing
 
-Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Note that Argo Smart Routing is only available for TCP applications.
+Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Argo Smart Routing is available for TCP and UDP (beta) applications.
 
 ## Edge TLS Termination
 

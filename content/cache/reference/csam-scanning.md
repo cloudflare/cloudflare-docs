@@ -72,7 +72,7 @@ ___
 
 To disable a block, either because you have determined that the blocked content is not CSAM (a false positive) or because you have taken down the blocked content, please navigate to the Cloudflare dashboard for your zone and request reviews on the relevant blocks. A request to remove a block must be accompanied by a representation from you confirming that the blocked content is not CSAM or has been removed.  If applicable, we will notify NCMEC when a false positive has been identified on the reported URL.
 
-![Example error message for a domain with blocked content.](/support/static/csam-blocked-content.png)
+![Example error message for a domain with blocked content.](/images/support/csam-blocked-content.png)
 
 These actions are available to users with the following roles:
 

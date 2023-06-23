@@ -35,7 +35,7 @@ ___
 Once your cache key is activated for your Enterprise domain, you can add it to Page Rules as shown below:
 
 ![Best Practice: Caching Everything While Ignoring Query Strings
-](/support/static/hc-import-cf_page_rules_custom_cache_key.png)
+](/images/support/hc-import-cf_page_rules_custom_cache_key.png)
 
 In this example, the rule enforces the ignore query string cache key `${uri\_iqs` behaviour for all HTML pages and allows the rule creator to set the **Cache Level**: _Cache Everything_ setting that is also needed.
 
