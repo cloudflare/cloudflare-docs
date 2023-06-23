@@ -37,6 +37,10 @@ Customize where the incoming traffic will go and with which parameters. Override
 Customize Cloudflare configuration settings for matching incoming requests.
 {{</feature>}}
 
+{{<feature header="Compression Rules" href="/rules/compression-rules/">}}
+Customize the compression applied to responses from Cloudflare's global network to your website visitors, based on the file extension and content type.
+{{</feature>}}
+
 {{<feature header="Snippets" href="/rules/snippets/">}}
 Customize the behavior of your website or application using short pieces of JavaScript code.
 {{</feature>}}

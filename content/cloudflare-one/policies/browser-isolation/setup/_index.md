@@ -48,21 +48,21 @@ Users can see if a webpage is isolated by using one of the following methods:
 
 - A non-Cloudflare root certificate indicates that Cloudflare did not proxy this web page.
 
-  ![Website does not present a Cloudflare root certificate](/cloudflare-one/static/documentation/rbi/non-cloudflare-root-ca.png)
+  ![Website does not present a Cloudflare root certificate](/images/cloudflare-one/rbi/non-cloudflare-root-ca.png)
 
 - The right-click context menu will have all of the normal options.
 
-  ![Normal right-click menu in browser](/cloudflare-one/static/documentation/rbi/non-isolated-browser.png)
+  ![Normal right-click menu in browser](/images/cloudflare-one/rbi/non-isolated-browser.png)
 
 ### Isolated browsing
 
 - A Cloudflare root certificate indicates traffic was proxied through Cloudflare Gateway.
 
-  ![Website presents a Cloudflare root certificate](/cloudflare-one/static/documentation/rbi/cloudflare-gateway-root-ca.png)
+  ![Website presents a Cloudflare root certificate](/images/cloudflare-one/rbi/cloudflare-gateway-root-ca.png)
 
 - The right-click context menu will be simplified.
 
-  ![Simplified right-click menu in browser](/cloudflare-one/static/documentation/rbi/isolated-browser.png)
+  ![Simplified right-click menu in browser](/images/cloudflare-one/rbi/isolated-browser.png)
 
 #### Disconnect Browser Isolation
 

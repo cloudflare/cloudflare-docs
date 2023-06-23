@@ -81,7 +81,7 @@ Caso precise de mais informações sobre o conteúdo que sua zona está veiculan
 -   Usuários do Cache Analytics: abra a **guia Armazenamento em Cache** no painel de controle para filtrar por tipo de conteúdo e identifique o tipo de tráfego que você está transferindo. 
 -   Usuários sem o Cache Analytics: abra a **guia Análise de Dados** no painel de controle e selecione a seção **Desempenho** para obter informações sobre o conteúdo que você está veiculando.
 
-![Cache Analytics: identifique o tipo de tráfego que está sendo transferido](/support/static/traffic-types.png)
+![Cache Analytics: identifique o tipo de tráfego que está sendo transferido](/images/support/traffic-types.png)
 
 ## Ainda tem dúvidas? Entre em contato com o suporte
 

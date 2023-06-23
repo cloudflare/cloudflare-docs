@@ -4,6 +4,7 @@ title: Migration tutorial
 weight: 5
 meta: 
     title: DNSSEC migration tutorial
+last_reviewed: 2023-06-20
 ---
 
 # Migrate a zone with DNSSEC enabled

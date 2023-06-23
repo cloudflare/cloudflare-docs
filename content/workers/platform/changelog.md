@@ -8,6 +8,11 @@ rss: file
 
 # Changelog
 
+## 2023-06-22
+
+- Added the [`strict_crypto_checks`](/workers/platform/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
+- Fixes regression in the [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) where `connect("google.com:443")` would fail with a `TypeError`.
+
 ## 2023-06-19
 
 - The [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) now reports clearer errors when a connection cannot be established.
