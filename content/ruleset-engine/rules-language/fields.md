@@ -158,6 +158,53 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
+   <tr id="field-http-request-uri-path-extension">
+      <td valign="top"><code>http.request.uri.path.extension</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>The lowercased file extension in the URI path without the dot (<code>.</code>) character. Corresponds to the string after the last dot in the URI path, without considering the query string.<br/>
+         If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (<code>""</code>). Having a dot as the first character does not represent a file extension and is commonly used in Unix-like systems to represent a hidden file or directory.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table>
+            <tr>
+              <th>URI path</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>/foo</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/.mp3</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/.foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.tar.bz2</code></td>
+              <td><code>"bz2"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.MP3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
+      </td>
+   </tr>
    <tr id="field-http-request-uri-query">
       <td valign="top"><code class>http.request.uri.query</code><br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -390,6 +437,13 @@ The Cloudflare Rules language supports these standard fields:
       </p>
     </td>
   </tr>
+  <tr id="field-raw-http-request-uri-path-extension">
+      <td valign="top"><code>raw.http.request.uri.path.extension</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Similar to the <a href="#field-http-request-uri-path-extension"><code>http.request.uri.path.extension</code></a> non-raw field. Represents the file extension in the request URI path without any transformation.
+         </p>
+      </td>
+   </tr>
   <tr id="field-raw-http-request-uri-query">
     <td valign="top"><code>raw.http.request.uri.query</code><br />{{<type>}}String{{</type>}}</td>
     <td>
@@ -1364,6 +1418,7 @@ The Rules language includes fields that represent properties of HTTP response re
 You can only use HTTP response fields in:
 
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
+* [Compression Rules](/rules/compression-rules/)
 * [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
 * Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/) ruleset
@@ -1462,6 +1517,48 @@ The Cloudflare Rules language supports these HTTP response fields:
          <br />
          <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
+      </td>
+   </tr>
+   <tr id="field-http-response-content_type-media_type">
+      <td valign="top"><code>http.response.content_type.media_type</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>The lowercased content type (including subtype and suffix) without any parameters such as <code>charset</code>, based on the response's <code>Content-Type</code> header.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table class="Small">
+            <tr>
+              <th><code>Content-Type</code> header</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>text/html</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra; charset=utf-8</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/HTML</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8; other=value</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
       </td>
    </tr>
    <tr id="field-cf-response-1xxx_code">
