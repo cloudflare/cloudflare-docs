@@ -335,4 +335,4 @@ Durable Objects have been built such that the number of Objects in the system do
 
 ## Image Resizing with Workers 
 
-When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on limits.
+When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.
