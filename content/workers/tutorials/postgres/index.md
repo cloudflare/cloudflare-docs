@@ -24,15 +24,22 @@ To continue:
 
 First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker application. To do this, open a terminal window and run the following command:
 
+{{<tabs labels="NPM | Yarn">}}
+{{<tab label="npm" no-code="true">}}
+
 ```sh
 $ npm create cloudflare@latest
 ```
 
-or `yarn`:
+{{</tab>}}
+{{<tab label="yarn" no-code="true">}}
 
 ```sh
 $ yarn create cloudflare@latest
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
 
