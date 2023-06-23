@@ -125,6 +125,7 @@ A fully populated JSON object for an ASN list item has the following structure:
 {
   "id": "7c5dae5552338874e5053f2534d2767a",
   "asn": 13335,
+  "comment": "My provider's ASN",
   "created_on": "2021-10-11T12:39:02Z",
   "modified_on": "2021-10-11T12:39:02Z"
 }
@@ -188,8 +189,7 @@ The JSON object properties for a list item are defined as follows:
         <tr>
             <td><code>comment</code><br />{{<type>}}String{{</type>}}</td>
             <td>An informative summary of the item.</td>
-            <td><p>Applies only to custom lists with IP addresses (IP lists).</p>
-            <p>Maximum length: 500 characters.</p></td>
+            <td><p>Maximum length: 500 characters.</p></td>
         </tr>
         <tr>
             <td><code>redirect</code><br />{{<type>}}Object{{</type>}}</td>
