@@ -23,7 +23,7 @@ To activate IP advertisement via the Cloudflare dashboard, refer to [Configure d
 
 ### API
 
-To activate IP advertisement via the API, refer to the [IP Address Management Dynamic Advertisement API](https://developers.cloudflare.com/api/operations/ip-address-management-dynamic-advertisement-properties).
+To activate IP advertisement via the API, refer to the [IP Address Management Dynamic Advertisement API](/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status).
 
 ### Magic Network Monitoring Rules
 
