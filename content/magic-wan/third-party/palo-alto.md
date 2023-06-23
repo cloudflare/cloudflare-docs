@@ -16,12 +16,11 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 - **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
 - **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
-## Assumptions
+## Prerequisites
 
 This tutorial assumes you have a standalone NGFW with two network interfaces: 
 - One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network); 
 - And the other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
-
 
 Additionally, there must be a default gateway set on the Virtual Router (default) pointing to the router of your Internet service provider(s).
 
@@ -47,7 +46,7 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 ### Magic IPsec Tunnels
 
-Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels). The settings mentioned in the how-to below are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels). The settings mentioned in [Add IPsec tunnels](#add-ipsec-tunnels) below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
 These are the target IP addresses for bidirectional tunnel health checks:
 
@@ -142,7 +141,7 @@ set tag Cloudflare_L3_Zone color color6
 
 ### Objects
 
-The use of **Address** and **Address Group** objects wherever possible is strongly encouraged as they ensure that configuration elements that reference them are defined accurately and consistently.
+The use of **Address** and **Address Group** objects wherever possible is strongly encouraged. These objects ensure that configuration elements that reference them are defined accurately and consistently.
 
 Any configuration changes should be applied to the objects and will automatically be applied throughout the remainder of the configuration.
 
