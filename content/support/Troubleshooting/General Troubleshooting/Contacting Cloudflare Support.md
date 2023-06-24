@@ -21,6 +21,24 @@ card numbers, private keys, or API keys with Cloudflare.
 
 Before notifying Cloudflare of an issue with your site, refer to the [Cloudflare Status Page](https://www.cloudflarestatus.com/). If reporting issues with your site, ensure to provide adequate details in the support ticket _(refer to [Getting help with an issue](#getting-help-with-an-issue) for more information)_.
 
+
+### What are the file formats acceptable
+
+When contacting Cloudflare, regarding our policies we only be able to open the next files extensions:
+
+*Images*
+ - png, jpg, gif, ico, tiff
+
+*Video*
+ - mp4, avi, webm
+
+*Text (only if opened with text editor)*
+
+- har, txt, csv, eml, css, html, json, tf
+
+
+Other formats than these ones, are not acceptable and the Customer Support can not proceed with the troubleshooting.
+
 ___
 
 ## Methods of contacting Cloudflare support
