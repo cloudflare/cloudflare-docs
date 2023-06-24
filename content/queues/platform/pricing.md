@@ -58,10 +58,10 @@ An application that writes, reads and deletes (consumes) 100 million ~127 KB mes
 
 {{<table-wrap>}}
 
-|                     | Total Usage                  | Free Usage | Billed Usage | Price       |
-| ------------------- | ---------------------------- | ---------- | ------------ | ----------- |
-| Standard operations | 2 \* 3 \* 100 \* 1,000,000   | 1,000,000  | 599,000,000  | $239.60     |
-|                     | (2x ops for > 64KB messages) |            |              |             |
-| **TOTAL**           |                              |            |              | **$239.60** |
+|                     | Total Usage                    | Free Usage | Billed Usage | Price       |
+| ------------------- | ------------------------------ | ---------- | ------------ | ----------- |
+| Standard operations | 2 \* 3 \* 100 \* 100,000,000   | 1,000,000  | 599,000,000  | $239.60     |
+|                     | (2x ops for > 64KB messages)   |            |              |             |
+| **TOTAL**           |                                |            |              | **$239.60** |
 
 {{</table-wrap>}}
