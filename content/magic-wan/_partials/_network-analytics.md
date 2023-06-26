@@ -26,7 +26,7 @@ Source / destination tunnel data in Network Analytics includes:
 5. In the **New filter** popover, choose what type of data you want to display from the left dropdown menu, an operator from the middle dropdown menu, and an action from the right dropdown menu. For example:
 
     ```txt
-    <Destination_tunnel> | _equals_ | <name_of_your_tunnel>
+    <DESTINATION_TUNNELS> | _equals_ | <NAME_OF_YOUR_TUNNEL>
     ```
 
     This lets you examine traffic from specific Source tunnels and / or Destination tunnels.
