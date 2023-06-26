@@ -53,6 +53,14 @@ A verification record for `example.com` might be:
 </div>
 </details>
 
+{{<Aside type="note">}}
+
+If your authoritative DNS provider automatically appends DNS record `name` fields with your domain, make sure to only insert `cloudflare-verify` as the record name. Otherwise, it may result in an incorrect record name, such as `cloudflare-verify.example.com.example.com`.
+
+After creating the record, you can use this [Dig Web Interface link](https://digwebinterface.com/?type=TXT&ns=auth&nameservers=) to search (`dig`) for `cloudflare-verify.<YOUR DOMAIN>` and validate if it is working.
+
+{{</Aside>}}
+
 That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
 
 ---

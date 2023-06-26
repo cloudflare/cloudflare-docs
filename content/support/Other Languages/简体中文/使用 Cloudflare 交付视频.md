@@ -81,7 +81,7 @@ Free、Pro 或 Business 计划用户如果提供视频或过多数量的非 HTML
 -   Cache Analytics 用户：打开仪表板上的**高速缓存**选项卡，以按内容类型筛选并确定您在传输的流量类型。
 -   没有 Cache Analytics 的用户：打开仪表板上的**分析**选项卡，然后选择**性能**部分以获取有关您在提供的内容的信息。
 
-![Cache Analytics - 确定所传输流量的类型](/support/static/traffic-types.png)
+![Cache Analytics - 确定所传输流量的类型](/images/support/traffic-types.png)
 
 ## 仍有问题？请联系支持团队
 

@@ -45,7 +45,7 @@ mobile requests to your mobile-optimized website homepage.
 
 8\. Toggle switch to **On**.
 
-![Mobile Redirect card with a sample URL, Keep path option, and the feature toggled to ](/support/static/hc-import-speed_mobileredirect_enabled.png)
+![Mobile Redirect card with a sample URL, Keep path option, and the feature toggled to ](/images/support/hc-import-speed_mobileredirect_enabled.png)
 
 ___
 

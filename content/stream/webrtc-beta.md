@@ -148,7 +148,7 @@ You can find the specific version of WHIP and WHEP being used in the `protocol-v
 
 ## Limitations while in beta
 
-- [Recording](/stream/stream-live/watch-live-stream/#replaying-recordings) is not yet supported (coming soon)
+- [Recording](/stream/stream-live/watch-live-stream/#live-stream-recording-playback) is not yet supported (coming soon)
 - [Simulcasting](/stream/stream-live/simulcasting) (restreaming) is not yet supported (coming soon)
 - [Live viewer counts](/stream/getting-analytics/live-viewer-count/) are not yet supported (coming soon)
 - [Analytics](/stream/getting-analytics/fetching-bulk-analytics/) are not yet supported (coming soon)
