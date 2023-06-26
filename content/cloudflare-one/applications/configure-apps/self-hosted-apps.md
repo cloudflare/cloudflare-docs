@@ -33,11 +33,13 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 7. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-8. In the **Identity Providers** card, select the identity providers you want to enable for your app.
+8. {{<render file="_access-block-page.md">}}
 
-9. (Optional) Turn on **Instant Auth** if you selected only one IdP and want users to skip the identity provider selection step.
+9. In the **Identity Providers** card, select the identity providers you want to enable for your app.
 
-10. Select **Next**.
+10. (Optional) Turn on **Instant Auth** if you selected only one IdP and want users to skip the identity provider selection step.
+
+11. Select **Next**.
 
 ## 2. Add an Access policy
 

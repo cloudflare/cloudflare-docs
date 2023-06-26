@@ -36,12 +36,13 @@ Obtain the following URLs from your SaaS application account:
 
 8. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-9. 
-9. Next, choose the **Identity providers** you want to enable for your application.
+9. {{<render file="_access-block-page.md">}}
 
-10. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
+10. Next, choose the **Identity providers** you want to enable for your application.
 
-11. Select **Next**.
+11. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
+
+12. Select **Next**.
 
 ## 2. Add an Access policy
 
