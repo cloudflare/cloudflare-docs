@@ -19,6 +19,7 @@ Cloudflare Logpush supports pushing logs to S3-compatible destinations via the C
 - [Linode Object Storage](https://www.linode.com/products/object-storage/)
 - [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
 - On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
+- [IBM QRadar DSM for Cloudflare Logs](https://www.ibm.com/docs/en/dsm?topic=configuration-cloudflare-logs&cf_target_id=7CF3CC74B000DE9F04A9775A6D3FE226)
 
 For more information about Logpush and the current production APIs, refer to [Cloudflare Logpush](/logs/get-started/) documentation.
 
