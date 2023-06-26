@@ -17,6 +17,7 @@ The routers at your tunnel endpoints must meet the following requirements to ens
 - Support Anycast tunneling.
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support maximum segment size (MSS) clamping.
+- If you are going to use IPsec, refer to the supported configuration parameters mentioned in [GRE and IPsec tunnels](/magic-transit/reference/tunnels/#supported-configuration-parameters).
 
 ## Draft Letter of Authorization
 
