@@ -4,7 +4,7 @@ title: Loading a Custom Managed Component
 weight: 15
 ---
 
-# Loading a Custom Managed Component
+# Load a Custom Managed Component
 
 Zaraz supports loading custom third-party tools using [Managed Components](https://managedcomponents.dev/). These can be Managed Components that you have developed yourself or that were developed by others. Using Custom Managed Components with Zaraz is done by converting them into a Cloudflare Worker running in your account.
 
@@ -17,12 +17,12 @@ Custom Managed Components are only available for accounts on a [Workers Paid pla
 ## Prepare a Managed Component
 
 {{<Aside type="note">}}
-If your Managed Component requires any building, transpiling, or bundling, you need to do that first, before you can deploy it. This is required, for example, for components written in TypeScript and is usually done by running `npm run build` or an equivalent.
+If your Managed Component requires any building, transpiling, or bundling, you must complete those steps before you can deploy it. For example, this is required for components written in TypeScript and is usually done by running `npm run build` or an equivalent.
 {{</Aside>}}
 
 To get started, you need have a JavaScript file ready for deployment, that exports the default Managed Component function for your Managed Component.
 
-In this guide, we will use a simple example of a Custom Managed Component that counts the users visits and logs it in the console:
+In this guide, we will use a simple example of a Custom Managed Component that counts user visits and logs this data in the console:
 
 ```javascript
 // File: index.js
@@ -46,8 +46,8 @@ export default async function (manager) {
 
 ## Deploy a Managed Component to Cloudflare
 
-1. Open a terminal in your managed component’s root directory.
-2. From there, run `npx managed-component-to-cloudflare-worker ./index.js my-new-counter-mc`, which will deploy the Managed Component to a specialised Cloudflare Worker. Change the path to your `index.js` and the name of the component to your liking.
+1. Open a terminal in your Managed Component’s root directory.
+2. From there, run `npx managed-component-to-cloudflare-worker ./index.js my-new-counter-mc`, which will deploy the Managed Component to a specialized Cloudflare Worker. Change the path to your `index.js`. You can also rename the Component if you choose.
 3. Your Managed Component should now be [visible on your account](https://dash.cloudflare.com/redirect?account=/workers-and-pages) as a Cloudflare Worker prefixed with `custom-mc`.
 
 ## Configure a Managed Component in Cloudflare
@@ -64,7 +64,7 @@ As with regular tools, it is recommended that you [create the triggers](/zaraz/g
 6. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the code of the Managed Component. You can add settings and default fields, as well as use [variables you have previously set up](/zaraz/get-started/create-variables/).
 7. Select **Save**.
 
-While your tool is now configured, it does not have any actions associated with it yet. Adding new actions will tell Zaraz when to contact your Managed Component, and what information to send to it. When adding actions, make sure to verify the Action Type you are using. The types `pageview` and `event` are the most commonly used ones, but you can add any action type to match the event listeners your Managed Component is using. Learn how to [create additional actions](/zaraz/get-started/create-actions/).
+While your tool is now configured, it does not have any actions associated with it yet. Adding new actions will tell Zaraz when to contact your Managed Component, and what information to send to it. When adding actions, make sure to verify the Action Type you are using. The types `pageview` and `event` are most commonly used, but you can add any action type to match the event listeners your Managed Component is using. Learn how to [create additional actions](/zaraz/get-started/create-actions/).
 
 If your Managed Component listens to `ecommerce` events, toggle **E-commerce tracking** in the Managed Component Settings page.
 
