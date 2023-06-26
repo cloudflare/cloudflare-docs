@@ -5,9 +5,13 @@ title: Node.js Compatibility
 
 # Node.js compatibility
 
+Most Workers import one or more packages of JavaScript or TypeScript code from [`npm`](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
+
 The following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code:
 
 {{<directory-listing>}}
+
+These APIs are available directly in the Workers runtime, without the need to add polyfills to your own code via the previous [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) option in Wrangler.
 
 Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the npm packages you depend on.
 
