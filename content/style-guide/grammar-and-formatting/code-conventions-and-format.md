@@ -29,14 +29,17 @@ Square brackets enclose optional items.
 
 Example:
 
-Specify a subsearch that starts with this search command: ``` tag=dns query [search tag=malware]. ```
+Specify a subsearch that starts with this search command: ` tag=dns query [search tag=malware]. `
 
 ## Curly braces ( { and } )
 
-Use curly braces in the following situations:
+Use curly braces in the following situations, such as:
 
-When they are part of a code sample or other string literal.
-In placeholders inside a URL: ``` https://api.cloudflare.com/client/v4/organizations/{organization_identifier}/invites ```
+When they are part of a code sample or other string literal, such as in placeholders inside a URL.
+
+Example:
+
+` https://api.cloudflare.com/client/v4/organizations/{organization_identifier}/invites `
 
 ## >
 
@@ -70,7 +73,7 @@ Text in this color indicates a link.
 
 Use **bold** when referring to a clickable action or to highlight a title or name in the UI. Bold text denotes items that you must select or click in the software, identifiers in the UI, or parameter names.
 
-Do not bold use for programs.
+Do not use bold for programs.
 
 In nested menus, use bold for the word not the symbol.
 
@@ -88,7 +91,7 @@ Do not use italics when referring to the state of a toggle - for example, enable
 
 Text in this font denotes text or characters that you should enter from the keyboard, sections of code, programming examples, and syntax examples. This font is also used for the proper names of drives, paths, directories, programs, subprograms, devices, functions, operations, variables, files, API commands, and extensions. 
 
-## Examples of elements we monospace:
+### Examples of elements we monospace
 
 + IP addresses and ranges. Example: Change your system + DNS servers to use `127.0.1.1`.
 + Port numbers. Example: Requests are redirected through the HTTP service (port `80`).

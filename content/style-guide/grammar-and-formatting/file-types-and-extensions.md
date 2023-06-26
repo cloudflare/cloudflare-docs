@@ -10,9 +10,9 @@ You can refer both to file types and file extensions in documentation:
 + File types: Accepted file formats are JSON and YAML.
 + File extensions: Upload the `.txt` file to the dashboard.
 
-When referring to a specific file type: always use regular text formatting, write the file type in uppercase, and avoid the initial dot (you are referring to the file type, not the file extension).
+When referring to a specific file type, always use regular text formatting, write the file type in uppercase, and avoid the initial dot (you are referring to the file type, not the file extension).
 
-When referring to a specific extension: always monospace the file, include a dot, write the extension in lowercase, and always specify a noun after mentioning a file extension (for example: "file" or "file extension"). Do not leave the extension hanging. 
+When referring to a specific extension, always monospace the file, include a dot, write the extension in lowercase, and always specify a noun after mentioning a file extension (for example: "file" or "file extension"). Do not leave the extension hanging. 
 
 Additional examples:
 

@@ -24,34 +24,40 @@ Bullet points help the reader's eye focus on a list of important elements.
 However, as with any other aspect of writing, they should be used mindfully. Below is a list of when you should and should not resort to bullet points.
 
 <table>
+  <thead>
     <tr>
         <th width=50%>❌ Do not use bullet points</th>
         <th>✅ Use bullet points</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
-        <th>To outline <b>processes</b> (prefer numbered lists)</th>
-        <th>To list <b>facts</b></th>
+        <td>To outline <b>processes</b> (prefer numbered lists)</td>
+        <td>To list <b>facts</b></td>
     </tr>
     <tr>
-        <th>To explain your reasoning (it is a blog post, not a list of system requirements)</th>
-        <th>To list data</th>
+        <td>To explain your reasoning (it is a blog post, not a list of system requirements)</td>
+        <td>To list data</td>
     </tr>
     <tr>
-        <th>-</th>
-        <th>To list options</th>
+        <td>-</td>
+        <td>To list options</td>
     </tr>
+    </tbody>
 </table>
 
 ## Bulleted lists
 
-+ Do not punctuate bullet points unless each item is a full sentence.
+Do not punctuate bullet points unless each item is a full sentence.
 
-+ If bullet point items are followed by a description, use a colon after the heading and capitalize the description. For example,
-    + **Item 1**: Description 1
-    + **Item 2**: Description 2
-+ For bullet points, try to stick to the "six-pack" rule: no more than six bullets, each made up of six words or less.
+If bullet point items are followed by a description, use a colon after the heading and capitalize the description. For example,
 
-+ Refer to [The best way to use bullet points](https://thewritinghabit.blog/2016/08/22/best-way-to-use-bullet-points/) for additional guidance.
++ **Item 1**: Description 1
++ **Item 2**: Description 2
+
+For bullet points, try to stick to the "six-pack" rule: no more than six bullets, each made up of six words or less.
+
+Refer to [The best way to use bullet points](https://thewritinghabit.blog/2016/08/22/best-way-to-use-bullet-points/) for additional guidance.
 
 ### Bulleted list checklist
 

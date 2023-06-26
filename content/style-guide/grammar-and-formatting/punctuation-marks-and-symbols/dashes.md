@@ -9,11 +9,13 @@ Dashes look like hyphens, but are wider. An em dash is the widest type of dash. 
 
 ## Hyphen (-) 
 
-**Hyphenate compound modifiers that are placed before the noun.** Compound modifiers that come before the noun require a hyphen to distinguish them from individual modifiers and nouns. Do not hyphenate compound modifiers that come after the noun. 
+**Hyphenate compound modifiers that are placed before the noun.** Compound modifiers that come before the noun require a hyphen to distinguish them from individual modifiers and nouns. Do not hyphenate compound modifiers that come after the noun. Hyphens are used in compound words and to express ranges.
 
-In compound words: The most up-to-date software can be found here.
+Examples:
 
-To express ranges: It takes 24-48 hours for the data to upload.
+The most up-to-date software can be found here.
+
+It takes 24-48 hours for the data to upload.
 {{<Aside type="note">}}
  
 Never include whitespaces around a hyphen.
@@ -34,9 +36,13 @@ Additional examples:
 
 + Shortcut for PC users: Hold down the Alt key and type 0151
 
-In pairs, in place of parentheses: Cookies provide saved information about a user’s session to establish a “state” — in most cases, identity — as your browser makes a request.
+Dashes are used in pairs (in place of parenthesis) or alone (in place of a semicolon or colon).
 
-Alone, in place of a semicolon or colon: Embed yourself in the team — the best results will come when trust is built.
+Examples: 
+
+Cookies provide saved information about a user’s session to establish a “state” — in most cases, identity — as your browser makes a request.
+
+Embed yourself in the team — the best results will come when trust is built.
 
 {{<Aside type="note">}}
 Following AP style guides, and to improve readability, we include whitespaces before and after the em dash.
