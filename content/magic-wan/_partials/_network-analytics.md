@@ -29,7 +29,7 @@ Source / destination tunnel data in Network Analytics includes:
     <DESTINATION_TUNNELS> | _equals_ | <NAME_OF_YOUR_TUNNEL>
     ```
 
-    This lets you examine traffic from specific Source tunnels and / or Destination tunnels.
+    This lets you examine traffic from specific Source tunnels and/or Destination tunnels.
 
 ## Feature Notes:
 
