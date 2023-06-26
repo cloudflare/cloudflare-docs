@@ -114,7 +114,7 @@ _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/f
 
 -   To match both `http` and `https`, just write `example.com`. It is not necessary to write `*example.com`.
 -   To match every page on a domain, write `example.com/*`. Just writing _example.com_ won’t work.
--   To match every page on a domain and it's subdomains, write `*_example.com/*`. Just writing _example.com_ won’t work.
+-   To match every page on a domain and it's subdomains, write `*example.com/*`. Just writing _example.com_ won’t work.
 -   A wildcard (\*) in a Page Rule URL will match even if no characters are present, and may include any part of the URL, including the query string.
 
 ### Referencing wildcard matches
