@@ -24,10 +24,10 @@ Be aware that if you enable CMB for a dataset that does not support your region,
 | CASB Findings | Account | ✘ | ✅ | ✘ |
 | Device Posture Results | Account | ✘ | ✅ | ✘ |
 | DNS Firewall logs | Account | ✅ | ✅ | ✘ |
-| Gateway DNS | Account | ✅ | ✅ | ✘ |
+| Gateway DNS | Account | ✘ | ✅ | ✘ |
 | Gateway HTTP | Account | ✅ | ✅ | ✅ |
 | Gateway Network | Account | ✅ | ✅ | ✅ |
-| Magic IDS Detections | Account | ✘ | ✅ | ✘ |
+| Magic IDS Detections | Account | ✅ | ✅ | ✘ |
 | Network Analytics Logs | Account | ✅ | ✅ | ✘ |
 | Workers Trace Events | Account | ✅ | ✅ | ✘ |
 | Zero Trust Sessions | Account | ✅ | ✅ | ✘ |
