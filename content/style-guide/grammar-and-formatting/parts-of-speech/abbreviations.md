@@ -60,9 +60,10 @@ Follow these guidelines:
 + Do not use a period with an abbreviation for the name of a country, US state, or the District of Columbia (DC).
 
 ## i.e. vs e.g.
+
 While similar, these two Latin abbreviations carry very different meanings. 
 
 + **i.e.** stands for **id est**. Quite literally, it means "that is" (that = id, est = is). It can be replaced with "that is" or "in other words".
-+ The median compression ratio achieved by Railgun was 0.65% (**i.e.**, the page was reduced to 0.65% of its size).
+    + The median compression ratio achieved by Railgun was 0.65% (**i.e.**, the page was reduced to 0.65% of its size).
 + **e.g.** stands for **exempli gratia**. Use this when introducing examples for something you have just mentioned. It can be replaced with "for example", or "like".
-+ Cloudflare products (**e.g.**, Zero Trust, Magic Transit, etc.) offer network security and reliability.
+    + Cloudflare products (**e.g.**, Zero Trust, Magic Transit, etc.) offer network security and reliability.

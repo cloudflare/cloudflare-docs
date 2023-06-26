@@ -13,9 +13,9 @@ Dashes look like hyphens, but are wider. An em dash is the widest type of dash. 
 
 Examples:
 
-The most up-to-date software can be found here.
++ The most up-to-date software can be found here.
 
-It takes 24-48 hours for the data to upload.
++ It takes 24-48 hours for the data to upload.
 {{<Aside type="note">}}
  
 Never include whitespaces around a hyphen.
@@ -40,9 +40,9 @@ Dashes are used in pairs (in place of parenthesis) or alone (in place of a semic
 
 Examples: 
 
-Cookies provide saved information about a user’s session to establish a “state” — in most cases, identity — as your browser makes a request.
++ Cookies provide saved information about a user’s session to establish a “state” — in most cases, identity — as your browser makes a request.
 
-Embed yourself in the team — the best results will come when trust is built.
++ Embed yourself in the team — the best results will come when trust is built.
 
 {{<Aside type="note">}}
 Following AP style guides, and to improve readability, we include whitespaces before and after the em dash.
