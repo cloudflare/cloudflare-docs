@@ -26,7 +26,7 @@ Domain access through a custom domain allows you to use Cloudflare Cache to acce
 
 {{<Aside type="note" header="Enabling cache for all file types">}}
 
-By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/about/default-cache-behavior/#default-cached-file-extensions)
+By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
 
 {{</Aside>}}
 
@@ -183,7 +183,3 @@ To disable public access for your bucket:
 4. In the confirmation dialog, type ‘disallow’ to confirm and select **Disallow**.
 
 Your bucket and its objects can no longer be accessed using the Public Bucket URL. 
-
-## Configure CORS for your bucket
-
-Currently, you have to use the S3 API `PutBucketCors` to configure CORS for your bucket.

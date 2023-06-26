@@ -1,5 +1,5 @@
 ---
-pcx_content_type: content
+pcx_content_type: concept
 title: Cache for SaaS
 weight: 3
 ---

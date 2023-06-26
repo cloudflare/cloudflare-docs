@@ -59,8 +59,8 @@ Many [Access policies](/cloudflare-one/policies/access/) depend on a user’s em
 
 Example in Okta:
 
-![Preview the SAML assertion from the Okta dashboard](/cloudflare-one/static/documentation/identity/saml-assertion.png)
-![Determine the email attribute name from the SAML assertion](/cloudflare-one/static/documentation/identity/saml-attributes.png)
+![Preview the SAML assertion from the Okta dashboard](/images/cloudflare-one/identity/saml-assertion.png)
+![Determine the email attribute name from the SAML assertion](/images/cloudflare-one/identity/saml-attributes.png)
 
 ### SAML attributes
 
@@ -68,11 +68,11 @@ SAML attributes can be added to the Access JWT. These can then be consumed by se
 
 Example in Okta:
 
-![Configure Okta to send SAML attributes](/cloudflare-one/static/documentation/identity/attribute-statements.png)
+![Configure Okta to send SAML attributes](/images/cloudflare-one/identity/attribute-statements.png)
 
 How to receive these SAML attributes in Cloudflare:
 
-![Configure Cloudflare to receive SAML attributes](/cloudflare-one/static/documentation/identity/attributes-cloudflare.png)
+![Configure Cloudflare to receive SAML attributes](/images/cloudflare-one/identity/attributes-cloudflare.png)
 
 ### SAML header attributes
 

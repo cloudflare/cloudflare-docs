@@ -43,6 +43,8 @@ To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`]
 {{</tab>}}
 {{</tabs>}}
 
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
+
 ## Limitations
 
 Before a rewrite is applied, Cloudflare checks the HTTP resources to ensure they are accessible via HTTPS. If they are not available over HTTPS, Cloudflare cannot rewrite the URL.

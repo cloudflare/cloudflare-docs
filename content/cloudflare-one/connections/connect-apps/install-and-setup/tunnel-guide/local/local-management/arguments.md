@@ -20,14 +20,13 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 - [`no-autoupdate`](#no-autoupdate)
 - [`origincert`](#origincert)
 - [`metrics`](#metrics)
-- [`metrics-update-freq`](#metrics-update-freq)
 - [`tag`](#tag)
 - [`retries`](#retries)
 - [`pidfile`](#pidfile)
 - [`protocol`](#protocol)
 - [`logfile`](#logfile)
 - [`loglevel`](#loglevel)
-- [`transport-loglevel`](#transport-loglevel)
+- [`token`](#token)
 
 ## `config`
 
@@ -87,14 +86,6 @@ When `cloudflared` receives SIGINT/SIGTERM it will stop accepting new requests, 
 
 Specifies address to query for usage metrics.
 
-## `metrics-update-freq`
-
-| Syntax                         | Default | Environment Variable         |
-| ------------------------------ | ------- | ---------------------------- |
-| `metrics-update-freq duration` | `5s`    | `TUNNEL_METRICS_UPDATE_FREQ` |
-
-Specifies frequency to update tunnel metrics.
-
 ## `tag`
 
 | Syntax                 | Environment Variable |
@@ -149,11 +140,10 @@ Saves application log to this file. Mainly useful for reporting issues. For more
 
 Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `debug`, `info`, `warn`, `error`, `fatal`.
 
-## `transport-loglevel`
+## `token`
 
-| Syntax               | Default | Environment Variable    |
-| -------------------- | ------- | ----------------------- |
-| `transport-loglevel` | `warn`  | `TUNNEL_PROTO_LOGLEVEL` |
+| Syntax          | Environment Variable |
+| --------------- | -------------------- |
+| `token value`   | `TUNNEL_TOKEN`       |
 
-Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare global network. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
-Any value below `warn` produces substantial output and should only be used to debug low-level performance issues and protocol quirks.
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).

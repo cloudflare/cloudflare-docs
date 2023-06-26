@@ -6,7 +6,7 @@ layout: single
 
 # Bindings
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform. 
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform.
 
 There are multiple types of bindings available today.
 
@@ -34,7 +34,7 @@ KV namespace bindings allow for communication between a Worker and a KV namespac
 
 Durable Object bindings for communication between a Worker and a Durable Object.
 
-* Learn more about [Durable Object bindings](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker).
+* Learn more about [Durable Object bindings](/workers/runtime-apis/durable-objects/#access-a-durable-object-from-a-worker).
 * Configure Durable Object bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects).
 
 ### R2 bucket bindings
@@ -49,6 +49,13 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 [Queue](/queues) bindings allow for communication between a Worker and a Queue.
 
 * Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
+
+### D1 database bindings
+
+[D1](/d1) bindings allow you to query a D1 database from your Worker.
+
+* [Configure a D1 binding](/d1/get-started/#3-bind-your-worker-to-your-d1-database).
+* Learn more about how to query a D1 database using the [client API](/d1/platform/client-api/).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 

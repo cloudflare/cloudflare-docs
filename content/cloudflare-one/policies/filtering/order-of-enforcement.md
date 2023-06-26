@@ -60,20 +60,14 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 
 ### Order of precedence
 
-Order of precedence refers to the priority of individual policies within the DNS, network, or HTTP policy builder (lowest value first, or from top to bottom as shown in the dashboard). You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
-
-In Gateway, the order of precedence follows the first match principle — once a site matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, we recommend putting the most specific policies and exceptions at the top of the list and the most general policies at the bottom.
+{{<render file="gateway/_order-of-precedence.md" withParameters="DNS, network, or HTTP">}}
 
 ## Example
 
 Suppose you have a list of policies arranged in the following order of precedence:
 
 - DNS policies:
-  | Precedence | Selector | Operator | Value | Action |
-  | ------ | ---------------| ---------| ----------------| -------------- |
-  | 1 | Host | is | `example.com` | Block |
-  | 2 | Host | is | `test.example.com` | Allow |
-  | 3 | Domain | matches regex | `.\` | Block |
+  {{<render file="gateway/_order-of-precedence-dns.md">}}
 - HTTP policies:
   | Precedence | Selector | Operator | Value | Action |
   | ------ | ---------------| ---------| ----------------| -------------- |
@@ -89,10 +83,7 @@ Suppose you have a list of policies arranged in the following order of precedenc
 When a user navigates to `https://test.example.com`, Gateway performs the following operations:
 
 1. Evaluate DNS request against DNS policies:
-
-   1. Policy #1 does not match `test.example.com` — move on to check Policy #2.
-   2. Policy #2 matches, so DNS resolution is Allowed.
-   3. Policy #3 is not evaluated because there has already been an explicit match.
+  {{<render file="gateway/_order-of-precedence-dns-order.md">}}
 
 2. Evaluate HTTPS request against HTTP policies:
 
@@ -102,7 +93,7 @@ When a user navigates to `https://test.example.com`, Gateway performs the follow
 3. Evaluate HTTPS request against network policies:
 
    1. Policy #1 does not match because port 80 is used for standard HTTP, not HTTPS.
-   2. Policy #2 matches, so the request is Allowed and proxied to the upstream server.
+   2. Policy #2 matches, so the request is allowed and proxied to the upstream server.
    3. Policy #3 is not evaluated because there has already been an explicit match.
 
 The user is therefore able to connect to `https://test.example.com`.

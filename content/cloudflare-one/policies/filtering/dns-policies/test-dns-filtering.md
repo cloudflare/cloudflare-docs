@@ -24,11 +24,11 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 3. If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
 
-   ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-disabled.png)
+   ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-disabled.png)
 
    If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
 
-   ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-enabled.png)
+   ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-enabled.png)
 
 ### Test a security or content category
 
@@ -126,3 +126,49 @@ If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/
    ```
 
    The source IP address should fall within the /24 range specified by your EDNS client subnet.
+
+## Clear DNS cache
+
+Modern web browsers and operating systems are designed to cache DNS records for a set amount of time. When a request is made for a DNS record, the browser cache is the first location checked for the requested record. A DNS policy may not appear to work if the response is already cached.
+
+To clear your DNS cache:
+
+<details>
+<summary>ChromeOS</summary>
+<div>
+
+1. Go to `chrome://net-internals/#dns`.
+2. Select **Clear host cache**.
+
+</div>
+</details>
+
+<details>
+<summary>Windows</summary>
+<div>
+
+1. Open the admin command prompt or Powershell.
+2. Run the following command:
+
+```bash
+ipconfig /flushdns
+```
+
+</div>
+</details>
+
+<details>
+<summary>macOS</summary>
+<div>
+
+1. Open Terminal.
+2. Run the following commands:
+
+```sh
+$ sudo killall -HUP mDNSResponder
+$ sudo killall mDNSResponderHelper
+$ sudo dscacheutil -flushcache
+```
+
+</div>
+</details>

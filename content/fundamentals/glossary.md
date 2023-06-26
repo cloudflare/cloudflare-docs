@@ -260,10 +260,7 @@ The amount of data transferred from the origin server to Cloudflare within a cer
 
 ## Origin Certificate
 
-A Cloudflare Origin Certificate is a free TLS certificate issued by Cloudflare that can be installed on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
-
-**Related terms:** TLS
-**Relevant links:** [Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca/)
+{{<render file="_origin-certificate-definition.md">}}
 
 ## origin request
 

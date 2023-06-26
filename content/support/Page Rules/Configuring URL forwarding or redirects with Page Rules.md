@@ -38,7 +38,7 @@ To configure URL forwarding or redirects using Page Rules:
 8.  Enter the _destination URL_.
 9.  To finish, click **Save and Deploy**.
 
-![Example Page Rule configuration for forwarding URLs with HTTP status code 301 (permanent redirect) or 302 (temporary redirect).](/support/static/hc-import-pagerules_urlforwarding_woptions_edited.png)
+![Example Page Rule configuration for forwarding URLs with HTTP status code 301 (permanent redirect) or 302 (temporary redirect).](/images/support/hc-import-pagerules_urlforwarding_woptions_edited.png)
 
 ___
 
@@ -140,4 +140,4 @@ ___
 
 -   [Single Redirects](/rules/url-forwarding/single-redirects/)
 -   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
--   [Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial)](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-)
+-   [Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial)](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)

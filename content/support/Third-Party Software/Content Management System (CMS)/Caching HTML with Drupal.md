@@ -52,7 +52,7 @@ When the _Bypass Cache on Cookie_ page rule matches the criteria we set, Cloud
 
 If you use additional cookies in your Drupal site, you must ensure these are in the Regex statement: _SESS.\*|phpsessid=.\*_
 
-![The Create a Page Rule dialog with the Cache Level set to Cache Everything, Bypass Cache on Cookie set to Drupal variables, and Edge Cache TTL set to a month.](/support/static/page_rules_caching_static_HTML_with_drupal.png)
+![The Create a Page Rule dialog with the Cache Level set to Cache Everything, Bypass Cache on Cookie set to Drupal variables, and Edge Cache TTL set to a month.](/images/support/page_rules_caching_static_HTML_with_drupal.png)
 
 Now, when Cloudflare is serving cached files, a C_F-Cache-Status: HIT_ header will be sent back to the browser.
 
@@ -60,4 +60,4 @@ ___
 
 ## Related Resources
 
--   [Caching Cloudflare CDN](/cache/about/default-cache-behavior/)
+-   [Caching Cloudflare CDN](/cache/concepts/default-cache-behavior/)

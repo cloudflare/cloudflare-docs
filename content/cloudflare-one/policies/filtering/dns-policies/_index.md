@@ -7,7 +7,7 @@ weight: 2
 
 # DNS policies
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
+When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
 
 A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -72,6 +72,8 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
+
+{{<Aside>}}The Override action cannot be used with selectors evaluated after resolution, including **Authoritative Nameserver IP**, **Resolved IP**, and any DNS response values.{{</Aside>}}
 
 ### SafeSearch
 
@@ -187,7 +189,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Host
 
-Use this selector to match against only the hostname specified. — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
+Use this selector to match against only the hostname specified — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
 | UI name | API example                      |
 | ------- | -------------------------------- |

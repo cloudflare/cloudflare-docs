@@ -56,6 +56,9 @@ When you choose to challenge different bot categories with Bot Fight Mode or Sup
 
 You may also see Managed Challenge as a result of a [firewall rule](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
 
+This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
+
+To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 ___
 
 ## What is the difference between the threat score and bot management score?
@@ -121,7 +124,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 -   Screenshots of strange activity from the firewall, such as a huge spike in challenged traffic on the graph
 -   Problematic URIs or paths
 -   Rough description of how your domain is configured.
-    -   Is one zone SSL for SaaS while the others are not?
+    -   Is one zone Cloudflare for SaaS while the others are not?
     -   Is most API traffic sent to a particular URI?
     -   How much mobile traffic do you expect?
 

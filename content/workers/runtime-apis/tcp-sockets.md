@@ -80,7 +80,7 @@ export default {
 - {{<code>}}readable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - Returns the readable side of the TCP socket.
 
-- {{<code>}}writeable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WriteableStream{{</type-link>}}
+- {{<code>}}writable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
@@ -140,7 +140,7 @@ export default {
 
 ## Close TCP connections
 
-You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writeable sides of the socket.
+You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writable sides of the socket.
 
 ```typescript
 import { connect } from "cloudflare:sockets"
@@ -156,7 +156,6 @@ const reader = socket.readable.getReader(); // This fails
 ## Considerations
  
 - Outbound TCP sockets to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are temporarily blocked, but will be re-enabled shortly.
-- When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, to use `connect()`.
-- TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
+- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/scheduled-event/), [`queue()`](/queues/platform/javascript-apis/#consumer)) or [`alarm()`](/workers/runtime-apis/durable-objects/#alarm-handler-method).
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
 - By default, Workers cannot create outbound TCP connections on port `25` to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.

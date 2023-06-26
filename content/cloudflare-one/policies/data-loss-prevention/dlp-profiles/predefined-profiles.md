@@ -6,7 +6,7 @@ weight: 2
 
 # Predefined profiles
 
-Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection granularity.
+Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection granularity. Additionally, you can configure [advanced settings](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for predefined profiles.
 
 ## Financial information
 
@@ -44,7 +44,7 @@ Detections are validated algorithmically when possible.
 | Australia Tax File Number                            | Validated with checksum.                                                                                                                                                                          |
 | Canada Social Insurance Number                       | Validated using Luhn's algorithm.                                                                                                                                                                 |
 | France Social Security Number                        | Validated with regex.                                                                                                                                                                             |
-| Singapore National Registration Identity Card Number | Validated with regex.                                                                                                                                                                             |
+| Singapore National Registration Identity Card Number | Validated with checksum.                                                                                                                                                                          |
 | Taiwan National Identification Number                | Validated with checksum.                                                                                                                                                                          |
 | United Kingdom NHS Number                            | Validated with checksum.                                                                                                                                                                          |
 | United Kingdom National Insurance Number             | Validated with regex.                                                                                                                                                                             |

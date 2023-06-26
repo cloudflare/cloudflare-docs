@@ -81,7 +81,7 @@ ___
 -   Cache Analyticsのユーザー：ダッシュボードにある**Cachingタブ**を使用して、コンテンツの種類別にフィルタリングし、転送するトラフィックの種類を特定します。
 -   Cache Analyticsを使用しないユーザー：ダッシュボードにある**分析タブ**を開き、**パフォーマンス**セクションを選び、提供しているコンテンツに関する情報を表示します。
 
-![Cache Analytics - 転送されているトラフィックのタイプを特定する](/support/static/traffic-types.png)
+![Cache Analytics - 転送されているトラフィックのタイプを特定する](/images/support/traffic-types.png)
 
 ## もっと質問がありますか？サポートに問い合わせる
 

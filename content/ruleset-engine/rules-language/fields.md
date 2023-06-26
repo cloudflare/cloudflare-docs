@@ -31,7 +31,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 {{<Aside type="note" header="Availability notes">}}
 
-- Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+- Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
 - Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -158,6 +158,53 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
+   <tr id="field-http-request-uri-path-extension">
+      <td valign="top"><code>http.request.uri.path.extension</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>The lowercased file extension in the URI path without the dot (<code>.</code>) character. Corresponds to the string after the last dot in the URI path, without considering the query string.<br/>
+         If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (<code>""</code>). Having a dot as the first character does not represent a file extension and is commonly used in Unix-like systems to represent a hidden file or directory.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table>
+            <tr>
+              <th>URI path</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>/foo</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/.mp3</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/.foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.tar.bz2</code></td>
+              <td><code>"bz2"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.MP3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
+      </td>
+   </tr>
    <tr id="field-http-request-uri-query">
       <td valign="top"><code class>http.request.uri.query</code><br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -262,6 +309,16 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
+   <tr id="field-ip-src-region">
+      <td valign="top"><code>ip.src.region</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the region name associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">Texas</code>
+         </p>
+      </td>
+   </tr>
    <tr id="field-ip-src-region_code">
       <td valign="top"><code>ip.src.region_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -283,17 +340,18 @@ The Cloudflare Rules language supports these standard fields:
          <p>This field is only available in rewrite expressions of <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-asnum">
-      <td valign="top"><code>ip.geoip.asnum</code><br />{{<type>}}Number{{</type>}}</td>
+   <tr id="field-ip-src-asnum">
+      <td valign="top"><code>ip.src.asnum</code><br />{{<type>}}Number{{</type>}}</td>
       <td>
          <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
          </p>
+         <p>This field has the same value as the <code>ip.geoip.asnum</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-continent">
-      <td valign="top"><code>ip.geoip.continent</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-continent">
+      <td valign="top"><code>ip.src.continent</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         Represents the continent code associated with client IP address:
+         <p>Represents the continent code associated with client IP address:
           <ul>
               <li>AF &#8211; Africa</li>
               <li>AN &#8211; Antarctica</li>
@@ -304,10 +362,12 @@ The Cloudflare Rules language supports these standard fields:
               <li>SA &#8211; South America</li>
               <li>T1 &#8211; Tor network</li>
           </ul>
+        </p>
+        <p>This field has the same value as the <code>ip.geoip.continent</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-country">
-      <td valign="top"><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-country">
+      <td valign="top"><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
          </p>
@@ -315,20 +375,22 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-subdivision-1-iso-code">
-      <td valign="top"><code>ip.geoip.subdivision_1_iso_code</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-subdivision-1-iso-code">
+      <td valign="top"><code>ip.src.subdivision_1_iso_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the ISO 3166-2 code for the first level region associated with the IP address. When the actual value is not available, this field contains an empty string.</p>
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-subdivision-2-iso-code">
-      <td valign="top"><code>ip.geoip.subdivision_2_iso_code</code><br />{{<type>}}String{{</type>}}</td>
+   <tr id="field-ip-src-subdivision-2-iso-code">
+      <td valign="top"><code>ip.src.subdivision_2_iso_code</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the ISO 3166-2 code for the second level region associated with the IP address. When the actual value is not available, this field contains an empty string.
          </p>
@@ -337,13 +399,15 @@ The Cloudflare Rules language supports these standard fields:
          <code class="InlineCode">GB-SWK</code>
          </p>
          <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is still available.</p>
       </td>
    </tr>
-   <tr id="field-ip-geoip-is-in-european-union">
-      <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
+   <tr id="field-ip-src-is-in-european-union">
+      <td valign="top"><code>ip.src.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
+         <p>This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is still available.</p>
       </td>
   </tr>
   <tr id="field-raw-http-request-full-uri">
@@ -373,6 +437,13 @@ The Cloudflare Rules language supports these standard fields:
       </p>
     </td>
   </tr>
+  <tr id="field-raw-http-request-uri-path-extension">
+      <td valign="top"><code>raw.http.request.uri.path.extension</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Similar to the <a href="#field-http-request-uri-path-extension"><code>http.request.uri.path.extension</code></a> non-raw field. Represents the file extension in the request URI path without any transformation.
+         </p>
+      </td>
+   </tr>
   <tr id="field-raw-http-request-uri-query">
     <td valign="top"><code>raw.http.request.uri.query</code><br />{{<type>}}String{{</type>}}</td>
     <td>
@@ -795,14 +866,16 @@ The Cloudflare Rules language supports these dynamic fields:
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
-    <tr id="field-ip-geoip-country">
-        <td><p><code>ip.geoip.country</code><br />{{<type>}}String{{</type>}}</p>
+    <tr id="field-ip-src-country">
+        <td><p><code>ip.src.country</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
-         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
-         Example value:
-         <code class="InlineCode">GB</code>
+         <p>Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+            Example value:<br />
+            <code>GB</code>
+         </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
         </td>
     </tr>
     <tr id="field-ip-hdr_len">
@@ -1345,6 +1418,7 @@ The Rules language includes fields that represent properties of HTTP response re
 You can only use HTTP response fields in:
 
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
+* [Compression Rules](/rules/compression-rules/)
 * [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
 * Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/) ruleset
@@ -1443,6 +1517,48 @@ The Cloudflare Rules language supports these HTTP response fields:
          <br />
          <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
+      </td>
+   </tr>
+   <tr id="field-http-response-content_type-media_type">
+      <td valign="top"><code>http.response.content_type.media_type</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>The lowercased content type (including subtype and suffix) without any parameters such as <code>charset</code>, based on the response's <code>Content-Type</code> header.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table class="Small">
+            <tr>
+              <th><code>Content-Type</code> header</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>text/html</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra; charset=utf-8</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/HTML</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8; other=value</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
       </td>
    </tr>
    <tr id="field-cf-response-1xxx_code">

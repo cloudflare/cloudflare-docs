@@ -205,4 +205,28 @@ export async function GET(request: Request) {
 };
 ```
 
+## Statically imported images on Pages
+
+Pages does not currently support the default Next.js image optimization API. As a result, static imports of images break.
+
+```js
+import Image from 'next/image';
+import MyImage from './myImage.png';
+
+const MyImage = props => {
+  return (
+    <Image
+      src={MyImage} // <- Not supported
+      alt="Picture of the author"
+      width={500}
+      height={500}
+    />
+  );
+};
+```
+
+To use image assets, upload your statically imported images to a remote provider like [Cloudflare Images](https://www.cloudflare.com/en-gb/products/cloudflare-images/) or [R2](https://www.cloudflare.com/en-gb/products/r2/).
+
+To serve optimized images, define a global [loaderFile](/images/image-resizing/integration-with-frameworks/) for your app and integrate on-demand resizing with [flexible image variants](/images/cloudflare-images/transform/flexible-variants/) (for Cloudflare Images) or [Image Resizing](/images/image-resizing/url-format/) (for all other remote sources).
+
 {{<render file="_learn-more.md" withParameters="Next.js">}}

@@ -15,7 +15,7 @@ title: Que dois
 
 Cloudflare par défaut  [met en cache le contenu statique](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-)  comme des images, CSS et JavaScript. Cependant, vous pouvez étendre notre mise en cache pour   travailler avec HTML   en créant des[Page Rules personnalisées](http://blog.cloudflare.com/introducing-pagerules-fine-grained-feature-co/).
 
-![Screen_Shot_2017-03-09_at_16.54.36.png](/support/static/Screen_Shot_2017-03-09_at_16.54.36.png)
+![Screen_Shot_2017-03-09_at_16.54.36.png](/images/support/Screen_Shot_2017-03-09_at_16.54.36.png)
 
 Sous la section Page Rules de votre compte, vous pouvez définir un schéma (l'ensemble ou une partie de votre site), puis activer l'option « Tout mettre en cache ». La création d'une Page Rule et l'activation de l'option Tout mettre   en cache signifient que Cloudflare mettra entièrement en cache HTML sur notre réseau de périphérie, au lieu de devoir faire des allers et retours depuis et vers votre serveur Web d'origine.
 

@@ -21,11 +21,11 @@ To start using Unified Search:
 
 3. Select **Try new search** to enable Unified Search. The system will default to **Fielded Search**, but you can also enable **Freeform Search**.
 
-	![Select Try new search to enable Unified Search](/email-security/static/unified-search/try-new-search.png)
+	![Select Try new search to enable Unified Search](/images/email-security/unified-search/try-new-search.png)
 
 4. (Optional) Under **Freeform Search**, select **Switch back to classic search** to revert to the previous search experience.
 
-	![Select witch back to classic search to revert to the classical search experience](/email-security/static/unified-search/revert-search.png)
+	![Select witch back to classic search to revert to the classical search experience](/images/email-security/unified-search/revert-search.png)
 
 ## Search terms
 

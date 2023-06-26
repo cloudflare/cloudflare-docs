@@ -5809,3 +5809,8 @@ html #ot-sdk-btn.ot-sdk-show-settings {
 html #ot-sdk-btn.ot-sdk-show-settings:hover {
     color: inherit;
 }
+
+.md__image {
+  display: inline;
+  margin: 0 10px 0 0;
+}

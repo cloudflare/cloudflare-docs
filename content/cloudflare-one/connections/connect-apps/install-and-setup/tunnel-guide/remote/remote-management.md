@@ -104,4 +104,4 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
    C:\Program Files (x86)\cloudflared\.\cloudflared.exe --protocol quic tunnel run --token <TOKEN VALUE>
    ```
 
-![Modify cloudflared service in the Registry Editor](/cloudflare-one/static/documentation/connections/connect-apps/remote-management-windows.png)
+![Modify cloudflared service in the Registry Editor](/images/cloudflare-one/connections/connect-apps/remote-management-windows.png)

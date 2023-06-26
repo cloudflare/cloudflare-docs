@@ -57,7 +57,7 @@ So aktivieren Sie die Zwei-Faktor-Authentifizierung für Ihr Cloudflare-Konto:
 
 4\. Scrollen Sie nach unten zum Abschnitt **Zwei-Faktor-Authentifizierung** und setzen Sie dort den Schalter auf _Ein_.
 
-![2FA_enable.png](/support/static/2FA_enable.png)
+![2FA_enable.png](/images/support/2FA_enable.png)
 
 ___
 
@@ -76,13 +76,13 @@ So aktivieren Sie 2FA:
 
 -   Wenn Sie den QR-Code nicht scannen können, klicken Sie auf **Kann QR-Code nicht scannen, alternativen Schritten folgen**, um Ihre Authentifizierungs-App manuell zu konfigurieren.
 
-![2FA_scan_QR_code.png](/support/static/2FA_scan_QR_code.png)
+![2FA_scan_QR_code.png](/images/support/2FA_scan_QR_code.png)
 
 3\. Geben Sie Ihr Passwort ein und klicken Sie erneut auf **Weiter**. Anschließend sehen Sie Ihre Backup-Prüfcodes.
 
 4\. Wenn Sie die Backup-Codes bekommen haben, sollten Sie sie an einem sicheren Ort aufbewahren. Klicken Sie auf **Herunterladen**, **Drucken** oder **Kopieren**, um die Codes zu speichern, und dann auf **Weiter**.
 
-![2FA_review_and_backup_codes_v2.png](/support/static/2FA_review_and_backup_codes_v2.png)
+![2FA_review_and_backup_codes_v2.png](/images/support/2FA_review_and_backup_codes_v2.png)
 
 Sie können Ihre Backup-Codes auf dem folgenden Bildschirm neu erzeugen, außerdem jederzeit in der Registerkarte **Authentifizierung**. 
 
@@ -90,7 +90,7 @@ Sie können Ihre Backup-Codes auf dem folgenden Bildschirm neu erzeugen, außerd
 
 6\. Sie haben auch die Möglichkeit, einen neuen Satz Backup-Codes anzufordern. Klicken Sie auf **Jetzt neu erzeugen**, um einen neuen Satz Zwei-Faktor-Backup-Codes zu speichern.
 
-![2FA_configuration_complete.png](/support/static/2FA_configuration_complete.png)
+![2FA_configuration_complete.png](/images/support/2FA_configuration_complete.png)
 
 ___
 
@@ -110,7 +110,7 @@ So deaktivieren Sie 2FA für Ihr Cloudflare-Konto:
 
 5\. Geben Sie Ihr Passwort und einen Code der Authentifizierungs-App oder einen Backup-Code ein und klicken Sie dann auf **Deaktivieren**.
 
-![2FA_disable.png](/support/static/2FA_disable.png)
+![2FA_disable.png](/images/support/2FA_disable.png)
 
 ___
 
@@ -131,7 +131,7 @@ Bei der Einrichtung von 2FA wurden Sie aufgefordert, Ihre Backup-Codes an einem 
 
 3\. Geben Sie den Backup-Code im Anmeldebildschirm ein und klicken Sie dann auf **Anmelden**.
 
-![2FA_backup_code_login_annontated.png](/support/static/2FA_backup_code_login_annontated.png)
+![2FA_backup_code_login_annontated.png](/images/support/2FA_backup_code_login_annontated.png)
 
 4\. Ein Backup-Code wird ungültig, wenn er benutzt wurde.
 

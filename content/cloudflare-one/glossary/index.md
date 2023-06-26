@@ -131,7 +131,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca/) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+{{<render file="_origin-certificate-definition.md" productFolder="fundamentals">}}
 
 ## policy
 
@@ -195,7 +195,7 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 
 ## team name
 
-The customizable portion of your [team domain](#team-domain). You can view your team name in Cloudflare Zero Trust under **Settings** > **General**.
+The customizable portion of your [team domain](#team-domain). You can view your team name in Cloudflare Zero Trust under **Settings** > **Custom Pages**.
 
 | team domain                             | team name        |
 | --------------------------------------- | ---------------- |

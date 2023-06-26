@@ -62,11 +62,11 @@ Finally, you will need to configure your SaaS application to require users to lo
 
 1. Configure the following fields with your SAML SSO-compliant application:
 
-   - **SSO endpoint**
+   - **SSO endpoint** (If your SaaS app supports a metadata file config, appending `/saml-metadata` to this URL will produce a metadata file that can be uploaded)
    - **Access Entity ID or Issuer**
    - **Public key**
 
-   ![Copy SSO settings for a SaaS application from Zero Trust](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
+   ![Copy SSO settings for a SaaS application from Zero Trust](/images/cloudflare-one/applications/saas-sso-endpoint.png)
 
    You can either manually enter this data into your SaaS application or upload the application's metadata XML file. The metadata is available at the URL: `<your-SSO-endpoint>/saml-metadata`
 

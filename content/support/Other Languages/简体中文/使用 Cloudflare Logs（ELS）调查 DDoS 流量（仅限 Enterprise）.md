@@ -96,7 +96,7 @@ ___
 
 模式 _:525,_（冒号、状态代码、逗号）是 _EdgeResponseStatus_ 字段独有的。如果简单地搜索 HTTP 状态代码 _525_ 而不加冒号和结尾逗号，则也会包含其他字段（例如 _EdgeStartTimeStamp_）中的模式 _525_，包括许多数字并且也可能包含数字序列 _525_。
 
-![](/support/static/12.png)
+![](/images/support/12.png)
 
 注意：原样的输出文件（els-200.txt 和 els-525.txt）非常不易读。若要以更易读的格式查看，请在以下命令中使用 jq：
 
@@ -115,7 +115,7 @@ ___
 
 **示例输出：**
 
-![](/support/static/11.png)
+![](/images/support/11.png)
 
 _ClientRequestURI、ClientIP、ClientRequestUserAgent、ClientCountry_ 和 _ClientRequestHost_ 字段通常在这些日志中查找攻击模式时最有帮助的字段。
 

@@ -8,12 +8,12 @@ weight: 2
 
 Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer between the end user and your origin. You can use signals from your existing identity providers (IdPs), device posture providers, and [other rules](/cloudflare-one/policies/access/#selectors) to control who can access your application.
 
-![Cloudflare Access authenticates users to your internal applications.](/cloudflare-one/static/documentation/applications/network-diagram.png)
+![Cloudflare Access authenticates users to your internal applications.](/images/cloudflare-one/applications/network-diagram.png)
 
 ## Prerequisites
 
-- [Add a website](/fundamentals/get-started/setup/add-site/) to Cloudflare.
-- [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare.
+- [Add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare.
+- [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare, or configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
 
 ## 1. Add your application to Access
 
@@ -28,7 +28,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 5. Choose a **Session Duration**. The session duration determines the minimum frequency for which a user will be prompted to authenticate with the configured IdP. If you want users to re-authenticate every time they reach your application, select _No duration, expires immediately_.
 
 6. In **Application domain**, enter the domains that will represent the application.
-   - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/access-for-saas/) that you control.
+   - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) that you control.
    - You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
 
 7. (Optional) If you want the application to be visible in the [App Launcher](/cloudflare-one/applications/app-launcher):
