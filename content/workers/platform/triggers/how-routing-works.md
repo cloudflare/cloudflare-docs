@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: How routing works
-weight: 8
+weight: 1
 ---
 
 # How routing works

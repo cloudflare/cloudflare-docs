@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Routes
+weight: 3
 ---
 
 # Routes

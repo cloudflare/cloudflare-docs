@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Cron Triggers
 layout: single
+weight: 4
 ---
 
 # Cron Triggers

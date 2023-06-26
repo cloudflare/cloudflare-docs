@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom Domains
+weight: 2
 ---
 
 # Custom Domains

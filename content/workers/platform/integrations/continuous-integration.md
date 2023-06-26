@@ -4,7 +4,7 @@ title: Continuous Integration
 weight: 16
 ---
 
-# Integrations
+# Continuous Integration
 
 Integrate Workers to your existing services and platforms to optimize your continuous integration and continuous deployment flow. The integrations officially supported for Cloudflare Workers are:
 
