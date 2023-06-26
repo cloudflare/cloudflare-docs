@@ -20,12 +20,12 @@ A Cloudflare usa um método de autenticação de vários fatores (MFA) para aume
 A Cloudflare contestará qualquer tentativa de logon se o usuário fornecer as credenciais corretas a partir de um endereço IP não reconhecido.
 
 ![URL antiga: https://support.cloudflare.com/hc/article_attachments/360035322751/account_access_email.png IDs do artigo: 115003614752 | Autenticação de vários fatores para e-mails
-](/support/static/hc-import-account_access_email.png)
+](/images/support/hc-import-account_access_email.png)
 
 A Cloudflare desafia o login enviando para o e-mail registrado na conta um código único que expira em 30 minutos. Depois que o código correto for fornecido pelo painel, esse IP será registrado e outras tentativas de login vindas desse endereço IP não serão questionadas por 90 dias.
 
 ![URL antiga: https://support.cloudflare.com/hc/article_attachments/360035323072/login_authentication.png IDs do artigo: 115003614752 | Autenticação de vários fatores para e-mails
-](/support/static/hc-import-login_authentication.png)
+](/images/support/hc-import-login_authentication.png)
 
 Ao marcar "lembrar deste computador", esse dispositivo/navegador não receberá desafios de MFA por até 14 dias. Após 14 dias, a Cloudflare voltará a verificar o endereço IP para detectar logins desse dispositivo/navegador.
 

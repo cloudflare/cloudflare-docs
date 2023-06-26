@@ -52,7 +52,7 @@ Les enregistrements DNS suivants sont automatiquement définis si vous continuez
 
 Utilisé seul, _issuewild_ n’autorise que l’émission de jokers.  Par conséquent, Cloudflare ne peut pas ajouter votre domaine racine au certificat, sauf si vous spécifiez l’option _Autoriser les jokers et les noms d’hôte spécifiques_ dans la liste déroulante **Balise** :  
 
-![configuring_caa_records_comodoca_annotated.png](/support/static/configuring_caa_records_comodoca_annotated.png)
+![configuring_caa_records_comodoca_annotated.png](/images/support/configuring_caa_records_comodoca_annotated.png)
 
 ___
 

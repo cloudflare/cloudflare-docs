@@ -12,7 +12,6 @@ meta:
     have a faster, more secure and private experience online.
   author: '@cloudflare'
   
-
 externals:
   - title: Blog announcement
     url: https://blog.cloudflare.com/warp-for-desktop/

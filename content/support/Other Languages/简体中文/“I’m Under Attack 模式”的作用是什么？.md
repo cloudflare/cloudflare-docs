@@ -7,7 +7,7 @@ title: “I’m Under Attack 模式”的作用是什么？
 
 # “I’m Under Attack 模式”的作用是什么？
 
-![im_under_attack_page.png.scaled500.png](/support/static/im_under_attack_page.png) 
+![im_under_attack_page.png.scaled500.png](/images/support/im_under_attack_page.png) 
 
 [“I'm Under Attack”](http://blog.cloudflare.com/introducing-im-under-attack-mode)将为受到攻击且需要 [DDoS 保护和缓解](https://www.cloudflare.com/ddos)的站点添加额外保护。如果您遭到攻击并且在攻击期间已启用此功能，则访问者将在我们分析流量时收到插页式页面大约五秒钟，以确保其是合法的访问者。
 

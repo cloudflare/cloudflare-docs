@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Snippets
-weight: 8
+weight: 9
 layout: single
 meta:
   title: Cloudflare Snippets (alpha)
@@ -46,7 +46,7 @@ For more information, refer to our [blog post](https://blog.cloudflare.com/cloud
 
 ## Availability
 
-Cloudflare Snippets is available in Alpha. [Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/).
+[Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/) to request access to Cloudflare Snippets (alpha).
 
 {{<feature-table id="rules.snippets">}}
 
