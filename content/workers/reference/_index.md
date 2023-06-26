@@ -8,6 +8,4 @@ meta:
 
 # Reference
 
-<!--> TODO: Summarize ways to test, debug and analyze Workers that is not displayed by pages in this section. For example, environments. <!-->
-
 {{<directory-listing>}}
