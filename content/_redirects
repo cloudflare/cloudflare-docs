@@ -728,8 +728,6 @@
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
 /waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 
-
-
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
 /waiting-room/about/plans/ /waiting-room/plans/ 301
