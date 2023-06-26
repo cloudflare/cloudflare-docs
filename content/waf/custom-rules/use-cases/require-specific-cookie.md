@@ -11,34 +11,32 @@ Use the [`http.cookie`](/ruleset-engine/rules-language/fields/#field-http-cookie
 
 This example comprises two rules:
 
-- The first rule targets requests to dev.www.foo that have a specific cookie key, `devaccess`. As long as the value of the cookie key contains one of three authorized users, _james_, _matt_, or _michael_, the expression matches and the request is allowed.
+- The first rule targets requests to `dev.www.example.com` that have a specific cookie key, `devaccess`. As long as the value of the cookie key contains one of three authorized users — `james`, `matt`, or `michael` — the expression matches and the request is allowed, skipping all other custom rules.
 - The second rule blocks all access to `dev.www.example.com`.
 
-Since the _Allow_ action has precedence over _Block_, Cloudflare grants access to requests that satisfy Rule 1 and blocks all other requests to `dev.www.example.com`:
+Since custom rules are evaluated in order, Cloudflare grants access to requests that satisfy rule 1 and blocks all other requests to `dev.www.example.com`:
 
 <table>
   <thead>
     <tr>
-      <th>Execution order</th>
       <th>Expression</th>
-      <th>Action</th>
+      <th style="width:20%">Action</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
       <td>
         <code>
           (http.cookie contains "devaccess=james" or http.cookie contains "devaccess=matt" or
-          http.cookie contains "devaccess=michael") and http.host eq "dev.www.example.com")
+          http.cookie contains "devaccess=michael") and http.host eq "dev.www.example.com"
         </code>
       </td>
       <td>
-        <em>Allow</em>
+        <em>Skip:</em><br>
+        — <em>All remaining custom rules</em>
       </td>
     </tr>
     <tr>
-      <td>2</td>
       <td>
         <code>http.host eq "dev.www.example.com"</code>
       </td>

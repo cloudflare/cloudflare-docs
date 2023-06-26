@@ -249,7 +249,7 @@
 
 # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
-/dns/additional-options/dnssec/ /dns/dnssec/ 301 
+/dns/additional-options/dnssec/ /dns/dnssec/ 301
 /dns/faq/ /dns/troubleshooting/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
@@ -728,6 +728,8 @@
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
 /waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 
+
+
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
 /waiting-room/about/plans/ /waiting-room/plans/ 301
@@ -1101,6 +1103,7 @@
 /support/account-management-billing/billing-cloudflare-add-on-services/* https://www.cloudflare.com/plans/ 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
+/firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
 /workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
 
 # Cloudflare for SaaS

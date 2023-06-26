@@ -44,4 +44,4 @@ JA3 may also be useful if you want to immediately remedy false positives or fals
 
 Often, mobile application traffic will produce the same JA3 fingerprint across devices and users. This means you can identify your mobile application traffic by its JA3 fingerprint.
 
-Use the JA3 fingerprint to [allow traffic](/firewall/recipes/challenge-bad-bots/#adjust-for-mobile-traffic) from your mobile application, but block or challenge remaining traffic.
+Use the JA3 fingerprint to [allow traffic](/waf/custom-rules/use-cases/challenge-bad-bots/#adjust-for-mobile-traffic) from your mobile application, but block or challenge remaining traffic.
