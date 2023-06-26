@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # View Network Analytics
 
-{{<render file="_network_analytics.md">}}
+{{<render file="_network-analytics.md" withParameters="Magic WAN">}}
 
 
 ## Query analytics with GraphQL
