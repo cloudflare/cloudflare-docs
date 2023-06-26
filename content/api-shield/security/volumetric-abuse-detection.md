@@ -48,7 +48,7 @@ Implementing low confidence rate limits can still be helpful to prevent API abus
 
 ### Create rate limits
 
-In the endpoint row, select **Create rule** to be automatically redirected to the [Advanced Rate Limiting](waf/rate-limiting-rules/create-zone-dashboard/) rules dashboard with your endpoint information, session identifier, and recommended rate limit pre-filled into the rule. Give your rule a name, action, and duration. Then, select **Deploy** to activate your rule.
+In the endpoint row, select **Create rule** to be automatically redirected to the [Advanced Rate Limiting](/waf/rate-limiting-rules/create-zone-dashboard/) rules dashboard with your endpoint information, session identifier, and recommended rate limit pre-filled into the rule. Give your rule a name, action, and duration. Then, select **Deploy** to activate your rule.
 
 ## API
 
