@@ -9,7 +9,7 @@ Use the Oxford comma in lists of three or more items in a sentence.
 
 Use commas to separate clauses. Break up longer or difficult-to-read sentences into shorter chunks.
 
-Dependent clauses that start a sentence, end with a comma [(learn more)](https://www.dailywritingtips.com/subordinate-clauses-and-commas/)
+Dependent clauses that start a sentence, end with a comma. [(Learn more)](https://www.dailywritingtips.com/subordinate-clauses-and-commas/)
 
 Example: After you open the file, save it to your desktop with a different name.
 
