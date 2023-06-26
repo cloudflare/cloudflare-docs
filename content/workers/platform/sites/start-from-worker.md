@@ -30,7 +30,7 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
    $ npm i -D @cloudflare/kv-asset-handler
    ```
 
-4. Import the `getAssetFromKV()` function into your Worker script and use it to respond with static assets.
+4. Import the `getAssetFromKV()` function into your Worker entry point and use it to respond with static assets.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -91,7 +91,7 @@ async function handleEvent(event) {
 
    For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
 
-5. Run `wrangler dev` or `wrangler publish` as you would normally with your Worker project.
+5. Run `wrangler dev` or `npx wrangler deploy` as you would normally.
    Wrangler will automatically upload the assets found in the configured directory.
 
    ```sh
