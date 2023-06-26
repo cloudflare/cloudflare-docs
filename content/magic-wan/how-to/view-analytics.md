@@ -1,12 +1,11 @@
 ---
-title: View Network Analytics
+title: View network analytics
 pcx_content_type: how-to
+meta:
+    title: How to view GRE and IPSec tunnel analytics
 ---
 
-# View Network Analytics
-
 {{<render file="_network-analytics.md" withParameters="Magic WAN">}}
-
 
 ## Query analytics with GraphQL
 
