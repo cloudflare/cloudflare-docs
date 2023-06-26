@@ -49,8 +49,8 @@ To view analytics on a per-device level:
 | ----------- | ----------- |
 | Round trip time | Round-trip time for the device to receive a response from the target. |
 | Number of hops | Number of routers encountered between the device and the target. |
-| Packet loss | Percentage of traceroute requests that failed to receive a response. |
-| Availability | Percentage of traceroute requests that reached the destination. |
+| Packet loss | Percentage of traceroute packets that failed to receive a response. |
+| Availability | Percentage of tests where at least one packet reached the destination. |
 
 ## Data retention
 

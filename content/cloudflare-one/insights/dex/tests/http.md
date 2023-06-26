@@ -6,7 +6,7 @@ weight: 1
 
 # Run an HTTP test
 
-An HTTP test sends a `GET` request from an end-user device to a specific web application. You can use the response metrics to troubleshoot connectivity issues. For example, you can check whether the application is inaccessible for all users in your organization, or only certain ones.
+An HTTP test sends a `GET` request from an end-user device to a specific web application. You can use the [response metrics](/cloudflare-one/insights/dex/tests/view-results/#http-get) to troubleshoot connectivity issues. For example, you can check whether the application is inaccessible for all users in your organization, or only certain ones.
 
 ## Create a test
 
