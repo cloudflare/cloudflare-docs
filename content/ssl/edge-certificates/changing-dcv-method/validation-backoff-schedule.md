@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Validation backoff schedule
-weight: 8
+weight: 1
 meta:
     description: Consider what happens if a domain control validation (DCV) fails and what schedule Cloudflare follows for new attempts and backoff.
 ---
