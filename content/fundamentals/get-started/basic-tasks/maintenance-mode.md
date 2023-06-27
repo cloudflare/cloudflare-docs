@@ -26,7 +26,6 @@ Certain customization and queue options depend on your [plan](/waiting-room/plan
 
 ### All plans
 
-
 Users on all plans can [create an Acccess application](/cloudflare-one/applications/configure-apps/self-hosted-apps/). Make sure to limit your [Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy) to only include yourself and any collaborators.
 
 If needed, you can also further [customize the login page](/cloudflare-one/identity/login-page/).
