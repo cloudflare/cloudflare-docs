@@ -43,6 +43,8 @@ These are the action types you can choose from:
 
 ### Allow
 
+Corresponding API action: `allow`
+
 Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
 | Selector           | Operator | Value     | Action |
@@ -54,6 +56,8 @@ Policies with Allow actions allow DNS queries to reach destinations you specify 
 When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries even if the cryptographic signature for the DNS record cannot be validated. We do not recommend disabling DNSSEC validation unless you know that the validation failure is due to DNSSEC configuration issues and not malicious attacks.
 
 ### Block
+
+Corresponding API action: `block`
 
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
@@ -67,6 +71,8 @@ When choosing the Block action, toggle the **Display custom block page** setting
 
 ### Override
 
+Corresponding API action: `override`
+
 Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
 
 | Selector | Operator | Value             | Action   | Override Hostname |
@@ -77,6 +83,8 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 
 ### SafeSearch
 
+Corresponding API action: `safesearch`
+
 SafeSearch is a feature of search engines that helps you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children or at work.
 
 You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. For example, to enable SafeSearch for Google, you can create the following policy:
@@ -86,6 +94,8 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 | Domain   | Is       | `google.com` | SafeSearch |
 
 ### YouTube Restricted Mode
+
+Corresponding API action: `ytrestricted`
 
 Similarly, you can enforce YouTube Restricted mode by choosing the _YouTube Restricted_ action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable YouTube Restricted Mode, you could set up a policy like the following:
 
