@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Commands
-weight: 2
 ---
 
 # Wrangler commands
