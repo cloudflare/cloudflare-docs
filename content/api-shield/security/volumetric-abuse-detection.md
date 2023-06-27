@@ -48,7 +48,7 @@ Implementing low confidence rate limits can still be helpful to prevent API abus
 
 ### Create rate limits
 
-1. Log in to the Cloudflare dashboard, and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **API Shield**.
 3. In **Endpoint Management**, select an endpoint.
 4. Select **Create rule** to be automatically redirected to the [Advanced Rate Limiting](/waf/rate-limiting-rules/create-zone-dashboard/) rules dashboard.
