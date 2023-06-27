@@ -128,7 +128,7 @@ Review the production logs associated with any Worker:
 
 Logging is available for all customers, including those on the free plan.
 
-![Cloudflare dashboard showing logs for a Worker named logging-example](../media/workers-logging-dashboard.png)
+![Cloudflare dashboard showing logs for a Worker named logging-example](/images/workers/learning/workers-logging-dashboard.png)
 
 Note that:
 
