@@ -31,7 +31,7 @@ Just like actions in DNS and HTTP policies, actions in network policies define w
 
 ### Allow
 
-Corresponding API action: `allow`
+API value: `allow`
 
 Policies with Allow actions allow network traffic to reach certain IPs or ports. For example, the following configuration allows specific users to reach a given IP address:
 
@@ -42,7 +42,7 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 
 ### Audit SSH
 
-Corresponding API action: `audit_ssh`
+API value: `audit_ssh`
 
 Policies with Audit SSH actions allow administrators to log SSH commands matching SSH traffic over port 22. For example, the following configuration logs SSH commands sent to a given IP address:
 
@@ -54,7 +54,7 @@ For more information on SSH logging, refer to [Configure SSH proxy and command l
 
 ### Block
 
-Corresponding API action: `block`
+API value: `block`
 
 Policies with Block actions block network traffic from reaching certain IPs or ports. For example, the following configuration blocks all traffic directed to port 443:
 
@@ -64,7 +64,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 ### Network Override
 
-Corresponding API action: `l4_override`
+API value: `l4_override`
 
 Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
 

@@ -31,7 +31,7 @@ Actions in HTTP policies allow you to choose what to do with a given set of elem
 
 ### Allow
 
-Corresponding API action: `allow`
+API value: `allow`
 
 The Allow action allows outbound traffic to reach destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration allows traffic to reach all websites we categorize as belonging to the Education content category:
 
@@ -57,7 +57,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 
 ### Block
 
-Corresponding API action: `block`
+API value: `block`
 
 The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
 
@@ -68,19 +68,19 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 ### Isolate
 
-Corresponding API action: `isolate`
+API value: `isolate`
 
 For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
 
 ### Do Not Isolate
 
-Corresponding API action: `noisolate`
+API value: `noisolate`
 
 For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
 
 ### Do Not Inspect
 
-Corresponding API action: `off`
+API value: `off`
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -94,7 +94,7 @@ All Do Not Inspect rules are evaluated first, before any Allow or Block rules, t
 
 ### Do Not Scan
 
-Corresponding API action: `noscan`
+API value: `noscan`
 
 When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
 
