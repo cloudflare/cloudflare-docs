@@ -9,9 +9,9 @@ title: TailEvent
 
 A tail event is the event type to automatically capture data from a producer Worker. It can be used to process logs in real-time and send them to a logging or analytics service.
 
-## Synatx: Module Worker
+## Syntax: ES modules
 
-Written using the Module Worker syntax, handle `TailEvent` in Workers functions by adding a `tail()` function to your module’s exported handlers:
+For Workers using the [ES modules format](/workers/learning/migrate-to-module-workers/), handle `TailEvent` in Workers functions by adding a `tail()` function to your module’s exported handlers:
 
 ```js
 ---
@@ -37,15 +37,15 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - An object containing the bindings associated with your Module Worker, such as KV namespaces and Durable Objects.
+  - An object containing the bindings associated with your Worker using [ES modules format](/workers/learning/migrate-to-module-workers/), such as KV namespaces and Durable Objects.
 
 - `ctx` {{<type>}}object{{</type>}}
-  - An object containing the context associated with your Module Worker. Currently, this object just contains the `waitUntil` function.
+  - An object containing the context associated with your Worker using [ES modules format](/workers/learning/migrate-to-module-workers/). Currently, this object just contains the `waitUntil` function.
 
 
 {{</definitions>}}
 
-## Synatx: Service Worker
+## Syntax: Service Worker
 
 Written using the Service Worker syntax, handle `TailEvent` in Workers functions by attaching the `tail` event with `addEventListener`:
 

@@ -33,7 +33,7 @@ Wie aktiviere ich Response Buffering?
 
 Response Buffering ist in der Network App des Cloudflare-Dashboard verfügbar.
 
-![](/support/static/Screen_Shot_2015-06-30_at_3.45.52_PM.png)
+![](/images/support/Screen_Shot_2015-06-30_at_3.45.52_PM.png)
 
 Für wen ist Response Buffering verfügbar?
 

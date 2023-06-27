@@ -57,7 +57,7 @@ There are two possible causes:
 
 Cloudflare returns an Cloudflare-branded HTTP 502 or 504 error when your origin web server responds with a standard HTTP 502 bad gateway or 504 gateway timeout error:
 
-![Example of a Cloudflare-branded error 502.](/support/static/image1.png)
+![Example of a Cloudflare-branded error 502.](/images/support/image1.png)
 
 **Resolution**
 
@@ -71,7 +71,7 @@ Contact your hosting provider to troubleshoot these common causes at your origin
 
 A 502 or 504 error originating from Cloudflare appears as follows:
 
-![Example of an unbranded error 502.](/support/static/image5.png)
+![Example of an unbranded error 502.](/images/support/image5.png)
 
 If the error does not mention “cloudflare,” contact your hosting provider for assistance on [502/504 errors from your origin](#h_85e06a1a-fa89-4685-aa24-2aaf57c0141b).
 
@@ -302,12 +302,12 @@ Request your server administrator or hosting provider to review the origin web s
 
 -   Certificate is not expired
 -   Certificate is not revoked
--   Certificate is signed by a [C](https://support.cloudflare.com/hc/articles/360026016272)[ertificate Authority](https://support.cloudflare.com/hc/articles/360026016272) (not self-signed)
+-   Certificate is signed by a [Certificate Authority](https://support.cloudflare.com/hc/articles/360026016272) (not self-signed)
 -   The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**
 -   Your origin web server accepts connections over port SSL port 443
 -   [Temporarily pause Cloudflare](https://support.cloudflare.com/hc/articles/200169176) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace www.example.com with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 
-![Screen showing an SSL certificate with no errors.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+![Screen showing an SSL certificate with no errors.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 If the origin server uses a self-signed certificate, configure the domain to use _Full_ _SSL_ instead of _Full SSL (Strict)_. Refer to [recommended SSL settings for your origin](/ssl/origin-configuration/ssl-modes).
 

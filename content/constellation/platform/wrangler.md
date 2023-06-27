@@ -10,15 +10,15 @@ weight: 30
 
 ## Installation
 
-Wrangler for Constellation is still in Beta. To install Wrangler for Constellation, run:
+To install Wrangler for Constellation, run:
 
-```bash
-$ npm install wrangler@beta --save-dev
+```sh
+$ npm install wrangler --save-dev
 ```
 
 Test Wrangler with [npx](https://github.com/npm/npx):
 
-```bash
+```sh
 $ npx wrangler constellation
 wrangler constellation
 
@@ -43,7 +43,7 @@ Flags:
 
 Use Wrangler to list, create or delete your [projects](/constellation/platform/data-model/#projects).
 
-```bash
+```sh
 $ npx wrangler constellation project --help
 wrangler constellation project
 
@@ -59,7 +59,7 @@ Commands:
 
 Create a Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation project create "<YOUR_PROJECT_NAME>" ONNX
 ```
 
@@ -67,7 +67,7 @@ $ npx wrangler constellation project create "<YOUR_PROJECT_NAME>" ONNX
 
 List your Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation project list
 ```
 
@@ -75,7 +75,7 @@ $ npx wrangler constellation project list
 
 Delete a Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation project delete "<YOUR_PROJECT_NAME"
 ```
 
@@ -83,7 +83,7 @@ $ npx wrangler constellation project delete "<YOUR_PROJECT_NAME"
 
 You can use Wrangler to list, create or delete your [models](/constellation/platform/data-model/#models).
 
-```bash
+```sh
 $ npx wrangler constellation model --help
 wrangler constellation model
 
@@ -99,7 +99,7 @@ Commands:
 
 To upload the [SqueezeNet1.1 CNN model](https://github.com/onnx/models/tree/main/vision/classification/squeezenet#model) to your project, run:
 
-```bash
+```sh
 $ npx wrangler constellation model upload "<YOUR_PROJECT_NAME>" "squeezenet11" squeezenet1.1.onnx
 ```
 
@@ -107,7 +107,7 @@ $ npx wrangler constellation model upload "<YOUR_PROJECT_NAME>" "squeezenet11" s
 
 List the models in your Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation model list "<YOUR_PROJECT_NAME>"
 ```
 
@@ -115,7 +115,7 @@ $ npx wrangler constellation model list "<YOUR_PROJECT_NAME>"
 
 Delete a model in your Constellation project.
 
-```bash
+```sh
 $ npx wrangler constellation model delete  "<YOUR_PROJECT_NAME>" "squeezenet11"
 ```
 
@@ -127,7 +127,7 @@ The [catalog](/constellation/platform/data-model/#catalog) has ready-to-use pre-
 
 List the models in the catalog.
 
-```bash
+```sh
 $ npx wrangler constellation catalog list
 ```
 

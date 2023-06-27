@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 type: overview
 title: Security
-weight: 1
+weight: 3
 layout: list
 ---
 

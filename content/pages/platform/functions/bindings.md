@@ -263,7 +263,7 @@ Below is an example of how to use Queue Producers in your Function. In this exam
 {{<tab label="js" default="true">}}
 ```js
 export async function onRequest(context) {
-  await env.MY_QUEUE.send({
+  await context.env.MY_QUEUE.send({
     url: request.url,
     method: request.method,
     headers: Object.fromEntries(request.headers),
@@ -276,11 +276,11 @@ export async function onRequest(context) {
 {{<tab label="ts">}}
 ```ts
 interface Env {
-  MY_QUEUE: Queue;
+  MY_QUEUE: Queue<any>;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  await env.MY_QUEUE.send({
+  await context.env.MY_QUEUE.send({
     url: request.url,
     method: request.method,
     headers: Object.fromEntries(request.headers),

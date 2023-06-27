@@ -40,7 +40,7 @@ In the **Activity Log**, find the **ZIP archive created** message and select **C
 
 With your ZIP file downloaded, deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Upload assets**.
 3. Name your project > **Create project**.
 4. Drag and drop your ZIP file or select it from your computer.

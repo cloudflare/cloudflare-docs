@@ -9,7 +9,7 @@ Custom limits allow you to programmatically set limits on your customer’s Work
 
 ## Set Custom limits
 
-Custom limits can be set in the Dispatch Worker:
+Custom limits can be set in the dynamic dispatch Worker:
 
 ```js
 ---

@@ -150,7 +150,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Worker.
+  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/platform/environment-variables/).
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -251,9 +251,10 @@ Triggers allow you to define the `cron` expression to invoke your Worker's `sche
 
 {{<definitions>}}
 
-- `cron` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `crons` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - An array of `cron` expressions.
+  - To disable a Cron Trigger, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
 
 {{</definitions>}}
 
@@ -530,11 +531,11 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
 ```
 
 ### mTLS Certificates

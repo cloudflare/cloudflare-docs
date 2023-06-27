@@ -34,7 +34,7 @@ Por padrão, o Cloudflare [armazena em cache o conteúdo estático](https://supp
 
 5)Nas Page Rules, você também pode  alterar o parâmetro Edge Cache Expire TTL, o que permite determinar por quanto tempo armazenaremos em cache a funcionalidade na nossa borda. As opções TTL variam de 2 (duas) horas a um mês.
 
-![page_rule_spike_or_surge_in_traffic.png](/support/static/page_rule_spike_or_surge_in_traffic.png)
+![page_rule_spike_or_surge_in_traffic.png](/images/support/page_rule_spike_or_surge_in_traffic.png)
 
 Com a opção Cache Tudo ativada, o Cloudflare servirá todo o site, retirando completamente a carga do servidor, tornando o site o mais rápido possível.
 

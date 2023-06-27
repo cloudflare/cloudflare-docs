@@ -17,6 +17,6 @@ Absolutely. Please make sure you're working on the [latest version of Bad Behav
 
 ![Old URL: https://support.cloudflare.com/hc/article_attachments/360020914452/cf-bad-behavior.png
 Article IDs: 200169496 | Is Cloudflare compatible with Bad Behavior?
-](/support/static/hc-import-cf_bad_behavior.png)
+](/images/support/hc-import-cf_bad_behavior.png)
 
 Note: You don't need to allow Cloudflare's IPs because the `CF-Connecting-IP` value will restore this.

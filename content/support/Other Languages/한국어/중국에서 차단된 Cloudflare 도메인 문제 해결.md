@@ -17,7 +17,7 @@ title: 중국에서 차단된 Cloudflare 도메인 문제 해결
 -   [Facebook으로의 공유 문제 해결](https://support.cloudflare.com/hc/ko/articles/217720788-Facebook%EC%9C%BC%EB%A1%9C%EC%9D%98-%EA%B3%B5%EC%9C%A0-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0 "Facebook으로의 공유 문제 해결")
 -   [중국에서 차단된 Cloudflare 도메인 문제 해결](https://support.cloudflare.com/hc/ko/articles/200169566-%EC%A4%91%EA%B5%AD%EC%97%90%EC%84%9C-%EC%B0%A8%EB%8B%A8%EB%90%9C-Cloudflare-%EB%8F%84%EB%A9%94%EC%9D%B8-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0 "중국에서 차단된 Cloudflare 도메인 문제 해결")
 
-![](/support/static/513a9e8b35eaed0a35fce9cc22f9972e37872a33.png)
+![](/images/support/513a9e8b35eaed0a35fce9cc22f9972e37872a33.png)
 
 #### Cloudflare 커뮤니티에 가입하세요
 

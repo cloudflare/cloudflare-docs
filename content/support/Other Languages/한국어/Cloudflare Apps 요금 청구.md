@@ -9,7 +9,7 @@ title: Cloudflare Apps 요금 청구
 
 Cloudflare Apps 내 많은 앱이 무료이며 요금이 청구되지 않습니다.
 
-![Cloudflare dashboard의 Apps 시작 페이지 스크린샷](/support/static/hc-dash-apps_main_page.png)
+![Cloudflare dashboard의 Apps 시작 페이지 스크린샷](/images/support/hc-dash-apps_main_page.png)
 
 Cloudflare Apps 내 유료 앱은 월별로 요금이 청구됩니다. 앱을 구매하고 설치한 도메인별로 매월 요금이 청구됩니다.
 

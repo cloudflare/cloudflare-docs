@@ -113,7 +113,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 {{<Aside type="note">}}
 
-If curl returns a `401` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
+If curl returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
 
 {{</Aside>}}
 
@@ -159,13 +159,13 @@ The following example demonstrates the setup procedure for Firefox.
 
 1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
 
-   ![Navigating to Network Settings menu in Firefox](/cloudflare-one/static/documentation/connections/firefox-network-settings.png)
+   ![Navigating to Network Settings menu in Firefox](/images/cloudflare-one/connections/firefox-network-settings.png)
 
 2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
 4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
 
-   ![Enter PAC file URL into Firefox](/cloudflare-one/static/documentation/connections/firefox-pac-file.png)
+   ![Enter PAC file URL into Firefox](/images/cloudflare-one/connections/firefox-pac-file.png)
 
 5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
 
