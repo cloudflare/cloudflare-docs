@@ -38,7 +38,7 @@ Since custom rules are evaluated in order, Cloudflare grants access to requests 
     </tr>
     <tr>
       <td>
-        <code>http.host eq "dev.www.example.com"</code>
+        <code>(http.host eq "dev.www.example.com")</code>
       </td>
       <td>
         <em>Block</em>

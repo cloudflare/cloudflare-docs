@@ -22,7 +22,7 @@ To prevent attackers from successfully using a permutation of `/wp-admin/` such 
     <tr>
       <td>
         <code>
-          not ip.src in {10.20.30.40 192.168.1.0/24} and starts_with(lower(http.request.uri.path), "/wp-admin")
+          (not ip.src in {10.20.30.40 192.168.1.0/24} and starts_with(lower(http.request.uri.path), "/wp-admin"))
         </code>
       </td>
       <td>

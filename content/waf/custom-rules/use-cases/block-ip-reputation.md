@@ -20,7 +20,7 @@ This example blocks requests based on country code ([ISO 3166-1 Alpha 2](https:/
     <tr>
       <td>
         <code>
-          (ip.src.country in {"CN" "TW" "US" "GB"}) and cf.threat_score > 0
+          (ip.geoip.country in {"CN" "TW" "US" "GB"} and cf.threat_score gt 0)
         </code>
       </td>
       <td>
