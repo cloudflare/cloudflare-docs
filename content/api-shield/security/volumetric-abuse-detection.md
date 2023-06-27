@@ -62,7 +62,7 @@ Your endpoint information, session identifier, and recommended rate limit will b
 
 [Rate limit recommendations are available via the API](/api/operations/api-shield-endpoint-management-retrieve-information-about-an-operation) if you would like to dynamically update rate limits over time.
 
-## Limits
+## Limitations
 
 API Shield will always calculate recommendations when session identifiers are configured. To enable session-based rate limits, [subscribe to Advanced Rate Limiting](/waf/rate-limiting-rules/#availability).
 
