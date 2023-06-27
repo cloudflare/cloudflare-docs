@@ -6,7 +6,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '0 0 * * *' # Runs at 12:00 AM UTC every day
+    - cron: '5 * * * *' # 5 minutes after the hour
 
 jobs:
   noResponse:
