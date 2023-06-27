@@ -32,7 +32,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  In Roles, use the mapping to programmatically and automatically assign users that can access the application.
 
-    ![OneLogin SAML Application Access interface with available Roles listed](/images/cloudflare-one/identity/onelogin/onelogin-saml-6.png)
+    ![OneLogin SAML Application Access interface with available Roles listed](/cloudflare-one/static/identity/onelogin/onelogin-saml-6.png)
 
 1.  Select the **SSO** tab.
 
@@ -42,7 +42,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Copy the **X.509 Certificate** to the Cloudflare **Signing Certificate**.
 
-    ![OneLogin SAML Application SSO interface with SAML2.0 sign on method, Issuer URL, and X.509 Certificate](/images/cloudflare-one/identity/onelogin/onelogin-saml-7.png)
+    ![OneLogin SAML Application SSO interface with SAML2.0 sign on method, Issuer URL, and X.509 Certificate](/cloudflare-one/static/identity/onelogin/onelogin-saml-7.png)
 
 1.  In Zero Trust, navigate to **Settings > Authentication**.
 

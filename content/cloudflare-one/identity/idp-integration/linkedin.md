@@ -44,7 +44,7 @@ To configure LinkedIn as an IdP:
 
 1.  Copy the **Client ID** and **Client Secret**.
 
-    ![LinkedIn account settings where you will copy the Client ID and Client Secret](/images/cloudflare-one/identity/linkedin/lin5.png)
+    ![LinkedIn account settings where you will copy the Client ID and Client Secret](/cloudflare-one/static/identity/linkedin/lin5.png)
 
 1.  In Zero Trust, navigate to **Settings > Authentication**.
 
