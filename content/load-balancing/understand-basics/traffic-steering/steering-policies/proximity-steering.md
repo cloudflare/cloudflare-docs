@@ -8,14 +8,14 @@ meta:
 
 # Proximity steering
 
-**Proximity Steering** routes visitors or internal services to the closest physical data center.
+**Proximity steering** routes visitors or internal services to the closest physical data center.
 
 To use proximity steering on a load balancer, you first need to add GPS coordinates to each origin pool.
 
 ## When to add proximity steering
 
 - For new pools, add GPS coordinates when you create a pool.
-- For existing pools, add GPS coordinates when [managing pools](/load-balancing/how-to/create-pool/#edit-a-pool) or in the **Add Traffic Steering** step of [creating a load balancer](/load-balancing/how-to/create-load-balancer/).
+- For existing pools, add GPS coordinates when [managing pools](/load-balancing/how-to/create-pool/#edit-a-pool) or in the **Add Traffic steering** step of [creating a load balancer](/load-balancing/how-to/create-load-balancer/).
 
 ## How to add proximity steering
 
