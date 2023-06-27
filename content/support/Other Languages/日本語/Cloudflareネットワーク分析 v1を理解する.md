@@ -33,7 +33,7 @@ ___
 
 Cloudflareの**ネットワーク分析**ビューでは、ネットワーク層とトランスポート層におけるトラフィックパターンとDDoS攻撃についてほぼリアルタイムの可視性を実現します。ネットワーク分析では、パケットとビットレベルのデータ、[GraphQL API分析](/analytics/graphql-api/)を介して利用できるのと同じデータを視覚化します。
 
-![分析パネルではタイプ別にパケットのサマリーを表示](/support/static/na-main-dashboard.png)
+![分析パネルではタイプ別にパケットのサマリーを表示](/images/support/na-main-dashboard.png)
 
 ネットワーク分析は、悪意のあるトラフィック報告と調査を加速します。次のパラメーターでデータを絞り込むことができます。
 
@@ -72,7 +72,7 @@ ___
 
 **時間枠**ドロップダウンリストで選択した期間のアクティビティの概要が、ヘッドラインとサイドパネルに表示されます。
 
-![ヘッドラインとサイドパネルが過去24時間までのアクティビティを要約](/support/static/na-navigate.png)
+![ヘッドラインとサイドパネルが過去24時間までのアクティビティを要約](/images/support/na-navigate.png)
 
 ヘッドラインには、パケットまたはビットの合計と検出・軽減された攻撃数が表示されます。攻撃が進行中の場合、ヘッドラインにはパケット（またはビット）の合計ではなく、これらの最大値が表示されます。
 
@@ -84,7 +84,7 @@ ___
 
 _30分前_を選択すると、**ネットワーク分析**ビューに過去30分間のデータが表示され、20秒ごとに更新されます。統計ドロップダウンリストの横に_Live_通知が表示され、ビューが自動的に更新され続けることがわかります。
 
-![ネットワーク分析は自動更新が有効化](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![ネットワーク分析は自動更新が有効化](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 _カスタム範囲_のオプションを選択すると、過去365日間のどの時点でも、最長30日間の期間が指定できます。
 
@@ -96,13 +96,13 @@ _カスタム範囲_のオプションを選択すると、過去365日間のど
 
 \[**注釈の表示**\] トグルを有効にして、**ネットワーク分析**ビューでアドバタイズ/取り消されたIPプレフィックスイベントの注釈を表示または非表示にします。各注釈をクリックすると、詳細が表示されます。
 
-![トグルボタンでネットワーク分析チャートに注釈を表示](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![トグルボタンでネットワーク分析チャートに注釈を表示](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### パケットの概要を拡大させる
 
 グラフ領域をクリックし、マウスをドラッグして拡大します。このやり方なら、３分という短い範囲まで拡大することができます。
 
-![パケットサマリーにズームイン ](/support/static/unnamed.gif)
+![パケットサマリーにズームイン ](/images/support/unnamed.gif)
 
 縮小表示するには、**時間枠**セレクターにある**X**アイコンをクリックします。
 
@@ -150,7 +150,7 @@ ___
 
 2\. **Magic Firewall ルールの作成**をクリックします。
 
-![ネットワーク分析でファイアウォールルールリンクを作成](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![ネットワーク分析でファイアウォールルールリンクを作成](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Magic Firewall ルールエディターに、選択したフィルターと値が表示されます。
 
@@ -434,7 +434,7 @@ ___
 
 **サマリー**タブの1つを選択すると、別のディメンションでデータを表示できます。
 
-![多元的にデータをビジュアル化](/support/static/unnamed__1_.gif)
+![多元的にデータをビジュアル化](/images/support/unnamed__1_.gif)
 
 次のオプションから選ぶことができます。
 
@@ -457,7 +457,7 @@ ___
 
 データ表示を共有するには、URLをコピーして、他のユーザーに送信します。そうすると、同じビューで作業ができるようになります。
 
-![ネットワーク分析ページのURLを選択](/support/static/hc-dashboard-network-analytics-6.png)
+![ネットワーク分析ページのURLを選択](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

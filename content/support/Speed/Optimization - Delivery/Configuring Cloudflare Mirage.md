@@ -83,4 +83,4 @@ To run the pre-loader only and serve degraded images on the page enter:
 Here is an example where Mirage 2 is triggered by a `?forcepreloadonly` flag. The notable image degradation is a sign that Mirage is working:
 
 ![Blog post regarding the launch of Mirage.
-](/support/static/hc-import-219178057_forcepreloadonly.png)
+](/images/support/hc-import-219178057_forcepreloadonly.png)

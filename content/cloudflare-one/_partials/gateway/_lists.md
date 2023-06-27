@@ -12,7 +12,7 @@ You can create a list by:
 
 ## Create a list from a CSV file
 
-Here is a [sample CSV file](/cloudflare-one/static/documentation/list-test.csv) of URLs that you can use for testing. When formatting the CSV:
+Here is a [sample CSV file](/cloudflare-one/static/list-test.csv) of URLs that you can use for testing. When formatting the CSV:
 
 - Each line should be a single entry.
 - Trailing whitespaces are not allowed.

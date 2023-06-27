@@ -114,7 +114,7 @@ _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/f
 
 -   To match both `http` and `https`, just write `example.com`. It is not necessary to write `*example.com`.
 -   To match every page on a domain, write `example.com/*`. Just writing _example.com_ won’t work.
--   To match every page on a domain and it's subdomains, write `*_example.com/*`. Just writing _example.com_ won’t work.
+-   To match every page on a domain and it's subdomains, write `*example.com/*`. Just writing _example.com_ won’t work.
 -   A wildcard (\*) in a Page Rule URL will match even if no characters are present, and may include any part of the URL, including the query string.
 
 ### Referencing wildcard matches
@@ -214,11 +214,11 @@ ___
 
 **Root cause**: This may be due to a configuration issue on a Page Rule. When creating a Page Rule that uses two wildcards, like a _Forwarding URL_ rule, it is possible to create a rule that mentions the second wildcard with the $2 placeholder. Refer to the example below:
 
-![Example Page Rule configuration with two wildcards. The forwarding URL contains a $2 placeholder, which will be replaced with the content matched by the second ](/support/static/page-rule-create.png)
+![Example Page Rule configuration with two wildcards. The forwarding URL contains a $2 placeholder, which will be replaced with the content matched by the second ](/images/support/page-rule-create.png)
 
 When updating the same rule, you can remove one of the wildcard in the **If the URL matches** field and save it. Refer to the example below:
 
-![Incorrect Page Rule configuration with a single wildcard, but still using the $2 placeholder in the forwarding URL. This configuration causes ](/support/static/page-rule-update.png)
+![Incorrect Page Rule configuration with a single wildcard, but still using the $2 placeholder in the forwarding URL. This configuration causes ](/images/support/page-rule-update.png)
 
 If you do so, the $2 placeholder reference a wildcard that does not exist anymore, and as such, an "_Error 500 (Internal server error)"_ is thrown when a URL triggers the page rule.
 

@@ -63,7 +63,7 @@ Next, install `cloudflared`.
 Use the deb package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` is used in this example.
 
 ```sh
-$ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && dpkg -i cloudflared-linux-amd64.deb
+$ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared-linux-amd64.deb
 ```
 
 ### ​.rpm install
