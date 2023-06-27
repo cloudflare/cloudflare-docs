@@ -346,7 +346,7 @@ You will notice that your function is deployed to a unique URL — for example, 
 
 After you have deployed your new form (refer to the [HTML forms](/pages/tutorials/forms) tutorial if you need help creating a form), you should be able to submit a new form submission and see the value show up immediately in Airtable:
 
-![Example GIF of complete Airtable and serverless function integration](example.gif)
+![Example GIF of complete Airtable and serverless function integration](/images/workers/tutorials/airtable/example.gif)
 
 ## Conclusion
 
