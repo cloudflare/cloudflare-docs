@@ -22,7 +22,9 @@ A user who authenticates will hold their seat until you [remove the user](#remov
 
 ## Revoke vs remove a user
 
-When you revoke a user, this action will terminate active sessions, but will not remove the user’s consumption of an active seat. On the other hand, when you remove a user, this action will revoke their session and remove that user registry, freeing up one seat from your account.
+When you revoke a user, this action will terminate active sessions, but will not remove the user’s consumption of an active seat. On the other hand, when you remove a user, this action will revoke their session and remove that user registry, freeing up one seat from your account. 
+
+Note: Removed is the closest we have to a deleted or archived user record at the moment.
 
 ## Check number of Active Users
 
