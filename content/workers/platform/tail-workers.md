@@ -72,7 +72,7 @@ filename: index.js
         "timestamp": 1587058642005
       }
     ],
-    "diagnosticChannelEvents": [
+    "diagnosticsChannelEvents": [
       {
         "channel": "foo",
         "message": "The diagnostic channel message",
