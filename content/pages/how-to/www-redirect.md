@@ -30,7 +30,7 @@ To do this:
 
 ![Create a new Bulk redirects](/images/pages/how-to//create_new_bulk_redirect.png)
 
-To test that your redirect worked, go to the Target URL and double-click the URL as if to copy it. If the URL does not display `www`, your change has successfully propogated.
+To test that your redirect worked, go to the Target URL and double-click the URL as if to copy it. If the URL does not display `www`, your change has successfully propagated.
 
 ## Related resources
 
