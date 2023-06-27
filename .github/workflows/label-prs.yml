@@ -75,4 +75,4 @@ jobs:
         run: echo ${{ env.CHANGED_FILES }}
 
       - name: Check for Spelling Errors
-        run: codespell --count --skip ./.git "${{ env.CHANGED_FILES }}"
+        run: codespell --count --skip ./.git ${{ env.CHANGED_FILES }}
