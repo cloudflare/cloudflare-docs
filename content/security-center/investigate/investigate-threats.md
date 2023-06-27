@@ -88,7 +88,7 @@ Distribution of Layer 3/4 attacks by protocol deployed to block them and graphs
 
 ## Analyze
 
-You can upload a JavaScript file to scan for malicious content using the Analyze feature.
+You can upload a JavaScript file to scan for malicious content using the **Analyze** feature.
 
 The scanner provides a percentage of integrity, a general measurement of safety, for the file. You can decide what percentage of integrity is safe to use.
 
