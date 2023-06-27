@@ -40,3 +40,7 @@ Phish Ee, phishee@nophish.com
 ### Integrating a directory
 
 If you want your BEC contacts automatically synced, Area 1 also supports directory integration for Microsoft and Gmail. Refer to [Office 365 directory guide](/email-security/email-configuration/enhanced-detections/business-email-compromise/o365-directory-guide/) and [Google Workspaces directory integration](/email-security/email-configuration/enhanced-detections/business-email-compromise/gworkspaces-directory-guide/) for more information.
+
+### Review threats
+
+Area 1's dashboard has at-a-glance insights regarding BEC attacks, such as top email addresses targeted. Refer to [Statistics overview](/email-security/reporting/statistics-overview/) and [Types of malicious detections](/email-security/reporting/types-malicious-detections/) for more information.
