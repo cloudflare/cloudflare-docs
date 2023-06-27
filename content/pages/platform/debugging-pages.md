@@ -15,7 +15,7 @@ You can review build errors in your Pages build log. To access your build log:
 2. In **Account Home**, go to **Workers & Pages**.
 3. In **Overview**, select your Pages project > **View build**.
 
-![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](../media/pages-build-log.png)
+![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](/images/pages/platform/pages-build-log.png)
 
 Possible errors in your build log are included in the following sections.
 
