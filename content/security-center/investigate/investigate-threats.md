@@ -48,7 +48,7 @@ API curl
 
 ### Overview
 
-Type (ipv4 / ipv6)
+Type (IPv4 / IPv6)
 
 ASN Info
 
