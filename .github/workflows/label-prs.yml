@@ -66,8 +66,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # get file names and separate them with space ' '
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | xargs -I {} sh -c 'echo "./{}"' | tr '\n' ' ')
-          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"          
+          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ' ')
+          echo "CHANGED_FILES='$files'" >> "$GITHUB_ENV"          
 
       - name: 🔸 Output Changed Files
         run: echo ${{ env.CHANGED_FILES }}
