@@ -14,7 +14,7 @@ You can request categorization changes by creating a [miscategorization API Toke
 
 ## Radar feedback
 
-You can also use [Cloudflare Radar](https://radar.cloudflare.com/domains/feedback) to submit feedback in radar to request recategorization.
+You can also use [Cloudflare Radar](https://radar.cloudflare.com/domains/feedback) to submit feedback to request recategorization.
 
 ## Change categorization via the Cloudflare dashboard
 
