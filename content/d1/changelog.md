@@ -7,6 +7,28 @@ rss: file
 
 # Changelog
 
+## 2023-06-16
+
+### Generated columns documentation
+
+We've published new documentation describing how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
+
+## 2023-06-28
+
+### Metrics and analytics
+
+You can now view [per-database metrics](/d1/platform/metrics-analytics/) via both the [Cloudflare dashboard](https://dash.cloudflare.com/) and the [GraphQL Analytics API](/analytics/graphql-api/).
+
+D1 currently exposes read & writes per second, query response size, and query latency percentiles.
+
+## 2023-06-12
+
+### Deprecating Error.cause
+
+As of [`wrangler` v3.1.1`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1) the [D1 client API](/d1/platform/client-api/) now returns [detailed error messages](/d1/platform/client-api/#errors) within the top-level `Error.message` property, and no longer requires developers to inspect the `Error.cause.message` property.
+
+To facilitate a transition from the previous `Error.cause` behaviour, detailed error messages will continue to be populated within `Error.cause` as well as the top-level `Error` object until approximately July 14th, 2023. Future versions of both `wrangler` and the D1 client API will no longer populate `Error.cause` after this date.
+
 ## 2023-05-19
 
 ### New experimental backend
