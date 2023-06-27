@@ -12,7 +12,7 @@ You can define a page rule to trigger one or more actions whenever a certain URL
 Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
 {{</Aside>}}
 
-The fetchAll default number of allowed page rules depends on the domain plan as shown below.
+The acccess default number of allowed page rules depends on the domain plan as shown below.
 
 {{<feature-table id="rules.page_rules">}}
 
