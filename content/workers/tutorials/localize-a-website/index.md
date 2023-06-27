@@ -19,7 +19,7 @@ The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the 
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
-![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpeg)
+![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)
 
 ## Setup
 
