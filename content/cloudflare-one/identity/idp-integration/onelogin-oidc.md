@@ -28,7 +28,7 @@ To set up OneLogin as your identity provider:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    ![OneLogin OIDC Application Basic Configuration page with example Redirect URI](/cloudflare-one/static/identity/onelogin/onelogin-oidc-3.png)
+    ![OneLogin OIDC Application Basic Configuration page with example Redirect URI](/images/cloudflare-one/identity/onelogin/onelogin-oidc-3.png)
 
 1.  Click **Save**.
 

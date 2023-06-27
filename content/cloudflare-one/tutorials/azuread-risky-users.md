@@ -58,7 +58,7 @@ Once the base IdP integration is tested and working, enable additional permissio
 
 You will see the list of enabled permissions.
 
-![API permissions in Azure AD](/cloudflare-one/static/identity/azure/risky-users-permissions.png)
+![API permissions in Azure AD](/images/cloudflare-one/identity/azure/risky-users-permissions.png)
 
 ## 3. Add risky users to Azure AD group
 
@@ -135,7 +135,7 @@ $ wrangler tail --format pretty
 
 After the initial run, the auto-generated groups will appear in the Azure AD dashboard.
 
-![Risky user groups in the Azure AD dashboard](/cloudflare-one/static/identity/azure/risky-users-groups.png)
+![Risky user groups in the Azure AD dashboard](/images/cloudflare-one/identity/azure/risky-users-groups.png)
 
 ## 4. Synchronize risky user groups
 

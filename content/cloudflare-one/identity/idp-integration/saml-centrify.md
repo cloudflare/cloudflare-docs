@@ -20,7 +20,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Next to the **SAML** icon click **Add**.
 
-    ![Centrify Settings Add Application details page with template text](/cloudflare-one/static/identity/saml-centrify/saml-centrify-3.png)
+    ![Centrify Settings Add Application details page with template text](/images/cloudflare-one/identity/saml-centrify/saml-centrify-3.png)
 
 1.  Enter the required information for your application.
 
@@ -50,7 +50,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Click **Active > Add** to create a new **Attribute Name**, **Email**.
 
-    ![Centrify SAML Response card with Settings Email Attribute selected](/cloudflare-one/static/identity/saml-centrify/saml-centrify-9.png)
+    ![Centrify SAML Response card with Settings Email Attribute selected](/images/cloudflare-one/identity/saml-centrify/saml-centrify-9.png)
 
 1.  Enter the user email addresses in the **Attribute Value** field.
 

@@ -14,7 +14,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 2. Select **Create App Integration**.
 3. For the **Sign-in method**, select **OIDC - OpenID Connect**.
 
-![Creating an OIDC application in Okta](/cloudflare-one/static/identity/okta/okta-1.png)
+![Creating an OIDC application in Okta](/images/cloudflare-one/identity/okta/okta-1.png)
 
 4. For the **Application type**, select **Web Application**. Select **Next**.
 
@@ -30,13 +30,13 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 8. Scroll down to the **OpenID ConnectID Token** and select **Edit**.
 
-   ![Configuring the Groups claim filter in Okta](/cloudflare-one/static/identity/okta/okta-2.png)
+   ![Configuring the Groups claim filter in Okta](/images/cloudflare-one/identity/okta/okta-2.png)
 
 9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
 
 10. In the **General** tab, copy the **Client ID**, **Client secret**, and **Okta domain**.
 
-    ![Finding your Client credentials and Okta domain in Okta](/cloudflare-one/static/identity/okta/okta-3.png)
+    ![Finding your Client credentials and Okta domain in Okta](/images/cloudflare-one/identity/okta/okta-3.png)
 
 11. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
@@ -100,7 +100,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 10. In the **API Token** field, enter the **SCIM Secret** obtained from Zero Trust.
 
-    ![Enter SCIM values into Okta](/cloudflare-one/static/identity/okta/enter-scim-values.png)
+    ![Enter SCIM values into Okta](/images/cloudflare-one/identity/okta/enter-scim-values.png)
 
 11. Select **Test API Credentials** to ensure that the credentials were entered correctly. Select **Save**.
 
@@ -110,7 +110,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
     - **Update User Attributes**
     - **Deactivate Users**
 
-    ![Configure provisioning settings in Okta](/cloudflare-one/static/identity/okta/enable-provisioning.png)
+    ![Configure provisioning settings in Okta](/images/cloudflare-one/identity/okta/enable-provisioning.png)
 
 13. Select **Save** to complete the configuration.
 
