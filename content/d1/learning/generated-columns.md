@@ -6,7 +6,7 @@ weight: 10
 
 # Generated columns
 
-D1 allows you define generated columns: columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/learning/querying-json).
+D1 allows you to define generated columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/learning/querying-json).
 
 This allows you to normalize your data as you write to it or read it from a table, making it easier to query and reducing the need for complex application logic.
 
@@ -19,9 +19,9 @@ There are two types of generated columns:
 * `VIRTUAL` (default): the column is generated when read. This has the benefit of not consuming storage, but can increase compute time (and thus reduce query performance), especially for larger queries.
 * `STORED`: the column is generated when the row is written. The column takes up storage space just as a regular column would, but the column does not need to be generated on every read, which can improve read query performance.
 
-When omitted from a generated column expression, generated columns default to the `VIRTUAL` type. The `STORED` type is recommended when the generated column is compute intensive: for example, parsing large JSON structures.
+When omitted from a generated column expression, generated columns default to the `VIRTUAL` type. The `STORED` type is recommended when the generated column is compute intensive. For example, when parsing large JSON structures.
 
-## Defining a generated column
+## Define a generated column
 
 Generated columns can be defined during table creation in a `CREATE TABLE` statement or afterwards via the `ALTER TABLE` statement. 
 
@@ -98,6 +98,6 @@ ADD COLUMN expires_at AS (date('now', '+30 days');
 
 ## Additional considerations
 
-* Tables must have at least one non-generated column: you cannot define a table with only generated column(s).
+* Tables must have at least one non-generated column. You cannot define a table with only generated column(s).
 * Expressions can only reference other columns in the same table and row, and must only use [deterministic functions](https://www.sqlite.org/deterministic.html). Functions like `random()`, sub-queries or aggregation functions cannot be used to define a generated column.
 * Columns added to an existing table via `ALTER TABLE ... ADD COLUMN` must be `VIRTUAL`. You cannot add a `STORED` column to an existing table.

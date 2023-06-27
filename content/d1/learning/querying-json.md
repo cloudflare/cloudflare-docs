@@ -88,7 +88,7 @@ CREATE TABLE some_table (
 )
 ```
 
-Visit the [generated columns documentation](/d1/learning/generated-columns/) to learn more about how to generate columns.
+Refer to [Generated columns](/d1/learning/generated-columns/) to learn more about how to generate columns.
 
 ## Example usage
 
