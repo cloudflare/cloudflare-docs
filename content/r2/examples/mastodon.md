@@ -51,7 +51,7 @@ S3_PERMISSION=private
 
 After configuration, you can run your instance. After the instance is running, upload a media attachment and verify the attachment is retrieved from the hostname set above. When navigating back to the bucket's page in R2, you should see the following structure.
 
-![Mastodon bucket structure after instance is set up and running](/r2/static/mastodon-r2-bucket-structure.png)
+![Mastodon bucket structure after instance is set up and running](/images/r2/mastodon-r2-bucket-structure.png)
 
 ## Migrate to R2
 
@@ -71,7 +71,7 @@ If you had the media files hosted locally, you will likely need to set up redire
 
 [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) are available for all plans. Refer to [Create Bulk Redirects in the dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/) for more information.
 
-![List of Source URLs and their new Target URLs as part of Bulk Redirects](/r2/static/mastodon-r2-bulk-redirects.png)
+![List of Source URLs and their new Target URLs as part of Bulk Redirects](/images/r2/mastodon-r2-bulk-redirects.png)
 
 ### 3. Verify bucket and redirects
 
