@@ -57,7 +57,7 @@ The `HTMLRewriter` class provided in the Workers runtime allows developers to pa
 
 The example website in this tutorial is a basic single-page HTML project that lives in the `public` directory. It includes an `h1` element with the text `Example Site` and a number of `p` elements with different text:
 
-![Demo code shown in Chrome DevTools with the elements described above](./media/code-example.png)
+![Demo code shown in Chrome DevTools with the elements described above](/images/workers/tutorials/localize-website/code-example.png)
 
 What is unique about this page is the addition of [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) in the HTML – custom attributes defined on a number of elements on this page. The `data-i18n-key` on the `h1` tag on this page, as well as many of the `p` tags, indicates that there is a corresponding internationalization key, which should be used to look up a translation for this text:
 
@@ -297,7 +297,7 @@ theme: dark
 ~/i18n-example $ wrangler publish
 ```
 
-![An example site that has been successfully localized in Japanese, German and English](./media/i18n.jpg)
+![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)
 
 ## Related resources
 
