@@ -31,10 +31,10 @@ There is no guarantee the category change will be approved.
 When you search for a domain, you can see an option to request to change categorization under the **Domain Overview**.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to Security Center > Investigate.
-3. Select Request to change categorization.
-4. Choose to change a security or a content category.
-5. Select Submit to submit your request for review after you have selected categories.
+2. Go to **Security Center** > **Investigate**.
+3. Select **Request to change categorization**.
+4. Choose whether to change a security or a content category.
+5. Select **Submit** to submit your request for review after you have selected the categories.
 6. Select up to two content categories.
 
 {{<Aside type="note">}}
