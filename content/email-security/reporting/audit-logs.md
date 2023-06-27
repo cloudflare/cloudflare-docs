@@ -2,6 +2,8 @@
 title: Audit Logs
 pcx_content_type: how-to
 weight: 4
+meta:
+    description: Use Area 1 logs to review actions performed on your account.
 ---
 
 # Audit logs
