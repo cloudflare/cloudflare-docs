@@ -1,10 +1,9 @@
 ---
-title: Information overview
+title: Statistics overview
 pcx_content_type: how-to
-weight: 1
 ---
 
-# Information overview
+# Statistics overview
 
 To access an overview of your account, total number of emails processed, a breakdown of types of threads detected, among other types of information:
 

@@ -1,7 +1,6 @@
 ---
 title: Types of malicious detections
 pcx_content_type: how-to
-weight: 2
 ---
 
 # Types of malicious detections
