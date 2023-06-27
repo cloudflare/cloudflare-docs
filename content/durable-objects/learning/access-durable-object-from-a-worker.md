@@ -10,7 +10,7 @@ To access a Durable Object from a Worker, you must first configure the Worker wi
 
 Namespace bindings allow you to generate Object IDs and connect to Objects.
 
-## Generate IDs randomly
+## 1. Generate IDs randomly
 
 ```js
 let id = OBJECT_NAMESPACE.newUniqueId();
@@ -30,7 +30,7 @@ When you construct a new unique ID, the system knows that the same ID will not b
 
 {{</Aside>}}
 
-## Derive IDs from names
+## 2. Derive IDs from names
 
 ```js
 let id = OBJECT_NAMESPACE.idFromName(name);
@@ -55,7 +55,7 @@ After the object has been accessed the first time, location information will be 
 
 {{</Aside>}}
 
-## Parse previously-created IDs from strings
+## 3. Parse previously-created IDs from strings
 
 ```js
 let id = OBJECT_NAMESPACE.idFromString(hexId);
@@ -74,3 +74,22 @@ This method parses an ID that was previously stringified. This is useful in part
 
 A stringified object ID is a 64-digit hexadecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
 
+## 4. Construct the stub using the ID 
+
+Construct the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
+
+```js
+let stub = env.EXAMPLE_CLASS.get(id);
+```
+
+## 5. Use `fetch()` handler method
+
+The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](/durable-objects/learning/access-durable-object-from-a-worker/).
+
+The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
+
+If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
+
+```js
+let response = await stub.fetch(request);
+```

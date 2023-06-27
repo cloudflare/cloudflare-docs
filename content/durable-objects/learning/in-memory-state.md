@@ -9,7 +9,7 @@ weight: 16
 
 Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory. 
 
-A common pattern is to initialize an Object from persistent storage and set instance variables the first time it is accessed. Since future accesses are routed to the same object, it is then possible to return any initialized values without making further calls to persistent storage.
+A common pattern is to initialize an object from persistent storage and set instance variables the first time it is accessed. Since future accesses are routed to the same object, it is then possible to return any initialized values without making further calls to persistent storage.
 
 ```js
 export class Counter {

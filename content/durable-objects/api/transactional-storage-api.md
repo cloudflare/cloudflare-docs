@@ -8,7 +8,25 @@ weight: 16
 
 The transactional storage API allows you to achieve consistent key-value storage. 
 
-You can access the transactional storage API via the [`state.storage`](/durable-objects/get-started/#2-write-a-class-that-defines-a-durable-object) object passed to the Durable Object constructor.
+Durable Objects gain access to a persistent [transactional storage API](/durable-objects/api/transactional-storage-api/) via the first parameter passed to the Durable Object constructor. 
+
+While access to a Durable Object instance is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
+
+```js
+export class DurableObjectExample {
+  constructor(state, env) {
+    this.state = state;
+  }
+
+  async fetch(request) {
+    let ip = request.headers.get("CF-Connecting-IP");
+    let data = await request.text();
+    let storagePromise = this.state.storage.put(ip, data);
+    await storagePromise;
+    return new Response(ip + " stored " + data);
+  }
+}
+```
 
 ## Methods
 
@@ -53,8 +71,6 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
     - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. 
     
     - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. 
-    
-    - Refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post to learn more. 
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
@@ -187,74 +203,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 {{</definitions>}}
 
-## `alarm()` handler method
+### Related resources
 
-The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed. 
-
-The method takes no parameters, does not return a result, and can be `async`.
-
-### How to use the `alarm()` handler method
-
-In your Durable Object, the `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
-
-The example below implements an `alarm()` handler that wakes the Durable Object up once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
-
-```js
-export default {
-  async fetch(request, env) {
-    let id = env.BATCHER.idFromName("foo");
-    return await env.BATCHER.get(id).fetch(request);
-  },
-};
-
-const SECONDS = 1000;
-
-export class Batcher {
-  constructor(state, env) {
-    this.state = state;
-    this.storage = state.storage;
-    this.state.blockConcurrencyWhile(async () => {
-      let vals = await this.storage.list({ reverse: true, limit: 1 });
-      this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
-    });
-  }
-  async fetch(request) {
-    this.count++;
-
-    // If there is no alarm currently set, set one for 10 seconds from now
-    // Any further POSTs in the next 10 seconds will be part of this batch.
-    let currentAlarm = await this.storage.getAlarm();
-    if (currentAlarm == null) {
-      this.storage.setAlarm(Date.now() + 10 * SECONDS);
-    }
-
-    // Add the request to the batch.
-    await this.storage.put(this.count, await request.text());
-    return new Response(JSON.stringify({ queued: this.count }), {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    });
-  }
-  async alarm() {
-    let vals = await this.storage.list();
-    await fetch("http://example.com/some-upstream-service", {
-      method: "POST",
-      body: Array.from(vals.values()),
-    });
-    await this.storage.deleteAll();
-    this.count = 0;
-  }
-}
-```
-
-The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
-
-## `fetch()` handler method
-
-The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](/durable-objects/learning/access-durable-object-from-a-worker/).
-
-The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
-
-If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
+1. [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
 
