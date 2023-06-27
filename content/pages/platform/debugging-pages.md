@@ -15,7 +15,7 @@ You can review build errors in your Pages build log. To access your build log:
 2. In **Account Home**, go to **Workers & Pages**.
 3. In **Overview**, select your Pages project > **View build**.
 
-![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](../media/pages-build-log.png)
+![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](/images/pages/platform/pages-build-log.png)
 
 Possible errors in your build log are included in the following sections.
 
@@ -103,7 +103,7 @@ server: cloudflare
 cf-ray: 7b1ffdaa8ad60693-MAN
 ```
 
-In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until the domain is verified. After the domain is verified, Access can be reenabled.
+In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until the domain is verified. After the domain is verified, Access can be re-enabled.
 
 You will need to do the same kind of thing for Redirect Rules or a Worker example too.
 

@@ -23,7 +23,7 @@ To add a custom domain:
 4. Select **Set up a domain**.
 5. Provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
 
-![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/platform/media/domains.png)
+![Adding a custom domain for your Pages project through the Cloudflare dashboard](/images/pages/platform/domains.png)
 
 ### Add a custom apex domain
 
