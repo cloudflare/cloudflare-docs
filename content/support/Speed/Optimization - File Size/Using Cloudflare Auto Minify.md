@@ -25,6 +25,8 @@ To enable Auto Minify on your website:
 3.  Go to **Speed** > **Optimization**.
 4.  For **Auto Minify**, select the file types to minify.
 
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
+
 ___
 
 ## Related resources

@@ -39,7 +39,7 @@ ___
 
 3\. **지원 문의**를 클릭하세요. _비상 전화 지원 핫라인 - 인증_ 카드로 스크롤하세요.
 
-![](/support/static/contact_support_ent_phone_card.png)
+![](/images/support/contact_support_ent_phone_card.png)
 
 4\. 일회용 토큰으로 인증하려면 **일회용 토큰 받기**를 클릭하세요. 토큰 코드와 함께 팝업 창이 나타납니다. 코드는 30초마다 자동으로 바뀝니다.
 

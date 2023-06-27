@@ -42,7 +42,7 @@ export class DurableObject {
 
 - `state.id` {{<type>}}DurableObjectId{{</type>}}
 
-  - The ID of this Durable Object. It can be converted into a hex string using its `toString()` method. Inside a Durable Object, the `state.id.name` property is not defined. If you need access to the name, explicitly pass it in the fetch request to the Durable Object, for example, a query parameter in the URL. 
+  - The ID of this Durable Object. It can be converted into a hex string using its `toString()` method. Inside a Durable Object, the `state.id.name` property is not defined. If you need access to the name, explicitly pass it in the fetch request to the Durable Object, for example, a query parameter in the URL.
 
 - `state.waitUntil`
 
@@ -165,7 +165,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - {{<code>}}allowUnconfirmed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. Refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post to learn more. 
+    - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed()` to `true` to opt out of the default behavior. Refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post to learn more.
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
@@ -290,7 +290,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `alarm()` handler method
 
-The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed. 
+The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed.
 
 The method takes no parameters, does not return a result, and can be `async`.
 
@@ -353,7 +353,7 @@ The `alarm()` handler will be called once every 10 seconds. If an unexpected err
 
 ### `fetch()` handler method
 
-The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#accessing-a-durable-object-from-a-worker).
+The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#access-a-durable-object-from-a-worker).
 
 The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
 
@@ -375,6 +375,8 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 [Code updates](/workers/learning/using-durable-objects/#global-uniqueness) will disconnect all WebSockets.
 
+`wrangler dev` does not currently work with the Hibernation API.
+
 #### WebSocket extensions
 
 - {{<code>}}webSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
@@ -390,7 +392,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 - {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object. `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
+  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. After calling `state.acceptWebSocket(ws)`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object. `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
   - This API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 - {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}

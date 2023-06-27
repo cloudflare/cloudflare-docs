@@ -24,22 +24,31 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-06-12</td>
       <td>2023-06-19</td>
-      <td>Block</td>
-      <td>100589</td>
-      <td>...8559ddfa</td>
-      <td>File Inclusion - WEB-INF</td>
-      <td>This is a New Detection</td>
+      <td>2023-06-26</td>
+      <td>Disabled</td>
+      <td>100008NS</td>
+      <td>...7bc0259f</td>
+      <td>Command Injection - Netcat - Body</td>
+      <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-06-12</td>
       <td>2023-06-19</td>
+      <td>2023-06-26</td>
+      <td>Disabled</td>
+      <td>100008G</td>
+      <td>...fb982fd6</td>
+      <td>SQLi - Libinject with Body Inspection</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2023-06-19</td>
+      <td>2023-07-03</td>
       <td>Block</td>
-      <td>100587_BETA</td>
-      <td>...fd0b4522</td>
-      <td>Code Injection - CVE:CVE-2019-18889</td>
-      <td>This rule will replace 100587 in legacy WAF and will replace ...269024be on New WAF</td>
+      <td>100590BETA</td>
+      <td>...c1e42497</td>
+      <td>VMware - Remote Code Execution - CVE:CVE-2023-20887</td>
+      <td>This rule will replace 100590 in legacy WAF and ...6f9bfc13 on New WAF</td>
     </tr>
   </tbody>
 </table>

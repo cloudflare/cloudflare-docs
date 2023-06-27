@@ -46,6 +46,6 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global networ
 * Predefined DLP Profiles to quickly get started
 * Log or block DLP matches
 
-![](/cloudflare-one/static/documentation/teams-no-background.png)
+![](/images/cloudflare-one/teams-no-background.png)
 
 {{</content-column>}}

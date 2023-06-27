@@ -33,10 +33,14 @@ To create a custom hostname:
 
 {{<render file="_create-custom-hostname.md">}}
 
+{{<render file="_create-custom-hostname-limitations.md">}}
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 {{<render file="_create-custom-hostname-api.md">}}
+
+{{<render file="_create-custom-hostname-limitations.md">}}
 
 {{</tab>}}
 {{</tabs>}}

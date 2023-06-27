@@ -11,7 +11,6 @@ meta:
   description: Create rules that examine incoming HTTP traffic against a set of
     powerful filters to block, challenge, log, or allow matching requests.
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/c/security/6

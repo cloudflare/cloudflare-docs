@@ -73,14 +73,11 @@ Cloudflare est le [fournisseur de service DNS le plus rapide](http://www.dnsperf
 
 ___
 
-### Combien d’enregistrements DNS puis-je avoir par domaine ?
+### Existe-t-il une limite sur le nombre d’enregistrements DNS par domaine ?
 
-Les limites par domaine sont les suivantes :
+Oui, le nombre d'enregistrement DNS par domaine est limité pour les plans Free, Pro et Business.
 
--   3 500 enregistrements DNS pour les domaines des offres Pro, Business et Enterprise Plan
--   1 000 enregistrements DNS pour les domaines de l’offre Free
-
-Si vous êtes un client Enterprise et que vous souhaitez ajouter plus d’enregistrements que la limite autorisée pour un domaine, [contactez-nous](http://www.cloudflare.com/enterprise-service-request) en décrivant votre situation et votre besoin de différents types d’enregistrements.
+Si vous êtes un client Enterprise et que vous souhaitez ajouter plus d’enregistrements que la limite autorisée pour un domaine, vous pouvez contacter votre équipe de gestion de compte.
 
 ___
 

@@ -14,7 +14,7 @@ Users log in using one of the identity providers configured for the account. Onc
 
 Tiles have a one-to-one relationship with each application you create in Access. If you create one application for general access to your Jira deployment and a separate application that restricts requests to a particular Jira path, a user authorized for both will see separate tiles for each. The tile names displayed in the Access App Launcher portal correspond to the application names listed under **Access** > **Applications**.
 
-![App Launcher portal](/cloudflare-one/static/documentation/applications/app-launcher.png)
+![App Launcher portal](/images/cloudflare-one/applications/app-launcher.png)
 
 ## Enable the App Launcher
 
