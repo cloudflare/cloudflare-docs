@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: concept
 title: Quick Tunnels
 weight: 5
 ---
@@ -8,7 +8,7 @@ weight: 5
 
 Developers can use the TryCloudflare tool to experiment with Cloudflare Tunnel without adding a site to Cloudflare's DNS. TryCloudflare will launch a process that generates a random subdomain on `trycloudflare.com`. Requests to that subdomain will be proxied through the Cloudflare network to your web server running on localhost.
 
-## Using TryCloudflare
+## Use TryCloudflare
 
 1.  Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
 1.  Launch a web server that is available over localhost to `cloudflared`.
@@ -26,7 +26,9 @@ $ cloudflared tunnel --url http://localhost:7000
 
 `cloudflared` will generate a random subdomain when connecting to the Cloudflare network and print it in the terminal for you to use and share. The output will serve traffic from the server on your local machine to the public internet, using Cloudflare's Argo Smart Routing, at a public URL.
 
+{{<Aside type="note">}}
 TryCloudflare quick tunnels are currently not supported if a `config.yaml` configuration file is present in the `.cloudflared` directory. It may be necessary to rename that file temporarily to use the feature.
+{{</Aside>}}
 
 ## FAQ
 
