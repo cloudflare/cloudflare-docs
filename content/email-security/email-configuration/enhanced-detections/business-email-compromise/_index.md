@@ -17,7 +17,7 @@ You have several options for adding email addresses to BEC protection.
 
 ### Using the dashboard
 
-Using the dashboard, you can add email addresses indivdually or upload a CSV file:
+Using the dashboard, you can add email addresses individually or upload a CSV file:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).

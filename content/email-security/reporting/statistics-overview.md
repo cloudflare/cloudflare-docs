@@ -17,7 +17,7 @@ Field <div style="width:180px">  | Description
 **System stats** | <ul><li>Status of Area 1’s services</li> <li>Uptime of Area 1’s services as well as any downtime</li> <li>Number of processed emails and attacks prevented</li></ul>
 **Detection stats** | Statistics regarding the total number of detections made, and emails processed.
 **Retractions** | Shows the distribution of messages removed from your user's mailboxes.
-**Phish Submissions Stats** | Statistics regarding the number of phish emails submited by your users and security operations center (SOC)
+**Phish Submissions Stats** | Statistics regarding the number of phish emails submitted by your users and security operations center (SOC)
 **Threat Origins** | Top geographical threat origins to your organization.
 **Org Spoofs** | Shows attacks where names in envelopes differ from the header, as well as spoofed domains.
 **Domain Proximity** | List of domains similar to your own.
