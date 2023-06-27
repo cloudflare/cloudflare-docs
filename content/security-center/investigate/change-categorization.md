@@ -18,13 +18,13 @@ You can also use [Cloudflare Radar](https://radar.cloudflare.com/domains/feedbac
 
 ## Change categorization via the Cloudflare dashboard
 
-When you search for a domain, you can see an option to request to change categorization under the **Domain Overview**.
+When you search for a domain, you can request to change its categorization under the **Domain Overview**.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to Security Center > Investigate.
-3. Select Request to change categorization.
-4. Choose to change a security or a content category.
-5. Select Submit to submit your request for review after you have selected categories.
+2. Go to **Security Center** > **Investigate**.
+3. Select **Request to change categorization**.
+4. Choose whether to change a security or a content category.
+5. Select **Submit** to submit your request for review after you have selected the categories.
 
 {{<Aside type="note">}}
 The interface will not allow a domain to have more than two content categories associated with it. To change the proposed categories, remove some of the selected categories.

@@ -40,7 +40,7 @@ You can view and [request categorization](/security-center/investigate/change-ca
 
 ### Overview
 
-+ Type (ipv4 / ipv6)
++ Type (IPv4 / IPv6)
 + ASN Info
 
 ### Passive DNS Records
@@ -75,7 +75,7 @@ You can view and [request categorization](/security-center/investigate/change-ca
 
 ## Analyze
 
-You can upload a JavaScript file to scan for malicious content using the Analyze feature.
+You can upload a JavaScript file to scan for malicious content using the **Analyze** feature.
 
 The scanner provides a percentage of integrity, a general measurement of safety, for the file. You can decide what percentage of integrity is safe to use.
 
