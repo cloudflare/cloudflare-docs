@@ -11,7 +11,7 @@ Direct creator uploads let your end users to upload videos directly to Cloudflar
 **Two options:**
 
 1. For videos under 200MB, [generate URLs that accept an HTTP POST request](/stream/uploading-videos/direct-creator-uploads#basic-upload-flow-for-small-videos).
-2. For videos over 200MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing your app while videos are still uploading, [generate URLs that use the tus protocol](/stream/uploading-videos/direct-creator-uploads#tus).
+2. For videos over 200 MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing your app while videos are still uploading, [generate URLs that use the tus protocol](/stream/uploading-videos/direct-creator-uploads#advanced-upload-flow-using-tus-for-large-videos).
 
 #### Example Apps
 
@@ -56,7 +56,7 @@ header: Response
 }
 ```
 
-## Step 2: Use the upload URL in your app 
+## Step 2: Use the upload URL in your app
 
 Using the `uploadURL` provided in the previous request, users can upload video
 files. Uploads are limited to 200 MB in size.

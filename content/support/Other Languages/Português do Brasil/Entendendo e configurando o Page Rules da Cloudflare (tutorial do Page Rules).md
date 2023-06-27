@@ -714,11 +714,11 @@ ___
 
 **Causa raiz**: Isso pode ser devido a um problema de configuração em uma regra de página. Ao criar uma regra de página que usa dois curingas, como uma regra de _redirecionamento de URL_, é possível criar uma regra que menciona o segundo curinga com o marcador de posição $2. Veja o exemplo abaixo:
 
-![configuração de regra de página de exemplo com dois curingas. O URL de encaminhamento contém um espaço reservado $2, que será substituído pelo conteúdo correspondente à segunda ](/support/static/page-rule-create.png)
+![configuração de regra de página de exemplo com dois curingas. O URL de encaminhamento contém um espaço reservado $2, que será substituído pelo conteúdo correspondente à segunda ](/images/support/page-rule-create.png)
 
 Ao atualizar a mesma regra, você pode remover um dos curingas do campo **Se o URL corresponder** e salvá-la. Veja o exemplo abaixo:
 
-![configuração de regra de página incorreta com um único curinga, mas ainda usando o espaço reservado de $2 no URL de encaminhamento. Essa configuração causa ](/support/static/page-rule-update.png)
+![configuração de regra de página incorreta com um único curinga, mas ainda usando o espaço reservado de $2 no URL de encaminhamento. Essa configuração causa ](/images/support/page-rule-update.png)
 
 Se você fizer isso, o marcador de posição $2 fará referência a um caractere curinga que não existe mais e, como tal, um "_Erro 500 (erro interno do servidor)_"é lançado quando um URL aciona a regra da página .
 

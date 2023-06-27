@@ -10,7 +10,6 @@ meta:
   title: Cloudflare Registrar docs
   description: Welcome to Cloudflare Registrar. The first registrar you can love.
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/c/reliability/registrar/53

@@ -21,7 +21,7 @@ Par exemple, si vous installez des applications qui dépendent de l'adresse IP e
 
 Le diagramme ci-dessous illustre les différentes façons dont les adresses IP sont gérées avec et sans Cloudflare.
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 ___
 

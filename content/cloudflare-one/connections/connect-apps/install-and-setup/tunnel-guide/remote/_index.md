@@ -30,7 +30,7 @@ Before you start, make sure you:
 
 6. Once the command has finished running, your connector will appear in Zero Trust.
 
-   ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
+   ![Connector appearing in the UI after cloudflared has run](/images/cloudflare-one/connections/connect-apps/connector.png)
 
 7. Select **Next**.
 
@@ -60,7 +60,7 @@ Follow these steps to connect a private network through your tunnel.
 
 After saving the tunnel, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
 
-![Tunnel appearing in the Tunnels table](/cloudflare-one/static/documentation/connections/connect-apps/tunnel-table.png)
+![Tunnel appearing in the Tunnels table](/images/cloudflare-one/connections/connect-apps/tunnel-table.png)
 
 {{<Aside type="note" header="Troubleshooting">}}
 

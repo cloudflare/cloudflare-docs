@@ -39,7 +39,7 @@ Para a segurança da conta, você deve verificar sua identidade e a propriedade 
 
 3\. Clique em **Entrar em contato com o suporte**. Role a tela para baixo até o cartão _Linha direta de suporte por telefone de emergência - Autenticação_.
 
-![](/support/static/contact_support_ent_phone_card.png)
+![](/images/support/contact_support_ent_phone_card.png)
 
 4\. Para se autenticar utilizando um token de uso único, clique em **Obter um token de uso único**. Será exibida uma janela pop-up com o código do token. O código é atualizado automaticamente a cada 30 segundos.
 

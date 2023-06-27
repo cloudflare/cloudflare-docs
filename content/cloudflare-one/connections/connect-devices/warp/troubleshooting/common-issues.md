@@ -14,7 +14,7 @@ If WARP is stuck in the `Disconnected` state or frequently changes between `Conn
 
 <div class="medium-img">
 
-![Example of WARP client UI when unable to turn on WARP](/cloudflare-one/static/documentation/connections/warp-stuck-on-disconnected.png)
+![Example of WARP client UI when unable to turn on WARP](/images/cloudflare-one/connections/warp-stuck-on-disconnected.png)
 
 </div>
 

@@ -33,11 +33,11 @@ Para ver las métricas de tu sitio web:
 
 Una vez que esté cargada, la aplicación Analytics muestra un conjunto de pestañas: **Tráfico**, **Seguridad**, **Rendimiento**, **DNS**, **Workers** y **Registros** (solo dominios Enterprise). Para conocer las distintas métricas disponibles, consulta _Revisar las métricas de tu sitio web_ (véase más abajo).
 
-![Interfaz de usuario de la aplicación Analytics en el panel de control de Cloudflare que muestra los datos de tráfico web](/support/static/hc-dash-analytics-dashboard_overview.png)
+![Interfaz de usuario de la aplicación Analytics en el panel de control de Cloudflare que muestra los datos de tráfico web](/images/support/hc-dash-analytics-dashboard_overview.png)
 
 Si eres cliente de los planes Pro, Business o Enterprise puedes ver los últimos análisis web en la pestaña Tráfico.
 
-![Captura de pantalla de la interfaz de usuario del panel de Cloudflare Analytics para clientes Pro, Business y Enterprise.](/support/static/hc-dash-analytics-web_traffic.png)
+![Captura de pantalla de la interfaz de usuario del panel de Cloudflare Analytics para clientes Pro, Business y Enterprise.](/images/support/hc-dash-analytics-web_traffic.png)
 
 ___
 

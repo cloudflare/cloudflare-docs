@@ -714,11 +714,11 @@ ___
 
 **Cause profonde** : ce problème peut être dû à un problème de configuration sur une Page Rule. Lors de la création d'une Page Rule qui utilise deux caractères génériques, comme une règle de _redirection d'URL_, il est possible de créer une règle qui mentionne le second caractère générique avec l'espace réservé $2. Voir l'exemple ci-dessous :
 
-![Exemple de configuration Page Rule avec deux caractères génériques. L'URL de redirection contient un espace réservé $2, qui sera remplacé par le contenu correspondant au second ](/support/static/page-rule-create.png)
+![Exemple de configuration Page Rule avec deux caractères génériques. L'URL de redirection contient un espace réservé $2, qui sera remplacé par le contenu correspondant au second ](/images/support/page-rule-create.png)
 
 Lors de la mise à jour de la même règle, vous pouvez supprimer un des caractères génériques dans le champ **If the URL matches** (Si l'URL correspond à) et enregistrer votre mise à jour. Voir l'exemple ci-dessous :
 
-![Configuration Page Rule incorrecte avec un caractère générique unique, mais qui utilise malgré tout l'espace réservé $2 dans l'URL de redirection. Cette configuration provoque ](/support/static/page-rule-update.png)
+![Configuration Page Rule incorrecte avec un caractère générique unique, mais qui utilise malgré tout l'espace réservé $2 dans l'URL de redirection. Cette configuration provoque ](/images/support/page-rule-update.png)
 
 Si vous procédez ainsi, l'espace réservé $2 renvoie à un caractère générique qui n'existe plus et, en conséquence, une erreur de type « _Error 500 (Internal server error)_ » survient quand une URL déclenche la Page Rule.
 
