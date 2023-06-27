@@ -136,6 +136,55 @@ async function getTodos(env) {
 export { getTodos }
 ```
 
+## Environment variables
+
+Environment variables, such as [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars), [secrets](/workers/platform/environment-variables/#compare-secrets-and-environment-variables), and [bindings](/workers/platform/bindings/), are configured with Wrangler. Environment variables are accessed differently in code written in ES modules format versus Service Worker format.
+
+Review the following example environment variable configuration in `wrangler.toml`:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+
+# Define top-level environment variables
+# under the `[vars]` block using
+# the `key = "value"` format
+[vars]
+API_ACCOUNT_ID = "<EXAMPLE-ACCOUNT-ID>"
+```
+
+### Environment variables in Service Worker format
+
+In Service Worker format, the `API_ACCOUNT_ID` is defined in the global scope of your Worker application. Your `API_ACCOUNT_ID` environment variable is available to use anywhere in your Worker application's code.
+
+```js
+---
+filename: worker.js
+---
+addEventListener("fetch", async (event) => {
+  console.log(API_ACCOUNT_ID) // Logs "<EXAMPLE-ACCOUNT-ID>"
+  return new Response("Hello, world!")
+})
+```
+
+### Environment variables in ES modules format
+
+In ES modules format, environment variables are only available inside the `env` parameter that is provided at the entrypoint to your Worker application.
+
+```js
+---
+filename: worker.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    console.log(env.API_ACCOUNT_ID) // Logs "<EXAMPLE-ACCOUNT-ID>"
+    return new Response("Hello, world!")
+  },
+};
+```
+
 ## Access `event` or `context` data
 
 Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/fetch-event/#parameters) for  more information.

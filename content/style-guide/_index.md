@@ -1,6 +1,6 @@
 ---
-title: Overview
-pcx_content_type: Content
+title: overview
+pcx_content_type: content
 weight: 1
 meta:
   title: Style Guide
