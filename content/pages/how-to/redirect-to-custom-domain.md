@@ -20,7 +20,7 @@ To set up a redirect to a custom domain:
 4. Go to **Account Home** > **Bulk Redirects**.
 5. Select **Create a new Bulk Redirects list** > **Create new list**.
 
-![Create a new Bulk redirects list](/pages/how-to/media/create_a_new_bulk_redirect_list.png)
+![Create a new Bulk redirects list](/images/pages/how-to//create_a_new_bulk_redirect_list.png)
 
 6. In the content type, select **Redirect**. 
 7. Add your application's `*.pages.dev` subdomain as your source URL.
@@ -31,7 +31,7 @@ To set up a redirect to a custom domain:
 10. Select **Add to list**.
 11. Go to **Bulk Redirects** > **Create Bulk Redirects** > select your list > **Save and Deploy**.
 
-![Create a new Bulk redirects](/pages/how-to/media/create_new_bulk_redirect.png)
+![Create a new Bulk redirects](/images/pages/how-to//create_new_bulk_redirect.png)
 
 To test that your redirect worked, go to your `*.pages.dev` domain and double-click the URL as if to copy it. If the URL is now set to your custom domain, then the rule has propagated.
 
