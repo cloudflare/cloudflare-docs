@@ -6,7 +6,7 @@ weight: 2
 
 # Run a traceroute test
 
-A traceroute test measures the network path of an IP packet from an end-user device to a server. You can use the [test results](/cloudflare-one/insights/dex/tests/view-results/#traceroute) to troubleshoot network issues. For example, increased latency for a subset of users may indicate a problem with a specific Internet service provider.
+A traceroute test measures the network path of an IP packet from an end-user device to a server. You can use the [test results](/cloudflare-one/insights/dex/tests/view-results/#traceroute) to troubleshoot network issues. For example, increased latency may indicate a problem with connectivity along the network path.
 
 ## Create a test
 
