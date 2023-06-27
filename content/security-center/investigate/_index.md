@@ -6,7 +6,7 @@ weight: 4
 
 # Investigate
 
-The Investigate feature allows you to view a domain’s category, the IP it belongs to, and whether the category has changed before. You can also see which records it points to, including the country of origin and passive DNS records. Using the API curl presents the same information. The API curls are given after performing a search.
+**Investigate** allows you to view a domain’s category, the IP it belongs to, and whether the category has changed before. You can also see which records it points to, including the country of origin and passive DNS records. After searching with Investigate, you will get an API curl to retrieve the same search results.
 
 You can learn more about the IP addresses in your logs by searching via the IP address to view its category and threat data. Enter any IP address, domain name, and hostname to see how it has been categorized from a threat perspective.
 
