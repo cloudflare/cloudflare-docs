@@ -32,7 +32,7 @@ To set up Yandex for Cloudflare Access:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    ![Yandex Platform interface with Web services checked and callback URI in open form field](/images/cloudflare-one/identity/yandex/yandex-3.png)
+    ![Yandex Platform interface with Web services checked and callback URI in open form field](/cloudflare-one/static/identity/yandex/yandex-3.png)
 
 1.  Click **Add**.
 
