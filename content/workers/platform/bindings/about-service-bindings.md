@@ -19,7 +19,7 @@ While the interface among Service bindings is HTTP, the networking is not. Unlik
 
 For more information, refer to the [Runtime API documentation for Service bindings](/workers/runtime-apis/service-bindings).
 
-![Service bindings are a zero-cost abstraction](/workers/platform/bindings/media/service-bindings-comparison.png)
+![Service bindings are a zero-cost abstraction](/images/workers/platform/bindings/service-bindings-comparison.png)
 
 ## Set a Service binding
 
@@ -75,7 +75,7 @@ To review Workers bound to your Worker in the Cloudflare dashboard:
 2. Select **Workers & Pages** and in **Overview**, select your **Worker**.
 3. Go to **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
 
-![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers & Pages > your Worker > Triggers](/workers/platform/bindings/media/service-bindings-triggers.png)
+![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers & Pages > your Worker > Triggers](/images/workers/platform/bindings/service-bindings-triggers.png)
 
 ## Compose an example Worker
 
@@ -92,7 +92,7 @@ To manage Service bindings:
 3. Select your Worker > **Settings**.
 4. In **Variables**, find **Service bindings** > **Edit variables**.
 
-![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](/workers/platform/bindings/media/service-bindings.png)
+![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](/images/workers/platform/bindings/service-bindings.png)
 
 Once added, the `gateway` Worker can access the Workers Service binding directly from the code, as in the example below. It utilizes the `fetch` API.
 
