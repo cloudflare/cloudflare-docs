@@ -13,6 +13,8 @@ To review the number and type of malicious detections made on your account:
 3. The **Overview** section will show you graphs with the total number of emails processed, as well as how many of those pertain to different threat categories - such as Malicious or Spam, among others. Refer to [Dispositions and attributes](/email-security/reference/dispositions-and-attributes/) for more information. Select **View Details**.
 4. You will open the **Detections** page. This page breaks down the information regarding the various types of threats detected. You have access to:
 
+{{<table-wrap>}}
+
 Field | Description
 --- | ---
 **Attachments** | - How many of the malicious emails received have an attachment. <br> - Of these, what are the top types of malicious files received (for example, PDF files).
@@ -23,3 +25,4 @@ Field | Description
 **Threat types** | - Top malicious threat types, and their percentage relatively to the total amount of threats received. 
 **Threat origins** | - A graph representing where in the world are your top threat origins.
 
+{{</table-wrap>}}
