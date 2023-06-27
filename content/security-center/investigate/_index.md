@@ -11,4 +11,3 @@ Investigate allows you to view a domain’s category, the IP it belongs to, and 
 You can learn more about the IP addresses in your logs by searching via the IP address to view its category and threat data. Enter any IP address, domain name, and hostname to see how it has been categorized from a threat perspective.
 
 Investigate also shows [Web Application Firewall](https://developers.cloudflare.com/waf/) analytics for your websites behind Cloudflare to help you discover what your vulnerabilities are, where attacks come from, and what to do about it.
-
