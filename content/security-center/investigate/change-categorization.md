@@ -28,7 +28,7 @@ There is no guarantee the category change will be approved.
 
 ## Change categorization in Investigate
 
-When you search for a domain, you can see an option to request to change categorization under the **Domain Overview**.
+When you search for a domain, you can request to change its categorization under the **Domain Overview**.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Security Center** > **Investigate**.
