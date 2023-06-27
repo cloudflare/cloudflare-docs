@@ -1,5 +1,5 @@
 ---
-pcx_content_type: Concept
+pcx_content_type: concept
 title: Colons
 ---
 
