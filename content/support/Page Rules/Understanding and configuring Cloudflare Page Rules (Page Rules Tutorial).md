@@ -9,7 +9,7 @@ title: Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
 You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
 
 {{<Aside type="warning">}}
-Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
+Paage Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
 {{</Aside>}}
 
 The default number of allowed page rules depends on the domain plan as shown below.
