@@ -1,6 +1,8 @@
 ---
 title: Statistics overview
 pcx_content_type: how-to
+meta:
+    description: Statistics overview allows you to have an at-a-glance overview of emails processed and number of threats detected.
 ---
 
 # Statistics overview

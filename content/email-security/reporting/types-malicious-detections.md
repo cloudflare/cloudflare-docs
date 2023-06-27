@@ -1,6 +1,8 @@
 ---
 title: Types of malicious detections
 pcx_content_type: how-to
+meta:
+    description: Types of malicious detections shows you information related to the number and types of malicious detections made on your account.
 ---
 
 # Types of malicious detections
