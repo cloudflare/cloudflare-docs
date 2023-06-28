@@ -20,7 +20,7 @@ This is specially useful if you already have mTLS implemented and client certifi
 
 1. Use the [Upload mTLS certificate endpoint](/api/operations/m-tls-certificate-management-upload-m-tls-certificate) to upload the CA root certificate.
 2. Take note of the Certificate ID (`id`) that is returned in the API response.
-3. Use the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations) to enable mTLS in each hostname that should use the CA for mTLS validation:
+3. Use the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations) to enable mTLS in each hostname that should use the CA for mTLS validation. Use the following parameters:
   
   * `hostnames`: The hostnames that will be using the indicated CA for client certificate validation.
 
@@ -34,11 +34,16 @@ This is specially useful if you already have mTLS implemented and client certifi
   
   {{<Aside type="warning">}}
     
-  If no `mtls_certificate_id` is provided, the hostnames will be associated to your active Cloudflare-managed CA.
+  If no `mtls_certificate_id` is provided, the hostnames will be associated to your active Cloudflare Managed CA.
     
   {{</Aside>}}
 
 4. Create a custom rule to enforce client certificate validation.
-You can do this [via the dashboard](/api-shield/security/mtls/configure/) or via API, using the [Create firewall rules endpoint](/api/operations/firewall-rules-create-firewall-rules)
+You can do this [via the dashboard](/api-shield/security/mtls/configure/) or via API, using the [Create firewall rules endpoint](/api/operations/firewall-rules-create-firewall-rules).
+
+```text
+  "rule": "(http.host in \"<HOSTNAME>\" and not cf.tls_client_auth.cert_verified)", 
+  "action": "block"
+```
 
 ## Remove custom CA
