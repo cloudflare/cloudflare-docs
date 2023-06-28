@@ -180,11 +180,11 @@ Cloudflare DNSアプリ内で_SPFレコード_と_DKIMレコード_を_TXTレコ
 
 6\. 「verify.squarespace.com」のCNAMEレコードが（以下のように）_DNS Only_とマークされていることを確認します。
 
-![cloudflare_with_squarespace.png](/support/static/cloudflare_with_squarespace.png)
+![cloudflare_with_squarespace.png](/images/support/cloudflare_with_squarespace.png)
 
 正しく設定されている場合、「Squarespace DNS設定（Squarespace DNS Settings）」ページに「設定に問題があります（Settings contain problems）」と表示されるようになります。 **これは、想定される動作です**。 
 
-![squarespace_dns_settings.png](/support/static/squarespace_dns_settings.png)トラフィックがCloudflareを通じて送信されるようになったので、Squarespaceとサイトの訪問者はCloudflareのIPアドレスを見るようになります。これにより、Squarespaceコンソールは、Squarespaceが割り当てたアドレスではなくCloudflare IPが返されたため、サイトの設定が間違っているとみなします。 Cloudflare DNSを適切に設定している限り（上記の手順1～6）、SquarespaceサイトはCloudflareを通じて動作するはずです。
+![squarespace_dns_settings.png](/images/support/squarespace_dns_settings.png)トラフィックがCloudflareを通じて送信されるようになったので、Squarespaceとサイトの訪問者はCloudflareのIPアドレスを見るようになります。これにより、Squarespaceコンソールは、Squarespaceが割り当てたアドレスではなくCloudflare IPが返されたため、サイトの設定が間違っているとみなします。 Cloudflare DNSを適切に設定している限り（上記の手順1～6）、SquarespaceサイトはCloudflareを通じて動作するはずです。
 
 _example.com_がカスタムドメインである場合は、以下のようなDNSレコードをCloudflareに追加します：
 

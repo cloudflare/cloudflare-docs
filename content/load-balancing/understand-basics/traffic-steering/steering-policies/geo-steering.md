@@ -8,7 +8,7 @@ meta:
 
 # Geo steering
 
-Geo Steering directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers. 
+**Geo steering** directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers. 
 
 This option is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
 
@@ -26,11 +26,11 @@ Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-
 
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
 
-1. Go to the **Traffic Steering** step.
-2. Click **Geo Steering**.
-3. For **Region**, select a region and click **Add Region**.
-4. Click **Edit**.
-5. Select a pool and click **Add Pool**.
+1. Go to the **Traffic steering** step.
+2. Select **Geo steering**.
+3. For **Region**, select a region > **Add Region**.
+4. Select **Edit**.
+5. Select a pool > **Add Pool**.
 6. If adding multiple pools, re-order them into your preferred failback order.
 7. (optional) Add more regions if needed.
 
@@ -71,11 +71,11 @@ Currently, China is not supported for Geo steering.{{</Aside>}}
 
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
 
-1. Follow the [create a load balancer procedure](/load-balancing/how-to/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic Steering** step.
-2. Click **Geo Steering**.
-3. For **Country**, select a country and click **Add Region**.
-4. Click **Edit**.
-5. Select a pool and click **Add Pool**.
+1. Follow the [create a load balancer procedure](/load-balancing/how-to/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic steering** step.
+2. Select **Geo steering**.
+3. For **Country**, select a country > **Add Region**.
+4. Select **Edit**.
+5. Select a pool > **Add Pool**.
 6. If adding multiple pools, re-order them into your preferred failback order.
 7. (optional) Add more countries if needed.
 

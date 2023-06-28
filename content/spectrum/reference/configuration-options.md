@@ -89,7 +89,7 @@ If IP Access rules are enabled for a Spectrum application, Cloudflare will respe
 
 ## Argo Smart Routing
 
-Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Note that Argo Smart Routing is only available for TCP applications.
+Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Argo Smart Routing is available for TCP and UDP (beta) applications.
 
 ## Edge TLS Termination
 
@@ -102,6 +102,14 @@ Spectrum offers three modes of TLS termination: 'Flexible', 'Full', and 'Full (S
 'Full' specifies that traffic from Cloudflare to the origin will also be encrypted but without certificate validation. When set to 'Full (Strict)', traffic from Cloudflare to the origin will also be encrypted with strict validation of the origin certificate.
 
 TLS versions supported by Spectrum include TLS 1.1, TLS 1.2, and TLS 1.3.
+
+You can manage this through the Spectrum app at the Cloudflare dashboard, or using the [Spectrum API endpoint](/api/operations/spectrum-applications-update-spectrum-application-configuration-using-a-name-for-the-origin).
+
+{{<Aside type="note" header="Note">}}
+
+If you have the TLS termination setting configured to **off**, this means that Spectrum will then proxy connections to the origin without decrypting. The certificate that is presented in this case will be the certificate installed at your origin server, instead of the Edge Certificate from Cloudflare.
+
+{{</Aside>}}
 
 ## Origin TLS Termination
 

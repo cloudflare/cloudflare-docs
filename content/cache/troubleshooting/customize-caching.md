@@ -57,7 +57,7 @@ Below, we provide links to articles with specific instructions on implementing t
 
 2. Add the following three settings:
 
--   _Cache Everything_ \- to act as catch all for static, anonymous content
+-   _Cache Level: Cache Everything_ \- to act as catch all for static, anonymous content
 -   _Bypass Cache on Cookie_ (available to Business and Enterprise domains only) - to bypass caching everything if the request has a matching cookie
 -   _Edge Cache TTL_ \- to specify how long Cloudflare should keep the cached resource in our edge network before asking the origin for it again
 

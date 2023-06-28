@@ -15,8 +15,12 @@ Logpush v2 does not store logs; we attempt to send logs as quickly as they arriv
 ## Availability
 
 {{<feature-table id="analytics.logpush">}}
-  
-In addition, [Workers Trace Events Logpush](/workers/platform/logpush/) is available on the [Workers Paid](/workers/platform/pricing/) plan.
+
+{{<Aside type="note">}}
+
+Users without an Enterprise plan can still access [Workers Trace Events Logpush](/workers/platform/logpush/) by subscribing to the [Workers Paid](/workers/platform/pricing/) plan.
+
+{{</Aside>}}
 
 ## Next steps
 

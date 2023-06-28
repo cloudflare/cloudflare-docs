@@ -4,8 +4,8 @@ title: Cloudflare Scrape Shield
 weight: 3
 ---
  
-# Welcome to the Cloudflare Scrape Shield section
+# Cloudflare Scrape Shield
  
-Below you will find links to the relevant sections for Cloudflare Scrape Shield support-focused material.
+**Scrape Shield** is a collection of settings meant to protect your site's content.
  
 {{<directory-listing>}}

@@ -21,15 +21,15 @@ Make sure you sign up for Azure and create a new subscription.
 
 1. First, create your first resource group.
 
-   ![Azure group](/cloudflare-one/static/documentation/connections/connect-apps/azure-1.png)
+   ![Azure group](/images/cloudflare-one/connections/connect-apps/azure-1.png)
 
 1. In addition, create your first keypair as well. You will be using the keypair to SSH into your Virtual Machine.
 
-   ![Azure keypair](/cloudflare-one/static/documentation/connections/connect-apps/azure-2.png)
+   ![Azure keypair](/images/cloudflare-one/connections/connect-apps/azure-2.png)
 
 1. Next, define your inbound and outbound ports to the VM. If these ports are not configured properly, the solution will not function as intended. For testing purposes, we will leave access open.
 
-   ![Azure keypair](/cloudflare-one/static/documentation/connections/connect-apps/azure-3.png)
+   ![Azure keypair](/images/cloudflare-one/connections/connect-apps/azure-3.png)
 
 Create two Ubuntu 20.04 LTS VMs, and make sure you record their internal IP addresses. Azure by default uses the `10.0.0.0/8` subnet.
 

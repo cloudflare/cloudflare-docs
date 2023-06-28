@@ -16,7 +16,7 @@ Network Error Logging can be used to help triage end-user connectivity issues th
 
 Connectivity loss can also result from end users changing IP addresses. For example, an end user may connect to a site from a home Wi-Fi and then leave their house.  The change from the home Wi-Fi network to a mobile network changes the end user’s IP address, interrupts any current connections, and could be reported as TCP.abort or TCP.timed\_out failures.  By comparing the last known good client IP with the client IP that reported the failure, Cloudflare determines whether the failures were due to a roaming end user.  The diagram below shows how NEL captures connectivity losses resulting from end user IP changes:
 
-![Diagram showing how Network Error Logging captures connectivity losses resulting from end user IP changes. For more details, continue reading.](/support/static/pasted_image_0__1_.png)
+![Diagram showing how Network Error Logging captures connectivity losses resulting from end user IP changes. For more details, continue reading.](/images/support/pasted_image_0__1_.png)
 
 **NEL process**:
 

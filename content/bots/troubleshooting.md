@@ -124,7 +124,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 -   Screenshots of strange activity from the firewall, such as a huge spike in challenged traffic on the graph
 -   Problematic URIs or paths
 -   Rough description of how your domain is configured.
-    -   Is one zone SSL for SaaS while the others are not?
+    -   Is one zone Cloudflare for SaaS while the others are not?
     -   Is most API traffic sent to a particular URI?
     -   How much mobile traffic do you expect?
 

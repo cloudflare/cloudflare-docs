@@ -25,7 +25,7 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 |          | Free plan                  | Paid Plan - Bundled                | Paid plan - Unbound                               |
 | -------- | -------------------------- | ---------------------------------- | ------------------------------------------------- |
 | Requests<sup>1</sup> | 100,000 / day              | 10 million / month, +$0.50/million | 1 million / month, + $0.15/million                |
-| Duration | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
+| Duration | 10 ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
 
 {{</table-wrap>}}
 

@@ -30,7 +30,7 @@ ___
 
 次の図は、Cloudflareを利用する場合と利用しない場合のIPアドレス処理の違いを示しています。
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 ___
 

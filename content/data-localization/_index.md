@@ -12,8 +12,6 @@ The Data Localization Suite (DLS) is a set of products that helps customers who 
 
 DLS is currently available for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information about purchasing DLS.
 
-{{<render file="gateway/_disable-udp.md" productFolder="cloudflare-one">}}
-
 The Data Localization Suite consists of the following products:
 
 - [Key Management](/data-localization/key-management/)

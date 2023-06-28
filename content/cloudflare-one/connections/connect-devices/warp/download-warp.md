@@ -48,9 +48,7 @@ Alternatively, download the client from one of the following links after checkin
 | **Memory**           | 35 MB |
 | **Network interface**| <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>|
 
-**[Package Download](https://pkg.cloudflareclient.com/packages/cloudflare-warp)**
-
-**[APT/YUM Repository Setup](https://pkg.cloudflareclient.com/install)**
+**[Package repository](https://pkg.cloudflareclient.com/)**
 
 ## iOS
 

@@ -38,7 +38,7 @@ Also, the maximum validity period for certificates will be decreased from 1 year
 
 ### Before hard deadline
 
-If your system integrates with the SSL for SaaS API to [create custom hostnames](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
+If your system integrates with the Cloudflare for SaaS API to [create custom hostnames](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
 - The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
@@ -117,4 +117,4 @@ If the custom hostname is not proxying traffic through Cloudflare, then the cust
 
 As the SaaS provider, you will be responsible for sharing these DCV tokens with your customers. Let’s Encrypt DCV tokens are valid for 7 days and Google Trust Services tokens are valid for 14 days. We recommend that you make this clear to your customers, so that they add the tokens in a timely manner. If your customers take longer than the token validity period to add the record then you will need to fetch updated tokens and share those in order for the certificate to validate and issue.
 
-Once your customer has added these tokens, the certificate status will change to **Active**. Cloudflare will periodically check if the DCV tokens have been placed according to the [certificate validation schedule](/ssl/reference/validation-backoff-schedule/). Once your customer has added the records, you can make a no-change call to the custom hostnames API to restart the validation schedule for a specific hostname.
+Once your customer has added these tokens, the certificate status will change to **Active**. Cloudflare will periodically check if the DCV tokens have been placed according to the [certificate validation schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/). Once your customer has added the records, you can make a no-change call to the custom hostnames API to restart the validation schedule for a specific hostname.

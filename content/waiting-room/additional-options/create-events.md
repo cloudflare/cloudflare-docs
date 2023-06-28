@@ -27,7 +27,7 @@ Any properties set on the event will override the default property on the waitin
     {{<Aside type="note">}}If you choose to override the values of Total active users, you must also override the number of New users per minute, and vice versa.{{</Aside>}}
 
 7.  Select **Next**.
-8.  In the customization section, you can select Always inherit your waiting room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. M​ake sure to preview the result before continuing.
+8.  In the customization section, you can select Always inherit your waiting room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. Make sure to preview the result before continuing.
 9.  Select **Next** and review your Event details and settings.
 10.  Select **Save**.
 
@@ -73,7 +73,7 @@ Set up a "lottery" system to reward all users who enter into the queue prior to 
 
 Users who reach your application **during the prequeue period** are [randomly assigned](/waiting-room/reference/queueing-methods/#random) a place in line when the event starts. If the event uses [FIFO ordering](/waiting-room/reference/queueing-methods/#first-in-first-out-fifo), users who reach your application **after the prequeue period** are assigned places after users from the prequeue.
 
-To set up a "lottery", include the [following parameters](#properties) in your API request:
+To set up a "lottery", include the [following parameters](#parameters) in your API request:
 
 - `prequeue_start_time`
 - `shuffle_at_event_start`

@@ -2,6 +2,8 @@
 title: Phish reports
 pcx_content_type: how-to
 weight: 2
+meta:
+    description: Access Phish reports through the dashboard or an email digest.
 ---
 
 # Phish reports

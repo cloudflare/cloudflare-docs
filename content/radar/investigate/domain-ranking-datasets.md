@@ -45,7 +45,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&lim
 }
 ```
 
-For more information refer to [Get Domains Rank top](/api/operations/radar_get_RankingTop).
+For more information refer to [Get Domains Rank top](/api/operations/radar_get__a).
 
 
 #### Example: Download top `x` ranking bucket file

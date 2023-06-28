@@ -15,7 +15,7 @@ layout: single
 
 In this tutorial, you will use [Cloudflare Workers](/workers/) and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
 
-![GIF of a complete Airtable and serverless function integration](example.gif)
+![GIF of a complete Airtable and serverless function integration](/images/workers/tutorials/airtable/example.gif)
 
 ## 1. Create a form
 
@@ -280,7 +280,7 @@ Your Worker project will deploy to a unique URL — for example, `https://worker
 
 After you have deployed your new form (refer to the [HTML forms](/pages/tutorials/forms) tutorial if you need help creating a form), you should be able to submit a new form submission and see the value show up immediately in Airtable:
 
-![Example GIF of complete Airtable and serverless function integration](example.gif)
+![Example GIF of complete Airtable and serverless function integration](/images/workers/tutorials/airtable/example.gif)
 
 ## Conclusion
 
