@@ -6,15 +6,13 @@ weight: 16
 
 # GraphQL Analytics
 
-Durable Object metrics are powered by GraphQL, like other Workers metrics. 
+Durable Object metrics are powered by GraphQL.
 
 The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. 
 
-You can use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspection/) to get information on the fields exposed by each.
+You can use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspection/) to get information on the fields exposed by each data sets.
 
 ## Example of GraphQL query for Durable Objects
-
-Refer to [Querying Workers Metrics](/analytics/graphql-api/tutorials/querying-workers-metrics/) tutorial for authentication and to learn more about querying Workers data sets.
 
 ```js
   viewer {
@@ -44,4 +42,6 @@ Refer to [Querying Workers Metrics](/analytics/graphql-api/tutorials/querying-wo
     }
   }
 ```
+
+Refer to [Querying Workers Metrics](/analytics/graphql-api/tutorials/querying-workers-metrics/) tutorial for authentication and to learn more about querying Workers data sets.
 

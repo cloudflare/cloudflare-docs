@@ -22,7 +22,7 @@ E-order is a concept deriving from the [E distributed programming language](<htt
 
 {{</Aside>}}
 
-## Obtain a Durable Object
+## 1. Obtain a Durable Object
 
 ```js
 let durableObjectStub = OBJECT_NAMESPACE.get(id);
@@ -43,7 +43,7 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 
 {{</definitions>}}
 
-## Provide a location hint
+## 2. Provide a location hint
 
 Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. 
 
@@ -69,7 +69,7 @@ The following locations are supported. Hints are a best effort and not a guarant
 
 <sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
 
-## Restrict Durable Objects to a jurisdiction
+## 3. Restrict Durable Objects to a jurisdiction
 
 Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). 
 
@@ -135,7 +135,7 @@ Object IDs will be logged outside of the specified jurisdiction for billing and 
 
 {{</Aside>}}
 
-## Send HTTP requests
+## 4. Send HTTP requests
 
 ```js
 let response = await durableObjectStub.fetch(request);
@@ -150,7 +150,7 @@ If an uncaught exception is thrown by the Durable Object's `fetch()` handler, th
 
 If the caller's `fetch()` failed as a result of being unable to reach the Durable Object, the exception thrown to the caller's `fetch()` will not have the `.remote` property, indicating the exception was not generated remotely.
 
-## List Durable Objects
+## 5. List Durable Objects
 
 The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
 

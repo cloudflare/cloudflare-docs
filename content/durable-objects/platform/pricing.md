@@ -62,7 +62,7 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 - 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
 - (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
 
-## Transactional storage API billing
+## Transactional Storage API billing
 
 The Durable Objects [Transactional Storage API](/durable-objects/api/transactional-storage-api) is only accessible from within Durable Objects. 
 
