@@ -26,9 +26,9 @@ Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric a
 
 Volumetric Abuse Detection analyzes your API’s individual session traffic statistics to recommend per-endpoint, per-session rate limits.
 
-This feature currently requires a [session identifier](/api-shield/get-started/#set-up-session-identifiers), like an authorization token available as a request header or cookie.
+Volumetric Abuse Detection currently requires a [session identifier](/api-shield/get-started/#set-up-session-identifiers), like an authorization token available as a request header or cookie.
 
-After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in **Endpoint Management** in the Cloudflare dashboard. Recommendations will continue to update if your traffic pattern changes
+After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in **Security** > **API Shield** > **Endpoint Management** on the Cloudflare dashboard. Recommendations will continue to update if your traffic pattern changes
 
 ### Observe rate limits
 
@@ -47,6 +47,8 @@ Implementing low confidence rate limits can still be helpful to prevent API abus
 {{</Aside>}}
 
 ### Create rate limits
+
+To create rate limits:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **API Shield**.
