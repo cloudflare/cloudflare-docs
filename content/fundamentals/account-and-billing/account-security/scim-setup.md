@@ -8,7 +8,7 @@ weight: 4
 
 By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis.
 
-We currently provide SCIM support only for **Azure Active Directory** and **Okta** in Self-Hosted Access applications.
+Currently, we only provide SCIM support for Azure Active Directory and Okta in Self-Hosted Access applications.
 
 For more information about the product, please refer to the blog post: [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/)
 
