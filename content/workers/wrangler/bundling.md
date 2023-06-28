@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Bundling
-weight: 5
 ---
 
 # Bundling

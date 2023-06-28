@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Configuration
-weight: 3
 ---
 
 # Configure `wrangler.toml`
