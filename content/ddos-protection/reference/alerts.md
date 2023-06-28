@@ -98,7 +98,7 @@ To investigate a possibly ongoing attack, select **View Dashboard**. To go to th
 
 ## Final remarks
 
-* Currently, if you are a Spectrum non-BYOIP customer, layer 3/4 DDoS attack alerts will show a Cloudflare IP prefix as the attacked target.
+* Spectrum and Magic Transit customers using [assigned Cloudflare IP addresses](/magic-transit/cloudflare-ips/) will receive layer 3/4 DDoS attack alerts where the attacked target is the Cloudflare IP or prefix. If you have [brought your own IP (BYOIP)](/byoip/) to Cloudflare Spectrum, Magic Transit, or Cloudflare CDN, you will see your own IP addresses or prefixes as the attacked target.
 
 * DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS managed rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system.
 
