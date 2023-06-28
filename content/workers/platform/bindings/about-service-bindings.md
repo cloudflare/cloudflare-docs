@@ -61,7 +61,7 @@ In the example above, the Service bindings for the `authentication` and `logout`
 
 ### Local development
 
-Local development is supported for Service bindings. For each Worker, open a terminal and use [`wrangler dev --local`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+Local development is supported for Service bindings. For each Worker, open a terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
 
 ### Use Service bindings
 
