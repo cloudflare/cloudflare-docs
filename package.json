@@ -15,9 +15,9 @@
     "crawl": "tsm bin/crawl.ts",
     "build:hugo": "tsm bin/transform-mermaid.ts && hugo",
     "build:vite": "vite build",
-    "build:post": "tsm bin/transform-mermaid.ts && npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
+    "build:post": "npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
     "build": "npm run build:hugo && npm run build:post",
-    "build:local": "./hugo && npm run build:post"
+    "build:local": "tsm bin/transform-mermaid.ts && ./hugo && npm run build:post"
   },
   "dependencies": {
     "@mermaid-js/mermaid-cli": "^10.2.2",
