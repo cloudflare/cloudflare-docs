@@ -9,8 +9,6 @@ weight: 4
 
 The Outlook integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
 
-This integration covers Microsoft 365 products, including OneDrive and SharePoint.
-
 ## Integration prerequisites
 
 - A Microsoft 365 account with an active Microsoft Business Basic, Microsoft Business Standard, Microsoft 365 E3, Microsoft 365 E5, or Microsoft 365 F3 subscription

@@ -7,7 +7,7 @@ weight: 1
 
 # Google Drive
 
-The Google Workspace integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
+The Google Drive integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
 
 ## Integration prerequisites
 
