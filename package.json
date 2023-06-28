@@ -13,13 +13,14 @@
     "dev": "concurrently --kill-others \"npm run dev:hugo\" \"npm run dev:vite\"",
     "lint": "tsm bin/format.ts --check",
     "crawl": "tsm bin/crawl.ts",
-    "build:hugo": "hugo",
+    "build:hugo": "bin/transform-mermaid.ts && hugo",
     "build:vite": "vite build",
     "build:post": "npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
     "build": "npm run build:hugo && npm run build:post",
     "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
+    "@mermaid-js/mermaid-cli": "^10.2.2",
     "fromnow": "3.0.1",
     "mermaid": "9.1.7",
     "node-html-parser": "^6.1.4",
