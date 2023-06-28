@@ -142,7 +142,7 @@ Before you continue, review the keys that you should have from Airtable:
 
 1.  **Airtable Table Name**: The name for your table, like Form Submissions.
 2.  **Airtable Base ID**: The alphanumeric base ID found at the top of your base's API page.
-3.  **Airtable Access Token**: A Personal Access Token created by the user to access information about your new Airtable base
+3.  **Airtable Access Token**: A Personal Access Token created by the user to access information about your new Airtable base.
 
 ## 4. Submit data to Airtable
 
