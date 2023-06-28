@@ -21,25 +21,31 @@ Cache stores copies of frequently accessed content (such as images, videos, or w
 
 ## Features
 
-{{<feature header="Cache rules" href="/cache/how-to/cache-rules/">}}
+{{<feature header="Cache Rules" href="/cache/how-to/cache-rules/">}}
 
 Configure Cache Rules to optimize your website by specifying which resources should be cached and for how long.
 
 {{</feature>}}
 
-{{<feature header="Tiered cache" href="/cache/how-to/tiered-cache/">}}
+{{<feature header="Default Cache Behavior" href="/cache/concepts/default-cache-behavior/">}}
+
+Learn about default cache behavior, default cached file extensions and cache responses.
+
+{{</feature>}}
+
+{{<feature header="Tiered Cache" href="/cache/how-to/tiered-cache/">}}
 
 Enable Tiered Cache to optimize content delivery by caching frequently accessed content in multiple locations for faster delivery and reduced origin traffic.
 
 {{</feature>}}
 
-{{<feature header="Cache reserve" href="/cache/advanced-configuration/cache-reserve/">}}
+{{<feature header="Cache Reserve" href="/cache/advanced-configuration/cache-reserve/">}}
 
 Use Cloudflare's persistent storage to increase cache times.
 
 {{</feature>}}
 
-{{<feature header="Purge cache" href="/cache/how-to/purge-cache/">}}
+{{<feature header="Purge Cache" href="/cache/how-to/purge-cache/">}}
 
 Clear cached files to force Cloudflare to fetch a fresh version of those files from your web server. You can purge files selectively or all at once.
 
@@ -51,6 +57,10 @@ Clear cached files to force Cloudflare to fetch a fresh version of those files f
 
 {{<related header="Load Balancing" href="/load-balancing/" product="load-balancing">}}
 Cloudflare Load Balancing distributes traffic across your servers, reducing server strain and latency and improving the end users experience.
+{{</related>}}
+
+{{<related header="Images" href="/images/" product="images">}}
+A suite of products tailored to your image-processing needs.
 {{</related>}}
 
 {{<related header="Workers" href="/workers/" product="workers">}}
