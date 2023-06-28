@@ -23,13 +23,15 @@ A serverless approach to storage and state.
 
 Durable Objects are Cloudflare's storage and coordination solution. Durable Objects provide you with scalable compute and permanent, consistent storage. With Durable Objects, you can coordinate requests without accessing storage. 
 
-Durable Objects come with global uniqueness and transactional storage API that simplifies data access and grants low-latency coordination. You can use Durable Objects to facilitate real-time chat, collaborative editing, video conferencing, game sessions and more.
+Durable Objects come with WebSockets API to help you keep a long-term connection, and Transactional Storage API to simplify data access. 
+
+You can use Durable Objects to facilitate real-time chat, collaborative editing, video conferencing, game sessions and more.
 
 ---
 
 ## Features
 
-{{<feature header="Transactional storage API" href="/durable-objects/api/transactional-storage-api/">}}
+{{<feature header="Transactional Storage API" href="/durable-objects/api/transactional-storage-api/">}}
 
 Learn how Durable Objects provide consistent key-value storage.
 

@@ -86,6 +86,4 @@ export class Counter {
 }
 ```
 
-## Related resources
 
-- [Durable Objects runtime API](/workers/runtime-apis/durable-objects/)

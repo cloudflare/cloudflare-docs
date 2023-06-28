@@ -64,9 +64,9 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
 ## Transactional storage API billing
 
-The Durable Objects [transactional storage API](/durable-objects/api/transactional-storage-api) is only accessible from within Durable Objects. 
+The Durable Objects [Transactional Storage API](/durable-objects/api/transactional-storage-api) is only accessible from within Durable Objects. 
 
-Durable Objects do not have to use the transactional storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
+Durable Objects do not have to use the Transactional Storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
 {{<table-wrap>}}
 

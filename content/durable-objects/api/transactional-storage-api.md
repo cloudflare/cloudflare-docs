@@ -4,11 +4,11 @@ pcx_content_type: concept
 weight: 16
 ---
 
-# Transactional storage API
+# Transactional Storage API
 
-The transactional storage API allows you to achieve consistent key-value storage. 
+The Transactional Storage API allows you to achieve consistent key-value storage. 
 
-Durable Objects gain access to a persistent [transactional storage API](/durable-objects/api/transactional-storage-api/) via the first parameter passed to the Durable Object constructor. 
+Durable Objects gain access to a persistent [Transactional Storage API](/durable-objects/api/transactional-storage-api/) via the first parameter passed to the Durable Object constructor. 
 
 While access to a Durable Object instance is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
 
@@ -30,7 +30,7 @@ export class DurableObjectExample {
 
 ## Methods
 
-The transactional storage API comes with several methods.
+The Transactional Storage API comes with several methods.
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
 
@@ -205,5 +205,5 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### Related resources
 
-1. [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+- [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
 

@@ -28,9 +28,11 @@ You can enable Durable Objects for your account by purchasing Workers paid plan.
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. 
 
+{{<Aside type="note">}}
 If you don't use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) that translates your class definition to a JavaScript class.
+{{</Aside>}}
 
-The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
+Your class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
 
 Note this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
@@ -39,9 +41,6 @@ export class DurableObjectExample {
   constructor(state, env) {}
 }
 ```
-
-
-
 Workers communicate with a Durable Object via the [Fetch API](/workers/runtime-apis/fetch/). Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
 
 ```js
@@ -73,7 +72,9 @@ bindings = [
 ]
 ```
 
-The `[durable_objects]` section has one subsection called `bindings`, an array of tables. Each table contains the following fields:
+The `[durable_objects]` section has one subsection called `bindings`, an array of tables. 
+
+Each table contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
@@ -266,5 +267,6 @@ If you copy the `DurableObjectExample` and fetch handler code from above into a 
 $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.workers.dev/ --data "important data!"
 ***.***.***.*** stored important data!
 ```
+### Related resources
 
-[Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.
+- [Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.
