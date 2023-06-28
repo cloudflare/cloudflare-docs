@@ -9,6 +9,10 @@ meta:
 
 # Cache
 
+{{<description>}}
+Cache content across Cloudflare's global server network
+{{</description>}}
+
 {{<plan type="all">}}
 
 Cache stores copies of frequently accessed content (such as images, videos, or webpages) in geographically distributed data centers that are located closer to end users than origin servers, reducing server load and improving website performance.
