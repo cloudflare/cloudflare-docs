@@ -16,7 +16,7 @@ To create a token:
 2. Select the user icon on the top right of your dashboard > **My Profile**.
 3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**. 
 
-![API Token Templates](/workers/wrangler/static/templates.png)
+![API Token Templates](/images/workers/wrangler/templates.png)
 
 4. Select **Use template** next to **Edit Cloudflare Workers**. All templates are prefilled with a token name and permissions. You also need to modify the account and zone resources you want assigned to the token.
 5. After editing your token, select **Continue to summary** and review the permissions before selecting create token.

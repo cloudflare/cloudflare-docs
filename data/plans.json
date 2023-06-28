@@ -1056,6 +1056,27 @@
         }
       }
     },
+    "compression_rules": {
+      "title": "Compression rules",
+      "link": "/rules/compression-rules/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "num_rules": {
+          "title": "Number of rules",
+          "free": 0,
+          "pro": 0,
+          "biz": 0,
+          "ent": 10
+        }
+      }
+    },
     "origin_rules": {
       "title": "Origin Rules",
       "link": "/rules/origin-rules/",

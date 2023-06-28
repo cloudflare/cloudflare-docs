@@ -43,11 +43,11 @@ export async function onRequest(context) {
 
 After you deploy the code above, run `wrangler pages deployment tail` in your terminal. Then access the route at which your Function lives. Your terminal will display:
 
-![Run `wrangler pages deployment tail`](/pages/platform/functions/media/wrangler-custom-logs.png)
+![Run `wrangler pages deployment tail`](/images/pages/platform/functions/wrangler-custom-logs.png)
 
 Your dashboard will display:
 
-![Follow the above steps to access custom logs in the dashboard](/pages/platform/functions/media/dash-custom-logs.png)
+![Follow the above steps to access custom logs in the dashboard](/images/pages/platform/functions/dash-custom-logs.png)
 
 ## View logs with Wrangler
 

@@ -48,7 +48,7 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 
 7. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 
-   ![DNS resolver setup instructions in Zero Trust](/cloudflare-one/static/documentation/policies/location-setup-instructions.png)
+   ![DNS resolver setup instructions in Zero Trust](/images/cloudflare-one/policies/location-setup-instructions.png)
 
 8. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
 

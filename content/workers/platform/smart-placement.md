@@ -16,11 +16,11 @@ The following example demonstrates how moving your Worker close to your back-end
 
 You have a user in Sydney, Australia who is accessing an application running on Workers. This application makes multiple round trips to a database located in Frankfurt, Germany in order to serve the user’s request. 
 
-![A user located in Sydney, AU connecting to a Worker in the same region which then makes multiple round trips to a database located in Frankfurt, DE. ](../media/workers-smart-placement-disabled.png)
+![A user located in Sydney, AU connecting to a Worker in the same region which then makes multiple round trips to a database located in Frankfurt, DE. ](/images/workers/platform/workers-smart-placement-disabled.png)
 
 The issue is the time that it takes the Worker to perform multiple round trips to the database. Instead of the request being processed close to the user, the Cloudflare network, with Smart Placement enabled, would process the request in a data center closest to the database. 
 
-![A user located in Sydney, AU connecting to a Worker in Frankfurt, DE which then makes multiple round trips to a database also located in Frankfurt, DE. ](../media/workers-smart-placement-enabled.png)
+![A user located in Sydney, AU connecting to a Worker in Frankfurt, DE which then makes multiple round trips to a database also located in Frankfurt, DE. ](/images/workers/platform/workers-smart-placement-enabled.png)
 
 ## Understand how Smart Placement (beta) works
 
@@ -118,7 +118,7 @@ We may remove the `cf-placement` header before Smart Placement enters general av
 
 If you are building full-stack applications on Workers, we recommend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/runtime-apis/service-bindings/) to connect your front-end logic and back-end logic Workers. 
 
-![Smart Placement and Service Bindings](../media/smart-placement-service-bindings.png)
+![Smart Placement and Service Bindings](/images/workers/platform/smart-placement-service-bindings.png)
 
 Enabling Smart Placement on your back-end Worker will invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintatins fast, reactive front-ends while also improving latency when the back-end Worker is called.  
 

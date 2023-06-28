@@ -9,8 +9,7 @@ title: Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
 You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
 
 {{<Aside type="warning">}}
-Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records)
-DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
+Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
 {{</Aside>}}
 
 The default number of allowed page rules depends on the domain plan as shown below.
@@ -29,8 +28,7 @@ It is important to understand two basic Page Rules behaviors:
 -   Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
 
 {{<Aside type="tip">}}
-Cloudflare recommends ordering your rules from most specific to least
-specific.
+Cloudflare recommends ordering your rules from most specific to least specific.
 {{</Aside>}}
 
 A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
@@ -114,7 +112,7 @@ _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/f
 
 -   To match both `http` and `https`, just write `example.com`. It is not necessary to write `*example.com`.
 -   To match every page on a domain, write `example.com/*`. Just writing _example.com_ won’t work.
--   To match every page on a domain and it's subdomains, write `*_example.com/*`. Just writing _example.com_ won’t work.
+-   To match every page on a domain and it's subdomains, write `*example.com/*`. Just writing _example.com_ won’t work.
 -   A wildcard (\*) in a Page Rule URL will match even if no characters are present, and may include any part of the URL, including the query string.
 
 ### Referencing wildcard matches

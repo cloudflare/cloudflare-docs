@@ -12,8 +12,6 @@ This guide will instruct you on configuring a binding for your Pages Function. Y
 
 {{<Aside type="note">}}
 Local development uses local storage. It cannot access data stored on Cloudflare’s servers.
-
-By default, data in local development is not persisted. This means if you write a value into KV, for example, the next time you start local dev, it will no longer exist. Enable persistence with the `--persist` flag.
 {{</Aside>}}
 
 ## KV namespaces

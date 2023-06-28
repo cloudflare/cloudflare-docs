@@ -25,7 +25,7 @@ In this tutorial you learn how to store and retrieve data in your Cloudflare Wor
 
 Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
 
-![Fauna architecture connecting to Cloudflare's network to create super fast applications](./media/fauna-cf-workers-diagram.jpg)
+![Fauna architecture connecting to Cloudflare's network to create super fast applications](/images/workers/tutorials/fauna/fauna-cf-workers-diagram.jpg)
 
 Fauna is a document-based database with a flexible schema. This allows you to define the structure of your data – whatever it may be – and store documents that adhere to that structure. In this tutorial, you will build a product inventory, where each `product` document must contain the following properties:
 
@@ -57,13 +57,13 @@ In the Fauna dashboard:
 3.  Select the **Classic** [Region Group][fauna-region-groups].
 4.  Select **Create**.
 
-![Create your database in Fauna by setting a name and region group](./media/create-database.png)
+![Create your database in Fauna by setting a name and region group](/images/workers/tutorials/fauna/create-database.png)
 
 ### Creating the products catalog
 
 Select **New Collection** to create the **Products** collection that stores your inventory documents.
 
-![Create your Products collection by following the directions above](./media/create-collection.png)
+![Create your Products collection by following the directions above](/images/workers/tutorials/fauna/create-collection.png)
 
 ### Creating a server key
 
@@ -71,7 +71,7 @@ You must create a key to connect to the database from your Worker.
 
 Go to the **Security** tab in the Fauna dashboard and create a new key with the **Server** role:
 
-![Create a new key in the Security tab of the Fauna dashboard](./media/new-server-key.png)
+![Create a new key in the Security tab of the Fauna dashboard](/images/workers/tutorials/fauna/new-server-key.png)
 
 The Fauna dashboard displays the key's secret. Copy and save this server key to use in a later step.
 
@@ -874,11 +874,11 @@ export function getFaunaError(error) {
 
 To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage Service** > **Delete**:
 
-![Delete your Worker by following the steps above](./media/delete-worker.png)
+![Delete your Worker by following the steps above](/images/workers/tutorials/fauna/delete-worker.png)
 
 Finally, delete your Fauna database from its settings in the Fauna dashboard:
 
-![Delete your Fauna database in the Fauna dashboard](./media/delete-database.png)
+![Delete your Fauna database in the Fauna dashboard](/images/workers/tutorials/fauna/delete-database.png)
 
 ## Related resources
 

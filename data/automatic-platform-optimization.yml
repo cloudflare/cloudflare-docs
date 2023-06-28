@@ -13,7 +13,6 @@ meta:
     site from our edge network, ensuring customers see improved performance when
     visiting your site.
   author: '@cloudflare'
-  
 
 externals:
   - title: Cloudflare homepage

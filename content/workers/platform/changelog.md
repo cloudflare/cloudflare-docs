@@ -8,6 +8,11 @@ rss: file
 
 # Changelog
 
+## 2023-06-22
+
+- Added the [`strict_crypto_checks`](/workers/platform/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
+- Fixes regression in the [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) where `connect("google.com:443")` would fail with a `TypeError`.
+
 ## 2023-06-19
 
 - The [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) now reports clearer errors when a connection cannot be established.
@@ -17,8 +22,8 @@ rss: file
 
 - `AbortSignal.any()` is now available.
 - Updated V8 to 11.4.
-- The `URLSearchParams` class' `delete()` and `has()` methods now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change so is gated behind the new `urlsearchparams_delete_has_value_arg` and `url_standard` compatibility flags.
-- Added compatibility flag [`strict_compression_checks`](/workers/platform/compatibility-dates/#strict-compression-error-checking) for additional `DecompressionStream` error checking.
+- Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/platform/compatibility-dates/#new-url-parser-implementation) compatibility flags.
+- Added the [`strict_compression_checks`](/workers/platform/compatibility-dates/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
 
 ## 2023-05-26
 

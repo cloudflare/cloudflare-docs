@@ -8,9 +8,9 @@ meta:
 
 # Standard steering policies
 
-Standard steering policies include **Off - Failover** and **Random**.
+**Standard steering** policies include **Off - Failover** and **Random**.
 
-These are the only steering policies available to non-Enterprise customers who have not purchased **Traffic Steering**.
+These are the only steering policies available to non-Enterprise customers who have not purchased **Traffic steering**.
 
 ## Off - Failover
 

@@ -28,7 +28,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 ## Create a Zero Trust policy
 
 1. To create a new application, go to Zero Trust. From the sidebar, select the **Applications** page. Select **Add an application**.
-   ![Location of 'Add an application' button above Application list](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
+   ![Location of 'Add an application' button above Application list](/images/cloudflare-one/zero-trust-security/ssh/app-list.png)
 
 1. On the next page, choose **Self-hosted**.
 

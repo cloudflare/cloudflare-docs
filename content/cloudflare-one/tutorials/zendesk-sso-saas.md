@@ -47,7 +47,7 @@ For this tutorial, you will need:
 
    Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v) if the name is not provided.
 
-   ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
+   ![Zendesk attributes](/images/cloudflare-one/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
 6. To determine who can access Zendesk, [create an Access policy](/cloudflare-one/policies/access/).
 
@@ -68,7 +68,7 @@ For this tutorial, you will need:
 
    4. Copy the **Formatted FingerPrint** value.
 
-   ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
+   ![Zendesk fingerprint](/images/cloudflare-one/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
 8. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 
