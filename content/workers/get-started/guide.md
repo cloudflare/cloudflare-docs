@@ -192,4 +192,4 @@ To do more:
 * Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
 * Understand how Workers works in [Learning](/workers/learning/).
 * Learn about Workers features and functionality in [Platform](/workers/platform/).
-* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test and deploy your Workers.
+* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test and deploy your Worker projects.
