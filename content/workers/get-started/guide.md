@@ -10,8 +10,6 @@ meta:
 
 This guide will instruct you through setting up and deploying your first Worker.
 
-This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
-
 {{<Aside type="note" header="Try the Playground">}}
 
 The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is an instant way to preview and test a Worker directly in the browser against any site.
@@ -28,11 +26,11 @@ By following the Get started guide, you will create a Worker using the command l
 
 {{<render file="_prereqs.md">}}
 
-## 1. Create a new project
+## 1. Create a new Worker project
 
 C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
-Open a terminal window and run C3:
+Open a terminal window and run C3 to create your Worker project:
 
 {{<tabs labels="npm | yarn">}}
 {{<tab label="npm" default="true">}}
@@ -53,7 +51,7 @@ $ yarn create cloudflare@latest
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
-For the purpose of this guide, set up a basic Worker:
+For this guide, set up a basic Worker:
 
 1. Name your new Worker directory by specifying where you want to create your application.
 2. Select `"Hello World" script` as the type of application you want to create.
@@ -61,8 +59,8 @@ For the purpose of this guide, set up a basic Worker:
 
 You will be asked if you would like to deploy the project to Cloudflare.
 
-* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 * If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
+* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 
 In your project directory, C3 has generated the following:
 
