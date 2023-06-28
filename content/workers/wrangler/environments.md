@@ -24,7 +24,7 @@ Environments are used with the `--env` or `-e` flag on `wrangler dev`, `wrangler
 
 ## Configuration
 
-To configure an environment:
+To create an environment:
 
 1. Open your Worker's `wrangler.toml` file.
 2. Add `[env.<NAME>]` and change `<NAME>` to the desired name of your environment.
@@ -48,6 +48,12 @@ route = "dev.example.com"
 You cannot specify multiple environments with the same name.
 
 Wrangler appends the environment name to the top-level name to deploy a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would deploy a Worker named `my-worker-dev`.
+
+{{<Aside type="warning" header="Inheritable keys and bindings">}}
+
+Review [Wrangler Environments Configuration documentation](/workers/wrangler/configuration/#environments) to learn more about inheritable keys in top-level configuration.
+
+{{</Aside>}}
 
 After you have configured your environment, run `npx wrangler deploy` in your Worker project directory for the changes to take effect.
 
