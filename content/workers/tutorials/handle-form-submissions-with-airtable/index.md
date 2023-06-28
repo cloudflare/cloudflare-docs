@@ -23,7 +23,7 @@ For this tutorial, you will be building a Workers function that handles input fr
 
 {{<Aside type="note" header="Build a form">}}
 If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [HTML forms](/pages/tutorials/forms) tutorial.
-{{<Aside>}}
+{{</Aside>}}
 
 Review a simplified example of the form used in this tuttorial. Note that the `action` parameter of the `<form>` tag should point to the deployed Workers application that you will build in this tutorial.
 
@@ -148,11 +148,11 @@ Before you continue, review the keys that you should have from Airtable:
 
 With your Airtable base set up, and the keys and IDs you need to communicate with the API ready, you will now set up your Worker to persist data from your form into Airtable.
 
-In `index.js`, replace the default code with a Workers fetch handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will return a `404 Not Found` response.
+In your Worker project's `worker.js` file, replace the default code with a Workers fetch handler that can respond to requests. When the URL requested has a pathname of `/submit`, you will handle a new form submission, otherwise, you will return a `404 Not Found` response.
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 export default {
   async fetch(request, env) {
@@ -257,7 +257,7 @@ AIRTABLE_BASE_ID = "exampleBaseId"
 AIRTABLE_TABLE_NAME = "Form Submissions"
 ```
 
-With all these fields submitted, it is time to deploy your Workers serverless function and get your form communicating with it. First, publish your function:
+With all these fields submitted, it is time to deploy your Workers serverless function and get your form communicating with it. First, publish your Worker:
 
 ```sh
 ---
@@ -266,7 +266,7 @@ header: Deploy your Worker
 $ npx wrangler deploy
 ```
 
-You will notice that your function is deployed to a unique URL — for example, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute — the second part is the path for your form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
+Your Worker project will deploy to a unique URL — for example, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute — the second part is the path for your form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
 
 ```html
 <form
