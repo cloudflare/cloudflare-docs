@@ -45,7 +45,7 @@ route = "dev.example.com"
 
 You cannot specify multiple environments with the same name.
 
-Wrangler appends the environment name to the top-level name to deploy a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
+Wrangler appends the environment name to the top-level name to deploy a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would deploy a Worker named `my-worker-dev`.
 
 After you have configured your environment, run `npx wrangler deploy` in your Worker project directory for the changes to take effect.
 
@@ -53,7 +53,7 @@ After you have configured your environment, run `npx wrangler deploy` in your Wo
 
 ## Examples
 
-## Staging and production environments
+### Staging and production environments
 
 The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/platform/triggers/custom-domains/) or [route](/workers/platform/triggers/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
 
