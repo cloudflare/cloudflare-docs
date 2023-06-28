@@ -42,7 +42,7 @@ kv_namespaces = [
 
 ## Environments
 
-The configuration for a Worker can become complex when you define different [environments](/workers/platform/environments/), and each environment has its own configuration.
+The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
 These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
@@ -493,7 +493,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/wrangler/environments/).
 
 {{</definitions>}}
 
