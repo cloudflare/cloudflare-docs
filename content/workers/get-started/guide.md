@@ -20,27 +20,36 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 ## Get started in the dashboard
 
-By following this guide, you will create a Worker using the command line. To create your first Worker using the Cloudflare dashboard:
+By following the Get started guide, you will create a Worker using the command line. To create your first Worker using the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** > **Create application**.
 3. Select **Create Worker** > **Deploy**.
 
+{{<render file="_prereqs.md">}}
+
 ## 1. Create a new project
 
-C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible. To get started, ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
+C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
-Open a terminal window and run C3 with `npm`:
+Open a terminal window and run C3:
+
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
 $ npm create cloudflare@latest
 ```
 
-or `yarn`:
+{{</tab>}}
+{{<tab label="yarn">}}
 
 ```sh
 $ yarn create cloudflare@latest
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
@@ -179,4 +188,10 @@ The code block consists of 4 parts:
 
 ## Related resources
 
-To do more with Workers, explore the [Tutorials](/workers/tutorials/) and [Examples](/workers/examples/).
+To do more:
+
+* Review [Tutorials](/workers/tutorials/) to build projects on Workers.
+* Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
+* Understand how Workers works in [Learning](/workers/learning/).
+* Learn about Workers features and functionality in [Platform](/workers/platform/).
+* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test and deploy your Workers.
