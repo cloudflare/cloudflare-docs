@@ -10,7 +10,7 @@ meta:
 # Cache
 
 {{<description>}}
-Cache content across Cloudflare's global server network
+Cache content across Cloudflare's global server network.
 {{</description>}}
 
 {{<plan type="all">}}
