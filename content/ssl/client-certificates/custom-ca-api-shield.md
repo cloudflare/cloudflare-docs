@@ -42,8 +42,16 @@ This is specially useful if you already have mTLS implemented and client certifi
 You can do this [via the dashboard](/api-shield/security/mtls/configure/) or via API, using the [Create firewall rules endpoint](/api/operations/firewall-rules-create-firewall-rules).
 
 ```text
-  "rule": "(http.host in \"<HOSTNAME>\" and not cf.tls_client_auth.cert_verified)", 
+  "expression": "(http.host in \"<HOSTNAME>\" and not cf.tls_client_auth.cert_verified)", 
   "action": "block"
 ```
+
+{{<Aside type="warning">}}
+
+Refer to [Firewall Rules API](/firewall/api/cf-firewall-rules/) for more guidance.
+
+Note that, with the [migration of Firewall Rules to WAF Custom Rules](/waf/reference/migration-guides/firewall-rules-to-custom-rules/), some [changes will apply to the API as well](/waf/reference/migration-guides/firewall-rules-to-custom-rules/#relevant-changes-for-api-users).
+
+{{</Aside>}}
 
 ## Remove custom CA
