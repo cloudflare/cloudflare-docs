@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Database metrics and analytics
+title: Metrics and analytics
 ---
 
 # Metrics and analytics
