@@ -30,6 +30,8 @@ To configure an environment:
 2. Add `[env.<NAME>]` and change `<NAME>` to the desired name of your environment.
 3. Repeat step 2 to create multiple environments.
 
+Be careful when naming your environments that they do not contain sensitive information, such as, `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
+
 Review the layout of an example `[env.dev]` environment that sets up a custom `dev.example.com` route:
 
 ```toml
