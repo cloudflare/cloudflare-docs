@@ -112,8 +112,11 @@ The `<DESCRIPTION>` field is optional.
 When uploading items to a custom list with hostnames via CSV file, use the following file format:
 
 ```txt
-<HOSTNAME_1>,<HOSTNAME_2>,<HOSTNAME_3>
+<HOSTNAME_1>,<DESCRIPTION>
+<HOSTNAME_2>
 ```
+
+The `<DESCRIPTION>` field is optional.
 
 ### Lists with ASNs
 
