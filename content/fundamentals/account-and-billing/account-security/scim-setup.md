@@ -10,7 +10,7 @@ By connecting a System for Cross-domain Identity Management (SCIM) provider, you
 
 Currently, we only provide SCIM support for Azure Active Directory and Okta in Self-Hosted Access applications.
 
-For more information about the product, please refer to the blog post: [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/)
+For more information about SCIM support, refer to the [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/) blog post.
 
 This guide will use Okta as the SCIM provider.
 
