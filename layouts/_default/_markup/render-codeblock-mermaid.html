@@ -1,2 +1,4 @@
+{{- if not hugo.IsProduction -}}
 <vue-component name="Mermaid" data-mermaid="{{ urlquery .Inner }}">
 </vue-component>
+{{- end -}}

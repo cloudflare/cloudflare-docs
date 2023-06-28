@@ -13,9 +13,9 @@
     "dev": "concurrently --kill-others \"npm run dev:hugo\" \"npm run dev:vite\"",
     "lint": "tsm bin/format.ts --check",
     "crawl": "tsm bin/crawl.ts",
-    "build:hugo": "bin/transform-mermaid.ts && hugo",
+    "build:hugo": "tsm bin/transform-mermaid.ts && hugo",
     "build:vite": "vite build",
-    "build:post": "npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
+    "build:post": "tsm bin/transform-mermaid.ts && npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
     "build": "npm run build:hugo && npm run build:post",
     "build:local": "./hugo && npm run build:post"
   },
