@@ -7,30 +7,45 @@ title: Environments
 
 ## Background
 
-Environments are different contexts that your code runs in. The Workers platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
+Wrangler allows you to deploy the same Worker application with different configuration for each environment. You must configure environments in your Worker application's `wrangler.toml` file.
 
-These environments are utilized with the `--env` or `-e` flag on `wrangler build`, `wrangler dev`, `wrangler preview`, `wrangler publish`, and `wrangler secret`.
+Review the following environments user flow:
+
+1. You have created a Worker application named `my-worker`.
+2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml` configuration file.
+3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/platform/bindings/) and/or [routes](/workers/platform/triggers/routes/).
+4. You deploy the Worker using `npx wrangler deploy -e dev`.
+5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
+6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
+
+Environments are used with the `--env` or `-e` flag on `wrangler dev`, `wrangler deploy`, and `wrangler secret`.
 
 ---
 
-### Naming
+### Configuration
 
-You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
+To configure an environment:
 
-For this reason, Wrangler appends the environment name to the top-level name to publish a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
+1. Open your Worker's `wrangler.toml` file.
+2. Add `[env.<NAME>]` and change `<NAME>` to the desired name of your environment.
+3. Repeat step 2 to create multiple environments.
 
-The layout of an example `[env.dev]` environment is displayed below:
+Review the layout of an example `[env.dev]` environment that sets up a custom route:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 name = "your-worker"
+route = "example.com"
 
 [env.dev]
-name = "your-worker-dev"
 route = "your-custom-route"
 ```
+
+You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
+
+For this reason, Wrangler appends the environment name to the top-level name to deploy a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
 
 ---
 
@@ -239,3 +254,4 @@ Published my-worker
 When you create a Service or Environment, Cloudflare automatically registers an SSL certification for it. SSL certifications are discoverable and a matter of public record. Be careful when naming your Services and Environments that they do not contain sensitive information i.e `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
 
 {{</Aside>}}
+
