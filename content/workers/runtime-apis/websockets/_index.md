@@ -1,12 +1,12 @@
 ---
 pcx_content_type: concept
-title: Using WebSockets
-weight: 13
+title: WebSockets
+layout: single
 ---
 
-# Using WebSockets
+# WebSockets
 
-WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSocket connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSocket connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
@@ -16,7 +16,9 @@ WebSockets utilize a simple event-based system for receiving and sending message
 
 {{</Aside>}}
 
-## Writing a WebSocket Server
+Learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
+
+## Write a WebSocket Server
 
 WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real time. This guide will show you how to set up a WebSocket server in Workers.
 
@@ -111,7 +113,7 @@ async function handleRequest(request) {
 }
 ```
 
-### Connecting to the WebSocket server from a client
+### Connect to the WebSocket server from a client
 
 Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it:
 
@@ -137,7 +139,7 @@ websocket.close();
 
 For an example of this in practice, refer to the [`websocket-template`](https://github.com/cloudflare/websocket-template) to get started with WebSockets.
 
-## Writing a WebSocket client
+## Write a WebSocket client
 
 Cloudflare Workers supports the `new WebSocket(url)` constructor. A Worker can establish a WebSocket connection to a remote server in the same manner as the client implementation described above.
 
@@ -181,4 +183,6 @@ Without this compatibility flag, the Workers runtime will strip or ignore the `S
 
 ## Durable Objects and WebSocket state
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Refer to [Durable Objects](/workers/learning/using-durable-objects/) to get started, and prefer using the Durable Objects [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) rather than the `.accept` method described above.
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections.
+
+Refer to [Durable Objects](/workers/learning/using-durable-objects/) to get started, and prefer using the Durable Objects [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) rather than the `.accept` method described above.

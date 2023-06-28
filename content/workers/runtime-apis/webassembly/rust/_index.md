@@ -1,6 +1,7 @@
 ---
 title: Rust
 pcx_content_type: tutorial
+layout: single
 meta:
   title: Rust WebAssembly guide
 ---

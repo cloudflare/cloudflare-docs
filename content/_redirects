@@ -913,6 +913,11 @@
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/environments/ /workers/wrangler/environments/ 301
+/workers/platform/nodejs-compatibility/ /workers/runtime-apis/nodejs/ 301
+/workers/learning/using-websockets/ /workers/runtime-apis/websockets/ 301
+/workers/runtime-apis/websockets/ /workers/runtime-apis/websockets/websockets/ 301
+/workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
+
 
 
 # zaraz
