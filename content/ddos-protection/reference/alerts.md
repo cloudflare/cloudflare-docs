@@ -81,7 +81,7 @@ Alert type                           |     WAF/CDN     |      Spectrum      | Sp
 -------------------------------------|:---------------:|:------------------:|:---------------:|:--------------:
 HTTP DDoS Attack Alert               |       Yes       |         –          |        –        |        –
 Advanced HTTP DDoS Attack Alert      | Yes<sup>1</sup> |         –          |        –        |        –
-Layer 3/4 DDoS Attack Alert          |        –        | Yes<sup>2, 3</sup> |       Yes       |       Yes
+Layer 3/4 DDoS Attack Alert          |        –        | Yes<sup>2, 3</sup> |       Yes       | Yes<sup>3</sup>
 Advanced Layer 3/4 DDoS Attack Alert |        –        |         –          | Yes<sup>2</sup> | Yes<sup>2</sup>
 
 <sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS Protection subscription._ <br>
@@ -98,7 +98,7 @@ To investigate a possibly ongoing attack, select **View Dashboard**. To go to th
 
 ## Final remarks
 
-* Spectrum and Magic Transit customers using [assigned Cloudflare IP addresses](/magic-transit/cloudflare-ips/) will receive layer 3/4 DDoS attack alerts where the attacked target is the Cloudflare IP or prefix. If you have [brought your own IP (BYOIP)](/byoip/) to Cloudflare Spectrum, Magic Transit, or Cloudflare CDN, you will see your own IP addresses or prefixes as the attacked target.
+* Spectrum and Magic Transit customers using [assigned Cloudflare IP addresses](/magic-transit/cloudflare-ips/) will receive layer 3/4 DDoS attack alerts where the attacked target is the Cloudflare IP or prefix. If you have [brought your own IP (BYOIP)](/byoip/) to Cloudflare Spectrum or Magic Transit, you will see your own IP addresses or prefixes as the attacked target.
 
 * DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS managed rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system.
 
