@@ -5,15 +5,11 @@ title: Environment variables
 
 # Environment variables
 
-In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings.
+Environment variables, such as `vars` and secrets, are known as bindings.
 
-## Environment variables with Workers using ES modules format
+## Environment variables via Wrangler
 
-When deploying a Worker using ES modules format, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
-
-## Environment variables via wrangler
-
-### Add environment variables via Wrangler
+### Add environment variables via `wrangler.toml`
 
 Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file. Environment variables are always plaintext or JSON values, represented using the [inline table toml syntax](https://toml.io/en/v1.0.0#inline-table).
 
@@ -115,28 +111,6 @@ Do not use plaintext environment variables to store sensitive information. Use [
 
 {{</Aside>}}
 
-### Add KV namespaces via Wrangler
-
-KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv-namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
-
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker-dev"
-
-[[kv_namespaces]]
-binding = "Customers"
-preview_id = "<PREVIEW KV NAMESPACEID>"
-id = "<DEV KV NAMESPACEID>"
-
-[env.production]
-name = "my-worker-production"
-[[kv_namespaces]]
-binding = "Customers"
-id = "<PRODUCTION KV NAMESPACEID>"
-```
-
 ## Environment variables via the dashboard
 
 ### Add environment variables via the dashboard
@@ -159,24 +133,6 @@ To add environment variables, such as `vars` and `secret`, via the dashboard:
 Do not select **Encrypt** when adding environment variables if your variable is not a secret. Skip step 3 if your variable's value is a plaintext string and does not need to be encrypted.
 
 {{</Aside>}}
-
-### Add KV namespace bindings via the dashboard
-
-To add KV namespace bindings:
-
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** and in **Overview**, select your Worker.
-3. Select **Settings** > **Add binding** under **KV Namespace Bindings**.
-4. Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker.
-5. Next, select a **KV namespace** from the dropdown.
-6. Select **Add binding** to add multiple bindings.
-7. When you are finished, select **Save** to implement your changes.
-
-![After selecting add binding, you will be directed to a configuration page to specify your Variable name and KV namespace to create your binding](/images/workers/platform/kv_namespace_bindings.png)
-
-Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference.
-
-![After creating your environment variable and KV namespace binding, your dashboard will show a summary of variables and bindings you configured](/images/workers/platform/envvarssecret-detail-page.jpeg)
 
 ## Compare secrets and environment variables
 

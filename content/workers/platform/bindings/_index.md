@@ -10,12 +10,23 @@ Bindings allow your Workers to interact with resources on the Cloudflare develop
 
 There are multiple types of bindings available today.
 
+## Bindings using ES modules format
+
+When deploying a Worker using [ES modules format](), any bindings will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the [`FetchEvent` documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
+
 ## Configuration
 
 Bindings can be configured by one of two ways:
 
 * Updating your project's [`wrangler.toml` file](/workers/wrangler/configuration/#bindings).
 * Logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > Account Home > **Workers & Pages** > your Worker > **Settings**> **Variables**.
+
+
+### Environment variables
+
+Environment variables, such as `vars` and secrets, are text bindings.
+
+* Configure and learn more about [environment variables](/workers/platform/bindings/about-service-bindings/).
 
 ### Service bindings
 
