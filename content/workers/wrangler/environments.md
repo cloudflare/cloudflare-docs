@@ -9,7 +9,7 @@ title: Environments
 
 Wrangler allows you to deploy the same Worker application with different configuration for each environment. You must configure environments in your Worker application's `wrangler.toml` file.
 
-Review the following environments user flow:
+Review the following environments flow:
 
 1. You have created a Worker application named `my-worker`.
 2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml` configuration file.
@@ -53,7 +53,9 @@ After you have configured your environment, run `npx wrangler deploy` in your Wo
 
 ## Examples
 
-The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/platform/triggers/custom-domains/) or [route](/workers/platform/triggers/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
+## Staging and production environments
+
+The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/platform/triggers/custom-domains/) or [route](/workers/platform/triggers/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
 
 ```toml
 ---
@@ -112,7 +114,7 @@ if (ENVIRONMENT === "staging") {
 }
 ```
 
-### Staging environment with workers.dev
+### Staging environment with \*.workers.dev
 
 In order to deploy your code to your `*.workers.dev` subdomain, include `workers_dev = true` in the desired environment. Your `wrangler.toml` file may look like this:
 
