@@ -21,11 +21,17 @@ In this tutorial, you will use [Cloudflare Workers](/workers/) and [Airtable](ht
 
 For this tutorial, you will be building a Workers function that handles input from a contact form. The form this tutorial references will collect a first name, last name, email address, phone number, message subject, and a message.
 
+{{<Aside type="note" header="Build a form">}}
 If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [HTML forms](/pages/tutorials/forms) tutorial.
+{{<Aside>}}
 
-A simplified example of the form we'll refer to is seen below. Note that the `action` parameter of the `<form>` tag should point to the deployed Workers application that you will build in this tutorial.
+Review a simplified example of the form used in this tuttorial. Note that the `action` parameter of the `<form>` tag should point to the deployed Workers application that you will build in this tutorial.
 
 ```html
+---
+header: Your front-end code
+highlight: [1]
+---
 <form action="https://workers-airtable-form.signalnerve.workers.dev/submit" method="POST">
   <div>
     <label for="first_name">First name</label>
@@ -72,11 +78,11 @@ A simplified example of the form we'll refer to is seen below. Note that the `ac
 </form>
 ```
 
-## 2. Create a Worker
+## 2. Create a Worker project
 
 To handle the form submission, create and deploy a Worker that parses the incoming form data and prepares it for submission to Airtable.
 
-Create a new `airtable-form-handler` Worker, and go to it in your terminal:
+Create a new `airtable-form-handler` Worker project:
 
 ```sh
 ---
@@ -88,8 +94,8 @@ $ npm create cloudflare@latest airtable-form-handler
 When configuring your Worker:
 
 * Choose `"Hello World" script` for the type of application you would like to create.
-* Answer `no` to using TypeScript.
-* Answer `no` to deploying your Worker.
+* Select `No` to using TypeScript.
+* Select `No` to deploying your Worker.
 
 ## 3. Configure an Airtable base
 
@@ -163,7 +169,7 @@ The `submitHandler` has two functions. First, it will parse the form data coming
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 async function submitHandler (request, env) {
   if (request.method !== "POST") {
@@ -210,7 +216,7 @@ Then you call `createAirtableRecord` (the function you will define next). The `c
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 async function createAirtableRecord(env, body) {
   try {
