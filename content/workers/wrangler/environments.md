@@ -116,7 +116,7 @@ if (ENVIRONMENT === "staging") {
 
 ### Staging environment with \*.workers.dev
 
-In order to deploy your code to your `*.workers.dev` subdomain, include `workers_dev = true` in the desired environment. Your `wrangler.toml` file may look like this:
+To deploy your code to your `*.workers.dev` subdomain, include `workers_dev = true` in the desired environment. Your `wrangler.toml` file may look like this:
 
 ```toml
 ---
