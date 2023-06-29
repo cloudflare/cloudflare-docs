@@ -16,9 +16,9 @@ The **All traffic** tab displays global information about layer 3/4 traffic and 
 
 The dashboard has additional tabs with specific information (and specific filters) for different layer 3/4 mitigation systems:
 
-* **DDoS managed rules**: Shows only traffic dropped and passed by [DDoS Managed Rules](/ddos-protection/managed-rulesets/).
-* **Advanced TCP Protection**: Shows traffic dropped and passed by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system. Does not include traffic dropped by DDoS Managed Rules.
-* **Magic Firewall**: Shows traffic dropped by [Magic Firewall](/magic-firewall/) and the traffic passed to the origin server. Does not include traffic dropped by DDoS Managed Rules or the Advanced TCP Protection system.
+* **DDoS managed rules**: Shows only traffic dropped and passed by [DDoS managed rules](/ddos-protection/managed-rulesets/).
+* **Advanced TCP Protection**: Shows traffic dropped and passed by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system. Does not include traffic dropped by DDoS managed rules.
+* **Magic Firewall**: Shows traffic dropped by [Magic Firewall](/magic-firewall/) and the traffic passed to the origin server. Does not include traffic dropped by DDoS managed rules or the Advanced TCP Protection system.
 
 Use these tabs to better understand the decisions made by each mitigation system, and which rules are being applied to mitigate attacks.
 
