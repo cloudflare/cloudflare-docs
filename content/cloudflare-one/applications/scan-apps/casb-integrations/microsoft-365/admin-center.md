@@ -35,7 +35,7 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 | Strong password disabled for user            | Low      |
 | Cloud sync disabled for on-prem user         | Low      |
 | Weak Windows Hello for Business key strength | Low      |
-| On-prem user not synced in 7 days.           | Low      |
+| On-prem user not synced in 7 days           | Low      |
 | User is not a legal adult                    | Low      |
 | User configured proxy addresses              | Low      |
 | User account disabled                        | Low      |
