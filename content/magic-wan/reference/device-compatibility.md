@@ -20,7 +20,7 @@ Cisco Meraki                                                   | Compatibility o
 [PAN-OS](/magic-wan/third-party/palo-alto/)                    | ✅                          | ✅
 [pfSense](/magic-wan/third-party/pfsense/)                     | ✅                          | ✅
 Prisma SD-WAN (Palo Alto)                                      | Specifications compatible*  | Specifications compatible*
-Riverbed 
+Riverbed                                                       | Specifications compatible*  | Specifications compatible*
 [SonicWall](/magic-wan/third-party/sonicwall/)                 | -                           | ✅
 [Sophos Firewall](/magic-wan/third-party/sophos-firewall/)     | ✅                          | ✅
 [strongSwan](/magic-wan/third-party/strongswan/)               | –                           | ✅
