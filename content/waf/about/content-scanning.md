@@ -141,7 +141,7 @@ When enabled, WAF content scanning provides the following fields you can use in 
     <td>The number of malicious content objects detected in the request (zero or greater).</td>
   </tr>
   <tr>
-    <td><code>cf.waf.content_scan.scan_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
+    <td><code>cf.waf.content_scan.has_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
     <td>When true, the file scanner was unable to scan all the content objects detected in the request.</td>
   </tr>
   <tr>
