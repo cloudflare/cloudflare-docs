@@ -24,7 +24,7 @@ To stay up-to-date with new CASB findings as they are added, bookmark this page 
 
 ### File sharing
 
-Get alerted when calendars in your Microsoft 365 account have their permissions changed to a less secure setting.
+Get alerted when files in your Microsoft 365 account have their permissions changed to a less secure setting.
 
 | Finding                                             | Severity |
 | --------------------------------------------------- | -------- |

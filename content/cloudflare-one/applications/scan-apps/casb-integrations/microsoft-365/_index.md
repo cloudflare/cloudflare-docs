@@ -45,7 +45,7 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 
 ### File sharing
 
-Get alerted when calendars in your Microsoft 365 account have their permissions changed to a less secure setting.
+Get alerted when files in your Microsoft 365 account have their permissions changed to a less secure setting.
 
 | Finding                                             | Severity |
 | --------------------------------------------------- | -------- |
