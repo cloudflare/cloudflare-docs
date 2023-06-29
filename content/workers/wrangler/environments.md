@@ -155,7 +155,7 @@ Published my-worker
 
 {{<Aside type="warning">}}
 
-When you create a Worker or environment, Cloudflare automatically registers an SSL certification for it. SSL certifications are discoverable and a matter of public record. Be careful when naming your Services and Environments that they do not contain sensitive information, such as, `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
+When you create a Worker via an environment, Cloudflare automatically creates an SSL certification for it. SSL certifications are discoverable and a matter of public record.
 
 {{</Aside>}}
 
