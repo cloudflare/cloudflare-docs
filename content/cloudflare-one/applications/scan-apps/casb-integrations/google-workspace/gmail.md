@@ -14,7 +14,7 @@ The Gmail integration detects a variety of user security, data loss prevention, 
 - A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
 - [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace
 
-{{<render file="casb/_google-perms.md">}}
+{{<render file="casb/_integration-perms.md" withParameters="Google Workspace;;google-workspace">}}
 
 ## Security findings
 

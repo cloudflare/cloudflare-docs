@@ -14,7 +14,7 @@ The Admin Center integration detects a variety of user security, data loss preve
 - A Microsoft 365 account with an active Microsoft Business Basic, Microsoft Business Standard, Microsoft 365 E3, Microsoft 365 E5, or Microsoft 365 F3 subscription
 - [Global admin role](https://docs.microsoft.com/en-us/microsoft-365/admin/add-users/about-admin-roles?view=o365-worldwide#commonly-used-microsoft-365-admin-center-roles) or equivalent permissions in Microsoft 365
 
-{{<render file="casb/_m365-perms.md">}}
+{{<render file="casb/_integration-perms.md" withParameters="Microsoft 365;;microsoft-365">}}
 
 ## Security findings
 
@@ -35,7 +35,7 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 | Strong password disabled for user            | Low      |
 | Cloud sync disabled for on-prem user         | Low      |
 | Weak Windows Hello for Business key strength | Low      |
-| On-prem user not synced in 7 days           | Low      |
+| On-prem user not synced in 7 days            | Low      |
 | User is not a legal adult                    | Low      |
 | User configured proxy addresses              | Low      |
 | User account disabled                        | Low      |
