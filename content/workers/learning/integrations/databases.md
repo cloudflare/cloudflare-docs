@@ -309,7 +309,7 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
   };
   ```
 
-To learn more about Upstash, refer to [Upstash's official documentation](https://docs.upstash.com/redis).
+To learn more about Upstash, refer to the [Upstash documentation](https://docs.upstash.com/redis).
 
 ### FAQs
 
