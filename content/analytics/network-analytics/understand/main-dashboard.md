@@ -14,11 +14,13 @@ The following sections are a guide on the different sections of the main Network
 
 The **All traffic** tab displays global information about layer 3/4 traffic and DDoS attacks.
 
-The dashboard has additional tabs with specific information (and specific filters) for different layer 3/4 mitigation systems. These mitigation systems are:
+The dashboard has additional tabs with specific information (and specific filters) for different layer 3/4 mitigation systems:
 
-* [DDoS managed rules](/ddos-protection/managed-rulesets/)
-* [Advanced TCP Protection](/ddos-protection/tcp-protection/)
-* [Magic Firewall](/magic-firewall/)
+* **DDoS managed rules**: Shows only traffic dropped and passed by [DDoS Managed Rules](/ddos-protection/managed-rulesets/).
+* **Advanced TCP Protection**: Shows traffic dropped and passed by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system. Does not include traffic dropped by DDoS Managed Rules.
+* **Magic Firewall**: Shows traffic dropped by [Magic Firewall](/magic-firewall/) and the traffic passed to the origin server. Does not include traffic dropped by DDoS Managed Rules or the Advanced TCP Protection system.
+
+Use these tabs to better understand the decisions made by each mitigation system, and which rules are being applied to mitigate attacks.
 
 ## High-level metrics
 
@@ -26,7 +28,7 @@ The side panels in the Network Analytics page provide a summary of activity over
 
 ![Available high-level metrics in the Network Analytics dashboard.](/images/analytics/network-analytics/high-level-metrics.png)
 
-Selecting one of the metrics in the sidebar will define the base unit (packets or bytes) for the data displayed in the dashboard.
+Selecting one of the metrics in the sidebar will define the base unit (packets or bits/bytes) for the data displayed in the dashboard.
 
 ## Filters
 
