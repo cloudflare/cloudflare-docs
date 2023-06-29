@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Custom CA for API Shield mTLS
+title: Bring your own CA for API Shield mTLS
 weight: 6
 ---
 
-# Custom CA for API Shield mTLS
+# Bring your own CA for API Shield mTLS
 
 This page explains how you can manage mTLS with [API Shield](/api-shield/) using client certificates that have not been issued by Cloudflare CA.
 
@@ -54,4 +54,4 @@ Note that, with the [migration of Firewall Rules to WAF Custom Rules](/waf/refer
 
 {{</Aside>}}
 
-## Remove custom CA
+## Delete an uploaded CA
