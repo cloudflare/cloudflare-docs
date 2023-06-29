@@ -259,7 +259,7 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
 
 [Upstash](https://upstash.com/) is a serverless database with Redis API. It aims to simplify the process of building and scaling real-time applications by providing a serverless database infrastructure.
 
-1. To set up an integration with Upstash, you to have an existing Upstash database to connect to. [Create a Upstash database](https://docs.upstash.com/redis#create-a-database) or [load data from an existing database to Upstash](https://docs.upstash.com/redis/howto/connectclient).
+1. To set up an integration with Upstash, you need an existing Upstash database to connect to. [Create a Upstash database](https://docs.upstash.com/redis#create-a-database) or [load data from an existing database to Upstash](https://docs.upstash.com/redis/howto/connectclient).
 
 2. Insert some data to your Upstash database. You can add data to your Upstash database in two ways:
     - Use the CLI directly from your Upstash console.
