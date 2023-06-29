@@ -34,7 +34,7 @@ By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and dest
 
 Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels. If enabled, by default, TCP and UDP traffic sourced from and destined to [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) space, [WARP](/cloudflare-one/connections/connect-devices/warp/), or [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) with source port higher than `1023` and destination port lower than `1024` will be proxied/filtered by Cloudflare Gateway. 
 
-Optionally, more specific matches may be specified that override the default:
+Optionally, more specific matches may be specified to override the default:
 
 - Source IP prefix in a subset of RFC1918 space, or [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/)
 - Destination IP prefix in a subset of RFC1918 space, or [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/)
