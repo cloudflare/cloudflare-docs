@@ -283,7 +283,7 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
 
 4. In your Worker, install the `@upstash/redis`, a HTTP client to connect to your database and start manipulating data:
 
-    ```
+    ```sh
     $ npm install @upstash/redis
     ```
 
