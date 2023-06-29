@@ -1,10 +1,9 @@
 ---
 pcx_content_type: concept
-title: Logging from Workers
-weight: 4
+title: Log from Workers
 ---
 
-# Logging from Workers
+# Log from Workers
 
 You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
 
