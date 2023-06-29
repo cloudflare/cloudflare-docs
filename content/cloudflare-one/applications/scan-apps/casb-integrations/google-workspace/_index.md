@@ -14,8 +14,7 @@ This integration covers the following Google Workspace products:
 
 ## Integration prerequisites
 
-- A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
-- [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace
+{{<render file="casb/_google-prereqs.md">}}
 
 ## Integration permissions
 
