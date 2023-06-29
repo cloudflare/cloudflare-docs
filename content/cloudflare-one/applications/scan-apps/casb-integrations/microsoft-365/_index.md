@@ -8,7 +8,9 @@ rss: file
 
 The Microsoft 365 (M365) integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
 
-This integration covers Microsoft 365 products, including OneDrive and SharePoint.
+This integration covers the following Microsoft 365 products:
+
+{{<directory-listing>}}
 
 ## Integration prerequisites
 
@@ -60,7 +62,7 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 
 ### File sharing
 
-Get alerted when calendars in your Microsoft 365 account have their permissions changed to a less secure setting.
+Get alerted when files in your Microsoft 365 account have their permissions changed to a less secure setting.
 
 | Finding                                             | Severity |
 | --------------------------------------------------- | -------- |
