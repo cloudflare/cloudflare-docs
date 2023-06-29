@@ -38,7 +38,7 @@ These are the action types you can choose from:
 - [Allow](#allow)
 - [Block](#block)
 - [Override](#override)
-- [SafeSearch](#safesearch)
+- [Safe Search](#safe-search)
 - [YouTube Restricted Mode](#youtube-restricted-mode)
 
 ### Allow
@@ -81,7 +81,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 
 {{<Aside>}}The Override action cannot be used with selectors evaluated after resolution, including **Authoritative Nameserver IP**, **Resolved IP**, and any DNS response values.{{</Aside>}}
 
-### SafeSearch
+### Safe Search
 
 API value: `safesearch`
 
@@ -89,9 +89,9 @@ SafeSearch is a feature of search engines that helps you filter explicit or offe
 
 You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. For example, to enable SafeSearch for Google, you can create the following policy:
 
-| Selector | Operator | Value        | Action     |
-| -------- | -------- | ------------ | ---------- |
-| Domain   | Is       | `google.com` | SafeSearch |
+| Selector | Operator | Value        | Action      |
+| -------- | -------- | ------------ | ----------- |
+| Domain   | Is       | `google.com` | Safe Search |
 
 ### YouTube Restricted Mode
 

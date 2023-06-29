@@ -132,7 +132,7 @@ For more information, refer to our list of [content categories](/cloudflare-one/
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 {{</Aside>}}
 
-{{<render file="gateway/_destination-continent.md" withParameters="http..dst_ip">}}
+{{<render file="gateway/_destination-continent.md" withParameters="http.dst_ip">}}
 
 ### Destination Country
 
