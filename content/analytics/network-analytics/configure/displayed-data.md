@@ -18,9 +18,9 @@ To focus on a specific mitigation system, select one of the [other available tab
 
 To toggle your view of the data, select the **Total packets** or **Total bytes** side panels.
 
-![Network Analytics side panels allowing you to use packets or bytes as the base unit for the dashboard.](/images/analytics/network-analytics/high-level-metrics.png)
+![Network Analytics side panels allowing you to use packets or bits/bytes as the base unit for the dashboard.](/images/analytics/network-analytics/high-level-metrics.png)
 
-The selected metric will determine the base units (packets or bytes) used in the several analytics panels displayed in the dashboard.
+The selected metric will determine the base units (packets or bits/bytes) used in the several dashboard analytics panels.
 
 ## Select a dimension
 
@@ -44,12 +44,23 @@ When applying filters, observe these guidelines:
 * When specifying an ASN number, leave out the `AS` prefix. For example, enter `1423` instead of `AS1423`.
 {{</Aside>}}
 
-## Select a stat filter
+### Select a stat filter
 
-To filter based on the type of data associated with one of the Network Analytics stats, use the **Filter** and **Exclude** buttons that display when you hover your pointer over the stat.
+To filter based on the type of data associated with one of the Network Analytics stats, use the **Filter** and **Exclude** buttons that display when you hover over the stat.
+
+## Create a Magic Firewall rule from the applied filters
+
+{{<Aside type="note">}}
+This feature is only available for Magic Transit users.
+{{</Aside>}}
+
+Select **Create Magic Firewall rule** to create a [Magic Firewall](/magic-firewall/) rule that will block all traffic matching the selected filters in Network Analytics.
+
+Note that some filters will not be added to the new Magic Firewall rule definition. However, you can further configure the rule in Magic Firewall.
 
 ## Show IP prefix events
 
 Enable the **Show annotations** toggle to show or hide annotations for advertised/withdrawn IP prefix events in the **Network Analytics** view. Select each annotation to get more details.
 
 ![Network Analytics chart displaying IP prefix-related annotations.](/images/analytics/network-analytics/view-annotations.png)
+
