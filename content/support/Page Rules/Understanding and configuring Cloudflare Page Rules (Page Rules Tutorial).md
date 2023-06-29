@@ -117,9 +117,9 @@ _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/f
 
 ### Referencing wildcard matches
 
-You can reference a matched wildcard in a Forwarding URL by using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
+In a _Forwarding URL_ rule, you can reference a matched wildcard in the _destination URL_ field by using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
 
-This is specifically useful with the _Forwarding URL_ setting. For example:
+For example:
 
 You could forward:
 
