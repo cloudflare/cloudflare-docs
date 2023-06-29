@@ -284,7 +284,7 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
 4. In your Worker, install the `@upstash/redis`, a HTTP client to connect to your database and start manipulating data:
 
     ```
-    npm install @upstash/redis
+    $ npm install @upstash/redis
     ```
 
 5. The following example shows how to make a query to your Upstash database in a Worker. The credentials needed to connect to Upstash have been automatically added as secrets to your Worker through the integration.
