@@ -28,20 +28,21 @@ This is specially useful if you already have mTLS implemented and client certifi
   
   - `certificates` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    - The `pem.ca` file associated with the CA certificate.
+    - Paste content copied from the `.pem` file associated with the CA certificate.
   
   - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+    - Indicate a unique name for your CA certificate.
 
   {{</definitions>}}  
 
-2. Take note of the Certificate ID (`id`) that is returned in the API response.
+2. Take note of the certificate ID (`id`) that is returned in the API response.
 3. Use the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations) to enable mTLS in each hostname that should use the CA for mTLS validation. Use the following parameters:
 
   {{<definitions>}}
 
   - `hostnames` {{<type>}}array{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   
-    - The hostnames that will be using the indicated CA for client certificate validation.
+    - List the hostnames that will be using the CA for client certificate validation.
   
     - {{<Aside type="warning">}}
   Submitting an empty array will remove all hostnames associations.
@@ -49,7 +50,7 @@ This is specially useful if you already have mTLS implemented and client certifi
   
   - `mtls_certificate_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    - The Certificate ID obtained from the previous step.
+    - Indicate the certificate ID obtained from the previous step.
 
     - {{<Aside type="warning">}}  
   If no `mtls_certificate_id` is provided, the hostnames will be associated to a Cloudflare Managed CA.
@@ -77,11 +78,11 @@ Note that, with the [migration of Firewall Rules to WAF Custom Rules](/waf/refer
 
 If you want to remove a CA that you have previously uploaded, you must first remove any hostname associations that it has.
 
-1. Make a request to the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations), with an empty array for `hostnames` and specifying your CA certificate id in `mtls_certificate_id`:
+1. Make a request to the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations), with an empty array for `hostnames` and specifying your CA certificate ID in `mtls_certificate_id`:
 
 ```text
   "hostnames": [], 
   "mtls_certificate_id": "block"
 ```
 
-2. Use the [Delete mTLS certificate endpoint](api/operations/m-tls-certificate-management-delete-m-tls-certificate) to delete the certificate.
+2. Use the [Delete mTLS certificate endpoint](/api/operations/m-tls-certificate-management-delete-m-tls-certificate) to delete the certificate.
