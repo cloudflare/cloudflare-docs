@@ -21,15 +21,15 @@ Cache stores copies of frequently accessed content (such as images, videos, or w
 
 ## Features
 
-{{<feature header="Cache Rules" href="/cache/how-to/cache-rules/">}}
+{{<feature header="Default cache behavior" href="/cache/concepts/default-cache-behavior/">}}
 
-Configure Cache Rules to optimize your website by specifying which resources should be cached and for how long.
+Learn about default cache behavior, default cached file extensions and cache responses.
 
 {{</feature>}}
 
-{{<feature header="Default Cache Behavior" href="/cache/concepts/default-cache-behavior/">}}
+{{<feature header="Cache Rules" href="/cache/how-to/cache-rules/">}}
 
-Learn about default cache behavior, default cached file extensions and cache responses.
+Configure Cache Rules to optimize your website by specifying which resources should be cached and for how long.
 
 {{</feature>}}
 
@@ -45,7 +45,7 @@ Use Cloudflare's persistent storage to increase cache times.
 
 {{</feature>}}
 
-{{<feature header="Purge Cache" href="/cache/how-to/purge-cache/">}}
+{{<feature header="Purge" href="/cache/how-to/purge-cache/">}}
 
 Clear cached files to force Cloudflare to fetch a fresh version of those files from your web server. You can purge files selectively or all at once.
 
