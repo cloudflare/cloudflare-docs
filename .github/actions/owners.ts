@@ -20,7 +20,7 @@ export const OWNERS: Record<string, string[]> = {
   cache: ["angelampcosta"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
-  "cloudflare-for-platforms": ["kodster28"],
+  "cloudflare-for-platforms": ["jason-cf"],
   "cloudflare-one": ["ranbel"],
   constellation: ["deadlypants1973"],
   d1: ["Maddy-Cloudflare"],
