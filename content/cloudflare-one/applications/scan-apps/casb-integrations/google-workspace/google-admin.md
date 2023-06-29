@@ -13,6 +13,8 @@ rss: file
 - A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
 - [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace
 
+## Integration permissions
+
 {{<render file="casb/_integration-perms.md" withParameters="Google Workspace;;google-workspace">}}
 
 ## Security findings
