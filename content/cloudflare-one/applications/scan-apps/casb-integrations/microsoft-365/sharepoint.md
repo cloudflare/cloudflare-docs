@@ -7,7 +7,7 @@ weight: 3
 
 # SharePoint
 
-The SharePoint integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="SharePoint;;Microsoft 365 account">}}
 
 ## Integration prerequisites
 

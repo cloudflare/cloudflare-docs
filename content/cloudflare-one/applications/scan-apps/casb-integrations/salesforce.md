@@ -6,7 +6,7 @@ rss: file
 
 # Salesforce
 
-The Salesforce integration detects a variety of misconfiguration, data loss prevention, and user security risks in an integrated Salesforce environment that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Salesforce;;Salesforce environment">}}
 
 ## Integration prerequisites
 

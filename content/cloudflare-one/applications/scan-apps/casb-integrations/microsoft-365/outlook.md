@@ -7,7 +7,7 @@ weight: 4
 
 # Outlook
 
-The Outlook integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Outlook;;Microsoft 365 account">}}
 
 ## Integration prerequisites
 

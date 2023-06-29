@@ -6,7 +6,7 @@ rss: file
 
 # Google Admin
 
-The Google Admin integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Google Admin;;Google Workspace account">}}
 
 ## Integration prerequisites
 

@@ -6,7 +6,7 @@ rss: file
 
 # Dropbox
 
-The Dropbox integration detects a variety of data loss prevention, account misconfiguration, and user security risks in an integrated Dropbox account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Dropbox;;Dropbox account">}}
 
 ## Integration prerequisites
 

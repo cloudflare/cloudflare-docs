@@ -6,7 +6,7 @@ rss: file
 
 # Microsoft 365
 
-The Microsoft 365 (M365) integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Microsoft 365 (M365);;Microsoft 365 account">}}
 
 This integration covers the following Microsoft 365 products:
 

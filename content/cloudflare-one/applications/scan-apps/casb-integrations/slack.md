@@ -6,7 +6,7 @@ rss: file
 
 # Slack
 
-The Slack integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Slack Workspace that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Slack;;Slack Workspace">}}
 
 ## Integration prerequisites
 

@@ -6,7 +6,7 @@ rss: file
 
 # Google Workspace
 
-The Google Workspace integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Google Workspace;;Google Workspace account">}}
 
 This integration covers the following Google Workspace products:
 

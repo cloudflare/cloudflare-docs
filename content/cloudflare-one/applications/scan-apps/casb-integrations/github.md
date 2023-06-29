@@ -6,7 +6,7 @@ rss: file
 
 # GitHub
 
-The GitHub integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated GitHub Organization that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="GitHub;;GitHub Organization">}}
 
 ## Integration prerequisites
 

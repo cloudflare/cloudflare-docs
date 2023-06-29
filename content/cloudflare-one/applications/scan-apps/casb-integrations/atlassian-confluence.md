@@ -6,7 +6,7 @@ rss: file
 
 # Atlassian Confluence
 
-The Atlassian Confluence integration detects a variety of data loss prevention, account misconfiguration, and user security risks in an integrated Atlassian Confluence Cloud account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Atlassian Confluence;;Atlassian Confluence Cloud account">}}
 
 {{<Aside type="note">}}
 At this time, the CASB integration for Confluence is only compatible with Confluence Cloud accounts. Support for Confluence Data Center will come at a future date.
