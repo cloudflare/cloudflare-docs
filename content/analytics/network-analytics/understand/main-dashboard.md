@@ -75,13 +75,13 @@ The **Mitigation System Distribution** card displays the amount of traffic (in t
 
 The Network Analytics **Packet sample log** shows up to 100 log events — including both allowed and dropped packets — in the currently selected time range, paginated with 10 results per page per time range view (the [GraphQL Analytics API](/analytics/graphql-api/) does not have this limitation).
 
-Expand each row to display event details.
+Expand each row to display event details, including the full packet headers and metadata.
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="fields in the expanded event details">}}
 
 ## Data center country/Source data center
 
-Displays the top source data centers where Cloudflare received the packets displayed in the dashboard, according to the selected time range and filters. The same card can also display the country associated with these top source data centers.
+Displays the top source Cloudflare data centers where the displayed traffic was ingested. The same card can also display the country associated with these top source data centers.
 
 To switch between **Data center country** and **Source data center** information, use the dropdown in the card.
 
