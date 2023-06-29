@@ -20,7 +20,7 @@ When enabled, content scanning attempts to detect content objects, such as uploa
 
 ## Default configuration
 
-Once you enable the feature, the default content scanner behavior is to scan certain content objects such as `multipart/form-data` file uploads for malicious content. However, the WAF will only perfom an action on requests with content considered malicious once you create a WAF custom rule.
+Once you enable the feature, the default content scanner behavior is to scan certain content objects such as `multipart/form-data` file uploads for malicious content. However, the WAF will only perform an action on requests with content considered malicious once you create a WAF custom rule.
 
 ## Custom scan expressions
 
@@ -141,7 +141,7 @@ When enabled, WAF content scanning provides the following fields you can use in 
     <td>The number of malicious content objects detected in the request (zero or greater).</td>
   </tr>
   <tr>
-    <td><code>cf.waf.content_scan.scan_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
+    <td><code>cf.waf.content_scan.has_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
     <td>When true, the file scanner was unable to scan all the content objects detected in the request.</td>
   </tr>
   <tr>
