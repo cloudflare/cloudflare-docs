@@ -17,7 +17,7 @@ meta:
 
 2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
-3. Configure the displayed data. You can [adjust the time range](/analytics/network-analytics/configure/time-range/), [select the main metric](/analytics/network-analytics/configure/displayed-data/#select-high-level-metric) (total packet rate or total bit rate), [apply filters](/analytics/network-analytics/configure/displayed-data/#apply-filters), and more.
+3. Configure the displayed data. You can [adjust the time range](/analytics/network-analytics/configure/time-range/), [select the main metric](/analytics/network-analytics/configure/displayed-data/#select-high-level-metric) (total packets or total bytes), [apply filters](/analytics/network-analytics/configure/displayed-data/#apply-filters), and more.
 
 ## Get Network Analytics data via API
 
