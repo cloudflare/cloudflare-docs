@@ -162,18 +162,18 @@ const reader = socket.readable.getReader(); // This fails
 
 ## Troubleshooting
 
-Below is a description of common error messages you may see when working with TCP Sockets, what they mean and how to solve them.
+Review descriptions of common error messages you may see when working with TCP Sockets, what the error messages mean, and how to solve them.
 
 ### `proxy request failed, cannot connect to the specified address`
 
-Your socket is connecting to an address that was disallowed. Examples include Cloudflare IPs, localhost, and private network IPs.
+Your socket is connecting to an address that was disallowed. Examples of a disallowed address include Cloudflare IPs, `localhost`, and private network IPs.
 
-If you need to connect to addresses on port 80 or 443 to make HTTP requests, consider instead using `fetch`.
+If you need to connect to addresses on port `80` or `443` to make HTTP requests, use [`fetch`](/workers/runtime-apis/fetch/).
 
 ### `TCP Loop detected`
 
-Your socket is connecting back to the Worker that initiated the outbound connection. In other words, it is connecting back to itself. This is currently not supported. Get in touch with us if this is something you require.
+Your socket is connecting back to the Worker that initiated the outbound connection. In other words, the Worker is connecting back to itself. This is currently not supported.
 
 ### `Connections to port 25 are prohibited`
 
-Your socket is connecting to an address on port 25. This is usually the port used for SMTP mail servers. Workers cannot create outbound connections on port `25`. Consider using [Cloudflare Email Workers](/email-routing/email-workers/) instead.
+Your socket is connecting to an address on port `25`. This is usually the port used for SMTP mail servers. Workers cannot create outbound connections on port `25`. Consider using [Cloudflare Email Workers](/email-routing/email-workers/) instead.
