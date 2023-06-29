@@ -5,7 +5,7 @@ meta:
   title: Connect to Cloudflare Gateway with Magic WAN
 ---
 
-# Connect to Cloudflare Gateway with Magic WAN
+# Cloudflare Gateway with Magic WAN
 
 [Cloudflare Gateway](/cloudflare-one/policies/filtering/), our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
 
