@@ -49,10 +49,10 @@ This is specially useful if you already have mTLS implemented and client certifi
   
   - `mtls_certificate_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    - The Certificate ID obtained from previous step.
+    - The Certificate ID obtained from the previous step.
 
     - {{<Aside type="warning">}}  
-  If no `mtls_certificate_id` is provided, the hostnames will be associated to your active Cloudflare Managed CA.
+  If no `mtls_certificate_id` is provided, the hostnames will be associated to a Cloudflare Managed CA.
   {{</Aside>}}
 
   {{</definitions>}}  
@@ -74,3 +74,14 @@ Note that, with the [migration of Firewall Rules to WAF Custom Rules](/waf/refer
 {{</Aside>}}
 
 ## Delete an uploaded CA
+
+If you want to remove a CA that you have previously uploaded, you must first remove any hostname associations that it has.
+
+1. Make a request to the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations), with an empty array for `hostnames` and specifying your CA certificate id in `mtls_certificate_id`:
+
+```text
+  "hostnames": [], 
+  "mtls_certificate_id": "block"
+```
+
+2. Use the [Delete mTLS certificate endpoint](api/operations/m-tls-certificate-management-delete-m-tls-certificate) to delete the certificate.
