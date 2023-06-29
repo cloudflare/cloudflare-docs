@@ -17,7 +17,7 @@ rss: file
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Google Calendar">}}
+{{<render file="casb/_security-findings.md" withParameters="Google Calendar;;google-workspace/google-calendar">}}
 
 ### Calendar sharing
 

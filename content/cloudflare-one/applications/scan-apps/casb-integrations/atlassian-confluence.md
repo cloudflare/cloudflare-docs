@@ -34,7 +34,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Atlassian Confluence">}}
+{{<render file="casb/_security-findings.md" withParameters="Atlassian Confluence;;atlassian-confluence">}}
 
 ### Access security
 

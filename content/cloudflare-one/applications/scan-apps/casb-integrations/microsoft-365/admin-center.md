@@ -18,7 +18,7 @@ weight: 1
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Admin Center">}}
+{{<render file="casb/_security-findings.md" withParameters="Admin Center;;microsoft-365/admin-center">}}
 
 ### User account settings
 

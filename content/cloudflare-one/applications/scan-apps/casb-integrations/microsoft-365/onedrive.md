@@ -18,7 +18,7 @@ weight: 2
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="OneDrive">}}
+{{<render file="casb/_security-findings.md" withParameters="OneDrive;;microsoft-365/onedrive">}}
 
 ### File sharing
 

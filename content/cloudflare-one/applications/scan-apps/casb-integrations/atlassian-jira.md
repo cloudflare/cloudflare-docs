@@ -29,7 +29,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Jira Cloud">}}
+{{<render file="casb/_security-findings.md" withParameters="Jira Cloud;;atlassian-jira">}}
 
 ### Access security
 

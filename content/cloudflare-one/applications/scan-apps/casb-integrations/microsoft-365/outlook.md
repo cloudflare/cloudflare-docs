@@ -18,7 +18,7 @@ weight: 4
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Outlook">}}
+{{<render file="casb/_security-findings.md" withParameters="Outlook;;microsoft-365/outlook">}}
 
 ### Calendar sharing
 

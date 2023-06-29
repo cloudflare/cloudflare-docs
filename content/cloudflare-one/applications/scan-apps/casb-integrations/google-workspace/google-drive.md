@@ -18,7 +18,7 @@ weight: 1
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Google Drive">}}
+{{<render file="casb/_security-findings.md" withParameters="Google Drive;;google-workspace/google-drive">}}
 
 ### File sharing
 

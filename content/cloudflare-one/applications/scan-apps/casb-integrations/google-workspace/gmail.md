@@ -18,7 +18,7 @@ weight: 2
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Gmail">}}
+{{<render file="casb/_security-findings.md" withParameters="Gmail;;google-workspace/gmail">}}
 
 ### Gmail administrator settings
 

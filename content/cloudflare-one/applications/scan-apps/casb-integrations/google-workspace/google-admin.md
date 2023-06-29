@@ -17,7 +17,7 @@ rss: file
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Google Admin">}}
+{{<render file="casb/_security-findings.md" withParameters="Google Admin;;google-workspace/google-admin">}}
 
 ### User account settings
 

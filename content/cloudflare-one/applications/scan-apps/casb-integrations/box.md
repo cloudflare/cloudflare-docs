@@ -24,7 +24,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Box">}}
+{{<render file="casb/_security-findings.md" withParameters="Box;;box">}}
 
 ### File sharing
 

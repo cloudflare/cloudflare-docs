@@ -18,7 +18,7 @@ weight: 3
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="SharePoint">}}
+{{<render file="casb/_security-findings.md" withParameters="SharePoint;;microsoft-365/sharepoint">}}
 
 ### File sharing
 

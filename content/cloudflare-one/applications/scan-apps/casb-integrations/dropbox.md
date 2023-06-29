@@ -34,7 +34,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Dropbox">}}
+{{<render file="casb/_security-findings.md" withParameters="Dropbox;;dropbox">}}
 
 ### File and folder sharing
 

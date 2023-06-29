@@ -38,7 +38,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Microsoft 365">}}
+{{<render file="casb/_security-findings.md" withParameters="Microsoft 365;;microsoft-365">}}
 
 ### User account settings
 
