@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Subdomain setup
 weight: 3
+layout: single
 ---
 
 # Subdomain setup
