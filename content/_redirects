@@ -917,6 +917,10 @@
 /workers/learning/using-websockets/ /workers/runtime-apis/websockets/ 301
 /workers/runtime-apis/websockets/ /workers/runtime-apis/websockets/websockets/ 301
 /workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
+/workers/platform/webassembly/ /workers/runtime-apis/webassembly/ 301
+/workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
+/workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
+/workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
 
 
 

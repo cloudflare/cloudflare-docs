@@ -79,5 +79,5 @@ await someResponse.body.pipeTo(writable);
 
 ## Related resources
 
-- [Using Streams](/workers/learning/using-streams/)
+- [Using Streams](/workers/runtime-apis/streams/)
 - [Writable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#ws-model)
