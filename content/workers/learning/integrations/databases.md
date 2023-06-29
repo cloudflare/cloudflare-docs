@@ -263,7 +263,7 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
 
 2. Insert some data to your Upstash database. You can add data to your Upstash database in two ways:
     - Use the CLI directly from your Upstash console.
-    - Alternatively, install [`redis-cli`](https://redis.io/docs/getting-started/installation/) locally and run the following commands. 
+    - Alternatively, install [redis-cli](https://redis.io/docs/getting-started/installation/) locally and run the following commands. 
 
     ```sh
     ➜ set GB "Ey up?"
