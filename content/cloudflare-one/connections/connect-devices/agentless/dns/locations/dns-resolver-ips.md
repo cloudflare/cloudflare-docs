@@ -11,13 +11,13 @@ When you create a DNS location, Gateway assigns IPv4/IPv6 addresses and DoT/DoH 
 
 To view the DNS resolver IPs for a DNS location, navigate to **Gateway** > **DNS Locations** and expand its location card.
 
-![View IP addresses and hostnames assigned to a DNS location](/cloudflare-one/static/documentation/policies/location-ips.png)
+![View IP addresses and hostnames assigned to a DNS location](/images/cloudflare-one/policies/location-ips.png)
 
 ## How Gateway matches queries to DNS locations
 
 Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
-![Flowchart for how Gateway determines the location of a DNS query. See below for discussion.](/cloudflare-one/static/documentation/policies/gateway-determine-location-dns.png)
+![Flowchart for how Gateway determines the location of a DNS query. See below for discussion.](/images/cloudflare-one/policies/gateway-determine-location-dns.png)
 
 **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
 

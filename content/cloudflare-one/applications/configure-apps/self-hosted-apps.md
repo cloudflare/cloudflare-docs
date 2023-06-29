@@ -8,7 +8,7 @@ weight: 2
 
 Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer between the end user and your origin. You can use signals from your existing identity providers (IdPs), device posture providers, and [other rules](/cloudflare-one/policies/access/#selectors) to control who can access your application.
 
-![Cloudflare Access authenticates users to your internal applications.](/cloudflare-one/static/documentation/applications/network-diagram.png)
+![Cloudflare Access authenticates users to your internal applications.](/images/cloudflare-one/applications/network-diagram.png)
 
 ## Prerequisites
 
@@ -31,25 +31,15 @@ Cloudflare Access allows you to securely publish internal tools and applications
    - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) that you control.
    - You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
 
-7. (Optional) If you want the application to be visible in the [App Launcher](/cloudflare-one/applications/app-launcher):
-   1. Select **Enable App in App Launcher**. The App Launcher link will only appear for users who are allowed by your Access policies. Blocked users will not see the app in their App Launcher.
+7. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-   {{<Aside type="note">}}
-   This toggle does not impact the user's ability to reach the application. Allowed users can always reach the application via a direct link, regardless of whether the toggle is enabled. Blocked users will never have access to the application.
-   {{</Aside>}}
+8. {{<render file="_access-block-page.md">}}
 
-   2. Choose a domain to use for the App Launcher link.
-   3. To add a custom logo for your application, select **Custom** and enter a link to your desired image.
+9. In the **Identity Providers** card, select the identity providers you want to enable for your app.
 
-   {{<Aside type="note">}}
-   If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-   {{</Aside>}}
+10. (Optional) Turn on **Instant Auth** if you selected only one IdP and want users to skip the identity provider selection step.
 
-8. In the **Identity Providers** card, select the identity providers you want to enable for your app.
-
-9. (Optional) Turn on **Instant Auth** if you selected only one IdP and want users to skip the identity provider selection step.
-
-10. Select **Next**.
+11. Select **Next**.
 
 ## 2. Add an Access policy
 

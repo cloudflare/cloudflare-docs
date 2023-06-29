@@ -50,7 +50,7 @@ In order to scan historical data, you must enable the DLP profile during the [in
 
 ## Supported integrations
 
-- [Google Workspace](/cloudflare-one/applications/scan-apps/casb-integrations/google-workspace/)
+- [Google Drive](/cloudflare-one/applications/scan-apps/casb-integrations/google-workspace/google-drive/)
 
 ## Limitations
 

@@ -14,7 +14,6 @@ meta:
     like GitHub, track and version changes over time, and roll back when
     needed—all without needing to learn the Cloudflare APIs
   author: '@cloudflare'
-  
 
 externals:
   - title: GitHub @cloudflare/terraform-provider-cloudflare

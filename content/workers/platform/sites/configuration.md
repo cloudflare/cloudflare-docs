@@ -31,7 +31,7 @@ To learn more about the optional `include` and `exclude` fields, refer to [Ignor
 
 {{<Aside type="note">}}
 
-If your project uses [environments](/workers/platform/environments/), make sure to place `site` above any environment-specific configuration blocks.
+If your project uses [environments](/workers/wrangler/environments/), make sure to place `site` above any environment-specific configuration blocks.
 
 {{</Aside>}}
 

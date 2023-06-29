@@ -43,7 +43,7 @@ ___
 
 -   ここでは、https://junade.com で実行されているWordPressを例として使います。そのため、Page Ruleは、https://junade.com/\*と一致していなければなりません。
 
-![Screen_Shot_2017-03-09_at_16.54.36.png](/support/static/Screen_Shot_2017-03-09_at_16.54.36.png)
+![Screen_Shot_2017-03-09_at_16.54.36.png](/images/support/Screen_Shot_2017-03-09_at_16.54.36.png)
 
 4\. 追加のPage Ruleを設定して静的HTMLをキャッシュします：
 

@@ -39,7 +39,7 @@ ___
 
 8\. スイッチを **On**に切り替えます。
 
-![Mobile Redirect card with a sample URL, Keep path option, and the feature toggled to ](/support/static/hc-import-speed_mobileredirect_enabled.png)
+![Mobile Redirect card with a sample URL, Keep path option, and the feature toggled to ](/images/support/hc-import-speed_mobileredirect_enabled.png)
 
 ___
 

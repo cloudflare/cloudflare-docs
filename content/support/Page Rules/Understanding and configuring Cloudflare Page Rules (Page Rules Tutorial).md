@@ -9,8 +9,7 @@ title: Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
 You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
 
 {{<Aside type="warning">}}
-Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records)
-DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
+Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
 {{</Aside>}}
 
 The default number of allowed page rules depends on the domain plan as shown below.
@@ -29,8 +28,7 @@ It is important to understand two basic Page Rules behaviors:
 -   Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
 
 {{<Aside type="tip">}}
-Cloudflare recommends ordering your rules from most specific to least
-specific.
+Cloudflare recommends ordering your rules from most specific to least specific.
 {{</Aside>}}
 
 A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
@@ -114,14 +112,14 @@ _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/f
 
 -   To match both `http` and `https`, just write `example.com`. It is not necessary to write `*example.com`.
 -   To match every page on a domain, write `example.com/*`. Just writing _example.com_ won’t work.
--   To match every page on a domain and it's subdomains, write `*_example.com/*`. Just writing _example.com_ won’t work.
+-   To match every page on a domain and it's subdomains, write `*example.com/*`. Just writing _example.com_ won’t work.
 -   A wildcard (\*) in a Page Rule URL will match even if no characters are present, and may include any part of the URL, including the query string.
 
 ### Referencing wildcard matches
 
-You can reference a matched wildcard later using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
+In a _Forwarding URL_ rule, you can reference a matched wildcard in the _destination URL_ field by using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
 
-This is specifically useful with the _Forwarding URL_ setting. For example:
+For example:
 
 You could forward:
 
@@ -214,11 +212,11 @@ ___
 
 **Root cause**: This may be due to a configuration issue on a Page Rule. When creating a Page Rule that uses two wildcards, like a _Forwarding URL_ rule, it is possible to create a rule that mentions the second wildcard with the $2 placeholder. Refer to the example below:
 
-![Example Page Rule configuration with two wildcards. The forwarding URL contains a $2 placeholder, which will be replaced with the content matched by the second ](/support/static/page-rule-create.png)
+![Example Page Rule configuration with two wildcards. The forwarding URL contains a $2 placeholder, which will be replaced with the content matched by the second ](/images/support/page-rule-create.png)
 
 When updating the same rule, you can remove one of the wildcard in the **If the URL matches** field and save it. Refer to the example below:
 
-![Incorrect Page Rule configuration with a single wildcard, but still using the $2 placeholder in the forwarding URL. This configuration causes ](/support/static/page-rule-update.png)
+![Incorrect Page Rule configuration with a single wildcard, but still using the $2 placeholder in the forwarding URL. This configuration causes ](/images/support/page-rule-update.png)
 
 If you do so, the $2 placeholder reference a wildcard that does not exist anymore, and as such, an "_Error 500 (Internal server error)"_ is thrown when a URL triggers the page rule.
 

@@ -55,7 +55,7 @@ To understand why this happens, note that WordPress [concatenates Javascript fi
 
 The screenshot below shows an example where resources in the Media Library are not rendered correctly and the browser debugging console reveals that the page is throwing an error:
 
-![Resources in the Media Library are not rendered correctly](/support/static/media_library_enabling_query.png)
+![Resources in the Media Library are not rendered correctly](/images/support/media_library_enabling_query.png)
 
 When the page `load-scripts.php` loads, the browser sends a request to Cloudflare for:
 

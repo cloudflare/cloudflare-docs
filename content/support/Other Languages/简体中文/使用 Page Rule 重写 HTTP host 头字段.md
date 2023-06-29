@@ -21,4 +21,4 @@ title: 使用 Page Rule 重写 HTTP host 头字段
 
 要确保重写头字段，只需转到 Page Rule，指定此重写将应用的 URI，并写入要更改的主机头字段中。在“Host Header Override”文本框中执行此操作。任何与您指定的 URI 匹配的请求都会将 Host 覆盖到您在“Host Header Override”框中输入的主机头字段。 请参阅下面的示例：
 
-![](/support/static/Screen_Shot_2015-09-03_at_2.56.52_PM.png)
+![](/images/support/Screen_Shot_2015-09-03_at_2.56.52_PM.png)
