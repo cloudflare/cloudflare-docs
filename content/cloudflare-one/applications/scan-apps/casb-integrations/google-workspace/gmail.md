@@ -18,9 +18,7 @@ weight: 2
 
 ## Security findings
 
-The Gmail integration currently scans for the following findings, or security risks.
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Gmail">}}
 
 ### Gmail administrator settings
 

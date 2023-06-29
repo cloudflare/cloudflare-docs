@@ -17,9 +17,7 @@ rss: file
 
 ## Security findings
 
-The Google Admin integration currently scans for the following findings, or security risks.
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Google Admin">}}
 
 ### User account settings
 

@@ -33,9 +33,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Google Workspace integration currently scans for the following findings, or security risks.
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Google Workspace">}}
 
 ### User account settings
 

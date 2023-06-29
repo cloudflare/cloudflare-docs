@@ -18,9 +18,7 @@ weight: 1
 
 ## Security findings
 
-The Admin Center integration currently scans for the following findings or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/manage-findings/#severity-levels).
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Admin Center">}}
 
 ### User account settings
 
