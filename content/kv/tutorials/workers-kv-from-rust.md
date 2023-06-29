@@ -11,7 +11,7 @@ layout: single
 
 {{<render file="_tutorials-wrangler-v1-warning.md">}}
 
-In this tutorial, you will learn how to read and write to Workers KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers KV API.
+This tutorial will teach you how to read and write to Workers KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers KV API.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -20,7 +20,7 @@ In this tutorial, you will learn how to read and write to Workers KV directly fr
 To get started:
 
 1.  Run the `git clone` command to create a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/).
-2.  After running the `git clone` command, `cd` into the new project.
+2.  `cd` into the new project.
 3.  Use the current state of the git repository as the initial commit by running the `git add` and `git commit` commands in your terminal.
 
 ```sh
@@ -29,10 +29,11 @@ $ cd workers-kv-from-rust
 $ git add -A
 $ git commit -m 'Initial commit'
 ```
-
 ## Create and bind a KV namespace
 
-To be able to access Workers KV, define a binding for a particular KV namespace in the `wrangler.toml` file generated in your new project's directory. If you do not have an existing namespace, create one using `wrangler`. For example, a namespace called `KV_FROM_RUST` would be created by running:
+To access Workers KV, you have to define a binding for a particular KV namespace in the `wrangler.toml` file generated in your new project's directory. 
+
+If you do not have an existing namespace, create one using `wrangler`. For example, a namespace called `KV_FROM_RUST` would be created by running:
 
 ```sh
 $ wrangler kv:namespace create "KV_FROM_RUST"
@@ -99,9 +100,9 @@ async function handleRequest(request) {
 }
 ```
 
-Note that the signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JavaScript side. This tutorial will try to do as much as possible in Rust and pass the request directly to the wasm handler, which will then construct and return a response.
+The signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JavaScript side. 
 
-To do this, declare `web-sys` as one of your Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features (the `Url` and `UrlSearchParams` features will be used later in this tutorial):
+To pass the request directly to the wasm handler, declare `web-sys` as one of your Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features:
 
 ```toml
 ---
@@ -118,7 +119,7 @@ features = [
 ]
 ```
 
-You can now use `Request` and `Response` in Rust to create a very simple handler that completely ignores the request and always responds with a `200 OK` status:
+Use `Request` and `Response` in Rust to create a simple handler that ignores the request and responds with a `200 OK` status:
 
 ```rust
 ---
@@ -272,8 +273,6 @@ The above wrapper only exposes a subset of the options supported by the KV API, 
 
 ## Use the wrapper
 
-You are now ready to use the wrapper to read and write values to and from your KV namespace.
-
 The following function is an example handler that writes to KV on a `PUT` request, using the URL segments to determine the KV document's key name and value. For example, sending a `PUT` request to `/foo?value=bar` will write the `"bar"` value to the `foo` key.
 
 Additionally, the example handler will read from KV when on `GET` requests, using the URL pathname as the key name. For example, a `GET /foo` request will return the `foo` key's value, if any.
@@ -334,9 +333,9 @@ $ curl 'localhost:8787/foo'
 "bar"
 ```
 
-## Conclusion
+## Complete `lib.rs`
 
-With all previous steps complete, the final `lib.rs` should look as follows (you can also find the full code as an example repository at <https://github.com/fkettelhoit/workers-kv-from-rust>):
+Your `lib.rs` should look as follows:
 
 ```rust
 ---
@@ -467,3 +466,5 @@ impl WorkersKv {
     }
 }
 ```
+
+Refer to the [full code](https://github.com/fkettelhoit/workers-kv-from-rust) as an example repository.
