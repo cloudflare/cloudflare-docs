@@ -34,6 +34,7 @@ export const OWNERS: Record<string, string[]> = {
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
   "load-balancing": ["patriciasantaana"],
+  kv: ["Maddy-Cloudflare"],
   logs: ["angelampcosta"],
   "magic-firewall": ["marciocloudflare"],
   "magic-network-monitoring": ["marciocloudflare"],
