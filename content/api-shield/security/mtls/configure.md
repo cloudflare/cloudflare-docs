@@ -1,6 +1,7 @@
 ---
 title: Configure
 pcx_content_type: how-to
+weight: 2
 meta:
   title: Configure mTLS
 ---
