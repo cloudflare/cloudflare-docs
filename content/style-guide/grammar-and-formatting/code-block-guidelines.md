@@ -12,7 +12,7 @@ You can create code blocks by:
 + Using triple-acute characters as a "fence" around the code block. (Recommended)
 + Indenting lines by four spaces or one tab.
 
-To define the syntax highlighting language used for the code block, enter a language name after the first fence. Refer to the [List of languages used in Cloudflare developer documentation](/style-guide/grammar-and-formatting/code-block-guidelines/#list-of-languages-being-used-in-dev-docs) for a list of supported languages.
+To define the syntax highlighting language used for the code block, enter a language name after the first fence. Refer to the [List of languages used in Cloudflare developer documentation](/style-guide/grammar-and-formatting/code-block-guidelines/#list-of-languages-being-used-in-cloudflare-developer-documentation) for a list of supported languages.
 
 Use the `txt` language when there is no appropriate syntax highlighting (for example, a fragment of an Apache configuration file).
 
@@ -126,6 +126,7 @@ Examples:
 + `js` (alias: `javascript`)
 + `json`
 + `kotlin`
++ `php`
 + `python` (alias: `py`)
 + `ruby` (alias: `rb`)
 + `rust` (alias: `rs`)
