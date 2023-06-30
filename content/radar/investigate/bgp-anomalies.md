@@ -388,4 +388,4 @@ async function send_email_alert(hijacker, prefixes, victims) {
 
 Refer to our [API documentation][api-portal] for more information on these topics.
 
-[api-portal]: /api/operations/radar_get_Us
+[api-portal]: /api/operations/radar-get-bgp-hijacks-events
