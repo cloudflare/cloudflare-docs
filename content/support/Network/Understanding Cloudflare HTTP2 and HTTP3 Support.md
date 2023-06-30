@@ -6,11 +6,7 @@ title: Understanding Cloudflare HTTP2 and HTTP3 Support
 
 # Understanding Cloudflare HTTP/2 and HTTP/3 Support
 
-
-
-## Overview
-
-HTTP/2 and HTTP/3 accelerate page load. They are both free for all [Cloudflare plans](https://www.cloudflare.com/plans) but require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/). Configure HTTP/2 and HTTP/3 via the Cloudflare **Speed** app > **Optimization**. HTTP/2 is enabled by default and domains on Free plans cannot disable it.
+HTTP/2 and HTTP/3 accelerate page load. They are both free for all [Cloudflare plans](https://www.cloudflare.com/plans) but require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/). Configure HTTP/2 and HTTP/3 via the Cloudflare **Speed** > **Optimization** > **Protocol Optimization**. HTTP/2 is enabled by default and domains on Free plans cannot disable it.
 
 A browser and web server automatically negotiate the highest protocol available. Thus, when both HTTP/3 and HTTP/2 are enabled, HTTP/3 takes precedence. 
 
@@ -31,7 +27,7 @@ ___
 
 ## HTTP/3
 
-HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better. Enable HTTP/3 via the Cloudflare **Speed** app > **Optimization**. 
+HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better. Enable HTTP/3 via the Cloudflare **Speed** > **Optimization** > **Protocol Optimization**. 
 
 For more information, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/performance/what-is-http3/).
 

@@ -28,7 +28,7 @@ For Cloudflare to start prefetching URLs, you will need to [enable the feature](
 To enable **Prefetch URLs** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Go to **Speed** > **Optimization**.
+2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3.  For **Prefetch URLs**, switch the toggle to **On**.
  
 {{</tab>}}

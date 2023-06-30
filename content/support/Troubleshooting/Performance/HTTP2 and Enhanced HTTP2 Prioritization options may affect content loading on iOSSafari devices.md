@@ -24,10 +24,10 @@ ___
 
 ## Workaround
 
-Check if **Enhanced HTTP/2 Prioritization** feature under the **Speed** app > **Optimization** tab is enabled.
+Make sure **Enhanced HTTP/2 Prioritization** is enabled at **Speed** > **Optimization** > **Protocols**.
 
 The speed of loading web content from the user’s perspective is dependent on the order in which the resources load. The greatest improvements will be experienced by visitors using Safari and Edge browsers. In some cases, this may not occur.
 
-If you are seeing the behavior on iOS or Safari devices, disable the **Enhanced HTTP/2 Prioritization** feature under the **Speed** app > **Optimization** tab.
+If you are seeing the behavior on iOS or Safari devices, disable **Enhanced HTTP/2 Prioritization**.
 
 On occasion, this option can sometimes re-enable automatically if **HTTP/2** feature on the **Network** app is enabled. You may need to disable **HTTP/2** feature first.

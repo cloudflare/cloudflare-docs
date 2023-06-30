@@ -18,7 +18,7 @@ AMP Real URL is available for all plans. However, refer to the following require
 If your account satisfies the requirements to enable AMP Real URL:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Speed** > **Optimization**.
+2. Go to **Speed** > **Optimization** > **Other**.
 3. Scroll to **AMP Real URL** and toggle the button to enable it.
 
 ## Limitations

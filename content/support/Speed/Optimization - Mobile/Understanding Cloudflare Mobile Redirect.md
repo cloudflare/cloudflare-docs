@@ -6,10 +6,6 @@ title: Understanding Cloudflare Mobile Redirect
 
 # Understanding Cloudflare Mobile Redirect
 
-
-
-## Overview
-
 Mobile Redirect allows you to automatically redirect mobile device visitors to a mobile-optimized website or subdomain home page. The redirect is done at the edge of Cloudflare's network, improving the user experience by eliminating a roundtrip to your server.
 
 You must have Cloudflare's performance service enabled (["orange clouded"](https://support.cloudflare.com/hc/articles/200169626) in the **DNS** Settings) for the redirect to be active.
@@ -23,29 +19,17 @@ ___
 
 ## Enable Mobile Redirect
 
-1\. Log into your Cloudflare account.
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and zone.
+3. Go to **Speed** > **Optimization** > **Other**.
+4. For **Mobile Redirect**, select the subdomain that you would like to redirect from the drop down list.
+5. Choose **Keep Path** or **Drop Path**_._
 
-2\. Click the appropriate Cloudflare account for the domain where you want to enable Mobile Redirect.
+    {{<Aside type="note">}}
+**Keep Path** will redirect all mobile requests to the same resource hosted on your mobile-optimized website. **Drop Path** will redirect all mobile requests to your mobile-optimized website homepage.
+    {{</Aside>}}
 
-3\. Click the **Speed** app.
-
-4\. Click the **Optimization** tab.
-
-5\. Scroll down to the **Mobile** section of the **Optimization** tab.
-
-6\. Select the subdomain that you would like to redirect from the drop down list.
-
-7\. Choose **Keep Path** or **Drop Path**_._
-
-{{<Aside type="note">}}
-**Keep Path** will redirect all mobile requests to the same resource
-hosted on your mobile-optimized website. **Drop Path** will redirect all
-mobile requests to your mobile-optimized website homepage.
-{{</Aside>}}
-
-8\. Toggle switch to **On**.
-
-![Mobile Redirect card with a sample URL, Keep path option, and the feature toggled to ](/images/support/hc-import-speed_mobileredirect_enabled.png)
+6. Toggle switch to **On**.
 
 ___
 
@@ -65,8 +49,7 @@ Browsers from the following mobile devices are redirected to the mobile-optimize
 -   Docomo
 
 {{<Aside type="note">}}
-The iPad and Android tablet user agents will not match and trigger the
-mobile redirect feature.
+The iPad and Android tablet user agents will not match and trigger the mobile redirect feature.
 {{</Aside>}}
 
 ___
