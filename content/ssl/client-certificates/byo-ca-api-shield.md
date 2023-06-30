@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Bring your own CA for API Shield mTLS
 weight: 6
+meta:
+  description: API Shield mTLS now supports client certificates that have not been issued by Cloudflare CA. Learn how you can bring your own CA and use Cloudflare to protect your API.
 ---
 
 # Bring your own CA for API Shield mTLS
@@ -53,7 +55,7 @@ This is specially useful if you already have mTLS implemented and client certifi
     - Indicate the certificate ID obtained from the previous step.
 
     - {{<Aside type="warning">}}  
-  If no `mtls_certificate_id` is provided, the hostnames will be associated to a Cloudflare Managed CA.
+  If no `mtls_certificate_id` is provided, the action will be performed against a Cloudflare Managed CA.
   {{</Aside>}}
 
   {{</definitions>}}  
