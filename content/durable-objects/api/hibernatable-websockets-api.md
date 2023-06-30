@@ -10,7 +10,7 @@ The Hibernatable WebSockets API allows a Durable Object that is not currently ru
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events.
 
-The Hibernatable WebSocket APIs enable you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/learning/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
+The Hibernatable WebSocket APIs enable you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
 
 For WebSocket proxy use-cases, [refer to the standard WebSocket API documentation](/workers/learning/using-websockets/#writing-a-websocket-client).
 
