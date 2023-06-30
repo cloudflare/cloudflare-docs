@@ -1519,7 +1519,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro and above",
+          "summary": "Paid plans",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1528,7 +1528,7 @@
         },
         "b_script_monitor": {
           "title": "Script monitor",
-          "summary": "Pro and above",
+          "summary": "Paid plans",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1555,7 +1555,7 @@
         },
         "e_malicious_scripts": {
           "title": "Malicious script detection<br/> and alerting",
-          "summary": "Enterprise-only",
+          "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1564,7 +1564,7 @@
         },
         "f_code_change_detection": {
           "title": "Code change detection<br /> and alerting",
-          "summary": "Enterprise-only",
+          "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1582,7 +1582,7 @@
         },
         "i_malicious_connections": {
           "title": "Malicious connection detection<br/> and alerting",
-          "summary": "Enterprise-only",
+          "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
           "biz": "No",
