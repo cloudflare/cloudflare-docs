@@ -78,9 +78,9 @@ Each table contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/workers/platform/environments/) script.
+  - `script_name` - Optional. Defaults to the current [environment's](/workers/wrangler/environments/) script.
 
-If you are using Wrangler [environments](/workers/platform/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. 
+If you are using Wrangler [environments](/workers/wrangler/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. 
 
 Durable Object bindings are not inherited. For example, you can define an environment named `staging` as below:
 
@@ -91,7 +91,7 @@ durable_objects.bindings = [
 ]
 ```
 
-Because Wrangler appends the [environment name](/workers/platform/environments/#naming) to the top-level name when publishing, for a Worker named `worker-name` the above example is equivalent to:
+Because Wrangler appends the [environment name](/workers/wrangler/environments/) to the top-level name when publishing, for a Worker named `worker-name` the above example is equivalent to:
 
 ```toml
 [env.staging]
@@ -115,7 +115,7 @@ durable_objects.bindings = [
 
 A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/) or Durable Objects. A binding is a runtime variable that the Workers runtime provides to your code.
 
-You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding’s variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables/) documentation for more information.
+You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding’s variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/wrangler/environments/) documentation for more information.
 
 {{</Aside>}}
 
@@ -129,7 +129,7 @@ Migration tags are treated like unique names and are used to determine which mig
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
-All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/platform/environments/).
+All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/wrangler/environments/).
 
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 

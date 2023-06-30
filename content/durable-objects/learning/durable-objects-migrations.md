@@ -46,7 +46,7 @@ Migration tags are treated like unique names and are used to determine which mig
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
-All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/platform/environments/).
+All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/wrangler/environments/).
 
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 

@@ -79,7 +79,7 @@ To use a jurisdiction, first create a jursidictional subnamespace:
 let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');
 ```
 
-A jurisdictional subnamespace works like a normal Durable Object namespace (`OBJECT_NAMESPACE` above), except that IDs created within them permanently encode the jurisdiction that was used to create the subnamespace. Additionally, the `idFromString` and `get` methods will throw an exception if the IDs passed into them are not within the subnamespace's jurisdiction. Once you have a subnamespace you can use all of the namespace methods documented above.
+A jurisdictional subnamespace works like a normal Durable Object namespace (`OBJECT_NAMESPACE` above), except that IDs created within them permanently encode the jurisdiction that was used to create the subnamespace. Additionally, the `idFromString()` and `get()` methods will throw an exception if the IDs passed into them are not within the subnamespace's jurisdiction. Once you have a subnamespace you can use all of the namespace methods documented above.
 
 To create a new Object ID that will only run and persist data within the jurisdiction:
 

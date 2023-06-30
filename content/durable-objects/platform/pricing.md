@@ -16,7 +16,7 @@ Durable Objects are only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-1. Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. Prefer using [`state.acceptWebSocket()`](/durable-objects/api/websockets-api/#state-methods-for-websockets), which will stop incurring duration charges once all event handlers finish running.
+1. Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. Prefer using [`state.acceptWebSocket()`](/durable-objects/api/hibernatable-websockets-api/#state-methods-for-websockets), which will stop incurring duration charges once all event handlers finish running.
 
 2. Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 
