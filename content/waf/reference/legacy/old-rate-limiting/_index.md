@@ -11,7 +11,7 @@ layout: single
 Cloudflare Rate Limiting automatically identifies and mitigates excessive request rates for specific URLs or for an entire domain.
 
 {{<Aside type="warning">}}
-The information in this page refers to the previous version of rate limiting rules, which are billed based on usage and is now deprecated.
+The information in this page refers to the previous version of rate limiting rules (now deprecated), which are billed based on usage.
 
 To benefit from unmetered rate limiting, rewrite your current rules in the [new version of rate limiting rules](/waf/rate-limiting-rules/). For more information, refer to the [migration guide](/waf/reference/migration-guides/old-rate-limiting-deprecation/).
 {{</Aside>}}
