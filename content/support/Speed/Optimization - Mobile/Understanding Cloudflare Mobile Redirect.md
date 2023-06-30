@@ -23,7 +23,7 @@ ___
 2. Select your account and zone.
 3. Go to **Speed** > **Optimization** > **Other**.
 4. For **Mobile Redirect**, select the subdomain that you would like to redirect from the drop down list.
-5. Choose **Keep Path** or **Drop Path**_._
+5. Choose **Keep Path** or **Drop Path**.
 
     {{<Aside type="note">}}
 **Keep Path** will redirect all mobile requests to the same resource hosted on your mobile-optimized website. **Drop Path** will redirect all mobile requests to your mobile-optimized website homepage.
