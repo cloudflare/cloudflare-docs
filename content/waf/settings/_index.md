@@ -1,9 +1,8 @@
 ---
 pcx_content_type: navigation
-title: Security
-weight: 7
+title: WAF Settings
 ---
 
-# Security
+# Settings
 
 {{<directory-listing>}}

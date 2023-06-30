@@ -347,6 +347,8 @@
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
+/fundamentals/security/ /waf/settings/ 301
+/fundamentals/security/challenge-passage/ /waf/settings/challenge-passage/ 301
 /fundamentals/signed-exchanges/ /fundamentals/speed/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /fundamentals/speed/amp-real-ulr/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /fundamentals/speed/amp-real-ulr/enable-amp-real-url/ 301
@@ -434,8 +436,6 @@
 
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
-
-#magic-network-monitoring
 /magic-network-monitoring/routers/sflow-jflow-config/ /magic-network-monitoring/routers/sflow-config/ 301
 
 # magic-transit
@@ -730,6 +730,12 @@
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
 /waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 /support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/ /waf/reference/legacy/old-waf-managed-rules/ 301
+/support/firewall/settings/ /waf/settings/ 301
+/support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /waf/settings/under-attack-mode/ 301
+/support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /waf/settings/browser-integrity-check/ 301
+/support/firewall/settings/understanding-the-cloudflare-security-level/ /waf/settings/security-level/ 301
+/support/firewall/settings/using-privacy-pass-with-cloudflare/ /waf/settings/privacy-pass/ 301
+/support/firewall/tools/ /waf/ 301
 /support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
 /support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-waf-managed-rules/troubleshooting/ 301
 
