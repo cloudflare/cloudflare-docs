@@ -21,7 +21,7 @@ HTTP/2 uses the TCP transport protocol and TLS to secure communications. It impr
 
 Note:
 
--   How browsers choose which requests to multiplexing in a single connection is a complext topic. Typically a connection applies to a single domain. However, HTTP/2 supports [connection coalescing](https://www.rfc-editor.org/rfc/rfc9113.html#name-connection-reuse), where clients can carry out additional checks and if they pass, requests for different domains can also be multiplexed.
+-   How browsers choose which requests to multiplexing in a single connection is a complex topic. Typically a connection applies to a single domain. However, HTTP/2 supports [connection coalescing](https://www.rfc-editor.org/rfc/rfc9113.html#name-connection-reuse), where clients can carry out additional checks and if they pass, requests for different domains can also be multiplexed.
 
 ___
 
