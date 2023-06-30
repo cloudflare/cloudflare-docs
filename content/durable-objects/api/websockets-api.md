@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 16
 ---
 
-{{<beta>}}WebSockets API{{</beta>}}
+{{<beta>}}Hibernatable WebSockets API{{</beta>}}
 
 The WebSockets API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/alarms-in-durable-objects/), to be removed from memory while keeping its WebSockets connected ("hibernation").
 
