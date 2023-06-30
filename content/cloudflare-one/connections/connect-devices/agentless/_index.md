@@ -6,8 +6,10 @@ weight: 2
 
 # Agentless options
 
-If you are unable to install the WARP client on your devices (for example, Windows Server does not support the WARP client), you can use agentless options to perform a subset of Gateway functions.
+If you are unable to install the WARP client on your devices (for example, Windows Server does not support the WARP client), you can use agentless options to enable a subset of Zero Trust features.
 
-- **[DNS filtering](/cloudflare-one/connections/connect-devices/agentless/dns/)** without WARP requires changing your local DNS resolver to Cloudflare.
-- **[HTTP filtering](/cloudflare-one/connections/connect-devices/agentless/pac-files/)** without WARP requires configuring your browser to forward traffic to a Cloudflare proxy server.
-
+- **[DNS filtering](/cloudflare-one/connections/connect-devices/agentless/dns/)**
+- **[HTTP filtering](/cloudflare-one/connections/connect-devices/agentless/pac-files/)**
+- **[Access policies (without device posture)](/cloudflare-one/policies/access/)** for [web applications](/cloudflare-one/applications/configure-apps/) and [browser-rendered](/cloudflare-one/applications/non-http/#rendering-in-the-browser) SSH and VNC connections.
+- **[Remote Browser Isolation](/cloudflare-one/policies/browser-isolation/)** via an [Access policy](/cloudflare-one/policies/access/isolate-application/), [prefixed URLs](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/), or a [non-identity on-ramp](/cloudflare-one/policies/browser-isolation/setup/non-identity/).
+- **[Cloud Access Security Broker](/cloudflare-one/applications/scan-apps/)**
