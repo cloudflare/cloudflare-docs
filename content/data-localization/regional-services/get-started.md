@@ -24,7 +24,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 | --- | --- |
 | Australia | Cloudflare will only use data centers that are physically located within Australia to decrypt and service HTTPS traffic. |
 | Canada | Cloudflare will only use data centers that are physically located within Canada to decrypt and service HTTPS traffic. |
-| European Union | Cloudflare will only use data centers that are physically located within the European Union. For more details, refer to the [list of European Union countrie](https://european-union.europa.eu/principles-countries-history/country-profiles_en)s. |
+| European Union | Cloudflare will only use data centers that are physically located within the European Union. For more details, refer to the [list of European Union countries](https://european-union.europa.eu/principles-countries-history/country-profiles_en). |
 | India | Cloudflare will only use data centers that are physically located within India to decrypt and service HTTPS traffic. |
 | Japan | Cloudflare will only use data centers that are physically located within Japan to decrypt and service HTTPS traffic. |
 | United States of America | Cloudflare will only use data centers that are physically located within the United States of America to decrypt and service HTTPS traffic. |
