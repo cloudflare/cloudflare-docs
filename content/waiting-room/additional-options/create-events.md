@@ -18,13 +18,16 @@ Any properties set on the event will override the default property on the waitin
 2.  Expand a waiting room  and select **Schedule event**.
 3.  Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
 4.  You can also enable the pre-queueing — in this case you need to define a pre-queueing time. And you can also select **Shuffle at event start** and all users in the pre-queue will be randomly admitted at event start.
+
+    {{<Aside type="note">}}Enabling pre-queuing will send all new users to your pre-queue during the pre-queueing time period. If you would like to also pre-queue users already active, make the pre-queueing time period longer than the session duration and disable session renewal in the **Settings** section. Once active users sessions expire, they will be placed into the pre-queue before your event starts.{{</Aside>}}
+
 5.  Select **Next**.
 6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base waiting room, the corresponding Event setting will update as well.
 
     {{<Aside type="note">}}If you choose to override the values of Total active users, you must also override the number of New users per minute, and vice versa.{{</Aside>}}
 
 7.  Select **Next**.
-8.  In the customization section, you can select Always inherit your waiting room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. M​ake sure to preview the result before continuing.
+8.  In the customization section, you can select Always inherit your waiting room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. Make sure to preview the result before continuing.
 9.  Select **Next** and review your Event details and settings.
 10.  Select **Save**.
 
@@ -34,9 +37,9 @@ In your waiting room page, in the **Next Event** column you can visualize the da
 
 ## Create an event via API
 
-To create an event, make a [POST request](/api/operations/waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
+To create an event, make a [POST request](/api/operations/waiting-room-create-event) including [required and optional parameters](#parameters). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room/), you may want to add [relevant variables](/api/operations/waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
+If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room), you may want to add [relevant variables](/api/operations/waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
 
 {{<Aside type="note">}}
 
@@ -70,7 +73,7 @@ Set up a "lottery" system to reward all users who enter into the queue prior to 
 
 Users who reach your application **during the prequeue period** are [randomly assigned](/waiting-room/reference/queueing-methods/#random) a place in line when the event starts. If the event uses [FIFO ordering](/waiting-room/reference/queueing-methods/#first-in-first-out-fifo), users who reach your application **after the prequeue period** are assigned places after users from the prequeue.
 
-To set up a "lottery", include the [following parameters](#properties) in your API request:
+To set up a "lottery", include the [following parameters](#parameters) in your API request:
 
 - `prequeue_start_time`
 - `shuffle_at_event_start`

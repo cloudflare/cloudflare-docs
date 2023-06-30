@@ -17,7 +17,7 @@ Platform-specific guides:
 
 ## Fetch HLS and Dash manifests
 
-### URL 
+### URL
 
 Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
@@ -44,7 +44,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 ### API
 
-Refer to the [Stream video details API documentation](/api/operations/stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
+Refer to the [Stream video details API documentation](/api/operations/stream-videos-retrieve-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
 
 ## Customize manifests by specifying available client bandwidth
 
@@ -74,7 +74,7 @@ https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e
 
 If you need ultra low latency, and your users view live video in native apps, you can stream live video with [**glass-to-glass latency of less than 1 second**](https://blog.cloudflare.com/magic-hdmi-cable/), by using SRT or RTMPS for playback.
 
-![Diagram showing SRT and RTMPS playback via the Cloudflare Network](/stream/static/stream-rtmps-srt-playback-magic-hdmi-cable.png)
+![Diagram showing SRT and RTMPS playback via the Cloudflare Network](/images/stream/stream-rtmps-srt-playback-magic-hdmi-cable.png)
 
 SRT and RTMPS playback is built into [ffmpeg](https://ffmpeg.org/). You will need to integrate ffmpeg with your own video player —  neither [AVPlayer (iOS)](/stream/viewing-videos/using-own-player/ios/) nor [ExoPlayer (Android)](/stream/viewing-videos/using-own-player/android/) natively support SRT or RTMPS playback.
 
@@ -84,9 +84,9 @@ We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cr
 
 ### Examples
 
-* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback)
-* [SRT playback with ffplay](/stream/examples/srt_playback)
+* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback/)
+* [SRT playback with ffplay](/stream/examples/srt_playback/)
 
 ## Limitations
 
-[Client-side Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
+[Client-side Analytics](/stream/getting-analytics/fetching-bulk-analytics/#client-side-analytics) are not available if you use your own player.

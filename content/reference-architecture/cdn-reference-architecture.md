@@ -48,7 +48,7 @@ From a security perspective, the origin server is also vulnerable to DDoS attack
 
 Further, in terms of resiliency, if the origin server temporarily goes offline, all content is inaccessible to users.
 
-![Figure 1: HTTP Request with no CDN](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-1.jpg)
+![Figure 1: HTTP Request with no CDN](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-1.jpg)
 
 ## How a CDN tackles web application challenges
 
@@ -103,13 +103,13 @@ The benefits of the Cloudflare CDN can be attributed to the below two points, di
 
 Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving their response back from a server on Cloudflare’s global Anycast edge network closest to where the clients are located, thus drastically reducing the latency and RTT. The diagram depicts a consistent end-user experience regardless of the physical location of the clients and origin. 
 
-![Figure 2: HTTP request to Cloudflare CDN with Anycast](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-2.jpg)
+![Figure 2: HTTP request to Cloudflare CDN with Anycast](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-2.jpg)
 
 ## Cloudflare CDN architecture and design
 
 Figure 3 is a view of the Cloudflare CDN on the global Anycast edge network. In addition to using Anycast for network performance and resiliency, the Cloudflare CDN leverages Argo Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
 
-![Figure 3: Cloudflare CDN with Argo Tiered Cache on global Anycast edge network](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-3.jpg)
+![Figure 3: Cloudflare CDN with Argo Tiered Cache on global Anycast edge network](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-3.jpg)
 
 In the above diagram, there are a few important key points to understand about the Cloudflare CDN and the global Anycast edge network it resides on:
 
@@ -125,7 +125,7 @@ In the above diagram, there are a few important key points to understand about t
 
 * Edge nodes within the Cloudflare network cache content from the origin server and are able to respond to requests via a cached copy. Cloudflare also provides [DNS](/dns/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and other performance, reliability, and security services using the same edge architecture. 
 
-* [Argo](/argo-smart-routing/) uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and [Tiered Cache](/cache/about/tiered-cache/). Cloudflare leverages Argo to provide an enhanced CDN solution. 
+* [Argo](/argo-smart-routing/) uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and [Tiered Cache](/cache/how-to/tiered-cache/). Cloudflare leverages Argo to provide an enhanced CDN solution. 
 
 ### Argo Tiered Cache
 
@@ -139,7 +139,7 @@ Cloudflare data centers have shorter distances and faster paths between them tha
 
 The Cloudflare CDN allows customers to configure tiered caching. Note that depending on the Cloudflare plan, different topologies are available for Argo Tiered Cache. By default, tiered caching is disabled and can be enabled under the caching tab of the main menu. ​​
 
-### Argo Tiered Cache Topologies
+### Argo Tiered Cache topologies
 
 The different cache topologies allow customers to control how Cloudflare interacts with origin servers to help ensure higher cache hit ratios, fewer origin connections, and reduced latency.
 
@@ -150,11 +150,11 @@ The different cache topologies allow customers to control how Cloudflare interac
 | Cloudflare will dynamically find the single best upper tier for an origin using Argo performance and routing data. |               | Engage with a Customer Success Manager (CSM) to build a custom topology. |
 
 
-### Traffic flow: Argo Tiered Cache, Smart Tiered Cache Topology
+### Traffic flow: Argo Tiered Cache, Smart Tiered Cache topology
 
 In Figure 4, Argo Tiered Caching is enabled with Smart Tiered Cache Topology. The diagram depicts two separate traffic flows. The first traffic flow (#1 in green) is a request from a client that comes into Data Center 1. The second traffic flow (#2 in red) is a subsequent request for the same resource into a different data center, Data Center 2.
 
-![Figure 4: HTTP requests and traffic flow through Cloudflare CDN](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-4.jpg) 
+![Figure 4: HTTP requests and traffic flow through Cloudflare CDN](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-4.jpg) 
 
 | **Client 1** | **Client 2** |
 |------|---------|
@@ -181,18 +181,47 @@ Argo Smart Routing accelerates traffic by taking into account real-time data and
 
 Figure 5 details the traffic flow when Argo Tiered Cache and Argo Smart Routing are not enabled. The request comes into the closest data center, and, because content is not locally cached and Argo Tiered Cache is not enabled, the request is sent directly to the origin server for the content. Also, since Argo Smart Routing is not enabled, a reliable, but perhaps not the fastest, path is taken when communicating with the origin server.
 
-![Figure 5: Cloudflare CDN without Argo Tiered Cache and Argo Smart Routing](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-5.jpg) 
+![Figure 5: Cloudflare CDN without Argo Tiered Cache and Argo Smart Routing](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-5.jpg) 
 
 Figure 6 articulates the traffic flow with both Argo Tiered Cache and Argo Smart Routing enabled.
 
 In Figure 6, when a request is received by Data Center 1 and there is a cache miss, the cache of the upper tier data center, Data Center 3, is checked. If the cached content is not found at the upper tier data center, with Argo Smart Routing enabled, the request is sent on the fastest path from the upper tier data center to the origin. The fastest path is determined by the Argo network intelligence capabilities, which take into account real-time network data such as congestion, latency, and RTT. 
 
-![Figure 6: Cloudflare CDN with Argo Tiered Cache and Argo Smart Routing enabled](/reference-architecture/static/cdn-reference-architecture-images/cdn-ref-arch-6.jpg)
+![Figure 6: Cloudflare CDN with Argo Tiered Cache and Argo Smart Routing enabled](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-6.jpg)
 
 With the Cloudflare CDN, Argo Smart Routing is used when:
 
 1. There is a cache miss and the request needs to be sent to the origin server to retrieve the content,
 2. There is a request for non-cacheable content, such as dynamic content (for example, APIs), and the request must go to the origin server.
+
+## Cache Reserve
+
+Expanding on the idea of Argo Tiered Cache, Cache Reserve further utilizes the scale and speed of the Cloudflare network while additionally leveraging R2, Cloudflare’s persistent object storage, to cache content even longer. Cache Reserve helps customers reduce bills by eliminating egress fees from origins while also providing multiple layers of resiliency and protection to make sure that content is reliably available, which improves website performance by having content load faster. Basically, Cache Reserve is an additional higher tier of cache with longer retention duration.
+
+While Cache Reserve can function without Argo Tiered Cache enabled, it is recommended that Argo Tiered Cache be enabled with Cache Reserve. Argo Tiered Cache will funnel, and potentially eliminate, requests to Cache Reserve. This process eliminates redundant read operations and redundant storage of cached content, reducing egress and storage fees. Enabling Cache Reserve via the Cloudflare dashboard will check and provide a warning if you try to use Cache Reserve without Argo Tiered Cache enabled.
+
+Cache Reserve has a retention period of 30 days which means it will hold cached content for 30 days regardless of cached headers or TTL policy. The TTL policy still affects the content’s freshness which means when content cache TTL expires inside of Cache Reserve, the content will need to be revalidated by checking the origin for any updates. The TTL policy can be set by any number of methods, such as `Cache-Control`, `CDN-Cache-Control` response headers, Edge Cache TTL, cache TTL by status code, or Cache Rules. Every time cache is read from Cache Reserve, the retention timer is reset to 30 days. After 30 days, if the cached content has not been read from Cache Reserve, the cache will be deleted.
+
+There are three main criteria to match for content to be considered cacheable via Cache Reserve:
+1. The content must be cacheable. See the [Cache documentation](/cache/) for more details on cacheable content.
+2. TTL is set to at least 10 hours. This can be set by any method from the previous paragraph.
+3. The Content-Length header must be used in the response header. Note that this means the [Transfer-Method “chunked”](/support/speed/essentials/why-is-my-dynamic-content-being-sent-with-chunked-encoding/) will prevent Cache Reserve from being populated.
+
+When combined with Argo Tiered Caching and Argo Smart Routing, Cache Reserve can be a powerful tool for increasing cache hits and in turn reducing load on origin servers while also improving performance by bringing the content closer to the end user.
+
+{{<Aside type="note">}}
+ 
+Using [Image Resizing](/images/image-resizing/) with Cache Reserve will not result in resized images being stored in Cache Reserve because Image Resizing takes place after reading from Cache Reserve. Resized images will be cached in other available tiers when they are served after resizing.
+ 
+{{</Aside>}}
+
+### Cache Reserve topology
+
+Figure 7 illustrates how Cache Reserve can help reduce load on an origin server while also repopulating cache stores in both upper and lower tier data centers.
+
+![Figure 7: Cloudflare CDN with Argo Tiered Cache, Argo Smart Routing, and Cache Reserve enabled
+](/images/reference-architecture/cdn-reference-architecture-images/cdn-ref-arch-7.png)
+
 
 ## Summary 
 

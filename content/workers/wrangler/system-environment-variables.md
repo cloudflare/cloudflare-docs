@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: System Environment Variables
-weight: 5
 ---
 
 # System Environment Variables
@@ -22,7 +21,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_ACCOUNT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The account ID for the Workers related account, can be [found in the Cloudflare dashboard](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), can usually be inferred by Wrangler.
+  - The [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for the Workers related account.
 
 - `CLOUDFLARE_API_TOKEN` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -46,7 +45,7 @@ Wrangler supports the following environment variables:
 
 - `WRANGLER_LOG` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`.
+  - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default.
 
 {{</definitions>}}
 

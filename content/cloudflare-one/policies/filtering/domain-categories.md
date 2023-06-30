@@ -39,8 +39,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes.                                                                                 |
 | Business & Economy     | Sites that are related to business, economy, finance, education, science and technology.                                                                                          |
 | Child Abuse            | Sites hosting child abuse content.                                                                                                                                                |
-| Deceptive Ads          | Sites that spoof clicks, impressions, conversions for ads.                                                                                                                        |
-| Drugs                  | Sites related to the use and promotion of illegal drugs or illegal use of prescribed drugs.                                                                                       |
 | Education              | Sites hosting educational content that are not included in other categories like Science, Technology or Educational institutions.                                                 |
 | Entertainment          | Sites that are hosting entertaining content that are not included in other categories like Comic books, Audio streaming, Video streaming etc.                                     |
 | Gambling               | Sites that are providing online gambling or are related to gambling.                                                                                                              |
@@ -53,8 +51,7 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | Questionable Content   | Sites hosting content that are related to hacking, piracy, profanity and other questionable activities.                                                                           |
 | Real Estate            | Sites related to real estate.                                                                                                                                                     |
 | Religion               | Sites hosting content about religion, alternative religion, religious teachings, religious groups and spirituality.                                                               |
-| Safe for Kids          | Sites that are safe for kids to visit.                                                                                                                                            |
-| Security Risk          | Sites that are [new or misconfigured](#security-risk-subcategories). We recommend that you allow or isolate this content category to avoid accidentally blocking trusted domains. |
+| Security Risks         | Sites that are [new or misconfigured](#security-risk-subcategories). We recommend that you allow or isolate this content category to avoid accidentally blocking trusted domains. |
 | Shopping & Auctions    | Sites that are hosting content related to ecommerce, coupons, shopping, auctions and marketplaces.                                                                                |
 | Social & Family        | Sites related to society and lifestyle.                                                                                                                                           |
 | Society & Lifestyle    | Sites hosting information about lifestyle that are not included in other categories like fashion, food & drink etc.                                                               |
@@ -67,17 +64,29 @@ You can block security and content categories by creating DNS or HTTP policies. 
 
 {{</table-wrap>}}
 
+### Miscellaneous subcategories
+
+{{<table-wrap>}}
+
+| Category      | Definition                                                             |
+| ------------- | ---------------------------------------------------------------------- |
+| Login Screens | Sites hosting login screens that are not included in other categories. |
+| Miscellaneous | Sites that do not belong to other content categories.                  |
+| No Content    | Sites that have no content.                                            |
+| Redirect      | Domains that redirect to other sites.                                  |
+| Unreachable   | Domains that resolve to unreachable IP addresses.                      |
+
+{{</table-wrap>}}
+
 ### Security risk subcategories
 
 {{<table-wrap>}}
-| Category | Definition |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Login Screens | Sites hosting login screens that are not included in other categories. |
-| New Domains | Domains registered within the past 30 days. |
-| Newly Seen Domains | Domains that were resolved for the first time within the past 30 days. |
-| No Content | Sites that have no content. |
-| Parked & For Sale Domains | Domains that are not connected to a hosting service. |
-| Unreachable | Domains that resolve to unreachable IP addresses. |
+
+| Category                  | Definition                                                             |
+| ------------------------- | ---------------------------------------------------------------------- |
+| New Domains               | Domains registered within the past 30 days.                            |
+| Newly Seen Domains        | Domains that were resolved for the first time within the past 30 days. |
+| Parked & For Sale Domains | Domains that are not connected to a hosting service.                   |
 
 {{</table-wrap>}}
 
@@ -87,7 +96,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 
 | Category ID | Category Name          | Subcategory ID | Subcategory Name                           |
 | ----------- | ---------------------- | -------------- | ------------------------------------------ |
-| 1           | Ads                    | 66             | Advertisements                             |
 | 2           | Adult Themes           | 67             | Adult Themes                               |
 | 2           | Adult Themes           | 125            | Nudity                                     |
 | 2           | Adult Themes           | 133            | Pornography                                |
@@ -130,8 +138,11 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 12          | Internet Communication | 168            | Webmail                                    |
 | 12          | Internet Communication | 172            | Photo Sharing                              |
 | 13          | Job Search & Careers   | 113            | Job Search & Careers                       |
+| 15          | Miscellaneous          | 115            | Login Screens                              |
 | 15          | Miscellaneous          | 119            | Miscellaneous                              |
+| 15          | Miscellaneous          | 124            | No Content                                 |
 | 15          | Miscellaneous          | 141            | Redirect                                   |
+| 15          | Miscellaneous          | 161            | Unreachable                                |
 | 17          | Questionable Content   | 85             | Deceptive Ads                              |
 | 17          | Questionable Content   | 87             | Drugs                                      |
 | 17          | Questionable Content   | 102            | Hacking                                    |
@@ -157,7 +168,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 22          | Shopping & Auctions    | 82             | Coupons                                    |
 | 22          | Shopping & Auctions    | 88             | Ecommerce                                  |
 | 22          | Shopping & Auctions    | 148            | Shopping                                   |
-| 24          | Society & Lifestyle    | 65             | Abortion                                   |
 | 24          | Society & Lifestyle    | 71             | Arts & Crafts                              |
 | 24          | Society & Lifestyle    | 72             | Astrology                                  |
 | 24          | Society & Lifestyle    | 78             | Clothing                                   |
@@ -168,7 +178,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 24          | Society & Lifestyle    | 97             | Food & Drink                               |
 | 24          | Society & Lifestyle    | 104            | Hobbies & Interests                        |
 | 24          | Society & Lifestyle    | 105            | Home & Garden                              |
-| 24          | Society & Lifestyle    | 112            | Jewelry                                    |
 | 24          | Society & Lifestyle    | 114            | Lifestyle                                  |
 | 24          | Society & Lifestyle    | 130            | Pets                                       |
 | 24          | Society & Lifestyle    | 132            | Photography                                |
@@ -177,7 +186,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 24          | Society & Lifestyle    | 149            | Social Networks                            |
 | 24          | Society & Lifestyle    | 154            | Swimsuits                                  |
 | 24          | Society & Lifestyle    | 158            | Tobacco                                    |
-| 24          | Society & Lifestyle    | 171            | LGBTQ                                      |
 | 24          | Society & Lifestyle    | 173            | Body Art                                   |
 | 24          | Society & Lifestyle    | 174            | Lingerie & Bikini                          |
 | 25          | Sports                 | 152            | Sports                                     |
@@ -198,9 +206,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 32          | Security Risks         | 128            | Parked & For Sale Domains                  |
 | 32          | Security Risks         | 169            | New Domains                                |
 | 32          | Security Risks         | 177            | Newly Seen Domains                         |
-| 32          | Security Risks         | 115            | Login Screens                              |
-| 32          | Security Risks         | 124            | No Content                                 |
-| 32          | Security Risks         | 161            | Unreachable                                |
 
 {{</table-wrap>}}
 

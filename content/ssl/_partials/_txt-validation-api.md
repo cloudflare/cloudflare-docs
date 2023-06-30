@@ -29,12 +29,12 @@ highlight: [13,14,15,16,17,18,19,20,21,22,23,24]
       "validation_records": [
         {
           "status": "pending",
-          "txt_name": "_acme-challenge.best3.com",
+          "txt_name": "_acme-challenge.<DOMAIN>.com",
           "txt_value": "lXLOcN6cPv0nproViNcUHcahD9TrIPlNgdwesj0pYpk"
         },
         {
           "status": "pending",
-          "txt_name": "_acme-challenge.best3.com",
+          "txt_name": "_acme-challenge.<DOMAIN>.com",
           "txt_value": "O0o8VgJu_OGu-T30_cvT-4xO5ZX1_2WsVNUrpUKE6ns"
         }
       ],

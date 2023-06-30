@@ -13,17 +13,17 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
 ## Prerequisites
 
 - Navigate to [Zero Trust](https://one.dash.cloudflare.com/) and create a Cloudflare Zero Trust account.
-- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) into your Cloudflare Zero Trust account.
+- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) into your Cloudflare Zero Trust account.
 
 ## Create your environment
 
 1. From the AWS console, navigate to **Build a Solution** and select **Launch a Virtual Machine with EC2**.
 
-   ![AWS console](/cloudflare-one/static/documentation/connections/connect-apps/aws-console.png)
+   ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-console.png)
 
 1. Next, select the appropriate AMI. In this instance, we are using Ubuntu 18.0.
 
-   ![AWS console](/cloudflare-one/static/documentation/connections/connect-apps/aws-step-2.png)
+   ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-step-2.png)
 
 1. When selecting your instance type, choose `t2.micro`. This type is available for the free tier.
 
@@ -31,7 +31,7 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
 
 1. Because we are leaving this device on the default VPC, you will not need to make any changes in the next couple of steps, nor will you need to add additional storage or tags. Click **Next: Add Storage**, and then click **Next: Add Tags**.
 
-   ![AWS console](/cloudflare-one/static/documentation/connections/connect-apps/aws-step-3.png)
+   ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-step-3.png)
 
 1. Next, advance to **Security Group Settings** and add two policies:
 
@@ -42,7 +42,7 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
 
 1. Finally, make sure you locate the Public IPv4 DNS address inside the instance summary on the AWS console. You will need that parameter as well in order to use SSH.
 
-![AWS console](/cloudflare-one/static/documentation/connections/connect-apps/aws-step-4.png)
+![AWS console](/images/cloudflare-one/connections/connect-apps/aws-step-4.png)
 
 The next step is to build out and route a service.
 

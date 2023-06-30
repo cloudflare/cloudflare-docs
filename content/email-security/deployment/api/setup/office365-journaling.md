@@ -10,8 +10,12 @@ meta:
 
 For customers using Microsoft Office 365, setting up Area 1 via journaling is quick and easy. The following email flow shows how this works:
 
-![Email flow when setting up a phishing assessment risk for Office 365 with Area 1.](/email-security/static/deployment/api-setup/journaling/office365-journaling-flow.png)
+![Email flow when setting up a phishing assessment risk for Office 365 with Area 1.](/images/email-security/deployment/api-setup/journaling/office365-journaling-flow.png)
 
 ## Journaling
 
 {{<render file="_journaling-connector.md">}}
+
+## Geographic locations
+
+{{<render file="_bcc-table-geographic-locations.md">}}

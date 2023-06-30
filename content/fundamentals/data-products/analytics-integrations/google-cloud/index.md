@@ -21,7 +21,7 @@ The components we'll use in this tutorial include:
 
 The following diagram depicts how data flows from Cloudflare Logs through the different components of the Google Cloud Platform discussed in this tutorial.
 
-![Data flow from Cloudflare Logpush to Google Cloud Platform](/fundamentals/static/images/google/cf-logpush-to-google-cloud-platform.png)
+![Data flow from Cloudflare Logpush to Google Cloud Platform](/images/fundamentals/google/cf-logpush-to-google-cloud-platform.png)
 
 {{<Aside type="note">}}
 
@@ -125,7 +125,7 @@ With Google Data Studio, you can generate graphs and charts from a Google BigQue
 
 Cloudflare has published a [Logs Insights Template](https://datastudio.google.com/u/0/reporting/1ez3m7Yf8AZLfM6aYRjfgF0pPpRvOwhTh/page/mAzI/preview) in the **Google Data Studio Report Gallery**.
 
-![Cloudflare Logs Insights Template on Google Data Studio Report Gallery](/logs/static/images/cf-logs-insights-template.png)
+![Cloudflare Logs Insights Template on Google Data Studio Report Gallery](/images/fundamentals/google/cf-logs-insights-template.png)
 
 The Cloudflare Insights Template features several dashboards, or report pages, to help you analyze your Cloudflare Logs data. You can also use filters within the dashboards to narrow down the analysis by date and time, device type, country, user agent, client IP, hostname, and more. These insights further help with debugging and tracing.
 
@@ -159,73 +159,36 @@ To create a report for your log data based on the Cloudflare template:
 
 8.  Next, update the **Type** for each of the following fields as indicated below:
 
-<table style="border: solid 2px darkgrey; width: 100%;">
-  <thead style="background: #ffeadf;">
-    <tr>
-      <th>Cloudflare Log Field</th>
-      <th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ZoneID</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>EdgeColoID</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>ClientSrcPort</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>EdgeResponseStatus</td>
-      <td>Number</td>
-    </tr>
-    <tr>
-      <td>EdgeRateLimitID</td>
-      <td>Text&nbsp;</td>
-    </tr>
-    <tr>
-      <td>
-        <div>
-          <div>Copy of EdgeStartTimestamp</div>
-        </div>
-      </td>
-      <td>Date &amp; Time &gt; Date Hour (YYYYMMDDHH)</td>
-    </tr>
-    <tr>
-      <td>OriginResponseStatus</td>
-      <td>Number</td>
-    </tr>
-    <tr>
-      <td>ClientASN</td>
-      <td>Text</td>
-    </tr>
-    <tr>
-      <td>ClientCountry</td>
-      <td>Geo &gt; Country</td>
-    </tr>
-    <tr>
-      <td>CacheResponseStatus</td>
-      <td>Text</td>
-    </tr>
-  </tbody>
-</table>
+    {{<table-wrap>}}
+| Cloudflare Log Field       | Type                                 |
+|----------------------------|--------------------------------------|
+| ZoneID                     | Text                                 |
+| EdgeColoID                 | Text                                 |
+| ClientSrcPort              | Text                                 |
+| EdgeResponseStatus         | Number                               |
+| EdgeRateLimitID            | Text                                 |
+| Copy of EdgeStartTimestamp | Date & Time > Date Hour (YYYYMMDDHH) |
+| OriginResponseStatus       | Number                               |
+| ClientASN                  | Text                                 |
+| ClientCountry              | Geo > Country                        |
+| CacheResponseStatus        | Text                                 |
+    {{</table-wrap>}}
+
 
 9.  Next, add a new field to identify and calculate threat. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
-    \_ For **Field Name**, type _Threats_.
-    \_ In the **Formula** text box, paste the following code:
+
+    - For **Field Name**, type _Threats_.
+
+    - In the **Formula** text box, paste the following code:
 
     ```bash
     CASE
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ip" THEN "ip block"
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ctry" THEN "country block"
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "zl" THEN "routed by zone lockdown"
-     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ua" THEN "blocked user agent"
+    WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ua" THEN "blocked user agent"
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "rateLimit" THEN "rate-limiting rule"
-     WHEN EdgePathingSrc = "bic" AND EdgePathingOp = "ban" AND EdgePathingStatus = "unknown" THEN "browser integrity check"
+    WHEN EdgePathingSrc = "bic" AND EdgePathingOp = "ban" AND EdgePathingStatus = "unknown" THEN "browser integrity check"
     WHEN EdgePathingSrc = "hot" AND EdgePathingOp = "ban" AND EdgePathingStatus = "unknown" THEN "blocked hotlink"
     WHEN EdgePathingSrc = "macro" AND EdgePathingOp = "chl" AND EdgePathingStatus = "captchaFail" THEN "CAPTCHA challenge failed"
     WHEN EdgePathingSrc = "macro" AND EdgePathingOp = "chl" AND EdgePathingStatus = "jschlFail" THEN "java script challenge failed"
@@ -235,11 +198,12 @@ To create a report for your log data based on the Cloudflare template:
     END
     ```
 
-    \* Click **Save** in the lower right corner.
+    - Click **Save** in the lower right corner.
 
 10. Finally, add another new field for grouping status error codes. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
-    \_ For **Field Name**, type _EdgeResponseStatus_Class_.
-    \_ In the **Formula** text box, paste the following code:
+
+    - For **Field Name**, type _EdgeResponseStatusClass_.
+    - In the **Formula** text box, paste the following code:
 
     ```bash
     CASE
@@ -252,7 +216,7 @@ To create a report for your log data based on the Cloudflare template:
     END
     ```
 
-- Click **Save** in the lower right corner.
+    - Click **Save** in the lower right corner.
 
 11. To finish, click **Add to Report** in the upper right.
 
@@ -292,8 +256,8 @@ You can also create custom fields directly in Data Studio.
 
 The following table summarizes which specific components require to be fixed:
 
-<table style="border: solid 2px darkgrey; width: 100%;">
-  <thead style="background: #ffeadf;">
+<table>
+  <thead>
     <tr>
       <th>Report page</th>
       <th>Components</th>

@@ -23,7 +23,7 @@ To enable the Cloudflare Logpush service:
 
 3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Add Logpush job**. A modal window opens where you will need to complete several steps.
 
 5.  Select the dataset you want to push to a storage service.
 
@@ -61,5 +61,5 @@ To enable Logpush to Sumo Logic:
 
 * Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/docs/manage/ingestion-volume/log-ingestion/).
 
-* To analyze and visualize Cloudflare Logs using the Cloudflare App for Sumo Logic, follow the steps in the [Sumo Logic Analytics integration page](/fundamentals/data-products/analytics-integrations/sumo-logic/).
+* To analyze and visualize Cloudflare Logs using the Cloudflare App for Sumo Logic, follow the steps in the Sumo Logic integration documentation to [install the Cloudflare App](https://help.sumologic.com/docs/integrations/saas-cloud/cloudflare/#installing-the-cloudflare-app) and [view the Cloudflare Dashboards](https://help.sumologic.com/docs/integrations/saas-cloud/cloudflare/#viewing-the-cloudflare-dashboards).
 {{</Aside>}}

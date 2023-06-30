@@ -31,7 +31,7 @@ Wrangler templates are git repositories. If you want to create your own template
 
 ## Workers Playground
 
-You can test how your Workers function will execute when it is deployed by using the [`dev` command](/workers/wrangler-legacy/commands/#dev):
+You can test how your Workers function will execute when it is deployed by using the [`dev` command](/workers/wrangler/commands/#dev):
 
 ```sh
 rustwasm-markdown-parser $ wrangler dev
@@ -127,7 +127,7 @@ You have completed writing a Cloudflare Workers function with Rust-generated Was
 
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
 
-![GIF of successfully publishing your project with the `wrangler publish` command](./media/publish.gif)
+![GIF of successfully publishing your project with the `wrangler publish` command](/images/workers/tutorials/rust/publish.gif)
 
 ## Related resources
 

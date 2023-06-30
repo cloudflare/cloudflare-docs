@@ -10,9 +10,8 @@ Clientless Web Isolation allows users to securely navigate high risk or sensitiv
 
 ## Set up Clientless Web Isolation
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Settings** > **Browser Isolation**.
-2. Toggle on **Clientless Web Isolation**.
-3. To configure permissions, click **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+{{<render file="/_clientless-browser-isolation.md">}}
+3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
 
 ## Use the remote browser
 
@@ -70,7 +69,7 @@ The clientless address bar has three views: hostname notch, full address bar and
 
 By default the isolated domain name appears in the notch positioned at the top and center of an isolated page.
 
-![Viewing hostname of an isolated page in the clientless remote browser](/cloudflare-one/static/documentation/policies/rbi-address-bar-notch.png)
+![Viewing hostname of an isolated page in the clientless remote browser](/images/cloudflare-one/policies/rbi-address-bar-notch.png)
 
 Clicking **Expand** or the hostname text will expand the notch to the full address bar view. If isolated page content is obscured by the notch, expanding to the full address bar view will make the content accessible.
 
@@ -78,7 +77,7 @@ Clicking **Expand** or the hostname text will expand the notch to the full addre
 
 The full address bar allows users to search and navigate to isolated websites. Users can jump to the address bar at any time by pressing <kbd>CTRL</kbd> + <kbd>L</kbd> on the keyboard.
 
-![Viewing full address of an isolated page in the clientless remote browser](/cloudflare-one/static/documentation/policies/rbi-address-bar-full.png)
+![Viewing full address of an isolated page in the clientless remote browser](/images/cloudflare-one/policies/rbi-address-bar-full.png)
 
 ### Hidden view
 

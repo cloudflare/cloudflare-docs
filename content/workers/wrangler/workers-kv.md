@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Workers KV
-weight: 4
 ---
 
 # Workers KV
@@ -12,7 +11,7 @@ To learn more about how KV works, refer to [How KV works](/workers/learning/how-
 
 To review the API spec, refer to the [KV in Runtime API](/workers/runtime-apis/kv).
 
-You can interact with KV via Wrangler and the Cloudflare dashboard. This page will guide you through creating your KV namespace, writing a new value to your namespace and interacting with [environments](/workers/platform/environments/).
+You can interact with KV via Wrangler and the Cloudflare dashboard. This page will guide you through creating your KV namespace, writing a new value to your namespace and interacting with [environments](/workers/wrangler/environments/).
 
 ## Create a KV namespace with Wrangler
 
@@ -92,7 +91,7 @@ To summarize, a namespace can be specified in two ways:
     $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
     ```
 
-Refer to the [`kv:bulk` documentation](/workers/wrangler-legacy/commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
+Refer to the [`kv:bulk` documentation](/workers/wrangler/commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
 
 ## Use environments with KV namespaces
 
@@ -154,6 +153,6 @@ $ wrangler kv:key get --binding "MY_KV" --env=production "<KEY>"
 
 ## Related resources
 
-* [Environments](/workers/platform/environments/)
+* [Environments](/workers/wrangler/environments/)
 * [`kv` command documentation](/workers/runtime-apis/kv/)
 * [`wrangler.toml` configuration documentation](/workers/wrangler/configuration)

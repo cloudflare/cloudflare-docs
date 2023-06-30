@@ -13,10 +13,14 @@ meta:
     when they are trying to access web pages that have high volumes of traffic.
   author: '@cloudflare'
   
-
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/waiting-rooms
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: waiting-room

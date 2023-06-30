@@ -58,7 +58,7 @@ Once the base IdP integration is tested and working, enable additional permissio
 
 You will see the list of enabled permissions.
 
-![API permissions in Azure AD](/cloudflare-one/static/documentation/identity/azure/risky-users-permissions.png)
+![API permissions in Azure AD](/images/cloudflare-one/identity/azure/risky-users-permissions.png)
 
 ## 3. Add risky users to Azure AD group
 
@@ -86,7 +86,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
 4. Modify `wrangler.toml` to include the following values:
 
-   - `<ACCOUNT_ID>`: your Cloudflare account ID, shown in the [Cloudflare dashboard](https://dash.cloudflare.com/) in the **Workers** tab.
+   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
    - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 
@@ -135,7 +135,7 @@ $ wrangler tail --format pretty
 
 After the initial run, the auto-generated groups will appear in the Azure AD dashboard.
 
-![Risky user groups in the Azure AD dashboard](/cloudflare-one/static/documentation/identity/azure/risky-users-groups.png)
+![Risky user groups in the Azure AD dashboard](/images/cloudflare-one/identity/azure/risky-users-groups.png)
 
 ## 4. Synchronize risky user groups
 

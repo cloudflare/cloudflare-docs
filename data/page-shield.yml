@@ -10,7 +10,6 @@ meta:
   title: Cloudflare Page Shield docs
   description: Provide client-side protection as part of your domain's firewall
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/page-shield
@@ -18,3 +17,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: page-shield

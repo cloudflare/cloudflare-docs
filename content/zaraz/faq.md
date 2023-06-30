@@ -33,10 +33,15 @@ If Zaraz is not loading, please verify the following:
 - The domain running Zaraz [is proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
 - Auto Injection is enabled in your [Zaraz Settings](/zaraz/reference/settings/#auto-inject-script).
 - Your website's HTML is valid and includes `<head>` and `</head>` tags.
+- You have at least [one enabled tool](/zaraz/get-started/add-tool/) configured in Zaraz.
 
 #### I'm seeing some data discrepancies. Is there a way to check what data reaches Zaraz?
 
 Yes. You can use the metrics in [Zaraz Monitoring](/zaraz/monitoring/) to help you find where in the workflow the problem occurred.
+
+#### Can I use Zaraz with Rocket Loader?
+
+We recommend disabling [Rocket Loader](/fundamentals/speed/rocket-loader/) when using Zaraz. While Zaraz can be used together with Rocket Loader, there's usually no need to use both. Rocket Loader can sometimes delay data from reaching Zaraz, causing issues.
 
 #### Is Zaraz compatible with Content Security Policies (CSP)?
 

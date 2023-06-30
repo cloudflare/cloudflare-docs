@@ -7,7 +7,7 @@ weight: 2
 
 # DNS policies
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
+When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
 
 A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -38,10 +38,12 @@ These are the action types you can choose from:
 - [Allow](#allow)
 - [Block](#block)
 - [Override](#override)
-- [SafeSearch](#safesearch)
+- [Safe Search](#safe-search)
 - [YouTube Restricted Mode](#youtube-restricted-mode)
 
 ### Allow
+
+API value: `allow`
 
 Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
@@ -55,6 +57,8 @@ When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries 
 
 ### Block
 
+API value: `block`
+
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
 | Selector           | Operator | Value        | Action |
@@ -67,23 +71,31 @@ When choosing the Block action, toggle the **Display custom block page** setting
 
 ### Override
 
+API value: `override`
+
 Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
 
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
 
-### SafeSearch
+{{<Aside>}}The Override action cannot be used with selectors evaluated after resolution, including **Authoritative Nameserver IP**, **Resolved IP**, and any DNS response values.{{</Aside>}}
+
+### Safe Search
+
+API value: `safesearch`
 
 SafeSearch is a feature of search engines that helps you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children or at work.
 
 You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. For example, to enable SafeSearch for Google, you can create the following policy:
 
-| Selector | Operator | Value        | Action     |
-| -------- | -------- | ------------ | ---------- |
-| Domain   | Is       | `google.com` | SafeSearch |
+| Selector | Operator | Value        | Action      |
+| -------- | -------- | ------------ | ----------- |
+| Domain   | Is       | `google.com` | Safe Search |
 
 ### YouTube Restricted Mode
+
+API value: `ytrestricted`
 
 Similarly, you can enforce YouTube Restricted mode by choosing the _YouTube Restricted_ action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable YouTube Restricted Mode, you could set up a policy like the following:
 
@@ -187,7 +199,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Host
 
-Use this selector to match against only the hostname specified. — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
+Use this selector to match against only the hostname specified — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
 | UI name | API example                      |
 | ------- | -------------------------------- |

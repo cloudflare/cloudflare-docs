@@ -30,7 +30,7 @@ ___
 
 次の図は、Cloudflareを利用する場合と利用しない場合のIPアドレス処理の違いを示しています。
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 ___
 
@@ -97,11 +97,11 @@ ___
 
 ## mod\_cloudflare
 
-mod\_cloudflare のインストールには、Github から Apache 拡張機能をダウンロードする方法と、オリジンのWebサーバーにコードを追加する方法の2種類があります。
+mod\_cloudflare のインストールには、GitHub から Apache 拡張機能をダウンロードする方法と、オリジンのWebサーバーにコードを追加する方法の2種類があります。
 
 ### Githubからパケットやスクリプトをダウンロードする
 
-Apache Webサーバーを使用している場合、[Github](https://github.com/cloudflare/mod_cloudflare)から mod\_cloudflare をダウンロードすることができます。
+Apache Webサーバーを使用している場合、[GitHub](https://github.com/cloudflare/mod_cloudflare)から mod\_cloudflare をダウンロードすることができます。
 
 ### オリジンWebサーバー にコードを追加する方法
 

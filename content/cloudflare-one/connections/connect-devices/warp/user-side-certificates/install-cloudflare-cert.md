@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Install certificate manually
 weight: 2
 meta:
-    description: Manually add the Cloudflare certificate to mobile devices and individual applications.
+  description: Manually add the Cloudflare certificate to mobile devices and individual applications.
 ---
 
 # Install the Cloudflare certificate
@@ -71,21 +71,21 @@ To install the certificate in **Keychain Access**:
 
 3. In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and click **Add**.
 
-![macOS popup window for adding certificates](/cloudflare-one/static/documentation/connections/keychain-popup.png)
+![macOS popup window for adding certificates](/images/cloudflare-one/connections/keychain-popup.png)
 
 The certificate is now listed in your preferred keychain within the **Keychain Access** application. You can always move the certificate under a different keychain by dragging and dropping the certificate onto the desired keychain on the left.
 
-![Viewing certificate in macOS Keychain Access application](/cloudflare-one/static/documentation/connections/listed-in-keych.png)
+![Viewing certificate in macOS Keychain Access application](/images/cloudflare-one/connections/listed-in-keych.png)
 
 4. Double-click the certificate.
 
 5. Click **Trust**.
 
-![macOS window for certificate configuration](/cloudflare-one/static/documentation/connections/cert-click-on-trust.png)
+![macOS window for certificate configuration](/images/cloudflare-one/connections/cert-click-on-trust.png)
 
 6. From the **When using this certificate** drop-down menu, select **Always Trust**.
 
-![macOS window for configuring certificate trust settings](/cloudflare-one/static/documentation/connections/cert-select-always-trust.png)
+![macOS window for configuring certificate trust settings](/images/cloudflare-one/connections/cert-select-always-trust.png)
 
 7. Close the menu.
 
@@ -115,7 +115,7 @@ iOS only allows the Safari browser to open and install certificates.
 
 1. Open Safari and [download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
 
-![iOS popup message asking for permission to download certificate](/cloudflare-one/static/documentation/connections/ios_cert_download.PNG)
+![iOS popup message asking for permission to download certificate](/images/cloudflare-one/connections/ios_cert_download.PNG)
 
 2. Tap **Allow**.
 
@@ -127,7 +127,7 @@ Alternatively you can navigate to **Settings**, where a new **Profile Downloaded
 
 {{</Aside>}}
 
-![iOS screen for viewing certificate profile](/cloudflare-one/static/documentation/connections/ios_cert_profile.PNG)
+![iOS screen for viewing certificate profile](/images/cloudflare-one/connections/ios_cert_profile.PNG)
 
 4. Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
@@ -137,7 +137,7 @@ If a second prompt is displayed, tap **Install** again.
 
 6. Next, the **Profile Installed** screen will appear. Tap **Done**.
 
-![iOS message confirming certificate profile installation](/cloudflare-one/static/documentation/connections/ios_profile_installed.PNG)
+![iOS message confirming certificate profile installation](/images/cloudflare-one/connections/ios_profile_installed.PNG)
 
 The certificate is now installed. However, before it can be used, it must be trusted by the device.
 
@@ -145,13 +145,13 @@ The certificate is now installed. However, before it can be used, it must be tru
 
 The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
 
-![iOS screen for configuring certificate trust settings](/cloudflare-one/static/documentation/connections/ios_cert_trust1.PNG)
+![iOS screen for configuring certificate trust settings](/images/cloudflare-one/connections/ios_cert_trust1.PNG)
 
 8. Tap the slide button next to the Cloudflare certificate you just installed.
 
 9. A confirmation dialogue will appear. Tap **Continue**.
 
-![iOS popup message asking to confirm trust setting](/cloudflare-one/static/documentation/connections/ios_cert_trust2.PNG)
+![iOS popup message asking to confirm trust setting](/images/cloudflare-one/connections/ios_cert_trust2.PNG)
 
 The root certificate is now installed and ready to be used.
 
@@ -172,7 +172,7 @@ Windows offers two options to install the certificate, each having a different i
 
 4. The **Certificate** window will appear. Click **Install Certificate**.
 
-![Window for Cloudflare certificate](/cloudflare-one/static/documentation/connections/windows_install_cert.png)
+![Window for Cloudflare certificate](/images/cloudflare-one/connections/windows_install_cert.png)
 
 5. Now choose a Store Location. If you see a Security Warning, click **Yes** to proceed.
 
@@ -182,11 +182,11 @@ Windows offers two options to install the certificate, each having a different i
 
 8. Click **OK**.
 
-![Window for selecting certificate store location](/cloudflare-one/static/documentation/connections/windows_cert_location.png)
+![Window for selecting certificate store location](/images/cloudflare-one/connections/windows_cert_location.png)
 
 9. Click **Finish**.
 
-![Window for finishing certificate installation](/cloudflare-one/static/documentation/connections/windows_cert_install_finished.png)
+![Window for finishing certificate installation](/images/cloudflare-one/connections/windows_cert_install_finished.png)
 
 The root certificate is now installed and ready to be used.
 
@@ -199,10 +199,10 @@ The location where the root certificate should be installed is different dependi
 1. Download the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
 2. Copy the certificate to the system, changing the file extension to `.crt`.
 
-  ```sh
-  $ sudo cp Cloudflare_CA.pem /usr/local/share/ca-certificates/Cloudflare_CA.crt
-  ```
-  
+```sh
+$ sudo cp Cloudflare_CA.pem /usr/local/share/ca-certificates/Cloudflare_CA.crt
+```
+
 3. Import the certificate.
 
 ```sh
@@ -214,9 +214,9 @@ $ sudo dpkg-reconfigure ca-certificates
 1. Download both the [.crt certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
 2. Copy both certificates to the trust store.
 
-  ```sh
-  $ sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
-  ```
+```sh
+$ sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
+```
 
 3. Import the certificate.
 
@@ -230,15 +230,15 @@ $ sudo update-ca-trust
 
 2. Navigate to **Settings** > **Security**.
 
-![Android **Settings** screen](/cloudflare-one/static/documentation/connections/android_security_settings.png)
+![Android **Settings** screen](/images/cloudflare-one/connections/android_security_settings.png)
 
 3. Tap **Advanced** > **Encryption & Credentials**.
 
 {{<table-wrap>}}
 
-|                                                                                                            |                                                                                                          |
-| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| ![Android **Security** settings screen](/cloudflare-one/static/documentation/connections/android_advanced_encrypt.png) | ![Android **Security** screen after expanding **Advanced** menu](/cloudflare-one/static/documentation/connections/android_advanced_encrypt2.png) |
+|                                                                                                                        |                                                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![Android **Security** settings screen](/images/cloudflare-one/connections/android_advanced_encrypt.png) | ![Android **Security** screen after expanding **Advanced** menu](/images/cloudflare-one/connections/android_advanced_encrypt2.png) |
 
 {{</table-wrap>}}
 
@@ -246,21 +246,21 @@ $ sudo update-ca-trust
 
 {{<table-wrap>}}
 
-|                                                                                                    |                                                                                          |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Android **Encryption & credentials** screen](/cloudflare-one/static/documentation/connections/android_install_cert.png) | ![Android **Install a certificate*** screen](/cloudflare-one/static/documentation/connections/android_ca_cert.png) |
+|                                                                                                                           |                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| ![Android **Encryption & credentials** screen](/images/cloudflare-one/connections/android_install_cert.png) | ![Android **Install a certificate*** screen](/images/cloudflare-one/connections/android_ca_cert.png) |
 
 {{</table-wrap>}}
 
 5. Tap **Install Anyway**.
 
-![Android screen asking to confirm certificate installation](/cloudflare-one/static/documentation/connections/android_install_anyway.png)
+![Android screen asking to confirm certificate installation](/images/cloudflare-one/connections/android_install_anyway.png)
 
 6. Verify your identity through the fingerprint, or by inserting the pin code.
 
 7. Select the certificate you want to install.
 
-![Selecting the Cloudflare certificate in the Android Google Drive app](/cloudflare-one/static/documentation/connections/android_choose_certificate.png)
+![Selecting the Cloudflare certificate in the Android Google Drive app](/images/cloudflare-one/connections/android_choose_certificate.png)
 
 The root certificate is now installed and ready to be used.
 
@@ -270,34 +270,33 @@ The root certificate is now installed and ready to be used.
 
 2. Navigate to your **ChromeOS Settings**.
 
-![**Settings** cog in ChromeOS](/cloudflare-one/static/documentation/connections/chromeOS1_cert.png)
+![**Settings** cog in ChromeOS](/images/cloudflare-one/connections/chromeOS1_cert.png)
 
 3. Navigate to **Apps** > **Google Play Store**.
 
-![**Google Play Store** app in ChromeOS settings](/cloudflare-one/static/documentation/connections/chromeOS2_cert.png)
+![**Google Play Store** app in ChromeOS settings](/images/cloudflare-one/connections/chromeOS2_cert.png)
 
 4. Click **Manage Android preferences**.
 
-![**Manage Android preferences** in ChromeOS settings](/cloudflare-one/static/documentation/connections/chromeOS3_cert.png)
+![**Manage Android preferences** in ChromeOS settings](/images/cloudflare-one/connections/chromeOS3_cert.png)
 
 5. Navigate to **Security & location** > **Credentials** > **Install from SD card**.
 
 {{<table-wrap>}}
 
-|                                                                                                   |                                                                                           |                                                                                                    |
-| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| ![ChromeOS **Network & Internet** screen](/cloudflare-one/static/documentation/connections/chromeOS4_cert.png) | ![ChromeOS **Security & location** screen](/cloudflare-one/static/documentation/connections/chromeOS5_cert.png) | ![ChromeOS **Credentials** screen](/cloudflare-one/static/documentation/connections/chromeOS6_cert.png) |
+|                                                                                                                |                                                                                                                 |                                                                                                         |
+| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| ![ChromeOS **Network & Internet** screen](/images/cloudflare-one/connections/chromeOS4_cert.png) | ![ChromeOS **Security & location** screen](/images/cloudflare-one/connections/chromeOS5_cert.png) | ![ChromeOS **Credentials** screen](/images/cloudflare-one/connections/chromeOS6_cert.png) |
 
 {{</table-wrap>}}
 
 6. In the file open dialog, select the `Cloudflare_CA.crt` file downloaded in step #1 and click **Open**.
 
-![ChromeOS dialogue for selecting a certificate file](/cloudflare-one/static/documentation/connections/chromeOS7_cert.png)
+![ChromeOS dialogue for selecting a certificate file](/images/cloudflare-one/connections/chromeOS7_cert.png)
 
 7. Enter anything you want for the certificate name and click **OK**.
 
-![ChromeOS dialogue for naming the certificate](/cloudflare-one/static/documentation/connections/chromeOS8_cert.png)
-
+![ChromeOS dialogue for naming the certificate](/images/cloudflare-one/connections/chromeOS8_cert.png)
 
 ### Nix and NixOS
 
@@ -325,50 +324,50 @@ The command to install the certificate with Python on Windows automatically incl
 
 1. Download the Cloudflare root certificate:
 
-    ```bash
-    curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
-    ```
+   ```bash
+   curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
+   ```
 
 2. To update the bundle to include the Cloudflare certificate, run the following command:
 
-    ```bash
-    gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
-    ```
+   ```bash
+   gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
+   ```
 
 #### Python on Mac and Linux
 
 1. Install the `certifi` package:
 
-    ```sh
-    $ pip install certifi
-    ```
+   ```sh
+   $ pip install certifi
+   ```
 
 2. Identify the CA store:
 
-    ```sh
-    $ python -m certifi
-    ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
-    ```
+   ```sh
+   $ python -m certifi
+   ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
+   ```
 
 3. Download the Cloudflare root certificate:
 
-    ```sh
-    $ wget https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
-    ```
+   ```sh
+   $ wget https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+   ```
 
 4. Append the Cloudflare certificate to this CA Store by running:
 
-    ```sh
-    $ echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
-    ```
+   ```sh
+   $ echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
+   ```
 
 5. If needed, configure system variables to point to this CA Store:
 
-    ```sh
-    $ export CERT_PATH=$(python -m certifi)
-    $ export SSL_CERT_FILE=${CERT_PATH}
-    $ export REQUESTS_CA_BUNDLE=${CERT_PATH}
-    ```
+   ```sh
+   $ export CERT_PATH=$(python -m certifi)
+   $ export SSL_CERT_FILE=${CERT_PATH}
+   $ export REQUESTS_CA_BUNDLE=${CERT_PATH}
+   ```
 
 ### Git
 
@@ -438,30 +437,30 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 
 1. Get curl's `cacert` bundle.
 
-    ```sh
-    $ curl -O https://curl.se/ca/cacert.pem
-    ```
+   ```sh
+   $ curl -O https://curl.se/ca/cacert.pem
+   ```
 
 2. Get the Cloudflare CA.
 
-    ```sh
-    $ curl -O https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
-    ```
+   ```sh
+   $ curl -O https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+   ```
 
-2. Combine the certs into a single `.pem` file.
+3. Combine the certs into a single `.pem` file.
 
-    ```sh
-    $ cat cacert.pem Cloudflare_CA.pem > ~/ca.pem
-    ```
+   ```sh
+   $ cat cacert.pem Cloudflare_CA.pem > ~/ca.pem
+   ```
 
-3. Configure Google Cloud to use the combined `.pem`.
+4. Configure Google Cloud to use the combined `.pem`.
 
-    ```sh
-    $ gcloud config set core/custom_ca_certs_file ~/ca.pem
-    ```
+   ```sh
+   $ gcloud config set core/custom_ca_certs_file ~/ca.pem
+   ```
 
 {{<Aside type="note">}}
-The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved then step 3 above will need to be re-run to point `gcloud` to the file's new location. 
+The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utility to leverage it. If the file is moved then step 3 above will need to be re-run to point `gcloud` to the file's new location.
 {{</Aside>}}
 
 #### Google Cloud SDK and Kaniko
@@ -470,7 +469,63 @@ Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/b
 
 ### Google Drive for desktop
 
-To trust the Cloudflare root certificate in the Google Drive desktop application, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
+To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+
+<details>
+<summary>macOS</summary>
+<div>
+
+1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
+2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
+3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+
+   ```sh
+   $ cat ~/Downloads/Cloudflare_CA.pem >> path/to/roots.pem
+   ```
+
+4. Apply the newly created root certificate to your Google Drive application.
+
+   ```sh
+   $ sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "path/to/root.pem"
+   ```
+
+You can verify the update with the following command.
+
+```sh
+$ defaults read /Library/Preferences/com.google.drivefs.settings
+```
+
+</div>
+</details>
+
+<details>
+<summary>Windows</summary>
+<div>
+ 
+1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
+2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
+3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+
+    ```sh
+    $ cat ~\Downloads\Cloudflare_CA.pem >> path\to\roots.pem
+    ```
+
+4. Update the Google Drive registry key.
+
+   ```sh
+   $ reg ADD "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile /t REG_SZ /d "path\to\roots.pem"
+   ```
+
+You can verify the update with the following command.
+
+```sh
+$ reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
+```
+
+</div>
+</details>
+
+For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
 ### AWS CLI
 
@@ -479,7 +534,6 @@ If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment var
 ### PHP Composer
 
 The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
-
 
 ```sh
 $ composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]

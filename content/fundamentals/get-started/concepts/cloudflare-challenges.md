@@ -76,6 +76,10 @@ Challenges are not supported by Microsoft Internet Explorer.
 
 If your visitors encounter issues using a major browser besides Internet Explorer, they should upgrade their browser.
 
+### Mobile browsers
+
+Challenges are not supported for desktop mode on mobile browsers.
+
 ---
 
 ## Resolve a challenge
@@ -88,3 +92,37 @@ When observing a Cloudflare Challenge page, a visitor could:
 - Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
 - Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (for example, images).
+
+
+---
+
+## Detecting a challenge page response
+
+When a request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitigated` header present and set to `challenge`. This header can be leveraged to detect if a response was challenged when making fetch/XHR requests. This header provides a simple and reliable way to identify whether a response is a challenge or not, enabling a web application to take appropriate action based on the result. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
+
+{{<Aside type="note">}}
+
+Regardless of the requested resource-type, the content-type of a challenge will be `text/html`.
+
+{{</Aside>}}
+
+For the `cf-mitigated` header, `challenge` is the only valid value. The header is set for all challenge page types.
+
+To illustrate, here is a code snippet that demonstrates how to use the `cf-mitigated` header to detect whether a response was challenged:
+
+```js
+fetch('/my-api-endpoint')
+  .then(response => {
+    if (response.headers.get('cf-mitigated') === 'challenge') {
+      // Handle challenged response
+    } else {
+      // Process response as usual
+    }
+  });
+```
+
+For additional help, refer to [our FAQ for Challenges](/firewall/known-issues-and-faq#challenges).
+
+## Multi-language support
+
+Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser UI. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.

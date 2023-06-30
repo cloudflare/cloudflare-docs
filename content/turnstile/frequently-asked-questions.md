@@ -34,6 +34,7 @@ We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evalu
 {{<faq-answer>}}
 
 A full Turnstile Challenge Token Flow consists of a few things:
+
 * A challenge is rendered (issued).
 * A challenge is solved on the front end and a token is harvested (solved).
 * The token is passed to siteverify, and it is consumed (siteverified).
@@ -177,6 +178,25 @@ An HTML page rendered in a [WebView](https://github.com/react-native-webview/rea
 {{<faq-answer>}}
 
 You can find special sitekeys to be used for testing in the [testing](/turnstile/reference/testing/) section.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Is there an API to create or manage Turnstile widgets?" >}}
+
+{{<faq-answer>}}
+
+Yes, you can refer to the [Turnstile API documentation](/api/operations/accounts-turnstile-widgets-list) to manage your widgets.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="I am seeing a 401 error in your console during a Turnstile security check, is this a problem?" >}}
+{{<faq-answer>}}
+
+You can safely ignore the error. It is requesting a [Private Access Token (PAT)](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/) that your device or browser does not support yet.
 
 {{</faq-answer>}}
 {{</faq-item>}}

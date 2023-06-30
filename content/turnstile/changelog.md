@@ -7,6 +7,15 @@ rss: file
 
 # Changelog
 
+## 2023-05-25
+
+- Added idempotency support for `POST /siteverify` requests via the `idempotency_key` parameter.
+
+## 2023-04-17
+
+- Added references to Turnstile Public API.
+- Added references for [`[after-interactive-callback]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget), [`[before-interactive-callback]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget), and [`[unsupported-callback]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget).
+
 ## 2023-03-06
 
 - Added [`[execution]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) and [`[appearance]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget).

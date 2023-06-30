@@ -24,7 +24,7 @@ For more details, refer to [this talk](https://www.infoq.com/presentations/cloud
 Beginning with a quick overview of the Workers runtime architecture:
 
 <div class="security-page-workers-architecture-diagram">
-  <img alt="Workers runtime architecture demonstrating design of Cloudflare's HTTP proxy and V8 isolates. Read below for more information." src="./media/Workers-architecture.svg">
+  <img alt="Workers runtime architecture demonstrating design of Cloudflare's HTTP proxy and V8 isolates. Read below for more information." src="/workers/learning/security-model/media/Workers-architecture.svg">
 </div>
 
 <style>
@@ -174,7 +174,7 @@ Supporting native code would limit choice in future mitigation techniques. There
 
 ### Step 1: Disallow timers and multi-threading
 
-In Workers, you can get the current time using the JavaScript Date API, for example by calling `Date.now()`. However, the time value returned by this is not really the current time. Instead, it is the time at which the network message was received which caused the application to begin executing. While the application executes, time is frozen. For example, if an attacker writes:
+In Workers, you can get the current time using the JavaScript Date API by calling `Date.now()`. However, the time value returned is not the current time. `Date.now()` returns the time of the last I/O. It does not advance during code execution. For example, if an attacker writes:
 
 ```js
 let start = Date.now();

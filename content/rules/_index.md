@@ -11,7 +11,7 @@ meta:
 
 {{<plan type="all">}}
 
-Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.
+{{<render file="_rules-definition.md">}}
 
 ---
 
@@ -37,6 +37,14 @@ Customize where the incoming traffic will go and with which parameters. Override
 Customize Cloudflare configuration settings for matching incoming requests.
 {{</feature>}}
 
+{{<feature header="Compression Rules" href="/rules/compression-rules/">}}
+Customize the compression applied to responses from Cloudflare's global network to your website visitors, based on the file extension and content type.
+{{</feature>}}
+
+{{<feature header="Snippets" href="/rules/snippets/">}}
+Customize the behavior of your website or application using short pieces of JavaScript code.
+{{</feature>}}
+
 {{<feature header="Custom error responses" href="/rules/custom-error-responses/" cta="Configure custom error responses">}}
 Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
 {{</feature>}}
@@ -57,8 +65,12 @@ Control incoming traffic by filtering requests to a zone. You can block or chall
 Define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 {{</related>}}
 
-{{<related header="Cache rules" href="/cache/about/cache-rules/" product="cache">}}
+{{<related header="Cache rules" href="/cache/how-to/cache-rules/" product="cache">}}
 Customize the cache properties of your HTTP requests.
+{{</related>}}
+
+{{<related header="Workers" href="/workers/" product="workers">}}
+Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
 {{</related>}}
 
 ---

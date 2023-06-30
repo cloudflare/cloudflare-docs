@@ -69,11 +69,11 @@ Timers are only available inside of [the Request Context](/workers/runtime-apis/
 
 {{</Aside>}}
 
-### EventTarget and Event
+### `EventTarget` and `Event`
 
 The [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) and [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) API allow objects to publish and subscribe to events.
 
-### AbortController and AbortSignal
+### `AbortController` and `AbortSignal`
 
 The [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) and [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) APIs provide a common model for canceling asynchronous operations.
 
@@ -127,12 +127,37 @@ The `CompressionStream` and `DecompressionStream` classes support the deflate, d
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
 
+---
+
 ## URLPattern API
 
-The URLPattern API provides a mechanism for matching URLs based on a convenient pattern syntax.
+The `URLPattern` API provides a mechanism for matching URLs based on a convenient pattern syntax.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern).
 
+---
+
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/platform/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+When the [`global_navigator`](/workers/platform/compatibility-dates/#global_navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+
+## Unhandled promise rejections
+
+The [`unhandledrejection`](https://developer.mozilla.org/en-US/docs/Web/API/Window/unhandledrejection_event) event is emitted by the global scope when a JavaScript promise is rejected without a rejection handler attached.
+
+The [`rejectionhandled`](https://developer.mozilla.org/en-US/docs/Web/API/Window/rejectionhandled_event) event is emitted by the global scope when a JavaScript promise rejection is handled late (after a rejection handler is attached to the promise after an `unhandledrejection` event has already been emitted).
+
+```js
+---
+header: worker.js
+---
+addEventListener('unhandledrejection', (event) => {
+  console.log(event.promise);  // The promise that was rejected.
+  console.log(event.reason);  // The value or Error with which the promise was rejected.
+});
+
+addEventListener('rejectionhandled', (event) => {
+  console.log(event.promise);  // The promise that was rejected.
+  console.log(event.reason);  // The value or Error with which the promise was rejected.
+});
+```

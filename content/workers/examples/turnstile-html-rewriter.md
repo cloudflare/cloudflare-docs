@@ -9,8 +9,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -45,7 +45,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {
@@ -89,43 +89,36 @@ This is only half the implementation for Turnstile. The corresponding token that
 {{</Aside>}}
 
 
-{{<tab label="js/esm" default="true">}}
+{{<tab label="js" default="true">}}
 ```js
 async function handlePost(request) {
     const body = await request.formData();
     // Turnstile injects a token in `cf-turnstile-response`.
     const token = body.get('cf-turnstile-response');
     const ip = request.headers.get('CF-Connecting-IP');
-    // Validate the token by calling the `/siteverify` API.
-    let formData = new FormData();
-
-    // Turnstile injects a token in `cf-turnstile-response`.
-    const token = body.get('cf-turnstile-response');
-    const ip = request.headers.get('CF-Connecting-IP');
 
     // Validate the token by calling the `/siteverify` API.
     let formData = new FormData();
 
-		// `secret_key` here is set using Wrangler secrets
+    // `secret_key` here is set using Wrangler secrets
     formData.append('secret', secret_key);
     formData.append('response', token);
     formData.append('remoteip', ip);
 
-	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
     const result = await fetch(url, {
         body: formData,
         method: 'POST',
     });
-    const outcome = await result.json();
 
     const outcome = await result.json();
 
     if (!outcome.success) {
         return new Response('The provided Turnstile token was not valid!', { status: 401 });
     }
-		// The Turnstile token was successfuly validated. Proceed with your application logic.
+    // The Turnstile token was successfuly validated. Proceed with your application logic.
     // Validate login, redirect user, etc.
-	return await fetch(request)
+    return await fetch(request)
 }
 
 export default {
@@ -136,13 +129,9 @@ export default {
 		if (request.method === 'POST') {
 			return handlePost(request)
 		}
-		
+
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
-			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
-			.on('head', {
-				element(element) {
-
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {

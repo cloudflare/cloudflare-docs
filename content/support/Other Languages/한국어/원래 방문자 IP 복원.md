@@ -30,7 +30,7 @@ ___
 
 아래 그림에서 Cloudflare를 사용할 때와 사용하지 않을 때 IP 주소를 어떻게 달리 처리하는지 알 수 있습니다.
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 ___
 
@@ -101,7 +101,7 @@ mod\_cloudflare를 설치하는 방법에는 2가지가 있습니다. 하나는 
 
 ### Github에서 패킷/스크립트 다운로드
 
-Apache 웹 서버를 사용하는 경우, [Github](https://github.com/cloudflare/mod_cloudflare)에서 mod\_cloudflare를 다운로드할 수 있습니다.
+Apache 웹 서버를 사용하는 경우, [GitHub](https://github.com/cloudflare/mod_cloudflare)에서 mod\_cloudflare를 다운로드할 수 있습니다.
 
 ### 원본 웹 서버에 코드 추가
 

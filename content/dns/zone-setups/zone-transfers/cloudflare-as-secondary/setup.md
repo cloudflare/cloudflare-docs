@@ -10,7 +10,7 @@ meta:
 
 With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can keep your primary DNS provider and use Cloudflare as a secondary DNS provider.
 
-{{<render file="_secondary-dns-override.md">}}
+{{<render file="_secondary-dns-override.md">}} <br />
 
 ## Before you begin
 
@@ -28,8 +28,10 @@ You will also need the following information from your Primary DNS provider:
 
 - **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
 - **Zone transfer type**: Will zone transfers be full (AXFR) or incremental (IXFR)?
+- **TSIG name** (optional): A descriptive name of the TSIG following domain name syntax ([RFC 8945 section 4.2](https://datatracker.ietf.org/doc/html/rfc8945#section-4.2)).
+ {{<render file="_tsig-name-match.md">}}
 - **TSIG secret** (optional): The secret string used to authenticate zone transfers.
-- **TSIG Algorithm** (optional): The algorithm used to authenticate zone transfers.
+- **TSIG algorithm** (optional): The algorithm used to authenticate zone transfers.
 
 ### At Cloudflare
 
@@ -39,14 +41,6 @@ Get the following values from your Cloudflare account:
 - [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
 - [Zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
 - [Nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names), which should have **secondary** in the name.
-
-### DNSSEC
-
-If you want [DNSSEC](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) available for your secondary zone, you will need one of the following setups (reach out to your account team for more details):
-
-- **Hidden primary**: Since Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries, Cloudflare can sign records on the fly.
-- **Pre-signed zones**: If your primary DNS provider signs records and transfers out the signatures, Cloudflare serves records and DNSSEC signatures as is without doing any signing. Cloudflare only supports NSEC records (and not NSEC3 records) and this setup does not support [Secondary Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/).
-- **Multi-signer DNSSEC**: Both Cloudflare and your primary DNS provider know the signing keys of the other provider and perform their own online signing in accordance with [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
 
 ---
 

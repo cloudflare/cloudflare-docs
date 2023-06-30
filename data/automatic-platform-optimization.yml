@@ -13,7 +13,6 @@ meta:
     site from our edge network, ensuring customers see improved performance when
     visiting your site.
   author: '@cloudflare'
-  
 
 externals:
   - title: Cloudflare homepage
@@ -22,3 +21,8 @@ externals:
     url: https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/
   - title: 'Blog: APO Post-launch report'
     url: https://blog.cloudflare.com/apo-post-launch-report/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: automatic-platform-optimization

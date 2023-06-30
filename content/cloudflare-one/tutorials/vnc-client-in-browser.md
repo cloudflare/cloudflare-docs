@@ -137,7 +137,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
    $ cloudflared tunnel --config path/config.yaml run <NAME>
    ```
 
-8. Follow [this guide](/cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
+8. Follow [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
 
 At this point you have a running VNC server and a Cloudflare Tunnel on your machine ready to accept inbound VNC requests.
 
@@ -151,11 +151,11 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
 3. Name the application and set the domain to which you would like to expose the VNC server.
 
-   ![Example domain name input for VNC application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
+   ![Example domain name input for VNC application](/images/cloudflare-one/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
 
 4. Add an Allow or Block policy. In this example, we are only allowing users with emails ending in `@example.com`.
 
-   ![Example Zero Trust policy input for VNC application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
+   ![Example Zero Trust policy input for VNC application](/images/cloudflare-one/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
 {{<Aside type="note">}}
 Service Auth and Bypass policies are not supported for browser-based VNC applications.

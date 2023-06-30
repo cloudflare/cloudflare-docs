@@ -7,17 +7,9 @@ title: Cloudflare Appsの請求
 
 # Cloudflare Appsの請求
 
-## Cloudflare Appsの請求
-
-_Cloudflare Appsの課金方法を説明します。_
-
-___
-
-## 概要
-
 Cloudflare Apps内の多くのアプリは無料であり、請求されません。
 
-![CloudflareダッシュボードのAppsフロントページのスクリーンショット](/support/static/hc-dash-apps_main_page.png)
+![CloudflareダッシュボードのAppsフロントページのスクリーンショット](/images/support/hc-dash-apps_main_page.png)
 
 Cloudflare Apps内のすべての有料アプリは毎月の請求となります。アプリを購入してインストールした各ドメインについて毎月請求されます。
 

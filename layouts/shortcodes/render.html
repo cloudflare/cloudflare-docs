@@ -7,7 +7,8 @@
 {{- $parentPagePath := .Page.File.Path -}}
 {{- $sep := ";;" -}}
 
-{{- $parameterValues := default "" (.Get "withParameters") }}
+{{- $parameterValues := default "" (.Get "withParameters") -}}
+{{- $noMarkdown := default false (.Get "noMarkdown") -}}
 
 {{- with .Site.GetPage $url -}}
 
@@ -43,7 +44,11 @@
     {{- end -}}
 
   {{- end -}}
-
-  {{ $contentPlaceholder | markdownify }}
+  
+  {{- if $noMarkdown -}}
+    {{- $contentPlaceholder -}}
+  {{- else -}}
+    {{- $contentPlaceholder | markdownify -}}
+  {{- end -}}
 
 {{- end -}}

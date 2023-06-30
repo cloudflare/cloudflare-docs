@@ -38,9 +38,9 @@ To create a new certificate using the API, send a [POST request](/api/operations
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="warning">}}
 
-{{<render file="_lets-encrypt-advanced-limitations.md">}}
+{{<render file="_acm-ca-hostnames-conditions.md">}}
 
 {{</Aside>}}
 

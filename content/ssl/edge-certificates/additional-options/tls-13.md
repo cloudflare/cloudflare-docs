@@ -10,8 +10,7 @@ TLS 1.3 enables the latest version of the TLS protocol (when supported) for impr
 
 ## What is TLS 1.3?
 
-TLS 1.3 is the newest, fastest, and most secure version of the TLS protocol.
-SSL/TLS is the protocol that encrypts communication between users and your website. When web traffic is encrypted with TLS, users will see the green padlock in their browser window.
+TLS 1.3 is the newest, fastest, and most secure version of the TLS protocol. SSL/TLS is the protocol that encrypts communication between users and your website. When web traffic is encrypted with TLS, users will see the green padlock in their browser window.
 
 By turning on the TLS 1.3 feature, traffic to and from your website will be served over the TLS 1.3 protocol when supported by clients. TLS 1.3 protocol has improved latency over older versions, has several new features, and is currently supported in both Chrome (starting with release 66), Firefox (starting with release 60), and in development for Safari and Edge browsers.
 
@@ -90,3 +89,7 @@ Since TLS 1.3 implementations are relatively new, some failures may occur. If yo
 - Packet captures
 
 Chrome users should submit a [net-internals trace](https://dev.chromium.org/for-testers/providing-network-details) to Google. Firefox users should [report bugs to Mozilla](https://bugzilla.mozilla.org/home).
+
+## Limitations
+
+{{<render file="_tls-1.3-cipher-limitations.md">}}

@@ -12,6 +12,10 @@ Delegated DCV allows zones with [partial DNS setups](/dns/zone-setups/partial-se
 
 DCV Delegation requires you to place a one-time record that allows Cloudflare to auto-renew all future certificate orders, so that there’s no manual intervention at the time of the renewal.
 
+## Availability
+
+{{<feature-table id="ssl.delegated_dcv">}}
+
 ## When to use
 
 You should use Delegated DCV when all of the following conditions are true:
@@ -20,6 +24,11 @@ You should use Delegated DCV when all of the following conditions are true:
 - Cloudflare is not already [performing DCV automatically](/ssl/edge-certificates/changing-dcv-method/).
 - Your zone is using an [Advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
 - Your zone is not using multiple CDN providers.
+- The Certificate Authority is either Google or Let's Encrypt
+
+{{<Aside type="note" header="Delegated DCV and origin certificates">}}
+As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare Origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
+{{</Aside>}}
 
 ## Setup
 

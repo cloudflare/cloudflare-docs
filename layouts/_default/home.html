@@ -2,7 +2,9 @@
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-site-page is-docs-page>
 
 <head>
+  {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
   {{- partial "onetrust" -}}
+  {{- end -}}
   {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
   <link rel="stylesheet preconnect" href="/home.css" />

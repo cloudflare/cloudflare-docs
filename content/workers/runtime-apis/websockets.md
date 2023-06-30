@@ -9,6 +9,8 @@ title: WebSockets
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
 
+When using WebSockets with Durable Objects, we recommend using the [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) which adds additional extensions to the standard `WebSocket` object.
+
 ## Constructor
 
 ```js
@@ -54,7 +56,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
   - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
 
-- {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}) {{<type>}}Function{{</type>}}{{</code>}}
+- {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}){{</code>}} {{<type>}}Function{{</type>}}
 
   - A function to be called when the WebSocket responds to a specific event.
 
@@ -62,9 +64,13 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ### close
 
+{{<definitions>}}
+
 - {{<code>}}close(code{{<param-type>}}number{{</param-type>}}, reason{{<param-type>}}string{{</param-type>}}){{</code>}}
 
-  Close the WebSocket connection.
+  - Close the WebSocket connection.
+
+{{</definitions>}}
 
 #### Parameters
 
@@ -82,9 +88,13 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ### send
 
+{{<definitions>}}
+
 - {{<code>}}send(message{{<param-type>}}string{{</param-type>}} | {{<param-type>}}ArrayBuffer{{</param-type>}} | {{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}}
 
   Send a message to the other WebSocket in this WebSocket pair.
+
+{{</definitions>}}
 
 #### Parameters
 
@@ -96,19 +106,22 @@ let [client, server] = Object.values(new WebSocketPair());
 
 {{</definitions>}}
 
+---
+
 ## Events
 
-- `close`
+{{<definitions>}}
 
-An event indicating the WebSocket has closed.
+- {{<code>}}close{{</code>}}
+  - An event indicating the WebSocket has closed.
 
-- `error`
+- {{<code>}}error{{</code>}}
+  - An event indicating there was an error with the WebSocket.
 
-An event indicating there was an error with the WebSocket.
+- {{<code>}}message{{</code>}}
+  - An event indicating a new message received from the client, including the data passed by the client.
 
-- `message`
-
-An event indicating a new message received from the client, including the data passed by the client.
+{{</definitions>}}
 
 ## Types
 
@@ -120,6 +133,8 @@ An event indicating a new message received from the client, including the data p
 - `type` {{<type>}}string{{</type>}} - Defaults to `message`.
 
 {{</definitions>}}
+
+---
 
 ## Related resources
 

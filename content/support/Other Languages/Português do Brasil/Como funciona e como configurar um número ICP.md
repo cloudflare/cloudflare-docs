@@ -63,10 +63,4 @@ Após o envio de todos os documentos necessários, o prazo para obtenção de um
 
 Após receber o certificado e o número de ICP, adicione-o ao rodapé da página inicial do seu site. 
 
-![URL antigo: https://support.cloudflare.com/hc/article_attachments/360040367132/baidu_home_page.png ID do artigo: 209714777 | Como entender e configurar um número ICP](/support/static/hc-import-baidu_home_page.png)
-
-___
-
-## Recursos relacionados
-
-[Devo escolher a Cloudflare ou o Yunjiasu?](https://support.cloudflare.com/hc/articles/209156358)
+![URL antigo: https://support.cloudflare.com/hc/article_attachments/360040367132/baidu_home_page.png ID do artigo: 209714777 | Como entender e configurar um número ICP](/images/support/hc-import-baidu_home_page.png)

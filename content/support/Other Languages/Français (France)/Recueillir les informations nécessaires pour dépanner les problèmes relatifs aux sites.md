@@ -38,17 +38,17 @@ Pour le moment, seuls Chrome et Firefox peuvent accéder par défaut à la fonct
 
 1\. Dans une page du navigateur, effectuez un clic droit n'importe où et sélectionnez **Inspecter l'élément**.
 
-2\. Les outils de développement apparaissent en bas ou à gauche du navigateur. Cliquez sur l’onglet **Network**.![gathering_har_file_network.png](/support/static/gathering_har_file_network.png)
+2\. Les outils de développement apparaissent en bas ou à gauche du navigateur. Cliquez sur l’onglet **Network**.![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
 
 3\. Cochez **Preserve log**.
 
 4\. Cliquez sur record.
 
- ![gathering_har_file_record.png](/support/static/gathering_har_file_record.png)
+ ![gathering_har_file_record.png](/images/support/gathering_har_file_record.png)
 
 5\. Accédez à l'URL qui provoque les problèmes. Une fois le problème rencontré, cliquez avec le bouton droit de la souris sur l’un des éléments dans l’onglet **Network** et sélectionnez **Save all as HAR with Content**.
 
- ![save_har_with_content.png](/support/static/save_har_with_content.png)
+ ![save_har_with_content.png](/images/support/save_har_with_content.png)
 
  6. Joignez le fichier HAR à votre ticket de support.
 

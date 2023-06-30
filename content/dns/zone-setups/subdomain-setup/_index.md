@@ -2,13 +2,14 @@
 pcx_content_type: concept
 title: Subdomain setup
 weight: 3
+layout: single
 ---
 
 # Subdomain setup
 
 When you use a subdomain setup, you can manage the Cloudflare settings for one or more subdomains separately from those associated with your root domain.
 
-![Screenshot showing a zone with a parent domain and a child subdomain](/dns/static/subdomain-zone.png)
+![Screenshot showing a zone with a parent domain and a child subdomain](/images/dns/subdomain-zone.png)
 
 You might use this when you want to share **access** to a specific subdomain's settings with different teams, but have stricter controls on your root domain. For example, this setup could allow your documentation team to manage the Cloudflare settings for `docs.example.com`, while preventing them from adjusting any settings on `example.com`.
 

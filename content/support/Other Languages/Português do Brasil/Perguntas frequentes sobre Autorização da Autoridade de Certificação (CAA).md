@@ -52,7 +52,7 @@ Os registros DNS a seguir são configurados automaticamente se você continuar a
 
 Usado isoladamente, o _issuewild_permite somente a emissão de curingas.  Portanto, a Cloudflare não pode adicionar seu domínio raiz ao certificado, a menos que você especifique a opção _Permitir curingas e nomes de host específicos_ na lista suspensa de **Tags**:
 
-![configuring_caa_records_comodoca_annotated.png](/support/static/configuring_caa_records_comodoca_annotated.png)
+![configuring_caa_records_comodoca_annotated.png](/images/support/configuring_caa_records_comodoca_annotated.png)
 
 ___
 

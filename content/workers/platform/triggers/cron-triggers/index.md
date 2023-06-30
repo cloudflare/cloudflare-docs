@@ -12,7 +12,13 @@ Cron Triggers allow users to map a cron expression to a Worker script using a [S
 
 ## Add a Cron Trigger
 
-You can add Cron Triggers to Workers with the Cloudflare API, or in the dashboard in **Workers** > **Manage Workers** > select **your Worker** > [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers). Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker. If a Worker is managed with Wrangler, [Cron Triggers should be exclusively managed through the `wrangler.toml`](/workers/wrangler/configuration/) file.
+Add Cron Triggers to Workers with the Cloudflare API, or in the dashboard. To add Cron Triggers in the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Triggers** > **Cron Triggers**.
+
+Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker. If a Worker is managed with Wrangler, [Cron Triggers should be exclusively managed through the `wrangler.toml`](/workers/wrangler/configuration/) file.
 
 {{<Aside type="note" header="Requires a ScheduledEvent Listener">}}
 
@@ -20,7 +26,7 @@ To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runt
 
 {{</Aside>}}
 
-![After selecting Triggers, add a trigger to execute time-based Workers](/workers/platform/triggers/cron-triggers/media/workers-schedule-editor.png)
+![After selecting Triggers, add a trigger to execute time-based Workers](/images/workers/platform/triggers/workers-schedule-editor.png)
 
 ## Supported cron expressions
 
@@ -95,7 +101,7 @@ $ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 Users can review the execution history of their Cron Triggers in **Past Events** under [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
-![Review the activity log of past cron triggers in Past Events](/workers/platform/triggers/cron-triggers/media/workers-past-events.png)
+![Review the activity log of past cron triggers in Past Events](/images/workers/platform/triggers/workers-past-events.png)
 
 It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 

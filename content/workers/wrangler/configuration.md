@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Configuration
-weight: 3
 ---
 
 # Configure `wrangler.toml`
@@ -43,7 +42,7 @@ kv_namespaces = [
 
 ## Environments
 
-The configuration for a Worker can become complex when you define different [environments](/workers/platform/environments/), and each environment has its own configuration.
+The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
 These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
@@ -150,7 +149,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Worker.
+  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/platform/environment-variables/).
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -251,9 +250,10 @@ Triggers allow you to define the `cron` expression to invoke your Worker's `sche
 
 {{<definitions>}}
 
-- `cron` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `crons` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - An array of `cron` expressions.
+  - To disable a Cron Trigger, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
 
 {{</definitions>}}
 
@@ -300,6 +300,40 @@ watch_dir = "build_watch_dir"
 ```
 
 ## Bindings
+
+### D1 databases
+
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/platform/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
+
+To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the database. This a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
+
+- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[d1_databases]]
+binding = "PROD_DB"
+database_name = "test-db"
+database_id = "c020574a-5623-407b-be0c-cd192bab9545"
+```
 
 ### Durable Objects
 
@@ -459,7 +493,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/wrangler/environments/).
 
 {{</definitions>}}
 
@@ -496,11 +530,11 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
 ```
 
 ### mTLS Certificates
@@ -670,8 +704,6 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-{{<render file="_nodejs-compat-local-dev.md">}}
-
 ### Add polyfills using Wrangler
 
 Add polyfills for subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
@@ -752,6 +784,6 @@ If you need to make changes to your Worker from the Cloudflare dashboard, the da
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler v1 [deprecation guide](/workers/wrangler-legacy/migration/deprecations/#other-deprecated-behaviour).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behaviour).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

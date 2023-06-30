@@ -5,7 +5,7 @@ product:
   title: Network Interconnect
   url: /network-interconnect/
   wrap: true
-  group: Network services
+  group: Network security
 
 meta:
   title: Cloudflare Network Interconnect docs
@@ -13,7 +13,6 @@ meta:
     connecting over the Internet.
   author: '@cloudflare'
   
-
 externals:
   - title: Blog announcement
     url: https://blog.cloudflare.com/cloudflare-network-interconnect/
@@ -21,3 +20,8 @@ externals:
     url: https://www.cloudflare.com/network-interconnect-partnerships/
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: network-interconnect

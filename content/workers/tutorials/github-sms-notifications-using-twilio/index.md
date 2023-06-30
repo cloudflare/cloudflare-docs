@@ -23,7 +23,7 @@ You will learn how to:
 - Integrate Workers with GitHub and Twilio.
 - Use Worker secrets with Wrangler.
 
-![Animated gif of receiving a text message on your phone after pushing changes to a repository](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
+![Animated gif of receiving a text message on your phone after pushing changes to a repository](/images/workers/tutorials/github-sms/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 ---
 
@@ -53,7 +53,7 @@ You can reference the finished code at this [GitHub repository](https://github.c
 
 To start, configure a GitHub webhook to post to your Worker when there is an update to the repository:
 
-1.  Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
+1.  Go to your GitHub repository's **Settings** > **Webhooks** > **Add webhook**.
 
 2.  Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/workers/wrangler/configuration/#zone-id-route) file and then [running `wrangler publish` in your command line](/workers/wrangler/commands/#publish) to generate a live URL for your Worker.
 
@@ -65,7 +65,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 6.  Select **Add webhook** to finish configuration.
 
-![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](./media/github-config-screenshot.png)
+![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
 
 ---
 
@@ -227,7 +227,7 @@ async function sendText(message) {
 }
 ```
 
-To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler-legacy/commands/#put) in your command line.
+To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/commands/#put-3) in your command line.
 
 ```sh
 $ wrangler secret put ACCOUNT_SID
@@ -268,7 +268,7 @@ Run the `wrangler publish` command to deploy your Workers script:
 $ wrangler publish
 ```
 
-![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
+![Video of receiving a text after pushing to a repo](/images/workers/tutorials/github-sms/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/tutorial/git-push-pull) to pushing to your repository.
 

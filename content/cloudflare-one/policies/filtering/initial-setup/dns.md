@@ -10,6 +10,10 @@ meta:
 
 Secure Web Gateway allows you to inspect DNS traffic and control which websites users can visit.
 
+{{<Aside type="note">}}
+For a more detailed guide to filtering DNS queries, refer to [Get started with DNS filtering](/learning-paths/dns-filtering/).
+{{</Aside>}}
+
 ## 1. Connect to Gateway
 
 ### Connect devices
@@ -36,16 +40,17 @@ Gateway identifies locations differently depending on the DNS query protocol:
 
 ## 2. Verify device connectivity
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
-2. Under **Gateway logging**, enable activity logging for all DNS logs.
-3. On your WARP-enabled device, open a browser and visit any website.
-4. In Zero Trust, navigate to **Logs** > **Gateway** > **DNS**. Before building DNS policies, make sure you see DNS queries from the email associated with your device.
+{{<render file="gateway/_verify-connectivity.md" withParameters="DNS">}}
 
 ## 3. Add recommended policies
 
 To create a new DNS policy, navigate to **Gateway** > **Firewall Policies** > **DNS** in Zero Trust. We recommend adding the following policy:
 
-{{<render file="gateway/_policies-recommended.md">}}
+### Block all security categories
+
+Block [known threats](/cloudflare-one/policies/filtering/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
+
+{{<render file="gateway/_block-security-categories.md">}}
 
 ## 4. Add optional policies
 

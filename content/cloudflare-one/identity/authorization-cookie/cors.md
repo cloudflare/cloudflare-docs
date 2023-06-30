@@ -68,7 +68,7 @@ To configure how Cloudflare responds to preflight requests:
    ```
 
    then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
-   ![Example CORS settings configuration in Zero Trust](/cloudflare-one/static/documentation/policies/CORS-settings.png)
+   ![Example CORS settings configuration in Zero Trust](/images/cloudflare-one/policies/CORS-settings.png)
 
 5. Click **Save application**.
 
@@ -139,7 +139,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
    $ cd redirect-worker
    ```
 
-3. Open `wrangler.toml` in a text editor and insert your Account ID. To find your Account ID, open your [Cloudflare dashboard](https://dash.cloudflare.com/) and click the **Workers** tab.
+3. Open `wrangler.toml` in a text editor and insert your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
    ```txt
    ---
@@ -218,7 +218,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 ### 4. Configure the Worker
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), navigate to the **Workers** tab.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/) Account Home, navigate to **Workers & Pages**.
 
 2. Click your newly created Worker. In this example, the Worker is called `redirect-worker`.
 

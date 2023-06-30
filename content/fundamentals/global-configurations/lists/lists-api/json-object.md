@@ -11,7 +11,7 @@ meta:
 
 ## List object structure and properties
 
-A JSON response for the [Lists API](/api/operations/lists-properties) has this structure:
+A JSON response for the [Lists API](/api/operations/lists-get-lists) has this structure:
 
 ```json
 {

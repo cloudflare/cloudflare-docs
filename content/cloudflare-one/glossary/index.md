@@ -21,6 +21,10 @@ Review definitions for Cloudflare Zero Trust terms.
 
 [Cloudflare Gateway](https://www.cloudflare.com/products/zero-trust/gateway/) is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
+## Cloudflare CASB
+
+[Cloudflare CASB](https://www.cloudflare.com/products/zero-trust/casb/) provides comprehensive visibility and control over SaaS apps so you can easily prevent data leaks and compliance violations. With Cloudflare CASB, you can detect insider threats, Shadow IT, risky data sharing, and bad actors.
+
 ## Cloudflare Tunnel
 
 [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/) (formerly _Argo Tunnel_) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
@@ -127,7 +131,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca/) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+{{<render file="_origin-certificate-definition.md" productFolder="fundamentals">}}
 
 ## policy
 
@@ -191,7 +195,7 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 
 ## team name
 
-The customizable portion of your [team domain](#team-domain). You can view your team name in Cloudflare Zero Trust under **Settings** > **General**.
+The customizable portion of your [team domain](#team-domain). You can view your team name in Cloudflare Zero Trust under **Settings** > **Custom Pages**.
 
 | team domain                             | team name        |
 | --------------------------------------- | ---------------- |

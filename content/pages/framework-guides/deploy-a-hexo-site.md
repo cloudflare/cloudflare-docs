@@ -53,7 +53,11 @@ Inside of `hello-hexo.md`, use Markdown to write the content of the article. You
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -80,10 +84,10 @@ Every time you commit new code to your Hexo site, Cloudflare Pages will automati
 
 Some Hexo themes or plugins have additional requirements for different Node.js versions. To use a specific Node.js version for Hexo:
 
-1. Go to **your Pages project**.
+1. Go to your Pages project.
 2. Go to **Settings** > **Environment variables**.
 3. Set the environment variable `NODE_VERSION` and a value of your required Node.js version (for example, `14.3`).
 
-![Follow the instructions above to set up an environment variable in the Pages dashboard](/pages/framework-guides/media/node-version-pages.png)
+![Follow the instructions above to set up an environment variable in the Pages dashboard](/images/pages/framework-guides/node-version-pages.png)
 
 {{<render file="_learn-more.md" withParameters="Hexo">}}

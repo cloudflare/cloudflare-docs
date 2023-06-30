@@ -22,7 +22,7 @@ To ensure that your service is not disrupted, you need to perform an additional 
 
 ### Recommended validation methods
 
-Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps you avoid downtime during your migration. If you choose to use [CNAME validation](#cname-validation), your domain might fall behind on its [backoff schedule](/ssl/reference/validation-backoff-schedule/).
+Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps you avoid downtime during your migration. If you choose to use [CNAME validation](#cname-validation), your domain might fall behind on its [backoff schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
 
 #### DNS TXT Record
 
@@ -85,7 +85,7 @@ Before your migration, you should:
     - Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
     - Via a CSV file (provided by your SE)
     - Via the Cloudflare dashboard:
-      ![Review SSL migration status in the dashboard](/ssl/static/ssl-migration-status.png)
+      ![Review SSL migration status in the dashboard](/images/cloudflare-for-platforms/ssl-migration-status.png)
 4.  Approve the migration. Your Cloudflare account team will work with you to schedule a migration window for each of your SSL for SaaS zones.
 
 ## During the migration

@@ -9,4 +9,4 @@ _build:
 
 2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP). In GCP, the server IP is the  **Internal IP** of the VM instance.
 
-3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#2-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
+3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.

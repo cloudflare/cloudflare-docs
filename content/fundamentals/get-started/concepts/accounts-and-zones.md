@@ -40,7 +40,7 @@ Each user has a profile that contains several settings, such as [Communication p
 
 To access your profile, select the user icon and then **My Profile** from any page within the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-![Use the Profile icon to access your profile settings](/fundamentals/static/images/get-started/profile-navigation.png)
+![Use the Profile icon to access your profile settings](/images/fundamentals/get-started/profile-navigation.png)
 
 ---
 
@@ -60,19 +60,21 @@ When you log into the [Cloudflare dashboard](https://dash.cloudflare.com), you c
 
 To access account settings and account-level products from within a zone, use the **Account Home** option from the **Profile** dropdown.
 
-![Use the Account Home option in the Profile dropdown to access account settings and products](/fundamentals/static/images/get-started/account-navigation-profile.png)
+![Use the Account Home option in the Profile dropdown to access account settings and products](/images/fundamentals/get-started/account-navigation-profile.png)
 
 You can also use the back button near the zone name.
 
-![Use the back button near the account name to move from a zone to your account](/fundamentals/static/images/get-started/account-navigation.png)
+![Use the back button near the account name to move from a zone to your account](/images/fundamentals/get-started/account-navigation.png)
 
 ---
 
 ## Zones
 
-Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones.
+Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones[^1]. Use your zone to monitor security and performance, update configurations, and apply zone-level products and services.
 
-Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/about/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
+Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/how-to/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
+
+
 
 ### Navigation
 
@@ -82,4 +84,6 @@ Once you are within a zone, items within the sidebar will be zone-related produc
 
 If you need to change to another zone, use the forward arrow next to the zone name or by go back to the homepage of your account.
 
-![Use the forward button near the account name to switch between zones in an account](/fundamentals/static/images/get-started/zone-navigation.png)
+![Use the forward button near the account name to switch between zones in an account](/images/fundamentals/get-started/zone-navigation.png)
+
+[^1]: Similar to [DNS zones](https://www.cloudflare.com/learning/dns/glossary/dns-zone/), but with additional capabilities.

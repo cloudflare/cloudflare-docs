@@ -26,32 +26,13 @@ You will not receive duplicate DDoS alerts within the same one-hour time frame.
 
 Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
 
+{{<Aside type="note">}}
 {{<render file="_alerts-and-reports-independent.md">}}
+{{</Aside>}}
 
 ## Set up a notification for DDoS alerts
 
-To set up a notification:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-
-2. Select **Notifications**.
-
-3. Under **Notifications**, select **Add**.
-
-4. Select one of the [available DDoS alerts](#alert-types) (depending on your plan and services):
-
-    * HTTP DDoS Attack Alert
-    * Layer 3/4 DDoS Attack Alert
-    * Advanced HTTP DDoS Attack Alert
-    * Advanced Layer 3/4 DDoS Attack Alert
-
-5. Enter a notification name and (optionally) a description.
-
-6. Configure a delivery method for the notification. The available delivery methods depend on your Cloudflare plan. For more information, refer to [Cloudflare Notifications](/fundamentals/notifications/).
-
-7. If you are creating a notification for one of the advanced DDoS attack alerts, select **Next** and define the parameters that will filter the notifications you will receive.
-
-8. Select **Save**.
+{{<render file="_create-notification.md">}}
 
 ## Edit an existing notification
 
@@ -96,25 +77,28 @@ You will also receive alerts for rules with a _Log_ action, containing informati
 
 The available alerts depend on your Cloudflare plan and subscribed services:
 
-Alert type                           |     WAF/CDN     |    Spectrum     | Spectrum BYOIP  |  Magic Transit
--------------------------------------|:---------------:|:---------------:|:---------------:|:--------------:
-HTTP DDoS Attack Alert               |       Yes       |        –        |        –        |        –
-Advanced HTTP DDoS Attack Alert      | Yes<sup>1</sup> |        –        |        –        |        –
-Layer 3/4 DDoS Attack Alert          |        –        | Yes<sup>2</sup> |       Yes       |       Yes
-Advanced Layer 3/4 DDoS Attack Alert |        –        |        –        | Yes<sup>2</sup> | Yes<sup>2</sup>
+Alert type                           |     WAF/CDN     |      Spectrum      | Spectrum BYOIP  |  Magic Transit
+-------------------------------------|:---------------:|:------------------:|:---------------:|:--------------:
+HTTP DDoS Attack Alert               |       Yes       |         –          |        –        |        –
+Advanced HTTP DDoS Attack Alert      | Yes<sup>1</sup> |         –          |        –        |        –
+Layer 3/4 DDoS Attack Alert          |        –        | Yes<sup>2, 3</sup> |       Yes       | Yes<sup>3</sup>
+Advanced Layer 3/4 DDoS Attack Alert |        –        |         –          | Yes<sup>2</sup> | Yes<sup>2</sup>
 
 <sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS Protection subscription._ <br>
-<sup>2</sup> _Only available on an Enterprise plan._
+<sup>2</sup> _Only available on an Enterprise plan._ <br>
+<sup>3</sup> _Refer to [Final remarks](#final-remarks) for additional notes._
 
 ## Example notification
 
 The following image shows an example notification delivered via email:
 
-![Example notification email of a DDoS attack](/ddos-protection/static/ddos-notification-example.png)
+![Example notification email of a DDoS attack](/images/ddos-protection/ddos-notification-example.png)
 
 To investigate a possibly ongoing attack, select **View Dashboard**. To go to the rule details in the Cloudflare dashboard, select **View Rule**.
 
 ## Final remarks
+
+* Spectrum and Magic Transit customers using [assigned Cloudflare IP addresses](/magic-transit/cloudflare-ips/) will receive layer 3/4 DDoS attack alerts where the attacked target is the Cloudflare IP or prefix. If you have [brought your own IP (BYOIP)](/byoip/) to Cloudflare Spectrum or Magic Transit, you will see your own IP addresses or prefixes as the attacked target.
 
 * DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS managed rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system.
 

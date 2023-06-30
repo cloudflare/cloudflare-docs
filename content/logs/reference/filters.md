@@ -232,7 +232,7 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 
 ## Setting filters via API or dashboard
 
-Filters can be set via API or the Cloudflare dashboard.
+Filters can be set via API or the Cloudflare dashboard. Note that using a filter is optional, but if used, it must contain the `where` key.
 
 ### API
 
@@ -258,7 +258,7 @@ To set filters through the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the domain you want to use.
 2. Go to **Analytics & Logs** > **Logs**.
-3. Select **Connect a service**. A modal window will open.
+3. Select **Add Logpush job**. A modal window will open.
 4. Select the dataset you want to push to a storage service.
 5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
 6. You need to select  a [Field](/logs/reference/log-fields/), an [Operator](/logs/reference/filters/#logical-operators), and a **Value**.

@@ -2,11 +2,12 @@
 title: Match on origin
 pcx_content_type: how-to
 weight: 8
+layout: list
 meta:
-  title: Match on origin — Edge certificates
+  title: Match on origin
 ---
 
-# Match on origin — Edge certificates
+# Match on origin
 
 Cloudflare will [present the cipher suites to your origin](/ssl/origin-configuration/cipher-suites/) and your server will select whichever cipher suite it prefers.
 

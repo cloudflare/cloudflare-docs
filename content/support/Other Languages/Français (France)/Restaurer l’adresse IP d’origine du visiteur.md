@@ -21,7 +21,7 @@ Par exemple, si vous installez des applications qui dépendent de l'adresse IP e
 
 Le diagramme ci-dessous illustre les différentes façons dont les adresses IP sont gérées avec et sans Cloudflare.
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 ___
 
@@ -88,11 +88,11 @@ ___
 
 ## mod\_cloudflare
 
-Il existe deux méthodes pour installer mod\_cloudflare : en téléchargeant l'extension Apache depuis Github ou en ajoutant du code à votre serveur web d'origine.
+Il existe deux méthodes pour installer mod\_cloudflare : en téléchargeant l'extension Apache depuis GitHub ou en ajoutant du code à votre serveur web d'origine.
 
-### Télécharger des paquets ou des scripts depuis Github
+### Télécharger des paquets ou des scripts depuis GitHub
 
-Si vous utilisez un serveur web Apache, vous pouvez télécharger mod\_cloudflare à partir de [Github](https://github.com/cloudflare/mod_cloudflare).
+Si vous utilisez un serveur web Apache, vous pouvez télécharger mod\_cloudflare à partir de [GitHub](https://github.com/cloudflare/mod_cloudflare).
 
 ### Ajouter du code à votre serveur web d'origine
 

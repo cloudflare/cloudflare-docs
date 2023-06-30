@@ -7,7 +7,7 @@
       "Cloudflare Essentials",
       "DNS",
       "SSL/TLS",
-      "Firewall",
+      "WAF",
       "Cache"
     ],
     "category": ["Security", "Performance", "Reliability"],
@@ -222,7 +222,7 @@
             "additional_description": "If you control your <a href='https://www.cloudflare.com/learning/cdn/glossary/origin-server/'>origin server</a> and plan on using <a href='/dns/manage-dns-records/reference/proxied-dns-records/'>Cloudflare’s proxy</a>, review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
           },
           {
-            "url_path": "/dns/additional-options/dnssec/#disable-dnssec",
+            "url_path": "/dns/dnssec/#disable-dnssec",
             "link_title": "(At your registrar) Disable DNSSEC",
             "additional_description": "Make sure DNSSEC is disabled at your registrar (where you purchased your domain name). Otherwise, your domain will experience connectivity errors when you change your nameservers."
           },
@@ -301,7 +301,7 @@
             "additional_description": "Make sure you understand Cloudflare's proxy status, which affects how Cloudflare treats incoming traffic to a DNS record."
           },
           {
-            "url_path": "/dns/additional-options/dnssec/",
+            "url_path": "/dns/dnssec/",
             "link_title": "Set up DNSSEC"
           },
           {

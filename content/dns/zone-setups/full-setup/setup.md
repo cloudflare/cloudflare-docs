@@ -61,7 +61,7 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  On **Overview**, locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
 
-    ![Find nameserver names on the Overview page of your domain](/dns/static/nameserver-names.png)
+    ![Find nameserver names on the Overview page of your domain](/images/dns/nameserver-names.png)
 
 <br/>
 3. Keep this window open while you perform the next step.
@@ -164,4 +164,4 @@ If you see unexpected results, refer to our [troubleshooting suggestions](/dns/z
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
 
-You should now [enable DNSSEC](/dns/additional-options/dnssec/) to protect from domain spoofing.
+You should now [enable DNSSEC](/dns/dnssec/) to protect from domain spoofing.

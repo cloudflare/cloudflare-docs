@@ -19,6 +19,10 @@ For all other customers (Super Bot Fight Mode and Bot Management for Enterprise)
 
 For more details on how to set up bot protection, see [Get started](/bots/get-started/).
 
+## Enforcing execution of JavaScript detections
+
+{{<render file="_javascript-detections-implementation.md">}}
+
 ## Limitations
 
 ### If you enabled Bot Management before June 2020
