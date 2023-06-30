@@ -1519,7 +1519,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Paid plans",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1528,7 +1528,7 @@
         },
         "b_script_monitor": {
           "title": "Script monitor",
-          "summary": "Paid plans",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
