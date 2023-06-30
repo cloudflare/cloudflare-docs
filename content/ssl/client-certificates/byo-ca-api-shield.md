@@ -82,7 +82,7 @@ If you want to remove a CA that you have previously uploaded, you must first rem
 
 ```text
   "hostnames": [], 
-  "mtls_certificate_id": "block"
+  "mtls_certificate_id": "<CERTIFICATE_ID>"
 ```
 
 2. Use the [Delete mTLS certificate endpoint](/api/operations/m-tls-certificate-management-delete-m-tls-certificate) to delete the certificate.
