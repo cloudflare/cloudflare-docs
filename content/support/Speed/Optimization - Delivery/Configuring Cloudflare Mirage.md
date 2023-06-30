@@ -51,7 +51,7 @@ ___
 To enable Mirage image optimization for your domain,
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2.  Select your account and zone.
 3.  Go to **Speed** > **Optimization** > **Image Optimization**.
 4.  For **Mirage**, switch the toggle to **On**.
 
