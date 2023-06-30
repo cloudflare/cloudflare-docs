@@ -179,8 +179,6 @@ Use one of the following API endpoints:
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
 
-For managed rulesets, this method returns a list with one item with the information about the most recent version of the ruleset.
-
 When the specified phase entry point ruleset does not exist, this API method returns an empty array in the `result` field.
 
 ### Example
@@ -249,8 +247,6 @@ Use one of the following API endpoints:
 [grv-zone]: /api/operations/getZoneRulesetVersions
 [gerv-account]: /api/operations/getAccountEntrypointRulesetVersion
 [gerv-zone]: /api/operations/getZoneEntrypointRulesetVersion
-
-You can view the rules in all the versions of a custom ruleset. However, you can only view the rules of the latest version of a managed ruleset.
 
 When the specified phase entry point ruleset does not exist, this API method returns a `404 Not Found` HTTP status code.
 

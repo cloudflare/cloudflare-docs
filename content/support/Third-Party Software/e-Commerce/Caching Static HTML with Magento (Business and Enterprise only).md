@@ -46,7 +46,7 @@ With this setting in place, you can set the necessary Page Rules to cache anonym
 
 -   Finally, setting _Edge Cache TTL_ will define the maximum period of time Cloudflare should keep cached files before getting them back from the origin. Even after setting a long Edge Cache TTL time, you can still  before this time expires.
 
-![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/support/static/hc-import-page_rules_caching_static_html_with_magento.png)
+![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/images/support/hc-import-page_rules_caching_static_html_with_magento.png)
 
 6\. Click **Save and Deploy**.
 
@@ -80,7 +80,7 @@ There are a couple of options for installing this:
 
 After installing the plugin, navigate to _System -> Configration -> TURPENTINE -> Varnish Options_ and find the "Use VCL fix" option, set it to "Disable" and save.
 
-![Use VCL fix option set to Disable.](/support/static/hc-import-use_vcl_fix_magento_cache_static_html.png)
+![Use VCL fix option set to Disable.](/images/support/hc-import-use_vcl_fix_magento_cache_static_html.png)
 
 ___
 

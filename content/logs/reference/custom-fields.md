@@ -192,7 +192,7 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 {{</Aside>}}
 
-## Enable custom rules via dashboard
+## Enable custom fields via dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select the domain you want to use.
 2. Go to **Analytics & Logs** > **Logs**.

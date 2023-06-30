@@ -35,7 +35,7 @@ The Plugin takes a function, which in turn takes an incoming message, and return
 
 The Plugin only exposes a single route, which is the URL you should set in the Google Cloud Console when creating the bot.
 
-![Google Cloud Console's Connection Settings for the Google Chat API showing 'App URL' selected and 'https://example.com/google-chat' entered into the 'App URL' text input.](/pages/platform/functions/plugins/google-chat.png)
+![Google Cloud Console's Connection Settings for the Google Chat API showing 'App URL' selected and 'https://example.com/google-chat' entered into the 'App URL' text input.](/images/pages/platform/functions/google-chat.png)
 
 ### API
 

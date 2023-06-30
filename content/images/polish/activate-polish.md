@@ -10,7 +10,7 @@ Images in the [cache must be purged](/cache/how-to/purge-cache/) or expired befo
 
 {{<Aside type="warning">}}
 
-Do not activate Polish and Image Resizing simultaneously. Image Resizing already applies lossy compression, which makes Polish redundant.
+Do not activate Polish and [Image Resizing](/images/image-resizing/) simultaneously. Image Resizing already applies lossy compression, which makes Polish redundant.
 
 {{</Aside>}}
 
@@ -20,3 +20,5 @@ Do not activate Polish and Image Resizing simultaneously. Image Resizing already
 4. (Optional) Select **WebP**. Enable this option if you want to further optimize PNG and JPEG images stored in the origin server, and serve them as WebP files to browsers that support this format.
 
 To ensure WebP is not served from cache to a browser without WebP support, disable WebP at your origin web server when using Polish.
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}

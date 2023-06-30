@@ -6,7 +6,9 @@ _build:
 inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
 ---
 
-# Tunnels and encapsulation
+# GRE and IPsec tunnels
+
+## Tunnels and encapsulation
 
 $1 uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec tunnels](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
 
@@ -34,7 +36,7 @@ Note right of C: Egress <br> traffic
 
 {{<Aside type="note">}}By default, egress packets are routed by your ISP interface, not Cloudflare.{{</Aside>}}
 
-## ​​Anycast tunnels
+## ​​Anycast
 
 $1 uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) IP addresses for Cloudflare’s tunnel endpoints. In the Anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
 
@@ -108,6 +110,7 @@ This is sometimes referred to as Phase 1 as per IKEv1 language.
   - SHA2-256
 
 - **Diffie-Hellman group**:
+  - DH group 20 (384-bit random)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 

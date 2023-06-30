@@ -30,7 +30,7 @@ La vista de **Network Analytics** de Cloudflare proporciona visibilidad casi en 
     migración](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
-![Panel de Analytics que muestra el resumen de paquetes por tipo](/support/static/na-main-dashboard.png)
+![Panel de Analytics que muestra el resumen de paquetes por tipo](/images/support/na-main-dashboard.png)
 
 La herramienta Network Analytics acelera la elaboración de informes y la investigación del tráfico malicioso. Puedes filtrar los datos por los siguientes parámetros:
 
@@ -75,7 +75,7 @@ ___
 
 El encabezado y los paneles laterales ofrecen un resumen de la actividad durante el periodo seleccionado en la lista desplegable **periodo**.
 
-![Título y panel lateral que resume la actividad de las últimas 24 horas](/support/static/na-navigate.png)
+![Título y panel lateral que resume la actividad de las últimas 24 horas](/images/support/na-navigate.png)
 
 El encabezado proporciona el total de paquetes o bits y el número de ataques detectados y mitigados. Cuando está ocurriendo un ataque, el encabezado muestra la tasa máxima de paquetes (o bits), pero no el recuento total.
 
@@ -87,7 +87,7 @@ Utiliza la lista desplegable **Periodo** para cambiar el intervalo de tiempo en 
 
 Cuando se selecciona _Últimos 30 minutos_, la vista **Network Analytics** muestra los datos de los últimos 30 minutos, actualizándose cada 20 segundos. Aparece una notificación _Live_ junto a la lista desplegable de estadísticas para informarte de que la vista se sigue actualizando automáticamente:
 
-![Actualización automática habilitada en Network Analytics](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![Actualización automática habilitada en Network Analytics](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 Si seleccionas la opción _Rango personalizado_ , puede especificar un rango de tiempo de hasta 30 días a lo largo de cualquier periodo de los últimos 365 días.
 
@@ -99,13 +99,13 @@ Elige una estadística de la lista desplegable para alternar entre los gráficos
 
 Activa la opción **Mostrar anotaciones** para mostrar u ocultar las anotaciones de los eventos de prefijos IP anunciados/retirados en la vista **Network Analytics** . Haga clic en cada anotación para obtener más detalles.
 
-![Botón de alternancia para mostrar las anotaciones en el gráfico de Network Analytics](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![Botón de alternancia para mostrar las anotaciones en el gráfico de Network Analytics](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### Resumen de los detalles de los paquetes 
 
 Haz clic y arrastra el ratón sobre una región del gráfico para ampliarlo. Con esta técnica, puedes acercarte a un rango de tiempo de tan solo 3 minutos.
 
-![Ampliación de los detalles de los paquetes ](/support/static/unnamed.gif)
+![Ampliación de los detalles de los paquetes ](/images/support/unnamed.gif)
 
 Para hacer zoom, pulsa el icono **X** del selector de **intervalo de tiempo**.
 
@@ -157,7 +157,7 @@ Haz lo siguiente:
 
 2\. Haz clic en **Crear regla de firewall mágico**. 
 
-![Creación de un enlace de regla de cortafuegos en Network Analytics](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![Creación de un enlace de regla de cortafuegos en Network Analytics](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Aparecerá el editor de reglas de firewall mágico con los filtros y valores seleccionados.
 
@@ -441,7 +441,7 @@ Puedes trazar los datos de Network Analytics a lo largo de una variedad de dimen
 
 Selecciona una de las pestañas de **Resumen** para ver los datos con una dimensión diferente.
 
-![Visualización de datos en distintas dimensiones](/support/static/unnamed__1_.gif)
+![Visualización de datos en distintas dimensiones](/images/support/unnamed__1_.gif)
 
 Puedes elegir entre estas opciones:
 
@@ -470,7 +470,7 @@ Cuando añades filtros y especificas un intervalo de tiempo en Network Analytics
 
 Para compartir tu vista de datos, copia la URL y envíala a otros usuarios para que puedan trabajar con la misma vista.
 
-![Selección de la URL de la página de Network Analytics](/support/static/hc-dashboard-network-analytics-6.png)
+![Selección de la URL de la página de Network Analytics](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

@@ -44,7 +44,7 @@ Users will now see a block page when they are blocked by this DNS policy.
 
 If your users see a "Warning: Potential Security Risk Ahead" message in their browser when visiting a blocked page, check that you have correctly installed the Cloudflare certificate on their device.
 
-![Error message when visiting a blocked page](/cloudflare-one/static/documentation/policies/https-browser-error.png)
+![Error message when visiting a blocked page](/images/cloudflare-one/policies/https-browser-error.png)
 
 ## Customize the block page
 

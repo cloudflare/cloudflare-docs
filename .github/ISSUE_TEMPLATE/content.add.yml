@@ -24,13 +24,16 @@ body:
         - Client IP Geolocation
         - Cloudflare for Platforms
         - Constellation
+        - D1
         - Data Localization
         - DDoS Protection
+        - DMARC Management
         - DNS
         - Email Routing
         - Email Security
         - Firewall
         - Fundamentals
+        - Health Checks
         - Image Optimization
         - Load Balancing
         - Logs
@@ -42,6 +45,7 @@ body:
         - Network Interconnect
         - Page Shield
         - Pages
+        - Privacy Gateway
         - Pub/Sub
         - Queues
         - R2
