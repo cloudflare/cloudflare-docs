@@ -6,6 +6,8 @@ _build:
 inputParameters: parentIntegration;;parentSlug
 ---
 
-## Integration permissions
+<div class="special-class" markdown="1">
 
 Refer to [$1 integration permissions](/cloudflare-one/applications/scan-apps/casb-integrations/$2/#integration-permissions) for information on which API permissions to enable.
+
+</div>

@@ -6,7 +6,7 @@ rss: file
 
 # Google Workspace
 
-The Google Workspace integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Google Workspace;;Google Workspace account">}}
 
 This integration covers the following Google Workspace products:
 
@@ -14,8 +14,7 @@ This integration covers the following Google Workspace products:
 
 ## Integration prerequisites
 
-- A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
-- [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace
+{{<render file="casb/_google-prereqs.md">}}
 
 ## Integration permissions
 
@@ -33,9 +32,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Google Workspace integration currently scans for the following findings, or security risks.
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Google Workspace;;google-workspace">}}
 
 ### User account settings
 

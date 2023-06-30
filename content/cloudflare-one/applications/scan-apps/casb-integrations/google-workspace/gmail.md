@@ -7,20 +7,19 @@ weight: 2
 
 # Gmail
 
-The Gmail integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Google Workspace account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Gmail;;Google Workspace account">}}
 
 ## Integration prerequisites
 
-- A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
-- [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace
+{{<render file="casb/_google-prereqs.md">}}
+
+## Integration permissions
 
 {{<render file="casb/_integration-perms.md" withParameters="Google Workspace;;google-workspace">}}
 
 ## Security findings
 
-The Gmail integration currently scans for the following findings, or security risks.
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Gmail;;google-workspace/gmail">}}
 
 ### Gmail administrator settings
 
