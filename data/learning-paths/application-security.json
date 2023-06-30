@@ -179,7 +179,7 @@
             "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
           {
-            "url_path": "/fundamentals/security/challenge-passage/",
+            "url_path": "/waf/settings/challenge-passage/",
             "link_title": "Customize challenge passage",
             "additional_description": "Specify the length of time that a visitor can access your website after completing a security challenge."
           },
