@@ -25,26 +25,61 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 To create an mTLS rule in the Cloudflare dashboard, follow these steps:
 
-1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your application.
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your application.
 
-2.  Go to **Security** > **Firewall rules**.
+2. Go to **SSL/TLS** > **Client Certificates**.
 
-3.  Click **Create a mTLS rule**.
+3. Select **Create a mTLS rule**.
 
-4.  Enter the following information:
+With the [migration of Firewall Rules to WAF Custom Rules](/waf/reference/migration-guides/firewall-rules-to-custom-rules/), the following steps vary depending on your zone status in the migration.
+
+{{<tabs labels="Custom Rules | Firewall Rules">}}
+{{<tab label="custom rules" no-code="true">}}
+ 
+4. In **Custom rules**, select **Create rule**
+
+5. Enter the following information:
+
+    - **Rule name**: A descriptive identifier for your mTLS rule.
+    - **Field**: `Hostname`
+    - **Operator**: `is in`
+    - **Value**: The mTLS-enabled hostnames to protect.
+
+6. Select **And** and enter the following:
+
+    - **Field**: `Client Certificate Verified`
+
+7. Make sure the second expression **Value** is negative, resulting in an **Expression Preview** as the following.
+
+    ```sql
+    (http.host in {"api.example.com"} and not cf.tls_client_auth.cert_verified)
+    ```
+
+8. In **Choose action** select `Block`.
+
+9. Select **Deploy** to make the rule active.
+
+{{</tab>}}
+{{<tab label="firewall rules" no-code="true">}}
+ 
+4. Enter the following information:
 
     - **Rule name**: A descriptive identifier for your mTLS rule.
     - **Hostname**: The mTLS-enabled hostnames to protect, only showing hosts in your application with [mTLS enabled](/ssl/client-certificates/enable-mtls/).
 
-5.  By default, your rule will have a [configuration](#expression-builder) similar to the following:
+5. By default, your rule will have a [configuration](#expression-builder) similar to the following:
 
     | **Expression**                                                                | **Action** |
     | ----------------------------------------------------------------------------- | ---------- |
     | `(http.host in {"api.example.com"} and not cf.tls_client_auth.cert_verified)` | _Block_    |
 
-    To make this rule active, click **Deploy**. To add additional firewall logic — such as checking for [revoked certificates](#check-for-revoked-certificates) — click **Use firewall rule builder**.
+    To make this rule active, select **Deploy**. To add additional firewall logic — such as checking for [revoked certificates](#check-for-revoked-certificates) — select **Use firewall rule builder**.
 
-6.  Once you have deployed your mTLS rule, any requests without a [Cloudflare-issued client certificate](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) will be blocked.
+{{</tab>}}
+{{</tabs>}}
+
+
+Once you have deployed your mTLS rule, any requests without a [Cloudflare-issued client certificate](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) will be blocked.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -58,7 +93,7 @@ To review your mTLS rule in the firewall rules Expression Builder, click the **w
 
 In the **Expression Preview**, your mTLS rule includes a [compound expression](/ruleset-engine/rules-language/expressions/#compound-expressions) formed from two [simple expressions](/ruleset-engine/rules-language/expressions/#simple-expressions) joined by the `and` operator.
 
-The first expression uses the `http.host` field, combined with the `in` operator, to capture the hosts your mTLS rule applies to.
+The first expression uses the `http.host` field, combined with the `is in` operator, to capture the hosts your mTLS rule applies to.
 
 The second expression — `not cf.tls_client_auth.cert_verified` — returns `true` when a request to access your API or web application does not present a valid client certificate.
 
