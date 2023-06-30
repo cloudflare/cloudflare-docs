@@ -1626,8 +1626,8 @@
       }
     },
     "rate_limiting_previous": {
-      "title": "Rate limiting rules (previous version)",
-      "link": "https://support.cloudflare.com/hc/articles/115001635128",
+      "title": "Rate Limiting (previous version)",
+      "link": "/waf/reference/legacy/old-rate-limiting/",
       "properties": {
         "availability": {
           "title": "Availability",

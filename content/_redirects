@@ -249,7 +249,7 @@
 
 # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
-/dns/additional-options/dnssec/ /dns/dnssec/ 301 
+/dns/additional-options/dnssec/ /dns/dnssec/ 301
 /dns/faq/ /dns/troubleshooting/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
@@ -329,6 +329,7 @@
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /firewall/cf-rulesets/view-rulesets/ /ruleset-engine/basic-operations/view-rulesets/ 301
 /firewall/recipes/require-valid-client-certificate/ /api-shield/security/mtls/configure/ 301
+/support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
 
 # fundamentals
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/account-and-billing/members/roles/ 301
@@ -728,6 +729,9 @@
 /waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rules/reference/owasp-core-ruleset/ 301
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
 /waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
+/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/ /waf/reference/legacy/old-waf-managed-rules/ 301
+/support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
+/support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-waf-managed-rules/troubleshooting/ 301
 
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
