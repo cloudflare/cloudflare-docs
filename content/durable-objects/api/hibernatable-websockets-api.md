@@ -1,12 +1,12 @@
 ---
-title: WebSockets API
+title: Hibernatable WebSockets API
 pcx_content_type: concept
 weight: 16
 ---
 
 {{<beta>}}Hibernatable WebSockets API{{</beta>}}
 
-The WebSockets API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/alarms-in-durable-objects/), to be removed from memory while keeping its WebSockets connected ("hibernation").
+The Hibernatable WebSockets API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/alarms-in-durable-objects/), to be removed from memory while keeping its WebSockets connected ("hibernation").
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events.
 
@@ -16,7 +16,7 @@ For WebSocket proxy use-cases, [refer to the standard WebSocket API documentatio
 
 {{<Aside type="note">}}
 
-A Durable Object that hibernates will not incur billable [Duration (GB-sec) charges](/durable-objects/platform/pricing/). For applications with many long-lived Durable Objects and periodic WebSocket messages or events, using the WebSockets API can measurably reduce billable duration.
+A Durable Object that hibernates will not incur billable [Duration (GB-sec) charges](/durable-objects/platform/pricing/). For applications with many long-lived Durable Objects and periodic WebSocket messages or events, using the Hibernatable WebSockets API can measurably reduce billable duration.
 
 {{</Aside>}}
 
@@ -50,7 +50,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
   
   - `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
   
-  - The WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
+  - The Hibernatable WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 - {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}
 
