@@ -6,7 +6,7 @@ meta:
   title: Cloudflare bot solutions
 ---
 
-# Cloudflare bot solutions
+# test2
 
 Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 
