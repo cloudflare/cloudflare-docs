@@ -18,7 +18,7 @@ For help setting up mTLS for one or more hosts using the dashboard, refer to [Co
 
 ## Availability
 
-All Cloudflare plans can set up mTLS with a Cloudflare-managed certificate authority (CA). For certificates from another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
+All Cloudflare plans can set up mTLS with a Cloudflare-managed certificate authority (CA). For certificates from another CA, Enterprise users can [bring their own CA via API](/ssl/client-certificates/byo-ca-api-shield/).
 
 ## Limitations
 
