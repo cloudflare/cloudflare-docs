@@ -1,20 +1,20 @@
 ---
-title: Create Durable Objects
+title: Create Durable Object stubs
 pcx_content_type: concept
 weight: 16
 ---
 
-# Create Durable Objects
+# Create Durable Object stubs
 
-A Durable Object is a client object used to send requests to a remote Durable Object.
+A Durable Object stub is a client object used to send requests to a remote Durable Object.
 
 `OBJECT_NAMESPACE.get(id)` creates a Durable Object.
 
 Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. 
 
-However, due to random network disruptions or other transient issues, an Object may become disconnected from its remote Object. A disconnected Object is a permanently broken Object. In this scenario, all in-flight calls and future calls will fail with exceptions. 
+However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Object. A disconnected stub is a permanently broken. In this scenario, all in-flight calls and future calls will fail with exceptions. 
 
-To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Object, keeping in mind that there are no ordering guarantees between requests to the new Object compared to the old one. If ordering is not a concern, you can create a new Object for every request.
+To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Durable Object stub, keeping in mind that there are no ordering guarantees between requests to the new stub compared to the old one. If ordering is not a concern, you can create a new Durable Object for every request.
 
 {{<Aside type="note" header="E-order">}}
 
@@ -22,7 +22,7 @@ E-order is a concept deriving from the [E distributed programming language](<htt
 
 {{</Aside>}}
 
-## 1. Obtain a Durable Object
+## 1. Obtain a Durable Object stub
 
 ```js
 let durableObjectStub = OBJECT_NAMESPACE.get(id);
@@ -113,7 +113,7 @@ To obtain an Object:
 let durableObjectStub = subnamespace.get(id)
 ```
 
-While you cannot use an ID from a different jurisdiction in a subnamespace's `idFromString` or `get` methods, you can use any valid ID in the top-level namespace's methods. Object IDs created with a jurisdiction will still only run and persist data within the jurisdiction.
+While you cannot use an ID from a different jurisdiction in a subnamespace's `idFromString()` or `get()` methods, you can use any valid ID in the top-level namespace's methods. Object IDs created with a jurisdiction will still only run and persist data within the jurisdiction.
 
 ```js
 let id = subnamespace.idFromName(name);
@@ -142,7 +142,7 @@ let response = await durableObjectStub.fetch(request);
 let response = await durableObjectStub.fetch(url, options);
 ```
 
-The `fetch()` method of a stub has the exact same signature as the global [`fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the Object points.
+The `fetch()` method of a stub has the exact same signature as the global [`fetch()`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the Object points.
 
 Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be propagated to the caller's `fetch()` promise. 
 

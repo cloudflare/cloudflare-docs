@@ -9,13 +9,13 @@ Durable Objects is generally available. However, there are some known limitation
 
 ## Global Uniqueness
 
-Global uniqueness guarantess that there is only a single instance of a Durable Object class with a given ID running at once, across the world.
+Global uniqueness guarantess there is only a single instance of a Durable Object class with a given ID running at once, across the world.
 
 Uniqueness is enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage. 
 
-After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an exception. If the event completes without ever accessing storage, it may not ever realize that the Object was no longer current.
+After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same Durable Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an exception. If the event completes without ever accessing storage, it may not ever realize that the Durable Object was no longer current.
 
-A Durable Object may be replaced in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling `wrangler tail` or dashboard logs requires a software update.
+A Durable Object may be replaced in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling `wrangler tail` or [Cloudflare dashboard](https://dash.cloudflare.com/) logs requires a software update.
 
 ## Development tools
 
@@ -27,9 +27,9 @@ The Workers editor in the [Cloudflare dashboard](https://dash.cloudflare.com/) a
 
 ## Object location
 
-A Durable Object is typically instantiated close to where the initial [`get()`](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub) is made. This may not be in the datacenter the user is connected to, but in most cases, it will be in close proximity.
+A Durable Object is instantiated close to where the initial `get()`is made. This may not be in the data center the user is connected to, but in most cases, it will be in close proximity.
 
-You can also provide an explicit [location hint](/durable-objects/learning/create-durable-objects/#provide-a-location-hint) and submit a preferred location when first creating the Durable Object. This can be useful in cases where Objects are created programmatically prior to user-interaction, or when the first client request is not representative of where the majority of requests to the Object will come from.
+You can also provide an explicit [location hint](/durable-objects/learning/create-durable-object-stubs/#2-provide-a-location-hint) and submit a preferred location when first creating the Durable Object. This can be useful in cases where Objects are created programmatically prior to user-interaction, or when the first client request is not representative of where the majority of requests to the Object will come from.
 
 Currently, Durable Objects do not migrate between locations after initial creation. Cloudflare will be exploring automatic migration compatibility in the future.
 

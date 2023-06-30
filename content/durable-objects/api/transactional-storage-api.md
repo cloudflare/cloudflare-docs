@@ -1,5 +1,5 @@
 ---
-title: Transactional storage API
+title: Transactional Storage API
 pcx_content_type: concept
 weight: 16
 ---

@@ -26,7 +26,7 @@ You can enable Durable Objects for your account by purchasing Workers paid plan.
 
  ## 1. Write a class that defines a Durable Object
 
-Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. 
+Before you create and access a Durable Object, you must define their behavior by exporting an ordinary JavaScript class. 
 
 {{<Aside type="note">}}
 If you don't use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) that translates your class definition to a JavaScript class.
@@ -41,7 +41,7 @@ export class DurableObjectExample {
   constructor(state, env) {}
 }
 ```
-Workers communicate with a Durable Object via the [Fetch API](/workers/runtime-apis/fetch/). Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
+Workers communicate with a Durable Object via the fetch API. Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
 
 ```js
 export class DurableObjectExample {
@@ -63,7 +63,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 ## 2. Configure Durable Object bindings
 
-You can configure Durable Objects bindings in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
+You can configure Durable Object bindings in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
 ```toml
 [durable_objects]
@@ -153,7 +153,9 @@ The class binding's `get()` method returns a stub to the particular Durable Obje
 
 The fetch handler in the example below implements the Worker that communicates to the Durable Object.  
 
-The fetch handler is written using a new kind of Workers syntax based on ES Modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the Service Worker syntax.
+{{<Aside type="note">}}
+Durable Objects must be written in ES Module syntax. However, a Worker can be written in both ES Module and Service Workers syntax.
+{{</Aside>}}
 
 ES Modules differ from regular JavaScript files in that they have imports and exports. For example, [to write a class that defines a Durable Object](/durable-objects/get-started/#2-write-a-class-that-defines-a-durable-object), you use `export class DurableObjectExample`. To implement a fetch handler, export a method named `fetch()` in an `export default {}` block.
 
@@ -200,13 +202,11 @@ export default {
 };
 ```
 
+In the example above, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
+
 Refer to [Access a Durable Object from a Worker](/durable-objects/learning/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
 
-{{<Aside type="note" header="String-derived IDs versus system-generated IDs">}}
 
-In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere to access the object again later. Refer to the [API reference documentation](/durable-objects/learning/access-durable-object-from-a-worker/) for more information.
-
-{{</Aside>}}
 
 ## 5. Upload a Durable Object Worker
 

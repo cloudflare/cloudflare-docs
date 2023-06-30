@@ -6,7 +6,7 @@ weight: 16
 
 {{<beta>}}WebSockets API{{</beta>}}
 
-The WebSockets API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/transactional-storage-api/#alarm-handler-method), to be removed from memory while keeping its WebSockets connected ("hibernation").
+The WebSockets API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/alarms-in-durable-objects/), to be removed from memory while keeping its WebSockets connected ("hibernation").
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events.
 

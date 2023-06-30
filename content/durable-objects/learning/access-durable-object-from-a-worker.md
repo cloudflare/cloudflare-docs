@@ -10,7 +10,17 @@ To access a Durable Object from a Worker, you must first configure the Worker wi
 
 Namespace bindings allow you to generate Object IDs and connect to Objects.
 
-## 1. Generate IDs randomly
+## 1. Create Durable Object IDs
+
+There are three approaches to create Durable Object IDs. You can choose to:
+
+- Generate IDs randomly.
+- Derive IDs from names.
+- Parse previously-created IDs from strings.
+
+All three approaches will allow you to create Durable Object IDs.  
+
+### Generate IDs randomly
 
 ```js
 let id = OBJECT_NAMESPACE.newUniqueId();
@@ -30,13 +40,13 @@ When you construct a new unique ID, the system knows that the same ID will not b
 
 {{</Aside>}}
 
-## 2. Derive IDs from names
+### Derive IDs from names
 
 ```js
 let id = OBJECT_NAMESPACE.idFromName(name);
 ```
 
-### Parameters
+#### Parameters
 
 {{<definitions>}}
 
@@ -55,13 +65,13 @@ After the object has been accessed the first time, location information will be 
 
 {{</Aside>}}
 
-## 3. Parse previously-created IDs from strings
+### Parse previously-created IDs from strings
 
 ```js
 let id = OBJECT_NAMESPACE.idFromString(hexId);
 ```
 
-### Parameters
+#### Parameters
 
 {{<definitions>}}
 
@@ -74,7 +84,7 @@ This method parses an ID that was previously stringified. This is useful in part
 
 A stringified object ID is a 64-digit hexadecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
 
-## 4. Construct the stub using the ID 
+## 2. Construct the stub using the ID 
 
 Construct the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
 
@@ -82,7 +92,7 @@ Construct the stub for the Durable Object using the ID. A stub is a client objec
 let stub = env.EXAMPLE_CLASS.get(id);
 ```
 
-## 5. Use `fetch()` handler method
+## 3. Use `fetch()` handler method
 
 The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](/durable-objects/learning/access-durable-object-from-a-worker/).
 
