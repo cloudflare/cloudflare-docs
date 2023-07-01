@@ -97,3 +97,9 @@ For help finding data center identifiers, refer to [this community thread](https
 Any data center not explicitly defined will fall back to using the corresponding `country_pool`, then `region_pool` mapping (if it exists), and finally to associated default pools.
 
 {{<Aside type="note">}}PoP steering is only available to Enterprise customers and only accessible via the API.{{</Aside>}}
+
+
+### Failover behavior
+
+When there is one pool in the region and it is unavailable, if there is a fallback pool, it would be used.
+If there are some pools in the region, the order of the pool will be respected. For example, when the 1st pool is down, 2nd pool will be used.
