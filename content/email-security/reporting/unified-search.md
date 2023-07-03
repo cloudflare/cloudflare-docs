@@ -33,7 +33,7 @@ To start using Unified Search:
 
 In Freeform Search, you can search for any value or combination of values separated by a space. Using spaces with multiple search terms is the equivalent of using the operator `AND`.
 
-Terms less than three characters long and common English words that do not offer significance for search value are ignored.
+Terms less than three characters long and common English words that do not offer significance for search value like `and`, `the`, `then`, `their` are ignored.
 
 For more exact matches, use the named fields in **Fielded Search** to denote which field should contain the value. For example, to find only messages sent by `demo@example.com`, enter `demo@example.com` in **FROM (EXACT)**. `EXACT` in a field descriptor means the term will match how the value appears in the message.
 
@@ -63,3 +63,27 @@ For more exact matches, use the named fields in **Fielded Search** to denote whi
 5. The **All detections** drop-down menu allows you to refine your search by detection disposition. This menu will be disabled if **Detections only** is not selected.
 6. By default, the search results are limited to the previous 30 days. Select **Last 30 days** to change this setting.
 7. (Optional) You can download the results from your search in CSV format. The CSV file is capped at 1,000 rows.
+
+## Search tips
+
+### Parameter filtering
+
+To search for specific values in one of the [available parameters](/email-security/reporting/search/detection-search/available-parameters/), format your search to be:
+
+```txt
+<<FIELD_NAME>>:<<VALUE>>
+```
+
+For example, you might search for `final_disposition:MALICIOUS`. Refer to our reference material for a full list of [dispositions](/email-security/reference/dispositions-and-attributes/).
+
+### `message_id`
+
+For normal queries, spaces split search terms into different values. For example, `billing statement` would look for all messages that contain both `billing` and `statement`.
+
+However, spaces, quotations, and other characters are sometimes part of the `message_id` parameter. To ensure these values are included as part of filtering on the message ID, you should prefix the `message_id` value with `message_id`.
+
+For example, the following query would find all messages that contain the terms `billing` and `statement` and have a `message_id` equal to `<Amazon aws Support@email.amazonses.com>`.
+
+```txt
+billing statement message_id:<Amazon aws Support@email.amazonses.com>
+```
