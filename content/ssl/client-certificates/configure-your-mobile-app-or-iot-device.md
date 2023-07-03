@@ -136,7 +136,7 @@ $ curl -s https://shield.upinatoms.com/temps | jq .
 
 ## Step 2 — Create Cloudflare-issued certificates
 
-Before you can use API Shield to protect your API or web application, you must create Cloudflare-issued client certificates.
+Before you can use API Shield to protect your API or web application, create Cloudflare-issued client certificates.
 
 You can [create a client certificate in the Cloudflare dashboard](/ssl/client-certificates/create-a-client-certificate/).
 
