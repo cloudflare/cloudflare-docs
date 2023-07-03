@@ -24,9 +24,9 @@ For customers in the United States, enter the following IP addresses:
 - **IPv6**:
   - `2405:8100:c400::/38`
 
-### **Office 365 `/24` addresses**
- To be used instead of the `/19` and `/23` subnet:
+## Office 365 `/24` addresses
 
+To be used instead of the `/19` and `/23` subnets:
   - `104.30.32.0/24`
   - `104.30.33.0/24`
   - `104.30.34.0/24`
