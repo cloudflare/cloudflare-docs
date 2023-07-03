@@ -69,7 +69,7 @@ export class Counter {
         --value;
         break;
       case "/":
-        // Just serve the current value.
+        // Serve the current value.
         break;
       default:
         return new Response("Not found", { status: 404 });
@@ -77,13 +77,15 @@ export class Counter {
 
     // You do not have to worry about a concurrent request having modified the
     // value in storage because "input gates" will automatically protect against
-    // unwanted concurrency. So, read-modify-write is safe. For more details,
-    // refer to: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
+    // unwanted concurrency. Read-modify-write is safe. 
     await this.state.storage.put("value", value);
 
     return new Response(value);
   }
 }
 ```
+### Related resources
+
+- [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
 
 
