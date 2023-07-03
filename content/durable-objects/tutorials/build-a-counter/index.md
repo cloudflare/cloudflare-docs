@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 title: Build a counter
 ---
 
-## Example - Counter
+## Build a counter
 
 The complete example code is included for both the Worker and the Durable Object for a basic counter below. Refer to [Durable Objects template](https://github.com/cloudflare/durable-objects-template) for the full code template.
 

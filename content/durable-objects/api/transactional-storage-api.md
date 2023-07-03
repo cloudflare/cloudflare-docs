@@ -8,7 +8,7 @@ weight: 16
 
 The Transactional Storage API allows you to achieve consistent key-value storage. 
 
-Durable Objects gain access to a persistent [Transactional Storage API](/durable-objects/api/transactional-storage-api/) via the first parameter passed to the Durable Object constructor. 
+Durable Objects gain access to a persistent Transactional Storage API via the first parameter passed to the Durable Object constructor. 
 
 While access to a Durable Object instance is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch()` requests.
 

@@ -24,17 +24,17 @@ You can enable Durable Objects for your account by purchasing Workers paid plan.
  2. Go to **Workers & Pages** > **Plans**. 
  3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
- ## 1. Write a class that defines a Durable Object
+ ## 1. Write a class to define a Durable Object
 
-Before you create and access a Durable Object, you must define their behavior by exporting an ordinary JavaScript class. 
+Before you create and access a Durable Object, you must define its behavior by exporting an ordinary JavaScript class. 
 
 {{<Aside type="note">}}
-If you don't use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) that translates your class definition to a JavaScript class.
+If you don't use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class.
 {{</Aside>}}
 
 Your class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
 
-Note this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
+Note that this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 ```js
 export class DurableObjectExample {
@@ -72,7 +72,7 @@ bindings = [
 ]
 ```
 
-The `[durable_objects]` section has one subsection called `bindings`, an array of tables. 
+The `[durable_objects]` section has one subsection called `bindings`, which is an array of tables. 
 
 Each table contains the following fields:
 
@@ -206,8 +206,6 @@ In the example above, you used a string-derived object ID by calling the `idFrom
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/learning/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
 
-
-
 ## 5. Upload a Durable Object Worker
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
@@ -230,7 +228,9 @@ The following sections will cover how to customize the configuration, but you ca
 
 ### Specify the main module
 
-Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. Refer to the [modules section of the custom builds documentation](/workers/wrangler/custom-builds/) for more details.
+Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. 
+
+Refer to the [modules section of the custom builds documentation](/workers/wrangler/custom-builds/) for more details.
 
 
 ### Durable Object migrations through Wrangler CLI

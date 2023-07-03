@@ -12,13 +12,13 @@ Namespace bindings allow you to generate Object IDs and connect to Objects.
 
 ## 1. Create Durable Object IDs
 
-There are three approaches to create Durable Object IDs. You can choose to:
+There are three methods to create Durable Object IDs. You can choose to:
 
 - Generate IDs randomly.
 - Derive IDs from names.
 - Parse previously-created IDs from strings.
 
-All three approaches will allow you to create Durable Object IDs.  
+All three methods will allow you to create Durable Object IDs.  
 
 ### Generate IDs randomly
 

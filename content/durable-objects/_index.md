@@ -6,12 +6,10 @@ weight: 1
 layout: overview
 pcx_content_type: overview
 meta:
-  title: Durable Objects
+  title: Cloudflare Durable Objects
 ---
 
-<!-- Don't merge yet: UPDATE LINKS -->
-
-# Durable Objects
+# Cloudflare Durable Objects
 
 {{<description>}}
 

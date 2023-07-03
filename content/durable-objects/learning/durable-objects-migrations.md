@@ -9,7 +9,7 @@ You must initiate a migration process when you create a new Durable Object class
 
 {{<Aside type="note">}}
 
-Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler deploy`](/workers/wrangler/commands/). This is true even for changes to how code interacts with persistent storage. Because of [global uniqueness](/durable-objects/learning/limitations/#global-uniqueness), you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
+Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler deploy`](/workers/wrangler/commands/#deploy). This is true even for changes to how code interacts with persistent storage. Because of [global uniqueness](/durable-objects/learning/limitations/#global-uniqueness), you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
 
 {{</Aside>}}
 
