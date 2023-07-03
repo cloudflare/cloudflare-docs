@@ -79,7 +79,7 @@ With the [migration of Firewall Rules to WAF Custom Rules](/waf/reference/migrat
 {{</tabs>}}
 
 
-Once you have deployed your mTLS rule, any requests without a [Cloudflare-issued client certificate](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) will be blocked.
+Once you have deployed your mTLS rule, any requests without a [valid client certificate](/ssl/client-certificates/) will be blocked.
 
 {{<Aside type="warning" header="Important">}}
 
