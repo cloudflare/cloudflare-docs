@@ -126,6 +126,11 @@
 /email-security/static/Deployment_and_Configuration_Guide_for_Sumologic_Collector.pdf /email-security/reporting/siem-integration/sumo-logic-integration-guide/ 301
 /email-security/static/API_Documentation_1.30.0.pdf /email-security/static/api_documentation_1.34.pdf 301
 /email-security/static/MSSP_Onboarding_Deployment_Guide.pdf /email-security/partners/ 301
+/email-security/reporting/search/ /email-security/reporting/unified-search/ 301
+/email-security/reporting/search/unified-search/ /email-security/reporting/unified-search/ 301
+/email-security/reporting/search/detection-search/ /email-security/reporting/unified-search/ 301
+/email-security/reporting/search/detection-search/available-parameters/ /email-security/reporting/unified-search/available-parameters/ 301
+/email-security/reporting/search/mailtrace/ /email-security/reporting/unified-search/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
