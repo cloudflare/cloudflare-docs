@@ -7,12 +7,6 @@ rss: file
 
 # Changelog
 
-## 2023-06-16
-
-### Generated columns documentation
-
-We've published new documentation describing how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
-
 ## 2023-06-28
 
 ### Metrics and analytics
@@ -20,6 +14,12 @@ We've published new documentation describing how to use D1's support for [genera
 You can now view [per-database metrics](/d1/platform/metrics-analytics/) via both the [Cloudflare dashboard](https://dash.cloudflare.com/) and the [GraphQL Analytics API](/analytics/graphql-api/).
 
 D1 currently exposes read & writes per second, query response size, and query latency percentiles.
+
+## 2023-06-16
+
+### Generated columns documentation
+
+We've published new documentation describing how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
 
 ## 2023-06-12
 
