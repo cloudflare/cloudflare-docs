@@ -56,9 +56,3 @@ If you do not know the IPS tag, contact your new registrar for instructions. You
 
 {{</Aside>}}
 
-## Possible reasons a transfer may fail or be rejected
-
-- The domain is locked or suspended.
-- The nameservers were updated after the checkout process.
-
-{{<render file="_next-steps.md">}}

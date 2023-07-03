@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Custom Domain Protection
+weight: 5
 ---
 
 # Cloudflare Custom Domain Protection
