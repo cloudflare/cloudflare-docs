@@ -19,7 +19,7 @@ D1 currently exposes read & writes per second, query response size, and query la
 
 ### Generated columns documentation
 
-We've published new documentation describing how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
+New documentation has been published on how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
 
 ## 2023-06-12
 
