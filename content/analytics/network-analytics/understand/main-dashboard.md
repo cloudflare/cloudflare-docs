@@ -26,7 +26,7 @@ Use these tabs to better understand the decisions made by each mitigation system
 
 The side panels in the Network Analytics page provide a summary of activity over the period selected in the timeframe drop-down list.
 
-![Available high-level metrics in the Network Analytics dashboard.](/images/analytics/network-analytics/high-level-metrics.png)
+![Available high-level metrics in the Network Analytics dashboard](/images/analytics/network-analytics/high-level-metrics.png)
 
 Selecting one of the metrics in the sidebar will define the base unit (packets or bits/bytes) for the data displayed in the dashboard.
 
