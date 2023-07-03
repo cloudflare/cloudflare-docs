@@ -9,26 +9,12 @@ meta:
 
 # Unified Search
 
-Unified Search merges [Detection Search](/email-security/reporting/search/detection-search/) and [Mail Trace](/email-security/reporting/search/mailtrace/) into a single, unified experience. Unified Search makes it easier to search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
+Unified Search makes it easier to search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
 
 Unified Search has two ways for searching emails:
 
 - **Fielded Search**: Presents you with fields where you can enter search terms.
 - **Freeform Search**: Has one search field where you can construct your own search query, like `My great products`.
-
-To start using Unified Search:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-
-2. Select the **Search** bar.
-
-3. Select **Try new search** to enable Unified Search. The system will default to **Fielded Search**, but you can also enable **Freeform Search**.
-
-	![Select Try new search to enable Unified Search](/images/email-security/unified-search/try-new-search.png)
-
-4. (Optional) Under **Freeform Search**, select **Switch back to classic search** to revert to the previous search experience.
-
-	![Select witch back to classic search to revert to the classical search experience](/images/email-security/unified-search/revert-search.png)
 
 ## Search terms
 
