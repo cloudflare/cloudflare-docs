@@ -9,7 +9,7 @@ meta:
 
 # Rate limiting (previous version) deprecation notice
 
-**The [previous version of rate limiting rules](/support/firewall/tools/configuring-cloudflare-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2024-05-01. After this date all remaining active rules will stop working.
+**The [previous version of rate limiting rules](/waf/reference/legacy/old-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2024-05-01. After this date all remaining active rules will stop working.
 
 ![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/images/waf/reference/rate-limiting-both-versions.png)
 

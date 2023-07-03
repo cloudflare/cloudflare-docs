@@ -15,7 +15,7 @@ Security Level presents a JS challenge page.
 
 ## Security levels
 
-IP Reputation is calculated based on [Project Honeypot](https://www.projecthoneypot.org/), external public IP information, as well as internal threat intelligence from our [WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) and [DDoS](https://support.cloudflare.com/hc/articles/200172676).
+IP Reputation is calculated based on [Project Honeypot](https://www.projecthoneypot.org/), external public IP information, as well as internal threat intelligence from our [WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) and [DDoS](https://support.cloudflare.com/hc/articles/200172676).
 
 | Security Level | Threat Scores | Description |
 | --- | --- | --- |

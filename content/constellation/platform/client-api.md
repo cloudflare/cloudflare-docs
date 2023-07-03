@@ -15,9 +15,9 @@ Before you use the Constellation client API, you need to:
 * Create a Constellation project and [configure the binding](/constellation/platform/wrangler/#bindings).
 * Import the `@cloudflare/constellation` library in your code:
 
-   ```javascript
-      import { Tensor, run } from "@cloudflare/constellation";
-   ```
+```javascript
+import { Tensor, run } from "@cloudflare/constellation";
+```
 
 ## Tensor class
 
@@ -71,23 +71,23 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
 #### A single string of text
 
 ```javascript
-   new Tensor(
-       "string",
-       [1, 1],
-       ["_You Could Qualify For A Exclusive Offer."]
-   );
+new Tensor(
+    "string",
+    [1, 1],
+    ["_You Could Qualify For A Exclusive Offer."]
+);
 ```
 
 #### A two-element vector
 
 ```javascript
-   new Tensor("int32", [2], [1, 2]);
+new Tensor("int32", [2], [1, 2]);
 ```
 
 #### A 3x2 float64 matrix
 
 ```javascript
-   new Tensor("float64", [3, 2], [ [0.1, 0.2], [0.3, 0.4], [0.5, 0.6] ]);
+new Tensor("float64", [3, 2], [ [0.1, 0.2], [0.3, 0.4], [0.5, 0.6] ]);
 ```
 
 ## Methods
@@ -97,7 +97,6 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
 Runs the inference engine on a model and input.
 
 ```javascript
-
 import { Tensor, run } from '@cloudflare/constellation';
 
 const input = [

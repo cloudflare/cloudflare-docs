@@ -31,6 +31,8 @@ Actions in HTTP policies allow you to choose what to do with a given set of elem
 
 ### Allow
 
+API value: `allow`
+
 The Allow action allows outbound traffic to reach destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration allows traffic to reach all websites we categorize as belonging to the Education content category:
 
 | Selector           | Operator | Value       | Action |
@@ -47,13 +49,15 @@ To use this feature, deploy a [custom root certificate](/cloudflare-one/connecti
 
 The **Untrusted certificate action** determines how to handle insecure requests.
 
-| Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                         |
-| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                         |
+| Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                           |
+| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                           |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
+
+API value: `block`
 
 The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
 
@@ -64,13 +68,19 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 ### Isolate
 
+API value: `isolate`
+
 For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
 
 ### Do Not Isolate
 
+API value: `noisolate`
+
 For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
 
 ### Do Not Inspect
+
+API value: `off`
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -83,6 +93,8 @@ Do Not Inspect lets you bypass certain elements from inspection. To prevent Gate
 All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. [Learn more](/cloudflare-one/policies/filtering/order-of-enforcement/#http-policies) about the order of enforcement for HTTP policies.
 
 ### Do Not Scan
+
+API value: `noscan`
 
 When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
 
@@ -120,7 +132,7 @@ For more information, refer to our list of [content categories](/cloudflare-one/
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 {{</Aside>}}
 
-{{<render file="gateway/_destination-continent.md" withParameters="http..dst_ip">}}
+{{<render file="gateway/_destination-continent.md" withParameters="http.dst_ip">}}
 
 ### Destination Country
 

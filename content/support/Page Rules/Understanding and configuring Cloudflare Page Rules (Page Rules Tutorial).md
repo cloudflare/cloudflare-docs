@@ -9,8 +9,7 @@ title: Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
 You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
 
 {{<Aside type="warning">}}
-Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records)
-DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
+Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
 {{</Aside>}}
 
 The default number of allowed page rules depends on the domain plan as shown below.
@@ -29,8 +28,7 @@ It is important to understand two basic Page Rules behaviors:
 -   Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
 
 {{<Aside type="tip">}}
-Cloudflare recommends ordering your rules from most specific to least
-specific.
+Cloudflare recommends ordering your rules from most specific to least specific.
 {{</Aside>}}
 
 A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
@@ -114,14 +112,14 @@ _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/f
 
 -   To match both `http` and `https`, just write `example.com`. It is not necessary to write `*example.com`.
 -   To match every page on a domain, write `example.com/*`. Just writing _example.com_ won’t work.
--   To match every page on a domain and it's subdomains, write `*_example.com/*`. Just writing _example.com_ won’t work.
+-   To match every page on a domain and it's subdomains, write `*example.com/*`. Just writing _example.com_ won’t work.
 -   A wildcard (\*) in a Page Rule URL will match even if no characters are present, and may include any part of the URL, including the query string.
 
 ### Referencing wildcard matches
 
-You can reference a matched wildcard later using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
+In a _Forwarding URL_ rule, you can reference a matched wildcard in the _destination URL_ field by using the `$X` syntax. `X` indicates the index of a glob pattern. As such, $1 represents the first wildcard match, $2 the second wildcard match, and so on.
 
-This is specifically useful with the _Forwarding URL_ setting. For example:
+For example:
 
 You could forward:
 
@@ -183,7 +181,7 @@ Below is the full list of settings available, presented in the order that they a
 | Disable Apps | Turn off all active **Cloudflare Apps**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | Disable Performance | Turn off [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/), [Rocket Loader](/fundamentals/speed/rocket-loader/), [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/), and [Polish](/images/polish). | All |
 | Disable Railgun (deprecated) | Turn off the **Railgun** feature of the Cloudflare **Speed** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | Business and above |
-| Disable Security| Turn off [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), [Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/), [Scrape Shield](/support/more-dashboard-apps/cloudflare-scrape-shield/), [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/). | All |
+| Disable Security| Turn off [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/), [Scrape Shield](/support/more-dashboard-apps/cloudflare-scrape-shield/), [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/). | All |
 | Disable Zaraz | Turn off [Zaraz](/zaraz/).{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | Edge Cache TTL | Specify how long to cache a resource in the Cloudflare edge network. _Edge Cache TTL_ isn't visible in response headers. | All |
 | [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/) | Turn on or off **Email Obfuscation**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
@@ -204,7 +202,7 @@ Below is the full list of settings available, presented in the order that they a
 | [Server Side Excludes](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/)| Turn on or off the **Server Side Excludes** feature of the Cloudflare **Scrape Shield** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} |  All |
 | [SSL](/ssl/origin-configuration/ssl-modes/) | Control options for the **SSL** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | True Client IP Header | Turn on or off the **True-Client-IP Header** feature of the Cloudflare **Network** app. [Learn more](/support/network/understanding-the-true-client-ip-header/). | Enterprise |
-| Web Application Firewall (previous version) | Turn on or off **WAF managed rules** as defined in **Security** > **WAF** > **Managed rules**. [Learn more](/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/).<br/>You cannot enable or disable individual WAF managed rules via page rules. | Pro and above |
+| Web Application Firewall (previous version) | Turn on or off **WAF managed rules** as defined in **Security** > **WAF** > **Managed rules**. [Learn more](/waf/reference/legacy/old-waf-managed-rules/).<br/>You cannot enable or disable individual WAF managed rules via page rules. | Pro and above |
 
 ___
 

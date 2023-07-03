@@ -290,7 +290,7 @@ ___
 
 ### Common cause
 
-The site owner implemented [Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) that affects your visitor traffic.
+The site owner implemented [Rate Limiting](/waf/reference/legacy/old-rate-limiting/) that affects your visitor traffic.
 
 {{<Aside type="note">}}
 *Unable to purge* is another 1015 error code relating to [Cloudflare
@@ -304,7 +304,7 @@ persist.
 ### Resolution
 
 -   If you are a site visitor, contact the site owner to request exclusion of your IP from rate limiting.
--   If you are the site owner, review [Cloudflare Rate Limiting thresholds](https://support.cloudflare.com/hc/articles/115001635128) and adjust your Rate Limiting configuration.
+-   If you are the site owner, review [Cloudflare Rate Limiting thresholds](/waf/reference/legacy/old-rate-limiting/) and adjust your Rate Limiting configuration.
 -   If your Rate Limiting blocks requests in a short time period (i.e. 1 second) try increasing the time period to 10 seconds.
 
 {{<Aside type="tip">}}

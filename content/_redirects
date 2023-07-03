@@ -329,6 +329,7 @@
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /firewall/cf-rulesets/view-rulesets/ /ruleset-engine/basic-operations/view-rulesets/ 301
 /firewall/recipes/require-valid-client-certificate/ /api-shield/security/mtls/configure/ 301
+/support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
 
 # fundamentals
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/account-and-billing/members/roles/ 301
@@ -588,6 +589,7 @@
 /ssl/keyless-ssl/hardware-security-modules/ncipher-thales-nshield-connect/ /ssl/keyless-ssl/hardware-security-modules/entrust-nshield-connect/ 301
 /ssl/mutual-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /ssl/reference/certificate-validation-options/ /ssl/concepts/#validation-level 301
+/ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
@@ -727,6 +729,9 @@
 /waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rules/reference/owasp-core-ruleset/ 301
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
 /waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
+/support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/ /waf/reference/legacy/old-waf-managed-rules/ 301
+/support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
+/support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-waf-managed-rules/troubleshooting/ 301
 
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
@@ -911,6 +916,7 @@
 /workers/learning/service-worker/ /workers/learning/migrate-to-module-workers/#service-worker-syntax/ 301
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
+/workers/platform/environments/ /workers/wrangler/environments/ 301
 
 
 # zaraz
@@ -995,6 +1001,7 @@
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
+/cloudflare-one/identity/login-page/ /cloudflare-one/applications/custom-pages/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
 /cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/filtering/lists 301

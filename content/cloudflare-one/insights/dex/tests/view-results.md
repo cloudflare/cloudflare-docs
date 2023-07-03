@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Test results
-weight: 2
+weight: 3
 ---
 
 # Test results
@@ -27,7 +27,7 @@ To view an overview of test results for all devices:
 
 To view analytics on a per-device level:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**. 
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
 2. Select the device you want to view, and then select **View details**.
 3. Select the **Tests** tab.
 4. Select a test to view detailed results.
@@ -42,6 +42,16 @@ To view analytics on a per-device level:
 | Server response time | Round-trip time for the device to receive a response from the target. |
 | DNS response time | Round-trip time for the DNS query to resolve. |
 | HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target. |
+
+### Traceroute
+
+| Data | Description |
+| ----------- | ----------- |
+| Round trip time | Time between sending out a packet and receiving a response from the target. |
+| Number of hops | Number of routers encountered between the device and the target. |
+| Packet loss | Percentage of IP packets that failed to receive a response. |
+| Availability | Percentage of tests where at least one packet reached the destination. |
+| Network Path Visualization | Round-trip time from the device to a specific hop along the network path. (Only available in [device-level results](#view-results-for-an-individual-device).) <li> **User to Cloudflare ingress**: Packet reaches a Cloudflare data center.  </li> <li> **User to Cloudflare egress**: Packet is ready to exit Cloudflare and head to the target. </li> <li> **User to application**: Packet reaches the target application.  </li> You can select a point on the graph to view details about each hop. |
 
 ## Data retention
 

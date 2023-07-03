@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Custom builds
-weight: 4
 ---
 
 # Custom builds

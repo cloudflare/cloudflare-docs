@@ -71,7 +71,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | blockedAlwaysCategory  | Domain or hostname is always blocked by Cloudflare.         |
 | allowedOnNoLocation    | Allowed because query did not match a Gateway DNS location. |
 | allowedOnNoPolicyMatch | Allowed because query did not match a policy.               |
-| overrideForSafeSearch  | Response was overridden by a SafeSearch policy.             |
+| overrideForSafeSearch  | Response was overridden by a Safe Search policy.            |
 | overrideApplied        | Response was overridden by an Override policy.              |
 
 {{</table-wrap>}}

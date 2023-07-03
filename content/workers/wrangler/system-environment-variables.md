@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: System Environment Variables
-weight: 5
 ---
 
 # System Environment Variables

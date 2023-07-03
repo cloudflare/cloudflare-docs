@@ -7,42 +7,6 @@ title: FAQ sur les enregistrements DNS de Cloudflare
 
 # FAQ sur les enregistrements DNS de Cloudflare
 
-_Obtenez de l’assistance sur les problèmes courants relatifs à l’application **DNS** de Cloudflare._
-
-## Foire aux questions sur les enregistrements DNS de Cloudflare
-
-### Dans cet article
-
--   [Comment puis-je en savoir plus sur les DNS ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-IsCloudflareafreeDNSdomainnameserverprovider)
--   [Cloudflare est-il un fournisseur de service DNS (serveur de noms de domaine) gratuit ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-IsCloudflareafreeDNSdomainnameserverprovider)
--   [Est-ce que Cloudflare facture ou limite les requêtes DNS ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-DoesCloudflarechargefororlimitDNSqueries)
--   [Quelle est la vitesse du service DNS gratuit de Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-HowfastisCloudflaresfreeDNSservice)
--   [Combien d’enregistrements DNS puis-je avoir par domaine ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-HowmanyDNSrecordscanIhaveperdomain)
--   [Comment puis-je faire pointer mes serveurs de noms vers Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-WheredoIchangemynameserverstopointCloudflare)
--   [Puis-je utiliser Cloudflare sans remplacer mes serveurs de noms par Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-CanIuseCloudflarewithoutchangingmynameserverstoCloudflare)
--   [Combien de temps faut-il pour qu’un changement de DNS soit effectif ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-HowlongdoesittakeforaDNSchangeImadetopushout)
--   [Cloudflare prend-il en charge les entrées DNS IPv6 ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-DoesCloudflaresupportIPv6DNSentries)
--   [Puis-je utiliser Cloudflare avec un domaine Blogger.com ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-CanIuseCloudflarewithaBlogger.comdomain)
--   [Cloudflare propose-t-il le masquage de domaine ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-DoesCloudflareofferdomainmasking)
--   [Puis-je configurer en CNAME un domaine qui n’est pas sur Cloudflare vers un domaine présent sur Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-CanICNAMEadomainnotonCloudflaretoadomainthatisonCloudflare)
--   [Puis-je utiliser des domaines add-on avec Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-CanIuseadd-ondomainswithCloudflare)
--   [Cloudflare prend-il en charge les entrées joker DNS ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries)
--   [Pourquoi ne puis-je pas effectuer de requêtes ANY vers les serveurs DNS de Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-WhycantImakeANYqueriestoCloudflareDNSservers)
--   [Pourquoi dois-je retirer mon enregistrement DS en m’inscrivant à Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-WhydoIhavetoremovemyDSrecordwhensigningupforCloudflare)
--   [Que se passe-t-il lorsque je retire l’enregistrement DS ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-WhathappenswhenIremovetheDSrecord)
--   [Cloudflare prend-il en charge EDNS0 (mécanismes d’extension pour DNS) ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#CloudflareDNSFAQ-DoesCloudflaresupportEDNS0(extensionmechanismsforDNS))
--   [Quels types d’enregistrements ne sont pas mis en proxy par Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#whichrecordtypesdoescloudflarenotproxy)
--   [Que représente la valeur TTL Automatique ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#whatdoestheautomaticttlvaluemean)
--   [Que dois-je faire si je change l’adresse IP de mon serveur ou mon fournisseur d’hébergement ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#ichangedmyserveripaddress)
--   [Cloudflare fonctionne-t-il avec les DNS dynamiques ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#doescloudflareworkwithdynamicdns)
--   [Où puis-je trouver mes serveurs de noms Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#findmycloudflarenameservers)
--   [L’icône à côté de mon enregistrement DNS doit-elle être orange ou grise ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#h_86206161161541019836180)
--   [Peut-on ajouter directement des sous-domaines à Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#h_41430356531541184358992)
--   [Puis-je configurer un enregistrement DNS uniquement pour le domaine racine ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#h_61391799331543360353071)
--   [Pourquoi est-ce que je vois des avertissements d’enregistrement SOA ?](https://support.cloudflare.com/hc/fr-fr/articles/360017421192-FAQ-sur-les-enregistrements-DNS-de-Cloudflare#h_47502541631545255831258)
-
-___
-
 ### Comment puis-je en savoir plus sur les DNS ?
 
 Veuillez consulter la [documentaion DNS du Centre d’apprentissage de Cloudflare](https://www.cloudflare.com/learning/dns/what-is-dns/).
@@ -73,14 +37,11 @@ Cloudflare est le [fournisseur de service DNS le plus rapide](http://www.dnsperf
 
 ___
 
-### Combien d’enregistrements DNS puis-je avoir par domaine ?
+### Existe-t-il une limite sur le nombre d’enregistrements DNS par domaine ?
 
-Les limites par domaine sont les suivantes :
+Oui, le nombre d'enregistrement DNS par domaine est limité pour les plans Free, Pro et Business.
 
--   3 500 enregistrements DNS pour les domaines des offres Pro, Business et Enterprise Plan
--   1 000 enregistrements DNS pour les domaines de l’offre Free
-
-Si vous êtes un client Enterprise et que vous souhaitez ajouter plus d’enregistrements que la limite autorisée pour un domaine, [contactez-nous](http://www.cloudflare.com/enterprise-service-request) en décrivant votre situation et votre besoin de différents types d’enregistrements.
+Si vous êtes un client Enterprise et que vous souhaitez ajouter plus d’enregistrements que la limite autorisée pour un domaine, vous pouvez contacter votre équipe de gestion de compte.
 
 ___
 

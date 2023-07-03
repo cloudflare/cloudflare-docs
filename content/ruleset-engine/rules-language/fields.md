@@ -507,7 +507,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>cf.bot_management.static_resource</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
-          <p>Indicates whether static resources should be when you create a rule using <code>cf.bot_management.score</code>.
+          <p>Indicates whether static resources should be included when you create a rule using <code>cf.bot_management.score</code>.
           </p>
           <p>For more details, refer to <a href="/bots/reference/static-resources/">Static resource protection</a>.
           </p>

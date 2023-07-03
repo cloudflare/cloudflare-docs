@@ -9,7 +9,7 @@ A Tail Worker receives information about the execution of other Workers, such as
 
 Tail Workers are available to all customers on the Workers Paid and Enterprise tiers. They are priced the same as [Workers](/workers/platform/pricing/#workers). 
 
-![Tail Worker diagram](../media/tail-workers.png)
+![Tail Worker diagram](/images/workers/platform/tail-workers.png)
 
 A Tail Worker is automatically invoked after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. You can filter, change the format of the data and send events to any HTTP endpoint. For quick debugging, Tail Workers can be used to send logs to [KV](/workers/runtime-apis/kv/) or any database.
 
