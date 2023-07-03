@@ -20,9 +20,13 @@ For customers in the United States, enter the following IP addresses:
   - `104.30.32.0/19`[^1]
   - `158.51.64.0/26`
   - `158.51.65.0/26`
-  - `134.195.26.0/23`
+  - `134.195.26.0/23`[^1]
+- **IPv6**:
+  - `2405:8100:c400::/38`
 
-- **Office 365 `/24` addresses (to be used instead of the `/19` subnet):**
+### **Office 365 `/24` addresses**
+ To be used instead of the `/19` and `/23` subnet:
+
   - `104.30.32.0/24`
   - `104.30.33.0/24`
   - `104.30.34.0/24`
@@ -55,9 +59,6 @@ For customers in the United States, enter the following IP addresses:
   - `104.30.61.0/24`
   - `104.30.62.0/24`
   - `104.30.63.0/24`
-
-- **IPv6**:
-  - `2405:8100:c400::/38`
 
 ## Europe
 
