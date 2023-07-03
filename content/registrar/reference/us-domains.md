@@ -7,20 +7,6 @@ meta:
 ---
 
 # .US domains
-
-{{<render file="_requirements.md">}}
-
----
-
-## Prerequisites
-
-- The domain must not be locked or suspended.
-- There must be an active zone [for the domain](/fundamentals/get-started/setup/add-site/) in your Cloudflare account.
-- The domain must have [Cloudflare nameservers](/dns/zone-setups/full-setup/).
-- The domain must not be expiring within the next 10 days.
-
----
-
 ## Registration requirements for .US domains
 
 If you want to register a `.us` domain, you must have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:

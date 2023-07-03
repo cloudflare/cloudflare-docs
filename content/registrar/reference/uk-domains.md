@@ -7,20 +7,6 @@ meta:
 ---
 
 # .UK domains
-
-{{<render file="_requirements.md">}}
-
----
-
-## Prerequisites
-
-- The domain must not be locked or suspended.
-- There must be an active zone [for the domain](/fundamentals/get-started/setup/add-site/) in your Cloudflare account.
-- The domain must have [Cloudflare nameservers](/dns/zone-setups/full-setup/).
-- The domain must not be expiring within the next 10 days.
-
----
-
 ## How to transfer a .UK domain to Cloudflare
 
 Cloudflare currently supports the transfer of `.uk`, `co.uk`, `org.uk`, and `me.uk` domains. To transfer a `.uk` domain to Cloudflare from another registrar follow these steps:
