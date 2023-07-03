@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 1
 ---
 
-{{<beta>}} Unified Search {{</beta>}}
+Unified Search
 
 Unified Search merges [Detection Search](/email-security/reporting/search/detection-search/) and [Mail Trace](/email-security/reporting/search/mailtrace/) into a single, unified experience. Unified Search makes it easier to search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
 
