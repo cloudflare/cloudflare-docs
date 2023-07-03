@@ -14,7 +14,9 @@ NAMESPACE.get(key);
 
 The method returns a promise you can `await` to get the value. If the key is not found, the promise will resolve with the literal value `null`.
 
-Note that `get()` may return stale values -- if a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to be visible. Refer to [How KV works](/kv/learning/how-kv-works/) for more information on this topic.
+Note that `get()` may return stale values -- if a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to be visible. 
+
+Refer to [How KV works](/kv/learning/how-kv-works/) for more information on this topic.
 
 An example of reading a key from within a Worker:
 

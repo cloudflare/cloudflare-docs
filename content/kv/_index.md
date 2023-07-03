@@ -1,12 +1,12 @@
 
 ---
-title: Workers KV
+title: Cloudflare Workers KV
 weight: xx
 layout: overview
 pcx_content_type: overview
 ---
 
-# Workers KV
+# Cloudflare Workers KV
 
 {{<description>}}
 A global, low-latency, key-value data storage solution. 

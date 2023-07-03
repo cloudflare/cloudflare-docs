@@ -16,4 +16,4 @@ This will remove the key and value from your namespace. As with any operations, 
 
 This method returns a promise that you should `await` on to verify successful deletion.
 
-You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair).
+You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair/).

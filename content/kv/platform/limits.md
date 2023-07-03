@@ -27,6 +27,6 @@ title: Limits
 
 {{<Aside type="note" header="Free versus Paid plan pricing">}}
 
-Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the specific KV operations you are allowed under each plan with their pricing.
+Refer to [KV pricing](/kv/platform/pricing/) to review the specific KV operations you are allowed under each plan with their pricing.
 
 {{</Aside>}}

@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: KV Namespaces
+title: KV namespaces
 weight: 7
 ---
 
-# KV Namespaces
+# KV namespaces
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
@@ -34,3 +34,14 @@ kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
 ```
+## Bind your KV namespace to your Worker
+
+To bind the namespace to your Worker in the Cloudflare dashboard:
+
+1.  Go to **Workers**.
+2.  Select your **Worker**.
+3.  Select **Settings** > **Variables**.
+4.  Go to **KV Namespace Bindings**.
+5.  Select **Add binding**.
+
+

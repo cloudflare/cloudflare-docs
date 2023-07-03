@@ -8,9 +8,9 @@ pcx_content_type: get-started
 
 This guide will instruct you through:
 
-- Create a KV namespace with Wrangler.
-- Interact with your KV namespace.
-- Use environments with KV namespaces.
+- Creating a KV namespace with Wrangler.
+- Interacting with your KV namespace.
+- Using environments with KV namespaces.
 
 ## 1. Create a KV namespace with Wrangler
 
@@ -52,7 +52,7 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 {{</Aside>}}
 
-## 2. Create KVs in the Cloudflare dashboard
+## 2. Create KVs on the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select **Workers & Pages** > **KV**.
