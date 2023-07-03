@@ -14,7 +14,7 @@ The name of your binding does not need to match the KV namespace's name. Instead
 
 When you create a namespace, it will have a name you choose (for example, `My tasks`), and an assigned ID (for example, `06779da6940b431db6e566b4846d64db`).
 
-To execute your Worker, define the binding. In the followig example, the binding is called `TODO`. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
+To execute your Worker, define the binding. In the following example, the binding is called `TODO`. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
 ```toml
 name = "worker"
