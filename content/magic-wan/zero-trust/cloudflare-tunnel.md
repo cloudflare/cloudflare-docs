@@ -11,4 +11,4 @@ By default, TCP, UDP and ICMP traffic routed through Magic WAN tunnels and desti
 
 If overlapping routes exist in your Magic WAN and Cloudflare Tunnel routing configurations, Cloudflare Tunnel routes will take precedence. This is true regardless of the health status of your tunnels.
 
-However, if overlapping routes exist in your Magic WAN and Cloudflare Tunnel routing configurations in the default Tunnel `vnet`, outbound connections from within that network will not work. This happens because Cloudflare Tunnel does not support outbound connections.
+However, if overlapping routes exist in your Magic WAN and Cloudflare Tunnel routing configurations in the default [Tunnel `vnet`](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/), outbound connections from within that network will not work. This happens because Cloudflare Tunnel does not support outbound connections.
