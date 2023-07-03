@@ -51,7 +51,7 @@ To filter based on the type of data associated with one of the Network Analytics
 ## Create a Magic Firewall rule from the applied filters
 
 {{<Aside type="note">}}
-This feature is only available for Magic Transit users.
+This feature is only available to Magic Transit and Magic WAN users.
 {{</Aside>}}
 
 Select **Create Magic Firewall rule** to create a [Magic Firewall](/magic-firewall/) rule that will block all traffic matching the selected filters in Network Analytics.
