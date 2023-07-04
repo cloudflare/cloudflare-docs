@@ -6,9 +6,9 @@ weight: 5
 
 # Top Level Domains supported 
 
-Cloudflare supports over 200 top-level domains (TLDs)[^1] and is always evaluating adding new TLDs. We do not have timeframes available for TLDs not yet listed.
+Cloudflare supports over 200 top-level domains (TLDs)[^1] and is always evaluating adding new TLDs. We have no specific timeframes for TLDs not yet listed.
 
-You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). 
+[^1]: You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). 
 
 {{<Aside type="note">}}
 If you want to register a `.us` domain refer to  [Additional requirements for .US domains](#additional-requirements-for-us-domains).
