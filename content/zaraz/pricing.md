@@ -18,7 +18,7 @@ The Free plan applies to accounts without a Workers Paid plan, and it includes u
 
 ### Workers Paid
 
-The Workers Paid plan includes the first 200,000 Zaraz Loads per month per account free of charge, with a charge of $0.5 for every additional 1,000 Zaraz Loads. In addition to all the features of the Free plan, the Paid plan includes: \
+The Workers Paid plan includes the first 200,000 Zaraz Loads per month per account free of charge, with a charge of $0.5 for every additional 1,000 Zaraz Loads. In addition to all the features of the Free plan, the Paid plan includes:
 
 - [Preview/publish configuration workflow](https://developers.cloudflare.com/zaraz/history/preview-mode/)
 - [Workers Variables](https://developers.cloudflare.com/zaraz/advanced/worker-variables/)
