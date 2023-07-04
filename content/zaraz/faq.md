@@ -138,6 +138,8 @@ If you proxy your domain through Cloudflare, you do not need to add any code to 
 
 The Zaraz team is working with third-party vendors to build their own Zaraz integrations using the Zaraz SDK. To request a new tool integration, or to collaborate on our SDK, contact us at zaraz@cloudflare.com.
 
+---
+
 ## Pricing
 
 ### How is Zaraz pricing structured?
