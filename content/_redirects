@@ -550,10 +550,10 @@
 /registrar/cloudflare-registrar/domain-management/ /registrar/account-options/domain-management/ 301
 /registrar/cloudflare-registrar/leaving-cloudflare/ /registrar/account-options/transfer-out-from-cloudflare/ 301
 /registrar/cloudflare-registrar/transfer-out-from-cloudflare/ /registrar/account-options/transfer-out-from-cloudflare/ 301
-/registrar/domain-registration/cloudflare-custom-domain-protection/ /registrar/reference/custom-domain-protection/ 301
-/registrar/domain-registration/tlds-supported/ /registrar/top-level-domains-supported/ 301
-/registrar/domain-registration/tld-support/ /registrar/top-level-domains-supported/ 301
-/registrar/domain-registration/whois-redaction/ /registrar/get-started/whois-redaction/ 301
+/registrar/domain-registration/cloudflare-custom-domain-protection/ /registrar/custom-domain-protection/ 301
+/registrar/domain-registration/tlds-supported/ /registrar/top-level-domains/ 301
+/registrar/domain-registration/tld-support/ /registrar/top-level-domains/ 301
+/registrar/domain-registration/whois-redaction/ /registrar/account-options/whois-redaction/ 301
 /registrar/domain-transfers/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/domain-transfers/transfer-costs/ /registrar/faq/ 301
 /registrar/domain-transfers/transfer-to-cloudflare/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
@@ -561,7 +561,11 @@
 /registrar/transfer-instructions/generic/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/transfer-instructions/namecheap/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/transfer-instructions/oneandone/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
-/registrar/why-choose-cloudflare/whois-redaction/ /registrar/get-started/whois-redaction/ 301
+/registrar/why-choose-cloudflare/whois-redaction/ /registrar/account-options/whois-redaction/ 301
+/registrar/reference/custom-domain-protection/ /registrar/custom-domain-protection/ 301
+/registrar/account-options/enable-dnssec/ /registrar/get-started/enable-dnssec/ 301
+/registrar/get-started/whois-redaction/ /registrar/account-options/whois-redaction/ 301
+/registrar/get-started/transfer-uk-domain/ /registrar/top-level-domains/uk-domains/ 301
 
 # rules
 /rules/transform/create-header-modification-rule/ /rules/transform/request-header-modification/create-dashboard/ 301

@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Custom Domain Protection
+weight: 6
 ---
 
 # Cloudflare Custom Domain Protection
@@ -13,4 +14,4 @@ Custom Domain Protection offers additional safeguard features for registered dom
 - **Out-of-band authentication**: All changes to domain ownership or nameserver information are verified and executed manually based on an authentication process defined by the customer.
 - **No interface**: Custom Domain Protection does not offer an interface, to remove the possibility of domain hijack through a compromised account.
 
-Contact your Customer Success Manager if you are interested in Cloudflare's Custom Domain Protection.
+Contact your account team if you are interested in Cloudflare's Custom Domain Protection.
