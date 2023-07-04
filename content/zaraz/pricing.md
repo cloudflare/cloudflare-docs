@@ -73,11 +73,11 @@ Suppose you have a personal website that generates 150,000 Zaraz Loads per month
 
 ### Example 3: Small Business Website (With Workers Paid plan)
 
-Suppose you have a small business website that generates 250,000 Zaraz Loads per month. Under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you will be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for 50,000 additional Zaraz Loads, which would cost you an extra $25 ((50,000/1,000) \* $0.5) on top of your monthly plan cost.
+Suppose you have a small business website that generates 250,000 Zaraz Loads per month. Under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you will be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for 50,000 additional Zaraz Loads, which would cost you an extra $25 (`(50,000/1,000) * $0.5`) on top of your monthly plan cost.
 
 ### Example 4: High Traffic Website (With Workers Paid plan)
 
-If you have a high traffic website that generates 20,000,000 Zaraz Loads per month, under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you would be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for an additional 19,800,000 Zaraz Loads, which would cost you an extra $9,900 ((19,800,000/1,000) \* $0.5) on top of your monthly plan cost. However, with such high usage, it would likely be more beneficial to consider the Workers Enterprise plan. For a custom quote tailored to your specific needs, please contact our sales team.
+If you have a high traffic website that generates 20,000,000 Zaraz Loads per month, under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you would be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for an additional 19,800,000 Zaraz Loads, which would cost you an extra $9,900 (`(19,800,000/1,000) * $0.5`) on top of your monthly plan cost. However, with such high usage, it would likely be more beneficial to consider the Workers Enterprise plan. For a custom quote tailored to your specific needs, please contact our sales team.
 
 ## Already Using Zaraz?
 
