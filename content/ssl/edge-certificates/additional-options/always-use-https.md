@@ -47,9 +47,9 @@ To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/op
 
 ### Encrypt some visitor traffic
 
-#### Configuration rules
+#### Page Rules
 
-If only some parts of your application can support HTTPS traffic, use [Configuration Rules](/rules/configuration-rules/create-dashboard/) to selectively disable **Always Use HTTPS**.
+If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** at the zone level and use [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to selectively enable this feature for specific URLs.
 
 #### Redirects
 
