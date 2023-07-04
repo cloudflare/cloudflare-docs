@@ -19,7 +19,7 @@ DNS record for your page rule to work. Page Rules won\'t apply to
 hostnames that don\'t exist in DNS or aren\'t being directed to
 Cloudflare.
 
-Depending on the record type, you can use different values as the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
+Depending on the record type, you can use different values for the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
 
 ```
 www.example.com  A      192.0.2.1
