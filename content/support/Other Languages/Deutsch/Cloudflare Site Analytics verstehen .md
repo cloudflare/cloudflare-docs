@@ -25,11 +25,11 @@ So können Sie sich Metriken für Ihre Website ansehen:
 
 Nach dem Laden zeigt die Analytics-App eine Reihe von Registerkarten für **Traffic**, **Sicherheit**, **Performance**, **DNS**, **Workers** und **Protokolle** an (nur Enterprise-Domains). Im Abschnitt _Ihre Website-Metriken betrachten_ weiter unten erfahren Sie, was die angezeigten Metriken bedeuten.
 
-![Benutzeroberfläche der Analytics-App im Cloudflare-Dashboard, die Daten zum Web-Traffic anzeigt](/support/static/hc-dash-analytics-dashboard_overview.png)
+![Benutzeroberfläche der Analytics-App im Cloudflare-Dashboard, die Daten zum Web-Traffic anzeigt](/images/support/hc-dash-analytics-dashboard_overview.png)
 
 Kunden mit den Tarifen Pro, Business und Enterprise sehen die neuesten Web Analytics unter der Registerkarte „Traffic“.
 
-![Screenshot der Benutzeroberfläche im Cloudflare Analytics-Dashboard für Pro-, Business- und Enterprise-Kunden.](/support/static/hc-dash-analytics-web_traffic.png)
+![Screenshot der Benutzeroberfläche im Cloudflare Analytics-Dashboard für Pro-, Business- und Enterprise-Kunden.](/images/support/hc-dash-analytics-web_traffic.png)
 
 {{<Aside type="note">}}
 Im Artikel [„Cloudflare Analytics: Ein kurzer

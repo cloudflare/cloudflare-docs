@@ -52,7 +52,7 @@ You can enable Tiered Cache in the dashboard or via API.
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 2. Select **Caching** > **Tiered Cache**.
-3. From **Argo Tiered Cache**, toggle the button to **enabled**.
+3. From **Tiered Cache**, toggle the button to **enabled**.
 4. In **Tiered Cache Topology**, you can control how your origin connects to Cloudflare’s data centers. You can select:
     - **Upper Tear Cache** - You have the option to choose between Smart or Generic Global Tiered Cache Topology.
     - **Middle Tier Cache** -  If you have selected Smart or Custom Tiered Cache Topology, you can now enable Regional Tiered Cache. 

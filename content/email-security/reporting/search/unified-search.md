@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 1
 ---
 
-{{<beta>}} Unified Search {{</beta>}}
+# Unified Search
 
 Unified Search merges [Detection Search](/email-security/reporting/search/detection-search/) and [Mail Trace](/email-security/reporting/search/mailtrace/) into a single, unified experience. Unified Search makes it easier to search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
 
@@ -21,11 +21,11 @@ To start using Unified Search:
 
 3. Select **Try new search** to enable Unified Search. The system will default to **Fielded Search**, but you can also enable **Freeform Search**.
 
-	![Select Try new search to enable Unified Search](/email-security/static/unified-search/try-new-search.png)
+	![Select Try new search to enable Unified Search](/images/email-security/unified-search/try-new-search.png)
 
 4. (Optional) Under **Freeform Search**, select **Switch back to classic search** to revert to the previous search experience.
 
-	![Select witch back to classic search to revert to the classical search experience](/email-security/static/unified-search/revert-search.png)
+	![Select witch back to classic search to revert to the classical search experience](/images/email-security/unified-search/revert-search.png)
 
 ## Search terms
 

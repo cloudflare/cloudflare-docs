@@ -50,7 +50,7 @@ Cloudflareの無料のUniversal SSL証明書を引き続き使用する場合、
 
 単独で_issuewild_ を使用すると、ワイルドカードの発行のみを許可します。したがって、**「タグ」**ドロップダウンで「_ワイルドカードと特定のホスト名を許可する（Allow wildcards and specific hostnames）_」 オプションを指定しない限り、Cloudflareは、ルートドメインを証明書に追加できません：  
 
-![configuring_caa_records_comodoca_annotated.png](/support/static/configuring_caa_records_comodoca_annotated.png)
+![configuring_caa_records_comodoca_annotated.png](/images/support/configuring_caa_records_comodoca_annotated.png)
 
 ___
 

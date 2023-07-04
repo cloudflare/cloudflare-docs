@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Commands
-weight: 2
 ---
 
 # Wrangler commands
@@ -1315,11 +1314,6 @@ If sampling persists after using options to filter messages, consider using [ins
 ## pages
 
 Configure Cloudflare Pages.
-
-{{<Aside type="warning">}}
-The `wrangler pages ...` commands are in beta.<br>
-Report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose.
-{{</Aside>}}
 
 ### `dev`
 

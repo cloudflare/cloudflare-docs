@@ -48,7 +48,7 @@ $ cloudflared tunnel --url http://localhost:3000
 
 In this example, the randomly-generated URL `https://seasonal-deck-organisms-sf.trycloudflare.com` has been created and assigned to your tunnel instance. Visiting this URL in a browser will show the application running, with requests being securely forwarded through Cloudflare's global network, through the tunnel running on your machine, to `localhost:3000`:
 
-![Cloudflare Tunnel example rendering a randomly-generated URL](../media/tunnel.png)
+![Cloudflare Tunnel example rendering a randomly-generated URL](/images/pages/how-to/tunnel.png)
 
 ## Next Steps
 

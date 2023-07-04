@@ -115,14 +115,14 @@ async function handleEvent(event) {
 {{</tab>}}
 {{</tabs>}}
 
-5.  Run `wrangler dev` or `wrangler publish` to preview or publish your site on Cloudflare.
+5.  Run `wrangler dev` or `wrangler deploy` to preview or deploy your site on Cloudflare.
     Wrangler will automatically upload the assets found in the configured directory.
 
     ```sh
-    $ wrangler publish
+    $ wrangler deploy
     ```
 
-6.  Publish your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
+6.  Deploy your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
 
     ```toml
     route = "https://example.com/*"

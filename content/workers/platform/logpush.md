@@ -43,7 +43,7 @@ In Logpush, you can configure [filters](/logs/reference/filters/) and a [samplin
 
 ## Enable logging on your Worker
  
-Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/platform/environments/). Any new Workers with this property will automatically get picked up by the Logpush job. 
+Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job. 
  
 ```toml
 ---

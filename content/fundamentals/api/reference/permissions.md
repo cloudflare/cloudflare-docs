@@ -33,7 +33,6 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
 
-
 | Name                                                         | Description                                                                                           |
 | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
 | Access: Apps and Policies Read                               | Grants read access to Cloudflare Access account resources.                                            |

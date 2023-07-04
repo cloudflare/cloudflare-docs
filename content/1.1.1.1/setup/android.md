@@ -39,7 +39,7 @@ Android Pie and later supports DNS over TLS to secure your queries through encry
 1. Go to **Settings** > **Network & internet**.
 2. Select **Advanced** > **Private DNS**.
 3. Select the **Private DNS provider hostname** option.
-4. Enter `one.one.one.one` or `1dot1dot1dot1.cloudflare-dns.com` and press **Save**.
+4. Enter `one.one.one.one` and press **Save**.
 
 ### Previous Android versions
 

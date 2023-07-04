@@ -60,11 +60,11 @@ Different sites will send requests in different ways. For example, some sites wi
 
 ## 4. View DLP logs
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Logs** > **Gateway** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP**.
 2. Select **Filter**.
 3. Choose an item under one of the following filters:
-    * **DLP Profiles** shows the requests which matched a specific DLP profile.
-    * **Policy** shows the requests which matched a specific DLP policy.
+   - **DLP Profiles** shows the requests which matched a specific DLP profile.
+   - **Policy** shows the requests which matched a specific DLP policy.
 
 You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).
 

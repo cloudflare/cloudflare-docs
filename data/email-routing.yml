@@ -13,7 +13,6 @@ meta:
     to share your primary email address, and Email Routing will forward your
     email messages for you.
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/email/routing/overview

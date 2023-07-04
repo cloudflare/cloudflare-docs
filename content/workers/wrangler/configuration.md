@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Configuration
-weight: 3
 ---
 
 # Configure `wrangler.toml`
@@ -43,7 +42,7 @@ kv_namespaces = [
 
 ## Environments
 
-The configuration for a Worker can become complex when you define different [environments](/workers/platform/environments/), and each environment has its own configuration.
+The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
 These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
@@ -150,7 +149,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Worker.
+  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/platform/environment-variables/).
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -494,7 +493,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/wrangler/environments/).
 
 {{</definitions>}}
 
@@ -531,11 +530,11 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
-analytics_engine_datasets = [
-    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-]
+[[analytics_engine_datasets]]
+binding = "<BINDING_NAME>"
+dataset = "<DATASET_NAME>"
 ```
 
 ### mTLS Certificates
@@ -704,8 +703,6 @@ header: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_compat" ]
 ```
-
-{{<render file="_nodejs-compat-local-dev.md">}}
 
 ### Add polyfills using Wrangler
 

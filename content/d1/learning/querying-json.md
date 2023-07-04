@@ -8,9 +8,10 @@ weight: 4
 
 D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:
 
-* Query paths within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
+* [Query paths](#extracting-values) within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
 * Insert and/or replace values within an object or array.
-* Expand the contents of a JSON object or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
+* [Expand the contents of a JSON object](#expanding-arrays-for-in-queries) or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
+* Create [generated columns](/d1/learning/generated-columns/) that are automatically populated with values from JSON objects you insert.
 
 One of the biggest benefits to parsing JSON within D1 directly is that it can directly reduce the number of round-trips (queries) to your database. It reduces the cases where you have to read a JSON object into your application (1), parse it, and then write it back (2).
 
@@ -70,6 +71,24 @@ This will return an error:
 ERROR 9015: SQL engine error: query error: Error code 1: SQL error or missing database (malformed
   JSON)`
 ```
+
+## Generated columns
+
+D1's support for [generated columns](/d1/learning/generated-columns/) allows you to create dynamic columns that are generated based on the values of other columns, including extracted or calculated values of JSON data.
+
+These columns can be queried like any other column, and can have [indexes](/d1/learning/using-indexes/) defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.
+
+For example, to define a column based on a value within a larger JSON object, use the `AS` keyword combined with a [JSON function](#supported-functions) to generate a typed column:
+
+```sql
+CREATE TABLE some_table (
+    -- other columns omitted
+    -- JSON: {"measurement":{"aqi":[21,42,58],"wind_mph":"13","location":"US-NY"}}
+    location AS (json_extract(raw_data, '$.measurement.location')) STORED
+)
+```
+
+Refer to [Generated columns](/d1/learning/generated-columns/) to learn more about how to generate columns.
 
 ## Example usage
 
@@ -166,7 +185,7 @@ SET last_audited = '2023-05-16T11:24:08+00:00'
 WHERE id IN (SELECT value FROM json_each('[183183, 13913, 94944]'))
 ```
 
-This would extract only the `value` column from the table returned by `json_each`, with each row representing the user IDs we passed in as an array.
+This would extract only the `value` column from the table returned by `json_each`, with each row representing the user IDs you passed in as an array.
 
 `json_each` effectively returns a table with multiple columns, with the most relevant being:
 

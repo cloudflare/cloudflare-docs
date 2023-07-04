@@ -164,7 +164,7 @@ end
 ```
 <br/>
 
-To solve this issue, review your various [URL forwarding rules](/rules/url-forwarding/) and [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to make sure no rules are not in conflict with each other.
+To solve this issue, review your various [URL forwarding rules](/rules/url-forwarding/) and [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to make sure no rules are not in conflict with each other.
 
 {{<Aside type="note">}}
 

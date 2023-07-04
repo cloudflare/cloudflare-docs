@@ -25,8 +25,8 @@ By default, 0-RTT Connection Resumption is not enabled on your Cloudflare applic
 To enable 0-RTT Connection Resumption in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Navigate to **Network**.
-3.  For **0-RTT Connection Resumption**, switch the toggle to **On**.
+2.  Navigate to **Speed > Optimization**.
+3.  Navigate to the **Protocol Optimization** tab and under **0-RTT Connection Resumption**, switch the toggle to **On**.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

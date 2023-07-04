@@ -8,12 +8,17 @@ weight: 3
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
+{{<Aside type="note" header="Beta waitlist">}}
+
+If you are interested in joining the private beta waitlist for incremental migration, [fill out the form](https://docs.google.com/forms/d/e/1FAIpQLSeqOcV0d8fuLSdTULP2eB4AQb3jU8TG3wUGOKEkJ_OeLG5e4g/viewform).
+
+{{</Aside>}}
+
 Migration jobs:
 
 - Preserve custom object metadata from source bucket by copying them on the migrated objects on R2.
 - Do not delete any objects from source bucket.
-- Overwrite objects in the destination R2 bucket when an object being copied from the source storage bucket matches the path of an existing object in the destination bucket.
-- Uses TLS encryption over HTTPS connections for safe and private object transfers.
+- Use TLS encryption over HTTPS connections for safe and private object transfers.
 
 ## When to use Super Slurper
 
@@ -21,15 +26,29 @@ Using Super Slurper as part of your strategy can be a good choice if the cloud s
 
 For migration use cases that do not meet the above criteria, we recommend using tools such as [rclone](/r2/examples/rclone/).
 
-## Migrate data from Amazon S3 to R2
-
+## Use Super Slurper to migrate data to R2
 1. From the Cloudflare dashboard, select **R2** > **Data Migration**.
 2. Select **Migrate files**.
-3. Enter your Amazon S3 bucket name and associated credentials and select **Next**.
-4. Enter your R2 bucket name and associated credentials and select **Next**.
-5. After you finish reviewing the details of your migration, select **Migrate files**.
+3. Select the source cloud storage provider that you will be migrating data from.
+4. Enter your source bucket name and associated credentials and select **Next**.
+5. Enter your R2 bucket name and associated credentials and select **Next**.
+6. After you finish reviewing the details of your migration, select **Migrate files**.
 
 You can view the status of your migration job at any time by selecting your migration from **Data Migration** page.
+
+### Source bucket options
+#### Bucket sub path (optional)
+This setting specifies the prefix within the source bucket where objects will be copied from.
+
+### Destination R2 bucket options
+#### Overwrite files?
+This setting determines what happens when an object being copied from the source storage bucket matches the path of an existing object in the destination R2 bucket. There are two options: overwrite (default) and skip.
+
+
+## Supported cloud storage providers
+We currently support copying data from the following cloud object storage providers to R2:
+- Amazon S3
+- Cloudflare R2
 
 ## Create Amazon S3 credentials
 
@@ -61,4 +80,4 @@ To create credentials with the correct permissions:
 
 3. Create a new user and attach the created policy to that user.
 
-You can now use both the Access Key ID and Secret Access Key when defining your source bucket. Refer to [Migrate data from Amazon S3 to R2](/r2/data-migration/#migrate-data-from-amazon-s3-to-r2) to learn more.
+You can now use both the Access Key ID and Secret Access Key when defining your source bucket.

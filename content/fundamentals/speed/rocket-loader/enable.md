@@ -17,7 +17,7 @@ To enable or disable **Rocket Loader** in the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2.  Select your account and domain.
-3.  Go to **Speed** > **Optimization**.
+3.  Go to **Speed** > **Optimization** > **Content Optimization**.
 4.  For **Rocket Loader**, switch the toggle to **On**.
 
 {{<render file="_rocket-loader-csp.md">}}
@@ -31,3 +31,5 @@ To enable or disable **Rocket Loader** with the API, send a [`PATCH`](/api/opera
 
 {{</tab>}}
 {{</tabs>}}
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
