@@ -7,6 +7,7 @@ meta:
 ---
 
 # .US domains
+
 ## Registration requirements for .US domains
 
 If you want to register a `.us` domain, you must have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:
