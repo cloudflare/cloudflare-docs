@@ -16,7 +16,7 @@ weight: 1
 
 ## How to register a new domain
 
-{{<Aside type="note">}}If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](registrar/top-level-domains/us-domains/) before proceeding.{{</Aside>}}
+{{<Aside type="note">}}If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/) before proceeding.{{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. 
 
@@ -83,4 +83,4 @@ When you register a domain with Cloudflare, your personal information is redacte
 
 ## Next steps
 
-To improve the security of your domain, enable [Domain Name System Security Extensions](/registrar/account-options/enable-dnssec/) to create a secure layer with a cryptographic signature.
+To improve the security of your domain, enable [Domain Name System Security Extensions](/registrar/get-started/enable-dnssec/) to create a secure layer with a cryptographic signature.
