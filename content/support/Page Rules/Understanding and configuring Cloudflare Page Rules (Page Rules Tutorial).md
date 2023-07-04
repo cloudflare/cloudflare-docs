@@ -181,7 +181,7 @@ Below is the full list of settings available, presented in the order that they a
 
 | **Setting** | **Description** | **Plans** |
 | --- | --- | --- |
-| [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) |  Turn on or off the **Always Use HTTPS** feature. If enabled, any `http://` URL is converted to `https://` through a 301 redirect.<br/><br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
+| [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) | Enable **Always Use HTTPS** feature. If enabled, any `http://` URL is converted to `https://` through a 301 redirect.<br/><br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
 | [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) | Indicate which file extensions to minify automatically.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) | Turn on or off **Automatic HTTPS Rewrites**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) | Control how long resources cached by client browsers remain valid. The Cloudflare UI and API both prohibit setting **Browser Cache TTL** to _0_ for non-Enterprise domains. | All |
