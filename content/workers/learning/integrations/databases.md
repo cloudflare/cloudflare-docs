@@ -257,7 +257,7 @@ To learn more about Neon, refer to [Neon's official documentation](https://neon.
 
 ### Upstash
 
-[Upstash](https://upstash.com/) is a serverless database with Redis API. It aims to simplify the process of building and scaling real-time applications by providing a serverless database infrastructure.
+[Upstash](https://upstash.com/) is a serverless database with Redis and Kafka support.
 
 To set up an integration with Upstash:
 
