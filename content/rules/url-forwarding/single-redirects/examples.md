@@ -42,9 +42,9 @@ Request URL                        | Target URL                       | Status c
 `example.com/contact-us/?state=TX` | `example.com/contacts/?state=TX` | `301`
 `example.com/team/`                | (unchanged)                      | n/a
 
-## Redirect requests for administration area to HTTPS
+## Redirect admin area requests to HTTPS
 
-This example dynamic redirect for zone `example.com` will redirect requests for the administration area of an online store to HTTPS, keeping the original path and query string.
+This example dynamic redirect for zone `example.com` will redirect requests for the administration area of a specific subdomain (`store.example.com`) to HTTPS, keeping the original path and query string.
 
 {{<example>}}
 
