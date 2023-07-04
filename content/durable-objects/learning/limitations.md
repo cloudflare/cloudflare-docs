@@ -7,7 +7,7 @@ title: Limitations
 
 Durable Objects is generally available. However, there are some known limitations.
 
-## Global Uniqueness
+## Global uniqueness
 
 Global uniqueness guarantess there is only a single instance of a Durable Object class with a given ID running at once, across the world.
 
