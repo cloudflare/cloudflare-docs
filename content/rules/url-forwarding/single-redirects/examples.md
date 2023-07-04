@@ -44,7 +44,7 @@ Request URL                        | Target URL                       | Status c
 
 ## Redirect all requests to a different hostname
 
-This example dynamic redirect for zone `example.com` will redirect all requests to a different hostname using HTTPS, keeping the original path and query string.
+This example dynamic redirect will redirect all requests for `smallshop.example.com` to a different hostname using HTTPS, keeping the original path and query string.
 
 {{<example>}}
 
