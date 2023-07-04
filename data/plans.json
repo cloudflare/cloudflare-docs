@@ -739,6 +739,20 @@
           "ent": "Yes"
         }
       }
+    },
+    "reverse_zones": {
+      "title": "Reverse Zones",
+      "link": "/dns/additional-options/reverse-zones/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
     }
   },
   "email": {
