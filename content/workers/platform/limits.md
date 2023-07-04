@@ -20,6 +20,7 @@ title: Limits
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
+| [Number of routes per zone](#number-of-routes-per-zone)         | 1000         | 1000       |
 
 {{</table-wrap>}}
 
