@@ -79,7 +79,7 @@ At this time, you can only use ASCII characters for contact data. If the default
 
 {{</table-wrap>}}
 
-When you register a domain with Cloudflare, your personal information is redacted when permitted by the registry. Refer to [WHOIS redaction](/registrar/get-started/whois-redaction/) for more information. 
+When you register a domain with Cloudflare, your personal information is redacted when permitted by the registry. Refer to [WHOIS redaction](/registrar/account-options/whois-redaction/) for more information. 
 
 ## Next steps
 
