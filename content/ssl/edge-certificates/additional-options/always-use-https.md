@@ -49,7 +49,7 @@ To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/op
 
 #### Page Rules
 
-If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** at the zone level and use [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to selectively enable this feature for specific URLs.
+If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** at the domain level and use [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to selectively enable this feature for specific URLs.
 
 #### Redirects
 
