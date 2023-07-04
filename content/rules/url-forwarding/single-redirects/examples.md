@@ -42,25 +42,31 @@ Request URL                        | Target URL                       | Status c
 `example.com/contact-us/?state=TX` | `example.com/contacts/?state=TX` | `301`
 `example.com/team/`                | (unchanged)                      | n/a
 
-## Redirect all requests to HTTPS
+## Redirect requests for administration area to HTTPS
 
-This example dynamic redirect for zone `example.com` will redirect visitors to HTTPS for the main domain and all subdomains, keeping the original path and query string.
+This example dynamic redirect for zone `example.com` will redirect requests for the administration area of an online store to HTTPS, keeping the original path and query string.
 
 {{<example>}}
 
 **When incoming requests match**
 
 * **Field:** _SSL/HTTPS_
-* **Value:** Off
+* **Value:** _Off_
 
 _And_
 
 * **Field:** _Hostname_
-* **Operator:** _ends with_
-* **Value:** `example.com`
+* **Operator:** _equals_
+* **Value:** `store.example.com`
+
+_And_
+
+* **Field:** _URI Path_
+* **Operator:** _starts with_
+* **Value:** `/admin`
 
 If you are using the Expression Editor, enter the following expression:<br>
-`(not ssl and ends_with(http.host, "example.com"))`
+`(not ssl and http.host eq "store.example.com" and starts_with(http.request.uri.path, "/admin"))`
 
 **Then**
 
@@ -71,17 +77,17 @@ If you are using the Expression Editor, enter the following expression:<br>
 
 {{</example>}}
 
-The rule expression includes _SSL/HTTPS: Off_ (or `not ssl`) to avoid redirect loops.
+The rule includes _SSL/HTTPS: Off_ (`not ssl` in the rule expression) to avoid redirect loops.
 
 For example, the redirect rule would perform the following redirects:
 
-Request URL                                      | Target URL                                       | Status code
--------------------------------------------------|--------------------------------------------------|------------
-`http://example.com/`                            | `https://example.com/`                           | `301`
-`http://example.com/calendar?show_details=true`  | `https://example.com/calendar?show_details=true` | `301`
-`http://store.example.com/admin/`                | `https://store.example.com/admin/`               | `301`
-`https://example.com/calendar?show_details=true` | (unchanged)                                      | n/a
-`https://store.example.com/admin/`               | (unchanged)                                      | n/a
+Request URL                                       | Target URL                                         | Status code
+--------------------------------------------------|----------------------------------------------------|------------
+`http://store.example.com/admin/products/`        | `https://store.example.com/admin/products/`        | `301`
+`https://store.example.com/admin/products/`       | (unchanged)                                        | n/a
+`http://store.example.com/admin/?logged_out=true` | `https://store.example.com/admin/?logged_out=true` | `301`
+`http://store.example.com/?all_items=true`        | (unchanged)                                        | n/a
+`http://example.com/admin/`                       | (unchanged)                                        | n/a
 
 ## Redirect UK and France visitors to their specific subdomains
 
