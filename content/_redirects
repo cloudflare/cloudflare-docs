@@ -562,6 +562,10 @@
 /registrar/transfer-instructions/namecheap/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/transfer-instructions/oneandone/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/why-choose-cloudflare/whois-redaction/ /registrar/get-started/whois-redaction/ 301
+/registrar/reference/custom-domain-protection/ registrar/custom-domain-protection/ 301
+
+# Registrar FAQ
+/registrar/faq/#can-i-register-a-premium-domain /registrar/get-started/register-domain/ 301
 
 # rules
 /rules/transform/create-header-modification-rule/ /rules/transform/request-header-modification/create-dashboard/ 301
