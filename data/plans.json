@@ -2703,6 +2703,14 @@
           "pro": "No",
           "biz": "No",
           "ent": "Paid add-on"
+        },
+        "seo_crawler": {
+          "title": "SEO Crawler Bypassing",
+          "link": "/waiting-room/reference/best-practices/#waiting-room-and-seo",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
         }
       }
     }
