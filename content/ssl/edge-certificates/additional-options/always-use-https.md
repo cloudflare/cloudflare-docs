@@ -47,12 +47,6 @@ To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/op
 
 ### Encrypt some visitor traffic
 
-#### Page Rules
-
-If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** at the domain level and use [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to selectively enable this feature for specific URLs.
-
-#### Redirects
-
 If you only want specific subdomains redirected to HTTPS, redirect on a URL basis using Cloudflare [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
 For example, you could forward traffic from a specific subdomain to HTTPS. You would likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `http://example.com/examples` go to `https://example.com/examples`.
