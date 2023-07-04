@@ -10,7 +10,7 @@ meta:
 
 The following sections contain example single redirect rule configurations.
 
-## Redirect visitors to the new URL of a page
+## Redirect visitors to the new URL of a specific page
 
 This example static redirect for zone `example.com` will redirect visitors requesting the `/contact-us/` page to the new page URL `/contacts/`.
 
@@ -41,6 +41,47 @@ Request URL                        | Target URL                       | Status c
 `example.com/contact-us/`          | `example.com/contacts/`          | `301`
 `example.com/contact-us/?state=TX` | `example.com/contacts/?state=TX` | `301`
 `example.com/team/`                | (unchanged)                      | n/a
+
+## Redirect all requests to HTTPS
+
+This example dynamic redirect for zone `example.com` will redirect visitors to HTTPS for the main domain and all subdomains, keeping the original path and query string.
+
+{{<example>}}
+
+**When incoming requests match**
+
+* **Field:** _SSL/HTTPS_
+* **Value:** Off
+
+_And_
+
+* **Field:** _Hostname_
+* **Operator:** _ends with_
+* **Value:** `example.com`
+
+If you are using the Expression Editor, enter the following expression:<br>
+`(not ssl and ends_with(http.host, "example.com"))`
+
+**Then**
+
+* **Type:** _Dynamic_
+* **Expression:** `concat("https://", http.host, http.request.uri.path)`
+* **Status code:** _301_
+* **Preserve query string:** Enabled
+
+{{</example>}}
+
+The rule expression includes _SSL/HTTPS: Off_ (or `not ssl`) to avoid redirect loops.
+
+For example, the redirect rule would perform the following redirects:
+
+Request URL                                      | Target URL                                       | Status code
+-------------------------------------------------|--------------------------------------------------|------------
+`http://example.com/`                            | `https://example.com/`                           | `301`
+`http://example.com/calendar?show_details=true`  | `https://example.com/calendar?show_details=true` | `301`
+`http://store.example.com/admin/`                | `https://store.example.com/admin/`               | `301`
+`https://example.com/calendar?show_details=true` | (unchanged)                                      | n/a
+`https://store.example.com/admin/`               | (unchanged)                                      | n/a
 
 ## Redirect UK and France visitors to their specific subdomains
 
