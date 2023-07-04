@@ -10,6 +10,21 @@ You can define a page rule to trigger one or more actions whenever a certain URL
 
 {{<Aside type="warning">}}
 Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
+
+Depending on the record type, you can use different values for the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
+
+```
+www.example.com  A      192.0.2.1
+www.example.com  AAAA   2001:DB8::1
+www.example.com  CNAME  domain.example
+```
+
+We recommend only using reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure.
+
+For more information on reserved IP addresses or top level domains, please refer to these RFCs:
+[RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)
+[RFC 3849](https://datatracker.ietf.org/doc/html/rfc3849)
+[RFC 2606](https://datatracker.ietf.org/doc/html/rfc2606)
 {{</Aside>}}
 
 The default number of allowed page rules depends on the domain plan as shown below.
