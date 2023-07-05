@@ -506,6 +506,38 @@ All Cloudflare plans.
 </div>
 </details>
 
+## Pages
+
+<details>
+<summary>Project updates</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to receive notifications about project-level events in [Cloudflare Pages](/pages/).
+
+**Other options / filters**
+
+Multiple filters available, including filtering by:
+
+- Pages projects.
+- Environments.
+- Different events:
+  - **Deployment started**
+  - **Deployment failed**
+  - **Deployment success**
+
+**Included with**
+
+All Cloudflare plans.
+
+**What should you do if you receive one?**
+
+For failed deployments, review our [debugging guide](/pages/platform/debugging-pages/#check-your-build-log).
+
+</div>
+</details>
+
 ## Page Shield
 
 <details>
