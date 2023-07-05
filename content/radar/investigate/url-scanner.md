@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: URL Scanner
+title: URL Scanner (beta)
 weight: 7
 ---
 
-# Radar's URL Scanner
+{{<beta>}} Radar's URL Scanner {{</beta>}}
 
 In order to better understand Internet usage around the world, Radar also showcases a URL Scanner at [https://radar.cloudflare.com/scan](https://radar.cloudflare.com/scan).
 
