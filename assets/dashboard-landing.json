@@ -6,12 +6,12 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
@@ -53,12 +53,12 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -83,7 +83,7 @@
         }, 
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
@@ -151,7 +151,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -278,7 +278,7 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -306,7 +306,7 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -349,7 +349,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -398,7 +398,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -464,7 +464,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         }
       ]
