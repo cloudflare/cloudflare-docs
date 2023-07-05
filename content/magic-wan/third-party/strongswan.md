@@ -15,16 +15,16 @@ This can be set up [with the API](/api/operations/magic-i-psec-tunnels-update-i-
 
 ```bash
 $ curl --request PUT \
- --url https://api.cloudflare.com/client/v4/accounts/{account_identifier}/magic/ipsec_tunnels/{tunnel_identifier} \
- --header 'Content-Type: application/json' \
- --header 'X-Auth-Email: <YOUR_EMAIL> ' \
- --data '{
-   "health_check": {
-       "enabled":true,
-       "target":"172.64.240.252",
-       "type":"request",
-       "rate":"mid"
-   }
+https://api.cloudflare.com/client/v4/accounts/{account_identifier}/magic/ipsec_tunnels/{tunnel_identifier} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--data '{
+    "health_check": {
+        "enabled":true,
+        "target":"172.64.240.252",
+        "type":"request",
+        "rate":"mid"
+    }
 }'
 ```
 
