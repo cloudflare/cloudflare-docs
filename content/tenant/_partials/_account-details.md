@@ -29,7 +29,7 @@ To retrieve a list of accounts associated with a Tenant details, send a `GET` re
 ---
 header: Request
 ---
-curl -X GET 'https://api.cloudflare.com/client/v4/tenants/<tenant-tag>/accounts?page=1&per_page=10' \
+curl https://api.cloudflare.com/client/v4/tenants/<tenant-tag>/accounts?page=1&per_page=10 \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
 -H 'x-auth-key: <API_KEY>'
