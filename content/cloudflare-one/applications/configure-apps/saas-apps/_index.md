@@ -74,12 +74,12 @@ The following tutorials provide detailed integration instructions for specific S
 
 - [Cloudflare Area 1](/cloudflare-one/tutorials/area-1/)
 
-- [Zendesk](/cloudflare-one/tutorials/zendesk-sso-saas/)
+- [Zendesk](/saas-apps/zendesk-sso-saas/)
 
-- [Docusign](/cloudflare-one/tutorials/docusign-access/)
+- [Docusign](/saas-apps/docusign-access/)
 
-- [Hubspot](/cloudflare-one/tutorials/hubspot-saas/)
+- [Hubspot](/saas-apps/hubspot-saas/)
 
-- [AWS](/cloudflare-one/tutorials/aws-sso-saas/)
+- [AWS](/saas-apps/aws-sso-saas/)
 
-- [Salesforce](/cloudflare-one/tutorials/salesforce-saas/)
+- [Salesforce](/saas-apps/salesforce-saas/)
