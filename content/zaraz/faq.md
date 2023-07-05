@@ -144,7 +144,7 @@ The Zaraz team is working with third-party vendors to build their own Zaraz inte
 
 ### How is Zaraz pricing structured?
 
-Zaraz pricing is based on two main components: Zaraz Loads and the set of features available in each plan. Please visit our [pricing page](https://developers.cloudflare.com/zaraz/pricing/) for more information.
+Zaraz pricing is based on two main components: Zaraz Loads and the set of features available in each plan. Please visit our [pricing page](/zaraz/pricing/) for more information.
 
 ### What features are included for free, and what features are part of the Workers Paid plan?
 
