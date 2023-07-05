@@ -161,8 +161,8 @@ header: Bucket list request example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
 -H 'Content-Type: application/json' \
--H "X-Auth-Email: <YOUR_EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json

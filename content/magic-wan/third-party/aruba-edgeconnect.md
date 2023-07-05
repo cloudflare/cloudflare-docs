@@ -181,7 +181,7 @@ For additional information on creating IPsec tunnels, refer to [API documentatio
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -204,7 +204,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tun
 header: Request
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -259,7 +259,7 @@ Use the tunnel ID from the response in Step 2. Save the pre-shared key generated
 header: Request
 ---
 curl --request POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json"
 ```

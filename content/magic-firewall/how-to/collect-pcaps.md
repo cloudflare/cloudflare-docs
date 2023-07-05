@@ -87,7 +87,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
   "type": "full",
   "colo": "ORD",
   "system": "magic-transit",
-  "destination_conf": "${bucket}"
+  "destination_conf": "${BUCKET}"
   }'
 ```
 
