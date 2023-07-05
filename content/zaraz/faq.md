@@ -152,7 +152,7 @@ The Zaraz Free plan includes a range of features at no cost, while the Workers P
 
 ### What is a Zaraz Load?
 
-A Zaraz Load is counted each time a web page loads the Zaraz script within it. For Single Page Applications, each URL navigation (i.e., every time the URL changes) is counted as a new Zaraz Load. Zaraz Loads are relevant for determining the usage within the Free and Paid plans.
+A Zaraz Load is counted each time a web page loads the Zaraz script within it. For single page applications, each URL navigation (i.e., every time the URL changes) is counted as a new Zaraz Load. Zaraz Loads are relevant for determining the usage within the Free and Paid plans.
 
 ### What happens if I exceed my Zaraz Loads limit under the Free plan?
 
