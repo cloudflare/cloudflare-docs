@@ -16,20 +16,20 @@ Enterprise customers can purge their cache by URL prefix or path separators in t
 
 Purging by prefix is useful in different scenarios, such as:
 
-- Purging everything within a directory
-- Increasing control over cached objects in a path
-- Simplifying the number of purge calls sent
+- Purging everything within a directory.
+- Increasing control over cached objects in a path.
+- Simplifying the number of purge calls sent.
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2.  Select the appropriate domain.
-3.  Select **Caching** > **Configuration**.
-4.  Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
-5.  Under **Purge by**, select **Prefix**.
-6.  Follow the syntax instructions.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+2. Select the appropriate domain.
+3. Select **Caching** > **Configuration**.
+4. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
+5. Under **Purge by**, select **Prefix**.
+6. Follow the syntax instructions.
     - One prefix per line.
     - Maximum 30 prefixes per API call.
-7.  Enter the appropriate value(s) in the text field using the format shown in the example.
-8.  Select **Purge**.
+7. Enter the appropriate value(s) in the text field using the format shown in the example.
+8  Select **Purge**.
 
 {{<Aside type="note" header="API">}}
 
@@ -43,7 +43,7 @@ There are several limitations regarding purge by prefix:
 
 - Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
 - Purge requests are limited to 30 prefixes per request.
-- [Purge rate-limits apply](/api/operations/zone-purge)
+- [Purge rate-limits apply](/api/operations/zone-purge).
 - URI query strings & fragments cannot purge by prefix:
   - `www.example.com/foo?a=b` (query string)
   - `www.example.com/foo#bar` (fragment)

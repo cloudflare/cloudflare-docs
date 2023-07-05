@@ -20,7 +20,7 @@ See the example API request below to purge all mobile assets on the root web pag
 
 ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
-    -H "X-Auth-Email: user@example.com" -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
+    -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY"
     -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
 ```
 
@@ -30,6 +30,6 @@ Purge resources for a location-based Cache Key by specifying the two-letter coun
 
 ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
-    -H "X-Auth-Email: user@example.com"
-    -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
+    -H "X-Auth-Email: <EMAIL>"
+    -H "X-Auth-Key: <API_KEY>" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
 ```

@@ -8,7 +8,7 @@ weight: 1
 
 With purge by single-file, cached resources are immediately removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
 
-The single-file purge rate limit for the Free subscription is 1000 urls/min. The rate limit is subject to change.
+The single-file purge rate limit for the Free subscription is 1,000 URLs/minute. The rate limit is subject to change.
 
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
 

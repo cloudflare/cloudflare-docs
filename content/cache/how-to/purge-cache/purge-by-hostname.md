@@ -12,7 +12,7 @@ Purging by hostname means that all assets at URLs with a host that matches one o
 2.  Select **Caching** > **Configuration**.
 3.  Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 4.  Under **Purge by**, select **Hostname**.
-5.  Follow the syntax instructions.
+5.  Follow the syntax instructions:
     - One hostname per line.
     - Separated by commas.
     - You can purge up to 30 hostnames at a time.

@@ -5,7 +5,7 @@ pcx_content_type: concept
 
 # Purge cache
 
-Cloudflare offeres different options to purge your content. Although single-file cache purging (purge by URL) is recommended, the following options are also available:
+Cloudflare offers different options to purge your content. Although single-file cache purging (purge by URL) is recommended, the following options are also available:
 
 {{<directory-listing>}}
 
@@ -13,6 +13,6 @@ Cloudflare offeres different options to purge your content. Although single-file
 
 {{<Aside type="note" header="Note">}}
 
-Purge requests appear in Cloudflare Logs and are identified by the PURGE method and the Cloudflare-branded User Agent.
+Purge requests appear in Cloudflare Logs and are identified by the `PURGE` method and the Cloudflare-branded User Agent.
 
 {{</Aside>}}
