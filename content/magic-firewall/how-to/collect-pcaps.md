@@ -135,7 +135,7 @@ header: Simple PCAP example request
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API>>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --data '{
   "filter_v1": {
     "source_address": "1.2.3.4",
@@ -204,7 +204,7 @@ To check the status of a running job, send a request to the endpoint and specify
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id} \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API>'
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 The response will be similar to the one received when requesting a PCAP collection.
@@ -277,7 +277,7 @@ Once the simple PCAP collection is complete, you can download the PCAP by specif
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --output download.pcap
 ```
 
@@ -309,7 +309,7 @@ header: List request example
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API>'
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 The response returns an array that includes up to 50 sent requests, which includes completed and ongoing requests.
