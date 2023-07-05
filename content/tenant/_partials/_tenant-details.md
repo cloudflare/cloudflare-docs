@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To retreive tenant details, send a `GET` request to the `/user/tenants` endpoint:
+To retrieve tenant details, send a `GET` request to the `/user/tenants` endpoint:
 
 {{</definitions>}}
 
