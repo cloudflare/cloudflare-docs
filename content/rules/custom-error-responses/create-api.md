@@ -64,7 +64,7 @@ Note that this `PUT` request, corresponding to the [Update zone entry point rule
 
 ### Custom HTML response for 1020 errors
 
-This example configures a custom HTML error response for [Cloudflare error 1020](https://support.cloudflare.com/hc/articles/360029779472#error1020) (Access Denied).
+This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
 
 ```json
 $ curl -X PUT \
