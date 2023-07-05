@@ -276,6 +276,10 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 {{<render file="gateway/_users.md">}}
 
+### Custom Threat Feeds
+
+{{<render file="gateway/_threat-feed.md" withParameters="dns.TBD">}}
+
 ## Comparison operators
 
 {{<render file="gateway/_comparison-operators.md">}}

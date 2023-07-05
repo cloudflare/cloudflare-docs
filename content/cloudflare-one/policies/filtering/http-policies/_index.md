@@ -274,6 +274,10 @@ The country of the user making the request.
 
 {{<render file="gateway/_users.md">}}
 
+### Custom Threat Feeds
+
+{{<render file="gateway/_threat-feed.md" withParameters="http.TBD">}}
+
 ## Comparison operators
 
 {{<render file="gateway/_comparison-operators.md">}}
