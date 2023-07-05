@@ -356,6 +356,11 @@
 /fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/ /fundamentals/speed/signed-exchanges/signed-exchanges-caveats/ 301
 /fundamentals/signed-exchanges/signed-exchanges/reference/ /fundamentals/speed/signed-exchanges/reference/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
+/support/firewall/settings/ /fundamentals/security/ 301
+/support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /fundamentals/security/under-attack-mode/ 301
+/support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /fundamentals/security/browser-integrity-check/ 301
+/support/firewall/settings/understanding-the-cloudflare-security-level/ /fundamentals/security/security-level/ 301
+/support/firewall/settings/using-privacy-pass-with-cloudflare/ /fundamentals/security/privacy-pass/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/filtering/ 301
@@ -434,8 +439,6 @@
 
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
-
-#magic-network-monitoring
 /magic-network-monitoring/routers/sflow-jflow-config/ /magic-network-monitoring/routers/sflow-config/ 301
 
 # magic-transit
@@ -734,6 +737,7 @@
 /waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
 /waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 /support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/ /waf/reference/legacy/old-waf-managed-rules/ 301
+/support/firewall/tools/ /waf/ 301
 /support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
 /support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-waf-managed-rules/troubleshooting/ 301
 
