@@ -6,7 +6,7 @@ title: Under Attack mode
 
 # Under Attack mode
 
-Cloudflare's **I'm Under Attack Mode** performs additional security checks to help mitigate Layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attacked (and will temporarily pause access to your site and impact your site analytics).
+Cloudflare's **I'm Under Attack Mode** performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attacked (and will temporarily pause access to your site and impact your site analytics).
 
 When enabled, visitors receive an interstitial page.
 
@@ -41,10 +41,10 @@ To preview what **I'm Under Attack** mode looks like for your visitors:
 4. Go to **Custom Pages**.
 5. For **Managed Challenge / I'm Under Attack Mode™**, select **Custom Pages** > **View default**.
 
-The "Checking your browser before accessing..." challenge determines whether to block or allow a visitor within 5 seconds. After passing the challenge, the visitor does not observe another challenge until the duration configured in [**Challenge Passage**](/fundamentals/security/challenge-passage/).
+The "Checking your browser before accessing..." challenge determines whether to block or allow a visitor within five seconds. After passing the challenge, the visitor does not observe another challenge until the duration configured in [**Challenge Passage**](/fundamentals/security/challenge-passage/).
 
 ---
 
 ## Potential issues
 
-The Under Attack mode requires your browser to support JavaScript to display and pass the interstitial page, it is expected to observe impact on third party analytics tools.
+Since the Under Attack mode requires your browser to support JavaScript to display and pass the interstitial page, it is expected to observe impact on third party analytics tools.

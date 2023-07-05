@@ -27,4 +27,4 @@ To disable **BIC** globally for your zone:
 
 To disable **BIC** selectively, you can set up a [firewall skip rule](/waf/custom-rules/skip/). 
 
-Also, use a [Configuration Rule](/rules/configuration-rules/) to selectively enable or disable this feature for certain sections of your website using a filter expression (such as a matching hostname or request url path).
+Also, use a [Configuration Rule](/rules/configuration-rules/) to selectively enable or disable this feature for certain sections of your website using a filter expression (such as a matching hostname or request URL path).

@@ -9,15 +9,14 @@ title: Security Level
 Cloudflare's **Security Level** uses the IP reputation of a visitor to decide whether to present a [Managed Challenge](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended) page. Once the visitor enters the correct Managed Challenge, they receive the appropriate website resources.
 
 {{<Aside type="note">}}
-When [I'm Under Attack mode](/fundamentals/security/under-attack-mode/) is enabled,
-Security Level presents a JS challenge page.
+When [I'm Under Attack mode](/fundamentals/security/under-attack-mode/) is enabled, Security Level presents a JS challenge page.
 {{</Aside>}}
 
 ---
 
 ## Security levels
 
-IP Reputation is calculated based on [Project Honeypot](https://www.projecthoneypot.org/), external public IP information, as well as internal threat intelligence from our [WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) and [DDoS](/ddos-protection/about/).
+IP reputation is calculated based on [Project Honeypot](https://www.projecthoneypot.org/), external public IP information, as well as internal threat intelligence from our [WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) and [DDoS](/ddos-protection/about/).
 
 | Security Level | Threat Scores | Description |
 | --- | --- | --- |
