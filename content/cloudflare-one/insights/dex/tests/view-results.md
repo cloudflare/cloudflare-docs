@@ -51,7 +51,6 @@ To view analytics on a per-device level:
 | Number of hops | Number of routers encountered between the device and the target. |
 | Packet loss | Percentage of IP packets that failed to receive a response. |
 | Availability | Percentage of tests where at least one packet reached the destination. |
-| Network Path Visualization | Round-trip time from the device to a specific hop along the network path. (Only available in [device-level results](#view-results-for-an-individual-device).) <li> **User to Cloudflare ingress**: Packet reaches a Cloudflare data center.  </li> <li> **User to Cloudflare egress**: Packet is ready to exit Cloudflare and head to the target. </li> <li> **User to application**: Packet reaches the target application.  </li> You can select a point on the graph to view details about each hop. |
 
 ## Data retention
 
