@@ -65,7 +65,7 @@ rss: file
       <td>OWASP Rules</td>
       <td>N/A</td>
       <td>...e068f5d3</td>
-      <td>944210: Magic bytes Detected Base64 Encoded, probable java serialization in use</td>
+      <td>944300: Base64 encoded string matched suspicious keyword</td>
       <td>Fixing OWASP Rule ...e068f5d3 : 944300: Base64 encoded string matched suspicious keyword</td>
     </tr>
   </tbody>
