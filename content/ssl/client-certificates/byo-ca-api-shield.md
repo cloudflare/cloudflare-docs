@@ -64,7 +64,7 @@ This is specially useful if you already have mTLS implemented and client certifi
 You can do this [via the dashboard](/api-shield/security/mtls/configure/) or via API, using the [Create firewall rules endpoint](/api/operations/firewall-rules-create-firewall-rules).
 
 ```text
-  "expression": "(http.host in \"<HOSTNAME>\" and not cf.tls_client_auth.cert_verified)", 
+  "expression": "(http.host in {\"<HOSTNAME_1>\" \"<HOSTNAME_2>\"} and not cf.tls_client_auth.cert_verified)", 
   "action": "block"
 ```
 
