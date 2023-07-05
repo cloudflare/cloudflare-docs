@@ -120,7 +120,7 @@ If you are building full-stack applications on Workers, we recommend splitting u
 
 ![Smart Placement and Service Bindings](/images/workers/platform/smart-placement-service-bindings.png)
 
-Enabling Smart Placement on your back-end Worker will invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintatins fast, reactive front-ends while also improving latency when the back-end Worker is called.  
+Enabling Smart Placement on your back-end Worker will invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintains fast, reactive front-ends while also improving latency when the back-end Worker is called.  
 
 ## Give feedback on Smart Placement
 
