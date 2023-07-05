@@ -54,9 +54,12 @@ When Area 1 detects a phishing email, the metadata of the detection can be sent 
 To test your the HTTP Event Collector, you can manually inject an event into Splunk by using the following cURL command:
 
 ```bash
-$ curl https://{host}:8088/services/collector/event \
+curl https://{host}:8088/services/collector/event \
 --header 'Authorization: Splunk <YOUR_TOKEN>' \
---data '{"sourcetype": "<YOUR_SOURCE_TYPE", "event":"Hello, World!"}'
+--data '{
+    "sourcetype": "<YOUR_SOURCE_TYPE",
+    "event":"Hello, World!"
+    }'
 ```
 
 ### Request formats
