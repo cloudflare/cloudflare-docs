@@ -306,7 +306,7 @@ To set up an integration with Upstash:
         }
       }
 
-      return new Response("Hello!");
+      return new Response("Hello What's up!");
     },
   };
   ```
