@@ -21,15 +21,14 @@ Purging by prefix is useful in different scenarios, such as:
 - Simplifying the number of purge calls sent.
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select the appropriate domain.
-3. Select **Caching** > **Configuration**.
-4. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
-5. Under **Purge by**, select **Prefix**.
-6. Follow the syntax instructions.
+2. Select **Caching** > **Configuration**.
+3. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
+4. Under **Purge by**, select **Prefix**.
+5. Follow the syntax instructions.
     - One prefix per line.
     - Maximum 30 prefixes per API call.
-7. Enter the appropriate value(s) in the text field using the format shown in the example.
-8  Select **Purge**.
+6. Enter the appropriate value(s) in the text field using the format shown in the example.
+7. Select **Purge**.
 
 {{<Aside type="note" header="API">}}
 

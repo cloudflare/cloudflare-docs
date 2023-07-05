@@ -6,7 +6,7 @@ weight: 3
 
 # Purge cache by cache-tags (Enterprise only)
 
-Cache-tag purging makes multi-file purging easier because you can bulk purge by adding cache-tags to your assets, such as web pages, image files, and more. Note that Tag, Hostname and Prefix purges are only available for Cloudflare Enterprise.
+Cache-tag purging makes multi-file purging easier because you can bulk purge by adding cache-tags to your assets, such as web pages, image files, and more. Note that Tag, Hostname and Prefix purges are only available for Enterprise customers.
 
 ## General workflow for cache-tags
 
@@ -24,7 +24,7 @@ Be careful when purging. A cache miss can cause execution delays by requiring a 
 
 ## Add Cache-Tag HTTP response headers
 
-You add cache-tags to your web content in Cache-Tag HTTP response headers to allow the client and server to pass additional information in requests or responses. HTTP headers consist of a specific case-insensitive name followed by a colon `:` and the valid value, for example, `Cache-Tag:tag1,tag2,tag3`. Use commas to separate the tags when you want to use multiple cache-tags.
+You add cache-tags to your web content in `Cache-Tag HTTP` response headers to allow the client and server to pass additional information in requests or responses. HTTP headers consist of a specific case-insensitive name followed by a colon `:` and the valid value, for example, `Cache-Tag:tag1,tag2,tag3`. Use commas to separate the tags when you want to use multiple cache-tags.
 
 When your content reaches our edge network, Cloudflare:
 

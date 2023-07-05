@@ -20,7 +20,7 @@ See the example API request below to purge all mobile assets on the root web pag
 
 ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
-    -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY"
+    -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>"
     -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
 ```
 
