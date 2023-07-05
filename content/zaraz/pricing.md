@@ -81,4 +81,4 @@ If you have a high traffic website that generates 20,000,000 Zaraz Loads per mon
 
 ## Already using Zaraz?
 
-If you're already using Zaraz and have questions about how these changes affect you, please visit our[ FAQ page](https://developers.cloudflare.com/zaraz/faq/).
+If you're already using Zaraz and have additional questions, please visit the [FAQ page](/zaraz/faq/).
