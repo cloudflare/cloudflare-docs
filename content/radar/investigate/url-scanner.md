@@ -27,7 +27,7 @@ curl --request POST \
 	}'
 ```
 
-By default, the report will be `Public` and appear in the [recent scan's](https://radar.cloudflare.com/scan#recent-scans) list and in search results. It will also include a single screenshot with desktop resolution.
+By default, the report will have a `Public` visibility level, which means it will appear in the [recent scan's](https://radar.cloudflare.com/scan#recent-scans) list and in search results. It will also include a single screenshot with desktop resolution.
 
 A successful response will have a status code of `200` and be similar to the following:
 
@@ -66,7 +66,7 @@ Here's an example request body with some custom configuration options:
 }
 ```
 
-Above, the visibility level is set as `Unlisted`, which means that the scan report won't be included in the [recent scan's](https://radar.cloudflare.com/scan#recent-scans) list nor in search results. In  effect, only users with knowledge of the scan ID can access it.
+Above, the visibility level is set as `Unlisted`, which means that the scan report won't be included in the [recent scan's](https://radar.cloudflare.com/scan#recent-scans) list nor in search results. In  effect, only users with knowledge of the scan ID will be able to access it.
 
 There will also be 3 screenshots taken of the webpage, one per target device type and the [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) HTTP Header will be set as "My-custom-user-agent". Notice that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 
@@ -79,14 +79,14 @@ While the scan is in progress, the HTTP status code will be `202`, once it's fin
 The response will include, among others, the following top properties in `result.scan`:
 
 - `task` - Information on the scan submission.
-- `page` - Information pertaining to the primary request (for example, response cookies) and the webpage itself (eg. console messages).
+- `page` - Information pertaining to the primary request (for example, response cookies) and the webpage itself (e.g. console messages).
 - `meta` - Meta processors output including detected technologies, categories, rank and others.
 - `ips` - IPs contacted.
 - `asns` - AS Numbers contacted.
 - `geo` - GeoIP information derived from contacted IPs.
 - `domains` - Hostnames contacted, including `dns` record information.
 - `links` - Outgoing links detected in the DOM.
-- `performance` - timings as given by the [`PerformanceNavigationTiming`](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming) interface. 
+- `performance` - Timings as given by the [`PerformanceNavigationTiming`](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming) interface.
 - `certificates` - TLS certificates of HTTP responses.
 - `verdicts` - Verdicts on malicious content.
 
@@ -103,10 +103,10 @@ Of those above, here are some highlights:
 - `meta.processors.tech` - What kind of technologies were detected as being in use by the website, with the help of [Wappalyzer](https://github.com/wappalyzer/wappalyzer).
 - `page.country` - GeoIP country name of the main IP address contacted.
 - `page.cookies` - Cookies set by the page.
-- `page.console` - Javascript console messages
+- `page.console` - JavaScript console messages
 - `page.js.variables` - Non-standard Javascript global variables.
 - `page.securityViolations` - [CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) or [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) violations.
-- `verdicts.overall.malicious` - whether the website was considered, _at the time of the scan_, malicious. Please check remaining properties for each subsystem(s) specific threats detected.
+- `verdicts.overall.malicious` - Whether the website was considered, _at the time of the scan_, malicious. Please check the remaining properties for each subsystem(s) specific threats detected.
 
 Visit `https://developers.cloudflare.com/api/urlscanner-get-scan` for the full response schema.
 
@@ -124,7 +124,9 @@ curl --request GET \
   --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-If you wanted instead, to search for scans which made _any_ request to the hostname `cdnjs.cloudflare.com` - results would include sites that use a javascript library hosted at `cdnjs.cloudflare.com`  - use the query parameter `hostname=cdnjs.cloudflare.com`:
+Search results will also include your _own_ `Unlisted` scans.
+
+If, instead, you wanted to search for scans which made at least one request to the hostname `cdnjs.cloudflare.com` - e.g. sites that use a JavaScript library hosted at `cdnjs.cloudflare.com`  - use the query parameter `hostname=cdnjs.cloudflare.com`:
 
 ```
 curl --request GET \
@@ -132,3 +134,5 @@ curl --request GET \
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer <API_TOKEN>"
 ```
+
+Check `https://developers.cloudflare.com/api/urlscanner-search-scans` for the full list of available options.
