@@ -41,7 +41,7 @@ Enterprise customers can also purchase a subscription for Advanced Certificate M
 
 ## Limitations
 
-Advanced Certificate Manager cannot be used with [Cloudflare Pages](/pages/) due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/). This is because Pages uses Cloudflare for SaaS for Custom Domains.
+Advanced certificates are not used with [Cloudflare Pages](/pages/) nor [R2](/r2/) due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/). Both Pages and R2 custom domains use Cloudflare for SaaS certificates.
 
 {{<render file="_validation-level-intro.md" withParameters="Advanced ceritificates">}}. If your organization needs Organization Validated (OV) or Extended Validation (EV) certificates, refer to [Custom certificates](/ssl/edge-certificates/custom-certificates/).
 <br/>
