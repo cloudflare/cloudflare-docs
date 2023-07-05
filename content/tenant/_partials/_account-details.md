@@ -32,7 +32,7 @@ header: Request
 curl -X GET 'https://api.cloudflare.com/client/v4/tenants/<tenant-tag>/accounts?page=1&per_page=10' \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
+-H 'x-auth-key: <API_KEY>'
 ```
 
 A successful request will return an HTTP status of `200` and a response body containing account information and feature flags for all accounts managed by the Tenant.

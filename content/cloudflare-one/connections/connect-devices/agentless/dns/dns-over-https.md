@@ -155,7 +155,7 @@ highlight: [3, 4, 7]
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
      -H "X-Auth-Email: <EMAIL>" \
      -H "X-Auth-Key: <API_KEY>" \
-     -H "Content-Type: application/json" \
+     -H "Content-Type: application/json"
 ```
 
 If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
@@ -250,8 +250,8 @@ Request a DoH token for the user, using your service token to authenticate into 
 ```bash
 curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \
      -H "Cf-Access-Client-Id: <CLIENT_ID>" \
-     -H "Cf-Access-Client-Secret: <CLIENT_SECRET>"
-     -H "Content-Type: application/json" \
+     -H "Cf-Access-Client-Secret: <CLIENT_SECRET>" \
+     -H "Content-Type: application/json"
 ```
 
 The response contains a unique DoH token associated with the user. This token expires in 24 hours. We recommend setting up a refresh flow for the DoH token instead of generating a new one for every DoH query.
