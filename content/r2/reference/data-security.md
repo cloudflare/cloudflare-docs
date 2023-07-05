@@ -23,7 +23,7 @@ Access over plaintext HTTP (without TLS/SSL) can be disabled by connecting a [cu
 
 {{<Aside type="note">}}
 
-R2 custom domains use Cloudflare fos SaaS certificates and cannot be customized. Even if you have [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/), the advanced certificate will not be used due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
+R2 custom domains use Cloudflare for SaaS certificates and cannot be customized. Even if you have [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/), the advanced certificate will not be used due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
 {{</Aside>}}
 
