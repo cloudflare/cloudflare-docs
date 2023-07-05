@@ -148,7 +148,7 @@ Zaraz pricing is based on two main components: Zaraz Loads and the set of featur
 
 ### What features are included for free, and what features are part of the Workers Paid plan?
 
-The Zaraz Free plan includes a range of features at no cost, while the Workers Paid plan provides additional advanced features. For a comprehensive list of features included in each plan, please visit our[ pricing page](https://developers.cloudflare.com/zaraz/pricing/).
+The Zaraz Free plan includes a range of features at no cost, while the Workers Paid plan provides additional advanced features. For a comprehensive list of features included in each plan, please visit our[ pricing page](/zaraz/pricing/).
 
 ### What is a Zaraz Load?
 
