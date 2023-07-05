@@ -6,7 +6,7 @@ title: Browser Integrity Check
 
 # Browser Integrity Check
 
-Cloudflare's **Browser Integrity Check (BIC)** operates similar to [Bad Behavior](https://bad-behavior.ioerror.us/) and looks for common HTTP headers abused most commonly by spammers and denies access to your page.
+Cloudflare's **Browser Integrity Check (BIC)** looks for common HTTP headers abused most commonly by spammers and denies access to your page.
 
 It also challenges visitors without a user agent or with a non-standard user agent such as commonly used by abusive bots, crawlers, or visitors.
 
