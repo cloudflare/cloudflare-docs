@@ -16,6 +16,6 @@ meta:
 
 Though visitors sometimes encounter this error — or similarly worded messages from Safari, Edge, or Firefox — because of network or local DNS issues, it might point to an issue with your DNS records in Cloudflare.
 
-## Possible solutions
+## Potential solutions
 
 {{<render file="_dns-errors-ts-action.md" withParameters="DNS_PROBE_POSSIBLE">}}
