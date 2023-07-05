@@ -96,7 +96,9 @@ To create a database using the experimental back-end, use `wrangler` and set the
 $ wrangler d1 create <DATABASE_NAME> --experimental-backend
 ```
 
-Note that databases created with the experimental back-end do not currently support back-ups. Support for back-ups is coming soon. Read more about the experimental back-end in the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to-11/).
+Databases created with the experimental back-end do not currently support back-ups. Support for back-ups is coming soon. 
+
+Refer to the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to-11/) to learn more about experimental back-end.
 
 {{ </Aside> }}
 
