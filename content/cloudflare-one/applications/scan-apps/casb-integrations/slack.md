@@ -6,7 +6,7 @@ rss: file
 
 # Slack
 
-The Slack integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Slack Workspace that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Slack;;Slack Workspace">}}
 
 ## Integration prerequisites
 
@@ -27,9 +27,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Slack integration currently scans for the following findings, or security risks.
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Slack;;slack">}}
 
 ### User account settings
 

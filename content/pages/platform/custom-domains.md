@@ -9,7 +9,7 @@ When deploying your Pages project, you may wish to point custom domains (or subd
 
 {{<Aside type="note" header="Purging the cache">}}
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/#purge-everything) in the dashboard to ensure the latest build gets served.
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) in the dashboard to ensure the latest build gets served.
 
 {{</Aside>}}
 
@@ -23,7 +23,7 @@ To add a custom domain:
 4. Select **Set up a domain**.
 5. Provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
 
-![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/platform/media/domains.png)
+![Adding a custom domain for your Pages project through the Cloudflare dashboard](/images/pages/platform/domains.png)
 
 ### Add a custom apex domain
 

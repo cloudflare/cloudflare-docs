@@ -21,7 +21,7 @@ Buy and manage your domain with Cloudflare Registrar, and add an additional laye
  
 ## Features
 
-{{<feature header="DNSSEC" href="/registrar/account-options/enable-dnssec/">}}
+{{<feature header="DNSSEC" href="/registrar/get-started/enable-dnssec/">}}
 Cloudflare Registrar offers one-click DNSSEC activation. DNSSEC secures DNS records with cryptographic signatures, and is free to all Cloudflare customers.
 {{</feature>}}
 

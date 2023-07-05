@@ -28,7 +28,7 @@ For SXGs to be enabled, a CAA record (Certification Authority Authorization) is 
 If your account satisfies all the requirements, follow the steps below to enable SXGs. Be aware that, currently, signed exchanges are only used on Chromium browsers on Android and desktop.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Speed** > **Optimization**.
+2. Go to **Speed** > **Optimization** > **Other**.
 3. Scroll to **Automatic Signed Exchanges (SXGs)** and enable it.
 
 {{<render file="_configuration-rule-promotion.md" productFolder="rules">}}

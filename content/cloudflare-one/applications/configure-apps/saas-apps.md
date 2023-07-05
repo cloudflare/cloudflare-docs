@@ -34,15 +34,9 @@ Obtain the following URLs from your SaaS application account:
 
 7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
-8. (Optional) Turn on **App Launcher visibility** if you want the application to be visible in the [App Launcher](/cloudflare-one/applications/app-launcher/).
-   {{<Aside type="note">}}
-   The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
-   {{</Aside>}}
+8. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-9. (Optional) Add a custom logo for your application by selecting **Custom** and entering a link to your desired image.
-   {{<Aside type="note">}}
-   If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-   {{</Aside>}}
+9. {{<render file="_access-block-page.md">}}
 
 10. Next, choose the **Identity providers** you want to enable for your application.
 

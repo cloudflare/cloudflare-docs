@@ -20,8 +20,8 @@ When you select _Previous 30 minutes_, the **Network Analytics** card will show 
 
 ## Zooming in the chart
 
-To zoom in a specific period, click and drag your mouse on a region of the **Packets summary** (or **Bits summary**) chart. To zoom out, click the **X** icon in the time range selector.
+To zoom in a specific period, select and drag to define a region in the **Packets summary** (or **Bits summary**) chart. To zoom out, select **X** in the time range selector.
 
 ![User zooming in a given period in the Network Analytics traffic chart.](/images/analytics/network-analytics/chart-zoom-in.gif)
 
-The effective resolution goes up when you zoom in and goes down when you zoom out, due to the Adaptive Bit Rate. This means that a big packet burst that lasted a few seconds may look less impactful when analyzing a chart displaying data for 24 hours or more.
+The effective resolution goes up when you zoom in and goes down when you zoom out, due to the [Adaptive Bit Rate](/analytics/network-analytics/understand/concepts/#adaptive-bit-rate-sampling). This means that a big packet burst that lasted a few seconds may look less impactful when analyzing a chart displaying data for 24 hours or more.

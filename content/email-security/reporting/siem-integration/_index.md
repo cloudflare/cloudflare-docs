@@ -2,6 +2,8 @@
 title: SIEM integration
 pcx_content_type: tutorial
 weight: 3
+meta:
+    description: SIEM integrations allow you to view message-level information outside of the dashboard and create your own custom reports.
 ---
 
 # SIEM integration

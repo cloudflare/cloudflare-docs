@@ -9,7 +9,7 @@ meta:
 
 When Area 1 detects a phishing email, the metadata of the detection can be sent directly to Splunk. This document outlines the steps required to integrate with Splunk Cloud.
 
-![A diagram outlining what happens when Area 1 detects a phishing email and sends it to Splunk.](/email-security/static/siem-integration/splunk/open-splunk.png)
+![A diagram outlining what happens when Area 1 detects a phishing email and sends it to Splunk.](/images/email-security/siem-integration/splunk/open-splunk.png)
 
 ## 1. Configure Splunk HTTP Event Collector
 
@@ -17,46 +17,49 @@ When Area 1 detects a phishing email, the metadata of the detection can be sent 
 
 2. Go to **Settings** > **Data inputs**.
 
-    ![Go to Data inputs to configure your settings.](/email-security/static/siem-integration/splunk/step2-data-inputs.png)
+    ![Go to Data inputs to configure your settings.](/images/email-security/siem-integration/splunk/step2-data-inputs.png)
 
 3. In **Local inputs** > **Type**, select **HTTP Event Collector** to access this configuration and create a new collector.
 
-    ![Select HTTP Event Collectors as the type of your collector.](/email-security/static/siem-integration/splunk/step3-type.png)
+    ![Select HTTP Event Collectors as the type of your collector.](/images/email-security/siem-integration/splunk/step3-type.png)
 
 4. Select the **New Token** button to start the configuration.
 
 5. Provide a descriptive name for the Area 1 token (for example, `Area 1 Email Detections`), and leave the **Enable indexer acknowledgement** unchecked.
 
-    ![Enter a descriptive name for your new token, but leave Enable indexer acknowledgement checkbox unchecked.](/email-security/static/siem-integration/splunk/step5-token.png)
+    ![Enter a descriptive name for your new token, but leave Enable indexer acknowledgement checkbox unchecked.](/images/email-security/siem-integration/splunk/step5-token.png)
 
 6. Select **Next** to continue.
 
 7. Configure the Input Settings for the HTTP Event Collector based on your environment.
 
-    ![Configure the Input Settings based on your environment](/email-security/static/siem-integration/splunk/step7-input-settings.png)
+    ![Configure the Input Settings based on your environment](/images/email-security/siem-integration/splunk/step7-input-settings.png)
 
 8. You may also select **Create a new index** to create new settings for Area 1 events, with a **Max Size of Entire Index** and **Retention (days)** that fits your environment. 
 
-    ![Optionally, create a new index for Area 1 events](/email-security/static/siem-integration/splunk/step8-new-index.png)
+    ![Optionally, create a new index for Area 1 events](/images/email-security/siem-integration/splunk/step8-new-index.png)
 
 9. For this example, we created a new `area1_index` index, and added it to the configuration. 
 
-    ![Example of a new index added to the configuration](/email-security/static/siem-integration/splunk/step9-new-index.png)
+    ![Example of a new index added to the configuration](/images/email-security/siem-integration/splunk/step9-new-index.png)
 
 10. Select **Review** > **Submit** to review your settings and create the collector.
 
 11. Take note of the token value in this next screen. This value is required for the Area 1 configuration in the next step. You can also retrieve the token from the HTTP Event Collector configuration panel, in **Settings** > **Data inputs** > **HTTP Event Collector**.
 
-    ![Example of a new index added to the configuration](/email-security/static/siem-integration/splunk/step11-token-value.png)
+    ![Example of a new index added to the configuration](/images/email-security/siem-integration/splunk/step11-token-value.png)
 
 ## 2. Test your HTTP Event Collector
 
 To test your the HTTP Event Collector, you can manually inject an event into Splunk by using the following cURL command:
 
 ```bash
-$ curl https://<HOST>:8088/services/collector/event \
--H 'Authorization: Splunk <YOUR_TOKEN>' \
--d '{"sourcetype": "<YOUR_SOURCE_TYPE", "event":"Hello, World!"}'
+curl https://{host}:8088/services/collector/event \
+--header 'Authorization: Splunk <YOUR_TOKEN>' \
+--data '{
+    "sourcetype": "<YOUR_SOURCE_TYPE",
+    "event":"Hello, World!"
+    }'
 ```
 
 ### Request formats
@@ -85,7 +88,7 @@ If all the requirements are met, you will receive the following response back to
 
 Additionally, you can search your instance of Splunk for the test event with `index` or other search criteria (for example, `index="area1_index"`):
 
-![Example of a new index added to the configuration](/email-security/static/siem-integration/splunk/search-instance.png)
+![Example of a new index added to the configuration](/images/email-security/siem-integration/splunk/search-instance.png)
 
 
 ## 3. Configure Area 1
@@ -102,6 +105,6 @@ The next step is to configure Area 1 to push the Email Detection Event to the Sp
 
 Your Splunk integration will now show up in the All Webhooks panel.
 
-![The All Webhooks section will show your Splunk webhook](/email-security/static/siem-integration/splunk/splunk-webhook-integrations.png)
+![The All Webhooks section will show your Splunk webhook](/images/email-security/siem-integration/splunk/splunk-webhook-integrations.png)
 
 It will take about ten minutes or so for the configuration to fully propagate through the infrastructure of Cloudflare Area 1, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Splunk. 

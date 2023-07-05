@@ -276,9 +276,9 @@ The `[durable_objects]` section has 1 subsection:
 - `bindings` - An array of tables, each table can contain the below fields.
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/workers/platform/environments/) script.
+  - `script_name` - Optional. Defaults to the current [environment's](/workers/wrangler/environments/) script.
 
-If you are using Wrangler [environments](/workers/platform/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. Durable Object bindings are not inherited. For example, an environment named `staging`:
+If you are using Wrangler [environments](/workers/wrangler/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. Durable Object bindings are not inherited. For example, an environment named `staging`:
 
 ```toml
 [env.staging]
@@ -287,7 +287,7 @@ durable_objects.bindings = [
 ]
 ```
 
-Because Wrangler [appends the environment name to the top-level name](/workers/platform/environments/#naming) when publishing, for a Worker named `worker-name` the above example is equivalent to:
+Because Wrangler [appends the environment name to the top-level name](/workers/wrangler/environments/#naming) when publishing, for a Worker named `worker-name` the above example is equivalent to:
 
 ```toml
 [env.staging]
@@ -346,7 +346,7 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
-All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/platform/environments/).
+All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/wrangler/environments/).
 
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 

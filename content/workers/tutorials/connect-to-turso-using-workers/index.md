@@ -298,7 +298,7 @@ With your environment configured and your code ready, you will now test your Wor
 To run a local instance of our Worker (entirely on your machine), run the following command:
 
 ```sh
-$ npx wrangler dev --local
+$ npx wrangler dev
 ```
 
 You should be able to review output similar to the following:

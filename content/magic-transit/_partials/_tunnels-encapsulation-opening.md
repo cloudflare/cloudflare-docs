@@ -110,6 +110,7 @@ This is sometimes referred to as Phase 1 as per IKEv1 language.
   - SHA2-256
 
 - **Diffie-Hellman group**:
+  - DH group 20 (384-bit random)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
