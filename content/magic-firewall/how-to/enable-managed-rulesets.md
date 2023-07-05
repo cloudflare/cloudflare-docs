@@ -43,9 +43,9 @@ The example below contains a request for a Managed phase Managed Kind ruleset.
 ---
 header: Example request - Create a Managed phase Managed Kind ruleset
 ---
-curl POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets"
+curl POST https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
 --data '{
   "name": "execute ruleset",
@@ -85,9 +85,9 @@ Building off the example from the previous step, the example below enables a cat
 ---
 header: Example request - Patch a Managed phase Managed kind ruleset
 ---
-curl --request PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<ROOT_KIND_RULESET>/rules/<ROOT_KIND_RULE>" \
+curl --request PATCH https://api.staging.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
 --data ' {
   "expression": "true",
@@ -121,9 +121,9 @@ To enable the complete ruleset or enable all rules, send the request below.
 ---
 header: Example request to enable all rules
 ---
-curl --request PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<ROOT_KIND_RULESET>/rules/<ROOT_KIND_RULE>" \
+curl --request PATCH https://api.staging.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
 --data ' {
   "expression": "true",
