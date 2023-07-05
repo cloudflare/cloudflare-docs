@@ -96,13 +96,13 @@ To find the KV namespace IDs in the [Cloudflare dashboard](https://dash.cloudfla
 
 ![List namespace IDs](/queues/examples/web-crawler-with-browser-rendering/list-namespace-id.png)
 
-Add a `max_batch_timeout` of sixty seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting Queue messages into a batch, so will remain under this browser invocation limit.
+Add a `max_batch_timeout` of sixty seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting Queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
 Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits. 
 
 Refer to [Worker limits](https://developers.cloudflare.com/workers/platform/limits/#worker-limits) to learn more about usage models.
 ### 5. Add bindings to environment
-Finally, add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the Queue as `Queue<any>` for now: you will change this in the next step.
+Add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the Queue as `Queue<any>`. The following step will show you how to change this type.
 
 ```ts
 ---
