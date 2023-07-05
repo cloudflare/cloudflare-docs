@@ -68,5 +68,5 @@ To disable Page Shield:
 3. Select **Disable Page Shield**.
 
 {{<Aside type="note">}}
-Disabling Page Shield will also disable all [policies](/page-shield/policies/). After reenabling Page Shield, reenable any required policies.
+Disabling Page Shield will also disable all [policies](/page-shield/policies/). After reenabling Page Shield, re-enable any required policies.
 {{</Aside>}}

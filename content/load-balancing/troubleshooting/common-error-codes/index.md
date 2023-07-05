@@ -288,7 +288,7 @@ You will receive this error when you attempt to delete an origin pool that is re
 
 ### Solution
 
-Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [reenable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
 
 ---
 
