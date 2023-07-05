@@ -101,5 +101,5 @@ Any data center not explicitly defined will fall back to using the corresponding
 
 ### Failover behavior
 
-A fallback pool will be used if there is only one pool in the region and it is unavailable.
+A fallback pool will be used if there is only one pool in the same region and it is unavailable.
 If there are multiple pools in the same region, the order of the pools will be respected. For example, if the first pool is unavailable, the second pool will be used.
