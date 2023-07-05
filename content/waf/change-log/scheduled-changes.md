@@ -56,8 +56,8 @@ rss: file
       <td>OWASP Rules</td>
       <td>N/A</td>
       <td>...5ab75703</td>
-      <td>944210: Magic bytes Detected Base64 Encoded, probable java serialization in use</td>
-      <td>Fixing OWASP Rule ...73cd4e53 : 944210: Magic bytes Detected Base64 Encoded, probable java serialization in use</td>
+      <td>944210: Magic bytes Detected Base64 Encoded, probable Java serialization in use</td>
+      <td>Fixing OWASP Rule ...73cd4e53 : 944210: Magic bytes Detected Base64 Encoded, probable Java serialization in use</td>
     </tr>
     <tr>
       <td>2023-07-05</td>
