@@ -67,7 +67,7 @@ The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminat
 
 ![IPsec tunnel values for east and west branches](/images/magic-wan/third-party/aruba-edge-connect/central-west-branch-ipsec.png)
 
-Bellow is an example of the **central_branch** deployment on the Orchestrator.
+Below is an example of the **central_branch** deployment on the Orchestrator.
 
 ![Values for central branch configuration within Orchestrator](/images/magic-wan/third-party/aruba-edge-connect/orchestrator-ipsec.png)
 
