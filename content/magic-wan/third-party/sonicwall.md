@@ -183,7 +183,7 @@ You have to [configure Magic WAN health checks](/magic-wan/how-to/run-tunnel-hea
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_identifier}/magic/ipsec_tunnels/{tunnel_identifier} \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header 'X-Auth-Email: <EMAIL> ' \
 --data '{
     "health_check": {
         "enabled":true,
