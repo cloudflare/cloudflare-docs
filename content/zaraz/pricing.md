@@ -71,7 +71,7 @@ Let's say you have a personal website that generates 80,000 Zaraz Loads per mont
 
 Suppose you have a personal website that generates 150,000 Zaraz Loads per month. Without the Workers Paid plan, Zaraz will function for the first 100,000 Zaraz Loads, but it will be automatically disabled for the remainder of the month once you exceed this limit. If you need Zaraz to continue functioning for the entire month, you would need to upgrade to the Workers Paid plan. Your cost would then be $5/month.
 
-### Example 3: Small Business Website (With Workers Paid plan)
+### Example 3: Small business website with Workers Paid plan
 
 Suppose you have a small business website that generates 250,000 Zaraz Loads per month. Under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you will be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for 50,000 additional Zaraz Loads, which would cost you an extra $25 (`(50,000/1,000) * $0.5`) on top of your monthly plan cost.
 
