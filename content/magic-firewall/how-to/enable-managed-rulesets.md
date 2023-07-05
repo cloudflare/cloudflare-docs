@@ -43,10 +43,10 @@ The example below contains a request for a Managed phase Managed Kind ruleset.
 ---
 header: Example request - Create a Managed phase Managed Kind ruleset
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets"
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
--H "Content-Type:application/json" \
+curl POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets"
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API>' \
+--header "Content-Type:application/json" \
 --data '{
   "name": "execute ruleset",
   "description": "Ruleset containing execute rules",
@@ -58,18 +58,18 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ruleset
       "action": "execute",
       "description": "Enable one rule ",
       "action_parameters": {
-          "id": "<MANAGED_RULESET_ID>",
-          "version": "latest",
-          "overrides": {
-            "rules": [
-              {
-                "id": "<MANAGED_RULE_ID>",
-                "enabled": true,
-                "action": "log"
-              }
-            ]
-          }
+        "id": "<MANAGED_RULESET_ID>",
+        "version": "latest",
+        "overrides": {
+          "rules": [
+            {
+              "id": "<MANAGED_RULE_ID>",
+              "enabled": true,
+              "action": "log"
+            }
+          ]
         }
+      }
     }
   ]
 }'
@@ -85,10 +85,10 @@ Building off the example from the previous step, the example below enables a cat
 ---
 header: Example request - Patch a Managed phase Managed kind ruleset
 ---
-curl -X PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<ROOT_KIND_RULESET>/rules/<ROOT_KIND_RULE>" \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
--H "Content-Type:application/json" \
+curl --request PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<ROOT_KIND_RULESET>/rules/<ROOT_KIND_RULE>" \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API>' \
+--header "Content-Type:application/json" \
 --data ' {
   "expression": "true",
   "action": "execute",
@@ -97,15 +97,15 @@ curl -X PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID
     "version": "latest",
     "overrides": {
       "rules": [
-              {
-                "id": "<MANAGED_RULE_ID>",
-                "enabled": true
-              }
-        ],
-        "categories": [
         {
-           "category": "simple",
-           "enabled": true
+          "id": "<MANAGED_RULE_ID>",
+          "enabled": true
+        }
+      ],
+      "categories": [
+        {
+          "category": "simple",
+          "enabled": true
         }
       ]
     }
@@ -121,10 +121,10 @@ To enable the complete ruleset or enable all rules, send the request below.
 ---
 header: Example request to enable all rules
 ---
-curl -X PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<ROOT_KIND_RULESET>/rules/<ROOT_KIND_RULE>" \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
--H "Content-Type:application/json" \
+curl --request PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<ROOT_KIND_RULESET>/rules/<ROOT_KIND_RULE>" \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API>' \
+--header "Content-Type:application/json" \
 --data ' {
   "expression": "true",
   "action": "execute",
