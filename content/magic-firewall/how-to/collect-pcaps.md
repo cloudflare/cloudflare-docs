@@ -75,7 +75,7 @@ Leave `filter_v1` empty to collect all packets without any filtering.
 ---
 header: Full PCAP example request
 ---
-curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
 --header 'Content-Type: application/json' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
@@ -132,7 +132,7 @@ Leave `filter_v1` to collect all packets without any filtering.
 ---
 header: Simple PCAP example request
 ---
-curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
@@ -201,7 +201,7 @@ header: Simple PCAP example response
 To check the status of a running job, send a request to the endpoint and specify the PCAP identifier. The PCAP identifier is received in the response of a collect request as shown in the previous step.
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id} \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id} \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>'
@@ -274,7 +274,7 @@ To obtain full PCAPs, download the files from the bucket specified in `destinati
 Once the simple PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id}/download \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
@@ -306,7 +306,7 @@ To view a list of sent requests, use the following command:
 ---
 header: List request example
 ---
-curl https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>'
