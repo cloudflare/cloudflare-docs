@@ -100,22 +100,21 @@ Create a `POST` request [using the API](/api/operations/magic-gre-tunnels-create
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
-    "gre_tunnels": [
-      {
-        "name": "<TUNNEL_NAME>",
-        "description": "<TUNNEL_DESCRIPTION>",
-        "interface_address": "<INTERFACE_ADDRESS>",
-        "cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
-        "customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
-      }
-    ]
-  }'
+curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "gre_tunnels": [
+    {
+      "name": "<TUNNEL_NAME>",
+      "description": "<TUNNEL_DESCRIPTION>",
+      "interface_address": "<INTERFACE_ADDRESS>",
+      "cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
+      "customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
+    }
+  ]
+}'
 ```
 
 </div>
@@ -130,22 +129,21 @@ Create a `POST` request [using the API](/api/operations/magic-i-psec-tunnels-cre
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
-    "ipsec_tunnels": [
-      {
-        "name": "<TUNNEL_NAME>", 
-        "description": "<TUNNEL_DESCRIPTION>", 
-        "interface_address": "<INTERFACE_ADDRESS>", 
-        "cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-        "customer_endpoint": "<CUSTOMER_ENDPOINT>"
-      }
-    ]
-  }'
+curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "ipsec_tunnels": [
+    {
+      "name": "<TUNNEL_NAME>", 
+      "description": "<TUNNEL_DESCRIPTION>", 
+      "interface_address": "<INTERFACE_ADDRESS>", 
+      "cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+      "customer_endpoint": "<CUSTOMER_ENDPOINT>"
+    }
+  ]
+}'
 ```
 
 This will generate a response like the following:
@@ -186,10 +184,9 @@ This will generate a response like the following:
 2. Create a `POST` request to generate a PSK. Use the tunnel `id` you received from the previous command (exemplified by `<YOUR_TUNNEL_ID>` above):
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/ipsec_tunnels/<YOUR_TUNNEL_ID>/psk_generate \
-  --header 'X-Auth-Email: <EMAIL>' 
-  --header 'X-Auth-Key: <API_KEY>'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
+--header 'X-Auth-Email: <EMAIL>' 
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 You will receive a response like the following:
