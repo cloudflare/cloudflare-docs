@@ -92,4 +92,4 @@ You can use the same key server for multiple domains.
 
 ## Additional questions
 
-Contact your account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+Contact your account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).

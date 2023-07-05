@@ -36,7 +36,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 
 **Solution:**
 
-Once the new Yandex IP is propagated to our system, the requests won't be blocked any more. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, please contact [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+Once the new Yandex IP is propagated to our system, the requests won't be blocked any more. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 ___
 

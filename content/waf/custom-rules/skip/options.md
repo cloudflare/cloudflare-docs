@@ -44,9 +44,9 @@ The available skip options in custom rules are the following:
     | ------------------------------------------------------------------------------------ | --------------- |
     | [Zone Lockdown](/waf/tools/zone-lockdown/)                                           | `zoneLockdown`  |
     | [User Agent Blocking](/waf/tools/user-agent-blocking/)                               | `uaBlock`       |
-    | [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086)      | `bic`           |
-    | [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026)           | `hot`           |
-    | [Security Level](https://support.cloudflare.com/hc/articles/200170056)               | `securityLevel` |
+    | [Browser Integrity Check](/fundamentals/security/browser-integrity-check/)      | `bic`           |
+    | [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)           | `hot`           |
+    | [Security Level](/fundamentals/security/security-level/)               | `securityLevel` |
     | [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)         | `rateLimit`     |
     | [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/) | `waf`           |
 

@@ -24,7 +24,7 @@ If you disable Universal SSL, you may experience errors with the following scena
 
 - **Other setups**:
 
-  - [Page rules](https://support.cloudflare.com/hc/articles/218411427) that redirect traffic to HTTPS
+  - [Page rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) that redirect traffic to HTTPS
   - HTTP to HTTPS redirects at your origin web server
 
 ## Disable Universal SSL certificate

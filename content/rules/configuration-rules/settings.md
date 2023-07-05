@@ -64,7 +64,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Browser Integrity Check
 
-Enable or disable [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086) [^3] for matching requests.
+Enable or disable [Browser Integrity Check](/fundamentals/security/browser-integrity-check/) [^3] for matching requests.
 
 <details>
 <summary>API information</summary>
@@ -160,7 +160,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Hotlink Protection
 
-Enable or disable [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026) [^7] for matching requests.
+Enable or disable [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) [^7] for matching requests.
 
 <details>
 <summary>API information</summary>
@@ -306,7 +306,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Security Level
 
-Select the [Security Level](https://support.cloudflare.com/hc/articles/200170056) [^13] for matching requests.
+Select the [Security Level](/fundamentals/security/security-level/) [^13] for matching requests.
 
 <details>
 <summary>API information</summary>

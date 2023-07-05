@@ -67,7 +67,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+            "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
@@ -174,7 +174,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200170056",
+            "url_path": "/fundamentals/security/security-level/",
             "link_title": "Customize security level",
             "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
@@ -190,8 +190,7 @@
             "additional_description": "Reduce the number of challenges presented to visitors using the <strong>Privacy Pass</strong> browser extension."
           },
           {
-            "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200170086",
+            "url_path": "/fundamentals/security/browser-integrity-check/",
             "link_title": "Browser Integrity Check",
             "additional_description": "Browser Integrity Check evaluates incoming HTTP headers based on known threats — such as requests with a missing or non-standard user agent — and present a challenge page if needed."
           },
