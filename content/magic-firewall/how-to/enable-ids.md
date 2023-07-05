@@ -49,7 +49,8 @@ Use the rule created in the previous step to enable or disable IDS. The Rulesets
 For example, the following patch request to set the `enabled` field to `false` will disable IDS. The ruleset and rule ID from the ruleset created in the previous step are used below.
 
 ```bash
-curl --request PATCH https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_ruleset_id}/rules/{rule_id} \
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_ruleset_id}/rules/{rule_id} \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \

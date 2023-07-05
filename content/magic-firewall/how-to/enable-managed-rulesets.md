@@ -122,7 +122,8 @@ To enable the complete ruleset or enable all rules, send the request below.
 ---
 header: Example request to enable all rules
 ---
-curl --request PATCH https://api.staging.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
+curl --request PATCH \
+https://api.staging.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
