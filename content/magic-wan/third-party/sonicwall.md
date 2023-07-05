@@ -68,7 +68,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 </div>
 
-5. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can use the settings in the examples bellow.
+5. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization’s preferred security policy. As an example, you can use the settings in the examples below.
 6. In the **IKE (Phase 1) Proposal** group, select the following settings:
     - **Exchange**: _IKEv2 Mode_
     - **DH Group**: _Group 14_
