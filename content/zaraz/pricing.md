@@ -67,7 +67,7 @@ To help you understand how the new pricing works, let's consider a few examples:
 
 Let's say you have a personal website that generates 80,000 Zaraz Loads per month. Without the Workers Paid plan, you can use Zaraz for free because you are within the 100,000 Zaraz Loads limit. You also have access to features like Auto-injection, Zaraz Debugger, Zaraz Track, Zaraz Set, and Zaraz Monitoring. If you need to use one of the features exclusive to the Workers Paid plan, you would need to upgrade to that plan. However, if you do not need any of the paid features, you can take advantage of the Free plan with no extra charge.
 
-### Example 2: High Traffic Personal Website (Without Workers Paid plan)
+### Example 2: High traffic personal website without Workers Paid plan
 
 Suppose you have a personal website that generates 150,000 Zaraz Loads per month. Without the Workers Paid plan, Zaraz will function for the first 100,000 Zaraz Loads, but it will be automatically disabled for the remainder of the month once you exceed this limit. If you need Zaraz to continue functioning for the entire month, you would need to upgrade to the Workers Paid plan. Your cost would then be $5/month.
 
