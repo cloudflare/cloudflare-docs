@@ -97,7 +97,7 @@ Validate the bucket by inserting the copied text in the `ownership_text` below:
 ```bash
 ---
 header: Bucket validation example
-----
+---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership/validate \
 --header 'Content-Type: application/json' \
 --header "X-Auth-Email: <EMAIL>" \

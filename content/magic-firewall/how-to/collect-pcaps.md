@@ -87,7 +87,8 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
   "type": "full",
   "colo": "ORD",
   "system": "magic-transit",
-  "destination_conf": "${bucket}"}'
+  "destination_conf": "${bucket}"
+  }'
 ```
 
 While the collection is in progress, the response returns the `status` field as `pending`. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status changes to `success`.
@@ -179,6 +180,7 @@ header: Simple PCAP example response
   "messages": []
 }
 ```
+
 </div>
 </details>
 

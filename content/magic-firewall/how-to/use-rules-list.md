@@ -21,7 +21,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
     "name":"iplist",
     "description":"This contains IPs that should be allowed.",
     "kind":"ip"
-    }'
+}'
 ```
 
 ## Add IPs to the List

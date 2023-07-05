@@ -43,7 +43,7 @@ The example below contains a request for a Managed phase Managed Kind ruleset.
 ---
 header: Example request - Create a Managed phase Managed Kind ruleset
 ---
-curl POST https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
