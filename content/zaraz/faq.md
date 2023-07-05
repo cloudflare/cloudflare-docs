@@ -167,7 +167,7 @@ The Monitoring page in the dashboard provides insight into the number of Zaraz L
 
 ### How can I upgrade from the Free plan to the Workers Paid plan?
 
-To upgrade from the Free plan to the Workers Paid plan, you can visit the[ Zaraz Plans](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/plans) page on the Cloudflare dashboard. From there, you can choose the Workers Paid plan and follow the prompts to complete the upgrade process. If you encounter any issues or have further questions, please reach out to our support team for assistance.
+To upgrade from the Free plan to the Workers Paid plan, you can visit the Zaraz Plans page on the Cloudflare dashboard. From there, you can choose the Workers Paid plan and follow the prompts to complete the upgrade process. If you encounter any issues or have further questions, please reach out to our support team for assistance.
 
 ### I was using Zaraz during its beta phase. How does the transition to general availability affect me?
 
