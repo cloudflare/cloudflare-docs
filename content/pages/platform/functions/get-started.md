@@ -6,7 +6,7 @@ weight: 1
 
 # Get started
 
-This guide will instruct you on creating and deploying a Pages Function.
+This guide will instruct you on creating and deploying a Pages Function. With some frameworks, such as Sveltekit, this approach will not work. Instead, Functions should be implemented as server endpoints in your SvelteKit app. For example, see https://kit.svelte.dev/docs/adapter-cloudflare#bindings
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ You must have a Pages project set up on your local machine or deployed on the Cl
 
 ## Create a Function
 
-To get started with generating a Pages Function, create a `/functions` directory at the root of your Pages project.
+To get started with generating a Pages Function, create a `/functions` directory at the root of your Pages project. 
 
 {{<Aside type="note" header="Advanced mode">}}
 
