@@ -199,7 +199,7 @@ Now let’s **create a route 53 domain** for the cluster. Kops uses DNS for di
 $ aws route53 create-hosted-zone --name k8saws.usualwebsite.com --caller-reference 1
 ```
 
-It will automatically create four name server (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
+It will automatically create four nameserver (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
 
 As Authoritative DNS for my domain usualwebsite.com I am using Cloudflare DNS. Just simply [add four NS records](/dns/manage-dns-records/how-to/create-dns-records/) under your DNS provider.
 

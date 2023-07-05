@@ -16,19 +16,14 @@ Whitespace is used in our blog posts and product content. For the sake of consis
     <th>Example</th>
   </tr>
   <tr>
-    <td>Nameserver</td>
-    <td>Name servers</td>
+    <td>nameserver</td>
+    <td>name servers</td>
     <td>Change your nameservers to Cloudflare's.</td>
   </tr>
   <tr>
-    <td>Hostname</td>
+    <td>hostname</td>
     <td>host name</td>
     <td>Add a *. SAN (wildcard) to the custom hostname certificate.</td>
-  </tr>
-  <tr>
-    <td>Nameserver</td>
-    <td>Name servers</td>
-    <td>Change your nameservers to Cloudflare's.</td>
   </tr>
   <tr>
     <td>data center</td>
@@ -50,7 +45,7 @@ See these examples:
 
 Now you can **set up** Centrify, OneLogin, and other identity providers with Cloudflare Access.
 
-Learn how to start using SSO to **log in** to the Cloudflare dashboard. 
+Learn how to start using SSO to **log in** to the Cloudflare dashboard.
 
 Make sure to **back up** your data.
 
@@ -62,7 +57,7 @@ Share an account without sharing a **login**.
 
 This allows you to restore your data from the **backup**.
 
-## Hyphenation 
+## Hyphenation
 
 Certain expressions should be hyphenated depending on their position and role in the sentence.
 
