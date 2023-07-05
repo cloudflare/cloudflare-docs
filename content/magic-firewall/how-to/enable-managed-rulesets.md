@@ -44,7 +44,7 @@ The example below contains a request for a Managed phase Managed Kind ruleset.
 header: Example request - Create a Managed phase Managed Kind ruleset
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
 --data '{
@@ -87,7 +87,7 @@ header: Example request - Patch a Managed phase Managed kind ruleset
 ---
 curl --request PATCH \
 https://api.staging.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
 --data ' {
@@ -124,7 +124,7 @@ header: Example request to enable all rules
 ---
 curl --request PATCH \
 https://api.staging.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
 --data ' {

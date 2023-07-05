@@ -19,7 +19,7 @@ Next, create a root ruleset with a single rule in the `magic_transit_ids_managed
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
   "name": "IDS Execute ruleset",
@@ -52,7 +52,7 @@ For example, the following patch request to set the `enabled` field to `false` w
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_ruleset_id}/rules/{rule_id} \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
   "enabled": false,

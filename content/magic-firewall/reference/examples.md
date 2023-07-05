@@ -23,7 +23,7 @@ The example below blocks all tcp ports, but allows one port (8080) by using the 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
     "name": "Example ruleset",
@@ -53,7 +53,7 @@ The example below blocks all packets with a source or destination IP address com
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
     "name": "Example ruleset",
@@ -84,7 +84,7 @@ Magic Firewall supports [using lists in expressions](/fundamentals/global-config
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
     "name": "Example ruleset",

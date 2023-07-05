@@ -15,7 +15,7 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --request POST \
 --data '{
@@ -29,7 +29,7 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --request POST \
 --data '{
@@ -47,7 +47,7 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --request POST \
 --data '{
@@ -61,7 +61,7 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --request POST \
 --data '{
@@ -77,7 +77,7 @@ Use the examples below to filter out fields that are not relevant to traffic flo
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --request POST \
 --data '{

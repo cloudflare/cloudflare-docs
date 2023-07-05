@@ -15,7 +15,7 @@ To use this feature first [create a new IP list](/api/operations/lists-create-a-
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
     "name":"iplist",
@@ -31,7 +31,7 @@ Next [create list items](/api/operations/lists-create-list-items). This will add
 ```bash
 curl POST https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '[
     {"ip":"10.0.0.1"},
@@ -46,7 +46,7 @@ Finally add a Magic Firewall rule referencing the List into an existing ruleset:
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
     "action": "skip",
