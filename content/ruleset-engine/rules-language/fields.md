@@ -59,7 +59,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-http-host">
       <td valign="top"><code>http.host</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         <p>Represents the host name used in the full request URI.
+         <p>Represents the hostname used in the full request URI.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">www.example.org</code>

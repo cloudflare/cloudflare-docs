@@ -14,7 +14,7 @@ Here are some tips when creating tables:
 + Avoid merged cells. When cells are merged, it impacts how a screen reader navigates the page.
 + Avoid too much text.
 + Aim for parallelism within the column.
-+ Keep tables as simple and as small as possible. 
++ Keep tables as simple and as small as possible.
 
 ## When to use tables
 
@@ -31,7 +31,7 @@ Do not use tables to format a page.
 
 ## Markdown examples
 
-**Add a table** 
+**Add a table**
 
 To add a table, use three or more hyphens (---) to create each column’s header, and use pipes (|) to separate each column. For compatibility, you should also add a pipe on either end of the row.
 
@@ -49,7 +49,7 @@ The rendered output looks like this:
 | Header      | Title       |
 | Paragraph   | Text        |
 
- Tip: Creating tables with hyphens and pipes can be tedious. To speed up the process, try using the [Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables). 
+ Tip: Creating tables with hyphens and pipes can be tedious. To speed up the process, try using the [Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables).
 
 ## Alignment
 
@@ -71,7 +71,7 @@ The rendered output looks like this:
 
 ## Formatting text in tables
 
-You can format the text within tables. For example, you can add links, code, and emphasis. 
+You can format the text within tables. For example, you can add links, code, and emphasis.
 
 You can’t add headings, blockquotes, lists, horizontal rules, images, or HTML tags.
 
@@ -103,7 +103,7 @@ For complex tables, consider using HTML. The following example is created with H
    <tr>
       <td valign="top"><code>http.host</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         <p>Represents the host name used in the full request URI.
+         <p>Represents the hostname used in the full request URI.
          </p>
          <p>Example value:
          <br /><code>www.example.org</code>
