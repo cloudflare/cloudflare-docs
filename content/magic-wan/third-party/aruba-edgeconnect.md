@@ -43,7 +43,7 @@ There are 2 branch offices each with distinct subnets.
 
 Below is an example of the **east_branch** deployment on the Orchestrator.
 
-![GCP East deployment configuraiton](/images/magic-wan/third-party/aruba-edge-connect/east-branch-deployment.png)
+![GCP East deployment configuration](/images/magic-wan/third-party/aruba-edge-connect/east-branch-deployment.png)
 
 The Deployment screenshot displays several different IP addresses and interfaces. From left to right:
 - **Next Hop 10.3.0.1**  - This example uses Google Cloud. This IP defines the default gateway IP for the subnet and is built into GCP. 
@@ -67,7 +67,7 @@ The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminat
 
 ![IPsec tunnel values for east and west branches](/images/magic-wan/third-party/aruba-edge-connect/central-west-branch-ipsec.png)
 
-Below is an example of the **central_branch** deployment on the Orchestrator.
+Bellow is an example of the **central_branch** deployment on the Orchestrator.
 
 ![Values for central branch configuration within Orchestrator](/images/magic-wan/third-party/aruba-edge-connect/orchestrator-ipsec.png)
 
