@@ -79,6 +79,6 @@ Suppose you have a small business website that generates 250,000 Zaraz Loads per
 
 If you have a high traffic website that generates 20,000,000 Zaraz Loads per month, under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you would be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for an additional 19,800,000 Zaraz Loads, which would cost you an extra $9,900 (`(19,800,000/1,000) * $0.5`) on top of your monthly plan cost. However, with such high usage, it would likely be more beneficial to consider the Workers Enterprise plan. For a custom quote tailored to your specific needs, please contact our sales team.
 
-## Already Using Zaraz?
+## Already using Zaraz?
 
 If you're already using Zaraz and have questions about how these changes affect you, please visit our[ FAQ page](https://developers.cloudflare.com/zaraz/faq/).
