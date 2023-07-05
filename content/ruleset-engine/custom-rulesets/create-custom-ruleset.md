@@ -15,13 +15,14 @@ Use the [Create an account ruleset](/api/operations/createAccountRuleset) API op
 
 The following request creates a new custom ruleset:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "Custom Ruleset 1",
   "description": "My First Custom Ruleset",
   "kind": "custom",

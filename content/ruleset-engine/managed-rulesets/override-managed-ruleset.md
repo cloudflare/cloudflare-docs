@@ -81,11 +81,12 @@ The following request adds a rule that executes a managed ruleset in the `http_r
 <summary>Example: Execute a managed ruleset with overrides in a phase at the zone level</summary>
 <div>
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Deploy managed ruleset, enabling a specific rule with log action",
   "rules": [
     {
@@ -117,11 +118,12 @@ The following request adds a rule that executes a managed ruleset in the `http_r
 <summary>Example: Execute a managed ruleset with overrides in a phase at the account level</summary>
 <div>
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Deploy managed ruleset for example.com, overriding the rules action to log",
   "rules": [
     {
