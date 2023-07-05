@@ -54,7 +54,7 @@ If you wanted to set the Security level more selectively:
 ## Recommendations
 
 To prevent bot IPs from attacking a website:
-- A new website owner might set a _Medium_ or _High_ **Security Level** and lower [**Challenge Passage**](/fundamentals/security/challenge-passage/) to _5_ to _30_ minutes to ensure that Cloudflare is constantly protecting the site.
+- A new website owner might set a _Medium_ or _High_ **Security Level** and lower [**Challenge Passage**](/fundamentals/security/challenge-passage/) to a value below **30 minutes** to ensure that Cloudflare is constantly protecting the site.
 - An experienced website administrator confident in their security settings might set **Security Level** to _Essentially Off_ or _Low_ while setting a higher [**Challenge Passage**](/fundamentals/security/challenge-passage/) for a week, month, or even year to provide a less obtrusive visitor experience.
 
 Only use [**I'm Under Attack!**](/fundamentals/security/under-attack-mode/) mode when a website is under a DDoS attack. **I'm Under Attack!** mode may affect some actions on your domain, such as your API traffic.  Set a custom **Security Level** for your API or any other part of your domain by creating a [Configuration Rule](/rules/configuration-rules/) for that portion of your site traffic.
