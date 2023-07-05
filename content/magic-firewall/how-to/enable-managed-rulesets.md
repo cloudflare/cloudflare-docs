@@ -85,7 +85,8 @@ Building off the example from the previous step, the example below enables a cat
 ---
 header: Example request - Patch a Managed phase Managed kind ruleset
 ---
-curl --request PATCH https://api.staging.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
+curl --request PATCH \
+https://api.staging.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --header "Content-Type:application/json" \
