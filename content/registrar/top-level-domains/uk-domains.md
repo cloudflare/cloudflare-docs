@@ -1,25 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Transfer a .UK domain to Cloudflare
+title: .UK domains
 weight: 3
 meta:
-    title: Learn how to transfer a .UK domain to Cloudflare.
+    title: Learn how to manage a .UK domain with Cloudflare.
 ---
 
-# Transfer a .UK domain to Cloudflare
-
-{{<render file="_requirements.md">}}
-
----
-
-## Prerequisites
-
-- The domain must not be locked or suspended.
-- There must be an active zone [for the domain](/fundamentals/get-started/setup/add-site/) in your Cloudflare account.
-- The domain must have [Cloudflare nameservers](/dns/zone-setups/full-setup/).
-- The domain must not be expiring within the next 10 days.
-
----
+# .UK domains
 
 ## How to transfer a .UK domain to Cloudflare
 
@@ -40,9 +27,19 @@ For security reasons, domains transferred to Cloudflare Registrar are locked for
 
 {{</Aside>}}
 
-## Possible reasons a transfer may fail or be rejected
+## Transfer a .UK domain to another registrar
 
-- The domain is locked or suspended.
-- The nameservers were updated after the checkout process.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Domain Registration** > **Manage Domains**.
+3. Find the domain you want to transfer, and select **Manage**.
+4. Select **Configuration** > **Unlock**.
+5. Enter the IPS tag of the registrar you wish to transfer to.
 
-{{<render file="_next-steps.md">}}
+Your new registrar is responsible for accepting the transfer. Cloudflare has no visibility into why a transfer might not be accepted by the new registrar.
+
+{{<Aside type="note">}}
+
+If you do not know the IPS tag, contact your new registrar for instructions. Your new registrar may require you to follow some additional steps before starting the transfer process.
+
+{{</Aside>}}
+

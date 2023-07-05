@@ -5483,6 +5483,10 @@ pre {
   background: #f5f5f5 !important;
 }
 
+[theme="dark"] .mermaid {
+  background: #222222 !important;
+}
+
 .RSS svg {
   opacity: 0.7;
 }

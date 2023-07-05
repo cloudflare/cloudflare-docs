@@ -242,7 +242,7 @@ mTLS is a common security practice that uses client TLS certificates to provide 
 
 ## nameserver
 
-A nameserver is a dedicated server that translates human readable host names into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
+A nameserver is a dedicated server that translates human readable hostnames into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
 
 **Related terms:** DNS
 
@@ -330,7 +330,7 @@ Static content is website content that can be delivered to an end user directly 
 
 ## Subject Alternative Name (SAN)
 
-The SAN field of an SSL certificate specifies additional host names (sites, IP addresses, common names, subdomains, root domains, etc.) protected by a single SSL Certificate.
+The SAN field of an SSL certificate specifies additional hostnames (sites, IP addresses, common names, subdomains, root domains, etc.) protected by a single SSL Certificate.
 
 ## subscription, add-on, or plan extension
 

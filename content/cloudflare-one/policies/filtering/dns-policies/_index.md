@@ -115,7 +115,7 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 ### Authoritative Nameserver IP
 
-Use this selector to match against the IP address of the authoritative name server IP address.
+Use this selector to match against the IP address of the authoritative nameserver IP address.
 
 | UI name                     | API example                                |
 | --------------------------- | ------------------------------------------ |

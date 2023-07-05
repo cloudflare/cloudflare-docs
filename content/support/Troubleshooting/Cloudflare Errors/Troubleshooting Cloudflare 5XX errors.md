@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 title: Troubleshooting Cloudflare 5XX errors
-source: 
+source:
 ---
 
 # Troubleshooting Cloudflare 5XX errors – Cloudflare Help Center
@@ -33,7 +33,7 @@ However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in
 
 1.  Your domain name
 2.  The time and timezone of the 500 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 500 error was observed (replace _www.example.com_ with your actual domain and host name)
+3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 500 error was observed (replace _www.example.com_ with your actual domain and hostname)
 
 {{<Aside type="note">}}
 If you observe blank or white pages when visiting your website, confirm
@@ -81,7 +81,7 @@ To avoid delays processing your inquiry, provide these required details to [Clo
 
 1.  Time and timezone the issue occurred.
 2.  URL that resulted in the HTTP 502 or 504 response (for example: _https://www.example.com/images/icons/image1.png_)
-3.  Output from browsing to _www.example.com/cdn-cgi/trace_ (replace _www.example.com_ with the domain and host name that caused the HTTP 502 or 504 error)
+3.  Output from browsing to _www.example.com/cdn-cgi/trace_ (replace _www.example.com_ with the domain and hostname that caused the HTTP 502 or 504 error)
 
 ___
 
@@ -95,11 +95,11 @@ HTTP error 503 occurs when your origin web server is overloaded. There are two p
 
 -   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
 
-**Resolution**: A connectivity issue occured in a Cloudflare data center. Provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
+**Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
 
 1.  Your domain name
 2.  The time and timezone of the 503 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 503 error was observed (replace _www.example.com_ with your actual domain and host name)
+3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 503 error was observed (replace _www.example.com_ with your actual domain and hostname)
 
 ___
 

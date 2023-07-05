@@ -45,7 +45,7 @@ If you're seeing a 403 response that contains Cloudflare branding in the respon
 -   Basic Protection level challenges
 -   Most 1xxx Cloudflare error codes
 -   The Browser Integrity Check
--   If you're attempting to access a second level of subdomains (eg-`*.*.example.com`) through Cloudflare using the Cloudflare-issued certificate, a HTTP 403 error will be seen in the browser as these host names are not present on the certificate.
+-   If you're attempting to access a second level of subdomains (eg-`*.*.example.com`) through Cloudflare using the Cloudflare-issued certificate, a HTTP 403 error will be seen in the browser as these hostnames are not present on the certificate.
 
 ### **404 Not Found (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 

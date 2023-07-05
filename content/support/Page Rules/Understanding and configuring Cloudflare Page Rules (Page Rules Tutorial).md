@@ -10,6 +10,21 @@ You can define a page rule to trigger one or more actions whenever a certain URL
 
 {{<Aside type="warning">}}
 Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules won't apply to hostnames that don't exist in DNS or aren't being directed to Cloudflare.
+
+Depending on the record type, you can use different values for the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
+
+```
+www.example.com  A      192.0.2.1
+www.example.com  AAAA   2001:DB8::1
+www.example.com  CNAME  domain.example
+```
+
+We recommend only using reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure.
+
+For more information on reserved IP addresses or top level domains, please refer to these RFCs:
+[RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)
+[RFC 3849](https://datatracker.ietf.org/doc/html/rfc3849)
+[RFC 2606](https://datatracker.ietf.org/doc/html/rfc2606)
 {{</Aside>}}
 
 The default number of allowed page rules depends on the domain plan as shown below.
@@ -166,7 +181,7 @@ Below is the full list of settings available, presented in the order that they a
 
 | **Setting** | **Description** | **Plans** |
 | --- | --- | --- |
-| [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) |  Turn on or off the **Always Use HTTPS** feature. If enabled, any `http://` URL is converted to `https://` through a 301 redirect.<br/><br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
+| [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) | Enable **Always Use HTTPS** feature. If enabled, any `http://` URL is converted to `https://` through a 301 redirect.<br/><br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
 | [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) | Indicate which file extensions to minify automatically.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) | Turn on or off **Automatic HTTPS Rewrites**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) | Control how long resources cached by client browsers remain valid. The Cloudflare UI and API both prohibit setting **Browser Cache TTL** to _0_ for non-Enterprise domains. | All |

@@ -1,30 +1,14 @@
 ---
-pcx_content_type: reference
-title: Top Level Domains supported
+pcx_content_type: how-to
+title: .US domains
 weight: 3
+meta:
+    title: Learn how to manage a .US domain with Cloudflare.
 ---
 
-# Top Level Domains supported
+# .US domains
 
-Cloudflare supports over 200 top-level domains (TLDs)[^1] and is always evaluating adding new TLDs.
-
-You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). If you want to register a `.us` domain refer to  [Additional requirements for .US domains](#additional-requirements-for-us-domains).
-
-## Domain availability
-
-During your [TLD registration process](/registrar/get-started/register-domain/#how-to-register-a-new-domain), Cloudflare Registrar will inform you if the TLD you are looking for is available to register. If it does not appear in your search list, this means that TLD is not available for registration.
-
-Possible causes for the domain not being available include:
-
-* Someone else owns that domain.
-* It is a premium domain, that is, one with non-standard pricing, which Cloudflare Registrar does not support.
-* It is an Internationalized Domain Name (IDN) which Cloudflare Registrar does not support. These domains include international characters (such as `á`, `ü`, among others).
-
-## Transfer a domain
-
-When transferring a domain to Cloudflare Registrar, refer to [Restrictions](/registrar/get-started/transfer-domain-to-cloudflare/#restrictions) for a full list of aspects to consider before starting the transfer.
-
-## Additional requirements for .US domains
+## Registration requirements for .US domains
 
 If you want to register a `.us` domain, you must have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:
 

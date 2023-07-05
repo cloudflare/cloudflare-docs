@@ -88,7 +88,7 @@ curl -X GET
 -H "X-Auth-Key: 3xamp1ek3y1234" 
 ```
 
-To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/#purge-varied-images).
+To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/purge-varied-images/).
 
 ## Limitations
 
