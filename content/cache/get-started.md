@@ -62,12 +62,12 @@ These code alterations only occur on the cacheable objects found at Cloudflare's
 
 Review the list of Cloudflare features that function in this manner.
 
-- [Auto Minify](https://support.cloudflare.com/hc/articles/200168196)
+- [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/)
 - [Rocket Loader](/fundamentals/speed/rocket-loader/)
 - [Polish](/images/polish/)
-- [Mirage](https://support.cloudflare.com/hc/articles/219178057)
-- [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026)
-- [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016)
+- [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/)
+- [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)
+- [Email address obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
 - [Bot Management Javascript Detections](/bots/reference/javascript-detections/)
 
 ## Troubleshoot
@@ -75,5 +75,5 @@ Review the list of Cloudflare features that function in this manner.
 Resolve common caching concerns.
 
 - [Learn about Cloudflare's cache response statuses](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses)
-- [Investigate Cloudflare's cache response with cURL](https://support.cloudflare.com/hc/articles/203118044#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)
+- [Investigate Cloudflare's cache response with cURL](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl)
 - [Diagnose Always Online issues](/cache/troubleshooting/always-online/)

@@ -13,4 +13,4 @@ Some specific API calls have their own limits and are documented separately, suc
 - [Cache Purge APIs](/api/operations/zone-purge)
 - [GraphQL APIs](/analytics/graphql-api/limits/)
 
-Enterprise customers can also [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to raise the limit to a higher value.
+Enterprise customers can also [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to raise the limit to a higher value.
