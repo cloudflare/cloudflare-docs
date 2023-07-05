@@ -95,7 +95,7 @@ HTTP error 503 occurs when your origin web server is overloaded. There are two p
 
 -   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
 
-**Resolution**: A connectivity issue occured in a Cloudflare data center. Provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
+**Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
 
 1.  Your domain name
 2.  The time and timezone of the 503 error occurrence
