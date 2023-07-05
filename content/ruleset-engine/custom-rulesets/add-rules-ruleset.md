@@ -21,14 +21,15 @@ You can use other API operations depending on the type of operation:
 
 The following request adds two rules to a custom ruleset. These will be the only two rules in the ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<CUSTOM_RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
@@ -93,14 +94,15 @@ To update one or more rules in a custom ruleset, use the [Update an account rule
 
 The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "id": "<CUSTOM_RULE_ID_2>",

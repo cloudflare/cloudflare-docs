@@ -26,11 +26,12 @@ This example uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) ope
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>
 <div>
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -53,7 +54,7 @@ curl -X PUT \
 }'
 ```
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`<ZONE_ID>`).
+*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone_id}`).
 *   `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
 *   `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
@@ -64,15 +65,16 @@ curl -X PUT \
 <summary>Example: Enable only Joomla rules using category overrides at the account level</summary>
 <div>
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\"",
+      "expression": "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\"",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
@@ -108,11 +110,12 @@ This example uses a `PUT` request to add two overrides to the rule that executes
 <summary>Example: Add more than one category override at the zone level</summary>
 <div>
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -146,15 +149,16 @@ curl -X PUT \
 <summary>Example: Add more than one category override at the account level</summary>
 <div>
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/account/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\"",
+      "expression": "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\"",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {

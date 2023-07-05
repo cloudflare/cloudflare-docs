@@ -39,7 +39,7 @@ header: Request
 ---
 curl -X GET https://api.cloudflare.com/client/v4/accounts \
 -H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
+-H 'x-auth-key: <API_KEY>'
 ```
 
 ```json
@@ -92,7 +92,7 @@ header: Request
 ---
 curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID> \
 -H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
+-H 'x-auth-key: <API_KEY>'
 ```
 
 A successful request will return the id to confirm the operation:
