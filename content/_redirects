@@ -600,6 +600,7 @@
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
+/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/ /ssl/troubleshooting/general-ssl-errors/ 301
 
 # cloudflare for saas
 /ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/custom-hostnames/ 301

@@ -26,7 +26,7 @@ Make sure that your redirects within Cloudflare are not forwarding traffic to UR
 
 ## Step 2 — Rewrite HTTP URLs
 
-If your application contains links or references to HTTP URLs, your visitors might see [mixed content errors](https://support.cloudflare.com/hc/articles/200170476) when accessing an HTTPS page.
+If your application contains links or references to HTTP URLs, your visitors might see [mixed content errors](/ssl/troubleshooting/mixed-content-errors/) when accessing an HTTPS page.
 
 To avoid these issues, enable [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) and pay attention to which HTTP requests are still reaching your origin server.
 

@@ -1,12 +1,12 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170566-Troubleshooting-SSL-errors
-title: Troubleshooting SSL errors
+title: General SSL errors
 meta:
     description: Learn how to troubleshoot various SSL/TLS errors with Cloudflare.
 ---
 
-# Troubleshooting SSL errors
+# General SSL errors
 
 ## Outdated browsers
 
