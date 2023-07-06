@@ -286,7 +286,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Rocket Loader
 
-Enable or disable [Rocket Loader](/fundamentals/speed/rocket-loader/) [^12] for matching requests.
+Enable or disable [Rocket Loader](/speed/rocket-loader/) [^12] for matching requests.
 
 <details>
 <summary>API information</summary>
@@ -386,7 +386,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## SXG
 
-Enable or disable [Signed Exchanges (SXG)](/fundamentals/speed/signed-exchanges/) [^16] for matching requests.
+Enable or disable [Signed Exchanges (SXG)](/speed/signed-exchanges/) [^16] for matching requests.
 
 <details>
 <summary>API information</summary>

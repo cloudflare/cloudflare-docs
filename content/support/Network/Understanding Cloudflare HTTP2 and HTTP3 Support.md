@@ -14,6 +14,8 @@ To determine the protocol used for your connection, enter `example.com/cdn-cgi/t
 
 ___
 
+## HTTP/2
+
 HTTP/2 uses the TCP transport protocol and TLS to secure communications. It improves page load times via:
 
 -   Request and response multiplexing - A single network connection can be used to fetch multiple resources. Responses are prioritized to ensure important assets are sent first, which impreoves page rendering times.
@@ -27,7 +29,7 @@ ___
 
 ## HTTP/3
 
-HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better. Enable HTTP/3 via the Cloudflare **Speed** > **Optimization** > **Protocol Optimization**. 
+HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better. Enable HTTP/3 via the Cloudflare **Speed** > **Optimization** > **Protocol Optimization**.
 
 For more information, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/performance/what-is-http3/).
 
