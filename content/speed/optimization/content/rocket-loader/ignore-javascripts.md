@@ -25,6 +25,6 @@ If Rocket Loader is only impacting a specific page, use a [Configuration Rule](/
 ## Limitations
 
 - Adding this attribute within JavaScript will not work if you wish to exclude the script from Rocket Loader.
-- If the script you want Rocket Loader to ignore has dependency on other JavaScript(s) on the page, those depedencies must also have the `data-cfasync="false"` attribute.
+- If the script you want Rocket Loader to ignore has dependency on other JavaScript(s) on the page, those dependencies must also have the `data-cfasync="false"` attribute.
 - The `data-cfasync` attribute must be added before the `src` attribute.
 - Rocket Loader will recognize the tag when either single or double quotes are placed around the attribute value.
