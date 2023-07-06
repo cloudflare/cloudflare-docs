@@ -12,12 +12,12 @@ Cloudflare makes customer websites faster by storing a copy of the website’s c
 
 Cloudflare caches static content based on the following factors:
 
-*   Cache level set at a zone or [page rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/)
-*   File extension
-*   Presence of query strings
-*   Origin cache-control headers
-*   Origin headers that indicate dynamic content
-*   Page rules that bypass cache on cookie
+* Cache level set at a zone or [page rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/)
+* [File extension](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
+* Presence of [query strings](/cache/advanced-configuration/query-string-sort/)
+* [Origin cache-control headers](/cache/concepts/cache-control/)
+* Origin headers that indicate [dynamic content](/logs/reference/glossary/#dynamic-content)
+* Page rules that [bypass cache on cookie](/support/third-party-software/content-management-system-cms/caching-html-with-drupal/#set-bypass-cache-on-cookie)
 
 Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](/dns/manage-dns-records/reference/proxied-dns-records/) DNS records.
 
@@ -25,14 +25,15 @@ Cloudflare only caches resources within the Cloudflare data center that serve th
 
 Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
 
-- [What is a CDN?](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
+- [Understand what is a CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
+- [Understand default cache behavior](/cache/concepts/default-cache-behavior/)
 - [Understand the default file types Cloudflare caches](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
 
 ## Make more resources cacheable
 
 Configure your settings to cache static HTML or cache anonymous page views of dynamic content.
 
-- [Speed up your site with caching best practices](/cache/troubleshooting/customize-caching/)
+- [Customize Caching with Cloudflare Rules](/cache/troubleshooting/customize-caching/)
 - [Specify which resources to cache](/cache/concepts/customize-cache/)
 - [Understand Origin Cache Control](/cache/concepts/cache-control/)
 - [Cache by device type (Enterprise only)](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
