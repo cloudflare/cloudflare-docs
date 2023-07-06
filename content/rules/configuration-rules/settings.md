@@ -110,6 +110,10 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 </div>
 </details>
 
+{{<Aside type="warning">}}
+This setting will not disable [Apps with Workers](https://cloudflareapps.com/apps/developer/docs/workers). These apps request permission to add a Worker when you are installing them.
+{{</Aside>}}
+
 ## Disable Railgun (deprecated)
 
 Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
