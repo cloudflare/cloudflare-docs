@@ -6,6 +6,6 @@ title: Image optimization on optimized images
 
 # Image optimization on optimized images
 
-Cloudflare's image optimization features will likely not help much if site owners are already optimizing their images in some way (Smush.it, etc.).
+Cloudflare's [image optimization features](/speed/optimization/images/) will likely not help much if you are already optimizing their images in some way (Smush.it, etc.).
 
-We would strongly recommend not activating two services on top of one another (Smush.it and Cloudflare's Polish, for example). Conflicts may occur if you are running two optimization services at the same time.
+Cloudflare recommends not activating other services on top of Cloudflare, because this setup can lead to unexpected outcomes and potential issues.

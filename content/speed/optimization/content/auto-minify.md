@@ -7,9 +7,9 @@ weight: 5
 
 # Auto Minify
 
-Cloudflare users interested in minifying HTML, CSS and JavaScript can activate **Auto Minify** in their Cloudflare settings. Auto Minify will remove all unnecessary characters from HTML, JavaScript, and CSS files.
+Cloudflare Auto Minifiy improves website performance by dynamically removing all unnecessary characters from HTML, CSS and JavaScript files.
 
-HTML files are minified dynamically by removing comments and unnecessary empty lines only. It does not require files to be cached. CSS and JS minification operates on cached CSS and JS files only. Once Cloudflare returns a cache HIT for the file it will be returned to browsers in minified form. This allows us to deliver a more complete minification result. If you need to enable or disable minification for CSS & JS you will now need to [purge your Cloudflare cache](https://support.cloudflare.com/hc/articles/200169246) to see the effect of any minification change.
+HTML files are minified dynamically by removing comments and unnecessary empty lines only. It does not require files to be cached. CSS and JS minification operates on cached CSS and JS files only. Once Cloudflare returns a cache `HIT` for the file it will be returned to browsers in minified form. This allows us to deliver a more complete minification result. If you need to enable or disable minification for CSS and JS files, you need to [purge your Cloudflare cache](/cache/how-to/purge-cache/).
 
 ___
 
@@ -28,4 +28,4 @@ ___
 
 ## Related resources
 
--   [Troubleshooting Auto Minify](https://support.cloudflare.com/hc/articles/200169876)
+-   [Troubleshooting Auto Minify](/speed/optimization/content/troubleshooting/auto-minify-not-working/)

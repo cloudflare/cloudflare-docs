@@ -1,17 +1,18 @@
 ---
 pcx_content_type: reference
-source: https://support.cloudflare.com/hc/en-us/articles/200168396-What-will-Cloudflare-compress-
-title: Brotli
-weight: 1
+title: Content compression
+weight: 2
+meta:
+    title: Content compression | Brotli
 ---
 
-# Brotli
+# How does Cloudflare compress content?
 
-Cloudflare supports content compression both when delivering content to your website visitors and when requesting content from your origin server.
+Cloudflare compresses content in two ways: between Cloudflare and your website visitors and between Cloudflare and your origin server.
 
-## Content compression from the Cloudflare network to website visitors
+## Compression between Cloudflare and website visitors
 
-In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/concepts/default-cache-behavior/) and [auto-minifying](/speed/optimization/content/auto-minify/) CSS, JavaScript, and HTML content to speed up your site, Cloudflare supports GZIP and Brotli compression when delivering content to website visitors.
+In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/) and [auto minification](/speed/optimization/content/auto-minify/) of CSS, JavaScript, and HTML content, Cloudflare supports GZIP and Brotli compression when delivering content to website visitors.
 
 ```mermaid
 flowchart LR
@@ -82,7 +83,7 @@ application/graphql+json
 application/geo+json
 ```
 
-Cloudflare's global network can deliver content to website visitors using GZIP compression, [Brotli compression](#enable-brotli-compression), or no compression, according to the values visitors provide in the `Accept-Encoding` request header.
+Cloudflare's global network can deliver content to website visitors using GZIP compression, Brotli compression, or no compression, according to the values visitors provide in the `Accept-Encoding` request header.
 
 For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. For successful response status codes, Cloudflare will only compress responses if their status code is `200`. Responses with other status codes will not be compressed.
 
@@ -90,15 +91,7 @@ For responses with error status codes, Cloudflare will only compress responses i
 Enterprise customers can use [Compression Rules](/rules/compression-rules/) to override Cloudflare's default compression behavior.
 {{</Aside>}}
 
-### Enable Brotli compression
-
-By default, Brotli compression is enabled for domain on Free and Pro plans and disabled for domains on Business and Enterprise plans.
-
-To enable Brotli compression:
-
-1. [Log in to the Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-2. Go to **Speed** > **Optimization** > **Content Optimization**.
-3. For **Brotli**, toggle the switch to **On**.
+---
 
 ## Content compression from origin servers to the Cloudflare network
 
@@ -137,15 +130,4 @@ Cloudflare will take into consideration the `Accept-Encoding` header value in we
 
 ---
 
-## Notes about end-to-end compression
-
-Even when using the same compression algorithm end to end (between your origin server and Cloudflare, and between the Cloudflare global network and your website visitor), Cloudflare will need to decompress the response and compress it again if you enable any of the following options for the request:
-
-- [Email Address Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
-- [Rocket Loader](/speed/optimization/content/rocket-loader/)
-- [Server Side Excludes (SSE)](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/)
-- [Mirage](/speed/optimization/images/mirage/)
-- [HTML Minification](/speed/optimization/content/auto-minify/) (you can minify JavaScript and CSS without any impact)
-- [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
-
-To disable these features for specific URI paths, create a [Configuration Rule](/rules/configuration-rules/).
+{{<render file="_brotli-compression-warning.md">}}

@@ -7,27 +7,20 @@ weight: 3
 
 # Cloudflare Mirage
 
-Mirage image optimization is currently available for Pro, Business, and Enterprise level domains.
+Cloudflare Mirage accelerates image loading on your domain.
 
-It accelerates image loading by:
+It does this by:
 
--   Automatically resizing images using JavaScript (by analyzing visitor connection and device type)
--   Virtualizing images, so visitors on poor connections get a smaller version at a lower resolution until they can access a higher bandwidth connection
--   Streamlining image requests, so visitors can see optimized images immediately
--   Acting as a lazy loader, turning all images into load on demand
+-   Automatically resizing images using JavaScript (by analyzing visitor connection and device type).
+-   Virtualizing images, so visitors on poor connections get a smaller version at a lower.resolution until they can access a higher bandwidth connection.
+-   Streamlining image requests, so visitors can see optimized images immediately.
+-   Acting as a lazy loader, turning all images into load on demand.
 
-{{<Aside type="note">}}
-Mirage, like Rocket Loader, is a feature that is applied to a
-customer's website through client-side JavaScript. This means we modify
-the HTML response and insert the JavaScript code for the browser to
-execute, which is how the optimization is applied. This also means
-disabling Mirage is not done by disabling the feature by the path of the
-image (we don't apply any optimization on the server-side), rather it
-is done by disabling by the path of the page that loads the image
-(stopping the script from being inserted in the first page).
-{{</Aside>}}
+---
 
-Read our [blog post](https://blog.cloudflare.com/mirage2-solving-mobile-speed) for more information on Mirage.
+## Availability
+
+{{<feature-table id="speed.mirage">}}
 
 ___
 
@@ -35,32 +28,27 @@ ___
 
 Mirage will work with the following image formats:
 
--   \*.jpg
--   \*.jpeg
--   \*.png
--   \*.gif
--   \*.img
+-   `.jpg`
+-   `.jpeg`
+-   `.png`
+-   `.gif`
+-   `.img`
 
 ___
 
 ## Enable Mirage
 
-To enable Mirage image optimization for your domain,
+{{<Aside type="note">}}
+If you send a CSP (content security policy) header that restricts where scripts can be loaded, you will need to ensure `ajax.cloudflare.com` is enabled. For example, to allow scripts from your own domain and `ajax.cloudflare.com` enter the following:
+`script-src 'self' ajax.cloudflare.com;`
+{{</Aside>}}
+
+To enable Mirage image optimization for your entire domain:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2.  Select your account and zone.
 3.  Go to **Speed** > **Optimization** > **Image Optimization**.
 4.  For **Mirage**, switch the toggle to **On**.
-
-{{<Aside type="note">}}
-If you send a CSP (content security policy) header that restricts where
-scripts can be loaded, you\'ll need to ensure ajax.cloudflare.com is
-enabled. For example, to allow scripts from your own domain and
-ajax.cloudflare.com enter the following:
-`script-src 'self' ajax.cloudflare.com;`
-{{</Aside>}}
-
-Once enabled Mirage will be active on the entire website.
 
 {{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
