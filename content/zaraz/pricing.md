@@ -61,7 +61,7 @@ The Workers Paid plan includes the first 200,000 Zaraz Loads per month per accou
 
 ## Pricing examples
 
-To help you understand how the new pricing works, let's consider a few examples:
+Below are several examples to help you understand Zaraz pricing:
 
 ### Example 1: Personal website without Workers Paid plan
 
