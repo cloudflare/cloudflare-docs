@@ -36,7 +36,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Auto Minify
 
-Select which file extensions to minify automatically using [Auto Minify](https://support.cloudflare.com/hc/articles/200168196) [^2].
+Select which file extensions to minify automatically using [Auto Minify](/speed/optimization/content/auto-minify/) [^2].
 
 <details>
 <summary>API information</summary>
