@@ -33,7 +33,7 @@ You will create a new Worker as the container for both your D1 database and the 
 Create a new project named `d1-tutorial` by running:
 
 ```sh
-$ npm create cloudflare
+$ npm create cloudflare@latest
 
 ```
 
@@ -52,9 +52,9 @@ This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare`.
+If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
-For example: `CI=true npm create cloudflare d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
+For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
 {{</Aside>}}
 

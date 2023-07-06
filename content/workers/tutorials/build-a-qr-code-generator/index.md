@@ -25,7 +25,7 @@ First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new 
 ---
 header: Create a new project with C3
 ---
-$ npm create cloudflare@latest qr-code-generator
+$ npm create cloudflare@latest@latest qr-code-generator
 ```
 
 To configure your Worker:

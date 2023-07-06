@@ -20,7 +20,7 @@ To use API Shield to protect your API or web application, you must do the follow
 
 3.  [Enable mTLS](/ssl/client-certificates/enable-mtls/) for the hosts you wish to protect with API Shield.
 
-4.  Create Cloudflare firewall rules that [require API requests to present a valid client certificate](/api-shield/security/mtls/configure/).
+4.  create cloudflare@latest firewall rules that [require API requests to present a valid client certificate](/api-shield/security/mtls/configure/).
 
 ## Workers
 
