@@ -10,7 +10,7 @@ By default, Cloudflare Zaraz is available to everyone for free under their Cloud
 
 ## Zaraz Plans
 
-Zaraz pricing is based on Zaraz Loads and the set of features. A Zaraz Load is counted each time a web page loads the Zaraz script within it. For Single Page Applications, each URL navigation (i.e., every time the URL changes) is counted as a new Zaraz Load. The Zaraz Loads are calculated per account across all its zones.
+Zaraz pricing is based on Zaraz Loads and the set of features. A Zaraz Load is counted each time a web page loads the Zaraz script within it. For single page applications, each URL navigation (i.e., every time the URL changes) is counted as a new Zaraz Load. The Zaraz Loads are calculated per account across all zones.
 
 ### Free
 
