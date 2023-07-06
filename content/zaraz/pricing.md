@@ -20,15 +20,15 @@ The Free plan applies to accounts without a Workers Paid plan, and it includes u
 
 The Workers Paid plan includes the first 200,000 Zaraz Loads per month per account free of charge, with a charge of $0.5 for every additional 1,000 Zaraz Loads. In addition to all the features of the Free plan, the Paid plan includes:
 
-- [Preview/publish configuration workflow](https://developers.cloudflare.com/zaraz/history/preview-mode/)
-- [Workers Variables](https://developers.cloudflare.com/zaraz/advanced/worker-variables/)
-- [Custom endpoints](https://developers.cloudflare.com/zaraz/reference/settings/#endpoints)
-- [E-commerce Web API](https://developers.cloudflare.com/zaraz/web-api/ecommerce/)
-- [HTTP Events API](https://developers.cloudflare.com/zaraz/http-events-api/)
+- [Preview/publish configuration workflow](/zaraz/history/preview-mode/)
+- [Workers Variables](/zaraz/advanced/worker-variables/)
+- [Custom endpoints](/zaraz/reference/settings/#endpoints)
+- [E-commerce Web API](/zaraz/web-api/ecommerce/)
+- [HTTP Events API](/zaraz/http-events-api/)
 - HTTP Request tool
-- [Custom Managed Components](https://developers.cloudflare.com/zaraz/advanced/load-custom-managed-component/)
+- [Custom Managed Components](/zaraz/advanced/load-custom-managed-component/)
 - Consent API
-- [Advanced privacy settings](https://developers.cloudflare.com/zaraz/reference/settings/#privacy)
+- [Advanced privacy settings](/zaraz/reference/settings/#privacy)
 
 |                                        | Without Workers Paid            | With Workers Paid                                                                 |
 | -------------------------------------- | ------------------------------- | --------------------------------------------------------------------------------- |
