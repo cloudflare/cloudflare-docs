@@ -34,7 +34,7 @@ Allowed values are the following:
 If you specify only _Gzip_ and/or _Brotli_ and no algorithm matches, the response will have no compression. To configure a fallback compression mechanism, add _Auto_ to the list.
 
 {{<Aside type="note">}}
-The compression applied by the _Default_ option takes into account global configuration settings such as [Enable Brotli compression](/speed/optimization/content/brotli/#enable-brotli-compression).
+The compression applied by the _Default_ option takes into account global configuration settings such as [Enable Brotli compression](/speed/optimization/content/brotli/).
 {{</Aside>}}
 
 ---
@@ -68,7 +68,7 @@ If you include `none`, `default`, or `auto` in the list, it must be the last val
 When you specify only the `gzip` and/or `brotli` algorithms, if no algorithm matches then the response will have no compression. To configure a fallback compression mechanism, add `auto` to the list.
 
 {{<Aside type="note">}}
-The compression applied by the `default` algorithm takes into account global configuration settings such as [Enable Brotli compression](/speed/optimization/content/brotli/#enable-brotli-compression).
+The compression applied by the `default` algorithm takes into account global configuration settings such as [Enable Brotli compression](/speed/optimization/content/brotli/).
 {{</Aside>}}
 
 ### Examples
