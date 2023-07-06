@@ -588,7 +588,10 @@
 /spectrum/proxy-protocol/ /spectrum/reference/simple-proxy-protocol-header/ 301
 
 # speed
+## jason should replace these two when re-building fundamentals
 /fundamentals/speed/ /speed/ 301
+/fundamentals/network/ /fundamentals/ 301
+## end block
 /fundamentals/network/0-rtt-connection-resumption/ /speed/optimization/protocol/0-rtt-connection-resumption/ 301
 /support/speed/essentials/will-cloudflares-image-optimization-features-help-if-im-already-optimizing-images/ /speed/optimization/images/troubleshooting/multiple-optimizations/ 301
 /support/speed/optimization-delivery/ /speed/optimization/images/ 301
