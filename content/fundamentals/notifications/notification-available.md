@@ -804,7 +804,7 @@ When an advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
-Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ssl-expired-or-ssl-mismatch-errors) for more information.
+Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](/ssl/troubleshooting/version-cipher-mismatch/) for more information.
 
 </div>
 </details>
