@@ -212,7 +212,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Mirage
 
-Enable or disable [Mirage](https://support.cloudflare.com/hc/articles/219178057) [^9] for matching requests.
+Enable or disable [Mirage](/speed/optimization/images/mirage/) [^9] for matching requests.
 
 <details>
 <summary>API information</summary>

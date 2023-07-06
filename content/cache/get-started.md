@@ -63,10 +63,10 @@ These code alterations only occur on the cacheable objects found at Cloudflare's
 
 Review the list of Cloudflare features that function in this manner.
 
-- [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/)
+- [Auto Minify](/speed/optimization/content/auto-minify/)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Polish](/images/polish/)
-- [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/)
+- [Mirage](/speed/optimization/images/mirage/)
 - [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)
 - [Email address obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
 - [Bot Management Javascript Detections](/bots/reference/javascript-detections/)

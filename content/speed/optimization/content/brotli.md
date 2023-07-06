@@ -11,7 +11,7 @@ Cloudflare supports content compression both when delivering content to your web
 
 ## Content compression from the Cloudflare network to website visitors
 
-In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/concepts/default-cache-behavior/) and [auto-minifying](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) CSS, JavaScript, and HTML content to speed up your site, Cloudflare supports GZIP and Brotli compression when delivering content to website visitors.
+In addition to Cloudflare's [CDN](/cache/) [caching static content](/cache/concepts/default-cache-behavior/) and [auto-minifying](/speed/optimization/content/auto-minify/) CSS, JavaScript, and HTML content to speed up your site, Cloudflare supports GZIP and Brotli compression when delivering content to website visitors.
 
 ```mermaid
 flowchart LR
@@ -144,8 +144,8 @@ Even when using the same compression algorithm end to end (between your origin s
 - [Email Address Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Server Side Excludes (SSE)](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/)
-- [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/)
-- [HTML Minification](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) (you can minify JavaScript and CSS without any impact)
+- [Mirage](/speed/optimization/images/mirage/)
+- [HTML Minification](/speed/optimization/content/auto-minify/) (you can minify JavaScript and CSS without any impact)
 - [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
 
 To disable these features for specific URI paths, create a [Configuration Rule](/rules/configuration-rules/).
