@@ -10,12 +10,12 @@ meta:
 
 This page explains how you can manage mTLS with [API Shield](/api-shield/) using client certificates that have not been issued by Cloudflare CA.
 
-This is specially useful if you already have mTLS implemented and client certificates issued by your chosen CA are already installed on devices.
+This is especially useful if you already have mTLS implemented and client certificates issued by your chosen CA are already installed on devices.
 
 ## Availability
 
-* Currently, this process can only be completed via API.
-* To be able to set this up, your account must be on an Enterprise plan.
+* Currently, you can only upload your CA via API.
+* This process is only available on Enterprise accounts.
 * Each Enterprise account can upload up to five CAs. This quota does not apply to CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ## Set up mTLS with your CA

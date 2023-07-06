@@ -25,9 +25,7 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 ## Create an mTLS rule
 
-To create an mTLS rule in the Cloudflare dashboard, follow these steps:
-
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your application.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 
 2. Go to **SSL/TLS** > **Client Certificates**.
 
@@ -57,7 +55,7 @@ With the [migration of Firewall Rules to WAF Custom Rules](/waf/reference/migrat
     (http.host in {"api.example.com"} and not cf.tls_client_auth.cert_verified)
     ```
 
-8. In **Choose action** select `Block`.
+8. In **Choose action**, select `Block`.
 
 9. Select **Deploy** to make the rule active.
 
@@ -75,11 +73,10 @@ With the [migration of Firewall Rules to WAF Custom Rules](/waf/reference/migrat
     | ----------------------------------------------------------------------------- | ---------- |
     | `(http.host in {"api.example.com"} and not cf.tls_client_auth.cert_verified)` | _Block_    |
 
-    To make this rule active, select **Deploy**. To add additional firewall logic — such as checking for [revoked certificates](#check-for-revoked-certificates) — select **Use firewall rule builder**.
+6. To make this rule active, select **Deploy**. To add additional firewall logic — such as checking for [revoked certificates](#check-for-revoked-certificates) — select **Use firewall rule builder**.
 
 {{</tab>}}
 {{</tabs>}}
-
 
 Once you have deployed your mTLS rule, any requests without a [valid client certificate](/ssl/client-certificates/) will be blocked.
 
