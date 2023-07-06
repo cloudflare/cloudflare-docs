@@ -14,6 +14,7 @@ meta:
 resources:
   community: https://community.cloudflare.com/c/website-application-performance/88
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/speed
+  learning_center: https://www.cloudflare.com/learning/performance/why-site-speed-matters/
 
 externals:
   - title: Cloudflare homepage
