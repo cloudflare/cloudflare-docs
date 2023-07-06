@@ -6,7 +6,7 @@ weight: 9
 
 # Zaraz Pricing
 
-By default, Cloudflare Zaraz is available to everyone for free under their Cloudflare website dashboard. The paid version of Zaraz is included in the [paid Workers plans](https://developers.cloudflare.com/workers/platform/pricing/).
+By default, Cloudflare Zaraz is available to everyone for free under their Cloudflare dashboard. The paid version of Zaraz is included in the [paid Workers plans](/platform/pricing/).
 
 ## Zaraz Plans
 
