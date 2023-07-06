@@ -3,6 +3,7 @@ title: Rust
 pcx_content_type: tutorial
 meta:
   title: Rust WebAssembly guide
+updated: 2023-05-10
 ---
 
 # Rust WebAssembly guide
