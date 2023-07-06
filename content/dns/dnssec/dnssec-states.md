@@ -27,4 +27,6 @@ In both `pending` and `active` states, Cloudflare signs the zone and responds wi
 
 In `pending-disabled` and `disabled` states, Cloudflare still signs the zone and serves `RRSIG`, `NSEC`, and `DNSKEY` record types, but the `CDS` and `CDNSKEY` records are set to zero ([RFC 8078](https://www.rfc-editor.org/rfc/rfc8078.html#section-4)), signaling to the registrar that DNSSEC should be disabled.
 
+In `deleted` state, Cloudflare does **not** sign the zone and does **not** respond with `RRSIG`, `NSEC`, `DNSKEY`, `CDS`, and `CDNSKEY` record types.
+
 Refer to [How DNSSEC works](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) to learn more about the authentication process and records involved.
