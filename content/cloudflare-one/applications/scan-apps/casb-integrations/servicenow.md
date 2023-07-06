@@ -25,7 +25,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 {{<render file="casb/_security-findings.md" withParameters="ServiceNow;;servicenow">}}
 
-### Instance Security
+### Instance security
 
 Identify security risks related to the ServiceNow instance itself.
 
@@ -36,7 +36,7 @@ Identify security risks related to the ServiceNow instance itself.
 | ServiceNow Instance with exposed admin credentials                    | High     |
 | ServiceNow Instance with exposed database user credentials            | Medium   |
 
-### User Security
+### User security
 
 Flag user-related security risks and misconfigurations.
 
@@ -50,7 +50,7 @@ Flag user-related security risks and misconfigurations.
 | ServiceNow user inactive                      | Low      |
 | ServiceNow user without recent activity       | Low      |
 
-### Incident Management
+### Incident management
 
 Identify issues related to ServiceNow incidents.
 
@@ -59,7 +59,7 @@ Identify issues related to ServiceNow incidents.
 | ServiceNow incident with no assigned user and High Priority | High     |
 | ServiceNow incident with no assigned user                   | Medium   |
 
-### Knowledge Management
+### Knowledge management
 
 Highlight potential misconfigurations in ServiceNow knowledge articles.
 
@@ -69,7 +69,7 @@ Highlight potential misconfigurations in ServiceNow knowledge articles.
 | ServiceNow knowledge article without any roles       | Low      |
 | ServiceNow knowledge article with flagged status     | Low      |
 
-### Integration and Access
+### Integration and access
 
 Detect issues related to ServiceNow integrations and access controls.
 
