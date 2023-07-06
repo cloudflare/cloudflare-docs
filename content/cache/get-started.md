@@ -45,7 +45,7 @@ Include or exclude query strings, optimize cache keys, or enable tiered cache to
 - [Choose a cache level](/cache/how-to/set-caching-levels/)
 - [Enable Tiered Cache with Argo](/cache/how-to/tiered-cache/#enable-tiered-cache)
 - [Configure custom cache keys (Enterprise only)](/cache/how-to/cache-keys/)
-- [Enable Prefetch URLs (Enterprise only)](/speed/prefetch-urls/)
+- [Enable Prefetch URLs (Enterprise only)](/speed/optimization/content/prefetch-urls/)
 
 ## Secure your cache configuration
 
@@ -64,7 +64,7 @@ These code alterations only occur on the cacheable objects found at Cloudflare's
 Review the list of Cloudflare features that function in this manner.
 
 - [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/)
-- [Rocket Loader](/speed/rocket-loader/)
+- [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Polish](/images/polish/)
 - [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/)
 - [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)

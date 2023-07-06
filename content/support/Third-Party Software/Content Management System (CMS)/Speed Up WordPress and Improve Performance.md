@@ -49,4 +49,4 @@ Due to HTTP/2 multiplexing requests, we advise against concatenating CSS or Java
 
 ### Advanced Performance Tools
 
-Enterprise users can utilise [Prefetching URLs From HTML Headers](/speed/prefetch-urls/) and [custom cache keys](/cache/how-to/cache-keys/) to enhance caching.
+Enterprise users can utilise [Prefetching URLs From HTML Headers](/speed/optimization/content/prefetch-urls/) and [custom cache keys](/cache/how-to/cache-keys/) to enhance caching.

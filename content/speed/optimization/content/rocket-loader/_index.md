@@ -29,6 +29,6 @@ On pages with JavaScript, this results in a [much faster loading experience](htt
 
 Some of Cloudflare's optional features, including Rocket Loader and Email Obfuscation, use non standard tags that fail strict HTML validation via tools like [w3.org](https://validator.w3.org/). These failures do not correlate to issues for your site visitors.
 
-If you observe JavaScript or jQuery issues for your website, [disable Rocket Loader](/speed/rocket-loader/enable/) and retest your website.
+If you observe JavaScript or jQuery issues for your website, [disable Rocket Loader](/speed/optimization/content/rocket-loader/enable/) and retest your website.
 
 {{<render file="_rocket-loader-csp.md">}}

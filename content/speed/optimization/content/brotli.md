@@ -142,7 +142,7 @@ Cloudflare will take into consideration the `Accept-Encoding` header value in we
 Even when using the same compression algorithm end to end (between your origin server and Cloudflare, and between the Cloudflare global network and your website visitor), Cloudflare will need to decompress the response and compress it again if you enable any of the following options for the request:
 
 - [Email Address Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
-- [Rocket Loader](/speed/rocket-loader/)
+- [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Server Side Excludes (SSE)](/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/)
 - [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/)
 - [HTML Minification](/support/speed/optimization-file-size/using-cloudflare-auto-minify/) (you can minify JavaScript and CSS without any impact)
