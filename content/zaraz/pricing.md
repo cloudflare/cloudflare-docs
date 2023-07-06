@@ -59,7 +59,7 @@ The Workers Paid plan includes the first 200,000 Zaraz Loads per month per accou
 | Advanced privacy settings              | ➖                              | ✔️                                                                                |
 | Consent API                            | ➖                              | ✔️                                                                                |
 
-## Pricing Examples
+## Pricing examples
 
 To help you understand how the new pricing works, let's consider a few examples:
 
