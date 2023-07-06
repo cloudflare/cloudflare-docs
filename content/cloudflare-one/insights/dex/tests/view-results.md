@@ -51,6 +51,7 @@ To view analytics on a per-device level:
 | Number of hops | Number of routers encountered between the device and the target. |
 | Packet loss | Percentage of IP packets that failed to receive a response. |
 | Availability | Percentage of tests where at least one packet reached the destination. |
+| test | test |
 
 ## Data retention
 
