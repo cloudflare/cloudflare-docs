@@ -12,7 +12,11 @@ This guide will instruct you through:
 - Interacting with your KV namespace.
 - Using environments with KV namespaces.
 
-## 1. Create a KV namespace with Wrangler
+## 1. Create a KV namespace 
+
+You can create a KV namespace via Wrangler or the Cloudflare dashboard.
+
+### Create a KV namespace via Wrangler
 
 Wrangler allows you to put, list, get, and delete entries within your KV namespace.
 
@@ -46,13 +50,13 @@ Binding names do not need to correspond to the namespace you created. It is an e
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](/r2/api/workers/workers-api-reference/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/kv/learning/kv-namespaces/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/api/workers/workers-api-reference/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. 
 
-A binding is defined in the `wrangler.toml` file of your Worker project's directory.
+Refer to the [Environment Variables](/workers/platform/environment-variables) documentation for more information.
 
 {{</Aside>}}
 
-## 2. Create KVs on the Cloudflare dashboard
+### Create KVs on the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select **Workers & Pages** > **KV**.
@@ -60,10 +64,19 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 4. Enter a name for your namespace. 
 5. Select **Add**.
 
-## 3. Create an access token
+## 2. Create an access token
 
+You only need an access token if you do not use the bindings directly. 
 
-## 4. Interact with your KV namespace
+To create an access token:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select **My Profile** > **API Tokens**.
+3. Select **Create Token** > **Edit Cloudflare Workers** > **Use template**.
+4. Under **Permissions**, select **Account** > **Workers KV Storage** > **Edit**.
+5. Select **Continue to summary**.
+
+## 3. Interact with your KV namespace
 
 To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand and input your key and value respectively:
 
@@ -101,9 +114,9 @@ To summarize, a namespace can be specified in two ways:
     $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
     ```
 
-Refer to the [`kv:bulk` documentation](/workers/wrangler-legacy/commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
+Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
 
-## 5. Use environments with KV namespaces
+## 4. Use environments with KV namespaces
 
 KV namespaces can be used with environments. This is useful for when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to be able to have these bindings point to different namespaces (like one for staging and one for production).
 
@@ -164,5 +177,5 @@ $ wrangler kv:key get --binding "MY_KV" --env=production "<KEY>"
 ## Related resources
 
 * [Environments](/workers/platform/environments/)
-* [`kv` command documentation](/workers/runtime-apis/kv/)
+* [`kv` command documentation](/kv/platform/kv-commands/)
 * [`wrangler.toml` configuration documentation](/workers/wrangler/configuration)

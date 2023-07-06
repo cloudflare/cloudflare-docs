@@ -6,6 +6,10 @@ weight: 7
 
 # KV namespaces
 
+You can bind your KV namespaces through Wrangler or via the Cloudflare dashboard.
+
+## Bind your KV namespace through Wrangler
+
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
 {{<definitions>}}
@@ -38,10 +42,11 @@ kv_namespaces = [
 
 To bind the namespace to your Worker in the Cloudflare dashboard:
 
-1.  Go to **Workers**.
-2.  Select your **Worker**.
-3.  Select **Settings** > **Variables**.
-4.  Go to **KV Namespace Bindings**.
-5.  Select **Add binding**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2.  Go to **Workers & Pages**.
+3.  Select your **Worker**.
+4.  Select **Settings** > **Variables**.
+5.  Go to **KV Namespace Bindings**.
+6.  Select **Add binding**.
 
 

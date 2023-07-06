@@ -59,19 +59,14 @@ addEventListener("fetch", async (event) => {
 {{</tab>}}
 {{</tabs>}}
 
-## Reference KV from Durable Objects and Workers using Modules Syntax
+## Reference KV from a Module Worker
 
-The documentation above assumes you are using the original Service Worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, for example, `NAMESPACE`. Durable Objects use Modules syntax. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#1-write-a-class-to-define-a-durable-object). A typical example might look like:
+When using the Module Worker syntax, `env` is passed in the fetch handler. 
 
 ```js
-export class DurableObject {
-  constructor(state, env) {
-    this.state = state;
-    this.env = env;
-  }
-
-  async fetch(request) {
-    const valueFromKV = await this.env.NAMESPACE.get("someKey");
+export default {
+  async fetch(request, env) {
+    const valueFromKV = await env.NAMESPACE.get("someKey");
     return new Response(valueFromKV);
   }
 }
