@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: param1
+inputParameters: errorName
 ---
 
 If you experience `$1` errors with a newly activated domain, review your DNS settings in the Cloudflare dashboard.

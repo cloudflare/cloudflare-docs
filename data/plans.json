@@ -741,7 +741,7 @@
       }
     },
     "reverse_zones": {
-      "title": "Reverse Zones",
+      "title": "Reverse zones",
       "link": "/dns/additional-options/reverse-zones/",
       "properties": {
         "availability": {

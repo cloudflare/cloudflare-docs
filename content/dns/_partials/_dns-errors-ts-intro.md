@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: param1
+inputParameters: errorName
 ---
 
 If you or your visitors experience `$1` errors after you [activate your domain on Cloudflare](/dns/zone-setups/full-setup/setup/), review your DNS records in Cloudflare.
