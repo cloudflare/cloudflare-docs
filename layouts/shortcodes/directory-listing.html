@@ -29,8 +29,9 @@
   </li>
   {{- end -}}
   {{- with .Params.external_link -}}
-  {{- $path = replaceRE `(^.{1})` "/$1" (replace $path ".md" "") -}}
-  {{- if hasPrefix $path $current -}}
+  {{- $path = replaceRE `(.{1}$)` "$1/" (replaceRE `(^.{1})` "/$1" (replace $path ".md" "")) -}}
+  {{- $delta2 := sub (len (split $path "/")) $len -}}
+  {{- if and (hasPrefix $path $current) (lt $delta2 2) -}}
   {{- $link = printf "[%s](%s)" $title . -}}
   <li>
     {{- $.Page.RenderString $link -}}
