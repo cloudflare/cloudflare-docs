@@ -96,14 +96,20 @@ import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
+// Define the bindings associated with our Function
+// so that they are typed
+interface Env {
+  PRODUCTS_KV: KVNamespace;
+}
+
 export const loader: LoaderFunction = async ({
   context,
   params,
 }) => {
   // Bindings are accessible on context.env
-  let productsKV = context.env.PRODUCTS_KV as KVNamespace
+  let env = context.env as Env
   return json(
-    await productsKV.get<{ name: string }>(`product-${params.productId}`, {
+    await env.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
       type: "json",
     })
   );
