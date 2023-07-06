@@ -740,7 +740,7 @@
 /support/firewall/managed-rules-web-application-firewall-waf/understanding-waf-managed-rules-web-application-firewall/ /waf/reference/legacy/old-waf-managed-rules/ 301
 /support/firewall/tools/ /waf/ 301
 /support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
-/support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-waf-managed-rules/troubleshooting/ 301
+/support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/troubleshooting/ 301
 
 # waiting-room
 /waiting-room/about/ /waiting-room/ 301
