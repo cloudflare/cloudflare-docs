@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Other optimization
+title: Other optimizations
 weight: 5
 ---
 
-# Other optimization
+# Other optimizations
 
 {{<directory-listing>}}

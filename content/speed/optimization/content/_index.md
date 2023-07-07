@@ -4,6 +4,6 @@ title: Content optimizations
 weight: 4
 ---
 
-# Content optimizations
+# Content optimization
 
 {{<directory-listing>}}

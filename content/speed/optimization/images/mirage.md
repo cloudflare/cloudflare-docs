@@ -12,7 +12,7 @@ Cloudflare Mirage accelerates image loading on your domain.
 It does this by:
 
 -   Automatically resizing images using JavaScript (by analyzing visitor connection and device type).
--   Virtualizing images, so visitors on poor connections get a smaller version at a lower.resolution until they can access a higher bandwidth connection.
+-   Virtualizing images, so visitors on poor connections get a smaller version at a lower resolution until they can access a higher bandwidth connection.
 -   Streamlining image requests, so visitors can see optimized images immediately.
 -   Acting as a lazy loader, turning all images into load on demand.
 
