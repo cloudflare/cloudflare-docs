@@ -97,7 +97,7 @@ For all available system keys, refer to the table below:
 | `system.page.encoding` | String | The encoding of the page associated with the event. |
 
 {{<Aside type="note">}}
-It's currently not possible to override location related properties, such as City, Country, Continent and alike.
+It is currently not possible to override location related properties, such as City, Country, and Continent.
 {{</Aside>}}
 
 ## Process API responses
