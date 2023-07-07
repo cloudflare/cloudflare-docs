@@ -1,10 +1,10 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-async function run() {
+async function run(): Promise<void> {
   try {
     const ctx = github.context;
-    const token = process.env.GITHUB_TOKEN;
+    const token = core.getInput('GITHUB_TOKEN', { required: true });
     const octokit = github.getOctokit(token);
     const pr = ctx.payload.pull_request;
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
@@ -15,38 +15,32 @@ async function run() {
 
     const changes = files.reduce((total, file) => total + file.changes, 0);
 
-    let label;
+    let label: string | undefined;
 
     switch (true) {
-      case changes <= parseInt(process.env.xs_max_size, 10):
-        label = process.env.xs_label;
+      case changes <= 10:
+        label = 'size/xs';
         break;
-      case changes <= parseInt(process.env.s_max_size, 10):
-        label = process.env.s_label;
+      case changes <= 100:
+        label = 'size/s';
         break;
-      case changes <= parseInt(process.env.m_max_size, 10):
-        label = process.env.m_label;
+      case changes <= 500:
+        label = 'size/m';
         break;
-      case changes <= parseInt(process.env.l_max_size, 10):
-        label = process.env.l_label;
+      case changes <= 1000:
+        label = 'size/l';
         break;
       default:
-        label = process.env.xl_label;
+        label = 'size/xl';
         break;
     }
 
     const currentLabels = pr.labels.map((label) => label.name);
-    const sizeLabels = [
-      process.env.xs_label,
-      process.env.s_label,
-      process.env.m_label,
-      process.env.l_label,
-      process.env.xl_label
-    ];
+    const sizeLabels = ['size/xs', 'size/s', 'size/m', 'size/l', 'size/xl'];
 
     // Remove previous size-related labels that are different from the current label
-    const labelsToRemove = currentLabels.filter((currentLabel) =>
-      sizeLabels.includes(currentLabel) && currentLabel !== label
+    const labelsToRemove = currentLabels.filter(
+      (currentLabel) => sizeLabels.includes(currentLabel) && currentLabel !== label
     );
 
     for (const labelToRemove of labelsToRemove) {
