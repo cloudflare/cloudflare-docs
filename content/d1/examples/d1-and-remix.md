@@ -31,7 +31,7 @@ The following example shows you how to define a Remix [`loader`](https://remix.r
 ---
 filename: app/routes/_index.tsx
 ---
-import type { LoaderArgs } from "@remix-run/cloudflare";
+import type { LoaderFunction } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
