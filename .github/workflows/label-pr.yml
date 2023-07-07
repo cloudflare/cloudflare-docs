@@ -7,6 +7,16 @@ on:
       - production
 
 jobs:
+  assign_pcx:
+    name: Assign PCX
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/assign-pr
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    continue-on-error: true
+  
   label_products:
     name: Label products
     runs-on: ubuntu-latest
@@ -15,6 +25,7 @@ jobs:
       - uses: ./.github/actions/label-products
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    continue-on-error: true
 
   label_size:
     name: Label size
@@ -24,3 +35,4 @@ jobs:
       - uses: ./.github/actions/label-size
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    continue-on-error: true
