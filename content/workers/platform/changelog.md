@@ -10,8 +10,8 @@ rss: file
 
 ## 2023-07-07
 
-- An implementation of process.env is now available when using the `nodejs_compat` compatibility flag.
-- An implementation of the Node.js diagnostics_channel API is now available when using the `nodejs_compat` compatibility flag.
+- An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+- An implementation of the [`diagnostics_channel`](/workers/runtime-apis/nodejs/diagnostics-channel) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
 
 ## 2023-06-22
 
