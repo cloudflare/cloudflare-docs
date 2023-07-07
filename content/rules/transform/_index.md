@@ -18,6 +18,8 @@ There are several types of Transform Rules:
 
 To configure Transform Rules in the dashboard, go to the **Transform Rules** page in Rules.
 
+{{<render file="_rules-requirements.md" withParameters="Transform Rules require">}}
+
 ***
 
 ## Transform Rules evaluation
