@@ -11,7 +11,7 @@ In this guide, you will create a new Remix application and deploy to Cloudflare 
 
 ## Setting up a new project
 
-Start by installing the latest version of Remix. Create a new project directory and then intialize a Remix project by running:
+Start by installing the latest version of Remix. Create a new project directory and then initialize a Remix project by running:
 
 ```sh
 $ npx create-remix@latest
