@@ -5,8 +5,8 @@
   <nav role="navigation" class="tabs">
     <ul class="tab-active" block-id="{{$unique_id}}">
       {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
-      <li class="tab-label-wrapper">
         {{ if (eq $link "js") }}
+        <li class="tab-label-wrapper">
         <a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
                xmlns="http://www.w3.org/2000/svg">
@@ -17,8 +17,9 @@
           </svg>
           JavaScript
         </a>
-
+      </li>
         {{ else if (eq $link "js-sw") }}
+        <li class="tab-label-wrapper">
         <a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
                xmlns="http://www.w3.org/2000/svg">
@@ -30,8 +31,9 @@
           </svg>
           Service Workers
         </a>
-
+      </li>
         {{ else if (eq $link "ts") }}
+        <li class="tab-label-wrapper">
         <a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
                width="1em"
@@ -43,8 +45,9 @@
           </svg>
           TypeScript
         </a>
-
+      </li>
         {{ else if (eq $link "ts-sw") }}
+        <li class="tab-label-wrapper">
         <a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
                width="1em"
@@ -57,8 +60,9 @@
           </svg>
           Service Workers
         </a>
-
+      </li>
         {{ else if (eq $link "js-esm") }}
+        <li class="tab-label-wrapper">
         <a class="tab-label " href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
                xmlns="http://www.w3.org/2000/svg">
@@ -70,8 +74,9 @@
           </svg>
           ES Modules
         </a>
-
+      </li>
         {{ else if (eq $link "ts-esm") }}
+        <li class="tab-label-wrapper">
         <a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
                width="1em"
@@ -84,14 +89,17 @@
           </svg>
           ES Modules
         </a>
-
+      </li>
+      
         {{ else }}
+        <li class="noCodeLabelWrapper">
         <a class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}" href="#" data-link="tab-{{lower $link}}"
            data-id="{{lower $unique_id}}">
           {{$link}}
         </a>
-        {{ end }}
       </li>
+        {{ end }}
+      
       {{ end }}
     </ul>
   </nav>

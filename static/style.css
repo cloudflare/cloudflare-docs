@@ -5091,6 +5091,7 @@ pre {
   padding: 0;
   margin: 0;
   display: flex;
+  flex-wrap: nowrap !important;
   width: 100%;
   background-color: rgb(216 216 218);
 }
@@ -5107,6 +5108,55 @@ pre {
   display: none;
 }
 
+.noCodeLabelWrapper {
+  display: flex;
+  margin-bottom: 0;
+  align-items: center;
+  flex-direction: row;
+  list-style-type: none;
+  box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
+  width: 100%;
+}
+
+.noCodeLabelWrapper:hover,
+.noCodeLabelWrapper a:hover {
+  background-color: rgb(243 243 244) !important;
+  color: rgb(29, 31, 32) !important;
+}
+
+.active {
+  background-color: rgb(243 243 244) !important;
+  color: rgb(29, 31, 32) !important;
+  width: 100%;
+  border-bottom: 4px solid var(--code-orange);
+}
+
+[theme="dark"] .noCodeLabelWrapper:hover,
+[theme="dark"] .noCodeLabelWrapper a:hover {
+  background-color: rgb(43 44 46) !important;
+  color: var(--code-orange) !important;
+}
+
+[theme="dark"] .active {
+  background-color: rgb(43 44 46) !important;
+  color: var(--code-orange) !important;
+  width: 100%;
+  border-bottom: 4px solid var(--code-orange);
+}
+
+.noCodeLabel {
+  height: 100% !important;
+  width: 100% !important;
+  padding: 0.6em 1.25em;
+  text-decoration: none;
+  justify-content: center !important;
+  cursor: pointer;
+  overflow-wrap: break-word;
+  font-weight: 700;
+  font-size: var(--code-font-size);
+  font-family: var(--monospace-font-family);
+}
+
 .tab-label-wrapper {
   display: flex;
   align-items: center;
@@ -5116,15 +5166,13 @@ pre {
   box-shadow: 1px 0 rgba(var(--shadow-color-rgb), 0.12);
 }
 
-.active,
 .tab-label-wrapper:hover,
 .tab-label-wrapper a:hover {
   background-color: rgb(243 243 244) !important;
   color: rgb(29, 31, 32) !important;
 }
 
-[theme="dark"] .active,
-.tab-label-wrapper:hover,
+[theme="dark"] .tab-label-wrapper:hover,
 [theme="dark"] .tab-label-wrapper a:hover {
   background-color: rgb(43 44 46) !important;
   color: var(--code-orange) !important;
@@ -5147,6 +5195,7 @@ pre {
   font-size: var(--code-font-size);
   font-family: var(--monospace-font-family);
 }
+
 
 .tab-label>svg {
   width: 15px;
