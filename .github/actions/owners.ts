@@ -58,6 +58,7 @@ export const OWNERS: Record<string, string[]> = {
   "ruleset-engine": ["pedrosousa"],
   "security-center": ["jason-cf"],
   spectrum: ["angelampcosta"],
+  speed: ["angelampcosta"],
   ssl: ["RebeccaTamachiro"],
   stream: ["dcpena"],
   "style-guide": ["haleycode"],

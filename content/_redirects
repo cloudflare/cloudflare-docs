@@ -348,14 +348,17 @@
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
-/fundamentals/signed-exchanges/ /fundamentals/speed/signed-exchanges/ 301
-/fundamentals/signed-exchanges/amp-real-ulr/ /fundamentals/speed/amp-real-ulr/ 301
-/fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /fundamentals/speed/amp-real-ulr/enable-amp-real-url/ 301
-/fundamentals/signed-exchanges/amp-real-ulr/reference/ /fundamentals/speed/amp-real-ulr/reference/ 301
-/fundamentals/signed-exchanges/signed-exchanges/ /fundamentals/speed/signed-exchanges/ 301
-/fundamentals/signed-exchanges/signed-exchanges/enable-signed-exchange/ /fundamentals/speed/signed-exchanges/enable-signed-exchange/ 301
-/fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/ /fundamentals/speed/signed-exchanges/signed-exchanges-caveats/ 301
-/fundamentals/signed-exchanges/signed-exchanges/reference/ /fundamentals/speed/signed-exchanges/reference/ 301
+/fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-ulr/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/other/amp-real-ulr/reference/ 301
+/fundamentals/signed-exchanges/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
+/fundamentals/signed-exchanges/signed-exchanges/enable-signed-exchange/ /speed/optimization/other/signed-exchanges/enable-signed-exchange/ 301
+/fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/ /speed/optimization/other/signed-exchanges/signed-exchanges-caveats/ 301
+/fundamentals/signed-exchanges/signed-exchanges/reference/ /speed/optimization/other/signed-exchanges/reference/ 301
+/fundamentals/speed/aim/ /speed/aim/ 301
+/fundamentals/speed/optimization/ /speed/optimization/ 301
+/fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
 /support/firewall/settings/ /fundamentals/security/ 301
 /support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /fundamentals/security/under-attack-mode/ 301
@@ -583,6 +586,21 @@
 /spectrum/getting-started/proxy-protocol/ /spectrum/how-to/enable-proxy-protocol/ 301
 /spectrum/how-to/cname-origins/ /spectrum/get-started/#create-a-spectrum-application-using-a-cname-record 301
 /spectrum/proxy-protocol/ /spectrum/reference/simple-proxy-protocol-header/ 301
+
+# speed
+## jason should replace these two when re-building fundamentals
+/fundamentals/speed/ /speed/ 301
+/fundamentals/network/ /fundamentals/ 301
+## end block
+/fundamentals/network/0-rtt-connection-resumption/ /speed/optimization/protocol/0-rtt-connection-resumption/ 301
+/support/speed/essentials/will-cloudflares-image-optimization-features-help-if-im-already-optimizing-images/ /speed/optimization/images/troubleshooting/multiple-optimizations/ 301
+/support/speed/optimization-delivery/ /speed/optimization/images/ 301
+/support/speed/optimization-delivery/configuring-cloudflare-mirage/ /speed/optimization/images/mirage/ 301
+/support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/ /speed/optimization/other/mobile-redirect/ 301
+/support/speed/optimization-file-size/using-cloudflare-auto-minify/ /speed/optimization/content/auto-minify/ 301
+/support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/brotli/ 301
+/support/speed/optimization-file-size/why-isnt-auto-minify-working/ /speed/optimization/content/troubleshooting/auto-minify-not-working/ 301
+/support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ 301
 
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
@@ -1113,6 +1131,10 @@
 /fundamentals/get-started/basic-tasks/account-security/* /fundamentals/account-and-billing/account-security/:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
 /fundamentals/get-started/setup/account-setup/* /fundamentals/account-and-billing/account-setup/:splat 301
+/fundamentals/speed/amp-real-ulr/* /speed/optimization/other/amp-real-ulr/:splat 301
+/fundamentals/speed/rocket-loader/* /speed/optimization/content/rocket-loader/:splat 301
+/fundamentals/speed/signed-exchanges/* /speed/optimization/other/signed-exchanges/:splat 301
+/fundamentals/speed/speed-test/* /speed/speed-test/:splat 301
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301

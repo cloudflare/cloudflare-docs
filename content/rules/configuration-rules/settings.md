@@ -36,7 +36,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Auto Minify
 
-Select which file extensions to minify automatically using [Auto Minify](https://support.cloudflare.com/hc/articles/200168196) [^2].
+Select which file extensions to minify automatically using [Auto Minify](/speed/optimization/content/auto-minify/) [^2].
 
 <details>
 <summary>API information</summary>
@@ -212,7 +212,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Mirage
 
-Enable or disable [Mirage](https://support.cloudflare.com/hc/articles/219178057) [^9] for matching requests.
+Enable or disable [Mirage](/speed/optimization/images/mirage/) [^9] for matching requests.
 
 <details>
 <summary>API information</summary>
@@ -286,7 +286,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Rocket Loader
 
-Enable or disable [Rocket Loader](/fundamentals/speed/rocket-loader/) [^12] for matching requests.
+Enable or disable [Rocket Loader](/speed/optimization/content/rocket-loader/) [^12] for matching requests.
 
 <details>
 <summary>API information</summary>
@@ -386,7 +386,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## SXG
 
-Enable or disable [Signed Exchanges (SXG)](/fundamentals/speed/signed-exchanges/) [^16] for matching requests.
+Enable or disable [Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) [^16] for matching requests.
 
 <details>
 <summary>API information</summary>
