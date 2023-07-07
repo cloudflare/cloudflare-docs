@@ -23,6 +23,10 @@ Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, Cloudflare plans on releasing a one-click migration tool for Page Rules.
 
+## Execution order of Rules products
+
+{{<render file="_product_execution_order.md" productFolder="rules">}}
+
 ## Create Cache Rules in the dashboard
 
 To create a new cache rule:
