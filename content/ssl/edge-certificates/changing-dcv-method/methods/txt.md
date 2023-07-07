@@ -57,7 +57,7 @@ This means that a wildcard certificate covering `example.com` and `*.example.com
 
 {{<render file="_dcv-validate-patch.md">}}
 
-## Renew DCV tokens
+## Renewal
 
 {{<render file="_dcv-token-renewal.md">}}
 

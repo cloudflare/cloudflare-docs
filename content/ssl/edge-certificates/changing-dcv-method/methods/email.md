@@ -43,6 +43,6 @@ Once you locate your certificate, find the following values:
 
 {{<render file="_dcv-validate-patch.md">}}
 
-## Renew DCV tokens
+## Renewal
 
 {{<render file="_dcv-token-renewal.md">}}
