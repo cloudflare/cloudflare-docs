@@ -68,6 +68,32 @@ async function eventHandler(event) {
 
 ---
 
+
+## How the `Accept-Encoding` header is handled
+
+When making a subrequest with the `fetch()` API, you can specify which forms of compression to prefer that the server will respond with (if the server supports it) by including the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) header.
+
+Workers supports both the gzip and brotli compression algorithms. For example, to make a subrequest and prefer that the response is encoded as brotli, and fall back to gzip if brotli is not supported by the server, you can specify `br, gzip` in the `Accept-Encoding` header, as shown in the example below:
+
+```typescript
+export default {
+  async fetch(request, env) { 
+    const headers = new Headers({
+      'Accept-Encoding': "br, gzip"
+    });
+    const response = await fetch("https://developers.cloudflare.com", {method: "GET", headers});
+    return new Response(`Content-Encoding: ${response.headers.get("Content-Encoding")}`);
+  }
+}
+```
+
+In order to read a response that is encoded as brotli within a Worker, you currently must enable the [`brotli_content_encoding`](/workers/platform/compatibility-dates/#brotli-content-encoding-support) compatibility flag in your Worker. Soon, this compatibility flag will be enabled for by default for all Workers past an upcoming compatibility date.
+
+### Passthrough behavior
+
+As long as you do not read the body of the response prior to returning it to the client, it will "pass through" without being decompressed and then recompressed again. This can be helpful when using Workers in front of origin servers or when fetching compressed media assets, to ensure that the same compression used by the origin server is used in the response that your Worker returns.
+
+
 ## Related resources
 
 - [Example: use `fetch` to respond with another site](/workers/examples/respond-with-another-site/)

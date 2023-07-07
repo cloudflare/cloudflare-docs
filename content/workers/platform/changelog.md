@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-07-06
+
+- When the [`brotli_content_encoding`](/workers/platform/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime can now decode subrequest response bodies that are encoded using the ([Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression)) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+
 ## 2023-06-22
 
 - Added the [`strict_crypto_checks`](/workers/platform/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
