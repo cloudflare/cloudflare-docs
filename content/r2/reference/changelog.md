@@ -6,6 +6,10 @@ rss: file
 
 # Changelog
 
+## 2023-07-05
+
+- Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than ranged reads on smaller files. Performance should now be consistently good independent of filesize.
+
 ## 2023-06-21
 
 - [Multipart ETags](/r2/objects/multipart-objects/#etags) are now MD5 hashes.
@@ -153,7 +157,7 @@ rss: file
 ## 2022-07-13
 
 - S3 XML documents sent to R2 that have an XML declaration are not rejected with `400 Bad Request` / `MalformedXML`.
-- Minor S3 XML compatability fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.
+- Minor S3 XML compatibility fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.
 - Beta `ListMultipartUploads` support.
 
 ## 2022-07-06
