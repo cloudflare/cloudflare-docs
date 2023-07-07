@@ -6,9 +6,9 @@ weight: 7
 
 {{<beta>}} Radar's URL Scanner {{</beta>}}
 
-In order to better understand Internet usage around the world, Radar also showcases a URL Scanner at [https://radar.cloudflare.com/scan](https://radar.cloudflare.com/scan).
+In order to better understand Internet usage around the world, Radar provides a URL Scanner at [https://radar.cloudflare.com/scan](https://radar.cloudflare.com/scan).
 
-To make your first URL scan using the API, you must obtain a URL Scanner specific [API token](/fundamentals/api/get-started/create-token/) first. Create a Custom Token, with _Account_ > _URL Scanner_ in the **Permissions** group, and select _Edit_ as the access level.
+To make your first URL scan using the API, you must obtain a URL Scanner specific [API token](/fundamentals/api/get-started/create-token/). Create a Custom Token with _Account_ > _URL Scanner_ in the **Permissions** group, and select _Edit_ as the access level.
 
 Once you have the token, and you know your `accountId`, you are ready to make your first request to the API at `https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/`.
 
@@ -27,7 +27,7 @@ curl --request POST \
 	}'
 ```
 
-By default, the report will have a `Public` visibility level, which means it will appear in the [recent scan's](https://radar.cloudflare.com/scan#recent-scans) list and in search results. It will also include a single screenshot with desktop resolution.
+By default, the report will have a `Public` visibility level, which means it will appear in the [recent scans](https://radar.cloudflare.com/scan#recent-scans) list and in search results. It will also include a single screenshot with desktop resolution.
 
 A successful response will have a status code of `200` and be similar to the following:
 
@@ -66,13 +66,13 @@ Here's an example request body with some custom configuration options:
 }
 ```
 
-Above, the visibility level is set as `Unlisted`, which means that the scan report won't be included in the [recent scan's](https://radar.cloudflare.com/scan#recent-scans) list nor in search results. In  effect, only users with knowledge of the scan ID will be able to access it.
+Above, the visibility level is set as `Unlisted`, which means that the scan report won't be included in the [recent scans](https://radar.cloudflare.com/scan#recent-scans) list nor in search results. In  effect, only users with knowledge of the scan ID will be able to access it.
 
-There will also be 3 screenshots taken of the webpage, one per target device type and the [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) HTTP Header will be set as "My-custom-user-agent". Notice that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
+There will also be three screenshots taken of the webpage, one per target device type. The [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) HTTP Header will be set as "My-custom-user-agent". Note that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 
 ## Get scan report
 
-Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/scan/<scanId>` (the `scanId` will be the `result.uuid` value returned in the previous response).
+Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/scan/<scanId>`. The `scanId` will be the `result.uuid` value returned in the previous response.
 
 While the scan is in progress, the HTTP status code will be `202`, once it's finished it will be `200`. Clients are advised to poll every 10-30 seconds.
 
@@ -108,9 +108,9 @@ Of those above, here are some highlights:
 - `page.securityViolations` - [CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) or [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) violations.
 - `verdicts.overall.malicious` - Whether the website was considered, _at the time of the scan_, malicious. Please check the remaining properties for each subsystem(s) specific threats detected.
 
-Visit `https://developers.cloudflare.com/api/operations/urlscanner-get-scan` for the full response schema.
+The [Get URL Scan](/api/operations/urlscanner-get-scan) API endpoint documentation contains the full response schema.
 
-In order to fetch the scan's [screenshots](https://developers.cloudflare.com/api/operations/urlscanner-get-scan-screenshot), [DOM](https://developers.cloudflare.com/api/operations/urlscanner-get-scan-dom) and full [network log](https://developers.cloudflare.com/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
+In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot), [DOM](/api/operations/urlscanner-get-scan-dom) and full [network log](/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
 
 
 ## Search scans
