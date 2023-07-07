@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Query a D1 database from a SvelteKit application
+summary: Query a D1 database from a SvelteKit application.
 tags:
   - SvelteKit
   - Svelte
@@ -15,12 +15,15 @@ layout: example
 
 To set up a new SvelteKit site on Cloudflare Pages that can query D1:
 
-1. Refer to [the Svelte guide](/pages/framework-guides/deploy-a-svelte-site/) and Svelte's [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare)a
-2. Install the Cloudflare adapter within your SvelteKit project: `npm i -D @sveltejs/adapter-cloudflare`
-3. Bind a D1 database [to your Pages Function](/pages/platform/functions/bindings/#d1-databases)
+1. Refer to [the Svelte guide](/pages/framework-guides/deploy-a-svelte-site/) and Svelte's [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare).
+2. Install the Cloudflare adapter within your SvelteKit project: `npm i -D @sveltejs/adapter-cloudflare`.
+3. Bind a D1 database [to your Pages Function](/pages/platform/functions/bindings/#d1-databases).
 4. Pass the `--d1=BINDING_NAME` flag when developing locally. `BINDING_NAME` should match what call in your code: for example, `--d1=DB`.
 
-The following example shows a server endpoint configured to query D1. Bindings are available on the `platform` parameter passed to each endpoint, via `platform.env.BINDING_NAME`. With SvelteKit's [file-based routing](https://kit.svelte.dev/docs/routing), the server endpoint defined in `src/routes/api/users/+server.ts` is available at `/api/users` within your SvelteKit app.
+The following example shows a server endpoint configured to query D1.
+
+* Bindings are available on the `platform` parameter passed to each endpoint, via `platform.env.BINDING_NAME`.
+* With SvelteKit's [file-based routing](https://kit.svelte.dev/docs/routing), the server endpoint defined in `src/routes/api/users/+server.ts` is available at `/api/users` within your SvelteKit app.
 
 The example also shows how to configure both your app-wide types within `src/app.d.ts` to recognize your `D1Database` binding, and import the `@sveltejs/adapter-cloudflare` adapter into `svelte.config.js` and configure it to apply to all of your routes.
 
