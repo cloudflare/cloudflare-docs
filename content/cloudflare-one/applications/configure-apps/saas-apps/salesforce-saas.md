@@ -15,13 +15,9 @@ meta:
 - Configure Salesforce as a SaaS application in Cloudflare Zero Trust
 - Force logins to Salesforce through Cloudflare's Zero Trust rules
 
-**Time to complete:**
+For this tutorial, you will need admin access to a Salesforce account
 
-15 minutes
-
-## Prerequisites
-
-Admin access to a Salesforce account
+**Time to complete:** 15 minutes
 
 ## Set up Salesforce as a SaaS application in Cloudflare Zero Trust
 
@@ -46,9 +42,9 @@ Admin access to a Salesforce account
 ## Enable Single Sign-On in Salesforce
 
 1.  In Salesforce, ensure your users have **Federation IDs**.
-    {{<Aside type="note">}}
-    The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.
-    {{</Aside>}}
+
+    {{<Aside type="note">}}The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.{{</Aside>}}
+
 1.  Navigate to **Security Controls > Single Sign-On Settings**.
 1.  Set the following global settings:
     - **SAML Enabled:** true

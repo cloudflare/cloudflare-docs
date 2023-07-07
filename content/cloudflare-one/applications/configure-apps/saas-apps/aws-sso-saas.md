@@ -1,5 +1,5 @@
 ---
-updated: 2021-08-03
+updated: 2023-07-05
 category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
@@ -10,19 +10,13 @@ title: Configure AWS SSO with Access for SaaS
 
 In this tutorial we will configure AWS SSO with Access for SaaS. Cloudflare Access for SaaS allows you to layer additional network and device posture policies on top of existing identity authentication from your identity provider. In this example, we are using Okta as an identity provider, but any supported identity provider can be leveraged.
 
-{{<Aside>}}
-
-For this tutorial, you will need:
+## Prerequisites
 
 - A Zero Trust account
 - An integrated IdP
 - Admin access to an AWS account
 
-{{</Aside>}}
-
-**Time to complete:**
-
-20 minutes
+**Time to complete:** 20 minutes
 
 ## Configure AWS
 
@@ -42,7 +36,7 @@ For this tutorial, you will need:
 
 1.  In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com) and navigate to **Access** > **Applications**.
 
-1.  Select _SaaS_ as the application type to begin creating a SaaS application.
+1.  Select *SaaS* as the application type to begin creating a SaaS application.
 
 1.  Copy the following fields from your AWS account and input them in the Zero Trust application configuration:
 
@@ -52,8 +46,6 @@ For this tutorial, you will need:
     | **AWS SSO Issuer URL** | **Entity ID**                      |
 
     The **Name ID Format** must be set to: Email.
-
-    ![Fields configured using information copied from an AWS account.](/images/cloudflare-one/zero-trust-security/aws-sso-saas/aws-application.png)
 
 1.  (Optional) Additional Attribute Statements can be passed from your IdP to AWS SSO. More information about AWS Attribute mapping can be found at [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
 
@@ -90,16 +82,11 @@ For this tutorial, you will need:
 
 1.  Set Provisioning to _Manual_.
 
-    ![AWS settings panel demonstrating correct settings for manual provisioning.](/images/cloudflare-one/zero-trust-security/aws-sso-saas/aws-settings.png)
-
-    {{<Aside type="warning" header="Important">}}
-
-    Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
+    {{<Aside type="warning" header="Important">}}Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
 
 1.  Users are created in both your identity provider and AWS
 1.  Users have matching usernames in your identity provider and AWS.
 1.  Usernames are email addresses. This is the only format AWS supports with third-party SSO providers.
-
     {{</Aside>}}
 
 ## Test your connection

@@ -10,17 +10,13 @@ title: Configure Zendesk SSO with Access for SaaS
 
 This tutorial covers how to configure Zendesk SSO with Access for SaaS.
 
-For this tutorial, you will need:
+## Prerequisites
 
 - A Zero Trust Account
 - An integrated identity provider (IdP)
 - Admin access to your Zendesk account
 
-**Time to complete:**
-
-20 minutes
-
----
+**Time to complete:** 20 minutes
 
 ## Configure Zendesk and Cloudflare
 
@@ -47,8 +43,6 @@ For this tutorial, you will need:
 
    Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v) if the name is not provided.
 
-   ![Zendesk attributes](/images/cloudflare-one/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
-
 6. To determine who can access Zendesk, [create an Access policy](/cloudflare-one/policies/access/).
 
 7. Copy the values from the Cloudflare IdP fields and add them to the following Zendesk fields:
@@ -67,8 +61,6 @@ For this tutorial, you will need:
    3. Set **Algorithm** to _SHA256_ and select **Calculate Fingerprint**.
 
    4. Copy the **Formatted FingerPrint** value.
-
-   ![Zendesk fingerprint](/images/cloudflare-one/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
 8. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 

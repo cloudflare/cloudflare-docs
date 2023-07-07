@@ -60,8 +60,6 @@ Finally, you will need to configure your SaaS application to require users to lo
    - **Access Entity ID or Issuer**
    - **Public key**
 
-   ![Copy SSO settings for a SaaS application from Zero Trust](/images/cloudflare-one/applications/saas-sso-endpoint.png)
-
    You can either manually enter this data into your SaaS application or upload the application's metadata XML file. The metadata is available at the URL: `<your-SSO-endpoint>/saml-metadata`
 
 2. Select **Done**.
@@ -74,12 +72,12 @@ The following tutorials provide detailed integration instructions for specific S
 
 - [Cloudflare Area 1](/cloudflare-one/tutorials/area-1/)
 
-- [Zendesk](/saas-apps/zendesk-sso-saas/)
+- [Zendesk](/cloudflare-one/applications/configure-apps/saas-apps/zendesk-sso-saas/)
 
-- [Docusign](/saas-apps/docusign-access/)
+- [Docusign](/cloudflare-one/applications/configure-apps/saas-apps/docusign-access/)
 
-- [Hubspot](/saas-apps/hubspot-saas/)
+- [Hubspot](/cloudflare-one/applications/configure-apps/saas-apps/hubspot-saas/)
 
-- [AWS](/saas-apps/aws-sso-saas/)
+- [AWS](/cloudflare-one/applications/configure-apps/saas-apps/aws-sso-saas/)
 
-- [Salesforce](/saas-apps/salesforce-saas/)
+- [Salesforce](/cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas/)
