@@ -1,21 +1,9 @@
 name: Label PRs
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
-on:
-  pull_request:
-    branches:
-      - production
+on: [pull_request_target]
 
 jobs:
-  assign_pcx:
-    name: Assign PCX
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/assign-pr
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    continue-on-error: true
   
   label_products:
     name: Label products
