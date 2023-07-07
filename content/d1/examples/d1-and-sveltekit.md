@@ -20,12 +20,12 @@ To set up a new SvelteKit site on Cloudflare Pages that can query D1:
 3. Bind a D1 database [to your Pages Function](/pages/platform/functions/bindings/#d1-databases).
 4. Pass the `--d1=BINDING_NAME` flag when developing locally. `BINDING_NAME` should match what call in your code: for example, `--d1=DB`.
 
-The following example shows a server endpoint configured to query D1.
+The following example shows you how to create a server endpoint configured to query D1.
 
 * Bindings are available on the `platform` parameter passed to each endpoint, via `platform.env.BINDING_NAME`.
 * With SvelteKit's [file-based routing](https://kit.svelte.dev/docs/routing), the server endpoint defined in `src/routes/api/users/+server.ts` is available at `/api/users` within your SvelteKit app.
 
-The example also shows how to configure both your app-wide types within `src/app.d.ts` to recognize your `D1Database` binding, and import the `@sveltejs/adapter-cloudflare` adapter into `svelte.config.js` and configure it to apply to all of your routes.
+The example also shows you how to configure both your app-wide types within `src/app.d.ts` to recognize your `D1Database` binding, import the `@sveltejs/adapter-cloudflare` adapter into `svelte.config.js`, and configure it to apply to all of your routes.
 
 {{<tabs labels="ts">}}
 {{<tab label="ts" default="true">}}
