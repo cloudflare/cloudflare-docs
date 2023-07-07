@@ -49,7 +49,7 @@ Easy integration with Cloudflare services, such as R2 & D1 enable developers to 
 
 ### d1-orm
 
-An Object Relational Mapping (ORM) is a way for you to query and manipulate data by using JavaScript. Created by a Cloudflare Discord Community Champion, the `d1-orm` seeks to provide a strictly typed experience while using D1.
+Object Relational Mapping (ORM) is a technique to query and manipulate data by using JavaScript. Created by a Cloudflare Discord Community Champion, the `d1-orm` seeks to provide a strictly typed experience while using D1.
 
 * [GitHub](https://github.com/Interactions-as-a-Service/d1-orm/issues)
 * [Documentation](https://docs.interactions.rest/d1-orm/)
