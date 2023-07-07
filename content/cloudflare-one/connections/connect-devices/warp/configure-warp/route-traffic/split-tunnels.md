@@ -90,7 +90,7 @@ Do not exclude a site from Split Tunnels if you want to see the traffic in your 
 
 ## Cloudflare Zero Trust domains
 
-Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP sesssion durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
+Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP session durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
 
 - The IdP used to authenticate to Cloudflare Zero Trust
 - `<your-team-name>.cloudflareaccess.com`
