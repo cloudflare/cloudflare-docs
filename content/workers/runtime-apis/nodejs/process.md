@@ -7,9 +7,7 @@ title: process
 
 {{<render file="_nodejs-compat-howto.md">}}
 
-The [`process`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html) module in Node.js provides a number of useful APIs related to the current process.
-Within a serverless environment like Workers, most of these APIs are not relevant or meaningful, but some are
-useful for cross-runtime compatibility. Within workers the following APIs are available:
+The [`process`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html) module in Node.js provides a number of useful APIs related to the current process. Within a serverless environment like Workers, most of these APIs are not relevant or meaningful, but some are useful for cross-runtime compatibility. Within Workers, the following APIs are available:
 
 ```js
 import {
@@ -27,19 +25,11 @@ nextTick(() => {
 
 ## `process.env`
 
-In the Node.js implementation of `process.env`, the `env` object is a copy of the environment
-variables at the time the process was started. In the Workers implementation, there is no
-process level environment, so `env` is an empty object. You can still set and get values from
-`env`, and those will be globally persistent for all workers running in the same Isolate and
-context (e.g. the same script).
+In the Node.js implementation of `process.env`, the `env` object is a copy of the environment variables at the time the process was started. In the Workers implementation, there is no process-level environment, so `env` is an empty object. You can still set and get values from `env`, and those will be globally persistent for all Workers running in the same isolate and context (for example, the same Workers entry point).
 
 ### Relationship to per-request `env` argument in `fetch()` handlers
 
-Workers do have a concept of [environment variables](/workers/platform/environment-variables/) that
-are applied on a per-worker/per-request basis. These are not accessible automatically via the
-`process.env` API. It is possible to manually copy these values into `process.env` if you need
-to. Be aware, however, that setting any value on `process.env` will coerce that value into a
-string.
+Workers do have a concept of [environment variables](/workers/platform/environment-variables/) that are applied on a per-Worker and per-request basis. These are not accessible automatically via the `process.env` API. It is possible to manually copy these values into `process.env` if you need to. Be aware, however, that setting any value on `process.env` will coerce that value into a string.
 
 ```js
 import * as process from 'node:process';
@@ -57,11 +47,7 @@ export default {
 };
 ```
 
-It is strongly recommended that you *do not* replace the entire `process.env` object with the
-request `env` object. Doing so will cause you to lose any environment variables that were set
-previously and will cause unexpected behavior for other workers running in the same Isolate.
-Specifically, it would cause inconsistency with the `process.env` object when accessed via
-named imports.
+It is strongly recommended that you *do not* replace the entire `process.env` object with the request `env` object. Doing so will cause you to lose any environment variables that were set previously and will cause unexpected behavior for other Workers running in the same isolate. Specifically, it would cause inconsistency with the `process.env` object when accessed via named imports.
 
 ```js
 const * as process from 'node:process';
@@ -77,7 +63,6 @@ process.env === env; // false! they are no longer the same object
 
 ## `process.nextTick()`
 
-The Workers implementation of `process.nextTick()` is a wrapper for the standard Web Platform API
-[`queueMicrotask()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/queueMicrotask).
+The Workers implementation of `process.nextTick()` is a wrapper for the standard Web Platform API [`queueMicrotask()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/queueMicrotask).
 
 Refer to the [Node.js documentation for `process`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html) for more information.

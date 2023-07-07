@@ -3,13 +3,11 @@ pcx_content_type: configuration
 title: Diagnostics Channel
 ---
 
-# process
+# Diagnostics channel
 
 {{<render file="_nodejs-compat-howto.md">}}
 
-The [`diagnostics_channel`](https://nodejs.org/dist/latest-v20.x/docs/api/diagnostics_channel.html) module provides an API to create named channels to report arbitrary
-message data for diagnostics purposes. The API is essentially a simple event pub/sub model that is
-specifically designed to support low-overhead diagnostics reporting.
+The [`diagnostics_channel`](https://nodejs.org/dist/latest-v20.x/docs/api/diagnostics_channel.html) module provides an API to create named channels to report arbitrary message data for diagnostics purposes. The API is essentially a simple event pub/sub model that is specifically designed to support low-overhead diagnostics reporting.
 
 ```js
 
@@ -35,17 +33,11 @@ subscribe('my-channel', (message) => {
 });
 ```
 
-All `Channel` instances are singletons per each Isolate/context (e.g. the same script). Subscribers
-are always invoked synchronously and in the order they were registered, much like an `EventTarget`
-or Node.js `EventEmitter` class.
-
+All `Channel` instances are singletons per each Isolate/context (for example, the same entry point). Subscribers are always invoked synchronously and in the order they were registered, much like an `EventTarget` or Node.js `EventEmitter` class.
 
 ## Integration with Tail Workers
 
-When using [Tail Workers](/workers/platform/tail-workers/), all messages published to any
-channel will be forwarded also to the [Tail Worker](/workers/platform/tail-workers/). Within the
-tail worker, the diagnostic channel messages can be accessed via the `diagnosticsChannelEvents`
-property:
+When using [Tail Workers](/workers/platform/tail-workers/), all messages published to any channel will be forwarded also to the [Tail Worker](/workers/platform/tail-workers/). Within the Tail Worker, the diagnostic channel messages can be accessed via the `diagnosticsChannelEvents` property:
 
 ```js
 export default {
@@ -57,15 +49,11 @@ export default {
 }
 ```
 
-Note that message published to the tail worker is passed through the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
-(same mechanism as the [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) API) so only values that can be successfully cloned
-are supported.
+Note that message published to the tail worker is passed through the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) (same mechanism as the [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) API) so only values that can be successfully cloned are supported.
 
 ## `TracingChannel`
 
-Per the Node.js documentation, "`TracingChannel` is a collection of \[Channels\] which together
-express a single traceable action. It is used to formalize and simplify the process of producing
-events for tracing application flow."
+Per the Node.js documentation, "[`TracingChannel`](https://nodejs.org/api/diagnostics_channel.html#class-tracingchannel) is a collection of \[Channels\] which together express a single traceable action. `TracingChannel` is used to formalize and simplify the process of producing events for tracing application flow."
 
 ```js
 import { tracingChannel } from 'node:diagnostics_channel';
