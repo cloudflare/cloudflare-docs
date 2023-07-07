@@ -10,6 +10,27 @@ updated: 2022-08-24
 After you [create a new account](/fundamentals/account-and-billing/account-setup/create-account/), you might want to create your billing profile.
 
 {{<how-to>}}
+{{<how-to-step title="Test tabs" noMarkdown=true >}}
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_pool-create.md" productFolder="load-balancing">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_pool-create-api.md" productFolder="load-balancing">}}
+ 
+{{</tab>}}
+{{</tabs>}}
+
+Test test test.
+
+And also test [links](/test/).
+
+{{</how-to-step>}}
+
 {{<how-to-step title="Add primary payment method">}}
 
 {{<render file="_billing-add-payment-method.md">}}
