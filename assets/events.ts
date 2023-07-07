@@ -270,3 +270,40 @@ export function toggleSidebar() {
     });
   }
 }
+
+export function bats() {
+  const content = document.querySelector("#batBox");
+    content.addEventListener("click", (event: Event) => {
+      const target = event.target as HTMLElement;
+
+      if (target.matches(".batContainer .bats a")) {
+          event.preventDefault();
+
+          const batContainer = target.closest(".batContainer");
+          if (batContainer) {
+              const batContentDivs = batContainer.querySelectorAll(".batContent > div");
+              batContentDivs.forEach((div: HTMLElement) => {
+                  div.style.display = "none";
+              });
+          }
+
+          const bats = target.closest(".bats");
+          if (bats) {
+              const batLinks = bats.querySelectorAll("a");
+              batLinks.forEach((link: HTMLElement) => {
+                  link.classList.remove("active");
+              });
+          }
+
+          target.classList.toggle("active");
+          const src = target.getAttribute("src");
+          if (src) {
+              const elementToShow = document.getElementById(src);
+              if (elementToShow) {
+                  elementToShow.style.display = "block";
+              }
+          }
+      }
+  });
+
+}

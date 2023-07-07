@@ -1,0 +1,5 @@
+{{- $label := replace (.Get "label") "/" "-"}}
+{{- $default := .Get "default" -}}
+{{- $noCode := .Get "no-code" -}}
+
+<div class="bat">{{ $.Inner | .Page.RenderString }}</div>

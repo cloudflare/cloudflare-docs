@@ -23,4 +23,5 @@ const currentLocation = window.location.href;
   events.toggleSidebar();
   events.activeTab();
   events.tabs();
+  events.bats();
 })();

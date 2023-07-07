@@ -15,7 +15,8 @@ Learn how to add new account members, edit or revoke their permissions and acces
 {{</Aside>}}
 
 ## Add account members
-
+{{<tabs labels="UI | API">}}
+{{<tab label="ui" no-code="true">}}
 To add a member to your account:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account[^1].
@@ -33,6 +34,51 @@ To add a member to your account:
 {{<Aside type="note">}}
 If a user already has an account with Cloudflare and you have an Enterprise account, you can also select **Direct Add** to add them to your account without sending an email invitation.
 {{</Aside>}}
+{{</tab>}}
+{{<tab label="api" default="true">}}
+test
+{{</tab>}}
+{{</tabs>}}
+
+<div id="batBox" labels="UI | API">
+  <div class="batContainer">
+    <ul class="bats">
+      <li><a src="bat1" href="javascript:void(0);" class="active">bat 1</a></li>
+      <li><a src="bat2" href="javascript:void(0);">bat 2</a></li>
+      <li><a src="bat3" href="javascript:void(0);">bat 3</a></li>
+      <li><a src="bat4" href="javascript:void(0);">bat 4</a></li>
+    </ul>
+    <div class="batContent">
+      <div id="bat1">
+        {{<Aside>}}
+        fdsa
+        {{</Aside>}}
+      </div>
+      <div id="bat2">
+        <span>Inside bat 2, how <b>interesting</b>.</span>
+      </div>
+      <div id="bat3">
+        <span>Inside bat 3, how <b>interesting</b>.</span>
+      </div>
+  </div>
+</div>
+
+
+
+----------
+
+
+{{<bats labels="UI | API">}}
+    {{<bat>}}
+    {{<code>}}
+    hifdsa
+    {{</code>}}
+    {{</bat>}}
+    {{<bat>}}
+    test
+    {{</bat>}}
+{{</bats>}}
+
 
 ## Edit member permissions
 

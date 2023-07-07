@@ -1,0 +1,27 @@
+{{- $text := .Get "labels" -}}
+{{- $labels := split $text " | " -}}
+{{ $unique_id := substr (md5 .Inner) 0 16 }}
+
+<div id="batBox" labels="{{ $text }}">
+  <div class="batContainer">
+    <ul class="bats">
+      {{ range $i, $label := $labels }}
+      <li><a src="bat{{$i}}" href="javascript:void(0);"{{ if eq $i 0 }} class="active"{{ end }}>{{$label}}</a></li>
+      {{ end }}
+    </ul>
+    <div class="batContent">
+      {{ range $i, $label := $labels }}
+      <div id="bat{{$i}}">
+            
+        <span>
+
+          
+        </span>
+        
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+

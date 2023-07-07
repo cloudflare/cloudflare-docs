@@ -5078,7 +5078,6 @@ pre {
 .tabs {
   position: relative;
   margin-top: 1rem;
-  box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
   height: 2.4rem;
 }
 
@@ -5563,4 +5562,70 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 
 [theme="dark"] #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
+}
+
+#batBox {
+  margin: 0 auto;
+  box-sizing:border-box;
+}
+
+
+.batContainer {
+  background: #f6f8fa;
+  border: .45px solid #d1d8dd;
+  margin: 0 auto;
+}
+
+.batContent {
+  padding: 10px;
+  text-align: left;
+  min-height: 200px;
+  color: #000;
+}
+
+/* Hide all but first bat */
+.batContent > div:not(:first-child) {
+  display: none;
+}
+
+.batContainer > .bats {
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.bats li {
+  float: left;
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+}
+
+.bats a {
+  position: relative;
+  background: #f1f5f8;
+  border-top: 3px solid rgba(0, 0, 0, 0);
+  padding: 1em .5em;
+  float: left;
+  text-decoration: none;
+  color: #666;
+  margin: 0 .1em 0 0;
+  font-size: 1em;
+  flex: 1;
+  transition: all .35s ease;
+}
+
+.bats a.active {
+  border-top: 3px solid #f38062;
+  color: #000;
+  background: inherit;
+  font-weight: 700;
+}
+
+.bats a:hover {
+  background: inherit;
+  color: #000;
 }
