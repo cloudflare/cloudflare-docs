@@ -5,8 +5,14 @@ _build:
   list: never
 ---
 
-If possible, DCV tokens for proxied hostnames are always renewed [via HTTP](/ssl/edge-certificates/changing-dcv-method/methods/http/).
+Even if you manually handle DCV when issuing certificates in a [partial DNS setup](/dns/zone-setups/partial-setup/), at certificate renewal, Cloudflare will attempt to automatically perform DCV via HTTP.
 
-However, some certificates — for example, if you are using wildcard certificates or certificates with multiple SANs or your hostname is not proxied — are not eligible for HTTP validation.
+If all of the following conditions are confirmed at the first attempt, the renewal happens automatically via HTTP.
 
-If your certificate is not eligible for HTTP validation, you will need to repeat the DCV process with your chosen method. Cloudflare generates these renewal TXT tokens 30 days before certificate expiration.
+* Hostnames are proxied.
+* Hostnames on the certificate resolve to the IPs assigned to the zone.
+* The certificate does not contain wildcards.
+
+If any one of the conditions is not met, the certificate renewal falls back to your chosen method and you will need to repeat the DCV process manually.
+
+Cloudflare generates renewal tokens 30 days before certificate expiration.
