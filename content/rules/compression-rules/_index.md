@@ -13,6 +13,8 @@ Cloudflare [compresses some responses by default](/support/speed/optimization-fi
 
 When there is a match for a compression rule configured with several compression algorithms, the selected algorithm is the first one supported by the website visitor, according to the received `accept-encoding` HTTP header. If multiple compression rules match, the last rule wins.
 
+{{<render file="_rules-requirements.md" withParameters="Compression Rules require">}}
+
 ## Get started
 
 Follow the instructions in the following pages to get started:

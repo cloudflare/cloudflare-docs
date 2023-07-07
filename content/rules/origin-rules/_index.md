@@ -18,6 +18,8 @@ Origin Rules allow you to customize where the incoming traffic will go and with 
 
 The Origin Rule expression will determine when these overrides will be applied.
 
+{{<render file="_rules-requirements.md" withParameters="Origin Rules require">}}
+
 ## Availability
 
 {{<feature-table id="rules.origin_rules">}}
