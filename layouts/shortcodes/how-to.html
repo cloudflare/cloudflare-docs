@@ -1,0 +1,23 @@
+<div class="howToStepContainer">
+  {{- .Inner -}}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  let howTos = document.getElementsByClassName("howToStepContainer");
+  if (howTos) {
+    for (const howTo of howTos) {
+      let counter = 1;
+      let howToSteps = howTo.getElementsByClassName("howToStep");
+      for (const step of howToSteps) {
+        let secondSpan = step.children[0].querySelector("span:nth-child(2)");
+        let stepCounter = document.createElement("span");
+        stepCounter.className = "stepCounter";
+        stepCounter.textContent = counter;
+        secondSpan.prepend(stepCounter);
+        counter++;
+      }
+    }
+  }
+});
+</script>
