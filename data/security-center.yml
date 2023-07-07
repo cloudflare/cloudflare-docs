@@ -13,7 +13,6 @@ meta:
     vulnerabilities, and providing a one-click solution for Cloudflare
     configuration issues.
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/security-center

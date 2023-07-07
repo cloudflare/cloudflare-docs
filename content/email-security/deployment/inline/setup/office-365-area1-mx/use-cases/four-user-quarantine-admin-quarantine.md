@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 4
 meta:
     title: User managed quarantine and administrative quarantine - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the user managed quarantine and administrative quarantine
@@ -35,7 +36,7 @@ To configure anti-spam policies:
 
     <div class="large-img">
 
-    ![Go to Actions and find Edit actions](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
+    ![Go to Actions and find Edit actions](/email-security/static/flexible-partial-images/o365-area1-mx/step6-edit-actions.png)
 
     </div>
 
@@ -52,7 +53,7 @@ To configure anti-spam policies:
 
     <div class="large-img">
 
-    ![Select the spam actions in the above step](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step7-quarantine-message-case4.png)
+    ![Select the spam actions in the above step](/email-security/static/flexible-partial-images/o365-area1-mx/step7-quarantine-message-case4.png)
 
     </div>
 

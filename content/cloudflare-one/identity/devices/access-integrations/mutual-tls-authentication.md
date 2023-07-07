@@ -23,7 +23,7 @@ With a root certificate authority (CA) in place, Access only allows requests fro
 
 Currently, mTLS does not work with HTTP/3 traffic.
 
-![mTLS handshake diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
+![mTLS handshake diagram](/images/cloudflare-one/identity/devices/mtls.png)
 
 ## Add mTLS authentication to your Access configuration
 

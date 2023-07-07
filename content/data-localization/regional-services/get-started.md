@@ -16,18 +16,24 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and domain.
 2. Go to the **DNS** tab.
 3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
-4. From the **Region** dropdown, select the region you would like to use on your domain. The complete list of available regions is the following:
+4. From the **Region** dropdown, select the region you would like to use on your domain. Refer to the table below for the complete list of available regions and their definitions. Note that only Super Administrators can view and edit the DNS Region used for Regional Services.
 
-    - Australia
-    - Canada
-    - European Union
-    - India
-    - Japan
-    - United States of America
-    - FedRAMP Compliant
-    - ISO 27001 Certified European Union
-    - Germany
-    - Singapore
+{{<table-wrap style="font-size: 87%">}}
+
+| Region | Definition |
+| --- | --- |
+| Australia | Cloudflare will only use data centers that are physically located within Australia to decrypt and service HTTPS traffic. |
+| Canada | Cloudflare will only use data centers that are physically located within Canada to decrypt and service HTTPS traffic. |
+| European Union | Cloudflare will only use data centers that are physically located within the European Union. For more details, refer to the [list of European Union countries](https://european-union.europa.eu/principles-countries-history/country-profiles_en). |
+| India | Cloudflare will only use data centers that are physically located within India to decrypt and service HTTPS traffic. |
+| Japan | Cloudflare will only use data centers that are physically located within Japan to decrypt and service HTTPS traffic. |
+| United States of America | Cloudflare will only use data centers that are physically located within the United States of America to decrypt and service HTTPS traffic. |
+| FedRAMP Compliant | Cloudflare will only use data centers that are FedRAMP certified. |
+| ISO 27001 Certified European Union | Cloudflare will only use data centers that are physically located within the [European Union](https://european-union.europa.eu/principles-countries-history/country-profiles_en) and that adhere to the ISO 27001 certification. |
+| Germany | Cloudflare will only use data centers that are physically located within Germany to decrypt and service HTTPS traffic. |
+| Singapore | Cloudflare will only use data centers that are physically located within Singapore to decrypt and service HTTPS traffic. |
+
+{{</table-wrap>}}
 
 ## Configure Regional Services via API
 

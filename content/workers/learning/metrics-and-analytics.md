@@ -33,7 +33,7 @@ Request traffic data may display a drop off near the last few minutes displayed 
 
 ### Invocation statuses
 
-Worker invocation statuses indicate whether a Worker script executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker script invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/learning/debugging-workers/#error-pages-generated-by-workers) being returned to the client.
+Worker invocation statuses indicate whether a Worker script executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker script invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/learning/logging-workers/#error-pages-generated-by-workers) being returned to the client.
 
 {{<table-wrap>}}
 
@@ -65,9 +65,9 @@ Workers on the [Bundled Usage Model](/workers/platform/pricing/#usage-models) ma
 
 ### Request duration
 
-The request duration per execution chart is currently only available when your Worker has [Smart Placement](/workers/platform/smart-placement) enabled. Request duration shows how long it took your Worker to respond to requests, including execution duration and network latency. 
+The request duration per execution chart is currently only available when your Worker has [Smart Placement](/workers/platform/smart-placement) enabled. Request duration shows how long it took your Worker to respond to requests, including execution duration and network latency.
 
-The data shows the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis. 
+The data shows the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis.
 
 
 ### Egress data

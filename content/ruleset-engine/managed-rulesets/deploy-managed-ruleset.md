@@ -21,20 +21,21 @@ Use the following workflow to deploy a managed ruleset to a phase at the account
 
 ### Example
 
-The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of your account (`<ACCOUNT_ID>`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
+The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of your account (`{account_id}`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
 
 {{<Aside type="warning">}}
 Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
 {{</Aside>}}
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -95,16 +96,17 @@ Use the following workflow to deploy a managed ruleset to a phase at the zone le
 
 ### Example
 
-The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of a given zone (`<ZONE_ID>`) by creating a rule that executes the managed ruleset.
+The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone_id}`) by creating a rule that executes the managed ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",

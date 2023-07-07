@@ -52,6 +52,9 @@ Connection quality metrics include download and upload speed, latency (round-tri
 
 In speed, latency, and jitter rankings, only countries where users run speed tests with sufficient regularity are included. Consequently, certain countries may be excluded from the rankings, even though their data can be found in other sections of Radar.
 
+Cloudflare Speed Test measures latency multiple times over the course of the test. Measurements taken before a download or upload begins are aggregated into idle latency and jitter, while measurements taken while a download or upload is in progress are aggregated as loaded latency and jitter.
+
+
 ## Content Categories
 
 Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or 1.1.1.1 for Families can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.

@@ -3793,6 +3793,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   --border-color: rgba(var(--color-rgb), 0.1);
 }
 
+.DocsMarkdown table.Small {
+  font-size: 87%;
+}
+
 .DocsMarkdown table a {
   --background-color-rgb: var(--orange-rgb);
   --background-color-alpha: 0.08;
@@ -3890,6 +3894,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   border-top: 0;
   border-bottom-left-radius: 0.25em;
   border-bottom-right-radius: 0.25em;
+}
+
+.DocsMarkdown details summary+div.NoPadding {
+  padding: 0 0.6em;
 }
 
 .DocsMarkdown details[open] {
@@ -5219,7 +5227,7 @@ pre {
 
 .skip-link {
   background: #f3f3f4;
-  z-index: 1;
+  z-index: 5;
   color: inherit;
   font-weight: 700;
   left: 50%;
@@ -5245,7 +5253,8 @@ pre {
   }
 }
 
-/* Beta pill */
+/* Alpha, Beta, and Deprecated pills */
+.DocsMarkdown-alpha,
 .DocsMarkdown-beta,
 .DocsMarkdown-deprecated {
   display: flex;
@@ -5281,6 +5290,12 @@ pre {
 .DocsMarkdown--pill-tab {
   top: 0;
   margin-left: 0.8em;
+}
+
+.DocsMarkdown--pill-alpha {
+  width: 47px;
+  background: var(--orange-8);
+  color: var(--orange-1);
 }
 
 .DocsMarkdown--pill-beta {
@@ -5438,6 +5453,10 @@ pre {
   background-color: #2f3133;
 }
 
+.littlefoot__button {
+  max-width: 3em;
+}
+
 .littlefoot-footnote__button {
   max-width: 3em;
 }
@@ -5462,6 +5481,10 @@ pre {
 
 .mermaid {
   background: #f5f5f5 !important;
+}
+
+[theme="dark"] .mermaid {
+  background: #222222 !important;
 }
 
 .RSS svg {

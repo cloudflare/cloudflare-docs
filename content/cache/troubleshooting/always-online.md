@@ -27,7 +27,7 @@ There are limitations with the Always Online functionality:
     - Always Online has not initially crawled the website
 2.  Cloudflare cannot show private content behind logins or handle form submission (POSTs) if your origin web server is offline.
 
-Always Online does not trigger for HTTP response codes such as [404](https://support.cloudflare.com/hc/articles/115003014512#code_404), [503](https://support.cloudflare.com/hc/articles/115003011431#503error), or [500](https://support.cloudflare.com/hc/articles/115003011431#500error) errors such as database connection errors or internal server errors.
+Always Online does not trigger for HTTP response codes such as [404](/support/troubleshooting/http-status-codes/4xx-client-error/#404-not-foundrfc7231httpstoolsietforghtmlrfc7231), [503](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-503-service-temporarily-unavailable), or [500](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-500-internal-server-error) errors such as database connection errors or internal server errors.
 
 ## Frequently asked questions
 

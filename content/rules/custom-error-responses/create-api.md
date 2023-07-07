@@ -37,7 +37,7 @@ The API token used in API requests to manage custom error responses must have at
 
 ### Custom JSON response for all Cloudflare 1xxx errors
 
-This example configures a custom JSON error response for all [Cloudflare 1xxx errors](https://support.cloudflare.com/hc/articles/360029779472) in the zone with ID `<ZONE_ID>`. The HTTP status code of the custom error response will be set to `530`.
+This example configures a custom JSON error response for all [Cloudflare 1xxx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) in the zone with ID `<ZONE_ID>`. The HTTP status code of the custom error response will be set to `530`.
 
 ```json
 $ curl -X PUT \
@@ -64,7 +64,7 @@ Note that this `PUT` request, corresponding to the [Update zone entry point rule
 
 ### Custom HTML response for 1020 errors
 
-This example configures a custom HTML error response for [Cloudflare error 1020](https://support.cloudflare.com/hc/articles/360029779472#error1020) (Access Denied).
+This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
 
 ```json
 $ curl -X PUT \

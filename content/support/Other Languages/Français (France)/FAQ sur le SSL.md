@@ -7,29 +7,6 @@ title: FAQ sur le SSL
 
 # FAQ sur le SSL
 
-_Trouvez des réponses aux questions courantes concernant l’application **SSL/TLS** de Cloudflare._
-
-### Dans cet article
-
--   [Je possède plusieurs certificats Cloudflare, lequel est utilisé ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_e2bd076d-beb3-40e8-adbe-075ba5a8851e)
--   [Le SSL de Cloudflare aidera-t-il au référencement SEO ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_29550926411548959889544)
--   [Combien de temps faut-il pour que le SSL de Cloudflare soit activé ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_7dc4564e-f93a-4e1d-a338-90903a812b95)
--   [Que signifie une vérification de marque SSL non valide ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_62d0852f-0bc5-4d54-a83f-971ca452398d)
--   [Comment rediriger tous les visiteurs via HTTPS/SSL ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_a61bfdef-08dd-40f8-8888-7edd8e40d156)
--   [Le SSL de Cloudflare prend-il en charge les IDN (Internationalized Domain Names) ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_406905917121548959897352)
--   [Le SSL fonctionne-t-il pour les partenaires d’hébergement ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_848554486311548959913241)
--   [Les certificats SSL de Cloudflare sont-ils partagés ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_293541339461548959928672)
--   [Un certificat SSL est installé sur mon site Web. Pourquoi puis-je voir un certificat Cloudflare ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_865954806521548960003696)
--   [Je veux que Cloudflare utilise un certificat SSL que j’ai acheté ailleurs](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_406415940571548960012266)
--   [Comment forcer mon site à utiliser uniquement HTTPS/SSL ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_999722138611548960019807)
--   [Le projet Galileo inclut-il la prise en charge SSL ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_745887958641548960026645)
--   [L’activation de Cloudflare affecte-t-elle les exigences TLS 1.2 de PayPal ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_100356045661548960034406)
--   [Comment puis-je servir un certificat SSL depuis les datacenters de Cloudflare en Chine ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_853db670-78aa-4c98-99d4-3aa3d38f8d59)
--   [Cloudflare prend-il en charge l’authentification TLS du client ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_db0bcd71-24f9-4b0c-8cfc-7a5ed0f27649)
--   [Comment activer Universal SSL avec GitHub ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_4e7e3537-ade2-431c-abe7-2dfe26e1cb9a)
-
-___
-
 ### Je possède plusieurs certificats Cloudflare, lequel est utilisé ?
 
 Les certificats Cloudflare sont hiérarchisés par [type de certificat](https://support.cloudflare.com/hc/articles/203295200) et également par nom d’hôte le plus spécifique.  En général, la hiérarchisation des certificats SSL est la suivante, de la priorité la plus élevée à la plus basse :

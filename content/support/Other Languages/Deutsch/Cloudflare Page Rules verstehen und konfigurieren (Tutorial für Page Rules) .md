@@ -735,11 +735,11 @@ ___
 
 **Grundlegende Ursache:** Dies kann auf ein Konfigurationsproblem bei einer Page Rule zurückzuführen sein. Wenn Sie eine Page Rule erstellen, die zwei Platzhalter verwendet, wie z. B. eine _URL-Weiterleitungsregel_, ist es möglich, eine Regel zu erstellen, die den zweiten Platzhalter mit dem Platzhalter $2 erwähnt. Siehe das folgende Beispiel:
 
-![Beispiel für die Konfiguration einer Page Rule mit zwei Platzhaltern. Die Weiterleitungs-URL enthält eine Wildcard $2, die durch den Inhalt ersetzt wird, auf den die zweite ](/support/static/page-rule-create.png)
+![Beispiel für die Konfiguration einer Page Rule mit zwei Platzhaltern. Die Weiterleitungs-URL enthält eine Wildcard $2, die durch den Inhalt ersetzt wird, auf den die zweite ](/images/support/page-rule-create.png)
 
 Wenn Sie dieselbe Regel aktualisieren, können Sie eine Wildcard im Feld **Wenn die URL übereinstimmt** entfernen und die Regel speichern. Siehe das folgende Beispiel:
 
-![Konfiguration der fehlerhaften Page Rule mit einer einzelnen Wildcard zutrifft, wobei jedoch weiterhin die Wildcard $2 in der Weiterleitungs-URL verwendet wird. Die Konfiguration sorgt dafür, ](/support/static/page-rule-update.png)
+![Konfiguration der fehlerhaften Page Rule mit einer einzelnen Wildcard zutrifft, wobei jedoch weiterhin die Wildcard $2 in der Weiterleitungs-URL verwendet wird. Die Konfiguration sorgt dafür, ](/images/support/page-rule-update.png)
 
 Wenn Sie dies tun, verweist der Platzhalter $2 auf eine Wildcard, die nicht mehr existiert, sodass ein „_Error 500 (Internal server error)_“ ausgegeben wird, wenn eine URL die Page Rule auslöst.
 

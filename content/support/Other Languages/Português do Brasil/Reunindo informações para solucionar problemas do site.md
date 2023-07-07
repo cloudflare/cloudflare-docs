@@ -38,17 +38,17 @@ Atualmente, apenas o Chrome e o Firefox podem acessar o recurso HAR por padrão.
 
 2\. As ferramentas do desenvolvedor aparecem na parte inferior ou esquerda do navegador. Clique na guia **Rede** .
 
-![Captura de tela da guia de rede HAR das ferramentas de desenvolvedor do Chrome](/support/static/image.png)
+![Captura de tela da guia de rede HAR das ferramentas de desenvolvedor do Chrome](/images/support/image.png)
 
 3\. Marque **Preserve log** .
 
 4\. Clique em gravar.
 
-![Captura de tela HAR do botão de registro nas ferramentas de desenvolvimento do chrome](/support/static/image.png)
+![Captura de tela HAR do botão de registro nas ferramentas de desenvolvimento do chrome](/images/support/image.png)
 
 5\. Navegue até o URL que causa problemas. Quando o problema for solucionado, clique com o botão direito do mouse em qualquer um dos itens da guia **Rede** e selecione **Salvar tudo como HAR com o Conteúdo** .
 
-![Captura de tela HAR do menu Salvar nas ferramentas de desenvolvedor do Chrome](/support/static/image.png)
+![Captura de tela HAR do menu Salvar nas ferramentas de desenvolvedor do Chrome](/images/support/image.png)
 
 6\. Anexe o arquivo HAR ao seu tíquete de suporte.
 

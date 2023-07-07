@@ -159,3 +159,21 @@ const reader = socket.readable.getReader(); // This fails
 - TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/scheduled-event/), [`queue()`](/queues/platform/javascript-apis/#consumer)) or [`alarm()`](/workers/runtime-apis/durable-objects/#alarm-handler-method).
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
 - By default, Workers cannot create outbound TCP connections on port `25` to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
+
+## Troubleshooting
+
+Review descriptions of common error messages you may see when working with TCP Sockets, what the error messages mean, and how to solve them.
+
+### `proxy request failed, cannot connect to the specified address`
+
+Your socket is connecting to an address that was disallowed. Examples of a disallowed address include Cloudflare IPs, `localhost`, and private network IPs.
+
+If you need to connect to addresses on port `80` or `443` to make HTTP requests, use [`fetch`](/workers/runtime-apis/fetch/).
+
+### `TCP Loop detected`
+
+Your socket is connecting back to the Worker that initiated the outbound connection. In other words, the Worker is connecting back to itself. This is currently not supported.
+
+### `Connections to port 25 are prohibited`
+
+Your socket is connecting to an address on port `25`. This is usually the port used for SMTP mail servers. Workers cannot create outbound connections on port `25`. Consider using [Cloudflare Email Workers](/email-routing/email-workers/) instead.

@@ -25,15 +25,15 @@ Durable Objects are named instances of a class you define. Like a class in objec
 To start, enable Durable Objects for your account by purchasing Workers Paid:
 
  1. Log in to [the Cloudflare dashboard](https://dash.cloudflare.com/).
- 2. Go to **Workers & Pages** and in **Overview**, select your Worker. 
+ 2. Go to **Workers & Pages** and in **Overview**, select your Worker.
  3. In your Worker, scroll down to **Durable Objects** > **Learn more** > **View Paid Plan**.
  4. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
 There are three steps to creating and using a Durable Object:
 
-- [Writing the class](#writing-a-class-that-defines-a-durable-object) that defines a Durable Object.
-- [Instantiating and communicating with a Durable Object](#instantiating-and-communicating-with-a-durable-object) from another Worker via the [Fetch](/workers/runtime-apis/durable-objects/#fetch-handler-method) API.
-- [Uploading the Durable Object and Worker](#uploading-a-durable-object-worker) to Cloudflare's servers using Wrangler.
+- [Writing the class](#write-a-class-that-defines-a-durable-object) that defines a Durable Object.
+- [Instantiating and communicating with a Durable Object](#instantiate-and-communicate-with-a-durable-object) from another Worker via the [Fetch](/workers/runtime-apis/durable-objects/#fetch-handler-method) API.
+- [Uploading the Durable Object and Worker](#upload-a-durable-object-worker) to Cloudflare's servers using Wrangler.
 
 ## Write a class that defines a Durable Object
 
@@ -224,11 +224,11 @@ export default {
 };
 ```
 
-Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker).
+Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/workers/runtime-apis/durable-objects/#access-a-durable-object-from-a-worker).
 
 {{<Aside type="note" header="String-derived IDs versus system-generated IDs">}}
 
-In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. Refer to the [API reference documentation](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker) for more information.
+In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. Refer to the [API reference documentation](/workers/runtime-apis/durable-objects/#access-a-durable-object-from-a-worker) for more information.
 
 {{</Aside>}}
 
@@ -276,9 +276,9 @@ The `[durable_objects]` section has 1 subsection:
 - `bindings` - An array of tables, each table can contain the below fields.
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/workers/platform/environments/) script.
+  - `script_name` - Optional. Defaults to the current [environment's](/workers/wrangler/environments/) script.
 
-If you are using Wrangler [environments](/workers/platform/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. Durable Object bindings are not inherited. For example, an environment named `staging`:
+If you are using Wrangler [environments](/workers/wrangler/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. Durable Object bindings are not inherited. For example, an environment named `staging`:
 
 ```toml
 [env.staging]
@@ -287,7 +287,7 @@ durable_objects.bindings = [
 ]
 ```
 
-Because Wrangler [appends the environment name to the top-level name](/workers/platform/environments/#naming) when publishing, for a Worker named `worker-name` the above example is equivalent to:
+Because Wrangler [appends the environment name to the top-level name](/workers/wrangler/environments/#naming) when publishing, for a Worker named `worker-name` the above example is equivalent to:
 
 ```toml
 [env.staging]
@@ -314,7 +314,7 @@ You must initiate a migration process when you create a new Durable Object class
 Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler publish`](/workers/wrangler/commands/). This is true even for changes to how code interacts with persistent storage. Because of [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness) you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
 
 {{</Aside>}}
-  
+
 The most common migration performed is a new class migration, which informs the system that a new Durable Object class is being uploaded.
 
 Migrations can also be used for transferring stored data between two Durable Object classes:
@@ -346,7 +346,7 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
-All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/platform/environments/).
+All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/wrangler/environments/).
 
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 
@@ -434,13 +434,13 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
-[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler](/workers/wrangler/) will emit a warning in that case. 
+[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler](/workers/wrangler/) will emit a warning in that case.
 
 ### Object location
 
-A Durable Object is typically instantiated close to where the initial [`get()`](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub) is made. This may not be in the datacenter the user is connected to, but in most cases, it will be in close proximity.
+A Durable Object is typically instantiated close to where the initial [`get()`](/workers/runtime-apis/durable-objects/#obtain-an-object-stub) is made. This may not be in the data center the user is connected to, but in most cases, it will be in close proximity.
 
-You can also provide an explicit [location hint](/workers/runtime-apis/durable-objects/#providing-a-location-hint) and submit a preferred location when first creating the Durable Object. This can be useful in cases where objects are created programmatically prior to user-interaction, or where the first client request is not representative of where the majority of requests to the object will come from.
+You can also provide an explicit [location hint](/workers/runtime-apis/durable-objects/#provide-a-location-hint) and submit a preferred location when first creating the Durable Object. This can be useful in cases where objects are created programmatically prior to user-interaction, or where the first client request is not representative of where the majority of requests to the object will come from.
 
 Currently, Durable Objects do not migrate between locations after initial creation. Cloudflare will be exploring automatic migration compatibility in the future.
 
@@ -554,7 +554,7 @@ Refer to the [Querying Workers Metrics with GraphQL](/analytics/graphql-api/tuto
 ```
   viewer {
     # Replace with your account tag, the 32 hex character id visible at the beginning of any url
-    # when logged in to dash.cloudflare.com or under "Account ID" on the sidebar of the Workers & Pages Overview  
+    # when logged in to dash.cloudflare.com or under "Account ID" on the sidebar of the Workers & Pages Overview
     accounts(filter: {accountTag: "your account tag here"}) {
       # Replace dates with a recent date
       durableObjectsInvocationsAdaptiveGroups(filter: {date_gt: "2023-05-23"}, limit: 1000) {
@@ -609,7 +609,7 @@ Refer to [Global Uniqueness](/workers/learning/using-durable-objects/#global-uni
 
 #### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 
-To prevent indefinite blocking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+To prevent indefinite blocking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 #### Error: Your account is doing too many concurrent storage operations. Please back off and try again later.
 

@@ -21,4 +21,4 @@ Um sicherzustellen, dass Sie die vollständige Kontrolle über diese Einträge h
 
 -   Im nächsten Schritt gibt es mehrere richtige Wege, um das Gleiche zu erreichen, und Ihr Setup kann sich drastisch unterscheiden. Wenn Sie für diesen Teil zusätzliche Unterstützung benötigen, wenden Sie sich an den Support mit Angabe Ihres Setups und dem gewünschten Endergebnis. In meinem Beispiel habe ich keinen Host in meinem s3-Bucket eingerichtet, also werde ich einfach den generischen s3-Host-Header auflösen, und ich möchte, dass alle Anfragen aus meinem /app-Unterverzeichnis in diesen s3-Bucket gehen. 
 
-![pagerule.png](/support/static/pagerule.png)
+![pagerule.png](/images/support/pagerule.png)

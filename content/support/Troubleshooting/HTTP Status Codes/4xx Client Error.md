@@ -33,19 +33,19 @@ Not yet implemented by RFC standards but reserved for future use.
 
 If you're seeing a 403 error without Cloudflare branding, this is always returned directly from the origin web server, not Cloudflare, and is generally related to permission rules on your server. The top reasons for this error are:
 
-1. Permission rules you have set or an error in the .htaccess rules you have set 
-2. Mod\_security rules. 
+1. Permission rules you have set or an error in the .htaccess rules you have set
+2. Mod\_security rules.
 3. IP Deny rules Since Cloudflare can not access your server directly, please contact your hosting provider for assistance with resolving 403 errors and fixing rules. You should make sure that [Cloudflare's IPs](https://www.cloudflare.com/ips) aren't being blocked. 
 
-Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [Understanding WAF managed rules (Web Application Firewall)](https://support.cloudflare.com/hc/en-us/articles/200172016). Cloudflare will also serve a 403 Forbidden response for SSL connections to sub/domains that aren't covered by any Cloudflare or uploaded SSL certificate.
+Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [WAF Managed Rules](/waf/managed-rules/). Cloudflare will also serve a 403 Forbidden response for SSL connections to sub/domains that aren't covered by any Cloudflare or uploaded SSL certificate.
 
 If you're seeing a 403 response that contains Cloudflare branding in the response body, this is the HTTP response code returned along with many of our security features:
 
--   WAF managed rules/firewall rules challenge and block pages
+-   WAF Managed Rules/firewall rules challenge and block pages
 -   Basic Protection level challenges
 -   Most 1xxx Cloudflare error codes
 -   The Browser Integrity Check
--   If you're attempting to access a second level of subdomains (eg-`*.*.example.com`) through Cloudflare using the Cloudflare-issued certificate, a HTTP 403 error will be seen in the browser as these host names are not present on the certificate.
+-   If you're attempting to access a second level of subdomains (eg-`*.*.example.com`) through Cloudflare using the Cloudflare-issued certificate, a HTTP 403 error will be seen in the browser as these hostnames are not present on the certificate.
 
 ### **404 Not Found (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
@@ -146,7 +146,7 @@ Failure of server to meet the requirements specified in the `Expect` header of
 
 Client has sent too many requests in the specified amount of time according to the server. Often known as "rate-limiting". Server may respond with information allowing the requester to retry after a specific period of time.
 
-Cloudflare will generate and send this status code when a request is being [rate limited](https://www.cloudflare.com/rate-limiting/). If visitors to your site are receiving these error codes, you will be able to see this in the [Rate Limiting Analytics](https://support.cloudflare.com/hc/articles/115001635128#7Cy9dajZBWM5pm9aIP5mMD).
+Cloudflare will generate and send this status code when a request is being [rate limited](https://www.cloudflare.com/rate-limiting/). If visitors to your site are receiving these error codes, you will be able to see this in the [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics).
 
 ### **451 Unavailable For Legal Reason (**[**RFC7725**](https://tools.ietf.org/html/rfc7725)**)**
 

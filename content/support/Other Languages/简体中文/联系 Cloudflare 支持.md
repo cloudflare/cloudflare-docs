@@ -39,7 +39,7 @@ Cloudflare 客户可以通过社区、聊天或支持票证联系 Cloudflare 以
 
 3\. 点击**联系支持**。向下滚动到_紧急电话支持热线 - 身份验证_ 卡。
 
-![](/support/static/contact_support_ent_phone_card.png)
+![](/images/support/contact_support_ent_phone_card.png)
 
 4\. 要使用一次性令牌进行身份验证，请点击**获取一次性令牌**。此时将出现一个带有令牌代码的弹出窗口。该代码每 30 秒自动刷新一次。
 

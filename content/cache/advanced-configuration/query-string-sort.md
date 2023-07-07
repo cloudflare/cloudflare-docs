@@ -55,7 +55,7 @@ To understand why this happens, note that WordPress [concatenates Javascript fi
 
 The screenshot below shows an example where resources in the Media Library are not rendered correctly and the browser debugging console reveals that the page is throwing an error:
 
-![Resources in the Media Library are not rendered correctly](/support/static/media_library_enabling_query.png)
+![Resources in the Media Library are not rendered correctly](/images/support/media_library_enabling_query.png)
 
 When the page `load-scripts.php` loads, the browser sends a request to Cloudflare for:
 
@@ -92,7 +92,7 @@ To minimize problems, consider:
 -   Use Cloudflare **Page Rules** to enable **Query String Sort** for URLs where preserving the query string parameter order is not important.
 -   Alternatively, use Cloudflare **Page Rules** to disable **Query String Sort** for URLs where a specific parameter order is required. For example, disable Query String Sort for `example.com/wp-admin/load-scripts.php*` or any URLs with similar requirements (replace example.com with your domain name).
 
-To learn more about Page Rules, visit [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
+To learn more about Page Rules, visit [Understanding and Configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
 ___
 
