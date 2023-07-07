@@ -8,7 +8,7 @@ pcx_content_type: get-started
 
 This guide will instruct you through:
 
-- Creating a KV namespace with Wrangler.
+- Creating a KV namespace.
 - Interacting with your KV namespace.
 - Using environments with KV namespaces.
 
@@ -85,7 +85,7 @@ $ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
 ```
 
-You can now access the binding from within a Worker. In your Worker, use the KV `.get()` command to fetch the data you stored in your KV database:
+You can now access the binding from within a Worker. In your Worker, use the KV `get()` command to fetch the data you stored in your KV database:
 
 ```js
 let value = await <YOUR_BINDING>.get("KEY");
