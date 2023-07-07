@@ -62,4 +62,4 @@ This process may involve a few minutes of downtime.
 
 ## Renewal
 
-{{<render file="_dcv-token-renewal.md">}}
+{{<render file="_dcv-certificate-renewal.md">}}

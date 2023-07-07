@@ -45,4 +45,4 @@ Once you locate your certificate, find the following values:
 
 ## Renewal
 
-{{<render file="_dcv-token-renewal.md">}}
+{{<render file="_dcv-certificate-renewal.md">}}

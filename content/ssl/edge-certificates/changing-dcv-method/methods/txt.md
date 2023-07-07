@@ -59,6 +59,6 @@ This means that a wildcard certificate covering `example.com` and `*.example.com
 
 ## Renewal
 
-{{<render file="_dcv-token-renewal.md">}}
+{{<render file="_dcv-certificate-renewal.md">}}
 
 [^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.
