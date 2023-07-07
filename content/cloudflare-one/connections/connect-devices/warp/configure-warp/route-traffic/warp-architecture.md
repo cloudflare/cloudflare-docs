@@ -11,14 +11,13 @@ This guide explains how the Cloudflare WARP client interacts with a device’s o
 
 ## Overview
 
-The WARP client allows IT administrators to have granular control over the applications an end user device can access. The software consists of two components: a service/daemon that handles all WARP functionality on your device, and a GUI wrapper that makes it easier for a user to interact with the daemon. The daemon forwards DNS and network traffic from the device to Cloudflare’s global network, where Zero Trust policies are applied in the cloud.
+The WARP client allows organizations to have granular control over the applications an end user device can access. The client forwards DNS and network traffic from the device to Cloudflare’s global network, where Zero Trust policies are applied in the cloud. On all operating systems, the WARP daemon maintains three connections between the device and Cloudflare:
 
-On all operating systems, the WARP daemon maintains three long-lived connections between the device and Cloudflare:
 | Connection | Protocol | Purpose |
 | -----------|----------|---------|
 | Device orchestration | HTTPS | Perform user registration, check device posture, apply WARP profile settings. |
-| DoH | HTTPS | Send DNS requests to Gateway for DNS policy enforcement. |
-| Wireguard | UDP | Send IP packets to Gateway for network and HTTP policy enforcement. |
+| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/) | HTTPS | Send DNS requests to Gateway for DNS policy enforcement. |
+| Wireguard | UDP | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access. |
 
 ```mermaid
 flowchart LR
@@ -28,7 +27,7 @@ D[DNS proxy]
 W -.-> V[Virtual interface]
 end
 subgraph Cloudflare
-A[Zero Trust settings]
+A[Zero Trust account]
 subgraph Gateway
 G[DNS resolver]
 N[L3/L4 firewall]
@@ -40,11 +39,13 @@ V<--Wireguard-->N
 N --> O[(Application)]
 ```
 
-Your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration determines which DNS requests are sent to the DoH endpoint. Your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration determines what IP traffic is sent down the Wireguard tunnel. Note that Split Tunnel rules do not apply to device orchestration and DoH traffic since those connections operate outside of the Wireguard tunnel.
+Your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration determines what traffic is sent down the Wireguard tunnel. Your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration determines which DNS requests are sent to Gateway via DoH. Traffic to the [DoH endpoint](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) and [device orchestration API](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) endpoint do not obey Split Tunnel rules, since those connections always operate outside of the Wireguard tunnel.
 
 Next, you will learn how WARP configures your operating system to apply your Local Domain Fallback and Split Tunnel routing rules. Implementation details differ between desktop and mobile clients.
 
 ## Windows, macOS, and Linux
+
+The desktop client consists of two components: a service/daemon that handles all WARP functionality on your device, and a GUI wrapper that makes it easier for a user to interact with the daemon.
 
 ### DNS traffic
 
@@ -55,7 +56,13 @@ When you turn on WARP, WARP creates a local DNS proxy on the device and binds it
 
 WARP then configures the operating system to send all DNS requests to these IP addresses. All network interfaces on the device will now use this local DNS proxy for DNS resolution. In other words, all DNS traffic will now be handled by the WARP client.
 
+{{<Aside type="note">}}
+Browsers with DoH or secure DNS configured will bypass the local DNS proxy. You may need to disable these settings in the browser.
+{{</Aside>}}
+
 Based on your Local Domain Fallback configuration, WARP will either forward the request to Gateway for DNS policy enforcement or forward the request to your private DNS resolver.
+- Requests to Gateway are sent over our [DoH connection](#overview) (outside of the Wireguard tunnel).
+- Requests to your private DNS resolver are sent either inside or outside of the tunnel depending on your Split Tunnel configuration. For more information, refer to [How the WARP client handles DNS requests](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 
 ```mermaid
 flowchart LR
@@ -95,7 +102,7 @@ WARP does not create a local DNS proxy in [Secure Web Gateway without DNS filter
 
 ### IP traffic
 
-When you turn on WARP, WARP makes three changes on the device to enable IP routing:
+When you turn on WARP, WARP makes three changes on the device to control if traffic is sent inside or outside of the Wireguard tunnel:
 
 - Creates a virtual network interface.
 - Modifies the operating system routing table according to your Split Tunnel rules.
@@ -171,7 +178,7 @@ destination: 169.254.0.0
 
 #### System firewall
 
-In Split Tunnel Exclude mode, WARP also modifies the operating system firewall to enforce your Split Tunnel rules. This adds a layer of protection in case a service bypasses the routing table and tries to send traffic directly through another interface. For example, if `www.example.com` is supposed to be inspected by Gateway, we create a firewall rule that only allows traffic to `www.example.com` to use our `utun` interface.
+In Split Tunnel Exclude mode, WARP also modifies the operating system firewall to enforce your Split Tunnel rules. This adds a layer of protection in case a service bypasses the routing table and tries to send traffic directly through another interface. For example, if traffic to `203.0.113.0` is supposed to be inspected by Gateway, we create a firewall rule that blocks `203.0.113.0` on all interfaces except for `utun`.
 
 ## iOS, Android, and ChromeOS
 
