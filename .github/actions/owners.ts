@@ -8,7 +8,7 @@
  *   - the "pull_request.opened" event to request review(s) instead of CODEOWNERS usage
  */
 export const OWNERS: Record<string, string[]> = {
-  "1.1.1.1": ["haleycode"],
+  "1.1.1.1": ["RebeccaTamachiro"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
