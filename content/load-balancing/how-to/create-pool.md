@@ -18,7 +18,7 @@ For more background information on pools, refer to [Origin pools](/load-balancin
 
 ## Create a pool
 
-{{<tabs labels="Dashboard | API | Terraform">}}
+{{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
 {{<render file="_pool-create.md">}}
@@ -27,11 +27,6 @@ For more background information on pools, refer to [Origin pools](/load-balancin
 {{<tab label="api" no-code="true">}}
  
 {{<render file="_pool-create-api.md">}}
- 
-{{</tab>}}
-{{<tab label="terraform" no-code="true">}}
- 
-test
  
 {{</tab>}}
 {{</tabs>}}
