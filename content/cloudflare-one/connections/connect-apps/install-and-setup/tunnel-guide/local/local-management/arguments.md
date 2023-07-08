@@ -38,9 +38,9 @@ Specifies the path to a config file in YAML format.
 
 ## `edge-ip-version`
 
-| Syntax         | Default                     | Environment Variable |
-| -------------- | --------------------------- | -------------------- |
-| `edge-ip-version value` | `auto` | `TUNNEL_EDGE_IP_VERSION` |
+| Syntax                  | Default | Environment Variable     |
+| ----------------------- | ------- | ------------------------ |
+| `edge-ip-version value` | `auto`  | `TUNNEL_EDGE_IP_VERSION` |
 
 Specifies the IP address version (IPv4 or IPv6) used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `4`, and `6`.
 
@@ -48,8 +48,8 @@ The value `auto` relies on the host operating system to determine which IP versi
 
 ## `edge-bind-address`
 
-| Syntax         | Environment Variable |
-| -------------- | -------------------- |
+| Syntax                    | Environment Variable       |
+| ------------------------- | -------------------------- |
 | `edge-bind-address value` | `TUNNEL_EDGE_BIND_ADDRESS` |
 
 Specifies the outgoing IP address used to establish a connection between `cloudflared` and the Cloudflare global network.
@@ -154,8 +154,8 @@ Specifies the verbosity of logging. The default `info` level does not produce mu
 
 ## `token`
 
-| Syntax          | Environment Variable |
-| --------------- | -------------------- |
-| `token value`   | `TUNNEL_TOKEN`       |
+| Syntax        | Environment Variable |
+| ------------- | -------------------- |
+| `token value` | `TUNNEL_TOKEN`       |
 
 Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
