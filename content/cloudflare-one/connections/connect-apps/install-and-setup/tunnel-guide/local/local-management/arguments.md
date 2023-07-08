@@ -38,13 +38,25 @@ Specifies the path to a config file in YAML format.
 
 ## `edge-ip-version`
 
-| Syntax         | Default                     |
-| -------------- | --------------------------- |
-| `edge-ip-version value` | `auto` |
+| Syntax         | Default                     | Environment Variable |
+| -------------- | --------------------------- | -------------------- |
+| `edge-ip-version value` | `auto` | `TUNNEL_EDGE_IP_VERSION` |
 
 Specifies the IP address version (IPv4 or IPv6) used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `4`, and `6`.
 
 The value `auto` relies on the host operating system to determine which IP version to select. The first IP version returned from the DNS resolution of the region lookup will be used as the primary set. In dual IPv6 and IPv4 network setups, `cloudflared` will separate the IP versions into two address sets that will be used to fallback in connectivity failure scenarios.
+
+## `edge-bind-address`
+
+| Syntax         | Environment Variable |
+| -------------- | -------------------- |
+| `edge-bind-address value` | `TUNNEL_EDGE_BIND_ADDRESS` |
+
+Specifies the outgoing IP address used to establish a connection between `cloudflared` and the Cloudflare global network.
+
+By default, `cloudflared` lets the operating system decide which IP address to use. This option is useful if you have multiple network interfaces available and you want to prefer a specific interface.
+
+If specified, this option will override `edge-ip-version` as it does not make sense to connect to an IPv6 destination from an IPv4 source address or vice versa.
 
 ## `autoupdate-freq`
 
@@ -56,9 +68,9 @@ Configures autoupdate frequency. See also: [`no-autoupdate`](#no-autoupdate).
 
 ## `no-autoupdate`
 
-| Syntax          | Default |
-| --------------- | ------- |
-| `no-autoupdate` | `false` |
+| Syntax          | Default | Environment Variable |
+| --------------- | ------- | -------------------- |
+| `no-autoupdate` | `false` | `NO_AUTOUPDATE`      |
 
 Disables periodic check for updates, restarting the server with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
 
@@ -72,9 +84,9 @@ Specifies the Tunnel certificate for one of your zones, authorizing the client t
 
 ## `grace-period`
 
-| Syntax         | Default |
-| -------------- | ------- |
-| `grace-period` | `30s`   |
+| Syntax         | Default | Environment Variable  |
+| -------------- | ------- | --------------------- |
+| `grace-period` | `30s`   | `TUNNEL_GRACE_PERIOD` |
 
 When `cloudflared` receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shut down. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
 
