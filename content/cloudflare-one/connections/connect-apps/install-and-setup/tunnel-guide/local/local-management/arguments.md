@@ -16,6 +16,7 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 
 - [`config`](#config)
 - [`edge-ip-version`](#edge-ip-version)
+- [`edge-bind-address`](#edge-bind-address)
 - [`autoupdate-freq`](#autoupdate-freq)
 - [`no-autoupdate`](#no-autoupdate)
 - [`origincert`](#origincert)
