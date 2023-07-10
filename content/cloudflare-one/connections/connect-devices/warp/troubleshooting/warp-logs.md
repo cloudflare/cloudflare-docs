@@ -113,9 +113,14 @@ In timestamped logs such as `daemon.log`, the most recent events will appear at 
 
 To view debug logs on mobile devices:
 
-1. Open the 1.1.1.1 app.
+1. Open the menu in 1.1.1.1 app.
 2. Go to **Settings** > **Advanced** > **Diagnostics**.
 3. Scroll down to **Debug logs** and choose from the [available logs](#mobile-app-logs).
+   **DNS logs**, click to enable the DNS logs, and try to reproduce any issue that you have with DNS logs enabled.
+   **Console logs**: In console logs you will find, **Extension logs** and **Application logs**, click on each button and click share, and the save to files, and email Cloudflare support.
+   **Routing table** The routing table, is a data table that lists the routes to particul network destinations for your device. We use it to debug network issues when you have a problem
+   connecting to 1.1.1.1 from your device. Make sure to share also this log with Support team.
+   
 
 ### Mobile app logs
 
