@@ -8,6 +8,6 @@ inputParameters: API_param
 
 Accounts designated by threat feed owners can use this selector to apply policies based on a feed supplied by third-party vendors.
 
-| UI name             | API example |
-| ------------------- | ----------- |
-| Custom Threat Feeds | `$1`        |
+| UI name             | API example         |
+| ------------------- | ------------------- |
+| Custom Threat Feeds | `$1.indicator_feed` |
