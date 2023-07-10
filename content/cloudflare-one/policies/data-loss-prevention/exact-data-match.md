@@ -13,7 +13,9 @@ All data in uploaded datasets is encrypted before reaching Cloudflare. To detect
 
 ## Prepare a dataset
 
-To prepare a dataset for EDM, add your desired data to a single-column spreadsheet. Spreadsheets can contain a maximum of 100,000 cells. Title cells may result in false positives and should not be included.
+To prepare a dataset for EDM, add your desired data to a single-column spreadsheet. Spreadsheets can contain a maximum of 100,000 cells.
+
+Cells must be at least six characters long. Title cells may result in false positives and should not be included.
 
 Accepted file formats include CSV and TXT.
 
