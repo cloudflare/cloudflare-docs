@@ -30,7 +30,7 @@ This is especially useful if you already have mTLS implemented and client certif
   
   - `certificates` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    - Paste content copied from the `.pem` file associated with the CA certificate.
+    - Insert content from the `.pem` file associated with the CA certificate, formatted as a single string with `\n` replacing the line breaks.
   
   - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
     - Indicate a unique name for your CA certificate.
