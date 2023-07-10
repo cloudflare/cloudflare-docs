@@ -1,5 +1,5 @@
 ---
-title: Unified Search
+title: Search
 pcx_content_type: concept
 layout: single
 weight: 1
@@ -7,11 +7,11 @@ meta:
     description: Search for messages with a detection disposition or that have been processeded by Area 1.
 ---
 
-# Unified Search
+# Search
 
-Unified Search makes it easier to search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
+You can search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
 
-Unified Search has two ways for searching emails:
+There are two ways for searching emails:
 
 - **Fielded Search**: Presents you with fields where you can enter search terms.
 - **Freeform Search**: Has one search field where you can construct your own search query, like `My great products`.
@@ -51,7 +51,7 @@ For more exact matches, use the named fields in **Fielded Search** to denote whi
 
 ### Parameter filtering
 
-To search for specific values in one of the [available parameters](/email-security/reporting/unified-search/available-parameters/), format your search to be:
+To search for specific values in one of the [available parameters](/email-security/reporting/search/available-parameters/), format your search to be:
 
 ```txt
 <<FIELD_NAME>>:<<VALUE>>

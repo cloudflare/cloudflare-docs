@@ -6,7 +6,7 @@ weight: 2
 
 # Available parameters
 
-You can pull information for a message in [search detections](/email-security/reporting/unified-search/) using the following parameters:
+You can pull information for a message in [search detections](/email-security/reporting/search/) using the following parameters:
 
 - From (`envelope_from`)
 - From Name
