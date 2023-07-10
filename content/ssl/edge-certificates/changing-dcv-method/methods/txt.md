@@ -63,4 +63,6 @@ TXT records used for DCV can be removed from your authoritative DNS provider as 
 
 {{<render file="_dcv-certificate-renewal.md">}}
 
+{{<render file="_dcv-renewal-fallback.md">}}
+
 [^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.
