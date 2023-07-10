@@ -26,7 +26,7 @@ Next, [view the results](/cloudflare-one/insights/dex/tests/view-results/) of yo
 
 ### Supported devices
 
-To run an HTTP test, the device must be connected to Zero Trust via the WARP client. Refer to the table below for client version requirements.
+To run an Traceroute test, the device must be connected to Zero Trust via the WARP client. Refer to the table below for client version requirements.
 
 | System | Minimum WARP version |
 | -------| ---------|
