@@ -53,10 +53,7 @@ To create a custom block page for Access:
 
     <p>To obtain access, contact your IT administrator.</p>
 
-    <script>
-    const d = new Date();
-    document.getElementById("demo").innerHTML = d;
-    </script>
+    
 
     </body>
     </html>
