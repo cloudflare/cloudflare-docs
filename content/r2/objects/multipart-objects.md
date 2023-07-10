@@ -1,6 +1,6 @@
 ---
-title: Multipart Upload
-pcx_content_type: how-to
+title: Multipart upload
+pcx_content_type: concept
 weight: 1
 ---
 
@@ -28,12 +28,9 @@ For uploads created after June 21, 2023, R2's multipart ETags now mimic the beha
 
 For example, consider a multipart upload with two parts.  If they have the ETags `bce6bf66aeb76c7040fdd5f4eccb78e6` and `8165449fc15bbf43d3b674595cbcc406` respectively, the ETag of the completed multipart upload will be `f77dc0eecdebcd774a2a22cb393ad2ff-2`.
 
-{{<Aside type="note">}}
-
-Note that is the binary MD5 sums themselves that are concatenated and then summed, not the hexadecimal representation.  To illustrate, in order to validate the above example on the command line, you'd need to do the following:
+Note that the binary MD5 sums themselves are concatenated and then summed, not the hexadecimal representation. For example, in order to validate the above example on the command line, you would need do the following:
 
 ```
 echo -n $(echo -n bce6bf66aeb76c7040fdd5f4eccb78e6 | xxd -r -p -)\
 $(echo -n 8165449fc15bbf43d3b674595cbcc406 | xxd -r -p -) | md5sum
 ```
-{{</Aside>}}
