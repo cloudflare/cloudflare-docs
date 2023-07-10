@@ -55,7 +55,7 @@ The value `auto` relies on the host operating system to determine which IP versi
 
 Specifies the outgoing IP address used to establish a connection between `cloudflared` and the Cloudflare global network.
 
-By default, `cloudflared` lets the operating system decide which IP address to use. This option is useful if you have multiple network interfaces available and you want to prefer a specific interface.
+By default, `cloudflared` lets the operating system decide which IP address to use. This option is useful if you have multiple network interfaces available and want to prefer a specific interface.
 
 The IP version of `edge-bind-address` will override [`edge-ip-version`](#edge-ip-version) (if provided). For example, if you enter an IPv6 source address, `cloudflared` will always connect to an IPv6 destination.
 
