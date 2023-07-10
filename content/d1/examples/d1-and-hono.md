@@ -16,7 +16,7 @@ When using Workers:
 
 - Ensure you have configured [`wrangler.toml`](/d1/get-started/#3-bind-your-worker-to-your-d1-database) to bind your D1 database to your Worker.
 - You can access your D1 databases via Hono's [`Context`](https://hono.dev/api/context) parameter: [bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) are exposed on `context.env`. If you configured a [binding](/pages/platform/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/platform/client-api/#query-statement-methods) methods via `c.env.DB`.
-- Refer to the Hono documentation [for Cloudflare Workers](https://hono.dev/getting-started/cloudflare-workers).
+- Refer to the Hono documentation for [Cloudflare Workers](https://hono.dev/getting-started/cloudflare-workers).
 
 If you are using [Pages Functions](/pages/platform/functions/):
 
