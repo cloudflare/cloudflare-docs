@@ -22,6 +22,8 @@ Durable Objects are only available on the Workers Paid plan.
 
 Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
 
+Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/api/hibernatable-websockets-api/) will not incur additional wall-clock time, and so they will not be charged.
+
 ## Durable Objects billing examples
 
 These examples exclude the costs for the Workers calling the Durable Objects.
