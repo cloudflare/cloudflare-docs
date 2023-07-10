@@ -57,6 +57,8 @@ This means that a wildcard certificate covering `example.com` and `*.example.com
 
 {{<render file="_dcv-validate-patch.md">}}
 
+TXT records used for DCV can be removed from your authoritative DNS provider as soon as the certificate is issued.
+
 ## Renewal
 
 {{<render file="_dcv-certificate-renewal.md">}}
