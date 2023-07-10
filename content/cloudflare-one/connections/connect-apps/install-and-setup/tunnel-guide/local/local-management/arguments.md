@@ -57,7 +57,7 @@ Specifies the outgoing IP address used to establish a connection between `cloudf
 
 By default, `cloudflared` lets the operating system decide which IP address to use. This option is useful if you have multiple network interfaces available and you want to prefer a specific interface.
 
-If specified, this option will override `edge-ip-version` as it does not make sense to connect to an IPv6 destination from an IPv4 source address or vice versa.
+The IP version of `edge-bind-address` will override [`edge-ip-version`](#edge-ip-version) (if provided). For example, if you enter an IPv6 source address, `cloudflared` will always connect to an IPv6 destination.
 
 ## `autoupdate-freq`
 
