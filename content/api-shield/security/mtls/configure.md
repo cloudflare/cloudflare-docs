@@ -10,8 +10,6 @@ meta:
 
 When you specify API hosts in [mTLS authentication](/api-shield/security/mtls/), Cloudflare will block all requests that do not have a [client certificate](/ssl/client-certificates/) for mTLS authentication.
 
-{{<render file="_client-cert-shared.md" productFolder="ssl" >}}
-
 ## Prerequisites
 
 Before you can protect your API or web application with mTLS rules, you need to:
