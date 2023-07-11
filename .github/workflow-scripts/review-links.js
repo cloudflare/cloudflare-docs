@@ -12,6 +12,19 @@ async function run() {
       per_page: 100,
     });
 
+    const { data: comments } = await octokit.rest.issues.listComments({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        issue_number: prNumber,
+        per_page: 100,
+      });
+
+    const existingComment = comments.find(
+    (comment) =>
+        comment.user.id === 41898282 &&
+        comment.body.includes('| Original Link | Updated Link |')
+    );
+
     const pagesComment = comments.find(
         (comment) =>
           comment.user.id === 73139402 &&
@@ -52,19 +65,6 @@ async function run() {
           `| [${file.originalLink}](${file.originalLink}) | [${file.updatedLink}](${file.updatedLink}) |`
       )
       .join('\n')}`;
-
-    const { data: comments } = await octokit.rest.issues.listComments({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      issue_number: prNumber,
-      per_page: 100,
-    });
-
-    const existingComment = comments.find(
-      (comment) =>
-        comment.user.id === 41898282 &&
-        comment.body.includes('| Original Link | Updated Link |')
-    );
 
     if (existingComment) {
     console.log('yes, existing comment')
