@@ -35,7 +35,7 @@ async function run() {
 
     console.log(pagesComment)
     if (pagesComment) {
-        const regex = /'(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)'/;
+        const regex = /'(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)'/gm;
         const urlMatches = pagesComment.body.match(regex)
         console.log(urlMatches)
     }
