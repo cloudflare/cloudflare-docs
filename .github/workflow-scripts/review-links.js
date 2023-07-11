@@ -16,7 +16,8 @@ async function run() {
       .filter(
         (file) =>
           file.filename.endsWith('.md') &&
-          !file.filename.includes('_partials')
+          !file.filename.includes('_partials') &&
+          file.filename.startsWith('content/')
       )
       .map((file) => file.filename);
 
@@ -36,6 +37,10 @@ async function run() {
         comment.user.id === 41898282 &&
         comment.body.includes('Files changed in this PR:')
     );
+    
+    console.log(comments)
+
+    console.log(existingBotComment)
 
     if (existingBotComment) {
       await octokit.rest.issues.updateComment({
