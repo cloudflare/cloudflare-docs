@@ -33,6 +33,7 @@ async function run() {
     
     let previewBaseURL = "https://www.example.com"
 
+    console.log(pagesComment)
     if (pagesComment) {
         const regex = /'(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)'/;
         const urlMatches = pagesComment.body.match(regex)
@@ -67,7 +68,6 @@ async function run() {
       .join('\n')}`;
 
     if (existingComment) {
-    console.log('yes, existing comment')
       await octokit.rest.issues.updateComment({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
@@ -75,7 +75,6 @@ async function run() {
         body: commentBody,
       });
     } else {
-        console.log('no existing comment')
       await octokit.rest.issues.createComment({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
