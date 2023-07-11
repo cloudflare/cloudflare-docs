@@ -10,28 +10,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Fetch branch
-        run: git fetch origin production:production
+      - name: Generate changed files list
+        run: git diff --name-only origin/production...$PR_NUMBER > changed_files.txt
 
-      - name: Comment on PR with Changed Files
-        if: github.event.pull_request && github.event.action != 'closed'
-        run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          CHANGED_FILES=$(git diff --name-only origin/production...$PR_NUMBER | grep -E '\.md$' | grep -v '_partials')
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
-          COMMENT_BODY="Files changed in this PR:\n\n"
-          while IFS= read -r FILE; do
-            COMMENT_BODY+="* $FILE\n"
-          done <<< "$CHANGED_FILES"
-
-          COMMENTS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments?per_page=100")
-          COMMENT_ID=$(echo "$COMMENTS" | jq -r ".[] | select(.user.id == 73139402) | .id")
-
-          if [ -n "$COMMENT_ID" ]; then
-            COMMENT_URL="https://api.github.com/repos/${{ github.repository }}/issues/comments/$COMMENT_ID"
-            echo $COMMENT_BODY | curl -X PATCH -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --data @- $COMMENT_URL
-          else
-            COMMENT_URL=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -d "{\"body\": \"$COMMENT_BODY\"}" "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments" | jq -r '.url')
-          fi
+      - name: Execute comment-on-pr.js
+        run: node .github/workflow-scripts/review-links.js
