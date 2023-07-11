@@ -22,7 +22,7 @@ B & C <--DNS lookups--> D[Resolver] <--DNS lookups--> E((User))
 ## How to
 
 - [Set up incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/)
-- Proxy traffic through Cloudflare with [Secondary DNS Override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/)
+- Proxy HTTP traffic through Cloudflare with [Secondary DNS Override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/)
 
 ## Availability
 
