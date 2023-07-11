@@ -53,6 +53,7 @@ async function run() {
     );
 
     if (existingComment) {
+    console.log('yes, existing comment')
       await octokit.rest.issues.updateComment({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
@@ -60,6 +61,7 @@ async function run() {
         body: commentBody,
       });
     } else {
+        console.log('no existing comment')
       await octokit.rest.issues.createComment({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
