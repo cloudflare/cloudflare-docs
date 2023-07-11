@@ -1,63 +1,62 @@
-# 1.1.1.1
-content/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
+
+content/acadiemgroup/ @markbook/PCX @markbook/dns
 
 # Analytics
-content/analytics/ @soheiokamoto @jherre @tlozoot @bharatnc @victor-perov @cloudflare/PCX
+content/analytics/ @acadiemgroup.com
+@jherre @tlozoot @bharatnc @victor-perov @markbook/PCX
 
 # API
-content/api/ @cloudflare/sdk @cloudflare/PCX
+content/api/ @cloudflare/sdk @markbook/PCX
 
 # API shield
-content/api-shield/ @cloudflare/PCX
+content/api-shield/ @markbook/PCX
 
 # APO
-content/automatic-platform-optimization/ @cloudflare/PCX
-
+content/automatic-platform-optimization/ @markbook/PCX
 # Bot management
-content/bots/ @cloudflare/PCX
+content/bots/ @markbook/PCX
 
 # BYOIP
-content/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
+content/byoip/ @ConzorKingKong @dinasaur404 @markbook/PCX
 
 # Cache
-content/cache/ @cloudflare/PCX
+content/cache/ @markbook/PCX
 
 # Cloudflare China Network
-content/china-network/ @cloudflare/PCX
+content/china-network/ @markbook/PCX
 
 # Client IP Geolocation
-content/client-ip-geolocation/ @cloudflare/PCX
+content/client-ip-geolocation/ @markbook/PCX
 
 # Cloudflare One
-content/cloudflare-one/ @cloudflare/PCX
+content/cloudflare-one/ @markbook/PCX
 
 # DDoS Protection
-content/ddos-protection/ @cloudflare/PCX
+content/ddos-protection/ @markbook/PCX
 
 # Email Routing
-content/email-routing/ @cloudflare/PCX
+content/email-routing/ @markbook/PCX
 
 # Firewall Rules
-content/firewall/ @cloudflare/firewall @cloudflare/PCX
+content/firewall/ @cloudflare/firewall @markbook/PCX
 
 # Fundamentals
-content/fundamentals/ @cloudflare/PCX
+content/fundamentals/ @markbook/PCX
 
 # HTTP/3
-content/http3/ @ConzorKingKong @cloudflare/PCX
+content/http3/ @ConzorKingKong @markbook/PCX
 
 # Cloudflare Images
-content/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
+content/images/ @acadiemgroup/PCX
 
 # Load Balancing
-content/load-balancing/ @ConzorKingKong @cloudflare/PCX
+content/load-balancing/ @acadiemgroup/PCX
 
 # Logs
-content/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @victor-perov @cloudflare/PCX
+content/logs/ @acadiemgroup/PCX
 
 # Magic Transit
-content/magic-transit/ @annikagarbers @cloudflare/PCX
-
+content/magic-transit/ @acadiemgroup/PCX
 # Magic Firewall
 content/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
 
@@ -104,7 +103,7 @@ content/security-center/ @cloudflare/PCX
 content/spectrum/ @ConzorKingKong @cloudflare/PCX
 
 # SSL
-content/ssl/ @ConzorKingKong @cloudflare/PCX
+content/ssl/ @acadiemgroup/PCX
 
 # Stream
 content/stream/ @renandincer @third774 @Everlag @zaidf @mbetz08 @bkrebsbach @cloudflare/PCX
@@ -134,4 +133,4 @@ content/web3/ @varuncf @cloudflare/PCX
 content/workers/ @cloudflare/workers-docs @cloudflare/PCX
 
 # Zaraz
-content/zaraz/ @cloudflare/PCX
+content/zaraz/ @acadiem/PCX
