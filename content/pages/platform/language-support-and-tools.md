@@ -18,7 +18,7 @@ If you need to use a specific version of a language, (for example, Node.js or Ru
 
 We have recently announced a [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) which brings several improvements to project builds. To migrate to this new version, configure your Pages project settings in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** > in **Overview**, select your Pages project.
 3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
 
