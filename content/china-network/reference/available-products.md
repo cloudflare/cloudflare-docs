@@ -43,3 +43,4 @@ The following products and features are available on the Cloudflare China Networ
 | Product | Feature | Description |
 |---|---|---|
 | [Analytics](/analytics/) | Web Analytics | Real-time traffic, security, and data monitoring. |
+| [Logs](/logs/) | Instant Logs | Live Tail your Cloudflare HTTP logs in the Cloudflare Dashboard. |
