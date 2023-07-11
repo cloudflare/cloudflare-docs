@@ -20,7 +20,7 @@ async function run() {
       )
       .map((file) => {
         const removeContentAndMd = (link) =>
-          link.replace(/^\/?content\//, '').replace(/\.md$/, '/');
+          link.replace(/^content\//, '').replace(/\.md$/, '/');
 
         const originalLink = `https://developers.cloudflare.com${removeContentAndMd(
           file.filename
