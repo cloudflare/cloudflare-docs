@@ -41,7 +41,7 @@ async function run() {
       await octokit.rest.issues.updateComment({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
-        comment_id: existingComment.id,
+        comment_id: existingBotComment.id,
         body: commentBody,
       });
     } else {
