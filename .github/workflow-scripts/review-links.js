@@ -49,7 +49,7 @@ async function run() {
     const existingComment = comments.find(
       (comment) =>
         comment.user.id === 41898282 &&
-        comment.body.includes('Files changed in this PR:')
+        comment.body.includes('| Original Link | Updated Link |')
     );
 
     if (existingComment) {
