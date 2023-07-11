@@ -56,7 +56,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
 
-- state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Sets an application level auto-response that doesn't wake hibernated WebSockets. 
   
