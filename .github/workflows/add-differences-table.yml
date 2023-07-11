@@ -10,10 +10,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Comment on PR with Changed Files
-        if: github.event.pull_request && (github.event.comment.user.id == 73139402 || github.event.comment.user.id == github.event.sender.id)
+        if: github.event.pull_request && github.event.action != 'closed'
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           CHANGED_FILES=$(git diff --name-only origin/production...$PR_NUMBER | grep -E '\.md$' | grep -v '_partials')
@@ -26,10 +26,9 @@ jobs:
           COMMENTS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments?per_page=100")
           COMMENT_ID=$(echo "$COMMENTS" | jq -r ".[] | select(.user.id == 73139402) | .id")
 
-          if [ -z "$COMMENT_ID" ]; then
-            COMMENT_URL=$(jq --raw-output .pull_request.comments_url "$GITHUB_EVENT_PATH")
-            echo $COMMENT_BODY | curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --data @- $COMMENT_URL
-          else
+          if [ -n "$COMMENT_ID" ]; then
             COMMENT_URL="https://api.github.com/repos/${{ github.repository }}/issues/comments/$COMMENT_ID"
             echo $COMMENT_BODY | curl -X PATCH -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --data @- $COMMENT_URL
+          else
+            COMMENT_URL=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -d "{\"body\": \"$COMMENT_BODY\"}" "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments" | jq -r '.url')
           fi
