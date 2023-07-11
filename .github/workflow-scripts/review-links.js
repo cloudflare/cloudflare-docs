@@ -16,13 +16,25 @@ async function run() {
       .filter(
         (file) =>
           file.filename.endsWith('.md') &&
-          !file.filename.includes('_partials') &&
-          file.filename.startsWith('content/')
+          !file.filename.includes('_partials')
       )
-      .map((file) => file.filename);
+      .map((file) => {
+        const originalLink = `https://developers.cloudflare.com${file.filename.replace(
+          /^\/content/,
+          ''
+        )}`;
+        const updatedLink = `https://test.com${file.filename
+          .replace(/^\/content/, '')
+          .replace(/\.md$/, '')}`;
 
-    const commentBody = `Files changed in this PR:\n\n${changedFiles
-      .map((file) => `* ${file}`)
+        return { originalLink, updatedLink };
+      });
+
+    const commentBody = `| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
+      .map(
+        (file) =>
+          `| [${file.originalLink}](${file.originalLink}) | [${file.updatedLink}](${file.updatedLink}) |`
+      )
       .join('\n')}`;
 
     const { data: comments } = await octokit.rest.issues.listComments({
@@ -32,17 +44,17 @@ async function run() {
       per_page: 100,
     });
 
-    const existingBotComment = comments.find(
+    const existingComment = comments.find(
       (comment) =>
-        comment.user.id === 41898282 &&
+        comment.user.id === 73139402 &&
         comment.body.includes('Files changed in this PR:')
     );
 
-    if (existingBotComment) {
+    if (existingComment) {
       await octokit.rest.issues.updateComment({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
-        comment_id: existingBotComment.id,
+        comment_id: existingComment.id,
         body: commentBody,
       });
     } else {
