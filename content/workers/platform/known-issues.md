@@ -58,3 +58,19 @@ is the equivalent of:
 ```js
 await fetch('https://example.com/foo')
 ```
+
+## Fetch to IP addresses
+
+For Workers subrequests, requests can only be made to URLs, not to IP addresses directly. To overcome this limitation add a [A or AAAA name record to your zone](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/) and then fetch that resource. 
+
+For example, in the zone `example.com` create a record of type `A` with the name `server` and value `192.0.2.1`, and then use:
+
+```js
+await fetch('http://server.example.com')
+```
+
+instead of  
+
+```js
+await fetch('http://192.0.2.1')
+```
