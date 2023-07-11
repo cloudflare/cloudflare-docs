@@ -19,13 +19,15 @@ async function run() {
           !file.filename.includes('_partials')
       )
       .map((file) => {
-        const originalLink = `https://developers.cloudflare.com${file.filename.replace(
-          /^\/content/,
-          ''
+        const removeContentAndMd = (link) =>
+          link.replace(/^\/?content\//, '').replace(/\.md$/, '/');
+
+        const originalLink = `https://developers.cloudflare.com${removeContentAndMd(
+          file.filename
         )}`;
-        const updatedLink = `https://test.com${file.filename
-          .replace(/^\/content/, '')
-          .replace(/\.md$/, '')}`;
+        const updatedLink = `https://test.com${removeContentAndMd(
+          file.filename
+        )}`;
 
         return { originalLink, updatedLink };
       });
@@ -46,7 +48,7 @@ async function run() {
 
     const existingComment = comments.find(
       (comment) =>
-        comment.user.id === 73139402 &&
+        comment.user.id === 41898282 &&
         comment.body.includes('Files changed in this PR:')
     );
 
