@@ -35,9 +35,9 @@ async function run() {
 
     console.log(pagesComment)
     if (pagesComment) {
-        const regex = /'(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)'/gm;
+        const regex = /(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)/gm;
         const urlMatches = pagesComment.body.match(regex)
-        console.log(urlMatches)
+        previewBaseURL = urlMatches[3]
     }
 
     const changedFiles = files
@@ -53,9 +53,7 @@ async function run() {
         const originalLink = `https://developers.cloudflare.com${removeContentAndMd(
           file.filename
         )}`;
-        const updatedLink = `https://test.com${removeContentAndMd(
-          file.filename
-        )}`;
+        const updatedLink = previewBaseURL.concat(removeContentAndMd(file.filename));
 
         return { originalLink, updatedLink };
       });
