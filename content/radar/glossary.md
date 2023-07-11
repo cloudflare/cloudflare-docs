@@ -10,7 +10,7 @@ This page provides a list of terms and concepts to help you understand Radar and
 
 ## Application-level Attacks
 
-Layer 7 attack information based on requests that were mitigated. Including the most frequent mitigation techniques as well as trending of mitigated request volume over time.
+Layer 7 attack information based on mitigated requests. Including the most frequent mitigation techniques as well as trending of mitigated request volume over time. Selected location or ASN is the source of the mitigated requests.
 
 ## Autonomous Systems
 
@@ -94,7 +94,7 @@ The IQI methodology requires a minimum number of measurements to generate estima
 
 ## Network-level DDoS Attacks
 
-Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range.
+Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
 
 ## Traffic type filter
 
