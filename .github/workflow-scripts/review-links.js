@@ -31,15 +31,20 @@ async function run() {
       per_page: 100,
     });
 
-    console.log(comments)
-
     const existingComment = comments.find(
-      (comment) => comment.user.id === 73139402
+      (comment) =>
+        comment.user.id === 73139402 &&
+        comment.body.includes('Files changed in this PR:')
     );
 
-    console.log(existingComment)
-
     if (existingComment) {
+      await octokit.rest.issues.updateComment({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        comment_id: existingComment.id,
+        body: commentBody,
+      });
+    } else {
       await octokit.rest.issues.createComment({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
