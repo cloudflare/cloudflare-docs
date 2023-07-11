@@ -1,0 +1,34 @@
+name: Comment on PR with Changed Files
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+
+jobs:
+  comment-on-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Comment on PR with Changed Files
+        if: github.event.issue.pull_request && (github.event.comment.user.id == 73139402 || github.event.comment.user.id == github.event.sender.id) && contains(github.event.comment.body, 'Deploy successful')
+        run: |
+          PR_NUMBER=$(jq --raw-output .issue.number "$GITHUB_EVENT_PATH")
+          CHANGED_FILES=$(git diff --name-only origin/master...$PR_NUMBER | grep -E '\.md$' | grep -v '_partials')
+
+          COMMENT_BODY="Files changed in this PR:\n\n"
+          while IFS= read -r FILE; do
+            COMMENT_BODY+="* $FILE\n"
+          done <<< "$CHANGED_FILES"
+
+          if [ -z "${{ github.event.comment.id }}" ]; then
+            COMMENT_URL=$(jq --raw-output .issue.comments_url "$GITHUB_EVENT_PATH")
+            echo $COMMENT_BODY | curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --data @- $COMMENT_URL
+          else
+            COMMENT_ID=${{ github.event.comment.id }}
+            COMMENT_URL="https://api.github.com/repos/${{ github.repository }}/issues/comments/$COMMENT_ID"
+            echo $COMMENT_BODY | curl -X PATCH -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --data @- $COMMENT_URL
+          fi
