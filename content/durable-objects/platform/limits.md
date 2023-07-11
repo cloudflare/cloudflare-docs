@@ -29,4 +29,5 @@ An individual object has a soft limit of 1000 requests per second. A simple get 
 Correspondingly, an object that (for example) serializes and/or deserializes large JSON values or performs larger `list()` operations may be more limited in terms of request throughput. An object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/platform/troubleshooting/#error-durable-object-is-overloaded) error to the caller.
 
 Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate Durable Objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account. If you need more storage, contact your account team.
-* <sup>1</sup> Durable Objects both bills and measures storage based on a gigabyte (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB).
+
+<sup>1</sup> Durable Objects both bills and measures storage based on a gigabyte (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB).

@@ -11,18 +11,18 @@ Durable Objects are only available on the Workers Paid plan.
 
 |          | Paid plan                                         |
 | -------- | ------------------------------------------------- |
-| Requests | 1 million, + $0.15/million                        |
-| Duration | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup> |
+| Requests<sup>1</sup> | 1 million, + $0.15/million                        |
+| Duration<sup>2</sup> | 400,000 GB-s, + $12.50/million GB-s<sup>3,4</sup> |
 
 {{</table-wrap>}}
 
-1. Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. Prefer using [`state.acceptWebSocket()`](/durable-objects/api/hibernatable-websockets-api/#state-methods-for-websockets), which will stop incurring duration charges once all event handlers finish running.
+<sup>1</sup> Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
 
-2. Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
+<sup>2</sup> Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/api/hibernatable-websockets-api/) will not incur additional wall-clock time, and so they will not be charged.
 
-Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
+<sup>3</sup> Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. Prefer using [`state.acceptWebSocket()`](/durable-objects/api/hibernatable-websockets-api/#state-methods-for-websockets), which will stop incurring duration charges once all event handlers finish running.
 
-Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/api/hibernatable-websockets-api/) will not incur additional wall-clock time, and so they will not be charged.
+<sup>4</sup> Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 
 ## Durable Objects billing examples
 
@@ -75,16 +75,20 @@ Durable Objects do not have to use the Transactional Storage API, but if your co
 |                                  | Paid plan                  |
 | -------------------------------- | -------------------------- |
 | Read request units<sup>1,2</sup> | 1 million, + $0.20/million |
-| Write request units<sup>1</sup>  | 1 million, + $1.00/million |
-| Delete requests<sup>3</sup>      | 1 million, + $1.00/million |
-| Stored data<sup>4</sup>          | 1 GB, + $0.20/ GB-month    |
+| Write request units<sup>3</sup>  | 1 million, + $1.00/million |
+| Delete requests<sup>4</sup>      | 1 million, + $1.00/million |
+| Stored data<sup>5</sup>          | 1 GB, + $0.20/ GB-month    |
 
 {{</table-wrap>}}
 
-1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
-2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for 1 read request unit.
-3.  Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
-4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
-5.  Each alarm write is billed as a single write request unit.
+<sup>1</sup> A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
+
+<sup>2</sup>  List operations are billed by read request units, based on the amount of data examined. For example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for 1 read request unit.
+
+<sup>3</sup>  Each alarm write is billed as a single write request unit.
+
+<sup>4</sup>  Delete requests are unmetered. For example, deleting a 100 KB value will be charged one delete request.
+
+<sup>5</sup>  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 
 Requests that hit the [Durable Objects in-memory cache](/durable-objects/learning/in-memory-state/) or that use the [multi-key versions of get/put/delete methods](/durable-objects/api/transactional-storage-api/) are billed the same as if they were a normal, individual request for each key.
