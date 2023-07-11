@@ -37,10 +37,6 @@ async function run() {
         comment.user.id === 41898282 &&
         comment.body.includes('Files changed in this PR:')
     );
-    
-    console.log(comments)
-
-    console.log(existingBotComment)
 
     if (existingBotComment) {
       await octokit.rest.issues.updateComment({
