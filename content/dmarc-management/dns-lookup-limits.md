@@ -15,5 +15,5 @@ To check if your SPF records are compliant with the SPF specification:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Email** > **DMARC Management**.
 3. In **Email record overview**, select **View records**.
-4. Find your SPF record, and select the **three dots next to it** > **Inspect**. 
+4. Find your SPF record, and select the three dots next to it > **Inspect**. 
 5. DMARC Management will inspect your records and check for the total number of DNS lookups. If the record exceeds the maximum number of DNS lookups, DMARC Management will warn you about this. You should edit and remove unnecessary records in the DNS page. Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) for more information on how to delete DNS records.
