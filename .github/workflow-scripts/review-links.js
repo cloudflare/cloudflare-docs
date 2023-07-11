@@ -12,6 +12,20 @@ async function run() {
       per_page: 100,
     });
 
+    const pagesComment = comments.find(
+        (comment) =>
+          comment.user.id === 73139402 &&
+          comment.body.includes('Deploy successful!')
+      );
+    
+    let previewBaseURL = "https://www.example.com"
+
+    if (pagesComment) {
+        const regex = /'(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)'/;
+        const urlMatches = pagesComment.body.match(regex)
+        console.log(urlMatches)
+    }
+
     const changedFiles = files
       .filter(
         (file) =>
