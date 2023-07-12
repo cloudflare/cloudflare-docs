@@ -1,11 +1,14 @@
 name: Show Changed Files
 on:
-  pull_request:
-    branches:
-      - production
+   issue_comment:
+    types:
+      - created
+      - edited
 
 jobs:
   changed-files-links:
+    name: Show Changed Files
+    if: github.event.issue.pull_request && (github.event.comment.user.id == 73139402 && contains(github.event.comment.body, 'Deploy successful')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

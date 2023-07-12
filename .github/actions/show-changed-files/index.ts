@@ -44,7 +44,8 @@ async function run(): Promise<void> {
       .filter(
         (file) =>
           file.filename.endsWith('.md') &&
-          !file.filename.includes('_partials')
+          !file.filename.includes('_partials') &&
+          file.filename.startsWith('content/')
       )
       .map((file) => ({
         file,
