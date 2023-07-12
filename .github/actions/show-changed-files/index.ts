@@ -16,8 +16,8 @@ async function run(): Promise<void> {
     });
 
     const { data: comments } = await octokit.rest.issues.listComments({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
+      owner: ctx.repo.owner,
+      repo: ctx.repo.repo,
       issue_number: prNumber,
       per_page: 100,
     });
@@ -78,15 +78,15 @@ async function run(): Promise<void> {
 
     if (existingComment) {
       await octokit.rest.issues.updateComment({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
+        owner: ctx.repo.owner,
+        repo: ctx.repo.repo,
         comment_id: existingComment.id,
         body: commentBody,
       });
     } else {
       await octokit.rest.issues.createComment({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
+        owner: ctx.repo.owner,
+        repo: ctx.repo.repo,
         issue_number: prNumber,
         body: commentBody,
       });
