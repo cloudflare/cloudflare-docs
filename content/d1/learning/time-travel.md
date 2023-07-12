@@ -34,16 +34,17 @@ Bookmarks can be derived from a [Unix timestamp](https://en.wikipedia.org/wiki/U
 
 ## Retrieve a bookmark
 
-You can retrieve a bookmark for the current timestamp by calling the `d1 show` command, which defaults to returning the current bookmark:
+You can retrieve a bookmark for the current timestamp by calling the `d1 info` command, which defaults to returning the current bookmark:
 
 ```sh
-$ wrangler d1 time-travel show YOUR_DATABASE
+$ wrangler d1 time-travel info YOUR_DATABASE
 ```
 
-To retrieve the bookmark for a timestamp in the past, pass the `--at-timestamp` flag with a valid Unix timestamp:
+To retrieve the bookmark for a timestamp in the past, pass the `--at-timestamp` flag with a valid Unix or RFC3339 timestamp:
 
 ```sh
-$ wrangler d1 time-travel show YOUR_DATABASE --at-timestamp=UNIX_TIMESTAMP
+# Using an RFC3339 timestamp, including the timezone:
+$ wrangler d1 time-travel info YOUR_DATABASE --timestamp='2023-07-09T17:31:11+00:00"
 ```
 
 ## Restore a database
