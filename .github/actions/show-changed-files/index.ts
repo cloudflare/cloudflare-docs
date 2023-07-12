@@ -3,19 +3,21 @@ import * as github from '@actions/github';
 
 async function run(): Promise<void> {
   try {
+    const ctx = github.context;
     const token = core.getInput('GITHUB_TOKEN', { required: true });
     const octokit = github.getOctokit(token);
-    const prNumber = github.context.payload.pull_request.number;
+    const pr = ctx.payload.pull_request;
+    const prNumber = pr.number;
 
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
-      ...github.context.repo,
+      ...ctx.repo,
       pull_number: prNumber,
       per_page: 100,
     });
 
     const { data: comments } = await octokit.rest.issues.listComments({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
+      owner: ctx.repo.owner,
+      repo: ctx.repo.repo,
       issue_number: prNumber,
       per_page: 100,
     });
@@ -76,15 +78,15 @@ async function run(): Promise<void> {
 
     if (existingComment) {
       await octokit.rest.issues.updateComment({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
+        owner: ctx.repo.owner,
+        repo: ctx.repo.repo,
         comment_id: existingComment.id,
         body: commentBody,
       });
     } else {
       await octokit.rest.issues.createComment({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
+        owner: ctx.repo.owner,
+        repo: ctx.repo.repo,
         issue_number: prNumber,
         body: commentBody,
       });
