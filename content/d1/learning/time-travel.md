@@ -26,7 +26,7 @@ To understand which storage subsystem your database uses, run `wrangler d1 info 
 
 Time Travel introduces the concept of a "bookmark" to D1: a bookmark represents the state of a database at a specific point in time, and is effectively an append-only log.
 
-* Bookmarks are lexigraphically sortable: sorting a list of bookmarks will order them from oldest-to-newest
+* Bookmarks are lexicographically sortable: sorting a list of bookmarks will order them from oldest-to-newest
 * Bookmarks older than 30 days are invalid and cannot be used as a restore point.
 * Restoring a database to a specific bookmark does not remove or delete older bookmarks. For example, if you restore to a bookmark representing the state of your database 10 minutes ago, and determine that you needed to restore to an earlier point in time, you can still do so.
 
