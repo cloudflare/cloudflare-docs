@@ -272,7 +272,7 @@ There are 3 variations of arguments that can be used in a range:
 
 {{<definitions>}}
 
-- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}{{</code>}}
+- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be stored given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
 
