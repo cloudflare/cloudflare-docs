@@ -1,5 +1,5 @@
-name: 'Assign PR Owner'
-description: 'Assign the PR to its product content owner.'
+name: 'Show changed files'
+description: 'Comment on the PR with before and after links to help isolate and review changes'
 
 inputs:
   GITHUB_TOKEN:

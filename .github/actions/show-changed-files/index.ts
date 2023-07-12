@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-async function run() {
+async function run(): Promise<void> {
   try {
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
     const prNumber = github.context.payload.pull_request.number;
@@ -52,7 +52,7 @@ async function run() {
       .sort((a, b) => b.changes - a.changes)
       .slice(0, 15) // Limit to 15 entries
       .map((file) => {
-        const removeContentAndMd = (link) =>
+        const removeContentAndMd = (link: string): string =>
           link.replace(/^content/, '').replace(/\.md$/, '/');
 
         const originalLink = `https://developers.cloudflare.com${removeContentAndMd(
@@ -65,7 +65,7 @@ async function run() {
         return { originalLink, updatedLink };
       });
 
-    const commentBody = `| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
+    const commentBody = `**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
       .map(
         (file) =>
           `| [${file.originalLink}](${file.originalLink}) | [${file.updatedLink}](${file.updatedLink}) |`
