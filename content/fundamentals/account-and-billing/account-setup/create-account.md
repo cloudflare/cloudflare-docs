@@ -8,7 +8,7 @@ meta:
 
 # Create a Cloudflare account
 
-To create a new Cloudflare account:
+To create a Cloudflare account:
 
 1. Go to the [Sign up page](https://dash.cloudflare.com/sign-up).
 2. Enter your **Email** and **Password**. 
