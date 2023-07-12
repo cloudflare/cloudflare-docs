@@ -1,18 +1,18 @@
 ---
-title: Guide
+title: Get started
 pcx_content_type: get-started
 weight: 2
 meta:
-  title: Get started guide
+  title: Get started 
 ---
 
-# Get started guide
+# Get started 
 
 Cloudflare Queues is a flexible messaging queue that allows you to queue messages for asynchronous processing. By following this guide, you will create your first queue, a Worker to publish messages to that queue, and a consumer Worker to consume messages from that queue.
 
 ## Prerequisite: Create a Cloudflare account
 
-In order to use Queues, you need a [Cloudflare account](/fundamentals/account-and-billing/account-setup/). If you already have an account, skip this step.
+To use Queues, you need a [Cloudflare account](/fundamentals/account-and-billing/account-setup/). If you already have an account, skip this step.
 
 ## 1. Enable Queues
 
