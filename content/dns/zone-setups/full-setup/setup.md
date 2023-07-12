@@ -17,10 +17,6 @@ meta:
 Before update your domain nameservers, make sure that you:
 
 - Already own a domain name (such as `example.com` or `cloudflare.com`).
-- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
-- Disabled DNSSEC at your registrar (where you bought your domain name).
-  
-{{<render file="_dnssec-providers.md">}}
 
 {{<Aside type="note">}}
 
@@ -29,6 +25,13 @@ If you do not already have a [domain name](https://www.cloudflare.com/learning/d
 All domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, which means you can skip the rest of this tutorial.
 
 {{</Aside>}}
+
+- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+- Disabled DNSSEC at your registrar (where you bought your domain name).
+  
+{{<render file="_dnssec-providers.md">}}
+
+{{<render file="_dnssec-enabled-migration.md">}}
 
 ---
 
