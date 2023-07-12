@@ -3,7 +3,7 @@ updated: 2022-02-07
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Build counter
+title: Build a counter
 ---
 
 ## Build a counter
