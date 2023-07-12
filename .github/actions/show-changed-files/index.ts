@@ -3,7 +3,8 @@ import * as github from '@actions/github';
 
 async function run(): Promise<void> {
   try {
-    const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+    const token = core.getInput('GITHUB_TOKEN', { required: true });
+    const octokit = github.getOctokit(token);
     const prNumber = github.context.payload.pull_request.number;
 
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
