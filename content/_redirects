@@ -438,7 +438,7 @@
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
 /magic-transit/set-up/provide-configuration-data/map-routes-for-prefixes-smaller-than-24/ /magic-transit/how-to/configure-static-routes/ 301
 /magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
-/magic-transit/set-up/provide-configuration-data/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
+/magic-transit/set-up/provide-configuration-data/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-1/ 301
 /magic-transit/set-up/requirements/ /magic-transit/prerequisites/ 301
 /magic-transit/get-started/configure-tunnels/ /magic-transit/how-to/ 301
 /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
@@ -454,6 +454,7 @@
 /magic-transit/reference/ipsec/ /magic-transit/reference/tunnels/#ipsec-tunnels 301
 /magic-transit/flow-based-monitoring/ /magic-transit/magic-network-monitoring/ 301
 /magic-transit/flow-based-monitoring/enable-flow-based-monitoring/ /magic-network-monitoring/notifications/ 301
+/magic-transit/how-to/auto-advertise-prefixes/ /magic-network-monitoring/rules/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
