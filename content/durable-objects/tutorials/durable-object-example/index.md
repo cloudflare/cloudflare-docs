@@ -1,5 +1,7 @@
 ---
-weight: 11
+updated: 2023-06-29
+difficulty: Beginner
+content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Durable Object example
 ---
