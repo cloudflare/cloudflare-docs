@@ -136,6 +136,12 @@ export default {
 };
 ```
 
+{{<Aside type="note">}}
+
+You should perform [Multipart uploads](/workers-for-platforms/platform/multipart/) if you want to use Service Workers syntax.
+
+{{</Aside>}}
+
 ## 5. Test a request
 
 You will now send a request to the route your dynamic dispatch Worker is on. You should receive the response (`Hello world`) you created in your user Worker (`customer-worker-1`) that you call from your dynamic dispatch Worker (the Worker you made in step 3).

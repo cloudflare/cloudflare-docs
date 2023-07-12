@@ -9,7 +9,7 @@ To perform multipart uploads, include a similar object in your metadata's `bindi
 
 ```json
 {
-    "main_module": "main.js",
+    "main_module": "main.js", // should correspond to the Worker filename
     "services": [
     {
         "binding": "some_service_binding",
@@ -26,4 +26,6 @@ To perform multipart uploads, include a similar object in your metadata's `bindi
     ]
 }
 ```
+
+
 
