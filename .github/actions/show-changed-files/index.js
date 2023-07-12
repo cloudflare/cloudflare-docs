@@ -11,7 +11,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``)}u.g
 
 | Original Link | Updated Link |
 | --- | --- |
-${d.filter(l=>l.filename.endsWith(".md")&&!l.filename.includes("_partials")).map(l=>({file:l,changes:l.changes})).sort((l,m)=>m.changes-l.changes).slice(0,15).map(l=>{let m=h=>h.replace(/^content/,"").replace(/\.md$/,"/"),v=`https://developers.cloudflare.com${m(l.file.filename)}`,y=o.concat(m(l.file.filename));return{originalLink:v,updatedLink:y}}).map(l=>`| [${l.originalLink}](${l.originalLink}) | [${l.updatedLink}](${l.updatedLink}) |`).join(`
+${d.filter(l=>l.filename.endsWith(".md")&&!l.filename.includes("_partials")&&l.filename.startsWith("content/")).map(l=>({file:l,changes:l.changes})).sort((l,m)=>m.changes-l.changes).slice(0,15).map(l=>{let m=h=>h.replace(/^content/,"").replace(/\.md$/,"/"),v=`https://developers.cloudflare.com${m(l.file.filename)}`,y=o.concat(m(l.file.filename));return{originalLink:v,updatedLink:y}}).map(l=>`| [${l.originalLink}](${l.originalLink}) | [${l.updatedLink}](${l.updatedLink}) |`).join(`
 `)}`;t?await p.rest.issues.updateComment({owner:W.context.repo.owner,repo:W.context.repo.repo,comment_id:t.id,body:n}):await p.rest.issues.createComment({owner:W.context.repo.owner,repo:W.context.repo.repo,issue_number:a,body:n})}catch(e){N1.setFailed(e.message)}}w0();
 /*!
  * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
