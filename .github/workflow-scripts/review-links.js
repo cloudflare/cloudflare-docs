@@ -12,6 +12,8 @@ async function run() {
       per_page: 100,
     });
 
+    console.log(files)
+
     const { data: comments } = await octokit.rest.issues.listComments({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
@@ -33,7 +35,6 @@ async function run() {
     
     let previewBaseURL = "https://www.example.com"
 
-    console.log(pagesComment)
     if (pagesComment) {
         const regex = /(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)/gm;
         const urlMatches = pagesComment.body.match(regex)
