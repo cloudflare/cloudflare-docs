@@ -9,13 +9,20 @@ To perform multipart uploads, include a similar object in your metadata's `bindi
 
 ```json
 {
+    "main_module": "main.js",
+    "services": [
+    {
+        "binding": "some_service_binding",
+        "service": "some_service",
+        "environment": "production"
+    }
+    ],
     "bindings": [
-        ...,
-        {
-            "name": "dispatcher",
-            "type": "dispatch_namespace",
-            "namespace": "my-namespace"
-        }
+    {
+        "name": "some_other_binding",
+        "type": "binding_type",
+        "example_param": "param"
+    }
     ]
 }
 ```
