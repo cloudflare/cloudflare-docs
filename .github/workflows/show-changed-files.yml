@@ -1,11 +1,11 @@
-name: Comment on PR with Changed Files
+name: Show Changed Files
 on:
   pull_request:
     branches:
       - production
 
 jobs:
-  comment-on-pr:
+  changed-files-links:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,4 +23,5 @@ jobs:
       - name: Execute comment-on-pr.js
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node .github/workflow-scripts/review-links.js
+        run: node .github/workflow-scripts/show-changed-files.js
+        continue-on-error: true

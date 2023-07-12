@@ -12,33 +12,31 @@ async function run() {
       per_page: 100,
     });
 
-    console.log(files)
-
     const { data: comments } = await octokit.rest.issues.listComments({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        issue_number: prNumber,
-        per_page: 100,
-      });
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      issue_number: prNumber,
+      per_page: 100,
+    });
 
     const existingComment = comments.find(
-    (comment) =>
+      (comment) =>
         comment.user.id === 41898282 &&
         comment.body.includes('| Original Link | Updated Link |')
     );
 
     const pagesComment = comments.find(
-        (comment) =>
-          comment.user.id === 73139402 &&
-          comment.body.includes('Deploy successful!')
-      );
-    
-    let previewBaseURL = "https://www.example.com"
+      (comment) =>
+        comment.user.id === 73139402 &&
+        comment.body.includes('Deploy successful!')
+    );
+
+    let previewBaseURL = 'https://www.example.com';
 
     if (pagesComment) {
-        const regex = /(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)/gm;
-        const urlMatches = pagesComment.body.match(regex)
-        previewBaseURL = urlMatches[3]
+      const regex = /(https:\/\/.*?\.cloudflare-docs-7ou\.pages\.dev)/gm;
+      const urlMatches = pagesComment.body.match(regex);
+      previewBaseURL = urlMatches[3];
     }
 
     const changedFiles = files
@@ -47,14 +45,22 @@ async function run() {
           file.filename.endsWith('.md') &&
           !file.filename.includes('_partials')
       )
+      .map((file) => ({
+        file,
+        changes: file.changes,
+      }))
+      .sort((a, b) => b.changes - a.changes)
+      .slice(0, 15) // Limit to 15 entries
       .map((file) => {
         const removeContentAndMd = (link) =>
           link.replace(/^content/, '').replace(/\.md$/, '/');
 
         const originalLink = `https://developers.cloudflare.com${removeContentAndMd(
-          file.filename
+          file.file.filename
         )}`;
-        const updatedLink = previewBaseURL.concat(removeContentAndMd(file.filename));
+        const updatedLink = previewBaseURL.concat(
+          removeContentAndMd(file.file.filename)
+        );
 
         return { originalLink, updatedLink };
       });
