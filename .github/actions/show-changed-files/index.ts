@@ -4,7 +4,6 @@ import * as github from '@actions/github';
 async function run(): Promise<void> {
   try {
     const ctx = github.context;
-    console.log(ctx)
     const token = core.getInput('GITHUB_TOKEN', { required: true });
     const octokit = github.getOctokit(token);
     const issue = ctx.payload.issue;
