@@ -4,21 +4,22 @@ import * as github from '@actions/github';
 async function run(): Promise<void> {
   try {
     const ctx = github.context;
+    console.log(ctx)
     const token = core.getInput('GITHUB_TOKEN', { required: true });
     const octokit = github.getOctokit(token);
-    const pr = ctx.payload.pull_request;
-    const prNumber = pr.number;
+    const issue = ctx.payload.issue;
+    const issueNumber = issue.number;
 
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
       ...ctx.repo,
-      pull_number: prNumber,
+      pull_number: issueNumber,
       per_page: 100,
     });
 
     const { data: comments } = await octokit.rest.issues.listComments({
       owner: ctx.repo.owner,
       repo: ctx.repo.repo,
-      issue_number: prNumber,
+      issue_number: issueNumber,
       per_page: 100,
     });
 
@@ -87,7 +88,7 @@ async function run(): Promise<void> {
       await octokit.rest.issues.createComment({
         owner: ctx.repo.owner,
         repo: ctx.repo.repo,
-        issue_number: prNumber,
+        issue_number: issueNumber,
         body: commentBody,
       });
     }
