@@ -90,7 +90,7 @@ The response will include, among others, the following top properties in `result
 - `certificates` - TLS certificates of HTTP responses.
 - `verdicts` - Verdicts on malicious content.
 
-Of those above, here are some highlights:
+Some examples of more specific properties include:
 
 - `task.uuid` - ID of the scan.
 - `task.effectiveUrl` - URL of the primary request, after all HTTP redirects.
