@@ -138,7 +138,7 @@ export default {
 
 {{<Aside type="note">}}
 
-You should perform [Multipart uploads](/workers-for-platforms/platform/multipart/) if you want to use Service Workers syntax.
+You should perform [Multipart uploads](/workers-for-platforms/platform/multipart/) if you want to use Module Javascript syntax.
 
 {{</Aside>}}
 
