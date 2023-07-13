@@ -22,17 +22,17 @@ To deploy a custom root certificate:
 
 2. Upload the certificate and private key to Cloudflare. The certificate must be a root CA.
 
-   ```json
-   curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/mtls_certificates"\
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/mtls_certificates" \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
    --data '{
-     "name":"example_ca_cert",
-     "certificates":"<ROOT_CERTIFICATE>",
-     "private_key":"<PRIVATE_KEY>",
-     "ca":true
-    }'
+     "name": "example_ca_cert",
+     "certificates": "<ROOT_CERTIFICATE>",
+     "private_key": "<PRIVATE_KEY>",
+     "ca": true
+   }'
    ```
 
    The response will return a UUID for the certificate:
@@ -56,24 +56,23 @@ To deploy a custom root certificate:
 
 3. Enable the certificate in Gateway:
 
-   ```json
+   ```bash
    ---
    highlight: [10]
    ---
    curl --request PATCH \
-   "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/configuration" \
+   "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/configuration" \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
    --data '{
-      "settings":
-      {
-        {
-        "enabled": true,
-        "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60"
-        }
-      }
-    }'
+     "settings": {
+       "custom_certificate": {
+         "enabled": true,
+         "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60"
+       }
+     }
+   }'
    ```
 
    The response will show the current status of the certificate:
