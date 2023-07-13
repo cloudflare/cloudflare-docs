@@ -12,20 +12,4 @@ Customers can create Magic Network Monitoring rules which will monitor specific 
 
 After Magic Transit is activated and your traffic is flowing through Cloudflare, malicious DDoS traffic will be blocked, and your origin servers will only receive clean network traffic via IPSec or GRE tunnels.
 
-## Enable Magic Network Monitoring notifications
-
-To enable Magic Network Monitoring attack detection notifications, refer to [Notifications](/magic-network-monitoring/notifications/).
-
-## Activate auto-advertisement
-
-### Dashboard
-
-To activate IP advertisement via the Cloudflare dashboard, refer to [Configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/#configure-dynamic-advertisement-via-the-dashboard).
-
-### API
-
-To activate IP advertisement via the API, refer to the [IP Address Management Dynamic Advertisement API](/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status).
-
-### Magic Network Monitoring rules
-
-To create Magic Network Monitoring rules with auto-advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](/magic-transit/how-to/auto-advertise-prefixes/).
+Refer to [Rules](/magic-network-monitoring/rules) to learn more about monitoring traffic volume and enabling per-prefix thresholds.
