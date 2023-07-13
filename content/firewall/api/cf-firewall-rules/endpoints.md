@@ -9,7 +9,7 @@ layout: list
 
 {{<content-column>}}
 
-To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the Cloudflare API base URL:
+To invoke a Cloudflare Firewall Rules operation, append the endpoint to the Cloudflare API base URL:
 
 ```txt
 https://api.cloudflare.com/client/v4/

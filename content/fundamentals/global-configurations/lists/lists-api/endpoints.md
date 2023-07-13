@@ -114,7 +114,7 @@ The Lists API supports the operations outlined below. Visit the associated links
 
 Nearly all the operations for managing items in a list are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
 
-Asynchronous list operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get bulk operation status](/api/operations/lists-get-bulk-operation-status) endpoint and specify the ID of the operation you want to monitor.
+Asynchronous list operations return an `operation_id`, which you can use to monitor the status of an operation. To monitor the status of an asynchronous operation, use the [Get bulk operation status](/api/operations/lists-get-bulk-operation-status) endpoint and specify the ID of the operation you want to monitor.
 
 When you make requests to a list while a bulk operation on that list is in progress, the requests are queued and processed in sequence (first in, first out). Requests for successful asynchronous operations return an `HTTP 201` status code.
 
