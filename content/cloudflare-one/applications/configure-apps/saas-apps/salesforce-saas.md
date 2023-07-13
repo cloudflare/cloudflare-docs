@@ -16,7 +16,7 @@ For this tutorial, you will need admin access to a Salesforce account.
 
 1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
 1.  Select the SaaS application type.
-1.  Select _Salesforce_ from the **Application** drop-down menu.
+1.  From the **Application** drop-down menu, select _Salesforce_.
 1.  Fill the remaining fields as follows:
     - **Entity ID**: https://\[YOUR_SFDC_DOMAIN].my.salesforce.com
     - **Assertion consumer service URL**: https://\[YOUR_SFDC_DOMAIN].my.salesforce.com
