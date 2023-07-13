@@ -7,9 +7,9 @@ title: Protecting DocuSign with Access for SaaS
 
 # Protecting DocuSign with Access for SaaS
 
-This guide covers how to protect your DocuSign account with Access for SaaS.
+This tutorial covers how to protect your DocuSign account with Access for SaaS.
 
-## Pre-Requisites:
+## Prerequisites
 
 - Access for SaaS requires that you have Single Sign-On available in your DocuSign plan.
 - A domain you own.
@@ -18,7 +18,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 **Time to complete:** 10 minutes
 
-## Create the Access for SaaS application
+## 1. Create the Access for SaaS application
 
 1.  In Zero Trust, go to **Access** > **Applications**.
 
@@ -60,7 +60,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1.  Set the file extension to `.crt` and save.
     {{</Aside>}}
 
-## Configure your DocuSign SSO instance
+## 2. Configure your DocuSign SSO instance
 
 1.  Ensure you have a domain claimed in Zendesk.
 
@@ -82,7 +82,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
     - Service Provider Issuer URL.
     - Service Provider Assertion Consumer Service URL.
 
-## Finalize your Cloudflare configuration
+## 3. Finalize your Cloudflare configuration
 
 1.  Go back to your DocuSign application under **Access** > **Applications**.
 1.  Click **Edit**.

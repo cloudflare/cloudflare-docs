@@ -19,7 +19,7 @@ For this tutorial, you will need admin access to a Salesforce account
 
 **Time to complete:** 15 minutes
 
-## Set up Salesforce as a SaaS application in Cloudflare Zero Trust
+## 1. Set up Salesforce as a SaaS application in Cloudflare Zero Trust
 
 1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
 1.  Select the SaaS application type.
@@ -33,13 +33,13 @@ For this tutorial, you will need admin access to a Salesforce account
 1.  Click Add application.
 1.  Next, take note of the **SSO endpoint**, the **Access Entity ID or Issuer**, and the **Public Key**.
 
-## Create a certificate file
+## 2. Create a certificate file
 
 1.  Paste the **Public key** in VIM or another code editor.
 1.  Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 1.  Set the file extension as `.crt` and save.
 
-## Enable Single Sign-On in Salesforce
+## 3. Enable Single Sign-On in Salesforce
 
 1.  In Salesforce, ensure your users have **Federation IDs**.
 
@@ -50,7 +50,7 @@ For this tutorial, you will need admin access to a Salesforce account
     - **SAML Enabled:** true
     - **Make federation ID case-insensitive:** true
 
-## Create a new SAML Single-Sign On configuration
+## 4. Create a new SAML Single-Sign On configuration
 
 1.  Create a new SAML Single-Sign On configuration:
     - **Name:** (this is what you want your users to see on sign in)
