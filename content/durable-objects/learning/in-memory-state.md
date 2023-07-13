@@ -4,7 +4,6 @@ pcx_content_type: concept
 weight: 16
 ---
 
-
 # In-memory state in a Durable Object
 
 In-memory state means that each object has one active instance at any particular time. All requests sent to that object are handled by that same instance. You can store some state in memory.
