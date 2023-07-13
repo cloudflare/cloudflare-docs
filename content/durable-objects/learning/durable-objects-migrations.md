@@ -5,7 +5,7 @@ title: Durable Objects migrations
 
 # Durable Objects migrations
 
-You must initiate a migration process when you create a new Durable Object class, rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
+You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
 
 {{<Aside type="note">}}
 
