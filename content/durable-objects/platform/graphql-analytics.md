@@ -1,5 +1,5 @@
 ---
-title: GraphQL Analytics
+title: GraphQL analytics
 pcx_content_type: concept
 weight: 16
 ---
