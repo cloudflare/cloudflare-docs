@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 16
 ---
 
-# GraphQL Analytics
+# GraphQL analytics
 
 Durable Object metrics are powered by GraphQL.
 
