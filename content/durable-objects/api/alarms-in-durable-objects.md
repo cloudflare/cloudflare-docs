@@ -10,7 +10,7 @@ Alarms allow Durable Objects to wake themselves up by executing the `alarm()` ha
 
 Alarms are modified using the [Transactional Storage API](/durable-objects/api/transactional-storage-api/). Alarm operations follow the same rules as other storage operations. Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`. 
 
-Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws. Retries are performed using exponential backoff starting at a 2 second delay from the first failure with up to 6 retries allowed.
+Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws. Retries are performed using exponential backoff starting at a two (2) second delay from the first failure with up to six (6) retries allowed.
 
 {{<Aside type="note" header="How are alarms different from Cron Triggers?">}}
 
