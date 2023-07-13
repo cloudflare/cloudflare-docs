@@ -30,7 +30,7 @@ After you or your users submit a phish sample, Area 1 adds that sample directly 
 
 ### Phish submission feedback
 
-Use the following keywords to search for submitted phish samples on Area 1 portal detection search:
+Use the following keywords to search for submitted phish samples on the Area 1 dashboard:
 
 - `phish_submission`
 - `user_malicious_submission`

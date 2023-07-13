@@ -172,6 +172,10 @@ Refer to [Querying Workers Analytics Engine from Grafana](/analytics/analytics-e
 The following limits apply to Analytics Engine:
 
 * Analytics Engine will accept up to twenty blobs, twenty doubles, and one index per request.
-* The total size of all blobs in a request must not exceed 5120 bytes
+* The total size of all blobs in a request must not exceed 5120 bytes.
 * Each index must not be more than 96 bytes.
-* There is also a limit of 25 writes (`writeDataPoint` invocations) per client HTTP request 
+* There is also a limit of 25 writes (`writeDataPoint` invocations) per client HTTP request.
+
+## Data retention
+
+* Data will be stored in Workers Analytics Engine for three months. In the future, we plan to offer longer retention periods.

@@ -11,6 +11,7 @@ There are instances in which Bot Management does not run and certain fields, suc
 ## Common reasons for Bot Management to not score a request
 
 ### Requests to internal endpoints
+
 Requests such as `/cdn-cgi/` are handled individually and will never receive a Bot Management score. Email Obfuscation, Web Analytics, Trace Requests, Challenge Pages, and JavaScript Detections do not receive bot scores. Refer to the table below for some examples of internal endpoints.
 
 | Route |
@@ -23,12 +24,12 @@ Requests such as `/cdn-cgi/` are handled individually and will never receive a B
 
 ### Same zone edgeworker and Grey Cloud sub-requests
 
-Same zone edgeworker subrequests will not receive a bot score or have JavaScript injected. 
+Same zone edgeworker subrequests will not receive a bot score or have JavaScript injected.
 
 ### Purge requests
 
-All HTTP purge requests will not receive a bot score. 
+All HTTP purge requests will not receive a bot score.
 
 ### Early hints cache requests
 
-Early hints cache requests will not receive a bot score. 
+Early hints cache requests will not receive a bot score.
