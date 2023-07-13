@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Traffic management
+title: Local Traffic Management
 weight: 17
 ---
 
