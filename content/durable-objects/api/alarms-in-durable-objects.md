@@ -30,7 +30,7 @@ The `alarm()` handler has guaranteed at-least-once execution and will be retried
 
 The method takes no parameters, does not return a result, and can be `async`.
 
-## How to use the `alarm()` handler method
+## Use the `alarm()` handler method
 
 In your Durable Object, the `alarm()` handler will be called when the alarm executes. Call `state.storage.setAlarm()` from anywhere in your Durable Object, and pass in a time for the alarm to run at. Use `state.storage.getAlarm()` to retrieve the currently set alarm time.
 
