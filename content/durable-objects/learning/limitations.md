@@ -9,7 +9,7 @@ Durable Objects is generally available. However, there are some known limitation
 
 ## Global uniqueness
 
-Global uniqueness guarantess there is only a single instance of a Durable Object class with a given ID running at once, across the world.
+Global uniqueness guarantees there is only a single instance of a Durable Object class with a given ID running at once, across the world.
 
 Uniqueness is enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage. 
 
