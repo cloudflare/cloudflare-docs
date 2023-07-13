@@ -1,8 +1,5 @@
 ---
-updated: 2022-07-15
-category: 🔐 Zero Trust
-difficulty: Advanced
-pcx_content_type: tutorial
+pcx_content_type: how-to
 title: Configure Zendesk SSO with Access for SaaS
 ---
 
@@ -15,8 +12,6 @@ This tutorial covers how to configure Zendesk SSO with Access for SaaS.
 - A Zero Trust Account
 - An integrated identity provider (IdP)
 - Admin access to your Zendesk account
-
-**Time to complete:** 20 minutes
 
 ## Configure Zendesk and Cloudflare
 

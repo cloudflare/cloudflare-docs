@@ -1,7 +1,5 @@
 ---
-updated: 2021-09-27
-category: 🔐 Zero Trust
-pcx_content_type: tutorial
+pcx_content_type: how-to
 title: Protecting DocuSign with Access for SaaS
 ---
 
@@ -15,8 +13,6 @@ This tutorial covers how to protect your DocuSign account with Access for SaaS.
 - A domain you own.
 - See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
 - A [SAML IdP](/cloudflare-one/identity/idp-integration/generic-saml/) configured with SAML Attributes configured.
-
-**Time to complete:** 10 minutes
 
 ## 1. Create the Access for SaaS application
 

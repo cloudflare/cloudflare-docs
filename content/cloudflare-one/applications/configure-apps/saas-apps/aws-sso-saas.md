@@ -1,8 +1,5 @@
 ---
-updated: 2023-07-05
-category: 🔐 Zero Trust
-difficulty: Intermediate
-pcx_content_type: tutorial
+pcx_content_type: how-to
 title: Configure AWS SSO with Access for SaaS
 ---
 
@@ -15,8 +12,6 @@ THis tutorial covers how to configure AWS SSO with Access for SaaS. Cloudflare A
 - A Zero Trust account
 - An integrated IdP
 - Admin access to an AWS account
-
-**Time to complete:** 20 minutes
 
 ## 2. Configure AWS
 
