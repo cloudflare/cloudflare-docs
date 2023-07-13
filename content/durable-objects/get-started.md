@@ -17,7 +17,7 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-You can enable Durable Objects for your account by purchasing Workers paid plan.
+Enable Durable Objects for your account by purchasing the Workers Paid plan:
 
  1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
  2. Go to **Workers & Pages** > **Plans**. 
