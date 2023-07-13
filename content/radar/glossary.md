@@ -10,7 +10,7 @@ This page provides a list of terms and concepts to help you understand Radar and
 
 ## Application-level Attacks
 
-Layer 7 attack information based on mitigated requests. Including the most frequent mitigation techniques as well as trending of mitigated request volume over time. Selected location or ASN is the source of the mitigated requests.
+Layer 7 attack information based on mitigated requests, including the most frequent mitigation techniques as well as the trend of mitigated request volume over time. Selected location or ASN is the source of the mitigated requests.
 
 ## Autonomous Systems
 
