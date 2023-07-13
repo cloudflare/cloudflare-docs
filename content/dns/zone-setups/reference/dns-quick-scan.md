@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: concept
 title: Records quick scan
 ---
 
@@ -27,8 +27,8 @@ The DNS records `content` would be different for each zone but, based on record 
 {{</example>}}
 
 The value `@` indicates the domain apex - in the example above, `domain.com` or `test.xyz`.
-    
-Virtually all zones on a full setup are expected to have an address record pointing to the IP address where the website or application is hosted.
+
+Virtually all zones on a full setup are expected to have at least one [address record](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) pointing to the IP address where the website or application is hosted.
 
 ### `www.` records
 
@@ -38,17 +38,21 @@ Virtually all zones on a full setup are expected to have an address record point
 | `CNAME` | `www.` | `<DOMAIN>` | `<TTL>` |
 {{</example>}}
 
-Since it is still common that visitors will type `www.<DOMAIN>` in their browsers expecting to reach the domain, it is very common that zones have a  `CNAME` record like the example above or something similar, named `www.`, to allow such queries to return the expected result.
+Since it is still common that visitors will type `www.<DOMAIN>` in their browsers expecting to reach the domain, it is very common that zones have a  [`CNAME` record](/dns/manage-dns-records/reference/dns-record-types/#cname) like the example above or something similar, named `www.`, to allow such queries to return the expected result.
 
 ### Email records
 
 {{<example>}}
 | Type | Name | Content | TTL |
 | --- | --- | --- | --- |
-| `MX` | `@` | `XXXXXXXXX` | `<TTL>` |
+| `A` | `webmail.` | `<IPv4>` | `<TTL>` |
 {{</example>}}
 
-or
+{{<example>}}
+| Type | Name | Mail server | TTL | Priority
+| --- | --- | --- | --- | --- |
+| `MX` | `@` | `webmail.<DOMAIN>` | `<TTL>` | `<PRIORITY>`
+{{</example>}}
 
 {{<example>}}
 | Type | Name | Content | TTL |
@@ -56,13 +60,7 @@ or
 | `CNAME` | `mail.` | `<TARGET>` | `<TTL>` |
 {{</example>}}
 
-or
-
-{{<example>}}
-| Type | Name | Content | TTL |
-| --- | --- | --- | --- |
-| `A` | `mail.` | `<IPv4>` | `<TTL>` |
-{{</example>}}
+Mail exchanger (`MX`) and other record types combined with names like `mail`, `webmail`, `smtp`, etc are also commonly found. As explained in [Set up email records](/dns/manage-dns-records/how-to/email-records/), there are several DNS records that can be used to make sure email reaches your mail server and to prevent other email senders from spoofing your domain.
 
 ## Limitations
 
