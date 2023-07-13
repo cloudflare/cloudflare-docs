@@ -14,7 +14,7 @@ meta:
 
 ## Before you begin
 
-Before update your domain nameservers, make sure that you:
+Before you update your domain nameservers, make sure that you:
 
 - Already own a domain name (such as `example.com` or `cloudflare.com`).
 
