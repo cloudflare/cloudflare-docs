@@ -105,9 +105,6 @@
 
 # area1
 /email-security/deployment/api/setup/office365-bcc-setup/ /email-security/deployment/api/setup/exchange-bcc-setup/ 301
-/email-security/reporting/detection-search/ /email-security/reporting/search/detection-search/ 301
-/email-security/reporting/detection-search/available-parameters/ /email-security/reporting/search/detection-search/available-parameters/ 301
-/email-security/reporting/mailtrace/ /email-security/reporting/search/mailtrace/ 301
 /email-security/static/Configure_SAML_SSO.pdf /email-security/account-setup/sso/generic-sso/ 301
 /email-security/static/API_Documentation_1.30.0.pdf /email-security/static/api_documentation_1.37.pdf 301
 /email-security/reporting/search/unified-search/ /email-security/reporting/search/ 301
