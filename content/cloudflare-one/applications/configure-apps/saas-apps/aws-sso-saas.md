@@ -79,7 +79,7 @@ This tutorial covers how to configure AWS SSO with Access for SaaS. Cloudflare A
 
     {{<Aside type="warning" header="Important">}}Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Make sure that:
 
-1.  Users are created in both your identity provider and AWS
+1.  Users are created in both your identity provider and AWS.
 1.  Users have matching usernames in your identity provider and AWS.
 1.  Usernames are email addresses. This is the only format AWS supports with third-party SSO providers.
     {{</Aside>}}
