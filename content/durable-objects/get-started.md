@@ -141,7 +141,7 @@ new_classes = ["DurableObjectExample"] # Array of new classes
 
 Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. 
 
-This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings work similarly to KV bindings and must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
+This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 
 A Worker talks to a Durable Object through a [stub](/durable-objects/learning/create-durable-object-stubs/). 
 
