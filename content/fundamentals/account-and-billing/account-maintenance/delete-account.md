@@ -22,7 +22,7 @@ Before Cloudflare can cancel your account and delete your personal information, 
 
 * [Cancel your subscriptions or add-on services](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/)
 
-* [Remove your domain from Cloudflare](https://support.cloudflare.com/hc/articles/360033554252)
+* [Remove your domain from Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/)
 
 * [Remove Cloudflare nameservers at your domain registrar](/dns/zone-setups/full-setup/setup/)
 

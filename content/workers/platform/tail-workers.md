@@ -5,9 +5,9 @@ title: Tail Workers
 
 {{<beta>}}Tail Workers{{</beta>}}
 
-A Tail Worker receives information about the execution of other Workers, such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics. 
+A Tail Worker receives information about the execution of other Workers, such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
 
-Tail Workers are available to all customers on the Workers Paid and Enterprise tiers. They are priced the same as [Workers](/workers/platform/pricing/#workers). 
+Tail Workers are available to all customers on the Workers Paid and Enterprise tiers. They are priced the same as [Workers](/workers/platform/pricing/#workers).
 
 ![Tail Worker diagram](/images/workers/platform/tail-workers.png)
 
@@ -71,6 +71,13 @@ filename: index.js
         "message": "Threw a sample exception",
         "timestamp": 1587058642005
       }
+    ],
+    "diagnosticsChannelEvents": [
+      {
+        "channel": "foo",
+        "message": "The diagnostic channel message",
+        "timestamp": 1587058642005
+      }
     ]
   }
 ]
@@ -83,6 +90,6 @@ tail_consumers = [{service = "<TAIL_WORKER_NAME>", environment = "<ENVIRONMENT_N
 ```
 
 {{<Aside type="note">}}
-The Worker selected must have a `TailEvent` handler defined. 
+The Worker selected must have a `TailEvent` handler defined.
 {{</Aside>}}
 

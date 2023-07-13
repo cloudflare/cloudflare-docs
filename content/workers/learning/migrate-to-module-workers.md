@@ -185,6 +185,31 @@ export default {
 };
 ```
 
+
+---
+
+## Cron triggers
+
+To handle a [Cron Trigger](/workers/platform/triggers/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax-es-modules), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
+
+This example code:
+
+```js
+addEventListener("scheduled", (event) => {
+  // ...
+});
+```
+
+Then becomes:
+
+```js
+export default {
+  async scheduled(event, env, ctx) {
+    // ...
+  },
+};
+```
+
 ## Access `event` or `context` data
 
 Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/fetch-event/#parameters) for  more information.

@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-06-19</td>
-      <td>2023-07-06</td>
-      <td>...22807318</td>
-      <td>HTTP requests from known botnets.</td>
-      <td>log</td>
+      <td>2023-07-10</td>
+      <td>2023-07-17</td>
+      <td>...6831bff1</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #35).</td>
+      <td>block</td>
       <td>ddos_dynamic</td>
-      <td>Detect new attacks from identified botnets.</td>
+      <td>Improve the filter to catch more attacks.</td>
     </tr>
   </tbody>
 </table>

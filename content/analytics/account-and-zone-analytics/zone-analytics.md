@@ -84,19 +84,19 @@ For this tab, the number and type of charts may vary based on existing data and 
 
 -   **Threats** - Displays a data summary and an area chart showing threats against the site.
 -   **Threats by Country** - Is an interactive map highlighting the countries where threats originated. It also includes data tables with statistics on **Top Threat Countries / Regions** and **Top Crawlers / Bots.**
--   **Rate Limiting** (add-on service) - Features a line chart highlighting matching and blocked requests, based on rate limits.  To learn more, consult [Rate Limiting Analytics](https://support.cloudflare.com/hc/en-us/articles/115003414428-Rate-Limiting-Analytics).
+-   **Rate Limiting** (add-on service) - Features a line chart highlighting matching and blocked requests, based on rate limits.  To learn more, consult [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics).
 -   **Overview** - Displays a set of pie charts for: **Total Threats Stopped**, **Traffic Served Over SSL**, and **Types of Threats Mitigated**. If available, the expandable **Details** link display a table with numerical data.
 
 ### Performance
 
 The metrics aggregated under this tab span multiple Cloudflare services.  The panels available include:
 
--   **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](https://support.cloudflare.com/hc/articles/115001255631-Argo-Analytics).
+-   **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](/argo-smart-routing/analytics/).
 -   **Overview** - Displays a set of pie charts for: **Client HTTP Version Used**, **Bandwidth Saved**, and **Content Type Breakdown**. If available, the expandable **Details** link display a table with numerical data.
 
 ### DNS
 
-The DNS tab presents several statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](https://support.cloudflare.com/hc/articles/360020348832-Understanding-a-CNAME-Setup).
+The DNS tab presents several statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
 
 The metrics panels available under the DNS tab include:
 
@@ -105,7 +105,7 @@ The metrics panels available under the DNS tab include:
 
 ### Workers
 
-This panel features metrics for Cloudflare Workers. To learn more, read [Cloudflare analytics with Workers](https://support.cloudflare.com/hc/articles/360007553512-Cloudflare-analytics-with-Workers).
+This panel features metrics for Cloudflare Workers. To learn more, read [Cloudflare analytics with Workers](/analytics/account-and-zone-analytics/analytics-with-workers/).
 
 ### Logs
 

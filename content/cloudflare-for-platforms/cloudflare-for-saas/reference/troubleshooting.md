@@ -33,7 +33,7 @@ There are two main causes of error 1016:
 
 {{<Aside type="note">}}
 
-If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Errors](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors).
+If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
 
 {{</Aside>}}
 

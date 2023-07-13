@@ -3,6 +3,7 @@ title: Rust
 pcx_content_type: tutorial
 meta:
   title: Rust WebAssembly guide
+updated: 2023-05-10
 ---
 
 # Rust WebAssembly guide
@@ -136,7 +137,7 @@ Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 {{<Aside type="note">}}
 
-When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. These errors should resolve themselves after a minute or so.
+When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
 
 {{</Aside>}}
 

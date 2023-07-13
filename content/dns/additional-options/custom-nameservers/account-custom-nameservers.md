@@ -29,7 +29,7 @@ If you are using [Cloudflare Registrar](/registrar/) for the zone that provides 
 
 {{<render file="_ns-set-omission-callout.md">}}
 
-2. [Contact Cloudfare Support](https://support.cloudflare.com/hc/articles/200172476) to add glue records to your ACNS and update your nameservers.
+2. [Contact Cloudfare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to add glue records to your ACNS and update your nameservers.
 3. To enable the ACNS on existing zones, use a [PUT command](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and automatically create the associated `A` or `AAAA` records.
 
 {{<render file="_ns-set-omission-callout.md">}}

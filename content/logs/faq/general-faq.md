@@ -1,6 +1,6 @@
 ---
 pcx_content_type: faq
-tittle: General FAQ
+title: General FAQ
 weight: 1
 meta:
     description: Review frequently asked questions about Cloudflare Logs.
@@ -28,7 +28,7 @@ Yes. The time period for which you pull or receive logs is based on our processi
 
 ## Can I receive logs in a format other than JSON?
 
-Not at this time. Talk to your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) if you are interested in other formats and we will consider them for the future.
+Not at this time. Talk to your Cloudflare account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) if you are interested in other formats and we will consider them for the future.
 
 ## Is it possible to track cache purge requests in the logs?
 

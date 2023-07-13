@@ -14,7 +14,7 @@ Follow this step-by-step guide to get your first tunnel up and running using Zer
 Before you start, make sure you:
 
 - [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/).
-- [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
+- [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
 
 ## 1. Create a tunnel
 
