@@ -48,7 +48,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-    - If true, then the key/value will not be inserted into the in-memory cache. If the key is already in the cache, the cached value will be returned, but its last-used time will not be updated. Use this when you expect this key will not be used again in the near future. This flag is only a hint: it will never change the semantics of your code, but it may affect performance.
+    - If true, then the key/value will not be inserted into the in-memory cache. If the key is already in the cache, the cached value will be returned, but its last-used time will not be updated. Use this when you expect this key will not be used again in the near future. This flag is only a hint. This flag will never change the semantics of your code, but it may affect performance.
 
 - {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
