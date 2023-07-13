@@ -111,13 +111,6 @@
 /email-security/reporting/mailtrace/ /email-security/reporting/search/mailtrace/ 301
 /email-security/static/Configure_SAML_SSO.pdf /email-security/account-setup/sso/generic-sso/ 301
 /email-security/static/API_Documentation_1.30.0.pdf /email-security/static/api_documentation_1.37.pdf 301
-/email-security/static/Deployment_and_Configuration_Guide_Okta_Integration.pdf /email-security/account-setup/sso/okta/ 301
-/email-security/static/Configure_SAML_SSO_with_Azure_AD.pdf /email-security/account-setup/sso/azure/ 301
-/email-security/static/Admin_Quarantine.pdf /email-security/email-configuration/admin-quarantine/ 301
-/email-security/static/Deployment_and_Configuration_Guide_for_Splunk_Cloud_HTTP_Event_Collector.pdf /email-security/reporting/siem-integration/splunk-integration-guide/ 301
-/email-security/static/Deployment_and_Configuration_Guide_for_Sumologic_Collector.pdf /email-security/reporting/siem-integration/sumo-logic-integration-guide/ 301
-/email-security/static/API_Documentation_1.30.0.pdf /email-security/static/api_documentation_1.34.pdf 301
-/email-security/static/MSSP_Onboarding_Deployment_Guide.pdf /email-security/partners/ 301
 /email-security/reporting/search/unified-search/ /email-security/reporting/search/ 301
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
 /email-security/reporting/search/detection-search/available-parameters/ /email-security/reporting/search/available-parameters/ 301
