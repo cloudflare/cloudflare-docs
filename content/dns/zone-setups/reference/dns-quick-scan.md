@@ -7,7 +7,6 @@ title: Records quick scan
 
 To help all customers get started when a new zone is created, Cloudflare offers a quick scan of DNS records.
 
-
 ## How the quick scan works
 
 The scan is built upon a list of recurring patterns of DNS records `type` and `name`, that Cloudflare identifies as being used in existing active zones.
@@ -38,7 +37,7 @@ Virtually all zones on a full setup are expected to have at least one [address r
 | `CNAME` | `www.` | `<DOMAIN>` | `<TTL>` |
 {{</example>}}
 
-Since it is still common that visitors will type `www.<DOMAIN>` in their browsers expecting to reach the domain, it is very common that zones have a  [`CNAME` record](/dns/manage-dns-records/reference/dns-record-types/#cname) like the example above or something similar, named `www.`, to allow such queries to return the expected result.
+Since it is still common that visitors will type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [`CNAME` record](/dns/manage-dns-records/reference/dns-record-types/#cname) like the example above or something similar, named `www.`. This allows such queries to return the expected result.
 
 ### Email records
 
@@ -64,6 +63,8 @@ Mail exchanger (`MX`) and other record types combined with names like `mail`, `w
 
 ## Limitations
 
-DKIM records
+Since the DNS records quick scan is based on a predefined list of commonly used record names and is not tailored to the specific zone you are adding to Cloudflare, there can be cases where not all records are picked up.
 
-Very specific names
+For example, if you have very specific hostnames - such as `bookstore.example.com` instead of `store.example.com` - or if you have set up a [DKIM record](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/) that uses a more custom name - `this._domainkey.` instead of `default._domainkey.` - it is expected that the scan will not find the specific DNS records.
+
+You should always [review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) and manually add any missing ones before changing your nameservers.
