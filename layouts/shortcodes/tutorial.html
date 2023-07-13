@@ -1,19 +1,26 @@
-<div class="howToStepContainer">
+<div class="tutorialStepContainer">
   {{- .Inner -}}
 </div>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-  let howTos = document.getElementsByClassName("howToStepContainer");
+  let howTos = document.getElementsByClassName("tutorialStepContainer");
   if (howTos) {
     for (const howTo of howTos) {
       let counter = 1;
-      let howToSteps = howTo.getElementsByClassName("howToStep");
+      let howToSteps = howTo.getElementsByClassName("tutorialStep");
       for (const step of howToSteps) {
+        const optional = step.getAttribute("data-optional")
         let secondSpan = step.children[0].querySelector("span:nth-child(2)");
         let stepCounter = document.createElement("span");
         stepCounter.className = "stepCounter";
         stepCounter.textContent = counter;
+        if (optional === "true") {
+          let optionalFlag = document.createElement("span");
+          optionalFlag.textContent = "Optional - ";
+          secondSpan.prepend(optionalFlag);
+          stepCounter.classList.add("optionalStepCounter")
+        }
         secondSpan.prepend(stepCounter);
         counter++;
       }

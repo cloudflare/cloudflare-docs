@@ -9,34 +9,13 @@ updated: 2022-08-24
 
 After you [create a new account](/fundamentals/account-and-billing/account-setup/create-account/), you might want to create your billing profile.
 
-{{<how-to>}}
-{{<how-to-step title="Test tabs" noMarkdown=true >}}
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
- 
-{{<render file="_pool-create.md" productFolder="load-balancing">}}
- 
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
- 
-{{<render file="_pool-create-api.md" productFolder="load-balancing">}}
- 
-{{</tab>}}
-{{</tabs>}}
-
-Test test test.
-
-And also test [links](/test/).
-
-{{</how-to-step>}}
-
-{{<how-to-step title="Add primary payment method">}}
+{{<tutorial>}}
+{{<tutorial-step title="Add primary payment method">}}
 
 {{<render file="_billing-add-payment-method.md">}}
-{{</how-to-step>}}
+{{</tutorial-step>}}
 
-{{<how-to-step title="Add backup payment method">}}
+{{<tutorial-step title="Add backup payment method" optional=true >}}
 
 A backup payment method is used if the primary payment method fails. To add a backup payment method:
 
@@ -48,9 +27,9 @@ A backup payment method is used if the primary payment method fails. To add a ba
 6. Enter the required information based on your preferred payment method (credit card or PayPal) and select **Confirm**.
 7. If you would like to make the backup payment method the primary method, select **Make primary payment method** in the **Backup** card.
 
-{{</how-to-step>}}
+{{</tutorial-step>}}
 
-{{<how-to-step title="Set up billing notifications">}}
+{{<tutorial-step title="Set up billing notifications">}}
 
 If you have a [usage-based product](https://support.cloudflare.com/hc/articles/115004555148) like Rate Limiting or Load Balancing, set up Billing notifications to monitor usage and avoid surprises on your bill.
 
@@ -70,9 +49,9 @@ To set up billable usage notifications:
 
 To disable, edit, or delete this notification, return to **Notifications** and find your notification.
 
-{{</how-to-step>}}
+{{</tutorial-step>}}
 
-{{<how-to-step title="Enable email invoices">}}
+{{<tutorial-step title="Enable email invoices">}}
 
 To receive invoices via email — which are sent when you add or remove subscriptions from your account — you can opt-in within the Billing section of the Cloudflare dashboard. Once enabled, you will receive invoices via email:
 
@@ -86,5 +65,5 @@ To enable Cloudflare invoice emails:
 2. Go to **Manage Account** > **Billing**.
 3. Go to **Invoices & Documents**.
 4. For **Billing email preference**, switch the value to **On**. You will receive an invoice via billing email address on file within one business day.
-{{</how-to-step>}}
-{{</how-to>}}
+{{</tutorial-step>}}
+{{</tutorial>}}

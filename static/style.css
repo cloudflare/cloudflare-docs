@@ -5580,32 +5580,36 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
 }
 
-.howToStep {
+.tutorialStep {
   padding-left: 2em;
   border-left: .5px solid gray;
 }
 
-.howToStep:not(:first-of-type) {
+.tutorialStep:not(:first-of-type) {
   margin-top: 5em;
 }
 
-.howToStep h2,
-.howToStep h3,
-.howToStep h4,
-.howToStep h5 {
+.tutorialStep h2,
+.tutorialStep h3,
+.tutorialStep h4,
+.tutorialStep h5 {
   margin-top: 0;
 }
 
-.howToStep h2:before,
-.howToStep h3::before,
-.howToStep h4::before,
-.howToStep h5::before {
+.tutorialStep h2:before,
+.tutorialStep h3::before,
+.tutorialStep h4::before,
+.tutorialStep h5::before {
   height: 0 !important;
 }
 
-.howToStepContainer {
+.tutorialStepContainer {
   margin-top: 4em;
   padding-bottom: 1em;
+}
+
+.optionalStepCounter {
+  border: 2px solid gray !important;
 }
 
 .stepCounter {
@@ -5614,7 +5618,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   margin-right: .5em;
   width: 1.2em;
   height: 1.2em;
-  border: 2px solid gray;
+  border: 2px solid var(--orange-5);
   border-radius: 50%;
   align-items: center;
   justify-content: center;
