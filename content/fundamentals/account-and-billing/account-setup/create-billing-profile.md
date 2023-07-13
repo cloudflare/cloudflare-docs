@@ -2,6 +2,7 @@
 pcx_content_type: tutorial
 title: Create billing profile
 weight: 3
+updated: 2022-08-24
 ---
 
 # Create billing profile

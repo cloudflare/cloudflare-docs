@@ -152,6 +152,8 @@ If a given widget has timed out, expired or needs to be reloaded, you can use th
 
 Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`. This will not call any callback and will remove all related DOM elements.
 
+To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
+
 ## Configurations
 
 | JavaScript Render Parameters | Data Attribute | Description |

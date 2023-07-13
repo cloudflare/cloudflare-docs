@@ -30,7 +30,7 @@ To retrieve those values:
 
 5. Name your application.
 
-6. Select **Register an application to integration with Azure AD (App you're developing)** and then select **Create**.
+6. Select **Register an application to integrate with Azure AD (App you're developing)** and then select **Create**.
 
 7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 

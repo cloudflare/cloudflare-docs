@@ -43,7 +43,7 @@ There are 2 branch offices each with distinct subnets.
 
 Below is an example of the **east_branch** deployment on the Orchestrator.
 
-![GCP East deployment configuraiton](/images/magic-wan/third-party/aruba-edge-connect/east-branch-deployment.png)
+![GCP East deployment configuration](/images/magic-wan/third-party/aruba-edge-connect/east-branch-deployment.png)
 
 The Deployment screenshot displays several different IP addresses and interfaces. From left to right:
 - **Next Hop 10.3.0.1**  - This example uses Google Cloud. This IP defines the default gateway IP for the subnet and is built into GCP. 
@@ -180,11 +180,21 @@ For additional information on creating IPsec tunnels, refer to [API documentatio
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: XXXXXXXXXX" \
-     -H "Content-Type: application/json" \
-     --data '{"ipsec_tunnels":[{"name":"EdgeConnect_IPSEC_1","customer_endpoint":"35.188.72.56","cloudflare_endpoint":"172.64.241.205","interface_address":"192.168.10.11/31","description":"Tunnel for EdgeConnect - GCP Central"}]}'
+curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ipsec_tunnels":[
+      {
+        "name":"EdgeConnect_IPSEC_1",
+        "customer_endpoint":"35.188.72.56",
+        "cloudflare_endpoint":"172.64.241.205",
+        "interface_address":"192.168.10.11/31",
+        "description":"Tunnel for EdgeConnect - GCP Central"
+        }
+      ]
+  }'
 ```
 
 2. Create a new IPsec tunnel
@@ -193,11 +203,21 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/i
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: XXXXXXXXXX" \
-     -H "Content-Type: application/json" \
---data '{"ipsec_tunnels":[{"name":"EdgeConnect_IPSEC_1","customer_endpoint":"35.188.72.56","cloudflare_endpoint":"172.64.241.205","interface_address":"192.168.10.11/31","description":"Tunnel for EdgeConnect - GCP Central"}]}'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ipsec_tunnels":[
+    {
+      "name":"EdgeConnect_IPSEC_1",
+      "customer_endpoint":"35.188.72.56",
+      "cloudflare_endpoint":"172.64.241.205",
+      "interface_address":"192.168.10.11/31",
+      "description":"Tunnel for EdgeConnect - GCP Central"
+      }
+    ]
+  }'
 ```
 
 ```json
@@ -238,28 +258,28 @@ Use the tunnel ID from the response in Step 2. Save the pre-shared key generated
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels/e70536b11daa47e09ff046fbb9800e4f/psk_generate?validate_only=true" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: XXXXXXXXXX" \
-     -H "Content-Type: application/json"
+curl --request POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json"
 ```
 
-```bash
+```json
 ---
 header: Response
 ---
 {
-"result": {
-"ipsec_id": "<ipsec_id>",
-"ipsec_tunnel_id": "<tunnel_id>",
-"psk": "XXXXXXXXXXXXXXXXX",
-"psk_metadata": {
-"last_generated_on": "2022-04-14T20:05:29.756514071Z"
-}
-},
-"success": true,
-"errors": [],
-"messages": []
+  "result": {
+  "ipsec_id": "<ipsec_id>",
+  "ipsec_tunnel_id": "<tunnel_id>",
+  "psk": "XXXXXXXXXXXXXXXXX",
+  "psk_metadata": {
+  "last_generated_on": "2022-04-14T20:05:29.756514071Z"
+  }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 

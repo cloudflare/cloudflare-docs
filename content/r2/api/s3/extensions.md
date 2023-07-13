@@ -5,7 +5,7 @@ pcx_content_type: concept
 
 # Extensions
 
-R2 implements some extensions on top of the basic S3 API. This page outlines these additional, available features.
+R2 implements some extensions on top of the basic S3 API. This page outlines these additional, available features. Some of the functionality described in this page requires setting a custom header. For examples on how to do so, refer to [Configure custom headers](/r2/examples/aws/custom-header).
 
 ## Extended metadata using Unicode
 
@@ -60,6 +60,12 @@ Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly c
 
 Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a detailed explanation of when to add this header.
 
+## PutObject
+
+### Conditional operations in `PutObject`
+
+`PutObject` supports [conditional uploads](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests) via the [`If-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match), [`If-None-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match), [`If-Modified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since), and [`If-Unmodified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Unmodified-Since) headers. These headers will cause the `PutObject` operation to be rejected with `412 PreconditionFailed` error codes when the preceding state of the object that is being written to does not match the specified conditions.
+
 ## CopyObject
 
 ### MERGE metadata directive
@@ -91,12 +97,6 @@ The XML response contains a `NextContinuationToken` and `IsTruncated` elements a
 | `ContinuationToken`     |                              | The continuation token that was supplied in the request.                                     |
 | `MaxKeys`               |                              | The max keys that were specified in the request.                                             |
 {{</table-wrap>}}
-
-## PutObject
-
-### Conditional operations in `PutObject`
-
-`PutObject` supports [conditional uploads](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests) via the [`If-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match), [`If-None-Match`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match), [`If-Modified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since), and [`If-Unmodified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Unmodified-Since) headers. These headers will cause the `PutObject` operation to be rejected with `412 PreconditionFailed` error codes when the preceding state of the object that is being written to does not match the specified conditions.
 
 ### Conditional operations in `CopyObject` for the destination object
 

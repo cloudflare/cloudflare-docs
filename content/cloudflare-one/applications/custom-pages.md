@@ -42,7 +42,7 @@ To create a custom block page for Access:
 4. Enter a unique name for the block page.
 5. Select **Failed identity provider check**.
 6. Copy the **Required script**.
-7. In **Custom HTML**, enter the HTML code for your custom page and paste the required script into the HTML body. For example,
+7. In **Custom HTML**, enter the HTML code for your custom page. For example,
 
     ```html
     <!DOCTYPE html>
@@ -52,11 +52,6 @@ To create a custom block page for Access:
     <h1>Access denied.</h1>
 
     <p>To obtain access, contact your IT administrator.</p>
-
-    <script>
-    const d = new Date();
-    document.getElementById("demo").innerHTML = d;
-    </script>
 
     </body>
     </html>

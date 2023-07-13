@@ -28,13 +28,15 @@ B->>C: Protocol <br> IP <br> GRE <br> IP
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-Cloudflare uses tunnels to deliver packets from our global network to your data centers, while Cloudflare $1 encapsulates these packets, adding a new IP header and GRE protocol header.
+Cloudflare Magic WAN uses tunnels to deliver packets from our global network to your data centers. Cloudflare encapsulates these packets adding new headers.
 
 $2
 
 {{<Aside type="warning" header="Important">}}
 
-If you are using IPsec inside GRE, set the MSS clamp at the IPsec tunnel interface and subtract 24 bytes from your current MSS value, which may be 1360 bytes or lower. This is because the physical interface will see IPsec-encrypted packets, not TCP packets, and MSS clamping will not apply to those.
+Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If that is not the case and you are using IPsec inside GRE, you have to set MSS clamp manually.
+
+Set MSS clamp at the IPsec tunnel interface and subtract 24 bytes from your current MSS value, which may be 1360 bytes or lower. This is because the physical interface will see IPsec-encrypted packets, not TCP packets, and MSS clamping will not apply to those.
 
 {{</Aside>}}
 

@@ -17,7 +17,7 @@ For [Magic Transit](/magic-transit/) customers, Cloudflare routes the traffic in
 To avoid blocking Cloudflare IP addresses unintentionally, review your external tools to check that:
 
 - Any security plugins — such as those for WordPress — allow Cloudflare IP addresses.
-- [Bad Behavior](https://support.cloudflare.com/hc/articles/200169496) and [mod_security](https://github.com/SpiderLabs/ModSecurity) plugins are up to date.
+- The [mod_security](https://github.com/SpiderLabs/ModSecurity) plugin is up to date.
 
 ## Configure origin server
 

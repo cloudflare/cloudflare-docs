@@ -6,7 +6,7 @@ weight: 0
 
 # Page Rules
 
-Page Rules trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to the [Page Rules Support article](https://support.cloudflare.com/hc/en-us/articles/218411427) to learn more about configuring Page Rules.
+Page Rules trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to the [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to learn more about configuring Page Rules.
 
 ## Page Rules with Workers
 
@@ -22,7 +22,7 @@ When using Page Rules with Workers, the following workflow is applied.
 
 Page Rules are evaluated both at the client-to-Worker request stage (step 2) and the Worker subrequest stage (step 5).
 
-If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 ## Affected Page Rules
 
@@ -58,7 +58,7 @@ Due to ongoing changes to the Workers runtime, detailed documentation on how the
 
 {{</Aside>}}
 
-To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
+To learn what these Page Rules do, refer to [Understanding and configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
 {{<Aside type="note" header="Same zone versus other zone">}}
 

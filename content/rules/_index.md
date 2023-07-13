@@ -12,10 +12,13 @@ meta:
 {{<plan type="all">}}
 
 {{<render file="_rules-definition.md">}}
+<br>
+
+Rules features require that you [proxy the DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) of your domain (or subdomain) through Cloudflare.
 
 ---
 
-## Products
+## Features
 
 {{<feature header="Transform Rules" href="/rules/transform/">}}
 Adjust the URI path, query string, and HTTP headers of requests and responses on the Cloudflare global network.
@@ -49,7 +52,7 @@ Customize the behavior of your website or application using short pieces of Java
 Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
 {{</feature>}}
 
-{{<feature header="Page Rules" href="https://support.cloudflare.com/hc/articles/218411427">}}
+{{<feature header="Page Rules" href="/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/">}}
 Trigger certain actions when a request matches a URL pattern.
 {{</feature>}}
 
