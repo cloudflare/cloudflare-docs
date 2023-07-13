@@ -24,7 +24,7 @@ The destination class (the class that stored objects are being transferred to) f
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data.
 
-After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
 {{</Aside>}}
 
