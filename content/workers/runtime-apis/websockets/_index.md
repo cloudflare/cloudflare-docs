@@ -18,7 +18,7 @@ WebSockets utilize a simple event-based system for receiving and sending message
 
 Learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
-## Write a WebSocket Server
+## Write a WebSocket server
 
 WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real time. This guide will show you how to set up a WebSocket server in Workers.
 

@@ -25,7 +25,7 @@ By default, Cloudflare Workers is capable of streaming responses using the [Stre
 
 {{</Aside>}}
 
-The two primitives developers use to perform active streaming are [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`ReadableStream.pipeTo()`](/workers/runtime-apis/streams/readablestream/#methods) method.
+The two primitives developers used to perform active streaming are [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`ReadableStream.pipeTo()`](/workers/runtime-apis/streams/readablestream/#methods) method.
 
 A basic pass-through usage of streams:
 
