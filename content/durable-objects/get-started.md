@@ -226,7 +226,7 @@ The following sections will cover how to customize the configuration, but you ca
 
 Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. 
 
-Refer to the [modules section of the custom builds documentation](/workers/wrangler/custom-builds/) for more details.
+Refer to [Custom builds documentation](/workers/wrangler/custom-builds/) for more details.
 
 
 ### Durable Object migrations through Wrangler CLI
