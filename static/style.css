@@ -3221,6 +3221,11 @@ html[is-docs-page] body {
   margin-left: 4px;
 }
 
+.apiSidebarIcon span {
+  height: 1.4em;
+  width: 1.4em;
+}
+
 .DocsMarkdown--link-external-icon {
   display: inline-block;
   height: 16px;
