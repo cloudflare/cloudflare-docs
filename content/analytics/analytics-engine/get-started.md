@@ -178,4 +178,4 @@ The following limits apply to Analytics Engine:
 
 ## Data retention
 
-* Data will be stored in Workers Analytics Engine for 3 months. In future we hope to offer an option to have longer retention periods.
+* Data will be stored in Workers Analytics Engine for three months. In the future, we plan to offer longer retention periods.
