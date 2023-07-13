@@ -18,7 +18,7 @@ For a quick summary, view your DNS analytics in the dashboard:
 2. Select your zone.
 3. Go to **Analytics** > **DNS**.
 
-For more detailed metrics, you can use the [DNS analytics API operation](/api/operations/dns-analytics-table) along with the available [Analytics API properties](/dns/reference/analytics-api-properties/).
+For more detailed metrics, you can use the [DNS analytics operation](/api/operations/dns-analytics-table) along with the available [Analytics API properties](/dns/reference/analytics-api-properties/).
 
 ## Logs
 

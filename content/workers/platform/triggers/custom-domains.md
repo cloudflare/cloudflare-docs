@@ -16,7 +16,7 @@ To add a Custom Domain, you must have:
 1. An [active Cloudflare zone](/dns/zone-setups/).
 2. A Worker to invoke.
 
-Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](https://developers.cloudflare.com/api/operations/worker-domain-list-domains).
+Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](/api/operations/worker-domain-list-domains).
 
 {{<Aside type="warning">}}
 

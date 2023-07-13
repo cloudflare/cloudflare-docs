@@ -10,7 +10,7 @@ Domains are sorted into categories by their content and security type. Refer to 
 
 ## API
 
-You can request categorization changes by creating a [miscategorization API Token](https://developers.cloudflare.com/api/operations/miscategorization-create-miscategorization).
+You can request categorization changes by creating a [miscategorization API Token](/api/operations/miscategorization-create-miscategorization).
 
 ## Radar feedback
 

@@ -24,7 +24,7 @@ Instead of relying on the automatic creation of an entry point ruleset, you can 
 <summary>Example: Set the rules of a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update a zone ruleset](/api/operations/updateZoneRuleset) API operation.
+The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation.
 
 ```bash
 ---
@@ -103,7 +103,7 @@ header: Response
 <summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example adds a single rule to a phase entry point ruleset (with ID `{ruleset_id}`) at the zone level using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation.
+The following example adds a single rule to a phase entry point ruleset (with ID `{ruleset_id}`) at the zone level using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
 
 ```bash
 ---
