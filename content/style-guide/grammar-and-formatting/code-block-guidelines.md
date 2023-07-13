@@ -102,7 +102,7 @@ Blocks containing **zsh** commands:
 
 Use the `json` language for **JSON code blocks** or **JSON fragments.**
 
-Multi-line cURL commands with a JSON body should use `bash` syntax highlighting, as stated in [Displaying terminal commands](#displaying-terminal-commands).
+Multi-line curl commands with a JSON body should use `bash` syntax highlighting, as stated in [Displaying terminal commands](#displaying-terminal-commands).
 
 {{<Aside type="note">}}JSON fragments may appear with a red background in GitHub because they are not valid JSON. Make it clear in the documentation that it is a fragment and not an entire piece of valid JSON content.
 {{</Aside>}}
