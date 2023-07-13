@@ -14,7 +14,6 @@ This guide will instruct you through:
 - Instantiating and communicationg with a Durable Object from another Worker via the Fetch API.
 - Uploading the Durable Object and Worker to Cloudflare's servers using Wrangler. 
 
-This guide assumes you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](/fundamentals/account-and-billing/account-setup/create-account/) before continuining.
 
 ## Prerequisites
 
