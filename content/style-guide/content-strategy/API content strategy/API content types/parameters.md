@@ -1,0 +1,66 @@
+---
+pcx_content_type: concept
+title: Parameters
+weight: 4
+
+---
+
+# Parameters
+
+<table>
+  <tr>
+    <th style="width:20%">Purpose</th>
+    <td>A parameter is an option passed with the endpoint to receive specific information or values.</td>
+  </tr>
+  <tr>
+    <th>Required components</th>
+    <td>Name<br/>Data type<br/>Description<br/>Required status<br/>Optional components</td>
+  </tr>
+  <tr>
+    <th>Values</th>
+    <td>default, minimum, and maximum</td>
+  </tr>
+</table>
+
+## Structure
+
+### Required Components
+
++ Name: Name of the parameter formatted as code snippet.
++ Data type: Indicates if the parameter is a string, integer, boolean, object, or array.
++ Description: Describes what the parameter does. Use a noun phrase for strings, integers, objects, and arrays. Use a verb for booleans. End description with a period.
++ Required status: Indicates whether the parameter is required
+
+### Optional components
+
++ Constraints*: Lists default, minimum, or maximum values for the parameter.
+
+*We're still working on a different term for Constraints because the current term implies a list of restrictions, but the term today is used as a catchall for default, minimum, or maximum values.
+
+## Writing guidelines
+
+When writing the titles and descriptions, keep our voice and tone in mind. Be concise and remember our users come from a variety of technical levels. Some parameter descriptions are more factual, like deviceName, and do not make sense to start with a verb. Other parameters will lend well to beginning with a verb, and this difference is okay. Try to avoid the passive voice and aim to describe what the parameter does or what it is used for in a concise sentence users can understand.
+
+Below are some examples of parameter descriptions for reference:
+
+deviceName: The device name.
+
+version: The WARP client version.
+
+per_page: Sets the maximum number of requested results.
+
+enabled: Enables or disable a load balancer.
+
+asn: The Autonomous System Number (ASN) used to advertise a prefix.
+
+## Example
+
+Name: actor.ip
+
+Data type: string
+
+Description: Filters a request by specific IP address or valid CIDR range.
+
+Required status: Not required
+
+Values: No listed default, minimum, or maximum, values.
