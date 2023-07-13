@@ -146,9 +146,9 @@ WARP does not create a local DNS proxy in [Secure Web Gateway without DNS filter
 
 When you turn on WARP, WARP makes three changes on the device to control if traffic is sent inside or outside of the Wireguard tunnel:
 
-- Creates a virtual network interface.
-- Modifies the operating system routing table according to your Split Tunnel rules.
-- Modifies the operating system firewall according to your Split Tunnel rules.
+- Creates a [virtual network interface](#virtual-interface).
+- Modifies the operating system [routing table](#routing-table) according to your Split Tunnel rules.
+- Modifies the operating system [firewall](#system-firewall) according to your Split Tunnel rules.
 
 ```mermaid
 flowchart LR
@@ -182,7 +182,7 @@ utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-To view a list of all network interfaces on Windows, run `ipconfig`. When WARP is turned on, you will see a [`wintun`](https://www.wintun.net/) adapter called `CloudflareWARP` with IP address `172.16.0.2`.
+To view a list of all network interfaces on Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with IP address `172.16.0.2`.
 
 ```bash
 ---
