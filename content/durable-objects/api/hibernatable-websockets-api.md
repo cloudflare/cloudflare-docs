@@ -62,7 +62,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 - {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Sets an application level auto-response that doesn't wake hibernated WebSockets. 
+  - Sets an application level auto response that does not wake hibernated WebSockets. 
   
   - `state.setWebSocketAutoResponse` receives `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this object to automatically reply with `response` when it receives the specified `request`. 
 
