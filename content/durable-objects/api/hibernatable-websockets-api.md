@@ -74,7 +74,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 - {{<code>}}state.getWebSocketAutoResponse(){{</code>}} : {{<type>}}Object | null{{</type>}}
 
-  - Gets the `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` currently set, or `null` if there's none. 
+  - Gets the `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` currently set, or `null` if there is none. 
 
   - Each `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` object provides methods for `getRequest()` and  `getResponse()`.
 
