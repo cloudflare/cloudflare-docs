@@ -46,7 +46,7 @@ Each line containing a command that the user should enter *must* start with a `$
 
 Use the `bash` language for other **Linux/macOS/generic commands**:
 
-+ Commands that span multiple lines (usually each line ends with a `\`) and and may include one or more lines of JSON content.
++ Commands that span multiple lines (usually each line ends with a `\`) and may include one or more lines of JSON content.
 + Commands for other platforms (Windows console, Windows PowerShell) or for specific shells (for example, a command specifically for the zsh shell, where the prompt is usually `#`).
 
 ## Terminal prompts
