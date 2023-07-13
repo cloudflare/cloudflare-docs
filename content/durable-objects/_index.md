@@ -68,7 +68,7 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{<resource-group>}}
  
-{{<resource header="Limits" href="/durable-objects/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Durable Objects have and how to work within them.{{</resource>}}
+{{<resource header="Limits" href="/durable-objects/platform/limits/" icon="documentation-clipboard">}}Learn about Durable Objects limits.{{</resource>}}
 
 {{<resource header="Pricing" href="/durable-objects/platform/pricing/" icon="reference-architecture">}}Learn about Durable Objects pricing.{{</resource>}}
 
