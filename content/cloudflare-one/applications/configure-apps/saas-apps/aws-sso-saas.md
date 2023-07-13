@@ -8,7 +8,7 @@ title: Configure AWS SSO with Access for SaaS
 
 # Configure AWS SSO with Access for SaaS
 
-THis tutorial covers how to configure AWS SSO with Access for SaaS. Cloudflare Access for SaaS allows you to layer additional network and device posture policies on top of existing identity authentication from your identity provider. In this example, we are using Okta as an identity provider, but any supported identity provider can be leveraged.
+This tutorial covers how to configure AWS SSO with Access for SaaS. Cloudflare Access for SaaS allows you to layer additional network and device posture policies on top of existing identity authentication from your identity provider. In this example, we are using Okta as an identity provider, but any supported identity provider can be leveraged.
 
 ## 1. Prerequisites
 
