@@ -5610,6 +5610,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 
 .optionalStepCounter {
   border: 2px solid gray !important;
+  border-radius: 0% !important;
 }
 
 .stepCounter {
