@@ -36,5 +36,5 @@ This is how the table looks:
 | Feature name<br/>Additional info | Yes     |
 
 {{<Aside type="warning">}}
-Do not use two spaces at the end of a sentence to create a forced line break. Although this Markdown syntax is supported, it is not immediately visible and can easily miss these line breaks during peer reviews. 
+Do not use two spaces at the end of a sentence to create a forced line break. Although this Markdown syntax is supported, it is not immediately visible and can easily miss these line breaks during peer reviews.
 {{</Aside>}}

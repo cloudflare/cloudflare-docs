@@ -5,7 +5,7 @@ title: External references
 
 # External references
 
-When referencing external resources, ensure that you are linking to a trustworthy source that is recognized as an authority. 
+When referencing external resources, ensure that you are linking to a trustworthy source that is recognized as an authority.
 
 For general websites, consider the following recommendations about the link text:
 

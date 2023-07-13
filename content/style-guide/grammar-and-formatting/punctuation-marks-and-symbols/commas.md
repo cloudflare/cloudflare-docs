@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Commas
 ---
 
-# Commas 
+# Commas
 
 Use the Oxford comma in lists of three or more items in a sentence.
 
