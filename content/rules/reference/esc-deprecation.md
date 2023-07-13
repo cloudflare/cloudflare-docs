@@ -104,7 +104,7 @@ Re-enable ESC for an account            | DELETE    | `/accounts/<ACCOUNT_ID>/di
 
 {{</table-wrap>}}
 
-To invoke an operation, append the operation endpoint to the Cloudflare API base URL:
+To invoke an API operation, append the operation endpoint to the Cloudflare API base URL:
 
 ```txt
 https://api.cloudflare.com/client/v4

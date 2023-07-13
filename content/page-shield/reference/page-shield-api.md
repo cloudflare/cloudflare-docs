@@ -26,7 +26,7 @@ The `{zone_id}` argument is the zone ID (a hexadecimal string). You can find thi
 
 The `{script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](/api/operations/page-shield-list-page-shield-scripts) operation for every detected script.
 
-The `{connection_id}` argument is the connection ID (a hexadecimal string). This value is included in the response of the List Page Shield connections operation for every detected connection.
+The `{connection_id}` argument is the connection ID (a hexadecimal string). This value is included in the response of the List Page Shield connections API operation for every detected connection.
 
 The following table summarizes the available operations:
 

@@ -20,7 +20,7 @@ This page contains examples of different skip rule scenarios for custom rules. T
 
 * The `{ruleset_id}` value is the ID of the [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/). The API examples in this page add a skip rule to an existing ruleset using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
 
-    However, the entry point ruleset may not exist yet. In this case, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) operationcreate the entry point ruleset with a skip rule. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
+    However, the entry point ruleset may not exist yet. In this case, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) operation to create the entry point ruleset with a skip rule. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
 
 * Although each example only includes one action parameter, you can use several skip options in the same rule by specifying the `ruleset`, `phases`, and `products` action parameters simultaneously.
 
