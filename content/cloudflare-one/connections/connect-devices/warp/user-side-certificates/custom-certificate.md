@@ -60,24 +60,17 @@ To deploy a custom root certificate:
    ---
    highlight: [10, 11, 12, 13, 14]
    ---
-   curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/configuration"\
+   curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/configuration"\
        -H "X-Auth-Email: <EMAIL>" \
        -H "X-Auth-Key: <API_KEY>" \
        -H "Content-Type: application/json" \
        --data '{
            "settings":
            {
-               "antivirus": {...},
-               "block_page": {...},
-               "custom_certificate":
                {
                    "enabled": true,
                    "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60"
                }
-               "tls_decrypt": {...},
-               "activity_log": {...},
-               "browser_isolation": {...},
-               "fips": {...},
            }
        }'
    ```
