@@ -56,7 +56,7 @@ A Worker can pass information to a Durable Object via headers, the HTTP method, 
 
 {{<Aside type="note">}}
 
-HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code – possibly other Durable Objects, or just plain Workers. Durable Objects use HTTP for familiarity, but plan to introduce other protocols in the future.
+HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code – possibly other Durable Objects, or Workers. Durable Objects use HTTP for familiarity, but plan to introduce other protocols in the future.
 
 {{</Aside>}}
 
