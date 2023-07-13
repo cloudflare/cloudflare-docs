@@ -28,4 +28,4 @@ To activate IP advertisement via the API, refer to the [IP Address Management Dy
 
 ### Magic Network Monitoring rules
 
-To create Magic Network Monitoring rules with auto-advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](/magic-transit/how-to/auto-advertise-prefixes/).
+To create Magic Network Monitoring rules with auto-advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](/magic-network-monitoring/rules/#rule-auto-advertisement).
