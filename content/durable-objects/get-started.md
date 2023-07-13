@@ -29,7 +29,7 @@ You can enable Durable Objects for your account by purchasing Workers paid plan.
 Before you create and access a Durable Object, you must define its behavior by exporting an ordinary JavaScript class. 
 
 {{<Aside type="note">}}
-If you don't use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class.
+If you do not use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class.
 {{</Aside>}}
 
 Your class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
