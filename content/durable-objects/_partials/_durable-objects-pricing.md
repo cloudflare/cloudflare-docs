@@ -7,7 +7,7 @@ _build:
 
 ## Durable Objects
 
-Durable Objects are only available on the Workers Paid plan.
+Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers).
 
 {{<table-wrap>}}
 
