@@ -64,7 +64,7 @@ OBJECT_NAMESPACE.idFromString(id.toString())
 OBJECT_NAMESPACE.get(id)
 ```
 
-Your Workers may still access Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
+Your Workers may still access Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 
 The currently supported jurisdictions are `eu` (the European Union) and `fedramp` (FedRAMP).
 
