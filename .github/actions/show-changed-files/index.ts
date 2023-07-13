@@ -57,7 +57,7 @@ async function run(): Promise<void> {
       .slice(0, 15) // Limit to 15 entries
       .map((file) => {
         const removeContentAndMd = (link: string): string =>
-          link.replace(/^content/, '').replace(/\.md$/, '/');
+          link.replace(/^content/, '').replace(/_index\.md$/, '').replace(/\.md$/, '/');
 
         const originalLink = `https://developers.cloudflare.com${removeContentAndMd(
           file.file.filename
