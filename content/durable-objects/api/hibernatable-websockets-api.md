@@ -50,7 +50,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
   - Adds a WebSocket to the set attached to this object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. 
   
-  - After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object. 
+  - After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object. 
   
   - `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
   
