@@ -11,9 +11,11 @@ To help all customers get started when a new zone is created, Cloudflare offers 
 
 The scan is built upon a list of recurring patterns of DNS records `type` and `name`, that Cloudflare identifies as being used in existing active zones.
 
-Since DNS record names are automatically appended with the domain that the records are set for, two completely different domains - `domain.com` and `test.xyz`, for example - would probably have a few matches if the lists of DNS records on their zones were compared side by side and the criterion is `type` and `name` combination.
+Since DNS record names are automatically appended with the domain that the records are set for, two completely different domains - `domain.com` and `test.xyz`, for example - would probably have a few matches if the lists of DNS records on their zones were compared side by side and the criterion was `type` and `name` combination.
 
-The DNS records `content` would be different for each zone but, based on record `type` and `name`, Cloudflare can identify a recurring pattern and expect to find the same pair when a new domain is added.
+The DNS records `content` would be different for each zone but, based on record `type` and `name`, Cloudflare can identify recurring patterns and expect to find the same pairs when a new domain is added.
+
+The following section provides some examples of these `type`/`name` combinations that the scan usually finds.
 
 ## Use case examples
 
@@ -34,17 +36,17 @@ Virtually all zones on a full setup are expected to have at least one [address r
 {{<example>}}
 | Type | Name | Content | TTL |
 | --- | --- | --- | --- |
-| `CNAME` | `www.` | `<DOMAIN>` | `<TTL>` |
+| `CNAME` | `www` | `<TARGET>` | `<TTL>` |
 {{</example>}}
 
-Since it is still common that visitors will type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [`CNAME` record](/dns/manage-dns-records/reference/dns-record-types/#cname) like the example above or something similar, named `www.`. This allows such queries to return the expected result.
+Since it is still common that visitors type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [`CNAME` record](/dns/manage-dns-records/reference/dns-record-types/#cname) named `www`. This allows such queries to return the expected result.
 
 ### Email records
 
 {{<example>}}
 | Type | Name | Content | TTL |
 | --- | --- | --- | --- |
-| `A` | `webmail.` | `<IPv4>` | `<TTL>` |
+| `A` | `webmail` | `<IPv4>` | `<TTL>` |
 {{</example>}}
 
 {{<example>}}
@@ -56,15 +58,19 @@ Since it is still common that visitors will type `www.<DOMAIN>` in their browser
 {{<example>}}
 | Type | Name | Content | TTL |
 | --- | --- | --- | --- |
-| `CNAME` | `mail.` | `<TARGET>` | `<TTL>` |
+| `CNAME` | `mail` | `<TARGET>` | `<TTL>` |
 {{</example>}}
 
-Mail exchanger (`MX`) and other record types combined with names like `mail`, `webmail`, `smtp`, etc are also commonly found. As explained in [Set up email records](/dns/manage-dns-records/how-to/email-records/), there are several DNS records that can be used to make sure email reaches your mail server and to prevent other email senders from spoofing your domain.
+Mail exchanger (`MX`) and other record types combined with names like `mail`, `webmail`, or `smtp`, are also commonly found. As explained in the [Set up email records page](/dns/manage-dns-records/how-to/email-records/), there are several DNS records that can be used to make sure email reaches your mail server and to prevent other email senders from spoofing your domain.
 
 ## Limitations
 
-Since the DNS records quick scan is based on a predefined list of commonly used record names and is not tailored to the specific zone you are adding to Cloudflare, there can be cases where not all records are picked up.
+Since the DNS records quick scan is based on this predefined list of commonly used records types and names, and is not tailored to the specific zone you are adding to Cloudflare, there can be cases where not all records are picked up.
 
-For example, if you have very specific hostnames - such as `bookstore.example.com` instead of `store.example.com` - or if you have set up a [DKIM record](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/) that uses a more custom name - `this._domainkey.` instead of `default._domainkey.` - it is expected that the scan will not find the specific DNS records.
+For example, if you have very specific hostnames - such as `my-store1900.example.com` instead of `store.example.com` - or if you have set up a [DKIM record](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/) that uses a more custom name - `this._domainkey` instead of `default._domainkey` - it is expected that the scan will not find the specific DNS records.
+
+{{<Aside type="warning" header="Important">}}
 
 You should always [review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) and manually add any missing ones before changing your nameservers.
+
+{{</Aside>}}
