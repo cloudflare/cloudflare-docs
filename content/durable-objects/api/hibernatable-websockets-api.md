@@ -82,7 +82,6 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
   - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
 
-
 ### `webSocketMessage()` handler method
 
 The system calls the `webSocketMessage()` method when an accepted WebSocket receives a message. 
