@@ -5,7 +5,7 @@ title: Allow traffic from specific countries only
 
 # Allow traffic from specific countries only
 
-This example blocks requests based on country code ([ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format), only allowing requests from two countries: United States and Mexico.
+This example blocks requests based on country code using the [`ip.geoip.country`](/ruleset-engine/rules-language/fields/#field-ip-src-country) field, only allowing requests from two countries: United States and Mexico.
 
 <table>
   <thead>
