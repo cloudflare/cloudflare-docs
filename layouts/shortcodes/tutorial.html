@@ -4,12 +4,12 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-  let howTos = document.getElementsByClassName("tutorialStepContainer");
-  if (howTos) {
-    for (const howTo of howTos) {
+  let tutorial = document.getElementsByClassName("tutorialStepContainer");
+  if (tutorial) {
+    for (const stepContainer of tutorial) {
       let counter = 1;
-      let howToSteps = howTo.getElementsByClassName("tutorialStep");
-      for (const step of howToSteps) {
+      let steps = stepContainer.getElementsByClassName("tutorialStep");
+      for (const step of steps) {
         const optional = step.getAttribute("data-optional")
         let secondSpan = step.children[0].querySelector("span:nth-child(2)");
         let stepCounter = document.createElement("span");
