@@ -70,7 +70,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
   - Both `request` and `response` are limited to 2048 characters each.
 
-  - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Doing so, will stop an actor from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
+  - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Setting `state.setWebSocketAutoResponse()` without any argument will stop an actor from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
 
 - {{<code>}}state.getWebSocketAutoResponse(){{</code>}} : {{<type>}}Object | null{{</type>}}
 
