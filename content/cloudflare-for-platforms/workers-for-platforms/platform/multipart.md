@@ -8,6 +8,9 @@ title: Multipart uploads
 To perform multipart uploads, include a similar object in your metadata's `bindings` property:
 
 ```json
+---
+filename: metadata.json
+---
 {
     "main_module": "main.js", // should correspond to the Worker filename
     "services": [
@@ -25,6 +28,19 @@ To perform multipart uploads, include a similar object in your metadata's `bindi
     }
     ]
 }
+```
+
+The `main.js` content will look like this:
+
+```js
+---
+filename: main.js
+---
+export default {
+  fetch(request) {
+    return new Response('Hello World');
+  },
+};
 ```
 
 

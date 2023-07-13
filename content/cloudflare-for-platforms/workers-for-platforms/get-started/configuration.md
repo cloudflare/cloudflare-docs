@@ -126,19 +126,9 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 -F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
 ```
 
-The `main.js` content will look like this:
-
-```js
-export default {
-  fetch(request) {
-    return new Response('Hello World');
-  },
-};
-```
-
 {{<Aside type="note">}}
 
-You should perform [Multipart uploads](/workers-for-platforms/platform/multipart/) if you want to use Module Javascript syntax.
+You should perform [Multipart uploads](/cloudflare-for-platforms/workers-for-platforms/platform/multipart/) if you want to use Module Javascript syntax.
 
 {{</Aside>}}
 
