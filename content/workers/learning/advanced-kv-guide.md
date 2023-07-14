@@ -54,7 +54,7 @@ coalesced: {
 }
 ```
 
-By coalescing the values, the cold keys benefit from being kept alive in the cache because of acccess patterns of the warmer keys.
+By coalescing the values, the cold keys benefit from being kept alive in the cache because of access patterns of the warmer keys.
 
 This works best if you don't think you'll need to update the values independently of each other which can pose race conditions unless you're
 careful about how you synchronize.
