@@ -32,7 +32,7 @@ export default {
 
 - `events` {{<type>}}array{{</type>}}
 
-  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the Dispatch Worker, `events` will contain two elements: one for the Dispatch Worker and one for the User Worker.
+  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the User Worker.
 
 - `env` {{<type>}}object{{</type>}}
 
@@ -70,7 +70,7 @@ addEventListener('tail', event =>
 
 - `event.traces` {{<type>}}array{{</type>}}
 
-  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the Dispatch Worker, `events` will contain two elements: one for the Dispatch Worker and one for the User Worker.
+  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the user Worker.
 
 - {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
@@ -116,7 +116,7 @@ addEventListener('tail', event =>
       - An internal error.
     - `exceededCpu`: The Worker invocation exceeded either its CPU limits.
     - `exceededMemory`: The Worker invocation exceeded memory limits.
-    - `scriptNotFound`: An internal error from difficulty retrieving the script.
+    - `scriptNotFound`: An internal error from difficulty retrieving the Worker script.
     - `canceled`: The worker invocation was canceled before it completed. Commonly because the client disconnected before a response could be sent.
 
 {{</definitions>}}
