@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 meta:
   title: Rust WebAssembly guide
 updated: 2023-05-10
+layout: single
 ---
 
 # Rust WebAssembly guide
@@ -41,7 +42,7 @@ You will find the following files and folders in the `hello-world-rust` director
 * `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for Wasm on Workers.
 * `README.md` - Boilerplate readme for working with the template project.
 * `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
-* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/platform/webassembly/rust/#bundling-worker-build)).
+* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/runtime-apis/webassembly/rust/#bundling-worker-build)).
 * `src` - Rust source directory, pre-populated with simple Hello World Worker.
 
 ## 2. Develop locally
@@ -78,7 +79,7 @@ async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
 There is some counterintuitive behavior going on here:
 
 1. `workers-rs` provides an `event` macro which expects a handler function signature identical to those seen in JavaScript Workers. 
-1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/platform/webassembly/rust/#async-wasm-bindgen-futures)). 
+1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/runtime-apis/webassembly/rust/#async-wasm-bindgen-futures)). 
 {{</Aside>}}
 
 ### Related runtime APIs
