@@ -20,7 +20,7 @@ Historically, a blocker for many customers was that this meant that your reads w
 However, as described in our [architecture blog post](https://blog.cloudflare.com/faster-workers-kv-architecture/), most customers today
 are using the new architecture where you will see updated values within a minute of the write, regardless of the cacheTtl value.
 
-{{<Aside type="note" header="Security considerations"> }}
+{{<Aside type="note" header="Security considerations">}}
 Some customers of Workers KV store authorization tokens. Often time such applications rely on having a strict guarantee on revocation.
 For example, if your service SLA is that a revoked token must be globally revoked within 5 minutes of revocation, your cacheTtl should
 not be longer than 5 minutes. While the write will be noticed within a minute, writes are only noticed due to misses or reads triggering
@@ -28,7 +28,7 @@ a background refresh. If your key is accessed once every 4 minutes and you set a
 exceed your SLA by a few minutes.
 {{</Aside>}}
 
-{{<Aside type="note" header="Availability of long cache TTL noticing writes quickly"> }}
+{{<Aside type="note" header="Availability of long cache TTL noticing writes quickly">}}
 Certain namespaces part of early closed betas and larger ENT customers are currently excluded. If you want to use the new architecture
 but think you may not be enabled, please contact support.
 {{</Aside>}}
