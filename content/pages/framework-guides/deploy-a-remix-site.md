@@ -83,7 +83,7 @@ A [binding](/pages/platform/functions/bindings/) allows your application to inte
 
 To access bound resources within a Remix application, you need to configure a [Remix `loader` function](https://remix.run/docs/en/main/route/loader).
 
-In the following example, we have a KV namespace called `PRODUCTS_KV` [bound to our Pages Function](/pages/platform/functions/bindings/#kv-namespaces). The `PRODUCTS_KV` binding is accessible on the `context` parameter passed to a `LoaderFunction` as `context.env.BINDING_NAME`.
+The following example uses a KV namespace called `PRODUCTS_KV` [bound to a Pages Function](/pages/platform/functions/bindings/#kv-namespaces). The `PRODUCTS_KV` binding is accessible on the `context` parameter passed to a `LoaderFunction` as `context.env.<BINDING_NAME>`.
 
 The following example shows a Remix `LoaderFunction` accessing a KV namespace in Remix:
 
@@ -131,7 +131,7 @@ export default function Product() {
 }
 ```
 
-Visit the [Remix documentation](https://remix.run/docs/en/main/guides/data-loading) to learn more about data loading within a Remix application.
+Refer to the [Remix documentation](https://remix.run/docs/en/main/guides/data-loading) to learn more about data loading within a Remix application.
 
 #### Durable Objects
 
