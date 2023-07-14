@@ -5583,6 +5583,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 .tutorialStep {
   padding-left: 2em;
   border-left: .5px solid gray;
+  counter-increment: stepCounter;
 }
 
 .tutorialStep:not(:first-of-type) {
@@ -5606,6 +5607,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 .tutorialStepContainer {
   margin-top: 4em;
   padding-bottom: 1em;
+  counter-reset: stepCounter;
 }
 
 .optionalStepCounter {
@@ -5617,11 +5619,15 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   padding-right: .35em;
   padding-left: .35em;
   margin-right: .5em;
-  width: 1.2em;
-  height: 1.2em;
   border: 2px solid var(--orange-5);
   border-radius: 50%;
-  align-items: center;
-  justify-content: center;
   font-weight: bold;
+}
+
+.stepCounter::before {
+  content: counter(stepCounter);
+}
+
+.optionalStepCounter::before {
+  content: counter(stepCounter);
 }
