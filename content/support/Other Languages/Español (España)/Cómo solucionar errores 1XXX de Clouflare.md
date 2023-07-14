@@ -526,7 +526,7 @@ ___
 
 ### Causas habituales
 
-Cloudflare Worker supera el [Límite de tiempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
+Cloudflare Worker supera el [Límite de tiempo de CPU](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
 
 ### Solución
 

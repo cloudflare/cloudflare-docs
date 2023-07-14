@@ -483,7 +483,7 @@ ___
 
 ### Causa comum
 
-Um Cloudflare Worker excede um [limite de tempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
+Um Cloudflare Worker excede um [limite de tempo de CPU](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
 
 ### Solução
 
