@@ -2,8 +2,8 @@ name: Image audit
 
 on:
   pull_request:
-    branches:
-      - production
+      branches:
+        - production
   workflow_dispatch:
   schedule:
     - cron: "0 0 1 * *"
@@ -33,7 +33,7 @@ jobs:
           
           # If there are unused files, output them
           if [ -n "$UNUSED_FILES" ]; then
-            echo "{unused_files}={$UNUSED_FILES}" >> "$GITHUB_OUTPUT"
+            echo "::set-output name=unused_files::$UNUSED_FILES"
           fi
 
       - name: Create Issue if Unused Files Found
