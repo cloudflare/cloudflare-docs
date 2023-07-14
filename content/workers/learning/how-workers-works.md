@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: How Workers works
-weight: 1
+weight: 2
 ---
 
 # How Workers works

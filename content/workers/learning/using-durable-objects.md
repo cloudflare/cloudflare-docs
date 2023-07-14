@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Using Durable Objects
-weight: 11
 ---
 
 # Using Durable Objects

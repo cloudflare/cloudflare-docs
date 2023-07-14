@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Continuous Integration
-weight: 16
 ---
 
 # Integrations

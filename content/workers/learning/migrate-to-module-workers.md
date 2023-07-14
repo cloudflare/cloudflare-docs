@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Migrate to ES modules format
-weight: 9
 ---
 
 # Migrate to ES modules format

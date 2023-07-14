@@ -1,8 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Triggers
+title: Reference
+weight: 12
 ---
 
-# Triggers
+# Reference
 
 {{<directory-listing>}}

@@ -1,20 +1,15 @@
 ---
-pcx_content_type: concept
-title: How routing works
-weight: 8
+pcx_content_type: navigation
+title: Routing
+layout: single
 ---
 
-# How routing works
-
-## Background
+# Routing
 
 To allow a Worker to receive inbound HTTP requests, you must connect it to an external endpoint such that it can be accessed by the Internet. There are two ways to route to a Worker: 
 
-1. [Custom Domains](/workers/platform/triggers/custom-domains).
-
-and
-
-2. [Routes](/workers/platform/triggers/routes).
+1. [Custom Domains](/workers/platform/triggers/custom-domains)
+2. [Routes](/workers/platform/triggers/routes)
 
 Routes add Workers functionality to your existing proxied hostnames, in front of your application server. These allow your  Workers to act as a proxy and perform any necessary work before reaching out to an application server behind Cloudflare.
 
@@ -38,28 +33,8 @@ Custom Domains can stack on top of each other. For example, if you have Worker A
 
 Routes can `fetch()` Custom Domains and take precedence if configured on the same hostname. If you would like to run a logging Worker in front of your application, for example, you can create a Custom Domain on your application Worker for `app.example.com`, and create a Route for your logging Worker at `app.example.com/*`.  Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot be the target of a same-zone `fetch()` call.
 
-## Configure your `wrangler.toml`
-
-To configure a route in your `wrangler.toml`, add the following to your environment:
-
-```toml
-routes = [
-    { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
-]
-```
-
-If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
-
-To configure a subdomain in your `wrangler.toml`, add the following to your environment:
-
-```toml
-routes = [
-	{ pattern = "subdomain.example.com", custom_domain = true, zone_name = "example.com" }
-]
-```
-
 ## What is best for me?
 
 [Custom Domains](/workers/platform/triggers/custom-domains/) are recommended for use cases where your application lives on the Cloudflare network, needs to be global by default, and may optionally communicate with any number of dependencies.
 
-Generally, [Routes](/workers/platform/triggers/routes) are good for use cases where the Worker acts like a proxy, making small modifications to the Request, Response, or logging data in between the user and the server. 
+Generally, [Routes](/workers/platform/triggers/routes) are good for use cases where the Worker acts like a proxy, making small modifications to the Request, Response, or logging data in between the user and the server.

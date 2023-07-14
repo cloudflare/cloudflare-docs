@@ -1,13 +1,11 @@
 ---
 pcx_content_type: concept
 title: Integrations
-weight: 6
+layout: single
 ---
 
 
 # Integrations
-
-{{<directory-listing>}}
 
 One of the key features of Cloudflare Workers is the ability to easily integrate with other services and products. In this document, we will explain the types of integrations available with Cloudflare Workers and provide step-by-step instructions for using them.
 
@@ -30,7 +28,7 @@ To use any of the available integrations:
 * Store necessary secrets and keys using secrets via [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret).
 
 
-## Tips and best practices
+## Best practices
 
 To help you get the most out of using integrations with Cloudflare Workers:
 
