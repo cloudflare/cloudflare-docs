@@ -69,7 +69,7 @@
 /access/other-protocols/tcp-guide/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /access/ /cloudflare-one/identity/ 301
 /access/authentication/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
-/access/cli/installing-cli-tool/ /cloudflare-one/connections/connect-apps/install-and-setup/installation/ 301
+/access/cli/installing-cli-tool/ /cloudflare-one/connections/connect-apps/downloads/ 301
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/getting-started/applications/ /cloudflare-one/applications/ 301
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
