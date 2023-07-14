@@ -33,7 +33,7 @@ jobs:
           
           # If there are unused files, output them
           if [ -n "$UNUSED_FILES" ]; then
-            echo "::set-output name=unused_files::$UNUSED_FILES"
+            echo "unused_files=$UNUSED_FILES" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create Issue if Unused Files Found
