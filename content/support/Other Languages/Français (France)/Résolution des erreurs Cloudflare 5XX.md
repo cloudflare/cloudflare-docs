@@ -87,7 +87,7 @@ Il existe deux causes possibles :
 
 Cloudflare renvoie une erreur HTTP 502 ou 504 mentionnant Cloudflare lorsque votre serveur web d'origine répond avec une erreur HTTP 502 bad gateway ou 504 gateway timeout standard :
 
-![Exemple d'erreur 502 de marque Cloudflare.](/support/static/image1.png)
+![Exemple d'erreur 502 de marque Cloudflare.](/images/support/image1.png)
 
 **Résolution**
 
@@ -101,7 +101,7 @@ Contactez votre fournisseur d’hébergement pour trouver la cause de ces probl�
 
 Une erreur 502 ou 504 provenant de Cloudflare se présente comme suit :
 
-![Exemple d'erreur 502 sans marque.](/support/static/image5.png)
+![Exemple d'erreur 502 sans marque.](/images/support/image5.png)
 
 Si l'erreur ne mentionne pas « cloudflare », contactez votre fournisseur d'hébergement pour obtenir de l'aide sur les [erreurs 502/504 depuis votre serveur d'origine](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_85e06a1a-fa89-4685-aa24-2aaf57c0141b).
 
@@ -287,7 +287,7 @@ Demandez à votre administrateur de serveur ou à votre hébergeur de vérifier 
 -   Votre serveur web d'origine accepte les connexions via le port SSL 443
 -   [Mettez temporairement en pause Cloudflare](https://support.cloudflare.com/hc/articles/200169176) et consultez [https://www.sslshopper.com/ssl-checker.html#hostname=www.exemple.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (remplacez www.exemple.com par votre nom d'hôte et votre domaine) pour vérifier qu'aucun problème n’existe avec le certificat SSL d'origine :
 
-![Écran affichant un certificat SSL sans erreur.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+![Écran affichant un certificat SSL sans erreur.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 Si le serveur d'origine utilise un certificat auto-signé, configurez le domaine pour utiliser _Full_ _SSL_ au lieu de _Full SSL (Strict)_. Consultez les [paramètres SSL recommandés pour votre serveur d'origine](/ssl/origin-configuration/ssl-modes).
 

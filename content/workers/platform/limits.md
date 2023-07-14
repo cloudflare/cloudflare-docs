@@ -15,7 +15,7 @@ title: Limits
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
+| [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
@@ -37,7 +37,7 @@ Request headers observe a total limit of 32 KB, but each header is limited to 16
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
-Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to have a request body limit beyond 500 MB.
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
 
 {{<table-wrap>}}
 
@@ -52,7 +52,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 
 ## Response limits
 
-Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](/cache/about/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](/cache/concepts/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
 
 ## Worker limits
 
@@ -273,7 +273,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 ## Worker startup time
 
@@ -330,3 +330,9 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 Durable Objects scale well across Objects, but each object is inherently single-threaded. A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload.
 
 Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your account team.
+
+---
+
+## Image Resizing with Workers 
+
+When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.

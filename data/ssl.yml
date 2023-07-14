@@ -4,7 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M23.4
 product:
   title: SSL/TLS
   url: /ssl/
-  group: Application security
+  group: Application performance
+  additional_groups: [Application security]
 
 meta:
   title: Cloudflare SSL/TLS docs
@@ -13,7 +14,6 @@ meta:
     performance and security company to offer free SSL/TLS protection.
   author: '@cloudflare'
   
-
 resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/

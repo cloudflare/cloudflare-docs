@@ -82,10 +82,6 @@ To restore the original visitor IP address at your origin web server, Cloudflare
 
 For incoming requests, the value of this header will be set to the protocol the client used (`http` or `https`). If the client set a different value, it will be overwritten.
 
-## X-Real-IP
-
-For incoming requests, the value of this header will be set to the client's IP address. If the client set a different value, it will be overwritten. The value has the same semantics as [`CF-Connecting-IP`](/fundamentals/get-started/reference/http-request-headers/#cf-connecting-ip) and [`True-Client-IP`](/fundamentals/get-started/reference/http-request-headers/#true-client-ip-enterprise-plan-only).
-
 ## CF-RAY
 
 The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/get-started/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.

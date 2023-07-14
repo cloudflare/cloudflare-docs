@@ -33,13 +33,14 @@ The following products and features are available on the Cloudflare China Networ
 
 | Product | Feature | Description |
 |---|---|---|
-| Supported protocols | [IPv6](https://support.cloudflare.com/hc/articles/229666767) | All data centers have IPv6 support by default. |
+| Supported protocols | [IPv6](/support/network/understanding-and-configuring-cloudflares-ipv6-support/) | All data centers have IPv6 support by default. |
 | Supported protocols | [SSL/TLS](/ssl/) | Customer Certificate, Dedicated Certificate, Universal Certificate, Custom, ACM (Dedicated), Universal SSL. |
 | Supported protocols | [HTTP/3 (QUIC)](https://www.cloudflare.com/learning/performance/what-is-http3/) | The latest version of the HTTP protocol to optimize page loading performance. |
-| Supported protocols | [WebSockets](/workers/learning/using-websockets/) | Real-time communication with Cloudflare Workers serverless functions. |
+| Supported protocols | [WebSockets](/workers/runtime-apis/websockets/) | Real-time communication with Cloudflare Workers serverless functions. |
 
 ## Other services
 
 | Product | Feature | Description |
 |---|---|---|
 | [Analytics](/analytics/) | Web Analytics | Real-time traffic, security, and data monitoring. |
+| [Logs](/logs/) | Instant Logs | Live Tail your Cloudflare HTTP logs in the Cloudflare Dashboard. |

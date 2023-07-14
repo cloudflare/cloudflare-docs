@@ -40,7 +40,7 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 5. (Optional) Toggle the following settings:
 
    - **Set as Default DNS Location** sets this location as the default in your DNS policy builder.
-   - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS name servers.
+   - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS nameservers.
 
      [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.
 
@@ -48,7 +48,7 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 
 7. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 
-   ![DNS resolver setup instructions in Zero Trust](/cloudflare-one/static/documentation/policies/location-setup-instructions.png)
+   ![DNS resolver setup instructions in Zero Trust](/images/cloudflare-one/policies/location-setup-instructions.png)
 
 8. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
 

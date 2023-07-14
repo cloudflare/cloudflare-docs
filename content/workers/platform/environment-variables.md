@@ -5,17 +5,17 @@ title: Environment variables
 
 # Environment variables
 
-In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
+In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings.
 
-## Environment variables with module Workers
+## Environment variables with Workers using ES modules format
 
-When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
+When deploying a Worker using ES modules format, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
 
 ## Environment variables via wrangler
 
 ### Add environment variables via Wrangler
 
-Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always plaintext values.
+Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file. Environment variables are always plaintext or JSON values, represented using the [inline table toml syntax](https://toml.io/en/v1.0.0#inline-table).
 
 ```toml
 ---
@@ -29,6 +29,7 @@ name = "my-worker-dev"
 [vars]
 API_TOKEN = "example_dev_token"
 STRIPE_TOKEN = "pk_xyz1234_test"
+SERVICE_X_DATA = { URL = "service-x-api.dev.example", API_KEY = "my-service-x-dev-api-key", MY_ID = 123 }
 
 # Override values for `--env production` usage
 [env.production]
@@ -36,9 +37,10 @@ name = "my-worker-production"
 [env.production.vars]
 API_TOKEN = "example_production_token"
 STRIPE_TOKEN = "pk_xyz1234"
+SERVICE_X_DATA = { URL = "service-x-api.prod.example", API_KEY = "my-service-x-prod-api-key", MY_ID = 123 }
 ```
 
-These environment variables can then be accessed within your Worker script as global variables. They will be plaintext strings.
+These environment variables can then be accessed within your Worker script as global variables. They will be either plaintext strings or json objects.
 
 ```js
 // Worker code:
@@ -49,9 +51,13 @@ console.log(API_TOKEN);
 console.log(STRIPE_TOKEN);
 //=> (default) "pk_xyz1234_test"
 //=> (env.production) "pk_xyz1234"
+
+console.log(JSON.stringify(SERVICE_X_DATA)):
+//=> (default) {"API_KEY":"my-service-x-dev-api-key","MY_ID":123,"URL":"service-x-api.dev.example"}
+//=> (env.production) {"API_KEY":"my-service-x-prod-api-key","MY_ID":123,"URL":"service-x-api.prod.example"}
 ```
 
-If using [module Workers](/workers/learning/migrating-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the following example:
+If using [Workers written in ES modules format](/workers/learning/migrate-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the following example:
 
 ```ts
 export interface Env {
@@ -146,7 +152,7 @@ To add environment variables, such as `vars` and `secret`, via the dashboard:
 7. (Optional) To add multiple environment variables, select **Add variable**.
 8. Select **Save** to implement your changes.
 
-![After selecting Add variable, you will be directed to an environment variables configuration page to set up your environment variable name and value](../media/env_variables_dash.png)
+![After selecting Add variable, you will be directed to an environment variables configuration page to set up your environment variable name and value](/images/workers/platform/env_variables_dash.png)
 
 {{<Aside type="warning" header="Plaintext strings and secrets">}}
 
@@ -166,11 +172,11 @@ To add KV namespace bindings:
 6. Select **Add binding** to add multiple bindings.
 7. When you are finished, select **Save** to implement your changes.
 
-![After selecting add binding, you will be directed to a configuration page to specify your Variable name and KV namespace to create your binding](../media/kv_namespace_bindings.png)
+![After selecting add binding, you will be directed to a configuration page to specify your Variable name and KV namespace to create your binding](/images/workers/platform/kv_namespace_bindings.png)
 
 Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference.
 
-![After creating your environment variable and KV namespace binding, your dashboard will show a summary of variables and bindings you configured](../media/envvarssecret-detail-page.jpeg)
+![After creating your environment variable and KV namespace binding, your dashboard will show a summary of variables and bindings you configured](/images/workers/platform/envvarssecret-detail-page.jpeg)
 
 ## Compare secrets and environment variables
 

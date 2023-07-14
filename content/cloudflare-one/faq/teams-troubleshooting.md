@@ -73,7 +73,7 @@ For more troubleshooting information, refer to [Support](/support/troubleshootin
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
-![An error displayed in the Gateway Overview page instead of analytics.](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
+![An error displayed in the Gateway Overview page instead of analytics.](/images/cloudflare-one/faq/gateway-dash-overview-empty.png)
 
 You may not see analytics on the Overview page for the following reasons:
 
@@ -110,7 +110,7 @@ An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First
 1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
 2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#6-run-the-tunnel)).
 
-For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
+For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
 ## I see `Error 0: Bad Request. Please create a ca for application.` when attempting to connect to SSH with a short-lived certificate.
 
@@ -151,15 +151,15 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 - Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
-## Connections are timing out after 270 seconds
+## My tunnel randomly disconnects
 
-Cloudflare enforces a 270-second idle timeout on TCP connections that go through the gateway. If there is no new data to send in either direction for 270 seconds, the proxy process drops the connection. This cannot be mitigated by Keep-Alive packets, as TCP is terminated in the gateway and a new connection is made to the upstream sever.
+Long-lived connections initiated through the Cloudflare Zero Trust platform, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) and contact Support.
 
 ## Tunnel connections fail with SSL error
 
 If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
 
-## My tunnel disconnects at random intervals
+## Tunnel connections fail with `Too many open files` error
 
 If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
 
@@ -183,3 +183,37 @@ ResolveUnicastSingleLabel=yes
 ```sh
 $ sudo systemctl restart systemd-resolved.service
 ```
+
+## Windows incorrectly shows `No Internet access` when WARP is enabled.
+
+Windows runs network connectivity checks that can sometimes fail due to how the WARP client configures the local DNS proxy on the device. This can result in a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. However, some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
+
+There are two options to resolve the issue:
+
+- **Option 1**: In Windows, configure the Network Connectivity Status Indicator (NCSI) to detect the WARP DNS server.
+{{<tabs labels="Registry key | Group policy">}}
+{{<tab label="registry key" no-code="true">}}
+
+To fix the issue with a registry key:
+
+```bash
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator" /v UseGlobalDNS /t REG_DWORD /d 1 /f
+```
+
+{{</tab>}}
+{{<tab label="group policy" no-code="true">}}
+
+To fix the issue with a local group policy:
+1. Open `gpedit.msc`.
+2. Go to **Computer Configuration** > **Administrative Templates** > **Network** > **Network Connectivity Status Indicator**.
+3. Enable **Specify Global DNS**.
+4. Update group policy settings on the device:
+  ```bash
+  gpupdate /force
+  ```
+5. Reboot the device.
+
+{{</tab>}}
+{{</tabs>}}
+
+- **Option 2**: In Zero Trust, add `*.msftconnecttest.com` and `dns.msftncsi.com` to your [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) exclude list.

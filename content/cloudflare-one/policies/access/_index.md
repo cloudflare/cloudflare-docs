@@ -74,7 +74,7 @@ This ensures that everyone connecting from outside your specified IP range will 
 
 {{<Aside type="note">}}
 
-When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
+When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
 
 {{</Aside>}}
 

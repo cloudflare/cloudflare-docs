@@ -81,7 +81,7 @@ Si vous avez besoin de plus d'informations sur les contenus diffusés par votre 
 -   Utilisateurs de Cache Analytics : Ouvrez **l'onglet de mise en cache** du tableau de bord pour filtrer les contenus par type et identifier le type de trafic transmis. 
 -   Utilisateurs sans Cache Analytics : Ouvrez **l'onglet Analyse** du tableau de bord et cliquez sur la rubrique **Performances** pour obtenir des informations sur le contenu que vous diffusez.
 
-![Cache Analytics - Identifier le type de trafic transmis](/support/static/traffic-types.png)
+![Cache Analytics - Identifier le type de trafic transmis](/images/support/traffic-types.png)
 
 ## D’autres questions ? Contacter le support
 

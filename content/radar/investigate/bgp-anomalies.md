@@ -379,13 +379,13 @@ async function send_email_alert(hijacker, prefixes, victims) {
 }
 ```
 
-[email-routing]: https://developers.cloudflare.com/email-routing/
-[email-workers-tutorial]: https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/
-[wrangler-send-email]: https://developers.cloudflare.com/workers/wrangler/configuration/#email-bindings
+[email-routing]: /email-routing/
+[email-workers-tutorial]: /email-routing/email-workers/send-email-workers/
+[wrangler-send-email]: /workers/wrangler/configuration/#email-bindings
 
 
 ## Next steps
 
 Refer to our [API documentation][api-portal] for more information on these topics.
 
-[api-portal]: https://developers.cloudflare.com/api/operations/radar_get_js
+[api-portal]: /api/operations/radar-get-bgp-hijacks-events

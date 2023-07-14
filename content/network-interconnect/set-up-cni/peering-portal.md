@@ -1,6 +1,7 @@
 ---
 title: Peering portal setup
-pcx-content-type: tutorial
+pcx_content_type: tutorial
+updated: 2023-04-04
 ---
 
 # Peering portal setup

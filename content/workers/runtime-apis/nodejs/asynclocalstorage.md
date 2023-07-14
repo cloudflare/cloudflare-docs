@@ -33,7 +33,7 @@ const asyncLocalStorage = new AsyncLocalStorage();
 
 - `getStore()` : {{<type>}}any{{</type>}}
 
-  - Returns the current stored. If called outside of an asynchronous context initialized by calling `asyncLocalStorage.run()`, it returns `undefined`.
+  - Returns the current store. If called outside of an asynchronous context initialized by calling `asyncLocalStorage.run()`, it returns `undefined`.
 
 - {{<code>}}run(store{{<param-type>}}any{{</param-type>}}, callback{{<param-type>}}function{{</param-type>}}, ...args{{<param-type>}}arguments{{</param-type>}}){{</code>}} : {{<type>}}any{{</type>}}
 

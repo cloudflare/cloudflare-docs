@@ -245,7 +245,7 @@ Browser Cache TTL（ブラウザキャッシュTTL）
 
  | 
 
-クライアントブラウザでキャッシュされるリソースが有効な状態を維持できる時間を管理します。Cloudflare UIとAPIの両方で、Enterpriseプランではないお客様が**ブラウザCache TTL**を_0_に設定することは禁止されています。[詳細を見る](/cache/about/edge-browser-cache-ttl)。
+クライアントブラウザでキャッシュされるリソースが有効な状態を維持できる時間を管理します。Cloudflare UIとAPIの両方で、Enterpriseプランではないお客様が**ブラウザCache TTL**を_0_に設定することは禁止されています。[詳細を見る](/cache/how-to/edge-browser-cache-ttl/)。
 
  | 
 
@@ -289,7 +289,7 @@ _下記の追加詳細で、限定的な正規表現のサポートについて�
 
  | 
 
-訪問者のデバイスタイプに基づき、キャッシュするコンテンツを分けます。[詳細を見る](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)。
+訪問者のデバイスタイプに基づき、キャッシュするコンテンツを分けます。[詳細を見る](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)。
 
  | 
 
@@ -317,7 +317,7 @@ Cache Deception Armor
 
 _カスタムキャッシュキー_とも呼ばれています。
 
-キャッシュするリソースを決定する際、どの変数を含めるかを具体的に管理します。お客様は、URLだけではなく他の要素にも基づいてキャッシュするものを決定できます。[詳細を見る](/cache/about/cache-keys)。
+キャッシュするリソースを決定する際、どの変数を含めるかを具体的に管理します。お客様は、URLだけではなく他の要素にも基づいてキャッシュするものを決定できます。[詳細を見る](/cache/how-to/cache-keys/)。
 
  | 
 
@@ -340,7 +340,7 @@ _カスタムキャッシュキー_とも呼ばれています。
 
 **標準 -** クエリ文字列を持つ静的コンテンツ全てをキャッシュします。
 
-**すべてをキャッシュする**\- すべてのコンテンツを静的コンテンツとして扱い、[Cloudflareのデフォルトでキャッシュされたコンテンツ](/cache/about/default-cache-behavior#default-cached-file-extensions)を超えて、すべてのファイルタイプをキャッシュします。Page Ruleで **エッジCache TTL**を設定している場合を除き、オリジンWebサーバーからのCacheヘッダーを尊重します。**エッジCache TTL**\>_0__と組み合わせると、_**すべてをキャッシュする**では、オリジンWebサーバーのレスポンスからのCookieを削除します。  
+**すべてをキャッシュする**\- すべてのコンテンツを静的コンテンツとして扱い、[Cloudflareのデフォルトでキャッシュされたコンテンツ](/cache/concepts/default-cache-behavior#default-cached-file-extensions)を超えて、すべてのファイルタイプをキャッシュします。Page Ruleで **エッジCache TTL**を設定している場合を除き、オリジンWebサーバーからのCacheヘッダーを尊重します。**エッジCache TTL**\>_0__と組み合わせると、_**すべてをキャッシュする**では、オリジンWebサーバーのレスポンスからのCookieを削除します。  
 
 
  | 
@@ -540,7 +540,7 @@ Mirage
 -   すべて
 
  |
-| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/about/cache-control)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
+| オリジンキャッシュコントロール | [オリジンCacheコントロール](/cache/concepts/cache-control/)はFreeドメイン、Proドメイン、Businessドメインにおいてデフォルトで有効になっており、Enterpriseドメインについてはデフォルトで無効になっています。 | 
 
 -   すべて
 
@@ -716,11 +716,11 @@ ___
 
 **根本原因**：Page Rule の設定問題に起因する可能性があります。_転送URL_ルールのような、2つのワイルドカードを使用するPage Ruleを作成する場合、$2 プレースホルダーが2番目のワイルドカードを指すルールを作成することができます。下記の例をご覧ください。
 
-![２つのワイルドカードを使ったPage Rule 設定の例転送URLには＄2プレースホルダー1つが含まれ、これが２つ目と一致するコンテンツに置き換えられます。 ](/support/static/page-rule-create.png)
+![２つのワイルドカードを使ったPage Rule 設定の例転送URLには＄2プレースホルダー1つが含まれ、これが２つ目と一致するコンテンツに置き換えられます。 ](/images/support/page-rule-create.png)
 
 同じルールを更新する場合、**URLが一致する場合**欄のワイルドカードを1つ削除して保存することができます。下記の例をご覧ください。
 
-![単一のワイルドカードを使った不正確なPage Rule設定で、その$2 プレースホルダーを転送URLで使用する場合。この設定が原因で ](/support/static/page-rule-update.png)
+![単一のワイルドカードを使った不正確なPage Rule設定で、その$2 プレースホルダーを転送URLで使用する場合。この設定が原因で ](/images/support/page-rule-update.png)
 
 これを行った場合、$2 プレースホルダーが存在しないワイルドカードを参照することになるため、URLがPage Rule をトリガーする際「_エラー 500（内部サーバーエラー）_」が発生します。
 

@@ -10,7 +10,7 @@ This page provides a list of terms and concepts to help you understand Radar and
 
 ## Application-level Attacks
 
-Layer 7 attack information based on requests that were mitigated. Including the most frequent mitigation techniques as well as trending of mitigated request volume over time.
+Layer 7 attack information based on mitigated requests, including the most frequent mitigation techniques as well as the trend of mitigated request volume over time. Selected location or ASN is the source of the mitigated requests.
 
 ## Autonomous Systems
 
@@ -46,6 +46,15 @@ In Cloudflare Radar, you can view all certificates issued for a given domain by 
 
 You can review the certificates issued for your domain name to ensure that there have been no incorrect or fraudulent issuances of certificates associated with your domains. You can also sign up to receive alerts from our certificate transparency monitor in the [Cloudflare Dashboard](https://dash.cloudflare.com/).
 
+## Connection Quality
+
+Connection quality metrics include download and upload speed, latency (round-trip time), and latency jitter (round-trip time stability), reflecting the best expected performance for specific countries or ASNs. These metrics are derived from speed tests initiated by end users on the [Cloudflare Speed Test website](https://speed.cloudflare.com/), aggregated over the previous 90 days. The underlying raw data is freely accessible for analysis through [Measurement Lab's BigQuery](https://blog.cloudflare.com/aim-database-for-internet-quality/).
+
+In speed, latency, and jitter rankings, only countries where users run speed tests with sufficient regularity are included. Consequently, certain countries may be excluded from the rankings, even though their data can be found in other sections of Radar.
+
+Cloudflare Speed Test measures latency multiple times over the course of the test. Measurements taken before a download or upload begins are aggregated into idle latency and jitter, while measurements taken while a download or upload is in progress are aggregated as loaded latency and jitter.
+
+
 ## Content Categories
 
 Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or 1.1.1.1 for Families can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
@@ -76,9 +85,16 @@ Note that a number of factors may affect the accuracy of the geolocation informa
 
 Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
 
+## IQI
+
+The Internet Quality Index estimates connection performance under average utilization, such as web browsing. It is based on end user measurements against a fixed set of Cloudflare and third-party targets, providing numbers for bandwidth, round-trip time (latency), and DNS response time, aggregated by continent, country, or ASN.
+
+The IQI methodology requires a minimum number of measurements to generate estimates. As a result, graphs for smaller countries and ASNs may display occasional gaps, especially during nighttime. These gaps do not indicate outages. The number of measurements underlying IQI does not necessarily correlate with the volume of traffic observed by Cloudflare in a specific country or ASN.
+
+
 ## Network-level DDoS Attacks
 
-Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range.
+Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
 
 ## Traffic type filter
 

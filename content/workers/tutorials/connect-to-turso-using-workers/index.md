@@ -123,7 +123,7 @@ For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevan
 The Turso client library requires two pieces of information to make a connection:
 
 1. `LIBSQL_DB_URL` - The connection string for your Turso database.
-2. `LIBSQL_DB_AUTH_TOKEN` - The authentication token for your Turos database. This should be kept a secret, and not committed to source code.
+2. `LIBSQL_DB_AUTH_TOKEN` - The authentication token for your Turso database. This should be kept a secret, and not committed to source code.
 
 To get the URL for your database, run the following Turso CLI command, and copy the result:
 
@@ -152,7 +152,21 @@ $ turso db tokens create my-db -e none
 # Will output a long text string (an encoded JSON Web Token)
 ```
 
-You will now [create a secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential:
+To keep this token secret:
+
+1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore` file if you are using Git.
+* You will also [create a Secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
+
+First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
+
+```
+---
+filename: .dev.vars
+---
+LIBSQL_DB_AUTH_TOKEN="<YOUR_AUTH_TOKEN>"
+```
+
+Save your changes to `.dev.vars`. Next, store the authentication token as a secret for your production Worker to reference. Run the following `wrangler secret` command to create a Secret with your token:
 
 ```sh
 # Ensure you specify the secret name exactly: your Worker will need to reference it later.
@@ -284,7 +298,7 @@ With your environment configured and your code ready, you will now test your Wor
 To run a local instance of our Worker (entirely on your machine), run the following command:
 
 ```sh
-$ npx wrangler dev --local
+$ npx wrangler dev
 ```
 
 You should be able to review output similar to the following:
@@ -360,12 +374,12 @@ You have now published a Worker that can connect to your Turso database, query i
 
 To clean up the resources you created as part of this tutorial:
 
-* If you do not want to keep this Worker, run `wrangler delete worker-turso-ts` to delete the published Worker.
+* If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the published Worker.
 * You can also delete your Turso database via `turso db destroy my-db`.
 
 ## Related resources
 
 * Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
-* Understand how to [debug your Cloudflare Worker](/workers/learning/debugging-workers/).
+* Understand how to [debug your Cloudflare Worker](/workers/observability/debug-workers/).
 * Join the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF).
 * Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).

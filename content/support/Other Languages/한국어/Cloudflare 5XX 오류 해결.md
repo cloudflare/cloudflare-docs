@@ -87,7 +87,7 @@ HTTP 502 오류 또는 504 오류는 Cloudflare가 원본 웹 서버에 접속�
 
 Cloudflare는 원본 웹 서버가 표준 HTTP 502 bad gateway 또는 504 gateway timeout 오류로 응답할 때 Cloudflare 브랜딩이 포함된 502/504 오류를 반환합니다.
 
-![Cloudflare 브랜드가 있는 502 오류의 예](/support/static/image1.png)
+![Cloudflare 브랜드가 있는 502 오류의 예](/images/support/image1.png)
 
 **문제 해결**
 
@@ -101,7 +101,7 @@ Cloudflare는 원본 웹 서버가 표준 HTTP 502 bad gateway 또는 504 gatewa
 
 Cloudflare에서의 502/504 오류는 다음의 예처럼 표시됩니다.
 
-![브랜드가 없는 502 오류의 예](/support/static/image5.png)
+![브랜드가 없는 502 오류의 예](/images/support/image5.png)
 
 오류에 'cloudflare'가 포함되지 않은 경우 [원본에서의 502/504 오류](https://support.cloudflare.com/hc/ko/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_85e06a1a-fa89-4685-aa24-2aaf57c0141b)이므로 호스팅 공급자에 지원을 요청해야 합니다.
 
@@ -287,7 +287,7 @@ ___
 -   원본 웹 서버가 SSL 443 포트를 통한 연결을 허용함
 -   [Cloudflare를 일시 중지](https://support.cloudflare.com/hc/articles/200169176)하고 [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com)에접속해(www.example.com은 호스트 이름과 도메인으로 대체)SSL 인증서 원본에 문제가 없는지 확인
 
-![오류가 없는 SSL 인증서가 표시된 화면](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+![오류가 없는 SSL 인증서가 표시된 화면](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 원본 서버가 자체적으로 서명한 인증서를 사용하는 경우, 도메인이 _Full SSL(Strict)_ 대신 _Full_ _SSL_을 사용하도록 설정하세요. 원본 서버에서 SSL을 설정하는 방법은 [SSL 설정 권장 사항](/ssl/origin-configuration/ssl-modes)을 참조할 수 있습니다.
 

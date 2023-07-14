@@ -16,7 +16,7 @@ To add a Custom Domain, you must have:
 1. An [active Cloudflare zone](/dns/zone-setups/).
 2. A Worker to invoke.
 
-Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](https://developers.cloudflare.com/api/operations/worker-domain-list-domains).
+Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](/api/operations/worker-domain-list-domains).
 
 {{<Aside type="warning">}}
 
@@ -87,7 +87,7 @@ However, if `worker-b` was instead set up to run on the Custom Domain `shop.exam
 
 Custom Domains do not support [wildcard DNS records](/dns/manage-dns-records/reference/wildcard-dns-records/). An incoming request must exactly match the domain or subdomain your Custom Domain is registered to. Other parts (path, query parameters) of the URL are not considered when executing this matching logic. For example, if you create a Custom Domain on `api.example.com` attached to your `api-gateway` Worker, a request to either `api.example.com/login` or `api.example.com/user` would invoke the same `api-gateway` Worker.
 
-![Custom Domains follow standard DNS ordering and matching logic](/workers/platform/triggers/media/custom-domains-api-gateway.png)
+![Custom Domains follow standard DNS ordering and matching logic](/images/workers/platform/triggers/custom-domains-api-gateway.png)
 
 ## Interaction with Routes
 

@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Commands
-weight: 2
 ---
 
 # Wrangler commands
@@ -321,10 +320,7 @@ None of the options for this command are required. Many of these options can be 
 
 {{<Aside type="warning">}}
 
-When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
-
-- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
-- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions providing `glibc 2.31` or higher (e.g. Ubuntu 20.04/22.04, Debian 11/12, Fedora 37/38/39), macOS version 11 or higher, and Windows (x86-64 architecture).
 
 {{</Aside>}}
 
@@ -1313,11 +1309,6 @@ If sampling persists after using options to filter messages, consider using [ins
 ## pages
 
 Configure Cloudflare Pages.
-
-{{<Aside type="warning">}}
-The `wrangler pages ...` commands are in beta.<br>
-Report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose.
-{{</Aside>}}
 
 ### `dev`
 

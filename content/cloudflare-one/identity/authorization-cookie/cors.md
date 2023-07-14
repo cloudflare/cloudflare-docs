@@ -68,7 +68,7 @@ To configure how Cloudflare responds to preflight requests:
    ```
 
    then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
-   ![Example CORS settings configuration in Zero Trust](/cloudflare-one/static/documentation/policies/CORS-settings.png)
+   ![Example CORS settings configuration in Zero Trust](/images/cloudflare-one/policies/CORS-settings.png)
 
 5. Click **Save application**.
 

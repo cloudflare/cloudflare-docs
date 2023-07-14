@@ -59,5 +59,5 @@ Any data not yet written is lost upon abort.
 
 ## Related resources
 
-- [Using Streams.](/workers/learning/using-streams/)
-- [Writable streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#ws-model)
+- [Use Streams](/workers/runtime-apis/streams/use-streams/)
+- [Writable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#ws-model)

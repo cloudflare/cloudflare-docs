@@ -53,7 +53,7 @@ Additionally, Cloudflare requires your `root domain` to be one level below a val
 7. Go through the **Quick Start Guide**, which allows you to:
     
     - **Improve security**: Make sure that your site enforces HTTPS connections using **Always Use HTTPS** and **Automatic HTTPS Rewrites**. For more help, refer to our [detailed guide](/ssl/edge-certificates/encrypt-visitor-traffic/).
-    - **Optimize performance**: Speed up your site by enabling [Auto Minify](https://support.cloudflare.com/hc/en-us/articles/200168196) and [Brotli compression](https://support.cloudflare.com/hc/en-us/articles/200168396).
+    - **Optimize performance**: Speed up your site by enabling [Auto Minify](/speed/optimization/content/auto-minify/) and [Brotli compression](/speed/optimization/content/brotli/).
  8. When you have finished the **Quick Start Guide**, click **Finish**.
 
 ## Step 2 — Update nameservers

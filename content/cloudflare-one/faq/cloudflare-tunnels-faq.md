@@ -46,7 +46,7 @@ Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cl
 
 {{<faq-answer>}}
 
-Cloudflare offers two modes of setup: [Full Setup](/dns/zone-setups/full-setup/), in which the domain uses Cloudflare DNS name servers, and [Partial Setup](/dns/zone-setups/partial-setup/) (also known as CNAME setup) in which the domain uses non-Cloudflare DNS servers.
+Cloudflare offers two modes of setup: [Full Setup](/dns/zone-setups/full-setup/), in which the domain uses Cloudflare DNS nameservers, and [Partial Setup](/dns/zone-setups/partial-setup/) (also known as CNAME setup) in which the domain uses non-Cloudflare DNS servers.
 
 The best experience with Cloudflare Tunnel is using Full Setup because Cloudflare manages DNS for the domain and can automatically configure DNS records for newly started Tunnels.
 
@@ -99,7 +99,7 @@ Named Tunnels can be routed via DNS records, in which case we use CNAME records 
 
 No. When using Cloudflare Tunnel, all requests to the origin are made internally between `cloudflared` and the origin.
 
-To log external visitor IPs, you will need to [configure an alternative method](https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs-Logging-visitor-IP-addresses-with-mod-cloudflare-).
+To log external visitor IPs, you will need to [configure an alternative method](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -177,8 +177,6 @@ Before contacting the Cloudflare support team:
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
 - Set [`log-level`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
-
-- Set [`transport-loglevel`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#transport-loglevel) to `debug`.
 
 - Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
 

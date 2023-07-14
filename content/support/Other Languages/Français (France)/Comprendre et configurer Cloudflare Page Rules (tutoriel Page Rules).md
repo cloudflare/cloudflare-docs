@@ -243,7 +243,7 @@ Browser Cache TTL
 
  | 
 
-(Durée de vie du cache du navigateur) Contrôlez la durée de validité des ressources mises en cache par les navigateurs clients.L’interface utilisateur et l’API Cloudflare interdisent tous les deux de définir **Browser Cache TTL** sur une valeur de _0_ pour les domaines non couverts par une offre Enterprise.[En savoir plus](/cache/about/edge-browser-cache-ttl).
+(Durée de vie du cache du navigateur) Contrôlez la durée de validité des ressources mises en cache par les navigateurs clients.L’interface utilisateur et l’API Cloudflare interdisent tous les deux de définir **Browser Cache TTL** sur une valeur de _0_ pour les domaines non couverts par une offre Enterprise.[En savoir plus](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -287,7 +287,7 @@ Cache By Device Type
 
  | 
 
-(Mise en cache par type d’appareil) Séparer le contenu mis en cache en fonction du type d’appareil du visiteur. [En savoir plus.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+(Mise en cache par type d’appareil) Séparer le contenu mis en cache en fonction du type d’appareil du visiteur. [En savoir plus.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -315,7 +315,7 @@ Cache Key
 
 (Clé de cache) Elle est également appelée _Custom Cache Key_.
 
-Contrôlez précisément les variables à prendre en compte lorsque vous décidez des ressources à mettre en cache. Cela permet aux clients de déterminer quelles ressources doivent être mises en cache en fonction de données autres que l’URL. [En savoir plus](/cache/about/cache-keys).
+Contrôlez précisément les variables à prendre en compte lorsque vous décidez des ressources à mettre en cache. Cela permet aux clients de déterminer quelles ressources doivent être mises en cache en fonction de données autres que l’URL. [En savoir plus](/cache/how-to/cache-keys/).
 
  | 
 
@@ -338,7 +338,7 @@ Cache Level
 
 **Standard** - Met en cache tout contenu statique comportant une chaîne de requête.
 
-**Cache Everything** (Tout mettre en cache) - Considère tous les contenus comme statiques et met en cache tous les types de fichiers au-delà du [contenu mis en cache par défaut par Cloudflare](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respecte les en-têtes de cache du serveur web d’origine, sauf si **Edge Cache TTL** est également défini dans la règle Page Rule. Associée à une valeur **Edge Cache TTL** > _0_, **Cache Everything** supprime les cookies de la réponse du serveur web d’origine.   
+**Cache Everything** (Tout mettre en cache) - Considère tous les contenus comme statiques et met en cache tous les types de fichiers au-delà du [contenu mis en cache par défaut par Cloudflare](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respecte les en-têtes de cache du serveur web d’origine, sauf si **Edge Cache TTL** est également défini dans la règle Page Rule. Associée à une valeur **Edge Cache TTL** > _0_, **Cache Everything** supprime les cookies de la réponse du serveur web d’origine.   
 
 
  | 
@@ -538,7 +538,7 @@ Opportunistic Encryption
 -   Toutes
 
  |
-| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/about/cache-control) est activé par défaut pour les domaines Free, Pro et Business. | 
+| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/concepts/cache-control/) est activé par défaut pour les domaines Free, Pro et Business. | 
 
 -   Toutes
 
@@ -714,11 +714,11 @@ ___
 
 **Cause profonde** : ce problème peut être dû à un problème de configuration sur une Page Rule. Lors de la création d'une Page Rule qui utilise deux caractères génériques, comme une règle de _redirection d'URL_, il est possible de créer une règle qui mentionne le second caractère générique avec l'espace réservé $2. Voir l'exemple ci-dessous :
 
-![Exemple de configuration Page Rule avec deux caractères génériques. L'URL de redirection contient un espace réservé $2, qui sera remplacé par le contenu correspondant au second ](/support/static/page-rule-create.png)
+![Exemple de configuration Page Rule avec deux caractères génériques. L'URL de redirection contient un espace réservé $2, qui sera remplacé par le contenu correspondant au second ](/images/support/page-rule-create.png)
 
 Lors de la mise à jour de la même règle, vous pouvez supprimer un des caractères génériques dans le champ **If the URL matches** (Si l'URL correspond à) et enregistrer votre mise à jour. Voir l'exemple ci-dessous :
 
-![Configuration Page Rule incorrecte avec un caractère générique unique, mais qui utilise malgré tout l'espace réservé $2 dans l'URL de redirection. Cette configuration provoque ](/support/static/page-rule-update.png)
+![Configuration Page Rule incorrecte avec un caractère générique unique, mais qui utilise malgré tout l'espace réservé $2 dans l'URL de redirection. Cette configuration provoque ](/images/support/page-rule-update.png)
 
 Si vous procédez ainsi, l'espace réservé $2 renvoie à un caractère générique qui n'existe plus et, en conséquence, une erreur de type « _Error 500 (Internal server error)_ » survient quand une URL déclenche la Page Rule.
 

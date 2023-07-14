@@ -94,7 +94,7 @@ This feature is available only to Enterprise customers.
 
 {{</Aside>}}
 
-A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/create-cache-keys/) documentation.
+A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/cache-keys/#create-custom-cache-keys) documentation.
 
 ```js
 // Set cache key for this request to "some-string".
@@ -159,12 +159,6 @@ export default handler;
 Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (for example, belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
 
 ## Override based on origin response code
-
-{{<Aside type="note">}}
-
-This feature is available only to Enterprise customers.
-
-{{</Aside>}}
 
 ```js
 // Force response to be cached for 86400 seconds for 200 status

@@ -82,7 +82,7 @@ ___
 -   Um domínio externo que não está usando a Cloudflare tem um registro CNAME para um domínio ativo na Cloudflare
 -   O destino do registro CNAME de DNS não resolve.
 -   Um registro CNAME no seu aplicativo DNS da Cloudflare requer resolução por meio de um provedor de DNS que está atualmente offline.
--   [Always Online](/cache/about/always-online) está habilitado para um domínio [Custom Hostname (SSL for SaaS](/ssl/ssl-for-saas)).
+-   [Always Online](/cache/how-to/always-online/) está habilitado para um domínio [Custom Hostname (SSL for SaaS](/ssl/ssl-for-saas)).
 
 ### Solução
 
@@ -90,7 +90,7 @@ Um domínio não Cloudflare não pode CNAME para um domínio Cloudflare, a menos
 
 A tentativa de acessar diretamente os registros de DNS usados para [configurações da CNAME na Cloudflare](/dns/zone-setups/partial-setup) também resulta em um erro 1001 (por exemplo: _www.exemplo.com.cdn.cloudflare.net_).
 
-Desabilite o [Always Online](/cache/how-to/enable-always-online) se estiver usando [Custom Hostnames (SSL para SaaS)](/ssl/ssl-for-saas).
+Desabilite o [Always Online](/cache/how-to/always-online/#enable-always-online) se estiver usando [Custom Hostnames (SSL para SaaS)](/ssl/ssl-for-saas).
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### Causa comum
 
-Um Cloudflare Worker excede um [limite de tempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
+Um Cloudflare Worker excede um [limite de tempo de CPU](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
 
 ### Solução
 

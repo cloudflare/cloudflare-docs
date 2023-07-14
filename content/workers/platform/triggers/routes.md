@@ -32,7 +32,7 @@ Route setup will differ depending on if your application's origin is a Worker or
 If your Worker is not your application's origin, follow the instructions below to set up a route.
 
 {{<Aside type="note">}}
-Routes can also be created via the API. Refer to the [Workers Routes API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes) for more information.
+Routes can also be created via the API. Refer to the [Workers Routes API documentation](/api/operations/worker-routes-list-routes) for more information.
 {{</Aside>}}
 
 ### Set up a route in the dashboard

@@ -87,7 +87,7 @@ Existem duas causas possíveis:
 
 A Cloudflare retorna um erro 502 ou 504 de HTTP com a marca da Cloudflare quando o servidor de origem responde com um erro 502 padrão de gateway incorreto de HTTP ou erro 504 de tempo limite excedido do gateway:
 
-![Exemplo de um erro 502 com a marca Cloudflare.](/support/static/image1.png)
+![Exemplo de um erro 502 com a marca Cloudflare.](/images/support/image1.png)
 
 **Solução**
 
@@ -101,7 +101,7 @@ Entre em contato com o seu provedor de hospedagem para solucionar essas causas c
 
 Um erro 502 ou 504 originário da Cloudflare aparece da seguinte maneira:
 
-![Exemplo de um erro 502 sem marca.](/support/static/image5.png)
+![Exemplo de um erro 502 sem marca.](/images/support/image5.png)
 
 Se o erro não mencionar "cloudflare", entre em contato com o seu provedor de hospedagem para obter ajuda sobre [erros 502/504 do seu servidor de origem](https://support.cloudflare.com/hc/pt-br/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_85e06a1a-fa89-4685-aa24-2aaf57c0141b).
 
@@ -287,7 +287,7 @@ Solicite ao administrador do seu servidor ou ao seu provedor de hospedagem que a
 -   O servidor de origem aceita conexões pela porta de SSL porta 443
 -   [Pause a Cloudflare temporariamente](https://support.cloudflare.com/hc/articles/200169176) e visite o link  [https://www.sslshopper.com/ssl-checker.html#hostname=www.exemplo.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (substitua www.exemplo.com pelo seu nome de host e domínio) para verificar se não há problemas com o certificado SSL de origem:
 
-![A tela mostra um certificado SSL sem nenhum erro.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+![A tela mostra um certificado SSL sem nenhum erro.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 Se o servidor de origem usar um certificado autoassinado, configure o domínio para usar um _SSL_ _Full_ \[Completo\] ao invés de um SSL _Full SSL (Strict)_ \[Completo (Estrito)\]. Consulte as [configurações de SSL recomendadas para o seu servidor de origem](/ssl/origin-configuration/ssl-modes).
 

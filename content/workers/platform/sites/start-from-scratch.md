@@ -28,10 +28,10 @@ This guide shows how to quickly start a new Workers Sites project from scratch.
     ```sh
     $ wrangler dev
     ```
-4.  Publish your site to Cloudflare:
+4.  Deploy your site to Cloudflare:
 
     ```sh
-    $ wrangler publish
+    $ wrangler deploy
     ```
 
 ## Project layout
@@ -58,7 +58,7 @@ The template project contains the following files and directories:
   compatibility_date = "yyyy-mm-dd"
   ```
 
-- Publish your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone:
+- Deploy your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone:
 
   ```toml
   route = "https://example.com/*"

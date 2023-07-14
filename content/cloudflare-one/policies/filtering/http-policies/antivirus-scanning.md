@@ -10,7 +10,7 @@ Cloudflare Gateway protects users as they navigate the Internet. When users down
 
 To prevent this, Cloudflare Gateway allows admins to enable **Anti-Virus (AV) scanning** of files that are uploaded or downloaded by users as the file passes through Gateway.
 
-AV scanning of files requires organizations to enable Proxy mode under **Settings** > **Network** > **Layer 7 Firewall**.
+AV scanning of files requires organizations to go to *Settings** > **Network** > **Firewall** and enable **AV inspection**.
 
 ## Enable AV scanning
 
@@ -22,7 +22,7 @@ To enable AV scanning:
 
 When a file is blocked due to the presence of malware, it is logged as a Block decision:
 
-![Example of a blocked action in the Gateway Activity Logs tab.](/cloudflare-one/static/documentation/policies/blocked-decision.png)
+![Example of a blocked action in the Gateway Activity Logs tab.](/images/cloudflare-one/policies/blocked-decision.png)
 
 ## How Gateway determines if a file should be scanned
 

@@ -26,16 +26,17 @@ To apply a rule to every request in a phase at the **zone** level, set the rule 
 
 ## Example
 
-The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of a given zone (`<ZONE_ID>`) by adding a rule that executes the managed ruleset.
+The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone_id}`) by adding a rule that executes the managed ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",

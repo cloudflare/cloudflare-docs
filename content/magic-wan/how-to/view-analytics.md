@@ -1,10 +1,12 @@
 ---
-title: View Network Analytics
+title: View network analytics
 pcx_content_type: how-to
+meta:
+    title: How to view GRE and IPSec tunnel analytics
 ---
 
-# View Network Analytics
+{{<render file="_network-analytics.md" withParameters="Magic WAN">}}
 
-Cloudflare’s Network Analytics provides near real-time visibility into network and transport layer traffic patterns and DDoS attacks which can help troubleshoot IP traffic issues. You can also use Network Analytics to view information about the traffic that leaves Cloudflare's global network by reviewing ingress and egress tunnel traffic over a specific amount of time. 
+## Query analytics with GraphQL
 
-For more information, refer to [Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-bandwidth-analytics/).
+You can also query analytics data using GraphQL. Refer to [Querying Magic Transit Tunnel Bandwidth Analytics with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-bandwidth-analytics/) and [Querying Magic Transit tunnel health check results with GraphQL](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/) for more information.

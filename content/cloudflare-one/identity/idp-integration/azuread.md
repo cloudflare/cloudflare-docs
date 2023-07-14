@@ -30,7 +30,7 @@ To retrieve those values:
 
 5. Name your application.
 
-6. Select **Register an application to integration with Azure AD (App you're developing)** and then select **Create**.
+6. Select **Register an application to integrate with Azure AD (App you're developing)** and then select **Create**.
 
 7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 
@@ -40,7 +40,7 @@ To retrieve those values:
 
    You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **General**.
 
-   ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
+   ![Registering an application in Azure](/images/cloudflare-one/identity/azure/name-app.png)
 
 8. Select **Register**.
 
@@ -48,7 +48,7 @@ To retrieve those values:
 
 10. Select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**.
 
-    ![Viewing the Application ID and Directory ID in Azure](/cloudflare-one/static/documentation/identity/azure/azure-values.png)
+    ![Viewing the Application ID and Directory ID in Azure](/images/cloudflare-one/identity/azure/azure-values.png)
 
 11. Navigate to **Certificates & secrets** and select **New client secret**.
 
@@ -56,7 +56,7 @@ To retrieve those values:
 
 13. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation.
 
-    ![Location of client secret in Azure](/cloudflare-one/static/documentation/identity/azure/client-cert-value.png)
+    ![Location of client secret in Azure](/images/cloudflare-one/identity/azure/client-cert-value.png)
 
 ### 2. Configure API permissions in Azure
 
@@ -84,7 +84,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. Select **Grant admin consent**.
 
-   ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
+   ![Configured permissions list in Azure](/images/cloudflare-one/identity/azure/configured-perms.png)
 
 ### 3. Add Azure AD as an identity provider
 
@@ -152,7 +152,7 @@ To check which users and groups were synchronized, select **View provisioning lo
 
 When [SCIM synchronization is enabled](#synchronize-users-and-groups), the Azure group names will appear in the **Values** dropdown when you choose the _Azure Groups_ selector.
 
-![Azure group names displayed in the Access policy builder](/cloudflare-one/static/documentation/identity/azure/azure-scim-groups.png)
+![Azure group names displayed in the Access policy builder](/images/cloudflare-one/identity/azure/azure-scim-groups.png)
 
 ### Manual entry
 
@@ -162,13 +162,13 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 2. On your Azure dashboard, note the `Object Id` for the Azure group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
-   ![Viewing the Azure group ID on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
+   ![Viewing the Azure group ID on the Azure dashboard](/images/cloudflare-one/identity/azure/object-id.png)
 
 3. If building an Access policy, choose the _Azure Groups_ selector. If building a Gateway policy, choose the _User Group IDs_ selector.
 
 4. In the **Value** field, enter the `Object Id` for the Azure group.
 
-   ![Entering an Azure group ID in Zero Trust](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+   ![Entering an Azure group ID in Zero Trust](/images/cloudflare-one/identity/azure/configure-group-n.png)
 
 ### Nested groups
 

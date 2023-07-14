@@ -16,18 +16,18 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 
 - [`config`](#config)
 - [`edge-ip-version`](#edge-ip-version)
+- [`edge-bind-address`](#edge-bind-address)
 - [`autoupdate-freq`](#autoupdate-freq)
 - [`no-autoupdate`](#no-autoupdate)
 - [`origincert`](#origincert)
 - [`metrics`](#metrics)
-- [`metrics-update-freq`](#metrics-update-freq)
 - [`tag`](#tag)
 - [`retries`](#retries)
 - [`pidfile`](#pidfile)
 - [`protocol`](#protocol)
 - [`logfile`](#logfile)
 - [`loglevel`](#loglevel)
-- [`transport-loglevel`](#transport-loglevel)
+- [`token`](#token)
 
 ## `config`
 
@@ -39,13 +39,25 @@ Specifies the path to a config file in YAML format.
 
 ## `edge-ip-version`
 
-| Syntax         | Default                     |
-| -------------- | --------------------------- |
-| `edge-ip-version value` | `auto` |
+| Syntax                  | Default | Environment Variable     |
+| ----------------------- | ------- | ------------------------ |
+| `edge-ip-version value` | `auto`  | `TUNNEL_EDGE_IP_VERSION` |
 
 Specifies the IP address version (IPv4 or IPv6) used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `4`, and `6`.
 
 The value `auto` relies on the host operating system to determine which IP version to select. The first IP version returned from the DNS resolution of the region lookup will be used as the primary set. In dual IPv6 and IPv4 network setups, `cloudflared` will separate the IP versions into two address sets that will be used to fallback in connectivity failure scenarios.
+
+## `edge-bind-address`
+
+| Syntax                    | Environment Variable       |
+| ------------------------- | -------------------------- |
+| `edge-bind-address value` | `TUNNEL_EDGE_BIND_ADDRESS` |
+
+Specifies the outgoing IP address used to establish a connection between `cloudflared` and the Cloudflare global network.
+
+By default, `cloudflared` lets the operating system decide which IP address to use. This option is useful if you have multiple network interfaces available and want to prefer a specific interface.
+
+The IP version of `edge-bind-address` will override [`edge-ip-version`](#edge-ip-version) (if provided). For example, if you enter an IPv6 source address, `cloudflared` will always connect to an IPv6 destination.
 
 ## `autoupdate-freq`
 
@@ -57,9 +69,9 @@ Configures autoupdate frequency. See also: [`no-autoupdate`](#no-autoupdate).
 
 ## `no-autoupdate`
 
-| Syntax          | Default |
-| --------------- | ------- |
-| `no-autoupdate` | `false` |
+| Syntax          | Default | Environment Variable |
+| --------------- | ------- | -------------------- |
+| `no-autoupdate` | `false` | `NO_AUTOUPDATE`      |
 
 Disables periodic check for updates, restarting the server with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
 
@@ -73,9 +85,9 @@ Specifies the Tunnel certificate for one of your zones, authorizing the client t
 
 ## `grace-period`
 
-| Syntax         | Default |
-| -------------- | ------- |
-| `grace-period` | `30s`   |
+| Syntax         | Default | Environment Variable  |
+| -------------- | ------- | --------------------- |
+| `grace-period` | `30s`   | `TUNNEL_GRACE_PERIOD` |
 
 When `cloudflared` receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shut down. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
 
@@ -86,14 +98,6 @@ When `cloudflared` receives SIGINT/SIGTERM it will stop accepting new requests, 
 | `metrics value` | `localhost:` | `TUNNEL_METRICS`     |
 
 Specifies address to query for usage metrics.
-
-## `metrics-update-freq`
-
-| Syntax                         | Default | Environment Variable         |
-| ------------------------------ | ------- | ---------------------------- |
-| `metrics-update-freq duration` | `5s`    | `TUNNEL_METRICS_UPDATE_FREQ` |
-
-Specifies frequency to update tunnel metrics.
 
 ## `tag`
 
@@ -149,11 +153,10 @@ Saves application log to this file. Mainly useful for reporting issues. For more
 
 Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `debug`, `info`, `warn`, `error`, `fatal`.
 
-## `transport-loglevel`
+## `token`
 
-| Syntax               | Default | Environment Variable    |
-| -------------------- | ------- | ----------------------- |
-| `transport-loglevel` | `warn`  | `TUNNEL_PROTO_LOGLEVEL` |
+| Syntax        | Environment Variable |
+| ------------- | -------------------- |
+| `token value` | `TUNNEL_TOKEN`       |
 
-Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare global network. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
-Any value below `warn` produces substantial output and should only be used to debug low-level performance issues and protocol quirks.
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).

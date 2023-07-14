@@ -139,12 +139,12 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Cached                                        | Always       | Programatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
 | TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/workers/learning/using-durable-objects/#alarms-in-durable-objects) |
-| Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 150 requests/second per DO<sup>3</sup> |
+| Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 500 - 1500 requests/second per Durable Object<sup>3</sup> |
 
 {{</table-wrap>}}
 
-<sup>1</sup>Free accounts are limited to 1GiB.
-<sup>2</sup>A Durable Object namespace is a logical container for as many Durable Objects as you need and is backed by a class implementing the logic all those Durable Objects will share.
-<sup>3</sup>Performance may depend on the specific data access patterns of your application and may be lower or higher depending on your specific application.
+<sup>1</sup> Free accounts are limited to 1GiB.
+<sup>2</sup> A Durable Object namespace is a logical container for as many Durable Objects as you need and is backed by a class implementing the logic all those Durable Objects will share.
+<sup>3</sup> The overall throughput a single Durable Object can sustain strongly correlates to the compute and storage operations a Durable Object performs. A `get()` and/or `put()` workload may allow up to 2,000 req/sec, whereas writing multiple values and serializing a large JSON response may only support 800 - 1,000 req/sec. Offloading compute operations that do not rely on state within your Durable Object to the calling Worker can improve per-object throughput in many cases.
 
 You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.

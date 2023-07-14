@@ -50,7 +50,7 @@
       {
         "type": "module",
         "title": "Review prerequisites",
-        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/download-warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/hosting-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
+        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/download-warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/hosting-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-apps/install-and-setup/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
       },
       {
         "type": "module",
@@ -64,7 +64,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+            "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
@@ -168,7 +168,7 @@
             "additional_description": "These policies allow Cloudflare to proxy requests to internal or private infrastructure without a public DNS record."
           },
           {
-            "url_path": "/cloudflare-one/analytics/logs/gateway-logs/",
+            "url_path": "/cloudflare-one/insights/logs/gateway-logs/",
             "link_title": "Validate that Cloudflare is receiving your WARP traffic",
             "additional_description": "Review your Gateway logs to make sure traffic is reaching the edge."
           }

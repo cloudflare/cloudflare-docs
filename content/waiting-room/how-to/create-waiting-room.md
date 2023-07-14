@@ -47,7 +47,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 Configure your waiting room with the following required parameters in the `data` field:
 
 *  `name` - A unique name for the waiting room. Use only alphanumeric characters, hyphens, and underscores.
-*  `host` - Host name for which you want to configure a waiting room.
+*  `host` - Hostname for which you want to configure a waiting room.
 *  `total_active_users` - The total number of active user sessions on the route at a point in time.
 *  `new_users_per_minute` - The number of new users gaining entry into the route every minute.
 
@@ -58,6 +58,9 @@ The following parameters are optional:
 *  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
 *  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](/api/operations/waiting-room-list-waiting-rooms).
 *  `json_response_enabled` - If you are using this waiting room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and set `json_response_enabled` to `true`.
+* `cookie_suffix`: Customize the suffix of your waiting room cookie. Suffix will be added to `_cfwaitingroom`. This field is required when utilizing `additional_routes`.
+* `additional_routes`: Add additional hostnames and/or paths to your waiting room coverage.
+
 
 ## Example
 

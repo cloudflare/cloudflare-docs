@@ -39,7 +39,7 @@ If you already have a domain, the easiest way to get set up with Cloudflare is t
 
 {{<Aside type="note">}}
 
-`.uk` domains work too, just with a [slightly different setup](/registrar/get-started/transfer-uk-domain/).
+`.uk` domains work too, just with a [slightly different setup](/registrar/top-level-domains/uk-domains/).
 
 {{</Aside>}}
 
