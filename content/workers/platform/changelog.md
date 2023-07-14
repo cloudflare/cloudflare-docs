@@ -8,6 +8,9 @@ rss: file
 
 # Changelog
 
+## 2023-07-14
+- The Node.js util.MIMEType API is now available for workers using the `nodejs_compat` compatibility flag
+
 ## 2023-07-07
 
 - An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
