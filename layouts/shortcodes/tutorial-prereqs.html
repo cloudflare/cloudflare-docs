@@ -1,11 +1,10 @@
 {{- $headingLevel := (default 2 (.Get "headingLevel")) | string -}}
-{{- $title := (default "" (.Get "title")) -}}
+{{- $title := (default "Before your begin" (.Get "title")) -}}
 {{- $optional := (default false (.Get "optional")) -}}
 {{- $ID := $title | urlize -}}
 
-<div class="tutorialStep" data-optional="{{$optional}}">
-
-<h{{$headingLevel}} id="{{ $ID }}" class="tutorialStepHeader"><span class="DocsMarkdown--header-anchor-positioner">
+<div class="tutorialPreReqs">
+  <h{{$headingLevel}} id="{{ $ID }}" class="tutorialPreReqHeader"><span class="DocsMarkdown--header-anchor-positioner">
     <a
     class="DocsMarkdown--header-anchor Link Link-without-underline"
     href="#{{ $ID }}"
@@ -13,8 +12,5 @@
 </span>
 <span>{{ $title | markdownify }}</span>
   </h{{ $headingLevel }}>
-
-<div class="tutorialStepContents">
-    {{- .Inner | .Page.RenderString -}}
-</div>
+  {{- .Inner | $.Page.RenderString -}}
 </div>

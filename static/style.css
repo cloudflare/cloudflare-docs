@@ -5580,6 +5580,16 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
 }
 
+.tutorialPreReqs {
+  padding-left: 2em;
+  border: 2px solid gray;
+  border-radius: 15px;
+}
+
+.tutorialPreReqHeader::before {
+  height: 0 !important; 
+}
+
 .tutorialStep {
   padding-left: 2em;
   border-left: .5px solid gray;
@@ -5590,17 +5600,11 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   margin-top: 5em;
 }
 
-.tutorialStep h2,
-.tutorialStep h3,
-.tutorialStep h4,
-.tutorialStep h5 {
+.tutorialStepHeader {
   margin-top: 0;
 }
 
-.tutorialStep h2:before,
-.tutorialStep h3::before,
-.tutorialStep h4::before,
-.tutorialStep h5::before {
+.tutorialStepHeader::before {
   height: 0 !important;
 }
 
@@ -5643,5 +5647,9 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     padding-left: 1em;
     /* had to increase this margin, but didn't exactly understand why */
     margin-top: 7em;
+  }
+
+  .tutorialPreReqHeader {
+    margin-top: 4em !important; 
   }
 }
