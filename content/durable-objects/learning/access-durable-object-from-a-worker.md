@@ -6,7 +6,7 @@ weight: 16
 
 # Access a Durable Object from a Worker
 
-To access a Durable Object from a Worker, you must first configure the Worker with a binding for a Durable Object namespace. The namespace is, in turn, configured to use a particular class and controls access to instances of that class.
+To access a Durable Object from a Worker, you must first create a Durable Object namespace binding in your Worker. The namespace is, in turn, configured to use a particular class and controls access to instances of that class.
 
 Namespace bindings allow you to generate Object IDs and connect to Objects.
 
