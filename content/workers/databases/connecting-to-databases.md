@@ -41,7 +41,7 @@ There are three ways to connect to a database from a Worker:
 
 1. [Database Integrations](/workers/databases/native-integrations/): Simplifies authentication by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
 2. [TCP Socket API](/workers/runtime-apis/tcp-sockets): A direct TCP connection to a database. TCP is the de-facto standard protocol that many databases, such as [PostgreSQL](/workers/databases/connect-to-postgres/) and MySQL, use for client connectivity.
-3. HTTP- or WebSocket-based [serverless drivers](/workers/learning/integrations/databases/#overview): Many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that do not support TCP, or as their preferred connection protocol.
+3. HTTP- or WebSocket-based serverless drivers: Many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that do not support TCP, or as their preferred connection protocol.
 
 ## Authentication
 
