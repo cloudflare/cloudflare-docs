@@ -926,7 +926,6 @@
 /workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
-/workers/runtime-apis/headers/ /workers/runtime-apis/headers/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
@@ -935,7 +934,6 @@
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/environments/ /workers/wrangler/environments/ 301
-/workers/platform/headers/ /workers/runtime-apis/headers/ 301
 /workers/platform/nodejs-compatibility/ /workers/runtime-apis/nodejs/
 /workers/learning/using-websockets/ /workers/runtime-apis/websockets/use-websockets/ 301
 /workers/learning/using-streams/ /workers/runtime-apis/use-streams/ 301
