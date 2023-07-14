@@ -153,7 +153,7 @@ Durable Objects must be written in ES Modules syntax. ES Modules differ from reg
 ```js
 // In ES Modules format, you use `export default` to export your Worker's
 // main event handlers, such as the `fetch` handler for receiving HTTP
-// requests. In Service workers, the fetch handler was registered using
+// requests. In Service Worker format, the fetch handler was registered using
 // `addEventHandler("fetch", event => { ... })`; this is just new syntax for
 // essentially the same thing.
 export default {
