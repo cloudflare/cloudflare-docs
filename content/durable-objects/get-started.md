@@ -14,7 +14,6 @@ This guide will instruct you through:
 - Instantiating and communicationg with a Durable Object from another Worker via the Fetch API.
 - Uploading the Durable Object and Worker to Cloudflare's servers using Wrangler. 
 
-
 ## Prerequisites
 
 Enable Durable Objects for your account by purchasing the Workers Paid plan:
@@ -65,6 +64,9 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 Configure Durable Object [bindings](/workers/platform/bindings/) in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
 ```toml
+---
+filename: wrangler.toml
+---
 [durable_objects]
 bindings = [
   { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
@@ -84,6 +86,9 @@ If you are using Wrangler [environments](/workers/wrangler/environments/), you m
 Durable Object bindings are not inherited. For example, you can define an environment named `staging` as below:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [env.staging]
 durable_objects.bindings = [
   {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample"}
@@ -93,6 +98,9 @@ durable_objects.bindings = [
 Because Wrangler appends the [environment name](/workers/wrangler/environments/) to the top-level name when publishing, for a Worker named `worker-name` the above example is equivalent to:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [env.staging]
 durable_objects.bindings = [
   {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name-staging"}
@@ -104,6 +112,9 @@ durable_objects.bindings = [
 If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [env.another]
 durable_objects.bindings = [
   {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
@@ -127,6 +138,9 @@ All migrations are applied at deployment. Each migration can only be applied onc
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["DurableObjectExample"] # Array of new classes
@@ -151,48 +165,29 @@ Durable Objects must be written in ES Modules syntax. ES Modules differ from reg
 
 
 ```js
-// In ES Modules format, you use `export default` to export your Worker's
-// main event handlers, such as the `fetch` handler for receiving HTTP
-// requests. In Service Worker format, the fetch handler was registered using
-// `addEventHandler("fetch", event => { ... })`; this is just new syntax for
-// essentially the same thing.
 export default {
-  // In ES modules format, bindings are delivered as a property of the
-  // environment object passed as the second parameter when an event handler or
-  // class constructor is invoked. This is new compared to Service Module workers,
-  // in which bindings show up as global variables.
+
   async fetch(request, env) {
-    // Derive an object ID from the URL path. `EXAMPLE_CLASS` is the Durable
-    // Object binding that you will read how to configure in the next section.
-    // `EXAMPLE_CLASS.idFromName()` always returns the same ID when given the
-    // same string as input (and called on the same class), but never the same
-    // ID for two different strings (or for different classes). So, in this
-    // case, you are creating a new object for each unique path.
+
     let id = env.EXAMPLE_CLASS.idFromName(new URL(request.url).pathname);
 
-    // Construct the stub for the Durable Object using the ID. A stub is a
-    // client object used to send messages to the Durable Object.
     let stub = env.EXAMPLE_CLASS.get(id);
 
-    // Forward the request to the Durable Object. Note that `stub.fetch()` has
-    // the same signature as the global `fetch()` function, except that the
-    // request is always sent to the object, regardless of the request's URL.
-    //
-    // The first time you send a request to a new object, the object will be
-    // created for us. If you do not store durable state in the object, it will
-    // automatically be deleted later (and recreated if you request it again).
-    // If you do store durable state, then the object may be evicted from memory
-    // but its durable state will be kept around permanently.
     let response = await stub.fetch(request);
 
-    // You received an HTTP response back. You could process it in the usual
-    // ways, but in this case, you will just return it to the client.
     return response;
   },
 };
 ```
 
-In the example above, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
+In the code above, you:
+
+1. Export your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
+2. Pass `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](http://localhost:5173/durable-objects/learning/access-durable-object-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
+3. Derive an object ID from the URL path. `EXAMPLE_CLASS.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path. 
+4. Construct the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
+5. Forward the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL.  The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept  permanently.
+6. Receive an HTTP response back to the client with `return response`.
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/learning/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
 

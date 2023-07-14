@@ -51,6 +51,9 @@ All migrations are applied at deployment. Each migration can only be applied onc
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["DurableObjectExample"] # Array of new classes
@@ -59,6 +62,9 @@ new_classes = ["DurableObjectExample"] # Array of new classes
 Each migration in the list can have multiple directives, and multiple migrations can be specified as your project grows in complexity. For example, you may want to rename the `DurableObjectExample` class to `UpdatedName` and delete an outdated `DeprecatedClass` entirely.
 
 ```toml
+---
+filename: wrangler.toml
+---
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["DurableObjectExample"] # Array of new classes

@@ -9,7 +9,7 @@ Durable Objects are a coordinated state tool for [Cloudflare Workers](/workers/)
 
 If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to [create a Durable Object](/durable-objects/learning/create-durable-object-stubs/), so clients send messages to a single-point-of-coordination. 
 
-As part of Durable Objects, Workers can act as WebSocket endpoints – including as a client or as a server. Previously, Workers could proxy WebSocket connections on to a back-end server, but could not speak the protocol directly.
+As part of Durable Objects, Workers can act as WebSocket endpoints – including as a client or as a server. 
 
 WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. 
 

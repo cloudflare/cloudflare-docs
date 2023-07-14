@@ -81,7 +81,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
     - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
 {{<Aside type="note" header="Automatic write coalescing">}}
-If you invoke `put()` (or `delete()`) multiple times without performing any `await` in the meantime, the operations will automatically be combined and submitted atomically. In case of a machine failure, either all of the writes will have been stored to disk or none of them will have.
+If you invoke `put()` (or `delete()`) multiple times without performing any `await` in the meantime, the operations will automatically be combined and submitted atomically. In case of a machine failure, either all of the writes will have been stored to disk or none of the writes will have been stored to disk.
 {{</Aside>}}
 
 {{<Aside type="note" header="Write buffer behavior">}}
@@ -141,7 +141,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 - {{<code>}}reverse{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
   - If true, return results in descending order instead of the default ascending order.
-  - Note that enabling this does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
+  - Enabling `reverse` does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
 
 - {{<code>}}limit{{</code>}}{{<param-type>}}number{{</param-type>}}
 
@@ -159,9 +159,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
-      <aside class="DocsMarkdown--aside" role="note" data-type="note">
-        {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
-      </aside>
+  - Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await` a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.
 
 - {{<code>}}txn{{</code>}}
 
@@ -206,4 +204,5 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 ### Related resources
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+- [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/).
 

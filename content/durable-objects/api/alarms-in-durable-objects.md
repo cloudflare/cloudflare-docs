@@ -6,7 +6,9 @@ weight: 16
 
 # Alarms 
 
-Alarms allow Durable Objects to wake themselves up by executing the `alarm()` handler at some point in the future. 
+Durable Objects alarms allow you to schedule the Object to be waken up at a time in the future.
+
+When the alarm's schedlued time comes, the `alarm()` handler will be called.
 
 Alarms are modified using the [Transactional Storage API](/durable-objects/api/transactional-storage-api/). Alarm operations follow the same rules as other storage operations. Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`. 
 
@@ -20,7 +22,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 {{</Aside>}}
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the Object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
 
 ## `alarm()` handler method
 
@@ -28,7 +30,7 @@ The system calls the `alarm()` handler method when a scheduled alarm time is rea
 
 The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two (2) second delays for up to six (6) retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed. 
 
-The method takes no parameters, does not return a result, and can be `async`.
+The `alarm()` handler takes no parameters, does not return a result, and can be `async`.
 
 ## Use the `alarm()` handler method
 
