@@ -914,6 +914,8 @@
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/environments/ /workers/wrangler/environments/ 301
+/workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
+
 
 
 # zaraz
