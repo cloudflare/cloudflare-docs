@@ -292,7 +292,7 @@ SSL public and private keys are essentially long strings of characters used for 
 
 ## roles
 
-Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](https://support.cloudflare.com/hc/articles/205065067#12345682).
+Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/account-and-billing/members/roles/).
 
 ## root certificate
 

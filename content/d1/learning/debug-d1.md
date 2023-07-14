@@ -6,7 +6,7 @@ pcx_content_type: concept
 
 # Debug
 
-D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/learning/debugging-workers/).
+D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/observability/debug-workers/).
 
 ## Handle errors
 
@@ -33,7 +33,7 @@ try {
 
 ## View logs
 
-View a stream of live logs from your Worker by using [`wrangler tail`](/workers/learning/logging-workers/#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/learning/logging-workers/#view-logs-from-the-dashboard).
+View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/log-from-workers/#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/log-from-workers/#view-logs-from-the-dashboard).
 
 ## Report issues
 
@@ -56,6 +56,6 @@ You should include as much of the following in any bug report:
 
 ## Related resources
 
-* Learn [how to debug Workers](/workers/learning/debugging-workers/).
-* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1.
+* Learn [how to debug Workers](/workers/observability/debug-workers/).
+* Understand how to [access logs](/workers/observability/log-from-workers/) generated from your Worker and D1.
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.

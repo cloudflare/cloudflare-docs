@@ -61,7 +61,7 @@ To enable Smart Placement via Wrangler:
 
 3. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
 
-4. View your Worker's [request duration analytics](/workers/learning/metrics-and-analytics).
+4. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/).
 
 
 ### Enable Smart Placement via the dashboard
@@ -74,7 +74,7 @@ To enable Smart Placement via the dashboard:
 4. Select **Settings** > **General**.
 5. Under **Placement**, choose **Smart**.
 6. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect.
-7. View your Worker's [request duration analytics](/workers/learning/metrics-and-analytics)
+7. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/)
 
 ## Observability
 
