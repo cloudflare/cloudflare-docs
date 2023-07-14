@@ -14,7 +14,6 @@ To configure a QRadar/Cloudflare integration you have the option to use one of t
 ## HTTP Receiver Protocol
 To send Cloudflare logs to QRadar you need to create a [Logpush job to HTTP endpoints](/logs/get-started/enable-destinations/http/) via API. Below you can find two curl examples of how to send Cloudflare Firewalls events and Cloudflare HTTP events to QRadar.
 
-
 ### Cloudflare Firewall events
 
 ```bash
