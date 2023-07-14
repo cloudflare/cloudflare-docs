@@ -33,6 +33,43 @@ Certain namespaces part of early closed betas and larger ENT customers are curre
 but think you may not be enabled, please contact support.
 {{</Aside>}}
 
+### Avoid hand-rolling Cache in front of Workers KV
+
+Workers KV is optimized to transparently refresh values in the background on your behalf based on actual access patterns to keep the
+values read lively when there's a write. If you put a cache in front of KV, then KV doesn't see any accesses for keys; every time you do
+end up hitting KV will be a cold request. At first glance this doesn't sound too bad and price conscious customers look to this option.
+From a performance perspective though, it will mean that your application will regularly experience long pauses as bunch of requests go
+to access hot keys that aren't in the cache anymore. This can happen either because you've set up your cache so that by the time KV sees
+a request it's outside the cacheTtl window or KV's cache has decided to evict your key because it wasn't getting any traffic.
+
+[BetterKV](https://flareutils.pages.dev/betterkv/) is a popular choice for many of our customers. Other customers choose to handroll. We
+haven't seen any customers who fix the pauses / stampeding herd problem and this is an attempt to provide a suggestion on how to solve that.
+
+* Don't put cache in front of KV.
+  * Pros: the system behaves optimally from a performance perspective.
+  * Cons: Today you get charged for cache reads.
+* Direct some subset of requests satisfied by the cache to KV anyway.
+  * Pros: You will solve the stampeding herd problem for your hottest keys at minimal cost.
+  * Cons: Stampeding herd problem will still be present for cooler keys.
+* Make sure you carefully tune your cache duration and the cacheTTL you use out of KV so that your cache duration is sufficiently less than
+the cacheTTL. For example, cache for 30s, probabilistically
+  * Pros: all keys will mostly avoid the stampeding herd problem
+  * Cons: More complicated to implement correctly.
+
+Recommendation: avoid putting a cache in front of KV & talk to our support staff about pricing. Putting a cache in front of KV also means
+that you can't partake in [noticing writes more quickly](#noticing-updated-values-within-seconds). If you want to go down this road anyway,
+ideally align the cacheTTL and your custom cache such that you refetch from KV before it gets expired from KV's cache. A quick and dirty
+solution may be to sample instead as getting all that logic to work correctly can be tricky. As always, make sure you have good observability
+that can highlight this problem for you so you can see it happening and know what to do about it. The [Workers Analytics Engine](/analytics/analytics-engine)
+is a convenient way to instrument your code to see when you're making KV requests and then watching out for sudden transient spikes for
+requests into KV.
+
+{{<Aside type="note" header="Timing considerations">}}
+`Date` comparisons can be used to get an [approximation](https://blog.cloudflare.com/mitigating-spectre-and-other-security-threats-the-cloudflare-workers-security-model/#step1disallowtimersandmultithreading)
+of how long an I/O operation took, but it's very coarse and likely too inaccurate for measuring KV performance.
+{{</Aside>}}
+
+
 ### Reducing cardinality by coalescing keys
 
 If you have a set of related key-value pairs that have a mixed usage pattern (some hot keys and some cold keys), consider
@@ -68,20 +105,20 @@ If you don't want to merge into a single KV entry as described above and your as
 then you can store the values within the metadata instead of the body. If you then name the keys with a shared unique prefix, your list operation will contain
 the value letting you bulk read multiple keys at once through a single, cacheable list operation.
 
-{{ <Aside type="note" header="List performance note"> }}
+{{<Aside type="note" header="List performance note">}}
 List operations are not "write aware". This means that while they are subject to tiering, they only stay cached for up to one minute past when it was last read, even
 at upper tiers. By comparison, get operations are cached at the upper tiers for a service managed duration that is always longer than your cacheTtl. Additionally, the cacheTtl
 lets you extend the duration of a single key lookup at the data center closest to the request.
-{{ </Aside> }}
+{{</Aside>}}
 
-## Read the values as part of the list
+## Batch reading multiple keys
 
 If you have small values that fit within the [metadata limit](/workers/platform/limits/#kv-limits), you can store the value within the metadata instead.
 This makes the value accessible during the list, avoiding the need to do a second I/O round-trip while iterating in case a lookup ends up missing the local cache.
 
-{{ <Aside type="note" header="List performance note"> }}
+{{<Aside type="note" header="List performance note">}}
 See above about the implications of cache duration and list operations.
-{{ </Aside> }}
+{{</Aside>}}
 
 ## Avoid using the GET REST API at the Edge
 
@@ -120,13 +157,16 @@ Benchmarking to predict what your Workers KV performance will look like in produ
 to put production load onto the system and then measure real-world performance rather than trying to do a synthetic test.
 Examples of issues that can trip up even internal engineers who know all the technical details:
 
-* A low traffic Worker is more subject to cold starts.
+* You don't have [permission](https://blog.cloudflare.com/mitigating-spectre-and-other-security-threats-the-cloudflare-workers-security-model/#step1disallowtimersandmultithreading)
+within the Runtime to get accurate timing measurements. That means you have to know to time externally to the system. At the same time,
+external timings are subject to sources of error that have nothing to do with Workers KV performance, particularly as described below.
+* A low traffic Worker is more subject to cold starts even though in practice cold starts don't exist once production traffic is flowing.
 * Within something we call "MCP"s, we have multiple virtual data centers within a single PoP. Which virtual data center you hit
-is random and currently such data centers have disjoint caches and require even more traffic to keep the isolate for your Worker
-warm.
+is random and today such data centers have disjoint caches and require even more traffic to keep the cache warm regardless of which
+virtual data center you randomly get routed to.
 * [wrk](https://github.com/wg/wrk) can typically generate substantial enough load from a single machine (thousands of requests
 per second) which should probably be enough to representative and overcome such issues, but it requires careful tuning of
-parameters to achieve max throughput.
+parameters to achieve max throughput and you have little to no visibility into Cloudflare's internal network to know if you succeeded.
 * Synthetic tests are typically hand-written and often fail to reproduce real-world access patterns for keys (if you have multiple keys).
 If you have a recording you can play through of the access patterns, that might work well. A representative recording is difficult
 to capture in practice because of the global nature of Cloudflare Workers.
