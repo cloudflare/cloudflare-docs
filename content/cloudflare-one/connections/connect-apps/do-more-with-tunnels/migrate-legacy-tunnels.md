@@ -10,7 +10,7 @@ meta:
 
 {{<Aside type="note" header="Before you start">}}
 
-- [Download](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) the latest version of `cloudflared`
+- [Download](/cloudflare-one/connections/connect-apps/downloads/) the latest version of `cloudflared`
 - Obtain a new origin certificate by running `cloudflared login`. While named tunnels are scoped to an account, for legacy reasons the login page requires selecting a zone.
 
 {{</Aside>}}

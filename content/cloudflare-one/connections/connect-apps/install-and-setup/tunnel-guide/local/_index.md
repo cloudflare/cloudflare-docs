@@ -22,7 +22,7 @@ Before you start, make sure you:
 <summary>Windows</summary>
 <div>
 
-First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) page to find the right package for your OS.
+First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-apps/downloads/) page to find the right package for your OS.
 
 Next, rename the executable to `cloudflared.exe`, and then open PowerShell. Change directory to your Downloads folder and run `.\cloudflared.exe --version`. It should output the version of `cloudflared`. Note that `cloudflared.exe` could be `cloudflared-windows-amd64.exe` or `cloudflared-windows-386.exe` if you haven't renamed it.
 
@@ -45,7 +45,7 @@ The first step to creating a tunnel is to download and install `cloudflared` on 
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
-Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) directly.
+Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-one/connections/connect-apps/downloads/) directly.
 
 </div>
 </details>
@@ -54,7 +54,7 @@ Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-on
 <summary>Linux</summary>
 <div>
 
-First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) page to find the right package for your OS.
+First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-apps/downloads/) page to find the right package for your OS.
 
 Next, install `cloudflared`.
 

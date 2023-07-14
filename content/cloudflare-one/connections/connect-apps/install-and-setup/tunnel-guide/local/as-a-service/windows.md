@@ -21,7 +21,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 ## Run `cloudflared` as a service
 
-1. [Download](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) the latest `cloudflared` version.
+1. [Download](/cloudflare-one/connections/connect-apps/downloads/) the latest `cloudflared` version.
 
 2. Create a new directory:
 

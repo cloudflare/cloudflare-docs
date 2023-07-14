@@ -25,7 +25,7 @@ This architecture allows `cloudflared` instances to proxy Internet traffic into 
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) the lightweight Cloudflare Tunnel daemon, `cloudflared`. Reference our installation guide for instructions on how to install `cloudflared` on your operating system.
+Start by [downloading and installing](/cloudflare-one/connections/connect-apps/downloads/) the lightweight Cloudflare Tunnel daemon, `cloudflared`. Reference our installation guide for instructions on how to install `cloudflared` on your operating system.
 
 ## Login to Cloudflare
 

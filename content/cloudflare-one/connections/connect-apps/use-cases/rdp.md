@@ -102,7 +102,7 @@ You now have secure, remote access to the RDP server.
 
 ### 2. Connect as a user
 
-1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) on the client machine.
+1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/downloads/) on the client machine.
 2. Run this command to open an RDP listening port:
 
     ```sh

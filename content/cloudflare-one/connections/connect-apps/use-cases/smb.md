@@ -76,7 +76,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
 ### 2. Connect as a user
 
-1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) on the client machine.
+1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/downloads/) on the client machine.
 2. Run the following command to open an SMB listening port. You can specify any available port on the client machine.
 
    ```sh

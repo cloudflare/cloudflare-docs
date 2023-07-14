@@ -11,7 +11,7 @@ While Cloudflare Pages provides unique [deploy preview URLs](/pages/platform/pre
 
 ## Installing Cloudflare Tunnel
 
-Cloudflare Tunnel can be installed on Windows, Linux, and macOS. To learn about installing Cloudflare Tunnel, refer to the [Install cloudflared](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) page in the Cloudflare for Teams documentation.
+Cloudflare Tunnel can be installed on Windows, Linux, and macOS. To learn about installing Cloudflare Tunnel, refer to the [Install cloudflared](/cloudflare-one/connections/connect-apps/downloads/) page in the Cloudflare for Teams documentation.
 
 Confirm that `cloudflared` is installed correctly by running `cloudflared --version` in your command line:
 

@@ -97,7 +97,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
 ## Configure Cloudflare Tunnel on your machine
 
-1. Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) to install `cloudflared`.
+1. Follow [these instructions](/cloudflare-one/connections/connect-apps/downloads/) to install `cloudflared`.
 
 2. Authenticate `cloudflared` with the command:
 

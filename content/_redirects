@@ -966,6 +966,10 @@
 /cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
 /argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/ 301
+/cloudflare-one/connections/connect-apps/do-more-with-tunnels/hosting-requirements/ /cloudflare-one/connections/connect-apps/downloads/system-requirements/ 301
+/cloudflare-one/connections/connect-apps/license/ /cloudflare-one/connections/connect-apps/downloads/license/ 301
+/cloudflare-one/connections/connect-apps/license/copyrights/ /cloudflare-one/connections/connect-apps/downloads/copyrights/ 301
+/cloudflare-one/connections/connect-apps/install-and-setup/installation/ /cloudflare-one/connections/connect-apps/downloads/ 301
 /cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/ 301

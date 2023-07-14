@@ -104,7 +104,7 @@ Users can connect from their device by [authenticating through `cloudflared`](#n
 
 #### Native Terminal
 
-1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) on the client machine.
+1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/downloads/) on the client machine.
 
 2. Make a one-time change to your SSH configuration file:
    ```sh
