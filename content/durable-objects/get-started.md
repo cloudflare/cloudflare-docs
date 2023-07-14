@@ -225,11 +225,6 @@ Refer to [Custom builds documentation](/workers/wrangler/custom-builds/) for mor
 
 ### Durable Object migrations through Wrangler CLI
 
-{{<Aside type="warning" header="Deprecation Notice">}}
-
-While CLI migrations initially served as a way to quickly migrate Durable Objects, this method is now deprecated and will be removed in a future release.
-
-{{</Aside>}}
 
 It is possible to define a migration purely through extra arguments to the `wrangler deploy` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
 
