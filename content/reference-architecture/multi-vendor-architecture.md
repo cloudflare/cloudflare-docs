@@ -79,7 +79,7 @@ Converting to CNAME setup ensures the hostname eventually resolves to Cloudflare
 
 If a customer's current DNS provider doesn’t support CNAME on the zone apex (sometimes called the "root domain" or "naked domain") like Cloudflare does with [CNAME Flattening](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/#:~:text=With%20Secondary%20DNS%20override%2C%20you,CNAME%20records%20can%20be%20proxied.), you must purchase Static IPs from Cloudflare and create an A record to those Static IPs in the provider DNS. In Cloudflare, you can then create an A record to point the zone apex to the origin.
 
-Many customers using Cloudflare services take advantage of the cross-product integration and innovations along with simplicity of a single UI for management and operational simplicity and use multiple Cloudflare services together like CDN and WAF. Although not recommended, it’s also possible to use security services like WAF with other CDN providers by setting up DNS to forward traffic through Cloudflare via CNAME and disabling Cloudflare caching via Cache Rules. \
+Many customers using Cloudflare services take advantage of the cross-product integration and innovations along with simplicity of a single UI for management and operational simplicity and use multiple Cloudflare services together like CDN and WAF. Although not recommended, it’s also possible to use security services like WAF with other CDN providers by setting up DNS to forward traffic through Cloudflare via CNAME and disabling Cloudflare caching via Cache Rules.
 
 ## Why multi-vendor?
 
@@ -157,7 +157,7 @@ Figure 7  below shows a view of Cloudflare Security Analytics which brings toget
 ![Figure 7: Cloudflare Security Analytics](/images/reference-architecture/multi-vendor-architecture-images/Figure_7.png)
 _Figure 7_
 
-In addition to analytics for each product and security analytics shown above, you can also view logs within the UI and export logs to Cloudflare or third party clouds or products for additional analysis.  \
+In addition to analytics for each product and security analytics shown above, you can also view logs within the UI and export logs to Cloudflare or third party clouds or products for additional analysis.
 
 In Figure 8 below a Logpush is being configured to automatically export logs to an external destination.
 
@@ -175,9 +175,9 @@ When selecting the vendors for a multi-vendor solution you should ensure you sel
 
 ### Multi-vendor active-active security and different provider for DNS
 
-The below diagram describes a typical multi-vendor setup in which both vendors are ‘active’ meaning they are both serving traffic for the same resource (www.example.com) and traffic is split between the two.
+The below diagram describes a typical multi-vendor setup in which both vendors are ‘active’ meaning they are both serving traffic for the same resource (`www.example.com`) and traffic is split between the two.
 
-On the routing front, this example shows the authoritative DNS living outside of the two providers and load balancing between them. This DNS provider could be self hosted or live on another third party provider. Traffic is directed to each provider by responding to queries for www.example.com with a provider specific CNAME record or static IP for apex domain traffic. To achieve this traffic split, the third party DNS provider does need to have some ability to load balance the traffic. Most major DNS providers will have some mechanism to perform DNS based load balancing with varying degrees of complexity and configurability. This could mean round robining between records in the simplest case, or varying the response based on client location, health check data and more.
+On the routing front, this example shows the authoritative DNS living outside of the two providers and load balancing between them. This DNS provider could be self hosted or live on another third party provider. Traffic is directed to each provider by responding to queries for `www.example.com` with a provider specific CNAME record or static IP for apex domain traffic. To achieve this traffic split, the third party DNS provider does need to have some ability to load balance the traffic. Most major DNS providers will have some mechanism to perform DNS based load balancing with varying degrees of complexity and configurability. This could mean round robining between records in the simplest case, or varying the response based on client location, health check data and more.
 
 ![Figure 9: Multi-vendor setup with Cloudflare and another vendor and different provider for DNS](/images/reference-architecture/multi-vendor-architecture-images/Figure_9.png)
 _Figure 9_
@@ -188,7 +188,7 @@ It’s important to note here that the third party services are looking at end-t
 
 Both providers’ configurations are kept in sync by the administrators, pushing out changes via Terraform which makes calls to each provider's API. Keep in mind that while Cloudflare does have full API support for every feature, this may not be the case for every provider.
 
-If only one external DNS provider is used, it does create a single point of failure if that DNS provider has an outage. A way to mitigate this risk is to implement a multi-vendor DNS solution; this is discussed in more detail in the ‘Multi-vendor DNS options’ section in this document.
+If only one external DNS provider is used, it does create a single point of failure if that DNS provider has an outage. A way to mitigate this risk is to implement a multi-vendor DNS solution; this is discussed in more detail in the [Multi-vendor DNS options](#multi-vendor-dns-options) section in this document.
 
 Another challenge of a parallel approach is keeping configurations in sync across providers to deliver a consistent end user experience. This means the administrators need to be familiar with the configuration management of both vendors and understand how feature parity can be achieved.
 
@@ -220,7 +220,7 @@ The configuration on the DNS side can vary; the different options are discussed 
 
 Some DNS providers like [Cloudflare](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) offer the capability where secondary DNS can overwrite the A and AAAA records. This allows the provider to rewrite the A/AAAA record to proxy traffic through a different vendor as desired. In this case the secondary DNS provider will provide a different response than the primary for the same hostname. This means that depending on what nameserver a client resolver queries, the request will be routed to the vendor’s respective network. This allows for flexibility and reduced complexity by relying on the client resolver for traffic steering and failover if the nameservers are slow or unreachable. This comes at the cost of direct control and predictability over what provider a client selects.
 
-Another variation is to have specific applications/hostnames hosted through specific providers. That could mean, in the above example, both the primary and secondary DNS servers have www.example.com mapped to a Cloudflare address, regardless of which provider resolves the initial DNS query.
+Another variation is to have specific applications/hostnames hosted through specific providers. That could mean, in the above example, both the primary and secondary DNS servers have `www.example.com` mapped to a Cloudflare address, regardless of which provider resolves the initial DNS query.
 
 ### Multi-vendor DNS setup options
 
@@ -232,7 +232,7 @@ This setup involves setting one provider as a primary and the second provider as
 
 In this setup both DNS providers are authoritative but only one is primary and the source of truth and where DNS configuration changes/updates are made. The configuration changes/updates on primary are synced to the secondary DNS provider via zone transfers managed by the provider. DNS of both providers answer DNS queries.
 
-The advantage and main use case with this deployment model is that it uses a standard for synching DNS across multiple providers and was created for just this reason, and the DNS provider is responsible for the zone transfers. This option provides simplicity in maintaining DNS synchronization between providers.
+The advantage and main use case with this deployment model is that it uses a standard for syncing DNS across multiple providers and was created for just this reason, and the DNS provider is responsible for the zone transfers. This option provides simplicity in maintaining DNS synchronization between providers.
 
 Sometimes customers may decide to use another option due to the following:
 * The requirement of updating DNS records when the record management and zone transfer pipeline is down.
