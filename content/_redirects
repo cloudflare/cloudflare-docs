@@ -946,7 +946,7 @@
 /workers/platform/logpush/ /workers/observability/logpush/ 301
 /workers/platform/tail-workers/ /workers/observability/tail-workers/ 301
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
-
+/workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 
 # zaraz
 
