@@ -783,7 +783,7 @@
 /workers/about/ /workers/learning/ 301
 /workers/about/how-it-works/ /workers/learning/how-workers-works/ 301
 /workers/about/limits/ /workers/platform/limits/ 301
-/workers/about/metrics/ /workers/learning/metrics-and-analytics/ 301
+/workers/about/metrics/ /workers/observability/metrics-and-analytics/ 301
 /workers/about/pricing/ /workers/platform/pricing/ 301
 /workers/about/routes/ /workers/platform/triggers/routes/ 301
 /workers/platform/routes/ /workers/platform/triggers/routes/ 301
