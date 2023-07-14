@@ -17,8 +17,10 @@ To send Cloudflare logs to QRadar you need to create a [Logpush job to HTTP endp
 ### Cloudflare Firewall events
 
 ```bash
-curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POST -d '
-{ 
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{ 
   "name": "<name>", 
   "logpull_options": "fields=Action,ClientIP,ClientASN,ClientASNDescription,ClientCountry,ClientIPClass,ClientRefererHost,ClientRefererPath,ClientRefererQuery,ClientRefererScheme,ClientRequestHost,ClientRequestMethod,ClientRequestPath,ClientRequestProtocol,ClientRequestQuery,ClientRequestScheme,ClientRequestUserAgent,EdgeColoCode,EdgeResponseStatus,Kind,MatchIndex,Metadata,OriginResponseStatus,OriginatorRayID,RayID,RuleID,Source,Datetime&timestamps=rfc3339", 
   "destination_conf": "<QRadar_URL:LogSource_Port>", 
@@ -26,25 +28,23 @@ curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POS
   "max_upload_records": 1000, 
   "dataset": "firewall_events", 
   "enabled": true
-}' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+}'
 ```
 
 ### Cloudflare HTTP events
 
 ```bash
-curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POST -d '
-{
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
   "name": "<name>",
   "logpull_options": "fields=ClientRequestMethod,EdgeResponseStatus,ClientIP,ClientSrcPort,CacheCacheStatus,ClientCountry,ClientDeviceType,ClientIPClass,ClientMTLSAuthCertFingerprint,ClientMTLSAuthStatus,ClientRegionCode,ClientRequestBytes,ClientRequestHost,ClientRequestPath,ClientRequestProtocol,ClientRequestReferer,ClientRequestScheme,ClientRequestSource,ClientRequestURI,ClientRequestUserAgent,ClientSSLCipher,ClientSSLProtocol,ClientXRequestedWith,EdgeEndTimestamp,EdgeRateLimitAction,EdgeRateLimitID,EdgeRequestHost,EdgeResponseBodyBytes,EdgeResponseBytes,EdgeServerIP,EdgeStartTimestamp,FirewallMatchesActions,FirewallMatchesRuleIDs,FirewallMatchesSources,OriginIP,OriginResponseStatus,OriginSSLProtocol,ParentRayID,RayID,SecurityLevel,WAFAction,WAFAttackScore,WAFProfile,WAFRuleID,WAFRuleMessage,WAFSQLiAttackScore,WAFXSSAttackScore,EdgeStartTimestamp&timestamps=rfc3339", 
   "destination_conf": "<QRadar_URL:LogSource_Port>", "max_upload_bytes": 5000000, 
   "max_upload_records": 1000, 
   "dataset": "http_requests", 
   "enabled": true
-}' \ 
--H "X-Auth-Email: <EMAIL>" \ 
--H "X-Auth-Key: <API_KEY>"
+}'
 ```
 
 Cloudflare checks the accessibility of the IP address, port, and validates the certificate of the HTTP Receive log source. If all parameters are valid, a Logpush is created, and starts to send events to HTTP Receiver log source.
