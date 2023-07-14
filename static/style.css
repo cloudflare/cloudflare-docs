@@ -5631,3 +5631,17 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 .optionalStepCounter::before {
   content: counter(stepCounter);
 }
+
+@media (max-width: 768px) {
+  .tutorialStep:not(:first-of-type) {
+    /* had to increase this margin, but didn't exactly understand why */
+    margin-top: 7em;
+  }
+
+  .tutorialStep {
+    /* using 2em seemed a bit of a waste on mobile */
+    padding-left: 1em;
+    /* had to increase this margin, but didn't exactly understand why */
+    margin-top: 7em;
+  }
+}
