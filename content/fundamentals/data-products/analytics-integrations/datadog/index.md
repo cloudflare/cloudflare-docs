@@ -37,7 +37,7 @@ To install the Cloudflare App for Datadog:
 
     - **Email**: This value helps keep your account safe. We recommend creating a dedicated Cloudflare user for analytics with the [_Analytics_ role](https://support.cloudflare.com/hc/articles/205065067#12345682) (read-only). Note that the _Analytics_ role is available to Enterprise customers only.
 
-    - **API Key**: Enter your Cloudflare Global API key.
+    - **API Key**: Enter your Cloudflare Global API key. For details refer to [API Keys](/fundamentals/api/get-started/keys/).
 
 6.  Click **Install Integration**.
     ![Configuring and installing the Datadog integration](/images/fundamentals/datadog/screenshots/cloudflare-tile-datadog-fill-details.png)
