@@ -49,6 +49,8 @@ If your organization does not currently allow inbound/outbound communication ove
 - Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
 - macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
 
+ Optionally if you are using Digital Experience Monitoring features you will also need to allow the `warp-dex` process to generate network traffic to the destinations you've configured.
+
 ## Captive portal
 
 The following domains are used as part of our captive portal check:
