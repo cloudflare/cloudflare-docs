@@ -11,9 +11,9 @@ that our customers sometimes employ for their problem domain, including:
 
 * Reducing TTFB latency through the [`cacheTtl`](/workers/runtime-apis/kv/#cache-ttl) parameter without sacrificing
 consistency latency.
-* Avoiding the use of redundant caching layers
-* Using Workers KV's [bindings API]() instead of the administrative REST API for user-facing workloads.
-* Ensuring correctness when you have concurrent writes to manage
+* Avoiding the use of redundant caching layers.
+* Using Workers KV's [bindings API](workers/runtime-apis/kv/) instead of the administrative REST API for user-facing workloads.
+* Ensuring correctness when you have concurrent writes to manage.
 * How to get early access to get sub 1 minute consistency latency.
 * Guidance on subtleties that crop up that make it hard to synthetically test Workers KV performance as a proxy to
 predict production performance.
@@ -104,7 +104,10 @@ for you. Insisting
 ### Reducing cardinality by coalescing keys
 
 If you have a set of related key-value pairs that have a mixed usage pattern (some hot keys and some cold keys), consider
-coalescing so that you have fewer overall keys. Some approaches to accomplishing this are described below.
+coalescing the need to fetch them somehow so that a single cached fetch retrieves all the values even if you only need one
+of the values. The reason this helps is that long tail retrieval is that the cooler keys share access patterns with the hotter
+keys and are thus more likely to be present in the cache. Some approaches to accomplishing this are described below.
+
 
 #### Merging into a "super" KV entry
 One coalescing technique is to make all the keys and values part of a super key/value object. For example, something like this:
@@ -142,6 +145,10 @@ at upper tiers. By comparison, get operations are cached at the upper tiers for 
 lets you extend the duration of a single key lookup at the data center closest to the request.
 {{</Aside>}}
 
+Since list operations are not "write aware" as described above, they are only ever cached for 1 minute. They are still subject to [tiered caching](https://blog.cloudflare.com/faster-workers-kv-architecture#a-new-horizontally-scaled-tiered-cache) as described in
+our blog post, so requests within the region and globally are amortized to keep the asset closer to your request. However, you still need to be reading the value about once
+every 30s to make sure it's always present within Cloudflare's caches.
+
 ## Batch reading multiple keys
 
 If you have small values that fit within the [metadata limit](/workers/platform/limits/#kv-limits), you can store the value within the metadata instead.
@@ -168,7 +175,7 @@ writers, there's no guarantee about a winner. This is even more problematic if y
 partial update of a value. A lot of customers have success creating a [Durable Object](/workers/learning/using-durable-objects)
 and making it responsible for all the writes to your KV namespace. This way, you can serialize access for writing the value.
 
-**Caution**: Workers KV is an eventually consistent system. If you try to do a read/modify/write operation where the read is
+*Caution**: Workers KV is an eventually consistent system. If you try to do a read/modify/write operation where the read is
 coming from KV, you can cause modifications to be lost because there's no guarantee that you will always read the most recent
 value written, even if the write is from the same data center. Additionally, where a Durable Object is running moves around
 outside of your control.
