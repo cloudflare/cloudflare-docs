@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Connect to Google Workspace through Access
+title: Google Workspace
 ---
 
 # Connect to Google Workspace through Access

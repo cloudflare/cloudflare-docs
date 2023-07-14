@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Configure AWS SSO with Access for SaaS
+title: AWS
 ---
 
 # Configure AWS SSO with Access for SaaS

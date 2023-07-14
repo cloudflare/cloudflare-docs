@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Configure Zendesk SSO with Access for SaaS
+title: Zendesk
 ---
 
 # Configure Zendesk SSO with Access for SaaS
