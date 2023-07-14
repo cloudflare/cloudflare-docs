@@ -1,24 +1,31 @@
 ---
 pcx_content_type: reference
 title: Downloads
-weight: 5
+weight: 2
+layout: single
 ---
 
 # Downloads
 
-{{<render file="_cloudflared-new-ui.md">}}
+Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/), you can simply copy-paste the installation command shown in the dashboard.
 
-Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
+To download and install `cloudflared` manually, use one of the following links.
 
-Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/releases). Downloads are available as standalone binaries or packages like Debian and RPM.
+## GitHub repository
 
-Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES).
+`cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
 
-## Linux
+- [All releases](https://github.com/cloudflare/cloudflared/releases)
 
-Download and install `cloudflared` via the [Cloudflare Package Repository](https://pkg.cloudflare.com/).
+- [Release notes](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES)
 
-Alternatively, download the latest release directly.
+## Latest release
+
+### Linux
+
+You can download and install `cloudflared` via the [Cloudflare Package Repository](https://pkg.cloudflare.com/).
+
+Alternatively, download the latest release directly:
 
 {{<table-wrap>}}
 
@@ -30,7 +37,7 @@ Alternatively, download the latest release directly.
 
 {{</table-wrap>}}
 
-## macOS
+### macOS
 
 Download and install `cloudflared` via Homebrew:
 
@@ -38,9 +45,9 @@ Download and install `cloudflared` via Homebrew:
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
-Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
+Alternatively, download the [latest Darwin amd64 release](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz) directly.
 
-## Windows
+### Windows
 
 | Type       | 32-bit                                                                                                     | 64-bit                                                                                                       |
 | ---------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -52,57 +59,12 @@ Instances of `cloudflared` do not automatically update on Windows. You will need
 
 {{</Aside>}}
 
-## Docker
+### Docker
 
 A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.com/r/cloudflare/cloudflared).
 
-## Update `cloudflared`
-
-You can update cloudflared by running the following command.
-
-```sh
-$ cloudflared update
-```
-
-The update will cause `cloudflared` to restart which would impact traffic currently being served. You can perform zero-downtime upgrades by using Cloudflare's Load Balancer product or by using multiple `cloudflared` instances.
-
-### Updating with Cloudflare Load Balancer
-
-You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Cloudflare Tunnel deployment.
-
-1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) a new Tunnel.
-2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
-3.  [Add the address](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
-4.  Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
-5.  Once confirmed, you can remove the older version from the Load Balancer pool.
-
-### Updating with multiple `cloudflared` instances
-
-If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
-
-1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) a new Tunnel.
-2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
-3.  In the Cloudflare DNS dashboard, [replace](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
-4.  Remove the now-inactive instance of `cloudflared`.
-
-#### Running multiple instances in Windows
-
-Windows systems require services to have a unique name and display name. You can run multiple instances of `cloudflared` by creating `cloudflared` services with unique names.
-
-First, install and configure `cloudflared`. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
-
-```bash
-sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"
-```
-
-Proceed to create additional services with unique names. You can now start each unique service.
-
-```bash
-sc.exe start <unique-name>
-```
-
-## Deprecated versions
+## Deprecated releases
 
 Cloudflare supports the previous year of `cloudflared` releases. For example, if the [latest version](https://github.com/cloudflare/cloudflared/releases) is `2023.5.1`, version `2022.5.1` and later are supported. Deprecated versions may be impacted by breaking changes unrelated to feature availability.
 
-To update `cloudflared`, refer to [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/#update-cloudflared).
+To update `cloudflared`, refer to [these instructions](/cloudflare-one/connections/connect-apps/downloads/update-cloudflared/).
