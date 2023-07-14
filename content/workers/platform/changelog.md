@@ -8,6 +8,9 @@ rss: file
 
 # Changelog
 
+## 2023-07-14
+- An implementation of the [util.MIMEType](https://nodejs.org/api/util.html#class-utilmimetype) API from Node.js is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) is enabled
+
 ## 2023-07-07
 
 - An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
