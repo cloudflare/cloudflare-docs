@@ -438,7 +438,7 @@
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
 /magic-transit/set-up/provide-configuration-data/map-routes-for-prefixes-smaller-than-24/ /magic-transit/how-to/configure-static-routes/ 301
 /magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
-/magic-transit/set-up/provide-configuration-data/specify-prefixes-to-advertise/ /magic-network-monitoring/rules/ 301
+/magic-transit/set-up/provide-configuration-data/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/set-up/requirements/ /magic-transit/prerequisites/ 301
 /magic-transit/get-started/configure-tunnels/ /magic-transit/how-to/ 301
 /magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
