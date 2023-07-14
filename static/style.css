@@ -5580,6 +5580,12 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
 }
 
+.tutorialPreReqs {
+  padding-left: 2em;
+  border: 2px solid gray;
+  border-radius: 15px;
+}
+
 .tutorialStep {
   padding-left: 2em;
   border-left: .5px solid gray;

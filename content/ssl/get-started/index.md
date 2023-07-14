@@ -11,15 +11,15 @@ meta:
 
 Follow the steps below to enable SSL/TLS protection for your application.
 
----
+{{<tutorial>}}
 
-## Prerequisites
+{{<tutorial-prereqs>}}
 
 - [Create an account and register an application](/fundamentals/get-started/setup/)
 
----
+{{</tutorial-prereqs>}}
 
-{{<tutorial>}}
+
 
 {{<tutorial-step title="Choose an edge certificate" >}}
 

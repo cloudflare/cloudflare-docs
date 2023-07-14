@@ -10,9 +10,9 @@ meta:
 
 {{<render file="_full-setup-definition.md">}}
 
----
+{{<tutorial>}}
 
-## Before you begin
+{{<tutorial-prereqs>}}
 
 Before update your domain nameservers, make sure that you:
 
@@ -30,9 +30,8 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{</Aside>}}
 
----
+{{</tutorial-prereqs>}}
 
-{{<tutorial>}}
 {{<tutorial-step title="Add site to Cloudflare">}}
 
 In the Cloudflare dashboard, [add your domain](/fundamentals/get-started/setup/add-site/).
