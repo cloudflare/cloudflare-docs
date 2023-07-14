@@ -787,7 +787,7 @@
 /workers/about/pricing/ /workers/platform/pricing/ 301
 /workers/about/routes/ /workers/platform/triggers/routes/ 301
 /workers/platform/routes/ /workers/platform/triggers/routes/ 301
-/workers/about/tips/debugging/ /workers/learning/debugging-workers/ 301
+/workers/about/tips/debugging/ /workers/observability/debug-workers/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
@@ -1160,7 +1160,7 @@
 /warp-client/setting-up/linux/* /warp-client/get-started/linux/:splat 301
 /warp-client/setting-up/macOS/* /warp-client/get-started/macos/:splat 301
 /warp-client/setting-up/windows/* /warp-client/get-started/windows/:splat 301
-/workers/about/metrics/* /workers/learning/metrics-and-analytics/:splat 301
+/workers/about/metrics/* /workers/observability/metrics-and-analytics/:splat 301
 /workers/cli-wrangler/commands/* /workers/wrangler/commands/:splat 301
 /workers/cli-wrangler/configuration/* /workers/wrangler/configuration/:splat 301
 /workers/recipes/lambda@edge-conversion/* /workers/ 301
