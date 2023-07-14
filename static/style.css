@@ -3211,6 +3211,21 @@ html[is-docs-page] body {
   border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
 }
 
+.DocsMarkdown--link-api-icon {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  margin-left: 4px;
+}
+
+.apiSidebarIcon span {
+  height: 1.4em;
+  width: 1.4em;
+}
+
 .DocsMarkdown--link-external-icon {
   display: inline-block;
   height: 16px;
@@ -5481,6 +5496,10 @@ pre {
 
 .mermaid {
   background: #f5f5f5 !important;
+}
+
+[theme="dark"] .mermaid {
+  background: #222222 !important;
 }
 
 .RSS svg {

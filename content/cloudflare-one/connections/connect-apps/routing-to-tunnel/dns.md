@@ -56,4 +56,4 @@ Note: this command requires the `cert.pem` file.
 
 ## Optional: Configure additional Cloudflare settings
 
-The application will default to the Cloudflare settings of the hostname in your account that includes the Cloudflare Tunnel DNS record, including [cache rules](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache) and [firewall policies](/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.
+The application will default to the Cloudflare settings of the hostname in your account that includes the Cloudflare Tunnel DNS record, including [cache rules](/cache/how-to/cache-rules/) and [firewall policies](/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.

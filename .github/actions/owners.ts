@@ -8,7 +8,7 @@
  *   - the "pull_request.opened" event to request review(s) instead of CODEOWNERS usage
  */
 export const OWNERS: Record<string, string[]> = {
-  "1.1.1.1": ["haleycode"],
+  "1.1.1.1": ["RebeccaTamachiro"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
@@ -20,7 +20,7 @@ export const OWNERS: Record<string, string[]> = {
   cache: ["angelampcosta"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
-  "cloudflare-for-platforms": ["kodster28"],
+  "cloudflare-for-platforms": ["jason-cf"],
   "cloudflare-one": ["ranbel"],
   constellation: ["deadlypants1973"],
   d1: ["Maddy-Cloudflare"],
@@ -58,8 +58,10 @@ export const OWNERS: Record<string, string[]> = {
   "ruleset-engine": ["pedrosousa"],
   "security-center": ["jason-cf"],
   spectrum: ["angelampcosta"],
+  speed: ["angelampcosta"],
   ssl: ["RebeccaTamachiro"],
   stream: ["dcpena"],
+  "style-guide": ["haleycode"],
   support: ["jedecf"],
   tenant: ["kodster28"],
   terraform: ["ranbel"],

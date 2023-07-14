@@ -33,4 +33,4 @@ Learn more about the certificate authorities Cloudflare uses to issue [Universal
 
 ## Backup certificates
 
-Cloudflare may also issue [backup certificates](/ssl/edge-certificates/backup-certificates/) from Google Trust Services or Sectigo.
+Cloudflare may also issue [backup certificates](/ssl/edge-certificates/backup-certificates/) from Google Trust Services, Let's Encrypt, or Sectigo.

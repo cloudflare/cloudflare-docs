@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 1
 meta:
     title: Junk email and Area 1 Admin Quarantine - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1

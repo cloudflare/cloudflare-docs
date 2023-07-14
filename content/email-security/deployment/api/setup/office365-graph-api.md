@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 4
 meta:
     Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API setup.
+updated: 2023-02-06
 ---
 
 # Office 365 Graph API set up with Area 1

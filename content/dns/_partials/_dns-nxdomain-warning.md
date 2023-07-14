@@ -7,6 +7,6 @@ _build:
 
 {{<Aside type="note">}}
 
-If you activate your domain on Cloudflare *without* setting up the correct DNS records for your domain and subdomain, your visitors may experience [DNS_PROBE_FINISHED_NXDOMAIN](/dns/zone-setups/troubleshooting/dns-probe-finished-nxdomain/) errors.
+If you activate your domain on Cloudflare *without* setting up the correct DNS records for your domain and subdomain, your visitors may experience [DNS_PROBE_FINISHED_NXDOMAIN](/dns/troubleshooting/dns-probe-finished-nxdomain/) errors.
 
 {{</Aside>}}

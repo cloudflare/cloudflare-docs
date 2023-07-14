@@ -45,7 +45,7 @@ If you run `gokeyless` with debug logging enabled, and you see logs like this:
 [DEBUG] connection 162.158.57.220:37862 removed
 ```
 
-These logs likely indicate that the key server is not using an appropriate server or pem file and the client is aborting the connection after the certificate exchange. The certificate must be signed by the keyless CA and the SANs must include the hostname of the keyless server. Here is a valid example for a keyless server located at `11aa40b4a5db06d4889e48e2f.example.com` (note the Subject Alternative Name and Authority Key Identifier):
+These logs likely indicate that the key server is not using an appropriate server or .`PEM` file and the client is aborting the connection after the certificate exchange. The certificate must be signed by the keyless CA and the SANs must include the hostname of the keyless server. Here is a valid example for a keyless server located at `11aa40b4a5db06d4889e48e2f.example.com` (note the Subject Alternative Name and Authority Key Identifier):
 
 ```bash
 $ openssl x509 -in server.pem -noout -text -certopt no_subject,no_header,no_version,no_serial,no_signame,no_validity,no_subject,no_issuer,no_pubkey,no_sigdump,no_aux | sed -e 's/^        //'
@@ -88,8 +88,8 @@ However, the key server is open source so you may attempt to build and deploy a 
 
 You can use the same key server for multiple domains.
 
- However, if you do, you will need to add the hostname and the Zone ID of the new domain to the `gokeyless.yaml` file.
+However, if you do, you will need to add the hostname and the Zone ID of the new domain to the `gokeyless.yaml` file.
 
 ## Additional questions
 
-Contact your account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+Contact your account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).

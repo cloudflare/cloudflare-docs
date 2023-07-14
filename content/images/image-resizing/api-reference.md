@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: API reference
-external_link: https://developers.cloudflare.com/api/operations/zone-settings-get-image_resizing-setting
+external_link: /api/operations/zone-settings-get-image_resizing-setting
 weight: 10
 _build:
   publishResources: false

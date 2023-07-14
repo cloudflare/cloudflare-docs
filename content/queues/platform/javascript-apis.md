@@ -96,15 +96,15 @@ type MessageSendRequest<Body = any> = {
 
 These APIs allow a consumer Worker to consume messages from a Queue.
 
-To define a consumer Worker, add a `queue` function to the default export of the Worker. This will allow it to receive messages from the Queue.
+To define a consumer Worker, add a `queue()` function to the default export of the Worker. This will allow it to receive messages from the Queue.
 
 By default, all messages in the batch will be acknowledged as soon as all of the following conditions are met:
 
-1. The `queue` function has returned.
-2. If the `queue` function returned a promise, the promise has resolved.
+1. The `queue()` function has returned.
+2. If the `queue()` function returned a promise, the promise has resolved.
 3. Any promises passed to `waitUntil()` have resolved.
 
-If the `queue` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
+If the `queue()` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
 
 ```ts
 export default {

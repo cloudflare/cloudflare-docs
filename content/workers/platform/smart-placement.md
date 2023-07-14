@@ -30,7 +30,7 @@ Smart Placement is only active for Workers that **make more than one roundtrip**
 
 Smart Placement is a best-effort attempt. Smart Placement will not take action unless it is more performant than the default (which is running the Worker at the data center closest to the user).
 
-### Supported back-end services
+### Unsupported back-end services
 
 There are some back-end services that are not considered by the Smart Placement algorithm:
 
@@ -120,7 +120,7 @@ If you are building full-stack applications on Workers, we recommend splitting u
 
 ![Smart Placement and Service Bindings](/images/workers/platform/smart-placement-service-bindings.png)
 
-Enabling Smart Placement on your back-end Worker will invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintatins fast, reactive front-ends while also improving latency when the back-end Worker is called.  
+Enabling Smart Placement on your back-end Worker will invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintains fast, reactive front-ends while also improving latency when the back-end Worker is called.  
 
 ## Give feedback on Smart Placement
 

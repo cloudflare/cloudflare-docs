@@ -44,7 +44,7 @@ In order to create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare
 
 ## Optional Cloudflare settings
 
-The application will default to the Cloudflare settings for the load balancer hostname, including [cache rules](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache) and [firewall policies](/firewall/). You can changes the settings for your hostname in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+The application will default to the Cloudflare settings for the load balancer hostname, including [cache rules](/cache/how-to/cache-rules/) and [firewall policies](/firewall/). You can changes the settings for your hostname in the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
 ## Known limitations
 

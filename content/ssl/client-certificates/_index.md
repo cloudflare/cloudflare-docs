@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Client certificates
-weight: 7
+weight: 6
 meta:
     description: Use Cloudflare public key infrastructure (PKI) to create client certificates and enforce mutual Transport Layer Security (mTLS) encryption.
 ---
@@ -9,6 +9,8 @@ meta:
 # Client certificates
 
 Use Cloudflare public key infrastructure (PKI) to create client certificates. Use these certificates with Cloudflare [API Shield™](/api-shield/) or [Cloudflare Workers](/workers/runtime-apis/mtls/) to enforce mutual Transport Layer Security (mTLS) encryption.
+
+{{<render file="_client-cert-shared.md">}}
 
 ## API Shield
 
@@ -21,6 +23,8 @@ To use API Shield to protect your API or web application, you must do the follow
 3.  [Enable mTLS](/ssl/client-certificates/enable-mtls/) for the hosts you wish to protect with API Shield.
 
 4.  Create Cloudflare firewall rules that [require API requests to present a valid client certificate](/api-shield/security/mtls/configure/).
+
+{{<render file="_cloudflare-managed-client-cert.md">}}
 
 ## Workers
 

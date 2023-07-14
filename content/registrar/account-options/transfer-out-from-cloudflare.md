@@ -39,19 +39,3 @@ If you lose your authentication code, you can get a new one by:
 3. Your new registrar will send the transfer request to the registry for your domain. The registry will then send it to Cloudflare. After Cloudflare receives the message, you can manually approve the transfer to initiate it immediately.
 4. You will need to confirm the approval. You can also reject it at this stage. If you reject it, Cloudflare will reapply the registrar lock.
 5. If you do not manually approve the transfer, the transfer will auto-approve on the fifth day after receiving the request. In either case, when your transfer out completes Cloudflare will remove the domain from your account and you will not be charged for future renewals.
-
-## Transfer a .UK domain to another registrar
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Domain Registration** > **Manage Domains**.
-3. Find the domain you want to transfer, and select **Manage**.
-4. Select **Configuration** > **Unlock**.
-5. Enter the IPS tag of the registrar you wish to transfer to.
-
-Your new registrar is responsible for accepting the transfer. Cloudflare has no visibility into why a transfer might not be accepted by the new registrar.
-
-{{<Aside type="note">}}
-
-If you do not know the IPS tag, contact your new registrar for instructions. Your new registrar may require you to follow some additional steps before starting the transfer process.
-
-{{</Aside>}}

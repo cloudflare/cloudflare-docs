@@ -8,6 +8,11 @@ rss: file
 
 # Changelog
 
+## 2023-07-07
+
+- An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+- An implementation of the [`diagnostics_channel`](/workers/runtime-apis/nodejs/diagnostics-channel) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+
 ## 2023-06-22
 
 - Added the [`strict_crypto_checks`](/workers/platform/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
