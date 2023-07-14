@@ -147,7 +147,7 @@ The class binding's `get()` method returns a stub to the particular Durable Obje
 The fetch handler in the example below implements the Worker that communicates to the Durable Object.  
 
 
-ES Modules differ from regular JavaScript files in that they have imports and exports. For example, [to write a class that defines a Durable Object](/durable-objects/get-started/#1-write-a-class-to-define-a-durable-object), you use `export class DurableObjectExample`. To implement a fetch handler, export a method named `fetch()` in an `export default {}` block.
+Durable Objects must be written in ES Modules syntax. ES Modules differ from regular JavaScript files in that they have imports and exports. For example, [to write a class that defines a Durable Object](/durable-objects/get-started/#1-write-a-class-to-define-a-durable-object), you use `export class DurableObjectExample`. To implement a fetch handler, export a method named `fetch()` in an `export default {}` block.
 
 
 ```js
