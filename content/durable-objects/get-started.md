@@ -110,13 +110,7 @@ durable_objects.bindings = [
 ]
 ```
 
-{{<Aside type="note" header="What is a binding?">}}
-
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/) or Durable Objects. A binding is a runtime variable that the Workers runtime provides to your code.
-
-You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding’s variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/wrangler/environments/) documentation for more information.
-
-{{</Aside>}}
+Refer to [Bindings](/workers/platform/bindings/) for more information about bindings.
 
 ## 3. Configure Durable Object classes with migrations
 
