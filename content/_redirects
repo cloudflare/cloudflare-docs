@@ -935,7 +935,11 @@
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/environments/ /workers/wrangler/environments/ 301
-
+/workers/learning/debugging-workers/ /workers/observability/debug-workers/ 301
+/workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
+/workers/platform/logpush/ /workers/observability/logpush/ 301
+/workers/platform/tail-workers/ /workers/observability/tail-workers/ 301
+/workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 
 # zaraz
 

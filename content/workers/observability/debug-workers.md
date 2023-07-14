@@ -1,10 +1,9 @@
 ---
 pcx_content_type: troubleshooting
-title: Debugging Workers
-weight: 3
+title: Debug Workers
 ---
 
-# Debugging Workers
+# Debug Workers
 
 Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production. In this article, you will learn how to effectively debug your Workers application, as well as review some code samples to help you get started:
 

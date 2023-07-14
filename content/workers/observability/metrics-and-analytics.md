@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
-weight: 5
 ---
 
 # Metrics and analytics
@@ -33,7 +32,7 @@ Request traffic data may display a drop off near the last few minutes displayed 
 
 ### Invocation statuses
 
-Worker invocation statuses indicate whether a Worker script executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker script invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/learning/logging-workers/#error-pages-generated-by-workers) being returned to the client.
+Worker invocation statuses indicate whether a Worker script executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker script invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/log-from-workers/#error-pages-generated-by-workers) being returned to the client.
 
 {{<table-wrap>}}
 
