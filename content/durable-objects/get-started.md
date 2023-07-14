@@ -157,7 +157,7 @@ Durable Objects must be written in ES Modules syntax. ES Modules differ from reg
 // `addEventHandler("fetch", event => { ... })`; this is just new syntax for
 // essentially the same thing.
 export default {
-  // In modules-syntax workers, bindings are delivered as a property of the
+  // In ES modules format, bindings are delivered as a property of the
   // environment object passed as the second parameter when an event handler or
   // class constructor is invoked. This is new compared to Service Module workers,
   // in which bindings show up as global variables.
