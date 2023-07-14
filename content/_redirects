@@ -783,11 +783,11 @@
 /workers/about/ /workers/learning/ 301
 /workers/about/how-it-works/ /workers/learning/how-workers-works/ 301
 /workers/about/limits/ /workers/platform/limits/ 301
-/workers/about/metrics/ /workers/learning/metrics-and-analytics/ 301
+/workers/about/metrics/ /workers/observability/metrics-and-analytics/ 301
 /workers/about/pricing/ /workers/platform/pricing/ 301
 /workers/about/routes/ /workers/platform/triggers/routes/ 301
 /workers/platform/routes/ /workers/platform/triggers/routes/ 301
-/workers/about/tips/debugging/ /workers/learning/debugging-workers/ 301
+/workers/about/tips/debugging/ /workers/observability/debug-workers/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
@@ -943,6 +943,12 @@
 /workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
 /workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
 /workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
+/workers/learning/debugging-workers/ /workers/observability/debug-workers/ 301
+/workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
+/workers/platform/logpush/ /workers/observability/logpush/ 301
+/workers/platform/tail-workers/ /workers/observability/tail-workers/ 301
+/workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
+
 
 # zaraz
 
@@ -1154,7 +1160,7 @@
 /warp-client/setting-up/linux/* /warp-client/get-started/linux/:splat 301
 /warp-client/setting-up/macOS/* /warp-client/get-started/macos/:splat 301
 /warp-client/setting-up/windows/* /warp-client/get-started/windows/:splat 301
-/workers/about/metrics/* /workers/learning/metrics-and-analytics/:splat 301
+/workers/about/metrics/* /workers/observability/metrics-and-analytics/:splat 301
 /workers/cli-wrangler/commands/* /workers/wrangler/commands/:splat 301
 /workers/cli-wrangler/configuration/* /workers/wrangler/configuration/:splat 301
 /workers/recipes/lambda@edge-conversion/* /workers/ 301
