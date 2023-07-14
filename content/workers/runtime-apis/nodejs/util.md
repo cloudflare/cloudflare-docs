@@ -74,3 +74,27 @@ The Workers implementation currently does not provide implementations of the `ut
 {{</Aside>}}
 
 For more about `util.types`, refer to the [Node.js documentation for util](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utiltypes).
+
+## util.MIMEType
+
+`util.MIMEType` provides convenience methods that allow you to more easily work with and manipulate [MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types). For example:
+
+```js
+import { MIMEType } from 'node:util';
+
+const myMIME = new MIMEType('text/javascript;key=value');
+
+console.log(myMIME.type);
+// Prints: text
+
+console.log(myMIME.essence);
+// Prints: text/javascript
+
+console.log(myMIME.subtype);
+// Prints: javascript
+
+console.log(String(myMIME));
+// Prints: application/javascript;key=value
+```
+
+For more about `util.MIMEType`, refer to the [Node.js documentation](https://nodejs.org/api/util.html#class-utilmimetype).
