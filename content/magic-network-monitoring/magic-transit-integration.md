@@ -6,4 +6,4 @@ weight: 6
 
 #  Magic Transit integration
 
-{{<render file="_magic-transit-integration.md">}}
+{{<render file="_magic-transit-integration.md" withParameters="Magic Network Monitoring">}}
