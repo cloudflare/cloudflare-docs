@@ -62,7 +62,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 ## 2. Configure Durable Object bindings
 
-You can configure Durable Object bindings in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
+Configure Durable Object [bindings](/workers/platform/bindings/) in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
 ```toml
 [durable_objects]
