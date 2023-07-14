@@ -13,7 +13,7 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 - An integrated IdP
 - Admin access to an AWS account
 
-## 2. Configure AWS
+## 1. Configure AWS
 
 1.  In the AWS admin panel, search for `SSO`.
 
