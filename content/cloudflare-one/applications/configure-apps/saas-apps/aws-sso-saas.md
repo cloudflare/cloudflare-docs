@@ -52,7 +52,7 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 1.  Save your policy and return to the AWS SSO dashboard.
 
-## 4. Complete the AWS configuration
+## 3. Complete the AWS configuration
 
 1.  Paste the Cloudflare IdP metadata into your AWS account with these mappings:
 
