@@ -121,7 +121,7 @@ While the specifics may vary widely depending on the vendor and business case, t
 
 The first and likely most important decision that must be made when looking at a multi-vendor strategy is how to route traffic to each provider. This depends on both the business logic driving the multi-vendor strategy and the technical capabilities of each vendor in question. Traffic to each provider will be routed using DNS and shift depending on the current conditions and needs of the business. Cloudflare can support configurations as an authoritative DNS provider, secondary DNS provider, or non-Cloudflare DNS (CNAME) setups for a zone.
 
-![Figure 6: Client request being routed to origin server(s) in a multi-vendor setup](/images/reference-architecture/multi-vendor-architecture-images/Figure_5.png)
+![Figure 6: Client request being routed to origin server(s) in a multi-vendor setup](/images/reference-architecture/multi-vendor-architecture-images/Figure_6.png)
 _Figure 6_
 
 DNS based load balancing and health checks can be leveraged here so that client requests to the domain/site are distributed across healthy origin server(s). The DNS provider monitors the health of the servers and DNS responds to the client request using a round-robin approach with the respective IPs.
@@ -361,7 +361,7 @@ Cloudflared creates an encrypted tunnel between your origin web server(s) and Cl
 
 The firewall and security posture is hardened by locking down all origin server ports and protocols via your firewall. Once Cloudflare Tunnel is in place and respective security applied, all requests on HTTP/S ports are dropped, including volumetric DDoS attacks. Data breach attempts, such as snooping of data in transit or brute force login attacks, are blocked entirely.
 
-![Figure 13: Connectivity from Cloudflare to origin server(s) via Cloudflare Tunnel](/images/reference-architecture/multi-vendor-architecture-images/Figure_12.png)
+![Figure 13: Connectivity from Cloudflare to origin server(s) via Cloudflare Tunnel](/images/reference-architecture/multi-vendor-architecture-images/Figure_13.png)
 _Figure 13_
 
 The above diagram describes the connectivity model through Cloudflare Tunnel. Note, this option provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. Cloudflare Tunnel can connect HTTP web servers, SSH servers, remote desktops, and other protocols safely to Cloudflare.
