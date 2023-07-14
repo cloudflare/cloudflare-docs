@@ -16,7 +16,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install libgbm-dev
           sudo apt-get install xvfb
-      - name: Use Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: 18.1
