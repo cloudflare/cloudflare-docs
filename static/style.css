@@ -5590,17 +5590,11 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   margin-top: 5em;
 }
 
-.tutorialStep h2,
-.tutorialStep h3,
-.tutorialStep h4,
-.tutorialStep h5 {
+.tutorialStepHeader {
   margin-top: 0;
 }
 
-.tutorialStep h2:before,
-.tutorialStep h3::before,
-.tutorialStep h4::before,
-.tutorialStep h5::before {
+.tutorialStepHeader::before {
   height: 0 !important;
 }
 
