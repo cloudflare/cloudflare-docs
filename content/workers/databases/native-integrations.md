@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Native Integrations
+title: Native Integrations (beta)
 ---
 {{<beta>}} Native Database Integrations {{</beta>}}
 
@@ -37,7 +37,6 @@ At this time, Database Integrations only support access to one database per prov
       category_id INT,
       KEY category_id_idx (category_id)
     );
-
     ```
 
 3. Insert some data in your newly created table. Run the following command to add a product and category to your table:
@@ -48,11 +47,11 @@ At this time, Database Integrations only support access to one database per prov
     ```
 
 4. Add the PlanetScale integration to your Worker:
-    - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers & Pages**.
-    - In **Overview**, select your Worker.
-    - Select **Settings** > **Integrations** > **PlanetScale**. 
-    - Follow the setup flow, selecting the database created in step 1.
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    2. In **Account Home**, select **Workers & Pages**.
+    3. In **Overview**, select your Worker.
+    4. Select **Settings** > **Integrations** > **PlanetScale**. 
+    5. Follow the setup flow, selecting the database created in step 1.
 
 5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
 
@@ -95,7 +94,7 @@ To learn more about PlanetScale, refer to [Planetscale's official documentation]
 
 [Supabase](https://supabase.com/) is an open source Firebase alternative and a PostgreSQL database service that offers real-time functionality, database backups, and extensions. With Supabase, developers can quickly set up a PostgreSQL database and build applications.
 
-1. To set up an integration with Supabase, you to have an existing Supabase database to connect to. [Create a Supabase database](https://supabase.com/docs/guides/database/tables#creating-tables) or [have an existing database to connect to Supabase and load data from](https://supabase.com/docs/guides/database/tables#loading-data).
+1. To set up an integration with Supabase, you need to have an existing Supabase database to connect to. [Create a Supabase database](https://supabase.com/docs/guides/database/tables#creating-tables) or [have an existing database to connect to Supabase and load data from](https://supabase.com/docs/guides/database/tables#loading-data).
 
 2. Create a `countries` table with the following query. You can create a table in your Supabase dashboard in two ways:
     - Use the table editor, which allows you to set up Postgres similar to a spreadsheet. 
@@ -117,11 +116,11 @@ To learn more about PlanetScale, refer to [Planetscale's official documentation]
     ```
 
 4. Add the Supabase database integration to your Worker:
-    - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers & Pages**.
-    - In **Overview**, select your Worker.
-    - Select **Settings** > **Integrations** > **Supabase**. 
-    - Follow the setup flow, selecting the database created in step 1.
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    2. In **Account Home**, select **Workers & Pages**.
+    3. In **Overview**, select your Worker.
+    4. Select **Settings** > **Integrations** > **Supabase**. 
+    5. Follow the setup flow, selecting the database created in step 1.
 
 5. In your Worker, install the `@supabase/supabase-js`  driver to connect to your database and start manipulating data:
 
@@ -154,7 +153,7 @@ To learn more about Supabase, refer to [Supabase's official documentation](https
 
 [Neon](https://neon.tech/) is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features, such as serverless, branching, and bottomless storage.
 
-1. To set up an integration with Neon, you to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/tutorial/project-setup#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
+1. To set up an integration with Neon, you need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/tutorial/project-setup#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
 
 2. Create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
 
@@ -185,11 +184,11 @@ To learn more about Supabase, refer to [Supabase's official documentation](https
     ```
 
 4. Add the Neon database integration to your Worker:
-    - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    - In **Account Home**, select **Workers & Pages**.
-    - In **Overview**, select your Worker.
-    - Select **Settings** > **Integrations** > **Neon**. 
-    - Follow the setup flow, selecting the database created in step 1.
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    2. In **Account Home**, select **Workers & Pages**.
+    3. In **Overview**, select your Worker.
+    4. Select **Settings** > **Integrations** > **Neon**. 
+    5. Follow the setup flow, selecting the database created in step 1.
 
 5. In your Worker, install the `@neondatabase/serverless`  driver to connect to your database and start manipulating data:
 
