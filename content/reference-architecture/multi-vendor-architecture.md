@@ -239,6 +239,16 @@ Sometimes customers may decide to use another option due to the following:
 * Not wanting to rely on a third party/vendor for the DNS synchronization and desiring more control.
 * Having specific restrictions/regulations excluding this option.
 
+This setup is recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization.
+
+Pros:
+* Uses standard (AXFR, IXFR) to keep DNS synced and done automatically via Zone Transfers.
+* Simplicity as the DNS provider is responsible for DNS synchronization.
+
+Cons:
+* If the record management and zone transfer pipeline is down, DNS records cannot be updated.
+* Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control and flexibility.
+
 **2. Two authoritative - both primary**
 
 Some customers may also want to have the added assurance of being able to update DNS records when the record management and zone transfer pipeline is down. They also may not want to rely on a third party/vendor for DNS synchronization and desire more control. In this case, both DNS providers can be used as primary.
@@ -247,11 +257,32 @@ In this setup each DNS provider is authoritative and primary. There is no second
 
 Synchronization of the DNS configuration between providers is critical, and in this setup it now becomes the customer’s responsibility to keep DNS in sync at both providers. Customers typically do this synchronization with automation tools like OctoDNS, Terraform, or via custom automation leveraging the vendors’ APIs.
 
+This setup is recommended for customers who desire the most flexible and resilient option that supports updating DNS records even when the record management and zone transfer pipeline is down and/or customers who want more control over DNS synchronization.
+
+Pros:
+* If control plane is down on one provider, DNS records can still be updated at the other.
+* More control and no reliance on DNS provider for DNS synchronization.
+
+Cons:
+* More complexity in keeping DNS between providers synced.
+* Customer is responsible for DNS synchronization which can be done via automation tools, automated via vendor APIs, or manually.
+
 **3. One or more authoritative - hidden primary and multiple secondary**
 
 In a hidden primary setup, users establish an unlisted primary server to store all zone files and changes, then enable one or more secondary servers to receive and resolve queries. Although most of the time the primary is authoritative, it doesn’t have to be. In this option, the primary is not listed with the registrar. The primary does not respond to queries and its main purpose is being the single source of truth.
 
 Although the secondary servers essentially fulfill the function of a primary server, the hidden setup allows users to hide their origin IP and shield it from attacks. Additionally, the primary can be taken offline for maintenance without causing DNS service to be disrupted.
+
+This setup is recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization. This solution also provides for flexibility in taking the primary offline as needed with less impact. 
+
+Pros:
+* Allows customers to maintain DNS record management on their infrastructure and use standard to keep DNS synced automatically via Zone Transfers.
+* Primary is used only for source of truth and maintaining DNS records and can be taken offline for maintenance /administration.
+
+Cons:
+* If the record management and zone transfer pipeline is down, DNS records cannot be updated.
+* Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control.
+
 
 ### Multi-vendor DNS options
 
