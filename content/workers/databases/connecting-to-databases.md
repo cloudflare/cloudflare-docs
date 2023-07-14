@@ -20,11 +20,11 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 | [Postgres](/workers/tutorials/postgres/) | - |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
 | [MySQL](/workers/tutorials/postgres/) | - | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
 | [FaunaDB](https://fauna.com/blog/getting-started-with-fauna-and-cloudflare-workers) | No |  [faunadb](https://github.com/fauna/faunadb-js)         | API via client library |
-| [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript) | [Yes](/workers/learning/integrations/databases/#planetscale) |[@planetscale/database](https://github.com/planetscale/database-js)         | API via client library |
-| [Supabase](https://github.com/supabase/examples-archive/tree/main/supabase-js-v1/with-cloudflare-workers) | [Yes](/workers/learning/integrations/databases/#supabase) | [@supabase/supabase-js](https://github.com/supabase/supabase-js)         | API via client library |
+| [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript) | [Yes](/workers/databases/native-integrations/#planetscale) |[@planetscale/database](https://github.com/planetscale/database-js)         | API via client library |
+| [Supabase](https://github.com/supabase/examples-archive/tree/main/supabase-js-v1/with-cloudflare-workers) | [Yes](/workers/databases/native-integrations/#supabase) | [@supabase/supabase-js](https://github.com/supabase/supabase-js)         | API via client library |
 | [Mongo](https://www.mongodb.com/developer/products/atlas/cloudflare-worker-rest-api/) | No | [realm-web](https://www.mongodb.com/docs/realm/web/)         | API via client library |
 | [Prisma](https://www.prisma.io/docs/guides/deployment/deployment-guides/deploying-to-cloudflare-workers) | No |  [prisma](https://github.com/prisma/prisma)         | API via client library |
-| [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/learning/integrations/databases/#neon) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
+| [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/databases/native-integrations/#neon) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
 | [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No | API | GraphQL API via fetch() |
 
 {{</table-wrap>}}
@@ -39,9 +39,9 @@ Once you have installed the necessary packages, use the APIs provided by these p
 
 There are three ways to connect to a database from a Worker:
 
-1. [Database Integrations](/workers/learning/integrations/databases/#native-database-integrations-beta): Simplifies authentication by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
+1. [Database Integrations](/workers/databases/native-integrations/): Simplifies authentication by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
 2. [TCP Socket API](/workers/runtime-apis/tcp-sockets): A direct TCP connection to a database. TCP is the de-facto standard protocol that many databases, such as [PostgreSQL](/workers/databases/connect-to-postgres/) and MySQL, use for client connectivity.
-3. HTTP- or WebSocket-based [serverless drivers](/workers/learning/integrations/databases/): Many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that do not support TCP, or as their preferred connection protocol.
+3. HTTP- or WebSocket-based [serverless drivers](/workers/learning/integrations/databases/#overview): Many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that do not support TCP, or as their preferred connection protocol.
 
 ## Authentication
 
