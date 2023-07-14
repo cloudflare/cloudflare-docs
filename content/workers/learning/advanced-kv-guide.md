@@ -36,14 +36,22 @@ but think you may not be enabled, please contact support.
 ### Avoid hand-rolling Cache in front of Workers KV
 
 Workers KV is optimized to transparently refresh values in the background on your behalf based on actual access patterns to keep the
-values read lively when there's a write. If you put a cache in front of KV, then KV doesn't see any accesses for keys; every time you do
-end up hitting KV will be a cold request. At first glance this doesn't sound too bad and price conscious customers look to this option.
-From a performance perspective though, it will mean that your application will regularly experience long pauses as bunch of requests go
-to access hot keys that aren't in the cache anymore. This can happen either because you've set up your cache so that by the time KV sees
-a request it's outside the cacheTtl window or KV's cache has decided to evict your key because it wasn't getting any traffic.
+values read lively when there's a write. As a cost-cutting measure, some customers choose to explore putting the Cache API in front
+of the `.get` call so that most requests hit the cache and when the cache expires you double-check with KV.
 
-[BetterKV](https://flareutils.pages.dev/betterkv/) is a popular choice for many of our customers. Other customers choose to handroll. We
-haven't seen any customers who fix the pauses / stampeding herd problem and this is an attempt to provide a suggestion on how to solve that.
+At first glance this doesn't sound too bad and price conscious customers look to this option (we hear from customers that like to use [BetterKV](https://flareutils.pages.dev/betterkv/)
+while others handroll). From a performance perspective though, it's surprising at first glance, but it will mean that your application
+will regularly experience a stampeding herd of requests that experience cold KV reads. Why is this?
+
+The first problem is if you've tuned the expiry within your fronting Cache instance to be the cacheTtl you use for KV (this is what BetterKV
+does). The problem with this is that when you miss your local cache, you'll also miss KV and get a cold read. If you're doing 10k RPS to that
+key, then you'll be missing 10k RPS for the duration it takes to refetch. As described, Workers KV very carefully and intentionally avoids
+this problem by refreshing in the background proactively so that the expiry is always in the future.
+
+Solving this can help a lot, but it's not the entire story. Even if your cache.match is set to expire before your cacheTtl, you'll still have
+another problem. Since KV isn't seeing accesses to that key, Cache will treat KV's cache as cold & prioritize evicting it. In such a scenario,
+even though we're within the cacheTtl, from KV's perspective it sees a sudden stampeding herd of requests that aren't satisfied by your cache.match
+but for which it doesn't have a cache anymore because it was evicted.
 
 * Don't put cache in front of KV.
   * Pros: the system behaves optimally from a performance perspective.
@@ -58,11 +66,10 @@ the cacheTTL. For example, cache for 30s, probabilistically
 
 Recommendation: avoid putting a cache in front of KV & talk to our support staff about pricing. Putting a cache in front of KV also means
 that you can't partake in [noticing writes more quickly](#noticing-updated-values-within-seconds). If you want to go down this road anyway,
-ideally align the cacheTTL and your custom cache such that you refetch from KV before it gets expired from KV's cache. A quick and dirty
-solution may be to sample instead as getting all that logic to work correctly can be tricky. As always, make sure you have good observability
-that can highlight this problem for you so you can see it happening and know what to do about it. The [Workers Analytics Engine](/analytics/analytics-engine)
-is a convenient way to instrument your code to see when you're making KV requests and then watching out for sudden transient spikes for
-requests into KV.
+you'll probably need to apply a mix of doing probabalistic refresh where you direct some percentage of cache hit requests into KV. Note
+however that probabilistic approaches mean that you need to measure and tune because you will have a long-tail that will be missed since
+most customers have a small number of very hot keys that will absorb the probability and a longer tail of keys that won't be refreshed
+probabilistically and thus suffer cold KV fetch. The aggregate RPS of the long tail of keys can easily rival your hottest key RPS.
 
 {{<Aside type="note" header="Timing considerations">}}
 `Date` comparisons can be used to get an [approximation](https://blog.cloudflare.com/mitigating-spectre-and-other-security-threats-the-cloudflare-workers-security-model/#step1disallowtimersandmultithreading)
