@@ -127,6 +127,7 @@ These are the fields available for Cache Rule expressions:
 - URI Query String - `http.request.uri.query`
 - User Agent - `http.user_agent`
 - X-Forwarded-For - `http.x_forwarded_for`
+- [HTTP request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields)
 
 Refer to [Fields](/ruleset-engine/rules-language/fields/) for reference information on these fields.
 
