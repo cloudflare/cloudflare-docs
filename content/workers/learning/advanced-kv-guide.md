@@ -12,7 +12,7 @@ that our customers sometimes employ for their problem domain, including:
 * Reducing TTFB latency through the [`cacheTtl`](/workers/runtime-apis/kv/#cache-ttl) parameter without sacrificing
 consistency latency.
 * Avoiding the use of redundant caching layers.
-* Using Workers KV's [bindings API](workers/runtime-apis/kv/) instead of the administrative REST API for user-facing workloads.
+* Using Workers KV's [bindings API](/workers/runtime-apis/kv/) instead of the administrative REST API for user-facing workloads.
 * Ensuring correctness when you have concurrent writes to manage.
 * How to get early access to get sub 1 minute consistency latency.
 * Guidance on subtleties that crop up that make it hard to synthetically test Workers KV performance as a proxy to
