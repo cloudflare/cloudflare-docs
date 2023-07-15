@@ -30,11 +30,19 @@ In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troub
   WARN warp::warp::connectivity_check: Tunnel trace failed request::Error { kind: Request, url: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("connectivity.cloudflareclient.com")), port: None, path: "/cdn-cgi/trace", query: None, fragment: None }, source: TimedOut }
   ```
 
+- Unable to bind local TCP/UDP socket:
+  ```txt
+  WARN main_loop: warp::warp: Unable to bind local UDP socket error=Os { code: 48, kind: AddrInUse, message: "Address already in use" } sockaddr=127.0.2.2:53
+  WARN main_loop: warp::warp::log_helpers: out="Failed to bind some UDP ports for DNS server. Ports potentially in conflict: [mDNSResponder -> 0.0.0.0:53], "
+  ```
+
 Here are the most common reasons why this issue occurs:
 
 ### A third-party service is blocking WARP
 
 A third-party service (such as a hardware or software firewall, router, MDM/group policy configuration, or other networking interface) may have a security policy in place which blocks WARP from connecting.
+
+On macOS, utilizing the OS [Virtualization framework](https://developer.apple.com/documentation/virtualization) can cause problems binding DNS ports (TCP/UDP:53).  Examples of third-party macOS applications that use the framework include some Virtual Machine managers: [lima](https://github.com/lima-vm/lima), [multipass](https://multipass.run/), and likely others.  If the `mDNSResponder` process is bound to port 53, then stopping all Virtualization guests may help.
 
 #### Solution
 
