@@ -241,10 +241,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your Service binding locally
-
-While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
-
 ## Queue Producers
 
 [Queue Producers](/queues/platform/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
