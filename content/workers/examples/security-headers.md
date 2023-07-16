@@ -105,7 +105,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     const DEFAULT_SECURITY_HEADERS = {
       /*
@@ -187,9 +187,7 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

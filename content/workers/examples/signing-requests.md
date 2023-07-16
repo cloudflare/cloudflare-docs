@@ -98,7 +98,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     // You will need some super-secret data to use as a symmetric key.
     const encoder = new TextEncoder();
@@ -174,9 +174,7 @@ const handler: ExportedHandler = {
     // through.
     return fetch(request);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -268,7 +266,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request: Request) {
     async function generateSignedUrl(url) {
       // You will need some super-secret data to use as a symmetric key.
@@ -325,9 +323,7 @@ const handler: ExportedHandler = {
       return fetch(request);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

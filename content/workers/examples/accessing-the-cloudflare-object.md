@@ -35,7 +35,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(req) {
     const data =
       req.cf !== undefined
@@ -48,9 +48,7 @@ const handler: ExportedHandler = {
       },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

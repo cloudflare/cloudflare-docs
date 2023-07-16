@@ -180,11 +180,7 @@ Replace the existing code in your `worker.ts` file with the following code:
 filename: worker.ts
 --- 
 export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext
-  ): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const client = new Client(env.DB_URL);
     await client.connect();
 
@@ -200,7 +196,7 @@ export default {
     ctx.waitUntil(client.end());
     return resp;
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 This code establishes a connection to the PostgreSQL database within your Worker application and queries the `products` table, returning the results as a JSON response.

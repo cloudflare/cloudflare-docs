@@ -66,7 +66,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request: Request) {
     /**
      * @param {string} headerNameSrc Header to get the new value from
@@ -110,9 +110,7 @@ const handler: ExportedHandler = {
     }
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

@@ -37,7 +37,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request: Request) {
     const data = {
       hello: "world",
@@ -51,7 +51,7 @@ const handler: ExportedHandler = {
       },
     });
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

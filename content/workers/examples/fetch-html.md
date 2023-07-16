@@ -59,7 +59,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     /**
      * Example someHost at URL is set up to respond with HTML
@@ -97,9 +97,7 @@ const handler: ExportedHandler = {
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

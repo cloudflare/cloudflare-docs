@@ -42,8 +42,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+export default {
+  async fetch(request) {
     const response = await fetch(request);
 
     // Clone the response so that it's no longer immutable
@@ -63,8 +63,7 @@ const handler: ExportedHandler = {
     newResponse.headers.set("x-header-to-change", "NewValue");
     return newResponse;
   },
-};
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

@@ -156,8 +156,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+export default {
+  async fetch(request) {
     const BASIC_USER = "admin";
     const BASIC_PASS = "admin";
 
@@ -282,9 +282,7 @@ const handler: ExportedHandler = {
 
     return new Response("Not Found.", { status: 404 });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
