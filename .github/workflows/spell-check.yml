@@ -46,5 +46,5 @@ jobs:
         run: codespell --count --skip="*.js,./.git,./content/support/Other Languages/*" ${{ env.CHANGED_FILES }}
 
       - name: Case Police
-        run: case-police ${{ env.CHANGED_FILES }} --disable vscode
+        run: case-police ${{ env.CHANGED_FILES }} --disable vscode,DoS
         if: always()
