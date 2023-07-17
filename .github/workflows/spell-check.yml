@@ -60,5 +60,5 @@ jobs:
         if: always()
         run: |
           for file in ${{ steps.changes.outputs.files }}; do
-            docker run --rm -v $PWD:/docs oskarstark/doctor-rst --short --error-format=github $file
+            docker run --rm -it -e DOCS_DIR='/docs' -v $PWD:/docs oskarstark/doctor-rst:latest $file
           done
