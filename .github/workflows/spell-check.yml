@@ -7,6 +7,14 @@ on:
       - synchronize
 
 jobs:
+  case-police:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use the correct case
+        uses: Namchee/actions-case-police@v1.0.2
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+          fix: true
   spell-check:
     runs-on: ubuntu-latest
     steps:
