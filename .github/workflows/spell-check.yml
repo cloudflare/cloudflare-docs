@@ -52,6 +52,8 @@ jobs:
         run: case-police ${{ env.CHANGED_FILES }} --disable vscode
         if: always()
       
+      -
+
       - name: Alex (inclusive language)
-        run: alex ${{ env.CHANGED_FILES }} --ignore "host"
+        run: alex ${{ env.CHANGED_FILES }} --config .alexrc
         if: always()
