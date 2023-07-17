@@ -9,6 +9,16 @@ title: Custom Domains
 
 Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you set up a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/platform/triggers/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
 
+Custom Domains are routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
+
+Custom Domains are recommended if you want to connect your Worker to the Internet and do not have an application server that you want to always communicate with.  If you do have external dependencies, you can create a `Request` object with the target URI, and use `fetch()` to reach out.
+
+Custom Domains can stack on top of each other. For example, if you have Worker A attached to `app.example.com` and Worker B attached to `api.example.com`, Worker A can call `fetch()` on `api.example.com` and invoke Worker B.
+
+![Custom Domains can stack on top of each other, like any external dependencies](/images/workers/learning/custom-domains-subrequest.png)
+
+Custom Domains can also be invoked within the same zone via `fetch()`, unlike Routes.
+
 ## Add a Custom Domain
 
 To add a Custom Domain, you must have:

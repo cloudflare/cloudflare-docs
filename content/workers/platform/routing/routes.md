@@ -9,6 +9,14 @@ title: Routes
 
 Routes allow users to map a URL pattern to a Worker. When a request comes in to the Cloudflare network that matches the specified URL pattern, your Worker will execute on that route.
 
+Routes are a set of rules that evaluate against a request's URL. Routes are recommended for you if you have a designated application server you always need to communicate with. Calling `fetch()` on the incoming `Request` object will trigger a subrequest to your application server, as defined in the **DNS** settings of your Cloudflare zone.
+
+Routes add Workers functionality to your existing proxied hostnames, in front of your application server. These allow your  Workers to act as a proxy and perform any necessary work before reaching out to an application server behind Cloudflare.
+
+![Routes work with your applications defined in Cloudflare DNS](/images/workers/learning/routes-diagram.png)
+
+Routes can `fetch()` Custom Domains and take precedence if configured on the same hostname. If you would like to run a logging Worker in front of your application, for example, you can create a Custom Domain on your application Worker for `app.example.com`, and create a Route for your logging Worker at `app.example.com/*`.  Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot be the target of a same-zone `fetch()` call.
+
 ## Types of routes
 
 There are three types of routes:
