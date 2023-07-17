@@ -108,7 +108,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 {{<Aside type="note">}}
 
-To enable Gateway filtering on TCP and UDP, navigate to **Settings** > **Network** > **Proxy**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
+To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > **Proxy**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
 
 {{</Aside>}}
 

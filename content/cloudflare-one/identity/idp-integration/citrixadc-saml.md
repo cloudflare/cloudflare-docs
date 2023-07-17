@@ -36,15 +36,15 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     Include the following required configuration details:
 
-    | Field                              | Description                                                                    |
-    | ---------------------------------- | ------------------------------------------------------------------------------ |
+    | Field                              | Description                                                                            |
+    | ---------------------------------- | -------------------------------------------------------------------------------------- |
     | **Name**                           | The certificate name you defined while [configuring SAML](#set-up-citrix-adc-saml)     |
-    | **Assertion Consumer Service URL** | `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`        |
+    | **Assertion Consumer Service URL** | `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`                |
     | **IdP Certificate Name**           | The IdP certificate name you defined while [configuring SAML](#set-up-citrix-adc-saml) |
-    | **Issuer Name**                    | `https://idp.<yourdomain>.com/saml/login`                                      |
-    | **Service Provider ID**            | `https://idp.<yourdomain>.com/saml/login`                                      |
-    | **Name ID Format**                 | EmailAddress                                                                   |
-    | **Attribute 1**                    | `email = AAA.USER.ATTRIBUTE("email")`                                          |
+    | **Issuer Name**                    | `https://idp.<yourdomain>.com/saml/login`                                              |
+    | **Service Provider ID**            | `https://idp.<yourdomain>.com/saml/login`                                              |
+    | **Name ID Format**                 | EmailAddress                                                                           |
+    | **Attribute 1**                    | `email = AAA.USER.ATTRIBUTE("email")`                                                  |
 
     Cloudflare Access currently sends the IdP address in place of the _Service Provider ID_ for the AuthN request.
 
@@ -70,7 +70,7 @@ To set up Citrix ADC (SAML) as your identity provider:
     bind authentication vserver nsidp -policy samlPol_CloudflareAccess
     ```
 
-1.  In Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, go to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 
@@ -86,4 +86,4 @@ To set up Citrix ADC (SAML) as your identity provider:
 
 1.  Click **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication > Login methods** and click **Test** next to the login method you want to test.

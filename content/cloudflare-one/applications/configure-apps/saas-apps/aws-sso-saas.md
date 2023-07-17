@@ -29,7 +29,7 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 ## 2. Configure Cloudflare
 
-1.  In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com) and navigate to **Access** > **Applications**.
+1.  In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Applications**.
 
 1.  Select **SaaS** as the application type to begin creating a SaaS application.
 

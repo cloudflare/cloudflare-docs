@@ -32,7 +32,7 @@ To set up OneLogin as your identity provider:
 
 1.  Click **Save**.
 
-1.  Select **More Actions > Add App to Connector**.
+1.  Select **More Actions** > **Add App to Connector**.
 
 1.  In the **Portal** section, enter a name for your application in the **Display Name** field.
 
@@ -48,7 +48,7 @@ To set up OneLogin as your identity provider:
 
 1.  Copy both the **Client ID** and **Client Secret**.
 
-1.  In Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, go to **Settings** > **Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 
@@ -58,7 +58,7 @@ To set up OneLogin as your identity provider:
 
 1.  Click **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.
+To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to OneLogin.
 
 ## Example API Config
 

@@ -14,7 +14,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Log in to your OneLogin admin portal.
 
-1.  Select **Apps > Add Apps**.
+1.  Select **Apps** > **Add Apps**.
 
 1.  Under **Find Applications**, search for **Cloudflare Access**.
 
@@ -44,7 +44,7 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO interface with SAML2.0 sign on method, Issuer URL, and X.509 Certificate](/images/cloudflare-one/identity/onelogin/onelogin-saml-7.png)
 
-1.  In Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, go to **Settings** > **Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 
@@ -56,7 +56,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Click **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

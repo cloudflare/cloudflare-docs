@@ -136,7 +136,7 @@ For GitLab, start by building two policies. Users will connect to GitLab in a co
 
 Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the **Applications** page in Zero Trust. Select **Add an application**.
+Once enabled, go to the **Applications** page in Zero Trust. Select **Add an application**.
 
 Choose self-hosted from the options presented.
 

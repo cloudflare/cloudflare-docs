@@ -36,7 +36,7 @@ Use these steps to set up Facebook as your identity provider.
 
     ![Facebook Settings with App ID and App Secret highlighted](/images/cloudflare-one/identity/facebook/fb6.png)
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings > Authentication**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

@@ -123,7 +123,7 @@ iOS only allows the Safari browser to open and install certificates.
 
 {{<Aside type="note">}}
 
-Alternatively you can navigate to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
+Alternatively, you can go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
 
 {{</Aside>}}
 
@@ -236,8 +236,8 @@ $ sudo update-ca-trust
 
 {{<table-wrap>}}
 
-|                                                                                                                        |                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+|                                                                                                          |                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | ![Android **Security** settings screen](/images/cloudflare-one/connections/android_advanced_encrypt.png) | ![Android **Security** screen after expanding **Advanced** menu](/images/cloudflare-one/connections/android_advanced_encrypt2.png) |
 
 {{</table-wrap>}}
@@ -246,8 +246,8 @@ $ sudo update-ca-trust
 
 {{<table-wrap>}}
 
-|                                                                                                                           |                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+|                                                                                                             |                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | ![Android **Encryption & credentials** screen](/images/cloudflare-one/connections/android_install_cert.png) | ![Android **Install a certificate*** screen](/images/cloudflare-one/connections/android_ca_cert.png) |
 
 {{</table-wrap>}}
@@ -284,8 +284,8 @@ The root certificate is now installed and ready to be used.
 
 {{<table-wrap>}}
 
-|                                                                                                                |                                                                                                                 |                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+|                                                                                                  |                                                                                                   |                                                                                           |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | ![ChromeOS **Network & Internet** screen](/images/cloudflare-one/connections/chromeOS4_cert.png) | ![ChromeOS **Security & location** screen](/images/cloudflare-one/connections/chromeOS5_cert.png) | ![ChromeOS **Credentials** screen](/images/cloudflare-one/connections/chromeOS6_cert.png) |
 
 {{</table-wrap>}}

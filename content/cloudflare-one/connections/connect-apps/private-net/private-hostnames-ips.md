@@ -30,7 +30,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Enable UDP support
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 1.  Scroll down to Firewall settings.
 1.  Ensure the Proxy is enabled and both TCP and UDP are selected.
 

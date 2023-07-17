@@ -26,7 +26,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ## 3. Generate a short-lived certificate public key
 
-1. In Zero Trust, navigate to **Access > Service Auth**.
+1. In Zero Trust, to **Access** > **Service Auth**.
 
 2. In the dropdown, choose the application that represents the resource you secured in Step 1.
 
