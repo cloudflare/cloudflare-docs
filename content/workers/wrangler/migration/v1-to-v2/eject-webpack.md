@@ -90,7 +90,7 @@ module.exports = {
 ```json
 {
   "name": "my-worker",
-  "verion": "2.0.0",
+  "version": "2.0.0",
   // ...
   "scripts": {
     "build": "webpack" // <-- Add this line!
