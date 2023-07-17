@@ -7,7 +7,7 @@ layout: single
 
 # Private networks
 
-With Cloudflare Tunnel, you can connect private networks and the services running in those networks to Cloudflare's edge. There are two main differences between private network and [public hostname](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) routes:
+With Cloudflare Tunnel, you can connect private networks and the services running in those networks to Cloudflare's edge. There are two main differences between private network and [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) routes:
 
 * Private network routes can expose both HTTP and non-HTTP resources.
 * To connect to private network resources, end users must have the [WARP client](/cloudflare-one/connections/connect-devices/warp/) installed on their device or onboard traffic via a [Magic WAN on-ramp](/magic-wan/zero-trust/cloudflare-tunnel/).

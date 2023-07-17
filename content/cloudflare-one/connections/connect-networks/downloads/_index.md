@@ -7,7 +7,7 @@ layout: single
 
 # Downloads
 
-Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/), you can simply copy-paste the installation command shown in the dashboard.
+Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. If you are [creating a tunnel through the dashboard](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/), you can simply copy-paste the installation command shown in the dashboard.
 
 To download and install `cloudflared` manually, use one of the following links.
 
@@ -67,4 +67,4 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 
 Cloudflare supports the previous year of `cloudflared` releases. For example, if the [latest version](https://github.com/cloudflare/cloudflared/releases) is `2023.5.1`, version `2022.5.1` and later are supported. Deprecated versions may be impacted by breaking changes unrelated to feature availability.
 
-To update `cloudflared`, refer to [these instructions](/cloudflare-one/connections/connect-apps/downloads/update-cloudflared/).
+To update `cloudflared`, refer to [these instructions](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/).

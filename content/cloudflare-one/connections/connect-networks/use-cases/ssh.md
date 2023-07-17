@@ -88,7 +88,7 @@ $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/).
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/).
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `ssh.example.com`).
 
@@ -104,7 +104,7 @@ Users can connect from their device by [authenticating through `cloudflared`](#n
 
 #### Native Terminal
 
-1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/downloads/) on the client machine.
+1. [Install `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/) on the client machine.
 
 2. Make a one-time change to your SSH configuration file:
    ```sh

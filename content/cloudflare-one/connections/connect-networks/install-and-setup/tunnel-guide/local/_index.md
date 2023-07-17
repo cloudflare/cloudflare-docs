@@ -22,7 +22,7 @@ Before you start, make sure you:
 <summary>Windows</summary>
 <div>
 
-First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-apps/downloads/) page to find the right package for your OS.
+First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-networks/downloads/) page to find the right package for your OS.
 
 Next, rename the executable to `cloudflared.exe`, and then open PowerShell. Change directory to your Downloads folder and run `.\cloudflared.exe --version`. It should output the version of `cloudflared`. Note that `cloudflared.exe` could be `cloudflared-windows-amd64.exe` or `cloudflared-windows-386.exe` if you haven't renamed it.
 
@@ -45,7 +45,7 @@ The first step to creating a tunnel is to download and install `cloudflared` on 
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
-Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-one/connections/connect-apps/downloads/) directly.
+Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-one/connections/connect-networks/downloads/) directly.
 
 </div>
 </details>
@@ -54,7 +54,7 @@ Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-on
 <summary>Linux</summary>
 <div>
 
-First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-apps/downloads/) page to find the right package for your OS.
+First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare-one/connections/connect-networks/downloads/) page to find the right package for your OS.
 
 Next, install `cloudflared`.
 
@@ -117,7 +117,7 @@ $ cloudflared tunnel login
 Running this command will:
 
 - Open a browser window and prompt you to log in to your Cloudflare account. After logging in to your account, select your hostname.
-- Generate an account certificate, the [cert.pem file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem), in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
+- Generate an account certificate, the [cert.pem file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#certpem), in the [default `cloudflared` directory](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
 
 ## 3. Create a tunnel and give it a name
 
@@ -127,8 +127,8 @@ $ cloudflared tunnel create <NAME>
 
 Running this command will:
 
-- Create a tunnel by establishing a persistent relationship between the [name you provide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#tunnel-name) and a [UUID](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet.
-- Generate a [tunnel credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
+- Create a tunnel by establishing a persistent relationship between the [name you provide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#tunnel-name) and a [UUID](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet.
+- Generate a [tunnel credentials file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#credentials-file) in the [default `cloudflared` directory](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
 - Create a subdomain of `.cfargotunnel.com`.
 
 From the output of the command, take note of the tunnel’s UUID and the path to your tunnel’s credentials file.
@@ -141,7 +141,7 @@ $ cloudflared tunnel list
 
 ## 4. Create a configuration file
 
-Create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
+Create a [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
 
 Add the following fields to the file:
 
@@ -208,7 +208,7 @@ $ cloudflared tunnel --config /path/your-config-file.yaml run
 
 {{<Aside>}}
 
-Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/).
+Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/).
 
 {{</Aside>}}
 
@@ -220,4 +220,4 @@ Your tunnel configuration is complete! If you want to get information on the tun
 $ cloudflared tunnel info <UUID or NAME>
 ```
 
-You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your tunnel using Cloudflare DNS or [determine who can reach your tunnel](/cloudflare-one/policies/access/) with Cloudflare Access.
+You can now [route traffic](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to your tunnel using Cloudflare DNS or [determine who can reach your tunnel](/cloudflare-one/policies/access/) with Cloudflare Access.

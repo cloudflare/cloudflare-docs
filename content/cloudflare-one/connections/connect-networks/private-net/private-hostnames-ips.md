@@ -24,7 +24,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Prerequisites
 
-- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) to route traffic to a private IP space.
+- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/) to route traffic to a private IP space.
 - `cloudflared` must be connected to Cloudflare from your target private network.
 - Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
 
@@ -42,13 +42,13 @@ Next, we need to [create a Local Domain Fallback entry](/cloudflare-one/connecti
 
 {{<Aside type="note">}}
 
-Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#3-route-private-network-ips-through-warp).
+Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#3-route-private-network-ips-through-warp).
 
 {{</Aside>}}
 
 ## Update `cloudflared`
 
-Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries. To do this, you can either set the `protocol: quic` property in your [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/) or [pass the `–-protocol quic` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) directly through your CLI.
+Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries. To do this, you can either set the `protocol: quic` property in your [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/) or [pass the `–-protocol quic` flag](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/) directly through your CLI.
 
 Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
 

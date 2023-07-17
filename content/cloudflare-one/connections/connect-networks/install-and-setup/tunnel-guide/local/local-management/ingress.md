@@ -8,7 +8,7 @@ weight: 3
 
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
 
-To specify which local services a request should be proxied to, you can define ingress rules in your [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
+To specify which local services a request should be proxied to, you can define ingress rules in your [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
 
 ## Requirements
 
@@ -95,8 +95,8 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | HTTP over Unix socket  | Just like HTTP, but using a Unix socket instead.                                                                          | `unix:/home/production/echo.sock`     |
 | HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                                                         | `unix+tls:/home/production/echo.sock` |
 | TCP                    | TCP connections are proxied to your local service.                                                                        | `tcp://localhost:2222`                |
-| SSH                    | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use-cases/ssh/). | `ssh://localhost:22`                  |
-| RDP                    | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use-cases/rdp/). | `rdp://localhost:3389`                |
+| SSH                    | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-networks/use-cases/ssh/). | `ssh://localhost:22`                  |
+| RDP                    | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-networks/use-cases/rdp/). | `rdp://localhost:3389`                |
 | kubectl bastion mode   | `cloudflared` will act like a jumphost, allowing access to any local address.                                             | `bastion`                             |
 | Hello World            | Test server for validating your Cloudflare Tunnel setup.                                                                  | `hello_world`                         |
 | HTTP status            | Responds to all requests with the given HTTP status.                                                                      | `http_status:404`                     |

@@ -15,7 +15,7 @@ Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup proc
 To complete the steps in this guide, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) and [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install).
-- [Basic knowledge of Terraform](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
+- [Basic knowledge of Terraform](/cloudflare-one/connections/connect-networks/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
 - [A zone on Cloudflare](/fundamentals/get-started/setup/add-site/).
 - [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
 
@@ -105,7 +105,7 @@ The following configuration will modify settings in your Cloudflare account.
 
 ### Configure GCP resources
 
-The following configuration defines the specifications for the GCP virtual machine and installs Python3 on the machine. Python3 allows Ansible to configure the GCP instance instead of having to run a [startup script](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/#create-a-startup-script) on boot.
+The following configuration defines the specifications for the GCP virtual machine and installs Python3 on the machine. Python3 allows Ansible to configure the GCP instance instead of having to run a [startup script](/cloudflare-one/connections/connect-networks/deployment-guides/terraform/#create-a-startup-script) on boot.
 
 1. In your configuration directory, create a `.tf` file:
 
@@ -294,4 +294,4 @@ It may take several minutes for the GCP instance and tunnel to come online. You 
 
 ## 7. Test the connection
 
-You can now SSH to the GCP server through the new `ssh_app.<zone>` hostname. For instructions on how to connect, refer to our [SSH guide](/cloudflare-one/connections/connect-apps/use-cases/ssh/#2-connect-as-a-user).
+You can now SSH to the GCP server through the new `ssh_app.<zone>` hostname. For instructions on how to connect, refer to our [SSH guide](/cloudflare-one/connections/connect-networks/use-cases/ssh/#2-connect-as-a-user).

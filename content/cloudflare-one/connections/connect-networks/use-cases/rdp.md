@@ -90,7 +90,7 @@ You now have secure, remote access to the RDP server.
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/).
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/).
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
 
@@ -102,7 +102,7 @@ You now have secure, remote access to the RDP server.
 
 ### 2. Connect as a user
 
-1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/downloads/) on the client machine.
+1. [Install `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/) on the client machine.
 2. Run this command to open an RDP listening port:
 
     ```sh

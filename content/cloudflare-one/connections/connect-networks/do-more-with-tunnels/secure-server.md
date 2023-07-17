@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="note" header="Before you start">}}
 
-Make sure you follow our [guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) to create, configure, and run a tunnel.
+Make sure you follow our [guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/) to create, configure, and run a tunnel.
 
 {{</Aside>}}
 
