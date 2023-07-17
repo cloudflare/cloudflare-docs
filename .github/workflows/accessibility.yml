@@ -39,9 +39,9 @@ jobs:
       - run: pnpm install
 
       - run: make build
-          env:
-            NODE_OPTIONS: "--max-old-space-size=8192"
-            
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
+
       - name: Accessibility Audits
         run: |
           npm install -g @jakepartusch/lumberjack
