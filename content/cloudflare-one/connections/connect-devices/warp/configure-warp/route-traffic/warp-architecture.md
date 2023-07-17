@@ -76,7 +76,7 @@ You can verify that the operating system is using WARP's local DNS proxy:
 {{<tabs labels="macOS and Linux | Windows">}}
 {{<tab label="macos and linux" no-code="true">}}
 
-To check the DNS servers used by macOS/Linux, run `scutil --dns`. You should see WARP's local DNS proxy IPs.
+To check the DNS servers used by macOS/Linux, open a terminal window and run `scutil --dns`. You should see WARP's local DNS proxy IPs.
 
 ```sh
 ---
@@ -104,7 +104,7 @@ resolver #2
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-To check the DNS servers used by Windows, run `ipconfig`. You should see WARP's local DNS proxy IPs.
+To check the DNS servers used by Windows, open a Powershell window and run `ipconfig`. You should see WARP's local DNS proxy IPs.
 
 ```bash
 ---
