@@ -376,7 +376,7 @@ CloudflareネットワークにあるWebサイト（`tunnel.example.com`）の�
 ### 解決方法
 
 -   **このWebサイトの訪問者の方は**：数分後にもう一度お試しください。
--   **Webサイトの所有者の方は**：_Cloudflare_が実行中であり、ネットワークにアクセスできることを確認してください。トンネルの[負荷分散](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)を有効化することもできます。
+-   **Webサイトの所有者の方は**：_Cloudflare_が実行中であり、ネットワークにアクセスできることを確認してください。トンネルの[負荷分散](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb)を有効化することもできます。
 
 ___
 

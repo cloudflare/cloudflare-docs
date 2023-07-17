@@ -418,7 +418,7 @@ Sie haben eine Seite auf einer Website angefordert (`tunnel.beispiel.com`), die 
 ### Lösung
 
 -   **Wenn Sie Besucher dieser Website sind**: Bitte versuchen Sie es in ein paar Minuten erneut.
--   **Wenn Sie der Besitzer dieser Website sind**: Überprüfen Sie, ob _cloudflared_ ausgeführt wird und das Netzwerk erreicht werden kann. Möglicherweise sollten Sie [Load Balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) für Ihren Tunnel aktivieren.
+-   **Wenn Sie der Besitzer dieser Website sind**: Überprüfen Sie, ob _cloudflared_ ausgeführt wird und das Netzwerk erreicht werden kann. Möglicherweise sollten Sie [Load Balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) für Ihren Tunnel aktivieren.
 
 ___
 

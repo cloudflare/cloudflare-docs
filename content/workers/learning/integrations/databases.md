@@ -14,8 +14,8 @@ Use Cloudflare Workers to connect your application to external databases, such a
 | Database                                                                         |Native Integration |  Library or Driver      | Connection Method      |
 | ------------------------------------------------------------------------------- | ----- | --------- | --------- |
 | [Postgres](/workers/tutorials/postgres/) | - |  [node-postgres](https://node-postgres.com/) | [Workers Socket API](/workers/runtime-apis/tcp-sockets/) |
-| [Postgres](/workers/tutorials/postgres/) | - |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
-| [MySQL](/workers/tutorials/postgres/) | - | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
+| [Postgres](/workers/tutorials/postgres/) | - |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) |
+| [MySQL](/workers/tutorials/postgres/) | - | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) |
 | [FaunaDB](https://fauna.com/blog/getting-started-with-fauna-and-cloudflare-workers) | No |  [faunadb](https://github.com/fauna/faunadb-js)         | API via client library |
 | [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript) | [Yes](/workers/learning/integrations/databases/#planetscale) |[@planetscale/database](https://github.com/planetscale/database-js)         | API via client library |
 | [Supabase](https://github.com/supabase/examples-archive/tree/main/supabase-js-v1/with-cloudflare-workers) | [Yes](/workers/learning/integrations/databases/#supabase) | [@supabase/supabase-js](https://github.com/supabase/supabase-js)         | API via client library |

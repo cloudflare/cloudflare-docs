@@ -98,7 +98,7 @@ A network of remote servers used to store and maintain data.
 
 `cloudflared` is the software that powers Cloudflare Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
-**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 ## content delivery network (CDN)
 

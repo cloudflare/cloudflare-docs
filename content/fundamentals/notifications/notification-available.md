@@ -1013,7 +1013,7 @@ No direct call to action.
 
 **Who is it for?**
 
-Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
 
 **Other options / filters**
 
@@ -1025,7 +1025,7 @@ All Cloudflare Zero Trust plans.
 
 **What should you do if you receive one?**
 
-Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/).
+Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/).
 
 </div>
 </details>

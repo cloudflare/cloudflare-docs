@@ -22,7 +22,7 @@ If you are using Legacy Tunnel today you can migrate to Named Tunnel deployment 
 
 10 minutes
 
-See additional documentation for working with [Kubernetes](/cloudflare-one/connections/connect-apps/deployment-guides/kubernetes/).
+See additional documentation for working with [Kubernetes](/cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/).
 
 ---
 
@@ -55,7 +55,7 @@ The Named Tunnel, documented below, model provides easier management and greater
 
 ## Create a Named Tunnel
 
-To migrate to the Named Tunnel model, first [download and authenticate](/cloudflare-one/connections/connect-apps/) `cloudflared`. Install the agent within your environment in a location that can reach the service you plan to connect to Cloudflare.
+To migrate to the Named Tunnel model, first [download and authenticate](/cloudflare-one/connections/connect-networks/) `cloudflared`. Install the agent within your environment in a location that can reach the service you plan to connect to Cloudflare.
 
 To begin, create a Named Tunnel with the following command.
 
@@ -67,7 +67,7 @@ This command will create a Tunnel object in your Cloudflare account that is repr
 
 ## Create a configuration file
 
-Next, configure your Tunnel. The example below consists of a web service that is available at port 8000. The ingress rule will send traffic that `cloudflared` receives for the specified hostname to that port. You can also connect [multiple services](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/) with a single instance of `cloudflared`.
+Next, configure your Tunnel. The example below consists of a web service that is available at port 8000. The ingress rule will send traffic that `cloudflared` receives for the specified hostname to that port. You can also connect [multiple services](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/) with a single instance of `cloudflared`.
 
 In the configuration file, you must specify the location of the credentials file generated previously when you created the Tunnel.
 

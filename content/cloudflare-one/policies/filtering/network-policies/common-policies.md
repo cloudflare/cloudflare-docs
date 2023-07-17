@@ -31,7 +31,7 @@ In the following example, users can only access an application if they connect f
 
 ## Restrict access to private networks
 
-Restrict access to resources which you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/).
+Restrict access to resources which you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
 
 The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic. Make sure that the Allow policy has higher priority (by positioning it towards the top of the list in the UI).
 
