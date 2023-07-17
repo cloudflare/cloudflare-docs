@@ -10,10 +10,7 @@ layout: single
 This guide covers the recommended steps to start securing your users and devices with Cloudflare Zero Trust.
 
 {{<Aside type="note">}}
-To get started with a specific use case, refer to the following learning paths:
-
-- [Replace your VPN](/learning-paths/replace-vpn/)
-- [Get started with DNS filtering](/learning-paths/dns-filtering/)
+To get started with a specific use case, refer to our [learning paths](/cloudflare-one/learning-paths/).
 {{</Aside>}}
 
 ## Create a Zero Trust organization
