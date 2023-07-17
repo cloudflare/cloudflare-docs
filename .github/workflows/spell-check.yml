@@ -7,29 +7,6 @@ on:
       - synchronize
 
 jobs:
-  case-police:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: npm install -g case-police
-
-      - name: Get Changed Files from Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # get file names and separate them with space ' '
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-only | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ' ')
-          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
-
-      - name: Output Changed Files
-        run: echo ${{ env.CHANGED_FILES }}
-
-      - name: Run Case Police on changed files
-        run: case-police ${{ env.CHANGED_FILES }}
 
   spell-check:
     runs-on: ubuntu-latest
@@ -51,6 +28,12 @@ jobs:
       - name: Install codespell
         run: pip install codespell
 
+      - name: Install case-police
+        run: npm install -g case-police
+
+      - name: Install alex
+        run: npm install -g alex
+
       - name: Get Changed Files from Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,5 +45,13 @@ jobs:
       - name: Output Changed Files
         run: echo ${{ env.CHANGED_FILES }}
 
-      - name: Check for Spelling Errors
+      - name: Spelling Errors
         run: codespell --count --skip="*.js,./.git,./content/support/Other Languages/*" ${{ env.CHANGED_FILES }}
+
+      - name: Case Police
+        run: case-police ${{ env.CHANGED_FILES }}
+        if: always()
+      
+      - name: Alex (inclusive language)
+        run: alex ${{ env.CHANGED_FILES }}
+        if: always()
