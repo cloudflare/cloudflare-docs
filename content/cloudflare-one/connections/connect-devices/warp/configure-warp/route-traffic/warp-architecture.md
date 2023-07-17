@@ -57,7 +57,7 @@ When you turn on WARP, WARP creates a local DNS proxy on the device and binds it
 WARP then configures the operating system to send all DNS requests to these IP addresses. All network interfaces on the device will now use this local DNS proxy for DNS resolution. In other words, all DNS traffic will now be handled by the WARP client.
 
 {{<Aside type="note">}}
-Browsers with DoH or secure DNS configured will bypass the local DNS proxy. You may need to disable these settings in the browser.
+Browsers with DoH configured will bypass the local DNS proxy. You may need to disable DoH settings in the browser.
 {{</Aside>}}
 
 Based on your Local Domain Fallback configuration, WARP will either forward the request to Gateway for DNS policy enforcement or forward the request to your private DNS resolver.
