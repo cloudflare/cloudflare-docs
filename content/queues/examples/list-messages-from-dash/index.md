@@ -1,14 +1,15 @@
 ---
 pcx_content_type: how-to
-title: List messages from the dashboard
-summary: Use the dashboard to fetch the messages currently in a Queue.
+title: List and ack messages from the dashboard
+summary: Use the dashboard to fetch and acknowledge the messages currently in a Queue.
 weight: 1004
 layout: single
 meta:
-  title: Cloudflare Queues - Listing messages from the dashboard 
+  title: Cloudflare Queues - Listing and acking messages from the dashboard
 ---
 
-# List messages from the dashboard
+# List and ack messages from the dashboard
+## List messages from the dashboard
 
 Listing messages from the dashboard allows you to debug Queues or Queue producers without a consumer Worker. Fetching a batch of messages to preview will not acknowledge or retry the message or affect its position in the Queue. The Queue can still be consumed normally by a consumer Worker.
 
@@ -24,10 +25,20 @@ To list messages in the dashboard:
 ![A form to configure how many messages are listed at a time, with a number input showing '10'](./fetch-message-batch-size.png)
 
 7. Select **List messages**.
-8. When the list of messages loads, select the blue arrow to the left of each row to expand the message preview.
+8. When the list of messages loads, select the blue arrow to the right of each row to expand the message preview.
 
 ![A table showing two previewed messages, one text and one JSON, both with some placeholder text](./fetched-messages.png)
 
 This will preview a batch of messages currently in the Queue.
 
-Refer to the [Get Started guide](/queues/get-started/) to learn how to process messages from a Queue in a Worker.
+## Acknowledge messages from the dashboard
+
+Acknowledging messages from the dashboard will permanently remove them from the Queue, with equivalent behavior as `ack()` in a Worker.
+
+1. Select the checkbox to the left of each row to select the message for acknowledgement, or select the checkbox in the table header to select all messages.
+2. Select **Acknowledge messages**.
+3. Confirm that you want to acknowledge the messages, and select **Acknowledge messages**.
+
+This will remove the selected messages from the Queue and prevent consumers from processing them further.
+
+Refer to the [Get Started guide](/queues/get-started/) to learn how to process and acknowledge messages from a Queue in a Worker.
