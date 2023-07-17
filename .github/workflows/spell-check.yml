@@ -52,6 +52,10 @@ jobs:
         run: case-police ${{ env.CHANGED_FILES }} --disable vscode,DoS
         if: always()
 
+      - name: Create .alexrc file
+        run: |
+          echo '{ "allow": ["attacks"] }' > .alexrc
+
       - name: Alex (inclusive language)
         run: alex ${{ env.CHANGED_FILES }}
         if: always()
