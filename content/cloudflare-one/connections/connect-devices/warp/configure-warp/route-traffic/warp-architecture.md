@@ -220,11 +220,7 @@ Unknown adapter CloudflareWARP:
 
 WARP edits the system routing table to control what traffic goes down the Wireguard tunnel to Gateway. The routing table indicates which network interface should handle packets to a particular IP address. By default, all traffic routes through WARP's virtual interface except for the IPs and domains on your Split Tunnel exclude list (which use the default interface on your device).
 
-To view the entire routing table:
-
-```sh
-$ netstat -r
-```
+To view the entire routing table, run `netstat -r`.
 
 You can also lookup a specific routing table entry:
 
