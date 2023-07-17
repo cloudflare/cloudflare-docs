@@ -7,7 +7,7 @@ weight: 2
 
 # Content types
 
-The content sections are in prioritized order and should be applied to all new developers.cloudflare.com products.
+The content sections are in prioritized order and should be applied to all new [developers.cloudflare.com](https://developers.cloudflare.com/) products.
 
 <table>
     <tr>

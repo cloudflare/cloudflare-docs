@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Notes/tips/warnings
-weight: 
 
 ---
 
@@ -10,14 +9,14 @@ weight:
 <table>
     <tr>
         <th style="width:15%">Definition</th>
-        <td>A colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that don't fit the text or warns users of specific behavior that can break functionality or impact security.</td>
+        <th>A colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the text or warns users of specific behavior that can break functionality or impact security.</th>
     </tr>
     <tr>
-        <th>Structure</th>
+        <td>Structure</td>
         <td>Title/Header (optional)<br/>Type: note or warning (defines the background color)<br/>Aside content</td>
     </tr>
     <tr>
-        <th>Used in</th>
+        <td>Used in</td>
         <td>How to, Configuration, FAQ, Concept, Reference, Tutorial</td>
     </tr>
 </table>

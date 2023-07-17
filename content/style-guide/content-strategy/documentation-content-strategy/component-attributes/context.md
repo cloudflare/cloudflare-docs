@@ -10,7 +10,7 @@ weight:
 <table>
   <tr>
     <th style="width:15%">Definition</th>
-    <td>An introductory paragraph immediately following the page title that explains what users can expect from the following content, whether steps, concepts, FAQs, or reference materials.</td>
+    <th>An introductory paragraph immediately following the page title that explains what users can expect from the following content, whether steps, concepts, FAQs, or reference materials.</th>
   </tr>
   <tr>
     <td>Structure</td>
@@ -24,12 +24,16 @@ weight:
 
 <table>
   <tr>
-    <th style="width=25%">Content Type</th>
+    <th style="width=20%">Content Type</th>
     <th>Context Guidelines</th>
   </tr>
   <tr>
+    <td>Overview (aka Landing Page)</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
     <td>How to</td>
-    <td>An introductory paragraph on the following steps and what they'll accomplish. <br/>Provide context to the reader that is not in the section heading.<br\>End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there's more material (such as a note) between the context and the procedure.<br\>Don't provide context for steps with a partial sentence that's completed by the numbered steps.</td>
+    <td>An introductory paragraph on the following steps and what they will accomplish. <br/>Provide context to the reader that is not in the section heading.<br/>End with a colon or a period. <br/>Use a colon if it immediately precedes the steps. <br/>Use a period if there is more material (such as a note) between the context and the procedure.<br/>Do not provide context for steps with a partial sentence that is completed by the numbered steps.</td>
   </tr>
   <tr>
     <td>Configuration</td>

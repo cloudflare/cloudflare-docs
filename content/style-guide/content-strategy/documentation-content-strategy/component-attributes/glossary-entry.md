@@ -9,14 +9,14 @@ title: Glossary entry
 <table>
     <tr>
         <th style="width:15%">Definition</th>
-        <td>A single term and corresponding definition in the glossary.</td>
+        <th>A single term and corresponding definition in the glossary.</th>
     </tr>
     <tr>
-        <th>Structure</th>
+        <td>Structure</td>
         <td>H2 term and paragraph definition.</td>
     </tr>
     <tr>
-        <th>Used in</th>
+        <td>Used in</td>
         <td>Glossary</td>
     </tr>
 </table>
@@ -33,21 +33,23 @@ Full entry formatting:
 **Relevant links:** [Description/title of link](https://www.example.com)
 ```
 
-Note: If you add both related terms and relevant links to an entry, include two spaces after `**Related terms:**` to create a line break (not paragraph break).
+{{<Aside type="note">}}
+If you add both **related terms** and **relevant links** to an entry, include two spaces after `**Related terms:**` to create a line break (not paragraph break).
+{{</Aside>}}
 
 ## Structure
 
 ### Required components
 
-+ Term: Fully spell out the term with any acronym following in parentheses. Use lower case, except for proper nouns.
-+ Definition: Use full sentences. Follow format of “A [term] is [explanation clause]" where applicable.
++ **Term**: Fully spell out the term with any acronym following in parentheses. Use lower case, except for proper nouns.
++ **Definition**: Use full sentences. Follow format of “A [term] is [explanation clause]" where applicable.
 
 ### Optional components
 
-+ Related terms: This is not needed for every term. List other terms defined in the glossary that will help with this term’s understanding, especially those that should be understood first.
-+ Relevant links: Link other pages relevant to the defined term. This is limited to
-product documentation specific to the term
-+ External pages (elsewhere in Cloudflare Docs, Help Center, Learning Center, etc.) that further explain a concept or provide additional details
++ **Related terms**: This is not needed for every term. List other terms defined in the glossary that will help with this term’s understanding, especially those that should be understood first.
++ **Relevant links**: Link other pages relevant to the defined term. This is limited to:
+    + Product documentation specific to the term.
+    + External pages (elsewhere in Cloudflare Docs, Help Center, Learning Center, etc.): Further explain a concept or provide additional details.
 
 ## Examples
 

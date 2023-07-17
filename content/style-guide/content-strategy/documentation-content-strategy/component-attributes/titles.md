@@ -47,7 +47,7 @@ title: Titles
     <td>"Changelog" if changelog is listed on one page. If changes are split into multiple pages, the top-level navigation page should be titled "Changelog" and titles of the sub-pages should be the date of change listed in year-month-day.</td>
   </tr>
   <tr>
-    <td>Glossary for external doc site</td>
+    <td>Glossary</td>
     <td>Glossary</td>
   </tr>
   <tr>
@@ -57,10 +57,6 @@ title: Titles
   <tr>
     <td>Reference</td>
     <td>For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example Common Cf-Polished statuses.</td>
-  </tr>
-  <tr>
-    <td>Tutorial</td>
-    <td> </td>
   </tr>
   <tr>
     <td>Navigation</td>

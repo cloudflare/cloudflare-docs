@@ -9,21 +9,21 @@ title: Examples
 <table>
     <tr>
         <th style="width:15%">Definition</th>
-        <td>A code sample or line of text that shows the specific structure of a request/response, input/output, or value for UI/API elements</td>
+        <th>A code sample or line of text that shows the specific structure of a request/response, input/output, or value for UI/API elements</th>
     </tr>
     <tr>
-        <th>Structure</th>
+        <td>Structure</td>
         <td>Context<br/>Code blocks or snippets<br/>These could include:<br/>Example requests and responses<br/>Example inputs and outputs<br/>Field values for UI and/or API</td>
     </tr>
     <tr>
-        <th>Used in</th>
+        <td>Used in</td>
         <td>Tutorial, How to, Reference</td>
     </tr>
 </table>
 
 ## Additional information
 
-<how to format code snippets>
+[Code block guidelines](/style-guide/grammar-and-formatting/code-block-guidelines/)
 
 ## Requests/feedback
 
