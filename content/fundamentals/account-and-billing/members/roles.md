@@ -44,6 +44,8 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Network Services Read (Magic) | Grants read access to network configurations for Magic services. |
 | Minimal Account Access | Can view account, and nothing else. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for DNS and Firewall. |
+| Page Shield | Grants write access to [Page Shield](/page-shield/) across the whole account. |
+| Page Shield Read | Grants read access to [Page Shield](/page-shield/) across the whole account. |
 | Trust & Safety | Can access trust and safety related services. |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
@@ -62,6 +64,8 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Domain Administrator | Grants full access to domains in an account, and read-only access to account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain Administrator Read Only | Grants read-only access to domains in an account, as well as account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain DNS | Grants access to edit [DNS settings](/dns/) for domains in an account. |
+| Domain Page Shield | Grants write access to [Page Shield](/page-shield/) for domains in an account. |
+| Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domains in an account. |
 | Domain Waiting Room Admin | Can edit [waiting rooms](/waiting-room/) configuration. |
 | Domain Waiting Room Read | Can read [waiting rooms](/waiting-room/) configuration. |
 | Zone Versioning | Grants full access to [Zone Versioning](/version-management/). |
