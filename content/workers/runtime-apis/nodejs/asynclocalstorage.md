@@ -227,3 +227,5 @@ console.log(myResource.doSomething()); // prints 123
 * Workers does not implement the full [`async_hooks`](https://nodejs.org/dist/latest-v18.x/docs/api/async_hooks.html) API upon which Node.js' implementation of `AsyncLocalStorage` is built.
 
 * Workers does not implement the ability to create an `AsyncResource` with an explicitly identified trigger context as allowed by Node.js. This means that a new `AsyncResource` will always be bound to the async context in which it was created.
+
+* Thenables (non-Promise objects that expose a `then()` method) are not fully supported when using AsyncLocalStorage.
