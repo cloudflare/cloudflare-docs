@@ -55,6 +55,7 @@ jobs:
       - name: Create .alexrc file
         run: |
           echo '{ "allow": ["attacks"] }' > .alexrc
+        if: always()
 
       - name: Alex (inclusive language)
         run: alex ${{ env.CHANGED_FILES }}
