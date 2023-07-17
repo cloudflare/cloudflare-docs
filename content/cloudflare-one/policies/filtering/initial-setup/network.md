@@ -24,7 +24,7 @@ To filter network traffic from a device such as a laptop or phone:
 
 ### Connect private networks
 
-To filter traffic from private networks, refer to the [Cloudflare Tunnel guide](/cloudflare-one/connections/connect-apps/).
+To filter traffic from private networks, refer to the [Cloudflare Tunnel guide](/cloudflare-one/connections/connect-networks/).
 
 ## 2. Verify device connectivity
 

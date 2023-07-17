@@ -376,7 +376,7 @@ Cloudflare 네트워크에 있는 웹 사이트(`tunnel.example.com`) 페이지�
 ### 문제 해결
 
 -   **이 웹 사이트의 방문자인 경우**: 잠시 후 다시 시도하시기 바랍니다.
--   **이 웹 사이트의 소유자인 경우**: _cloudflared_가 실행 중이며 해당 네트워크에 도달할 수 있는지 확인하시기 바랍니다. 터널에 대해 [로드 밸런싱](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)을 사용해야 하는 경우도 있습니다.
+-   **이 웹 사이트의 소유자인 경우**: _cloudflared_가 실행 중이며 해당 네트워크에 도달할 수 있는지 확인하시기 바랍니다. 터널에 대해 [로드 밸런싱](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb)을 사용해야 하는 경우도 있습니다.
 
 ___
 
