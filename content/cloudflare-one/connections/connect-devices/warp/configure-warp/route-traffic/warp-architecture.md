@@ -75,10 +75,10 @@ R -- No --> G[Cloudflare Gateway]
 
 You can verify that the operating system is using WARP's local DNS proxy:
 
-{{<tabs labels="macOS and Linux | Windows">}}
-{{<tab label="macos and linux" no-code="true">}}
+{{<tabs labels="macOS | Windows | Linux">}}
+{{<tab label="macos" no-code="true">}}
 
-To check the DNS servers used by macOS/Linux, open a terminal window and run `scutil --dns`. You should see WARP's local DNS proxy IPs.
+On macOS, open a terminal window and run `scutil --dns`. The DNS servers should be set to WARP's local DNS proxy IPs.
 
 ```sh
 ---
@@ -106,11 +106,11 @@ resolver #2
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-To check the DNS servers used by Windows, open a Powershell window and run `ipconfig`. You should see WARP's local DNS proxy IPs.
+On Windows, open a Powershell window and run `ipconfig`. The DNS servers should be set to WARP's local DNS proxy IPs.
 
 ```bash
 ---
-highlight: 19-22
+highlight: 17-18
 ---
 PS C:\> ipconfig
 
@@ -118,23 +118,32 @@ Windows IP Configuration
 
 Unknown adapter CloudflareWARP:
 
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
-   Physical Address. . . . . . . . . :
-   DHCP Enabled. . . . . . . . . . . : No
-   Autoconfiguration Enabled . . . . : Yes
-   IPv6 Address. . . . . . . . . . . : 2606:4700:110:80f4:8a9c:b893:67d3:30fc(Preferred)
-   IPv6 Address. . . . . . . . . . . : fd01:db8:1111::2(Preferred)
-   IPv6 Address. . . . . . . . . . . : fd01:db8:1111::3(Preferred)
-   Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%28(Preferred)
-   IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.255.255
-   Default Gateway . . . . . . . . . :
-   DNS Servers . . . . . . . . . . . : fd01:db8:1111::2
-                                       fd01:db8:1111::3
-                                       127.0.2.2
-                                       127.0.2.3
-   NetBIOS over Tcpip. . . . . . . . : Enabled
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : 2606:4700:110:8f79:145:f180:fc4:8106(Preferred)
+   Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
+   IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.255
+   Default Gateway . . . . . . . . . :
+   DNS Servers . . . . . . . . . . . : 127.0.2.2
+                                       127.0.2.3
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+```
+
+{{</tab>}}
+
+{{<tab label="linux" no-code="true">}}
+
+On Linux, check the `/etc/resolv.conf` file. The DNS servers should be set to WARP's local DNS proxy IPs.
+
+```sh
+---
+highlight: 5-6
+---
+$ cat /etc/resolv.conf
 ```
 
 {{</tab>}}
@@ -159,10 +168,12 @@ S -- No --> U["Virtual interface<br> (172.16.0.2)"] --> G[Cloudflare Gateway]
 
 Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP’s virtual interface is what maintains the Wireguard connection between the device and Cloudflare. Its IP address is hardcoded as `172.16.0.2`.
 
-{{<tabs labels="macOS and Linux | Windows">}}
-{{<tab label="macos and linux" no-code="true">}}
+To view a list of all network interfaces on the operating system:
 
-To view a list of all network interfaces on macOS/Linux, run `ifconfig`. When WARP is turned on, you will see a `utun` interface with IP address `172.16.0.2`.
+{{<tabs labels="macOS | Windows | Linux">}}
+{{<tab label="macos" no-code="true">}}
+
+On macOS, run `ifconfig`. When WARP is turned on, you will see a `utun` interface with IP address `172.16.0.2`.
 
 ```sh
 ---
@@ -180,11 +191,11 @@ utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-To view a list of all network interfaces on Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with IP address `172.16.0.2`.
+On Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with IP address `172.16.0.2`.
 
 ```bash
 ---
-highlight: 16
+highlight: 14
 ---
 PS C:\> ipconfig
 
@@ -192,40 +203,55 @@ Windows IP Configuration
 
 Unknown adapter CloudflareWARP:
 
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
-   Physical Address. . . . . . . . . :
-   DHCP Enabled. . . . . . . . . . . : No
-   Autoconfiguration Enabled . . . . : Yes
-   IPv6 Address. . . . . . . . . . . : 2606:4700:110:80f4:8a9c:b893:67d3:30fc(Preferred)
-   IPv6 Address. . . . . . . . . . . : fd01:db8:1111::2(Preferred)
-   IPv6 Address. . . . . . . . . . . : fd01:db8:1111::3(Preferred)
-   Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%28(Preferred)
-   IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.255.255
-   Default Gateway . . . . . . . . . :
-   DNS Servers . . . . . . . . . . . : fd01:db8:1111::2
-                                       fd01:db8:1111::3
-                                       127.0.2.2
-                                       127.0.2.3
-   NetBIOS over Tcpip. . . . . . . . : Enabled
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : 2606:4700:110:8f79:145:f180:fc4:8106(Preferred)
+   Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
+   IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.255
+   Default Gateway . . . . . . . . . :
+   DNS Servers . . . . . . . . . . . : 127.0.2.2
+                                       127.0.2.3
+   NetBIOS over Tcpip. . . . . . . . : Enabled
 ```
 
 {{</tab>}}
+
+{{<tab label="linux" no-code="true">}}
+
+On Linux, run `ifconfig` or `ip addr`. When WARP is turned on, you will see a `utun` interface with IP address `172.16.0.2`.
+
+```sh
+---
+highlight: 4
+---
+$ ifconfig
+<redacted>
+utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
+	inet 172.16.0.2 --> 172.16.0.2 netmask 0xffffffff 
+	inet6 fe80::f6d4:88ff:fe82:6d9e%utun3 prefixlen 64 scopeid 0x17 
+	inet6 2606:4700:110:8c7d:7369:7526:a59b:5636 prefixlen 128 
+	nd6 options=201<PERFORMNUD,DAD>
+```
+{{</tab>}}
+
 {{</tabs>}}
 
 #### Routing table
 
 WARP edits the system routing table to control what traffic goes down the Wireguard tunnel to Gateway. The routing table indicates which network interface should handle packets to a particular IP address. By default, all traffic routes through WARP's virtual interface except for the IPs and domains on your Split Tunnel exclude list (which use the default interface on your device).
 
-To view the entire routing table, run `netstat -r`.
+You can verify that the routing table matches your Split Tunnel rules:
 
-You can also lookup a specific routing table entry:
+{{<tabs labels="macOS | Windows | Linux">}}
+{{<tab label="macos" no-code="true">}}
 
-{{<tabs labels="macOS and Linux | Windows">}}
-{{<tab label="macos and linux" no-code="true">}}
+To view the entire routing table on macOS, run `netstat -r`.
 
-On macOS/Linux, you can search the routing table for a domain or IP address. In this example, we see that traffic to `google.com` is sent through `utun3`, which is the WARP virtual interface on this device:
+You can also search the routing table for a domain or IP address. In this example, we see that traffic to `google.com` is sent through `utun3`, which is the WARP virtual interface on this device:
 
 ```sh
 ---
@@ -260,7 +286,9 @@ destination: 169.254.0.0
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-On Windows, you can search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the WARP virtual interface:
+To view the entire routing table on Windows, run `netstat -r`.
+
+You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the WARP virtual interface:
 
 ```bash
 PS C:/> Find-NetRoute -RemoteIPAddress "1.1.1.1" | Select-Object InterfaceAlias -Last 1
@@ -281,6 +309,25 @@ Wi-Fi
 ```
 
 {{</tab>}}
+
+{{<tab label="linux" no-code="true">}}
+
+To view the entire routing table on Linux, run `ip -6 route show table all` or `ip -4 route show table all`.
+
+You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the WARP virtual interface:
+
+```sh
+$ ip route get 1.1.1.1
+```
+
+In contrast, this DHCP address is excluded from WARP and uses the default interface:
+
+```sh
+$ ip route get 169.254.0.0
+```
+
+{{</tab>}}
+
 {{</tabs>}}
 
 #### System firewall
