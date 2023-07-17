@@ -38,7 +38,7 @@ pcx_content_type: Content
 
 ### Optional components
 
-Code snippets - Examples of API responses or commands to run certain tasks. 
+**Code snippets** - Examples of API responses or commands to run certain tasks. 
 
 [Dynamic Lists](/style-guide/content-strategy/documentation-content-strategy/component-attributes/dynamic-lists/)  - Long lists of fields (more than 20).
 
@@ -46,9 +46,9 @@ Code snippets - Examples of API responses or commands to run certain tasks.
 
 [Notes/tips/warnings](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/) - Relevant information that can help or simplify concepts or warn users of potential impacts.
 
-Screenshots - Images of a completed configuration for complicated tasks.
+**Screenshots** - Images of a completed configuration for complicated tasks.
 
-Tables - Longer lists of features and an associated number value or terms and their definitions.
+**Tables** - Longer lists of features and an associated number value or terms and their definitions.
 
 ## Reference Examples
 

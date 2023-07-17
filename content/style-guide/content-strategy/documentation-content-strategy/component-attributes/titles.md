@@ -56,7 +56,8 @@ title: Titles
   </tr>
   <tr>
     <td>Reference</td>
-    <td>For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example Common Cf-Polished statuses.</td>
+    <td>For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example <a href="https://developers.cloudflare.com/images/polish/cf-polished-statuses/">Common Cf-Polished statuses.</a>
+    </td>
   </tr>
   <tr>
     <td>Navigation</td>
@@ -68,7 +69,7 @@ title: Titles
 
 <table>
   <tr>
-    <th style="width:15%">Definition</th>
+    <th style="width:20%">Definition</th>
     <td>The first line of text on a page. H2, H3, etc.</td>
   </tr>
   <tr>
@@ -90,7 +91,7 @@ Subtitles should be written in imperatives, for example, "## Install Wrangler" a
   </tr>
   <tr>
     <td>Overview</td>
-    <td>Refer to the Overview guidelines for guidance.</td>
+    <td>Refer to the <a href="/style-guide/content-strategy/documentation-content-strategy/content-types/overview/">Overview guidelines</a> for guidance.</td>
   </tr>
   <tr>
     <td>How to</td>
@@ -102,15 +103,15 @@ Subtitles should be written in imperatives, for example, "## Install Wrangler" a
   </tr>
   <tr>
     <td>FAQ</td>
-    <td>Refer to the Web Analytics FAQ for guidance.</td>
+    <td>Refer to the <a href="https://developers.cloudflare.com/analytics/faq/web-analytics/">Web Analytics FAQ</a> for guidance.</td>
   </tr>
   <tr>
     <td>Changelog</td>
-    <td>Refer to R2 or Stream Changelog for guidance.</td>
+    <td>Refer to <a href="https://developers.cloudflare.com/r2/reference/changelog/">R2</a> or <a href="https://developers.cloudflare.com/stream/changelog/">Stream Changelog</a> for guidance.</td>
   </tr>
   <tr>
     <td>Glossary for external doc site</td>
-    <td>Refer to Fundamentals Glossary for guidance.</td>
+    <td>Refer to <a href="/fundamentals/glossary/">Fundamentals Glossary</a> for guidance.</td>
   </tr>
   <tr>
     <td>Concept</td>

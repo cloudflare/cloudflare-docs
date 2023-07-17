@@ -44,7 +44,7 @@ Note: This troubleshooting strategy outlines our approach to troubleshooting con
 
 [Examples](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
 
-Next steps
+**Next steps**
 
 ## Template
 

@@ -49,7 +49,7 @@ External links placed in-paragraph are strongly discouraged because Cloudflare h
 
 + Place links for example requests and API calls in code blocks.
 + Use placeholders in links with account- or user-specific information. And explain what to replace the referential text with.
-    + For example, for the link "`https://api.cloudflare.com/client/v4/accounts/e394a1d3191612045dd1e35eb3a0cebc/rulesets`" use "`https://api.cloudflare.com/client/v4/accounts/<ACCOUNTID>/rulesets`" and add text to say "replace `<ACCOUNTID>` with your Account ID" or similar
+    + For example, for the link "`https://api.cloudflare.com/client/v4/accounts/a0b1c2d3/rulesets`" use "`https://api.cloudflare.com/client/v4/accounts/<ACCOUNTID>/rulesets`" and add text to say "replace `<ACCOUNTID>` with your Account ID" or similar.
 + See [angle brackets](/style-guide/grammar-and-formatting/code-conventions-and-format/) in Code Conventions and Formatting.
 
 ## Shorter URLs

@@ -8,42 +8,40 @@ title: How to
 
 <table>
   <tr>
-    <th style="width:15%">Purpose</th>
-    <td>The purpose of a how to is to explain how to complete a task within the product.</td>
+    <th style="width:20%">Purpose</th>
+    <th>The purpose of a how to is to explain how to complete a task within the product.</th>
   </tr>
   <tr>
-    <th>Tone</th>
+    <td>Tone</td>
     <td>instructional, straightforward</td>
   </tr>
   <tr>
-    <th>content_type</th>
+    <td>content_type</td>
     <td>how-to</td>
   </tr>
   <tr>
-    <th>Required components</th>
+    <td>Required components</td>
     <td>Title Steps Next steps</td>
   </tr>
   <tr>
-    <th>Optional components</th>
+    <td>Optional components</td>
     <td>Context<br/>Prerequisites<br/>Notes/warnings<br/>Examples<br/>Screenshots<br/>Related links</td>
   </tr>
 </table>
-
-Unsure whether your content should be a how to or a tutorial? Check out: Should this be a how to, tutorial, or integration guide?
 
 ## Structure
 
 ## Required components
 
-[Title](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Short verb phrase in second-person imperative. Do not use gerund phrases. 
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Short verb phrase in second-person imperative. Do not use gerund phrases. 
 
-[Steps](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/) - Numbered steps that complete a task.
+[**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/) - Numbered steps that complete a task.
 
-[Next steps](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/) - What users should see as the end result of the steps and/or actionable next steps. Refer to Next steps for more information.
+[**Next steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/) - What users should see as the end result of the steps and/or actionable next steps. Refer to Next steps for more information.
 
 ## Optional components
 
-[Context](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/) - An introductory paragraph on the following steps and what they'll accomplish. Refer to Context for more information. 
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/) - An introductory paragraph on the following steps and what they'll accomplish. Refer to Context for more information.
 
 Provide context to the reader that is not in the section heading.
 
@@ -51,15 +49,15 @@ End with a colon or a period. Use a colon if it immediately precedes the steps. 
 
 Don't provide context for steps with a partial sentence that's completed by the numbered steps.
 
-[Prerequisites](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/) - Tasks or conditions that must be completed before a user can complete a series of steps. Refer to Prerequisites for additional information.
+[**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/) - Tasks or conditions that must be completed before a user can complete a series of steps. Refer to Prerequisites for additional information.
 
-[Notes/warnings](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
+[**Notes/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 
-[Examples](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
+[**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
 
-Screenshots - Refer to
+**Screenshots** - Refer to
 
-Related links - Bulleted list of links to associated resources. Refer to Links for linking strategy.
+**Related links** - Bulleted list of links to associated resources. Refer to [Links](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/) for linking strategy.
 
 ## Template
 

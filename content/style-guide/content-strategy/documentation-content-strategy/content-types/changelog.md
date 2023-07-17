@@ -8,7 +8,7 @@ title: Changelog
 
 <table>
     <tr>
-        <th style="width:15%">Purpose</th>
+        <th style="width:20%">Purpose</th>
         <th>The purpose of a changelog is to log or record notable changes.</th>
     </tr>
     <tr>
@@ -65,7 +65,7 @@ GitHub already maintains an RSS feed for commits affecting a specific file or al
 
 If you want to make this RSS feed visible on your page – both through a link in the HTML `head` and an RSS feed icon in the top toolbar – add one of the following key-value pairs to the frontmatter of your changelog page.
 
-{{<Aside type="note">}}Be careful with moving around changelog pages that have RSS feeds. You'll break anyone's integration who's watching the page, as well as the automated Discord channels that could be referencing the page. {{</Aside>}}
+{{<Aside type="note">}}Be careful with moving around changelog pages that have RSS feeds. You will break anyone's integration who is watching the page, as well as the automated Discord channels that could be referencing the page. {{</Aside>}}
 
 ## File RSS feed
 

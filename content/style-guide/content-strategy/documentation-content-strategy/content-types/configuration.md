@@ -33,13 +33,13 @@ title: Configuration
 
 ### Required components
 
-+ Title - The title should be noun-based, because configurations are not designed to guide users towards achieving a goal – rather, they describe common ways to set up a specific feature depending on the user's needs.
-+ Context - The context should be given in a paragraph right after the title. It should introduce the features, contextualize what type of configurations the user will encounter, and link to other relevant documentation.
-+ Settings and values - This should be a reference table with a 1:1 correspondence between a setting the user can change, and the value they should input/select in order to reach the goal outlined in the context paragraph.
++ **Title** - The title should be noun-based, because configurations are not designed to guide users towards achieving a goal – rather, they describe common ways to set up a specific feature depending on the user's needs.
++ **Context** - The context should be given in a paragraph right after the title. It should introduce the features, contextualize what type of configurations the user will encounter, and link to other relevant documentation.
++ **Settings and values** - This should be a reference table with a 1:1 correspondence between a setting the user can change, and the value they should input/select in order to reach the goal outlined in the context paragraph.
 
 ### Optional components
 
-+ Navigation - When we have many configurations to cover, it's useful to include a navigation list to help the user find what they need.
++ **Navigation** - When we have many configurations to cover, it's useful to include a navigation list to help the user find what they need.
 
 ## Template
 
