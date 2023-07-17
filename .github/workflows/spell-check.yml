@@ -9,19 +9,20 @@ on:
 jobs:
   case-police:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install -g case-police
 
       - name: Find changed files
         id: changes
         run: echo "::set-output name=files::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})"
 
       - name: Run Case Police on changed files
-        uses: antfu/case-police@main
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # Required to comment on pull requests
-          files: ${{ steps.changes.outputs.files }}
+        run: case-police ${{ steps.changes.outputs.files }}
   spell-check:
     runs-on: ubuntu-latest
     steps:
