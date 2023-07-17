@@ -15,7 +15,7 @@ Improve the performance of your website or web application.
 
 {{<plan type="all">}}
 
-Speed allows you to conduct tests with both synthetic and real user data to identify potential website performance enhancements. You can also get recommendations of Cloudflare products and settings to effectively improve your site's performance.
+Speed allows you to assess the performance of your website and get recommendations of Cloudflare products to enhance the website performance.
 
 ---
 
@@ -23,13 +23,13 @@ Speed allows you to conduct tests with both synthetic and real user data to iden
 
 {{<feature header="Observatory" href="/speed/speed-test/">}}
 
-Use synthetic tests and real user data from browsers to assess the performance of your website.
+Use Observatory to conduct tests with both synthetic and real user data to identify potential website performance enhancements.
 
 {{</feature>}}
 
 {{<feature header="Optimization" href="/speed/optimization/">}}
 
-Get recommendations of Cloudflare products to enhance your website’s performance.
+Get recommendations of Cloudflare products ans settings to improve your website’s performance.
 
 {{</feature>}}
 
