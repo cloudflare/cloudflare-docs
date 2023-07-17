@@ -344,7 +344,7 @@ To deploy your Worker, run `wrangler deploy`.
 You have successfully created a Worker which can submit URLs to a Queue for crawling and save results to KV.
 
 
-Refer to [here](#: TODO) for the complete tutorial, including a frontend deployed with Pages to submit URLs and view crawler results.
+Refer to [this GitHub Repository](https://github.com/cloudflare/queues-web-crawler) for the complete tutorial, including a frontend deployed with Pages to submit URLs and view crawler results.
 
 ## Related resources
 
