@@ -117,15 +117,15 @@ Beyond the [example WHIP client](https://github.com/cloudflare/workers-sdk/blob/
 
 ### WHIP
 
-- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
+- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (TypeScript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 - [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
 
 ### WHEP
 
-- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
-- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
+- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (TypeScript)
+- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (TypeScript)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
 As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.
