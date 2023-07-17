@@ -5,7 +5,7 @@ title: Zendesk
 
 # Configure Zendesk SSO with Access for SaaS
 
-This tutorial covers how to configure Zendesk SSO with Access for SaaS.
+This guide covers how to configure Zendesk SSO with Access for SaaS.
 
 ## Prerequisites
 
