@@ -58,14 +58,14 @@ The template project contains the following files and directories:
   compatibility_date = "yyyy-mm-dd"
   ```
 
-- Deploy your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone:
+- Deploy your site to a [custom domain](/workers/platform/routing/custom-domains/) that you own and have already attached as a Cloudflare zone:
 
   ```toml
   route = "https://example.com/*"
   ```
 
   {{<Aside type="note">}}
-  Refer to the documentation on [Routes](/workers/platform/triggers/routes/) to configure a `route` properly.
+  Refer to the documentation on [Routes](/workers/platform/routing/routes/) to configure a `route` properly.
   {{</Aside>}}
 
 Learn more about [configuring your project](/workers/wrangler/configuration/).

@@ -91,7 +91,7 @@ There is some counterintuitive behavior going on here:
 This macro allows you to easily define entrypoints to your Worker. The `event` macro supports the following events:
 
 * `fetch` - Invoked by an incoming HTTP request.
-* `scheduled` - Invoked by [`Cron Triggers`](/workers/platform/triggers/cron-triggers/).
+* `scheduled` - Invoked by [`Cron Triggers`](/workers/platform/cron-triggers/).
 * `queue` - Invoked by incoming message batches from [Queues](/queues/) (Requires `queue` feature in `Cargo.toml`, refer to the [`workers-rs` GitHub repository and `queues` feature flag](https://github.com/cloudflare/workers-rs#queues)).
 * `start` - Invoked when the Worker is first launched (such as, to install panic hooks).
 
@@ -128,7 +128,7 @@ Implements convenient [routing API](https://docs.rs/worker/latest/worker/struct.
 
 ## 4. Publish your Worker project
 
-With your project configured, you can now deploy your Worker, to a *.workers.dev subdomain, or a [custom domain](https://developers.cloudflare.com/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+With your project configured, you can now deploy your Worker, to a *.workers.dev subdomain, or a [custom domain](https://developers.cloudflare.com/workers/platform/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 $ npx wrangler publish
