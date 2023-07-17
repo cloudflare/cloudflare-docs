@@ -55,3 +55,5 @@ jobs:
       - name: Alex (inclusive language)
         run: alex ${{ env.CHANGED_FILES }}
         if: always()
+        with:
+          args: --no-truncate --no-default-ignores --ignore "host,attack,attacks"
