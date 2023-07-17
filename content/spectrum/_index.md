@@ -10,7 +10,7 @@ meta:
 # Spectrum
 
 {{<description>}}
-Spectrum provides security and acceleration for any [TCP](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) or [UDP](https://www.cloudflare.com/learning/ddos/glossary/user-datagram-protocol-udp/) based application. 
+Spectrum provides security and acceleration for any [TCP](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) or [UDP](https://www.cloudflare.com/learning/ddos/glossary/user-datagram-protocol-udp/) based application.
 {{</description>}}
 
 {{<plan type="paid">}}
@@ -58,3 +58,5 @@ Cloudflare's global DNS platform provides speed and resilience. DNS customers al
 {{<resource header="Plans" href="https://www.cloudflare.com/products/cloudflare-spectrum/" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
 
 {{<resource header="Pricing" href="https://www.cloudflare.com/plans/" icon="price">}}Explore pricing options for Spectrum{{</resource>}}
+
+{{</resource-group>}}
