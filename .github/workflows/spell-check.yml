@@ -53,5 +53,5 @@ jobs:
         if: always()
 
       - name: Alex (inclusive language)
-        run: alex ${{ env.CHANGED_FILES }} --config ./.github/workflows/.alexrc
+        run: alex ${{ env.CHANGED_FILES }}d
         if: always()
