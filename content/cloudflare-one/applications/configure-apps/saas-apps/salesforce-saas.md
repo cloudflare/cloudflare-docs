@@ -5,7 +5,7 @@ title: Salesforce
 
 # Configure Salesforce with Access for SaaS
 
-**This tutorial covers how to:**
+This guide covers how to:
 
 - Configure Salesforce as a SaaS application in Cloudflare Zero Trust
 - Force logins to Salesforce through Cloudflare's Zero Trust rules
