@@ -29,7 +29,7 @@ Use Observatory to conduct tests with both synthetic and real user data to ident
 
 {{<feature header="Optimization" href="/speed/optimization/">}}
 
-Get recommendations of Cloudflare products ans settings to improve your website’s performance.
+Get recommendations of Cloudflare products and settings to improve your website’s performance.
 
 {{</feature>}}
 
