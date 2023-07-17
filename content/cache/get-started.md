@@ -61,7 +61,7 @@ To provide Cloudflare services to our customers, we may need to alter your HTML 
 
 These code alterations only occur on the cacheable objects found at Cloudflare's edge and do not affect the original source. The changes will also be removed if the specific feature is disabled and the cache is purged.
 
-Review the list of Cloudflare features that function in this manner:
+Review the list of Cloudflare features that function in this manner (Javascript test):
 
 - [Auto Minify](/speed/optimization/content/auto-minify/)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
