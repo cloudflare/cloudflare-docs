@@ -1,9 +1,74 @@
 ---
-pcx_content_type: navigation
-title: Speed
-weight: 8
+title: Overview
+pcx_content_type: overview
+weight: 1
+layout: overview
+meta:
+  title: Speed
 ---
 
 # Speed
 
-{{<directory-listing>}}
+{{<description>}}
+Improve the performance of your website or web application.
+{{</description>}}
+
+{{<plan type="all">}}
+
+Speed allows you to use Observatory to conduct tests with both synthetic and real user data. This comprehensive approach helps identify potential performance enhancements for your website or web application. Optimization recommends you Cloudflare settings to effectively improve your site's performance.
+
+---
+
+## Features
+
+{{<feature header="Observatory" href="/speed/speed-test/">}}
+
+Use synthetic tests and real user data from browsers to assess the performance of your website.
+
+{{</feature>}}
+
+{{<feature header="Optimization" href="/speed/optimization/">}}
+
+Get recommendations of Cloudflare products to enhance your website’s performance.
+
+{{</feature>}}
+
+{{<feature header="Aggregated Internet Measurement" href="/speed/aim/">}}
+
+Understand your Internet quality to identify scenarios that your Internet connection is good or bad for.
+
+{{</feature>}}
+
+---
+
+## Related products
+
+{{<related header="Cache rules" href="/cache/how-to/cache-rules/" product="cache">}}
+Customize the cache properties of your HTTP requests.
+{{</related>}}
+
+{{<related header="Cloudflare Web Analytics" href="/analytics/web-analytics/" product="analytics">}}
+Understand the performance of your web pages as experienced by your site visitors.
+{{</related>}}
+
+{{<related header="Cloudflare Image Resizing" href="/images/image-resizing/" product="images">}}
+Transform images on Cloudflare’s edge platform: resize, adjust quality, and convert images to WebP or AVIF format on demand.
+{{</related>}}
+
+{{<related header="Early Hints" href="/cache/advanced-configuration/early-hints/" product="cache">}}
+Take advantage of “server think time” to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response.
+{{</related>}}
+
+---
+
+## More resources
+
+{{<resource-group>}}
+
+{{<resource header="Quotas" href="/speed/speed-test/run-speed-test/#quotas" icon="documentation-clipboard">}}Learn about the quota limits for the number of tests you can run per month.{{</resource>}}
+
+{{<resource header="Community Forum" href="https://community.cloudflare.com/c/website-application-performance/88" icon="learning-center-book">}}
+Engage with other users and explore more resources on Cloudflare support forum.
+{{</resource>}}
+
+{{</resource-group>}}
