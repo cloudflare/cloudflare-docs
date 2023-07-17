@@ -28,6 +28,15 @@ jobs:
           else
           npm i
           fi
+      - uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.92.0'
+          extended: true
+
+      - name: (env) pnpm
+        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+
+      - run: pnpm install
       - name: Build
         run: |
           npm run build
