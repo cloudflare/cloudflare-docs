@@ -7,7 +7,9 @@ layout: single
 
 # WARP architecture
 
-This guide explains how the Cloudflare WARP client interacts with a device’s operating system to route traffic and enforce Zero Trust policies.
+This guide explains how the Cloudflare WARP client interacts with a device’s operating system to route traffic in [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode.
+
+In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the IP traffic information does not apply. In [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode, the DNS traffic information does not apply.
 
 ## Overview
 
@@ -137,10 +139,6 @@ Unknown adapter CloudflareWARP:
 
 {{</tab>}}
 {{</tabs>}}
-
-{{<Aside type="note">}}
-WARP does not create a local DNS proxy in [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
-{{</Aside>}}
 
 ### IP traffic
 
