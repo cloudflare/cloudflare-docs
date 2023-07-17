@@ -67,9 +67,7 @@ Notes:
 
 * The number of available custom lists depends on the highest plan in your account. Any account with at least one paid plan will get the highest quota.
 
-* The maximum number of items across all lists is the following:
-    * 10,000 items across all your IP lists.
-    * 5,000 items across all other custom lists.
+* You can have a maximum number of 10,000 list items across all custom lists.
 
 * The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
 
