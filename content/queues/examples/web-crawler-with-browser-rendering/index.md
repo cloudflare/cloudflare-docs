@@ -63,7 +63,7 @@ C3 will then prompt you for some information on your Worker.
 
 This will create the crawler Worker.
 ### 4. Configure your Worker
-In the `wrangler.toml` file, add a Browser Rendering binding. This gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and Queue you created previously, which will allow you to access KV and the Queue from the Worker. 
+In the `wrangler.toml` file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and Queue you created previously, which will allow you to access KV and the Queue from the Worker. 
 
 ```toml
 ---
@@ -96,7 +96,7 @@ To find the KV namespace IDs in the [Cloudflare dashboard](https://dash.cloudfla
 
 ![List namespace IDs](/queues/examples/web-crawler-with-browser-rendering/list-namespace-id.png)
 
-Add a `max_batch_timeout` of sixty seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting Queue messages into a batch. The Worker will then remain under this browser invocation limit.
+Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting Queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
 Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits. 
 
@@ -120,7 +120,7 @@ export interface Env {
 
 ### 6. Submit links to crawl
 
-Add a `fetch()` handler to the Worker so you can submit links to crawl.
+Add a `fetch()` handler to the Worker to submit links to crawl.
 
 ```ts
 ---
@@ -147,7 +147,7 @@ This will accept requests to any subpath and forwards the request's body to be c
 
 ### 7. Crawl with Puppeteer
 
-Add a `queue()` handler to the Worker so you can process the links you send.
+Add a `queue()` handler to the Worker to process the links you send.
 
 ```ts
 ---
@@ -235,11 +235,11 @@ const crawlPage = async (url: string): Promise<Result> => {
 };
 ```
 
-This helper function opens a new page in Puppeteer and navigates to the provided URL. `numCloudflareLinks` uses Puppeteer's `$$eval` (equivalent to `document.querySelectorAll`) to find the number of links to a `cloudflare.com` page. Checking if the link's `href` is to a `cloudflare.com` page is wrapped in a try-catch to handle cases where `href`s may not be URLs.
+This helper function opens a new page in Puppeteer and navigates to the provided URL. `numCloudflareLinks` uses Puppeteer's `$$eval` (equivalent to `document.querySelectorAll`) to find the number of links to a `cloudflare.com` page. Checking if the link's `href` is to a `cloudflare.com` page is wrapped in a `try...catch` to handle cases where `href`s may not be URLs.
 
 Then, the function sets the browser viewport size and takes a screenshot of the full page. The screenshot is returned as a `Buffer` so it can be converted to an `ArrayBuffer` and written to KV.
 
-Optionally, if you want to enable recursively crawling links, add a snippet just after checking the number of Cloudflare links to send messages recursively from the Queue consumer to the Queue itself. Recursing too deep, as is possible with crawling, will cause a Durable Object `Subrequest depth limit exceeded.` error. If one occurs, it is caught, but the links aren't retried.
+To enable recursively crawling links, add a snippet after checking the number of Cloudflare links to send messages recursively from the Queue consumer to the Queue itself. Recursing too deep, as is possible with crawling, will cause a Durable Object `Subrequest depth limit exceeded.` error. If one occurs, it is caught, but the links are not retried.
 
 ```ts
 ---
