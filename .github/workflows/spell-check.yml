@@ -18,7 +18,7 @@ jobs:
         run: echo "::set-output name=files::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})"
 
       - name: Run Case Police on changed files
-        uses: antfu/case-police@v1
+        uses: antfu/case-police@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}  # Required to comment on pull requests
           files: ${{ steps.changes.outputs.files }}
