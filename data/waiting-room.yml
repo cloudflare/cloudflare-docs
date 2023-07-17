@@ -5,6 +5,7 @@ product:
   title: Waiting Room
   url: /waiting-room/
   group: Application performance
+  additional_groups: [Developer platform]
   preview_tryout: true
 
 meta:

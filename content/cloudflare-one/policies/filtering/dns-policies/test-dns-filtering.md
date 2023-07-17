@@ -147,7 +147,7 @@ To clear your DNS cache:
 <summary>Windows</summary>
 <div>
 
-1. Open the admin command prompt or Powershell.
+1. Open the admin command prompt or PowerShell.
 2. Run the following command:
 
 ```bash

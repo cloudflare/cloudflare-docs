@@ -1,17 +1,17 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Vuepress site
+title: Deploy a VuePress site
 ---
 
-# Deploy a Vuepress site
+# Deploy a VuePress site
 
 [VuePress](https://vuepress.vuejs.org/) is a minimalistic static site generator with a Vue-powered theming system and Plugin API. It is well optimized for writing technical documentation and was created to power Vue's own sub projects.
 
-In this guide, you will create a new Vuepress project and deploy it using Cloudflare Pages. You will use the [`create-vuepress-site-generator`](https://github.com/vuepress/create-vuepress-site), a generator for creating new Vuepress projects.
+In this guide, you will create a new VuePress project and deploy it using Cloudflare Pages. You will use the [`create-vuepress-site-generator`](https://github.com/vuepress/create-vuepress-site), a generator for creating new VuePress projects.
 
 ## Set up a new project
 
-Scaffold a Vuepress site using the `create-vuepress-site` tool to set up a new project, you can use `npx` or `yarn` by passing in `create-vuepress-site` and the name of the directory where you want the project to live:
+Scaffold a VuePress site using the `create-vuepress-site` tool to set up a new project, you can use `npx` or `yarn` by passing in `create-vuepress-site` and the name of the directory where you want the project to live:
 
 ```sh
 $ npx create-vuepress-site [optionalDirectoryName]
@@ -51,6 +51,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Vuepress project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your VuePress project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Vuepress">}}
+{{<render file="_learn-more.md" withParameters="VuePress">}}

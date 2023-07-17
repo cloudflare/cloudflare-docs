@@ -10,7 +10,7 @@ meta:
 
 # Devices
 
-## Why does my Windows device appear to switch from WiFi to Ethernet when I enable WARP?
+## Why does my Windows device appear to switch from Wi-Fi to Ethernet when I enable WARP?
 
 As the WARP client has replaced WinDivert with WinTun architecture, all Windows machines using WinTun will show as being connected using a virtual adapter. Windows, by default, shows virtual adapter connections with a wired Ethernet connection icon, even if the device is connected over wireless. This is by design and should have no impact on connectivity.
 
@@ -31,9 +31,9 @@ Sites inside Cloudflare network are able to see this information. If a site is s
 
 Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a new location on the Internet, you should see blazing fast DNS lookups. However, WARP is built to trade some throughput for enhanced privacy, because it encrypts all traffic both to and from your device. While this isn't noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though and continue to work on improving performance all over the system.
 
-## Why is my device not connecting to a public WiFi?
+## Why is my device not connecting to a public Wi-Fi?
 
-The WiFi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily disable WARP. After you login to the captive portal through your browser, you can re-enable WARP to access corporate resources.
+The Wi-Fi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily disable WARP. After you login to the captive portal through your browser, you can re-enable WARP to access corporate resources.
 
 To allow end users to connect through a captive portal, administrators can do the following:
 
