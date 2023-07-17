@@ -17,14 +17,6 @@ Routes add Workers functionality to your existing proxied hostnames, in front of
 
 Routes can `fetch()` Custom Domains and take precedence if configured on the same hostname. If you would like to run a logging Worker in front of your application, for example, you can create a Custom Domain on your application Worker for `app.example.com`, and create a Route for your logging Worker at `app.example.com/*`.  Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot be the target of a same-zone `fetch()` call.
 
-## Types of routes
-
-There are three types of routes:
-
-* Routes: Routes that are set within a Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
-* Custom Domains: Routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
-* `workers.dev`: The `workers.dev` subdomain route automatically created for your Worker that you can disable.
-
 ## Set up a route
 
 To add a route, you must have:
