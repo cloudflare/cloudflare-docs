@@ -21,7 +21,13 @@ jobs:
           node-version: 18.1
       - name: Install npm packages
         run: |
+          if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+          elif [ -e package-lock.json ]; then
           npm ci
+          else
+          npm i
+          fi
       - name: Build
         run: |
           npm run build
