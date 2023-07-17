@@ -11,7 +11,7 @@ The Hibernatable WebSockets API allows a Durable Object that is not currently ru
 Durable Objects WebSockets support includes:
 
 * Cloudflare-specific extensions to the standard WebSocket interface.
-* Related methods on the `state` object. 
+* Related methods on the `state` Object. 
 * Handler methods that a Durable Object can implement for processing WebSocket events.
 
 The Hibernatable WebSocket APIs enable you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
@@ -48,7 +48,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 - {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Adds a WebSocket to the set attached to this object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. 
+  - Adds a WebSocket to the set attached to this Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. 
   
   - After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object. 
   
@@ -64,7 +64,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
   - Sets an application level auto response that does not wake hibernated WebSockets. 
   
-  - `state.setWebSocketAutoResponse` receives `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this object to automatically reply with `response` when it receives the specified `request`. 
+  - `state.setWebSocketAutoResponse` receives `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this Object to automatically reply with `response` when it receives the specified `request`. 
 
   - `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the websocket from hibernation, thereby preventing unnecessary duration charges.
 
@@ -76,7 +76,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
   - Gets the `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` currently set, or `null` if there is none. 
 
-  - Each `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` object provides methods for `getRequest()` and  `getResponse()`.
+  - Each `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` Object provides methods for `getRequest()` and  `getResponse()`.
 
 - {{<code>}}state.getWebSocketAutoResponseTimestamp(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Date | null{{</type>}}
 

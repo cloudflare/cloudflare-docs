@@ -30,11 +30,14 @@ Before you create and access a Durable Object, you must define its behavior by e
 If you do not use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class.
 {{</Aside>}}
 
-Your class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
+Your class `DurableObjectExample` will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
 
 Note that this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 ```js
+---
+filename: index.js
+---
 export class DurableObjectExample {
   constructor(state, env) {}
 }
@@ -42,6 +45,9 @@ export class DurableObjectExample {
 Workers communicate with a Durable Object via the fetch API. Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
 
 ```js
+---
+filename: index.js
+---
 export class DurableObjectExample {
   constructor(state, env) {}
 
@@ -165,6 +171,9 @@ Durable Objects must be written in ES Modules syntax. ES Modules differ from reg
 
 
 ```js
+---
+filename: index.js
+---
 export default {
 
   async fetch(request, env) {
@@ -195,49 +204,23 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/learning/acces
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
-You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-update/) to manage Durable Objects.
+You must use [Wrangler latest version](/workers/wrangler/install-and-update/) to manage Durable Objects.
 
 {{</Aside>}}
 
-To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. Start with one of our templates, the simplest of which can be used by running:
+To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. 
+
+Open your terminal and run the following command to upload a Durable Object Worker:
 
 ```sh
-$ git clone https://github.com/cloudflare/durable-objects-template
-$ cd durable-objects-template
 $ wrangler dev
 ```
 
-The template will create a directory for your project with basic configuration and a single JavaScript source file already set up. Try the [Durable Objects Rollup ES Modules template](https://github.com/cloudflare/durable-objects-rollup-esm) if you want to use the ES modules, the [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm) if you want to use TypeScript, or the [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs) if you want to bundle external dependencies with your code using Rollup or Webpack.
-
-The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler deploy`](/workers/wrangler/commands/) command.
-
 ### Specify the main module
 
-Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. 
+Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `main = "src/index.js"` section of `wrangler.toml`. 
 
 Refer to [Custom builds documentation](/workers/wrangler/custom-builds/) for more details.
-
-
-### Durable Object migrations through Wrangler CLI
-
-
-It is possible to define a migration purely through extra arguments to the `wrangler deploy` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
-
-You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler deploy` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
-
-The list of CLI migration arguments that can be added to `wrangler deploy` is as follows:
-
-```bash
---old-tag <tag name> # Optional if your script does not have a migration tag set yet.
---new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
-
-# Each of the migration directives can be specified multiple times if you are
-# creating/deleting/renaming/transferring multiple classes at once.
---new-class <class name>
---delete-class <class name>
---rename-class <from class> <to class>
---transfer-class <from script> <from class> <to class>
-```
 
 ## 6. Test your Durable Objects project
 
@@ -247,6 +230,9 @@ If you copy the `DurableObjectExample` and fetch handler code from above into a 
 $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.workers.dev/ --data "important data!"
 ***.***.***.*** stored important data!
 ```
+
+By finishing this tutorial, you have now created a class that defines a Durable Object, configured bindings and migrations, uploaded and tested your Durable Objects project. 
+
 ### Related resources
 
 - [Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.

@@ -12,9 +12,12 @@ You can restrict a Durable Object to a jurisdiction, or provide a location hint.
 
 Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). 
 
-To use a jurisdiction, first create a jurisidictional subnamespace:
+To use a jurisdiction, first create a jurisidictional subnamespace in your `index.js` file:
 
 ```js
+---
+filename: index.js
+---
 let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');
 ```
 
@@ -23,12 +26,18 @@ A jurisdictional subnamespace works like a normal Durable Object namespace (`OBJ
 To create a new Object ID that will only run and persist data within the jurisdiction:
 
 ```js
+---
+filename: index.js
+---
 let id = subnamespace.newUniqueId();
 ```
 
 To derive a unique object ID from the given name string that will only run and persist data within the jurisdiction:
 
 ```js
+---
+filename: index.js
+---
 let id = subnamespace.idFromName(name);
 ```
 
@@ -43,18 +52,27 @@ This may be counterintuitive at first, but it would be impossible to enforce two
 To parse a previously-created ID from a string:
 
 ```js
+---
+filename: index.js
+---
 let id = subnamespace.idFromString(id);
 ```
 
 To obtain an Object:
 
 ```js
+---
+filename: index.js
+---
 let durableObjectStub = subnamespace.get(id)
 ```
 
 While you cannot use an ID from a different jurisdiction in a subnamespace's `idFromString()` or `get()` methods, you can use any valid ID in the top-level namespace's methods. Object IDs created with a jurisdiction will still only run and persist data within the jurisdiction.
 
 ```js
+---
+filename: index.js
+---
 let id = subnamespace.idFromName(name);
 
 // This is valid.
@@ -81,6 +99,9 @@ Durable Objects do not currently move between geographical regions after they ar
 To manually create Durable Objects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
 
 ```js
+---
+filename: index.js
+---
 let durableObjectStub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
 ```
 

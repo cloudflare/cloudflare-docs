@@ -22,7 +22,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 {{</Aside>}}
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the Object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Object alive. Refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/) to learn more about alarms.
 
 ## `alarm()` handler method
 

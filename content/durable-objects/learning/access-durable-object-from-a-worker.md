@@ -12,21 +12,28 @@ Namespace bindings allow you to generate Object IDs and connect to Objects.
 
 ## 1. Create Durable Object IDs
 
-There are three methods to create Durable Object IDs. You can choose to:
+An Object ID is a 64-digit hexadecimal number used to identify the Object you are sending the request to. The Object ID is tied to a class.
+
+To create a Durable Object ID, you can choose to:
 
 - Generate IDs randomly.
-- Derive IDs from names.
+- Derive IDs from names (these names are string data types).
 - Parse previously-created IDs from strings.
 
 All three methods will allow you to create Durable Object IDs.  
 
 ### Generate IDs randomly
 
+The following code gives you a new Object ID. You can add this code in your `index.js` file.
+
 ```js
+---
+filename: index.js
+---
 let id = OBJECT_NAMESPACE.newUniqueId();
 ```
 
-The `newUniqueId()` method on a Durable Object namespace creates a new Object ID randomly. `newUniqueId()` will never return the same ID twice, and thus, it is guaranteed that the Object does not yet exist and has never existed at the time the method returns.
+The `newUniqueId()` method on a Durable Object namespace creates a new Object ID randomly. `newUniqueId()` will never return the same ID twice. Thus, it is guaranteed that the Object does not yet exist and has never existed at the time the method returns.
 
 When generating an ID randomly, you need to store the ID somewhere to reach the same Object again in the future. For example, you can store the ID in Workers KV, in an external database, or in a cookie in the user's browser.
 
@@ -42,7 +49,12 @@ When you construct a new unique ID, the system knows that the same ID will not b
 
 ### Derive IDs from names
 
+The following code allows you to use a name (which is a `String`) to extract the ID of your Durable Object. 
+
 ```js
+---
+filename: index.js
+---
 let id = OBJECT_NAMESPACE.idFromName(name);
 ```
 
@@ -68,6 +80,9 @@ After the object has been accessed the first time, location information will be 
 ### Parse previously-created IDs from strings
 
 ```js
+---
+filename: index.js
+---
 let id = OBJECT_NAMESPACE.idFromString(hexId);
 ```
 
@@ -89,6 +104,9 @@ A stringified object ID is a 64-digit hexadecimal number. However, not all 64-di
 Construct the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
 
 ```js
+---
+filename: index.js
+---
 let stub = env.EXAMPLE_CLASS.get(id);
 ```
 
@@ -101,5 +119,8 @@ The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
 
 ```js
+---
+filename: index.js
+---
 let response = await stub.fetch(request);
 ```
