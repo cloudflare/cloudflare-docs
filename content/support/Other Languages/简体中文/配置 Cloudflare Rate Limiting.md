@@ -175,7 +175,7 @@ _POST_ 或 _GET_。如果未指定，则所有方法都匹配，规则将列出 
 
 -   **阻止** **\-** 超过阈值时，Cloudflare 发出 HTTP 429 错误。
 -   **旧版 CAPTCHA** **\-** 访问者必须通过 CAPTCHA 质询。如果通过，则 Cloudflare 允许该请求。
--   **JS 质询** **\-** 访问者必须通过 Cloudflare Javascript 质询。如果通过，则 Cloudflare 允许该请求。
+-   **JS 质询** **\-** 访问者必须通过 Cloudflare JavaScript 质询。如果通过，则 Cloudflare 允许该请求。
 -   **记录 -** 请求记录到 [Cloudflare Logs](https://support.cloudflare.com/hc/articles/216672448) 中。这有助于在应用至生产环境前测试规则。
 
 #### **禁令期限**
