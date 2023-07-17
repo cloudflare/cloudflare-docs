@@ -17,7 +17,7 @@ Query String Sort changes this behavior. If two query strings exist with the sam
 
 `/example/file?word=alpha&word=beta and /example/file?word=beta&word=alpha`
 
-are sorted to:
+would be sorted to:
 
 `/example/file?word=alpha&word=beta`
 
