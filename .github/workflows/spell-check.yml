@@ -55,3 +55,11 @@ jobs:
       - name: Alex (inclusive language)
         run: alex ${{ env.CHANGED_FILES }}
         if: always()
+
+      - name: DOCtor-RST
+        uses: docker://oskarstark/doctor-rst
+        if: always()
+        run: |
+          for file in ${{ steps.changes.outputs.files }}; do
+            docker run --rm -v $PWD:/docs oskarstark/doctor-rst --short --error-format=github $file
+          done
