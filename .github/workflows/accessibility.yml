@@ -37,9 +37,11 @@ jobs:
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
 
       - run: pnpm install
+
       - run: make build
           env:
             NODE_OPTIONS: "--max-old-space-size=8192"
+            
       - name: Accessibility Audits
         run: |
           npm install -g @jakepartusch/lumberjack
