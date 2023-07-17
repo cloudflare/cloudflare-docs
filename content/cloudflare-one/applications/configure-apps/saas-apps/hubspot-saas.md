@@ -5,7 +5,7 @@ title: Hubspot
 
 # Configure a Hubspot account for Access for SaaS
 
-This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot.
+This guide covers how to set up Cloudflare as the SSO provider for Hubspot.
 
 ## Prerequisites
 
