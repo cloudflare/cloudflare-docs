@@ -10,10 +10,10 @@ weight: 1
 <table>
   <tr>
     <th style="width:20%">Purpose</th>
-    <td>The Get started section provides a brief overview of the Cloudflare’s API and lists requirements and tasks users must complete before successfully making their first request.</td>
+    <th>The Get started section provides a brief overview of the Cloudflare’s API and lists requirements and tasks users must complete before successfully making their first request.</th>
   </tr>
   <tr>
-    <th>Required components</th>
+    <td>Required components</td>
     <td>Overview<br/>Authentication</td>
   </tr>
 </table>
@@ -31,7 +31,7 @@ weight: 1
 
 **Recommended workflow**:
 
-1. Sign up for a Cloudflare account
-1. Create an API token
-1. (Optional) Use API token templates and token permissions
-1. Make your first request
+1. Sign up for a Cloudflare account.
+1. Create an API token.
+1. (Optional) Use API token templates and token permissions.
+1. Make your first request.

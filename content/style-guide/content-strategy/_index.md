@@ -7,7 +7,7 @@ weight: 2
 
 # Content strategy overview
 
-Content strategy means using the right tool for the job. Cloudflare Docs will provide the most effective content types that serve a customer-focused purpose. Adoption of this content strategy will be impacted by product releases, resourcing, and company goals.
+Content strategy means using the right tool for the job. Cloudflare's documentation will provide the most effective content types that serve a customer-focused purpose. Adoption of this content strategy will be impacted by product releases, resourcing, and company goals.
 
 The purpose of Cloudflare's developer documentation content strategy is to:
 
@@ -24,11 +24,9 @@ Strategically speaking, the mission and guiding principles translate into the fo
 + Partner with various internal departments and stakeholders in creating and sustaining a rich, consistent content experience across all Cloudflare products
 + Devise new and better ways to give users the information they need, when and where they need it
 
-Refer to the Technical Writing section for lower-level details about the content strategy and implementation.
-
 ## Purpose statements
 
-For each purpose statement, the Cloudflare team will define the approach to solve the content problem for a product. This approach includes:
+For each purpose statement, the documentation team will define the approach to solve the content problem for a product. This approach includes:
 
 + Information architecture
     + Where content should live on the site

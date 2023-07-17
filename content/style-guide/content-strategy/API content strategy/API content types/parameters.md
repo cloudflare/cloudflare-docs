@@ -26,16 +26,14 @@ weight: 4
 
 ### Required Components
 
-+ Name: Name of the parameter formatted as code snippet.
-+ Data type: Indicates if the parameter is a string, integer, boolean, object, or array.
-+ Description: Describes what the parameter does. Use a noun phrase for strings, integers, objects, and arrays. Use a verb for booleans. End description with a period.
-+ Required status: Indicates whether the parameter is required
++ **Name**: Name of the parameter formatted as code snippet.
++ **Data type**: Indicates if the parameter is a string, integer, boolean, object, or array.
++ **Description**: Describes what the parameter does. Use a noun phrase for strings, integers, objects, and arrays. Use a verb for booleans. End description with a period.
++ **Required status**: Indicates whether the parameter is required
 
 ### Optional components
 
-+ Constraints*: Lists default, minimum, or maximum values for the parameter.
-
-*We're still working on a different term for Constraints because the current term implies a list of restrictions, but the term today is used as a catchall for default, minimum, or maximum values.
++ **Constraints**: Lists default, minimum, or maximum values for the parameter.
 
 ## Writing guidelines
 
@@ -55,12 +53,12 @@ asn: The Autonomous System Number (ASN) used to advertise a prefix.
 
 ## Example
 
-Name: actor.ip
+**Name**: `actor.ip`
 
-Data type: string
+**Data type**: `string`
 
-Description: Filters a request by specific IP address or valid CIDR range.
+**Description**: Filters a request by specific IP address or valid CIDR range.
 
-Required status: Not required
+**Required status**: Not required
 
-Values: No listed default, minimum, or maximum, values.
+**Values**: No listed default, minimum, or maximum, values.

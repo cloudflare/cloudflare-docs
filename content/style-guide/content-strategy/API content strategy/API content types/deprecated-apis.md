@@ -9,38 +9,38 @@ title: Deprecated APIs
 <table>
   <tr>
     <th style="width:20%">Purpose</th>
-    <td>The purpose of Deprecated API content is to communicate that Cloudflare no longer supports an endpoint and to provide users with an alternative option.</td>
+    <th>The purpose of Deprecated API content is to communicate that Cloudflare no longer supports an endpoint and to provide users with an alternative option.</th>
   </tr>
   <tr>
-    <th>Tone</th>
+    <td>Tone</td>
     <td>instructional, straightforward</td>
   </tr>
   <tr>
-    <th>content_type</th>
+    <td>content_type</td>
     <td>reference</td>
   </tr>
   <tr>
-    <th>Required components</th>
+    <td>Required components</td>
     <td>Deprecated endpoint name<br\>Context<br\>Alternative endpoint<br\>End of life date</td>
   </tr>
   <tr>
-    <th>Optional components</th>
+    <td>Optional components</td>
     <td>Complete list of endpoints/related APIs that are being deprecated</td>
   </tr>
 </table>
 
 ## Structure
 
-+ Deprecated endpoint name: Should match what existed in the non-deprecated Endpoint
-+ Context:  Brief description of what's happening, why Cloudflare is deprecating this endpoint, and any other important information. Avoid using time-bound descriptors (today, tomorrow, in one week, etc). Instead, be specific when including dates.
-+ Replacement: A description of and/or link to the alternative endpoint OR an explanation as to why Cloudflare is removing the capability of that endpoint.
-+ End of life date: The date by which users will no longer be able to use that endpoint. Format full month name, date, and year (May 10, 2021).
++ **Deprecated endpoint name**: Should match what existed in the non-deprecated Endpoint
++ **Context**:  Brief description of what is happening, why Cloudflare is deprecating this endpoint, and any other important information. Avoid using time-bound descriptors (today, tomorrow, in one week, etc). Instead, be specific when including dates.
++ **Replacement**: A description of and/or link to the alternative endpoint OR an explanation as to why Cloudflare is removing the capability of that endpoint.
++ **End of life date**: The date by which users will no longer be able to use that endpoint. Format full month name, date, and year (May 10, 2021).
 
 ## Additional information
 
 Add API deprecation notices to the API deprecations page by deprecation date and not alphabetically by endpoint.
 
-When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("<name of endpoint> will be deprecated on <full month name, date, year>. Use the <alternative endpoint> instead."). This guidance will eventually be added to the Endpoint content strategy.
+When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead."). This guidance will eventually be added to the [Endpoint content strategy](/style-guide/content-strategy/API-content-strategy/API-content-types/endpoints/).
 
 Cloudflare's EoL process: Cloudflare API Deprecation and EoL Process
 
