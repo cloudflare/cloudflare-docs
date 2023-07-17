@@ -7,6 +7,7 @@ on:
       - synchronize
 
 jobs:
+
   spell-check:
     runs-on: ubuntu-latest
     steps:
@@ -27,6 +28,12 @@ jobs:
       - name: Install codespell
         run: pip install codespell
 
+      - name: Install case-police
+        run: npm install -g case-police
+
+      - name: Install alex
+        run: npm install -g alex
+
       - name: Get Changed Files from Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -38,5 +45,18 @@ jobs:
       - name: Output Changed Files
         run: echo ${{ env.CHANGED_FILES }}
 
-      - name: Check for Spelling Errors
+      - name: Spelling Errors
         run: codespell --count --skip="*.js,./.git,./content/support/Other Languages/*" ${{ env.CHANGED_FILES }}
+
+      - name: Case Police
+        run: case-police ${{ env.CHANGED_FILES }} --disable vscode,DoS,webRTC
+        if: always()
+
+      - name: Create .alexrc file
+        run: |
+          echo '{ "allow": ["attacks", "attack", "hooks", "host-hostess", "period", "remains"], "profanitySureness": 2 }' > .alexrc
+        if: always()
+
+      - name: Alex (inclusive language)
+        run: alex ${{ env.CHANGED_FILES }}
+        if: always()
