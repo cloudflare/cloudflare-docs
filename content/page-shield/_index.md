@@ -49,4 +49,3 @@ Policies define allowed resources on your websites. Use policies to enforce an a
 ## Availability
 
 {{<feature-table id="security.page_shield">}}
-
