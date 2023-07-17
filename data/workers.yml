@@ -5,7 +5,6 @@ product:
   title: Workers
   url: /workers/
   group: Developer platform
-  additional_groups: [Application performance]
   preview_tryout: true
 
 meta:
