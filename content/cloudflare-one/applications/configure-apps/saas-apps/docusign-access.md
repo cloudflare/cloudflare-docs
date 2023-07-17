@@ -1,24 +1,20 @@
 ---
-updated: 2021-09-27
-category: 🔐 Zero Trust
-pcx_content_type: tutorial
-title: Protecting DocuSign with Access for SaaS
+pcx_content_type: how-to
+title: DocuSign
 ---
 
 # Protecting DocuSign with Access for SaaS
 
 This guide covers how to protect your DocuSign account with Access for SaaS.
 
-## Pre-Requisites:
+## Prerequisites
 
 - Access for SaaS requires that you have Single Sign-On available in your DocuSign plan.
 - A domain you own.
 - See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
 - A [SAML IdP](/cloudflare-one/identity/idp-integration/generic-saml/) configured with SAML Attributes configured.
 
-**Time to complete:** 10 minutes
-
-## Create the Access for SaaS application
+## 1. Create the Access for SaaS application
 
 1.  In Zero Trust, go to **Access** > **Applications**.
 
@@ -32,11 +28,14 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
     - Put placeholder values in **EntityID** and **Assertion Consumer Service URL** (e.g. `https://example.com`). We’ll come back and update these.
     - Set **Name ID Format** to: _Unique ID_.
 
-1.  DocuSign requires SAML attributes to do Just In Time user provisioning.
+1.  DocuSign requires SAML attributes to do Just In Time user provisioning. Ensure you are collecting SAML attributes from your IdP:
 
-    - Ensure you are collecting SAML attributes from your IdP:
-
-    ![List of DocuSign SAML Attributes](/images/cloudflare-one/zero-trust-security/docusign/saml-attributes.png)
+    - Group
+    - username
+    - department
+    - firstName
+    - lastName
+    - phone
 
 1.  These IdP SAML values can then be mapped to the following DocuSign SAML attributes:
 
@@ -48,8 +47,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 1.  Copy and save SSO Endpoint, Entity ID and Public Key.
 
-         {{<Aside type="note">}}
-
+    {{<Aside type="note">}}
     The Public key must be transformed into a fingerprint. To do that:
 
 1.  Copy the Public Key Value.
@@ -58,7 +56,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1.  Set the file extension to `.crt` and save.
     {{</Aside>}}
 
-## Configure your DocuSign SSO instance
+## 2. Configure your DocuSign SSO instance
 
 1.  Ensure you have a domain claimed in Zendesk.
 
@@ -76,13 +74,11 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 1.  Configure your SAML Attribute mappings. The Attribute Names should match the values in **IdP Value** in your Access application.
 
-    ![DocuSign Custom Attributes mapping](/images/cloudflare-one/zero-trust-security/docusign/custom-attribute-mapping.png)
-
 1.  Go back to the Identity Provider's screen and select **Actions** > **Endpoints**. Copy and save the following:
     - Service Provider Issuer URL.
     - Service Provider Assertion Consumer Service URL.
 
-## Finalize your Cloudflare configuration
+## 3. Finalize your Cloudflare configuration
 
 1.  Go back to your DocuSign application under **Access** > **Applications**.
 1.  Click **Edit**.

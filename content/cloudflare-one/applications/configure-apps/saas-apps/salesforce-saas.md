@@ -1,33 +1,24 @@
 ---
-updated: 2021-03-09
-category: 🔐 Zero Trust
-difficulty: Intermediate
-pcx_content_type: tutorial
-title: Salesforce with Access for SaaS configuration
-meta:
-  description: Configure Salesforce as a SaaS application and then force logins to Salesforce through Cloudflare's Zero Trust rules.
+pcx_content_type: how-to
+title: Salesforce
 ---
 
-# Salesforce with Access for SaaS configuration
+# Configure Salesforce with Access for SaaS
 
-**This tutorial covers how to:**
+This guide covers how to:
 
 - Configure Salesforce as a SaaS application in Cloudflare Zero Trust
 - Force logins to Salesforce through Cloudflare's Zero Trust rules
 
-**Time to complete:**
-
-15 minutes
-
 ## Prerequisites
 
-Admin access to a Salesforce account
+- Admin access to a Salesforce account
 
-## Set up Salesforce as a SaaS application in Cloudflare Zero Trust
+## 1. Set up Salesforce as a SaaS application in Cloudflare Zero Trust
 
 1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
 1.  Select the SaaS application type.
-1.  Next, select _Salesforce_ from the **Application** drop-down menu.
+1.  From the **Application** drop-down menu, select _Salesforce_.
 1.  Fill the remaining fields as follows:
     - **Entity ID**: https://\[YOUR_SFDC_DOMAIN].my.salesforce.com
     - **Assertion consumer service URL**: https://\[YOUR_SFDC_DOMAIN].my.salesforce.com
@@ -37,24 +28,24 @@ Admin access to a Salesforce account
 1.  Click Add application.
 1.  Next, take note of the **SSO endpoint**, the **Access Entity ID or Issuer**, and the **Public Key**.
 
-## Create a certificate file
+## 2. Create a certificate file
 
 1.  Paste the **Public key** in VIM or another code editor.
 1.  Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 1.  Set the file extension as `.crt` and save.
 
-## Enable Single Sign-On in Salesforce
+## 3. Enable Single Sign-On in Salesforce
 
 1.  In Salesforce, ensure your users have **Federation IDs**.
-    {{<Aside>}}
-    The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.
-    {{</Aside>}}
+
+    {{<Aside type="note">}}The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.{{</Aside>}}
+
 1.  Navigate to **Security Controls > Single Sign-On Settings**.
 1.  Set the following global settings:
     - **SAML Enabled:** true
     - **Make federation ID case-insensitive:** true
 
-## Create a new SAML Single-Sign On configuration
+## 4. Create a new SAML Single-Sign On configuration
 
 1.  Create a new SAML Single-Sign On configuration:
     - **Name:** (this is what you want your users to see on sign in)
