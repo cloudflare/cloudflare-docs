@@ -243,8 +243,8 @@ Use one of the following API endpoints:
 | [Get an account entry point ruleset version][gerv-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}` |
 | [Get a zone entry point ruleset version][gerv-zone]        | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}`       |
 
-[grv-account]: /api/operations/getAccountRulesetVersions
-[grv-zone]: /api/operations/getZoneRulesetVersions
+[grv-account]: /api/operations/getAccountRulesetVersion
+[grv-zone]: /api/operations/getZoneRulesetVersion
 [gerv-account]: /api/operations/getAccountEntrypointRulesetVersion
 [gerv-zone]: /api/operations/getZoneEntrypointRulesetVersion
 
