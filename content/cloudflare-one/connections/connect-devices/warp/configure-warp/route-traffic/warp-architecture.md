@@ -85,7 +85,7 @@ highlight: 5-6
 $ scutil --dns
 DNS configuration (for scoped queries)
 resolver #1
-  search domain[0] : fios-router.home
+  search domain[0] : <DNS-SEARCH-DOMAIN>
   nameserver[0] : 127.0.2.2
   nameserver[1] : 127.0.2.3
   if_index : 15 (en0)
