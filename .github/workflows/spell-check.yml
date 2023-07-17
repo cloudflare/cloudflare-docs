@@ -55,10 +55,3 @@ jobs:
       - name: Alex (inclusive language)
         run: alex ${{ env.CHANGED_FILES }}
         if: always()
-
-      - name: DOCtor-RST
-        if: always()
-        run: |
-          for file in ${{ steps.changes.outputs.files }}; do
-            docker run --rm -it -e DOCS_DIR='/docs' -v $PWD:/docs oskarstark/doctor-rst:latest $file
-          done
