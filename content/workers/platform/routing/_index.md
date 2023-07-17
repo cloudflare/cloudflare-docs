@@ -8,8 +8,8 @@ layout: single
 
 To allow a Worker to receive inbound HTTP requests, you must connect it to an external endpoint such that it can be accessed by the Internet. There are two ways to route to a Worker: 
 
-* [Custom Domains](/workers/platform/triggers/custom-domains)
-* [Routes](/workers/platform/triggers/routes)
+* [Custom Domains](/workers/platform/routing/custom-domains)
+* [Routes](/workers/platform/routing/routes)
 
 ## What is best for me?
 

@@ -136,7 +136,7 @@ These certificates are generated with default settings. To override these settin
 
 ## Migrate from Routes
 
-If you are currently invoking a Worker using a [route](/workers/platform/triggers/routes) with `/*`, and you have a CNAME record pointing to `100::` or similar, a Custom Domain is a recommended replacement.
+If you are currently invoking a Worker using a [route](/workers/platform/routing/routes) with `/*`, and you have a CNAME record pointing to `100::` or similar, a Custom Domain is a recommended replacement.
 
 ### Migrate from Routes via the dashboard
 
