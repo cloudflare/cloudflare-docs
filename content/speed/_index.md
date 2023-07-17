@@ -15,7 +15,7 @@ Improve the performance of your website or web application.
 
 {{<plan type="all">}}
 
-Speed allows you to use Observatory to conduct tests with both synthetic and real user data. This comprehensive approach helps identify potential performance enhancements for your website or web application. Optimization recommends you Cloudflare settings to effectively improve your site's performance.
+Speed allows you to conduct tests with both synthetic and real user data to identify potential website performance enhancements. You can also get recommendations of Cloudflare products and settings to effectively improve your site's performance.
 
 ---
 
