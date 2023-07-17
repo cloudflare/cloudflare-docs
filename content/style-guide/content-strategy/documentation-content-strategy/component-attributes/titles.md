@@ -8,7 +8,7 @@ title: Titles
 
 <table>
   <tr>
-    <th style="width:15%">Definition</th>
+    <th style="width:20%">Definition</th>
     <td>The first line of text on a page. H1.</td>
   </tr>
   <tr>

@@ -58,7 +58,7 @@ Though we do want to help our customers and integrations between different produ
 + [Examples](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
 + Screenshots
   + Screenshots of the third-party product are highly discouraged. It is all the problems of video/screenshot maintenance, but with a much greater risk that something changes and we are not aware of it.
-  + May become an even bigger problem if we can not access the 3rd-party product
+  + May become an even bigger problem if we can not access the 3rd-party product.
 
 ## Templates
 

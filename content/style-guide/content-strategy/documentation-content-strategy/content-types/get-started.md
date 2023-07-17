@@ -9,22 +9,22 @@ title: Get started
 <table>
   <tr>
     <th style="width:15%">Purpose</th>
-    <td>The purpose of Get started content is to help users go from not using a product to successfully configuring and setting up.</td>
+    <th>The purpose of Get started content is to help users go from not using a product to successfully configuring and setting up.</th>
   </tr>
   <tr>
-    <th>Tone</th>
+    <td>Tone</td>
     <td>N/A</td>
   </tr>
   <tr>
-    <th>content_type</th>
+    <td>content_type</td>
     <td>get-started</td>
   </tr>
   <tr>
-    <th>Required components</th>
+    <td>Required components</td>
     <td>Title <br/> Prerequisites <br/> Steps</td>
   </tr>
   <tr>
-    <th>Optional components</th>
+    <td>Optional components</td>
     <td>Next steps</td>
   </tr>
 </table>

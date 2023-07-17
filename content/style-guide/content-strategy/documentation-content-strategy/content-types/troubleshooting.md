@@ -34,15 +34,15 @@ Note: This troubleshooting strategy outlines our approach to troubleshooting con
 
 ### Required components
 
-[Title](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Troubleshooting name of product or feature
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Troubleshooting name of product or feature
 
 ### Optional components
 
-[Context](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/)
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/)
 
-[Steps/Tasks/Procedures](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/)
+[**Steps/Tasks/Procedures**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/)
 
-[Examples](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
+[**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
 
 **Next steps**
 

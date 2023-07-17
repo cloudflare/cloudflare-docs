@@ -37,11 +37,11 @@ title: How to
 
 [**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/) - Numbered steps that complete a task.
 
-[**Next steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/) - What users should see as the end result of the steps and/or actionable next steps. Refer to Next steps for more information.
+[**Next steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/) - What users should see as the end result of the steps and/or actionable next steps.
 
 ## Optional components
 
-[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/) - An introductory paragraph on the following steps and what they'll accomplish. Refer to Context for more information.
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/) - An introductory paragraph on the following steps and what they'll accomplish.
 
 Provide context to the reader that is not in the section heading.
 
@@ -49,15 +49,15 @@ End with a colon or a period. Use a colon if it immediately precedes the steps. 
 
 Don't provide context for steps with a partial sentence that's completed by the numbered steps.
 
-[**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/) - Tasks or conditions that must be completed before a user can complete a series of steps. Refer to Prerequisites for additional information.
+[**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/) - Tasks or conditions that must be completed before a user can complete a series of steps. 
 
 [**Notes/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 
 [**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
 
-**Screenshots** - Refer to
+**Screenshots**
 
-**Related links** - Bulleted list of links to associated resources. Refer to [Links](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/) for linking strategy.
+[**Related links**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/) - Bulleted list of links to associated resources.
 
 ## Template
 

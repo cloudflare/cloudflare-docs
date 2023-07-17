@@ -7,7 +7,7 @@ pcx_content_type: Content
 
 <table>
   <tr>
-    <th style="width:15%">Purpose</th>
+    <th style="width:20%">Purpose</th>
     <td>The purpose of a navigation page is to direct users deeper into the doc set and act as a sub-landing page for a specific area of the docs.</td>
   </tr>
   <tr>
@@ -16,7 +16,7 @@ pcx_content_type: Content
   </tr>
   <tr>
     <th>Tone</th>
-    <td>N/a</td>
+    <td>N/A</td>
   </tr>
   <tr>
     <th>content_type</th>

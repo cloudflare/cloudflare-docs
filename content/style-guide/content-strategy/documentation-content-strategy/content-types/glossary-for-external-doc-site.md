@@ -12,23 +12,23 @@ Adding a glossary entry should be done with input from the team to ensure consen
 
 <table>
     <tr>
-        <th style="width:15%">Purpose</th>
-        <td>Define Cloudflare and general concept terms.</td>
+        <th style="width:20%">Purpose</th>
+        <th>Define Cloudflare and general concept terms.</th>
     </tr>
     <tr>
-        <th>Tone</th>
+        <td>Tone</td>
         <td>N/A</td>
     </tr>
     <tr>
-        <th>content_type</th>
+        <td>content_type</td>
         <td>glossary</td>
     </tr>
     <tr>
-        <th>Required components</th>
+        <td>Required components</td>
         <td>word<br/>definition</td>
     </tr>
     <tr>
-        <th>Optional components</th>
+        <td>Optional components</td>
         <td>related terms<br/>relevant links</td>
     </tr>
 </table>

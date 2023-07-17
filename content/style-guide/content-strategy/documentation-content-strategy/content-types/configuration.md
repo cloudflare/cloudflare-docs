@@ -8,23 +8,27 @@ title: Configuration
 
 <table>
     <tr>
-        <th style="width:15%">Purpose</th>
-        <td>The purpose of a configuration is to show examples of specific settings, values, and options.</td>
+        <th style="width:20%">Purpose</th>
+        <th>The purpose of a configuration is to show examples of specific settings, values, and options.</th>
     </tr>
     <tr>
-        <th>Tone</th>
+        <td>Tone</td>
         <td>plain, descriptive, straightforward</td>
     </tr>
     <tr>
-        <th>Required components</th>
+        <td>content_type</td>
+        <td>configuration</td>
+    </tr>
+    <tr>
+        <td>Required components</td>
         <td>Title<br/>Context<br/>Settings and values<br/>Customizations<br/>Links</td>
     </tr>
     <tr>
-        <th>Optional components</th>
+        <td>Optional components</td>
         <td>Navigation<br/>Links</td>
     </tr>
     <tr>
-        <th>When to use</th>
+        <td>When to use</td>
         <td>Configurations are useful for parts of the product that are very configuration-intensive; for example, rules. </td>
     </tr>
 </table>
