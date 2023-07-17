@@ -54,7 +54,7 @@ jobs:
 
       - name: Create .alexrc file
         run: |
-          echo '{ "allow": ["attacks"] }' > .alexrc
+          echo '{ "allow": ["attacks", "host-hostess"] }' > .alexrc
         if: always()
 
       - name: Alex (inclusive language)
