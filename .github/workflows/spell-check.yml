@@ -53,7 +53,5 @@ jobs:
         if: always()
       
       - name: Alex (inclusive language)
-        run: alex ${{ env.CHANGED_FILES }}
+        run: alex ${{ env.CHANGED_FILES }} --no-truncate --no-default-ignores --ignore "host,attack,attacks"
         if: always()
-        with:
-          args: --no-truncate --no-default-ignores --ignore "host,attack,attacks"
