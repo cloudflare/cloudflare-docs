@@ -49,7 +49,7 @@ jobs:
         run: codespell --count --skip="*.js,./.git,./content/support/Other Languages/*" ${{ env.CHANGED_FILES }}
 
       - name: Case Police
-        run: case-police ${{ env.CHANGED_FILES }} --disable vscode,DoS,webRTC
+        run: case-police ${{ env.CHANGED_FILES }} --disable DoS
         if: always()
 
       - name: Create .alexrc file
