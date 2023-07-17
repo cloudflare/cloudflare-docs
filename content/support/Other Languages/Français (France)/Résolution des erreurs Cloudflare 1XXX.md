@@ -483,7 +483,7 @@ ___
 
 ### Cause courante
 
-Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
+Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
 
 ### Résolution
 

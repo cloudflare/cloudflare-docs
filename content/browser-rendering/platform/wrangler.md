@@ -35,7 +35,7 @@ main = "src/index.ts"
 node_compat = true
 workers_dev = true
 
-browser = { binding = "MYBROWSER", type = "browser" }
+browser = { binding = "MYBROWSER" }
 ```
 
 After the binding is declared, access the DevTools endpoint using `env.MYBROWSER` in your Worker code:

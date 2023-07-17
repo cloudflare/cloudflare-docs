@@ -209,6 +209,6 @@ Follow the [changelog](/workers/platform/changelog/) for updates to these caveat
 
 ## Next steps
 
-* Refer to the list of [supported database integrations](/workers/learning/integrations/databases/) to understand other ways to connect to existing databases.
+* Refer to the list of [supported database integrations](/workers/databases/connecting-to-databases/) to understand other ways to connect to existing databases.
 * Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker.
 * Understand the [protocols supported by Workers](/workers/platform/protocols).

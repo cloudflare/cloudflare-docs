@@ -483,7 +483,7 @@ ___
 
 ### 考えられる原因
 
-Cloudflare Worker が[CPU時間制限](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)を超過しています。CPU時間は、コード（たとえば、ループ、JSOの解析など）実行に費やす時間のことです。ネットワークリクエスト（フェッチング、レスポンディング）にかかった時間はCPU時間にカウントされません。
+Cloudflare Worker が[CPU時間制限](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions)を超過しています。CPU時間は、コード（たとえば、ループ、JSOの解析など）実行に費やす時間のことです。ネットワークリクエスト（フェッチング、レスポンディング）にかかった時間はCPU時間にカウントされません。
 
 ### 解決方法
 

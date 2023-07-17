@@ -105,7 +105,7 @@ Users can review the execution history of their Cron Triggers in **Past Events**
 
 It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 
-Refer to [Metrics and Analytics](/workers/learning/metrics-and-analytics/) for more information.
+Refer to [Metrics and Analytics](/workers/observability/metrics-and-analytics/) for more information.
 
 {{<Aside type="note" header="What is Green Compute?">}}
 

@@ -483,7 +483,7 @@ ___
 
 ### 일반적인 원인
 
-Cloudflare Worker가  [CPU 시간제한](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)을 초과했습니다. CPU 시간은 loops, parsing JSON 등의 코드를 실행하는 데 걸리는 시간을 말합니다. 네트워크 요청(가져오기, 응답하기)에 걸리는 시간은 CPU 시간에 포함되지 않습니다.
+Cloudflare Worker가  [CPU 시간제한](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions)을 초과했습니다. CPU 시간은 loops, parsing JSON 등의 코드를 실행하는 데 걸리는 시간을 말합니다. 네트워크 요청(가져오기, 응답하기)에 걸리는 시간은 CPU 시간에 포함되지 않습니다.
 
 ### 문제 해결
 

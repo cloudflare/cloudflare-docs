@@ -544,7 +544,7 @@ ___
 
 ### Common cause
 
-A Cloudflare Worker exceeds a [CPU time limit](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). CPU time is the time spent executing code (for example, loops, parsing JSON, etc). Time spent on network requests (fetching, responding) does not count towards CPU time.
+A Cloudflare Worker exceeds a [CPU time limit](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). CPU time is the time spent executing code (for example, loops, parsing JSON, etc). Time spent on network requests (fetching, responding) does not count towards CPU time.
 
 ### Resolution
 

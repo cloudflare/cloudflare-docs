@@ -1,10 +1,9 @@
 ---
 pcx_content_type: concept
-title: Using WebSockets
-weight: 13
+title: Use WebSockets
 ---
 
-# Using WebSockets
+# Use WebSockets
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
@@ -16,7 +15,7 @@ WebSockets utilize a simple event-based system for receiving and sending message
 
 {{</Aside>}}
 
-## Writing a WebSocket Server
+## Write a WebSocket Server
 
 WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real time. This guide will show you how to set up a WebSocket server in Workers.
 
@@ -111,7 +110,7 @@ async function handleRequest(request) {
 }
 ```
 
-### Connecting to the WebSocket server from a client
+### Connect to the WebSocket server from a client
 
 Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it:
 
@@ -137,7 +136,7 @@ websocket.close();
 
 For an example of this in practice, refer to the [`websocket-template`](https://github.com/cloudflare/websocket-template) to get started with WebSockets.
 
-## Writing a WebSocket client
+## Write a WebSocket client
 
 Cloudflare Workers supports the `new WebSocket(url)` constructor. A Worker can establish a WebSocket connection to a remote server in the same manner as the client implementation described above.
 

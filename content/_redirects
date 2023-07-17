@@ -454,6 +454,7 @@
 /magic-transit/reference/ipsec/ /magic-transit/reference/tunnels/#ipsec-tunnels 301
 /magic-transit/flow-based-monitoring/ /magic-transit/magic-network-monitoring/ 301
 /magic-transit/flow-based-monitoring/enable-flow-based-monitoring/ /magic-network-monitoring/notifications/ 301
+/magic-transit/how-to/auto-advertise-prefixes/ /magic-network-monitoring/rules/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
@@ -782,11 +783,11 @@
 /workers/about/ /workers/learning/ 301
 /workers/about/how-it-works/ /workers/learning/how-workers-works/ 301
 /workers/about/limits/ /workers/platform/limits/ 301
-/workers/about/metrics/ /workers/learning/metrics-and-analytics/ 301
+/workers/about/metrics/ /workers/observability/metrics-and-analytics/ 301
 /workers/about/pricing/ /workers/platform/pricing/ 301
 /workers/about/routes/ /workers/platform/triggers/routes/ 301
 /workers/platform/routes/ /workers/platform/triggers/routes/ 301
-/workers/about/tips/debugging/ /workers/learning/debugging-workers/ 301
+/workers/about/tips/debugging/ /workers/observability/debug-workers/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/learning/how-the-cache-works/ 301
 /workers/api/ /api/operations/worker-script-list-workers 301
@@ -925,7 +926,6 @@
 /workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
-/workers/runtime-apis/headers/ /workers/platform/headers/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
@@ -934,7 +934,19 @@
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/environments/ /workers/wrangler/environments/ 301
-
+/workers/platform/nodejs-compatibility/ /workers/runtime-apis/nodejs/
+/workers/learning/using-websockets/ /workers/runtime-apis/websockets/use-websockets/ 301
+/workers/learning/using-streams/ /workers/runtime-apis/use-streams/ 301
+/workers/platform/webassembly/ /workers/runtime-apis/webassembly/ 301
+/workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
+/workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
+/workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
+/workers/learning/debugging-workers/ /workers/observability/debug-workers/ 301
+/workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
+/workers/platform/logpush/ /workers/observability/logpush/ 301
+/workers/platform/tail-workers/ /workers/observability/tail-workers/ 301
+/workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
+/workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 
 # zaraz
 
@@ -1148,7 +1160,7 @@
 /warp-client/setting-up/linux/* /warp-client/get-started/linux/:splat 301
 /warp-client/setting-up/macOS/* /warp-client/get-started/macos/:splat 301
 /warp-client/setting-up/windows/* /warp-client/get-started/windows/:splat 301
-/workers/about/metrics/* /workers/learning/metrics-and-analytics/:splat 301
+/workers/about/metrics/* /workers/observability/metrics-and-analytics/:splat 301
 /workers/cli-wrangler/commands/* /workers/wrangler/commands/:splat 301
 /workers/cli-wrangler/configuration/* /workers/wrangler/configuration/:splat 301
 /workers/recipes/lambda@edge-conversion/* /workers/ 301

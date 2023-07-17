@@ -1,10 +1,9 @@
 ---
 pcx_content_type: concept
-title: Logging from Workers
-weight: 4
+title: Log from Workers
 ---
 
-# Logging from Workers
+# Log from Workers
 
 You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
 
@@ -21,7 +20,7 @@ This feature is not available for zones on the [Cloudflare China Network](/china
 
 {{<Aside type="note">}}
 
-To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush/).
+To push your Worker logs to a third-party provider, refer to [Logpush](/workers/observability/logpush/).
 
 {{</Aside>}}
 
@@ -139,9 +138,9 @@ Note that:
 
 ## Push logs to storage
 
-[Workers Logpush](/workers/platform/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
+[Workers Logpush](/workers/observability/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
 
-Refer to the [Workers Logpush documentation](/workers/platform/logpush/) to learn how to create and configure Logpush jobs.
+Refer to the [Workers Logpush documentation](/workers/observability/logpush/) to learn how to create and configure Logpush jobs.
 
 ---
 

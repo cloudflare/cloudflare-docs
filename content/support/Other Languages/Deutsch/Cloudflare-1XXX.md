@@ -525,7 +525,7 @@ ___
 
 ### Häufige Ursache
 
-Ein Cloudflare-Worker überschreitet ein [CPU-Zeitlimit](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Die CPU-Zeit ist die Zeit, die mit der Ausführung von Code verbracht wird (z. B. Schleifen, JSON-Parsing usw.). Die Zeit, die mit Netzwerkanfragen verbracht wird (Abrufen, Antworten), zählt nicht zur CPU-Zeit.
+Ein Cloudflare-Worker überschreitet ein [CPU-Zeitlimit](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Die CPU-Zeit ist die Zeit, die mit der Ausführung von Code verbracht wird (z. B. Schleifen, JSON-Parsing usw.). Die Zeit, die mit Netzwerkanfragen verbracht wird (Abrufen, Antworten), zählt nicht zur CPU-Zeit.
 
 ### Lösung
 
