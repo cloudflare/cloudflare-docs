@@ -9,13 +9,13 @@ title: Routes
 
 Routes allow users to map a URL pattern to a Worker. When a request comes in to the Cloudflare network that matches the specified URL pattern, your Worker will execute on that route.
 
-## Types of routes
+Routes are a set of rules that evaluate against a request's URL. Routes are recommended for you if you have a designated application server you always need to communicate with. Calling `fetch()` on the incoming `Request` object will trigger a subrequest to your application server, as defined in the **DNS** settings of your Cloudflare zone.
 
-There are three types of routes:
+Routes add Workers functionality to your existing proxied hostnames, in front of your application server. These allow your  Workers to act as a proxy and perform any necessary work before reaching out to an application server behind Cloudflare.
 
-* Routes: Routes that are set within a Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
-* Custom Domains: Routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
-* `workers.dev`: The `workers.dev` subdomain route automatically created for your Worker that you can disable.
+![Routes work with your applications defined in Cloudflare DNS](/images/workers/learning/routes-diagram.png)
+
+Routes can `fetch()` Custom Domains and take precedence if configured on the same hostname. If you would like to run a logging Worker in front of your application, for example, you can create a Custom Domain on your application Worker for `app.example.com`, and create a Route for your logging Worker at `app.example.com/*`.  Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot be the target of a same-zone `fetch()` call.
 
 ## Set up a route
 
@@ -26,7 +26,7 @@ To add a route, you must have:
 3. An orange-clouded DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
 
 {{<Aside type="warning">}}
-Route setup will differ depending on if your application's origin is a Worker or not. If your Worker is your application's origin, use [Custom Domains](/workers/platform/triggers/custom-domains/).
+Route setup will differ depending on if your application's origin is a Worker or not. If your Worker is your application's origin, use [Custom Domains](/workers/platform/routing/custom-domains/).
 {{</Aside>}}
 
 If your Worker is not your application's origin, follow the instructions below to set up a route.
@@ -184,6 +184,6 @@ All domains and subdomains must have a [DNS record](/dns/manage-dns-records/how-
 
 {{<Aside type="warning">}}
 
-If you have previously used the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)), Cloudflare recommends creating a [Custom Domain](/workers/platform/triggers/custom-domains/) pointing to your Worker instead.
+If you have previously used the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)), Cloudflare recommends creating a [Custom Domain](/workers/platform/routing/custom-domains/) pointing to your Worker instead.
 
 {{</Aside>}}

@@ -45,7 +45,7 @@ There are some back-end services that are not considered by the Smart Placement 
 
 Smart Placement is available to users on all Workers plans.
 
-Smart Placement is intended for latency-sensitive Workers and as such, does not currently work with [Cron Triggers](/workers/platform/triggers/cron-triggers/).
+Smart Placement is intended for latency-sensitive Workers and as such, does not currently work with [Cron Triggers](/workers/platform/cron-triggers/).
 
 ### Enable Smart Placement via Wrangler
 
