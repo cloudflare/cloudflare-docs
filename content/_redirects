@@ -944,6 +944,7 @@
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
+/workers/platform/triggers/ /workers/platform/ 301
 
 # zaraz
 
