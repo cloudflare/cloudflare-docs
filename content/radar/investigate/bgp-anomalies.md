@@ -159,7 +159,7 @@ In the response we can learn about the following information about each event:
 
 ## Send alerts for BGP hijacks
 
-In this example, we will show you how you can build a simple Cloudflare Workers app that sends out alerts for BGP hijacks relevant to a given ASN using webhooks (works for Google Hangouts, Discord, Telegram, etc) or email.
+In this example, we will show you how you can build a Cloudflare Workers app that sends out alerts for BGP hijacks relevant to a given ASN using webhooks (works for Google Hangouts, Discord, Telegram, etc) or email.
 
 We will use Cloudflare Workers as the platform and use its Cron Triggers to periodically check for new alerts.
 
@@ -303,8 +303,8 @@ await env.HIJACKS_KV.put("latest_id", kv_latest_id.toString());
 
 ### Send alerts using webhook
 
-The function `send_alert` handles constructing alert message and sending out alerts using webhook. Here we provide a
-very simple example plain-text message template using Google Hangouts webhook. Users can customize the message and the use of webhook based on their
+The function `send_alert` handles constructing alert message and sending out alerts using webhook. Here we demonstrate
+an example plain-text message template using Google Hangouts webhook. Users can customize the message and the use of webhook based on their
 platform of choice and needs.
 
 ```javascript
