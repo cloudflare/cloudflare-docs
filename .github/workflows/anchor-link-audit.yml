@@ -1,5 +1,9 @@
 name: Anchor link audit
 
+# **What it does**: Regularly audits our documentation for broken internal anchor links.
+# **Why we have it**: B/c checking on the individual commit push level is too granular, but we want to address broken headers periodically.
+# **Who does it impact**: PCX team
+
 on:
   pull_request:
     branches:
@@ -43,7 +47,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { context: workflowContext, github } = require('@actions/github');
+            const { context: workflowContext, github: octokit } = require('@actions/github');
 
             async function createIssue() {
               const body = `Broken header links:
@@ -52,7 +56,7 @@ jobs:
             ${process.env.ACTIONS_STEP_DEBUG === 'true' ? process.env.header_link_check : 'Logging not available.'}
             \`\`\``;
 
-              const response = await github.issues.create({
+              const response = await octokit.issues.create({
                 ...workflowContext.repo,
                 title: 'Broken header links found',
                 body,
