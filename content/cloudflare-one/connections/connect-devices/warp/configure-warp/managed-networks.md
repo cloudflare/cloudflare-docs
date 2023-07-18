@@ -99,7 +99,7 @@ WARP will automatically exclude the IP address of the TLS endpoint from all [Spl
 | Managed network | is | `<NETWORK-NAME>` |
 4. Save the profile.
 
-Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will determine its network location and apply the corresponding settings profile.
+Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing Wi-Fi networks), the WARP client will determine its network location and apply the corresponding settings profile.
 
 {{<Aside type="note">}}
 The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.

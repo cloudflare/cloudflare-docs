@@ -300,7 +300,7 @@ The root certificate is now installed and ready to be used.
 
 ### Nix and NixOS
 
-nixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
+NixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
 
 ## Add the certificate to applications
 
@@ -373,7 +373,7 @@ The command to install the certificate with Python on Windows automatically incl
 
 #### Git on Windows
 
-1. Open Powershell.
+1. Open PowerShell.
 
 2. Run the following command:
 

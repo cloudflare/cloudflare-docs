@@ -32,14 +32,14 @@ You can select between the options available in the app's settings. By default, 
 
 {{<Aside type="note">}}
 
-If you configure 1.1.1.1 manually, you will have to do it for every WiFi network your device connects to. This method does not work for cellular connections.
+If you configure 1.1.1.1 manually, you will have to do it for every Wi-Fi network your device connects to. This method does not work for cellular connections.
 
 {{</Aside>}}
 
 Take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
 
 1. Go to **Settings** > **WiFi**.
-2. Select the **'i'** icon next to the WiFi network you are connected to.
+2. Select the **'i'** icon next to the Wi-Fi network you are connected to.
 3. Scroll down and select **Configure DNS**.
 4. Change the configuration from **Automatic** to **Manual**.
 5. Select **Add Server**.

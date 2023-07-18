@@ -41,7 +41,7 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
 
 ### Windows
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Use the `Get-CimInstance` command to get the SerialNumber property of the `Win32_BIOS` class.
 
    ```txt
