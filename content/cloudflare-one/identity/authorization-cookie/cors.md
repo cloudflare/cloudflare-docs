@@ -50,7 +50,7 @@ You can configure Cloudflare to respond to the OPTIONS request on your behalf. T
 
 To configure how Cloudflare responds to preflight requests:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the origin that will be receiving OPTIONS requests and click **Edit**.
 3. In the **Settings** tab, scroll down to **CORS settings**.
 4. Configure the dashboard [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
@@ -114,7 +114,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 ### 2. Add a Service Auth policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
 2. Find your `api.mysite.com` application and click **Edit**.
 
@@ -218,7 +218,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 ### 4. Configure the Worker
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/) Account Home, navigate to **Workers & Pages**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/) Account Home, go to **Workers & Pages**.
 
 2. Click your newly created Worker. In this example, the Worker is called `redirect-worker`.
 

@@ -80,10 +80,10 @@ Suppose you have a list of policies arranged in the following order of precedenc
   | 2 | Destination port | is | `443` | Allow |
   | 3 | SNI Domain | is | `test.example.com` | Block |
 
-When a user navigates to `https://test.example.com`, Gateway performs the following operations:
+When a user goes to `https://test.example.com`, Gateway performs the following operations:
 
 1. Evaluate DNS request against DNS policies:
-  {{<render file="gateway/_order-of-precedence-dns-order.md">}}
+   {{<render file="gateway/_order-of-precedence-dns-order.md">}}
 
 2. Evaluate HTTPS request against HTTP policies:
 

@@ -17,7 +17,7 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
 
 ## Create your environment
 
-1. From the AWS console, navigate to **Build a Solution** and select **Launch a Virtual Machine with EC2**.
+1. From the AWS console, go to **Build a Solution** and select **Launch a Virtual Machine with EC2**.
 
    ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-console.png)
 

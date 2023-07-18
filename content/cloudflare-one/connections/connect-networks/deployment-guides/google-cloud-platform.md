@@ -15,9 +15,9 @@ The purpose of this guide is to walk through some best practices for accessing p
 
 ## Create your environment
 
-To start, you will need to navigate to the Google Cloud Console and create a project. This project will contain all of your future Google Cloud resources, including the VM instances you will create in this process.
+To start, you will need to go to the Google Cloud Console and create a project. This project will contain all of your future Google Cloud resources, including the VM instances you will create in this process.
 
-1.  From the Cloud Console, navigate to **Compute Engine**.
+1.  From the Cloud Console, go to **Compute Engine**.
 
 1.  Under Compute Engine, select **VM Instances**.
 

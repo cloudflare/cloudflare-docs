@@ -135,7 +135,7 @@ The third component, the token, consists of the zone ID (for the selected domain
 
 ## Firefox shows a network protocol violation when I use the WARP client.
 
-If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
+If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
 ## `cloudflared access` shows an error `websocket: bad handshake`
 
@@ -146,7 +146,7 @@ If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able t
 There are a few different possible root causes behind the `websocket: bad handshake` error:
 
 - Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
-- WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
+- WebSockets are not enabled. To enable them, go to `dash.cloudflare.com` > **Network**.
 - Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 - Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
@@ -191,8 +191,8 @@ Windows runs network connectivity checks that can sometimes fail due to how the 
 There are two options to resolve the issue:
 
 - **Option 1**: In Windows, configure the Network Connectivity Status Indicator (NCSI) to detect the WARP DNS server.
-{{<tabs labels="Registry key | Group policy">}}
-{{<tab label="registry key" no-code="true">}}
+  {{<tabs labels="Registry key | Group policy">}}
+  {{<tab label="registry key" no-code="true">}}
 
 To fix the issue with a registry key:
 
@@ -204,13 +204,16 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectiv
 {{<tab label="group policy" no-code="true">}}
 
 To fix the issue with a local group policy:
+
 1. Open `gpedit.msc`.
 2. Go to **Computer Configuration** > **Administrative Templates** > **Network** > **Network Connectivity Status Indicator**.
 3. Enable **Specify Global DNS**.
 4. Update group policy settings on the device:
-  ```bash
-  gpupdate /force
-  ```
+
+```bash
+gpupdate /force
+```
+
 5. Reboot the device.
 
 {{</tab>}}

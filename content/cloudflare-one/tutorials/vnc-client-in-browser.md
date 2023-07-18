@@ -39,7 +39,7 @@ There are a number of VNC versions, deployments, and instances. This tutorial fo
 
 ## Configure VNC on your virtual machine
 
-This section covers how to install a VNC server with TightVNC and the Gnome User Interface. If you already have a VNC server installed, you can skip this step.
+This section covers how to install a VNC server with TightVNC and the GNOME desktop environment. If you already have a VNC server installed, you can skip this step.
 
 1. Open a terminal window for your VM.
 
@@ -145,7 +145,7 @@ At this point you have a running VNC server and a Cloudflare Tunnel on your mach
 
 The last step is to create a Zero Trust application to run your VNC server in the Browser.
 
-1. Open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access > Applications**.
+1. Open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Applications**.
 
 2. Select **Add an application** and choose **Self-hosted**.
 

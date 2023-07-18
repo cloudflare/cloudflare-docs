@@ -21,7 +21,7 @@ Not all SaaS applications support tenant control. Examples of common application
 
 This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **Firewall Policies** > **HTTP**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 
 1.  Create a policy with the following values:
 

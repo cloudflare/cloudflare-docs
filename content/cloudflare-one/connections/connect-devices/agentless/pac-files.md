@@ -30,7 +30,7 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 <summary>Create a proxy endpoint (dashboard)</summary>
 <div>
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Gateway** > **Proxy Endpoints**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy Endpoints**.
 2. Click **Create endpoint**.
 3. Give your endpoint any name.
 4. Enter the public source IP address of your device(s) in CIDR notation. For example,
@@ -148,7 +148,7 @@ function FindProxyForURL(url, host) {
 
 - Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
 - You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
-- Use a proper text editor such as VSCode to avoid added characters.
+- Use a proper text editor such as VS Code to avoid added characters.
   {{</Aside>}}
 
 ## 4. Configure your browser

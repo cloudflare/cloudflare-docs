@@ -60,7 +60,7 @@ To retrieve those values:
 
 ### 2. Configure API permissions in Azure
 
-1. From the **App registrations** page for your application, navigate to **API permissions**.
+1. From the **App registrations** page for your application, go to **API permissions**.
 
 2. Select **Add a permission**.
 
@@ -88,7 +88,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 ### 3. Add Azure AD as an identity provider
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
 

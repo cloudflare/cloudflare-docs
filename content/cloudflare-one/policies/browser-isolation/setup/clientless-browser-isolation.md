@@ -6,12 +6,11 @@ weight: 5
 
 # Clientless Web Isolation
 
-Clientless Web Isolation allows users to securely navigate high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
+Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
 ## Set up Clientless Web Isolation
 
-{{<render file="/_clientless-browser-isolation.md">}}
-3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+{{<render file="/_clientless-browser-isolation.md">}} 3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
 
 ## Use the remote browser
 
@@ -75,7 +74,7 @@ Clicking **Expand** or the hostname text will expand the notch to the full addre
 
 ### Full address bar view
 
-The full address bar allows users to search and navigate to isolated websites. Users can jump to the address bar at any time by pressing <kbd>CTRL</kbd> + <kbd>L</kbd> on the keyboard.
+The full address bar allows users to search and go to isolated websites. Users can jump to the address bar at any time by pressing <kbd>CTRL</kbd> + <kbd>L</kbd> on the keyboard.
 
 ![Viewing full address of an isolated page in the clientless remote browser](/images/cloudflare-one/policies/rbi-address-bar-full.png)
 

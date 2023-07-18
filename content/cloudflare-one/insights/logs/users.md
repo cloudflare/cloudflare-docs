@@ -8,7 +8,7 @@ weight: 1
 
 Cloudflare Zero Trust allows you to consult a comprehensive list of users who have authenticated to Cloudflare Zero Trust. For each user that logged in, you can see their name, their email address, and whether they’re actively utilizing a seat in both Access and Gateway.
 
-To see your user list, navigate to **My Team** > **Users**.
+To see your user list, go to **My Team** > **Users**.
 
 ## Revoke user sessions
 

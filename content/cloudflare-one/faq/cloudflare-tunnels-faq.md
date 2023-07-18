@@ -145,7 +145,7 @@ Refer to [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunn
 
 ### Check SSL/TLS encryption mode
 
-1.  On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
+1.  On the Cloudflare dashboard for your zone, go to **SSL/TLS** > **Overview**.
 1.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
 
 When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.

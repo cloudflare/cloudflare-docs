@@ -30,7 +30,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Enable UDP support
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 1.  Scroll down to Firewall settings.
 1.  Ensure the Proxy is enabled and both TCP and UDP are selected.
 
@@ -76,7 +76,7 @@ Both `dig` commands will fail if the WARP client is disabled in your end user's 
 
 Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
 
-- Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in Zero Trust.
+- Ensure that `cloudflared` is connected to Cloudflare by visiting **Access** > **Tunnels** in Zero Trust.
 
 - Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
 
