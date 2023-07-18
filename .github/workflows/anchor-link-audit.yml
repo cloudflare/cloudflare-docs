@@ -53,8 +53,7 @@ jobs:
           echo "header_link_check_job_url=$job_id" >> "$GITHUB_OUTPUT"
 
       - name: Create issue on failure
-        if: ${{ failure() }}
-        needs: [header_link_check, job_details]
+        if: ${{ failure() && steps.header_link_check.outputs.header_link_check_output != 'Logging not available.' && steps.job_details.outputs.header_link_check_job_url != null }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEADER_LINK_CHECK_JOB_URL: ${{ needs.job_details.outputs.header_link_check_job_url }}
