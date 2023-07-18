@@ -21,6 +21,12 @@ jobs:
           hugo-version: '0.92.0'
           extended: true
 
+      - name: Install dependencies
+        run: curl https://htmltest.wjdp.uk | bash
+
+      - name: Check - Broken header links
+        run: ./bin/htmltest -c ./bin/.htmltest.yml
+
       - name: (env) pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
 
@@ -30,11 +36,7 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
 
-      - name: Install dependencies
-        run: curl https://htmltest.wjdp.uk | bash
-
-      - name: Check - Broken header links
-        run: ./bin/htmltest
+      
 
       
   # lint:
