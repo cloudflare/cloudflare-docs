@@ -45,7 +45,7 @@ By default, the dataset name is the same as the binding name.
 
 * The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables).
 * For example, `binding = "MY_DATASET"` or `binding = "metricsDataset"` would both be valid names for the binding.
-* Your binding is available in your Worker at `env.<BINDING_NAME>` and exposes the `writeMetric` method.
+* Your binding is available in your Worker at `env.<BINDING_NAME>` and exposes the `writeDataPoint` method.
 
 If you want, you can also specify the dataset name:
 
