@@ -38,16 +38,16 @@ jobs:
         run: curl https://htmltest.wjdp.uk | bash
 
       - name: Check - Broken header links
-        id: header-link-check
-        run: ./bin/htmltest -c ./bin/.htmltest.yml
-        env:
-          ACTIONS_STEP_DEBUG: true
+        id: header_link_check
+        run: |
+          output=$(./bin/htmltest -c ./bin/.htmltest.yml)
+          echo "header_link_check_output=$output" >> "$GITHUB_OUTPUT"
 
       - name: Create issue on failure
         if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEADER_LINK_CHECK_OUTPUT: ${{ process.env.ACTIONS_STEP_DEBUG === 'true' ? steps.header-link-check.outputs.stdout }}
+          HEADER_LINK_CHECK_OUTPUT: ${{ steps.header_link_check.outputs.header_link_check_output }}
         run: |
           echo "Broken header links:\n${HEADER_LINK_CHECK_OUTPUT}" > header_link_check_output.txt
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
