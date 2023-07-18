@@ -8,7 +8,7 @@ Connect to databases using the new Database Integrations (beta) experience. Enab
 
 {{<Aside type="note" header="Making multiple round trip calls to a centralized database from a Worker?">}}
 
-If your Worker is making multiple round trip calls to a centralized database, your Worker may be a good fit for Smart Placement. Smart Placement speeds up applications by automatically running your Worker closer to your back-end infrastructure rather than the end user. Learn more about [how Smart Placement works](/workers/platform/smart-placement/).
+If your Worker is making multiple round trip calls to a centralized database, your Worker may be a good fit for Smart Placement. Smart Placement speeds up applications by automatically running your Worker closer to your back-end infrastructure rather than the end user. Learn more about [how Smart Placement works](/workers/configuration/smart-placement/).
 {{</Aside>}}
 
 ## Database credentials
@@ -88,7 +88,7 @@ At this time, Database Integrations only support access to one database per prov
     };
     ```
 
-To learn more about PlanetScale, refer to [Planetscale's official documentation](https://docs.planetscale.com/).
+To learn more about PlanetScale, refer to [PlanetScale's official documentation](https://docs.planetscale.com/).
 
 ### Supabase
 

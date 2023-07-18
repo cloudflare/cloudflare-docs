@@ -151,7 +151,7 @@ To export the certificate:
 
 ## Configure ADFS to sign SAML responses
 
-To ensure that ADFS signs the full response when communicating with Cloudflare, open your local **Powershell** and enter the following command:
+To ensure that ADFS signs the full response when communicating with Cloudflare, open your local **PowerShell** and enter the following command:
 
 ```bash
 Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"

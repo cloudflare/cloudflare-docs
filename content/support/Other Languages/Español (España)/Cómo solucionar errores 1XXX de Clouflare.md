@@ -419,7 +419,7 @@ Has solicitado una página en un sitio web (`tunnel.ejemplo.com`) que está en l
 ### Solución
 
 -   **Si eres un visitante del sitio web**: por favor, inténtalo de nuevo en unos minutos.
--   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para tu túnel.
+-   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) para tu túnel.
 
 ___
 

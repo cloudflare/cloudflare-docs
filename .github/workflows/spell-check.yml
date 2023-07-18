@@ -49,12 +49,12 @@ jobs:
         run: codespell --count --skip="*.js,./.git,./content/support/Other Languages/*" ${{ env.CHANGED_FILES }}
 
       - name: Case Police
-        run: case-police ${{ env.CHANGED_FILES }} --disable vscode,DoS,webRTC
+        run: case-police ${{ env.CHANGED_FILES }} --disable DoS
         if: always()
 
       - name: Create .alexrc file
         run: |
-          echo '{ "allow": ["attacks", "attack", "hooks", "host-hostess", "period", "remains"], "profanitySureness": 2 }' > .alexrc
+          echo '{ "allow": ["actors-actresses", "attacks", "attack", "invalid", "hooks", "host-hostess", "period", "remains"], "profanitySureness": 2 }' > .alexrc
         if: always()
 
       - name: Alex (inclusive language)

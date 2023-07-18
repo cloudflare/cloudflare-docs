@@ -38,6 +38,6 @@ Source / destination tunnel data in Network Analytics includes:
     - [WARP](/cloudflare-one/connections/connect-devices/warp/)
     - [CNIs](/network-interconnect/)
     - Traffic destined for the public Internet via [Gateway](/cloudflare-one/policies/filtering/)
-    - Traffic destined for applications behind [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+    - Traffic destined for applications behind [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 The label `Non-Tunnel traffic` is a placeholder, and more specific labels will be applied to this category of traffic in the near future.

@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-The [Tunnel Virtual Network](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) that the device is connected to via the WARP client.
+The [Tunnel Virtual Network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) that the device is connected to via the WARP client.
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |

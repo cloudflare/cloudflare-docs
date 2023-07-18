@@ -453,7 +453,7 @@ None of the options for this command are required. Also, many can be set in your
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/platform/triggers/cron-triggers/#examples).
+  - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/configuration/cron-triggers/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
   - Routes where this Worker will be deployed.
   - For example: `--route example.com/*`.
@@ -1564,7 +1564,7 @@ $ wrangler whoami
 Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 {{</Aside>}}
 
-For more information about deployments and how they work, refer to [Deployments](/workers/platform/deployments).
+For more information about deployments and how they work, refer to [Deployments](/workers/configuration/deployments).
 
 ### list
 
@@ -1655,7 +1655,7 @@ binding = "MY_KV"
 
 Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
 
-There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/platform/deployments#rollbacks) for more information.
+There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/configuration/deployments#rollbacks) for more information.
 
 {{<Aside type="warning">}}
 A rollback will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
