@@ -53,7 +53,7 @@ These steps help you set up Centrify as your identity provider:
     Do not use the forward slash from the **Settings** tab.
     {{</Aside>}}
 
-1.  Navigate to the **User Access** tab.
+1.  Go to the **User Access** tab.
 
 1.  Select the roles to grant access to your application.
 

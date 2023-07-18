@@ -31,7 +31,7 @@ You can set up External Evaluation rules using any API service, but to get start
    $ wrangler generate my-worker https://github.com/cloudflare/workers-access-external-auth-example
    ```
 
-2. Navigate to the project directory.
+2. Go to the project directory.
 
    ```sh
    $ cd my-worker
@@ -122,7 +122,7 @@ When a user logs in to your application, Access will now check their email, devi
 
 To debug your External Evaluation rule:
 
-1. Navigate to your Worker directory.
+1. Go to your Worker directory.
 
    ```sh
    $ cd my-worker

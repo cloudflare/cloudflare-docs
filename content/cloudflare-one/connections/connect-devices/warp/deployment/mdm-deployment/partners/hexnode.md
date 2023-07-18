@@ -154,7 +154,7 @@ This will push the app along with the configurations to the selected devices.
 6. Push the app to the target devices using Hexnode.
    1. On your Hexnode console, go to **Policies** and create a new policy.
    2. Provide a name for the policy and go to **iOS**.
-   3. Navigate to **Mandatory Apps** > **Configure**.
+   3. Go to **Mandatory Apps** > **Configure**.
    4. Click **+Add** > **Add app**, check the required app, and click **Done**.
    5. Go to **Policy Targets** and associate the policy with the required target devices.
 

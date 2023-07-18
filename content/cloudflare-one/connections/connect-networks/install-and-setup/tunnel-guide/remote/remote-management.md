@@ -94,7 +94,7 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 1. Open the Registry Editor.
 
-2. Navigate to **HKEY_LOCAL_MACHINE** > **SYSTEM** > **CurrentControlSet** > **Services** > **cloudflared**.
+2. Go to **HKEY_LOCAL_MACHINE** > **SYSTEM** > **CurrentControlSet** > **Services** > **cloudflared**.
 
 3. Double-click **ImagePath**.
 

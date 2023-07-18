@@ -21,7 +21,7 @@ To enforce an MFA requirement to an application:
 
 1.  Find the application for which you want to enforce MFA and click **Edit**. Alternatively, [create a new application](/cloudflare-one/applications/configure-apps/).
 
-1.  Navigate to the **Rules** section of the application.
+1.  Go to the **Rules** section of the application.
 
 1.  If your application already has a rule containing an identity requirement, find it and click **Edit**.
 

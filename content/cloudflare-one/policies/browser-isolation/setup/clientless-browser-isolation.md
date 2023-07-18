@@ -60,7 +60,7 @@ You can configure [remote browser controls](/cloudflare-one/policies/browser-iso
 
 ## Address bar
 
-Clientless Web Isolation has an embedded address bar. This feature is designed to improve the user's experience while navigating in isolated pages with prefixed URLs.
+Clientless Web Isolation has an embedded address bar. This feature is designed to improve the user's experience while visiting isolated pages with prefixed URLs.
 
 The clientless address bar has three views: hostname notch, full address bar and hidden. The user's selected view is remembered across domains and remote browsing sessions.
 

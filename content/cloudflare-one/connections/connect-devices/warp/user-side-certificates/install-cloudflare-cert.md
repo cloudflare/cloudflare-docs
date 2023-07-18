@@ -119,7 +119,7 @@ iOS only allows the Safari browser to open and install certificates.
 
 2. Tap **Allow**.
 
-3. Navigate to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
+3. Go to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
 {{<Aside type="note">}}
 
@@ -228,7 +228,7 @@ $ sudo update-ca-trust
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-2. Navigate to **Settings** > **Security**.
+2. Go to **Settings** > **Security**.
 
 ![Android **Settings** screen](/images/cloudflare-one/connections/android_security_settings.png)
 
@@ -268,11 +268,11 @@ The root certificate is now installed and ready to be used.
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-2. Navigate to your **ChromeOS Settings**.
+2. Go to your **ChromeOS Settings**.
 
 ![**Settings** cog in ChromeOS](/images/cloudflare-one/connections/chromeOS1_cert.png)
 
-3. Navigate to **Apps** > **Google Play Store**.
+3. Go to **Apps** > **Google Play Store**.
 
 ![**Google Play Store** app in ChromeOS settings](/images/cloudflare-one/connections/chromeOS2_cert.png)
 
@@ -280,7 +280,7 @@ The root certificate is now installed and ready to be used.
 
 ![**Manage Android preferences** in ChromeOS settings](/images/cloudflare-one/connections/chromeOS3_cert.png)
 
-5. Navigate to **Security & location** > **Credentials** > **Install from SD card**.
+5. Go to **Security & location** > **Credentials** > **Install from SD card**.
 
 {{<table-wrap>}}
 

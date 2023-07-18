@@ -33,7 +33,7 @@ To filter traffic from private networks, refer to the [Cloudflare Tunnel guide](
 3. On your WARP-enabled device, open a browser and visit any website.
 4. Determine the **Source IP** for your device:
    1. Open the WARP client settings.
-   2. Navigate to **Preferences** > **General**.
+   2. Go to **Preferences** > **General**.
    3. Note the **Public IP**.
 5. In Zero Trust, go to **Logs** > **Gateway** > **Network**. Before building Network policies, make sure you see Network logs from the Source IP assigned to your device.
 

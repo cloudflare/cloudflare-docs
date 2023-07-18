@@ -73,7 +73,7 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 ## Creating an HTTP policy
 
-1.  Navigate to **Gateway** > **Firewall Policies** > **HTTP policies**.
+1.  Go to **Gateway** > **Firewall Policies** > **HTTP policies**.
 
 1.  Click **Create a policy**.
 

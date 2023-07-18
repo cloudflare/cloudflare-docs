@@ -37,14 +37,16 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
 2. Enable **Proxy** for TCP.
 3. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
 4. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`:
-    1. Select **ICMP**.
-    2. On Linux servers:
 
-    * Ensure that the Group ID for the `cloudflared` process is included in `/proc/sys/net/ipv4/ping_group_range`.
-    * If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
-    ```sh
-    $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
-    ```
+   1. Select **ICMP**.
+   2. On Linux servers:
+
+   - Ensure that the Group ID for the `cloudflared` process is included in `/proc/sys/net/ipv4/ping_group_range`.
+   - If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
+
+   ```sh
+   $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
+   ```
 
 Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp).
 
@@ -84,7 +86,7 @@ Your application will appear on the **Applications** page.
 
 ## 5. Connect as a user
 
-End users can now reach HTTP or TCP-based services on your network by navigating to any IP address in the range you have specified.
+End users can now reach HTTP or TCP-based services on your network by visiting any IP address in the range you have specified.
 
 ### Troubleshooting
 
@@ -98,7 +100,7 @@ To check that their device is properly configured, the user can visit `https://h
 
 #### Router configuration
 
-Check the local IP address of the device and ensure that it does not fall within the IP/CIDR range of your private network. For example, some home routers will make DHCP assignments in the `10.0.0.0/24` range, which overlaps with the `10.0.0.0/8` range used by most corporate private networks. When a user's home network shares the same IP addresses as the routes in your tunnel, their device will be unable to connect to your application. 
+Check the local IP address of the device and ensure that it does not fall within the IP/CIDR range of your private network. For example, some home routers will make DHCP assignments in the `10.0.0.0/24` range, which overlaps with the `10.0.0.0/8` range used by most corporate private networks. When a user's home network shares the same IP addresses as the routes in your tunnel, their device will be unable to connect to your application.
 
 To resolve the IP conflict, you can either:
 

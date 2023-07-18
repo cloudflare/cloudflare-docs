@@ -58,7 +58,7 @@ $ kubectl create secret generic tunnel-credentials \
 ## Associate your Tunnel with a DNS record
 
 1.  Go to the Cloudflare dashboard.
-1.  Navigate to the DNS tab.
+1.  Go to the DNS tab.
 1.  Now create a CNAME targeting `.cfargotunnel.com`. In this example, the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`.
 
 You can also create multiple CNAME records targeting the same Tunnel, if desired.

@@ -31,7 +31,7 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 1.  Follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-2.  Navigate to the `Applications` page in the `Access` section of Zero Trust.
+2.  In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
 3.  Click **Add an application** and choose `Self-hosted`.
 
