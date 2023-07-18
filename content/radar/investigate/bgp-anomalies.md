@@ -10,7 +10,7 @@ To access Cloudflare Radar BGP Anomaly Detection results, you will first need to
 
 ## Search BGP hijack events
 
-In the following example, we will request the most recent BGP origin hijacks originated by or affecting `AS64512` (example ASN).
+In the following example, we will send request [BGP hijack events API][hijack-api-doc] for the most recent BGP origin hijacks originated by or affecting `AS64512` (example ASN).
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?invlovedAsn=64512&format=json&per_page=10" \
@@ -101,7 +101,7 @@ the `provider-customer-provider` type of route leak. You can learn more about ou
 
 [route-leak-blog-post]: https://blog.cloudflare.com/route-leak-detection-with-cloudflare-radar/
 
-In the following example, we will request the most recent BGP route leak events affecting `AS64512`.
+In the following example, we will request the [BGP route leak events API][route-leak-api-doc] for the most recent BGP route leak events affecting `AS64512`.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/bgp/leaks/events?invlovedAsn=64512&format=json&per_page=10" \
@@ -386,6 +386,7 @@ async function send_email_alert(hijacker, prefixes, victims) {
 
 ## Next steps
 
-Refer to our [API documentation][api-portal] for more information on these topics.
+Refer to our API documentation for [BGP route leaks][route-leak-api-doc] and [BGP hijacks][hijack-api-doc] for more information on these topics.
 
-[api-portal]: /api/operations/radar-get-bgp-hijacks-events
+[route-leak-api-doc]: /api/operations/radar-get-bgp-route-leak-events
+[hijack-api-doc]: /api/operations/radar-get-bgp-hijacks-events
