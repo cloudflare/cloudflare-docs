@@ -97,4 +97,4 @@ console.log(String(myMIME));
 // Prints: application/javascript;key=value
 ```
 
-For more about `util.MIMEType`, refer to the [Node.js documentation](https://nodejs.org/api/util.html#class-utilmimetype).
+For more about `util.MIMEType`, refer to the [Node.js documentation for `util.MIMEType`](https://nodejs.org/api/util.html#class-utilmimetype).
