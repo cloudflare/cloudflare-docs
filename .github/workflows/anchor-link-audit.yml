@@ -34,7 +34,7 @@ jobs:
         run: curl https://htmltest.wjdp.uk | bash
 
       - name: Check - Broken header links
-        run: bin/htmltest
+        run: ./bin/htmltest
 
       
   # lint:
