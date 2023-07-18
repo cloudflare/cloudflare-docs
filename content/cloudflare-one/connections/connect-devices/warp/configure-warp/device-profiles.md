@@ -29,7 +29,7 @@ Your profile will appear in the **Profile settings** list. You can rearrange the
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Profile settings** card, find the profile you want to update and select **Configure**.
-3. Modify [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-settings) for devices that match this profile.
+3. Modify [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-settings) for this profile.
 {{<Aside type="note">}}
 Changing any of the settings below will cause the WARP connection to restart. The user may experience a brief period of connectivity loss while the new settings are being applied.
 
@@ -41,7 +41,7 @@ Changing any of the settings below will cause the WARP connection to restart. Th
 
 4. Select **Save profile**.
 
-The updated settings will immediately propagate to clients.
+The new settings will immediately propagate to devices that match this profile.
 
 ## Verify settings
 
