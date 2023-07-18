@@ -47,6 +47,8 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 {{<render file="_dns-scan-intro.md">}} <br />
 
+{{<render file="_dns-scan-note.md">}}
+
 {{<render file="_dns-scan-procedure.md">}}
 
 {{<render file="_dns-nxdomain-warning.md">}}
