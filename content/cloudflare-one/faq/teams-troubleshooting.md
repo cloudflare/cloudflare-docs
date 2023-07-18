@@ -135,7 +135,7 @@ The third component, the token, consists of the zone ID (for the selected domain
 
 ## Firefox shows a network protocol violation when I use the WARP client.
 
-If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
+If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
 ## `cloudflared access` shows an error `websocket: bad handshake`
 

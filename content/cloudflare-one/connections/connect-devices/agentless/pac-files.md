@@ -148,7 +148,7 @@ function FindProxyForURL(url, host) {
 
 - Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
 - You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
-- Use a proper text editor such as VSCode to avoid added characters.
+- Use a proper text editor such as VS Code to avoid added characters.
   {{</Aside>}}
 
 ## 4. Configure your browser
