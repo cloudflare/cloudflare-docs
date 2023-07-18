@@ -193,7 +193,7 @@ Example: `"example.com/*"`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -213,7 +213,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -221,7 +221,7 @@ Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
 
 ### Custom Domain route
 
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{<definitions>}}
 
@@ -231,7 +231,7 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -374,7 +374,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/configuration/durable-objects/#configuring-durable-object-classes-with-migrations).
 
 {{<definitions>}}
 
@@ -695,7 +695,7 @@ If you depend on Node.js APIs, either directly in your own code or via a library
 
 ### Use runtime APIs directly
 
-A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
+A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
 
 ```toml
 ---

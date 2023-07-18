@@ -18,7 +18,7 @@ rss: file
 
 ## 2023-06-22
 
-- Added the [`strict_crypto_checks`](/workers/platform/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
+- Added the [`strict_crypto_checks`](/workers/configuration/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
 - Fixes regression in the [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) where `connect("google.com:443")` would fail with a `TypeError`.
 
 ## 2023-06-19
@@ -30,8 +30,8 @@ rss: file
 
 - `AbortSignal.any()` is now available.
 - Updated V8 to 11.4.
-- Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/platform/compatibility-dates/#new-url-parser-implementation) compatibility flags.
-- Added the [`strict_compression_checks`](/workers/platform/compatibility-dates/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
+- Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/configuration/compatibility-dates/#new-url-parser-implementation) compatibility flags.
+- Added the [`strict_compression_checks`](/workers/configuration/compatibility-dates/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
 
 ## 2023-05-26
 
@@ -216,7 +216,7 @@ rss: file
 
 ## 2022-03-24
 
-- A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](/workers/platform/compatibility-dates/#minimal-subrequests).
+- A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](/workers/configuration/compatibility-dates/#minimal-subrequests).
 - When creating a `Response` with JavaScript-backed ReadableStreams, the `Body` mixin functions (e.g. `await response.text()` ) are now implemented.
 - The `IdentityTransformStream` creates a byte-oriented `TransformStream` implementation that simply passes bytes through unmodified. The readable half of the `TransformStream` supports BYOB-reads. It is important to note that `IdentityTransformStream` is identical to the current non-spec compliant `TransformStream` implementation, which will be updated soon to conform to the WHATWG Stream Standard. All current uses of `new TransformStream()` should be replaced with `new IdentityTransformStream()` to avoid potentially breaking changes later.
 

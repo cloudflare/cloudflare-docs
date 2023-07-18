@@ -1564,7 +1564,7 @@ $ wrangler whoami
 Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 {{</Aside>}}
 
-For more information about deployments and how they work, refer to [Deployments](/workers/platform/deployments).
+For more information about deployments and how they work, refer to [Deployments](/workers/configuration/deployments).
 
 ### list
 
@@ -1655,7 +1655,7 @@ binding = "MY_KV"
 
 Rollback to a specified deployment by ID, or to the previous deployment if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional message.
 
-There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/platform/deployments#rollbacks) for more information.
+There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/configuration/deployments#rollbacks) for more information.
 
 {{<Aside type="warning">}}
 A rollback will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.

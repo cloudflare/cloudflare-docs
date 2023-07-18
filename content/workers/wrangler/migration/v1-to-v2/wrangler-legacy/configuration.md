@@ -271,7 +271,7 @@ You can also define your `kv_namespaces` using an [alternative TOML syntax](http
 
 ### site
 
-A [Workers Site](/workers/platform/sites/) generated with [`wrangler generate --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#generate) or [`wrangler init --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#init).
+A [Workers Site](/workers/configuration/sites/start-from-scratch) generated with [`wrangler generate --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#generate) or [`wrangler init --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#init).
 
 Usage:
 

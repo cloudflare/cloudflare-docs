@@ -170,7 +170,7 @@ Workers being rate-limited by Anti-Abuse Protection are also visible from the Cl
 
 ### Daily request
 
-Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/routing/routes/) in two modes: 1) Fail open and 2) Fail closed.
+Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/configuration/routing/routes/) in two modes: 1) Fail open and 2) Fail closed.
 
 #### Fail open
 
@@ -291,7 +291,7 @@ App Workers do not count towards this limit.
 
 ## Number of routes per zone
 
-Each zone has a limit of 1,000 [routes](/workers/platform/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ---
 

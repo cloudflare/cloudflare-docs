@@ -137,7 +137,7 @@ export { getTodos }
 
 ## Environment variables
 
-Environment variables, such as [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars), [secrets](/workers/platform/environment-variables/#compare-secrets-and-environment-variables), and [bindings](/workers/configuration/bindings/), are configured with Wrangler. Environment variables are accessed differently in code written in ES modules format versus Service Worker format.
+Environment variables, such as [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars), [secrets](/workers/configuration/environment-variables/#compare-secrets-and-environment-variables), and [bindings](/workers/configuration/bindings/), are configured with Wrangler. Environment variables are accessed differently in code written in ES modules format versus Service Worker format.
 
 Review the following example environment variable configuration in `wrangler.toml`:
 

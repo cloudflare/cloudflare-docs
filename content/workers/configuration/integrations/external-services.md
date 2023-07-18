@@ -25,4 +25,4 @@ Then use the secret value to authenticate with the external service. For example
 
 For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
 
-Use [Custom Domains](/workers/platform/routing/custom-domains/) when communicating with external APIs, which treat your Worker as your core application.
+Use [Custom Domains](/workers/configuration/routing/custom-domains/) when communicating with external APIs, which treat your Worker as your core application.

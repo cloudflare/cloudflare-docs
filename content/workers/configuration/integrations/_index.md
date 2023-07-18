@@ -13,7 +13,7 @@ One of the key features of Cloudflare Workers is the ability to easily integrate
 Cloudflare Workers offers several types of integrations, including:
 
 * [Databases](/workers/databases/): Cloudflare Workers can be integrated with a variety of databases, including SQL and NoSQL databases. This allows you to store and retrieve data from your databases directly from your Cloudflare Workers code.
-* [APIs](/workers/learning/configuration/apis/): Cloudflare Workers can be used to integrate with external APIs, allowing you to access and use the data and functionality exposed by those APIs in your own code.
+* [APIs](/workers/configuration/integrations/apis/): Cloudflare Workers can be used to integrate with external APIs, allowing you to access and use the data and functionality exposed by those APIs in your own code.
 * [Third-party services](/workers/configuration/integrations/external-services/): Cloudflare Workers can be used to integrate with a wide range of third-party services, such as payment gateways, authentication providers, and more. This makes it possible to use these services in your Cloudflare Workers code.
 
 
@@ -34,4 +34,4 @@ To help you get the most out of using integrations with Cloudflare Workers:
 * Secure your integrations and protect sensitive data. Ensure you use secure authentication and authorization where possible, and ensure the validity of libraries you import.
 * Use [caching](/workers/learning/how-the-cache-works) to improve performance and reduce the load on an external service.
 * Split your Workers into service-oriented architecture using [Service bindings](/workers/configuration/bindings/about-service-bindings/) to make your application more modular, easier to maintain, and more performant.
-* Use [Custom Domains](/workers/platform/routing/custom-domains/) when communicating with external APIs and services, which create a DNS record on your behalf and treat your Worker as an application instead of a proxy.
+* Use [Custom Domains](/workers/configuration/routing/custom-domains/) when communicating with external APIs and services, which create a DNS record on your behalf and treat your Worker as an application instead of a proxy.
