@@ -26,32 +26,22 @@
 /content/r2/ @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @renandincer @third774 @Everlag @tsmith512 @mbetz08 @bkrebsbach @cloudflare/pcx-technical-writing
 /content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/content/zaraz/ @cloudflare/zaraz @cloudflare/pcx-technical-writing
-
-# DNS
-/content/1.1.1.1/ @hannes-cf @cloudflare/pcx-technical-writing
-/content/dns/ @hannes-cf @cloudflare/pcx-technical-writing
+/content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF
 /content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
 /content/waf/ @cloudflare/firewall @cloudflare/pcx-technical-writing
 
 # Magic products
-/content/magic-transit/ @annikagarbers @cloudflare/pcx-technical-writing
-/content/magic-firewall/ @arges @annikagarbers @cloudflare/pcx-technical-writing
-/content/magic-wan/ @annikagarbers @cloudflare/pcx-technical-writing
+/content/magic-transit/ @cloudflare/pcx-technical-writing
+/content/magic-firewall/ @arges @cloudflare/pcx-technical-writing
+/content/magic-wan/ @cloudflare/pcx-technical-writing
 
 # Radar
 /content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
 
-# Randomness Beacon
-/content/randomness-beacon/ @lukevalenta @armfazh @cloudflare/pcx-technical-writing
-
 # Support 
 /content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
-
-# Time Services
-/content/time-services/ @lukevalenta @wbl @armfazh @cloudflare/pcx-technical-writing
 
 # Turnstile
 /content/turnstile/ @migueldemoura @punkeel @worenga @cloudflare/pcx-technical-writing
