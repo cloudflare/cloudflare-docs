@@ -1,0 +1,51 @@
+name: Anchor link audit
+
+on:
+  pull_request:
+    branches:
+      - production
+
+jobs:
+  compile:
+    name: Compiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.1
+      - uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.92.0'
+          extended: true
+
+      - name: (env) pnpm
+        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+
+      - run: pnpm install
+
+      - run: make build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
+
+      - name: Install dependencies
+        run: curl https://htmltest.wjdp.uk | bash
+
+      - name: Check - Broken header links
+        run: bin/htmltest
+
+      
+  # lint:
+  #   name: Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #     - name: (env) pnpm
+  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+  #     - run: pnpm install
+  #     - run: pnpm run lint
