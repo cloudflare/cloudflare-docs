@@ -70,7 +70,7 @@ To configure how Cloudflare responds to preflight requests:
    then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
    ![Example CORS settings configuration in Zero Trust](/images/cloudflare-one/policies/CORS-settings.png)
 
-5. Click **Save application**.
+5. Select **Save application**.
 
 6. (Optional) You can check your configuration by sending an OPTIONS request to the origin with `curl`. For example,
 
@@ -118,7 +118,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 2. Find your `api.mysite.com` application and click **Edit**.
 
-3. Click the **Policies** tab.
+3. Select the **Policies** tab.
 
 4. Add the following policy:
    | Action | Rule type | Selector |
@@ -220,7 +220,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/) Account Home, go to **Workers & Pages**.
 
-2. Click your newly created Worker. In this example, the Worker is called `redirect-worker`.
+2. Select your newly created Worker. In this example, the Worker is called `redirect-worker`.
 
 3. In the **Triggers** tab, scroll down to **Routes** and add `example.com/api/*`. The Worker is placed on a subpath of `example.com` to avoid making a cross-origin request.
 

@@ -79,7 +79,7 @@ The certificate is now listed in your preferred keychain within the **Keychain A
 
 4. Double-click the certificate.
 
-5. Click **Trust**.
+5. Select **Trust**.
 
 ![macOS window for certificate configuration](/images/cloudflare-one/connections/cert-click-on-trust.png)
 
@@ -168,9 +168,9 @@ Windows offers two options to install the certificate, each having a different i
 
 2. Right-click the certificate file.
 
-3. Click **Open**. If you see a Security Warning, click **Open** to proceed.
+3. Select **Open**. If you see a Security Warning, click **Open** to proceed.
 
-4. The **Certificate** window will appear. Click **Install Certificate**.
+4. The **Certificate** window will appear. Select **Install Certificate**.
 
 ![Window for Cloudflare certificate](/images/cloudflare-one/connections/windows_install_cert.png)
 
@@ -180,11 +180,11 @@ Windows offers two options to install the certificate, each having a different i
 
 7. Choose the **Trusted Root Certification Authorities** store.
 
-8. Click **OK**.
+8. Select **OK**.
 
 ![Window for selecting certificate store location](/images/cloudflare-one/connections/windows_cert_location.png)
 
-9. Click **Finish**.
+9. Select **Finish**.
 
 ![Window for finishing certificate installation](/images/cloudflare-one/connections/windows_cert_install_finished.png)
 
@@ -276,7 +276,7 @@ The root certificate is now installed and ready to be used.
 
 ![**Google Play Store** app in ChromeOS settings](/images/cloudflare-one/connections/chromeOS2_cert.png)
 
-4. Click **Manage Android preferences**.
+4. Select **Manage Android preferences**.
 
 ![**Manage Android preferences** in ChromeOS settings](/images/cloudflare-one/connections/chromeOS3_cert.png)
 

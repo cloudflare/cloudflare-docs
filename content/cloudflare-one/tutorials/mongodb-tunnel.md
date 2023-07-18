@@ -33,9 +33,9 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 2.  In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
-3.  Click **Add an application** and choose `Self-hosted`.
+3.  Select **Add an application** and choose `Self-hosted`.
 
-4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
+4.  Create an application for a subdomain where users will connect to your deployment. Select **Next**.
 
     ![MongoDB screen that shows how to add an application](/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-app.png)
 
@@ -43,7 +43,7 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
     ![MongoDB screen that shows how to configure a rule](/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
-6.  Click **Next** again and add the application.
+6.  Select **Next** again and add the application.
 
 ## Configure the Kubernetes deployment
 

@@ -81,7 +81,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 ## 3. Finalize your Cloudflare configuration
 
 1.  Go back to your DocuSign application under **Access** > **Applications**.
-1.  Click **Edit**.
+1.  Select **Edit**.
 1.  Use the following mappings:
     - EntityID->Service Provider Issuer URL.
     - Assertion Consumer Service URL -> Service Provider Assertion Consumer Service URL.

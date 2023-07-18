@@ -54,6 +54,6 @@ To set up Keycloak (SAML) as your identity provider:
     | IdP Entity ID or Issuer URL | `https://<unique_id>.cloudflareaccess.com/cdn-cgi/access/callback` |
     | Signing certificate         | Use the X509 Certificate in the Realm Settings from Keycloak       |
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.

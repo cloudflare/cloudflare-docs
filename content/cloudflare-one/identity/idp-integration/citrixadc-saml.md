@@ -84,6 +84,6 @@ To set up Citrix ADC (SAML) as your identity provider:
     | **Signing Certificate**      | The public certificate from the NetScaler        |
     | **Email attribute name**     | This is listed under **Optional configurations** |
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.

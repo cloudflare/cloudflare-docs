@@ -19,11 +19,11 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 1.  Add **AWS Single Sign** on to your AWS account.
 
-1.  Click **Choose an identity source**.
+1.  Select **Choose an identity source**.
 
 1.  Change the identity source to **External Identity provider**.
 
-1.  Click **Show individual metadata values**. These will be the fields that are added to the Cloudflare Access for SaaS app.
+1.  Select **Show individual metadata values**. These will be the fields that are added to the Cloudflare Access for SaaS app.
 
 1.  Copy the **AWS SSO ACS URL**.
 
@@ -46,7 +46,7 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 1.  Copy the Cloudflare IdP metadata values and save them for the Final AWS configuration.
 
-1.  Click **Next**.
+1.  Select **Next**.
 
 1.  Now create an [Access policy](/cloudflare-one/policies/access/) to determine who has access to your application.
 
@@ -73,7 +73,7 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
     {{</Aside>}}
 
-1.  Click **Next: Review**.
+1.  Select **Next: Review**.
 
 1.  Set Provisioning to _Manual_.
 

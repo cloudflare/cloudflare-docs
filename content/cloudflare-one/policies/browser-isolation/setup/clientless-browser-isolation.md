@@ -70,7 +70,7 @@ By default the isolated domain name appears in the notch positioned at the top a
 
 ![Viewing hostname of an isolated page in the clientless remote browser](/images/cloudflare-one/policies/rbi-address-bar-notch.png)
 
-Clicking **Expand** or the hostname text will expand the notch to the full address bar view. If isolated page content is obscured by the notch, expanding to the full address bar view will make the content accessible.
+Selecting **Expand** or the hostname text will expand the notch to the full address bar view. If isolated page content is obscured by the notch, expanding to the full address bar view will make the content accessible.
 
 ### Full address bar view
 
@@ -109,7 +109,7 @@ If you want to isolate a website without Cloudflare WARP installed, you will nee
   </head>
   <body>
     <p>
-      This website is being redirected to a remote browser. Click
+      This website is being redirected to a remote browser. Select
       <a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
         >here</a
       >

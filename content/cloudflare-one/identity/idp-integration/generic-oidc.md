@@ -40,7 +40,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 9. (Optional) Under **Optional configurations**, enter custom OIDC claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
-10. Click **Save**.
+10. Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test. On success, a confirmation screen displays.
 

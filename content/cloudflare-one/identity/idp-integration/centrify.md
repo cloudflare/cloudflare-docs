@@ -14,9 +14,9 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Log in to the Centrify administrator panel.
 
-1.  Click **Apps**.
+1.  Select **Apps**.
 
-1.  Click **Add Web Apps**.
+1.  Select **Add Web Apps**.
 
 1.  Select the **Custom** tab and click **Add OpenID Connect**.
 
@@ -26,9 +26,9 @@ These steps help you set up Centrify as your identity provider:
 
     ![Centrify Settings with Application ID added](/images/cloudflare-one/identity/centrify/centrify-4.png)
 
-1.  Click **Save**.
+1.  Select **Save**.
 
-1.  Click **Trust** in the **Settings** menu.
+1.  Select **Trust** in the **Settings** menu.
 
 1.  Enter a strong application secret on the **Trust** section.
 
@@ -44,7 +44,7 @@ These steps help you set up Centrify as your identity provider:
 
     ![Centrify Trust Identity Provider Configuration with team domain and callback](/images/cloudflare-one/identity/centrify/centrify-6.png)
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 1.  Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
@@ -63,7 +63,7 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
 

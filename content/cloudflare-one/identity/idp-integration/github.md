@@ -30,7 +30,7 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Click **Register application**.
+1.  Select **Register application**.
 
 1.  Copy the **Client ID** and **Client Secret**.
 
@@ -44,7 +44,7 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 1.  Paste in the **Client ID** and **Client secret**.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to GitHub.
 If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.

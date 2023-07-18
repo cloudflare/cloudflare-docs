@@ -35,7 +35,7 @@ This is a walkthrough of how to add custom headers for Microsoft 365. The proced
     - Custom Header Name: Restrict-Access-To-Tenants
     - Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
 
-1.  Click **Create policy**.
+1.  Select **Create policy**.
 
 Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to an Office 365 application with a personal account, authentication will fail.
 

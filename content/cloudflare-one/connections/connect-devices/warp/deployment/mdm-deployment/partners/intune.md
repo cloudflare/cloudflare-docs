@@ -16,9 +16,9 @@ weight: 2
 
 1. Log in to your Microsoft Intune account.
 2. Go to **Apps** > **All Apps** > **Add**.
-3. In **App type**, select _Line-of-business app_ from the drop-down menu. Click **Select**.
-4. Click **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
-5. Click **OK**.
+3. In **App type**, select _Line-of-business app_ from the drop-down menu. Select **Select**.
+4. Select **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
+5. Select **OK**.
 6. In the **Name** field, we recommend entering the version number of the package being uploaded.
 7. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
 8. In the **Command-line arguments** field, enter a [valid installation command](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#windows). \

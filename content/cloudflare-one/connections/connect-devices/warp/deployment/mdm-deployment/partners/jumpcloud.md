@@ -28,16 +28,16 @@ meta:
 
 8. (Optional) Select **Allow end users to delay updates for up to one week** to avoid updates during a busy time.
 
-9. Click **save**.
+9. Select **save**.
 
 10. Select the device(s) you want to deploy the app to:
 
     - **Single device**: Go to the **Devices** tab and select the target device.
     - **Device group**: Go to the **Device Groups** tab and select the target device group.
 
-11. Click **save**.
+11. Select **save**.
 
-12. Click **save** again.
+12. Select **save** again.
 
 Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.
 
@@ -60,6 +60,6 @@ Verify that Cloudflare WARP was installed by selecting the app and viewing the *
    - **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
    - **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
 
-7. Click **save** to install the client.
+7. Select **save** to install the client.
 
 Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.

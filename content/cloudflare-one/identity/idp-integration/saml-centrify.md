@@ -16,7 +16,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Select **Add Web Apps**.
 
-1.  Click the **Custom** tab.
+1.  Select the **Custom** tab.
 
 1.  Next to the **SAML** icon click **Add**.
 
@@ -24,9 +24,9 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Enter the required information for your application.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
-1.  Click **Settings** in the left pane.
+1.  Select **Settings** in the left pane.
 
 1.  In the middle menu pane, select **Trust**.
 
@@ -38,23 +38,23 @@ To set up SAML with Centrify as your identity provider:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 1.  In the middle menu pane, select **User Access**.
 
-1.  Click **Add**. The **Select Role** dialog displays.
+1.  Select **Add**. The **Select Role** dialog displays.
 
 1.  Complete your roles access assignments. The Role rules display on the **User Access** card.
 
 1.  In the **User Access** card's middle menu pane, select **SAML Response**.
 
-1.  Click **Active** > **Add** to create a new **Attribute Name**, **Email**.
+1.  Select **Active** > **Add** to create a new **Attribute Name**, **Email**.
 
     ![Centrify SAML Response card with Settings Email Attribute selected](/images/cloudflare-one/identity/saml-centrify/saml-centrify-9.png)
 
 1.  Enter the user email addresses in the **Attribute Value** field.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 1.  Select **Settings** again from the left menu pane, and **Trust**.
 
@@ -68,7 +68,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Copy and paste the corresponding information from Centrify into the fields.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
 

@@ -23,9 +23,9 @@ This guide covers how to:
     - **Entity ID**: https://\[YOUR_SFDC_DOMAIN].my.salesforce.com
     - **Assertion consumer service URL**: https://\[YOUR_SFDC_DOMAIN].my.salesforce.com
     - **Name ID format**: Email
-1.  Click **Next**.
+1.  Select **Next**.
 1.  Set the desired policy configuration for user access.
-1.  Click Add application.
+1.  Select Add application.
 1.  Next, take note of the **SSO endpoint**, the **Access Entity ID or Issuer**, and the **Public Key**.
 
 ## 2. Create a certificate file
@@ -55,9 +55,9 @@ This guide covers how to:
     - **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
     - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
     - **Identity Provider Login URL**: This is the SSO endpoint provided in Zero Trust for that application.
-1.  Click **Save**.
+1.  Select **Save**.
 1.  From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
-1.  At the bottom, find **Authentication Configuration**. Click **Edit** and select your Authentication Service you created.
+1.  At the bottom, find **Authentication Configuration**. Select **Edit** and select your Authentication Service you created.
 1.  (Optional) To force all users to sign in through Cloudflare Access:
-    1.  Click **Security Controls** > **Single Sign-On Settings** > **Edit**.
-    1.  Click `Disable login with Salesforce credentials`.
+    1.  Select **Security Controls** > **Single Sign-On Settings** > **Edit**.
+    1.  Select `Disable login with Salesforce credentials`.

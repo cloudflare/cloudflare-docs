@@ -12,17 +12,17 @@ To see your user list, go to **My Team** > **Users**.
 
 ## Revoke user sessions
 
-Clicking the **Revoke** button next to a user will terminate all currently active sessions for that user, and revoke access to all their connected devices. If you want to prevent this user from logging in again, you need to manually remove this user from any existing policies that grant them access to your applications.
+Selecting the **Revoke** button next to a user will terminate all currently active sessions for that user, and revoke access to all their connected devices. If you want to prevent this user from logging in again, you need to manually remove this user from any existing policies that grant them access to your applications.
 
 ## View user details
 
-Clicking the View button for any user will show you details for that user, such as:
+Selecting the View button for any user will show you details for that user, such as:
 
 - Their user details
 - Devices they have connected to Cloudflare Zero Trust
 - Their recent logins
 
-Click on **View all activity** to see a full list of the user’s login events.
+Select **View all activity** to see a full list of the user’s login events.
 
 ## Workplace records
 
@@ -30,7 +30,7 @@ Wokplace records show the amount of unique sessions the user has initiated from 
 
 1.  In the Users page, locate the user whose workplace records you want to see.
 
-1.  Click **View**.
+1.  Select **View**.
 
 1.  In the **User details** section, under the **Most recent location** field, click on the View all button.
 

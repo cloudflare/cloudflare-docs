@@ -34,7 +34,7 @@ To set up Yandex for Cloudflare Access:
 
     ![Yandex Platform interface with Web services checked and callback URI in open form field](/images/cloudflare-one/identity/yandex/yandex-3.png)
 
-1.  Click **Add**.
+1.  Select **Add**.
 
 1.  Scroll to the **Platforms** card, and click **Submit**.
 
@@ -50,7 +50,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  Paste the ID and password in the appropriate fields.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 ## Example API Config
 
