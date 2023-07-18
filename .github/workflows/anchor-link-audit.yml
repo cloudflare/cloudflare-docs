@@ -5,9 +5,9 @@ name: Anchor link audit
 # **Who does it impact**: PCX team
 
 on:
-  pull_request:
-    branches:
-      - production
+  schedule:
+    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
+  workflow_dispatch:
 
 jobs:
   compile:
@@ -45,7 +45,7 @@ jobs:
         if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}/jobs/${{ github.job_id }}
+          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
         run: |
           echo "Specific header links in the [Workflow Run]($WORKFLOW_LINK).\n\nGenerally, we expect you to address at least 10-15 links before closing this out." > issue_body.txt
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
