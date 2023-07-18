@@ -19,7 +19,7 @@ $ npx create-vuepress-site [optionalDirectoryName]
 
 The command will interactively prompt for details to configure your VuePress site’s metadata such the project name, description, maintainer's email and repository URL.
 
-Once this is done, a scaffolded documentation site will be created in the `docs` directory and ready for you to customize or deploy. 
+Once this is done, a scaffolded documentation site will be created in the `docs` directory and ready for you to customize or deploy.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -33,15 +33,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, the following information will be provided:
 
-<div>
-
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `dist`          |
-
-</div>
+{{<pages-build-preset framework="vuepress">}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `vuepress`, your project dependencies, and building your site, before deploying it.
 
