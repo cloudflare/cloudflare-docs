@@ -4,8 +4,6 @@ title: Get started
 pcx_content_type: get-started
 ---
 
-<!-- Don't merge: UPDATE LINKS! -->
-
 # Get started
 
 This guide will instruct you through:
@@ -16,13 +14,23 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-Enable Durable Objects for your account by purchasing the Workers Paid plan:
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages), if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). 
+
+{{<Aside type="note" header="Node.js version manager">}}
+Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed later in this guide, requires a Node version of `16.13.0` or later.
+{{</Aside>}}
+
+## 1. Enable Durable Objects in the dashboard
+
+To enable Durable Objects, you will need to purchase Workers Paid plan:
 
  1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
  2. Go to **Workers & Pages** > **Plans**. 
  3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
- ## 1. Write a class to define a Durable Object
+ ## 2. Write a class to define a Durable Object
 
 Before you create and access a Durable Object, you must define its behavior by exporting an ordinary JavaScript class. 
 
@@ -65,7 +73,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 {{</Aside>}}
 
-## 2. Configure Durable Object bindings
+## 3. Configure Durable Object bindings
 
 Configure Durable Object [bindings](/workers/platform/bindings/) in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
@@ -129,7 +137,7 @@ durable_objects.bindings = [
 
 Refer to [Bindings](/workers/platform/bindings/) for more information about bindings.
 
-## 3. Configure Durable Object classes with migrations
+## 4. Configure Durable Object classes with migrations
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.  
 
@@ -151,7 +159,7 @@ filename: wrangler.toml
 tag = "v1" # Should be unique for each entry
 new_classes = ["DurableObjectExample"] # Array of new classes
 ```
-## 4. Instantiate and communicate with a Durable Object
+## 5. Instantiate and communicate with a Durable Object
 
 Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. 
 
@@ -200,7 +208,7 @@ In the code above, you:
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/learning/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
 
-## 5. Upload a Durable Object Worker
+## 6. Upload a Durable Object Worker
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
@@ -222,7 +230,7 @@ Workers that use ES Modules syntax must have a main module specified from which 
 
 Refer to [Custom builds documentation](/workers/wrangler/custom-builds/) for more details.
 
-## 6. Test your Durable Objects project
+## 7. Test your Durable Objects project
 
 If you copy the `DurableObjectExample` and fetch handler code from above into a generated Wrangler project, publish it using a `--new-class` migration, and make a request to it, you will notice that your request was stored in a Durable Object:
 

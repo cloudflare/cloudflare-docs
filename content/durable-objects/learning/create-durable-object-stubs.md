@@ -6,7 +6,7 @@ weight: 16
 
 # Create Durable Object stubs
 
-A Durable Object stub is a client object used to send requests to a remote Durable Object.
+A Durable Object stub is a client Object used to send requests to a remote Durable Object.
 
 `OBJECT_NAMESPACE.get(id)` creates a Durable Object.
 

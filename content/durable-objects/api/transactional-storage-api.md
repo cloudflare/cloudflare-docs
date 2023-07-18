@@ -12,18 +12,27 @@ Durable Objects gain access to a persistent Transactional Storage API via the fi
 
 While access to a Durable Object instance is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch()` requests.
 
+The following code snippet shows you how to store and retrieve data using the Transactional Storage API.
+
 ```js
-export class DurableObjectExample {
+export class Counter {
   constructor(state, env) {
     this.state = state;
   }
 
   async fetch(request) {
-    let ip = request.headers.get("CF-Connecting-IP");
-    let data = await request.text();
-    let storagePromise = this.state.storage.put(ip, data);
-    await storagePromise;
-    return new Response(ip + " stored " + data);
+    let url = new URL(request.url);
+
+    // retrieve data
+    let value = (await this.state.storage.get("value")) || 0; 
+
+    // increment counter and get a new value
+    value += 1; 
+
+    // store data
+    await this.state.storage.put("value", value); 
+
+    return new Response(value);
   }
 }
 ```
@@ -179,9 +188,9 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
-  - Sets the current alarm time, accepting either a JS Date, or integer milliseconds since epoch.
+  - Sets the current alarm time, accepting either a JavaScript `Date`, or integer milliseconds since epoch.
 
-    If `setAlarm()` is called with a time equal to or before `Date.now()`,  the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
+    <br/> If `setAlarm()` is called with a time equal to or before `Date.now()`,  the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
 
 **Supported options:** Like `put()` above, but without `noCache()`.
 

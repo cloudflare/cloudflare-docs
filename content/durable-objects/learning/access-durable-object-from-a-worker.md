@@ -8,11 +8,13 @@ weight: 16
 
 To access a Durable Object from a Worker, you must first create a Durable Object namespace binding in your Worker. The namespace is, in turn, configured to use a particular class and controls access to instances of that class.
 
-Namespace bindings allow you to generate Object IDs and connect to Objects.
+Durable Objects namespace bindings allow you to generate Object IDs and connect to Objects.
+
+If you are using [Wrangler environments](/workers/wrangler/environments/), you must specify any Durable Object namespace bindings you wish to use on a per-environment basis.
 
 ## 1. Create Durable Object IDs
 
-An Object ID is a 64-digit hexadecimal number used to identify the Object you are sending the request to. The Object ID is tied to a class.
+An Object ID is a 64-digit hexadecimal number used to identify the Object you are sending the request to. Not all 64-digit hex numbers are valid IDs. The Object ID is tied to a class.
 
 To create a Durable Object ID, you can choose to:
 
@@ -67,13 +69,13 @@ let id = OBJECT_NAMESPACE.idFromName(name);
 
 {{</definitions>}}
 
-This method derives a unique object ID from the given name string. It will always return the same ID when given the same name as input.
+This method derives a unique Object ID from the given name string. It will always return the same ID when given the same name as input.
 
 {{<Aside type="note" header="Name-derived IDs require global lookups at creation">}}
 
 The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the Object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same Object at the same time. To guarantee that only one instance of the Object is created worldwide, the system must check whether the Object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds. After this check, the Object will be instantiated near where it was first requested.
 
-After the object has been accessed the first time, location information will be cached around the world so that subsequent lookups can be faster.
+After the Object has been accessed the first time, location information will be cached around the world so that subsequent lookups can be faster.
 
 {{</Aside>}}
 
@@ -95,13 +97,13 @@ let id = OBJECT_NAMESPACE.idFromString(hexId);
 
 {{</definitions>}}
 
-This method parses an ID that was previously stringified. This is useful in particular with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere, probably as a string.
+This method parses an ID that was previously stringified. This is useful with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere as a string.
 
-A stringified object ID is a 64-digit hexadecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
+This method will throw an exception if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw an exception if the ID was originally created for a different namespace.
 
 ## 2. Construct the stub using the ID 
 
-Construct the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
+Construct the stub for the Durable Object using the ID. A stub is a client Object used to send messages to the Durable Object.
 
 ```js
 ---

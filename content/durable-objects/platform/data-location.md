@@ -32,7 +32,7 @@ filename: index.js
 let id = subnamespace.newUniqueId();
 ```
 
-To derive a unique object ID from the given name string that will only run and persist data within the jurisdiction:
+To derive a unique Object ID from the given name string that will only run and persist data within the jurisdiction:
 
 ```js
 ---
@@ -43,7 +43,7 @@ let id = subnamespace.idFromName(name);
 
 {{<Aside type="note" header="IDs derived from the same name but different jurisdictions will differ">}}
 
-Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
+Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different Objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different Objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
 
 This may be counterintuitive at first, but it would be impossible to enforce two different non-overlapping jurisdictions for a single name. The key insight to remember is that Durable Object namespaces operate on IDs, not names, and the jurisdiction is a permanent part of the ID.
 
@@ -96,7 +96,7 @@ Object IDs will be logged outside of the specified jurisdiction for billing and 
 
 Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. 
 
-To manually create Durable Objects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
+To manually create Durable Objects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular Object will respect the hint.
 
 ```js
 ---

@@ -35,8 +35,8 @@ async function handleRequest(request, env) {
   // ID for two different strings (or for different classes).
   let id = env.COUNTER.idFromName(name);
 
-  // Construct the stub for the Durable Object using the ID. A stub is a
-  // client object used to send messages to the Durable Object.
+  // Construct the stub for the Durable Object using the ID. 
+  //A stub is a client Object used to send messages to the Durable Object.
   let obj = env.COUNTER.get(id);
 
   // Send a request to the Durable Object, then await its response.
@@ -59,8 +59,8 @@ export class Counter {
     let url = new URL(request.url);
 
     // Durable Object storage is automatically cached in-memory, so reading the
-    // same key every request is fast. (That said, you could also store the
-    // value in a class member if you prefer.)
+    // same key every request is fast. 
+    // You could also store the value in a class member if you prefer.
     let value = (await this.state.storage.get("value")) || 0;
 
     switch (url.pathname) {
@@ -71,15 +71,15 @@ export class Counter {
         --value;
         break;
       case "/":
-        // Serve the current value.
+        // Serves the current value.
         break;
       default:
         return new Response("Not found", { status: 404 });
     }
 
-    // You do not have to worry about a concurrent request having modified the
-    // value in storage because "input gates" will automatically protect against
-    // unwanted concurrency. Read-modify-write is safe. 
+    // You do not have to worry about a concurrent request having modified the value in storage. 
+    // "input gates" will automatically protect against unwanted concurrency. 
+    // Read-modify-write is safe. 
     await this.state.storage.put("value", value);
 
     return new Response(value);

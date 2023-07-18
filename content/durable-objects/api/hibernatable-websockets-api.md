@@ -14,7 +14,7 @@ Durable Objects WebSockets support includes:
 * Related methods on the `state` Object. 
 * Handler methods that a Durable Object can implement for processing WebSocket events.
 
-The Hibernatable WebSocket APIs enable you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
+The Hibernatable WebSocket API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
 
 For WebSocket proxy use-cases, refer to the [standard WebSocket API](/workers/learning/using-websockets/#writing-a-websocket-client) documentation.
 
@@ -26,7 +26,11 @@ A Durable Object that hibernates will not incur billable [Duration (GB-sec) char
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
-[Code updates](/durable-objects/learning/limitations/#global-uniqueness) will disconnect all WebSockets.
+{{<Aside type="warning" header="WebSockets disconnection">}}
+
+Code updates will disconnect all WebSockets. If you deploy a new version of a Worker, every Durable Object is restarted, which means that any connections to old Durable Objects will be disconnected.
+
+{{</Aside>}}
 
 
 ## WebSocket extensions
