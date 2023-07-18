@@ -40,8 +40,8 @@ jobs:
       - name: Check - Broken header links
         id: header_link_check
         run: |
-          output=$(./bin/htmltest -c ./bin/.htmltest.yml)
-          echo "header_link_check_output=$output" >> "$GITHUB_OUTPUT"
+            output=$(./bin/htmltest -c ./bin/.htmltest.yml)
+            echo "::set-output name=header_link_check_output::$output"
 
       - name: Create issue on failure
         if: ${{ failure() }}
