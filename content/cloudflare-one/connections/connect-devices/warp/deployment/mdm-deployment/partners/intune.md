@@ -15,7 +15,7 @@ weight: 2
 ### Configure Intune for Windows
 
 1. Log in to your Microsoft Intune account.
-2. Go to **Apps** > **All Apps** > **+Add**.
+2. Go to **Apps** > **All Apps** > **Add**.
 3. In **App type**, select _Line-of-business app_ from the drop-down menu. Click **Select**.
 4. Click **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
 5. Click **OK**.
