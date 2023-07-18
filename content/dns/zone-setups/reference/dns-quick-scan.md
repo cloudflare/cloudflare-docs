@@ -31,7 +31,7 @@ The value `@` indicates the domain apex - in the example above, `domain.com` or 
 
 Virtually all zones on a full setup are expected to have at least one [address record](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) pointing to the IP address where the website or application is hosted.
 
-### `www.` records
+### `www` records
 
 {{<example>}}
 | Type | Name | Content | TTL |
@@ -39,15 +39,15 @@ Virtually all zones on a full setup are expected to have at least one [address r
 | `CNAME` | `www` | `<TARGET>` | `<TTL>` |
 {{</example>}}
 
-Since it is still common that visitors type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [`CNAME` record](/dns/manage-dns-records/reference/dns-record-types/#cname) named `www`. This allows such queries to return the expected result.
-
-### Email records
-
 {{<example>}}
 | Type | Name | Content | TTL |
 | --- | --- | --- | --- |
-| `A` | `webmail` | `<IPv4>` | `<TTL>` |
+| `A` | `www` | `<IPv4>` | `<TTL>` |
 {{</example>}}
+
+Since it is still common that visitors type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [`CNAME`](/dns/manage-dns-records/reference/dns-record-types/#cname) or an [`A`](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) record named `www`. This allows queries for `www.<DOMAIN>` to return the expected result.
+
+### Email records
 
 {{<example>}}
 | Type | Name | Mail server | TTL | Priority
@@ -61,11 +61,17 @@ Since it is still common that visitors type `www.<DOMAIN>` in their browsers exp
 | `CNAME` | `mail` | `<TARGET>` | `<TTL>` |
 {{</example>}}
 
+{{<example>}}
+| Type | Name | Content | TTL |
+| --- | --- | --- | --- |
+| `A` | `webmail` | `<IPv4>` | `<TTL>` |
+{{</example>}}
+
 Mail exchanger (`MX`) and other record types combined with names like `mail`, `webmail`, or `smtp`, are also commonly found. As explained in the [Set up email records page](/dns/manage-dns-records/how-to/email-records/), there are several DNS records that can be used to make sure email reaches your mail server and to prevent other email senders from spoofing your domain.
 
 ## Limitations
 
-Since the DNS records quick scan is based on this predefined list of commonly used records types and names, and is not tailored to the specific zone you are adding to Cloudflare, there can be cases where not all records are picked up.
+Since the DNS records quick scan is based on this predefined list of commonly used record types and names, and is not tailored to the specific zone you are adding to Cloudflare, there can be cases where not all records are picked up.
 
 For example, if you have very specific hostnames - such as `my-store1900.example.com` instead of `store.example.com` - or if you have set up a [DKIM record](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/) that uses a more custom name - `this._domainkey` instead of `default._domainkey` - it is expected that the scan will not find the specific DNS records.
 
