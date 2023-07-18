@@ -17,7 +17,7 @@ The latest deployment for a Worker is considered the active deployment. You can 
 
 {{<Aside type="note">}}
 
-Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [R2](/r2/), and [Durable Objects](/workers/learning/using-durable-objects/) are not tracked with deployments.
+Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [R2](/r2/), and [Durable Objects](/workers/configuration/durable-objects/) are not tracked with deployments.
 
 {{</Aside>}}
 
@@ -64,7 +64,7 @@ Deployments are in active development. To give feedback, request a [live chat](h
 ## Rollbacks
 Rollbacks are a way to quickly deploy an older deployment to the Cloudflare global network. This could be useful if a breaking change or unintended publish is made to a production Worker.
 
-Perform a rollback via [Wrangler](/workers/platform/deployments/#via-wrangler-1) or the [Cloudflare dashboard](/workers/platform/deployments/#via-the-cloudflare-dashboard-1).
+Perform a rollback via [Wrangler](/workers/configuration/deployments/#via-wrangler-1) or the [Cloudflare dashboard](/workers/configuration/deployments/#via-the-cloudflare-dashboard-1).
 
 ### via Wrangler
 

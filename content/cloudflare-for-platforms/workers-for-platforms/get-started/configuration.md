@@ -62,7 +62,7 @@ To create a Worker, run `wrangler init` followed by your Worker project name:
 $ wrangler init <YOUR_WORKER>
 ```
 
-To create a dynamic dispatch Worker, create a [binding](/workers/platform/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
+To create a dynamic dispatch Worker, create a [binding](/workers/configuration/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
 
 ```toml
 ---

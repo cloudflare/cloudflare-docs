@@ -133,7 +133,7 @@ $ turso db show my-db --url
 libsql://my-db-<your-github-username>.turso.io
 ```
 
-Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/platform/environment-variables/) for your project:
+Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/configuration/environment-variables/) for your project:
 
 ```toml
 ---

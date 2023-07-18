@@ -201,10 +201,10 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
 
 * A Worker may consume up to **10 milliseconds** on the Free plan.
-* A Worker or [Scheduled Worker](/workers/platform/cron-triggers/) may consume up to **50 milliseconds** of CPU time with the Bundled usage model on the Paid Plan.
+* A Worker or [Scheduled Worker](/workers/configuration/cron-triggers/) may consume up to **50 milliseconds** of CPU time with the Bundled usage model on the Paid Plan.
 * A Worker may run for up to **30 seconds** with the Unbound usage model on the Paid Plan.
-* A [Scheduled Worker](/workers/platform/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
-* A [Scheduled Worker](/workers/platform/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
+* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
+* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
 * A [Queue consumer Worker](/queues/platform/javascript-apis/#consumer) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, per invocation.
 
 There is no limit on the real runtime for a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
@@ -217,7 +217,7 @@ Duration is the measurement of wall-clock time. This is measured in Gigabyte-sec
 
 For example, when a Worker executes via a [scheduled event](/workers/runtime-apis/scheduled-event/), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
-Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/workers/learning/using-durable-objects/).
+Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/workers/configuration/durable-objects/).
 
 ---
 

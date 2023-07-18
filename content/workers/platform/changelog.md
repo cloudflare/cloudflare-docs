@@ -35,11 +35,11 @@ rss: file
 
 ## 2023-05-26
 
-- A new [Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) (beta) has been added to [Durable Objects](/workers/learning/using-durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
+- A new [Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) (beta) has been added to [Durable Objects](/workers/configuration/durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
 
 ## 2023-05-16
 
-- The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
+- The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/learning/protocols/).
 - We have added new [native database integrations](/workers/databases/native-integrations/) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
 - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
 - The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
@@ -318,7 +318,7 @@ rss: file
 - The `unhandledrejection` and `rejectionhandled` events are now supported.
 - The `ReadableStreamDefaultReader` and `ReadableStreamBYOBReader` constructors are now supported.
 - Added non-standard `ReadableStreamBYOBReader` method `.readAtLeast(size, buffer)` that can be used to return a buffer with at least `size` bytes. The `buffer` parameter must be an `ArrayBufferView`. Behavior is identical to `.read()` except that at least `size` bytes are read, only returning fewer if EOF is encountered. One final call to `.readAtLeast()` is still needed to get back a `done = true` value.
-- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to [Compatibility Dates](/workers/platform/compatibility-dates/)
+- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to [Compatibility Dates](/workers/configuration/compatibility-dates/)
 
 ## 2021-10-14
 

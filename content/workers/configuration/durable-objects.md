@@ -1,10 +1,9 @@
 ---
 pcx_content_type: concept
-title: Using Durable Objects
-weight: 11
+title: Durable Objects
 ---
 
-# Using Durable Objects
+# Durable Objects
 
 Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
 
@@ -133,7 +132,7 @@ A given instance of a Durable Object may share global memory with other instance
 
 The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Counter example](#example---counter) below for an example of this approach.
 
-However, in applications with more complex state, [explicitly storing state in your Object](/workers/learning/using-durable-objects/#in-memory-state-in-a-durable-object) may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
+However, in applications with more complex state, [explicitly storing state in your Object](/workers/configuration/durable-objects/#in-memory-state-in-a-durable-object) may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
 {{</Aside>}}
 
@@ -170,7 +169,7 @@ A binding is defined in the `wrangler.toml` file of your Worker project’s dire
 
 A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/) or Durable Objects. A binding is a runtime variable that the Workers runtime provides to your code.
 
-You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding’s variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables/) documentation for more information.
+You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding’s variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/configuration/environment-variables/) documentation for more information.
 
 {{</Aside>}}
 
@@ -180,7 +179,7 @@ The fetch handler in the example below implements the Worker that talks to the D
 
 We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) for convenience, but it is not required.
 
-ES Modules differ from regular JavaScript files in that they have imports and exports. [As shown earlier](/workers/learning/using-durable-objects/#writing-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
+ES Modules differ from regular JavaScript files in that they have imports and exports. [As shown earlier](/workers/configuration/durable-objects/#writing-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
 ```js
 // In modules-syntax workers, you use `export default` to export your script's
@@ -311,7 +310,7 @@ You must initiate a migration process when you create a new Durable Object class
 
 {{<Aside type="note">}}
 
-Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler publish`](/workers/wrangler/commands/). This is true even for changes to how code interacts with persistent storage. Because of [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness) you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
+Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler publish`](/workers/wrangler/commands/). This is true even for changes to how code interacts with persistent storage. Because of [Global Uniqueness](/workers/configuration/durable-objects/#global-uniqueness) you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
 
 {{</Aside>}}
 
@@ -605,7 +604,7 @@ There is a limit on how quickly you can [create new objects or lookup different 
 
 #### Error: Durable Object reset because its code was updated.
 
-Refer to [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness). "Reset" in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
+Refer to [Global Uniqueness](/workers/configuration/durable-objects/#global-uniqueness). "Reset" in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
 
 #### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 

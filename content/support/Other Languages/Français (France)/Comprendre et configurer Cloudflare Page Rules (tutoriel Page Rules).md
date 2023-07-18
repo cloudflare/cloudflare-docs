@@ -769,7 +769,7 @@ Si vous spécifiez un port dans le champ **If the URL matches** (Si l'URL corres
 
 ### Utilisation de Page Rules avec Workers
 
-Si l'URL de la requête actuelle correspond à la fois à une Page Rule et à une [route Workers personnalisée](/workers/platform/routes), certains paramètres Page Rules ne seront pas appliqués. Pour plus d'informations sur l'utilisation de Page Rules avec Workers, consultez [Workers : Page Rules](/workers/platform/workers-with-page-rules/) dans la documentation destinée aux développeurs.
+Si l'URL de la requête actuelle correspond à la fois à une Page Rule et à une [route Workers personnalisée](/workers/platform/routes), certains paramètres Page Rules ne seront pas appliqués. Pour plus d'informations sur l'utilisation de Page Rules avec Workers, consultez [Workers : Page Rules](/workers/configuration/workers-with-page-rules/) dans la documentation destinée aux développeurs.
 
 ___
 

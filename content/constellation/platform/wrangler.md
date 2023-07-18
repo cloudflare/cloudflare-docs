@@ -133,7 +133,7 @@ $ npx wrangler constellation catalog list
 
 ## Bindings
 
-To deploy a Constellation Worker, you must declare one or more [bindings](/workers/platform/bindings/) for the Constellation projects you want to use in your `wrangler.toml` configuration file.
+To deploy a Constellation Worker, you must declare one or more [bindings](/workers/configuration/bindings/) for the Constellation projects you want to use in your `wrangler.toml` configuration file.
 
 ```toml
 ---

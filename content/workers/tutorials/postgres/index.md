@@ -91,7 +91,7 @@ $ wrangler secret put DB_URL
 
 ### Set explicit parameters
 
-Configure each database parameter as an [environment variable](/workers/platform/environment-variables/) via the [Cloudflare dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
+Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
 
 ```toml
 ---

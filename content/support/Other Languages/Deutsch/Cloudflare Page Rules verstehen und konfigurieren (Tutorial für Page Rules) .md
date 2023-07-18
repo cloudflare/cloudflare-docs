@@ -790,7 +790,7 @@ Wenn Sie einen Port im Page-Rule-Feld **Wenn die URL übereinstimmt** angeben, m
 
 ### Page Rules mit Workers verwenden
 
-Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](/workers/platform/routes) übereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation für Entwickler](/workers/platform/workers-with-page-rules/).
+Wenn die URL der aktuellen Anfrage sowohl mit einer Page Rule als auch mit einer [benutzerdefinierten Route von Workers](/workers/platform/routes) übereinstimmt, werden einige Einstellungen der Page Rules nicht angewendet. Einzelheiten zur Verwendung von Page Rules mit Workers finden Sie unter [Workers: Page Rules in der Dokumentation für Entwickler](/workers/configuration/workers-with-page-rules/).
 
 ___
 

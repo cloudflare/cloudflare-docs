@@ -47,7 +47,7 @@ There is a default (top-level) environment and named environments that provide e
 
 These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
 
-The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/platform/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
+The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
 ## Inheritable keys
 
@@ -69,7 +69,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `compatibility_date` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/platform/compatibility-dates/).
+  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `account_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -77,7 +77,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `compatibility_flags` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/platform/compatibility-dates/).
+  - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -149,7 +149,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/platform/environment-variables/).
+  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/configuration/environment-variables/).
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -303,7 +303,7 @@ watch_dir = "build_watch_dir"
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/platform/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -337,7 +337,7 @@ database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 
 ### Durable Objects
 
-[Durable Objects](/workers/learning/using-durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
+[Durable Objects](/workers/configuration/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 To bind Durable Objects to your Worker, assign an array of the below object to the `durable_objects.bindings` key.
 
@@ -477,7 +477,7 @@ r2_buckets  = [
 
 ### Service bindings
 
-A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/platform/bindings/about-service-bindings/).
+A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/configuration/bindings/about-service-bindings/).
 
 To bind other Workers to your Worker, assign an array of the below object to the `services` key.
 
@@ -541,7 +541,7 @@ dataset = "<DATASET_NAME>"
 
 To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
 
-To create a [binding](/workers/platform/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
+To create a [binding](/workers/configuration/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
 
 {{<definitions>}}
 

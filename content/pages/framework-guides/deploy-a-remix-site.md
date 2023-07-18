@@ -77,7 +77,7 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 ## Create and add a binding to your Remix application
 
 To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/workers/learning/how-kv-works/), [Durable Objects](/workers/configuration/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
 ### Binding resources to your Remix application
 
@@ -147,6 +147,6 @@ export const loader = async ({ context, params }: LoaderArgs) => {
 };
 ```
 
-Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
+Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/configuration/durable-objects/).
 
 {{<render file="_learn-more.md" withParameters="Remix">}}

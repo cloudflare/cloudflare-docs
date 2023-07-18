@@ -174,7 +174,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 ### vars
 
-The `vars` key defines a table of [environment variables](/workers/platform/environment-variables/) provided to your Worker script. All values are plaintext values.
+The `vars` key defines a table of [environment variables](/workers/configuration/environment-variables/) provided to your Worker script. All values are plaintext values.
 
 Usage:
 

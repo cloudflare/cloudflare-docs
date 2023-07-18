@@ -78,7 +78,7 @@ You cannot change your queue name after you have set it. After you create your q
 
 ## 4. Set up your producer worker
 
-In order to expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/platform/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
+In order to expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/configuration/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
 
 To create a binding, open your newly generated `wrangler.toml` configuration file and add the following:
 

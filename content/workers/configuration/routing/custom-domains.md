@@ -67,7 +67,7 @@ routes = [
 
 ## Worker to Worker communication
 
-On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/platform/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/platform/bindings/about-service-bindings/). 
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/platform/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/configuration/bindings/about-service-bindings/). 
 
 On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 
@@ -136,7 +136,7 @@ These certificates are generated with default settings. To override these settin
 
 ## Migrate from Routes
 
-If you are currently invoking a Worker using a [route](/workers/platform/routing/routes) with `/*`, and you have a CNAME record pointing to `100::` or similar, a Custom Domain is a recommended replacement.
+If you are currently invoking a Worker using a [route](/workers/configuration/routing/routes/) with `/*`, and you have a CNAME record pointing to `100::` or similar, a Custom Domain is a recommended replacement.
 
 ### Migrate from Routes via the dashboard
 
