@@ -93,7 +93,7 @@ Like with Prometheus, Grafana can be configured to run as a so that it does not 
 
 Go to the site that Grafana is listening on.
 
-In the bottom left corner of the page click on the gear and then Data Sources.
+In the bottom left corner of the page, select the gear and then Data Sources.
 
 Select "Add data source" and select Prometheus from the options. Enter the url that leads to the site that shows the Prometheus dashboard.
 

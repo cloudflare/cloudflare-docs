@@ -173,7 +173,7 @@ The command will print a URL that you must visit to login with your Cloudflare a
 
 Choose a website that you have added into your account.
 
-Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
+Once you select one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](/images/cloudflare-one/secure-origin-connections/share-new-site/cert-download.png)
 

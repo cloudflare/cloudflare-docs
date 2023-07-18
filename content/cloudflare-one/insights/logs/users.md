@@ -32,6 +32,6 @@ Wokplace records show the amount of unique sessions the user has initiated from 
 
 1.  Select **View**.
 
-1.  In the **User details** section, under the **Most recent location** field, click on the View all button.
+1.  In the **User details** section, under the **Most recent location** field, select the View all button.
 
 To change the granularity with which workplace records are shown, adjust your [global session duration](/cloudflare-one/identity/users/session-management/#set-global-session-duration). An informative threshold can be **24 hours**.
