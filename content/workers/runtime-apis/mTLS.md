@@ -19,6 +19,12 @@ Currently, mTLS for Workers is not supported for domains [proxied](/dns/manage-d
 
 First, upload a certificate and its private key to your account using the [`wrangler mtls-certificate`](/workers/wrangler/commands/#mtls-certificate) command:
 
+{{<Aside type="warning">}}
+
+This command requires "Account: SSL and Certificates" write permissions.
+
+{{</Aside>}}
+
 ```sh
 $ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
 ```
