@@ -7,7 +7,7 @@ meta:
   title: Speed
 ---
 
-# Speed
+# Cloudflare Speed
 
 {{<description>}}
 Improve the performance of your website or web application.
