@@ -34,18 +34,31 @@ jobs:
         run: curl https://htmltest.wjdp.uk | bash
 
       - name: Check - Broken header links
+        id: header-link-check
         run: ./bin/htmltest -c ./bin/.htmltest.yml
 
-      
-  # lint:
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - name: (env) pnpm
-  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-  #     - run: pnpm install
-  #     - run: pnpm run lint
+      - name: Create issue on failure
+        if: ${{ failure() }}
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { context, github } = require('@actions/github');
+
+            async function createIssue() {
+              const body = `Broken header links:
+
+            \`\`\`
+            ${process.env.ACTIONS_STEP_DEBUG === 'true' ? process.env.header_link_check : 'Logging not available.'}
+            \`\`\``;
+
+              const response = await github.issues.create({
+                ...context.repo,
+                title: 'Broken header links found',
+                body,
+              });
+
+              console.log(`Issue created: ${response.data.html_url}`);
+            }
+
+            createIssue();
