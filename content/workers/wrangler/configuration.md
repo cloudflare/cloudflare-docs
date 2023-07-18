@@ -246,7 +246,7 @@ route = { pattern = "example.com", custom_domain = true }
 
 ## Triggers
 
-Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/platform/cron-triggers/#supported-cron-expressions).
+Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
 
 {{<definitions>}}
 
@@ -725,7 +725,7 @@ This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in i
 Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
 {{</Aside>}}
 
-[Workers Sites](/workers/platform/sites) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
+[Workers Sites](/workers/configuration/sites/) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
 
 {{<definitions>}}
 

@@ -17,7 +17,7 @@ R2 organizes the data you store, called objects, into containers, called buckets
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/platform/environment-variables) for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/configuration/environment-variables/) for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -345,7 +345,7 @@ Only a single hashing algorithm can be specified at once.
 - {{<code>}}include{{<param-type>}}Array\<string\>{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
   - Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the list will include the specified metadata.
 
-  - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may recieve fewer than `limit` results in your response to accomodate metadata.
+  - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may receive fewer than `limit` results in your response to accommodate metadata.
 
   - The [compatibility date](/workers/configuration/compatibility-dates/) must be set to `2022-08-04` or later in your `wrangler.toml` file. If not, then the `r2_list_honor_include` compatibility flag must be set. Otherwise it is treated as `include: ['httpMetadata', 'customMetadata']` regardless of what the `include` option provided actually is.
 
@@ -407,7 +407,7 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 - {{<code>}}delimitedPrefixes{{<param-type>}}Array\<{{<type>}}string{{</type>}}\>{{</param-type>}}{{</code>}}
 
-  - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurence of the delimiter.
+  - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
   
   - For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix. 
 

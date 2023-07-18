@@ -125,7 +125,7 @@ To deploy your site to Pages:
 5. Click on **Save and Deploy** to start the deployment. This first deployment will not be fully functional as the next step is also necessary.
 6. In your Pages project, go to **Settings** > **Functions** > **Compatibility Flags**.
 7. Configure a `nodejs_compat` flag for both production and preview.
-8. Above **Compability Flags**, go to **Compatibility Date**  and configure a compatibility date that is at least `2022-11-30` for both production and preview.
+8. Above **Compatibility Flags**, go to **Compatibility Date**  and configure a compatibility date that is at least `2022-11-30` for both production and preview.
 
 {{<Aside type="note" header="Note">}}
 

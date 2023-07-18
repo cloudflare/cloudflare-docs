@@ -107,7 +107,7 @@ The [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextE
 
 ## URL API
 
-The URL API supports URLs conforming to HTTP and HTTPs schemes.
+The URL API supports URLs conforming to HTTP and HTTPS schemes.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 

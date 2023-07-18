@@ -137,7 +137,7 @@ Durable Objects are only available on the Workers Paid plan.
 | [Storage per object](#durable-objects)     | unlimited                                      |
 | [Key size](#durable-objects)               | 2048 bytes                                     |
 | [Value size](#durable-objects)             | 128 KiB                                        |
-| [Websocket message size](#durable-objects) | 1 MiB                                          |
+| [WebSocket message size](#durable-objects) | 1 MiB                                          |
 | [CPU per request](#durable-objects)        | 30s                                            |
 
 {{</table-wrap>}}
@@ -323,7 +323,7 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 - Storage values of up to 128 KiB (131072 bytes)
 
-- Websocket messages of up to 1 MiB (1048576 bytes). This limit applies to messages received, not sent or proxied through.
+- WebSocket messages of up to 1 MiB (1048576 bytes). This limit applies to messages received, not sent or proxied through.
 
 - 30s of CPU time per request, including websocket messages
 

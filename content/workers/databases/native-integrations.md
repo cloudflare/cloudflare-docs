@@ -88,7 +88,7 @@ At this time, Database Integrations only support access to one database per prov
     };
     ```
 
-To learn more about PlanetScale, refer to [Planetscale's official documentation](https://docs.planetscale.com/).
+To learn more about PlanetScale, refer to [PlanetScale's official documentation](https://docs.planetscale.com/).
 
 ### Supabase
 

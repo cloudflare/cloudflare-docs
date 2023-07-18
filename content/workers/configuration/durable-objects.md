@@ -247,7 +247,7 @@ $ cd durable-objects-template
 $ wrangler dev
 ```
 
-This will create a directory for your project with basic configuration and a single JavaScript source file already set up. If you want to use TypeScript, or be able to bundle external dependencies with your code using Rollup or Webpack, or to use CommonJS modules rather than ES modules, try one of the other starter templates instead:
+This will create a directory for your project with basic configuration and a single JavaScript source file already set up. If you want to use TypeScript, or be able to bundle external dependencies with your code using Rollup or webpack, or to use CommonJS modules rather than ES modules, try one of the other starter templates instead:
 
 - [Durable Objects Rollup ES Modules template](https://github.com/cloudflare/durable-objects-rollup-esm)
 - [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm)

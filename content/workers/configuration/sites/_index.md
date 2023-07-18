@@ -20,7 +20,7 @@ To deploy with Workers Sites, select from one of these three approaches dependin
 
 If you are ready to start a brand new project, this quick start guide will help you set up the infrastructure to deploy a simple HTML website to Workers.
 
-<p>{{<button type="primary" href="/workers/configuration/sites/start-from-scratchstart-from-scratch">}}Start from scratch{{</button>}}</p>
+<p>{{<button type="primary" href="/workers/configuration/sites/start-from-scratch/">}}Start from scratch{{</button>}}</p>
 
 ---
 
@@ -28,7 +28,7 @@ If you are ready to start a brand new project, this quick start guide will help 
 
 If you have an existing project or static assets that you want to deploy with Workers, this quick start guide will help you install Wrangler and configure Workers Sites for your project.
 
-<p>{{<button type="primary" href="/workers/configuration/sites/start-from-scratchstart-from-existing">}}Start from an existing static site{{</button>}}</p>
+<p>{{<button type="primary" href="/workers/configuration/sites/start-from-existing/">}}Start from an existing static site{{</button>}}</p>
 
 ---
 
@@ -36,7 +36,7 @@ If you have an existing project or static assets that you want to deploy with Wo
 
 If you already have a Worker deployed to Cloudflare, this quick start guide will show you how to configure the existing codebase to use Workers Sites.
 
-<p>{{<button type="primary" href="/workers/configuration/sites/start-from-scratchstart-from-worker">}}Start from an existing Worker{{</button>}}</p>
+<p>{{<button type="primary" href="/workers/configuration/sites/start-from-worker/">}}Start from an existing Worker{{</button>}}</p>
 
 {{<Aside type="note">}}
 

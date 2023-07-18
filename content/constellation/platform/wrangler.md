@@ -28,7 +28,7 @@ Commands:
   wrangler constellation project  Manage your projects
   wrangler constellation model    Manage your models
   wrangler constellation catalog  Check the curated model catalog
-  wrangler constellation runtime  Check the suported runtimes
+  wrangler constellation runtime  Check the supported runtimes
 
 Flags:
   -j, --experimental-json-config  Experimental: Support wrangler.json  [boolean]
