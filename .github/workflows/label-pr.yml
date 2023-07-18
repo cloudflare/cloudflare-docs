@@ -1,6 +1,9 @@
 name: Label PRs
 
-# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+# **What it does**: Uses the files to label PRs with updated doc areas && size estimates.
+# **Why we have it**: Easier scanning of repo PRs && backend reporting on our team's work.
+# **Who does it impact**: PCX team
+
 on: [pull_request_target]
 
 jobs:

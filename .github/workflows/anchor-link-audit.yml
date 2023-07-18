@@ -41,13 +41,25 @@ jobs:
         id: header-link-check
         run: ./bin/htmltest -c ./bin/.htmltest.yml
 
+      - name: Get Job Details
+        id: job_details
+        if: ${{ failure() }}
+        run: |
+          job_id=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/cloudflare/cloudflare-docs/actions/runs/${{ github.run_id }}/jobs" \
+            | jq -r '.jobs[] | select(.html_url')
+
+          echo "header_link_check_job_url=$job_id" >> "$GITHUB_OUTPUT"
+
       - name: Create issue on failure
         if: ${{ failure() }}
+        needs: [header_link_check, job_details]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}/jobs/${{ github.job_id }}
+          HEADER_LINK_CHECK_JOB_URL: ${{ needs.job_details.outputs.header_link_check_job_url }}
         run: |
-          echo "More details in the [Workflow Run]($WORKFLOW_LINK)" > issue_body.txt
+          echo "Refer to the [header_link_check job]($HEADER_LINK_CHECK_JOB_URL) for more information." > issue_body.txt
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
