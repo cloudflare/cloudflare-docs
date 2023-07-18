@@ -110,7 +110,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    ```
 
 {{<Aside type="note">}}
-The [Cron Trigger](/workers/platform/triggers/cron-triggers/) in this example schedules the script to run every minute. [Learn more](/workers/platform/triggers/cron-triggers/#supported-cron-expressions) about supported cron expressions.
+The [Cron Trigger](/workers/platform/cron-triggers/) in this example schedules the script to run every minute. [Learn more](/workers/platform/cron-triggers/#supported-cron-expressions) about supported cron expressions.
 {{</Aside>}}
 
 5. Publish the Worker to your Workers account.

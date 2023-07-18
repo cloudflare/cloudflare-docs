@@ -33,41 +33,10 @@ Page Ruleを定義し、URLパターンが一致するたびに、複数のア�
 
 | **プラン** | **許可されているページルール数の上限** |
 | --- | --- |
-| 
-Free
-
- | 
-
-3
-
- |
-| 
-
-Pro
-
- | 
-
-20
-
- |
-| 
-
-Business
-
- | 
-
-50
-
- |
-| 
-
-Enterprise
-
- | 
-
-125
-
- |
+| Free | 3 |
+| Pro | 20 |
+| Business | 50 |
+| Enterprise | 125 |
 
 Freeプラン、Proプラン、Businessプランのドメインに関しては、（最大100まで）[追加のルールを購入](https://www.cloudflare.com/features-page-rules/)できます。
 

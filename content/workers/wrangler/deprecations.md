@@ -63,7 +63,7 @@ Wrangler v2 introduces new fields for configuration and new features for develop
 - Local mode for `wrangler dev`.
 - Module system (for both modules and service worker format Workers).
 - Devtools.
-- Typescript support.
+- TypeScript support.
 - Sharing development environment on the Internet.
 - Wider platform compatibility.
 - Developer hotkeys.

@@ -34,5 +34,5 @@ To run an HTTP test, the device must be connected to Zero Trust via the WARP cli
 | Windows | 2023.3.381 |
 | Linux | 2023.3.398 |
 | iOS | Not supported |
-| ChromeOS | 6.24 |
+| ChromeOS | 6.28 |
 | Android | 6.26 |

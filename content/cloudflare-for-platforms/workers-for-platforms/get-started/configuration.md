@@ -109,34 +109,28 @@ Update the necessary fields and run the following command:
 5. Add the script name `customer-worker-1` to `<SCRIPT_NAME>`.
 
 ```bash
-curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'X-Auth-Key: <AUTH_KEY> \
--H 'Content-Type: application/javascript' \
---data "addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-})
-
-async function handleRequest(request) {
-  return new Response('Hello world');
-}"
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <AUTH_KEY>" \
+-H "Content-Type: multipart/form-data" \
+-F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
 ```
 
 If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) with **Workers Edit** permission. Select **Account**, **Workers Script**, and **Edit**. Then, add the token to the `"Authorization: Bearer <API_TOKEN>"` header. 
 
 
 ```bash
-curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
--H 'Authorization: Bearer <API_TOKEN>' \
--H 'Content-Type: application/javascript' \
---data "addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-})
-
-async function handleRequest(request) {
-  return new Response('Hello world');
-}"
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
+-H "Authorization: Bearer <BEARER_TOKEN>" \
+-H "Content-Type: multipart/form-data" \
+-F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
 ```
+
+{{<Aside type="note">}}
+
+You should perform [Multipart uploads](/cloudflare-for-platforms/workers-for-platforms/platform/multipart/) if you want to use ES Modules syntax.
+
+{{</Aside>}}
 
 ## 5. Test a request
 

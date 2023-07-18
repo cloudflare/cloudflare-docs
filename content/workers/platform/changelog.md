@@ -8,6 +8,9 @@ rss: file
 
 # Changelog
 
+## 2023-07-14
+- An implementation of the [util.MIMEType](https://nodejs.org/api/util.html#class-utilmimetype) API from Node.js is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) is enabled
+
 ## 2023-07-07
 
 - An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
@@ -37,7 +40,7 @@ rss: file
 ## 2023-05-16
 
 - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/platform/protocols/).
-- We've added new [native database integrations](/workers/learning/integrations/databases/#native-database-integrations-beta) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
+- We have added new [native database integrations](/workers/databases/native-integrations/) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
 - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
 - The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
 
@@ -78,7 +81,7 @@ rss: file
 
 ## 2023-03-06
 
-- [Workers Logpush](/workers/platform/logpush/#limits) now supports 300 characters per log line. This is an increase from the previous limit of 150 characters per line.
+- [Workers Logpush](/workers/observability/logpush/#limits) now supports 300 characters per log line. This is an increase from the previous limit of 150 characters per line.
 
 ## 2023-02-06
 

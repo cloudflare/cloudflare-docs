@@ -320,12 +320,7 @@ None of the options for this command are required. Many of these options can be 
 
 {{<Aside type="warning">}}
 
-As of Wrangler v3, `wrangler dev` is currently only supported by Debian 12 Bookworm-based distributions, macOS version 13 or greater, and Windows (x86-64 architecture). We are working to increase support for additional operating systems.
-
-When using `wrangler dev`, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
-
-- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
-- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions providing `glibc 2.31` or higher (e.g. Ubuntu 20.04/22.04, Debian 11/12, Fedora 37/38/39), macOS version 11 or higher, and Windows (x86-64 architecture).
 
 {{</Aside>}}
 
@@ -458,7 +453,7 @@ None of the options for this command are required. Also, many can be set in your
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/platform/triggers/cron-triggers/#examples).
+  - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/platform/cron-triggers/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
   - Routes where this Worker will be deployed.
   - For example: `--route example.com/*`.
