@@ -45,9 +45,9 @@ jobs:
         if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}/jobs/${{ github.job_id }}
         run: |
-          echo "Issue body: [Workflow Run]($WORKFLOW_LINK)" > issue_body.txt
+          echo "More details in the [Workflow Run]($WORKFLOW_LINK)" > issue_body.txt
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
