@@ -38,6 +38,26 @@ In Cloudflare Radar, you can inspect the detected route leak events on the corre
 
 Learn more about our route leak detection system design and usages  in [How we detect route leaks and our new Cloudflare Radar route leak service](https://blog.cloudflare.com/route-leak-detection-with-cloudflare-radar/) blog post.
 
+##  BGP Origin Hijacks
+
+[BGP origin hijack](https://en.wikipedia.org/wiki/bgp_hijacking) is one type of BGP anomalies where networks falsely announce
+ownership for groups of IP addresses (prefixes) that they do not own, control, or route to. A BGP origin hijack can redirect internet traffic to the hijacker from its
+legitimate destination, causing data loss with potential leak of private/confidential information.
+
+In Cloudflare Radar, you can inspect the detected BGP origin hijack events in the "BGP Origin Hijacks" table. The columns
+of the table are defined as follows:
+
+* `ID`: Event ID, clickable and navigates to the event details page.
+* `Detected Origin`: The AS that originated the prefixes at the time of detection, potentially being a BGP hijacker.
+* `Expected Origin(s)`: The AS(es) that are expeceting to originate the corresponding prefixes based on various evidences.
+* `Start Time (UTC)` and `Duration`: The detected timestamp in UTC with a human-readable time duration for how long the event lasted. Ongoing events will nto have a duration value, indicated by the `--` sign.
+* `BGP Messages`: The number of BGP messages that contains the detected anomaly.
+* `Prefixes`: The prefixes hijacked during the event, showing only one full prefix due to table space limitation.
+* `Confidence`: The level of confidence that we have on the event being a true hijacks. Values can be `High`, `Medium` or `Low`.
+* `Tags`: The relevant evidence presented as short tags, presenting key facts we compiled using additional data sources, such as RPKI validation result or network relationship.
+
+You can also access the detection result programmably via our [public API](https://developers.cloudflare.com/api/operations/radar-get-bgp-hijacks-events) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
+
 ## Certificates
 
 Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a client and a server.
