@@ -133,7 +133,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
    $ wrangler generate redirect-worker
    ```
 
-2. Navigate to the project directory.
+2. Go to the project directory.
 
    ```sh
    $ cd redirect-worker

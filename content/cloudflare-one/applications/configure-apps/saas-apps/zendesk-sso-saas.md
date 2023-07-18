@@ -15,7 +15,7 @@ This guide covers how to configure Zendesk SSO with Access for SaaS.
 
 ## Configure Zendesk and Cloudflare
 
-1. Navigate to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
+1. Go to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
 
 2. In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com), select your account, and go to **Access** > **Applications**.
 

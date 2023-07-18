@@ -15,36 +15,38 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
 1. Download the [custom profile](https://github.com/kandji-inc/support/blob/master/Configuration%20Profiles/cloudflare_warp.mobileconfig).
 
 2. Add the custom profile:
-    1. Navigate to **Library** > **Add New** > **Add Library Item** > **Custom Profile**.
-    2. Click **Add & Configure**.
+
+   1. Go to **Library** > **Add New** > **Add Library Item** > **Custom Profile**.
+   2. Click **Add & Configure**.
 
 3. Configure the custom profile:
 
-    1. Enter a **Name** for the custom configuration profile.
-    2. Assign your custom profile to a test Blueprint.
-    3. Set **Device Families** to _Mac_.
-    4. Upload the `cloudflare_warp.mobileconfig` file you previously downloaded.
-    5. Save the custom profile.
+   1. Enter a **Name** for the custom configuration profile.
+   2. Assign your custom profile to a test Blueprint.
+   3. Set **Device Families** to _Mac_.
+   4. Upload the `cloudflare_warp.mobileconfig` file you previously downloaded.
+   5. Save the custom profile.
 
-    ![Configuring custom profile for WARP in Kandji](/images/cloudflare-one/connections/custom-profile.png)
+   ![Configuring custom profile for WARP in Kandji](/images/cloudflare-one/connections/custom-profile.png)
 
 4. Add a custom app:
 
-    1. Navigate to **Library** > **Add New** > **Add Library Item** > **Custom App**.
-    2. Click **Add & Configure**.
+   1. Go to **Library** > **Add New** > **Add Library Item** > **Custom App**.
+   2. Click **Add & Configure**.
 
 5. Configure the custom app:
-    1. Name the custom app.
-    2. Assign the custom app to the same test Blueprint used for the profile.
-    3. Select **Audit and Enforce** as the installation type.
-    4. Copy the **Audit and Enforce Script** [below](#audit-and-enforce-script) and paste it into the **Audit Script** text field.
-    5. To enforce a minimum app version, update the **ENFORCED_VERSION** variable in the audit script with the version number the audit script should enforce (for example, `1.5.207.0`).
 
-        If **ENFORCED_VERSION** is left blank (““), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. Refer to the script comments for more details.
+   1. Name the custom app.
+   2. Assign the custom app to the same test Blueprint used for the profile.
+   3. Select **Audit and Enforce** as the installation type.
+   4. Copy the **Audit and Enforce Script** [below](#audit-and-enforce-script) and paste it into the **Audit Script** text field.
+   5. To enforce a minimum app version, update the **ENFORCED_VERSION** variable in the audit script with the version number the audit script should enforce (for example, `1.5.207.0`).
 
-    6. In the **Install Details** section, select **Installer Package**.
-    7. Under **Installer Package**, upload the `Cloudflare_WARP.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
-    8. Click **Save**.
+      If **ENFORCED_VERSION** is left blank (““), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. Refer to the script comments for more details.
+
+   6. In the **Install Details** section, select **Installer Package**.
+   7. Under **Installer Package**, upload the `Cloudflare_WARP.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
+   8. Click **Save**.
 
 To verify that Cloudflare WARP was installed, select the app in the **Custom App** library and view its **Status** tab.
 

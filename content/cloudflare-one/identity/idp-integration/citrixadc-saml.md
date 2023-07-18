@@ -19,7 +19,7 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     If you do not already have a certificate for signing SAML assertions, you can use a self-signed certificate generated on Citrix ADC by following these steps:
 
-    1. Navigate to **Traffic Management** > **SSL**.
+    1. Go to **Traffic Management** > **SSL**.
     1. Select **Create and Install a Server Test Certificate**.
 
 1.  Select **Configuration** and enter a **Certificate File Name**, **Fully Qualified Domain Name**, and a select a **Country**.
@@ -32,7 +32,7 @@ To set up Citrix ADC (SAML) as your identity provider:
 
 ## Add a new profile
 
-1.  Navigate to **Security** > **AAA - Application Traffic** > **Policies** > **Authentication** > **Advanced Policies** > **SAML IDP** to add a new profile.
+1.  Go to **Security** > **AAA - Application Traffic** > **Policies** > **Authentication** > **Advanced Policies** > **SAML IDP** to add a new profile.
 
     Include the following required configuration details:
 

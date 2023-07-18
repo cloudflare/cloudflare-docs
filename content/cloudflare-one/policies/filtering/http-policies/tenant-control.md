@@ -115,8 +115,8 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 
 ![Results that will appear when configuring the example allow policy.](/images/cloudflare-one/policies/httpbin-policy.png)
 
-#### 3. Navigate to `https://httpbin.org/anything`
+#### 3. Visit `https://httpbin.org/anything`
 
-HTTPBIN is a helpful service to test request headers. Navigating to `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
+HTTPBIN is a helpful service to test request headers. Visiting `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
 
 ![Custom Cloudflare header displayed in output from HTTPBIN.](/images/cloudflare-one/policies/httpbin.png)

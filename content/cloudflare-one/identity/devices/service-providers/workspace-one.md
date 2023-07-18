@@ -22,7 +22,7 @@ The following Workspace ONE values are needed to set up the Workspace ONE postur
 To retrieve those values:
 
 1. Log in to your Workspace ONE dashboard.
-1. Navigate to **Groups & Settings** > **Configurations**.
+1. Go to **Groups & Settings** > **Configurations**.
 1. Enter `OAuth` in the search bar labeled **Enter a name or category**.
 1. Select **OAuth Client Management** in the results. The OAuth Client Management screen displays.
 1. Select **Add**.

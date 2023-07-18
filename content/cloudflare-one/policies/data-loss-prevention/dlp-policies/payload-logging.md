@@ -42,7 +42,7 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 
 1. Go to **Logs** > **Gateway** > **HTTP**.
 
-2. Navigate to the DLP log you are interested in reviewing and expand the row.
+2. Go to the DLP log you are interested in reviewing and expand the row.
 
 3. Select **Decrypt Payload Log**.
 

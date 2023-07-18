@@ -6,9 +6,9 @@ weight: 51
 
 # DNS record
 
-| Before you start                                                                   |
-| ---------------------------------------------------------------------------------- |
-| 1. [Create a Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/)      |
+| Before you start                                                                                         |
+| -------------------------------------------------------------------------------------------------------- |
+| 1. [Create a Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/)       |
 | 2. [Configure the Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide//) |
 
 ## Route traffic from the Cloudflare dashboard
@@ -22,7 +22,7 @@ Unlike publicly routable IP addresses, the subdomain will only proxy traffic for
 To create a DNS record for your tunnel:
 
 1.  Log in to the Cloudflare dashboard.
-1.  Navigate to the **Cloudflare DNS** tab.
+1.  Go to the **Cloudflare DNS** tab.
 1.  Create a new CNAME record and input the subdomain of your tunnel into the Target field.
 1.  Click **Save**.
 
@@ -37,7 +37,7 @@ Additionally, you can create multiple DNS records that point to the same tunnel 
 To delete a DNS record assigned to a tunnel:
 
 1.  Log in to the Cloudflare dashboard.
-1.  Navigate to DNS and locate the DNS record under the DNS management card.
+1.  Go to DNS and locate the DNS record under the DNS management card.
 1.  Click **Edit** > **Delete**.
 
 ## Route traffic from the command line

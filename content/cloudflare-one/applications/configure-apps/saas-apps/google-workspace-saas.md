@@ -43,7 +43,7 @@ When you put your Google Workspace behind Access, users will not be able to log 
 ## 3. Create an SSO provider in Google Workspace
 
 1. Log in to your [Google Admin console](https://admin.google.com/).
-2. Navigate to **Security** > **Authentication** > **SSO with third party IdP**.
+2. Go to **Security** > **Authentication** > **SSO with third party IdP**.
 3. Select **Third-party SSO profile for your organization**.
 4. Enable **Set up SSO with third-party identity provider**.
 5. Fill in the following information:
