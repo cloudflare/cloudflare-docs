@@ -39,7 +39,7 @@ There are a number of VNC versions, deployments, and instances. This tutorial fo
 
 ## Configure VNC on your virtual machine
 
-This section covers how to install a VNC server with TightVNC and the Gnome User Interface. If you already have a VNC server installed, you can skip this step.
+This section covers how to install a VNC server with TightVNC and the GNOME desktop environment. If you already have a VNC server installed, you can skip this step.
 
 1. Open a terminal window for your VM.
 
