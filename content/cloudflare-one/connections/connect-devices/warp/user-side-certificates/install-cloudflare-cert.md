@@ -192,7 +192,7 @@ The root certificate is now installed and ready to be used.
 
 ### Linux
 
-The location where the root certificate should be installed is different depending on your Linux distribution. Please follow the specific instructions for your flavor of Linux.
+The location where the root certificate should be installed is different depending on your Linux distribution. Follow the specific instructions for your distribution of Linux.
 
 #### Debian / Ubuntu
 
