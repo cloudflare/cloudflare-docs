@@ -9,7 +9,7 @@ title: AsyncLocalStorage
 
 {{<render file="_nodejs-compat-howto.md">}}
 
-Cloudflare Workers provides an implemenation of a subset of the Node.js [`AsyncLocalStorage`](https://nodejs.org/dist/latest-v18.x/docs/api/async_context.html#class-asynclocalstorage) API for creating in-memory stores that remain coherent through asynchronous operations.
+Cloudflare Workers provides an implementation of a subset of the Node.js [`AsyncLocalStorage`](https://nodejs.org/dist/latest-v18.x/docs/api/async_context.html#class-asynclocalstorage) API for creating in-memory stores that remain coherent through asynchronous operations.
 
 ## Constructor
 
