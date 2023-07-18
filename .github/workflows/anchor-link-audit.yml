@@ -38,19 +38,17 @@ jobs:
         run: curl https://htmltest.wjdp.uk | bash
 
       - name: Check - Broken header links
-        id: header_link_check
-        run: |
-            output=$(./bin/htmltest -c ./bin/.htmltest.yml)
-            echo "::set-output name=header_link_check_output::$output"
+        id: header-link-check
+        run: ./bin/htmltest -c ./bin/.htmltest.yml
 
       - name: Create issue on failure
         if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEADER_LINK_CHECK_OUTPUT: ${{ steps.header_link_check.outputs.header_link_check_output }}
+          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
         run: |
-          echo "Broken header links:\n${HEADER_LINK_CHECK_OUTPUT}" > header_link_check_output.txt
+          echo "Issue body: [Workflow Run]($WORKFLOW_LINK)" > issue_body.txt
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
-            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat header_link_check_output.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
+            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat issue_body.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
