@@ -4,7 +4,7 @@ title: How to
 
 ---
 
-## How to
+# How to
 
 <table>
   <tr>

@@ -4,11 +4,11 @@ title: Get started
 
 ---
 
-## Get started
+# Get started
 
 <table>
   <tr>
-    <th style="width:15%">Purpose</th>
+    <th style="width:20%">Purpose</th>
     <th>The purpose of Get started content is to help users go from not using a product to successfully configuring and setting up.</th>
   </tr>
   <tr>
