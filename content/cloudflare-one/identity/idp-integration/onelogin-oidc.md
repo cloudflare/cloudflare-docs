@@ -14,7 +14,7 @@ To set up OneLogin as your identity provider:
 
 1.  Log in to your OneLogin admin portal.
 
-1.  Select **Apps > Custom Connectors**. The _Custom Connectors_ card displays.
+1.  Select **Apps** > **Custom Connectors**. The _Custom Connectors_ card displays.
 
 1.  Click **New Connector**.
 

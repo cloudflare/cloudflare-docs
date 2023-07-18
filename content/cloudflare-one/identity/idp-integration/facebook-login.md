@@ -30,13 +30,13 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Continue**. Ignore any JavaScript page that suggests that you install it on your site.
 
-1.  Click **Settings > Basic**.
+1.  Click **Settings** > **Basic**.
 
 1.  Copy the **App ID** and **App Secret**.
 
     ![Facebook Settings with App ID and App Secret highlighted](/images/cloudflare-one/identity/facebook/fb6.png)
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings > Authentication**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 
@@ -46,7 +46,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Click **Save**.
 
-1.  On [developers.facebook.com](https://developers.facebook.com/), click **Facebook Login > Settings** on the left-hand menu.
+1.  On [developers.facebook.com](https://developers.facebook.com/), click **Facebook Login** > **Settings** on the left-hand menu.
 
 1.  Ensure that the **Use Strict Mode for Redirect URIs** slider is set to **Yes**.
 

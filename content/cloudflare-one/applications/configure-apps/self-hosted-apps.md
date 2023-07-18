@@ -17,7 +17,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ## 1. Add your application to Access
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access > Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Select **Add an application**.
 
@@ -28,6 +28,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 5. Choose a **Session Duration**. The session duration determines the minimum frequency for which a user will be prompted to authenticate with the configured IdP. If you want users to re-authenticate every time they reach your application, select _No duration, expires immediately_.
 
 6. In **Application domain**, enter the domains that will represent the application.
+
    - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) that you control.
    - You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
 
@@ -52,6 +53,7 @@ You can now configure an [Access policy](/cloudflare-one/policies/access/) to co
 3. Assign [Access groups](/cloudflare-one/identity/users/groups/) to reuse existing rules, or create new rules. You can add as many include, exception, or require statements as needed.
 
 4. (Optional) Customize the login experience for users who match this policy:
+
    - [Purpose justification](/cloudflare-one/policies/access/require-purpose-justification/)
    - [Temporary authentication](/cloudflare-one/policies/access/temporary-auth/)
 
@@ -60,6 +62,7 @@ You can now configure an [Access policy](/cloudflare-one/policies/access/) to co
 ## 3. (Optional) Configure advanced settings
 
 You can configure the following advanced settings for your application:
+
 - [Cross-Origin Resource Sharing (CORS)](/cloudflare-one/identity/authorization-cookie/cors/)
 - [Cookie settings](/cloudflare-one/identity/authorization-cookie/#cookie-settings)
 - [Automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/#automatic-cloudflared-authentication)

@@ -10,13 +10,13 @@ Cloudflare Gateway protects users as they browse the Internet. When users downlo
 
 To prevent this, Cloudflare Gateway allows admins to enable **Anti-Virus (AV) scanning** of files that are uploaded or downloaded by users as the file passes through Gateway.
 
-AV scanning of files requires organizations to go to \*Settings** > **Network** > **Firewall** and enable **AV inspection\*\*.
+AV scanning of files requires organizations to go to **Settings** > **Network** > **Firewall** and enable **AV inspection**.
 
 ## Enable AV scanning
 
 To enable AV scanning:
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings > Network**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 
 1.  In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
 

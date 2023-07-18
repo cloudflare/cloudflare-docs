@@ -16,7 +16,7 @@ This guide covers how to:
 
 ## 1. Set up Salesforce as a SaaS application in Cloudflare Zero Trust
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Access > Applications**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 1.  Select the SaaS application type.
 1.  From the **Application** drop-down menu, select _Salesforce_.
 1.  Fill the remaining fields as follows:
@@ -38,9 +38,9 @@ This guide covers how to:
 
 1.  In Salesforce, ensure your users have **Federation IDs**.
 
-    {{<Aside type="note">}}The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.{{</Aside>}}
+    {{<Aside type="note">}}The Federation ID is found under **Manage Users** > **Users** in Setup. The Federation ID should match the email address of the user authenticating via Access.{{</Aside>}}
 
-1.  Navigate to **Security Controls > Single Sign-On Settings**.
+1.  Navigate to **Security Controls** > **Single Sign-On Settings**.
 1.  Set the following global settings:
     - **SAML Enabled:** true
     - **Make federation ID case-insensitive:** true

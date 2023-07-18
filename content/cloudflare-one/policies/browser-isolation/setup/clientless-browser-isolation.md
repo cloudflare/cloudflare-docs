@@ -6,7 +6,7 @@ weight: 5
 
 # Clientless Web Isolation
 
-Clientless Web Isolation allows users to securely brows high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
+Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
 ## Set up Clientless Web Isolation
 

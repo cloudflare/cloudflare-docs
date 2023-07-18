@@ -76,7 +76,7 @@ Both `dig` commands will fail if the WARP client is disabled in your end user's 
 
 Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
 
-- Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in Zero Trust.
+- Ensure that `cloudflared` is connected to Cloudflare by visiting **Access** > **Tunnels** in Zero Trust.
 
 - Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
 

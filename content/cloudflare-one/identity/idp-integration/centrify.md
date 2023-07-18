@@ -57,7 +57,7 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Select the roles to grant access to your application.
 
-1.  In Zero Trust, go to **Settings > Authentication**.
+1.  In Zero Trust, go to **Settings** > **Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 
@@ -65,7 +65,7 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Click **Save**.
 
-To test that your connection is working, go to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
 
 ## **Example API Config**
 

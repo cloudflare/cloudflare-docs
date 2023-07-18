@@ -242,7 +242,7 @@ $ sudo update-ca-trust
 
 {{</table-wrap>}}
 
-4. Tap **Install a certificate > CA certificate**.
+4. Tap **Install a certificate** > **CA certificate**.
 
 {{<table-wrap>}}
 
