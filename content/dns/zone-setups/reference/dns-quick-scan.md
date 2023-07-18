@@ -5,17 +5,17 @@ title: Records quick scan
 
 # DNS records quick scan
 
-To help all customers get started when a new zone is created, Cloudflare offers a quick scan of DNS records.
+To help all customers get started when a new zone is created, Cloudflare offers a DNS records quick scan.
 
 ## How the quick scan works
 
 The scan is built upon a list of recurring patterns of DNS records `type` and `name`, that Cloudflare identifies as being used in existing active zones.
 
-Since DNS record names are automatically appended with the domain that the records are set for, two completely different domains - `domain.com` and `test.xyz`, for example - would probably have a few matches if the lists of DNS records on their zones were compared side by side and the criterion was `type` and `name` combination.
+Since DNS record names are automatically appended with the domain that the records are set for, two completely different domains - `domain.com` and `test.xyz`, for example - would probably have a few matches if the lists of DNS records on their zones were compared side by side and the criterion was `type`/`name` combination.
 
 The DNS records `content` would be different for each zone but, based on record `type` and `name`, Cloudflare can identify recurring patterns and expect to find the same pairs when a new domain is added.
 
-The following section provides some examples of these `type`/`name` combinations that the scan usually finds.
+The following section provides some examples of DNS records `type`/`name` combinations that the scan usually finds.
 
 ## Use case examples
 

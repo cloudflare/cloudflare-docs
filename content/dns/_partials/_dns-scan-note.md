@@ -5,8 +5,6 @@ _build:
   list: never
 ---
 
-When you add a new site to Cloudflare, Cloudflare automatically scans for [common records](/dns/zone-setups/reference/dns-quick-scan/) and adds them to the DNS zone. The records show up under the respective zone **DNS** > **Records** page. 
-
 {{<Aside type="note">}}
 The [DNS records quick scan](/dns/zone-setups/reference/dns-quick-scan/) is not automatically invoked in the following cases:
 

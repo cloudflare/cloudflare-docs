@@ -45,7 +45,7 @@ In the Cloudflare dashboard, [add your domain](/fundamentals/get-started/setup/a
 
 When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a full setup, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
-{{<render file="_dns-auto-scan-info.md">}}
+{{<render file="_dns-scan-intro.md">}} <br />
 
 {{<render file="_dns-scan-procedure.md">}}
 
