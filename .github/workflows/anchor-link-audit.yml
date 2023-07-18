@@ -43,7 +43,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { context, github } = require('@actions/github');
+            const { context: workflowContext, github } = require('@actions/github');
 
             async function createIssue() {
               const body = `Broken header links:
@@ -53,7 +53,7 @@ jobs:
             \`\`\``;
 
               const response = await github.issues.create({
-                ...context.repo,
+                ...workflowContext.repo,
                 title: 'Broken header links found',
                 body,
               });
