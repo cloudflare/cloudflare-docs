@@ -19,12 +19,12 @@
 
 # Developer platform
 /content/d1/ @elithrar @rozenmd @cloudflare/pcx-technical-writing
-/content/images/ @kornelski @GregBrimble @sejoker @cloudflare/pcx-technical-writing
+/content/images/ @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /content/pub-sub/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
 /content/queues/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
 /content/r2/ @cloudflare/workers-docs @cloudflare/pcx-technical-writing
-/content/stream/ @renandincer @third774 @Everlag @tsmith512 @mbetz08 @bkrebsbach @cloudflare/pcx-technical-writing
+/content/stream/ @tsmith512 @cloudflare/pcx-technical-writing
 /content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 
