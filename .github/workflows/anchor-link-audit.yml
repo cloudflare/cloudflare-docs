@@ -40,29 +40,17 @@ jobs:
       - name: Check - Broken header links
         id: header-link-check
         run: ./bin/htmltest -c ./bin/.htmltest.yml
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Create issue on failure
         if: ${{ failure() }}
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { context: workflowContext, github: octokit } = require('@actions/github');
-
-            async function createIssue() {
-              const body = `Broken header links:
-
-            \`\`\`
-            ${process.env.ACTIONS_STEP_DEBUG === 'true' ? process.env.header_link_check : 'Logging not available.'}
-            \`\`\``;
-
-              const response = await octokit.issues.create({
-                ...workflowContext.repo,
-                title: 'Broken header links found',
-                body,
-              });
-
-              console.log(`Issue created: ${response.data.html_url}`);
-            }
-
-            createIssue();
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEADER_LINK_CHECK_OUTPUT: ${{ process.env.ACTIONS_STEP_DEBUG === 'true' ? steps.header-link-check.outputs.stdout }}
+        run: |
+          echo "Broken header links:\n${HEADER_LINK_CHECK_OUTPUT}" > header_link_check_output.txt
+          curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
+            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat header_link_check_output.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
