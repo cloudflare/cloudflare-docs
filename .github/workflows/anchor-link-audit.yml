@@ -41,24 +41,13 @@ jobs:
         id: header-link-check
         run: ./bin/htmltest -c ./bin/.htmltest.yml
 
-      - name: Get Job Details
-        id: job_details
-        if: ${{ failure() }}
-        run: |
-          job_id=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/cloudflare/cloudflare-docs/actions/runs/${{ github.run_id }}/jobs" \
-            | jq -r '.jobs[] | select(.html_url')
-
-          echo "header_link_check_job_url=$job_id" >> "$GITHUB_OUTPUT"
-
       - name: Create issue on failure
-        if: ${{ failure() && steps.header_link_check.outputs.header_link_check_output != 'Logging not available.' && steps.job_details.outputs.header_link_check_job_url != null }}
+        if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEADER_LINK_CHECK_JOB_URL: ${{ needs.job_details.outputs.header_link_check_job_url }}
+          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}/jobs/${{ github.job_id }}
         run: |
-          echo "Refer to the [header_link_check job]($HEADER_LINK_CHECK_JOB_URL) for more information." > issue_body.txt
+          echo "Specific header links in the [Workflow Run]($WORKFLOW_LINK).\n\nGenerally, we expect you to address at least 10-15 links before closing this out." > issue_body.txt
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
