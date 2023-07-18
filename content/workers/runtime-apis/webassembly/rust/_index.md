@@ -9,7 +9,7 @@ layout: single
 
 # Rust WebAssembly guide
 
-By following this guide, you will learn how to build a Worker entirely in the Rust programming language. You will accomplish this using the `workers-rs` crate, which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/platform/bindings/) to developer platform products, such as [Workers KV](/workers/learning/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+By following this guide, you will learn how to build a Worker entirely in the Rust programming language. You will accomplish this using the `workers-rs` crate, which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/workers/learning/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
 
 ## Prerequisites
 
@@ -91,7 +91,7 @@ There is some counterintuitive behavior going on here:
 This macro allows you to easily define entrypoints to your Worker. The `event` macro supports the following events:
 
 * `fetch` - Invoked by an incoming HTTP request.
-* `scheduled` - Invoked by [`Cron Triggers`](/workers/platform/cron-triggers/).
+* `scheduled` - Invoked by [`Cron Triggers`](/workers/configuration/cron-triggers/).
 * `queue` - Invoked by incoming message batches from [Queues](/queues/) (Requires `queue` feature in `Cargo.toml`, refer to the [`workers-rs` GitHub repository and `queues` feature flag](https://github.com/cloudflare/workers-rs#queues)).
 * `start` - Invoked when the Worker is first launched (such as, to install panic hooks).
 
@@ -105,7 +105,7 @@ An object representing the incoming request. This includes methods for accessing
 
 2. **[`Env`](https://docs.rs/worker/latest/worker/struct.Env.html)**
 
-Provides access to Worker [bindings](https://developers.cloudflare.com/workers/platform/bindings/). 
+Provides access to Worker [bindings](https://developers.cloudflare.com/workers/configuration/bindings/). 
 
 * [`Secret`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
 * [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.
@@ -128,7 +128,7 @@ Implements convenient [routing API](https://docs.rs/worker/latest/worker/struct.
 
 ## 4. Publish your Worker project
 
-With your project configured, you can now deploy your Worker, to a *.workers.dev subdomain, or a [custom domain](https://developers.cloudflare.com/workers/platform/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+With your project configured, you can now deploy your Worker, to a `*.workers.dev` subdomain, or a [Custom Domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 $ npx wrangler publish

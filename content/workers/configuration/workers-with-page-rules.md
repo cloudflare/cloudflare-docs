@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Page Rules
-weight: 0
 ---
 
 # Page Rules
@@ -29,26 +28,26 @@ If you are experiencing Page Rule errors when running Workers, contact your Clou
 The following Page Rules may not work as expected when an incoming request is matched to a Worker route:
 
 *   Always Online
-*   [Always Use HTTPS](/workers/platform/workers-with-page-rules/#always-use-https)
-*   [Auto Minify](/workers/platform/workers-with-page-rules/#auto-minify)
-*   [Automatic HTTPS Rewrites](/workers/platform/workers-with-page-rules/#automatic-https-rewrites)
-*   [Browser Cache TTL](/workers/platform/workers-with-page-rules/#browser-cache-ttl)
-*   [Browser Integrity Check](/workers/platform/workers-with-page-rules/#browser-integrity-check)
-*   [Cache Deception Armor](/workers/platform/workers-with-page-rules/#cache-deception-armor)	
-*   [Cache Level](/workers/platform/workers-with-page-rules/#cache-level)
+*   [Always Use HTTPS](/workers/configuration/workers-with-page-rules/#always-use-https)
+*   [Auto Minify](/workers/configuration/workers-with-page-rules/#auto-minify)
+*   [Automatic HTTPS Rewrites](/workers/configuration/workers-with-page-rules/#automatic-https-rewrites)
+*   [Browser Cache TTL](/workers/configuration/workers-with-page-rules/#browser-cache-ttl)
+*   [Browser Integrity Check](/workers/configuration/workers-with-page-rules/#browser-integrity-check)
+*   [Cache Deception Armor](/workers/configuration/workers-with-page-rules/#cache-deception-armor)	
+*   [Cache Level](/workers/configuration/workers-with-page-rules/#cache-level)
 *   Disable Apps
-*   [Disable Zaraz](/workers/platform/workers-with-page-rules/#disable-zaraz)
-*   [Edge Cache TTL](/workers/platform/workers-with-page-rules/#edge-cache-ttl)
-*   [Email Obfuscation](/workers/platform/workers-with-page-rules/#email-obfuscation)
-*   [Forwarding URL](/workers/platform/workers-with-page-rules/#forwarding-url)
+*   [Disable Zaraz](/workers/configuration/workers-with-page-rules/#disable-zaraz)
+*   [Edge Cache TTL](/workers/configuration/workers-with-page-rules/#edge-cache-ttl)
+*   [Email Obfuscation](/workers/configuration/workers-with-page-rules/#email-obfuscation)
+*   [Forwarding URL](/workers/configuration/workers-with-page-rules/#forwarding-url)
 *   Host Header Override
-*   [IP Geolocation Header](/workers/platform/workers-with-page-rules/#ip-geolocation-header)
+*   [IP Geolocation Header](/workers/configuration/workers-with-page-rules/#ip-geolocation-header)
 *   Mirage
-*   [Origin Cache Control](/workers/platform/workers-with-page-rules/#origin-cache-control)
-*   [Rocket Loader](/workers/platform/workers-with-page-rules/#rocket-loader)
-*   [Security Level](/workers/platform/workers-with-page-rules/#security-level)
-*   [Server Side Excludes](/workers/platform/workers-with-page-rules/#server-side-excludes)
-*   [SSL](/workers/platform/workers-with-page-rules/#ssl)
+*   [Origin Cache Control](/workers/configuration/workers-with-page-rules/#origin-cache-control)
+*   [Rocket Loader](/workers/configuration/workers-with-page-rules/#rocket-loader)
+*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level)
+*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes)
+*   [SSL](/workers/configuration/workers-with-page-rules/#ssl)
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
 

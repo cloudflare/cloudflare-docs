@@ -13,7 +13,7 @@ Review the following environments flow:
 
 1. You have created a Worker application named `my-worker`.
 2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml` configuration file.
-3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/platform/bindings/) and/or [routes](/workers/platform/routing/routes/).
+3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/configuration/bindings/) and/or [routes](/workers/configuration/routing/routes/).
 4. You deploy the Worker using `npx wrangler deploy -e dev`.
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
 6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
@@ -63,7 +63,7 @@ After you have configured your environment, run `npx wrangler deploy` in your Wo
 
 ### Staging and production environments
 
-The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/platform/routing/custom-domains/) or [route](/workers/platform/routing/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
+The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
 
 ```toml
 ---
@@ -110,7 +110,7 @@ Published my-worker-production
   example.com/*
 ```
 
-Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/workers/configuration/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 

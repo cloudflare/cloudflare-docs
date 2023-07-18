@@ -51,4 +51,4 @@ For services that require mTLS authentication, use [mTLS certificates](/workers/
 
 * Use the Cache API to cache data from the third party API. This allows you to optimize cacheable requests made to the API. Integrating with third party APIs from Cloudflare Workers adds additional functionality and features to your application.
 
-* Use [Custom Domains](/workers/platform/routing/custom-domains/) when communicating with external APIs, which treat your Worker as your core application.
+* Use [Custom Domains](/workers/configuration/routing/custom-domains/) when communicating with external APIs, which treat your Worker as your core application.

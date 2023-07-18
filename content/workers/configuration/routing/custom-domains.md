@@ -7,7 +7,7 @@ title: Custom Domains
 
 ## Background
 
-Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you set up a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/platform/routing/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
+Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you set up a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/configuration/routing/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
 
 Custom Domains are routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
 
@@ -26,7 +26,7 @@ To add a Custom Domain, you must have:
 1. An [active Cloudflare zone](/dns/zone-setups/).
 2. A Worker to invoke.
 
-Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/platform/routing/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/platform/routing/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](/api/operations/worker-domain-list-domains).
+Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](/api/operations/worker-domain-list-domains).
 
 {{<Aside type="warning">}}
 
@@ -67,14 +67,14 @@ routes = [
 
 ## Worker to Worker communication
 
-On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/platform/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/platform/bindings/about-service-bindings/). 
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/configuration/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/configuration/bindings/about-service-bindings/). 
 
 On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 
 For example, consider the following scenario, where both Workers are running on the `example.com` Cloudflare zone:
 
-- `worker-a` running on the [route](/workers/platform/routing/routes/#set-up-a-route) `auth.example.com/*`.
-- `worker-b` running on the [route](/workers/platform/routing/routes/#set-up-a-route) `shop.example.com/*`.
+- `worker-a` running on the [route](/workers/configuration/routing/routes/#set-up-a-route) `auth.example.com/*`.
+- `worker-b` running on the [route](/workers/configuration/routing/routes/#set-up-a-route) `shop.example.com/*`.
 
 If `worker-a` sends a fetch request to `worker-b`, the request will fail, because of the limitation on same-zone fetch requests. `worker-a` must have a service binding to `worker-b` for this request to resolve.
 
@@ -136,7 +136,7 @@ These certificates are generated with default settings. To override these settin
 
 ## Migrate from Routes
 
-If you are currently invoking a Worker using a [route](/workers/platform/routing/routes) with `/*`, and you have a CNAME record pointing to `100::` or similar, a Custom Domain is a recommended replacement.
+If you are currently invoking a Worker using a [route](/workers/configuration/routing/routes/) with `/*`, and you have a CNAME record pointing to `100::` or similar, a Custom Domain is a recommended replacement.
 
 ### Migrate from Routes via the dashboard
 

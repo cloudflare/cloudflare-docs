@@ -34,7 +34,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - {{<code>}}accept(){{</code>}}
 
-  - Accepts the Websocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+  - Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
 
 {{</definitions>}}
 
