@@ -1,5 +1,5 @@
 # Default owners if not more specific match
-@cloudflare/pcx-technical-writing
+* @cloudflare/pcx-technical-writing
 
 # More dev-specific files
 /.github/ @kodster28 @pedrosousa @haleycode @codewithkristian
