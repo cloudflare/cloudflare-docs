@@ -41,7 +41,7 @@ The PingFederate® offering from PingIdentity provides SSO identity management. 
 
 9.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-10. Under **Login methods**, click **Add new**.
+10. Under **Login methods**, select **Add new**.
 
 11. Select SAML.
 
@@ -55,7 +55,7 @@ The PingFederate® offering from PingIdentity provides SSO identity management. 
 
 14. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
 ## Example API configuration
 

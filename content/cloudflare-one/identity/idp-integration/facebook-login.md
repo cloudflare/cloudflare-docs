@@ -20,7 +20,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Select **Submit**.
 
-1.  On the **Facebook Login** card, click **Set Up**. A Quickstart card displays offering platform choices.
+1.  On the **Facebook Login** card, select **Set Up**. A Quickstart card displays offering platform choices.
 
 1.  Select **Web**. The **Web** tab displays.
 
@@ -38,7 +38,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Fill in the **App ID** and **App Secret** obtained from Facebook.
 
@@ -46,7 +46,7 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Select **Save**.
 
-1.  On [developers.facebook.com](https://developers.facebook.com/), click **Facebook Login** > **Settings** on the left-hand menu.
+1.  On [developers.facebook.com](https://developers.facebook.com/), select **Facebook Login** > **Settings** on the left-hand menu.
 
 1.  Ensure that the **Use Strict Mode for Redirect URIs** slider is set to **Yes**.
 

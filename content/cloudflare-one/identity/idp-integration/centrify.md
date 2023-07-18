@@ -18,9 +18,9 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Select **Add Web Apps**.
 
-1.  Select the **Custom** tab and click **Add OpenID Connect**.
+1.  Select the **Custom** tab, then select **Add OpenID Connect**.
 
-1.  On the **Add Web App** screen click **Yes** to create an OpenID Connect application.
+1.  On the **Add Web App** scree, select **Yes** to create an OpenID Connect application.
 
 1.  Enter an **Application ID**.
 
@@ -34,7 +34,7 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Under **Service Provider Configuration** enter your application’s authentication domain as the resource application URL.
 
-1.  Under **Authorized Redirect URIs** click **Add**.
+1.  Under **Authorized Redirect URIs**, select **Add**.
 
 1.  Under **Authorized Redirect URIs** enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
@@ -59,13 +59,13 @@ These steps help you set up Centrify as your identity provider:
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 
 1.  Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
 ## **Example API Config**
 

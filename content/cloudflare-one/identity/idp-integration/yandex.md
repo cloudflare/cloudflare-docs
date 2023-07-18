@@ -24,7 +24,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  Select the **Access to email address**, **Access to user avatar,** and **Access to username, first name and surname, gender** options.
 
-1.  Select **Platform** and click **Web Services.**
+1.  Select **Platform** and select **Web Services.**
 
 1.  In the **Callback URL #1** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
@@ -36,7 +36,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  Select **Add**.
 
-1.  Scroll to the **Platforms** card, and click **Submit**.
+1.  Scroll to the **Platforms** card, and select **Submit**.
 
     **Yandex OAuth** card titled **Cloudflare Access App** displays.
 
@@ -44,7 +44,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Select Yandex.
 

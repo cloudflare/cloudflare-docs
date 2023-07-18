@@ -29,7 +29,7 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
 
 1. Select **Next: Configure Instance Details**.
 
-1. Because we are leaving this device on the default VPC, you will not need to make any changes in the next couple of steps, nor will you need to add additional storage or tags. Select **Next: Add Storage**, and then click **Next: Add Tags**.
+1. Because we are leaving this device on the default VPC, you will not need to make any changes in the next couple of steps, nor will you need to add additional storage or tags. Select **Next: Add Storage**, and then select **Next: Add Tags**.
 
    ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-step-3.png)
 

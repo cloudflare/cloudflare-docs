@@ -14,7 +14,7 @@ meta:
 
 2. Go to **Device Management** > **Software Management**.
 
-3. Select the **Windows** tab, then click **(+)**.
+3. Select the **Windows** tab, then select **(+)**.
 
    ![Configuring WARP in the JumpCloud **Windows** tab](/images/cloudflare-one/connections/jumpcloud.png)
 
@@ -47,7 +47,7 @@ Verify that Cloudflare WARP was installed by selecting the app and viewing the *
 
 2. Go to **Device Management** > **Software Management**.
 
-3. Select the **Apple** tab, then click **(+)**.
+3. Select the **Apple** tab, then select **(+)**.
 
    ![Configuring WARP in the JumpCloud **Apple** tab](/images/cloudflare-one/connections/jumpcloud-mac.png)
 

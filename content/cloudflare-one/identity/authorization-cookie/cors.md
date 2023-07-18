@@ -51,7 +51,7 @@ You can configure Cloudflare to respond to the OPTIONS request on your behalf. T
 To configure how Cloudflare responds to preflight requests:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Locate the origin that will be receiving OPTIONS requests and click **Edit**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
 3. In the **Settings** tab, scroll down to **CORS settings**.
 4. Configure the dashboard [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
 
@@ -116,7 +116,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
-2. Find your `api.mysite.com` application and click **Edit**.
+2. Find your `api.mysite.com` application and select **Edit**.
 
 3. Select the **Policies** tab.
 
@@ -224,7 +224,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 3. In the **Triggers** tab, scroll down to **Routes** and add `example.com/api/*`. The Worker is placed on a subpath of `example.com` to avoid making a cross-origin request.
 
-4. In the **Settings** tab, click **Variables**.
+4. In the **Settings** tab, select **Variables**.
 
 5. Under **Environment Variables**, add the following [secret variables](/workers/configuration/environment-variables/#environment-variables-via-the-dashboard):
    - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
@@ -232,7 +232,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 The Client ID and Client Secret are copied from your [service token](#1-generate-a-service-token).
 
-6. Enable the **Encrypt** option for each variable and click **Save**.
+6. Enable the **Encrypt** option for each variable and select **Save**.
 
 ### 5. Update HTTP request URLs
 

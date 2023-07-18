@@ -26,7 +26,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  In the **Cloudflare Access Authorization Domain** field, paste your [team domain](/cloudflare-one/glossary/#team-domain).
 
-1.  Select the **Parameters** tab, click **Add Parameter** and enter your values for **Cloudflare Access Field**.
+1.  Select the **Parameters** tab, select **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
 1.  Select the **Access** tab
 
@@ -46,7 +46,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Select SAML.
 
@@ -56,7 +56,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

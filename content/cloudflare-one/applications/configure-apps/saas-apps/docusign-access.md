@@ -60,9 +60,9 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 1.  Ensure you have a domain claimed in Zendesk.
 
-1.  From the DocuSign Admin dashboard, click **Identity Providers**.
+1.  From the DocuSign Admin dashboard, select **Identity Providers**.
 
-1.  On the Identity Providers page, click **ADD IDENTITY PROVIDER**. Use the following mappings from the saved Access Application values:
+1.  On the Identity Providers page, select **ADD IDENTITY PROVIDER**. Use the following mappings from the saved Access Application values:
 
     - **Name**: Pick your desired name.
     - **Identity Provider Issuer**: Entity ID.

@@ -50,7 +50,7 @@ To set up OneLogin as your identity provider:
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Select OneLogin as your IdP.
 
@@ -58,7 +58,7 @@ To set up OneLogin as your identity provider:
 
 1.  Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to OneLogin.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to OneLogin.
 
 ## Example API Config
 

@@ -83,11 +83,11 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Access policies](/cloudflare-one/policies/access/).
 
-If you closed the Add Relying Trust wizard, use Explorer to find the **Relying Party Trusts** folder, select the newly created RPT file, and click **Edit Claim Rules** in the **Action** sidebar.
+If you closed the Add Relying Trust wizard, use Explorer to find the **Relying Party Trusts** folder, select the newly created RPT file, and select **Edit Claim Rules** in the **Action** sidebar.
 
 To create Claim Rules:
 
-1.  In the **Edit Claim Rules for CF Login** window, click **Add Rule**. The **Choose Rule Type** step displays.
+1.  In the **Edit Claim Rules for CF Login** window, select **Add Rule**. The **Choose Rule Type** step displays.
 
 1.  In the **Claim rule template** field, select **Send LDAP Attributes as Claims** from the drop-down list.
 
@@ -163,7 +163,7 @@ To enable Cloudflare Zero Trust to accept the claims and assertions sent from AD
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  The **Add a SAML identity provider** card displays.
 
@@ -189,7 +189,7 @@ To enable Cloudflare Zero Trust to accept the claims and assertions sent from AD
 
 1.  Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

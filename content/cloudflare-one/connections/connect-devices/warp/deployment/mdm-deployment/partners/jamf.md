@@ -38,9 +38,9 @@ meta:
 
 1. Go to **Configuration Profiles** > **New**.
 2. Enter a name for your new profile, such as `Cloudflare Zero Trust`.
-3. Scroll through the options list and click **Application & Custom Settings** > **Configure**.
+3. Scroll through the options list and select **Application & Custom Settings** > **Configure**.
 4. In **Preference Domain**, enter `com.cloudflare.warp`.
-5. Upload your `plist` file and click **Save**.
+5. Upload your `plist` file and select **Save**.
 6. Go to **Scope** to configure which devices in your organization will receive this profile.
 7. Select **Save**.
 
@@ -58,9 +58,9 @@ Create an [XML file](/cloudflare-one/connections/connect-devices/warp/deployment
 
 1. Log in to your [Jamf](https://www.jamf.com/) account.
 2. Go to **Devices** > **Mobile Device Apps** > **+ New**.
-3. Select _App store app or apps purchased in volume_ and click **Next**.
+3. Select _App store app or apps purchased in volume_ and select **Next**.
 4. In the search box, enter `1.1.1.1: Faster Internet`. Select **Next**.
-5. In the row for _1.1.1.1: Faster Internet by Cloudflare Inc._, click **Add**. To verify that it is the correct application, click [this App Store link](https://apps.apple.com/us/app/id1423538627).
+5. In the row for _1.1.1.1: Faster Internet by Cloudflare Inc._, select **Add**. To verify that it is the correct application, select [this App Store link](https://apps.apple.com/us/app/id1423538627).
 6. Go to **Scope** and specify the devices in your organization that will receive the application.
 7. Go to **App Configuration** and copy/paste your XML file.
 8. Select **Save**.

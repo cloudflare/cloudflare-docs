@@ -65,7 +65,7 @@ $ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=a
 1.  In Zero Trust, go to **My Team** > **Lists**
 1.  Select **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues.
 1.  Add a name for the list, specify "Hostnames" as the list type, and give it a description.
-1.  Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.
+1.  Drag and drop your MCAS output file created via the API call, or you can select **Select a file**.
 1.  Select **Create**. You will see the list of hostnames that have been added to the list.
 1.  Save the list.
 

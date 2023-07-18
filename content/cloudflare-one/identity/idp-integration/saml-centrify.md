@@ -12,13 +12,13 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 To set up SAML with Centrify as your identity provider:
 
-1.  Log in to your **Centrify** admin portal and click **Apps**.
+1.  Log in to your **Centrify** admin portal and select **Apps**.
 
 1.  Select **Add Web Apps**.
 
 1.  Select the **Custom** tab.
 
-1.  Next to the **SAML** icon click **Add**.
+1.  Next to the **SAML** icon, select **Add**.
 
     ![Centrify Settings Add Application details page with template text](/images/cloudflare-one/identity/saml-centrify/saml-centrify-3.png)
 
@@ -62,7 +62,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Select SAML.
 
@@ -70,7 +70,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

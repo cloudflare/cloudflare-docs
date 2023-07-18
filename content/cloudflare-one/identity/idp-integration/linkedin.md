@@ -48,7 +48,7 @@ To configure LinkedIn as an IdP:
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Select **LinkedIn** as your IdP.
 
@@ -56,7 +56,7 @@ To configure LinkedIn as an IdP:
 
 1.  Select **Save**.
 
-1.  In the **LinkedIn** **Auth** tab, scroll to **OAuth 2.0 settings** and click the **pencil icon** to edit the settings.
+1.  In the **LinkedIn** **Auth** tab, scroll to **OAuth 2.0 settings** and select the pencil icon to edit the settings.
 
 1.  Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
@@ -64,7 +64,7 @@ To configure LinkedIn as an IdP:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-To test that your connection is working, in Zero Trust, go to **Authentication** > **Login methods** and click **Test** next to LinkedIn.
+To test that your connection is working, in Zero Trust, go to **Authentication** > **Login methods** and select **Test** next to LinkedIn.
 
 ## Example API configuration
 

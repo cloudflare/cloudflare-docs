@@ -30,7 +30,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 4. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-5. Under **Login methods**, click **Add new**.
+5. Under **Login methods**, select **Add new**.
 
 6. Choose **OpenID Connect**..
 
@@ -42,7 +42,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 10. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test. On success, a confirmation screen displays.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test. On success, a confirmation screen displays.
 
 ## Example API Configuration
 

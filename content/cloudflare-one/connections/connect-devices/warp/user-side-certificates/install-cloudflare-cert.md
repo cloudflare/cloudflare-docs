@@ -69,7 +69,7 @@ To install the certificate in **Keychain Access**:
 
 2. Double-click the `.crt` file.
 
-3. In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and click **Add**.
+3. In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and select **Add**.
 
 ![macOS popup window for adding certificates](/images/cloudflare-one/connections/keychain-popup.png)
 
@@ -168,15 +168,15 @@ Windows offers two options to install the certificate, each having a different i
 
 2. Right-click the certificate file.
 
-3. Select **Open**. If you see a Security Warning, click **Open** to proceed.
+3. Select **Open**. If you see a Security Warning, choose **Open** to proceed.
 
 4. The **Certificate** window will appear. Select **Install Certificate**.
 
 ![Window for Cloudflare certificate](/images/cloudflare-one/connections/windows_install_cert.png)
 
-5. Now choose a Store Location. If you see a Security Warning, click **Yes** to proceed.
+5. Now choose a Store Location. If you see a Security Warning, choose **Yes** to proceed.
 
-6. On the next screen, click **Browse**.
+6. On the next screen, select **Browse**.
 
 7. Choose the **Trusted Root Certification Authorities** store.
 
@@ -290,11 +290,11 @@ The root certificate is now installed and ready to be used.
 
 {{</table-wrap>}}
 
-6. In the file open dialog, select the `Cloudflare_CA.crt` file downloaded in step #1 and click **Open**.
+6. In the file open dialog, select the `Cloudflare_CA.crt` file downloaded in step #1 and select **Open**.
 
 ![ChromeOS dialogue for selecting a certificate file](/images/cloudflare-one/connections/chromeOS7_cert.png)
 
-7. Enter anything you want for the certificate name and click **OK**.
+7. Enter anything you want for the certificate name and select **OK**.
 
 ![ChromeOS dialogue for naming the certificate](/images/cloudflare-one/connections/chromeOS8_cert.png)
 

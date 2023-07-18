@@ -103,7 +103,7 @@ Select the new data source and enter the Prometheus queries to monitor.
 
 Some simple queries to start with are "cloudflared_tunnel_request_errors" and "cloudflared_tunnel_requests".
 
-Create a new dashboard and then in the upper right corner of the page click the "Add panel" button, and "Add a new panel".
+Create a new dashboard and then in the upper right corner of the page select the "Add panel" button, and "Add a new panel".
 
 Select the above metric names in the metrics drop down to populate a graph with them.
 
