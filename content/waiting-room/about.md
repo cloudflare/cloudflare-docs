@@ -14,9 +14,9 @@ Cloudflare Waiting Room protects websites by queueing site visitors when a websi
 
 ## Benefits
 
-Waiting Room protects **your origin server** by preventing surges in legitimate traffic that may overload your origin.
+Waiting Room protects your origin server by preventing surges in legitimate traffic that may overload your origin.
 
-Waiting Room also benefits **your visitors** by:
+Waiting Room also benefits your visitors by:
 
 - Keeping your application online and preventing them from reaching error pages.
 - Showing estimated wait times that are continuously updated.
@@ -42,7 +42,7 @@ Once you have [created and activated a waiting room](/waiting-room/get-started/)
 The following customers have access to Cloudflare Waiting Room:
 
 - Those qualified under [Project Fair Shot](https://www.cloudflare.com/fair-shot/)
-- Business customers
+- Customers on a Business or Enterprise plan
 
 Access to certain features depends on a customer's [plan type](/waiting-room/plans/).
 

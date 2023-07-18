@@ -1,6 +1,7 @@
 ---
 title: Overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
   title: Cloudflare Waiting Room
@@ -30,6 +31,7 @@ Create rules to indicate specific traffic or areas of your site or application t
 
 {{<feature header="Waiting Room Analytics" href="/waiting-room/waiting-room-analytics/">}}
 Get insights into the traffic going through your waiting room.
+{{</feature>}}
 
 ---
 
@@ -53,7 +55,7 @@ Cloudflare SSL/TLS encrypts your web traffic to prevent data theft and other tam
 
 {{<resource-group>}}
 
-{{<resource header="Pricing" href="https://www.cloudflare.com/plans/" icon="price">}}Explore pricing options for the Waiting Room{{</resource>}}
+{{<resource header="Pricing" href="https://www.cloudflare.com/plans/" icon="price">}}Explore pricing options for Waiting Room.{{</resource>}}
 
 {{</resource-group>}}
 
