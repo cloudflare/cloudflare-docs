@@ -66,7 +66,7 @@ If paying by credit card:
 
 7. Review the suggested address in the pop-up window. If the information is correct, select **Confirm**. 
 
-If paying by Paypal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
+If paying by PayPal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
 
 ## Update billing email address
 
