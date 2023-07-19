@@ -45,7 +45,7 @@ Service tokens expire according to the token duration you selected when you crea
 
 To renew the service token:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access** > **Service Auth** > **Service Tokens**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
 2. Locate the token you want to renew.
 3. To extend the token's lifetime by one year, select **Refresh**.
 4. To extend the token's lifetime by more than a year:
@@ -57,7 +57,7 @@ To renew the service token:
 
 If you need to revoke access before the token expires, simply delete the token.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access** > **Service Auth** > **Service Tokens**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
 2. **Delete** the token you need to revoke.
 
 Services that rely on a deleted service token can no longer reach your application.
@@ -72,7 +72,7 @@ An alert can be configured to notify a week before a service token expires to al
 
 To configure a service token expiration alert:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com), navigate to the **Notifications** tab.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Notifications** tab.
 2. Select **Add**.
 3. Select _Expiring Access Service Token_.
 4. Enter a name for your alert and an optional description.

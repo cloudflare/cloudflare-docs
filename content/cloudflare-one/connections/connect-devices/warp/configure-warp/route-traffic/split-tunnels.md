@@ -24,9 +24,9 @@ Changes made to your Split Tunnel configuration are immediately propagated to cl
 
 3. Scroll down to **Split Tunnels**.
 
-3. (Optional) To view your existing Split Tunnel configuration, select **Manage**. You will see a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected. We recommend making a copy of your Split Tunnel entries, as they will revert to the default upon switching modes.
+4. (Optional) To view your existing Split Tunnel configuration, select **Manage**. You will see a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected. We recommend making a copy of your Split Tunnel entries, as they will revert to the default upon switching modes.
 
-4. Under **Split Tunnels**, choose a mode:
+5. Under **Split Tunnels**, choose a mode:
 
    - **Exclude IPs and domains** — (Default) All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
    - **Include IPs and Domains** — Only traffic destined to the IPs or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies. In order to use certain features, you will need to manually add [Zero Trust domains](#cloudflare-zero-trust-domains).
@@ -49,6 +49,7 @@ All clients with this device profile will now switch to the new mode and its def
 {{<tab label="add an ip" no-code="true">}}
 
 To add an IP address to Split Tunnels:
+
 1. Select _IP Address_.
 2. Enter the IP address or CIDR you want to exclude or include.
 3. Select **Save destination**.
@@ -57,14 +58,15 @@ Traffic to this IP address is now excluded or included from the WARP tunnel.
 
 {{</tab>}}
 {{<tab label="add a domain" no-code="true">}}
- 
+
 To add a domain to Split Tunnels:
+
 1. Select _Domain_.
 2. Enter a [valid domain](#valid-domains) to exclude or include.
 3. Select **Save destination**.
 4. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
-When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
+When a user goes to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
 {{</tab>}}
 {{</tabs>}}
@@ -90,7 +92,7 @@ Do not exclude a site from Split Tunnels if you want to see the traffic in your 
 
 ## Cloudflare Zero Trust domains
 
-Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP sesssion durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
+Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP session durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
 
 - The IdP used to authenticate to Cloudflare Zero Trust
 - `<your-team-name>.cloudflareaccess.com`

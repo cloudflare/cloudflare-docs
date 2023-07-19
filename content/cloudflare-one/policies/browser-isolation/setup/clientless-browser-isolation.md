@@ -6,12 +6,11 @@ weight: 5
 
 # Clientless Web Isolation
 
-Clientless Web Isolation allows users to securely navigate high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
+Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
 ## Set up Clientless Web Isolation
 
-{{<render file="/_clientless-browser-isolation.md">}}
-3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+{{<render file="/_clientless-browser-isolation.md">}} 3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
 
 ## Use the remote browser
 
@@ -47,7 +46,7 @@ If [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decrypt
 
 ### Connect private networks
 
-With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
+With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/).
 
 For example, if you added `192.0.2.1` to your tunnel, users can connect to your application through the remote browser by going to `https://<your-team-name>.cloudflareaccess.com/browser/http://192.0.2.1`.
 
@@ -61,7 +60,7 @@ You can configure [remote browser controls](/cloudflare-one/policies/browser-iso
 
 ## Address bar
 
-Clientless Web Isolation has an embedded address bar. This feature is designed to improve the user's experience while navigating in isolated pages with prefixed URLs.
+Clientless Web Isolation has an embedded address bar. This feature is designed to improve the user's experience while visiting isolated pages with prefixed URLs.
 
 The clientless address bar has three views: hostname notch, full address bar and hidden. The user's selected view is remembered across domains and remote browsing sessions.
 
@@ -75,7 +74,7 @@ Clicking **Expand** or the hostname text will expand the notch to the full addre
 
 ### Full address bar view
 
-The full address bar allows users to search and navigate to isolated websites. Users can jump to the address bar at any time by pressing <kbd>CTRL</kbd> + <kbd>L</kbd> on the keyboard.
+The full address bar allows users to search and go to isolated websites. Users can jump to the address bar at any time by pressing <kbd>CTRL</kbd> + <kbd>L</kbd> on the keyboard.
 
 ![Viewing full address of an isolated page in the clientless remote browser](/images/cloudflare-one/policies/rbi-address-bar-full.png)
 

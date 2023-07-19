@@ -10,7 +10,7 @@ The administrators managing policies and groups in Cloudflare Access might be di
 
 ## Creating a scoped API token
 
-1.  In the [Cloudflare for Infrastructure](https://dash.cloudflare.com/) dashboard, click the user icon in the top right and navigate to "My Profile".
+1.  In the [Cloudflare for Infrastructure](https://dash.cloudflare.com/) dashboard, click the user icon in the top right and go to "My Profile".
 
 1.  Select the **API Tokens** tab. The existing tokens will display.
 

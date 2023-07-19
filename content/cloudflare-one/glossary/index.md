@@ -81,7 +81,7 @@ DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS req
 
 ## DoH subdomain
 
-Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as a _unique id_). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, navigate to **Gateway** > **DNS Locations**, expand the card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
+Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as a _unique id_). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, go to **Gateway** > **DNS Locations**, expand the card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
 
 | DNS over HTTPS hostname                               | DoH subdomain |
 | ----------------------------------------------------- | ------------- |

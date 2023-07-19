@@ -6,7 +6,7 @@ weight: 10
 
 # Glossary
 
-Review the definitions for terms used across Cloudflare.
+Review the definitions for terms used across Cloudflare's documentation.
 
 ## account
 
@@ -98,7 +98,7 @@ A network of remote servers used to store and maintain data.
 
 `cloudflared` is the software that powers Cloudflare Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
-**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 ## content delivery network (CDN)
 
@@ -292,7 +292,7 @@ SSL public and private keys are essentially long strings of characters used for 
 
 ## roles
 
-Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](https://support.cloudflare.com/hc/articles/205065067#12345682).
+Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/account-and-billing/members/roles/).
 
 ## root certificate
 

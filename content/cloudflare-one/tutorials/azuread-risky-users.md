@@ -41,7 +41,7 @@ Once the base IdP integration is tested and working, enable additional permissio
 
 2. Select the application you created for the IdP integration.
 
-3. Navigate to **API permissions** and select **Add a permission**.
+3. Go to **API permissions** and select **Add a permission**.
 
 4. Select **Microsoft Graph**.
 
@@ -78,7 +78,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    $ wrangler generate risky-users https://github.com/cloudflare/msft-risky-user-ad-sync
    ```
 
-3. Navigate to the project directory.
+3. Go to the project directory.
 
    ```sh
    $ cd risky-users
@@ -110,7 +110,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    ```
 
 {{<Aside type="note">}}
-The [Cron Trigger](/workers/platform/triggers/cron-triggers/) in this example schedules the script to run every minute. [Learn more](/workers/platform/triggers/cron-triggers/#supported-cron-expressions) about supported cron expressions.
+The [Cron Trigger](/workers/configuration/cron-triggers/) in this example schedules the script to run every minute. Learn more about [supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
 {{</Aside>}}
 
 5. Publish the Worker to your Workers account.

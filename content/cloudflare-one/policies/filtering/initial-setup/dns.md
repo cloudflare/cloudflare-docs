@@ -44,7 +44,7 @@ Gateway identifies locations differently depending on the DNS query protocol:
 
 ## 3. Add recommended policies
 
-To create a new DNS policy, navigate to **Gateway** > **Firewall Policies** > **DNS** in Zero Trust. We recommend adding the following policy:
+To create a new DNS policy, go to **Gateway** > **Firewall Policies** > **DNS** in Zero Trust. We recommend adding the following policy:
 
 ### Block all security categories
 

@@ -36,4 +36,4 @@ The maximum file size is 100 MB. Size limitation is assessed against the file af
 
 ## Feature availability
 
-Data Loss Prevention is only available on Enterprise plans.
+Data Loss Prevention is available as an add-on to Zero Trust Enterprise plans.

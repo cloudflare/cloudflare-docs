@@ -40,7 +40,7 @@ To set up Keycloak (SAML) as your identity provider:
 
     Next, you will need to integrate with Cloudflare Access.
 
-1.  In Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, go to **Settings** > **Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 
@@ -56,4 +56,4 @@ To set up Keycloak (SAML) as your identity provider:
 
 1.  Click **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and click **Test** next to the login method you want to test.

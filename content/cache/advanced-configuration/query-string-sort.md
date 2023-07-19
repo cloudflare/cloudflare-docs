@@ -17,7 +17,7 @@ Query String Sort changes this behavior. If two query strings exist with the sam
 
 `/example/file?word=alpha&word=beta and /example/file?word=beta&word=alpha`
 
-are sorted to:
+would be sorted to:
 
 `/example/file?word=alpha&word=beta`
 
@@ -49,7 +49,7 @@ For example in the WordPress admin UI, you might notice any of the following beh
 -   Inability to drag any widget to a sidebar in **Appearance** \> **Widgets**
 -   Inability to edit menus in **Appearance** \> **Menus**
 
-To understand why this happens, note that WordPress [concatenates Javascript files](https://wordpress.org/support/article/editing-wp-config-php/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
+To understand why this happens, note that WordPress [concatenates JavaScript files](https://wordpress.org/support/article/editing-wp-config-php/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
 
 ### Identifying the problem
 

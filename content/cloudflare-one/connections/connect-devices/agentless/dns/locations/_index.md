@@ -11,7 +11,7 @@ DNS locations are usually physical entities like offices, homes, retail stores, 
 
 To add a DNS location to Gateway:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **DNS Locations**.
 
 2. Select **Add a DNS location**.
 

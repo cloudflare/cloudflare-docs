@@ -790,7 +790,7 @@ Si especificas un puerto en el campo **si la URL coincide** de una regla de pág
 
 ### Uso de Page Rules con Workers
 
-Si la URL de la solicitud actual coincide tanto con una regla de página como con una [ruta personalizada de Workers](/workers/platform/routes), no se aplicarán algunos ajustes de Page Rules. Si necesitas más información sobre el uso de Page Rules con Workers, consulta [Workers: Page Rules](/workers/platform/workers-with-page-rules/) en la documentación para desarrolladores.
+Si la URL de la solicitud actual coincide tanto con una regla de página como con una [ruta personalizada de Workers](/workers/platform/routes), no se aplicarán algunos ajustes de Page Rules. Si necesitas más información sobre el uso de Page Rules con Workers, consulta [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) en la documentación para desarrolladores.
 
 ___
 

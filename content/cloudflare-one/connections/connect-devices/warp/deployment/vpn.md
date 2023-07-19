@@ -8,7 +8,7 @@ weight: 10
 
 We understand that you may be required to run a legacy third-party VPN alongside the Cloudflare WARP client. Because the WARP client and third-party VPN both enforce firewall, routing, and DNS rules on your local device, the two products will compete with each other for control over network traffic.
 
-For the most stable and consistent connection, we recommend using Cloudflare Tunnel to [connect your private network or individual applications](/cloudflare-one/connections/connect-apps/private-net/) to our global edge network. However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.
+For the most stable and consistent connection, we recommend using Cloudflare Tunnel to [connect your private network or individual applications](/cloudflare-one/connections/connect-networks/private-net/) to our global edge network. However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.
 
 ## Requirements
 

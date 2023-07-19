@@ -85,7 +85,7 @@ database_name = "<DATABASE_NAME>"
 database_id = "<unique-ID-for-your-database>"
 ```
 
-This will create a new D1 database, and output the [binding](/workers/platform/bindings/) configuration needed in the next step.
+This will create a new D1 database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
 
 {{<Aside type="note" heading="New experimental back-end">}}
 
@@ -105,7 +105,7 @@ Refer to the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to
 
 ## 3. Bind your Worker to your D1 database
 
-You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/platform/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
 To bind your D1 database to your Worker, add the following to the end of your `wrangler.toml` file:
 

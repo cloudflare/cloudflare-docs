@@ -213,7 +213,7 @@ ___
 
 ## 为什么我在添加域名后看到数百条随机的 DNS 记录？
 
-如果您在以前的权威 DNS 上配置了通配符 \* 记录，就有可能发生这种情况。您可以使用 API 批量删除这些记录：https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record。或者，您也可以从 Cloudflare Dashboard 中删除您的域名，然后从权威 DNS 中删除通配符记录，之后再重新添加该域名
+如果您在以前的权威 DNS 上配置了通配符 \* 记录，就有可能发生这种情况。您可以使用 API 批量删除这些记录：/api/operations/dns-records-for-a-zone-delete-dns-record。或者，您也可以从 Cloudflare Dashboard 中删除您的域名，然后从权威 DNS 中删除通配符记录，之后再重新添加该域名
 
 ___
 

@@ -57,7 +57,7 @@ The OWASP version supporting WAF managed rules and WAF Managed Rules is quite di
 
 If a zone has [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides) (only available via API), you will not have the option to migrate to WAF Managed Rules. To update to WAF Managed Rules you must:
 
-1. Delete any existing URI-based WAF overrides using the [Delete a WAF override](/api/operations/waf-overrides-delete-a-waf-override) API operation.
+1. Delete any existing URI-based WAF overrides using the [Delete a WAF override](/api/operations/waf-overrides-delete-a-waf-override) operation.
 2. Follow the update process described below.
 
 ### Cloudflare dashboard changes
@@ -173,7 +173,7 @@ The update process can take up to an hour. During this period you may observe se
 
 ### Using the API
 
-1. Use the [Check WAF update compatibility](#api-operations) API operation to determine if the zone can update to the new WAF, given its current configuration:
+1. Use the [Check WAF update compatibility](#api-operations) operation to determine if the zone can update to the new WAF, given its current configuration:
 
     ```bash
     $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waf_migration/check?phase_two=1" \
@@ -196,7 +196,7 @@ The update process can take up to an hour. During this period you may observe se
 
     If the response includes `"compatible": true`, this means that the zone can update to the new WAF and you can proceed with the update process. If the response includes `"compatible": false`, this means that your zone is not eligible for the update, given its current configuration. Refer to [Eligible zones](#eligible-zones) for details.
 
-2. To get the new WAF configuration corresponding to your current configuration, use the [Get new WAF configuration](#api-operations) API operation:
+2. To get the new WAF configuration corresponding to your current configuration, use the [Get new WAF configuration](#api-operations) operation:
 
     ```bash
     $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waf_migration/config?phase_two=1" \
@@ -245,7 +245,7 @@ The returned configuration in the example above, which would match the existing 
 - A rule that executes the Cloudflare Managed Ruleset (ruleset with ID `efb7b8c949ac4650a09736fc376e9aee`).
 - A single override for the rule "Apache Struts - Open Redirect - CVE:CVE-2013-2248" (rule with ID `23ee7cebe6e8443e99ecf932ab579455`) in the same ruleset, setting the action to `log` and disabling the rule.
 
-3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the Update zone entry point ruleset API operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
+3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the Update zone entry point ruleset operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
 
     ```bash
     $ curl -X PUT \

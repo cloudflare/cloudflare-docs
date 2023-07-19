@@ -33,6 +33,6 @@ To run a traceroute test, the device must be connected to Zero Trust via the WAR
 | macOS  | 2023.5.589   |
 | Windows | 2023.5.587|
 | Linux | Not supported |
-| iOS | Not supported |
-| ChromeOS | Not supported |
-| Android | Not supported |
+| iOS | 6.22 |
+| ChromeOS | 6.28 |
+| Android | 6.28 |

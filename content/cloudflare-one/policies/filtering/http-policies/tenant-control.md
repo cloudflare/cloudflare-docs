@@ -21,7 +21,7 @@ Not all SaaS applications support tenant control. Examples of common application
 
 This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **Firewall Policies** > **HTTP**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 
 1.  Create a policy with the following values:
 
@@ -115,8 +115,8 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 
 ![Results that will appear when configuring the example allow policy.](/images/cloudflare-one/policies/httpbin-policy.png)
 
-#### 3. Navigate to `https://httpbin.org/anything`
+#### 3. Visit `https://httpbin.org/anything`
 
-HTTPBIN is a helpful service to test request headers. Navigating to `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
+HTTPBIN is a helpful service to test request headers. Visiting `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
 
 ![Custom Cloudflare header displayed in output from HTTPBIN.](/images/cloudflare-one/policies/httpbin.png)

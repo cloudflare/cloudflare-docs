@@ -12,7 +12,7 @@ This feature is only available to Enterprise customers.
 
 {{</Aside>}}
 
-You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file. The PAC file contains a Javascript function which instructs a browser to forward traffic to a proxy server instead of directly to the destination server. When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account, to be filtered by Gateway.
+You can apply Gateway HTTP policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file. The PAC file contains a JavaScript function which instructs a browser to forward traffic to a proxy server instead of directly to the destination server. When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway.
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 <summary>Create a proxy endpoint (dashboard)</summary>
 <div>
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Gateway** > **Proxy Endpoints**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy Endpoints**.
 2. Click **Create endpoint**.
 3. Give your endpoint any name.
 4. Enter the public source IP address of your device(s) in CIDR notation. For example,
@@ -148,7 +148,7 @@ function FindProxyForURL(url, host) {
 
 - Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
 - You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
-- Use a proper text editor such as VSCode to avoid added characters.
+- Use a proper text editor such as VS Code to avoid added characters.
   {{</Aside>}}
 
 ## 4. Configure your browser
@@ -159,7 +159,7 @@ The following example demonstrates the setup procedure for Firefox.
 
 1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
 
-   ![Navigating to Network Settings menu in Firefox](/images/cloudflare-one/connections/firefox-network-settings.png)
+   ![Going to Network Settings menu in Firefox](/images/cloudflare-one/connections/firefox-network-settings.png)
 
 2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.

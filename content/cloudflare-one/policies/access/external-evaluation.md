@@ -31,7 +31,7 @@ You can set up External Evaluation rules using any API service, but to get start
    $ wrangler generate my-worker https://github.com/cloudflare/workers-access-external-auth-example
    ```
 
-2. Navigate to the project directory.
+2. Go to the project directory.
 
    ```sh
    $ cd my-worker
@@ -98,14 +98,14 @@ To generate an RSA private/public key pair:
 1. Open a browser and go to `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys`.
 
 2. (Optional) Verify that the key has been stored in the `KV` namespace:
-   1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to **Workers & Pages** > **KV**.
+   1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Workers & Pages** > **KV**.
    2. Select **View** next to `my-worker-KV`.
 
 Other key formats (such as DSA) are not supported at this time.
 
 ### 4. Create an External Evaluation rule
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
 2. Find the application for which you want to apply the External Evaluation rule and select **Edit**.
 
@@ -122,7 +122,7 @@ When a user logs in to your application, Access will now check their email, devi
 
 To debug your External Evaluation rule:
 
-1. Navigate to your Worker directory.
+1. Go to your Worker directory.
 
    ```sh
    $ cd my-worker

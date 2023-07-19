@@ -119,11 +119,11 @@ iOS only allows the Safari browser to open and install certificates.
 
 2. Tap **Allow**.
 
-3. Navigate to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
+3. Go to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
 {{<Aside type="note">}}
 
-Alternatively you can navigate to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
+Alternatively, you can go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
 
 {{</Aside>}}
 
@@ -228,7 +228,7 @@ $ sudo update-ca-trust
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-2. Navigate to **Settings** > **Security**.
+2. Go to **Settings** > **Security**.
 
 ![Android **Settings** screen](/images/cloudflare-one/connections/android_security_settings.png)
 
@@ -236,18 +236,18 @@ $ sudo update-ca-trust
 
 {{<table-wrap>}}
 
-|                                                                                                                        |                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+|                                                                                                          |                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | ![Android **Security** settings screen](/images/cloudflare-one/connections/android_advanced_encrypt.png) | ![Android **Security** screen after expanding **Advanced** menu](/images/cloudflare-one/connections/android_advanced_encrypt2.png) |
 
 {{</table-wrap>}}
 
-4. Tap **Install a certificate > CA certificate**.
+4. Tap **Install a certificate** > **CA certificate**.
 
 {{<table-wrap>}}
 
-|                                                                                                                           |                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+|                                                                                                             |                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | ![Android **Encryption & credentials** screen](/images/cloudflare-one/connections/android_install_cert.png) | ![Android **Install a certificate*** screen](/images/cloudflare-one/connections/android_ca_cert.png) |
 
 {{</table-wrap>}}
@@ -268,11 +268,11 @@ The root certificate is now installed and ready to be used.
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-2. Navigate to your **ChromeOS Settings**.
+2. Go to your **ChromeOS Settings**.
 
 ![**Settings** cog in ChromeOS](/images/cloudflare-one/connections/chromeOS1_cert.png)
 
-3. Navigate to **Apps** > **Google Play Store**.
+3. Go to **Apps** > **Google Play Store**.
 
 ![**Google Play Store** app in ChromeOS settings](/images/cloudflare-one/connections/chromeOS2_cert.png)
 
@@ -280,12 +280,12 @@ The root certificate is now installed and ready to be used.
 
 ![**Manage Android preferences** in ChromeOS settings](/images/cloudflare-one/connections/chromeOS3_cert.png)
 
-5. Navigate to **Security & location** > **Credentials** > **Install from SD card**.
+5. Go to **Security & location** > **Credentials** > **Install from SD card**.
 
 {{<table-wrap>}}
 
-|                                                                                                                |                                                                                                                 |                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+|                                                                                                  |                                                                                                   |                                                                                           |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | ![ChromeOS **Network & Internet** screen](/images/cloudflare-one/connections/chromeOS4_cert.png) | ![ChromeOS **Security & location** screen](/images/cloudflare-one/connections/chromeOS5_cert.png) | ![ChromeOS **Credentials** screen](/images/cloudflare-one/connections/chromeOS6_cert.png) |
 
 {{</table-wrap>}}
@@ -300,7 +300,7 @@ The root certificate is now installed and ready to be used.
 
 ### Nix and NixOS
 
-nixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
+NixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
 
 ## Add the certificate to applications
 
@@ -373,7 +373,7 @@ The command to install the certificate with Python on Windows automatically incl
 
 #### Git on Windows
 
-1. Open Powershell.
+1. Open PowerShell.
 
 2. Run the following command:
 

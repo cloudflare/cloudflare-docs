@@ -62,7 +62,7 @@ $ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=a
 
 ## Adding a hostname list in Zero Trust
 
-1.  In Zero Trust, navigate to **My Team** > **Lists**
+1.  In Zero Trust, go to **My Team** > **Lists**
 1.  Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues.
 1.  Add a name for the list, specify "Hostnames" as the list type, and give it a description.
 1.  Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.
@@ -73,7 +73,7 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 ## Creating an HTTP policy
 
-1.  Navigate to **Gateway** > **Firewall Policies** > **HTTP policies**.
+1.  Go to **Gateway** > **Firewall Policies** > **HTTP policies**.
 
 1.  Click **Create a policy**.
 

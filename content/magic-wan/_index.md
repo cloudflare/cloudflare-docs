@@ -17,7 +17,7 @@ Magic WAN provides secure, performant connectivity and routing for your entire c
 
 With Magic WAN, you can securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 
-Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels, [Cloudflare Network Interconnect](/network-interconnect/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), [WARP](/cloudflare-one/connections/connect-devices/warp/), and a variety of Network On-ramp Partners.
+Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels, [Cloudflare Network Interconnect](/network-interconnect/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [WARP](/cloudflare-one/connections/connect-devices/warp/), and a variety of Network On-ramp Partners.
 
 ---
  
