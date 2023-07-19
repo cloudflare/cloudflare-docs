@@ -122,7 +122,7 @@
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/ 301
 /argo-tunnel/reference/how-it-works/ /cloudflare-one/connections/connect-networks/install-and-setup/ 301
 /argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/ 301
-/argo-tunnel/reference/service/ //cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/ 301
+/argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/ 301
 /argo-tunnel/run-tunnel/run-as-service/ /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/ 301
 /argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/install-and-setup/ 301
 
