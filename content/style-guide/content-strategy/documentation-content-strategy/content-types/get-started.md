@@ -73,4 +73,4 @@ Point to more complex setup options.
 
 ## Example
 
-https://developers.cloudflare.com/waiting-room/get-started/
+[Waiting room](/waiting-room/get-started/)

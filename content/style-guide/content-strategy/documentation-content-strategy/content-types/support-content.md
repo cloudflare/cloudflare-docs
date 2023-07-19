@@ -53,7 +53,7 @@ Support content should not duplicate content that already exists in a product ti
         <td>Troubleshooting a specific product or platform</td>
     </tr>
     <tr>
-        <td>Third-party integrations and partnerships that aren't specific to a product(like Wordpress)</td>
+        <td>Third-party integrations and partnerships that aren't specific to a product(like WordPress)</td>
         <td>Product-specific integration guides</td>
     </tr>
     <tr>
