@@ -1,16 +1,16 @@
 ---
 pcx_content_type: how-to
-title: List messages in the dashboard
+title: List messages from the dashboard
 summary: Use the dashboard to fetch the messages currently in a Queue.
 weight: 1004
 layout: single
 meta:
-  title: Cloudflare Queues - Listing messages in the dashboard 
+  title: Cloudflare Queues - Listing messages from the dashboard 
 ---
 
-# List messages in the dashboard
+# List messages from the dashboard
 
-Listing messages in the dashboard allows you to debug Queues or Queue producers without a consumer Worker. Fetching a batch of messages to preview will not acknowledge or retry the message or affect its position in the Queue. The Queue can still be consumed normally by a consumer Worker.
+Listing messages from the dashboard allows you to debug Queues or Queue producers without a consumer Worker. Fetching a batch of messages to preview will not acknowledge or retry the message or affect its position in the Queue. The Queue can still be consumed normally by a consumer Worker.
 
 To list messages in the dashboard:
 
@@ -23,7 +23,7 @@ To list messages in the dashboard:
 
 ![A form to configure how many messages are listed at a time, with a number input showing '10'](./fetch-message-batch-size.png)
 
-7. Select **Fetch messages**.
+7. Select **List messages**.
 8. When the list of messages loads, select the blue arrow to the left of each row to expand the message preview.
 
 ![A table showing two previewed messages, one text and one JSON, both with some placeholder text](./fetched-messages.png)
