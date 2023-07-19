@@ -13,7 +13,7 @@ Here is the list:
 
 | Intelligence Endpoint | Definition |
 | --- | --- |
-| [ASN](/api/operations/asn-intelligence-get-asn-overview) | f |
+| [ASN](https://developers.cloudflare.com/api/operations/asn-intelligence-get-asn-overview) | Provides an overview of the Autonymous System Number (ANS) and a list of subnets for it. |
 | [Domain Intel](/api/operations/domain-intelligence-get-domain-details) | Provides security details and statistics about a domain. |
 | [Domain History](/api/operations/domain-history-get-domain-history) | f |
 | [IP](/api/operations/ip-intelligence-get-ip-overview) | f |
@@ -26,26 +26,31 @@ Here is the list:
 
 ### ASN Intelligence
 <details open>
-<summary>How to retrieve intel about an ASN</summary>
+<summary>Retrieve overview details about an ASN</summary>
 <div>
 
-```sh
-$ git checkout -b step3-https
+```bash
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/asn/13335" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
 
-Switched to a new branch 'step3-https'
-
-resource "cloudflare_zone_settings_override" "example-com-settings" {
-  zone_id = var.zone_id
-
-  settings {
-    tls_1_3                  = "on"
-    automatic_https_rewrites = "on"
-    ssl                      = "strict"
-  }
-}
-EOF
+{
+    "result": {
+        "asn": 13335,
+        "description": "CLOUDFLARENET",
+        "country": "US",
+        "type": "isp"
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+}    
 ```
 
+{{<Aside>}}
+
+{{</Aside>}}
 </div>
 </details>
 
