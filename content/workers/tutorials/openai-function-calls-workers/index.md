@@ -103,7 +103,7 @@ To make this work, you need to use [`wrangler secret put`](/workers/wrangler/com
 npx wrangler secret put OPENAI_API_KEY
 ```
 
-For local development, we'll also want to place this value in our `.dev.vars` file. Create a new file `.dev.vars` and add this line. Making sure to replace it with your own OpenAI API key:
+For local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
 ```
 OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 ```
