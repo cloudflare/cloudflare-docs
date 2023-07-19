@@ -8,7 +8,7 @@ weight: 6
 
 You can enable and disable Page Shield, configure its settings, and fetch information about detected scripts and connections using the [Page Shield API](/api/operations/page-shield-get-page-shield-settings).
 
-For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation. For more information on the required API token permissions, refer to [Roles and permissions](/page-shield/reference/roles-and-permissions/).
+To authenticate API requests you need an [API token](/fundamentals/api/get-started/create-token/). For more information on the required API token permissions, refer to [Roles and permissions](/page-shield/reference/roles-and-permissions/).
 
 {{<Aside type="note">}}
 Refer to [API deprecations](/fundamentals/api/reference/deprecations/#page-shield) for details on Page Shield API changes.
