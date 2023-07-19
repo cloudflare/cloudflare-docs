@@ -1,0 +1,10 @@
+---
+pcx_content_type: concept
+title: Exclamation points
+---
+
+# Exclamation points
+
+Avoid using exclamation points in most writing!
+
+Exclamation points are appropriate for success messages or screens in the UI.
