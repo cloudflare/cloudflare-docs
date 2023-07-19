@@ -6,7 +6,7 @@ weight: 7
 
 # List keys
 
-You can use a list operation to see all of the keys that live in a given namespace.
+Use a list operation to view all of the keys that live in a given KV namespace.
 
 An example:
 
@@ -90,7 +90,9 @@ await NAMESPACE.put(key, "", {
 
 ## List by prefix
 
-You can also list all of the keys starting with a particular prefix. For example, you may have structured your keys with a user, a user ID, and key names, separated by colons (for example, `user:1:<key>`). You could get the keys for user number one by doing this:
+List all of the keys starting with a particular prefix. 
+
+For example, you may have structured your keys with a user, a user ID, and key names, separated by colons (such as `user:1:<key>`). You could get the keys for user number one by using the following code:
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -119,7 +121,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tab>}}
 
-This will return all of the keys that start with the `"user:1:"` prefix.
+This will return all keys starting with the `"user:1:"` prefix.
 
 ## Ordering
 
@@ -137,4 +139,6 @@ const cursor = value.cursor;
 const next_value = await NAMESPACE.list({ cursor: cursor });
 ```
 
-Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch; check `list_complete` instead. The reason it is possible to have an empty array in `keys`, but still have more keys to fetch, is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
+Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch. Instead, check `list_complete`. 
+
+It is possible to have an empty array in `keys`, but still have more keys to fetch, because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.

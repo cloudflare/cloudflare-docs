@@ -17,6 +17,9 @@ When you create a namespace, it will have a name you choose (for example, `My ta
 To execute your Worker, define the binding. In the following example, the binding is called `TODO`. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
 ```toml
+---
+filename: wrangler.toml
+---
 name = "worker"
 
 # ...

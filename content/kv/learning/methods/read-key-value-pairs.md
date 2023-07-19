@@ -6,17 +6,15 @@ weight: 7
 
 # Read key-value pairs
 
-To get the value for a given key, call the `get()` method on any namespace you have bound to your script:
+To get the value for a given key, call the `get()` method on any KV namespace you have bound to your Worker script:
 
 ```js
 NAMESPACE.get(key);
 ```
 
-The method returns a promise you can `await` to get the value. If the key is not found, the promise will resolve with the literal value `null`.
+The `get()` method returns a promise you can `await` to get the value. If the key is not found, the promise will resolve with the literal value `null`.
 
-Note that `get()` may return stale values -- if a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to be visible. 
-
-Refer to [How KV works](/kv/learning/how-kv-works/) for more information on this topic.
+The `get()` method may return stale values. If a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to be visible. 
 
 An example of reading a key from within a Worker:
 
@@ -66,16 +64,16 @@ You can pass in an options object with a `type` parameter to the `get()` method:
 NAMESPACE.get(key, { type: "text" });
 ```
 
-The `type` parameter can be any of:
+The `type` parameter can be any of the following:
 
 - `"text"`: A string (default).
 - `"json"`: An object decoded from a JSON string.
 - `"arrayBuffer"`: An [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
 - `"stream"`: A [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
 
-For simple values, it often makes sense to use the default `"text"` type which provides you with your value as a string. For convenience, a `"json"` type is also specified which will convert a JSON value into an object before returning it to you. For large values, you can use `"stream"` to request a `ReadableStream` and `"arrayBuffer"` to request an `ArrayBuffer` for binary values.
+For simple values, use the default `"text"` type which provides you with your value as a string. For convenience, a `"json"` type is also specified which will convert a JSON value into an object before returning the object to you. For large values, use `"stream"` to request a `ReadableStream`. Use `"arrayBuffer"` to request an `ArrayBuffer` for binary values.
 
-For large values, the choice of `type` can have a noticeable effect on latency and CPU usage. For reference, the `type`s can be ordered from fastest to slowest as `"stream"`, `"arrayBuffer"`, `"text"`, and `"json"`.
+For large values, the choice of `type` can have a noticeable effect on latency and CPU usage. For reference, the `type` can be ordered from fastest to slowest as `"stream"`, `"arrayBuffer"`, `"text"`, and `"json"`.
 
 ## Cache TTL parameter
 
@@ -93,7 +91,7 @@ The effective Cache TTL of an already cached item can be reduced by getting it a
 
 ## Metadata
 
-You can get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata()` method on a namespace you have bound in your script:
+Get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata()` method on a KV namespace you have bound in your Worker script:
 
 ```js
 const { value, metadata } = await NAMESPACE.getWithMetadata(key);

@@ -9,14 +9,12 @@ pcx_content_type: overview
 # Cloudflare Workers KV
 
 {{<description>}}
-A global, low-latency, key-value data storage solution. 
+Create a global, low-latency, key-value data storage. 
 {{</description>}}
 
 {{<plan type="paid">}}
 
-Workers KV supports exceptionally high read volumes with low latency, making it possible to build highly dynamic APIs and websites that respond as quickly as a cached static file would. 
-
-With Workers KV, reads are periodically revalidated in the background, and requests which are not in cache and need to hit the centralized back end can see high latencies.
+Workers KV is an eventually consistent type of data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency. 
 
 ---
 
@@ -66,9 +64,9 @@ Built on SQLite, D1 is Cloudflare’s first queryable relational database. Creat
 
 {{<resource-group>}}
 
-{{<resource header="Limits" href="/kv/platform/limits/" icon="documentation-clipboard">}} Learn about limits that apply to your Workers KV project. {{</resource>}}
+{{<resource header="Limits" href="/kv/platform/limits/" icon="documentation-clipboard">}} Learn about Workers KV limits. {{</resource>}}
 
-{{<resource header="Pricing" href="/kv/platform/pricing/" icon="price">}} Understand pricing for free and paid tier rates. {{</resource>}}
+{{<resource header="Pricing" href="/kv/platform/pricing/" icon="price">}} Learn about Workers KV pricing. {{</resource>}}
 
 {{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
 

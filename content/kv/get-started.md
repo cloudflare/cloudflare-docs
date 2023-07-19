@@ -12,6 +12,13 @@ This guide will instruct you through:
 - Interacting with your KV namespace.
 - Using environments with KV namespaces.
 
+## Prerequisites
+
+To use Workers KV, you will need:
+
+1. A [Cloudflare account](/fundamentals/account-and-billing/account-setup/), if you do not have one already. 
+2. [Wrangler](/workers/wrangler/install-and-update/) installed.
+
 ## 1. Create a KV namespace 
 
 You can create a KV namespace via Wrangler or the Cloudflare dashboard.
@@ -41,6 +48,9 @@ kv_namespaces = [
 2. In your `wrangler.toml` file, add the following with the values generated in your terminal:
 
 ```bash
+---
+filename: wrangler.toml
+---
 kv_namespaces = [
     { binding = "<YOUR_BINDING>", id = "<YOUR_ID>" }
 ]
@@ -56,7 +66,7 @@ Refer to the [Environment Variables](/workers/platform/environment-variables) do
 
 {{</Aside>}}
 
-### Create KVs on the Cloudflare dashboard
+### Create a KV namespace via the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select **Workers & Pages** > **KV**.
@@ -78,27 +88,27 @@ To create an access token:
 
 ## 3. Interact with your KV namespace
 
-To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand and input your key and value respectively:
+To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively:
 
 ```sh
 $ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
 ```
 
-You can now access the binding from within a Worker. In your Worker, use the KV `get()` command to fetch the data you stored in your KV database:
+You can now access the binding from within a Worker. In your Worker script, use the KV `get()` method to fetch the data you stored in your KV database:
 
 ```js
 let value = await <YOUR_BINDING>.get("KEY");
 ```
 
-Instead of `--binding`, you may use `--namespace-id` to specify which KV namespace should receive the operation:
+Instead of using `--binding`, you may use `--namespace-id` to specify which KV namespace should receive the operation:
 
 ```sh
 $ wrangler kv:key put --namespace-id=e29b263ab50e42ce9b637fa8370175e8 "<KEY>" "<VALUE>"
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
 ```
 
-To summarize, a namespace can be specified in two ways:
+A KV namespace can be specified in two ways:
 
 1.  With a `--binding`:
 
@@ -106,7 +116,7 @@ To summarize, a namespace can be specified in two ways:
     $ wrangler kv:key get --binding=<YOUR_BINDING> "<KEY>"
     ```
 
-    - This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
+  This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
 
 2.  With a `--namespace-id`:
 
@@ -114,15 +124,18 @@ To summarize, a namespace can be specified in two ways:
     $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
     ```
 
-Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
+Refer to the [`kv:bulk`](/kv/platform/kv-commands/#kvbulk) documentation to write a file of multiple key-value pairs to a given KV namespace.
 
 ## 4. Use environments with KV namespaces
 
-KV namespaces can be used with environments. This is useful for when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to be able to have these bindings point to different namespaces (like one for staging and one for production).
+KV namespaces can be used with environments. This is useful when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to have these bindings point to different KV namespaces (like one for staging and one for production).
 
-A `wrangler.toml` file with two environments that have two different namespaces with the same binding name:
+The following code in the `wrangler.toml` file shows you how to have two environments that have two different namespaces but the same binding name.
 
 ```toml
+---
+filename: wrangler.toml
+---
 [env.staging]
 kv_namespaces = [
   { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
@@ -134,9 +147,9 @@ kv_namespaces = [
 ]
 ```
 
-Using the same binding name for two different namespaces keeps your Worker code simple. In the `staging` environment, `MY_KV.get("KEY")` will read from the namespace ID `e29b263ab50e42ce9b637fa8370175e8`. In the `production` environment, `MY_KV.get("KEY")` will read from the namespace ID `a825455ce00f4f7282403da85269f8ea`.
+Using the same binding name for two different KV namespaces keeps your Worker code simple. In the `staging` environment, `MY_KV.get("KEY")` will read from the namespace ID `e29b263ab50e42ce9b637fa8370175e8`. In the `production` environment, `MY_KV.get("KEY")` will read from the namespace ID `a825455ce00f4f7282403da85269f8ea`.
 
-To insert a value into a `staging` KV namespace, use:
+To insert a value into a `staging` KV namespace, run:
 
 ```sh
 $ wrangler kv:key put --env=staging --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
@@ -148,9 +161,16 @@ Since `--namespace-id` is always unique (unlike binding names), you do not need 
 $ wrangler kv:key put --namespace-id=<YOUR_ID> "<KEY>" "<VALUE>"
 ```
 
-Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. This allows you to publish Workers running the same code but with different namespaces. For example, you could use separate staging and production namespaces for KV data in your `wrangler.toml` file:
+Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. 
+
+Specifying an environment with the optional `--env` flag  allows you to publish Workers running the same code but with different namespaces. 
+
+For example, you could use separate staging and production namespaces for KV data in your `wrangler.toml` file:
 
 ```toml
+---
+filename: wrangler.toml
+---
 type = "webpack"
 name = "my-worker"
 account_id = "<account id here>"
@@ -168,7 +188,9 @@ kv_namespaces = [
 ]
 ```
 
-With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
+With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. 
+
+For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
 
 ```sh
 $ wrangler kv:key get --binding "MY_KV" --env=production "<KEY>"

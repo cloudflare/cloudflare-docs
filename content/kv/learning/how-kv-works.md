@@ -36,6 +36,6 @@ KV does not perform like an in-memory datastore, such as [Redis](https://redis.i
 
 All values are encrypted at rest with 256-bit AES-GCM, and only decrypted by the process executing your Worker scripts or responding to your API requests.
 
-Workers KV is free to try, with additional usage available as part of the Workers Bundled plan.
+
 
 

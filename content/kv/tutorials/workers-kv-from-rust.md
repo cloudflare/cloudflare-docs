@@ -19,7 +19,7 @@ This tutorial will teach you how to read and write to Workers KV directly from R
 
 To get started:
 
-1.  Run the `git clone` command to create a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/).
+1.  Open your terminal and run the `git clone` command to create a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/).
 2.  `cd` into the new project.
 3.  Use the current state of the git repository as the initial commit by running the `git add` and `git commit` commands in your terminal.
 
@@ -33,7 +33,9 @@ $ git commit -m 'Initial commit'
 
 To access Workers KV, you have to define a binding for a particular KV namespace in the `wrangler.toml` file generated in your new project's directory. 
 
-If you do not have an existing namespace, create one using `wrangler`. For example, a namespace called `KV_FROM_RUST` would be created by running:
+If you do not have an existing KV namespace, create one using `wrangler`. 
+
+For example, a KV namespace called `KV_FROM_RUST` would be created by running:
 
 ```sh
 $ wrangler kv:namespace create "KV_FROM_RUST"
@@ -45,7 +47,7 @@ kv_namespaces = [
 ]
 ```
 
-Create a preview ID to use the namespace with `wrangler preview`:
+Create a preview ID to use the KV namespace with `wrangler preview`:
 
 ```sh
 wrangler kv:namespace create "KV_FROM_RUST" --preview

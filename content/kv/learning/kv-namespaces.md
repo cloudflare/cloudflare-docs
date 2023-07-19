@@ -38,15 +38,15 @@ kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
 ```
-## Bind your KV namespace to your Worker
+## Bind your KV namespace via the dashboard
 
 To bind the namespace to your Worker in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2.  Go to **Workers & Pages**.
-3.  Select your **Worker**.
-4.  Select **Settings** > **Variables**.
-5.  Go to **KV Namespace Bindings**.
-6.  Select **Add binding**.
+2. Go to **Workers & Pages**.
+3. Select your **Worker**.
+4. Select **Settings** > **Variables**.
+5. Go to **KV Namespace Bindings**.
+6. Select **Add binding**.
 
 
