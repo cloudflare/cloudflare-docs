@@ -228,4 +228,4 @@ console.log(myResource.doSomething()); // prints 123
 
 * Workers does not implement the ability to create an `AsyncResource` with an explicitly identified trigger context as allowed by Node.js. This means that a new `AsyncResource` will always be bound to the async context in which it was created.
 
-* Thenables (non-Promise objects that expose a `then()` method) are not fully supported when using `AsyncLocalStorage`.
+* Thenables (non-Promise objects that expose a `then()` method) are not fully supported when using `AsyncLocalStorage`. When working with thenables, instead use [`AsyncLocalStorage.snapshot()`](https://nodejs.org/api/async_context.html#static-method-asynclocalstoragesnapshot) to capture a snapshot of the current context.
