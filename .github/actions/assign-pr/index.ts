@@ -4,7 +4,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { OWNERS, REVIEWERS } from "../owners";
-import fs from "fs";
+// import fs from "fs";
 
 type Octokit = ReturnType<typeof github.getOctokit>;
 
@@ -124,13 +124,14 @@ function parse(filename: string): string | void {
         issue_number: prnumber,
         labels: ["pcx_team_review"],
       });
-      const templatePath = ".github/review-template.md";
+      // Hold out of this PR for codeowners
+      /* const templatePath = ".github/review-template.md";
       const templateContent = fs.readFileSync(templatePath, "utf8");
       await client.rest.issues.createComment({
         ...github.context.repo,
         issue_number: prnumber,
         body: templateContent,
-      });
+      }); */
     } else {
       // ---
       // At this point, author is external and/or not PCX member.
