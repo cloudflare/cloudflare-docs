@@ -49,7 +49,7 @@ Cloudflare Access will prompt you to login with your Okta account. For the purpo
 
 The `mfa` value is sent by Okta to tell Cloudflare Access that you used a multifactor authentication option. The `pwd` value indicates you used a password. In this example, the `otp` value is sent because the user authenticatd with an app-based code.
 
-You can test with a hardkey by logging out of Okta and returning to the list of providers in Access. Click **Test** again, but this time use your hardware key as a second factor. Cloudflare Access will now see Okta share `hwk` in the `amr` fields.
+You can test with a hardkey by logging out of Okta and returning to the list of providers in Access. Select **Test** again, but this time use your hardware key as a second factor. Cloudflare Access will now see Okta share `hwk` in the `amr` fields.
 
 ![Test MFA](/images/cloudflare-one/zero-trust-security/require-yubikey/with-hwk.png)
 
@@ -57,9 +57,9 @@ You can test with a hardkey by logging out of Okta and returning to the list of 
 
 You can use this information to build a rule in Access. Go to the `Applications` list in the Cloudflare Access section of the dashboard. Choose an application that you have already built or create a new one. This example adds the requirement to an existing application.
 
-Click **Edit** to edit the existing `Allow` rule.
+Select **Edit** to edit the existing `Allow` rule.
 
-Add a `Require` rule and select `Authentication Method` from the list. Choose `hwk` as the required `Authentication Method`. Click **Save rule**.
+Add a `Require` rule and select `Authentication Method` from the list. Choose `hwk` as the required `Authentication Method`. Select **Save rule**.
 
 ![Require Rule](/images/cloudflare-one/zero-trust-security/require-yubikey/require-hwk.png)
 

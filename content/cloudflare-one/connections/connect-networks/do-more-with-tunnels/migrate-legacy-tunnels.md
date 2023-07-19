@@ -26,7 +26,7 @@ To check if you still have legacy tunnels:
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select a zone. Legacy Tunnels are associated with a zone and not by account.
 2. Go to **Traffic** > **Cloudflare Tunnel**.
 
-If nothing appears, this indicates there are no legacy tunnels associated with the zone. If legacy tunnels appear, please follow the migration instructions below.
+If nothing appears, this indicates there are no legacy tunnels associated with the zone. If legacy tunnels appear, follow the migration instructions below.
 
 {{<Aside type="note">}}
 Named tunnels will only appear in [Zero Trust](https://one.dash.cloudflare.com/) under **Access** > **Tunnels**.

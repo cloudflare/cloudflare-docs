@@ -43,7 +43,7 @@ Cloudflare Zero Trust can automatically remove any user who does not log in to a
 To enable user seat expiration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Account**.
-2. Scroll down to **User Seat Expiration** and click **Edit**.
+2. Scroll down to **User Seat Expiration** and select **Edit**.
 3. Select an inactivity time from the dropdown menu.
 4. Select **Save**.
 

@@ -52,7 +52,7 @@ To start, you will need to go to the Google Cloud Console and create a project. 
     EOF
     ```
 
-1.  Spin up your VM Instance by clicking **Create**.
+1.  Spin up your VM Instance by selecting **Create**.
 
 ## Deploying `cloudflared`
 
