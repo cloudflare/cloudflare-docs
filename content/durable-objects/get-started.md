@@ -30,6 +30,16 @@ To enable Durable Objects, you will need to purchase Workers Paid plan:
  2. Go to **Workers & Pages** > **Plans**. 
  3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
+ ## 2. Create a Worker
+
+ ```js
+ export default {
+  async fetch(request, env) {
+    return await handleRequest(request, env);
+  }
+}
+ ```
+
  ## 2. Write a class to define a Durable Object
 
 Before you create and access a Durable Object, you must define its behavior by exporting an ordinary JavaScript class. 

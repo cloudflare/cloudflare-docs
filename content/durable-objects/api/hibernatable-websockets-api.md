@@ -28,7 +28,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 {{<Aside type="warning" header="WebSockets disconnection">}}
 
-Code updates will disconnect all WebSockets. If you deploy a new version of a Worker, every Durable Object is restarted, which means that any connections to old Durable Objects will be disconnected.
+Code updates will disconnect all WebSockets. If you deploy a new version of a Worker, every Durable Object is restarted. Any connections to old Durable Objects will be disconnected.
 
 {{</Aside>}}
 
@@ -39,16 +39,16 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 - {{<code>}}webSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Keeps a copy of `value` in memory (not on disk) such that it will survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
+  - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
   
   - If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) and pass the corresponding key to this method so it can be retrieved later.
 
 - {{<code>}}webSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
 
-  - Retrieve the most recent value passed to `serializeAttachment`, or null if none exists.
+  - Retrieves the most recent value passed to `serializeAttachment`, or null if none exists.
 
 
-### `state` methods for WebSockets
+## `state` methods for WebSockets
 
 - {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
@@ -56,7 +56,7 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
   
   - After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object. 
   
-  - `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
+  - `tags` are optional string tags used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
   
   - The Hibernatable WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
@@ -94,7 +94,7 @@ The method is not called for WebSocket control frames. The system will respond t
 
 ### `webSocketClose()` handler method
 
-The system calls the `webSocketClose()` method when a WebSocket is closed. The method takes `(ws: WebSocket, code: number, reason: string, wasClean: boolean)` as parameters. `wasClean` is true if the connection closed cleanly, false otherwise. The method does not return a result and can be `async`.
+The system calls the `webSocketClose()` method when a WebSocket is closed. The method takes `(ws: WebSocket, code: number, reason: string, wasClean: boolean)` as parameters. `wasClean()` is true if the connection closed cleanly, false otherwise. The method does not return a result and can be `async`.
 
 ### `webSocketError()` handler method
 

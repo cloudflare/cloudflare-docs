@@ -20,7 +20,11 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 |  Websocket message size                    | 1 MiB (only for received messages)                |
 |  CPU per request                           | 30s (including websocket messages)                |
 
+{{<Aside type="note">}}
 
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+
+{{</Aside>}}
 
 Durable Objects can scale horizontally across many Objects. Each individual Object is inherently single-threaded.
 
