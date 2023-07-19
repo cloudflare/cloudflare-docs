@@ -58,7 +58,7 @@ SELECT * FROM orders WHERE customer_id = ?
 SELECT * FROM orders WHERE order_date = '2023-05-01'
 ```
 
-In more complex cases, you can confirm whether an index was used by D1 by [analyzing a query](#testing-an-index) directly.
+In more complex cases, you can confirm whether an index was used by D1 by [analyzing a query](#test-an-index) directly.
 
 ## List indexes
 
@@ -78,7 +78,7 @@ This will return output resembling the below:
 └──────────────────────────────────┴───────┴────────────────────────────────────────┘
 ```
 
-Note that you cannot modify this table, or an existing index. To modify an index, [delete it first](#removing-indexes) and [create a new index](#creating-an-index) with the updated definition.
+Note that you cannot modify this table, or an existing index. To modify an index, [delete it first](#removing-indexes) and [create a new index](#create-an-index) with the updated definition.
 
 ## Test an index
 
@@ -139,5 +139,5 @@ Take note of the following considerations when creating indexes:
 
 * Indexes are not always a free performance boost. You should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained. When you write to an indexed column, the database needs to write to the table and the index.
 * You cannot create indexes that reference other tables or use non-deterministic functions, since the index would not be stable.
-* Indexes cannot be updated. To add or remove a column from an index, [remove](#removing-indexes) the index and then [create a new index](#creating-an-index) with the new columns.
+* Indexes cannot be updated. To add or remove a column from an index, [remove](#removing-indexes) the index and then [create a new index](#create-an-index) with the new columns.
 * Indexes contribute to the overall storage required by your database: an index is effectively a table itself.
