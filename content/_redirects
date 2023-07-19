@@ -1066,6 +1066,7 @@
 /cloudflare-one/policies/filtering/dns-policies-builder/dns-categories/ /cloudflare-one/policies/filtering/domain-categories/ 301
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/filtering/domain-categories/ 301
 /cloudflare-one/policies/filtering/dns-policies/check-policy/ /cloudflare-one/policies/filtering/dns-policies/test-dns-filtering/ 301
+/cloudflare-one/policies/filtering/enforce-sessions/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/ 301
 /cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/http-policies/global-rules/ /cloudflare-one/policies/filtering/global-policies/ 301
