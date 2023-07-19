@@ -4,10 +4,10 @@ pcx_content_type: overview
 weight: 1
 layout: overview
 meta:
-  title: Spectrum
+  title: Cloudflare Spectrum
 ---
 
-# Spectrum
+# Cloudflare Spectrum
 
 {{<description>}}
 Spectrum provides security and acceleration for any [TCP](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) or [UDP](https://www.cloudflare.com/learning/ddos/glossary/user-datagram-protocol-udp/) based application.
