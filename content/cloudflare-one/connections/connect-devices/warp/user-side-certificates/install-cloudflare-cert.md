@@ -117,7 +117,7 @@ iOS only allows the Safari browser to open and install certificates.
 
 ![iOS popup message asking for permission to download certificate](/images/cloudflare-one/connections/ios_cert_download.PNG)
 
-2. Tap **Allow**.
+2. Select **Allow**.
 
 3. Go to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
@@ -129,13 +129,13 @@ Alternatively, you can go to **Settings**, where a new **Profile Downloaded** se
 
 ![iOS screen for viewing certificate profile](/images/cloudflare-one/connections/ios_cert_profile.PNG)
 
-4. Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+4. Select the profile and select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
-5. Next, a certificate warning will appear. Tap **Install**.
+5. Next, a certificate warning will appear. Select **Install**.
 
-If a second prompt is displayed, tap **Install** again.
+If a second prompt is displayed, select **Install** again.
 
-6. Next, the **Profile Installed** screen will appear. Tap **Done**.
+6. Next, the **Profile Installed** screen will appear. Select **Done**.
 
 ![iOS message confirming certificate profile installation](/images/cloudflare-one/connections/ios_profile_installed.PNG)
 
@@ -147,9 +147,9 @@ The installed root certificates will be displayed in the _Enable full trust for 
 
 ![iOS screen for configuring certificate trust settings](/images/cloudflare-one/connections/ios_cert_trust1.PNG)
 
-8. Tap the slide button next to the Cloudflare certificate you just installed.
+8. Select the slide button next to the Cloudflare certificate you just installed.
 
-9. A confirmation dialogue will appear. Tap **Continue**.
+9. A confirmation dialogue will appear. Select **Continue**.
 
 ![iOS popup message asking to confirm trust setting](/images/cloudflare-one/connections/ios_cert_trust2.PNG)
 
@@ -232,7 +232,7 @@ $ sudo update-ca-trust
 
 ![Android **Settings** screen](/images/cloudflare-one/connections/android_security_settings.png)
 
-3. Tap **Advanced** > **Encryption & Credentials**.
+3. Select **Advanced** > **Encryption & Credentials**.
 
 {{<table-wrap>}}
 
@@ -242,7 +242,7 @@ $ sudo update-ca-trust
 
 {{</table-wrap>}}
 
-4. Tap **Install a certificate** > **CA certificate**.
+4. Select **Install a certificate** > **CA certificate**.
 
 {{<table-wrap>}}
 
@@ -252,7 +252,7 @@ $ sudo update-ca-trust
 
 {{</table-wrap>}}
 
-5. Tap **Install Anyway**.
+5. Select **Install Anyway**.
 
 ![Android screen asking to confirm certificate installation](/images/cloudflare-one/connections/android_install_anyway.png)
 
