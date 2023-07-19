@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Investigate
-weight: 4
+weight: 6
 ---
 
 # Investigate

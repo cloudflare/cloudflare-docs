@@ -1,35 +1,37 @@
 ---
 pcx_content_type: navigation
-title: Intelligence APIs
-weight: 5
+title: Threat Intelligence APIs
+weight: 3
 ---
 
-# Intelligence APIs
+# Threat Intelligence APIs
 
-## Background
+## Overview
 Cloudflare provides a series of endpoints covering various areas of internet security and insights. 
-
-Here is the list:
 
 | Intelligence Endpoint | Definition |
 | --- | --- |
-| [ASN](https://developers.cloudflare.com/api/operations/asn-intelligence-get-asn-overview) | Provides an overview of the Autonymous System Number (ANS) and a list of subnets for it. |
-| [Domain Intel](/api/operations/domain-intelligence-get-domain-details) | Provides security details and statistics about a domain. |
-| [Domain History](/api/operations/domain-history-get-domain-history) | f |
-| [IP](/api/operations/ip-intelligence-get-ip-overview) | f |
-| [Passive DNS](/api/operations/passive-dns-by-ip-get-passive-dns-by-ip) | f |
-| [Phishing](/api/operations/phishing-url-information-get-results-for-a-url-scan) | f |
-| [Miscategorization](/api/operations/miscategorization-create-miscategorization) | f |
-| [WHOIS](/api/operations/whois-record-get-whois-record) | f |
+| [ASN Intelligence](/api/operations/asn-intelligence-get-asn-overview) | Provides an overview of the Autonymous System Number (ANS) and a list of subnets for it. |
+| [Domain Intelligence](/api/operations/domain-intelligence-get-domain-details) | Provides security details and statistics about a domain. |
+| [Domain History](/api/operations/domain-history-get-domain-history) | Provides historical security threat and content categories that are currently and previously assigned to a domain. |
+| [IP Intelligence](/api/operations/ip-intelligence-get-ip-overview) | Provides the geolocation, ASN, infrastructure type of the ASN, and any security threat categories of an IP address. |
+| [Passive DNS by IP](/api/operations/passive-dns-by-ip-get-passive-dns-by-ip) | Provides a list of all the domains, including first seen and last seen dates, that have resolved to a specific IP address. |
+| [Phishing Intelligence](/api/operations/phishing-url-information-get-results-for-a-url-scan) | Provides phishing details about a URL.  |
+| [Miscategorization Intelligence](/api/operations/miscategorization-create-miscategorization) | Enables users to submit requests for modifying a domain's category, subsequently undergoing review by the Cloudflare Intelligence team. |
+| [WHOIS](/api/operations/whois-record-get-whois-record) | Provides the WHOIS registration information for a specific domain. |
 
 ## API Examples
 
+Before you begin, ensure you have created an [API Token](/fundamentals/api/get-started/create-token/) with permissions to edit resources for this tutorial.
+
+Below are examples of the Threat Intelligence APIs. For complete documentation, navigate to their respective API documentation using the links above. 
+
 ### ASN Intelligence
 <details open>
-<summary>Retrieve overview details about an ASN</summary>
-<div>
+<summary>Get ASN Overview</summary>
 
 ```bash
+
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/asn/13335" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
@@ -45,82 +47,324 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
     "success": true,
     "errors": [],
     "messages": []
-}    
+}
 ```
-
-{{<Aside>}}
-
-{{</Aside>}}
-</div>
 </details>
-
 
 ### Domain Intelligence
-<details open>
-<summary>How to retrieve intel about a Domain</summary>
-<div>
+<details>
+<summary>Get Domain Details</summary>
 
-```sh
-$ git checkout -b step3-https
+```bash
 
-Switched to a new branch 'step3-https'
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain?domain=cloudflare.com" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
 
-resource "cloudflare_zone_settings_override" "example-com-settings" {
-  zone_id = var.zone_id
-
-  settings {
-    tls_1_3                  = "on"
-    automatic_https_rewrites = "on"
-    ssl                      = "strict"
-  }
+{
+    "result": {
+        "domain": "cloudflare.com",
+        "resolves_to_refs": [
+            {
+                "id": "ipv4-addr--71f6bb54-e0c5-5e7d-b939-5698fc15a102",
+                "value": "104.16.133.229"
+            },
+            {
+                "id": "ipv4-addr--015b0df4-7fcd-5409-9b56-cfd300c662f6",
+                "value": "104.16.132.229"
+            },
+            {
+                "id": "ipv6-addr--4a7455cd-e8d0-5bfb-8bdb-f6ebb1759508",
+                "value": "2606:4700::6810:85e5"
+            },
+            {
+                "id": "ipv6-addr--68f89579-7204-5ebd-a851-e91b3a86fc6d",
+                "value": "2606:4700::6810:84e5"
+            }
+        ],
+        "application": {},
+        "content_categories": [
+            {
+                "id": 155,
+                "super_category_id": 26,
+                "name": "Technology"
+            },
+            {
+                "id": 26,
+                "name": "Technology"
+            }
+        ],
+        "additional_information": {},
+        "type": "Apex domain",
+        "notes": "Apex domain given."
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
 }
-EOF
 ```
-
-</div>
 </details>
 
+### Domain History
+<details>
+<summary>Get Domain History</summary>
 
-
-
-<!-- {{<tabs labels="ASN | Domain Intel | Domain History | IP | Passive DNS | Phishing | Miscategorization | WHOIS">}}
-{{<tab label="asn">}}
 ```bash
-$ git checkout -b step3-https
-Switched to a new branch 'step3-https'
 
-$ cat >> cloudflare.tf <<'EOF'
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain-history?domain=cloudflare.com" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
 
-resource "cloudflare_zone_settings_override" "example-com-settings" {
-  zone_id = var.zone_id
-
-  settings {
-    tls_1_3                  = "on"
-    automatic_https_rewrites = "on"
-    ssl                      = "strict"
-  }
+{
+    "result": [
+        {
+            "domain": "cloudflare.com",
+            "categorizations": [
+                {
+                    "categories": [
+                        {
+                            "id": 155,
+                            "name": "Technology"
+                        }
+                    ],
+                    "start": "2020-12-16T19:49:30.533482Z",
+                    "end": "2023-05-31T08:12:53.547029Z"
+                },
+                {
+                    "categories": [
+                        {
+                            "id": 115,
+                            "name": "Login Screens"
+                        },
+                        {
+                            "id": 155,
+                            "name": "Technology"
+                        }
+                    ],
+                    "start": "2023-05-31T08:12:53.547029Z"
+                }
+            ]
+        }
+    ],
+    "success": true,
+    "errors": [],
+    "messages": []
 }
-EOF
-```{{</tab>}}
-{{<tab label="domain intel">}}
-hi
-{{</tab>}}
-{{<tab label="domain history">}}
-hi
-{{</tab>}}
-{{<tab label="ip">}}
-hi
-{{</tab>}}
-{{<tab label="passive dns">}}
-hi
-{{</tab>}}
-{{<tab label="phishing">}}
-hi
-{{</tab>}}
-{{<tab label="miscategorization">}}
-hi
-{{</tab>}}
-{{<tab label="whois">}}
-hi
-{{</tab>}}
-{{</tabs>}} -->
+```
+</details>
+
+### IP Intelligence
+<details>
+<summary>Get IP Overview</summary>
+
+```bash
+
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/ip?ipv4=1.1.1.1" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
+
+{
+    "result": [
+        {
+            "ip": "1.1.1.1",
+            "belongs_to_ref": {
+                "id": "autonomous-system--2fa28d71-3549-5a38-af05-770b79ad6ea8",
+                "value": 13335,
+                "type": "isp",
+                "country": "US",
+                "description": "CLOUDFLARENET"
+            },
+            "ip_lists": null,
+            "ptr_lookup": {
+                "ptr_domains": [
+                    "one.one.one.one."
+                ],
+                "ptr_lookup_errors": ""
+            },
+            "iana_reservations": []
+        }
+    ],
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
+</details>
+
+### Passive DNS by IP
+<details>
+<summary>Get Passive DNS by IP</summary>
+
+```bash
+
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/dns?ipv4=1.1.1.1&start=2023-07-15&end=2023-07-18&per_page=5" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
+
+{
+    "result": {
+        "reverse_records": [
+            {
+                "first_seen": "2023-07-15T00:00:00Z",
+                "last_seen": "2023-07-18T00:00:00Z",
+                "hostname": "internet-ping.svc.starlink.com"
+            },
+            {
+                "first_seen": "2023-07-15T00:00:00Z",
+                "last_seen": "2023-07-18T00:00:00Z",
+                "hostname": "one.one.one.one"
+            },
+            {
+                "first_seen": "2023-07-15T00:00:00Z",
+                "last_seen": "2023-07-18T00:00:00Z",
+                "hostname": "ping.ui.com"
+            },
+            {
+                "first_seen": "2023-07-15T00:00:00Z",
+                "last_seen": "2023-07-18T00:00:00Z",
+                "hostname": "ping.ubnt.com"
+            },
+            {
+                "first_seen": "2023-07-15T00:00:00Z",
+                "last_seen": "2023-07-18T00:00:00Z",
+                "hostname": "bflow.tiki.video"
+            }
+        ],
+        "count": 778,
+        "page": 1,
+        "per_page": 5
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+
+```
+</details>
+
+### Phishing Intelligence
+<details>
+<summary>Get results for a URL scan</summary>
+
+```bash
+
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain-history?domain=cloudflare.com" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
+
+{
+    "result": [
+        {
+            "domain": "cloudflare.com",
+            "categorizations": [
+                {
+                    "categories": [
+                        {
+                            "id": 155,
+                            "name": "Technology"
+                        }
+                    ],
+                    "start": "2020-12-16T19:49:30.533482Z",
+                    "end": "2023-05-31T08:12:53.547029Z"
+                },
+                {
+                    "categories": [
+                        {
+                            "id": 115,
+                            "name": "Login Screens"
+                        },
+                        {
+                            "id": 155,
+                            "name": "Technology"
+                        }
+                    ],
+                    "start": "2023-05-31T08:12:53.547029Z"
+                }
+            ]
+        }
+    ],
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
+</details>
+
+### Miscategorization Intelligence
+<details>
+<summary>Create Miscategorization</summary>
+
+```bash
+
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
+    --data '{
+            "content_adds": [
+                82
+            ],
+            "content_removes": [
+                82
+            ],
+            "indicator_type": "url",
+            "ip": null,
+            "security_adds": [
+                117,
+                131
+            ],
+            "security_removes": [
+                117
+            ],
+            "url": "https://wrong-category.theburritobot.com"
+        }'
+
+{
+    "result": "",
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
+</details>
+
+### WHOIS
+<details>
+<summary>Get WHOIS Record</summary>
+
+```bash
+
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/whois?domain=cloudflare.com" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" | jq . 
+
+{
+    "result": {
+        "domain": "cloudflare.com",
+        "created_date": "2009-02-17",
+        "updated_date": "2017-05-24",
+        "registrant": "DATA REDACTED",
+        "registrant_org": "DATA REDACTED",
+        "registrant_country": "United States",
+        "registrant_email": "https://domaincontact.cloudflareregistrar.com/cloudflare.com",
+        "registrar": "CloudFlare, Inc.",
+        "nameservers": [
+            "ns3.cloudflare.com",
+            "ns4.cloudflare.com",
+            "ns5.cloudflare.com",
+            "ns6.cloudflare.com",
+            "ns7.cloudflare.com"
+        ]
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
+</details>
