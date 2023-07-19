@@ -6,6 +6,8 @@ weight: 2
 
 # Get started with Cloudflare Stream
 
+TEST
+
 {{<Aside type="note" header="Before you get started:">}}
 
 You must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/fundamentals/api/get-started/create-token/) to begin using Stream.
