@@ -17,6 +17,9 @@
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
 
+# Cloudflare One
+/content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @spatel-cf @cloudflare/pcx-technical-writing
+
 # Developer platform
 /content/d1/ @elithrar @rozenmd @cloudflare/pcx-technical-writing
 /content/images/ @GregBrimble @cloudflare/pcx-technical-writing
