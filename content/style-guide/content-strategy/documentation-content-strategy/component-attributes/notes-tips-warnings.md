@@ -6,22 +6,23 @@ title: Notes/tips/warnings
 
 # Notes/tips/warnings
 
-<table>
-    <tr>
-        <th style="width:15%">Definition</th>
-        <th>A colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the text or warns users of specific behavior that can break functionality or impact security.</th>
-    </tr>
-    <tr>
-        <td>Structure</td>
-        <td>Title/Header (optional)<br/>Type: note or warning (defines the background color)<br/>Aside content</td>
-    </tr>
-    <tr>
-        <td>Used in</td>
-        <td>How to, Configuration, FAQ, Concept, Reference, Tutorial</td>
-    </tr>
-</table>
+## Definition
 
-Full entry formatting:
+A colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the text or warns users of specific behavior that can break functionality or impact security.
+
+## Used in
+
+How to, Configuration, FAQ, Concept, Reference, Tutorial
+
+## Structure
+
+Type: note or warning (defines the background color)
+
+Aside content
+
+(optional) Title/Header
+
+## Full entry formatting:
 
 ```
 {{</*Aside type="note" header="Header text"*/>}} 
@@ -61,7 +62,7 @@ There is no need to add buffer lines between the `{{</*/Aside*/>}}` elements, bu
 
 Make sure you use double quitation marks in the `header=` section. If you use single quotation marks, building locally will error out.
 
-Rendered examples:
+## Rendered examples:
 
 {{<Aside type="note" header="Header text">}}
 

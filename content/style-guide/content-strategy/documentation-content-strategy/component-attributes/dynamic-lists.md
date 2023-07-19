@@ -14,6 +14,8 @@ Dynamic lists automatically add or remove elements based on set criteria.
 
 When at all possible, Cloudflare seeks to avoid creating static representations of dynamic options.
 
+## Structure
+
 Potential examples include:
 
 + Exhaustive listing of fields

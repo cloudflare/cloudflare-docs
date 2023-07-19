@@ -6,18 +6,15 @@ title: Product descriptions
 
 # Product descriptions
 
-<table>
-    <tr>
-        <th style="width:15%">Definition</th>
-        <th>Statements about the product and its benefits for customers.</th>
-    </tr>
-    <tr>
-        <td>Used in</td>
-        <td>Overview (aka Landing Page), Support home page, Cloudflare Docs home page</td>
-    </tr>
-</table>
+## Definition
 
-## Descriptions
+Statements about the product and its benefits for customers.
+
+## Used in
+
+Overview (aka Landing Page), Support home page, Cloudflare Docs home page
+
+## Structure
 
 There are two product descriptions: short and long. Both descriptions are used in the [Overview (aka Landing page)](/style-guide/content-strategy/documentation-content-strategy/content-types/overview/) as part of an introduction to the product.
 
@@ -25,7 +22,7 @@ There are two product descriptions: short and long. Both descriptions are used i
 
 The short description should be a short summary statement about the product. This does not need to be, and ideally should not be, a complete sentence.
 
-Example:
+**Example**
 
 Cloudflare Registrar: Cloudflare's domain registrar
 
@@ -37,6 +34,6 @@ A long product description should summarize the product and the value or benefit
 
 **Length**: 2-4 sentences (keep sentences readable - 7th grade reading level rule)
 
-Example:
+**Example**
 
 Cloudflare Registrar: Manage your domain with Cloudflare Registrar and add an additional layer of security to your DNS records for free.

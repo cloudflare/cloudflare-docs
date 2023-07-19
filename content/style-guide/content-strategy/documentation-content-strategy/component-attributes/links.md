@@ -6,16 +6,13 @@ title: Links
 
 # Links
 
-<table>
-    <tr>
-        <th style="width:15%">Definition</th>
-        <th>Reference to data that can be accessed by clicking, tapping, or selecting.</th>
-    </tr>
-    <tr>
-        <td>Used in</td>
-        <td>All content types</td>
-    </tr>
-</table>
+## Definition
+
+Reference to data that can be accessed by clicking, tapping, or selecting.
+
+## Used in
+
+All content types
 
 ## Overview
 
@@ -43,11 +40,10 @@ External links placed in-paragraph are strongly discouraged because Cloudflare h
 
 ## Links for instructions in documentation
 
-+ Place links for example requests and API calls in code blocks.
-+ Use placeholders in links with account- or user-specific information. And explain what to replace the referential text with.
-    + For example, for the link "`https://api.cloudflare.com/client/v4/accounts/a0b1c2d3/rulesets`" use "`https://api.cloudflare.com/client/v4/accounts/<ACCOUNTID>/rulesets`" and add text to say "replace `<ACCOUNTID>` with your Account ID" or similar.
-+ See [angle brackets](/style-guide/grammar-and-formatting/code-conventions-and-format/) in Code Conventions and Formatting.
+Place links for example requests and API calls in code blocks.
 
-## Shorter URLs
+Use placeholders in links with account- or user-specific information. And explain what to replace the referential text with.
 
-If you need a shorter version of an URL, raise a Community (COM) JIRA ticket and assign it to Val. Add to the ticket a Google Sheet with the links that need a shorter version and share that sheet with Vale and Ryan Knight. Val can also provide us quarterly stats on how many people clicked those custom links, what countries, referral URL, etc. Also, if the end link is ever changed, for any reason and the end link becomes 404, just edit that into the sheet, tag Val and Ryan and they can redirect the existing link to redirect to the new correct 200 URL.
++ For example, for the link "`https://api.cloudflare.com/client/v4/accounts/a0b1c2d3/rulesets`" use "`https://api.cloudflare.com/client/v4/accounts/<ACCOUNTID>/rulesets`" and add text to say "replace `<ACCOUNTID>` with your Account ID" or similar.
+
+See [angle brackets](/style-guide/grammar-and-formatting/code-conventions-and-format/) in Code Conventions and Formatting.

@@ -6,22 +6,19 @@ title: Glossary entry
 
 # Glossary entry
 
-<table>
-    <tr>
-        <th style="width:15%">Definition</th>
-        <th>A single term and corresponding definition in the glossary.</th>
-    </tr>
-    <tr>
-        <td>Structure</td>
-        <td>H2 term and paragraph definition.</td>
-    </tr>
-    <tr>
-        <td>Used in</td>
-        <td>Glossary</td>
-    </tr>
-</table>
+## Definition
 
-Full entry formatting:
+A single term and corresponding definition in the glossary.
+
+## Used in
+
+Glossary
+
+## Structure
+
+H2 term and paragraph definition.
+
+## Full entry formatting:
 
 ```
 ## [term]
@@ -41,15 +38,18 @@ If you add both **related terms** and **relevant links** to an entry, include tw
 
 ### Required components
 
-+ **Term**: Fully spell out the term with any acronym following in parentheses. Use lower case, except for proper nouns.
-+ **Definition**: Use full sentences. Follow format of “A [term] is [explanation clause]" where applicable.
+**Term**: Fully spell out the term with any acronym following in parentheses. Use lower case, except for proper nouns.
+
+**Definition**: Use full sentences. Follow format of “A [term] is [explanation clause]" where applicable.
 
 ### Optional components
 
-+ **Related terms**: This is not needed for every term. List other terms defined in the glossary that will help with this term’s understanding, especially those that should be understood first.
-+ **Relevant links**: Link other pages relevant to the defined term. This is limited to:
-    + Product documentation specific to the term.
-    + External pages (elsewhere in Cloudflare Docs, Help Center, Learning Center, etc.): Further explain a concept or provide additional details.
+**Related terms**: This is not needed for every term. List other terms defined in the glossary that will help with this term’s understanding, especially those that should be understood first.
+
+**Relevant links**: Link other pages relevant to the defined term. This is limited to:
+
++ Product documentation specific to the term.
++ External pages (elsewhere in Cloudflare Docs, Help Center, Learning Center, etc.): Further explain a concept or provide additional details.
 
 ## Examples
 

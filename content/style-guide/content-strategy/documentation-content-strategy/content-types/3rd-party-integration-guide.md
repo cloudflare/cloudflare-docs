@@ -35,28 +35,46 @@ Although we want to help our customers as integrations between different product
 
 ### Required components
 
-+ [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative that includes the 3rd-party name. Do not use gerund phrases.
-  + If a 3rd-party integration guide is with a specific Cloudflare technology partner, add a Markdown component that indicates `<partner>` after the title.
-+ [**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they will accomplish.
-  + Provide context to the reader that is not in the section heading.
-  + End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there is more material (such as a note) between the context and the procedure.
-  + Do not provide context for steps with a partial sentence that is completed by the numbered steps.
-  + Mention any unique considerations between the 3rd-party and Cloudflare.
-+ [**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
-  + For 3rd-party integration guides, include information about what you need to interact with the third party for the following steps.
-+ [**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
-  + Proceed with caution: creating step-by-step instructions of 3rd-party environments
-    + Discouraged generally, but acceptable in certain situations. General preference is to link back to an article that someone else maintains.
-    + Easily become out-of-date, especially if we can not access the 3rd-party product
-  + Link out for basic concepts (Regex, JavaScript, web server maintenance).
-+ [**Links**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/): May be a bulleted list that references the 3rd-party product or in-text links to the 3rd-party process documentation.
-  + Link to reputable sources within reason.
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative that includes the 3rd-party name. Do not use gerund phrases.
+
+  If a 3rd-party integration guide is with a specific Cloudflare technology partner, add a Markdown component that indicates `<partner>` after the title.
+
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they will accomplish.
+
+  Provide context to the reader that is not in the section heading.
+  
+  End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there is more material (such as a note) between the context and the procedure.
+  
+  Do not provide context for steps with a partial sentence that is completed by the numbered steps.
+  
+  Mention any unique considerations between the 3rd-party and Cloudflare.
+
+[**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
+  
+  For 3rd-party integration guides, include information about what you need to interact with the third party for the following steps.
+
+[**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
+  
+  Link out for basic concepts (Regex, JavaScript, web server maintenance).
+
+{{<Aside type="warning">}}
+
+Step-by-step instructions of 3rd-party environments are discouraged generally, but acceptable in certain situations. General preference is to link back to an article that someone else maintains.
+
+They easily become out-of-date, especially if we can not access the 3rd-party product
+{{</Aside>}}
+
+[**Links**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/): May be a bulleted list that references the 3rd-party product or in-text links to the 3rd-party process documentation.
+  
+  Link to reputable sources within reason.
 
 ### Optional components
 
-+ [**Notes/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
-+ [**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
-+ **Screenshots**
+[**Notes/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
+
+[**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
+
+**Screenshots**
 
 {{<Aside type="note">}}
 

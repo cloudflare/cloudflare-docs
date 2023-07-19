@@ -31,18 +31,20 @@ title: Get started
 
 ## Structure
 
-+ [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Should be "Get started"
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Should be "Get started"
 
-+ [**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/) - Which may include:
+[**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/): Which may include:
   + An active zone
   + Certain subscription / enabled product / plan
   + Other tasks you might need to do to set up other things (your origin) outside of CF
   + Do you need to make certain decisions before you start?
-+ [**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/) → Steps that lead someone to whatever would be considered Product Adoption.
+
+[**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Steps that lead someone to whatever would be considered Product Adoption.
   + Often, these can be partialized files from your How-to pages.
   + This is usually the bare minimum (a single Bot Management FW rule) + the most general use case for a product.
   + This may – at times – contradict the flow in the Cloudflare dashboard. If it does, consider raising it up to the Product team.
-+ **Next steps** –> Point someone towards additional configuration options.
+
+**Next steps**: Point someone towards additional configuration options.
 
 ## Template
 

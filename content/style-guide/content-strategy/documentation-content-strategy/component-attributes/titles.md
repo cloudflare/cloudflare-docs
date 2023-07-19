@@ -6,16 +6,15 @@ title: Titles
 
 # Titles
 
-<table>
-  <tr>
-    <th style="width:20%">Definition</th>
-    <th>The first line of text on a page. H1.</th>
-  </tr>
-  <tr>
-    <td>Used in</td>
-    <td>All content types</td>
-  </tr>
-</table>
+## Definition
+
+The first line of text on a page. H1.
+
+## Used in
+
+All content types
+
+## Structure
 
 <table>
   <tr>
@@ -62,20 +61,15 @@ title: Titles
 
 ## Subtitles
 
-<table>
-  <tr>
-    <th style="width:20%">Definition</th>
-    <th>The first line of text on a page. H2, H3, etc.</th>
-  </tr>
-  <tr>
-    <td>Structure</td>
-    <td>Varies by content type. See table below.</td>
-  </tr>
-  <tr>
-    <td>Used in</td>
-    <td>All content types</td>
-  </tr>
-</table>
+## Definition
+
+The first line of text on a page. H2, H3, etc.
+
+## Used in
+
+All content types
+
+## Structure
 
 Subtitles should be written in imperatives, for example, "## Install Wrangler" and not "## Installing Wrangler." Subtitles should never be a question ("How do I install Wrangler?") or a call to action ("Reach out to us if you have a problem").
 
