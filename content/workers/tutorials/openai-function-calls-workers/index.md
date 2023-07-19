@@ -52,7 +52,7 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 ## Make a request to OpenAI
 
-With your local environment set up, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. You will also be using the `axios-fetch` adapter to interact with OpenAI's node library on the edge. Install the OpenAI node library and `axios-fetch` adapter with `npm`:
+With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. You will also be using the `axios-fetch` adapter to interact with OpenAI's node library on the edge. Install the OpenAI node library and `axios-fetch` adapter with `npm`:
 ```sh
 npm install openai
 npm install @vespaiach/axios-fetch-adapter
