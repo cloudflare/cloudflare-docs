@@ -108,7 +108,7 @@ For local development, create a new file `.dev.vars` in your Worker project and 
 OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 ```
 
-Now, make your request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) with your functions argument to indicate that you are enabling [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with this request.
+Now, make a request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) with your functions argument to indicate that you are enabling [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with this request.
 ```js
 ---
 filename: worker.js
