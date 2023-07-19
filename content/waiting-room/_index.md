@@ -10,7 +10,7 @@ meta:
 # Cloudflare Waiting Room
 
 {{<description>}}
-A virtual waiting room to manage peak traffic
+A virtual waiting room to manage peak traffic.
 {{</description>}}
 
 {{<plan type="business">}}
