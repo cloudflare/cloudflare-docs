@@ -412,6 +412,7 @@ ___
 
 HTTP error 530 is returned with an accompanying 1XXX error displayed. Search for the specific [1XXX error within the Cloudflare Help Center](https://support.cloudflare.com/hc/sections/200820298) for troubleshooting information.
 
+Enabling [Load Balancing](/load-balancing/) in China will cause a 530 error.
 ___
 
 ## Related resources
