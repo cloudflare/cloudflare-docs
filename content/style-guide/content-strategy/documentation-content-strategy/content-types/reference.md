@@ -8,22 +8,22 @@ pcx_content_type: Content
 <table>
   <tr>
     <th style="width:20%">Purpose</th>
-    <td>The purpose of reference content is to provide supplemental information (a “deep dive”) for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.</td>
+    <th>The purpose of reference content is to provide supplemental information (a “deep dive”) for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.</th>
   </tr>
   <tr>
-    <th>Tone</th>
+    <td>Tone</td>
     <td>plain, straightforward</td>
   </tr>
   <tr>
-    <th>content_type</th>
+    <td>content_type</td>
     <td>reference</td>
   </tr>
   <tr>
-    <th>Required components</th>
+    <td>Required components</td>
     <td>Title<br/>Context</td>
   </tr>
   <tr>
-    <th>Optional components</th>
+    <td>Optional components</td>
     <td>Code snippets<br/>Dynamic Lists<br/>Examples<br/>Notes/tips/warnings<br/>Screenshots<br/>Tables</td>
   </tr>
 </table>

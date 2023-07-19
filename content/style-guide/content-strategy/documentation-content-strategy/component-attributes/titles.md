@@ -9,7 +9,7 @@ title: Titles
 <table>
   <tr>
     <th style="width:20%">Definition</th>
-    <td>The first line of text on a page. H1.</td>
+    <th>The first line of text on a page. H1.</th>
   </tr>
   <tr>
     <td>Used in</td>
@@ -19,7 +19,7 @@ title: Titles
 
 <table>
   <tr>
-    <th style="width=25%">Content Type</th>
+    <th style="width:25%">Content Type</th>
     <th>Context Guidelines</th>
   </tr>
   <tr>
@@ -52,8 +52,7 @@ title: Titles
   </tr>
   <tr>
     <td>Reference</td>
-    <td>For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example <a href="https://developers.cloudflare.com/images/polish/cf-polished-statuses/">Common Cf-Polished statuses.</a>
-    </td>
+    <td>For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example <a href="https://developers.cloudflare.com/images/polish/cf-polished-statuses/">Common Cf-Polished statuses.</a></td>
   </tr>
   <tr>
     <td>Navigation</td>

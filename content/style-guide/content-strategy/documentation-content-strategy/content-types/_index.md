@@ -46,28 +46,43 @@ The content sections are in prioritized order and should be applied to all new [
         <td>The purpose of a tutorial is to guide users and connect products to real-world scenarios.</td>
     </tr>
     <tr>
-        <td>API</td>
+        <td><a href="/style-guide/content-strategy/api-content-strategy/api-content-types/">API</a></td>
         <td>No</td>
-        <td>API endpoints are documented through schema files and reviewed by technical writers.</td>
+        <td>API content lists requirements and tasks users must complete before successfully making their first request.</td>
     </tr>
     <tr>
         <td><a href="/style-guide/content-strategy/documentation-content-strategy/content-types/troubleshooting/">Troubleshooting</a></td>
         <td>No</td>
-        <td>Troubleshooting content</td>
+        <td>The purpose of Troubleshooting content is to provide guidance for solving common and corner-case problems with the product.</td>
     </tr>
     <tr>
         <td><a href="/style-guide/content-strategy/documentation-content-strategy/content-types/faq/">FAQ</a></td>
         <td>No</td>
         <td>The purpose of an FAQ is to provide simple answers to common questions.</td>
     </tr>
+    <tr>
+        <td><a href="/style-guide/content-strategy/documentation-content-strategy/content-types/3rd-party-integration-guide/">3rd-party integration guide</a></td>
+        <td>No</td>
+        <td>The purpose of a 3rd-party integration guide is to explain how to use a 3rd-party product with Cloudflare.</td>
+    </tr>
+    <tr>
+        <td><a href="/style-guide/content-strategy/documentation-content-strategy/content-types/changelog/">Changelog</a></td>
+        <td>No</td>
+        <td>The purpose of a changelog is to log or record notable changes.</td>
+    </tr>
+    <tr>
+        <td><a href="/style-guide/content-strategy/documentation-content-strategy/content-types/configuration/">Configuration</a></td>
+        <td>No</td>
+        <td>The purpose of a configuration is to show examples of specific settings, values, and options.</td>
+    </tr>
+    <tr>
+        <td><a href="/style-guide/content-strategy/documentation-content-strategy/content-types/navigation/">Navigation</a></td>
+        <td>No</td>
+        <td>The purpose of a navigation page is to direct users deeper into the doc set and act as a sub-landing page for a specific area of the docs.</td>
+    </tr>
+    <tr>
+        <td><a href="/style-guide/content-strategy/documentation-content-strategy/content-types/support-content/">Support content</a></td>
+        <td>No</td>
+        <td>The purpose of support content is to provide guidance for solving specific problems with Cloudflare.</td>
+    </tr>
 </table>
-
-3rd party
-
-changelog
-
-config
-
-nav
-
-support content

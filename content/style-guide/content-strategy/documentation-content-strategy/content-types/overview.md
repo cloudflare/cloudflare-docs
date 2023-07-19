@@ -33,20 +33,29 @@ title: Overview
 
 ### Required components
 
-+ **Metadata title**: Overview
-+ **Title**: Name of the product, group of products, or conceptual content area. H1. Usually a noun. Don't add "documentation" to the title.
-+ **Intro/overview**: Brief welcoming introductory content. May be combined with product description.
-+ **Product description**: What does this product do? Why would you use it?
-+ **Product availability**: What plan(s) is this available to? Review [available plan types](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/plan.html#L1).
-+ **Product attributes**: What's included with this product? (Specific actions, protections, etc)
+**Metadata title**: Overview
+
+**Title**: Name of the product, group of products, or conceptual content area. H1. Usually a noun. Don't add "documentation" to the title.
+
+**Intro/overview**: Brief welcoming introductory content. May be combined with product description.
+
+**Product description**: What does this product do? Why would you use it?
+
+**Product availability**: What plan(s) is this available to? Review [available plan types](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/plan.html#L1).
+
+**Product attributes**: What's included with this product? (Specific actions, protections, etc)
 
 ### Optional components
 
-+ **Features**: A few main features specific to product. Includes a link to relevant documentation on feature.
-+ **Related products**: Links to docs for products used or configured together with current product.
-+ **More resources**: External links to related resources, such as plans, pricing. Don't duplicate the information from the footer. Also, if the product is free to use or there aren't any useful links, feel free to skip this section. Review [available icons in the source code](https://github.com/cloudflare/cloudflare-docs/tree/production/static/icons/resources).
-+ **Visual**: Graphic or image that enhances the landing page. Should be something relatively static that won't require much (if any) updating in the future.
-+ **Integration information**
+**Features**: A few main features specific to product. Includes a link to relevant documentation on feature.
+
+**Related products**: Links to docs for products used or configured together with current product.
+
+**More resources**: External links to related resources, such as plans, pricing. Don't duplicate the information from the footer. Also, if the product is free to use or there aren't any useful links, feel free to skip this section. Review [available icons in the source code](https://github.com/cloudflare/cloudflare-docs/tree/production/static/icons/resources).
+
+**Visual**: Graphic or image that enhances the landing page. Should be something relatively static that won't require much (if any) updating in the future.
+
+**Integration information**
 
 ## Template
 
@@ -115,7 +124,6 @@ Below there's an example for a product whose availability is complex, and is not
 {{</*plan type="PLAN_TYPE"*/>}}
 
 Description of content in this section.
-
 
 {{</*/feature*/>}}
 ```

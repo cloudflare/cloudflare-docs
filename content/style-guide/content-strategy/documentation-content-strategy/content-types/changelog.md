@@ -33,17 +33,21 @@ title: Changelog
 
 ### Required components
 
-+ **Metadata title**: Changelog
-+ [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): If the changelog is listed on one page, the title should be "Changelog." If the changes are split into multiple pages, the top-level navigation page should be titled "Changelog" and titles of the nested pages should be the date of change listed in year-month-day.
-+ **Description of change**: What changed?
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): If the changelog is listed on one page, the title should be "Changelog." If the changes are split into multiple pages, the top-level navigation page should be titled "Changelog" and titles of the nested pages should be the date of change listed in year-month-day.
+
+**Description of change**: What changed?
 
 ### Optional components
 
-+ **IDs**: Rule ID, Legacy Rule ID
-+ **Actions (previous or new)**: What action changed? What was the previous action?
-+ **Version**: previous version → new version
-+ **Related links**: Links to related examples, tutorials, code
-+ **RSS feed** → More details.
+**IDs**: Rule ID, Legacy Rule ID
+
+**Actions (previous or new)**: What action changed? What was the previous action?
+
+**Version**: previous version → new version
+
+**Related links**: Links to related examples, tutorials, code
+
+**RSS feed** → More details.
 
 ## Examples
 

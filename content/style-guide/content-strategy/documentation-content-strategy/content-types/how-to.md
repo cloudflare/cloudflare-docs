@@ -33,15 +33,15 @@ title: How to
 
 ### Required components
 
-[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Short verb phrase in second-person imperative. Do not use gerund phrases. 
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases. 
 
-[**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/) - Numbered steps that complete a task.
+[**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
 
-[**Next steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/) - What users should see as the end result of the steps and/or actionable next steps.
+[**Next steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/): What users should see as the end result of the steps and/or actionable next steps.
 
 ### Optional components
 
-[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/) - An introductory paragraph on the following steps and what they'll accomplish.
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they'll accomplish.
 
 Provide context to the reader that is not in the section heading.
 
@@ -49,7 +49,7 @@ End with a colon or a period. Use a colon if it immediately precedes the steps. 
 
 Don't provide context for steps with a partial sentence that's completed by the numbered steps.
 
-[**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/) - Tasks or conditions that must be completed before a user can complete a series of steps. 
+[**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
 
 [**Notes/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 
@@ -57,12 +57,12 @@ Don't provide context for steps with a partial sentence that's completed by the 
 
 **Screenshots**
 
-[**Related links**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/) - Bulleted list of links to associated resources.
+[**Related links**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/): Bulleted list of links to associated resources.
 
 ## Template
 
-```
 Single procedure how-to
+```
 ---
 weight: xx
 pcx_content_type: how-to
@@ -79,8 +79,8 @@ Context for procedure (optional)
 Next steps sentence - what users should see as the end result and/or actionable next steps.
 ```
 
-```
 How-to with multiple procedures
+```
 ---
 weight: xx
 pcx_content_type: how-to
@@ -109,8 +109,8 @@ Next steps sentence - what users should see as the end result and/or actionable 
 Next steps sentence - what users should see as the end result and/or actionable next steps.
 ```
 
-```
 How-to with multiple procedures that must be completed in order
+```
 ---
 weight: xx
 pcx_content_type: how-to

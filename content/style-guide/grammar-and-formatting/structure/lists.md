@@ -37,11 +37,11 @@ However, as with any other aspect of writing, they should be used mindfully. Bel
     </tr>
     <tr>
         <td>To explain your reasoning (it is a blog post, not a list of system requirements)</td>
-        <td>To list data</td>
+        <td>To list <b>data</b></td>
     </tr>
     <tr>
         <td>-</td>
-        <td>To list options</td>
+        <td>To list <b>options</b></td>
     </tr>
     </tbody>
 </table>

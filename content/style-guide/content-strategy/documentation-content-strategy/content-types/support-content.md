@@ -9,7 +9,7 @@ title: Support content
 <table>
     <tr>
         <th style="width:20%">Purpose</th>
-        <th>The purpose of Support content is to provide guidance for solving specific problems with Cloudflare.</th>
+        <th>The purpose of support content is to provide guidance for solving specific problems with Cloudflare.</th>
     </tr>
     <tr>
         <td>Tone</td>

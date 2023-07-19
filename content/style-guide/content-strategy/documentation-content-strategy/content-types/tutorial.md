@@ -33,18 +33,27 @@ title: Tutorial
 
 ### Required components
 
-+ [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
-+ **Context**: An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to Context for more information.
-+ **Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
-+ [**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/): Numbered steps that complete a task. Refer to Steps/Tasks/Procedures for more information.
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
+
+**Context**: An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to Context for more information.
+
+**Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
+
+[**Steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/): Numbered steps that complete a task. Refer to Steps/Tasks/Procedures for more information.
 
 ### Optional components
 
-+ [**Notes/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
-+ [**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
-+ **Screenshots**
-+ [**Links**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/)
-+ **Boundaries**
+[**Notes/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/)
+
+[**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
+
+**Screenshots**
+
+[**Links**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/links/)
+
+**Boundaries**
+
+## Guidelines
 
 **A tutorial is:**
 + User-focused

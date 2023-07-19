@@ -46,6 +46,6 @@ pcx_content_type: navigation
 
 ## Examples
 
-https://developers.cloudflare.com/logs/get-started/enable-destinations
+[Logs: Enable destinations](/logs/get-started/enable-destinations/)
 
-https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup
+[Cloudflare Tunnel: Get Started](/cloudflare-one/connections/connect-apps/install-and-setup/)

@@ -39,7 +39,7 @@ The required components apply to newly created endpoints. Existing endpoints wil
 + **Method**: Includes the type of method, such as `GET`, `POST`, `PUT`, `PATCH`, or `DELETE`.
 + **Endpoint**: Lists the endpoint and should be stylized as code snippet.
 
-When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead."). See [Deprecated APIs](/style-guide/content-strategy/API-content-strategy/API-content-types/deprecated-apis/) for more.
+When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead"). See [Deprecated APIs](/style-guide/content-strategy/api-content-strategy/api-content-types/deprecated-apis/) for more.
 
 ### Optional components
 

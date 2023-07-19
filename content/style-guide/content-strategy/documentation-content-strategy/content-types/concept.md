@@ -21,11 +21,7 @@ title: Concept
   </tr>
   <tr>
     <td>Required components</td>
-    <td>Title Context Explanation</td>
-  </tr>
-  <tr>
-    <td>Optional components</td>
-    <td>TBD</td>
+    <td><li>Title</li> <li>Context</li> <li>Explanation</li></td>
   </tr>
 </table>
 
@@ -33,9 +29,11 @@ title: Concept
 
 ### Required components
 
-+ [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Use "About" for concept pages that describe the functionality of your product. Otherwise, use a short noun phrase (feature name, functionality, Internet concept - Health checks, Status resource protection, CDN)
-+ [**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): Provide a brief description of why users should care about this information.
-+ **Explanation**: Explain the page topic. Keep paragraphs short and concise to avoid large blocks of text. Feel free to use bulleted lists, notes, and headings for visual breaks.
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Use "About" for concept pages that describe the functionality of your product. Otherwise, use a short noun phrase (feature name, functionality, Internet concept - Health checks, Status resource protection, CDN)
+
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): Provide a brief description of why users should care about this information.
+
+**Explanation**: Explain the page topic. Keep paragraphs short and concise to avoid large blocks of text. Feel free to use bulleted lists, notes, and headings for visual breaks.
 
 ## Template
 
