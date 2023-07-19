@@ -7,20 +7,15 @@ weight:
 
 # Context
 
-<table>
-  <tr>
-    <th style="width:15%">Definition</th>
-    <th>An introductory paragraph immediately following the page title that explains what users can expect from the following content, whether steps, concepts, FAQs, or reference materials.</th>
-  </tr>
-  <tr>
-    <td>Structure</td>
-    <td>Each content type may include additional guidelines for context paragraphs.</td>
-  </tr>
-  <tr>
-    <td>Used in</td>
-    <td>How to, Configuration, FAQ, Concept, Reference, Tutorial</td>
-  </tr>
-</table>
+## Definition
+
+An introductory paragraph immediately following the page title that explains what users can expect from the following content, whether steps, concepts, FAQs, or reference materials.
+
+## Used in
+
+How to, Configuration, FAQ, Concept, Reference, Tutorial
+
+## Structure
 
 <table>
   <tr>

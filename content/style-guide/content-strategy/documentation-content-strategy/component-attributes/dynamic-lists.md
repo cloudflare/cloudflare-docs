@@ -6,6 +6,12 @@ title: Dynamic lists
 
 # Dynamic lists
 
+## Definition
+
+Dynamic lists automatically add or remove elements based on set criteria.
+
+## Used in
+
 When at all possible, Cloudflare seeks to avoid creating static representations of dynamic options.
 
 Potential examples include:
@@ -15,10 +21,4 @@ Potential examples include:
 + Maintaining lists of potential options in the UI (i.e., Alert types)
 + Things like Verified Bots
 
-The preferred approach would be to do one of the following:
-
-(with Engineering's help), create a dynamic component that pulls in data from another source.
-
-**OR**
-
-(for less overhead and tech debt), speak more generally to the categories or specific, high-value fields.
+The preferred approach would be speak more generally to the categories or specific, high-value fields.
