@@ -12,10 +12,6 @@ title: Links
         <th>Reference to data that can be accessed by clicking, tapping, or selecting.</th>
     </tr>
     <tr>
-        <td>Structure</td>
-        <td>See guidance below.</td>
-    </tr>
-    <tr>
         <td>Used in</td>
         <td>All content types</td>
     </tr>

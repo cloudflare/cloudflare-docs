@@ -61,5 +61,3 @@ The content sections are in prioritized order and should be applied to all new [
         <td>The purpose of an FAQ is to provide simple answers to common questions.</td>
     </tr>
 </table>
-
-{{<directory-listing>}}

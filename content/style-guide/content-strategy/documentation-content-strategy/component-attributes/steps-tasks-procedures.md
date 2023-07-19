@@ -13,7 +13,7 @@ title: Steps/tasks/procedures
   </tr>
   <tr>
     <td>Structure</td>
-    <td>Precise, factual, short, and to the point. See information below.</td>
+    <td>Precise, factual, short, and to the point.</td>
   </tr>
   <tr>
     <td>Used in</td>
@@ -21,7 +21,7 @@ title: Steps/tasks/procedures
   </tr>
 </table>
 
-## General guidelines
+## Structure
 
 + **Single-step procedures**: When a procedure consists of just one step, add the step into the introductory sentence.
 + **Sub-steps in numbered procedures**: In a numbered procedure, sub-steps should be lowercase letters, and sub-sub-steps get lowercase Roman numerals.
@@ -36,7 +36,7 @@ title: Steps/tasks/procedures
 + [Bullets vs. Numbered Lists](/style-guide/grammar-and-formatting/structure/lists/)
 + **Post requisites**: Not used at this time. If you feel like you need a post requisites section, consider adding the task as the final step of a procedure or moving the content into Next steps.
 
-## More guidelines for writing procedures
+## Guidelines for writing procedures
 
 + If the user must log in to the dashboard as a first step, consolidate logging in and navigation into the first step. Also, write "log in to" (three words) instead of "log into".
 + If the user must press **Enter** after a step, then include that instruction as part of the step.

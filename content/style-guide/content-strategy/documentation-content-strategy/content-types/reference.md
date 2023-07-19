@@ -7,7 +7,7 @@ pcx_content_type: Content
 
 <table>
   <tr>
-    <th style="width:15%">Purpose</th>
+    <th style="width:20%">Purpose</th>
     <td>The purpose of reference content is to provide supplemental information (a “deep dive”) for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.</td>
   </tr>
   <tr>
@@ -32,31 +32,29 @@ pcx_content_type: Content
 
 ### Required components
 
-[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example "Common Cf-Polished statuses."
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example, [Common Cf-Polished statuses](https://developers.cloudflare.com/images/polish/cf-polished-statuses/).
 
-[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/) - Provide an introductory paragraph to explain how and why a user might utilize the information on this page.
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): Provide an introductory paragraph to explain how and why a user might utilize the information on this page.
 
 ### Optional components
 
-**Code snippets** - Examples of API responses or commands to run certain tasks. 
+**Code snippets**: Examples of API responses or commands to run certain tasks.
 
-[**Dynamic Lists**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/dynamic-lists/)  - Long lists of fields (more than 20).
+[**Dynamic Lists**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/dynamic-lists/): Long lists of fields (more than 20).
 
-[**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/) - Code samples that reference a specific configuration or API call. 
+[**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/): Code samples that reference a specific configuration or API call.
 
-[**Notes/tips/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/) - Relevant information that can help or simplify concepts or warn users of potential impacts.
+[**Notes/tips/warnings**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/notes-tips-warnings/): Relevant information that can help or simplify concepts or warn users of potential impacts.
 
-**Screenshots** - Images of a completed configuration for complicated tasks.
+**Screenshots**: Images of a completed configuration for complicated tasks.
 
-**Tables** - Longer lists of features and an associated number value or terms and their definitions.
+**Tables**: Longer lists of features and an associated number value or terms and their definitions.
 
-## Reference Examples
+## Examples
 
-Cache — Common Cf-Polished statuses
+[Cache — Common Cf-Polished statuses](https://developers.cloudflare.com/images/polish/cf-polished-statuses/)
 
-Logpush — Logpush API configuration
-
-Magic WAN — Configuration examples
+[Logpush — Logpush API configuration](https://developers.cloudflare.com/logs/get-started/api-configuration/)
 
 ## Template
 

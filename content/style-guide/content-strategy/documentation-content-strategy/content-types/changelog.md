@@ -33,8 +33,8 @@ title: Changelog
 
 ### Required components
 
-+ **Metadata title** - Changelog
-+ [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): If the changelog is listed on one page, title should be "Changelog." If the changes are split into multiple pages, top-level navigation page should be titled "Changelog" and titles of the nested pages should be date of change listed in year-month-day.
++ **Metadata title**: Changelog
++ [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): If the changelog is listed on one page, the title should be "Changelog." If the changes are split into multiple pages, the top-level navigation page should be titled "Changelog" and titles of the nested pages should be the date of change listed in year-month-day.
 + **Description of change**: What changed?
 
 ### Optional components
@@ -47,9 +47,9 @@ title: Changelog
 
 ## Examples
 
-https://developers.cloudflare.com/waf/change-log
+[WAF Changelog](/waf/change-log)
 
-https://developers.cloudflare.com/analytics/web-analytics/change-log
+[Web Analytics Changelog](/analytics/web-analytics/change-log)
 
 ## Additional information
 
@@ -57,7 +57,11 @@ Developers and engineers maintain changelogs manually or via an automated proces
 
 The structure of the page can differ depending on the frequency or type of page.
 
-{{<Aside type="note">}}Do not use the following terms: change log (two words), release notes, what's new, or README. "What's New" is a specific [content type](https://www.cloudflare.com/whats-new/) for marketing communication.{{</Aside>}}
+{{<Aside type="note">}}
+Do not use the following terms: change log (two words), release notes, what's new, or README.
+
+"What's New" is a specific [content type](https://www.cloudflare.com/whats-new/) for marketing communication.
+{{</Aside>}}
 
 ## RSS feeds
 
@@ -65,7 +69,9 @@ GitHub already maintains an RSS feed for commits affecting a specific file or al
 
 If you want to make this RSS feed visible on your page – both through a link in the HTML `head` and an RSS feed icon in the top toolbar – add one of the following key-value pairs to the frontmatter of your changelog page.
 
-{{<Aside type="note">}}Be careful with moving around changelog pages that have RSS feeds. You will break anyone's integration who is watching the page, as well as the automated Discord channels that could be referencing the page. {{</Aside>}}
+{{<Aside type="note">}}
+Be careful with moving around changelog pages that have RSS feeds. You will break anyone's integration who is watching the page, as well as the automated Discord channels that could be referencing the page.
+{{</Aside>}}
 
 ## File RSS feed
 

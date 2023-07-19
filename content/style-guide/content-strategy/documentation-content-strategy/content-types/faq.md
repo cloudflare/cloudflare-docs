@@ -29,6 +29,28 @@ title: FAQ
     </tr>
 </table>
 
+## Overview
+
+A Frequently Asked Question (FAQ) page is a priority area for SEO and digital marketing, and can be a simple way to improve navigation for users.
+
+An effective FAQ page should:
+
++ Reflect the audience's need
++ Cover a broad range of content
++ Receive frequent updates
++ Solve problems
++ Drive page views
++ Fuel a blog post of other, deeper, content
++ Showcase expertise, trust, and authority
+
+## What should you include in an FAQ page?
+
+The FAQ should include a list of questions and answers to a particular topic, and should only be used if your page has a list of questions with answers.
+
+Make sure each question includes the entire text of the question.
+
+Make sure the answer includes the entire answer.
+
 ## Structure
 
 ### Smaller FAQ pages (5-10 questions)

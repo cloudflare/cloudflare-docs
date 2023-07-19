@@ -14,7 +14,7 @@ weight: 1
   </tr>
   <tr>
     <td>Required components</td>
-    <td>Overview<br/>Authentication</td>
+    <td><li>Overview</li><li>Authentication</li></td>
   </tr>
 </table>
 
@@ -27,7 +27,7 @@ weight: 1
 
 ## Example
 
-**Overview**: Cloudflare's API exposes the entire Cloudflare infrastructure via a standardized programmatic interface. Cloudflare’s API uses REST and returns JSON responses, and the latest version is v4.
+**Overview**: Cloudflare's API exposes the entire Cloudflare infrastructure via a standardized programmatic interface. Cloudflare’s API uses `REST` and returns `JSON` responses, and the latest version is `v4`.
 
 **Recommended workflow**:
 

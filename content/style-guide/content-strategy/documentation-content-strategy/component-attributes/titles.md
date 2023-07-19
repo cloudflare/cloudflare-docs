@@ -12,10 +12,6 @@ title: Titles
     <td>The first line of text on a page. H1.</td>
   </tr>
   <tr>
-    <td>Structure</td>
-    <td>Varies by content type. See table below.</td>
-  </tr>
-  <tr>
     <td>Used in</td>
     <td>All content types</td>
   </tr>

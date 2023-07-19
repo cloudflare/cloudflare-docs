@@ -31,7 +31,7 @@ title: How to
 
 ## Structure
 
-## Required components
+### Required components
 
 [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Short verb phrase in second-person imperative. Do not use gerund phrases. 
 
@@ -39,7 +39,7 @@ title: How to
 
 [**Next steps**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/next-steps/) - What users should see as the end result of the steps and/or actionable next steps.
 
-## Optional components
+### Optional components
 
 [**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/) - An introductory paragraph on the following steps and what they'll accomplish.
 

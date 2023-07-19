@@ -10,14 +10,14 @@ weight: 4
 <table>
   <tr>
     <th style="width:20%">Purpose</th>
-    <td>A parameter is an option passed with the endpoint to receive specific information or values.</td>
+    <th>A parameter is an option passed with the endpoint to receive specific information or values.</th>
   </tr>
   <tr>
-    <th>Required components</th>
+    <td>Required components</td>
     <td>Name<br/>Data type<br/>Description<br/>Required status<br/>Optional components</td>
   </tr>
   <tr>
-    <th>Values</th>
+    <td>Values</td>
     <td>default, minimum, and maximum</td>
   </tr>
 </table>
@@ -37,19 +37,23 @@ weight: 4
 
 ## Writing guidelines
 
-When writing the titles and descriptions, keep our voice and tone in mind. Be concise and remember our users come from a variety of technical levels. Some parameter descriptions are more factual, like deviceName, and do not make sense to start with a verb. Other parameters will lend well to beginning with a verb, and this difference is okay. Try to avoid the passive voice and aim to describe what the parameter does or what it is used for in a concise sentence users can understand.
+When writing the titles and descriptions, keep our voice and tone in mind. Be concise and remember our users come from a variety of technical levels.
+
+Some parameter descriptions are more factual, like **deviceName**, and do not make sense to start with a verb. Other parameters will lend well to beginning with a verb, and this difference is okay.
+
+Try to avoid the passive voice and aim to describe what the parameter does or what it is used for in a concise sentence users can understand.
 
 Below are some examples of parameter descriptions for reference:
 
-deviceName: The device name.
+**deviceName**: The device name.
 
-version: The WARP client version.
+**version**: The WARP client version.
 
-per_page: Sets the maximum number of requested results.
+**per_page**: Sets the maximum number of requested results.
 
-enabled: Enables or disable a load balancer.
+**enabled**: Enables or disable a load balancer.
 
-asn: The Autonomous System Number (ASN) used to advertise a prefix.
+**ASN**: The Autonomous System Number (ASN) used to advertise a prefix.
 
 ## Example
 

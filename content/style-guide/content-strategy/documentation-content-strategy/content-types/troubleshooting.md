@@ -9,7 +9,7 @@ Note: This troubleshooting strategy outlines our approach to troubleshooting con
 
 <table>
     <tr>
-        <th style="width:15%">Purpose</th>
+        <th style="width:20%">Purpose</th>
         <td>The purpose of Troubleshooting content is to provide guidance for solving common and corner-case problems with the product.</td>
     </tr>
     <tr>

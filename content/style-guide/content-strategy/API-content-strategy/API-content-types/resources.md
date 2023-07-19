@@ -14,7 +14,7 @@ weight: 2
   </tr>
   <tr>
     <td>Required components</td>
-    <td>Name<br/>Description</td>
+    <td><li>Name</li><br/><li>Description</li></td>
   </tr>
 </table>
 

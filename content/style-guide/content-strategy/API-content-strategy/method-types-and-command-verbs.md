@@ -17,27 +17,33 @@ Additionally, using the method type as the verb in the title and description is 
 
 <table>
     <tr>
-        <th style="width:50%">Method & Purpose</th>
+        <th style="width:20%">Method</th>
+        <th style="width:40%">Purpose</th>
         <th>Verb examples</th>
     </tr>
     <tr>
-        <td>GET <br/>Retrieves a resource</td>
+        <td>`GET`</td>
+        <td>Retrieves a resource</td>
         <td>Gets, Lists, Returns, Downloads</td>
     </tr>
     <tr>
-        <td>POST <br/>Creates a resource</td>
+        <td>`POST`</td>
+        <td>Creates a resource</td>
         <td>Creates, Watches, Inserts, Adds</td>
     </tr>
     <tr>
-        <td>PUT <br/>Updates or creates an existing resource</td>
+        <td>`PUT`</td>
+        <td>Updates or creates an existing resource</td>
         <td>Updates, Modifies, Adds</td>
     </tr>
     <tr>
-        <td>PATCH <br/>Partially modifies an existing resource</td>
+        <td>`PATCH`</td>
+        <td>Partially modifies an existing resource</td>
         <td>Updates, Edits, Changes</td>
     </tr>
     <tr>
-        <td>DELETE <br/>Removes the resource</td>
+        <td>`DELETE`</td>
+        <td>Removes the resource</td>
         <td>Deletes, Removes, Cancels</td>
     </tr>
 </table>

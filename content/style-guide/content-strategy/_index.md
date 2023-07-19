@@ -26,14 +26,19 @@ Strategically speaking, the mission and guiding principles translate into the fo
 
 ## Purpose statements
 
-For each purpose statement, the documentation team will define the approach to solve the content problem for a product. This approach includes:
+For each purpose statement, the documentation team will define the approach to solve the content problem for a product.
 
-+ Information architecture
-    + Where content should live on the site
-    + Linking strategy
-+ Content
-    + What content is included and what is optional
-    + How the content is written
+This approach includes:
+
+### Information architecture
+
++ Where content should live on the site
++ Linking strategy
+
+### Content
+
++ What content is included and what is optional
++ How the content is written
 
 ## Content requirements
 
