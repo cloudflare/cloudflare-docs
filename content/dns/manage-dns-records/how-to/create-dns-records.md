@@ -6,7 +6,9 @@ weight: 1
 
 # Manage DNS records
 
-{{<render file="_dns-auto-scan-info.md">}}
+{{<render file="_dns-scan-intro.md">}} <br />
+
+{{<render file="_dns-scan-note.md">}}
 
 {{<render file="_dns-scan-procedure.md">}}
 
