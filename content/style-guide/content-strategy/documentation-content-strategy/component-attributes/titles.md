@@ -65,7 +65,7 @@ title: Titles
 <table>
   <tr>
     <th style="width:20%">Definition</th>
-    <td>The first line of text on a page. H2, H3, etc.</td>
+    <th>The first line of text on a page. H2, H3, etc.</th>
   </tr>
   <tr>
     <td>Structure</td>

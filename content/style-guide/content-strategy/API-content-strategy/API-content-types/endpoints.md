@@ -30,9 +30,9 @@ The required components apply to newly created endpoints. Existing endpoints wil
 
 + **Title**: Title of the endpoint using sentence casing (first word capitalized). The titles do not use punctuation marks at the end of the title. Simple cases usually take one of the following forms:
 
-&nbsp; &nbsp; &nbsp; &nbsp; Endpoints that act on/return a single item: verb + indefinite article + singular resource name. Example: Get a list item
+  Endpoints that act on/return a single item: verb + indefinite article + singular resource name. Example: Get a list item
 
-&nbsp; &nbsp; &nbsp; &nbsp; Endpoints that act on/return a collection of items: verb + plural resource name. Example: Get list items
+  Endpoints that act on/return a collection of items: verb + plural resource name. Example: Get list items
 
 + **Description**: Describes what the endpoint does or how it should be used. Use punctuation at the end of the description.
 + **Plan availability**: Lists the plan required to use the endpoint, such as Free, Pro, Business, or Enterprise.
