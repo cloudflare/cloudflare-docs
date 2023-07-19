@@ -4,15 +4,15 @@ title: WARP sessions
 weight: 12
 ---
 
-# Enforce WARP session duration
+# Enforce WARP session timeout
 
-Cloudflare Zero Trust enforces WARP client reauthentication on a per-application basis, unlike legacy VPNs which treat it as a global setting. WARP session timeouts are configured as part of your Gateway Network and HTTP policies. Once a session expires, a user will be prompted to re-authenticate with the identity provider they used to enroll in the WARP client. If you do not enforce a session duration, WARP sessions will be unlimited by default.
+Cloudflare Zero Trust enforces WARP client reauthentication on a per-application basis, unlike legacy VPNs which treat it as a global setting. WARP session timeouts are configured as part of your Gateway Network and HTTP policies. Once a session expires, a user will be prompted to re-authenticate with the identity provider they used to enroll in the WARP client. If you do not enforce a session timeout, WARP sessions will be unlimited by default.
 
 ## Prerequisites
 
 Ensure that traffic can reach your IdP and `<your-team-name>.cloudflareaccess.com` through WARP.
 
-## Configure session duration
+## Configure session timeout
 
 You can configure a WARP session for any Allow policy. To configure a session:
 
@@ -27,3 +27,4 @@ Session checks are now enabled for the application protected by this policy.
 ## Limitations
 
 - **Only one user per device** — If a device is already registered with User A, User B will not be able to log in on that device through the re-authentication flow. You can revoke a device registration by going to **My Team** > **Devices**.
+- **Active connections are not terminated** — Active sessions such as SSH and RDP will remain connected beyond the timeout limit.
