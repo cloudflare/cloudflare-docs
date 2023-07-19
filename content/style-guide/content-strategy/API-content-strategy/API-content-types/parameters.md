@@ -14,7 +14,7 @@ weight: 4
   </tr>
   <tr>
     <td>Required components</td>
-    <td>Name<br/>Data type<br/>Description<br/>Required status<br/>Optional components</td>
+    <td><li>Name</li><li>Data type</li><li>Description</li><li>Required status</li><li>Optional components</li></td>
   </tr>
   <tr>
     <td>Values</td>

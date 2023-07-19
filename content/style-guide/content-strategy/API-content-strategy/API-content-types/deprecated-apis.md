@@ -21,7 +21,7 @@ title: Deprecated APIs
   </tr>
   <tr>
     <td>Required components</td>
-    <td>Deprecated endpoint name <br/>Context <br/>Alternative endpoint <br/>End of life date</td>
+    <td><li>Deprecated endpoint name</li> <li>Context</li> <li>Alternative endpoint</li> <li>End of life date</li></td>
   </tr>
   <tr>
     <td>Optional components</td>
@@ -31,7 +31,7 @@ title: Deprecated APIs
 
 ## Structure
 
-+ **Deprecated endpoint name**: Must match what existed in the non-deprecated [Endpoint](/style-guide/content-strategy/api-content-strategy/api-content-types/endpoints/).
++ **Deprecated endpoint name**: Must match what existed in the non-deprecated [Endpoint](/style-guide/content-strategy/API-content-strategy/API-content-types/endpoints/).
 + **Context**:  Brief description of what is happening, why Cloudflare is deprecating this endpoint, and any other important information. Avoid using time-bound descriptors (today, tomorrow, in one week, etc). Instead, be specific when including dates.
 + **Replacement**: A description of and/or link to the alternative endpoint OR an explanation as to why Cloudflare is removing the capability of that endpoint.
 + **End of life date**: The date by which users will no longer be able to use that endpoint. Format full month name, date, and year (May 10, 2021).
@@ -40,7 +40,7 @@ title: Deprecated APIs
 
 Add API deprecation notices to the API deprecations page by deprecation date and not alphabetically by endpoint.
 
-When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead."). This guidance will eventually be added to the [Endpoint content strategy](/style-guide/content-strategy/API-content-strategy/API-content-types/endpoints/).
+When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead.").
 
 Cloudflare's EoL process: Cloudflare API Deprecation and EoL Process
 

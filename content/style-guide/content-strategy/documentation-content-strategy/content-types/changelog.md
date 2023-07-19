@@ -49,7 +49,7 @@ title: Changelog
 
 [WAF Changelog](/waf/change-log)
 
-[Web Analytics Changelog](/analytics/web-analytics/change-log)
+[Web Analytics Changelog](/analytics/web-analytics/changelog/)
 
 ## Additional information
 

@@ -16,7 +16,7 @@ The required components apply to newly created endpoints. Existing endpoints wil
   </tr>
   <tr>
     <td>Required components</td>
-    <td>Title<br/>Description<br/>Plan availability<br/>Method<br/>Endpoint</td>
+    <td><li>Title</li><li>Description</li><li>Plan availability</li><li>Method</li><li>Endpoint</li></td>
   </tr>
   <tr>
     <td>Optional components</td>
@@ -29,15 +29,17 @@ The required components apply to newly created endpoints. Existing endpoints wil
 ### Required Components
 
 + **Title**: Title of the endpoint using sentence casing (first word capitalized). The titles do not use punctuation marks at the end of the title. Simple cases usually take one of the following forms:
-        
+
 &nbsp; &nbsp; &nbsp; &nbsp; Endpoints that act on/return a single item: verb + indefinite article + singular resource name. Example: Get a list item
-    
+
 &nbsp; &nbsp; &nbsp; &nbsp; Endpoints that act on/return a collection of items: verb + plural resource name. Example: Get list items
 
 + **Description**: Describes what the endpoint does or how it should be used. Use punctuation at the end of the description.
 + **Plan availability**: Lists the plan required to use the endpoint, such as Free, Pro, Business, or Enterprise.
 + **Method**: Includes the type of method, such as `GET`, `POST`, `PUT`, `PATCH`, or `DELETE`.
 + **Endpoint**: Lists the endpoint and should be stylized as code snippet.
+
+When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead."). See [Deprecated APIs](/style-guide/content-strategy/API-content-strategy/API-content-types/deprecated-apis/) for more.
 
 ### Optional components
 
