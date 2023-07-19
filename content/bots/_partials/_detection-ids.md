@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Detection IDs are fields used to identify the specific detection that caused Cloudflare to identify traffic as bot traffic. If you are having an issue with one of our heuristics, this feature allows you to decide which heuristics to enforce on your zones with a default configuration.
+Detection IDs are static rules used to detect predictable bot behavior with no overlap with human traffic. Detection IDs cause a bot to receive a score source of heuristics with a score of 1. For example, a detection ID can identify if you sent your headers in a different order than what was expected of your browser.
