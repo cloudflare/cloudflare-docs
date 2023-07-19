@@ -244,7 +244,7 @@ This request to OpenAI will look similar to first request. But this time, instea
 
 Run your code again by running `npx wrangler dev` and open it in your browser. This will now show you OpenAI's response using real-time information from the website. You can try other websites and topics by updating the user's message in your two API calls.
 
-## Next steps
+## Deploy your Worker application
 
 To deploy your application, run the `npx wrangler deploy` command to deploy your Worker application:
 
