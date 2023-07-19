@@ -22,7 +22,7 @@ An example of writing a single message to a Queue:
 
 ```ts
 type Environment = {
-  readonly MY_QUEUE: Queue;
+  readonly MY_QUEUE: Queue<any>;
 };
 
 export default {
@@ -54,14 +54,14 @@ A binding that allows a producer to send messages to a Queue.
 
 ```ts
 interface Queue<Body = any> {
-  send(body: Body): Promise<void>;
+  send(body: Body, options?: { contentType?: QueuesContentType }): Promise<void>;
   sendBatch(messages: Iterable<MessageSendRequest<Body>>): Promise<void>;
 }
 ```
 
 {{<definitions>}}
 
-- {{<code>}}send(body{{<param-type>}}any{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+- {{<code>}}send(body{{<param-type>}}any{{</param-type>}}, options?{{<param-type>}}{ contentType?: QueuesContentType }{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
   - Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   - When the promise resolves, the message is confirmed to be written to disk.
@@ -80,6 +80,7 @@ A wrapper type used for sending message batches.
 ```ts
 type MessageSendRequest<Body = any> = {
   body: Body;
+  contentType?: QueuesContentType;
 };
 ```
 
@@ -90,7 +91,21 @@ type MessageSendRequest<Body = any> = {
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
+- {{<code>}}contentType{{<param-type>}}QueuesContentType{{</param-type>}}{{</code>}}
+
+  - The explicit content type of a message so it can be previewed correctly with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature. Optional argument.
+  - This option is primarily for internal use as of now. In the future, this will be used by alternative consumer types to explicitly mark messages as serialized so they can be consumed in the desired type.
+  - See [QueuesContentType](#QueuesContentType) for possible values.
+
 {{</definitions>}}
+
+### `QueuesContentType`
+
+A union type containing valid message content types.
+
+```ts
+type QueuesContentType = "text" | "bytes" | "json" | "v8";
+```
 
 ## Consumer
 
