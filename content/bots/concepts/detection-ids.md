@@ -19,7 +19,7 @@ A request can trigger multiple detection IDs.
 You can use `cf.bot_management.detection_ids` fields in tools such as:
 
 - [Custom Rules](/waf/custom-rules/)
-- Advanced Rate Limiting
+- [Advanced Rate Limiting](/waf/rate-limiting-rules/)
 - [Transform Rules](/rules/transform/)
 - Legacy Firewall Rules
 - [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
