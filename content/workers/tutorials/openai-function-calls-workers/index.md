@@ -7,7 +7,7 @@ title: OpenAI GPT function calling with JavaScript and Cloudflare Workers
 layout: single
 ---
 
-# OpenAI GPT function calling with JavaScript and Cloudflare Workers 
+# Use OpenAI GPT function calling with JavaScript and Cloudflare Workers 
 
 {{<render file="_tutorials-before-you-start.md">}}
 
