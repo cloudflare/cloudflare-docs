@@ -64,7 +64,7 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
 
-- {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}<br/>optional{{</prop-meta>}}){{</code>}}: {{<type>}}void{{</type>}}
 
   - Sets an application level auto response that does not wake hibernated WebSockets. 
   
@@ -78,9 +78,9 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 - {{<code>}}state.getWebSocketAutoResponse(){{</code>}} : {{<type>}}Object | null{{</type>}}
 
-  - Gets the `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` currently set, or `null` if there is none. 
+  - <br/> Gets the `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` currently set, or `null` if there is none. 
 
-  - Each `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` Object provides methods for `getRequest()` and  `getResponse()`.
+  - <br/> Each `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` Object provides methods for `getRequest()` and  `getResponse()`.
 
 - {{<code>}}state.getWebSocketAutoResponseTimestamp(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Date | null{{</type>}}
 
