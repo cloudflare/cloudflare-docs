@@ -21,8 +21,8 @@ First, upload a certificate and its private key to your account using the [`wran
 
 {{<Aside type="warning">}}
 
-This command requires "Account: SSL and Certificates" write permissions.
 
+The `wrangler mtls-certificate upload` command requires ["SSL and Certificates Edit"](https://developers.cloudflare.com/fundamentals/api/reference/permissions/) API token scope. If your are using the OAuth flow triggered by  `wrangler login`, the correct scope is set automatically. If you are using API tokens, follow the guide ["Create an API token"](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) accordingly to se the right scope.
 {{</Aside>}}
 
 ```sh
