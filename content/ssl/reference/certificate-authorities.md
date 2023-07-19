@@ -13,6 +13,36 @@ Learn more about the certificate authorities Cloudflare uses to issue [Universal
 
 ### Availability per certificate type
 
+Version 1
+
+| Certificate         | Chain | Let's Encrypt | Google Trust Services | Sectigo | DigiCert                 |
+|---------------------|-------|---------------|-----------------------|---------|--------------------------|
+| [Universal](/ssl/edge-certificates/universal-ssl/)           | ECDSA | ✅             | ✅                     | N/A     | ✅<br /> Deprecating soon |
+|                     | RSA   | ❌             | ❌                     | N/A     | ❌                        |
+| [Advanced](/ssl/edge-certificates/advanced-certificate-manager/)            | ECDSA | ✅             | ✅                     | N/A     | ✅<br /> Deprecating soon |
+|                     | RSA   | ✅             | ✅                     | N/A     | ✅<br /> Deprecating soon |
+| [Total TLS](/ssl/edge-certificates/additional-options/total-tls/)           | ECDSA | ✅             | ✅                     | N/A     | ✅<br /> Deprecating soon |
+|                     | RSA   | ✅             | ✅                     | N/A     | ✅<br /> Deprecating soon |
+| [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/)     | ECDSA | ❌             | ❌                     | N/A     | ✅<br /> Deprecating soon |
+|                     | RSA   | ✅             | ✅                     | N/A     | ✅<br /> Deprecating soon |
+| [Backup](ssl/edge-certificates/backup-certificates/)              | ECDSA | ✅             | ✅                     | ✅      | ❌                        |
+|                     | RSA   | ✅             | ✅                     | ✅      | ❌ |
+
+
+<br />
+<br />
+
+Version 2
+
+| Certificate         | Chain | Let's Encrypt | Google Trust Services | Sectigo | DigiCert                 |
+|---------------------|-------|---------------|-----------------------|---------|--------------------------|
+| [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />❌| ✅<br /><br /><br />❌ | N/A<br /><br /><br />N/A | ✅<br /> Deprecating soon <br /><br />❌|
+| [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> Deprecating soon <br /><br /> ✅<br /> Deprecating soon |
+| [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> Deprecating soon <br /><br /> ✅<br /> Deprecating soon |
+| [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) | ECDSA<br /><br /><br />RSA | ❌<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> Deprecating soon <br /><br /> ✅<br /> Deprecating soon |
+| [Backup](ssl/edge-certificates/backup-certificates/) | ECDSA<br /><br />RSA | ✅<br /><br />✅| ✅<br /><br />✅ | ✅<br /><br />✅ | ❌ <br /><br /> ❌ |
+
+
 ### Features and limitations
 
 | Certificate authority | Features | Limitations | Client support |
