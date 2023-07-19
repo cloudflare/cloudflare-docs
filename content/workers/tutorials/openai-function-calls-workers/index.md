@@ -153,9 +153,7 @@ Review the arguments you are passing to OpenAI:
     * **description**: A short description that lets OpenAI know what your function does. You are letting OpenAI know that your function reads the content on a given website.
     * **parameters**: The parameters that the function can accept described as a JSON Schema object. You will have one parameter called `url`.
 
-After your request to OpenAI completes, you are logging the message back to confirm it is telling you to call your function. Run your code with `npx wrangler dev` and open it in a browser by pressing `b`.
-
-After our request to OpenAI completes, we're logging the message back to confirm it's telling us to call our function. Run your code with `npx wrangler dev` and open it in a browser by pressing `b` on your keyboard after the `npx wrangler dev` command prompts you in terminal. You should see the following in your terminal log:
+After your request to OpenAI completes, you are logging the message back to confirm it is telling you to call your function. Run your code with `npx wrangler dev` and open it in a browser by pressing `b`. You should see the following in your terminal log:
 ```sh
 Object {
   name: read_website_content,
@@ -251,6 +249,8 @@ To deploy your application, run the `npx wrangler deploy` command to deploy your
 ```sh
 $ npx wrangler deploy
 ```
+
+You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
 
 ## Next steps
 
