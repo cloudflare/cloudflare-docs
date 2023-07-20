@@ -182,7 +182,7 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
 
 - <code id="function-substring">{{<name>}}substring{{</name>}}(field{{<param-type>}}String | Bytes{{</param-type>}}, start{{<param-type>}}Integer{{</param-type>}} [, end{{<param-type>}}Integer{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
-  - Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` index up to (but excluding) the `end` index. The first character in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
+  - Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
 
   - The `end` index must be greater than the `start` index. The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
 
