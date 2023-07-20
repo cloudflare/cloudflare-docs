@@ -11,9 +11,9 @@ weight: 1001
 layout: example
 ---
 
-{{<Aside type="note">}}
+{{<Aside type="warning" header="Caution when using in production">}}
 
-This code is provided as a sample, and is not suitable for production code without protecting against timing attacks. To learn how to implement production-safe code, see the [`timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate against timing attacks in your Workers code.
+This code is provided as a sample, and is not suitable for production code without protecting against timing attacks. To learn how to implement production-safe code, refer to the [`timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate against timing attacks in your Workers code.
 
 {{</Aside>}}
 
