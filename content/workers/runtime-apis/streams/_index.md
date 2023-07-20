@@ -77,7 +77,7 @@ async function fetchAndStream(request) {
 
 This example calls `response.body.pipeTo(writable)` but does not `await` it. This is so it does not block the forward progress of the remainder of the `fetchAndStream()` function. It continues to run asynchronously until the response is complete or the client disconnects.
 
-The runtime can continue running a function (`response.body.pipeTo(writable)`) after a response is returned to the client. This example just pumps the subrequest response body to the final response body. However, you can use more complicated logic, such as adding a prefix or a suffix to the body or to process it somehow.
+The runtime can continue running a function (`response.body.pipeTo(writable)`) after a response is returned to the client. This example pumps the subrequest response body to the final response body. However, you can use more complicated logic, such as adding a prefix or a suffix to the body or to process it somehow.
 
 ---
 
