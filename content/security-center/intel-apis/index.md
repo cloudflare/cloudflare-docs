@@ -10,7 +10,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 
 | Intelligence Endpoint | Definition |
 | --- | --- |
-| [ASN Intelligence](/api/operations/asn-intelligence-get-asn-overview) | Provides an overview of the Autonymous System Number (ANS) and a list of subnets for it. |
+| [ASN Intelligence](/api/operations/asn-intelligence-get-asn-overview) | Provides an overview of the Autonomous System Number (ASN) and a list of subnets for it. |
 | [Domain Intelligence](/api/operations/domain-intelligence-get-domain-details) | Provides security details and statistics about a domain. |
 | [Domain History](/api/operations/domain-history-get-domain-history) | Provides historical security threat and content categories that are currently and previously assigned to a domain. |
 | [IP Intelligence](/api/operations/ip-intelligence-get-ip-overview) | Provides the geolocation, ASN, infrastructure type of the ASN, and any security threat categories of an IP address. |
