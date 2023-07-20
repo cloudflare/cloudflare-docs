@@ -100,7 +100,7 @@ Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Renderin
 
 Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits. 
 
-Refer to [Worker limits](https://developers.cloudflare.com/workers/platform/limits/#worker-limits) to learn more about usage models.
+Refer to [Worker limits](/workers/platform/limits/#worker-limits) to learn more about usage models.
 ### 5. Add bindings to environment
 Add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the Queue as `Queue<any>`. The following step will show you how to change this type.
 
@@ -348,8 +348,8 @@ Refer to [this GitHub Repository](https://github.com/cloudflare/queues-web-crawl
 
 ## Related resources
 
-- [How Queues works](https://developers.cloudflare.com/queues/learning/how-queues-works/)
-- [Queues Batching and Retries](https://developers.cloudflare.com/queues/learning/batching-retries/)
-- [Browser Rendering](https://developers.cloudflare.com/browser-rendering/)
+- [How Queues works](/queues/learning/how-queues-works/)
+- [Queues Batching and Retries](/queues/learning/batching-retries/)
+- [Browser Rendering](/browser-rendering/)
 - [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)
 

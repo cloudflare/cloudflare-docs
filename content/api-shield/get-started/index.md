@@ -29,7 +29,7 @@ After setting up session identifiers and allowing some time for Cloudflare to le
 
 Schema Validation protects your APIs by ensuring only requests matching your API schema are allowed to communicate with your origin.
 
-While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](https://developers.cloudflare.com/api-shield/reference/classic-schema-validation/). 
+While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](/api-shield/reference/classic-schema-validation/). 
 
 {{<Aside type="note">}}
 It is recommended to start with Schema Validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
@@ -39,7 +39,7 @@ If you do not have a schema to upload, continue reading this guide to learn how 
 
 ## Enable the Sensitive Data Detection ruleset and accompanying rules
 
-API Shield works with Cloudflare WAF’s [Sensitive Data Detection](https://developers.cloudflare.com/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify API endpoints that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
+API Shield works with Cloudflare WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify API endpoints that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
 
 {{<Aside type="note">}}
 A subscription is required for Sensitive Data Detection. Contact your account team if you are not entitled for Sensitive Data Detection.
