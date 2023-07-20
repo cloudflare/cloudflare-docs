@@ -33,7 +33,7 @@ filename: wrangler.toml
 [[dispatch_namespaces]]
 binding = "dispatcher"
 namespace = "<NAMESPACE_NAME>"
-outbound = {service = "<SERVICE_NAME>", parameters = [customer_name,url]}
+outbound = {service = "<SERVICE_NAME>", parameters = ["customer_name","url"]}
 ```
 
 3. Edit your dynamic dispatch Worker to call the Outbound Worker and declare variables to pass on `dispatcher.get()`.
@@ -43,30 +43,42 @@ outbound = {service = "<SERVICE_NAME>", parameters = [customer_name,url]}
 filename: index.js
 ---
 export default {
- async fetch(request, env) {
-   try {
-     // parse the URL, read the subdomain
-     let workerName = new URL(request.url).host.split('.')[0];
-     let userWorker = env.dispatcher.get(
-       workerName,
-       {},
-       {// outbound arguments
-         outbound: {
-          customer_name: workerName,
-            url: request.url}
-          }
-       }
-     );
-     return await userWorker.fetch(request);
-   } catch (e) {
-     if (e.message.startsWith('Worker not found')) {
-       // we tried to get a worker that doesn't exist in our dispatch namespace
-       return new Response('', { status: 404 });
-     }
-      return new Response(e.message, { status: 500 });
-   }
- },
+  // this event is fired when the dispatched Workers make a subrequest
+  async fetch(request, env, ctx) {
+    // env contains the values we set in `dispatcher.get()`
+    const customer_name = env.customer_name;
+    const original_url = env.url;
+
+    // log the request
+    ctx.waitUntil(fetch(
+      'https://logs.example.com',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          customer_name,
+          original_url,
+        }),
+      },
+    ));
+
+    const url = new URL(original_url);
+    if (url.host === 'api.example.com') {
+      // pre-auth requests to our API
+      const jwt = make_jwt_for_customer(customer_name);
+
+      let headers = new Headers(request.headers);
+      headers.set('Authorization', `Bearer {jwt}`);
+
+      // clone the request to set new headers using existing body
+      let new_request = new Request(request, {headers})
+
+      return fetch(new_request)
+    }
+
+    return fetch(request)
+  }
 };
+
 ```
 
 4. The Outbound Worker will now be invoked on any `fetch()` requests from a user Worker. The user Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
