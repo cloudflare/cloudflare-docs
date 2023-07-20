@@ -54,9 +54,10 @@ For example, this configuration blocks every request to the application, except 
 
 ### Bypass
 
-{{<Aside type="warn">}}
+{{<Aside type="warning" header="Warning">}}
 
 Bypass does not enforce any Access security controls and requests are not logged. This should be tested before deploying to production. Consider using Service Auth if you would like to enforce policies and maintain logging without requiring user authentication.
+
 {{</Aside>}}
 
 The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
