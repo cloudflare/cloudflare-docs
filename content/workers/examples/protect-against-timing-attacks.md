@@ -19,10 +19,10 @@ To use this function, you can create a new [`TextEncoder`](/workers/runtime-apis
 ```js
 const encoder = new TextEncoder();
 
-const string1 = "foo"
-const string2 = "bar"
+const string1 = new TextEncoder().encode("foo")
+const string2 = new TextEncoder().encode("bar")
 
-if (string1.length !== string2.length) {
+if (string1.byteLength !== string2.byteLength) {
   // Strings must be the same length in order to compare
   // with crypto.timingSafeEqual
   return false
@@ -52,10 +52,10 @@ if (equal) {
 ```ts
 const encoder = new TextEncoder();
 
-const string1 = "foo"
-const string2 = "bar"
+const string1 = new TextEncoder().encode("foo")
+const string2 = new TextEncoder().encode("bar")
 
-if (string1.length !== string2.length) {
+if (string1.byteLength !== string2.byteLength) {
   // Strings must be the same length in order to compare
   // with crypto.timingSafeEqual
   return false
