@@ -157,20 +157,44 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
   - Returns a new byte array with all the occurrences of the given bytes removed.
 
   - <em>Example:</em>
-    <br />
 
-    `remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"`
+    ```txt
+    // With http.host = "www.cloudflare.com":
+
+    remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"
+    ```
 
 - <code id="function-starts_with">{{<name>}}starts_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
   - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-  - *Example:*<br />
-    If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
+  - *Example:*
+
+    ```txt
+    // With http.request.uri.path = "/blog/first-post":
+
+    starts_with(http.request.uri.path, "/blog") == true
+    ```
 
 {{<Aside type="warning">}}
 The `starts_with()` function is not available in [firewall rules](/firewall/).
 {{</Aside>}}
+
+- <code id="function-substring">{{<name>}}substring{{</name>}}(field{{<param-type>}}String | Bytes{{</param-type>}}, start{{<param-type>}}Integer{{</param-type>}} [, end{{<param-type>}}Integer{{</param-type>}}])</code> {{<type>}}String{{</type>}}
+
+  - Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` index up to (but excluding) the `end` index. The first character in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
+
+  - The `start` index can be a negative integer value, which allows you to access characters from the end of the string instead of the beginning.
+
+  - *Examples:*
+
+    ```txt
+    // With http.request.body.raw = "asdfghjk":
+
+    substring(http.request.body.raw, 2, 5) == "dfg"
+    substring(http.request.body.raw, 2) == "dfghjk"
+    substring(http.request.body.raw, -2) == "jk"
+    ```
 
 - <code id="function-to_string">{{<name>}}to_string{{</name>}}({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -179,8 +203,8 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
   - *Examples:*
 
     ```txt
-    to_string(cf.bot_management.score) == '5'
-    to_string(ssl) == 'true'
+    to_string(cf.bot_management.score) == "5"
+    to_string(ssl) == "true"
     ```
 
 {{<Aside type="warning">}}
@@ -274,7 +298,7 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 - <code>{{<name>}}lengthOfSeparator{{</name>}}</code> {{<type>}}Integer literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Specifies the length of the `separator` between the `timestamp` and the `message` in the `MessageMAC`. Expressed in bytes, with a default value of 0.
+  - Specifies the length of the `separator` between the `timestamp` and the `message` in the `MessageMAC`. Expressed in bytes, with a default value of `0`.
 
 - <code>{{<name>}}flags{{</name>}}</code> {{<type>}}String literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
