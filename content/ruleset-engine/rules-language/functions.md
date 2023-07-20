@@ -25,7 +25,7 @@ In the expression below, the`lower()` function transforms `http.host` values to 
 lower(http.host) == "www.cloudflare.com"
 ```
 
-Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/ruleset-engine/rules-language/values/#arrays) for more information.
+Transformation functions that do not take arrays as an argument type require the `[*]` index notation. Refer to [Arrays](/ruleset-engine/rules-language/values/#arrays) for more information.
 
 The Rules language supports these transformation functions:
 
@@ -376,7 +376,7 @@ For more information, refer to [HMAC Validation: Overview](#overview).
 
 {{</Aside>}}
 
-### Simple case
+### MessageMAC in a single field
 
 Consider the case where the MessageMAC is contained entirely within a single field, as in this example URI path:
 
@@ -393,7 +393,7 @@ Element     | Value
 `timestamp` | `1484063787`
 `mac`       | `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
 
-When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Pass the name of the field to the `MessageMAC` argument:
+When the MessageMAC is contained entirely within a single field such as `http.request.uri`, pass the field name to the `MessageMAC` argument of the HMAC validation function:
 
 ```java
 is_timed_hmac_valid_v0(
