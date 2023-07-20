@@ -12,11 +12,11 @@ Statements about the product and its benefits for customers.
 
 ## Used in
 
-Overview (aka Landing Page), Support home page, Cloudflare Docs home page
+[Overview (aka Landing Page)](/style-guide/content-strategy/documentation-content-strategy/content-types/overview/), Support home page, Cloudflare Docs home page
 
 ## Structure
 
-There are two product descriptions: short and long. Both descriptions are used in the [Overview (aka Landing page)](/style-guide/content-strategy/documentation-content-strategy/content-types/overview/) as part of an introduction to the product.
+There are two product descriptions: short and long. Both descriptions are used in the Overview (aka Landing page) as part of an introduction to the product.
 
 ### Short description
 

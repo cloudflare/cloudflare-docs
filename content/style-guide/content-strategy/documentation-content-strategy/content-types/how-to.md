@@ -6,28 +6,17 @@ title: How to
 
 # How to
 
-<table>
-  <tr>
-    <th style="width:20%">Purpose</th>
-    <th>The purpose of a how to is to explain how to complete a task within the product.</th>
-  </tr>
-  <tr>
-    <td>Tone</td>
-    <td>instructional, straightforward</td>
-  </tr>
-  <tr>
-    <td>content_type</td>
-    <td>how-to</td>
-  </tr>
-  <tr>
-    <td>Required components</td>
-    <td>Title Steps Next steps</td>
-  </tr>
-  <tr>
-    <td>Optional components</td>
-    <td>Context<br/>Prerequisites<br/>Notes/warnings<br/>Examples<br/>Screenshots<br/>Related links</td>
-  </tr>
-</table>
+## Purpose
+
+The purpose of a how to is to explain how to complete a task within the product.
+
+## Tone
+
+instructional, straightforward
+
+## content_type
+
+how-to
 
 ## Structure
 

@@ -7,23 +7,17 @@ weight: 1
 
 # Get started - API
 
-<table>
-  <tr>
-    <th style="width:20%">Purpose</th>
-    <th>The Get started section provides a brief overview of the Cloudflare’s API and lists requirements and tasks users must complete before successfully making their first request.</th>
-  </tr>
-  <tr>
-    <td>Required components</td>
-    <td><li>Overview</li><li>Authentication</li></td>
-  </tr>
-</table>
+## Purpose
+
+The Get started section provides a brief overview of the Cloudflare’s API and lists requirements and tasks users must complete before successfully making their first request.
 
 ## Structure
 
 ### Required components
 
-+ **Overview**: High-level explanation of Cloudflare’s API and includes information about our architectural style, schema, and base URL.
-+ **Authentication**: Explains how users can authenticate with the Cloudflare API and how users should or can utilize API tokens, API token templates, and API token permissions.
+**Overview**: High-level explanation of Cloudflare’s API and includes information about our architectural style, schema, and base URL.
+
+**Authentication**: Explains how users can authenticate with the Cloudflare API and how users should or can utilize API tokens, API token templates, and API token permissions.
 
 ## Example
 

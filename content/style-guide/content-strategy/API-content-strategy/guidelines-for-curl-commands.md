@@ -1,11 +1,11 @@
 ---
 pcx_content_type: concept
-title: Guidelines for cUrl commands
+title: Guidelines for cURL commands
 weight: 3
 
 ---
 
-# Guidelines for cUrl commands
+# Guidelines for cURL commands
 
 Use long parameter names, like in the API docs, for clarity:
 

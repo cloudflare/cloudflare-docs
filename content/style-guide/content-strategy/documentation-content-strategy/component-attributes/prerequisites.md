@@ -12,7 +12,7 @@ Tasks that must be completed or conditions that must be met before a user can co
 
 ## Used in
 
-How to, Tutorial
+[How to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), [Tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/)
 
 ## Structure
 

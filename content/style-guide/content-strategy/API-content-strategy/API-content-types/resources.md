@@ -7,23 +7,17 @@ weight: 2
 
 # Resources
 
-<table>
-  <tr>
-    <th style="width:20%">Purpose</th>
-    <th>The resource groups all of the associated endpoints together.</th>
-  </tr>
-  <tr>
-    <td>Required components</td>
-    <td><li>Name</li><li>Description</li></td>
-  </tr>
-</table>
+## Purpose
+
+The resource groups all of the associated endpoints together.</th>
 
 ## Structure
 
 ### Required components
 
-+ **Name**: Name of the resource that serves as a top-level grouping. Short noun phrase.
-+ **Description**: Describes the collective group of endpoints that fall under the resource and provides a high-level description of the endpoints.
+**Name**: Name of the resource that serves as a top-level grouping. Short noun phrase.
+
+**Description**: Describes the collective group of endpoints that fall under the resource and provides a high-level description of the endpoints.
 
 ## Example
 

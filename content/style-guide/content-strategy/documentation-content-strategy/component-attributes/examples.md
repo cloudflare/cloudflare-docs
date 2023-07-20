@@ -12,7 +12,7 @@ A code sample or line of text that shows the specific structure of a request/res
 
 ## Used in
 
-Tutorial, How to, Reference
+[Tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/), [How to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), [Reference](/style-guide/content-strategy/documentation-content-strategy/content-types/reference/)
 
 ## Structure
 

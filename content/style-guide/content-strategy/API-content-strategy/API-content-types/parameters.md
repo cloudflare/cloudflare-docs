@@ -7,33 +7,29 @@ weight: 4
 
 # Parameters
 
-<table>
-  <tr>
-    <th style="width:20%">Purpose</th>
-    <th>A parameter is an option passed with the endpoint to receive specific information or values.</th>
-  </tr>
-  <tr>
-    <td>Required components</td>
-    <td><li>Name</li><li>Data type</li><li>Description</li><li>Required status</li><li>Optional components</li></td>
-  </tr>
-  <tr>
-    <td>Values</td>
-    <td>default, minimum, and maximum</td>
-  </tr>
-</table>
+## Purpose
+
+A parameter is an option passed with the endpoint to receive specific information or values.
+
+## Values
+
+default, minimum, and maximum
 
 ## Structure
 
 ### Required Components
 
-+ **Name**: Name of the parameter formatted as code snippet.
-+ **Data type**: Indicates if the parameter is a string, integer, boolean, object, or array.
-+ **Description**: Describes what the parameter does. Use a noun phrase for strings, integers, objects, and arrays. Use a verb for booleans. End description with a period.
-+ **Required status**: Indicates whether the parameter is required
+**Name**: Name of the parameter formatted as code snippet.
+
+**Data type**: Indicates if the parameter is a string, integer, boolean, object, or array.
+
+**Description**: Describes what the parameter does. Use a noun phrase for strings, integers, objects, and arrays. Use a verb for booleans. End description with a period.
+
+**Required status**: Indicates whether the parameter is required
 
 ### Optional components
 
-+ **Constraints**: Lists default, minimum, or maximum values for the parameter.
+**Constraints**: Lists default, minimum, or maximum values for the parameter.
 
 ## Writing guidelines
 

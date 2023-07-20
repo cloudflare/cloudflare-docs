@@ -7,34 +7,23 @@ pcx_content_type: Content
 
 This troubleshooting strategy outlines our approach to troubleshooting content that's specific to a product or platform.
 
-<table>
-    <tr>
-        <th style="width:20%">Purpose</th>
-        <th>The purpose of Troubleshooting content is to provide guidance for solving common and corner-case problems with the product.</th>
-    </tr>
-    <tr>
-        <td>Tone</td>
-        <td>Guiding, straightforward, solution-oriented</td>
-    </tr>
-    <tr>
-        <td>content_type</td>
-        <td>troubleshooting</td>
-    </tr>
-    <tr>
-        <td>Required components</td>
-        <td>Title</td>
-    </tr>
-    <tr>
-        <td>Optional components</td>
-        <td>Context<br/>Steps/Tasks/Procedures<br/>Examples</td>
-    </tr>
-</table>
+## Purpose
+
+The purpose of Troubleshooting content is to provide guidance for solving common and corner-case problems with the product.
+
+## Tone
+
+Guiding, straightforward, solution-oriented
+
+## content_type
+
+troubleshooting
 
 ## Structure
 
 ### Required components
 
-[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) - Troubleshooting name of product or feature
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): Troubleshooting name of product or feature
 
 ### Optional components
 

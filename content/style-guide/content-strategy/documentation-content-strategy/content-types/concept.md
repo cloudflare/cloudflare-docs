@@ -6,24 +6,17 @@ title: Concept
 
 # Concept
 
-<table>
-  <tr>
-    <th style="width:20%">Purpose</th>
-    <th>The purpose of a concept is to provide conceptual or descriptive information so users understand the background and context of a particular topic.</th>
-  </tr>
-  <tr>
-    <td>Tone</td>
-    <td>instructional, descriptive, approachable, supportive</td>
-  </tr>
-  <tr>
-    <td>content_type</td>
-    <td>concept</td>
-  </tr>
-  <tr>
-    <td>Required components</td>
-    <td><li>Title</li> <li>Context</li> <li>Explanation</li></td>
-  </tr>
-</table>
+## Purpose
+
+The purpose of a concept is to provide conceptual or descriptive information so users understand the background and context of a particular topic.
+
+## Tone
+
+instructional, descriptive, approachable, supportive
+
+## content_type
+
+concept
 
 ## Structure
 

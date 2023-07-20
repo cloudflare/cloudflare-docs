@@ -5,32 +5,19 @@ pcx_content_type: Content
 
 # Navigation
 
-<table>
-  <tr>
-    <th style="width:20%">Purpose</th>
-    <th>The purpose of a navigation page is to direct users deeper into the doc set and act as a sub-landing page for a specific area of the docs.</th>
-  </tr>
-  <tr>
-    <td>content_type</td>
-    <td>navigation</td>
-  </tr>
-  <tr>
-    <td>Tone</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td>content_type</td>
-    <td>navigation</td>
-  </tr>
-  <tr>
-    <td>Required components</td>
-    <td>Links</td>
-  </tr>
-</table>
+## Purpose
+
+The purpose of a navigation page is to direct users deeper into the doc set and act as a sub-landing page for a specific area of the docs.
+
+## content_type
+
+navigation
 
 ## Structure
 
 Use the ```{{</*directory-listing*/>}}``` component
+
+**Title**: Verb or noun phrase that describes the sub-pages in the section.
 
 ## Template
 

@@ -6,28 +6,17 @@ title: Changelog
 
 # Changelog
 
-<table>
-    <tr>
-        <th style="width:20%">Purpose</th>
-        <th>The purpose of a changelog is to log or record notable changes.</th>
-    </tr>
-    <tr>
-        <td>Tone</td>
-        <td>instructional, straightforward</td>
-    </tr>
-    <tr>
-        <td>content_type</td>
-        <td>changelog</td>
-    </tr>
-    <tr>
-        <td>Required components</td>
-        <td>Title: Date of change<br/>Description of change</td>
-    </tr>
-    <tr>
-        <td>Optional components</td>
-        <td>IDs<br/>Actions (previous or new)<br/>Version<br/>Related links</td>
-    </tr>
-</table>
+## Purpose
+
+The purpose of a changelog is to log or record notable changes.
+
+## Tone
+
+instructional, straightforward
+
+## content_type
+
+changelog
 
 ## Structure
 

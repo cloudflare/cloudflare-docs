@@ -6,30 +6,17 @@ title: 3rd-party integration guide
 
 # 3rd-party integration guide
 
-<table>
-  <tr>
-    <th style="width:20%">Purpose</th>
-    <th>The purpose of a 3rd-party integration guide is to explain how to use a 3rd-party product with Cloudflare.</th>
-  </tr>
-  <tr>
-    <td>Tone</td>
-    <td>instructional, straightforward</td>
-  </tr>
-  <tr>
-    <td>content_type</td>
-    <td>integration-guide</td>
-  </tr>
-  <tr>
-    <td>Required components</td>
-    <td>Title <br/>Context <br/>Prerequisites <br/>Steps <br/>Links</td>
-  </tr>
-  <tr>
-    <td>Optional components</td>
-    <td>Notes/warnings <br/> Examples <br/> Screenshots <br/> Tables <br/> Step validation</td>
-  </tr>
-</table>
+## Purpose
 
-Although we want to help our customers as integrations between different products can be a pain point, there is a large risk and maintenance cost associated with specific types of 3rd-party resources.
+The purpose of a 3rd-party integration guide is to explain how to use a 3rd-party product with Cloudflare. Although we want to help our customers as integrations between different products can be a pain point, there is a large risk and maintenance cost associated with specific types of 3rd-party resources.
+
+## Tone
+
+instructional, straightforward
+
+## content_type
+
+integration-guide
 
 ## Structure
 
@@ -75,6 +62,10 @@ They easily become out-of-date, especially if we can not access the 3rd-party pr
 [**Examples**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/)
 
 **Screenshots**
+
+**Tables**
+
+**Step validation**
 
 {{<Aside type="note">}}
 

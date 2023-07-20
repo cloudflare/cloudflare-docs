@@ -12,7 +12,7 @@ The end result of a procedure and/or actionable steps to take after completing a
 
 ## Used in
 
-How to, Tutorial
+[How to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), [Tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/)
 
 ## Structure
 

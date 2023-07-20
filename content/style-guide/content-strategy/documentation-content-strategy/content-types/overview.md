@@ -6,28 +6,17 @@ title: Overview
 
 # Overview
 
-<table>
-    <tr>
-        <th style="width:20%">Purpose</th>
-        <th>The purpose of a landing page is to welcome users and provide an overview of the product.</th>
-    </tr>
-    <tr>
-        <td>Tone</td>
-        <td>Accessible, welcoming, conversational, outspoken</td>
-    </tr>
-    <tr>
-        <td>content_type</td>
-        <td>overview</td>
-    </tr>
-    <tr>
-        <td>Required components</td>
-        <td>Title<br/>Intro/overview<br/>Short product description<br/>Product availability<br/>Product attributes</td>
-    </tr>
-    <tr>
-        <td>Optional components</td>
-        <td>Features<br/>Related products<br/>More resources<br/>Visual<br/>Integration information - how to use product with other products</td>
-    </tr>
-</table>
+## Purpose
+
+The purpose of a landing page is to welcome users and provide an overview of the product.
+
+## Tone
+
+Accessible, welcoming, conversational, outspoken
+
+## content_type
+
+overview
 
 ## Structure
 
@@ -35,7 +24,7 @@ title: Overview
 
 **Metadata title**: Overview
 
-**Title**: Name of the product, group of products, or conceptual content area. H1. Usually a noun. Don't add "documentation" to the title.
+**Title**: Name of the product, group of products, or conceptual content area. H1. Usually a noun. Don't add "documentation" to the title. Do not use gerund phrases.
 
 **Intro/overview**: Brief welcoming introductory content. May be combined with product description.
 

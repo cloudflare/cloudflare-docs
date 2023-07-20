@@ -6,28 +6,17 @@ title: Tutorial
 
 # Tutorial
 
-<table>
-    <tr>
-        <th style="width:20%">Purpose</th>
-        <th>The purpose of a tutorial is to connect products to real-world scenarios to meet a user's goal.</th>
-    </tr>
-    <tr>
-        <td>Tone</td>
-        <td>Guiding, straightforward, educational, authoritative</td>
-    </tr>
-    <tr>
-        <td>content_type</td>
-        <td>tutorial</td>
-    </tr>
-    <tr>
-        <td>Required components</td>
-        <td>Title<br/>Context<br/>Steps</td>
-    </tr>
-    <tr>
-        <td>Optional components</td>
-        <td>Prerequisites<br/>Notes/warnings<br/>Examples<br/>Screenshots<br/>Next steps<br/>Related links</td>
-    </tr>
-</table>
+## Purpose
+
+The purpose of a tutorial is to connect products to real-world scenarios to meet a user's goal.
+
+## Tone
+
+Guiding, straightforward, educational, authoritative
+
+## content_type
+
+tutorial
 
 ## Structure
 

@@ -13,49 +13,40 @@ An introductory paragraph immediately following the page title that explains wha
 
 ## Used in
 
-How to, Configuration, FAQ, Concept, Reference, Tutorial
+[How to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), [Configuration](/style-guide/content-strategy/documentation-content-strategy/content-types/configuration/), [FAQ](/style-guide/content-strategy/documentation-content-strategy/content-types/faq/), [Concept](/style-guide/content-strategy/documentation-content-strategy/content-types/concept/), [Reference](/style-guide/content-strategy/documentation-content-strategy/content-types/reference/), [Tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/)
 
 ## Structure
 
-<table>
-  <tr>
-    <th style="width=20%">Content Type</th>
-    <th>Context Guidelines</th>
-  </tr>
-  <tr>
-    <td>Overview (aka Landing Page)</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td>How to</td>
-    <td>An introductory paragraph on the following steps and what they will accomplish. <br/>Provide context to the reader that is not in the section heading.<br/>End with a colon or a period. <br/>Use a colon if it immediately precedes the steps. <br/>Use a period if there is more material (such as a note) between the context and the procedure.<br/>Do not provide context for steps with a partial sentence that is completed by the numbered steps.</td>
-  </tr>
-  <tr>
-    <td>Configuration</td>
-    <td> </td>
-  </tr>
-  <tr>
-    <td>FAQ</td>
-    <td>An introductory paragraph on the section and what users can expect from it.</td>
-  </tr>
-  <tr>
-    <td>Glossary for external doc site</td>
-    <td> </td>
-  </tr>
-  <tr>
-    <td>Concept</td>
-    <td> </td>
-  </tr>
-  <tr>
-    <td>Reference</td>
-    <td> </td>
-  </tr>
-  <tr>
-    <td>Tutorial</td>
-    <td> </td>
-  </tr>
-  <tr>
-    <td>Navigation</td>
-    <td>N/A</td>
-  </tr>
-</table>
+### How to
+
+An introductory paragraph on the following steps and what they will accomplish.
+
+Provide context to the reader that is not in the section heading.
+
+End with a colon or a period.
+
+Use a colon if it immediately precedes the steps.
+
+Use a period if there is more material (such as a note) between the context and the procedure.
+
+Do not provide context for steps with a partial sentence that is completed by the numbered steps.
+
+### Configuration
+
+The context should be given in a paragraph right after the title. It should introduce the features, contextualize what type of configurations the user will encounter, and link to other relevant documentation.
+
+### FAQ
+
+An introductory paragraph on the section and what users can expect from it.
+
+### Concept
+
+Provide a brief description of why users should care about this information.
+
+### Reference
+
+Provide an introductory paragraph to explain how and why a user might utilize the information on this page.
+
+### Tutorial
+
+An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to Context for more information.

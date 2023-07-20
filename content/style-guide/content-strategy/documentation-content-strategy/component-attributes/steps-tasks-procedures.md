@@ -12,7 +12,7 @@ Action-oriented processes that outline steps to take and the order the steps sho
 
 ## Used in
 
-How to, Tutorial
+[How to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), [Tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/)
 
 ## Structure
 

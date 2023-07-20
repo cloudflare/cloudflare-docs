@@ -12,7 +12,7 @@ A colored info box or aside with content (text, images, lists, code blocks) that
 
 ## Used in
 
-How to, Configuration, FAQ, Concept, Reference, Tutorial
+[How to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), [Configuration](/style-guide/content-strategy/documentation-content-strategy/content-types/configuration/), [FAQ](/style-guide/content-strategy/documentation-content-strategy/content-types/faq/), [Concept](/style-guide/content-strategy/documentation-content-strategy/content-types/concept/), [Reference](/style-guide/content-strategy/documentation-content-strategy/content-types/reference/), [Tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/)
 
 ## Structure
 
@@ -22,7 +22,7 @@ Aside content
 
 (optional) Title/Header
 
-## Full entry formatting:
+## Templates
 
 ```
 {{</*Aside type="note" header="Header text"*/>}} 
@@ -62,7 +62,7 @@ There is no need to add buffer lines between the `{{</*/Aside*/>}}` elements, bu
 
 Make sure you use double quitation marks in the `header=` section. If you use single quotation marks, building locally will error out.
 
-## Rendered examples:
+## Rendered examples
 
 {{<Aside type="note" header="Header text">}}
 

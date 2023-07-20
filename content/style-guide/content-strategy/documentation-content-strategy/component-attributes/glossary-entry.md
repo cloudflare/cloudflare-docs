@@ -18,24 +18,6 @@ Glossary
 
 H2 term and paragraph definition.
 
-## Full entry formatting:
-
-```
-## [term]
-
-[definition]
-
-**Related terms:** term  
-
-**Relevant links:** [Description/title of link](https://www.example.com)
-```
-
-{{<Aside type="note">}}
-If you add both **related terms** and **relevant links** to an entry, include two spaces after `**Related terms:**` to create a line break (not paragraph break).
-{{</Aside>}}
-
-## Structure
-
 ### Required components
 
 **Term**: Fully spell out the term with any acronym following in parentheses. Use lower case, except for proper nouns.
@@ -50,6 +32,22 @@ If you add both **related terms** and **relevant links** to an entry, include tw
 
 + Product documentation specific to the term.
 + External pages (elsewhere in Cloudflare Docs, Help Center, Learning Center, etc.): Further explain a concept or provide additional details.
+
+## Template
+
+```
+## [term]
+
+[definition]
+
+**Related terms:** term  
+
+**Relevant links:** [Description/title of link](https://www.example.com)
+```
+
+{{<Aside type="note">}}
+If you add both **related terms** and **relevant links** to an entry, include two spaces after `**Related terms:**` to create a line break (not paragraph break).
+{{</Aside>}}
 
 ## Examples
 

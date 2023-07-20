@@ -6,28 +6,17 @@ title: FAQ
 
 # FAQ
 
-<table>
-    <tr>
-        <th style="width:20%">Purpose</th>
-        <th>The purpose of an FAQ is to provide simple answers to common questions.</th>
-    </tr>
-    <tr>
-        <td>Tone</td>
-        <td>Guiding, straightforward, educational, authoritative</td>
-    </tr>
-    <tr>
-        <td>content_type</td>
-        <td>faq</td>
-    </tr>
-    <tr>
-        <td>Required components</td>
-        <td>Title<br/>Context<br/>Questions<br/>Answers</td>
-    </tr>
-    <tr>
-        <td>Optional components</td>
-        <td>Sections<br/>Screenshots<br/>Notes/warnings<br/>Links</td>
-    </tr>
-</table>
+## Purpose
+
+The purpose of an FAQ is to provide simple answers to common questions.
+
+## Tone
+
+Guiding, straightforward, educational, authoritative
+
+## content_type
+
+faq
 
 ## Overview
 
@@ -57,9 +46,9 @@ Make sure the answer includes the entire answer.
 
 Smaller FAQ pages won't need structuring into sections. The structure is as follows:
 
-Title: FAQ
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): FAQ
 
-Context: an introductory paragraph on the section and what users can expect from it.
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): an introductory paragraph on the section and what users can expect from it.
 
 Questions, answers
 
@@ -67,9 +56,9 @@ Questions, answers
 
 Medium FAQ pages will need structuring into sections to facilitate readability and discoverability of content.
 
-Title: FAQ
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): FAQ
 
-Context: an introductory paragraph on the section and what users can expect from it.
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): an introductory paragraph on the section and what users can expect from it.
 
 Navigation menu with a list of section titles
 
@@ -81,29 +70,25 @@ Questions, answers
 
 Large FAQ pages (for product suites like Teams/Cloudflare One) will need structuring into sections, and each section will have its own subpage, to facilitate readability and discoverability of content.
 
-```
-Main FAQ page
+#### Main FAQ page
 
-Title: FAQ
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): FAQ
 
-Context (page): an introductory paragraph on the section and what users can expect from it.
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) (page): an introductory paragraph on the section and what users can expect from it.
 
 Section titles
 
-Context (section): a one-liner describing what users will find in that sub-section
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/) (section): a one-liner describing what users will find in that sub-section
 
 Button: a button leading to the subpage with the actual questions
-```
 
-```
-Child FAQ page
+#### Child FAQ page
 
 Breadcrumbs back to the main FAQ page
 
-Title: corresponds to the section header from the Main FAQ page
+[**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): corresponds to the section header from the Main FAQ page
 
 Questions, answers
-```
 
 ## Question types
 

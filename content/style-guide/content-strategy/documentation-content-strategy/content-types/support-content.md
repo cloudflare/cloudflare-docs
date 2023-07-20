@@ -6,28 +6,25 @@ title: Support content
 
 # Support content
 
-<table>
-    <tr>
-        <th style="width:20%">Purpose</th>
-        <th>The purpose of support content is to provide guidance for solving specific problems with Cloudflare.</th>
-    </tr>
-    <tr>
-        <td>Tone</td>
-	    <td>Guiding, straightforward, solution-oriented</td>
-    </tr>
-    <tr>
-        <td>content_type</td>
-        <td>Use the metadata tag for the Content Type you create within the /support/ tile.</td>
-    </tr>
-    <tr>
-        <td>Required components</td>
-        <td>Title<br/>Context</td>
-    </tr>
-    <tr>
-        <td>Optional components</td>
-        <td>Steps/Tasks/Procedures<br/>Examples<br/>Next steps</td>
-    </tr>
-</table>
+## Purpose
+
+The purpose of support content is to provide guidance for solving specific problems with Cloudflare.
+
+## Tone
+
+Guiding, straightforward, solution-oriented
+
+## content_type
+
+Use the metadata tag for the Content Type you create within the /support/ tile.</td>
+
+### Required components
+
+Title<br/>Context
+
+### Optional components
+
+Steps/Tasks/Procedures<br/>Examples<br/>Next steps
 
 ## Structure
 
