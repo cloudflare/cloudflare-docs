@@ -24,13 +24,11 @@ ___
 
 ## Solution
 
-If the Universal SSL _does not meet your business requirements_, we would recommend using our _Advanced Certificate Manager_. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
+Cipher suites has to be disabled when you have [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager) purchased. After you have subscribed to Advanced Certificate Manager for the zone, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting). Currently, restricting cipher suites could only be done via API and not available via Cloudflare Dashboard. Assuming this is just a one-time change, you could trigger the API call using curl. **Step-by-step guide:**
 
-You could restrict the Cipher Suites used for TLS using our [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager). After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting). Currently, restricting cipher suites could only be done via API and not available via Cloudflare Dashboard. Assuming this is just a one-time change, you could trigger the API call using curl. **Step-by-step guide:**
-
-1.  Get/view Global API Key _(or create Token)_ from: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
-2.  Get Zone ID from the bottom right of Overview page for your domain in Cloudflare Dashboard.
-3.  Decide which Cipher Suites you would like to allow from [the list](/ssl/reference/cipher-suites/).
+1.  [Get/view Global API Key _(or create Token)_](/fundamentals/api/get-started/keys/)
+2.  [Get the Zone ID via Cloudflare Dashboard _(or API)_](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
+3.  Decide which cipher suites you would like to allow from [the list](/ssl/reference/cipher-suites/supported-cipher-suites/)
 
 Here is an example value (list of cipher suites) which you can use to replace <cipher\_suites> in the commands below:
 
@@ -38,7 +36,7 @@ Here is an example value (list of cipher suites) which you can use to replace <c
 ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-ECDSA-CHACHA20-POLY1305","ECDHE-RSA-AES128-GCM-SHA256","ECDHE-RSA-CHACHA20-POLY1305","ECDHE-ECDSA-AES256-GCM-SHA384","ECDHE-RSA-AES256-GCM-SHA384"]
 ```
 
-Run the command to do the API call with the appropriate <zone\_id>, <auth\_email>, <auth\_key>, and <cipher\_suites>:
+Run the `curl` command to do the API call with the appropriate <zone\_id>, <auth\_email>, <auth\_key>, and <cipher\_suites>:
 
 ```bash
 curl -X PATCH \
@@ -65,11 +63,12 @@ To revert to the default Cipher Suites, you can send an empty array as the value
   --data '{"value": []}'
 ```
 
-Learn more about API Tokens and Keys here: [Managing API Tokens and Keys](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys)
+Learn more about API Tokens and Keys here: [Managing API Tokens and Keys](/fundamentals/api/get-started/)
 
 ___
 
 ## Additional Resources
 
--   [Understanding Advanced Certificate Manager](https://support.cloudflare.com/hc/en-us/articles/360044797871-Understanding-Advanced-Certificate-Manager)
--   [Cloudflare SSL cipher, browser, and protocol support](https://support.cloudflare.com/hc/en-us/articles/203041594-Cloudflare-SSL-cipher-browser-and-protocol-support)
+-   [Understanding Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)
+-   [Browser compatibility](/ssl/reference/browser-compatibility/)
+-   [Cipher suites recommendations](/ssl/reference/cipher-suites/recommendations/)
