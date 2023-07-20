@@ -168,7 +168,7 @@ You may have a Gateway DNS, Network, or HTTP in place that accidentally blocks a
 
 ### Split Tunnel settings are misconfigured for the app or site
 
-Some applications require traffic to flow either all inside or all outside of the WARP tunnel. For instance, in order to use Airdrop or communicate with a local printer, traffic must be outside the tunnel. For applications like Microsoft Teams to function properly, all Microsoft Teams traffic must be either fully inside the tunnel or fully outside the tunnel.
+Some applications require traffic to flow either all inside or all outside of the WARP tunnel. For instance, in order to use AirDrop or communicate with a local printer, traffic must be outside the tunnel. For applications like Microsoft Teams to function properly, all Microsoft Teams traffic must be either fully inside the tunnel or fully outside the tunnel.
 
 #### Solution
 
