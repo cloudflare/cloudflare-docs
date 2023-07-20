@@ -205,7 +205,7 @@ Use this selector to match against only the hostname specified — for example,
 | ------- | -------------------------------- |
 | Host    | `dns.fqdn == "test.example.com"` |
 
-### Indicator Feeds
+### Indicator Feed
 
 {{<render file="gateway/_indicator-feed.md" withParameters="dns">}}
 
