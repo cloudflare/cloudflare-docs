@@ -12,7 +12,7 @@ layout: single
 
 This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer. 
 
-Puppeteer is a high-level library you can use to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to Cloudflare.com and take a screenshot of the site, saving results to KV.
+Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to Cloudflare.com and take a screenshot of the site, saving results to KV.
 
 You can use Puppeteer to request all images on a page, save the colors used on a site, and more. 
 
@@ -22,11 +22,11 @@ To continue, you will need:
 2. A subscription to Workers Paid, required for using Queues.
 3. Access to the [Browser Rendering](https://www.cloudflare.com/lp/workers-browser-rendering-api/) API, currently in open beta.
 
-## Build the crawler Worker
-
+## 1. Build the crawler Worker
 You will first need to create KV namespaces and Queue required for the crawler before creating a new Worker, setting up bindings, and writing the crawler script.
 
-### 1. Set up KV namespaces
+### Set up KV namespaces
+
 To set up KV namespaces:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Go to **Workers & Pages** > **KV**. 
@@ -34,7 +34,7 @@ To set up KV namespaces:
 
 ![Creating a KV namespace named crawler_links](/queues/examples/web-crawler-with-browser-rendering/create-kv-namespaces.png)
 
-### 2. Set up a Queue
+### Set up a Queue
 To set up a Queue:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Go to **Workers & Pages** > **Queues**. 
@@ -43,13 +43,13 @@ To set up a Queue:
 
 ![Creating a Queue named queues-web-crawler](/queues/examples/web-crawler-with-browser-rendering/create-queue.png)
 
-### 3. Create a Worker 
+## 2. Create a Worker 
 
 Create a new Worker with the C3 (`create-cloudflare-cli`) CLI, a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
 ```sh
 ---
-header: Create a worker
+header: Create a Worker
 ---
 $ npm create cloudflare@latest # or yarn create cloudflare
 ```
@@ -62,7 +62,9 @@ C3 will then prompt you for some information on your Worker.
 4. For the question `Do you want to deploy your application?`, select `n`.
 
 This will create the crawler Worker.
-### 4. Configure your Worker
+
+## 3. Configure your Worker
+
 In the `wrangler.toml` file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and Queue you created previously, which will allow you to access KV and the Queue from the Worker. 
 
 ```toml
@@ -101,7 +103,9 @@ Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Renderin
 Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits. 
 
 Refer to [Worker limits](https://developers.cloudflare.com/workers/platform/limits/#worker-limits) to learn more about usage models.
-### 5. Add bindings to environment
+
+## 5. Add bindings to environment
+
 Add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the Queue as `Queue<any>`. The following step will show you how to change this type.
 
 ```ts
@@ -118,7 +122,7 @@ export interface Env {
 }
 ```
 
-### 6. Submit links to crawl
+## 6. Submit links to crawl
 
 Add a `fetch()` handler to the Worker to submit links to crawl.
 
@@ -145,7 +149,7 @@ export default {
 
 This will accept requests to any subpath and forwards the request's body to be crawled. It expects that the request body only contains a URL. In production, you should check that the request was a `POST` request and contains a well-formed URL in its body. This has been omitted for simplicity.
 
-### 7. Crawl with Puppeteer
+## 7. Crawl with Puppeteer
 
 Add a `queue()` handler to the Worker to process the links you send.
 
