@@ -22,17 +22,17 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 2. Type `dig example.com` (`nslookup example.com` if you are using Windows) and press **Enter**.
 
-3. If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
+3. If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
 
    ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-disabled.png)
 
-   If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
+   If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
 
    ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-enabled.png)
 
 ### Test a security or content category
 
-If you are blocking a [security category](/cloudflare-one/policies/filtering/dns-policies/#security-categories) or a [content category](/cloudflare-one/policies/filtering/dns-policies/#content-categories), you can test that the policy is working by using the [test domain](#common-test-domains) associated with each category.
+If you are blocking a [security category](/cloudflare-one/policies/gateway/dns-policies/#security-categories) or a [content category](/cloudflare-one/policies/gateway/dns-policies/#content-categories), you can test that the policy is working by using the [test domain](#common-test-domains) associated with each category.
 
 Once you have configured your Gateway policy to block the category, the test domain will show a block page when you attempt to visit the domain in your browser, or will return `REFUSED` when you perform `dig` using the command-line interface.
 

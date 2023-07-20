@@ -6,7 +6,7 @@ weight: 4
 
 # Change categorization
 
-Domains are sorted into categories by their content and security type. Refer to [domain categories](/cloudflare-one/policies/filtering/domain-categories/) for more information. You can request categorization changes in three ways:
+Domains are sorted into categories by their content and security type. Refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/) for more information. You can request categorization changes in three ways:
 
 ## API
 

@@ -11,7 +11,7 @@ layout: single
 Requires [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/).
 {{</Aside>}}
 
-With Access policies, you can require users to open self-hosted applications in a secure [remote browser](/cloudflare-one/policies/browser-isolation/). Because the remote browser is directly integrated into our Secure Web Gateway platform, [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) can be applied to isolated applications without needing to install the WARP client. This allows you to distribute internal applications to unmanaged users while retaining control over sensitive data.
+With Access policies, you can require users to open self-hosted applications in a secure [remote browser](/cloudflare-one/policies/browser-isolation/). Because the remote browser is directly integrated into our Secure Web Gateway platform, [HTTP policies](/cloudflare-one/policies/gateway/http-policies/) can be applied to isolated applications without needing to install the WARP client. This allows you to distribute internal applications to unmanaged users while retaining control over sensitive data.
 
 ## Prerequisites
 
@@ -33,9 +33,9 @@ You can optionally add a second Allow policy for users on managed devices who do
 
 ## Policies for isolated applications
 
-Traffic to the isolated Access application is filtered by your Gateway [HTTP policies](/cloudflare-one/policies/filtering/http-policies/). Useful policies include:
+Traffic to the isolated Access application is filtered by your Gateway [HTTP policies](/cloudflare-one/policies/gateway/http-policies/). Useful policies include:
 
-- [Identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) to allow or block requests based on user identity.
+- [Identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) to allow or block requests based on user identity.
 - [Data Loss Prevention policies](/cloudflare-one/policies/data-loss-prevention/) to log or block transmission of sensitive data.
 - [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/) to disable browser actions such as copy/paste, printing, or file downloads.
 

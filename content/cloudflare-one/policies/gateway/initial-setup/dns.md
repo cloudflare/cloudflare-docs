@@ -22,7 +22,7 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 1. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 2. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
-3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device .
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/gateway/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device .
 
 ### Connect DNS locations
 
@@ -48,10 +48,10 @@ To create a new DNS policy, go to **Gateway** > **Firewall Policies** > **DNS** 
 
 ### Block all security categories
 
-Block [known threats](/cloudflare-one/policies/filtering/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
+Block [known threats](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
 
 {{<render file="gateway/_block-security-categories.md">}}
 
 ## 4. Add optional policies
 
-Refer to our list of [common DNS policies](/cloudflare-one/policies/filtering/dns-policies/common-policies) for other policies you may want to create.
+Refer to our list of [common DNS policies](/cloudflare-one/policies/gateway/dns-policies/common-policies) for other policies you may want to create.

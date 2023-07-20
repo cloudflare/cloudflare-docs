@@ -20,7 +20,7 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 
 - Azure AD Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
-- [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) enabled on your devices
+- [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) enabled on your devices
 - (Recommended) [`wrangler`](/workers/wrangler/install-and-update/) installation
 
 ## 1. Set up Azure AD as an identity provider
@@ -152,7 +152,7 @@ Cloudflare Access will now synchronize changes in group membership with Azure AD
 
 ## 5. Create a browser isolation policy
 
-Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/filtering/http-policies/) to isolate traffic for risky user groups.
+Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to isolate traffic for risky user groups.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 

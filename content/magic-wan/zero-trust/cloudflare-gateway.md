@@ -7,7 +7,7 @@ meta:
 
 # Cloudflare Gateway with Magic WAN
 
-[Cloudflare Gateway](/cloudflare-one/policies/filtering/), our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
+[Cloudflare Gateway](/cloudflare-one/policies/gateway/), our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
 
 You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magic-firewall/) policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN. [DNS filtering](/learning-paths/dns-filtering/) requires using Cloudflare’s DNS resolver.
 
@@ -15,7 +15,7 @@ You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magi
 
 In order to inspect HTTPS traffic, you need to [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) on any client machines that are not running [WARP](/cloudflare-one/connections/connect-devices/warp/). This is required in order for Cloudflare to terminate TLS.
 
-If you cannot or do not want to install the certificate, you can create [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) policies to exempt Magic WAN traffic or disable TLS decryption entirely.
+If you cannot or do not want to install the certificate, you can create [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policies to exempt Magic WAN traffic or disable TLS decryption entirely.
 
 ## Outbound Internet traffic
 
@@ -26,7 +26,7 @@ By default, the following traffic routed through Magic WAN tunnels and destined 
 
 Traffic destined to public IPs will be routed over the public Internet, unless explicitly specified otherwise. If you want to configure specific public IP ranges to be routed through your Magic WAN tunnels instead of over the public Internet after filtering, contact your account team.
 
-This traffic will egress from Cloudflare according to the [egress policies](/cloudflare-one/policies/filtering/egress-policies/) you define in Cloudflare Gateway. By default, it will egress from a shared [Cloudflare public IP range](https://cloudflare.com/ips).
+This traffic will egress from Cloudflare according to the [egress policies](/cloudflare-one/policies/gateway/egress-policies/) you define in Cloudflare Gateway. By default, it will egress from a shared [Cloudflare public IP range](https://cloudflare.com/ips).
 
 ## Private traffic
 

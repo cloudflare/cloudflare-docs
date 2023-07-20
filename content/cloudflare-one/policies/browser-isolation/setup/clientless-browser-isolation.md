@@ -28,7 +28,7 @@ If `<url>` is not provided, users are presented with a Cloudflare Zero Trust lan
 
 ### Allow or block websites
 
-When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
+When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/policies/gateway/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
 
 For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`, simply create a Cloudflare Gateway HTTP policy to block `example.com`:
 
@@ -38,7 +38,7 @@ For example, if you use a third-party Secure Web Gateway to block `example.com`,
 
 ### Bypass TLS decryption
 
-If [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. To connect to sites that are incompatible with TLS decryption, you will need to add a Do Not Inspect HTTP policy for the application or domain.
+If [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. To connect to sites that are incompatible with TLS decryption, you will need to add a Do Not Inspect HTTP policy for the application or domain.
 
 | Selector | Operator | Value        | Action         |
 | -------- | -------- | ------------ | -------------- |
@@ -56,7 +56,7 @@ All users with access to your remote browser can access your Cloudflare Tunnel a
 
 ### Disable remote browser controls
 
-You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/filtering/http-policies/) when you select the Isolate action.
+You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/gateway/http-policies/) when you select the Isolate action.
 
 ## Address bar
 

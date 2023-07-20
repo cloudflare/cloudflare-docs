@@ -309,7 +309,7 @@ Some packages, development tools, and other applications provide options to trus
 All of the applications below first require downloading the Cloudflare certificate with the instructions above. On Mac, the default path is `/Library/Keychains/System.keychain Cloudflare_CA.crt`. On Windows, the default path is `\Cert:\CurrentUser\Root`.
 
 {{<Aside type="note">}}
-Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domains or IPs that the application relies on.
+Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for the domains or IPs that the application relies on.
 {{</Aside>}}
 
 ### Firefox

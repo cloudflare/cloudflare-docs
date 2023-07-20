@@ -48,7 +48,7 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
 - **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
 
   - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
-  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
   - Redirect all HTTPS requests to HTTP.
 
 If none of the above scenarios apply, contact Cloudflare support with the following information:
@@ -62,7 +62,7 @@ For more troubleshooting information, refer to [Support](/support/troubleshootin
 
 ## I see error 504 when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/filtering/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
 
 | Selector          | Operator | Value         | Action |
 | ----------------- | -------- | ------------- | ------ |

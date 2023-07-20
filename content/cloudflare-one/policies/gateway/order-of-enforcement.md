@@ -6,7 +6,7 @@ weight: 11
 
 # Order of enforcement
 
-With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies/filtering/initial-setup/) any combination of DNS, network, and HTTP policies.
+With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies/gateway/initial-setup/) any combination of DNS, network, and HTTP policies.
 
 ## Priority between policy builders
 
@@ -24,7 +24,7 @@ Lastly, if traffic passes your HTTP policies, Gateway checks the traffic against
 
 ### HTTP/3 traffic
 
-For proxied [HTTP/3 traffic](/cloudflare-one/policies/filtering/http-policies/http3/), Gateway applies your policies in the following order:
+For proxied [HTTP/3 traffic](/cloudflare-one/policies/gateway/http-policies/http3/), Gateway applies your policies in the following order:
 
 1. DNS
 2. Network
@@ -42,7 +42,7 @@ Gateway evaluates network policies in [order of precedence](#order-of-precedence
 
 ### HTTP policies
 
-Gateway applies HTTP policies based on a combination of [action type](/cloudflare-one/policies/filtering/http-policies/#actions) and [order of precedence](#order-of-precedence):
+Gateway applies HTTP policies based on a combination of [action type](/cloudflare-one/policies/gateway/http-policies/#actions) and [order of precedence](#order-of-precedence):
 
 1. All Do Not Inspect policies are evaluated first, in order of precedence.
 2. If no policies match, all Isolate policies are evaluated in order of precedence.

@@ -8,7 +8,7 @@ weight: 1
 
 The following policies are commonly used to secure network traffic.
 
-Refer to the [network policies page](/cloudflare-one/policies/filtering/network-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [network policies page](/cloudflare-one/policies/gateway/network-policies/) for a comprehensive list of other selectors, operators, and actions.
 
 {{<render file="gateway/_block-applications.md">}}
 
