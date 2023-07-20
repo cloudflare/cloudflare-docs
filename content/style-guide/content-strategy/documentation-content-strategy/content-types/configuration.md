@@ -34,7 +34,7 @@ Configurations are useful for parts of the product that are very configuration-i
 
 ### Optional components
 
-[**Navigation**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/navigation/): When we have many configurations to cover, it's useful to include a navigation list to help the user find what they need.
+[**Navigation**](/style-guide/content-strategy/documentation-content-strategy/content-types/navigation/): When we have many configurations to cover, it's useful to include a navigation list to help the user find what they need.
 
 ## Template
 

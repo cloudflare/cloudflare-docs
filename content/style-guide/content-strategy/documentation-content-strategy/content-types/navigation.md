@@ -21,7 +21,8 @@ Use the ```{{</*directory-listing*/>}}``` component
 
 ## Template
 
-```---
+```
+---
 weight: xx
 pcx_content_type: navigation
 ---
