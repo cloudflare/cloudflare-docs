@@ -24,7 +24,7 @@ To create a DNS record for your tunnel:
 1.  Log in to the Cloudflare dashboard.
 1.  Go to the **Cloudflare DNS** tab.
 1.  Create a new CNAME record and input the subdomain of your tunnel into the Target field.
-1.  Click **Save**.
+1.  Select **Save**.
 
 ![Example of fields completed to create a new CNAME record.](/images/cloudflare-one/connections/connect-apps/dns/dns-record.png)
 
@@ -38,7 +38,7 @@ To delete a DNS record assigned to a tunnel:
 
 1.  Log in to the Cloudflare dashboard.
 1.  Go to DNS and locate the DNS record under the DNS management card.
-1.  Click **Edit** > **Delete**.
+1.  Select **Edit** > **Delete**.
 
 ## Route traffic from the command line
 

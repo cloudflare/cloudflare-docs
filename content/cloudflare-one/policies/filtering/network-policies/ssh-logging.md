@@ -110,7 +110,7 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
 
 3. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 
-4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and click **Save**. Note that this a different public key from the `ca.pub` file you used to configure the origin server.
+4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and select **Save**. Note that this a different public key from the `ca.pub` file you used to configure the origin server.
 
 All proxied SSH commands are immediately encrypted using this public key. The matching private key is required to [view logs](#view-ssh-logs).
 

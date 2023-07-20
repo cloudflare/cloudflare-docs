@@ -27,7 +27,7 @@ In the following example, users can only access an application if they connect f
 
 ## Enforce session duration
 
-[Require users to re-authenticate](/cloudflare-one/policies/filtering/enforce-sessions/) after a certain amount of time has elapsed.
+[Require users to re-authenticate](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/) after a certain amount of time has elapsed.
 
 ## Restrict access to private networks
 

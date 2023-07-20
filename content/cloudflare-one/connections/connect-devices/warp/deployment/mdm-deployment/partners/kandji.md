@@ -17,7 +17,7 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
 2. Add the custom profile:
 
    1. Go to **Library** > **Add New** > **Add Library Item** > **Custom Profile**.
-   2. Click **Add & Configure**.
+   2. Select **Add & Configure**.
 
 3. Configure the custom profile:
 
@@ -32,7 +32,7 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
 4. Add a custom app:
 
    1. Go to **Library** > **Add New** > **Add Library Item** > **Custom App**.
-   2. Click **Add & Configure**.
+   2. Select **Add & Configure**.
 
 5. Configure the custom app:
 
@@ -46,7 +46,7 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
 
    6. In the **Install Details** section, select **Installer Package**.
    7. Under **Installer Package**, upload the `Cloudflare_WARP.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
-   8. Click **Save**.
+   8. Select **Save**.
 
 To verify that Cloudflare WARP was installed, select the app in the **Custom App** library and view its **Status** tab.
 

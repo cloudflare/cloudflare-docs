@@ -69,7 +69,7 @@ To install the certificate in **Keychain Access**:
 
 2. Double-click the `.crt` file.
 
-3. In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and click **Add**.
+3. In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and select **Add**.
 
 ![macOS popup window for adding certificates](/images/cloudflare-one/connections/keychain-popup.png)
 
@@ -79,7 +79,7 @@ The certificate is now listed in your preferred keychain within the **Keychain A
 
 4. Double-click the certificate.
 
-5. Click **Trust**.
+5. Select **Trust**.
 
 ![macOS window for certificate configuration](/images/cloudflare-one/connections/cert-click-on-trust.png)
 
@@ -117,7 +117,7 @@ iOS only allows the Safari browser to open and install certificates.
 
 ![iOS popup message asking for permission to download certificate](/images/cloudflare-one/connections/ios_cert_download.PNG)
 
-2. Tap **Allow**.
+2. Select **Allow**.
 
 3. Go to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
@@ -129,13 +129,13 @@ Alternatively, you can go to **Settings**, where a new **Profile Downloaded** se
 
 ![iOS screen for viewing certificate profile](/images/cloudflare-one/connections/ios_cert_profile.PNG)
 
-4. Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+4. Select the profile and select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
-5. Next, a certificate warning will appear. Tap **Install**.
+5. Next, a certificate warning will appear. Select **Install**.
 
-If a second prompt is displayed, tap **Install** again.
+If a second prompt is displayed, select **Install** again.
 
-6. Next, the **Profile Installed** screen will appear. Tap **Done**.
+6. Next, the **Profile Installed** screen will appear. Select **Done**.
 
 ![iOS message confirming certificate profile installation](/images/cloudflare-one/connections/ios_profile_installed.PNG)
 
@@ -147,9 +147,9 @@ The installed root certificates will be displayed in the _Enable full trust for 
 
 ![iOS screen for configuring certificate trust settings](/images/cloudflare-one/connections/ios_cert_trust1.PNG)
 
-8. Tap the slide button next to the Cloudflare certificate you just installed.
+8. Select the slide button next to the Cloudflare certificate you just installed.
 
-9. A confirmation dialogue will appear. Tap **Continue**.
+9. A confirmation dialogue will appear. Select **Continue**.
 
 ![iOS popup message asking to confirm trust setting](/images/cloudflare-one/connections/ios_cert_trust2.PNG)
 
@@ -168,23 +168,23 @@ Windows offers two options to install the certificate, each having a different i
 
 2. Right-click the certificate file.
 
-3. Click **Open**. If you see a Security Warning, click **Open** to proceed.
+3. Select **Open**. If you see a Security Warning, choose **Open** to proceed.
 
-4. The **Certificate** window will appear. Click **Install Certificate**.
+4. The **Certificate** window will appear. Select **Install Certificate**.
 
 ![Window for Cloudflare certificate](/images/cloudflare-one/connections/windows_install_cert.png)
 
-5. Now choose a Store Location. If you see a Security Warning, click **Yes** to proceed.
+5. Now choose a Store Location. If you see a Security Warning, choose **Yes** to proceed.
 
-6. On the next screen, click **Browse**.
+6. On the next screen, select **Browse**.
 
 7. Choose the **Trusted Root Certification Authorities** store.
 
-8. Click **OK**.
+8. Select **OK**.
 
 ![Window for selecting certificate store location](/images/cloudflare-one/connections/windows_cert_location.png)
 
-9. Click **Finish**.
+9. Select **Finish**.
 
 ![Window for finishing certificate installation](/images/cloudflare-one/connections/windows_cert_install_finished.png)
 
@@ -192,7 +192,7 @@ The root certificate is now installed and ready to be used.
 
 ### Linux
 
-The location where the root certificate should be installed is different depending on your Linux distribution. Please follow the specific instructions for your flavor of Linux.
+The location where the root certificate should be installed is different depending on your Linux distribution. Follow the specific instructions for your distribution of Linux.
 
 #### Debian / Ubuntu
 
@@ -232,7 +232,7 @@ $ sudo update-ca-trust
 
 ![Android **Settings** screen](/images/cloudflare-one/connections/android_security_settings.png)
 
-3. Tap **Advanced** > **Encryption & Credentials**.
+3. Select **Advanced** > **Encryption & Credentials**.
 
 {{<table-wrap>}}
 
@@ -242,7 +242,7 @@ $ sudo update-ca-trust
 
 {{</table-wrap>}}
 
-4. Tap **Install a certificate** > **CA certificate**.
+4. Select **Install a certificate** > **CA certificate**.
 
 {{<table-wrap>}}
 
@@ -252,7 +252,7 @@ $ sudo update-ca-trust
 
 {{</table-wrap>}}
 
-5. Tap **Install Anyway**.
+5. Select **Install Anyway**.
 
 ![Android screen asking to confirm certificate installation](/images/cloudflare-one/connections/android_install_anyway.png)
 
@@ -276,7 +276,7 @@ The root certificate is now installed and ready to be used.
 
 ![**Google Play Store** app in ChromeOS settings](/images/cloudflare-one/connections/chromeOS2_cert.png)
 
-4. Click **Manage Android preferences**.
+4. Select **Manage Android preferences**.
 
 ![**Manage Android preferences** in ChromeOS settings](/images/cloudflare-one/connections/chromeOS3_cert.png)
 
@@ -290,11 +290,11 @@ The root certificate is now installed and ready to be used.
 
 {{</table-wrap>}}
 
-6. In the file open dialog, select the `Cloudflare_CA.crt` file downloaded in step #1 and click **Open**.
+6. In the file open dialog, select the `Cloudflare_CA.crt` file downloaded in step #1 and select **Open**.
 
 ![ChromeOS dialogue for selecting a certificate file](/images/cloudflare-one/connections/chromeOS7_cert.png)
 
-7. Enter anything you want for the certificate name and click **OK**.
+7. Enter anything you want for the certificate name and select **OK**.
 
 ![ChromeOS dialogue for naming the certificate](/images/cloudflare-one/connections/chromeOS8_cert.png)
 
