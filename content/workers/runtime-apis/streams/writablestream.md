@@ -9,7 +9,7 @@ title: WritableStream
 
 A `WritableStream` is the `writable` property of a [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers platform, `WritableStream` cannot be directly created using the `WritableStream` constructor.
 
-A typical way to write to a `WritableStream` is to simply pipe a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to it.
+A typical way to write to a `WritableStream` is to pipe a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to it.
 
 ```js
 readableStream
