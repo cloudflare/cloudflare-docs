@@ -28,7 +28,7 @@ See additional documentation for working with [Kubernetes](/cloudflare-one/conne
 
 ## Creating a Legacy Tunnel with Cloudflare Load Balancer
 
-This tutorial starts by documenting the steps to create a Legacy Tunnel with Cloudflare Load Balancer so that those can be compared to the migration steps. If you would prefer to start the migration now, please [skip ahead](#create-a-named-tunnel).
+This tutorial starts by documenting the steps to create a Legacy Tunnel with Cloudflare Load Balancer so that those can be compared to the migration steps. If you would prefer to start the migration now, skip to [Create a Named Tunnel](#create-a-named-tunnel).
 
 In both modes, the first step is to create a Load Balancer and Origin Pool. Go to the `Traffic` tab of the Cloudflare dashboard. Input a public-facing DNS hostname for a domain in your Cloudflare account.
 

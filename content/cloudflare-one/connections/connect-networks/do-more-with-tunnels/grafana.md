@@ -8,7 +8,7 @@ weight: 7
 
 When a Tunnel is run, cloudflared will automatically spin up a metrics server. This metrics server can be routed to Prometheus and Grafana in order to convert the metrics into actionable insights.
 
-By default, the port that metrics are sent to is randomly selected and can be found by viewing Tunnels logs as seen below: 
+By default, the port that metrics are sent to is randomly selected and can be found by viewing Tunnels logs as seen below:
 
 ![Default Metrics Port](/images/cloudflare-one/connections/connect-apps/grafana/metrics-port.png)
 
@@ -24,7 +24,7 @@ $ cloudflared tunnel --metrics <service-URL>:<service-port> run <TUNNEL NAME>
 
 If you do not already have Prometheus installed, follow this [guide](https://prometheus.io/download/) to get started.
 
-In the folder created when Prometheus was downloaded you will find a config file named "prometheus.yml". 
+In the folder created when Prometheus was downloaded you will find a config file named "prometheus.yml".
 
 Make the following additions to the end of the config file.
 
@@ -34,35 +34,35 @@ global:
   scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
   # scrape_timeout is set to the global default (10s).
- 
+
 # Alertmanager configuration
 alerting:
   alertmanagers:
     - static_configs:
         - targets:
           # - alertmanager:9093
- 
+
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
   # - "first_rules.yml"
   # - "second_rules.yml"
- 
+
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
- 
+  - job_name: "prometheus"
+
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
- 
+
     static_configs:
-      - targets: ['localhost:9090'] ## Port that prometheus will go to
- 
+      - targets: ["localhost:9090"] ## Port that prometheus will go to
+
   ## ADD HERE
-  - job_name: '<job name>' ##NAME FOR JOB
+  - job_name: "<job name>" ##NAME FOR JOB
     static_configs:
-      - targets: ['<service-URL>:<service-port>']  ##PORT THAT TUNNEL SENDS METRICS TOO
+      - targets: ["<service-URL>:<service-port>"] ##PORT THAT TUNNEL SENDS METRICS TOO
 ```
 
 To start Prometheus, from within the Prometheus folder enter:
@@ -91,21 +91,21 @@ Like with Prometheus, Grafana can be configured to run as a so that it does not 
 
 ## Connecting Prometheus to Grafana
 
-Go to the site that Grafana is listening on. 
+Go to the site that Grafana is listening on.
 
-In the bottom left corner of the page click on the gear and then Data Sources.
+In the bottom left corner of the page, select the gear and then Data Sources.
 
-Click "Add data source" and select Prometheus from the options. Enter the url that leads to the site that shows the Prometheus dashboard.
+Select "Add data source" and select Prometheus from the options. Enter the url that leads to the site that shows the Prometheus dashboard.
 
-A dashboard can now be created within Grafana to monitor Tunnel metrics. 
+A dashboard can now be created within Grafana to monitor Tunnel metrics.
 
-Select the new data source and enter the Prometheus queries to monitor. 
+Select the new data source and enter the Prometheus queries to monitor.
 
-Some simple queries to start with are "cloudflared_tunnel_request_errors" and "cloudflared_tunnel_requests". 
+Some simple queries to start with are "cloudflared_tunnel_request_errors" and "cloudflared_tunnel_requests".
 
-Create a new dashboard and then in the upper right corner of the page click the "Add panel" button, and "Add a new panel". 
+Create a new dashboard and then in the upper right corner of the page select the "Add panel" button, and "Add a new panel".
 
-Select the above metric names in the metrics drop down to populate a graph with them. 
+Select the above metric names in the metrics drop down to populate a graph with them.
 
 ![Grafana query](/images/cloudflare-one/connections/connect-apps/grafana/grafana-ops.png)
 

@@ -46,13 +46,13 @@ weight: 2
 
 3. On your Hexnode console, go to **Manage** > **Devices**.
 
-4. Click on your device name. This will take you to the **Device Summary**.
+4. Select your device name. This will take you to the **Device Summary**.
 
-5. Click **Actions** > **Execute Custom Script**.
+5. Select **Actions** > **Execute Custom Script**.
 
 6. Choose the script file source as _Upload file_, then upload the script file.
 
-7. Click **Execute**.
+7. Select **Execute**.
 
 ## macOS
 
@@ -66,13 +66,13 @@ weight: 2
 
 1. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos) the Cloudflare WARP client for macOS.
 
-2. On your Hexnode console, go to **Apps** > **+Add Apps** > **Enterprise App**.
+2. On your Hexnode console, go to **Apps** > **Add Apps** > **Enterprise App**.
 
 3. Select _macOS_ as the app platform.
 
 4. Add an app name, category and description.
 
-5. Upload the `cloudflare_WARP.pkg` file and click **Add**.
+5. Upload the `cloudflare_WARP.pkg` file and select **Add**.
 
 6. Set up an XML file with the supported app configurations for the app.
    Here is a sample XML file with the accepted parameters.
@@ -102,9 +102,9 @@ weight: 2
 
 9. Go to **macOS** > **App Management** > **Mandatory Apps** and start setting up the policy.
 
-10. Click **+Add** and select the previously uploaded WARP client app.
+10. Select **Add** and select the previously uploaded WARP client app.
 
-11. Go to **App Configurations** > **+Add new configuration**.
+11. Go to **App Configurations** > **Add new configuration**.
 
 12. Select the _WARP client_ app and upload the XML file from Step 6.
 
@@ -120,7 +120,7 @@ This will push the app along with the configurations to the selected devices.
 
 {{</Aside>}}
 
-1. On your Hexnode console, go to **Apps** > **+Add Apps** > **Store App**.
+1. On your Hexnode console, go to **Apps** > **Add Apps** > **Store App**.
 
 2. Select _iOS_ as the app platform.
 
@@ -146,16 +146,16 @@ This will push the app along with the configurations to the selected devices.
 5. Upload the app configurations in Hexnode:
 
    1. On your Hexnode console, go to the **Apps** tab.
-   2. Find the 1.1.1.1 app and click on its name.
-   3. Click the settings icon and choose **App Configuration**.
+   2. Find the 1.1.1.1 app and select its name.
+   3. Select the settings icon and choose **App Configuration**.
    4. Upload the XML file in the corresponding field.
-   5. Click **Save**.
+   5. Select **Save**.
 
 6. Push the app to the target devices using Hexnode.
    1. On your Hexnode console, go to **Policies** and create a new policy.
    2. Provide a name for the policy and go to **iOS**.
    3. Go to **Mandatory Apps** > **Configure**.
-   4. Click **+Add** > **Add app**, check the required app, and click **Done**.
+   4. Select **Add** > **Add app**, check the required app, and select **Done**.
    5. Go to **Policy Targets** and associate the policy with the required target devices.
 
 This will push the app along with the configurations to the selected devices.
@@ -168,11 +168,11 @@ This will push the app along with the configurations to the selected devices.
 
 {{</Aside>}}
 
-1. On your Hexnode console, go to **Apps** > **+Add Apps** > **Managed Google Apps**.
+1. On your Hexnode console, go to **Apps** > **Add Apps** > **Managed Google Apps**.
 2. Search for the app [**1.1.1.1: Faster & Safer Internet**](https://play.google.com/work/apps/details?id=com.cloudflare.onedotonedotonedotone).
 3. Approve the app as a Managed Google Play app.
 4. Go to **Policies** and create a new policy.
-5. Go to **Android** > **App Configurations** > **+Add new configuration**.
+5. Go to **Android** > **App Configurations** > **Add new configuration**.
 6. Find the **1.1.1.1 Faster & Safer Internet** app and set up your custom configurations.
 7. Go to **Policy Targets** and associate the policy with the required target devices.
 8. Save the policy.

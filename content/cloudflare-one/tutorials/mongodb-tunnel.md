@@ -33,9 +33,9 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 2.  In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
-3.  Click **Add an application** and choose `Self-hosted`.
+3.  Select **Add an application** and choose `Self-hosted`.
 
-4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
+4.  Create an application for a subdomain where users will connect to your deployment. Select **Next**.
 
     ![MongoDB screen that shows how to add an application](/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-app.png)
 
@@ -43,7 +43,7 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
     ![MongoDB screen that shows how to configure a rule](/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
-6.  Click **Next** again and add the application.
+6.  Select **Next** again and add the application.
 
 ## Configure the Kubernetes deployment
 
@@ -210,7 +210,7 @@ $ cloudflared login
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 
-Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
+Once you select one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 

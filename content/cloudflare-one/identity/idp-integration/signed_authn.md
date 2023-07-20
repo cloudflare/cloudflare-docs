@@ -18,7 +18,7 @@ To set up Signed AuthN requests:
 
 1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Choose **SAML** on the next page.
 

@@ -78,18 +78,18 @@ For more troubleshooting information, refer to [Support](/support/troubleshootin
 You may not see analytics on the Overview page for the following reasons:
 
 - **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
-- **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
+- **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
 - **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
-- **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
+- **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, file a support ticket.
 
 ## I see a "No Browsers Available" alert.
 
-If you encounter this error please [file feedback](/cloudflare-one/policies/browser-isolation/known-limitations/) via the WARP client and we will investigate.
+If you encounter this error, [file feedback](/cloudflare-one/policies/browser-isolation/known-limitations/) via the WARP client and we will investigate.
 
 ## I see a "Maximum Sessions Reached" alert.
 
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
-A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
+A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
 ## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 

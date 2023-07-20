@@ -63,7 +63,7 @@ If you need to revoke access before the token expires, simply delete the token.
 Services that rely on a deleted service token can no longer reach your application.
 
 {{<Aside type="note">}}
-When editing an Access application, clicking **Revoke existing tokens** revokes existing sessions but does not prevent the user from starting a new session. As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must delete the service token.
+When editing an Access application, selecting **Revoke existing tokens** revokes existing sessions but does not prevent the user from starting a new session. As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must delete the service token.
 {{</Aside>}}
 
 ## Set a token expiration alert

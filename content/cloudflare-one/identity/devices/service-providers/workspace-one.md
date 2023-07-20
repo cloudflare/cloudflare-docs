@@ -35,7 +35,7 @@ To retrieve those values:
 
 ## 2. Add Workspace ONE as a service provider
 
-1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
+1. Go to **Settings** > **Devices** > **Device posture providers** and select **Add new**.
 1. Select **Workspace ONE**.
 1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
 1. Enter the **Client ID** and **Client secret** you noted down above.
