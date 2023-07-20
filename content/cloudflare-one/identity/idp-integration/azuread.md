@@ -38,7 +38,7 @@ To retrieve those values:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **General**.
+   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **Custom Pages**.
 
    ![Registering an application in Azure](/images/cloudflare-one/identity/azure/name-app.png)
 
