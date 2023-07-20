@@ -67,7 +67,7 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 #### Custom block page
 
-When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/filtering/configuring-block-page/).
+When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/configuring-block-page/).
 
 ### Override
 
@@ -123,7 +123,7 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 ### Content Categories
 
-Use this selector to block domains belonging to specific [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories). When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category).
+Use this selector to block domains belonging to specific [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories). When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).
 
 | UI name            | API example                           |
 | ------------------ | ------------------------------------- |
@@ -248,7 +248,7 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 ### Security Categories
 
-Use this selector to block domains (and optionally, [IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories).
+Use this selector to block domains (and optionally, [IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
 
 | UI name             | API example                            |
 | ------------------- | -------------------------------------- |

@@ -77,4 +77,4 @@ End users can connect to the SSH session without any configuration by using Clou
 
 ---
 
-Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/filtering/network-policies/ssh-logging).
+Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/gateway/network-policies/ssh-logging).

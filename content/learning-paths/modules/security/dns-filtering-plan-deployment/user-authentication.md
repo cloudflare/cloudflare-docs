@@ -10,7 +10,7 @@ Finally, decide how users will authenticate to your Zero Trust organization. The
 | Authentication method | Pros | Cons |
 | ----------------------|----- | ---- |
 | Identity provider (most common)     | <li> Can build policies based on specific users and groups. </li> <li> DNS logs show who made the request. </li> | <li> Users must manually click on the WARP client and authenticate.</li> |
-| Service token         | <li> No user authentication required. </li> <li> Immediate enforcement of policies. </li> | <li> Cannot use [identity selectors](/cloudflare-one/policies/filtering/identity-selectors/) in policies. </li> <li> DNS logs only show device-level information, not user identity. </li> |
+| Service token         | <li> No user authentication required. </li> <li> Immediate enforcement of policies. </li> | <li> Cannot use [identity selectors](/cloudflare-one/policies/gateway/identity-selectors/) in policies. </li> <li> DNS logs only show device-level information, not user identity. </li> |
 
 ## Configure IdP authentication
 

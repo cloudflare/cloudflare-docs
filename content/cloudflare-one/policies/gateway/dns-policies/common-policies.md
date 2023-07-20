@@ -8,7 +8,7 @@ weight: 1
 
 The following policies are commonly used to secure DNS traffic.
 
-Refer to the [DNS policies page](/cloudflare-one/policies/filtering/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [DNS policies page](/cloudflare-one/policies/gateway/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
 
 {{<render file="gateway/_recommended-dns-policies.md">}}
 
@@ -18,7 +18,7 @@ Refer to the [DNS policies page](/cloudflare-one/policies/filtering/dns-policies
 
 Filter DNS queries to allow only specific users access.
 
-The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence).
+The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
 
 ### 1. Allow a group
 
@@ -35,7 +35,7 @@ The following example includes two policies. The first policy allows the specifi
 
 ## Control IP version
 
-Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/filtering/egress-policies/) to control which IP address is used to egress to the origin server.
+Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP address is used to egress to the origin server.
 
 ### Force IPv4
 

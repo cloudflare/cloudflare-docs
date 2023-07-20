@@ -6,7 +6,7 @@ weight: 1
 
 # Get started
 
-This section covers best practices for setting up [DNS](/cloudflare-one/policies/filtering/initial-setup/dns/), [HTTP](/cloudflare-one/policies/filtering/initial-setup/http/), and [network](/cloudflare-one/policies/filtering/initial-setup/network/) filtering policies.
+This section covers best practices for setting up [DNS](/cloudflare-one/policies/gateway/initial-setup/dns/), [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/), and [network](/cloudflare-one/policies/gateway/initial-setup/network/) filtering policies.
 
 For each type of policy, we recommend the following workflow:
 

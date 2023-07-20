@@ -8,7 +8,7 @@ weight: 1
 
 The following policies are commonly used to secure HTTP traffic.
 
-Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [HTTP policies page](/cloudflare-one/policies/gateway/http-policies/) for a comprehensive list of other selectors, operators, and actions.
 
 ## Block sites
 
@@ -38,9 +38,9 @@ Block a section of a site without blocking the entire site. For example, you can
 
 ## Skip inspection for groups of applications
 
-Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS inspection](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
 
-Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/filtering/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
 
 | Selector    | Operator | Value          | Action         |
 | ----------- | -------- | -------------- | -------------- |

@@ -40,11 +40,11 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 
 ### Do Not Inspect applications
 
-Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) for a variety of reasons, one of which is certificate pinning. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
+Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for a variety of reasons, one of which is certificate pinning. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
 
 This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in order to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
 
-Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. To ensure that traffic gets through to these applications, you can [create an HTTP policy](/cloudflare-one/policies/filtering/initial-setup/http/#bypass-inspection-for-incompatible-applications) for all _Do Not Inspect_ applications.
+Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. To ensure that traffic gets through to these applications, you can [create an HTTP policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) for all _Do Not Inspect_ applications.
 
 Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ HTTP policy and selecting all applications within the _Do Not Inspect_ app type, you will ensure that your _Do Not Inspect_ policy will apply to any new applications added to the app type.
 
@@ -54,4 +54,4 @@ Instead of setting up a _Do Not Inspect_ policy for an application, you may be a
 
 ## Office 365 integration
 
-You can perform a one-click action to bypass TLS decryption for all Office 365 traffic. To enable, go to **Settings** > **Network** > **Bypass decryption of Office 365 traffic** and select **Create policy**. This will create a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for all [Office 365 domains and IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). This policy also uses our own Cloudflare intelligence to determine which traffic belongs to Office 365.
+You can perform a one-click action to bypass TLS decryption for all Office 365 traffic. To enable, go to **Settings** > **Network** > **Bypass decryption of Office 365 traffic** and select **Create policy**. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Office 365 domains and IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). This policy also uses our own Cloudflare intelligence to determine which traffic belongs to Office 365.

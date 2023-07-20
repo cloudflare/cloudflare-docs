@@ -28,4 +28,4 @@ The recommended policy type depends on what kind of traffic you are trying to fi
 - To block malware and other security threats, create both DNS and HTTP policies.
 - To assign static IP addresses to your organization's egress traffic, create an egress policy.
 
-Refer to the [DNS](/cloudflare-one/policies/filtering/dns-policies/), [network](/cloudflare-one/policies/filtering/network-policies/), [HTTP](/cloudflare-one/policies/filtering/http-policies/), and [egress](/cloudflare-one/policies/filtering/egress-policies/) configuration pages to see the available filtering options within each policy builder.
+Refer to the [DNS](/cloudflare-one/policies/gateway/dns-policies/), [network](/cloudflare-one/policies/gateway/network-policies/), [HTTP](/cloudflare-one/policies/gateway/http-policies/), and [egress](/cloudflare-one/policies/gateway/egress-policies/) configuration pages to see the available filtering options within each policy builder.

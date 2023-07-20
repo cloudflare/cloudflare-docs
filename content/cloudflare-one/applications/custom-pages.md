@@ -31,7 +31,7 @@ The login page is now updated for all of your Access applications.
 You can display a custom block page when users fail to authenticate to an Access application.
 
 {{<Aside type="note">}}
-To customize the page that users see when they are blocked by a Gateway firewall policy, refer to [Gateway block page](/cloudflare-one/policies/filtering/configuring-block-page/).
+To customize the page that users see when they are blocked by a Gateway firewall policy, refer to [Gateway block page](/cloudflare-one/policies/gateway/configuring-block-page/).
 {{</Aside>}}
 
 To create a custom block page for Access:

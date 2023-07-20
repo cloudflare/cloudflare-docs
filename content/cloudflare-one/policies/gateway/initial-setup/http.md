@@ -34,7 +34,7 @@ We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications
 
-Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#limitations).
+Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
 This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
 | Selector    | Operator | Value          | Action         |
@@ -43,10 +43,10 @@ This will help avoid any certificate pinning errors that may arise from an initi
 
 ### Block all security categories
 
-Block [known threats](/cloudflare-one/policies/filtering/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
+Block [known threats](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
 
 {{<render file="gateway/_block-security-categories.md">}}
 
 ## 4. Add optional policies
 
-Refer to our list of [common HTTP policies](/cloudflare-one/policies/filtering/http-policies/common-policies) for other policies you may want to create.
+Refer to our list of [common HTTP policies](/cloudflare-one/policies/gateway/http-policies/common-policies) for other policies you may want to create.

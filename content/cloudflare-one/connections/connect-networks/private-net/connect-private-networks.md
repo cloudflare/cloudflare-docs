@@ -60,7 +60,7 @@ You can create Zero Trust policies to manage access to specific applications on 
 4. For **Application type**, select _Destination IP_.
 5. For **Value**, enter the IP address for your application (for example, `10.128.0.7`).
    {{<Aside type="note">}}
-   If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/filtering/network-policies/) using the **Destination IP** selector.
+   If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/gateway/network-policies/) using the **Destination IP** selector.
    {{</Aside>}}
 
 6. Configure your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
@@ -78,7 +78,7 @@ You can create Zero Trust policies to manage access to specific applications on 
      |--|--|--|--|
      | Block | Destination IP |in|`10.128.0.7` |
 
-   Policies are evaluated in [numerical order](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/filtering/network-policies/).
+   Policies are evaluated in [numerical order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/gateway/network-policies/).
 
 9. Select **Add application**.
 

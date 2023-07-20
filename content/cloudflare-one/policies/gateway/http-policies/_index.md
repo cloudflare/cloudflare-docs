@@ -13,7 +13,7 @@ Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-
 
 {{</Aside>}}
 
-HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/policies/filtering/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
+HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/policies/gateway/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
 
 An HTTP policy consists of an **Action** as well as a logical expression that determines the scope of the policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -52,7 +52,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                           |
-| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                           |
+| Block        | Display [block page](/cloudflare-one/policies/gateway/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                           |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
@@ -88,9 +88,9 @@ When a Do Not Inspect policy is created for a given hostname, application, or ap
 
 {{</Aside>}}
 
-Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. [Learn more](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) about applications which may require a Do Not Inspect policy.
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. [Learn more](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) about applications which may require a Do Not Inspect policy.
 
-All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. [Learn more](/cloudflare-one/policies/filtering/order-of-enforcement/#http-policies) about the order of enforcement for HTTP policies.
+All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. [Learn more](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies) about the order of enforcement for HTTP policies.
 
 ### Do Not Scan
 
@@ -124,7 +124,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 | ------------------ | ------------------------------------------------------- |
 | Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
 
-For more information, refer to our list of [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories).
+For more information, refer to our list of [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
 
 ### Destination Continent
 
@@ -224,7 +224,7 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 | -------------- | ------------------------------------------ |
 | Security Risks | `any(http.request.uri.category[*] in {1})` |
 
-For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories).
+For more information, refer to our list of [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
 
 ### Source Continent
 
