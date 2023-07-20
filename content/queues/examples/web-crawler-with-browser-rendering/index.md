@@ -102,7 +102,7 @@ Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Renderin
 
 Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits. 
 
-Refer to [Worker limits](https://developers.cloudflare.com/workers/platform/limits/#worker-limits) to learn more about usage models.
+Refer to [Worker limits](/workers/platform/limits/#worker-limits) to learn more about usage models.
 
 ## 5. Add bindings to environment
 
@@ -347,13 +347,12 @@ To deploy your Worker, run `wrangler deploy`.
 
 You have successfully created a Worker which can submit URLs to a Queue for crawling and save results to KV.
 
-
 Refer to [this GitHub Repository](https://github.com/cloudflare/queues-web-crawler) for the complete tutorial, including a frontend deployed with Pages to submit URLs and view crawler results.
 
 ## Related resources
 
-- [How Queues works](https://developers.cloudflare.com/queues/learning/how-queues-works/)
-- [Queues Batching and Retries](https://developers.cloudflare.com/queues/learning/batching-retries/)
-- [Browser Rendering](https://developers.cloudflare.com/browser-rendering/)
+- [How Queues works](/queues/learning/how-queues-works/)
+- [Queues Batching and Retries](/queues/learning/batching-retries/)
+- [Browser Rendering](/browser-rendering/)
 - [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)
 

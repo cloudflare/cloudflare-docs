@@ -16,6 +16,7 @@
   {{ end }}
   {{- $x := .RelPermalink -}}
   {{- $title := .Title -}}
+  {{- $meta := .Params.meta.description -}}
   {{- $self := eq $x $current -}}
   {{- $delta := sub (len (split $x "/")) $len -}}
   {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) (not .Params.hidden) -}}
@@ -32,7 +33,7 @@
   {{- $path = replaceRE `(.{1}$)` "$1/" (replaceRE `(^.{1})` "/$1" (replace $path ".md" "")) -}}
   {{- $delta2 := sub (len (split $path "/")) $len -}}
   {{- if and (hasPrefix $path $current) (lt $delta2 2) -}}
-  {{- $link = printf "[%s](%s)" $title . -}}
+  {{- $link = printf "[%s](%s): %s" $title . $meta -}}
   <li>
     {{- $.Page.RenderString $link -}}
   </li>
