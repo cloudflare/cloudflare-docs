@@ -6,7 +6,6 @@ weight: 3
 
 # Threat Intelligence APIs
 
-## Overview
 Cloudflare provides a series of endpoints covering various areas of internet security and insights. 
 
 | Intelligence Endpoint | Definition |
@@ -22,9 +21,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 
 ## API Examples
 
-Before you begin, ensure you have created an [API Token](/fundamentals/api/get-started/create-token/) with permissions to edit resources for this tutorial.
-
-Below are examples of the Threat Intelligence APIs. For complete documentation, navigate to their respective API documentation using the links above. 
+Below you can find examples of Threat Intelligence API calls. Make sure you are using an [API Token](/fundamentals/api/get-started/create-token/) with the appropriate edit permissions. For comprehensive details, navigate to the respective API documentation using the links above.
 
 ### ASN Intelligence
 <details open>
@@ -251,46 +248,39 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 <summary>Get results for a URL scan</summary>
 
 ```bash
-
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain-history?domain=cloudflare.com" \
+$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/brand-protection/url-info?url=http://worcester-realistic-ellen-portland.trycloudflare.com/login.html \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" | jq . 
 
 {
+    "errors": [],
+    "messages": [],
     "result": [
         {
-            "domain": "cloudflare.com",
-            "categorizations": [
+            "categorizations": [],
+            "model_results": [
                 {
-                    "categories": [
-                        {
-                            "id": 155,
-                            "name": "Technology"
-                        }
-                    ],
-                    "start": "2020-12-16T19:49:30.533482Z",
-                    "end": "2023-05-31T08:12:53.547029Z"
-                },
-                {
-                    "categories": [
-                        {
-                            "id": 115,
-                            "name": "Login Screens"
-                        },
-                        {
-                            "id": 155,
-                            "name": "Technology"
-                        }
-                    ],
-                    "start": "2023-05-31T08:12:53.547029Z"
+                    "model_name": "MACHINE_LEARNING_v2",
+                    "model_score": 0.999
                 }
-            ]
+            ],
+            "rule_matches": [
+                {
+                    "description": "Match frequently used phishing kit (Discord, Facebook, Instagram, Twitter)",
+                    "name": "phishkit.social"
+                }
+            ],
+            "scan_status": {
+                "last_processed": "Wed, 19 Jul 2023 14:15:28 GMT",
+                "scan_complete": true,
+                "status_code": 200,
+                "submission_id": 23098147
+            },
+            "url": "http://worcester-realistic-ellen-portland.trycloudflare.com/login.html"
         }
     ],
-    "success": true,
-    "errors": [],
-    "messages": []
+    "success": true
 }
 ```
 </details>
