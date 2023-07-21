@@ -11,7 +11,7 @@ Adaptive DDoS Protection learns your unique traffic patterns and adapts to them 
 Adaptive DDoS Protection provides the following types of protection:
 
 * **Origin-aware DDoS Protection**: Detects and mitigates traffic that deviates from your site's origin errors profile.
-* **User-agent-aware DDoS Protection**: Detects and mitigates traffic that deviates from the top User Agents seen by Cloudflare on the network. The User Agent profile is built from the entire Cloudflare network and not just from the customer's zone.
+* **User-agent-aware DDoS Protection**: Detects and mitigates traffic that deviates from the top User Agents seen by Cloudflare on the network. The User Agent profile is built from the entire Cloudflare network and not only from the customer's zone.
 * **Location-aware DDoS Protection**: Detects and mitigates traffic that deviates from your site’s geo-distribution profile. The profile is calculated from the rate for every client country and region, using the rates from the past seven days.
 * **Protocol-aware DDoS Protection**: Detects and mitigates traffic that deviates from your traffic’s IP protocol profile. The profile is calculated as a global rate for each of your prefixes.
 
