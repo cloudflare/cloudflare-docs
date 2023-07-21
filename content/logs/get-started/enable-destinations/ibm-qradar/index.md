@@ -49,7 +49,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 
 Cloudflare checks the accessibility of the IP address, port, and validates the certificate of the HTTP Receive log source. If all parameters are valid, a Logpush is created, and starts to send events to HTTP Receiver log source.
 
-## Amazon AWS S3 Rest API Protocol
+## Amazon AWS S3 Rest API
 
 When you use the Amazon S3 REST API protocol, IBM QRadar collects Cloudflare Log events from an Amazon S3 bucket. To use this option, you need to:
 

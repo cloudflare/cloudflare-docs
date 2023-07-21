@@ -31,7 +31,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ow
 
 ### Parameters
 
-- **destination_conf** - See [Destination](/logs/get-started/api-configuration/#destination) for details.
+- **destination_conf** - Refer to [Destination](/logs/get-started/api-configuration/#destination) for details.
 
 ### Response
 
@@ -54,7 +54,7 @@ You will need to provide the token contained in this file when creating a job in
 
 {{<Aside type="note" header="Note">}}
 
-When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
+When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it is uploaded.
 
 {{</Aside>}}
 
@@ -314,7 +314,7 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 }
 ```
 
-## Step 6 - Updating **logpull_options**
+## Step 6 - Update **logpull_options**
 
 If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **logpull_options** for your zone.
 

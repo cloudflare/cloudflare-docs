@@ -10,7 +10,7 @@ Jobs in Logpush now have a new key **output_options** which replaces **logpull_o
 
 Edge Logstream jobs do not support this yet.
 
-## Replacing logpull_options
+## Replace logpull_options
 
 Previously, Logpush jobs could be customized by specifying the list of fields, sampling rate, and timestamp format in **logpull_options** as [URL-encoded parameters](/logs/get-started/api-configuration/#options). For example:
 
@@ -44,7 +44,7 @@ We have replaced this with **output_options** as it is used for both Logpull and
 
 ## Output types
 
-By default Logpush outputs each record as a single line of JSON (aka ndjson).
+By default Logpush outputs each record as a single line of JSON (also known as ndjson).
 
 With **output_options** you can switch to CSV or single JSON object, further customize prefixes, suffixes, delimiters, or provide your own record template (in a stripped-down version of Go [text/template](https://pkg.go.dev/text/template) syntax).
 
