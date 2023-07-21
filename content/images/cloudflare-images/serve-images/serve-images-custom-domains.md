@@ -1,9 +1,9 @@
 ---
 pcx_content_type: reference
-title: Custom domains
+title: Custom domains and paths
 layout: single
 meta:
-    title: Serve images from custom domains
+    title: Serve images from custom domains and paths
 weight: 2
 ---
 
