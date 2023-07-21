@@ -44,7 +44,7 @@ We have replaced this with **output_options** as it is used for both Logpull and
 
 ## Output types
 
-By default Logpush outputs each record as a single line of JSON (also known as ndjson).
+By default Logpush outputs each record as a single line of JSON (also known as `ndjson`).
 
 With **output_options** you can switch to CSV or single JSON object, further customize prefixes, suffixes, delimiters, or provide your own record template (in a stripped-down version of Go [text/template](https://pkg.go.dev/text/template) syntax).
 
@@ -73,7 +73,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 ### ndjson
 
 <details>
-<summary>Default output_options for ndjson</summary>
+<summary>Default output_options for `ndjson`</summary>
 <div>
 
 ```json
@@ -114,7 +114,7 @@ Specifying **field_names** and **output_type** will result in the remaining opti
 </div>
 </details>
 
-- ndjson with different field names:
+- `ndjson` with different field names:
 
 <details>
 <summary>Example output_options</summary>

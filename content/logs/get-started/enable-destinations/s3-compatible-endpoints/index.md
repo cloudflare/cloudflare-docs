@@ -28,7 +28,7 @@ Enable Logpush to an S3-compatible destination via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
 2. Select the Enterprise account or domain you want to use with Logpush.
 

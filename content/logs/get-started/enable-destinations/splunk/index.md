@@ -17,7 +17,7 @@ Enable Logpush to Splunk via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
 2. Select the Enterprise account or domain you want to use with Logpush.
 
@@ -164,7 +164,7 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may get
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Security** > **WAF** > **Firewall rules**.
 2. Select **Create firewall rule** and enter a descriptive name for it (for example, Splunk).
-3. Under **When incoming requests match...**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
+3. Under **When incoming requests match**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
 
 {{<table-wrap>}}
 
