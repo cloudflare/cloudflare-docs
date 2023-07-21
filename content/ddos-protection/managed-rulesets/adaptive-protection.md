@@ -78,7 +78,7 @@ To configure a rule, refer to the instructions in the following pages:
 
 For more information on the available configuration parameters, refer to the following pages:
 
-* For the Origin-aware, User-agent-aware, and Location-aware (L7) DDoS Protection rules:
-    * [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/)
-* For the Protocol-aware DDoS Protection rule:
-    * [Network-layer DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/network/override-parameters/)
+* For the Origin-aware, User-agent-aware, and Location-aware (L7) DDoS Protection rules:<br>
+  [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/)
+* For the Protocol-aware DDoS Protection rule:<br>
+  [Network-layer DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/network/override-parameters/)
