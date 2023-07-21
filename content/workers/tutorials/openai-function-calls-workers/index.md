@@ -100,7 +100,7 @@ async fetch(request, env, ctx) {
 
 To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set your `OPENAI_API_KEY`. This key is the API key you created earlier in the OpenAI dashboard:
 ```sh
-npx wrangler secret put OPENAI_API_KEY
+$ npx wrangler secret put <OPENAI_API_KEY>
 ```
 
 For local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
