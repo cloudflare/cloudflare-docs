@@ -210,7 +210,7 @@ In this function, you take the URL that you received back from OpenAI and use Ja
 
 With this function in place, run your code again to review that you are properly calling your function and pulling website data:
 ```sh
-npx wrangler dev
+$ npx wrangler dev
 ```
 
 When you open a browser, you should see the log of the website content in your terminal.
