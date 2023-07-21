@@ -96,12 +96,12 @@ The metrics aggregated under this tab span multiple Cloudflare services.  The p
 
 ### DNS
 
-The DNS tab presents several statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
+The DNS tab presents statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
 
-The metrics panels available under the DNS tab include:
+The metrics panels available under the DNS tab may include:
 
--   **DNS Queries** - Displays several area charts and data tables for DNS record metrics including queries by _Response Code_, _Record Type_ as well as records that return an _NXDOMAIN_ response (dns record doesn’t exist). You can filter by one or several DNS records by entering record names (for example, www.example.com) in the dropdown near the top.
--   **DNS Queries by Data Center** - Lets you view DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _Traffic_, _NXDOMAIN_, and _NOERROR_.
+-   **DNS Queries** - Displays area charts and data tables for DNS record metrics. For free plans, this section includes _Queries by Response Code_ and, for Pro and above, this section also includes _Queries by Record Type_. Records that return an _NXDOMAIN_ response (dns record doesn’t exist) are also considered. For zones in Enterprise plan, you can also filter by one or several DNS records by entering record names (for example, www.example.com) in the dropdown near the top.
+-   **DNS Queries by Data Center** - Displays DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _DNS Traffic_, _NXDOMAIN_, and _NOERROR_. This section is available to zones in Pro plan or above.
 
 ### Workers
 
