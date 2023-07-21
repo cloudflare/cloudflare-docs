@@ -70,7 +70,7 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Assign values to the variables
 
-{{<render file="_terraform_variables_values.md">}}
+{{<render file="_terraform_variable_values.md">}}
 
 ### Configure Terraform providers
 
