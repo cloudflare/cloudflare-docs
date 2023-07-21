@@ -23,7 +23,7 @@ You will learn how to:
 
 ---
 
-## Create a Worker project
+## 1. Create a Worker project
 
 Create a Worker project in the command line:
 
@@ -50,7 +50,7 @@ Inside of your new `openai-function-calling-workers` directory, find the `src/wo
 
 You will also need an OpenAI account and API key for this tutorial. If you do not have one, [create a new OpenAI account](https://platform.openai.com/signup) and [create an API key](https://platform.openai.com/account/api-keys) to continue with this tutorial. Make sure to store you API key somewhere safe so you can use it later.
 
-## Make a request to OpenAI
+## 2. Make a request to OpenAI
 
 With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. You will also be using the `axios-fetch` adapter to interact with OpenAI's node library on the edge. Install the OpenAI node library and `axios-fetch` adapter with `npm`:
 ```sh
@@ -165,7 +165,7 @@ Object {
 
 Function calling intelligently determines what content to pass in the argument. Take note that you did not specify your `messages` `content` as `"what's happening on nba.com today?"`, but instead asked `"What's happening in the NBA today?"`. OpenAI determined that "https://www.nba.com" was the right URL to pass to your function.
 
-## Building your `read_website_content()` function
+## 3. Building your `read_website_content()` function
 
 Add the code to call your function when OpenAI determines you need to:
 ```js
@@ -216,7 +216,7 @@ $ npx wrangler dev
 
 When you open a browser, you should see the log of the website content in your terminal.
 
-## Send your function response back to OpenAI
+## 4. Send your function response back to OpenAI
 
 The last part of your application is returning the data you got back from your `worker.js` function to OpenAI and having it answer the user's original question. Right after you log `websiteContent`, make a second call to the chat completion API:
 ```js
@@ -243,7 +243,7 @@ This request to OpenAI will look similar to first request. But this time, instea
 
 Run your code again by running `npx wrangler dev` and open it in your browser. This will now show you OpenAI's response using real-time information from the website. You can try other websites and topics by updating the user's message in your two API calls.
 
-## Deploy your Worker application
+## 5. Deploy your Worker application
 
 To deploy your application, run the `npx wrangler deploy` command to deploy your Worker application:
 
@@ -253,7 +253,7 @@ $ npx wrangler deploy
 
 You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
 
-## Next steps
+## 6. Next steps
 
 Reference the [finished code for this tutorial on GitHub](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/openai-function-calling).
 
