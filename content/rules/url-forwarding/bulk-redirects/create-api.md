@@ -107,7 +107,7 @@ header: Response
 }
 ```
 
-This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation status](/api/operations/lists-get-bulk-operation-status) method:
+This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation status](/api/operations/lists-get-bulk-operation-status) operation:
 
 ```bash
 ---
