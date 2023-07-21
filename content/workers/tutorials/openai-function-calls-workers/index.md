@@ -87,12 +87,12 @@ filename: worker.js
 ---
 async fetch(request, env, ctx) {
   const configuration = new Configuration({
-        apiKey: env.OPENAI_API_KEY,
-        baseOptions: {
-            adapter: fetchAdapter
-        }
-      });
-      const openai = new OpenAIApi(configuration);
+    apiKey: env.OPENAI_API_KEY,
+    baseOptions: {
+      adapter: fetchAdapter
+    }
+  });
+  const openai = new OpenAIApi(configuration);
 
   return new Response('Hello World!');
 },
