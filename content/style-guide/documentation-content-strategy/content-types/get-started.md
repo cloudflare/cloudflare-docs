@@ -68,4 +68,4 @@ Point to more complex setup options.
 
 ## Example
 
-[Waiting Room](/waiting-room/get-started/): get started guide
+[Waiting Room: Get started](/waiting-room/get-started/)

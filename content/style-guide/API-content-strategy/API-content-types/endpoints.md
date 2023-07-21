@@ -65,6 +65,6 @@ Below are some examples of endpoint titles and descriptions for reference:
 
 **Plan availability**: Free, Pro, Business, Enterprise
 
-**Method**: GET
+**Method**: `GET`
 
 **Endpoint**: user/audit_logs

@@ -16,7 +16,7 @@ Guiding, straightforward, solution-oriented
 
 ## content_type
 
-Use the metadata tag for the Content Type you create within the /support/ tile.</td>
+Use the metadata tag for the Content Type you create within the Support tile.</td>
 
 ### Required components
 
