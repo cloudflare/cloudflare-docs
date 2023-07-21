@@ -158,7 +158,8 @@ After your request to OpenAI completes, you are logging the message back to conf
 Object {
   name: read_website_content,
   arguments: {
-"url": "https://www.nba.com/"
+    "url": "https://www.nba.com/"
+  }
 }
 ```
 
