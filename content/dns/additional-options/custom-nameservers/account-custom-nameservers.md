@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Account level
 weight: 4
 meta:
-  title: Account-level custom nameservers
+  title: Account custom nameservers
   description: With account-level custom nameservers, you can use the same custom nameservers for different zones in the account. The domain or domains that provide the nameservers names do not have to exist as zones in Cloudflare.
 ---
 
