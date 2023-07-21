@@ -253,7 +253,7 @@ async function handleEvent(event) {
 }
 ```
 
-## Publish
+## Deploy
 
 Your i18n tool built on Cloudflare Workers is complete and it is time to deploy it to your domain.
 
@@ -288,13 +288,13 @@ bucket = "./public"
 entry-point = "workers-site"
 ```
 
-Using `wrangler`, publish to Cloudflare’s network, using the `publish` command:
+Deploy your project to Cloudflare’s network:
 
 ```sh
 ---
 theme: dark
 ---
-~/i18n-example $ wrangler publish
+~/i18n-example $ npx wrangler deploy
 ```
 
 ![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)

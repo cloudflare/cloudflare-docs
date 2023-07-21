@@ -351,12 +351,12 @@ Quit Wrangler by typing `q` into the shell where it was started.
 After you have validated that your Worker can connect to your Turso database, publish your Worker. Run the following Wrangler command to publish our Worker publicly:
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 The first time you run this command, it will launch a browser, ask you to sign in with your Cloudflare account, and grant permissions to Wrangler.
 
-The `publish` command will output the following:
+The `deploy` command will output the following:
 
 ```sh
 Your worker has access to the following bindings:

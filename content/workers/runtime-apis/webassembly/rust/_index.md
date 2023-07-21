@@ -131,7 +131,7 @@ Implements convenient [routing API](https://docs.rs/worker/latest/worker/struct.
 With your project configured, you can now deploy your Worker, to a `*.workers.dev` subdomain, or a [Custom Domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.

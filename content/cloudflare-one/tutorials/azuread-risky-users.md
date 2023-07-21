@@ -116,7 +116,7 @@ The [Cron Trigger](/workers/configuration/cron-triggers/) in this example schedu
 5. Publish the Worker to your Workers account.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 6. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.

@@ -253,7 +253,7 @@ This will create a directory for your project with basic configuration and a sin
 - [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm)
 - [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs)
 
-The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler publish`](/workers/wrangler/commands/) command.
+The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command.
 
 ### Specify the main module
 
@@ -310,7 +310,7 @@ You must initiate a migration process when you create a new Durable Object class
 
 {{<Aside type="note">}}
 
-Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler publish`](/workers/wrangler/commands/). This is true even for changes to how code interacts with persistent storage. Because of [Global Uniqueness](/workers/configuration/durable-objects/#global-uniqueness) you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
+Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler deploy`](/workers/wrangler/commands/#deploy). This is true even for changes to how code interacts with persistent storage. Because of [Global Uniqueness](/workers/configuration/durable-objects/#global-uniqueness) you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
 
 {{</Aside>}}
 
@@ -382,11 +382,11 @@ While CLI migrations initially served a way to quickly migrate Durable Objects, 
 
 {{</Aside>}}
 
-It is possible to define a migration purely through extra arguments to the `wrangler publish` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
+It is possible to define a migration purely through extra arguments to the `wrangler deploy` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
 
-You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler publish` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
+You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler deploy` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
 
-The list of CLI migration arguments that can be added to `wrangler publish` is as follows:
+The list of CLI migration arguments that can be added to `wrangler deploy` is as follows:
 
 ```bash
 --old-tag <tag name> # Optional if your script does not have a migration tag set yet.
@@ -541,7 +541,7 @@ export class Counter {
 
 The `wrangler dev` command opens up a tunnel from your local development environment to Cloudflare's global network, letting you test your Durable Objects code in the Workers environment as you write it.
 
-`wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+`wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler deploy`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
 ### GraphQL Analytics
 
@@ -586,7 +586,7 @@ In your `wrangler.toml` file, make sure the `dir` and `main` entries point to th
 
 #### Error when deleting migration
 
-When deleting a migration using `wrangler publish --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
+When deleting a migration using `wrangler deploy --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
 
 #### Error: Durable Object is overloaded.
 

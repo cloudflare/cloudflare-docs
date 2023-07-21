@@ -364,13 +364,13 @@ name = "worker-to-text"
 
 ```
 
-Then run the `wrangler publish` command to publish your Worker.
+Then run the `wrangler deploy` command to publish your Worker.
 
 ```sh
-$ wrangler publish
+$ npx  wrangler deploy
 ```
 
-A `.workers.dev` domain will be generated for your Worker after running `wrangler publish`. You will use this domain in the main thumbnail image.
+A `.workers.dev` domain will be generated for your Worker after running `wrangler deploy`. You will use this domain in the main thumbnail image.
 
 ## Create a Worker to display the original image
 
@@ -528,7 +528,7 @@ name = "thumbnail-image"
 Deploy your Worker by running:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 The command deploys your Worker to custom `workers.dev` subdomain. Go to your `.workers.dev` subdomain and go to the `/thumbnail` route.

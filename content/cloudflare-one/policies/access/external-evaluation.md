@@ -86,7 +86,7 @@ You can set up External Evaluation rules using any API service, but to get start
 2. Publish the Worker to your Workers account.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -133,7 +133,7 @@ To debug your External Evaluation rule:
 3. Publish your changes.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 4. Next, start a session to output realtime logs from your Worker.

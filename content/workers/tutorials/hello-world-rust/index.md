@@ -121,13 +121,11 @@ async function handleRequest(request) {
 
 If `wrangler dev` is running, you will see the output of your Rust program in your browser a few seconds after you save it in your editor. Wrangler watches your project for changes then compiles your Rust to WebAssembly and outputs compiler errors.
 
-## Publish
+## Deploy
 
 You have completed writing a Cloudflare Workers function with Rust-generated Wasm.
 
-Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
-
-![GIF of successfully publishing your project with the `wrangler publish` command](/images/workers/tutorials/rust/publish.gif)
+Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy), which will build and deploy your code.
 
 ## Related resources
 

@@ -50,21 +50,21 @@ Subsequent deployments will reuse both of these values (saved in your `node_modu
 From here, you have created an empty project and can now publish your assets for your first deployment and for all subsequent deployments in your production environment. To do this, execute the following command:
 
 ```sh
-$ wrangler pages publish <OUTPUT_DIRECTORY>
+$ wrangler pages deploy <OUTPUT_DIRECTORY>
 ```
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
  
 {{<Aside type= "note">}}
 
-Before using the `wrangler publish` command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
+Before using the `wrangler deploy` command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
 
 {{</Aside>}}
  
 However, to publish assets to a preview environment, run: 
 
 ```sh
-$ wrangler pages publish <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
+$ wrangler pages deploy <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
 ```
 
 For every branch you create, a branch alias will be available to you at `<BRANCH_NAME>.<PROJECT_NAME>.pages.dev`. 

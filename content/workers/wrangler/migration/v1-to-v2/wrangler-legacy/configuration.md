@@ -88,7 +88,7 @@ kv_namespaces = [
 ]
 ```
 
-To deploy this example Worker to the `helloworld` environment, you would run `wrangler publish --env helloworld`.
+To deploy this example Worker to the `helloworld` environment, you would run `wrangler deploy --env helloworld`.
 
 ---
 
@@ -253,7 +253,7 @@ let value = await FOO.get("keyname");
 
 - `id` {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The ID of the KV namespace that your `binding` should represent. Required for `wrangler publish`.
+  - The ID of the KV namespace that your `binding` should represent. Required for `wrangler deploy`.
 
 - `preview_id` {{<prop-meta>}}required{{</prop-meta>}}
 

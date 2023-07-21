@@ -145,7 +145,7 @@ This Worker instantiates a browser using Puppeteer, opens a new page, navigates 
 
 ## Test and deploy
 
-Run `npx wrangler dev --remote` to test your Worker, and `npx wrangler publish` to publish it.
+Run `npx wrangler dev --remote` to test your Worker, and `npx wrangler deploy` to publish it.
 
 ## Related resources
 

@@ -701,7 +701,7 @@ export default async request => {
 
 By completing the preceding steps, you have finished writing the code for your Slack bot. You can now publish your application.
 
-Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
+Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler deploy`, which will build and publish your code:
 
 ![Animated gif of running the `wrangler publish` command to deploy your Workers application](/images/workers/tutorials/slackbot/publish.gif)
 

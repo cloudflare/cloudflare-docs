@@ -213,7 +213,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 5. Publish the Worker to your account.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 ### 4. Configure the Worker

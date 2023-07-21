@@ -165,7 +165,7 @@ database_name = "<YOUR_DATABASE_NAME>"
 database_id = "<YOUR_DATABASE_UUID>"
 ```
 
-Now, run `wrangler publish` to publish your project to Cloudflare. When it has successfully published, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:
+Now, run `npx wrangler deploy` to publish your project to Cloudflare. When it has successfully published, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:
 
 ```sh
 # Note: Your workers.dev deployment URL may be different
