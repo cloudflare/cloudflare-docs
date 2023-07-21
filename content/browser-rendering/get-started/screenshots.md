@@ -46,7 +46,7 @@ filename: wrangler.toml
 name = "browser-worker"
 main = "src/index.ts"
 compatibility_date = "2023-03-14"
-node_compat = true
+compatibility_flags = [ "nodejs_compat" ]
 workers_dev = true
 
 browser = { binding = "MYBROWSER", type = "browser" }
