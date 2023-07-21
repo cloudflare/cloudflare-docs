@@ -173,7 +173,7 @@ filename: worker.js
 ---
  let websiteContent;
 
- if(msg.function_call.name === "read_website_content") {
+ if (msg.function_call.name === "read_website_content") {
     const url = JSON.parse(msg.function_call.arguments).url;
     websiteContent = await read_website_content(url);
     console.log(websiteContent);
