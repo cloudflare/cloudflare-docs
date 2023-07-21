@@ -26,8 +26,8 @@ This will place a `warp-debugging-info-<date>-<time>.zip` on your Desktop.
 
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
- 
-1. Open a Command Prompt or Powershell window.
+
+1. Open a Command Prompt or PowerShell window.
 2. Run the `warp-diag` tool:
     ```bash
     C:\Users\JohnDoe>warp-diag
@@ -36,7 +36,7 @@ This will place a `warp-debugging-info-<date>-<time>.zip` on your Desktop.
 
 {{</tab>}}
 {{<tab label="linux" no-code="true">}}
- 
+
 1. Open a Terminal window.
 2. Run the `warp-diag` tool:
     ```sh
@@ -99,7 +99,7 @@ The `warp-debugging-info-<date>-<time>.zip` archive contains the following files
 
 The `warp-debugging-info` folder may contain multiple versions of the same log, such as `daemon.log`, `daemon.1.log`, and `daemon.2.log`. Since logs can get very long, they are rotated either daily or when they exceed a certain size.
 
-- `<logfile>.log` is the most current log. This is almost always the log you should be looking at, as it shows events that occured on the day you ran the `warp-diag` command.
+- `<logfile>.log` is the most current log. This is almost always the log you should be looking at, as it shows events that occurred on the day you ran the `warp-diag` command.
 - `<logfile>.1.log` shows events from the previous day.
 - `<logfile>.2.log` shows events from two days before.
 

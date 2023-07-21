@@ -33,7 +33,7 @@ In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch)
 
 {{</Aside>}}
 
-When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public WiFi, or a firewall at a customer site blocking the connection).
+When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
 
 You can also set a **Timeout** to define how long the user is allowed to toggle on or off the WARP switch.
 
@@ -178,7 +178,7 @@ When `Enabled`, users will receive update notifications when a new version of th
 
 When `Enabled`, the client will automatically reconnect if it has been disabled for the specified **Timeout** value. This setting is best used in conjunction with [Lock WARP Switch](#lock-warp-switch) above.
 
-We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified, the client defaults to the Connected state (for example, after a reboot or the initial install).
+We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified, the client defaults to the Connected state (for example, after a reboot or the initial install).
 
 **Value:**
 

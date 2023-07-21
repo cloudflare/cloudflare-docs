@@ -12,7 +12,7 @@ By following this guide, you will create a Worker through which your application
 This example worker could serve as a basis for your own use case where you can add authentication to the worker, or even add extra validation logic when uploading each part.
 This guide also contains an example Python application that uploads files to this worker.
 
-This guide assumes you have set up the [R2 binding](/workers/platform/bindings/) for your Worker. Refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage) for instructions on setting up an R2 binding.
+This guide assumes you have set up the [R2 binding](/workers/configuration/bindings/) for your Worker. Refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage) for instructions on setting up an R2 binding.
 
 ## An example Worker using the multipart API
 

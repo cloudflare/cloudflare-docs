@@ -168,6 +168,6 @@ To solve this issue, review your various [URL forwarding rules](/rules/url-forwa
 
 {{<Aside type="note">}}
 
-To reduce the potential for redirect loops and [mixed content errors](https://support.cloudflare.com/hc/articles/200170476), Cloudflare recommends Wordpress users to install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) at their origin web server and enable the *Automatic HTTPS rewrites* option within the plugin. Alternatively, Cloudflare recommends the [SSL insecure content fixer](https://en-gb.wordpress.org/plugins/ssl-insecure-content-fixer/) or [Really Simple SSL plugin](https://en-gb.wordpress.org/plugins/really-simple-ssl/).
+To reduce the potential for redirect loops and [mixed content errors](/ssl/troubleshooting/mixed-content-errors/), Cloudflare recommends Wordpress users to install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) at their origin web server and enable the *Automatic HTTPS rewrites* option within the plugin. Alternatively, Cloudflare recommends the [SSL insecure content fixer](https://en-gb.wordpress.org/plugins/ssl-insecure-content-fixer/) or [Really Simple SSL plugin](https://en-gb.wordpress.org/plugins/really-simple-ssl/).
 
 {{</Aside>}}

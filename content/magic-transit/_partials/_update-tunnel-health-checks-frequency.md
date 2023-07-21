@@ -16,10 +16,12 @@ Here is an example of how you would adjust health check frequency to `low`. Note
 
 ```bash
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/gre_tunnels/<tunnel_identifier> \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <YOUR_EMAIL> ' \
-  --data '{"health_check": {"rate":"low"}}'
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tunnel_id} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--data '{
+  "health_check": {"rate":"low"}
+  }'
 ```
 
 Refer to the API documentation for more information on how to [update a GRE](/api/operations/magic-gre-tunnels-update-gre-tunnel), [IPsec](/api/operations/magic-i-psec-tunnels-update-i-psec-tunnel) or [CNI](/api/operations/magic-interconnects-update-interconnect) tunnel.

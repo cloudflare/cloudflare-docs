@@ -5,6 +5,7 @@ weight: 1
 layout: single
 meta:
    title: Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
+updated: 2023-01-12
 ---
 
 # Deploy and configure Microsoft Office 365 with Area 1 as the MX Record

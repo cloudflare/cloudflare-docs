@@ -22,13 +22,13 @@ Use one of the following API endpoints:
 
 | Operation                           | Method + Endpoint                     |
 | ----------------------------------- | ------------------------------------- |
-| [List account rulesets][lr-account] | `GET /accounts/<ACCOUNT_ID>/rulesets` |
-| [List zone rulesets][lr-zone]       | `GET /zones/<ZONE_ID>/rulesets`       |
+| [List account rulesets][lr-account] | `GET /accounts/{account_id}/rulesets` |
+| [List zone rulesets][lr-zone]       | `GET /zones/{zone_id}/rulesets`       |
 
 [lr-account]: /api/operations/listAccountRulesets
 [lr-zone]: /api/operations/listZoneRulesets
 
-The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
+The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the [phase](/ruleset-engine/about/phases/) where that ruleset is defined.
 
 Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy to the specified zone.
 
@@ -47,8 +47,8 @@ The result does not include the list of rules in the ruleset. Check [View a spec
 <div>
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -67,7 +67,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
       "description": "",
       "kind": "zone",
       "version": "5",
-      "last_updated": "2021-03-18T18:30:08.122758Z",
+      "last_updated": "2023-03-18T18:30:08.122758Z",
       "phase": "http_request_firewall_managed"
     }
   ],
@@ -88,10 +88,10 @@ Use one of the following API endpoints:
 
 | Operation                                      | Method + Endpoint                                                    |
 | ---------------------------------------------- | -------------------------------------------------------------------- |
-| [Get an account ruleset][gr-account]           | `GET /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>`                   |
-| [Get a zone ruleset][gr-zone]                  | `GET /zones/<ZONE_ID>/rulesets/<RULESET_ID>`                         |
-| [Get an account entry point ruleset][gep-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
-| [Get a zone entry point ruleset][gep-zone]       | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint`       |
+| [Get an account ruleset][gr-account]           | `GET /accounts/{account_id}/rulesets/{ruleset_id}`                   |
+| [Get a zone ruleset][gr-zone]                  | `GET /zones/{zone_id}/rulesets/{ruleset_id}`                         |
+| [Get an account entry point ruleset][gep-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint` |
+| [Get a zone entry point ruleset][gep-zone]       | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint`       |
 
 [gr-account]: /api/operations/getAccountRuleset
 [gr-zone]: /api/operations/getZoneRuleset
@@ -116,8 +116,8 @@ The API returns a `404 Not Found` HTTP status code under these conditions:
 <div>
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -144,10 +144,10 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
         "action_parameters": {
           "id": "<MANAGED_RULESET_ID>"
         },
-        "last_updated": "2021-03-17T15:42:37.917815Z"
+        "last_updated": "2023-03-17T15:42:37.917815Z"
       }
     ],
-    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "last_updated": "2023-03-17T15:42:37.917815Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,
@@ -167,10 +167,10 @@ Use one of the following API endpoints:
 
 | Operation                                                  | Method + Endpoint                                                             |
 | ---------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [List account ruleset versions][lv-account]                | `GET /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions`                   |
-| [List zone ruleset versions][lv-zone]                      | `GET /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions`                         |
-| [List account entry point ruleset versions][lev-account]   | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions` |
-| [List zone entry point ruleset versions][lev-zone]         | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions`       |
+| [List account ruleset versions][lv-account]                | `GET /accounts/{account_id}/rulesets/{ruleset_id}/versions`                   |
+| [List zone ruleset versions][lv-zone]                      | `GET /zones/{zone_id}/rulesets/{ruleset_id}/versions`                         |
+| [List account entry point ruleset versions][lev-account]   | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint/versions` |
+| [List zone entry point ruleset versions][lev-zone]         | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint/versions`       |
 
 [lv-account]: /api/operations/listAccountRulesetVersions
 [lv-zone]: /api/operations/listZoneRulesetVersions
@@ -188,8 +188,8 @@ When the specified phase entry point ruleset does not exist, this API method ret
 <div>
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -208,7 +208,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
       "description": "",
       "kind": "zone",
       "version": "1",
-      "last_updated": "2021-02-17T11:15:13.128705Z",
+      "last_updated": "2023-02-17T11:15:13.128705Z",
       "phase": "http_request_firewall_managed"
     },
     {
@@ -217,7 +217,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
       "description": "",
       "kind": "zone",
       "version": "2",
-      "last_updated": "2021-02-17T11:24:06.869326Z",
+      "last_updated": "2023-02-17T11:24:06.869326Z",
       "phase": "http_request_firewall_managed"
     }
   ],
@@ -238,13 +238,13 @@ Use one of the following API endpoints:
 
 | Operation                                                  | Method + Endpoint                                                                              |
 |------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| [Get an account ruleset version][grv-account]              | `GET /account/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>`                    |
-| [Get a zone ruleset version][grv-zone]                     | `GET /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>`                         |
-| [Get an account entry point ruleset version][gerv-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions/<VERSION_NUMBER>` |
-| [Get a zone entry point ruleset version][gerv-zone]        | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions/<VERSION_NUMBER>`       |
+| [Get an account ruleset version][grv-account]              | `GET /account/{account_id}/rulesets/{ruleset_id}/versions/{version_number}`                    |
+| [Get a zone ruleset version][grv-zone]                     | `GET /zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number}`                         |
+| [Get an account entry point ruleset version][gerv-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}` |
+| [Get a zone entry point ruleset version][gerv-zone]        | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}`       |
 
-[grv-account]: /api/operations/getAccountRulesetVersions
-[grv-zone]: /api/operations/getZoneRulesetVersions
+[grv-account]: /api/operations/getAccountRulesetVersion
+[grv-zone]: /api/operations/getZoneRulesetVersion
 [gerv-account]: /api/operations/getAccountEntrypointRulesetVersion
 [gerv-zone]: /api/operations/getZoneEntrypointRulesetVersion
 
@@ -257,8 +257,8 @@ When the specified phase entry point ruleset does not exist, this API method ret
 <div>
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -285,10 +285,10 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
         "action_parameters": {
           "id": "<MANAGED_RULESET_ID>"
         },
-        "last_updated": "2021-03-17T15:42:37.917815Z"
+        "last_updated": "2023-03-17T15:42:37.917815Z"
       }
     ],
-    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "last_updated": "2023-03-17T15:42:37.917815Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,
@@ -312,7 +312,7 @@ Returns a list of all the rules in a managed ruleset with a specific tag.
 
 | Operation                                            | Method + Endpoint                                                                                      |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [List rules in account ruleset version by tag][lrbt] | `GET /accounts/<ACCOUNT_ID>/rulesets/<MANAGED_RULESET_ID>/versions/<VERSION_NUMBER>/by_tag/<TAG_NAME>` |
+| [List rules in account ruleset version by tag][lrbt] | `GET /accounts/{account_id}/rulesets/{managed_ruleset_id}/versions/{version_number}/by_tag/{tag_name}` |
 
 [lrbt]: /api/operations/listAccountRulesetVersionRulesByTag
 
@@ -323,8 +323,8 @@ Returns a list of all the rules in a managed ruleset with a specific tag.
 <div>
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/2/by_tag/wordpress" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/2/by_tag/wordpress \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -356,7 +356,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULES
           "wordpress"
         ],
         "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
-        "last_updated": "2021-03-19T16:54:32.942986Z",
+        "last_updated": "2023-03-19T16:54:32.942986Z",
         "ref": "<RULE_REF_1>",
         "enabled": true
       },
@@ -366,13 +366,13 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULES
         "action": "block",
         "categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
         "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
-        "last_updated": "2021-03-19T16:54:32.942986Z",
+        "last_updated": "2023-03-19T16:54:32.942986Z",
         "ref": "<RULE_REF_2>",
         "enabled": true
       }
       // (...)
     ],
-    "last_updated": "2021-03-19T16:54:32.942986Z",
+    "last_updated": "2023-03-19T16:54:32.942986Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,

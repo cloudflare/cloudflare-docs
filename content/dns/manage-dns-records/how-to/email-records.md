@@ -24,7 +24,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
 
      | **Type** | **Name** | **IPv4 address** | **Proxy status** |
      | -------- | -------- | ---------------- | ---------------- |
-     | A        | `mail`   | `192.0.2.1`      | Proxied          |
+     | A        | `mail`   | `192.0.2.1`      | DNS only         |
 
      <details>
       <summary>API example</summary>
@@ -105,8 +105,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
         "type":"MX",
         "name":"example.com",
         "content":"mail.example.com",
-        "ttl":3600,
-        "proxied":false
+        "ttl":3600
       }'
       ```
 

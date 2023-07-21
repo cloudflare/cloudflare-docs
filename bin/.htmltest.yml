@@ -1,0 +1,14 @@
+DirectoryPath: "public"
+EnforceHTTPS: false
+IgnoreURLs:
+- "/api/*"
+IgnoreDirs:
+- "support/other-languages/"
+CheckLinks: false
+CheckImages: false
+CheckScripts: false
+CheckGeneric: false
+CheckExternal: false
+IgnoreInternalEmptyHash: true
+IgnoreEmptyHref: true
+IgnoreDirectoryMissingTrailingSlash: true

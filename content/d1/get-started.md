@@ -33,7 +33,7 @@ You will create a new Worker as the container for both your D1 database and the 
 Create a new project named `d1-tutorial` by running:
 
 ```sh
-$ npm create cloudflare
+$ npm create cloudflare@latest
 
 ```
 
@@ -52,9 +52,9 @@ This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare`.
+If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
-For example: `CI=true npm create cloudflare d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
+For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
 {{</Aside>}}
 
@@ -85,11 +85,27 @@ database_name = "<DATABASE_NAME>"
 database_id = "<unique-ID-for-your-database>"
 ```
 
-This will create a new D1 database, and output the [binding](/workers/platform/bindings/) configuration needed in the next step.
+This will create a new D1 database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+
+{{<Aside type="note" heading="New experimental back-end">}}
+
+D1 has a new experimental storage back-end that dramatically improves query throughput, latency and reliability. The experimental back-end will become the default back-end for all new D1 databases in the near future.
+
+To create a database using the experimental back-end, use `wrangler` and set the `--experimental-backend` flag when creating a database: 
+
+```sh
+$ wrangler d1 create <DATABASE_NAME> --experimental-backend
+```
+
+Databases created with the experimental back-end do not currently support back-ups. Support for back-ups is coming soon. 
+
+Refer to the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to-11/) to learn more about experimental back-end.
+
+{{</Aside>}}
 
 ## 3. Bind your Worker to your D1 database
 
-You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/platform/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
 To bind your D1 database to your Worker, add the following to the end of your `wrangler.toml` file:
 

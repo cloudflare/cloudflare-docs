@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Create WAF exceptions
 weight: 7
+layout: single
 ---
 
 # Create WAF exceptions

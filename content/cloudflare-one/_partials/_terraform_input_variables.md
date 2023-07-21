@@ -61,5 +61,6 @@ The following variables will be passed into your GCP and Cloudflare configuratio
     variable "cloudflare_token" {
       description = "Cloudflare API token created at https://dash.cloudflare.com/profile/api-tokens"
       type        = string
+      sensitive   = true
     }
     ```

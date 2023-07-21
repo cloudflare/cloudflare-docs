@@ -47,7 +47,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 Configure your waiting room with the following required parameters in the `data` field:
 
 *  `name` - A unique name for the waiting room. Use only alphanumeric characters, hyphens, and underscores.
-*  `host` - Host name for which you want to configure a waiting room.
+*  `host` - Hostname for which you want to configure a waiting room.
 *  `total_active_users` - The total number of active user sessions on the route at a point in time.
 *  `new_users_per_minute` - The number of new users gaining entry into the route every minute.
 

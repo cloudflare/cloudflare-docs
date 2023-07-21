@@ -28,7 +28,7 @@ If someone else used your email to sign up for a Cloudflare account, you can rem
 
 ## Resend verification emails
 
-If you cannot find your verification email or your email has expired, you can request another verification email:
+If you cannot find your verification email or your email has expired, request another verification email:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **My Profile**.

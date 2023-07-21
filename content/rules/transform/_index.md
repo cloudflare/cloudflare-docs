@@ -18,6 +18,8 @@ There are several types of Transform Rules:
 
 To configure Transform Rules in the dashboard, go to the **Transform Rules** page in Rules.
 
+{{<render file="_rules-requirements.md" withParameters="Transform Rules require">}}
+
 ***
 
 ## Transform Rules evaluation
@@ -38,7 +40,7 @@ This table outlines the Transform Rules features available with each customer pl
 
 {{<feature-table id="rules.transform_rules">}}
 
-A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/hc/articles/205065067#12345682) or one of the Administrator roles to access Transform Rules.
+A Cloudflare user must have the [Firewall role](/fundamentals/account-and-billing/members/roles/) or one of the Administrator roles to access Transform Rules.
 
 ## Get started
 

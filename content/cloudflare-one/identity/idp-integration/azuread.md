@@ -22,7 +22,7 @@ To retrieve those values:
 
 1. Log in to the [Azure dashboard](https://portal.azure.com/).
 
-2. Navigate to **All services** > **Azure Active Directory**.
+2. Go to **All services** > **Azure Active Directory**.
 
 3. In the Azure Active Directory menu, go to **Enterprise applications**.
 
@@ -30,7 +30,7 @@ To retrieve those values:
 
 5. Name your application.
 
-6. Select **Register an application to integration with Azure AD (App you're developing)** and then select **Create**.
+6. Select **Register an application to integrate with Azure AD (App you're developing)** and then select **Create**.
 
 7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 
@@ -38,7 +38,7 @@ To retrieve those values:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **General**.
+   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **Custom Pages**.
 
    ![Registering an application in Azure](/images/cloudflare-one/identity/azure/name-app.png)
 
@@ -50,7 +50,7 @@ To retrieve those values:
 
     ![Viewing the Application ID and Directory ID in Azure](/images/cloudflare-one/identity/azure/azure-values.png)
 
-11. Navigate to **Certificates & secrets** and select **New client secret**.
+11. Go to **Certificates & secrets** and select **New client secret**.
 
 12. Name the client secret and choose an expiration period.
 
@@ -60,7 +60,7 @@ To retrieve those values:
 
 ### 2. Configure API permissions in Azure
 
-1. From the **App registrations** page for your application, navigate to **API permissions**.
+1. From the **App registrations** page for your application, go to **API permissions**.
 
 2. Select **Add a permission**.
 
@@ -88,7 +88,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 ### 3. Add Azure AD as an identity provider
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
 
@@ -130,7 +130,7 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 5. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal).
 
-6. Navigate to **Provisioning** and select **Get started**.
+6. Go to **Provisioning** and select **Get started**.
 
 7. For **Provisioning Mode**, choose _Automatic_.
 

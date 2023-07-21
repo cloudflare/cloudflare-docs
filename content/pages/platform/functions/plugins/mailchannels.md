@@ -6,7 +6,7 @@ weight: 1
 
 # MailChannels Pages Plugin
 
-The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. It then emails these form submissions using the MailChannels API.
+The MailChannels Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. Then, it emails these form submissions using the MailChannels API.
 
 ## Installation
 

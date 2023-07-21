@@ -32,9 +32,9 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/workers/platform/bindings/">}}
+{{<feature header="Bindings" href="/workers/configuration/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/configuration/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
@@ -72,7 +72,7 @@ Cloudflare Queues integrates with Cloudflare Workers to allow developers to send
 
 {{<resource header="HTMLRewriter" href="/workers/runtime-apis/html-rewriter/" icon="reference-architecture">}}Parse and transform HTML from inside a Worker.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn which storage option is best for your project.{{</resource>}}
+{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn which storage option is best for your project.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

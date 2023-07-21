@@ -31,17 +31,16 @@ If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit
 
 Follow the previous steps to [create](#create-rules) or [edit](#edit-or-delete-rules) a rule. Then, make sure you enable **Auto-Advertisement**.
 
-
 ## Rule fields
 
 | Field <div style="width: 100px"> | Description |
-|-------| ------------|
-| **Rule name** | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`).  Max 256 characters. |
+|-------------------------| ------------|
+| **Rule name**           | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`).  Max 256 characters. |
 | **Rule threshold type** | Can be defined in either bits per second or packets per second. |
-| **Rule threshold** | The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
-| **Rule duration** | The amount of time in seconds the rule threshold must exceed to send an alert notification. The minimum is 60 seconds and maximum is six hours (21,600 seconds).|
-| **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered. |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. |
+| **Rule threshold**      | The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
+| **Rule duration**       | The amount of time in seconds the rule threshold must exceed to send an alert notification. The minimum is 60 seconds and maximum is six hours (21,600 seconds).|
+| **Auto-advertisement**  | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered. |
+| **Rule IP prefix**      | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. |
 
 ## Enable per-prefix thresholds with the API
 
@@ -51,6 +50,8 @@ The system uses the concept of rules, and each rule consists of a group of prefi
 
 ### Example
 
+For a rule with two prefix CIDRs and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDRs in case the flag is turned on.
+
 ```bash
 "rules":[
         "name": "Too many packets",
@@ -58,7 +59,7 @@ The system uses the concept of rules, and each rule consists of a group of prefi
         "packet_threshold": 10000,
         "automatic_advertisement": true,
         "duration": "1m0s",
-       ]
+        ]
 ```
 
 For more granular thresholds, create a more focused rule as shown below.
@@ -74,3 +75,18 @@ For more granular thresholds, create a more focused rule as shown below.
 ```
 
 Refer to the [Magic Network Monitoring API documentation](/api/operations/magic-network-monitoring-rules-list-rules) for more information.
+
+## Notifications
+
+Webhook, PagerDuty, and email notifications are sent following an auto-advertisement attempt for all prefixes inside the flagged rule.
+
+You will receive the status of the advertisement for each prefix with the following available statuses:
+
+- **Advertised**: The prefix was successfully advertised.
+- **Already Advertised**: The prefix was advertised prior to the auto advertisement attempt.
+- **Delayed**: The prefix cannot currently be advertised but will attempt advertisement. After the prefix can be advertised, a new notification is sent with the updated status.
+- **Locked**: The prefix is locked and cannot be advertised.
+- **Could not Advertise**: Cloudflare was unable to advertise the prefix. This status can occur for multiple reasons, but usually occurs when you are not allowed to advertise a prefix.
+- **Error**: A general error occurred during prefix advertisement.
+
+Refer to [Notifications](/magic-network-monitoring/notifications/) to learn how to create one.

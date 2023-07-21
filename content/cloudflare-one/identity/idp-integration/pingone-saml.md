@@ -10,7 +10,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 
 ## Set up PingOne as a SAML provider
 
-1. In your PingIdentity environment, navigate to **Connections** > **Applications**.
+1. In your PingIdentity environment, go to **Connections** > **Applications**.
 2. Select **Add Application**.
 3. Enter an **Application Name**.
 4. Select **SAML Application**.
@@ -41,7 +41,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
    These [SAML attributes](/cloudflare-one/identity/idp-integration/generic-saml/#saml-attributes) tell Cloudflare Access who the user is.
 
 9. Set the application to **Active**.
-10. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Settings** > **Authentication**.
+10. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 11. Under **Login methods**, select **Add new**.
 12. Select **SAML**.
 13. Upload your PingOne XML metadata file from Step 7.

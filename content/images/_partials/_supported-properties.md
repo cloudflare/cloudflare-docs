@@ -245,6 +245,8 @@ The `auto` option will serve the WebP or AVIF format to browsers that support it
 Workers integration supports:
 - `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
 - `webp`: Generate images in Google WebP format. Set the quality to `100` to get the WebP lossless format.
+- `jpeg`: Generate images in interlaced progressive JPEG format, in which data is compressed in multiple passes of progressively higher detail.
+- `baseline-jpeg`: Generate images in baseline sequential JPEG format. It should be used in cases when target devices don't support progressive JPEG or other modern file formats.
 - `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain data such as image size (before and after resizing), source image’s MIME type, and file size.
 
 Example:
@@ -254,6 +256,13 @@ Example:
 header: URL format
 ---
 format=auto
+```
+
+```js
+---
+header: URL format alias
+---
+f=auto
 ```
 
 ```js
@@ -315,6 +324,13 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
   ```js
   ---
+  header: URL format alias
+  ---
+  g=auto
+  ```
+
+  ```js
+  ---
   header: Workers
   ---
   cf: {image: {gravity: "auto"}}
@@ -356,6 +372,13 @@ Specifies maximum height of the image in pixels. Exact behavior depends on the `
 header: URL format
 ---
 height=250
+```
+
+```js
+---
+header: URL format alias
+---
+h=250
 ```
 
 ```js
@@ -455,6 +478,13 @@ quality=50
 
 ```js
 ---
+header: URL format alias
+---
+q=50
+```
+
+```js
+---
 header: Workers
 ---
 cf: {image: {quality: 50}}
@@ -498,13 +528,17 @@ cf: {image: {sharpen: 2}}
 
 #### `trim`
 
-Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`. Example:
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left` or via separate values `trim.width`,`trim.height`, `trim.left`,`trim.top`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`. Example:
 
 ```js
 ---
 header: URL format
 ---
 trim=20;30;20;0
+trim.width=678
+trim.height=678
+trim.left=30
+trim.top=40
 ```
 
 ```js
@@ -524,6 +558,14 @@ header: URL format
 ---
 width=250
 ```
+
+```js
+---
+header: URL format alias
+---
+w=250
+```
+
 
 ```js
 ---

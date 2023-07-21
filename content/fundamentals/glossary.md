@@ -6,7 +6,7 @@ weight: 10
 
 # Glossary
 
-Review the definitions for terms used across Cloudflare.
+Review the definitions for terms used across Cloudflare's documentation.
 
 ## account
 
@@ -36,7 +36,7 @@ In Cloudflare for Teams, an application is the resource being protected by Cloud
 
 ## backup codes
 
-Backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](https://support.cloudflare.com/hc/articles/200167906). A backup code becomes invalid after use.
+Backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/). A backup code becomes invalid after use.
 
 **Related terms:** two-factor authentication
 
@@ -98,7 +98,7 @@ A network of remote servers used to store and maintain data.
 
 `cloudflared` is the software that powers Cloudflare Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
-**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 ## content delivery network (CDN)
 
@@ -242,7 +242,7 @@ mTLS is a common security practice that uses client TLS certificates to provide 
 
 ## nameserver
 
-A nameserver is a dedicated server that translates human readable host names into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
+A nameserver is a dedicated server that translates human readable hostnames into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
 
 **Related terms:** DNS
 
@@ -292,7 +292,7 @@ SSL public and private keys are essentially long strings of characters used for 
 
 ## roles
 
-Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](https://support.cloudflare.com/hc/articles/205065067#12345682).
+Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/account-and-billing/members/roles/).
 
 ## root certificate
 
@@ -330,7 +330,7 @@ Static content is website content that can be delivered to an end user directly 
 
 ## Subject Alternative Name (SAN)
 
-The SAN field of an SSL certificate specifies additional host names (sites, IP addresses, common names, subdomains, root domains, etc.) protected by a single SSL Certificate.
+The SAN field of an SSL certificate specifies additional hostnames (sites, IP addresses, common names, subdomains, root domains, etc.) protected by a single SSL Certificate.
 
 ## subscription, add-on, or plan extension
 
@@ -400,7 +400,7 @@ Uncached requests are requests that are not cached, and therefore are served fro
 
 ## usage-based billing
 
-Within subscriptions, certain products are charged based on usage. This is referred to as usage-based billing. The bill can vary month by month based on usage. This is in contrast to monthly flat fees such as for [plans](https://www.cloudflare.com/plans/) or additional [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
+Within subscriptions, certain products are charged based on usage. This is referred to as usage-based billing. The bill can vary month by month based on usage. This is in contrast to monthly flat fees such as for [plans](https://www.cloudflare.com/plans/) or additional [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
 ## web application firewall (WAF)
 

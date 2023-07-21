@@ -36,7 +36,7 @@ The available rate limiting rule parameters are the following:
 
 - **Period** {{<type>}}Number{{</type>}}
 
-  - Field name in the dashboard: `period`.
+  - Field name in the API: `period`.
   - The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
   - The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), or `3600` (one hour).
 

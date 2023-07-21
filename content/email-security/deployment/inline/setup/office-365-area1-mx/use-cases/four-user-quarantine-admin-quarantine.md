@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 4
 meta:
     title: User managed quarantine and administrative quarantine - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the user managed quarantine and administrative quarantine

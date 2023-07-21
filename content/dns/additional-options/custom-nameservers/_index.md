@@ -16,7 +16,7 @@ With custom (or vanity) nameservers, a domain can use Cloudflare DNS without usi
 ## Availability
 
 - Zone custom nameservers are available for zones on Business or Enterprise plans. Via API or on the Dashboard.
-- Account custom nameservers are available for zones on Business (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)) or Enterprise plans. Via API only.
+- Account custom nameservers are available for zones on Business (after [contacting Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/)) or Enterprise plans. Via API only.
 - Tenant custom nameservers, if created by the tenant owner, will be available to any account that is part of the tenant. Via API only.
 
 ## Restrictions

@@ -13,6 +13,8 @@ Configuration Rules allow you to customize certain Cloudflare [configuration set
 
 The Configuration Rule expression will determine to which requests the rule settings will apply. For more information on expressions, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
+{{<render file="_rules-requirements.md" withParameters="Configuration Rules require">}}
+
 ---
 
 ## Availability

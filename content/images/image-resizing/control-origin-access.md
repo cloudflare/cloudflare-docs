@@ -104,7 +104,7 @@ async function handleRequest(request) {
 
 ## Authenticated origin
 
-To ensure good performance, Cloudflare Image Resizing caches resized images. Since it would not be safe to share images customized for individual visitors, it is generally not recommended to resize images stored with restricted access. However, in cases where the customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers. At the moment, this is supported on authenticated AWS, Azure, SecureAuth origins and origins behind Cloudflare Access:
+Cloudflare Image Resizing caches resized images to aid performance. Images stored with restricted access are generally not recommended for resizing because sharing images customized for individual visitors is unsafe. However, in cases where the customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers. At the moment, this is supported on authenticated AWS, Azure, Google Cloud, SecureAuth origins and origins behind Cloudflare Access.
 
 ```js
 ---
@@ -140,5 +140,6 @@ For more information, refer to:
 
 - [AWS docs](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html)
 - [Azure docs](https://docs.microsoft.com/en-us/rest/api/storageservices/List-Containers2#request-headers)
+- [Google Cloud docs](https://cloud.google.com/storage/docs/aws-simple-migration)
 - [Cloudflare Zero Trust docs](/cloudflare-one/identity/service-tokens/)
 - [SecureAuth docs](https://docs.secureauth.com/2104/en/authentication-api-guide.html)

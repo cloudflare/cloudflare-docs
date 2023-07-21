@@ -31,7 +31,7 @@ Do not use tables to format a page.
 
 ## Markdown examples
 
-**Add a table** 
+**Add a table**
 
 To add a table, use three or more hyphens (---) to create each column’s header, and use pipes (|) to separate each column. For compatibility, you should also add a pipe on either end of the row.
 
@@ -71,7 +71,7 @@ The rendered output looks like this:
 
 ## Formatting text in tables
 
-You can format the text within tables. For example, you can add links, code, and emphasis. 
+You can format the text within tables. For example, you can add links, code, and emphasis.
 
 You can’t add headings, blockquotes, lists, horizontal rules, images, or HTML tags.
 
@@ -103,7 +103,7 @@ For complex tables, consider using HTML. The following example is created with H
    <tr>
       <td valign="top"><code>http.host</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         <p>Represents the host name used in the full request URI.
+         <p>Represents the hostname used in the full request URI.
          </p>
          <p>Example value:
          <br /><code>www.example.org</code>

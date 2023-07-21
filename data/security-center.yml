@@ -5,6 +5,7 @@ product:
   title: Security Center
   url: /security-center/
   group: Application security
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Security Center docs

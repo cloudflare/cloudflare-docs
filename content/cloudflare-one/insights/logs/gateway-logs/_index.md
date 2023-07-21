@@ -13,7 +13,7 @@ Gateway logs will only show the public Source IP address. Private IP addresses a
 
 {{</Aside>}}
 
-Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/policies/filtering/network-policies/ssh-logging/) for sessions proxied by Gateway.
+Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/) for sessions proxied by Gateway.
 
 To view Gateway activity logs, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway**. Select an individual row to investigate the event in more detail.
 
@@ -35,7 +35,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **DNS**                | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
 | **Email**              | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
-| **Event**              | The [Action](/cloudflare-one/policies/filtering/dns-policies/#actions) Gateway applied to the query (for example, `Allow` or `Block`).                                                                                                                                                                                                                                                                 |
+| **Event**              | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (for example, `Allow` or `Block`).                                                                                                                                                                                                                                                                 |
 | **Date**               | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
 | **Source IP**          | Public source IP address of the DNS query.                                                                                                                                                                                                                                                                                                                                                             |
 | **Port**               | Port that was used to make the DNS query.                                                                                                                                                                                                                                                                                                                                                              |
@@ -71,7 +71,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | blockedAlwaysCategory  | Domain or hostname is always blocked by Cloudflare.         |
 | allowedOnNoLocation    | Allowed because query did not match a Gateway DNS location. |
 | allowedOnNoPolicyMatch | Allowed because query did not match a policy.               |
-| overrideForSafeSearch  | Response was overridden by a SafeSearch policy.             |
+| overrideForSafeSearch  | Response was overridden by a Safe Search policy.            |
 | overrideApplied        | Response was overridden by an Override policy.              |
 
 {{</table-wrap>}}
@@ -86,7 +86,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Source IP**              | IP address of the user sending the packet.                                                                                                                   |
 | **Destination IP**         | IP address of the packet’s target.                                                                                                                           |
-| **Action**                 | The Gateway [Action](/cloudflare-one/policies/filtering/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
+| **Action**                 | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
 | **Session ID**             | ID of the unique session.                                                                                                                                    |
 | **Time**                   | Date and time of the session.                                                                                                                                |
 | **Source Port**            | Source port number for the packet.                                                                                                                           |
@@ -96,7 +96,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Destination IP Country** | Country code for the packet destination.                                                                                                                     |
 | **Protocol**               | Protocol over which the packet was sent.                                                                                                                     |
 | **SNI**                    | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                                          |
-| **Virtual Network**        | [Virtual network](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) that the client is connected to.                            |
+| **Virtual Network**        | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) that the client is connected to.                            |
 | **Categories**             | Category or categories associated with the packet.                                                                                                           |
 | **Policy Name**            | Name of the matched policy (if there is one).                                                                                                                |
 | **Policy ID**              | ID of the policy enforcing the decision Gateway made.                                                                                                        |
@@ -123,7 +123,7 @@ When an HTTP request results in an error, the first 512 bytes of the request are
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Host**                     | Hostname in the HTTP header for the HTTP request.                                                                                                            |
 | **Email**                    | Email address of the user who made the HTTP request. This is generated by the WARP client.                                                                   |
-| **Action**                   | The Gateway [Action](/cloudflare-one/policies/filtering/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
+| **Action**                   | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (for example, `Allow` or `Block`). |
 | **Request ID**               | Unique ID of the request.                                                                                                                                    |
 | **Time**                     | Date and time of the HTTP request.                                                                                                                           |
 | **URL**                      | Full URL of the HTTP request.                                                                                                                                |

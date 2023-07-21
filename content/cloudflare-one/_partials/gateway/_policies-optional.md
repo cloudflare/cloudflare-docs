@@ -7,7 +7,7 @@ _build:
 
 ## Check user identity
 
-Configure access on a per user or group basis by adding [identity-based conditions](/cloudflare-one/policies/filtering/identity-selectors/) to your policies.
+Configure access on a per user or group basis by adding [identity-based conditions](/cloudflare-one/policies/gateway/identity-selectors/) to your policies.
 
 | Selector         | Operator | Value         | Action |
 | ---------------- | -------- | ------------- | ------ |

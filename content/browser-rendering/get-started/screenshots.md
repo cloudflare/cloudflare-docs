@@ -22,9 +22,9 @@ $ npm install @cloudflare/puppeteer --save-dev
 
 ## Create a KV namespace
 
-Browser Rendering can be used with other developer products. You might need a [relational database](https://developers.cloudflare.com/d1/), an [R2 bucket](https://developers.cloudflare.com/r2/) to archive your crawled pages and assets, or maybe use a [Durable Object](https://developers.cloudflare.com/workers/runtime-apis/durable-objects/#durable-objects) to keep your browser instance alive and share it with multiple requests, or [queues](https://developers.cloudflare.com/queues/) to handle your jobs asynchronous.
+Browser Rendering can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, or maybe use a [Durable Object](/workers/runtime-apis/durable-objects/#durable-objects) to keep your browser instance alive and share it with multiple requests, or [queues](/queues/) to handle your jobs asynchronous.
 
-For the purpose of this guide, you are going to use a [KV store](https://developers.cloudflare.com/workers/runtime-apis/kv/#kv) to cache your screenshots.
+For the purpose of this guide, you are going to use a [KV store](/workers/runtime-apis/kv/#kv) to cache your screenshots.
 
 Create two namespaces, one for production, and one for development.
 
@@ -57,42 +57,89 @@ kv_namespaces = [
 
 ## Code
 
-Create `src/index.ts` with your Worker code:
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+Create `src/index.js` with your Worker code:
 
-```javascript
+```js
 import puppeteer from "@cloudflare/puppeteer";
 
 export default {
-    async fetch(request: Request, env: Env): Promise<Response> {
-        const { searchParams } = new URL(request.url);
-        let url = searchParams.get("url");
-        let img: Buffer;
-        if (url) {
-            url = new URL(url).toString(); // normalize
-            img = await env.BROWSER_KV_DEMO.get(url, { type: "arrayBuffer" });
-            if (img == null) {
-                const browser = await puppeteer.launch(env.MYBROWSER);
-                const page = await browser.newPage();
-                await page.goto(url);
-                img = (await page.screenshot()) as Buffer;
-                await env.BROWSER_KV_DEMO.put(url, img, {
-                    expirationTtl: 60 * 60 * 24,
-                });
-                await browser.close();
-            }
-            return new Response(img, {
-                headers: {
-                    "content-type": "image/jpeg",
-                },
-            });
-        } else {
-            return new Response(
-                "Please add an ?url=https://example.com/ parameter"
-            );
-        }
-    },
+	async fetch(request, env) {
+		const { searchParams } = new URL(request.url);
+		let url = searchParams.get("url");
+		let img;
+		if (url) {
+			url = new URL(url).toString(); // normalize
+			img = await env.BROWSER_KV_DEMO.get(url, { type: "arrayBuffer" });
+			if (img === null) {
+				const browser = await puppeteer.launch(env.MYBROWSER);
+				const page = await browser.newPage();
+				await page.goto(url);
+				img = await page.screenshot();
+				await env.BROWSER_KV_DEMO.put(url, img, {
+					expirationTtl: 60 * 60 * 24,
+				});
+				await browser.close();
+			}
+			return new Response(img, {
+				headers: {
+					"content-type": "image/jpeg",
+				},
+			});
+		} else {
+			return new Response(
+				"Please add an ?url=https://example.com/ parameter"
+			);
+		}
+	},
 };
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+Create `src/index.ts` with your Worker code:
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+interface Env {
+	MYBROWSER: Fetcher;
+	BROWSER_KV_DEMO: KVNamespace;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { searchParams } = new URL(request.url);
+		let url = searchParams.get("url");
+		let img: Buffer;
+		if (url) {
+			url = new URL(url).toString(); // normalize
+			img = await env.BROWSER_KV_DEMO.get(url, { type: "arrayBuffer" });
+			if (img === null) {
+				const browser = await puppeteer.launch(env.MYBROWSER);
+				const page = await browser.newPage();
+				await page.goto(url);
+				img = (await page.screenshot()) as Buffer;
+				await env.BROWSER_KV_DEMO.put(url, img, {
+					expirationTtl: 60 * 60 * 24,
+				});
+				await browser.close();
+			}
+			return new Response(img, {
+				headers: {
+					"content-type": "image/jpeg",
+				},
+			});
+		} else {
+			return new Response(
+				"Please add an ?url=https://example.com/ parameter"
+			);
+		}
+	},
+};
+```
+{{</tab>}}
+{{</tabs>}}
 
 This Worker instantiates a browser using Puppeteer, opens a new page, navigates to whatever you put in the "url" parameter, takes a screenshot of the page, stores the screenshot in KV, closes the browser, and responds with the JPEG image of the screenshot. If the same "url" is requested again, it will use the cached version in KV instead, unless it expired.
 

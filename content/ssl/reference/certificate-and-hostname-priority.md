@@ -27,7 +27,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | 1        | [Keyless SSL](/ssl/keyless-ssl/)                                 |
     | 2        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
     | 3        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)     |
-    | 4        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/) |
+    | 4        | [Custom Hostname (Cloudflare for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/) |
     | 5        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
     | 6        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/) |
     | 7        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
