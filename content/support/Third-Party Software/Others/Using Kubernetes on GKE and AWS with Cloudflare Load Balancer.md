@@ -311,7 +311,7 @@ Delete the Ingress: 
 
 ```sh
 $ kubectl delete ingress basic-ingress
-``` 
+```
 
 ___
 
