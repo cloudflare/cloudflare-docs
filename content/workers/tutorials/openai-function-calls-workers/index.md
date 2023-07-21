@@ -46,7 +46,7 @@ Go to your new `openai-function-calling-workers` Worker project:
 $ cd openai-function-calling-workers
 ```
 
-Inside of your new `openai-function-calling-workers` directory, `src/worker.js` represents the entry point to your Cloudflare Workers application. You will configure this file for most of the tutorial.
+Inside of your new `openai-function-calling-workers` directory, find the `src/worker.js` file. You will configure this file for most of the tutorial.
 
 You will also need an OpenAI account and API key for this tutorial. If you do not have one, [create a new OpenAI account](https://platform.openai.com/signup) and [create an API key](https://platform.openai.com/account/api-keys) to continue with this tutorial. Make sure to store you API key somewhere safe so you can use it later.
 
