@@ -13,7 +13,7 @@ Use long parameter names, like in the API docs, for clarity:
 + `--request` (when needed, instead of -X)
 + `--data` (instead of -d)
 
-You do not need to use the `--url` parameter since it is the main cUrl parameter. Also, the URL does not need to be enclosed in double quotes (""), except if it contains a `?` character (that is, when it includes a query string).
+You do not need to use the `--url` parameter since it is the main cURL parameter. Also, the URL does not need to be enclosed in double quotes (""), except if it contains a `?` character (that is, when it includes a query string).
 
 ## Indentation
 
@@ -23,17 +23,17 @@ For requests with body content, start indenting when you get to the body part (t
 
 Requests without a body should not be indented also, to make them consistent with requests containing a body.
 
-## Do not use jq as part of curl examples
+## Do not use jq as part of cURL examples
 
-[jq](https://jqlang.github.io/jq/) is a separate tool that not everyone will have installed. Curl examples should not include response formatting through jq as part of the example.
+[jq](https://jqlang.github.io/jq/) is a separate tool that not everyone will have installed. cURL examples should not include response formatting through jq as part of the example.
 
-If you must suggest the use of this tool, you can add a link to the [Make API calls](/fundamentals/api/how-to/make-api-calls/) page in Fundamentals, which briefly mentions this tool. Do not repeat the existing content about jq near the cUrl example.
+If you must suggest the use of this tool, you can add a link to the [Make API calls](/fundamentals/api/how-to/make-api-calls/) page in Fundamentals, which briefly mentions this tool. Do not repeat the existing content about jq near the cURL example.
 
 ## Request guidelines
 
 ### Preliminary notes
 
-+ Make sure not to use typographical or smart quotes in a cUrl command, or the command will fail.
++ Make sure not to use typographical or smart quotes in a cURL command, or the command will fail.
 + Placeholders in the URL should follow the same format as in the API documentation: `{zone_id}`
 + Placeholders in the request body (that is, the data included in a `POST`/`PUT`/`PATCH` request) should use this format: `<RULE_ID>`
 
@@ -41,7 +41,7 @@ The same placeholder name should correspond to the same value – use different 
 
 ## Authentication HTTP headers
 
-If using Email + API Key authentication, include the following arguments in the cUrl command to add the two required HTTP headers to the request:
+If using Email + API Key authentication, include the following arguments in the cURL command to add the two required HTTP headers to the request:
 
 ```
 --header "X-Auth-Email: <EMAIL>" \
@@ -49,10 +49,10 @@ If using Email + API Key authentication, include the following arguments in the 
 ```
 
 {{<Aside type="note">}}
-Ending slashes included to facilitate copy and paste. Do not include the last slash if this is the last line of the cUrl command.
+Ending slashes included to facilitate copy and paste. Do not include the last slash if this is the last line of the cURL command.
 {{</Aside>}}
 
-If using API Token (the preferred authentication method), include the following arguments in the cUrl command to add the required HTTP header to the request:
+If using API Token (the preferred authentication method), include the following arguments in the cURL command to add the required HTTP header to the request:
 
 ```
 --header "Authorization: Bearer <API_TOKEN>" \
@@ -65,7 +65,7 @@ For `GET` requests, do not include the `--request` command-line argument, since 
 ### `GET` request template
 
 ```
-curl {full_url_with_placeholders} \
+cURL {full_url_with_placeholders} \
 
 --header "Authorization: Bearer <API_TOKEN>"
 ```
@@ -73,7 +73,7 @@ curl {full_url_with_placeholders} \
 ### `DELETE` request template
 
 ```
-curl --request DELETE \
+cURL --request DELETE \
 
 {full_url_with_placeholders} \
 
@@ -83,7 +83,7 @@ curl --request DELETE \
 ### `GET` request example
 
 ```
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
+cURL https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 
 --header "Authorization: Bearer <API_TOKEN>"
 ```
@@ -101,7 +101,7 @@ For `POST` requests, do not include the `--request` command-line argument, since
 ### `POST` request template
 
 ```
-curl {full_url_with_placeholders} \
+cURL {full_url_with_placeholders} \
 
 --header "Authorization: Bearer <API_TOKEN>" \
 
@@ -115,7 +115,7 @@ curl {full_url_with_placeholders} \
 ### `PUT`/`PATCH` request template
 
 ```
-curl --request (PUT/PATCH) \
+cURL --request (PUT/PATCH) \
 
 {full_url_with_placeholders} \
 
@@ -133,7 +133,7 @@ Enclose the `JSON` payload ( the --data command-line argument) in single quotes 
 ### `POST` request example
 
 ```
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
+cURL https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '[
@@ -158,7 +158,7 @@ Which means "close string, add escaped single quote, begin string again".
 Example:
 
 ```
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
+cURL https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -173,7 +173,7 @@ If you have a `POST` request without a body, add a `--request POST` argument exp
 Example:
 
 ```
-curl --request POST \
+cURL --request POST \
 {full_url_with_placeholders} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
@@ -185,7 +185,7 @@ Code blocks with example requests that include a `JSON` body should use `bash` s
 ## Full request example
 
 ```
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
+cURL https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
