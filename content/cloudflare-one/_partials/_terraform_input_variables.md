@@ -61,8 +61,6 @@ The following variables will be passed into your GCP and Cloudflare configuratio
     variable "cloudflare_token" {
       description = "Cloudflare API token created at https://dash.cloudflare.com/profile/api-tokens"
       type        = string
-      ## Terraform 0.14 has added the ability to mark variables as sensitive to avoid leaking secrets in logs.
-      ## uncomment if using Terraform >=0.14
-      # secure    = true
+      sensitive   = true
     }
     ```
