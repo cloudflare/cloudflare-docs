@@ -182,7 +182,7 @@ filename: worker.js
 
 The above function does not exist. You need to create it. Use a node library called [`cheerio`](https://github.com/cheeriojs/cheerio) to the websites content. Run `npm` to install `cheerio`:
 ```sh
-npm install cheerio
+$ npm install cheerio
 ```
 
 With cheerio installed, import it at the top of your `worker.js` file and immediately create your `read_website_content` function:
