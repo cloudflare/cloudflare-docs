@@ -14,17 +14,17 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 ## Instant Logs on the Cloudflare dashboard
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
-2.  Select the domain you want to use with Instant Logs.
+2. Select the domain you want to use with Instant Logs.
 
-3.  Go to **Analytics** > **Instant Logs**.
+3. Go to **Analytics** > **Instant Logs**.
 
-4.  Click **Start streaming**.
+4. Select **Start streaming**.
 
-5.  Click **Add filters** to narrow down the events shown.
+5. Select **Add filters** to narrow down the events shown.
 
-The filters you can add are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**. If you would like to see filtering on additional criteria, leave us feedback on the form linked on the Instant Logs page.
+The filters you can add are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**. If you would like to filter on additional criteria, leave us feedback on the form linked on the Instant Logs page.
 
 Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dash.
 
@@ -92,7 +92,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/logpush/edge
 
 Response:
 
-The response will include a new field called **destination_conf**. The value of this field is your unique WebSocket address that will receive messages from Cloudflare's edge.
+The response will include a new field called **destination_conf**. The value of this field is your unique WebSocket address that will receive messages from Cloudflare's global network.
 
 ```bash
 {
@@ -124,7 +124,7 @@ Once connected to the websocket, you will receive messages of line-delimited JSO
 
 ### Angle Grinder
 
-Now that you have a connection to Cloudflare's websocket and are receiving logs from the edge, you can start slicing and dicing the logs. A handy tool for this is [Angle Grinder](https://github.com/rcoh/angle-grinder). Angle Grinder lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country you can sum the number of events by the `ClientCountry` field.
+Now that you have a connection to Cloudflare's websocket and are receiving logs from Cloudflare's global network, you can start slicing and dicing the logs. A handy tool for this is [Angle Grinder](https://github.com/rcoh/angle-grinder). Angle Grinder lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country you can sum the number of events by the `ClientCountry` field.
 
 ```sh
 $ websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987 | agrind '* | json | sum(sampleInterval) by ClientCountry'
@@ -145,7 +145,7 @@ Response:
 
 For the moment, HTTP requests is the only dataset available. In the future, we will expand to other datasets.
 
-## Exporting
+## Export
 
 You can download the table of logs that appears in your dash using the **Export** button. The data will be downloaded in JSON format.
 
