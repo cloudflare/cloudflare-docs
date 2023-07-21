@@ -37,7 +37,7 @@ Take note of the IDs.
 
 ## wrangler.toml
 
-Let’s create the simplest possible wrangler.toml configuration file with the Browser Rendering API binding and the KV namespaces we just created:
+Let’s create the simplest possible wrangler.toml configuration file with the Browser Rendering API binding and the KV namespaces we created:
 
 ```toml
 ---
