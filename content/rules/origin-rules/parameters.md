@@ -17,7 +17,7 @@ SNI override | [`sni` object](#sni-override-parameters)
 DNS record override / Destination port override| [`origin` object](#dns-record-override-and-destination-port-override-parameters)
 
 {{<Aside type="note">}}
-The same Origin Rule can have different types of overrides. Refer to [Configuring several overrides in the same rule](#configuring-several-overrides-in-the-same-rule) for a syntax example.
+The same origin rule can have different types of overrides. Refer to [Configuring several overrides in the same rule](#configuring-several-overrides-in-the-same-rule) for a syntax example.
 {{</Aside>}}
 
 ## Host header override parameters
@@ -59,7 +59,7 @@ If you are only overriding the hostname or the port, omit the `port` or `host` p
 
 ## Configuring several overrides in the same rule
 
-The same Origin Rule can have different types of overrides. For example, a single Origin Rule can perform an HTTP `Host` header override and a destination port override. The syntax of such a rule would be the following:
+The same origin rule can have different types of overrides. For example, a single origin rule can perform an HTTP `Host` header override and a destination port override. The syntax of such a rule would be the following:
 
 ```json
 "action_parameters": {
