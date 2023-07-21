@@ -35,7 +35,7 @@ To enable the Cloudflare Logpush service:
 
 9. Select **Validate access**.
 
-10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and select **Prove ownership**. To find the ownership token, select the **Open** button in the **Overview** tab of the ownership challenge file.
+10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and select **Prove ownership**. To find the ownership token, select **Open** in the **Overview** tab of the ownership challenge file.
 
 11. Select **Save and Start Pushing** to finish enabling Logpush.
 

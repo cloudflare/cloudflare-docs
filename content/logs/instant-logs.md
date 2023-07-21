@@ -24,7 +24,7 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 5. Select **Add filters** to narrow down the events shown.
 
-The filters you can add are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**. If you would like to do filtering on additional criteria, leave us feedback on the form linked on the Instant Logs page.
+The filters you can add are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**. If you would like to filter on additional criteria, leave us feedback on the form linked on the Instant Logs page.
 
 Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dash.
 

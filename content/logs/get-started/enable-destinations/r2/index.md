@@ -15,7 +15,7 @@ Before getting started:
 
 - Create an R2 bucket and set up R2 API tokens.
 
-    1. Navigate to the R2 UI > **Create bucket**.
+    1. Go to the R2 UI > **Create bucket**.
 
     2. Select **Manage R2 API Tokens**.
 
