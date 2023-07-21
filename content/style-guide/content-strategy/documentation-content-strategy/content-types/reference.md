@@ -7,7 +7,7 @@ pcx_content_type: Content
 
 ## Purpose
 
-The purpose of reference content is to provide supplemental information (a “deep dive”) for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.
+The purpose of reference content is to provide supplemental information for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.
 
 ## Tone
 
@@ -41,14 +41,15 @@ reference
 
 ## Examples
 
-[Cache — Common Cf-Polished statuses](https://developers.cloudflare.com/images/polish/cf-polished-statuses/)
+[Cache: Common Cf-Polished statuses](/images/polish/cf-polished-statuses/)
 
-[Logpush — Logpush API configuration](https://developers.cloudflare.com/logs/get-started/api-configuration/)
+[Logpush: Logpush API configuration](/logs/get-started/api-configuration/)
 
 ## Template
 
 Single reference page
 ```
+{
 ---
 weight: xx
 pcx_content_type: reference
@@ -67,4 +68,5 @@ Brief description of content in this section.
 ## Concise noun title
  
 Brief description of content in this section.
+}
 ```

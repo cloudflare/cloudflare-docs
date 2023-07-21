@@ -65,6 +65,7 @@ tutorial
 ## Template
 
 ```
+{
 ---
 weight: xx
 pcx_content_type: tutorial
@@ -80,11 +81,12 @@ Prerequisites
 2. Step two
 3. Step three
 4. ...
+}
 ```
 
 ## Examples
 
-Docs > Tutorials
+[Tutorials](/tutorials/)
 
 ## Additional information
 

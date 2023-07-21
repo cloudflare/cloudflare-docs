@@ -15,35 +15,10 @@ For the endpoint description, use the present tense of the verb. For example, �
 
 Additionally, using the method type as the verb in the title and description is okay. For example, using the method GET and including it in the description as “Gets embed code” is acceptable.
 
-<table>
-    <tr>
-        <th style="width:20%">Method</th>
-        <th style="width:40%">Purpose</th>
-        <th>Verb examples</th>
-    </tr>
-    <tr>
-        <td>`GET`</td>
-        <td>Retrieves a resource</td>
-        <td>Gets, Lists, Returns, Downloads</td>
-    </tr>
-    <tr>
-        <td>`POST`</td>
-        <td>Creates a resource</td>
-        <td>Creates, Watches, Inserts, Adds</td>
-    </tr>
-    <tr>
-        <td>`PUT`</td>
-        <td>Updates or creates an existing resource</td>
-        <td>Updates, Modifies, Adds</td>
-    </tr>
-    <tr>
-        <td>`PATCH`</td>
-        <td>Partially modifies an existing resource</td>
-        <td>Updates, Edits, Changes</td>
-    </tr>
-    <tr>
-        <td>`DELETE`</td>
-        <td>Removes the resource</td>
-        <td>Deletes, Removes, Cancels</td>
-    </tr>
-</table>
+|Method|Purpose|Verb examples|
+|---|---|---|
+|`GET`|Retrieves a resource|Gets, Lists, Returns, Downloads|
+|`POST`|Creates a resource|Creates, Watches, Inserts, Adds|
+|`PUT`|Updates or creates an existing resource|Updates, Modifies, Adds|
+|`PATCH`|Partially modifies an existing resource|Updates, Edits, Changes|
+|`DELETE`|Removes the resource|Deletes, Removes, Cancels|

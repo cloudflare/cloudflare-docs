@@ -30,13 +30,13 @@ how-to
 
 ### Optional components
 
-[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they'll accomplish.
+[**Context**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they will accomplish.
 
 Provide context to the reader that is not in the section heading.
 
-End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there's more material (such as a note) between the context and the procedure.
+End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there is more material (such as a note) between the context and the procedure.
 
-Don't provide context for steps with a partial sentence that's completed by the numbered steps.
+Do not provide context for steps with a partial sentence that is completed by the numbered steps.
 
 [**Prerequisites**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
 

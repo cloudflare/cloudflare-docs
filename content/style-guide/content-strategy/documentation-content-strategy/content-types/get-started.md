@@ -31,7 +31,7 @@ get-started
 
 + Often, these can be partialized files from your How-to pages.
 + This is usually the bare minimum (a single Bot Management FW rule) + the most general use case for a product.
-+ This may – at times – contradict the flow in the Cloudflare dashboard. If it does, consider raising it up to the Product team.
++ This may at times contradict the flow in the Cloudflare dashboard at times. If it does, consider raising it up to the Product team.
 
 ### Optional components
 
@@ -40,6 +40,7 @@ get-started
 ## Template
 
 ```
+{
 ---
 weight: xx
 pcx_content_type: get-started
@@ -51,7 +52,7 @@ Description
  
 ## Before you begin
  
-All the things you need to do before you start configuring your product, both w/in CF and outside.
+All the things you need to do before you start configuring your product, both within Cloudflare and outside.
  
 ## Step 1 - Blah
  
@@ -62,8 +63,9 @@ All the things you need to do before you start configuring your product, both w/
 ## Next steps
  
 Point to more complex setup options.
+}
 ```
 
 ## Example
 
-[Waiting room](/waiting-room/get-started/)
+[Waiting Room](/waiting-room/get-started/): get started guide

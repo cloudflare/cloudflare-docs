@@ -31,6 +31,7 @@ concept
 ## Template
 
 ```
+{
 ---
 title: About (for high-level product concept page only - otherwise omit this line)
 weight: xx
@@ -42,6 +43,7 @@ pcx_content_type: concept
 Provide a brief description of why users should care about this information.
 
 Explain the page topic. Keep paragraphs short and concise to avoid large blocks of text. Feel free to use bulleted lists, notes, and headings for visual breaks.
+}
 ```
 
 ## Additional information
@@ -50,7 +52,7 @@ Do not recreate information that's already available online. Instead, consider w
 
 ## Examples
 
-[Load balancing](/load-balancing/)
+[Load Balancing](/load-balancing/)
 
 [WAF](/waf/about/)
 

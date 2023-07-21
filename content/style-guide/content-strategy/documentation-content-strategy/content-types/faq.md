@@ -20,7 +20,7 @@ faq
 
 ## Overview
 
-A Frequently Asked Question (FAQ) page is a priority area for SEO and digital marketing, and can be a simple way to improve navigation for users.
+A Frequently Asked Questions (FAQ) page is a priority area for SEO and digital marketing, and can be a simple way to improve navigation for users.
 
 An effective FAQ page should:
 
@@ -100,7 +100,7 @@ Questions, answers
     + How does something work?
     + How is something measured/counted?
 + **Definitions**
-    + What (is|are) ...?
+    + What (is/are) ...?
 + **Scenarios**
     + What if ...?
 + **Troubleshooting**
@@ -113,9 +113,9 @@ Questions, answers
 
 Write the questions from the customer's POV, so use the first person.
 
-✅Can I use wildcards when creating policies?
+✅ Can I use wildcards when creating policies?
 
-❌Can users use wildcards when creating policies?
+❌ Can users use wildcards when creating policies?
 
 ### Yes/No
 
@@ -124,11 +124,11 @@ With this question type, users want to inquire about capabilities. Does the prod
 + **Question**
     + Yes/no questions should start with structures like:
         + Can I....
-        + (Can|Does) the product...
+        + (Can/Does) the product...
 + **Answer**
     + Start the answer with Yes/No.
-        + ✅Yes. Cloudflare Access supports several providers simultaneously.
-        + ❌Cloudflare Access supports several providers simultaneously.
+        + ✅ Yes. Cloudflare Access supports several providers simultaneously.
+        + ❌ Cloudflare Access supports several providers simultaneously.
     + Always follow with a short contextualization. Give the user all the information they need.
 
 ### Procedural
@@ -142,7 +142,7 @@ This question type addresses doubts regarding how to achieve a goal with the pro
         + How does ... work?
 + Answer
     + Give concise but complete answers
-    + **Link out to relevant docs** (tutorials, how-tos, even blog posts) for more in-depth info
+    + **Link out to relevant docs** (tutorials, how-tos, even blog posts) for more in-depth information
 
 ### Definitions
 

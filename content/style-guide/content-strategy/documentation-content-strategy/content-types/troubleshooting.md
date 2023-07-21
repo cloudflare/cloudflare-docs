@@ -5,7 +5,7 @@ pcx_content_type: Content
 
 # Troubleshooting
 
-This troubleshooting strategy outlines our approach to troubleshooting content that's specific to a product or platform.
+This troubleshooting strategy outlines our approach to troubleshooting content that is specific to a product or platform.
 
 ## Purpose
 
@@ -38,6 +38,7 @@ troubleshooting
 ## Template
 
 ```
+{
 ---
 weight: xx
 pcx_content_type: troubleshooting
@@ -54,6 +55,7 @@ Explanation of how to address this issue.
 ## Concise noun title
 
 Explanation of how to address this issue.
+}
 ```
 
 ## Additional information

@@ -20,11 +20,17 @@ Use the metadata tag for the Content Type you create within the /support/ tile.<
 
 ### Required components
 
-Title<br/>Context
+**Title**
+
+**Context**
 
 ### Optional components
 
-Steps/Tasks/Procedures<br/>Examples<br/>Next steps
+**Steps/Tasks/Procedures**
+
+**Examples**
+
+**Next steps**
 
 ## Structure
 
@@ -32,7 +38,7 @@ The structure of a page within the support tile will depend on the purpose that 
 
 ## Boundaries
 
-The general guidance is that anything related to a specific product (DNS, Security Center) or platform (Cloudflare One) belongs in a [product](https://developers.cloudflare.com/products/) tile. Anything that's specific to interacting with Cloudflare support or details niche troubleshooting steps belongs in the [support](https://developers.cloudflare.com/support/) tile.
+The general guidance is that anything related to a specific product (DNS, Security Center) or platform (Cloudflare One) belongs in a [product](/products/) tile. Anything that is specific to interacting with Cloudflare support or details niche troubleshooting steps belongs in the [support](/support/) tile.
 
 Support content should not duplicate content that already exists in a product tile.
 
@@ -43,14 +49,14 @@ Support content should not duplicate content that already exists in a product ti
     </tr>
     <tr>
         <td>How to interact with Cloudflare support</td>
-        <td>Product documentation - feature info, functionality, configuration, known limitations</td>
+        <td>Product documentation - feature information, functionality, configuration, known limitations</td>
     </tr>
     <tr>
         <td>Niche troubleshooting information (multiple product configurations affecting each other)</td>
         <td>Troubleshooting a specific product or platform</td>
     </tr>
     <tr>
-        <td>Third-party integrations and partnerships that aren't specific to a product(like WordPress)</td>
+        <td>Third-party integrations and partnerships that are not specific to a product (like WordPress)</td>
         <td>Product-specific integration guides</td>
     </tr>
     <tr>
@@ -59,13 +65,14 @@ Support content should not duplicate content that already exists in a product ti
     </tr>
     <tr>
         <td>How Cloudflare charges for specific things (rates, usage)</td>
-        <td>Process documentation for how to set up billing information, etc - no pricing content</td>
+        <td>Process documentation for how to set up billing information, etc. - no pricing content</td>
     </tr>
 </table>
 
 ## Additional information
 
 Migrating content from /support/ to other areas of dev docs
+
 When you migrate content from the Support tile to other, relevant product areas:
 
 1. Move over the English version of the page to your desired location.

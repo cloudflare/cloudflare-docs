@@ -24,7 +24,7 @@ overview
 
 **Metadata title**: Overview
 
-**Title**: Name of the product, group of products, or conceptual content area. H1. Usually a noun. Don't add "documentation" to the title. Do not use gerund phrases.
+**Title**: Name of the product, group of products, or conceptual content area. H1. Usually a noun. Do not add "documentation" to the title. Do not use gerund phrases.
 
 **Intro/overview**: Brief welcoming introductory content. May be combined with product description.
 
@@ -32,23 +32,24 @@ overview
 
 **Product availability**: What plan(s) is this available to? Review [available plan types](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/plan.html#L1).
 
-**Product attributes**: What's included with this product? (Specific actions, protections, etc)
+**Product attributes**: What is included with this product? (Specific actions, protections, etc.)
 
 ### Optional components
 
 **Features**: A few main features specific to product. Includes a link to relevant documentation on feature.
 
-**Related products**: Links to docs for products used or configured together with current product.
+**Related products**: Links to documentation for products used or configured together with current product.
 
-**More resources**: External links to related resources, such as plans, pricing. Don't duplicate the information from the footer. Also, if the product is free to use or there aren't any useful links, feel free to skip this section. Review [available icons in the source code](https://github.com/cloudflare/cloudflare-docs/tree/production/static/icons/resources).
+**More resources**: External links to related resources, such as plans, pricing. Do not duplicate the information from the footer. Also, if the product is free to use or there are not any useful links, feel free to skip this section. Review [available icons in the source code](https://github.com/cloudflare/cloudflare-docs/tree/production/static/icons/resources).
 
-**Visual**: Graphic or image that enhances the landing page. Should be something relatively static that won't require much (if any) updating in the future.
+**Visual**: Graphic or image that enhances the landing page. Should be something relatively static that will not require much (if any) updating in the future.
 
 **Integration information**
 
 ## Template
 
 ```
+{
 ---
 title: Overview
 weight: xx
@@ -93,19 +94,20 @@ Description of external resource related to current product.
 {{</*/resource*/>}}
  
 {{</*/resource-group*/>}}
+}
 ```
 
 ## Additional Information
 
-Only use Overview for the first page in a developer doc set.
+Only use Overview for the first page in a developer documentation set.
 
 ## Examples
 
-Examples of in-work designs are below, and a more detailed view is available in the "Template Examples" section of this Figma board. A live example is available in the Argo Smart Routing docs.
- Expand source
+Examples of in-work designs are below, and a more detailed view is available in the "Template Examples" section of this Figma board. A live example is available in the Argo Smart Routing documentation.
 
-Many availabilities
-Below there's an example for a product whose availability is complex, and is not easy to just use one type of plan. To create something similar to the example below, insert `{{</*plan type="<PLAN_TYPE>"*/>}}` below each of the feature component, like so:
+### Many availabilities
+
+Below there is an example for a product whose availability is complex, and is not easy to just use one type of plan. To create something similar to the example below, insert `{{</*plan type="<PLAN_TYPE>"*/>}}` below each of the feature component, like so:
 
 ```
 {{</*feature header="<CLOUDFLARE_PRODUCT>" href="/path/to/product"*/>}}

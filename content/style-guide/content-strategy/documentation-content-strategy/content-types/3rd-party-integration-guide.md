@@ -77,12 +77,14 @@ It may become a bigger problem if we can not access the 3rd-party product.
 ## Templates
 
 Single procedure 3rd-party integration guide
+
 ```
+{
 ---
 weight: xx
 pcx_content_type: integration-guide
+
 ---
- 
 # Second-person imperative verb phrase with 3rd-party name included
  
 Context for procedure
@@ -93,10 +95,12 @@ Prerequisites
 2. Step two
 3. Step three
 4. ...
+}
 ```
 
 3rd-party integration guide with multiple procedures that must be completed in order
 ```
+{
 ---
 weight: xx
 pcx_content_type: integration-guide
@@ -115,7 +119,6 @@ Prerequisites
 3. Step three
 4. ...    
  
- 
 ## 2. Second-person imperative verb phrase  
  
 1. Step one
@@ -129,6 +132,7 @@ Prerequisites
 2. Step two
 3. Step three
 4. ...
+}
 ```
 
 ## Examples

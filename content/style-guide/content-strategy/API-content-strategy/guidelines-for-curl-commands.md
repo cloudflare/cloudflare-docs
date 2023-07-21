@@ -33,7 +33,7 @@ If you must suggest the use of this tool, you can add a link to the [Make API ca
 
 ### Preliminary notes
 
-+ Make sure to not use typographical or smart quotes in a cUrl command, or the command will fail.
++ Make sure not to use typographical or smart quotes in a cUrl command, or the command will fail.
 + Placeholders in the URL should follow the same format as in the API documentation: `{zone_id}`
 + Placeholders in the request body (that is, the data included in a `POST`/`PUT`/`PATCH` request) should use this format: `<RULE_ID>`
 
@@ -58,11 +58,11 @@ If using API Token (the preferred authentication method), include the following 
 --header "Authorization: Bearer <API_TOKEN>" \
 ```
 
-## Request without body content (GET, DELETE)
+## Request without body content (`GET`, `DELETE`)
 
 For `GET` requests, do not include the `--request` command-line argument, since it is the default where the request does not include a body and it is not recommended for `GET`/`POST` requests:
 
-### GET request template
+### `GET` request template
 
 ```
 curl {full_url_with_placeholders} \
@@ -70,7 +70,7 @@ curl {full_url_with_placeholders} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-### DELETE request template
+### `DELETE` request template
 
 ```
 curl --request DELETE \
@@ -80,7 +80,7 @@ curl --request DELETE \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-### GET request example
+### `GET` request example
 
 ```
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
@@ -90,7 +90,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 
 Requests without a body do not need syntax highlight, but `bash` syntax highlighting is used to highlight the several delimited strings.
 
-## Request with JSON body content (POST, PUT, PATCH)
+## Request with JSON body content (`POST`, `PUT`, `PATCH`)
 
 Make sure to include a `Content-Type` header if the request includes a body. For requests with `JSON` content, the header should be: `Content-Type: application/json`
 
@@ -98,7 +98,7 @@ This header should appear after the authentication headers.
 
 For `POST` requests, do not include the `--request` command-line argument, since it is the default when the request includes a body:
 
-### POST request template
+### `POST` request template
 
 ```
 curl {full_url_with_placeholders} \
@@ -112,10 +112,10 @@ curl {full_url_with_placeholders} \
 (}|])'
 ```
 
-### PUT/PATCH request template
+### `PUT`/`PATCH` request template
 
 ```
-curl --request (PUT|PATCH) \
+curl --request (PUT/PATCH) \
 
 {full_url_with_placeholders} \
 
@@ -130,7 +130,7 @@ curl --request (PUT|PATCH) \
 
 Enclose the `JSON` payload ( the --data command-line argument) in single quotes (') instead of double quotes because it requires less escaping (strings in `JSON` must be delimited using double quotes).
 
-### POST request example
+### `POST` request example
 
 ```
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
@@ -166,7 +166,7 @@ curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 }'
 ```
 
-### POST requests without a body
+### `POST` requests without a body
 
 If you have a `POST` request without a body, add a `--request POST` argument explicitly to the cUrl command.
 

@@ -9,7 +9,7 @@ weight: 3
 
 ## Purpose
 
-An endpoint is used to make HTTPS requests, and the GET, POST, PUT, PATCH, and DELETE methods dictate how to interact with the resource.
+An endpoint is used to make HTTPS requests, and the `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods dictate how to interact with the resource.
 
 ## Structure
 
@@ -17,7 +17,7 @@ An endpoint is used to make HTTPS requests, and the GET, POST, PUT, PATCH, and D
 
 {{<Aside type="note">}}
 
-The required components apply to newly created endpoints. Existing endpoints will NOT be modified.
+The required components apply to newly created endpoints. Existing endpoints will **not** be modified.
 
 {{</Aside>}}
 

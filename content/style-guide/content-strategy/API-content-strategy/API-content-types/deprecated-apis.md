@@ -32,7 +32,7 @@ reference
 
 ### Optional components
 
-Complete list of endpoints or related APIs that are being deprecated
+A complete list of endpoints or related APIs that are being deprecated
 
 ## Additional information
 

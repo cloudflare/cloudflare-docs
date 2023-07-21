@@ -39,6 +39,7 @@ Configurations are useful for parts of the product that are very configuration-i
 ## Template
 
 ```
+{
 ---
  
 weight: xx  
@@ -83,8 +84,9 @@ Write an overview of the high-level feature here, not more than 2-3 sentences. O
 | - | - | - | 
  
 | Value 1 | Value 2 | Value 3 |
+}
 ```
 
 ## Additional Information
 
-Configurations, aka use cases, are reference pages with examples of how you might set a product up based on your requirements. If you're creating a configuration and feel yourself wanting to include instructions, consider a [tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/), [how-to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), or [example](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/) instead.
+Configurations, also known as use cases, are reference pages with examples of how you might set a product up based on your requirements. If you are creating a configuration and feel yourself wanting to include instructions, consider a [tutorial](/style-guide/content-strategy/documentation-content-strategy/content-types/tutorial/), [how-to](/style-guide/content-strategy/documentation-content-strategy/content-types/how-to/), or [example](/style-guide/content-strategy/documentation-content-strategy/component-attributes/examples/) instead.
