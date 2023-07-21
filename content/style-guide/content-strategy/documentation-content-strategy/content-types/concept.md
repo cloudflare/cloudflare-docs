@@ -16,7 +16,7 @@ instructional, descriptive, approachable, supportive
 
 ## content_type
 
-concept
+`concept`
 
 ## Structure
 

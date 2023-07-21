@@ -16,7 +16,7 @@ instructional, straightforward
 
 ## content_type
 
-reference
+`reference`
 
 ## Structure
 
@@ -40,8 +40,6 @@ Add API deprecation notices to the API deprecations page by deprecation date and
 
 When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead.").
 
-Cloudflare's EoL process: Cloudflare API Deprecation and EoL Process
-
 ## Examples
 
 Cloudflare Images - Create authenticated direct upload URL v1
@@ -52,8 +50,8 @@ This endpoint is deprecated in favor of using v2, which allows you to control me
 
 Deprecated API:
 
-POST accounts/:account_identifier/images/v1/direct_upload
+`POST accounts/:account_identifier/images/v1/direct_upload`
 
 Replacement:
 
-POST accounts/:account_identifier/images/v2/direct_upload
+`POST accounts/:account_identifier/images/v2/direct_upload`

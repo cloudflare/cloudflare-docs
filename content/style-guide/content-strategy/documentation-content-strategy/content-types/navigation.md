@@ -11,7 +11,7 @@ The purpose of a navigation page is to direct users deeper into the doc set and 
 
 ## content_type
 
-navigation
+`navigation`
 
 ## Structure
 
@@ -22,6 +22,7 @@ Use the ```{{</*directory-listing*/>}}``` component
 ## Template
 
 ```
+{
 ---
 weight: xx
 pcx_content_type: navigation
@@ -30,6 +31,7 @@ pcx_content_type: navigation
 # Name of section
  
 <DirectoryListing path="/<first-level folder within product space>/<second-level folder within product space>/<third-level folder within product space>"/>
+}
 ```
 
 ## Examples

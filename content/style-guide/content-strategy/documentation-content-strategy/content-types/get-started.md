@@ -12,7 +12,7 @@ The purpose of Get started content is to help users go from not using a product 
 
 ## content_type
 
-get-started
+`get-started`
 
 ## Structure
 

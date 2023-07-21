@@ -16,7 +16,7 @@ instructional, straightforward
 
 ## content_type
 
-changelog
+`changelog`
 
 ## Structure
 

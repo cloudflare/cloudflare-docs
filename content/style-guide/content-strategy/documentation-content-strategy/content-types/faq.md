@@ -16,7 +16,7 @@ Guiding, straightforward, educational, authoritative
 
 ## content_type
 
-faq
+`faq`
 
 ## Overview
 
@@ -44,7 +44,7 @@ Make sure the answer includes the entire answer.
 
 ### Smaller FAQ pages (5-10 questions)
 
-Smaller FAQ pages will not need structuring into sections. The structure is as follows:
+Smaller FAQ pages will not need structuring into sections.
 
 [**Title**](/style-guide/content-strategy/documentation-content-strategy/component-attributes/titles/): FAQ
 

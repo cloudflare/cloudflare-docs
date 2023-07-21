@@ -15,7 +15,7 @@ plain, straightforward
 
 ## content_type
 
-reference
+`reference`
 
 ## Structure
 

@@ -16,7 +16,7 @@ Accessible, welcoming, conversational, outspoken
 
 ## content_type
 
-overview
+`overview`
 
 ## Structure
 
@@ -103,11 +103,11 @@ Only use Overview for the first page in a developer documentation set.
 
 ## Examples
 
-Examples of in-work designs are below, and a more detailed view is available in the "Template Examples" section of this Figma board. A live example is available in the Argo Smart Routing documentation.
+[Argo Smart Routing documentation](https://developers.cloudflare.com/argo-smart-routing/)
 
 ### Many availabilities
 
-Below there is an example for a product whose availability is complex, and is not easy to just use one type of plan. To create something similar to the example below, insert `{{</*plan type="<PLAN_TYPE>"*/>}}` below each of the feature component, like so:
+[Images](/images/) is an example of a product whose availability is complex, and is not easy to just use one type of plan. To create components for each plan type, insert `{{</*plan type="<PLAN_TYPE>"*/>}}` below each of the feature component, like so:
 
 ```
 {{</*feature header="<CLOUDFLARE_PRODUCT>" href="/path/to/product"*/>}}

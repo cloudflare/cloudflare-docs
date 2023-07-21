@@ -17,7 +17,7 @@ Guiding, straightforward, solution-oriented
 
 ## content_type
 
-troubleshooting
+`troubleshooting`
 
 ## Structure
 

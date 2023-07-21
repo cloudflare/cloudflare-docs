@@ -16,7 +16,7 @@ Guiding, straightforward, educational, authoritative
 
 ## content_type
 
-tutorial
+`tutorial`
 
 ## Structure
 
@@ -90,4 +90,4 @@ Prerequisites
 
 ## Additional information
 
-We have a tool that pulls together everything labeled with `<pcx_content_type: tutorial>`: Developer docs > Tutorials
+We have a tool that pulls together everything labeled with `<pcx_content_type: tutorial>`: [Tutorials](https://developers.cloudflare.com/tutorials/)

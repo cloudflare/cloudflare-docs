@@ -16,7 +16,7 @@ plain, descriptive, straightforward
 
 ## content_type
 
-configuration
+`configuration`
 
 ## When to use
 
