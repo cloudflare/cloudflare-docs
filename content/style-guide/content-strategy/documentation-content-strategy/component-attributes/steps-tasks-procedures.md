@@ -50,7 +50,7 @@ State the purpose of the action before stating the action.
 
 Write in the order that the reader needs to follow. State the location of the action before stating the action. If there are multiple headings associated with a set of procedures, restate the location of the action in the first step of each procedure, even if the location is the same as in the previous procedure.
 
-Don't use "please."
+Do not use "please."
 
 ## Additional information
 

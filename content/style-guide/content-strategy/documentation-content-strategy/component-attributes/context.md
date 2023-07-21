@@ -49,4 +49,4 @@ Provide an introductory paragraph to explain how and why a user might utilize th
 
 ### Tutorial
 
-An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to Context for more information.
+An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial.

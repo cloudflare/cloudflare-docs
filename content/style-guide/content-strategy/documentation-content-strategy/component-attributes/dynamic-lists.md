@@ -21,6 +21,6 @@ Potential examples include:
 + Exhaustive listing of fields
 + Replicating API content in developer docs
 + Maintaining lists of potential options in the UI (i.e., Alert types)
-+ Things like Verified Bots
++ Verified Bots
 
 The preferred approach would be speak more generally to the categories or specific, high-value fields.

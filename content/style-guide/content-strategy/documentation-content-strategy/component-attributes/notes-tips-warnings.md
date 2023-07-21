@@ -16,11 +16,11 @@ A colored info box or aside with content (text, images, lists, code blocks) that
 
 ## Structure
 
-Type: note or warning (defines the background color)
+**Type**: note or warning (defines the background color)
 
-Aside content
+**Aside content**
 
-(optional) Title/Header
+**(optional) Title/Header**
 
 ## Templates
 
@@ -107,6 +107,7 @@ An `{{</*Aside...*/>}}` element, as it appears in Markdown files, is a Hugo shor
 ## When should I use a note/warning?
 
 Use a note to alert a reader to additional useful information that you cannot integrate into the text.
+
 Use a warning to alert a reader to behavior that could impact the security of a users network or break functionality.
 
 ## Recommendations

@@ -42,7 +42,7 @@ overview
 
 **More resources**: External links to related resources, such as plans, pricing. Do not duplicate the information from the footer. Also, if the product is free to use or there are not any useful links, feel free to skip this section. Review [available icons in the source code](https://github.com/cloudflare/cloudflare-docs/tree/production/static/icons/resources).
 
-**Visual**: Graphic or image that enhances the landing page. Should be something relatively static that will not require much (if any) updating in the future.
+**Visual**: Graphic or image that enhances the landing page. It should be something relatively static that will not require much (if any) updating in the future.
 
 **Integration information**
 
