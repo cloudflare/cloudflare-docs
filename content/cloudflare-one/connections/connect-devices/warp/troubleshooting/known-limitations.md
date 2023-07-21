@@ -40,3 +40,22 @@ Cisco Meraki devices have a bug where WARP traffic can sometimes be identified a
 ## Windows Teredo
 
 The [Windows Teredo](https://learn.microsoft.com/en-us/windows/win32/teredo/about-teredo) interface conflicts with the WARP client. Since Teredo and WARP will fight for control over IPv6 traffic routing, you must disable Terado on your Windows device. This allows the WARP client to provide IPv6 connectivity on the device.
+
+## Docker on Linux with bridged networking
+
+Currently [Docker](https://www.docker.com/products/container-runtime/) on 
+Linux does not respond to underlying network tunnel mtu changes. This can be seen with WARP Gateway enabled
+when a basic TLS GET `curl -v https://cloudflare.com > /dev/null` fails 
+inside a Docker container that is using the default bridge network driver. 
+Until Docker changes this behaviour, WARP + Docker users on Linux can modify 
+`/etc/docker/daemon.json` to include: 
+```
+  {
+      "mtu":1420
+  }
+``` 
+or create a Docker network with a configuration modified for a working mtu size:
+```
+  docker network create \
+    -o "com.docker.network.driver.mtu=1420" my-docker-network
+```
