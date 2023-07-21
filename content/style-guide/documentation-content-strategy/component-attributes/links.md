@@ -46,4 +46,4 @@ Use placeholders in links with account- or user-specific information. And explai
 
 + For example, for the link "`https://api.cloudflare.com/client/v4/accounts/a0b1c2d3/rulesets`" use "`https://api.cloudflare.com/client/v4/accounts/<ACCOUNTID>/rulesets`" and add text to say "replace `<ACCOUNTID>` with your Account ID" or similar.
 
-See [angle brackets](/style-guide/grammar-and-formatting/code-conventions-and-format/) in Code Conventions and Formatting.
+See [angle brackets](/style-guide/formatting/code-conventions-and-format/) in Code Conventions and Formatting.

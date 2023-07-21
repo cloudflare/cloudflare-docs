@@ -140,7 +140,7 @@ Prerequisites
 **3rd-party integration in the Cloudflare dashboard**:
 
 + [Enable Logpush to Sumo Logic](/logs/get-started/enable-destinations/sumo-logic/)
-+ [Device Posture - Carbon Black](cloudflare-one/identity/devices/warp-client-checks/carbon-black/)
++ [Device Posture - Carbon Black](/cloudflare-one/identity/devices/warp-client-checks/carbon-black/)
 
 **Linking to external documentation**:
 

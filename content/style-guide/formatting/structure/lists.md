@@ -48,7 +48,7 @@ However, as with any other aspect of writing, they should be used mindfully. Bel
 
 ## Bulleted lists
 
-Instructions should be numbered steps and not bullet points. See [steps/tasks/procedures](/documentation-content-strategy/component-attributes/steps-tasks-procedures/) for additional information.
+Instructions should be numbered steps and not bullet points. See [steps/tasks/procedures](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/) for additional information.
 
 Do not punctuate bullet points unless each item is a full sentence.
 
