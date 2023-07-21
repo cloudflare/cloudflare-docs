@@ -6,7 +6,7 @@ meta:
   title: Compression Rules examples
 ---
 
-# Compression rule examples
+# Compression Rules examples
 
 The following examples cover common patterns for configuring compression rules.
 

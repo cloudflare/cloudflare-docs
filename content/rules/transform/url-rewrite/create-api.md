@@ -1,41 +1,36 @@
 ---
 title: Create a rule via API
 pcx_content_type: how-to
-type: overview
 weight: 3
-layout: list
 meta:
-  title: Create a Rewrite URL Rule via API
+  title: Create a rewrite URL rule via API
 ---
 
-# Create a Rewrite URL Rule via API
+# Create a rewrite URL rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Rewrite URL Rules via API. Define the rewrite configuration in the `action_parameters` field. Refer to [URL rewrite examples](/rules/transform/url-rewrite/examples/) for examples of rule definitions.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create rewrite URL rules via API. Refer to [URL rewrite examples](/rules/transform/url-rewrite/examples/) for common use cases.
 
-When creating a Rewrite URL Rule via API, make sure you:
+## Basic rule settings
+
+When creating a rewrite URL rule via API, make sure you:
 
 * Set the rule action to `rewrite`.
 * Define the [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/#api-information) in the `action_parameters` field according to the type of URL rewrite (static or dynamic).
 * Deploy the rule to the `http_request_transform` phase at the zone level.
 
-***
+## Procedure
 
 {{<render file="_rules-creation-workflow.md" withParameters="a rewrite URL rule;;http_request_transform">}}
 
-## Required API token permissions
+Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
 
-The API token used in API requests to manage Rewrite URL Rules must have at least the following permissions:
-
-* _Account_ > _Transform Rules_ > _Edit_
-* _Account_ > _Account Rulesets_ > _Read_
-
-## Examples
+## Example requests
 
 <details>
 <summary>Example: Add a rule that performs a static URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single Rewrite URL Rule — performing a static rewrite of the URI path — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single rewrite URL rule — performing a static rewrite of the URI path — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -49,7 +44,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "(http.request.uri.query contains \"eu\")",
-      "description": "My first static Rewrite URL Rule",
+      "description": "My first static rewrite URL rule",
       "action": "rewrite",
       "action_parameters": {
         "uri": {
@@ -89,7 +84,7 @@ header: Response
           }
         },
         "expression": "(http.request.uri.query contains \"eu\")",
-        "description": "My first static Rewrite URL Rule",
+        "description": "My first static rewrite URL rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -110,7 +105,7 @@ header: Response
 <summary>Example: Add a rule that performs a dynamic URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single Rewrite URL Rule — performing a dynamic rewrite of the URI path — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single rewrite URL rule — performing a dynamic rewrite of the URI path — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -124,7 +119,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "starts_with(http.request.uri.path, \"/news/2012/\")",
-      "description": "My first dynamic Rewrite URL Rule",
+      "description": "My first dynamic rewrite URL rule",
       "action": "rewrite",
       "action_parameters": {
         "uri": {
@@ -164,7 +159,7 @@ header: Response
           }
         },
         "expression": "starts_with(http.request.uri.path, \"/news/2012/\")",
-        "description": "My first dynamic Rewrite URL Rule",
+        "description": "My first dynamic rewrite URL rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -180,3 +175,12 @@ header: Response
 
 </div>
 </details>
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage rewrite URL rules must have at least the following permissions:
+
+* _Account_ > _Transform Rules_ > _Edit_
+* _Account_ > _Account Rulesets_ > _Read_

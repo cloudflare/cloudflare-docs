@@ -1,41 +1,36 @@
 ---
 title: Create a rule via API
 pcx_content_type: how-to
-type: overview
 weight: 3
-layout: list
 meta:
-  title: Create an HTTP Response Header Modification Rule via API
+  title: Create an HTTP response header modification rule via API
 ---
 
-# Create an HTTP Response Header Modification Rule via API
+# Create an HTTP response header modification rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP Response Header Modification Rules via API. Define the header modification configuration in the `action_parameters` field. Refer to [Response header modification examples](/rules/transform/response-header-modification/examples/) for examples of rule definitions.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP response header modification rules via API. Refer to [Response header modification examples](/rules/transform/response-header-modification/examples/) for common use cases.
 
-When creating an HTTP Response Header Modification Rule via API, make sure you:
+## Basic rule settings
+
+When creating an HTTP response header modification rule via API, make sure you:
 
 *   Set the rule action to `rewrite`.
 *   Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set, add, or remove header).
 *   Deploy the rule to the `http_response_headers_transform` phase at the zone level.
 
-***
+## Procedure
 
-{{<render file="_rules-creation-workflow.md" withParameters="an HTTP Response Header Modification Rule;;http_response_headers_transform">}}
+{{<render file="_rules-creation-workflow.md" withParameters="an HTTP response header modification rule;;http_response_headers_transform">}}
 
-## Required API token permissions
+Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
 
-The API token used in API requests to manage HTTP Response Header Modification Rules must have at least the following permissions:
-
-* Transform Rules: Edit
-* Account Rulesets: Read
-
-## Examples
+## Example requests
 
 <details>
 <summary>Example: Set an HTTP response header to a static value</summary>
 <div>
 
-The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP Response Header Modification Rule — setting an HTTP response header to a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
+The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -49,7 +44,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-      "description": "My first HTTP Response Header Modification Rule",
+      "description": "My first HTTP response header modification rule",
       "action": "rewrite",
       "action_parameters": {
         "headers": {
@@ -91,7 +86,7 @@ header: Response
           }
         },
         "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-        "description": "My first HTTP Response Header Modification Rule",
+        "description": "My first HTTP response header modification rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -112,7 +107,7 @@ header: Response
 <summary>Example: Set an HTTP response header to a dynamic value</summary>
 <div>
 
-The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP Response Header Modification Rule — setting an HTTP response header to a dynamic value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
+The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a dynamic value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -126,7 +121,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-      "description": "My first HTTP Response Header Modification Rule",
+      "description": "My first HTTP response header modification rule",
       "action": "rewrite",
       "action_parameters": {
         "headers": {
@@ -168,7 +163,7 @@ header: Response
           }
         },
         "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-        "description": "My first HTTP Response Header Modification Rule",
+        "description": "My first HTTP response header modification rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -189,7 +184,7 @@ header: Response
 <summary>Example: Add a <code>set-cookie</code> HTTP response header with a static value</summary>
 <div>
 
-The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP Response Header Modification Rule — adding a `set-cookie` HTTP response header with a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation. By configuring the rule with the `add` operation you will keep any existing `set-cookie` headers that may already exist in the response.
+The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — adding a `set-cookie` HTTP response header with a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. By configuring the rule with the `add` operation you will keep any existing `set-cookie` headers that may already exist in the response.
 
 ```bash
 ---
@@ -203,7 +198,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-      "description": "My first HTTP Response Header Modification Rule",
+      "description": "My first HTTP response header modification rule",
       "action": "rewrite",
       "action_parameters": {
         "headers": {
@@ -245,7 +240,7 @@ header: Response
           }
         },
         "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-        "description": "My first HTTP Response Header Modification Rule",
+        "description": "My first HTTP response header modification rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -267,7 +262,7 @@ header: Response
 <summary>Example: Remove an HTTP response header</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — removing an HTTP response header — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP response header modification rule — removing an HTTP response header — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -281,7 +276,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-      "description": "My first HTTP Response Header Modification Rule",
+      "description": "My first HTTP response header modification rule",
       "action": "rewrite",
       "action_parameters": {
         "headers": {
@@ -321,7 +316,7 @@ header: Response
           }
         },
         "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-        "description": "My first HTTP Response Header Modification Rule",
+        "description": "My first HTTP response header modification rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -337,3 +332,12 @@ header: Response
 
 </div>
 </details>
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage HTTP response header modification rules must have at least the following permissions:
+
+* _Transform Rules_ > _Edit_
+* _Account Rulesets_ > _Read_

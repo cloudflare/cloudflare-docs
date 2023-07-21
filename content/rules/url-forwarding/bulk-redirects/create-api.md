@@ -15,10 +15,7 @@ To create Bulk Redirects via API, you must:
 2. Add items (URL redirects) to the list created in step 1.
 3. Create a Bulk Redirect Rule via API, which enables the list created in step 1.
 
-The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following permissions:
-
-* _Account_ > _Account Rulesets_ > _Edit_
-* _Account_ > _Account Filter Lists_ > _Edit_
+{{<render file="url-forwarding/_requires-proxied-site.md" withParameters="Bulk Redirects">}}
 
 ## 1. Create a Bulk Redirect List via API
 
@@ -43,6 +40,7 @@ The response will be similar to the following:
 ```json
 ---
 header: Response
+highlight: 3
 ---
 {
   "result": {
@@ -61,11 +59,13 @@ header: Response
 }
 ```
 
+Take note of the list ID — you will need it in the next step.
+
 For more information on list operations, refer to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) documentation.
 
 ## 2. Add items to the list
 
-Use the [Create list items](/api/operations/lists-create-list-items) operation to add URL redirect items to the list:
+Use the [Create list items](/api/operations/lists-create-list-items) operation to add URL redirect items to the list. Enter the list ID from the previous step in the endpoint URL:
 
 ```bash
 ---
@@ -139,7 +139,7 @@ header: Response
 
 Since Bulk Redirect Lists are just containers of URL redirects, you have to enable the URL redirects in the list by creating a Bulk Redirect Rule.
 
-Add Bulk Redirect Rules to the entry point ruleset of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
+Add Bulk Redirect Rules to the [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
 
 A Bulk Redirect Rule must have:
 
@@ -308,3 +308,12 @@ header: Response
   "messages": []
 }
 ```
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following permissions:
+
+* _Account_ > _Account Rulesets_ > _Edit_
+* _Account_ > _Account Filter Lists_ > _Edit_

@@ -4,36 +4,34 @@ pcx_content_type: how-to
 type: overview
 weight: 4
 meta:
-  title: Create a Configuration Rule via API
+  title: Create a configuration rule via API
 ---
 
-# Create a Configuration Rule via API
+# Create a configuration rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Configuration Rules via API.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create configuration rules via API.
 
-When creating a Configuration Rule via API, make sure you:
+## Basic rule settings
+
+When creating a configuration rule via API, make sure you:
 
 * Set the rule action to `set_config`.
 * Define the parameters in the `action_parameters` field according to the [settings](/rules/configuration-rules/settings/) you wish to override for matching requests.
 * Deploy the rule to the `http_config_settings` phase at the zone level.
 
-***
+## Procedure
 
 {{<render file="_rules-creation-workflow.md" withParameters="a configuration rule;;http_config_settings">}}
 
-## Required API token permissions
+Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
 
-The API token used in API requests to manage Configuration Rules must have at least the following permission:
-
-* _Zone_ > _Config Rules_ > _Edit_
-
-## Examples
+## Example requests
 
 <details>
 <summary>Example: Add a rule that enables Auto Minify for CSS files and enables Hotlink Protection</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single Configuration Rule — enabling Auto Minify for CSS files and Hotlink Protection for the `assets.example.com` hostname — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Auto Minify for CSS files and Hotlink Protection for the `assets.example.com` hostname — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -69,7 +67,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 <summary>Example: Add a rule that enables Email Obfuscation and Browser Integrity Check</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single Configuration Rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -101,7 +99,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 <summary>Example: Add a rule that sets the Security Level to <em>High</em></summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single Configuration Rule — changing the Security Level to _High_ for the administration area — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — changing the Security Level to _High_ for the administration area — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
 ```bash
 ---
@@ -127,3 +125,11 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 </div>
 </details>
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage configuration rules must have at least the following permission:
+
+* _Zone_ > _Config Rules_ > _Edit_
