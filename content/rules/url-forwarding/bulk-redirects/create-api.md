@@ -137,7 +137,7 @@ header: Response
 
 ## 3. Create a Bulk Redirect Rule via API
 
-Since Bulk Redirect Lists are just containers of URL redirects, you have to enable the URL redirects in the list by creating a Bulk Redirect Rule.
+Since Bulk Redirect Lists are essentially containers of URL redirects, you have to enable the URL redirects in the list by creating a Bulk Redirect Rule.
 
 Add Bulk Redirect Rules to the [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
 

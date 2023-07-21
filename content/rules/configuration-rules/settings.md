@@ -414,7 +414,7 @@ Refer to [Create a configuration rule via API](/rules/configuration-rules/create
 
 [^3]: Browser Integrity Check blocks access to pages based on specific HTTP headers commonly abused by spammers.
 
-[^4]: Cloudflare Apps is a platform for sharing high-quality apps that are easy to use by anyone with a website.
+[^4]: Cloudflare Apps is a platform for sharing high-quality apps that anyone with a website can use.
 
 [^5]: Railgun (deprecated) is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
 
