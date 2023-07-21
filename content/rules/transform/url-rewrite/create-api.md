@@ -20,16 +20,7 @@ When creating a Rewrite URL Rule via API, make sure you:
 
 ***
 
-Follow this workflow to create a Rewrite URL Rule for a given zone via API:
-
-1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_transform` phase at the zone level.
-
-2. If the phase ruleset does not exist, create it using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method with the zone-level endpoint. In the new ruleset properties, set the following values:
-
-    * **kind**: `zone`
-    * **phase**: `http_request_transform`
-
-3. Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to add a Rewrite URL Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](/ruleset-engine/rulesets-api/create/) request mentioned in the previous step.
+{{<render file="_rules-creation-workflow.md" withParameters="a rewrite URL rule;;http_request_transform">}}
 
 ## Required API token permissions
 
@@ -44,17 +35,17 @@ The API token used in API requests to manage Rewrite URL Rules must have at leas
 <summary>Example: Add a rule that performs a static URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Rewrite URL Rule — performing a static rewrite of the URI path — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single Rewrite URL Rule — performing a static rewrite of the URI path — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "(http.request.uri.query contains \"eu\")",
@@ -119,17 +110,17 @@ header: Response
 <summary>Example: Add a rule that performs a dynamic URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Rewrite URL Rule — performing a dynamic rewrite of the URI path — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single Rewrite URL Rule — performing a dynamic rewrite of the URI path — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "starts_with(http.request.uri.path, \"/news/2012/\")",

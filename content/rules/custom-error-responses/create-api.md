@@ -37,14 +37,14 @@ The API token used in API requests to manage custom error responses must have at
 
 ### Custom JSON response for all Cloudflare 1xxx errors
 
-This example configures a custom JSON error response for all [Cloudflare 1xxx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) in the zone with ID `<ZONE_ID>`. The HTTP status code of the custom error response will be set to `530`.
+This example configures a custom JSON error response for all [Cloudflare 1xxx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
 
-```json
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_custom_errors/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "serve_error",
@@ -66,12 +66,12 @@ Note that this `PUT` request, corresponding to the [Update zone entry point rule
 
 This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
 
-```json
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_custom_errors/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "serve_error",
@@ -92,12 +92,12 @@ Note that this `PUT` request, corresponding to the [Update zone entry point rule
 
 This example configures a custom HTML error response for responses with a `500` HTTP status code, and redefines the response status code to `503`.
 
-```json
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_custom_errors/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "serve_error",

@@ -20,16 +20,7 @@ When creating an HTTP Request Header Modification Rule via API, make sure you:
 
 ***
 
-Follow this workflow to create an HTTP Request Header Modification Rule for a given zone via API:
-
-1.  Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_late_transform` phase at the zone level.
-
-2.  If the phase ruleset does not exist, create it using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method with the zone-level endpoint. In the new ruleset properties, set the following values:
-
-    *   **kind**: `zone`
-    *   **phase**: `http_request_late_transform`
-
-3.  Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to add an HTTP Request Header Modification Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](/ruleset-engine/rulesets-api/create/) request mentioned in the previous step.
+{{<render file="_rules-creation-workflow.md" withParameters="an HTTP Request Header Modification Rule;;http_request_late_transform">}}
 
 ## Required API token permissions
 
@@ -44,17 +35,17 @@ The API token used in API requests to manage HTTP Request Header Modification Ru
 <summary>Example: Add an HTTP request header with a static value</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
@@ -121,17 +112,17 @@ header: Response
 <summary>Example: Add an HTTP request header with a dynamic value</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a dynamic value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a dynamic value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
@@ -198,17 +189,17 @@ header: Response
 <summary>Example: Remove an HTTP request header</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Request Header Modification Rule — removing an HTTP request header — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP Request Header Modification Rule — removing an HTTP request header — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
