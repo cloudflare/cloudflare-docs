@@ -113,7 +113,7 @@ Now, make a request to the OpenAI [Chat Completions API](https://platform.openai
 ---
 filename: worker.js
 ---
-try{
+try {
   const chatCompletion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo-0613",
     messages: [{role: "user", content: "What's happening in the NBA today?"}],
@@ -135,10 +135,10 @@ try{
     ]
   });
 
-const msg = chatCompletion.data.choices[0].message;
-console.log(msg.function_call)
+  const msg = chatCompletion.data.choices[0].message;
+  console.log(msg.function_call)
 
-return new Response('Hello World!');
+  return new Response('Hello World!');
 } catch (e) {
   return new Response(e);
 }
