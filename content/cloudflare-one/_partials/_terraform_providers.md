@@ -24,6 +24,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
       required_providers {
         cloudflare = {
           source = "cloudflare/cloudflare"
+          version = ">= 4.9.0"
         }
         google = {
           source = "hashicorp/google"
