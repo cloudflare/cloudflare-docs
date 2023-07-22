@@ -98,7 +98,7 @@ The following configuration will modify settings in your Cloudflare account.
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
-   resource "cloudflare_argo_tunnel" "auto_tunnel" {
+   resource "cloudflare_tunnel" "auto_tunnel" {
      account_id = var.cloudflare_account_id
      name       = "Terraform GCP tunnel"
      secret     = random_id.tunnel_secret.b64_std
@@ -108,9 +108,24 @@ The following configuration will modify settings in your Cloudflare account.
    resource "cloudflare_record" "http_app" {
      zone_id = var.cloudflare_zone_id
      name    = "http_app"
-     value   = "${cloudflare_argo_tunnel.auto_tunnel.id}.cfargotunnel.com"
+     value   = "${cloudflare_argo_tunnel.auto_tunnel.cname}"
      type    = "CNAME"
      proxied = true
+   }
+
+   # Creates the configuration for the tunnel.
+   resource "cloudflare_tunnel_config" "auto_tunnel" {
+     tunnel_id = cloudflare_tunnel.auto_tunnel.id
+     account_id = var.cloudflare_account_id
+     config {
+      ingress_rule {
+        hostname = "${cloudflare_record.http_app.hostname}"
+        service  = "http://httpbin:8080"
+      }
+      ingress_rule {
+        service  = "http_status:404"
+      }
+     }
    }
 
    # Creates an Access application to control who can connect.
@@ -184,11 +199,7 @@ The following configuration defines the specifications for the GCP virtual machi
      // Configures the VM to run a startup script that takes in the Terraform variables.
      metadata_startup_script = templatefile("./install-tunnel.tpl",
        {
-         web_zone    = var.cloudflare_zone,
-         account     = var.cloudflare_account_id,
-         tunnel_id   = cloudflare_argo_tunnel.auto_tunnel.id,
-         tunnel_name = cloudflare_argo_tunnel.auto_tunnel.name,
-         secret      = random_id.tunnel_secret.b64_std
+         tunnel_token = cloudflare_tunnel.auto_tunnel.tunnel_token,
        })
    }
    ```
@@ -228,49 +239,16 @@ The following script will install `cloudflared`, create a permissions and config
         image: kennethreitz/httpbin
         restart: always
         container_name: httpbin
-        ports:
-          - 8080:80
-    EOF
 
-    # cloudflared configuration
-    cd ~
-    # Retrieve the cloudflared Linux package
-    wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-    sudo dpkg -i cloudflared-linux-amd64.deb
-    # Create a local user directory to temporarily hold the tunnel configuration.
-    mkdir ~/.cloudflared
-    touch ~/.cloudflared/cert.json
-    touch ~/.cloudflared/config.yml
-    # Populate the tunnel credentials file.
-    cat > ~/.cloudflared/cert.json << "EOF"
-    {
-        "AccountTag"   : "${account}",
-        "TunnelID"     : "${tunnel_id}",
-        "TunnelName"   : "${tunnel_name}",
-        "TunnelSecret" : "${secret}"
-    }
+      cloudflared:
+        image: cloudflare/cloudflared:latest
+        restart: always
+        container_name: cloudflared
+        environment:
+          TUNNEL_TOKEN: ${tunnel_token}
     EOF
-    # Define the ingress rules the tunnel will use.
-    cat > ~/.cloudflared/config.yml << "EOF"
-    tunnel: ${tunnel_id}
-    credentials-file: /etc/cloudflared/cert.json
-    logfile: /var/log/cloudflared.log
-    loglevel: info
-
-    ingress:
-
-      - hostname: http_app.${web_zone}
-        service: http://localhost:8080
-      - hostname: "*"
-        service: hello-world
-    EOF
-    # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudflared.
-    sudo cloudflared service install
-    # The credentials file does not get copied over so we do that manually.
-    sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/
-    # Start HTTPBin and start the tunnel
     cd /tmp
-    sudo docker-compose up -d && sudo systemctl start cloudflared
+    sudo docker-compose up -d
     ```
 
 ## 6. Deploy Terraform
