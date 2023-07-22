@@ -180,7 +180,7 @@ You will be billed when you input your authorization code and initiate the trans
 
 {{<faq-answer>}}
 
-No, there is no fee to transfer a `.uk` domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.
+No, there is not fee to transfer a `.uk` domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.
 
 {{</faq-answer>}}
 {{</faq-item>}}
