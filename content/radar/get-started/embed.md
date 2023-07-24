@@ -22,12 +22,10 @@ Charts supporting this feature will have a share icon <img src="/icons/share.svg
 
 ## Embed an interactive chart in your website
 
-1. Press the share button to open the sharing menu
-
-2. Select between **fixed-time** and **real-time**, where:
-   - Real-time uses a “sliding window” based on the selected date range, and will display data points looking back over that duration from the current date/time.
-   - Fixed-time will always display a chart with only the currently visible data points.
-
-3. Copy the HTML to your page
+1. Select the Share icon next to the description of the chart you wish to share.
+2. Select between Fixed Time and Real Time.
+   - Real Time uses a “sliding window” based on the selected date range, and will display data points looking back over that duration from the current date/time.
+   - Fixed Time will always display a chart with only the currently visible data points.
+3. Select Copy Code and paste the code into your web page.
 
 **Note**: Your current selections, such as date range, location, autonomous system (ASN), and visible series, will be reflected in the shared chart.
