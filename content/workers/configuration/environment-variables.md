@@ -11,7 +11,7 @@ Attach secrets, text strings, and JSON values as environment variables to your W
 
 Secrets are environment variables that are encrypted and not visible once set. They are used for storing sensitive information like API keys, and auth tokens.
 
-Texts strong and JSON values are not encryped and are useful for storing application configuration.
+Texts strong and JSON values are not encrypted and are useful for storing application configuration.
 
 ## Add environment variables via Wrangler
 

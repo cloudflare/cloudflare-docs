@@ -15,7 +15,7 @@ There are several reasons to migrate your Workers to the ES modules format:
 2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
 3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
 
-## Migrate a simple Worker
+## Migrate a Worker
 
 The following example demonstrates a Worker that redirects all incoming requests to a URL with a `301` status code.
 
@@ -36,7 +36,7 @@ addEventListener('fetch', event => {
 });
 ```
 
-Workers using ES modules format replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The example code above becomes:
+Workers using ES modules format replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The previous example code becomes:
 
 ```js
 export default {
@@ -137,7 +137,7 @@ export { getTodos }
 
 ## Environment variables
 
-[Environment variables](/workers/platform/environment-variables/) are accessed differently in code written in ES modules format versus Service Worker format.
+[Environment variables](/workers/configuration/environment-variables/) are accessed differently in code written in ES modules format versus Service Worker format.
 
 Review the following example environment variable configuration in `wrangler.toml`:
 
