@@ -59,7 +59,7 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 
 {{<definitions>}}
 
-- {{<code>}}queue{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}queue{{</code>}} {{<type>}}string{{</type>}}
 
   - The name of the Queue.
 
