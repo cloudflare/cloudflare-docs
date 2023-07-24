@@ -147,7 +147,7 @@ interface MessageBatch<Body = any> {
 
 {{<definitions>}}
 
-- {{<code>}}queue{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}queue{{</code>}} {{<type>}}string{{</type>}}
 
   - The name of the Queue that belongs to this batch.
 
