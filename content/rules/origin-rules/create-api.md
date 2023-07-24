@@ -144,7 +144,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
-      "description": "Origin rule for the company's HR application",
+      "description": "Origin rule for the company HR application",
       "action": "route",
       "action_parameters": {
         "host_header": "hr-server.example.com",
@@ -182,7 +182,7 @@ header: Response
           }
         },
         "expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
-        "description": "Origin rule for the company's HR application",
+        "description": "Origin rule for the company HR application",
         "last_updated": "2022-06-03T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }

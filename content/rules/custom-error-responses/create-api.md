@@ -8,7 +8,7 @@ meta:
 
 # Create a custom error response via API
 
-You configure custom error responses as [rules](/ruleset-engine/about/rules/) belonging to the `http_custom_errors` phase. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create custom error responses via API.
+Configure custom error responses as [rules](/ruleset-engine/about/rules/) belonging to the `http_custom_errors` phase. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create custom error responses via API.
 
 ## Basic rule settings
 

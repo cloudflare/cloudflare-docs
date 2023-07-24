@@ -10,12 +10,12 @@ meta:
 
 Below you will find answers to the most commonly asked questions regarding Origin Rules.
 
-## What happens if I use both an origin rule and a Page Rule to perform a Host header/DNS record override?
+## What happens if I use both an origin rule and a page rule to perform a Host header/DNS record override?
 
-In this situation the origin rule parameters will override the [Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) parameters. Consider the following example scenarios:
+In this situation the origin rule parameters will override the [page rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) parameters. Consider the following example scenarios:
 
-* A Page Rule defines a Host header override, but not a resolve override (or DNS record override). An origin rule defines a DNS record override, but not a Host header override. The resulting request will have the `Host` header defined by the Page Rule and the origin hostname defined by the origin rule.
-* A Page Rule defines a Host header override, and an origin rule also defines a Host header override. The resulting request will have the `Host` header defined by the origin rule.
+* A page rule defines a Host header override, but not a resolve override (or DNS record override). An origin rule defines a DNS record override, but not a Host header override. The resulting request will have the `Host` header defined by the page rule and the origin hostname defined by the origin rule.
+* A page rule defines a Host header override, and an origin rule also defines a Host header override. The resulting request will have the `Host` header defined by the origin rule.
 
 ## Will Cloudflare automatically migrate my Page Rules with Host header and DNS record overrides to origin rules?
 
