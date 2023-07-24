@@ -75,7 +75,7 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 
   - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
 
-- {{<code>}}dead_letter_queue{{</code>}}{{<param-type>}}string{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}dead_letter_queue{{</code>}} {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The name of another Queue to send a message if it fails processing at least `max_retries` times.
   - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will eventually be discarded.
