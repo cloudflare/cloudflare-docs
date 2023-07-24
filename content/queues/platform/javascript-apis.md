@@ -189,7 +189,7 @@ interface Message<Body = any> {
 
   - A timestamp when the message was sent.
 
-- {{<code>}}body{{</code>}}{{<param-type>}}any{{</param-type>}}
+- {{<code>}}body{{</code>}} {{<type>}}any{{</type>}}
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
