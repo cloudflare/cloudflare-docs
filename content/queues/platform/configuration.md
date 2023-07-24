@@ -63,7 +63,7 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 
   - The name of the Queue.
 
-- {{<code>}}max_batch_size{{</code>}}{{<param-type>}}number{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}max_batch_size{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of messages allowed in each batch.
 
