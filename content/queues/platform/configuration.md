@@ -71,7 +71,7 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 
   - The maximum number of seconds to wait until a batch is full.
 
-- {{<code>}}max_retries{{</code>}}{{<param-type>}}number{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}max_retries{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
 
