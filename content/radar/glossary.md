@@ -85,6 +85,8 @@ In some cases, a domain may be miscategorized. For example, a social media site 
 
 Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
+Trending domains are domains which are currently experiencing an increase in popularity. Domains Trending Today are domains spiking in popularity, reflecting increased interest potentially related to a particular event or a topic. Domains Trending This Week are domains that have steadily grown in popularity, reflecting an increase of their user base over the week.
+
 ## Geographical Distribution
 
 Countries contributing traffic to this AS, and their relative contribution as percentage of the total AS traffic seen by Cloudflare.
