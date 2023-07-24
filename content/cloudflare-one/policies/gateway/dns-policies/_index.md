@@ -205,6 +205,10 @@ Use this selector to match against only the hostname specified — for example,
 | ------- | -------------------------------- |
 | Host    | `dns.fqdn == "test.example.com"` |
 
+### Indicator Feed
+
+{{<render file="gateway/_indicator-feed.md" withParameters="dns">}}
+
 ### Query Record Type
 
 Use this selector to choose the DNS resource record type that you would like to apply policies against — for example, you can choose to block A records for a domain but not MX records.
