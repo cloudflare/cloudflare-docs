@@ -15,11 +15,9 @@ Charts supporting this feature will have a share icon <img src="/icons/share.svg
 
 ## Download a chart in PNG format
 
-1. Press the share button the open the sharing menu
-
-2. Click the button labeled "Download Image"
-
-3. Done! Your browser will download the .png file containing the requested chart
+1. Select the Share icon next to the description of the chart you wish to share.
+2. Select `Download Image.`
+3. A .png file containing the requested chart will be downloaded.
 
 
 ## Embed an interactive chart in your website
