@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: concept
 title: Observability
 weight: 2
 ---

@@ -6,7 +6,7 @@ weight: 7
 
 # KV performance optimizations
 
-You can optimize Workers KV latency by adopting techniques to maximize Workers KV performance. 
+You can adopt techniques to optimize Workers KV performance. 
 
 ## Optimize `get()` long tail performance
 
@@ -18,12 +18,12 @@ When Workers KV encounters a key beyond its `cacheTTL`, the key is treated as a 
 recently written value.
 
 Most Workers KV requests are not for security-sensitive keys. To optimize the long-tail performance of infrequently accessed keys, specify a longer
-`cacheTTL` value (for example, 86400 to request the entire day). 
+`cacheTTL` value (for example, 86,400 to request the entire day). 
 
-With the [new architecure](https://blog.cloudflare.com/faster-workers-kv-architecture/), you will see updated values within ~1 minute of the write, regardless of the `cacheTTL` value. See also the [section](#noticing-updated-values-within-seconds) below about how to explore getting sub minute global consistency.
+With the [new architecure](https://blog.cloudflare.com/faster-workers-kv-architecture/), you will see updated values within ~1 minute of the write, regardless of the `cacheTTL` value. 
 
 {{<Aside type="note" header="Decoupled cacheTTL and visible writes availability">}}
-A longer `cacheTTL` will result in the`cacheTTL` taking that duration for a `get()` to report the least value that was written within the interim. If you want to use the new architecture but think you may not be enabled, please contact support. This is a transparent optimization.
+A longer `cacheTTL` will result in the`cacheTTL` taking that duration for a `get()` to report the least value that was written within the interim. Contact support to use the new architecture. 
 {{</Aside>}}
 
 ## Avoid hand-rolling cache in front of Workers KV
@@ -36,20 +36,25 @@ Setting the expiry within your fronting Cache instance to be the `cacheTTL` you 
 
 For example, if you perform 10k RPS to that key, you will miss 10k RPS for the duration it takes to refetch. Workers KV solves this problem by refreshing in the background so that the expiry is set in the future. 
 
-<!-- The first problem is if you have tuned the expiry within your fronting Cache instance to bethe cacheTTL you use for KV (this is what BetterKV
-does). The problem with this is that when you miss your local cache, you will also miss KV and get a cold read. If you are doing 10k RPS to that
-key, then you will be missing 10k RPS for the duration it takes to refetch. As described, Workers KV very carefully and intentionally avoids
-this problem by refreshing in the background proactively so that the expiry is always in the future. -->
+<!-- The first problem is if you have tuned the expiry within your fronting Cache instance to be the cacheTTL you use for KV (this is what BetterKV
+does). The problem with this is that when you miss your local cache, you will also miss KV and get a cold read. 
+
+If you are doing 10k RPS to that key, then you will be missing 10k RPS for the duration it takes to refetch. As described, Workers KV very carefully and intentionally avoids this problem by refreshing in the background proactively so that the expiry is always in the future. -->
 
 <!-- Solving this can help a lot, but it's not the entire story. Even if your cache.match is set to expire before yourcacheTTL, you'll still have
 another problem. Since KV isn't seeing accesses to that key, Cache will treat KV's cache as cold & prioritize evicting it. In such a scenario,
-even though we're withinthe cacheTTL, from KV's perspective it sees a sudden stampeding herd of requests that aren't satisfied by your cache.match
+even though we're within the cacheTTL, from KV's perspective it sees a sudden stampeding herd of requests that aren't satisfied by your cache.match
 but for which it doesn't have a cache anymore because it was evicted. That being said, the most common cause is likely having a very similar
 cacheTtl in your extra caching layer and KV. -->
 
-There are many strategies to solve this problem.
+To solve this problem, you should:
 
-#### Do not put cache in front of Workers KV
+- [Avoid putting cache in front of Workers KV](/kv/learning/kv-performance-optimizations/#avoid-putting-cache-in-front-of-workers-kv).
+- [Set a longer `cacheTTL`](/kv/learning/kv-performance-optimizations/#set-a-longer-cachettl).
+- [Direct subset of cache hits to KV anyway in a `waitUntil`](http://localhost:5173/kv/learning/kv-performance-optimizations/#probabilistically-direct-some-subset-of-cache-hits-for-example-1-to-kv-anyway-in-a-waituntil).
+- [Shorten the cacheTTL within your extra caching layer](http://localhost:5173/kv/learning/kv-performance-optimizations/#shorten-the-cachettl-within-your-extra-caching-layer).
+
+#### Avoid putting cache in front of Workers KV
 
 The system will optimize performance by not putting cache in front of Workers KV. You can also leverage [notice writes more quickly than 1 minute](#noticing-updated-values-within-seconds).
 
@@ -58,15 +63,14 @@ The system will optimize performance by not putting cache in front of Workers KV
 
   Setting a longer `cacheTTL` improves latency across the board.
   * Cons: You may see prolonged stale reads by 1 extra KV cycle because the extra cache layer isn't letting KV know to refresh the asset (e.g if your extra cache layer caches
-  for 1 minute, it will take you 2 minutes to see a write (a longer `cacheTtl` without an extra cache layer in front of KV doesn't have this problem).
+  for 1 minute, it will take you 2 minutes to see a write (a longer `cacheTTL` without an extra cache layer in front of KV doesn't have this problem).
 
 #### Probabilistically direct some subset of cache hits (for example 1%) to KV anyway in a `waitUntil`
 
 You will need `waitUntil` because KV will abort work if you return a response before KV completes its work and no refresh will take place.
 
 KV will see more representative usage patterns and thus ensure that the most recent value is always in the cache.
-  * Cons: You need to manually fine tune the probability and you may not have sufficient observability to see problems. Consider following the steps in [improving observability](#improving-observability) to
-  make sure you can see this problem.
+  * Cons: You need to manually fine tune the probability and you may not have sufficient observability to see problems. Consider following the steps in [improving observability](#improving-observability) to make sure you can see this problem.
 #### Shorten the cacheTTL within your extra caching layer
 
 Shortening the cacheTTL within your extra caching layer will ensure all keys will mostly avoid the stampeding herd of cold KV accesses.
@@ -84,8 +88,6 @@ of how long an I/O operation took. However, approximations are inaccurate for me
 {{</Aside>}}
 
 It is best to allow Workers KV to manage the caching layer.
-
-**TLDR**: Adding an extra caching layer in front of KV that has good performance is surprisingly tricky and brittle. The best practice is to let KV manage this complex topic correctly for you. Insisting
 
 ### Reduce cardinality by coalescing keys
 
@@ -127,18 +129,17 @@ careful about synchronization.
 
 By merging into a "super" KV entry, infrequently accessed keys are kept in the cache.
 
-**Cons**: Size of the resultant value can easily push your worker out of it's memory limits. Safely updating the value requires a [locking mechanism](#concurrent-writers) of some kind.
+**Cons**: Size of the resultant value can push your worker out of its memory limits. Safely updating the value requires a [locking mechanism](#concurrent-writers).
 
 #### Store in metadata and shared prefix
 
 If you do not want to [merge into a single KV entry](/kv/learning/kv-performance-optimizations/#merge-into-a-super-kv-entry) and your associated values fit within the [metadata limit](/workers/platform/limits/#kv-limits), store the values within the metadata instead of the body. If you name the keys with a shared unique prefix, your list operation will contain the value letting you bulk read multiple keys at once through a single, cacheable list operation.
 
 {{<Aside type="note" header="List performance note">}}
-List operations are not "write aware". This means that while they are subject to tiering, they only stay cached for up to one minute past when it was last read, even at upper tiers. By comparison, get operations are cached at the upper tiers for a service managed duration that is always longer than your cacheTTL.Additionally, the cacheTTL lets you extend the duration of a single key lookup at the data center closest to the request.
+List operations are not "write aware". While list operations are subject to tiering, they only stay cached for up to one minute past when it was last read, even at upper tiers. By comparison, get operations are cached at the upper tiers for a service managed duration that is always longer than your cacheTTL. The cacheTTL lets you extend the duration of a single key lookup at the data center closest to the request.
 {{</Aside>}}
 
-List operations are only ever cached for 1 minute. They are still subject to [tiered caching](https://blog.cloudflare.com/faster-workers-kv-architecture#a-new-horizontally-scaled-tiered-cache). Therefore, requests within the region and globally are amortized to keep the asset closer to your request. However, you still need to be reading the value about once
-every 30s to make sure it's always present within Cloudflare's caches.
+List operations are only ever cached for 1 minute. They are still subject to [tiered caching](https://blog.cloudflare.com/faster-workers-kv-architecture#a-new-horizontally-scaled-tiered-cache). Requests within the region and globally are amortized to keep the asset closer to your request. However, you still need to be reading the value about once every 30 seconds to make sure it is always present within Cloudflare's caches.
 
 ## Batch reading multiple keys
 
@@ -150,14 +151,13 @@ Storing the value within metadata is not suitable for all problem domains as it 
 
 ## Avoid using the GET REST API at the Edge
 
-Using the REST API to read a key will reduce performance because you always have to do a long distance round trip before you hit a cache. 
+Using the REST API to read a key will affect performance because you always have to do a long distance round trip before you hit a cache. 
 
 A `get()` or `getWithMetadata()`, and a `list()` operation within your Worker will access the cache closest to where the request originated from.
 
 ## Concurrent writers to a single key
 
 `put()` will always clobber the value. If you have multiple writers, there is no guarantee about a winner. 
-
 
 This is even more problematic if you have structured data and want to do a partial update of a value. A lot of customers have success creating a [Durable Object](/workers/learning/using-durable-objects) and making it responsible for all the writes to your KV namespace. This way, you can serialize access for writing the value.
 
@@ -174,13 +174,13 @@ it to KV for reading. -->
 
 ## Notice updated values within seconds
 
-Reads have a "refreshTtl" of 1 minute. A write is noticed within 1 minute of a read being issued.
+Reads have a "refreshTTL" of 1 minute. A write is noticed within 1 minute of a read being issued.
 
 Contact customer support to change the default for your namespace.
 
 ## Benchmarking Workers KV
 
-To predict what your Workers KV performance, put production load onto the system and then measure real-world performance.
+To predict your Workers KV performance, put production load onto the system and then measure real-world performance.
 
 You may encounter the following issues:
 
