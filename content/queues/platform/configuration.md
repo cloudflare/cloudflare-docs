@@ -32,11 +32,11 @@ To enable Producer Worker to Queue communication, set up a binding in your `wran
 
 {{<definitions>}}
 
-- {{<code>}}queue{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}queue{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - The name of the Queue.
 
-- {{<code>}}binding{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}binding{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - The name of the binding, which is a JavaScript variable.
 
@@ -59,29 +59,29 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 
 {{<definitions>}}
 
-- {{<code>}}queue{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}queue{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - The name of the Queue.
 
-- {{<code>}}max_batch_size{{<param-type>}}number{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}max_batch_size{{</code>}}{{<param-type>}}number{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of messages allowed in each batch.
 
-- {{<code>}}max_batch_timeout{{<param-type>}}number{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}max_batch_timeout{{</code>}}{{<param-type>}}number{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of seconds to wait until a batch is full.
 
-- {{<code>}}max_retries{{<param-type>}}number{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}max_retries{{</code>}}{{<param-type>}}number{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
 
-- {{<code>}}dead_letter_queue{{<param-type>}}string{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}dead_letter_queue{{</code>}}{{<param-type>}}string{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The name of another Queue to send a message if it fails processing at least `max_retries` times.
   - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will eventually be discarded.
   - If there is no Queue with the specified name, it will be created automatically.
 
-- {{<code>}}max_concurrency{{<param-type>}}number{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}max_concurrency{{</code>}}{{<param-type>}}number{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
 
