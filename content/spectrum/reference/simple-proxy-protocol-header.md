@@ -42,7 +42,7 @@ The contents of the header are below.
 
 ## Client Address
 
-128-bit address of the originator of the proxied UDP datagram, that is the client. An IPv6 address if the client used IPv6 addressing, or an IPv4-mapped IPv6 address (see [RFC 4291](https://tools.ietf.org/html/rfc4291)) in case of an IPv4 client.
+128-bit address of the originator of the proxied UDP datagram, that is, the client. An IPv6 address if the client used IPv6 addressing, or an IPv4-mapped IPv6 address (refer to [RFC 4291](https://tools.ietf.org/html/rfc4291)) in case of an IPv4 client.
 
 ## Proxy address
 
