@@ -151,7 +151,7 @@ interface MessageBatch<Body = any> {
 
   - The name of the Queue that belongs to this batch.
 
-- {{<code>}}messages{{</code>}}{{<param-type>}}Message[]{{</param-type>}}
+- {{<code>}}messages{{</code>}} {{<type>}}Message[]{{</type>}}
 
   - An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the order in which they were published. If you are interested in guaranteed FIFO ordering, please [email the Queues team](mailto:queues@cloudflare.com).
 
