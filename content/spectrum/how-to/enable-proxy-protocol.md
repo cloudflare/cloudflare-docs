@@ -18,7 +18,7 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
 ## Enable Proxy Protocol v1 for TCP
 
-1. Log in to the Cloudflare dashboard
+1. Log in to the Cloudflare dashboard.
 2. Select **Spectrum**.
 3. Locate the application that will use the PROXY protocol and select **Configure**.
 4. From the dropdown, select **PROXY Protocol v1**.
@@ -41,7 +41,7 @@ An example PROXY Protocol line for an IPv6 address would look like:
 
 ## Enable Proxy Protocol v2 for TCP/UDP
 
-1. Log in to the Cloudflare dashboard
+1. Log in to the Cloudflare dashboard.
 2. Select **Spectrum**.
 3. Locate the application that will use the PROXY protocol and select **Configure**.
 4. From the dropdown, select **PROXY Protocol v2**.

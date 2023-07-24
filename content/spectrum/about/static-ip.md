@@ -12,7 +12,7 @@ With static IPs, Cloudflare commits to never changing the IP address of a client
 
 ## Use static IPs with Spectrum
 
-Static IPs are an Enterprise feature that does not come standard with Spectrum. If you would like to start using static IPs, please contact your account team.
+Static IPs are an Enterprise feature that does not come standard with Spectrum. If you would like to start using static IPs, contact your account team.
 
 Once you get your static IP from Cloudflare, you can use it via API, just like [BYOIP](/byoip/). For the moment, there is still no UI available for this feature.
 
