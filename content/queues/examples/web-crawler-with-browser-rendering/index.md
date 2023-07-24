@@ -104,7 +104,7 @@ Change the `usage_model` to unbound. This allows your crawler to take advantage 
 
 Refer to [Worker limits](/workers/platform/limits/#worker-limits) to learn more about usage models.
 
-## 5. Add bindings to environment
+## 4. Add bindings to environment
 
 Add the bindings to the environment interface in `src/worker.ts`, so TypeScript correctly types the bindings. Type the Queue as `Queue<any>`. The following step will show you how to change this type.
 
@@ -122,7 +122,7 @@ export interface Env {
 }
 ```
 
-## 6. Submit links to crawl
+## 5. Submit links to crawl
 
 Add a `fetch()` handler to the Worker to submit links to crawl.
 
@@ -149,7 +149,7 @@ export default {
 
 This will accept requests to any subpath and forwards the request's body to be crawled. It expects that the request body only contains a URL. In production, you should check that the request was a `POST` request and contains a well-formed URL in its body. This has been omitted for simplicity.
 
-## 7. Crawl with Puppeteer
+## 6. Crawl with Puppeteer
 
 Add a `queue()` handler to the Worker to process the links you send.
 
@@ -341,13 +341,13 @@ for (const message of batch.messages) {
   // ...
 ```
 
-## 8. Deploy your Worker 
+## 7. Deploy your Worker 
 
 To deploy your Worker, run `wrangler deploy`. 
 
 You have successfully created a Worker which can submit URLs to a Queue for crawling and save results to KV.
 
-Refer to [this GitHub Repository](https://github.com/cloudflare/queues-web-crawler) for the complete tutorial, including a frontend deployed with Pages to submit URLs and view crawler results.
+Refer to the [GitHub Repository](https://github.com/cloudflare/queues-web-crawler) for the complete tutorial, including a frontend deployed with Pages to submit URLs and view crawler results.
 
 ## Related resources
 
