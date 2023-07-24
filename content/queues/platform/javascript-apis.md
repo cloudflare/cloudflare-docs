@@ -181,7 +181,7 @@ interface Message<Body = any> {
 
 {{<definitions>}}
 
-- {{<code>}}id{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}id{{</code>}} {{<type>}}string{{</type>}}
 
   - A unique, system-generated ID for the message.
 
