@@ -58,23 +58,40 @@ To solve this problem, you should:
 
 The system will optimize performance by not putting cache in front of Workers KV. You can also leverage [notice writes more quickly than 1 minute](#noticing-updated-values-within-seconds).
 
-  * Cons: Today you get charged for cache reads. Larger customers should work with support and longer-term we hope to adjust our pricing to obviate the pricing differential.
+<!-- CON-->
+{{<Aside type="note">}}
+At the moment, you are charged for cache reads. Larger customers should work with support and longer-term we hope to adjust our pricing to obviate the pricing differential.
+{{</Aside>}}
+
 #### Set a longer `cacheTTL`
 
   Setting a longer `cacheTTL` improves latency across the board.
-  * Cons: You may see prolonged stale reads by 1 extra KV cycle because the extra cache layer isn't letting KV know to refresh the asset (e.g if your extra cache layer caches
-  for 1 minute, it will take you 2 minutes to see a write (a longer `cacheTTL` without an extra cache layer in front of KV doesn't have this problem).
+
+<!-- CON-->
+{{<Aside type="note">}}
+You may see prolonged stale reads by 1 extra KV cycle because the extra cache layer is not letting KV know to refresh the asset. For example, if your extra cache layer caches for 1 minute, it will take you 2 minutes to see a write. A longer `cacheTTL` without an extra cache layer in front of KV does not have this problem.
+{{</Aside>}}
+
 
 #### Probabilistically direct some subset of cache hits (for example 1%) to KV anyway in a `waitUntil`
 
 You will need `waitUntil` because KV will abort work if you return a response before KV completes its work and no refresh will take place.
 
 KV will see more representative usage patterns and thus ensure that the most recent value is always in the cache.
-  * Cons: You need to manually fine tune the probability and you may not have sufficient observability to see problems. Consider following the steps in [improving observability](#improving-observability) to make sure you can see this problem.
+
+<!-- CON-->
+{{<Aside type="note">}}
+You need to manually fine tune the probability and you may not have sufficient observability to see problems. Follow the steps in [Observability](#improving-observability) to make sure you can see this problem.
+{{</Aside>}}
+
 #### Shorten the cacheTTL within your extra caching layer
 
 Shortening the cacheTTL within your extra caching layer will ensure all keys will mostly avoid the stampeding herd of cold KV accesses.
-  * Cons: Not as effective at improving performance as increasing the cacheTTL. If the key is evicted from KV's cache due to insufficient usage, you will still suffer a stampeding herd of slow requests.
+
+<!-- CON -->
+{{<Aside type="warning">}}
+Not as effective at improving performance as increasing the cacheTTL. If the key is evicted from KV's cache due to insufficient usage, you will still suffer a stampeding herd of slow requests.
+{{</Aside>}}
 
 {{<Aside type="note" header="What does cardinality and distribution mean?">}}
 [Cardinality](https://en.wikipedia.org/wiki/Cardinality) is a mathemtical concept. Within the context of Workers KV, it means "how many distinct keys
@@ -129,7 +146,9 @@ careful about synchronization.
 
 By merging into a "super" KV entry, infrequently accessed keys are kept in the cache.
 
-**Cons**: Size of the resultant value can push your worker out of its memory limits. Safely updating the value requires a [locking mechanism](#concurrent-writers).
+{{<Aside type="warning">}}
+Size of the resultant value can push your Worker out of its memory limits. Safely updating the value requires a [locking mechanism](#concurrent-writers).
+{{</Aside>}}
 
 #### Store in metadata and shared prefix
 
