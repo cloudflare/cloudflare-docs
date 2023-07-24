@@ -17,6 +17,8 @@ For certificates issued through Cloudflare, this process may be done automatical
 
 For [custom certificates](/ssl/edge-certificates/custom-certificates/), DCV will always be handled by you, when you request the certificate from the CA.
 
+Refer to [Domain control validation flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) to learn more about the steps and parties involved in the DCV process.
+
 ---
 
 ## Full DNS setup - no action required
