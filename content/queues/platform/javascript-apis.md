@@ -185,7 +185,7 @@ interface Message<Body = any> {
 
   - A unique, system-generated ID for the message.
 
-- {{<code>}}timestamp{{</code>}}{{<param-type>}}Date{{</param-type>}}
+- {{<code>}}timestamp{{</code>}} {{<type>}}Date{{</type>}}
 
   - A timestamp when the message was sent.
 
