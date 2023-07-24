@@ -32,7 +32,7 @@ To enable Producer Worker to Queue communication, set up a binding in your `wran
 
 {{<definitions>}}
 
-- {{<code>}}queue{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}queue{{</code>}} {{<type>}}string{{</type>}}
 
   - The name of the Queue.
 
