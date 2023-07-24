@@ -81,7 +81,7 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
   - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will eventually be discarded.
   - If there is no Queue with the specified name, it will be created automatically.
 
-- {{<code>}}max_concurrency{{</code>}}{{<param-type>}}number{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}max_concurrency{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
 
