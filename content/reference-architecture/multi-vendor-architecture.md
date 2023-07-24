@@ -363,3 +363,5 @@ If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Infor
 ## Summary
 
 To summarize, a successful multi-vendor strategy for application security and performance requires careful consideration of your business objectives, infrastructure requirements, and vendor capabilities. There are several options to choose from when deploying a multi-vendor strategy with various advantages and limitations to each. Cloudflare can support these configurations by delivering services through the Cloudflare Global Network that are highly resilient, performant, and cost effective to fit your organizations multi-vendor strategy.
+
+{{<button type="primary" href="/static/multi-vendor-application-security-performance.pdf">}}Download this page as a PDF{{</button>}}
