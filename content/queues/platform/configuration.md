@@ -36,7 +36,7 @@ To enable Producer Worker to Queue communication, set up a binding in your `wran
 
   - The name of the Queue.
 
-- {{<code>}}binding{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}binding{{</code>}} {{<type>}}string{{</type>}}
 
   - The name of the binding, which is a JavaScript variable.
 
