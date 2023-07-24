@@ -13,7 +13,7 @@ Secrets are environment variables that are encrypted and not visible once set. T
 
 Texts strong and JSON values are not encryped and are useful for storing application configuration.
 
-## Environment variables via Wrangler
+## Add environment variables via Wrangler
 
 Text and JSON values are defined via the `[vars]` configuration in your `wrangler.toml` file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
 
@@ -49,7 +49,7 @@ export default {
 }
 ```
 
-## Environment variables via the dashboard
+## Add environment variables via the dashboard
 
 To add environment variables via the dashboard:
 
@@ -69,6 +69,7 @@ Only select **Encrypt** if your environment variable is a secret. Otherwise, ski
 {{</Aside>}}
 
 ## Add secrets to your project
+
 ### Secrets in development
 
 When developing your Worker locally, create a `.dev.vars` file in the root of your project to define secrets that will be available to your Worker when running `wrangler dev`.

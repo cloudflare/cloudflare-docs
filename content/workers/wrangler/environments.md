@@ -66,7 +66,7 @@ name = "my-worker"
 vars = { API_HOST = "example.com" }
 
 kv_namespaces = [
-  { binding = "<BINDING_NAME>", id = "KV_NAMESPACE_ID_DEV" }
+  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_DEV>" }
 ]
 
 [env.production]
@@ -74,7 +74,7 @@ kv_namespaces = [
 vars = { API_HOST = "production.example.com" }
 
 kv_namespaces = [
-  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_PRODUCTION" }
+  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_PRODUCTION>" }
 ]
 ```
 
