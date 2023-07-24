@@ -67,10 +67,10 @@ export default {
       const jwt = make_jwt_for_customer(customer_name);
 
       let headers = new Headers(request.headers);
-      headers.set('Authorization', `Bearer {jwt}`);
+      headers.set('Authorization', `Bearer ${jwt}`);
 
       // clone the request to set new headers using existing body
-      let new_request = new Request(request, {headers})
+      let new_request = new Request(request, {headers});
 
       return fetch(new_request)
     }
@@ -78,7 +78,6 @@ export default {
     return fetch(request)
   }
 };
-
 ```
 
 4. The Outbound Worker will now be invoked on any `fetch()` requests from a user Worker. The user Worker will trigger a [FetchEvent](/workers/runtime-apis/fetch-event/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
