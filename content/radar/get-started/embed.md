@@ -8,7 +8,7 @@ weight: 3
 
 # Share a Radar chart
 
-Radar allows you to download an image of a chart, as well as to embed interactive cards of most charts into your own webpages.
+Radar allows you to download an image of a chart, as well as embed interactive cards of most charts into your own web pages.
 
 Charts supporting this feature will have a share icon <img src="/icons/share.svg" style="display: inline-block" title="Share Icon"/> next to its description.
 
