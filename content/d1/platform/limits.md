@@ -33,5 +33,6 @@ Refer to the [Storage options guide](/workers/learning/storage-options/) to revi
 
 {{</Aside>}}
 
-* <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Note that not all limits can be increased.
-* <sup>2</sup> This is an alpha-only limit, and we intend to increase this as D1 moves towards General Availability (GA).
+<sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Note that not all limits can be increased.
+
+<sup>2</sup> This is an alpha-only limit, and we intend to increase this as D1 moves towards General Availability (GA).
