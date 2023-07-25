@@ -70,9 +70,10 @@ Refer to the example below to view the configuration using information required 
 
 Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
-Example using cURL:
-
 ```json
+---
+header: Example using cURL
+---
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
 -H 'Content-Type: application/json' \
 -d '{
@@ -127,9 +128,10 @@ It is highly recommended to validate the output of the API call to check that th
 
 Use the `PUT` command to update keys. 
 
-Example with cURL:
-
 ```json
+---
+header: Example using cURL
+---
 curl -X PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}/credentials' \
 -H 'Content-Type: application/json' \
 -d '{
@@ -168,9 +170,10 @@ You can only modify the following fields with `PATCH`: `title`, `description`, `
 
 {{</Aside>}}
 
-Example with cURL: 
-
 ```json
+---
+header: Example using cURL
+---
 curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}' \
 -H 'Content-Type: application/json' \
 -d '{
