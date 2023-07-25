@@ -13,9 +13,9 @@ Page Shield continuously monitors scripts and their connections on your website.
 * `script-src`
 * `connection-src`
 
-Page Shield policies support most CSP directives, covering both monitored and unmonitored resources. This means that you can control other types of resources loaded on your website even if Page Shield is not monitoring them.
+Page Shield policies support most CSP directives, covering both monitored and unmonitored resources. You can use a policy to control other types of resources besides scripts and their connections, even though Page Shield is not monitoring these resources.
 
-The directives directly supported on the Cloudflare dashboard when working with policies are the following:
+The directives directly supported by the Cloudflare dashboard when working with policies are the following:
 
 {{<table-wrap>}}
 
@@ -40,4 +40,8 @@ Directive         | Dashboard values
 
 {{</table-wrap>}}
 
-If needed, you can also enter your own CSP directives and values in a Page Shield policy.
+If needed, you can also enter your own CSP directives and their values in a Page Shield policy.
+
+## More resources
+
+For more information on each CSP directive and their allowed values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
