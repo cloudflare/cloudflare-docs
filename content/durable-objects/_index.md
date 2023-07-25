@@ -40,6 +40,14 @@ Learn how the Hibernatable WebSockets API allows you to keep a long-term connect
 
 {{</feature>}}
 
+{{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms-in-durable-objects/">}}
+
+Learn how to schedule the Object to be waken up at a time in the future. 
+
+{{</feature>}}
+
+
+
 ---
 
 ## Related products

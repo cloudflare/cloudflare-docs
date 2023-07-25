@@ -30,17 +30,26 @@ To enable Durable Objects, you will need to purchase Workers Paid plan:
  2. Go to **Workers & Pages** > **Plans**. 
  3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
- ## 2. Create a Worker
+ ## 2. Create a Worker project
 
- ```js
- export default {
-  async fetch(request, env) {
-    return await handleRequest(request, env);
-  }
-}
- ```
+You will access your Durable Object from a Worker, the producer Worker. 
 
- ## 2. Write a class to define a Durable Object
+To create a producer Worker, run:
+
+```sh
+$ npm create cloudflare@latest # or 'yarn create cloudflare@latest'
+```
+In your terminal, you will be asked a series of questions related to your project: 
+
+1. Name your new Worker directory by specifying where you want to create your application.
+2. Select `"Hello World" script` as the type of application you want to create.
+3. Answer `no` to using TypeScript.
+4. Answer `no` to using Git.
+5. Answer `no` to deploying your Worker.
+
+This will create a new directory, which will include both a `src/worker.js` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a class to define a Durable Object.
+
+ ## 3. Write a class to define a Durable Object
 
 Before you create and access a Durable Object, you must define its behavior by exporting an ordinary JavaScript class. 
 
@@ -54,7 +63,7 @@ Note that this means bindings are no longer global variables. For example, if yo
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 export class DurableObjectExample {
   constructor(state, env) {}
@@ -64,7 +73,7 @@ Workers communicate with a Durable Object via the fetch API. Like a Worker, a Du
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 export class DurableObjectExample {
   constructor(state, env) {}
@@ -83,7 +92,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 {{</Aside>}}
 
-## 3. Configure Durable Object bindings
+## 4. Configure Durable Object bindings
 
 Configure Durable Object [bindings](/workers/platform/bindings/) in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
@@ -147,7 +156,7 @@ durable_objects.bindings = [
 
 Refer to [Bindings](/workers/platform/bindings/) for more information about bindings.
 
-## 4. Configure Durable Object classes with migrations
+## 5. Configure Durable Object classes with migrations
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.  
 
@@ -169,7 +178,10 @@ filename: wrangler.toml
 tag = "v1" # Should be unique for each entry
 new_classes = ["DurableObjectExample"] # Array of new classes
 ```
-## 5. Instantiate and communicate with a Durable Object
+
+Refer to [Durable Objects migrations](/durable-objects/learning/durable-objects-migrations/) to learn more about the migration process.
+
+## 6. Instantiate and communicate with a Durable Object
 
 Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. 
 
@@ -190,7 +202,7 @@ Durable Objects must be written in ES Modules syntax. ES Modules differ from reg
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 export default {
 
@@ -207,18 +219,18 @@ export default {
 };
 ```
 
-In the code above, you:
+In the code above, you have:
 
-1. Export your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
-2. Pass `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](http://localhost:5173/durable-objects/learning/access-durable-object-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
-3. Derive an object ID from the URL path. `EXAMPLE_CLASS.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path. 
-4. Construct the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
-5. Forward the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL.  The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept  permanently.
-6. Receive an HTTP response back to the client with `return response`.
+1. Exported your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
+2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](http://localhost:5173/durable-objects/learning/access-durable-object-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
+3. Derived an object ID from the URL path. `EXAMPLE_CLASS.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path. 
+4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
+5. Forwarded the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL.  The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept  permanently.
+6. Received an HTTP response back to the client with `return response`.
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/learning/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
 
-## 6. Upload a Durable Object Worker
+## 7. Upload a Durable Object Worker
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
@@ -236,11 +248,11 @@ $ wrangler dev
 
 ### Specify the main module
 
-Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `main = "src/index.js"` section of `wrangler.toml`. 
+Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `main = "src/worker.js"` section of `wrangler.toml`. 
 
 Refer to [Custom builds documentation](/workers/wrangler/custom-builds/) for more details.
 
-## 7. Test your Durable Objects project
+## 8. Test your Durable Objects project
 
 If you copy the `DurableObjectExample` and fetch handler code from above into a generated Wrangler project, publish it using a `--new-class` migration, and make a request to it, you will notice that your request was stored in a Durable Object:
 

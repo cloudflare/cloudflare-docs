@@ -8,15 +8,19 @@ weight: 16
 
 You can restrict a Durable Object to a jurisdiction, or provide a location hint.
 
+
+
 ## Restrict Durable Objects to a jurisdiction
 
 Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). 
 
-To use a jurisdiction, first create a jurisidictional subnamespace in your `index.js` file:
+Jurisdictions are available to all Durable Objects users. 
+
+To use a jurisdiction, first create a jurisidictional subnamespace in your `worker.js` file:
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');
 ```
@@ -27,7 +31,7 @@ To create a new Object ID that will only run and persist data within the jurisdi
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 let id = subnamespace.newUniqueId();
 ```
@@ -36,7 +40,7 @@ To derive a unique Object ID from the given name string that will only run and p
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 let id = subnamespace.idFromName(name);
 ```
@@ -53,7 +57,7 @@ To parse a previously-created ID from a string:
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 let id = subnamespace.idFromString(id);
 ```
@@ -62,7 +66,7 @@ To obtain an Object:
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 let durableObjectStub = subnamespace.get(id)
 ```
@@ -71,7 +75,7 @@ While you cannot use an ID from a different jurisdiction in a subnamespace's `id
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 let id = subnamespace.idFromName(name);
 
@@ -100,12 +104,16 @@ To manually create Durable Objects in another location, provide an optional `loc
 
 ```js
 ---
-filename: index.js
+filename: worker.js
 ---
 let durableObjectStub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
 ```
 
-The following locations are supported. Hints are a best effort and not a guarantee. Durable Objects do not currently run in all of the locations below. The closest nearby region will be used until those locations are fully supported.
+The following locations are supported. Hints are a best effort and not a guarantee. 
+
+{{<Aside type="warning">}}
+Durable Objects do not currently run in all locations below. The closest nearby region will be used until those locations are fully supported.
+{{</Aside>}}
 
 | Location Hint Parameter  | Location              |
 | ------------------------ | --------------------- |
