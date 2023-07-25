@@ -50,7 +50,7 @@ If you are not using a framework, leave the **Build command** field blank.
 | Jekyll                       | `jekyll build`                       | `_site`                     |
 | Jigsaw                       | `vendor/bin/jigsaw build production` | `build_production`          |
 | mdBook                       | `mdbook build`                       | `book`                      |
-| Mkdocs                       | `mkdocs build`                       | `site`                      |
+| MkDocs                       | `mkdocs build`                       | `site`                      |
 | Next.js (Static HTML Export) | `next build && next export`          | `out`                       |
 | Nuxt 2                       | `nuxt generate`                      | `dist`                      |
 | Nuxt 3+                      | `nuxt build`                         | `dist`                      |

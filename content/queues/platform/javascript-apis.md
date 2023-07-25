@@ -85,7 +85,7 @@ type MessageSendRequest<Body = any> = {
 
 {{<definitions>}}
 
-- {{<code>}}body{{<param-type>}}any{{</param-type>}}{{</code>}}
+- {{<code>}}body{{</code>}} {{<type>}}any{{</type>}}
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
@@ -96,15 +96,15 @@ type MessageSendRequest<Body = any> = {
 
 These APIs allow a consumer Worker to consume messages from a Queue.
 
-To define a consumer Worker, add a `queue` function to the default export of the Worker. This will allow it to receive messages from the Queue.
+To define a consumer Worker, add a `queue()` function to the default export of the Worker. This will allow it to receive messages from the Queue.
 
 By default, all messages in the batch will be acknowledged as soon as all of the following conditions are met:
 
-1. The `queue` function has returned.
-2. If the `queue` function returned a promise, the promise has resolved.
+1. The `queue()` function has returned.
+2. If the `queue()` function returned a promise, the promise has resolved.
 3. Any promises passed to `waitUntil()` have resolved.
 
-If the `queue` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
+If the `queue()` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
 
 ```ts
 export default {
@@ -147,19 +147,19 @@ interface MessageBatch<Body = any> {
 
 {{<definitions>}}
 
-- {{<code>}}queue{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}queue{{</code>}} {{<type>}}string{{</type>}}
 
   - The name of the Queue that belongs to this batch.
 
-- {{<code>}}messages{{<param-type>}}Message[]{{</param-type>}}{{</code>}}
+- {{<code>}}messages{{</code>}} {{<type>}}Message[]{{</type>}}
 
   - An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the order in which they were published. If you are interested in guaranteed FIFO ordering, please [email the Queues team](mailto:queues@cloudflare.com).
 
-- {{<code>}}ackAll() {{<type>}}void{{</type>}}{{</code>}}
+- {{<code>}}ackAll(){{</code>}} {{<type>}}void{{</type>}}
 
   - Marks every message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not. 
 
-- {{<code>}}retryAll() {{<type>}}void{{</type>}}{{</code>}}
+- {{<code>}}retryAll(){{</code>}} {{<type>}}void{{</type>}}
 
   - Marks every message to be retried in the next batch.
 
@@ -181,24 +181,24 @@ interface Message<Body = any> {
 
 {{<definitions>}}
 
-- {{<code>}}id{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}id{{</code>}} {{<type>}}string{{</type>}}
 
   - A unique, system-generated ID for the message.
 
-- {{<code>}}timestamp{{<param-type>}}Date{{</param-type>}}{{</code>}}
+- {{<code>}}timestamp{{</code>}} {{<type>}}Date{{</type>}}
 
   - A timestamp when the message was sent.
 
-- {{<code>}}body{{<param-type>}}any{{</param-type>}}{{</code>}}
+- {{<code>}}body{{</code>}} {{<type>}}any{{</type>}}
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
-- {{<code>}}ack() {{<type>}}void{{</type>}}{{</code>}}
+- {{<code>}}ack(){{</code>}} {{<type>}}void{{</type>}}
 
   - Marks a message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not. 
 
-- {{<code>}}retry() {{<type>}}void{{</type>}}{{</code>}}
+- {{<code>}}retry(){{</code>}} {{<type>}}void{{</type>}}
 
   - Marks a message to be retried in the next batch.
 

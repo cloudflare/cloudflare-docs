@@ -18,7 +18,7 @@ Build serverless applications and deploy instantly across the globe for exceptio
  
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure. 
 
-Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
+Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in over 300 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
  
@@ -32,9 +32,9 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/workers/platform/bindings/">}}
+{{<feature header="Bindings" href="/workers/configuration/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/configuration/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
@@ -72,7 +72,7 @@ Cloudflare Queues integrates with Cloudflare Workers to allow developers to send
 
 {{<resource header="HTMLRewriter" href="/workers/runtime-apis/html-rewriter/" icon="reference-architecture">}}Parse and transform HTML from inside a Worker.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn which storage option is best for your project.{{</resource>}}
+{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn which storage option is best for your project.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

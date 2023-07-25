@@ -47,7 +47,7 @@ You can acknowledge individual messages with a batch by explicitly acknowledging
 * Each message can be acknowledged as you process it within a batch, and avoids the entire batch from being re-delivered if your consumer throws an error during batch processing.
 * Acknowledging individual messages is useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent (state changing) actions on individual messages.
 
-To explicitly acknowledge a message as delivered, call the `.ack()` method on the message. 
+To explicitly acknowledge a message as delivered, call the `ack()` method on the message. 
 
 ```ts
 ---
@@ -66,7 +66,7 @@ export default {
 };
 ```
 
-You can also call `.retry()` to explicitly force a message to be redelivered in a subsequent batch. This is referred to as "negative acknowledgement". This can be particularly useful when you want process the rest of the messages in that batch without throwing an error that would force the entire batch to be redelivered.
+You can also call `retry()` to explicitly force a message to be redelivered in a subsequent batch. This is referred to as "negative acknowledgement". This can be particularly useful when you want process the rest of the messages in that batch without throwing an error that would force the entire batch to be redelivered.
 
 ```ts
 ---
@@ -83,13 +83,13 @@ export default {
   },
 };
 ```
-You can also acknowledge or negatively acknowledge messages at a batch level with `.ackAll()` and `.retryAll()`. Calling `.ackAll()` on the batch of messages (`MessageBatch`) delivered to your consumer Worker has the same behaviour as a consumer Worker that successfully returns (does not throw an error).
+You can also acknowledge or negatively acknowledge messages at a batch level with `ackAll()` and `retryAll()`. Calling `ackAll()` on the batch of messages (`MessageBatch`) delivered to your consumer Worker has the same behaviour as a consumer Worker that successfully returns (does not throw an error).
 
-Note that calls to `.ack()`, `.retry()` and their `.ackAll()` / `.retryAll` equivalents follow the below precedence rules:
+Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivalents follow the below precedence rules:
 
-* If you call `.ack()` on a message, subsequent calls to `.ack()` or `.retry()` are silently ignored.
-* If you call `.retry()` on a message and then call `.ack()`: the `.ack()` is ignored. The first method call wins in all cases.
-* If you call either `.ack()` or `.retry()` on a single message, and then either/any of `.ackAll()` or `.retryAll()` on the batch, the call on the single message takes precedence. That is, the batch-level call does not apply to that message (or messages, if multiple calls were made).
+* If you call `ack()` on a message, subsequent calls to `ack()` or `retry()` are silently ignored.
+* If you call `retry()` on a message and then call `ack()`: the `ack()` is ignored. The first method call wins in all cases.
+* If you call either `ack()` or `retry()` on a single message, and then either/any of `ackAll()` or `retryAll()` on the batch, the call on the single message takes precedence. That is, the batch-level call does not apply to that message (or messages, if multiple calls were made).
 
 ## Retries
 

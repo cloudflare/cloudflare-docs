@@ -3,6 +3,7 @@ title: Sumo Logic
 pcx_content_type: tutorial
 meta:
     description: Sumo Logic integration guide
+updated: 2023-01-26
 ---
 
 # Sumo Logic integration guide

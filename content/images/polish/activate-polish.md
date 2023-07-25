@@ -15,7 +15,7 @@ Do not activate Polish and [Image Resizing](/images/image-resizing/) simultaneou
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select the account and domain where you want to activate Polish.
-2. Select **Speed** > **Optimization**.
+2. Go to **Speed** > **Optimization** > **Image Optimization**.
 3. Under **Polish**, select _Lossy_ or _Lossless_ from the drop-down menu.
 4. (Optional) Select **WebP**. Enable this option if you want to further optimize PNG and JPEG images stored in the origin server, and serve them as WebP files to browsers that support this format.
 

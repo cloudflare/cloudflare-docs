@@ -14,8 +14,8 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Create an account ruleset rule][ar-account] | `POST /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules` |
-| [Create a zone ruleset rule][ar-zone] | `POST /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules` |
+| [Create an account ruleset rule][ar-account] | `POST /accounts/{account_id}/rulesets/{ruleset_id}/rules` |
+| [Create a zone ruleset rule][ar-zone] | `POST /zones/{zone_id}/rulesets/{ruleset_id}/rules` |
 
 [ar-account]: /api/operations/createAccountRulesetRule
 [ar-zone]: /api/operations/createZoneRulesetRule
@@ -28,16 +28,17 @@ Invoking this method creates a new version of the ruleset.
 
 ## Example
 
-The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List zone rulesets](/api/operations/listZoneRulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following example adds a rule to ruleset `{ruleset_id}` of zone `{zone_id}`. The ruleset ID was previously obtained using the [List zone rulesets](/api/operations/listZoneRulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
 <details open>
 <summary>Request</summary>
 <div>
 
-```json
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "js_challenge",
   "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
   "description": "challenge GB and FR or based on IP Reputation"

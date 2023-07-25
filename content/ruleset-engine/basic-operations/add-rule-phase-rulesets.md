@@ -24,16 +24,17 @@ Instead of relying on the automatic creation of an entry point ruleset, you can 
 <summary>Example: Set the rules of a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update a zone ruleset](/api/operations/updateZoneRuleset) API operation.
+The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -102,15 +103,16 @@ header: Response
 <summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example adds a single rule to a phase entry point ruleset (with ID `<RULESET_ID>`) at the zone level using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation.
+The following example adds a single rule to a phase entry point ruleset (with ID `{ruleset_id}`) at the zone level using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/zone/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl https://api.cloudflare.com/client/v4/zone/{zone_id}/rulesets/{ruleset_id}/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "execute",
   "action_parameters": {
     "id": "<MANAGED_RULESET_ID>"

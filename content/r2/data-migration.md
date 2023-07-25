@@ -24,6 +24,11 @@ Migration jobs:
 
 Using Super Slurper as part of your strategy can be a good choice if the cloud storage bucket you are migrating consists primarily of objects less than 50 GB. Objects greater than 50 GB will be skipped and need to be copied separately.
 
+If your source cloud provider is Amazon S3, Super Slurper can be a good choice if the bucket you are migrating primarily consists of objects stored using non-archival storage classes, as objects stored using [archival storage classes](https://aws.amazon.com/s3/storage-classes/#Archive) will be skipped and need to be copied separately. Specifically:
+
+- Files stored using S3 Glacier tiers (not including Glacier Instant Retrieval) will be skipped and logged in the migration log.
+- Files stored using S3 Intelligent Tiering and placed in Deep Archive tier will be skipped and logged in the migration log.
+
 For migration use cases that do not meet the above criteria, we recommend using tools such as [rclone](/r2/examples/rclone/).
 
 ## Use Super Slurper to migrate data to R2

@@ -20,9 +20,9 @@ Connectivity loss can also result from end users changing IP addresses. For exam
 
 **NEL process**:
 
-1.  User moves from WiFi to mobile.
+1.  User moves from Wi-Fi to mobile.
 2.  Customer connects via mobile IP.
-3.  All connections made to Cloudflare over WiFi are timed out due to src-dest mismatch.
+3.  All connections made to Cloudflare over Wi-Fi are timed out due to src-dest mismatch.
 4.  Connections are re-established over mobile connections and the user reports failures over their mobile connection to the Cloudflare NEL endpoint.
 
 The Report-To header is present in all requests to Cloudflare zones that have NEL enabled:  

@@ -13,14 +13,12 @@ Review the following environments flow:
 
 1. You have created a Worker application named `my-worker`.
 2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml` configuration file.
-3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/platform/bindings/) and/or [routes](/workers/platform/triggers/routes/).
+3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/configuration/bindings/) and/or [routes](/workers/configuration/routing/routes/).
 4. You deploy the Worker using `npx wrangler deploy -e dev`.
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
 6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
 
 Environments are used with the `--env` or `-e` flag on `wrangler dev`, `wrangler deploy`, and `wrangler secret`.
-
----
 
 ## Configuration
 
@@ -49,13 +47,38 @@ You cannot specify multiple environments with the same name.
 
 Wrangler appends the environment name to the top-level name to deploy a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would deploy a Worker named `my-worker-dev`.
 
-{{<Aside type="warning" header="Inheritable keys and bindings">}}
-
-Review [Wrangler Environments Configuration documentation](/workers/wrangler/configuration/#environments) to learn more about inheritable keys in top-level configuration.
-
-{{</Aside>}}
-
 After you have configured your environment, run `npx wrangler deploy` in your Worker project directory for the changes to take effect.
+
+## Non-inheritable keys and environments
+
+[Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
+
+[Bindings](/workers/configuration/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [`wrangler.toml`](/workers/wrangler/configuration/) file.
+
+Review the following example `wrangler.toml` file:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker"
+
+vars = { API_HOST = "example.com" }
+
+kv_namespaces = [
+  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_DEV>" }
+]
+
+[env.production]
+
+vars = { API_HOST = "production.example.com" }
+
+kv_namespaces = [
+  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_PRODUCTION>" }
+]
+```
+
+You may assign environment-specific [secrets](/workers/configuration/environment-variables/#add-secrets-to-your-project) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3). 
 
 ---
 
@@ -63,7 +86,7 @@ After you have configured your environment, run `npx wrangler deploy` in your Wo
 
 ### Staging and production environments
 
-The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/platform/triggers/custom-domains/) or [route](/workers/platform/triggers/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
+The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
 
 ```toml
 ---
@@ -110,7 +133,7 @@ Published my-worker-production
   example.com/*
 ```
 
-Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/workers/configuration/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 

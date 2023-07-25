@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: reference
 title: Challenge Passage
 weight: 7
 ---

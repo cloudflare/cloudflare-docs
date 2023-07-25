@@ -16,5 +16,5 @@ To start using Super Bot Fight Mode:
     *   For more details on invisible code injection, refer to [JavaScript detections](/bots/reference/javascript-detections/).
 
 {{<Aside type="warning" header="Warning">}}
-If your organization also uses [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
+If your organization also uses [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 {{</Aside>}}

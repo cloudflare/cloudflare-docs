@@ -99,13 +99,6 @@ A set of validation methods and requirements to gather set IP ranges for a verif
 * A valid `ASN` belonging to the bot owner.
 * A user-agent match pattern.
 
-### Machine Learning 
-
-* A valid user-agent.
-* More than 1000 requests per day.
-* Dynamic IPs are solely used by bot owner. 
-* A user-agent match pattern.
-
 ## Breach of Policy 
 
 If any of the requirements to validate are breached, a service will be removed from the global allowlist.

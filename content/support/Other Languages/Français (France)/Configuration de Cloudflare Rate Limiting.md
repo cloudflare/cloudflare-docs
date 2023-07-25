@@ -175,7 +175,7 @@ Les actions de limitation de taux sont basées sur l'offre du domaine, comme ind
 
 -   **Block** (Bloquer) **–** Cloudflare émet une erreur HTTP 429 en cas de dépassement du seuil.
 -   **Legacy CAPTCHA** (CAPTCHA hérité) **\-** Le visiteur doit répondre à une vérification par captcha.  S'il réussit, Cloudflare autorise la requête.
--   **JS Challenge** (Défi JS) **–** Le visiteur doit résoudre un défi Javascript de Cloudflare. S'il réussit, Cloudflare autorise la requête.
+-   **JS Challenge** (Défi JS) **–** Le visiteur doit résoudre un défi JavaScript de Cloudflare. S'il réussit, Cloudflare autorise la requête.
 -   **Journalisation** Les requêtes sont enregistrées dans les [journaux Cloudflare](https://support.cloudflare.com/hc/articles/216672448). Ceci permet de tester les règles avant de les appliquer à la production.
 
 #### **Durée de l'interdiction**

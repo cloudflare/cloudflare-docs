@@ -7,9 +7,9 @@ _build:
 
 ## Prerequisites
 
-To ensure changes made in this tutorial take effect quickly, update the Time to Live (TTL) value of the existing MX records on your domains to five minutes. Do this on all the domains you will be deploying. 
+To ensure changes made in this tutorial take effect quickly, update the Time to Live (TTL) value of the existing MX records on your domains to five minutes. Do this on all the domains you will be deploying.
 
-Changing the TTL value instructs DNS servers on how long to cache this value before requesting an update from the responsible name server. You need to change the TTL value before changing your MX records to Cloudflare Area 1. This will ensure that changes take effect quickly and can also be reverted quickly if needed. If your DNS manager does not allow for a TTL of five minutes, set it to the lowest possible setting.
+Changing the TTL value instructs DNS servers on how long to cache this value before requesting an update from the responsible nameserver. You need to change the TTL value before changing your MX records to Cloudflare Area 1. This will ensure that changes take effect quickly and can also be reverted quickly if needed. If your DNS manager does not allow for a TTL of five minutes, set it to the lowest possible setting.
 
 To check your existing TTL, open a terminal window and run the following command against your domain:
 
@@ -33,7 +33,7 @@ $ dig mx <YOUR_DOMAIN>
 <YOUR_DOMAIN>.	300	IN	MX	10 mailstream-west.mxrecord.io.
 ```
 
-In the above example, TTL is shown in seconds as `300` (or five minutes). 
+In the above example, TTL is shown in seconds as `300` (or five minutes).
 
 If you are using Cloudflare for DNS, you can leave the [TTL setting as **Auto**](/dns/manage-dns-records/reference/ttl/).
 
