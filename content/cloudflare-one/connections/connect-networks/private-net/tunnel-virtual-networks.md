@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Tunnel Virtual Networks
+title: Virtual networks
 weight: 5
 ---
 
-# Tunnel Virtual Networks
+# Virtual networks
 
-[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Tunnel Virtual Networks allow you to manage different private networks which have overlapping IP ranges.
+[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Virtual networks allow you to manage different private networks which have overlapping IP ranges.
 
 For example, an organization may want to expose two distinct virtual private cloud (VPC) networks which they consider to be “production” and “staging”. However, if the two private networks happened to receive the same RFC 1918 IP assignment, there may be two different resources with the same IP address. By creating two separate virtual networks, you can deterministically route traffic to duplicative private addresses like `10.128.0.1/32` staging and `10.128.0.1/32` production. End users would then select which network to connect to by accessing their WARP client settings.
 

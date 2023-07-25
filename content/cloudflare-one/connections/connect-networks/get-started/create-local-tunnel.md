@@ -1,5 +1,5 @@
 ---
-title: Via the command line
+title: Locally-managed (CLI) tunnels
 pcx_content_type: how-to
 weight: 2
 layout: single
@@ -141,56 +141,60 @@ $ cloudflared tunnel list
 
 ## 4. Create a configuration file
 
-Create a [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
+1. In your `.cloudflared` directory, create a [`config.yml` file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/)  using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
 
-Add the following fields to the file:
+2. Add the following fields to the file:
 
-**If you are connecting an application**
+    - If you are connecting an application:
 
-```txt
-url: http://localhost:8000
-tunnel: <Tunnel-UUID>
-credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
-```
+    ```yml
+    ---
+    filename: config.yml
+    ---
+    url: http://localhost:8000
+    tunnel: <Tunnel-UUID>
+    credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
+    ```
 
-**If you are connecting a network**
+    - If you are connecting a private network:
 
-```txt
-tunnel: <Tunnel-UUID>
-credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
-warp-routing:
-  enabled: true
-```
+    ```yml
+    ---
+    filename: config.yml
+    ---
+    tunnel: <Tunnel-UUID>
+    credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
+    warp-routing:
+      enabled: true
+    ```
 
-Confirm that the configuration file has been successfully created by running:
+4. Confirm that the configuration file has been successfully created by running:
 
-```sh
-$ cat config.yml
-```
+    ```sh
+    $ cat config.yml
+    ```
 
 ## 5. Start routing traffic
 
-Now assign a CNAME record that points traffic to your tunnel subdomain.
+1. Now assign a `CNAME` record that points traffic to your tunnel subdomain:
 
-**If you are connecting an application**
+    - If you are connecting an application, route the service to a [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/):
 
-```sh
-$ cloudflared tunnel route dns <UUID or NAME> <hostname>
-```
+    ```sh
+    $ cloudflared tunnel route dns <UUID or NAME> <hostname>
+    ```
 
-**If you are connecting a network**
+    - If you are connecting a [private network](/cloudflare-one/connections/connect-networks/private-net/), route an IP address or CIDR through the tunnel:
 
-Add the IP/CIDR you would like to be routed through the tunnel.
+    ```sh
+    $ cloudflared tunnel route ip add <IP/CIDR> <UUID or NAME>
+    ```
 
-```sh
-$ cloudflared tunnel route ip add <IP/CIDR> <UUID or NAME>
-```
+2. Confirm that the route has been successfully established:
 
-You can confirm that the route has been successfully established by running:
-
-```sh
-$ cloudflared tunnel route ip show
-```
+    ```sh
+    $ cloudflared tunnel route ip show
+    ```
 
 ## 6. Run the tunnel
 

@@ -6,8 +6,6 @@ weight: 6
 
 # Useful commands
 
-{{<render file="_cloudflared-new-ui.md">}}
-
 Use these commands to manage local tunnels through the CLI.
 
 ## Manage tunnels

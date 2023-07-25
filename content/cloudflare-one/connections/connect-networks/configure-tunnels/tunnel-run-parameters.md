@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: Cloudflared parameters
+title: Tunnel run parameters
 weight: 4
 ---
 
-# Cloudflared parameters
+# Tunnel run parameters
 
 This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/) tunnels. These flags can also be added to the [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/) for locally-managed tunnels.
 
