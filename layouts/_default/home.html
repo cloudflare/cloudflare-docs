@@ -4,6 +4,7 @@
 <head>
   {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
   {{- partial "onetrust" -}}
+  <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin" defer></script>
   {{- end -}}
   {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
