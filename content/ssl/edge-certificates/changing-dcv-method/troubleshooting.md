@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 pcx_content_type: troubleshooting
-weight: 2
+weight: 3
 meta:
   title: Troubleshooting Domain Control Validation
 ---
