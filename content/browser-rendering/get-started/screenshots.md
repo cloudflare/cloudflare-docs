@@ -37,7 +37,7 @@ Take note of the IDs.
 
 ## wrangler.toml
 
-Let’s create the simplest possible wrangler.toml configuration file with the Browser Rendering API binding and the KV namespaces we just created:
+Let’s create the simplest possible wrangler.toml configuration file with the Browser Rendering API binding and the KV namespaces we created:
 
 ```toml
 ---
@@ -46,7 +46,7 @@ filename: wrangler.toml
 name = "browser-worker"
 main = "src/index.ts"
 compatibility_date = "2023-03-14"
-node_compat = true
+compatibility_flags = [ "nodejs_compat" ]
 workers_dev = true
 
 browser = { binding = "MYBROWSER", type = "browser" }
