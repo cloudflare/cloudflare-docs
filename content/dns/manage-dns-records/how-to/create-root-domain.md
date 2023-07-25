@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
-title: Create root domain
+title: Create zone apex record
 weight: 3
 ---
 
-# Create a root domain record
+# Create a record on your zone apex
 
-When you add a domain to Cloudflare, you may also need to create a DNS record for your root domain (`example.com`).
+When you add a domain to Cloudflare, you may also need to create a DNS record on your zone apex (`example.com`).
 
-To do this, you would create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) for your root domain (specified by using `@` for the **Name**).
+To do this, create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) using `@` for the **Name**.
 
 {{<example>}}
 

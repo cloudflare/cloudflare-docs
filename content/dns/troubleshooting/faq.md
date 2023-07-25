@@ -206,7 +206,7 @@ ___
 
 {{<Aside type="note">}}
 Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the root domain.
+server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
 {{</Aside>}}
 
 ___
