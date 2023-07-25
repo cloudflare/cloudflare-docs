@@ -1,9 +1,9 @@
 ---
-title: Examples
+title: Templates
 pcx_content_type: navigation
 weight: 7
 ---
 
-# Examples
+# Templates
 
 {{<directory-listing>}}

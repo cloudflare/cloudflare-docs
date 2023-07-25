@@ -8,8 +8,6 @@ weight: 16
 
 You can restrict a Durable Object to a jurisdiction, or provide a location hint.
 
-
-
 ## Restrict Durable Objects to a jurisdiction
 
 Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). 
@@ -27,7 +25,7 @@ let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');
 
 A jurisdictional subnamespace works like a normal Durable Object namespace (`OBJECT_NAMESPACE` above), except that IDs created within them permanently encode the jurisdiction that was used to create the subnamespace. Additionally, the `idFromString()` and `get()` methods will throw an exception if the IDs passed into them are not within the subnamespace's jurisdiction. Once you have a subnamespace, you can use all of the namespace methods documented above.
 
-To create a new Object ID that will only run and persist data within the jurisdiction:
+To create a new Durable Object ID that will only run and persist data within the jurisdiction:
 
 ```js
 ---

@@ -1,9 +1,9 @@
 ---
-title: Templates
+title: How to
 pcx_content_type: navigation
 weight: 7
 ---
 
-# Templates
+# How to
 
 {{<directory-listing>}}

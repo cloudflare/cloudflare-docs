@@ -6,11 +6,11 @@ weight: 16
 
 # In-memory state in a Durable Object
 
-In-memory state means that each Object has one active instance at any particular time. All requests sent to that Durable Object are handled by that same instance. You can store some state in memory.
+In-memory state means that each Durable Object has one active instance at any particular time. All requests sent to that Durable Object are handled by that same instance. You can store some state in memory.
 
 Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory. 
 
-A common pattern is to initialize a Durable Object from persistent storage and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
+A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/transactional-storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
 
 ```js
 export class Counter {

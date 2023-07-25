@@ -11,7 +11,7 @@ The Hibernatable WebSockets API allows a Durable Object that is not currently ru
 Durable Objects WebSockets support includes:
 
 * Cloudflare-specific extensions to the standard WebSocket interface.
-* Related methods on the `state` Object. 
+* Related methods on the `state` of the Durable Object. 
 * Handler methods that a Durable Object can implement for processing WebSocket events.
 
 The Hibernatable WebSocket API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
@@ -52,7 +52,7 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 - {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - <br/> Adds a WebSocket to the set attached to this Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. 
+  - <br/> Adds a WebSocket to the set attached to this Durable Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. 
   
   - After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method will not ever receive any events as they will be delivered to the Durable Object. 
   
