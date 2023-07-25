@@ -190,4 +190,5 @@ Email Routing does not have advanced routing options. Characters such as `+` or 
 
 ### Subdomains are only supported for Enterprise customers
 
-Subdomains cannot use Email Routing to forward emails, unless they are part of an Enterprise account.
+Subdomains cannot use Email Routing to forward emails, unless they are part of an Enterprise account. 
+Currently, to achieve this solution you will need to perform the [subdomain setup](https://developers.cloudflare.com/dns/zone-setups/subdomain-setup/) where you can manage the Cloudflare settings for one or more subdomains separately from those associated with your root domain.
