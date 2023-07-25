@@ -67,9 +67,9 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 - 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
 - (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
 
-## Durable Objects storage API
+## Transactional Storage API
 
-The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
+The [Transactional Storage API](/durable-objects/api/transactional-storage-api/) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
 {{<table-wrap>}}
 
@@ -88,4 +88,4 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 5.  Each alarm write is billed as a single write request unit.
 
-Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the Durable Objects in-memory cache or that use the [multi-key versions of get/put/delete methods](/durable-objects/api/transactional-storage-api/) are billed the same as if they were a normal, individual request for each key.

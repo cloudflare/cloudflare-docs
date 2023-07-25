@@ -16,7 +16,7 @@ Durable Objects WebSockets support includes:
 
 The Hibernatable WebSocket API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
 
-For WebSocket proxy use-cases, refer to the [standard WebSocket API](/workers/learning/using-websockets/#writing-a-websocket-client) documentation.
+For WebSocket proxy use-cases, refer to the [standard WebSocket API](/workers/runtime-apis/websockets/use-websockets/#write-a-websocket-client) documentation.
 
 {{<Aside type="note">}}
 

@@ -16,9 +16,9 @@ Alarms have guaranteed at-least-once execution and are retried automatically whe
 
 {{<Aside type="note" header="How are alarms different from Cron Triggers?">}}
 
-Alarms are more fine grained than [Cron Triggers](/workers/platform/triggers/cron-triggers/). A Worker can have up to three Cron Triggers configured at once, but it can have an unlimited amount of Durable Objects each of which can have an alarm set.
+Alarms are more fine grained than [Cron Triggers](/workers/configuration/cron-triggers/#cron-triggers). A Worker can have up to three Cron Triggers configured at once, but it can have an unlimited amount of Durable Objects each of which can have an alarm set.
 
-Alarms are directly scheduled from within your Durable Object. Cron Triggers, on the other hand, are not programmatic. [Cron Triggers](/workers/platform/triggers/cron-triggers/) execute based on their schedules, which have to be configured through the Cloudflare dashboard or API.
+Alarms are directly scheduled from within your Durable Object. Cron Triggers, on the other hand, are not programmatic. [Cron Triggers](/workers/configuration/cron-triggers/#cron-triggers) execute based on their schedules, which have to be configured through the Cloudflare dashboard or API.
 
 {{</Aside>}}
 

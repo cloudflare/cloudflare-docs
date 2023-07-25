@@ -94,7 +94,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 ## 4. Configure Durable Object bindings
 
-Configure Durable Object [bindings](/workers/platform/bindings/) in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
+Configure Durable Object bindings in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
 
 ```toml
 ---
@@ -153,8 +153,6 @@ durable_objects.bindings = [
   {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
 ]
 ```
-
-Refer to [Bindings](/workers/platform/bindings/) for more information about bindings.
 
 ## 5. Configure Durable Object classes with migrations
 
@@ -222,7 +220,7 @@ export default {
 In the code above, you have:
 
 1. Exported your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
-2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/learning/access-durable-object-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
+2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/how-to/access-durable-object-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
 3. Derived an object ID from the URL path. `EXAMPLE_CLASS.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path. 
 4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
 5. Forwarded the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL.  The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept  permanently.
