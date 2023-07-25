@@ -2,32 +2,35 @@
 pcx_content_type: concept
 title: Domain control validation flow
 weight: 2
-layout: list
 meta:
-    description: Consider the steps that have to take place before the DCV process is completed and certificate aithorities can issue SSL/TLS certificates.
+    description: Consider the steps that have to take place before the DCV process is completed and certificate authorities can issue SSL/TLS certificates.
 ---
 
 # Domain control validation flow
 
-Universal, Advanced and Custom hostname certificates must be publicly trusted and so, in order to obtain them, Cloudflare partners with different certificate authorities (CAs).
+In order to obtain [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates, Cloudflare partners with different publicly trusted [certificate authorities (CAs)](/ssl/reference/certificate-authorities/).
 
-What this means, in regards to DCV, is that there are three different parties involved in the process:
+However, every time a CA will issue or renew a certificate, the requestor must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing a token on a standard URL path (`/.well-known/pki-validation`).
 
-* the website or application for which the certificate is issued,
-* the client that requests the certificate issuance or renewal, 
-* and the server that processes the requests and, depending on the success or failure of the DCV process, issues or renews the certificates.
+## Where Cloudflare sits in the DCV process
 
-The following image illustrates this process. ACME stands for Automated Certificate Management Environment and DNS or HTTP corresponds to [TXT](/ssl/edge-certificates/changing-dcv-method/methods/txt/) or [HTTP](/ssl/edge-certificates/changing-dcv-method/methods/http/) methods.
+For the use cases mentioned above, there are three different parties involved in the process:
 
-![Domain control validation detailed flowchart](/images/ssl/dcv-process-detail.png)
+* The website or application for which the certificate is issued.
+* The requestor (Cloudflare).
+* The CA that processes the request.
 
-1. CF gets DCV tokens from CAs
-2. Either we place the tokens or we ask customers to do so
-2. We poll the URLs to check for the tokens.
-3. Only after we see the tokens placed via multiple DNS resolvers, we ask the CA (google in this case) to check for the tokens.
-4. If CA sees the tokens, the cert gets issued. If the CA doesn't see the tokens, the old ones are invalidated and the tokens need to be rolled.
+## Steps in the process
 
+In summary, five steps have to succeed after Cloudflare requests a CA to issue or renew a certificate:
 
-validation URL
-/.well-known/
-If CA sees the tokens, the cert gets issued. If the CA doesn't see the tokens, the old ones are invalidated and the tokens need to be rolled.
+1. Cloudflare receives the DCV tokens from the CA.
+2. Cloudflare either places the tokens on your behalf ([Full DNS setup](/dns/zone-setups/full-setup/), [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/)), or makes the tokens available for you to place them.
+2. Cloudflare polls the validation URLs to check for the tokens.
+3. After Cloudflare can see that the tokens are placed via multiple DNS resolvers, the CA is asked to check as well.
+4. If the CA can confirm the tokens are placed, the certificate gets issued. If the CA cannot confirm the tokens are placed, the certificate is not issued and the tokens are no longer valid.
+
+## Aspects to consider
+
+* Settings that interfere with the validation URLs can cause issues with your certificate issuance or renewal. Refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+* The DCV tokens are generated and controlled by the CA and not by Cloudflare.
