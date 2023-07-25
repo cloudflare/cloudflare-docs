@@ -74,9 +74,9 @@ You can create Zero Trust policies to manage access to specific applications on 
      | User email     | Matches regex | `.*@example.com` |       |        |
 
    - **Policy 2**
-     | Selector       | Operator | Value        |
-     | -------------- | -------- | ------------ |
-     | Destination IP | in       | `10.128.0.7` |
+     | Selector       | Operator | Value        | Action |
+     | -------------- | -------- | ------------ | ------ |
+     | Destination IP | in       | `10.128.0.7` | Block  |
 
    Policies are evaluated in [numerical order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/gateway/network-policies/).
 
