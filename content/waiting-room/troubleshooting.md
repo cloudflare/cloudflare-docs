@@ -62,7 +62,7 @@ However, if they close their tab and then try to access the application again du
 
 ## Monitorizing your waiting room
 
-### Why do I see a few users being queued in the dashboard?
+### Why do I observe a few users being queued in the dashboard?
 
 Some users might be queued before your waiting room reaches is limit due to architectural designs. For more details on the behavior and how to fix it, refer to [​​Queueing activation](/waiting-room/how-to/monitor-waiting-room#queueing-activation).
 
