@@ -63,13 +63,14 @@ The available rate limiting rule parameters are the following:
     | _Body_                                    | `http.request.body.raw`                              |
     | _Body size_ (select operator, enter size) | `http.request.body.size`                             |
     | _Form input value of_ (enter field name)  | `http.request.body.form["<input_field_name>"]`       |
+    | N/A (API only)                            | `substring(<field>, <start>[, <end>])`               |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
   - If you use `http.request.headers["<header_name>"]` in an API request, you must enter the header name in lower case, since Cloudflare normalizes header names on the Cloudflare global network.
   - If you use _Cookie value of_, refer to [Recommendations](#recommendations) for additional validations you should implement.
   - You should not use _Header value of_ or _Cookie value of_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
-  - For more information on the `lookup_json_string` function, refer to [Functions](/ruleset-engine/rules-language/functions/#function-lookup_json_string) in the Ruleset Engine documentation.
+  - For more information on the `lookup_json_string` and `substring` functions, refer to [Functions](/ruleset-engine/rules-language/functions/) in the Ruleset Engine documentation.
   - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/).
   - Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
 
