@@ -158,7 +158,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
   <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
-  <script type="module" src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
+  <script type="module" src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin" defer></script>
 
   {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
