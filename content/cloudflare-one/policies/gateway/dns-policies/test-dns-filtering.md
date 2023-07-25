@@ -24,8 +24,6 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 3. If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
 
-   ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-disabled.png)
-
    ```sh
    ---
    highlight: [6]
@@ -48,8 +46,6 @@ For example, if you created a policy to block `example.com`, you can do the foll
    ```
 
    If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
-
-   ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-enabled.png)
 
    ```sh
    ---
