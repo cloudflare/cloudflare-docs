@@ -21,20 +21,22 @@ The directives directly supported on the Cloudflare dashboard when working with 
 
 Directive         | Dashboard values
 ------------------|-----------------------------------------------
-`default-src`     | None<br>Self<br>* (wildcard)<br>(custom value)
-`style-src`       | None<br>Self<br>* (wildcard)<br>(custom value)
-`img-src`         | None<br>Self<br>* (wildcard)<br>(custom value)
-`font-src`        | None<br>Self<br>* (wildcard)<br>(custom value)
-`object-src`      | None<br>Self<br>* (wildcard)<br>(custom value)
-`media-src`       | None<br>Self<br>* (wildcard)<br>(custom value)
-`frame-src`       | None<br>Self<br>* (wildcard)<br>(custom value)
-`child-src`       | None<br>Self<br>* (wildcard)<br>(custom value)
-`form-action`     | None<br>Self<br>* (wildcard)<br>(custom value)
-`frame-ancestors` | None<br>Self<br>* (wildcard)<br>(custom value)
-`base-uri`        | None<br>Self<br>* (wildcard)<br>(custom value)
-`worker-src`      | None<br>Self<br>(custom value)
-`manifest-src`    | None<br>Self<br>* (wildcard)<br>(custom value)
-`prefetch-src`    | None<br>Self<br>* (wildcard)<br>(custom value)
+`script-src`      | **none**<br>**self**<br>**unsafe inline**<br>**unsafe `eval()`**<br>(custom value)
+`connect-src`     | **none**<br>**self**<br>(custom value)
+`default-src`     | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`style-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`img-src`         | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`font-src`        | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`object-src`      | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`media-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`frame-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`child-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`form-action`     | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`frame-ancestors` | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`base-uri`        | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`worker-src`      | **none**<br>**self**<br>(custom value)
+`manifest-src`    | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+`prefetch-src`    | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
 
 {{</table-wrap>}}
 
