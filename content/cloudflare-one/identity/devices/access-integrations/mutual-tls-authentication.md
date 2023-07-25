@@ -69,7 +69,7 @@ To enforce mTLS authentication from [Zero Trust](https://one.dash.cloudflare.com
 
 {{<Aside type="warning">}}
 
-Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domain.
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for the domain.
 {{</Aside>}}
 
 ## Test mTLS using cURL

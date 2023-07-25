@@ -66,7 +66,7 @@ $ wrangler r2 bucket list
 
 After your new R2 bucket is ready, use it inside your Worker application. 
 
-Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an [R2 bucket binding](/workers/platform/bindings/#r2-bucket-bindings). Add the following R2 bucket binding to your `wrangler.toml` file:
+Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an [R2 bucket binding](/workers/configuration/bindings/#r2-bucket-bindings). Add the following R2 bucket binding to your `wrangler.toml` file:
 
 ```toml
 [[r2_buckets]]

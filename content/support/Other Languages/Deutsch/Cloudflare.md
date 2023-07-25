@@ -193,7 +193,7 @@ Aktionen der Durchsatzbegrenzung basieren auf dem Tarif der Domain, wie oben unt
 
 -   **Blockieren****:** Cloudflare gibt einen HTTP-429-Fehler aus, wenn der Schwellenwert überschritten wird.
 -   **Legacy-CAPTCHA** **–** Der Besucher muss eine Captcha-Herausforderung bestehen.  Wenn er besteht, lässt Cloudflare die Anfrage durch.
--   **JS Challenge** **–** Der Besucher muss eine Cloudflare Javascript Challenge bestehen. Wenn er besteht, lässt Cloudflare die Anfrage durch.
+-   **JS Challenge** **–** Der Besucher muss eine Cloudflare JavaScript Challenge bestehen. Wenn er besteht, lässt Cloudflare die Anfrage durch.
 -   **Protokollieren -** Anfragen werden in [Cloudflare-Protokollen](https://support.cloudflare.com/hc/articles/216672448) aufgezeichnet. Damit kann die Regel getestet werden, bevor sie produktiv eingesetzt wird.
 
 #### **Dauer der Sperre**

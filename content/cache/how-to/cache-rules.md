@@ -23,6 +23,10 @@ Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, Cloudflare plans on releasing a one-click migration tool for Page Rules.
 
+## Execution order of Rules products
+
+{{<render file="_product_execution_order.md" productFolder="rules">}}
+
 ## Create Cache Rules in the dashboard
 
 To create a new cache rule:
@@ -67,7 +71,10 @@ Select if you want to **Respect origin** or **Override origin**. If you wish to 
 <div>
 
 Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
- - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), and [Ignore query string order](/cache/troubleshooting/cache-everything-ignore-query-strings/).
+ - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/troubleshooting/cache-everything-ignore-query-strings/), and [Enable query string sort](/cache/how-to/cache-keys/#query-string).
+
+Enterprise customers have these additional options for custom cache keys:
+
  - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
  - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
  - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.

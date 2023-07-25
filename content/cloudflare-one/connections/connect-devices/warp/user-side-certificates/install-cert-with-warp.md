@@ -8,7 +8,7 @@ meta:
 
 # Install a certificate using the WARP client
 
-The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on devices enrolled in your Zero Trust organization. The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/filtering/http-policies/tls-decryption/), display custom block pages, and more.
+The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on devices enrolled in your Zero Trust organization. The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), display custom block pages, and more.
 
 ## Supported platforms
 

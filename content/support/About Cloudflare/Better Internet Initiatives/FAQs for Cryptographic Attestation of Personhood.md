@@ -53,14 +53,14 @@ CAP supports a wide variety of hardware authenticators:
     -   _Supported_: All security keys found in the [FIDO Metadata Service 3.0](https://fidoalliance.org/metadata/), unless they have been revoked for security reasons.
     -   _Examples_: YubiKeys, HyperFIDO keys, Thetis FIDO U2F keys
 -   **Platform authenticators:**
-    -   _Examples_: Apple Touch ID and Face ID on iOS mobile devices and MacOS laptops; Android mobile devices with fingerprint readers; Windows Hello
+    -   _Examples_: Apple Touch ID and Face ID on iOS mobile devices and macOS laptops; Android mobile devices with fingerprint readers; Windows Hello
 
 ### Known limitations
 
 Most combinations of of web browsers and WebAuthn-capable authenticators will work, but there are some known compatibility issues with WebAuthn attestation that may prevent CAP from working successfully:
 
 -   **Basic CAP**:
-    -   _MacOS desktop_: For TouchID, browser must be Safari
+    -   _macOS desktop_: For TouchID, browser must be Safari
     -   _Android_: Browser must be Chrome
 -   **CAP with Zero-Knowledge Proof**:
     -   _Apple platform authenticators_ (e.g., iPhone with Touch ID/Face ID) are incompatible with the [zero-knowledge proof system](https://blog.cloudflare.com/introducing-zero-knowledge-proofs-for-private-web-attestation-with-cross-multi-vendor-hardware/). If this fails, you will immediately be redirected to basic CAP route without having to take any further action. Since Apple uses a privacy-preserving [Apple Anonymous Attestation](https://www.w3.org/TR/webauthn/#sctn-apple-anonymous-attestation) to show that an authenticator is valid while blocking tracking, this method maintains a high standard of privacy.

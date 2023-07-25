@@ -11,15 +11,17 @@ meta:
 
 Follow the steps below to enable SSL/TLS protection for your application.
 
----
+{{<tutorial>}}
 
-## Prerequisites
+{{<tutorial-prereqs>}}
 
 - [Create an account and register an application](/fundamentals/get-started/setup/)
 
----
+{{</tutorial-prereqs>}}
 
-## Step 1 — Choose an edge certificate
+
+
+{{<tutorial-step title="Choose an edge certificate" >}}
 
 As explained in the [concepts page](/ssl/concepts/#ssltls-certificate), edge certificates are the SSL/TLS certificates that Cloudflare presents to your visitors.
 
@@ -38,7 +40,9 @@ For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare
 
 {{</Aside>}}
 
-## Step 2 — Choose your encryption mode
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Choose your encryption mode" >}}
 
 Once you have chosen your edge certificate, [choose an encryption mode](/ssl/origin-configuration/ssl-modes/).
 
@@ -46,10 +50,18 @@ Encryption modes specify how Cloudflare encrypts connections between (a) visitor
 
 Note that some encryption modes will require you to have a valid [origin certificate](/ssl/concepts/#origin-certificate), which is managed on your origin server. Each encryption mode setup page lists out this and other requirements and you can also [consider other Cloudflare options to use with your origin server](/ssl/origin-configuration/), such as [Origin CA certificates](/ssl/origin-configuration/origin-ca/).
 
-## Step 3 — Enforce HTTPS connections
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Enforce HTTPS connections" >}}
 
 {{<render file="_enforce-https-recommendation.md">}}
 
-## Step 4 (optional) — Enable additional features
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Enable additional features" optional=true >}}
 
 {{<render file="_get-started-additional-features.md">}}
+
+{{</tutorial-step>}}
+
+{{</tutorial>}}

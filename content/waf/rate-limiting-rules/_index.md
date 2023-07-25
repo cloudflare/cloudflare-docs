@@ -84,6 +84,6 @@ You can also configure rate limiting rules using the [Rulesets API](/ruleset-eng
 
 ## Related resources
 
-For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/).
+For guidance on the previous version of rate limiting rules (billed based on usage and now deprecated), refer to [Cloudflare Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/).
 
 {{</content-column>}}

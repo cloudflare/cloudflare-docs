@@ -28,4 +28,5 @@ You can integrate the following SaaS applications with Cloudflare CASB:
   - [Outlook](microsoft-365/outlook/)
 
 - [Salesforce](salesforce/)
+- [ServiceNow](servicenow/)
 - [Slack](slack/)

@@ -43,23 +43,23 @@ An Okta administrator in your organization must first [enable U2F support](https
 
 You can begin building U2F policies by testing your Okta integration.
 
-Navigate to the **Settings > Authentication** section of Zero Trust. Next, choose the row for Okta and click **Test**.
+In [Zero Trust](https://one.dash.cloudflare.com/), go to the **Settings** > **Authentication**. Next, choose the row for Okta and select **Test**.
 
 Cloudflare Access will prompt you to login with your Okta account. For the purposes of the test, use a second factor option like an app-based code. Okta will return `amr` values to Cloudflare Access - these are standard indicators of multifactor methods shared between identity control systems.
 
 The `mfa` value is sent by Okta to tell Cloudflare Access that you used a multifactor authentication option. The `pwd` value indicates you used a password. In this example, the `otp` value is sent because the user authenticatd with an app-based code.
 
-You can test with a hardkey by logging out of Okta and returning to the list of providers in Access. Click **Test** again, but this time use your hardware key as a second factor. Cloudflare Access will now see Okta share `hwk` in the `amr` fields.
+You can test with a hardkey by logging out of Okta and returning to the list of providers in Access. Select **Test** again, but this time use your hardware key as a second factor. Cloudflare Access will now see Okta share `hwk` in the `amr` fields.
 
 ![Test MFA](/images/cloudflare-one/zero-trust-security/require-yubikey/with-hwk.png)
 
 ## Build a Zero Trust policy to require U2F
 
-You can use this information to build a rule in Access. Navigate to the `Applications` list in the Cloudflare Access section of the dashboard. Choose an application that you have already built or create a new one. This example adds the requirement to an existing application.
+You can use this information to build a rule in Access. Go to the `Applications` list in the Cloudflare Access section of the dashboard. Choose an application that you have already built or create a new one. This example adds the requirement to an existing application.
 
-Click **Edit** to edit the existing `Allow` rule.
+Select **Edit** to edit the existing `Allow` rule.
 
-Add a `Require` rule and select `Authentication Method` from the list. Choose `hwk` as the required `Authentication Method`. Click **Save rule**.
+Add a `Require` rule and select `Authentication Method` from the list. Choose `hwk` as the required `Authentication Method`. Select **Save rule**.
 
 ![Require Rule](/images/cloudflare-one/zero-trust-security/require-yubikey/require-hwk.png)
 

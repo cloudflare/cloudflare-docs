@@ -506,6 +506,38 @@ All Cloudflare plans.
 </div>
 </details>
 
+## Pages
+
+<details>
+<summary>Project updates</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to receive notifications about project-level events in [Cloudflare Pages](/pages/).
+
+**Other options / filters**
+
+Multiple filters available, including filtering by:
+
+- Pages projects.
+- Environments.
+- Different events:
+  - **Deployment started**
+  - **Deployment failed**
+  - **Deployment success**
+
+**Included with**
+
+All Cloudflare plans.
+
+**What should you do if you receive one?**
+
+For failed deployments, review our [debugging guide](/pages/platform/debugging-pages/#check-your-build-log).
+
+</div>
+</details>
+
 ## Page Shield
 
 <details>
@@ -772,7 +804,7 @@ When an advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
-Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/#ssl-expired-or-ssl-mismatch-errors) for more information.
+Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](/ssl/troubleshooting/version-cipher-mismatch/) for more information.
 
 </div>
 </details>
@@ -981,7 +1013,7 @@ No direct call to action.
 
 **Who is it for?**
 
-Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
 
 **Other options / filters**
 
@@ -993,7 +1025,7 @@ All Cloudflare Zero Trust plans.
 
 **What should you do if you receive one?**
 
-Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/).
+Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/).
 
 </div>
 </details>

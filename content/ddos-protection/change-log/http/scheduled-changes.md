@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-06-19</td>
-      <td>2023-07-06</td>
-      <td>...22807318</td>
-      <td>HTTP requests from known botnets.</td>
-      <td>log</td>
-      <td>ddos_dynamic</td>
-      <td>Detect new attacks from identified botnets.</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

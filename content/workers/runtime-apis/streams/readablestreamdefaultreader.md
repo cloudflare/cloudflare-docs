@@ -58,5 +58,5 @@ Any data not yet read is lost.
 
 ## Related resources
 
-- [Using Streams](/workers/learning/using-streams/)
+- [Streams](/workers/runtime-apis/streams/)
 - [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)

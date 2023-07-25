@@ -175,7 +175,7 @@ _POST_ （投稿）または _GET_（取得）です。指定されるものが�
 
 -   **ブロック** **\-** しきい値を超えると、CloudflareがHTTP 429 エラーを出します。
 -   **従来型のCAPTCHA** **\-**訪問者は、CAPTCHAチャレンジで正解する必要があります。正解した場合、Cloudflareがリクエストを許可します。
--   **JS チャレンジ** **\-**訪問者はCloudflare Javascriptチャレンジに正解する必要があります。正解すると、Cloudflareがリクエストを許可します。
+-   **JS チャレンジ** **\-**訪問者はCloudflare JavaScriptチャレンジに正解する必要があります。正解すると、Cloudflareがリクエストを許可します。
 -   **ログ -** リクエストは [Cloudflare ログ](https://support.cloudflare.com/hc/articles/216672448)に記録されます。これは、本番で適用される前にルールをテストするのに役立ちます。
 
 #### **禁止期間**

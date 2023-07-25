@@ -59,7 +59,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-http-host">
       <td valign="top"><code>http.host</code><br />{{<type>}}String{{</type>}}</td>
       <td>
-         <p>Represents the host name used in the full request URI.
+         <p>Represents the hostname used in the full request URI.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">www.example.org</code>
@@ -1564,7 +1564,7 @@ The Cloudflare Rules language supports these HTTP response fields:
    <tr id="field-cf-response-1xxx_code">
       <td valign="top"><code>cf.response.1xxx_code</code><br />{{<type>}}Integer{{</type>}}</td>
       <td>
-         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="https://support.cloudflare.com/hc/articles/360029779472">Troubleshooting Cloudflare 1XXX errors</a>.
+         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/">Troubleshooting Cloudflare 1XXX errors</a>.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">1020</code>

@@ -9,9 +9,11 @@ layout: single
 
 Use Compression Rules to customize the compression applied to responses from Cloudflare's global network to your website visitors, based on the file extension and content type. Compression Rules are powered by the [Ruleset Engine](/ruleset-engine/).
 
-Cloudflare [compresses some responses by default](/support/speed/optimization-file-size/what-will-cloudflare-compress/), based on the content type. With Compression Rules, you can customize the default behavior, which includes defining preferred compression algorithms for particular file types.
+Cloudflare [compresses some responses by default](/speed/optimization/content/brotli/), based on the content type. With Compression Rules, you can customize the default behavior, which includes defining preferred compression algorithms for particular file types.
 
 When there is a match for a compression rule configured with several compression algorithms, the selected algorithm is the first one supported by the website visitor, according to the received `accept-encoding` HTTP header. If multiple compression rules match, the last rule wins.
+
+{{<render file="_rules-requirements.md" withParameters="Compression Rules require">}}
 
 ## Get started
 
@@ -30,7 +32,7 @@ Compression Rules are available to Enterprise customers.
 
 ## Relevant fields
 
-The following fields are commonly used in expressions of Compression Rules:
+The following fields are commonly used in expressions of compression rules:
 
 {{<table-wrap>}}
 

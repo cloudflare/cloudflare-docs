@@ -25,7 +25,7 @@ If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Infor
 ## Related topics
 
 - [SSL/TLS Encryption Modes](/ssl/origin-configuration/ssl-modes/)
-- [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 ## Limitations
 

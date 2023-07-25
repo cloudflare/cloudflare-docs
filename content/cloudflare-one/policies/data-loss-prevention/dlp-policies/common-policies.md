@@ -30,7 +30,7 @@ The **Allow** action functions as an implicit logger, providing visibility into 
 
 ## Block uploads/downloads for specific users
 
-You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/policies/filtering/identity-selectors/) to your policies. The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps.
+You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/policies/gateway/identity-selectors/) to your policies. The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps.
 
 | Policy name |
 | ---- |
@@ -48,7 +48,7 @@ You can configure access on a per-user or group basis by adding [identity-based 
 
 ## Exclude Android applications
 
-Many Android applications (such as Google Drive) use [certificate pinning](/cloudflare-one/glossary/#certificate-pinning), which is incompatible with Gateway inspection. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) so that the app can continue to function on Android:
+Many Android applications (such as Google Drive) use [certificate pinning](/cloudflare-one/glossary/#certificate-pinning), which is incompatible with Gateway inspection. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) so that the app can continue to function on Android:
 
 1. Set up an [OS version device posture check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) that checks for the Android operating system.
 
@@ -73,7 +73,7 @@ Android users can now use the app, but the app traffic will bypass DLP scanning.
 
 In your [DLP logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#4-view-dlp-logs), you may find that certain sites are a common source of noise. To exempt these sites from DLP scanning:
 
-1. [Create a list](/cloudflare-one/policies/filtering/lists/) of hostnames or URLs.
+1. [Create a list](/cloudflare-one/policies/gateway/lists/) of hostnames or URLs.
 
 2. Exclude the list from your DLP policy as shown in the example below:
 
