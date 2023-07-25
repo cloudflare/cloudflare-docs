@@ -82,17 +82,17 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 #### Test domain format
 
--  **One-word category** — For categories with one-word names (for example, _Malware_), the test domain uses the following format:
+- **One-word category** — For categories with one-word names (for example, _Malware_), the test domain uses the following format:
 
    ```txt
    <NAME_OF_CATEGORY>.testcategory.com
    ```
 
--  **Multi-word category** — For categories with multiple words in the name (for example, _Parked & For Sale Domains_), the test domain uses the following format:
+- **Multi-word category** — For categories with multiple words in the name (for example, _Parked & For Sale Domains_), the test domain uses the following format:
 
-   -  Remove any spaces between the words
-   -  Replace `&` with `and`
-   -  Lowercase all letters
+   - Remove any spaces between the words
+   - Replace `&` with `and`
+   - Lowercase all letters
 
 #### Common test domains
 
