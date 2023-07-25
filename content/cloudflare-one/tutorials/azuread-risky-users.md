@@ -156,7 +156,7 @@ Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-po
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 
-2. Select **Create a policy**.
+2. Select **Add a policy**.
 
 3. Build an [Isolate policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
 

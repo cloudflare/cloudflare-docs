@@ -23,7 +23,7 @@ This is a walkthrough of how to add custom headers for Microsoft 365. The proced
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 
-1. Create a policy with the following values:
+1. Add a policy with the following values:
 
     - Action: `Allow`
     - Selector: `Application`
