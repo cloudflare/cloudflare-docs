@@ -34,26 +34,28 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
 
-10. In the **General** tab, copy the **Client ID**, **Client secret**, and **Okta domain**.
+    Note: If you are referencing Active Directory groups in Okta, follow [this guide](https://support.okta.com/help/s/article/Can-we-retrieve-both-Active-Directory-and-Okta-groups-in-OpenID-Connect-claims?language=en_US) to include additional required claims 
+
+11. In the **General** tab, copy the **Client ID**, **Client secret**, and **Okta domain**.
 
     ![Finding your Client credentials and Okta domain in Okta](/images/cloudflare-one/identity/okta/okta-3.png)
 
-11. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+12. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-12. Under **Login methods**, select **Add new**. Select **Okta** as your identity provider.
+13. Under **Login methods**, select **Add new**. Select **Okta** as your identity provider.
 
-13. Fill in the following information:
+14. Fill in the following information:
 
     - **Name**: Name your identity provider
     - **App ID**: Enter your Okta Client ID.
     - **Client secret**: Enter your Okta Client secret.
     - **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
 
-14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
+15. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+16. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-16. Select **Save**.
+17. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
