@@ -29,18 +29,10 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
 2. Select **Create a policy**.
 3. Build an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) using the [DLP Profile](/cloudflare-one/policies/gateway/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
 
-   | Policy name                       |
-   | --------------------------------- |
-   | Only allow SSN uploads to Workday |
-
-   | Selector     | Operator | Value                          |
-   | ------------ | -------- | ------------------------------ |
-   | DLP Profiles | in       | `U.S. Social Security Numbers` |
-   | Application  | not in   | `Workday`                      |
-
-   | Action |
-   | ------ |
-   | Block  |
+   | Selector     | Operator | Value                          | Logic | Action |
+   | ------------ | -------- | ------------------------------ | ----- | ------ |
+   | DLP Profiles | in       | `U.S. Social Security Numbers` | And   | Block  |
+   | Application  | not in   | `Workday`                      |       |        |
 
 4. Select **Create policy**.
 

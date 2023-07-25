@@ -160,17 +160,9 @@ Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-po
 
 3. Build an [Isolate policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
 
-   | Policy name         |
-   | ------------------- |
-   | Isolate risky users |
-
-   | Selector         | Operator | Value                                         |
-   | ---------------- | -------- | --------------------------------------------- |
-   | Domain           | In       | `app1.example.com`, `app2.example.com`        |
-   | User Group Names | in       | `IdentityProtection-RiskyUser-RiskLevel-high` |
-
-   | Action  |
-   | ------- |
-   | Isolate |
+   | Selector         | Operator | Value                                         | Logic | Action  |
+   | ---------------- | -------- | --------------------------------------------- | ----- | ------- |
+   | Domain           | In       | `app1.example.com`, `app2.example.com`        | And   | Isolate |
+   | User Group Names | in       | `IdentityProtection-RiskyUser-RiskLevel-high` |       |         |
 
 To test the policy, refer to the Microsoft documentation for [simulating risky detections](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk).
