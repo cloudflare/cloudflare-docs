@@ -9,9 +9,9 @@ title: Environment variables
 
 Attach secrets, text strings, and JSON values as environment variables to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker).
 
-Secrets are environment variables that are encrypted and not visible once set. They are used for storing sensitive information like API keys, and auth tokens.
+Secrets are environment variables that are encrypted and not visible once set. They are used for storing sensitive information like API keys and auth tokens.
 
-Texts strong and JSON values are not encrypted and are useful for storing application configuration.
+Text strings and JSON values are not encrypted and are useful for storing application configuration.
 
 ## Add environment variables via Wrangler
 
