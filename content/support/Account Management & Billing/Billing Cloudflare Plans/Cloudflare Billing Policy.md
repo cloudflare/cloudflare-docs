@@ -13,13 +13,6 @@ The terms subscription and add-on service are used interchangeably in
 this support guide.
 {{</Aside>}}
 
-{{<Aside type="note">}}
-**Note:** Cloudflare allows VaultPress IP addresses as of December 18th,
-2015. If you know of additional VaultPress IP addresses that do not
-appear to be in our allowlist, please contact us so we can look at
-adding them.
-{{</Aside>}}
-
 Cloudflare plans and add-on services are billed every 30 days for each domain in your account.
 
 Cloudflare also collects sales tax as governed by local laws. Sales taxes are computed based on the nine (9) digit postal code of either the shipping or billing address on file for your Cloudflare account where applicable.
