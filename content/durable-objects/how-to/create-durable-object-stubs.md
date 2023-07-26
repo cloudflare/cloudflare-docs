@@ -10,7 +10,7 @@ A Durable Object stub is a client Object used to send requests to a remote Durab
 
 `OBJECT_NAMESPACE.get(id)` creates a Durable Object.
 
-Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. 
+Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. 
 
 However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/platform/troubleshooting/). 
 
@@ -35,7 +35,7 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 - `id` {{<type>}}DurableObjectId{{</type>}}
   - An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this namespace.
 
-  - This method constructs an Object, which is a local client that provides access to a remote Durable Object.
+  - This method constructs an Object, which is a local client that provides access to a remote Object.
 
   - If the remote Object does not already exist, it will be created. Thus, there will always be an Object accessible from the stub.
 

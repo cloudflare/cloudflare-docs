@@ -26,7 +26,7 @@ You can request adjustments to limits that conflict with your project goals by c
 
 {{</Aside>}}
 
-Durable Objects can scale horizontally across many Objects. Each individual Object is inherently single-threaded.
+Durable Objects can scale horizontally across many Durable Objects. Each individual Object is inherently single-threaded.
 
 An individual Object has a soft limit of 1000 requests per second. A simple get on a small value that directly returns the response may realize a higher request throughput.
 

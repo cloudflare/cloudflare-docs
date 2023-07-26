@@ -36,7 +36,7 @@ To solve this error, you can either do less work per request, or send fewer requ
 
 ### Your account is generating too much load on Durable Objects. Please back off and try again later
 
-There is a limit on how quickly you can [create new Objects or lookup different existing Objects](/durable-objects/how-to/create-durable-object-stubs/). Those lookups are usually cached, meaning attempts for the same set of recently accessed Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
+There is a limit on how quickly you can [create new Durable Objects or lookup different existing Durable Objects](/durable-objects/how-to/create-durable-object-stubs/). Those lookups are usually cached, meaning attempts for the same set of recently accessed Durable Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
 
 ### Durable Object reset because its code was updated
 
@@ -46,7 +46,7 @@ Refer to [Global Uniqueness](/durable-objects/platform/known-issues/#global-uniq
 
 ### Durable Object storage operation exceeded timeout which caused object to be reset
 
-To prevent indefinite blocking, there is a limit on how much time storage operations can take. In Objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+To prevent indefinite blocking, there is a limit on how much time storage operations can take. In Durable Objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
 
 ### Your account is doing too many concurrent storage operations. Please back off and try again later
 

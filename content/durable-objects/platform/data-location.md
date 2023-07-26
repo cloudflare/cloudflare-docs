@@ -47,7 +47,7 @@ let id = subnamespace.idFromName(name);
 
 {{<Aside type="note" header="IDs derived from the same name but different jurisdictions will differ">}}
 
-Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different Objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different Objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
+Because the jurisdiction is encoded permanently in the Durable Object ID, it is possible to have the same name represent different Durable Objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different Durable Objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
 
 This may be counterintuitive at first, but it would be impossible to enforce two different non-overlapping jurisdictions for a single name. The key insight to remember is that Durable Object namespaces operate on IDs, not names, and the jurisdiction is a permanent part of the ID.
 
@@ -86,13 +86,13 @@ OBJECT_NAMESPACE.idFromString(id.toString())
 OBJECT_NAMESPACE.get(id)
 ```
 
-Your Workers may still access Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
+Your Workers may still access Durable Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 
 The currently supported jurisdictions are `eu` (the European Union) and `fedramp` (FedRAMP).
 
 {{<Aside type="note" header="ID logging">}}
 
-Object IDs will be logged outside of the specified jurisdiction for billing and debugging purposes.
+Durable Object IDs will be logged outside of the specified jurisdiction for billing and debugging purposes.
 
 {{</Aside>}}
 

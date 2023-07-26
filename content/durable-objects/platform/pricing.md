@@ -40,7 +40,7 @@ Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
 ### Example 2
 
-If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately one message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Objects were actually active for half the month:
+If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately one message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Durable Objects were actually active for half the month:
 
 Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = $272.01
 
@@ -53,7 +53,7 @@ Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = $272.01
 
 ### Example 3
 
-If 100 Durable Objects each had a single WebSocket connection established to each of them, which sent one message a second for a month, and the messages overlapped so that the Objects were actually active for the entire month, the estimated cost in a month would be:
+If 100 Durable Objects each had a single WebSocket connection established to each of them, which sent one message a second for a month, and the messages overlapped so that the Durable Objects were actually active for the entire month, the estimated cost in a month would be:
 
 Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
@@ -89,6 +89,6 @@ Durable Objects do not have to use the Transactional Storage API, but if your co
 
 <sup>4</sup>  Delete requests are unmetered. For example, deleting a 100 KB value will be charged one delete request.
 
-<sup>5</sup>  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
+<sup>5</sup>  Durable Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 
 Requests that hit the [Durable Objects in-memory cache](/durable-objects/learning/in-memory-state/) or that use the [multi-key versions of get/put/delete methods](/durable-objects/api/transactional-storage-api/) are billed the same as if they were a normal, individual request for each key.
