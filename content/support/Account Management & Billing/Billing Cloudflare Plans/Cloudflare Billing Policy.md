@@ -30,7 +30,7 @@ Subdomains do not count as billable domains.
 
 For example, if test1.com and test2.com are added to the same Cloudflare account and upgraded to the Pro plan, you will receive an invoice with two $20 charges. Subdomains such as blog.test1.com or blog.test2.com will not be included as billable domains.
 
-The date you initiate a paid plan or add-on service will be both the start of your billing period and your [invoice date](https://support.cloudflare.com/hc/articles/205610698). For example, If you upgrade your plan on January 10, all future plan charges will be billed on the 10th of every month. Both dates are initialized using the UTC (Universal Time Coordinated) time zone, and not your local time zone.
+The date you initiate a paid plan or add-on service will be both the start of your billing period and your [invoice date](https://support.cloudflare.com/hc/articles/205610698). For example, If you upgrade your plan on January 10, all future plan charges will be billed on the 10th of every month. Both dates are initialized using the UTC (Coordinated Universal Time) time zone, and not your local time zone.
 
 When ordering a paid plan, subscription, or add-on service, you must agree to the following:
 
@@ -53,7 +53,7 @@ If your domain is on a paid plan (for example, Pro) and you upgrade to a higher-
 -   Cloudflare credits the prorated cost of the lower-priced plan, until the end of the billing cycle.
 -   At the beginning of the next billing cycle, your invoice will reflect the full cost of the higher-priced plan.
 
-Your bill cycle start and end dates are calculated using the UTC (Universal Time Coordinated) time zone, and not your local time zone.
+Your bill cycle start and end dates are calculated using the UTC (Coordinated Universal Time) time zone, and not your local time zone.
 
 For example, if your billing date is January 1, but you upgrade from Pro to Business, on January 15,
 
