@@ -8,35 +8,32 @@ meta:
 
 # CSP directives supported by policies
 
-Page Shield continuously monitors scripts and their connections on your website. Monitored resources are displayed in the [**Monitors** dashboard](/page-shield/detection/monitor-connections-scripts/), and they are controlled by the following Content Security Policy (CSP) directives:
+Page Shield monitors scripts loaded on your website and the connections they make. Monitored resources are displayed in the [**Monitors** dashboard](/page-shield/detection/monitor-connections-scripts/).
 
-* `script-src`
-* `connection-src`
+Page Shield policies support most Content Security Policy (CSP) directives, covering both monitored and unmonitored resources. You can use a policy to control other types of resources besides scripts and their connections, even though Page Shield is not monitoring these resources.
 
-Page Shield policies support most CSP directives, covering both monitored and unmonitored resources. You can use a policy to control other types of resources besides scripts and their connections, even though Page Shield is not monitoring these resources.
-
-The directives directly supported by the Cloudflare dashboard when working with policies are the following:
+The supported directives in Page Shield policies are the following:
 
 {{<table-wrap>}}
 
-Directive         | Dashboard values
-------------------|-----------------------------------------------
-`script-src`      | **none**<br>**self**<br>**unsafe inline**<br>**unsafe `eval()`**<br>(custom value)
-`connect-src`     | **none**<br>**self**<br>(custom value)
-`default-src`     | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`style-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`img-src`         | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`font-src`        | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`object-src`      | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`media-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`frame-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`child-src`       | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`form-action`     | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`frame-ancestors` | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`base-uri`        | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`worker-src`      | **none**<br>**self**<br>(custom value)
-`manifest-src`    | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
-`prefetch-src`    | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value)
+Directive         | API values | Dashboard values | Monitored
+------------------|------------|------------------|----------------------------
+`script-src`      | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br>**unsafe inline**<br>**unsafe `eval()`**<br>(detected value)<br>(custom value) | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`connect-src`     | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br>(detected value)<br>(custom value) | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`default-src`     | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`style-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`img-src`         | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`font-src`        | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`object-src`      | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`media-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`frame-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`child-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`form-action`     | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`frame-ancestors` | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`base-uri`        | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`worker-src`      | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br>(custom value) |
+`manifest-src`    | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`prefetch-src`    | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
 
 {{</table-wrap>}}
 
