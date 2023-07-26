@@ -5,6 +5,6 @@ _build:
   list: never
 ---
 
-| Selector            | Operator  | Value              | Action |
-| ------------------- | ----------| -------------------| ------ |
-| Security categories | in        | `All security risks` | Block  |
+| Selector            | Operator | Value                | Action |
+| ------------------- | -------- | -------------------- | ------ |
+| Security categories | in       | `All security risks` | Block  |
