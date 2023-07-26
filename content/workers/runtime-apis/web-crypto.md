@@ -29,7 +29,7 @@ console.log(new Uint8Array(myDigest));
 Some common uses include [signing requests](/workers/examples/signing-requests/).
 
 {{<Aside type="warning">}}
-The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
+The Web Crypto API differs significantly from the [Node.js Crypto API](workers/runtime-apis/nodejs/crypto/). If you are working with code that relies on the Node.js Crypto API, you can use it by enabling the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/).
 {{</Aside>}}
 
 ---
