@@ -52,8 +52,7 @@ If your domain is on a paid plan (for example, Pro) and you upgrade to a higher-
 -   Your invoice will reflect the prorated cost of the higher-tiered plan, until the end of your billing cycle.
 -   Cloudflare credits the prorated cost of the lower-priced plan, until the end of the billing cycle.
 -   At the beginning of the next billing cycle, your invoice will reflect the full cost of the higher-priced plan.
-
-Your bill cycle start and end dates are calculated using the UTC (Coordinated Universal Time) time zone, and not your local time zone.
+-   Your bill cycle start and end dates are calculated using the UTC (Coordinated Universal Time) time zone, and not your local time zone.
 
 For example, if your billing date is January 1, but you upgrade from Pro to Business, on January 15,
 
