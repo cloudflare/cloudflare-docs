@@ -77,7 +77,7 @@ Add the following script:
 
 ### Can I use the same JS Snippet for a different domain?
 
-No. However, if the root domain is the same, you can use the same site tag. For example, if you have provided us a hostname `example.com` when registering a site, you can use the JS snippet from that site for `abc.example.com` and `def.example.com` since they use the same root domain. When payload gets sent to the beacon endpoint, we validate the hostname with postfix matching, so if your domain shares the same root domain, that would work.
+No. However, if the apex domain (also known as "root domain" or "naked domain") is the same, you can use the same site tag. For example, if you have provided us a hostname `example.com` when registering a site, you can use the JS snippet from that site for `abc.example.com` and `def.example.com` since they use the same apex domain. When payload gets sent to the beacon endpoint, we validate the hostname with postfix matching, so if your domain shares the same apex domain, that would work.
 
 ### Can I use automatic setup with a DNS-only domain (CNAME setup)?
 
