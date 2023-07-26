@@ -6,7 +6,7 @@ weight: 3
 
 # Guidelines for cURL commands
 
-Use long parameter names, like in the API docs, for clarity:
+Use long parameter names, like in the [API reference documentation](/api/), for clarity:
 
 + `--header` (instead of `-H`)
 + `--request` (when needed, instead of `-X`)
