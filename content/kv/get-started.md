@@ -128,7 +128,7 @@ Refer to the [`kv:bulk`](/kv/platform/kv-commands/#kvbulk) documentation to writ
 
 ## 4. Use environments with KV namespaces
 
-KV namespaces can be used with environments. This is useful when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to have these bindings point to different KV namespaces (like one for staging and one for production).
+KV namespaces can be used with [environments](/workers/wrangler/environments/#environments). This is useful when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to have these bindings point to different KV namespaces (like one for staging and one for production).
 
 The following code in the `wrangler.toml` file shows you how to have two environments that have two different namespaces but the same binding name.
 

@@ -77,17 +77,17 @@ For large values, the choice of `type` can have a noticeable effect on latency a
 
 ## Cache TTL parameter
 
-The `get()` options object also accepts a `cacheTtl` parameter:
+The `get()` options object also accepts a `cacheTTL` parameter:
 
 ```js
-NAMESPACE.get(key, { cacheTtl: 3600 });
+NAMESPACE.get(key, { cacheTTL: 3600 });
 ```
 
-The `cacheTtl` parameter must be an integer that is greater than or equal to `60`, which is the default. 
+The `cacheTTL` parameter must be an integer greater than or equal to `60`, which is the default. 
 
-It defines the length of time in seconds that a KV result is cached in the global network location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
+It defines the length of time in seconds that a KV result is cached in the global network location it is accessed from. Defining the length of time in seconds can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
 
-The effective Cache TTL of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to `60` seconds.
+The effective Cache TTL of an already cached item can be reduced by getting it again with a lower `cacheTTL`. For example, if you did `NAMESPACE.get(key, {cacheTTL: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTTL: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTTL`, which defaults to `60` seconds.
 
 ## Metadata
 
@@ -99,4 +99,4 @@ const { value, metadata } = await NAMESPACE.getWithMetadata(key);
 
 If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
-You can pass an options object with `type` and/or `cacheTtl` parameters to the `getWithMetadata()` method, similar to `get()`.
+You can pass an options object with `type` and/or `cacheTTL` parameters to the `getWithMetadata()` method, similar to `get()`.

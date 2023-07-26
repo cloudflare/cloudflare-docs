@@ -6,7 +6,7 @@ weight: 7
 
 # List keys
 
-Use a list operation to view all of the keys that live in a given KV namespace.
+Use a list operation to view all the keys that live in a given KV namespace.
 
 An example:
 
@@ -80,7 +80,7 @@ The `name` is a string, the `expiration` value is a number, and `metadata` is wh
 
 Additionally, if `list_complete` is `false`, there are more keys to fetch, even if the `keys` array is empty. You will use the `cursor` property to get more keys. Refer to the [Pagination section](#pagination) below for more details.
 
-Note that if your values fit in [the metadata-size limit](/workers/platform/limits/#kv-limits), you may consider storing them in metadata instead. This is more efficient than a `list` followed by a `get` per key. When using `put`, you can leave the `value` parameter empty and instead include a property in the metadata object:
+If your values fit in [the metadata-size limit](/kv/platform/limits/), you may consider storing them in metadata instead. This is more efficient than a `list` followed by a `get` per key. When using `put`, you can leave the `value` parameter empty and instead include a property in the metadata object:
 
 ```js
 await NAMESPACE.put(key, "", {
@@ -90,7 +90,7 @@ await NAMESPACE.put(key, "", {
 
 ## List by prefix
 
-List all of the keys starting with a particular prefix. 
+List all the keys starting with a particular prefix. 
 
 For example, you may have structured your keys with a user, a user ID, and key names, separated by colons (such as `user:1:<key>`). You could get the keys for user number one by using the following code:
 
@@ -139,6 +139,6 @@ const cursor = value.cursor;
 const next_value = await NAMESPACE.list({ cursor: cursor });
 ```
 
-Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch. Instead, check `list_complete`. 
+Checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch. Instead, check `list_complete`. 
 
 It is possible to have an empty array in `keys`, but still have more keys to fetch, because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
