@@ -947,6 +947,7 @@
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
 /workers/platform/triggers/ /workers/platform/ 301
 /workers/learning/using-durable-objects/ /workers/configuration/durable-objects/ 301
+/workers/configuration/durable-objects/ /durable-objects/get-started/ 301
 /workers/platform/languages/ /workers/learning/languages/ 301
 /workers/platform/protocols/ /workers/learning/protocols/ 301
 /workers/platform/storage-options/ /workers/learning/storage-options/ 301
