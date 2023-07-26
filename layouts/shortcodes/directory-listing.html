@@ -10,9 +10,9 @@
 {{- range (where .Site.Pages "Section" $section).ByWeight -}}
   {{ $path := "" }}
   {{ with .File }}
-    {{ $path = .Path }}
+    {{ $path = (replace .Path "\\" "/") }}
   {{ else }}
-    {{ $path = .Path }}
+    {{ $path = (replace .Path "\\" "/") }}
   {{ end }}
   {{- $x := .RelPermalink -}}
     {{- $title := .Title -}}
