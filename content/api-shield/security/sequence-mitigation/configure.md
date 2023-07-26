@@ -54,10 +54,10 @@ header: Example of a rule object
 | Field name | Description | Possible Values | Example |
 | --- | --- | --- | --- |
 | `id` | An opaque identifier that identifies a rule.  | a UUID |  `"d4909253-390f-4956-89fd-92a5b0cd86d8"` |
-| `title` | A string that helps to identify the rule | A value between 1 and 50 characters | "Allow checkout sequence" |  
+| `title` | A string that helps to identify the rule. | A value between 1 and 50 characters | "Allow checkout sequence" |  
 | `kind` | Defines the semantics of this rule. Blocks rules have a negative security model and allow to explicitly deny a sequence. Allow rules have a positive security model and deny everything but the configured sequence. | `block`, `allow` | `"block"` |
 | `action` | What firewall action should we do when the rule matches. | `block`,`log` | `"log"` |
-| `sequence` | Denotes the operations (from Endpoint Management) that make up the sequence for this rule. We currently only support sequences of length 2. | An array with two valid Operation IDs from Endpoint Management. |`["0d9bf70c-92e1-4bb3-9411-34a3bcc59003", "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"]` |
+| `sequence` | Denotes the operations (from Endpoint Management) that make up the sequence for this rule. We currently only support sequences of length 2. | An array with two valid Operation IDs from Endpoint Management |`["0d9bf70c-92e1-4bb3-9411-34a3bcc59003", "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"]` |
 | `priority` | Denotes the precedence of this rule in relation to all other rules. Rules with a higher priority value are evaluated before those with a lower value. If two rules have the same priority, they are evaluated in the order in which they were added. | A valid integer | 10 |
 | `last_updated` | When this rule was last changed. | A date string | 2023-05-02T12:06:51.796286Z |
 | `created_at` | When this rule was created. | A date string | 2023-05-02T12:06:51.796286Z |
