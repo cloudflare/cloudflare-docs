@@ -70,7 +70,7 @@ curl {full_url_with_placeholders} \
 
 ```bash
 ---
-header: GET request example
+header: Example
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 --header "Authorization: Bearer <API_TOKEN>"
@@ -84,7 +84,7 @@ curl --request DELETE \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-Requests without a body do not need syntax highlight, but `bash` syntax highlighting is used to highlight the several delimited strings.
+Requests without a body do not need syntax highlight, but we use `bash` syntax highlighting to highlight the several delimited strings.
 
 ## Request with JSON body content (`POST`, `PUT`, `PATCH`)
 
@@ -107,7 +107,7 @@ curl {full_url_with_placeholders} \
 
 ```bash
 ---
-header: POST request example
+header: Example
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 --header "Authorization: Bearer <API_TOKEN>" \
