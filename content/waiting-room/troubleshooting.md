@@ -43,7 +43,7 @@ To check which features are available to different plan types, refer to [Plans](
 
 Some Cloudflare products run before a waiting room acts on traffic:
 
-- DDos Mitigation
+- DDoS Mitigation
 - Web Application Firewall (WAF)
 - Bot Management
 - Page Rules
