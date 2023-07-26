@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Guidelines for cURL commands
 weight: 3
-
 ---
 
 # Guidelines for cURL commands
@@ -13,7 +12,7 @@ Use long parameter names, like in the API docs, for clarity:
 + `--request` (when needed, instead of `-X`)
 + `--data` (instead of `-d`)
 
-You do not need to use the `--url` parameter since it is the main cURL parameter. Also, the URL does not need to be enclosed in double quotes (""), except if it contains a `?` character (that is, when it includes a query string).
+You do not need to use the `--url` parameter since it is the main cURL parameter. Also, the URL does not need to be enclosed in double quotes (`""`), except if it contains a `?` character (that is, when it includes a query string).
 
 ## Indentation
 
@@ -27,7 +26,7 @@ Requests without a body should not be indented also, to make them consistent wit
 
 [jq](https://jqlang.github.io/jq/) is a separate tool that not everyone will have installed. cURL examples should not include response formatting through jq as part of the example.
 
-If you must suggest the use of this tool, you can add a link to the [Make API calls](/fundamentals/api/how-to/make-api-calls/) page in Fundamentals, which briefly mentions this tool. Do not repeat the existing content about jq near the cURL example.
+If you must suggest the use of this tool, you can add a link to the [Make API calls](/fundamentals/api/how-to/make-api-calls/) page in Fundamentals, which mentions this tool. Do not repeat the existing content about jq near the cURL example.
 
 ## Request guidelines
 
@@ -69,18 +68,19 @@ curl {full_url_with_placeholders} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
+```bash
+---
+header: GET request example
+---
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
 ### `DELETE` request template
 
 ```txt
 curl --request DELETE \
 {full_url_with_placeholders} \
---header "Authorization: Bearer <API_TOKEN>"
-```
-
-### `GET` request example
-
-```txt
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -105,23 +105,10 @@ curl {full_url_with_placeholders} \
 (}|])'
 ```
 
-### `PUT`/`PATCH` request template
-
-```txt
-curl --request (PUT/PATCH) \
-{full_url_with_placeholders} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '({|[)
-  (...JSON content, pretty printed, using 2-space indents...)
-(}|])'
-```
-
-Enclose the `JSON` payload ( the --data command-line argument) in single quotes (') instead of double quotes because it requires less escaping (strings in `JSON` must be delimited using double quotes).
-
-### `POST` request example
-
 ```bash
+---
+header: POST request example
+---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
@@ -136,6 +123,20 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 ]'
 ```
 
+### `PUT`/`PATCH` request template
+
+```txt
+curl --request (PUT/PATCH) \
+{full_url_with_placeholders} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '({|[)
+  (...JSON content, pretty printed, using 2-space indents...)
+(}|])'
+```
+
+Enclose the JSON payload ( the `--data` command-line argument) in single quotes (`'`) instead of double quotes because it requires less escaping (strings in JSON must be delimited using double quotes).
+
 ### Escaping a single quote in the body
 
 The recommended way of escaping a single quote inside the body is the following (assuming the user will run the command in a bash-like terminal):
@@ -144,9 +145,10 @@ The recommended way of escaping a single quote inside the body is the following 
 
 Which means "close string, add escaped single quote, begin string again".
 
-Example:
-
 ```bash
+---
+header: Example
+---
 curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
@@ -159,9 +161,7 @@ curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 
 If you have a `POST` request without a body, add a `--request POST` argument explicitly to the cURL command.
 
-Example:
-
-```
+```txt
 curl --request POST \
 {full_url_with_placeholders} \
 --header "Authorization: Bearer <API_TOKEN>"
@@ -173,7 +173,7 @@ Code blocks with example requests that include a JSON body should use `bash` syn
 
 ## Full request example
 
-```txt
+```bash
 curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
