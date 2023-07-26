@@ -38,7 +38,7 @@ If you must suggest the use of this tool, you can add a link to the [Make API ca
 
 The same placeholder name should correspond to the same value – use different placeholder names for different ID values. You can use the same request placeholders in the response, if they should match the values in the request.
 
-## Authentication HTTP headers
+### Authentication HTTP headers
 
 If using Email + API Key authentication, include the following arguments in the cURL command to add the two required HTTP headers to the request:
 
@@ -57,11 +57,11 @@ If using API Token (the preferred authentication method), include the following 
 --header "Authorization: Bearer <API_TOKEN>" \
 ```
 
-## Request without body content (`GET`, `DELETE`)
+### Request without body content (`GET`, `DELETE`)
 
 For `GET` requests, do not include the `--request` command-line argument, since it is the default where the request does not include a body and it is not recommended for `GET`/`POST` requests:
 
-### `GET` request template
+#### `GET` request template
 
 ```txt
 curl {full_url_with_placeholders} \
@@ -76,7 +76,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-### `DELETE` request template
+#### `DELETE` request template
 
 ```txt
 curl --request DELETE \
@@ -86,7 +86,7 @@ curl --request DELETE \
 
 Requests without a body do not need syntax highlight, but we use `bash` syntax highlighting to highlight the several delimited strings.
 
-## Request with JSON body content (`POST`, `PUT`, `PATCH`)
+### Request with JSON body content (`POST`, `PUT`, `PATCH`)
 
 Make sure to include a `Content-Type` header if the request includes a body. For requests with JSON content, the header should be `Content-Type: application/json`.
 
@@ -94,7 +94,7 @@ This header should appear after the authentication headers.
 
 For `POST` requests, do not include the `--request` command-line argument, since it is the default when the request includes a body.
 
-### `POST` request template
+#### `POST` request template
 
 ```txt
 curl {full_url_with_placeholders} \
@@ -123,7 +123,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 ]'
 ```
 
-### `PUT`/`PATCH` request template
+#### `PUT`/`PATCH` request template
 
 ```txt
 curl --request (PUT/PATCH) \
@@ -137,7 +137,7 @@ curl --request (PUT/PATCH) \
 
 Enclose the JSON payload ( the `--data` command-line argument) in single quotes (`'`) instead of double quotes because it requires less escaping (strings in JSON must be delimited using double quotes).
 
-### Escaping a single quote in the body
+#### Escaping a single quote in the body
 
 The recommended way of escaping a single quote inside the body is the following (assuming the user will run the command in a bash-like terminal):
 
@@ -157,7 +157,7 @@ curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 }'
 ```
 
-### `POST` requests without a body
+#### `POST` requests without a body
 
 If you have a `POST` request without a body, add a `--request POST` argument explicitly to the cURL command.
 
@@ -167,11 +167,11 @@ curl --request POST \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-## Additional information
+### Additional information
 
 Code blocks with example requests that include a JSON body should use `bash` syntax, similarly to example requests without a body.
 
-## Full request example
+### Full request example
 
 ```bash
 curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
@@ -201,7 +201,7 @@ A response starts either with an object `({ ... })` or a list `([ ... ])`. The i
 + If there are IDs that were obtained using a previous command, or if their exact value is not relevant in the current context, use a placeholder (for example, `<RULE_ID>`) instead of the ID. The same placeholder name should correspond to the same value. Use different placeholder names for different ID values.
 + Response excerpts or snippets containing the most relevant parts of the response body should mention that they do not correspond to the entire response.
 
-## Full response example
+### Full response example
 
 ```json
 {
