@@ -18,22 +18,22 @@ The supported directives in Page Shield policies are the following:
 
 Directive         | API values | Dashboard values | Monitored
 ------------------|------------|------------------|----------------------------
-`script-src`      | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br>**unsafe inline**<br>**unsafe `eval()`**<br>(detected value)<br>(custom value) | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`connect-src`     | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br>(detected value)<br>(custom value) | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`default-src`     | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`style-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`img-src`         | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`font-src`        | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`object-src`      | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`media-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`frame-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`child-src`       | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`form-action`     | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`frame-ancestors` | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`base-uri`        | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`worker-src`      | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br>(custom value) |
-`manifest-src`    | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
-`prefetch-src`    | `'none'`<br>`'self'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>(custom value) | No
+`script-src`      | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>URI/Hostname/IP/Scheme | **none**<br>**self**<br>**unsafe inline**<br>**unsafe `eval()`**<br>Detected value<br>Custom value | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`connect-src`     | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br>Detected value<br>Custom value | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`default-src`     | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`style-src`       | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`img-src`         | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`font-src`        | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`object-src`      | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`media-src`       | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`frame-src`       | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`child-src`       | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`form-action`     | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`frame-ancestors` | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`base-uri`        | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`worker-src`      | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br>Custom value |
+`manifest-src`    | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
+`prefetch-src`    | `'none'`<br>`'self'`<br>URI/hostname/IP/scheme | **none**<br>**self**<br><strong>*</strong> (wildcard)<br>Custom value | No
 
 {{</table-wrap>}}
 
