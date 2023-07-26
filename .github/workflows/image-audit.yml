@@ -1,0 +1,50 @@
+name: Image audit
+
+# **What it does**: Regularly audits our documentation for unused image files.
+# **Why we have it**: Good hygiene + helps simplify future image audits.
+# **Who does it impact**: PCX team
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  image-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Find Unused Files
+        id: find-files
+        run: |
+          # Find all .png and .svg files, excluding those in the ./static directory
+          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -not -path "./static/*")
+          
+          # Check if files are referenced in any markdown file
+          UNUSED_FILES=""
+          for FILE in $FILES; do
+            FILENAME=$(basename "$FILE")
+            if ! grep -q -r -F --exclude-dir=.github "$FILENAME" --include="*.md" .; then
+              UNUSED_FILES+="$FILE\n"
+            fi
+          done
+          
+          # If there are unused files, output them
+          if [ -n "$UNUSED_FILES" ]; then
+            echo "unused_files=$UNUSED_FILES" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Issue if Unused Files Found
+        if: steps.find-files.outputs.unused_files
+        env:
+          UNUSED_FILES: ${{ steps.find-files.outputs.unused_files }}
+        run: |
+          # Create the issue and reference the unused_files variable
+          echo "The following files are not referenced in any markdown file:\n${UNUSED_FILES}" > unused_files.txt
+          curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
+            -d "{\"title\": \"Unused Image Files Found\", \"body\": \"$(cat unused_files.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"

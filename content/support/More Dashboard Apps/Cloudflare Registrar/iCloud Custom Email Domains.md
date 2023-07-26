@@ -66,7 +66,7 @@ If you are not receiving emails intended for your new email address, review your
 2.  Go to **DNS**.
 3.  Your domain should have records similar to the following:
 
-![Your iCloud custom email domain should have a specific set of records created by default.](/support/static/icloud-custom-domain-dns-example.png)
+![Your iCloud custom email domain should have a specific set of records created by default.](/images/support/icloud-custom-domain-dns-example.png)
 
 If your domain has records similar to those listed above and you are still experiencing problems with your new email address, contact [Apple Support](https://support.apple.com/).
 

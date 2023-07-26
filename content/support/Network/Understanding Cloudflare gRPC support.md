@@ -29,7 +29,7 @@ ___
 
 The following products have limited capabilities with gRPC requests:
 
--   **Argo Tunnel** currently does not support gRPC.
+-   **Cloudflare Tunnel** currently does not support gRPC.
 -   **Cloudflare Access** does not support gRPC traffic sent through Cloudflare’s reverse proxy. gRPC traffic will be ignored by Access if gRPC is enabled in Cloudflare. We recommend disabling gRPC for any sensitive origin servers protected by Access or enabling another means of authenticating gRPC traffic to your origin servers.
 
 ___

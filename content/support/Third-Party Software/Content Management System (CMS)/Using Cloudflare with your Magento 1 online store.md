@@ -12,7 +12,7 @@ The following steps will help you to activate Cloudflare for your Magento store
 
 1\. Login to your [Cloudflare account](https://www.cloudflare.com/a/login). If you don’t yet have a Cloudflare account, you can sign up [here.](https://web.archive.org/web/20160428154415/https://www.cloudflare.com/sign-up)
 
-2\. Add your domain and follow the steps for full configuration by using your domain registrar interface and pointing your Name Servers to the Cloudflare Name Servers provided.
+2\. Add your domain and follow the steps for full configuration by using your domain registrar interface and pointing your nameservers to the Cloudflare nameservers provided.
 
 We suggest you read the following article that explains the Cloudflare setup process in detail: [https://support.cloudflare.com/hc/en-us/articles/201720164-How-do-I-sign-up-for-Cloudflare-](https://web.archive.org/web/20160428154415/https://support.cloudflare.com/hc/en-us/articles/201720164-How-do-I-sign-up-for-CloudFlare-)
 

@@ -12,15 +12,15 @@ Cloudflare Zero Trust can integrate SAML with Okta as an identity provider.
 
 To set up SAML with Okta as your identity provider:
 
-1. On your Okta admin dashboard, navigate to **Applications** > **Applications**.
+1. On your Okta admin dashboard, go to **Applications** > **Applications**.
 
-2. Click **Create App Integration**.
+2. Select **Create App Integration**.
 
-3. In the pop-up dialog, select **SAML 2.0** and click **Next**.
+3. In the pop-up dialog, select **SAML 2.0** and then elect **Next**.
 
-4. Enter an app name and click **Next**.
+4. Enter an app name and select **Next**.
 
-   ![Entering your Zero Trust callback URL into Okta](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-1.png)
+   ![Entering your Zero Trust callback URL into Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-1.png)
 
 5. In the **Single sign on URL** and the **Audience URI (SP Entity ID)** fields, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
@@ -37,29 +37,29 @@ To set up SAML with Okta as your identity provider:
    - **Name**: Enter `groups`.
    - **Filter**: Select _Matches regex_ and enter `.*`.
 
-![Configuring attribute statements in Okta](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-2.png)
+![Configuring attribute statements in Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-2.png)
 
-8. Click **Next**.
+8. Select **Next**.
 
 9. Select **I’m an Okta customer adding an internal app** and check **This is an internal app that we have created**.
 
-![Configuring feedback options in Okta](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-3.png)
+![Configuring feedback options in Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-3.png)
 
-9. Click **Finish**.
+9. Select **Finish**.
 
-10. In the **Assignments** tab, click **Assign** and assign individuals or groups you want to grant access to.
+10. In the **Assignments** tab, select **Assign** and assign individuals or groups you want to grant access to.
 
-11. Click **Done**. The assigned individuals and groups will display in the **Assignments** tab.
+11. Select **Done**. The assigned individuals and groups will display in the **Assignments** tab.
 
-![Assigning individuals and groups to Okta application](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-4.png)
+![Assigning individuals and groups to Okta application](/images/cloudflare-one/identity/okta-saml/okta-saml-4.png)
 
-12. To retrieve the SAML provider information, navigate to the **Sign On** and click **View Setup Instructions**. A new page will open showing the **Identity Provider Single Sign-on URL**, **Identity Provider Issuer**, and **X.509 Certificate**. Save this information for configuring your Zero Trust settings.
+12. To retrieve the SAML provider information, go to the **Sign On** tab and select **View Setup Instructions**. A new page will open showing the **Identity Provider Single Sign-on URL**, **Identity Provider Issuer**, and **X.509 Certificate**. Save this information for configuring your Zero Trust settings.
 
-![Retrieving SAML provider information in Okta](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-5.png)
+![Retrieving SAML provider information in Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-5.png)
 
-13. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+13. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-14. Click **Add new** under **Login Methods**, and select _SAML_.
+14. Select **Add new** under **Login Methods**, and select _SAML_.
 
 15. Fill in the following information:
 
@@ -70,13 +70,13 @@ To set up SAML with Okta as your identity provider:
 
 16. (Recommended) Enable **Sign SAML authentication request**.
 
-17. (Recommended) Under **SAML attributes**, enter `email` and `name`. The `name` attribute is required if you want to use Okta groups.
+17. (Recommended) Under **SAML attributes**, add the `email` and `groups` attributes. The `groups` attribute is required if you want to create policies based on [Okta groups](/cloudflare-one/policies/gateway/identity-selectors/#okta-saml).
 
-![Adding optional SAML attributes in Zero Trust](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-6.png)
+![Adding optional SAML attributes in Zero Trust](/images/cloudflare-one/identity/okta-saml/okta-saml-6.png)
 
-18. Click **Save**.
+18. Select **Save**.
 
-To test that your connection is working, navigate to **Settings** > **Authentication** > **Login methods** and click **Test** next to Okta. A success response should return the configured SAML attributes.
+To test that your connection is working, go to **Settings** > **Authentication** > **Login methods** and select **Test** next to Okta. A success response should return the configured SAML attributes.
 
 {{<Aside type="warning">}}
 

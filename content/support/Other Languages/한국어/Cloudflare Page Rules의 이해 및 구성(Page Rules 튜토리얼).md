@@ -712,11 +712,11 @@ ___
 
 **근본 원인**: Page Rule의 문제로 인한 것일 수 있습니다. _전달 URL_ 규칙처럼 두 개의 와일드카드를 쓰는 Page Rule을 만들 때는 두 번째 와일드카드를 $2 자리표시자로 언급하는 경우가 있습니다. 다음 예를 참조하세요.
 
-![두 개의 와일드카드가 있는 Page Rule 구성 예. 전달 URL에 $2 자리 표시자가 포함되어 있는데 이는 일치하는 내용으로 대체됩니다 ](/support/static/page-rule-create.png)
+![두 개의 와일드카드가 있는 Page Rule 구성 예. 전달 URL에 $2 자리 표시자가 포함되어 있는데 이는 일치하는 내용으로 대체됩니다 ](/images/support/page-rule-create.png)
 
 동일한 규칙을 업데이트할 때는 **If the URL matches** 필드의 와일드카드 하나를 제거하고 저장하면 됩니다. 다음 예를 참조하세요.
 
-![전달 URL에 $2 자리 표시자가 포함되어 있으며 하나의 와일드 카드가 있는 잘못된 Page Rule. 이  ](/support/static/page-rule-update.png)
+![전달 URL에 $2 자리 표시자가 포함되어 있으며 하나의 와일드 카드가 있는 잘못된 Page Rule. 이  ](/images/support/page-rule-update.png)
 
 그렇게 하면 $2 자리표시자가 존재하지 않는 와일드카드를 참조하므로 URL이 해당 페이지 규칙을 트리거할 때 "_오류 500(내부 서버 오류)"_가 발생하게 됩니다.
 
@@ -767,7 +767,7 @@ Page Rule을 저장할 때, Cloudflare는 **URL이 일치하는 경우** 필드�
 
 ### Workers와 함께 Page Rules 사용하기
 
-현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/platform/workers-with-page-rules/)를 참조하시기 바랍니다.
+현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/configuration/workers-with-page-rules/)를 참조하시기 바랍니다.
 
 ___
 

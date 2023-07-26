@@ -6,10 +6,6 @@ title: Improving web security for content management systems like WordPress
 
 # Improving web security for content management systems like WordPress
 
-
-
-## Overview
-
 Content Management Systems make it easy to create, update, and manage content. However, they can also introduce vulnerabilities that may lead to server compromise and data theft.
 
 There are many Cloudflare features that can be used for preventing such attacks, but they can also disrupt normal administrative processes such as logging in or uploading images. With proper configuration, you can protect your site from attacks without losing important functionality.
@@ -26,7 +22,7 @@ The following should be considered an overview of some recommended security acti
 
 The [WAF Managed Rulesets](/waf/managed-rules/) are pre-configured rulesets that provide immediate protection against a variety of attacks, and are regularly updated. Many rules are turned on by default, but not all. It is recommended that you browse the Cloudflare Managed Ruleset to find any additional rules tagged for your content management system not enabled, and enable them:
 
-![Dashboard screenshot filtering for WordPress](/support/static/Wordpress-configure-deployment.png)
+![Dashboard screenshot filtering for WordPress](/images/support/Wordpress-configure-deployment.png)
 
 ### Managed Rulesets on the Free Plan
 
@@ -49,11 +45,11 @@ Using the principle of least privilege, you can run some test actions from the a
 
 After generating enough requests to have a good sample logged in your Firewall Events, observe the actions that were taken in the Managed rules section:
 
-![](/support/static/Screenshot_2022-12-23_at_16.40.29.png)
+![](/images/support/Screenshot_2022-12-23_at_16.40.29.png)
 
 Next, you can use this information to create a Skip Rule that excludes only the rules that prevent administrative actions:
 
-![](/support/static/Screenshot_2022-12-22_at_13.49.18.png)
+![](/images/support/Screenshot_2022-12-22_at_13.49.18.png)
 
 ### When incoming requests match…
 
@@ -72,7 +68,7 @@ Any of these fields can be spoofed, so this is not a security measure on its own
 
 Next, you want to use the information from your Firewall logs to select which rules to skip by [adding an exception](/waf/custom-rules/skip/). For WordPress, I’ve chosen the following:
 
-![](/support/static/Screenshot_2022-12-23_at_17.08.37.png)
+![](/images/support/Screenshot_2022-12-23_at_17.08.37.png)
 
 After this is complete, you will want to create a similar rule for any rulesets that prevent you from logging in. In my use case, I only needed to skip “OWASP Core Ruleset 949110.”
 
@@ -92,7 +88,7 @@ Now that you’ve elevated your security to protect the publicly accessible part
 
 After configuring a web application, users will be required to authenticate in some way before they can access the restricted content. The default method is through email multifactor authentication:
 
-![](/support/static/Screenshot_2022-12-22_at_14.39.21.png)
+![](/images/support/Screenshot_2022-12-22_at_14.39.21.png)
 
 ### Advanced Firewall Rules with mTLS
 

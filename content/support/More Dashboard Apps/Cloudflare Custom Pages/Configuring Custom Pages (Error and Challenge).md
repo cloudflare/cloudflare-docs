@@ -20,7 +20,7 @@ avoid breaking specific API endpoints and other web applications.
 Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard..
 
 {{<Aside type="note">}}
-Enable Origin Error Pages excludes 521 and 522 errors.
+Enable Origin Error Pages excludes errors 520 to 527.
 {{</Aside>}}
 
 ___
@@ -149,11 +149,13 @@ ___
 
 ## Troubleshoot common custom pages issues
 
-### IP/Country Block vs 1000 Class Errors pages
+### Error pages for blocked requests
 
-If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
+If you block countries or IP addresses with [IP Access Rules](/waf/tools/ip-access-rules/), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors** custom page.
+
+If you block countries or IP addresses with [WAF custom rules](/waf/custom-rules/), affected visitors will see your **WAF Block** custom page.
 
 ### 1xxx errors
 
@@ -175,9 +177,10 @@ Your custom error page cannot be blank and cannot exceed 1.43 MB. To avoid excee
 
 ___
 
-## Related Resources
+## Related resources
 
 -   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
--   [Configuring IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)
+-   [IP Access Rules](/waf/tools/ip-access-rules/)
+-   [Cloudflare Web Application Firewall (WAF)](/waf/)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
 -   [Collapsify](https://github.com/cloudflare/collapsify)

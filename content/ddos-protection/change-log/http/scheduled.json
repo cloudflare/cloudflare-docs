@@ -1,1 +1,1 @@
-[{"kind": "PLANNED", "rule_id": "...6fa59d23", "rule_ref": "GEN0007", "description": "HTTP requests that are very likely coming from bots.", "comments": "Allow the rule to trigger in more cases to catch more attacks.", "previous_action": "ddos_dynamic", "new_action": "ddos_dynamic", "announcement_date": "2023-06-06", "release_date": "2023-06-19"}]
+[]

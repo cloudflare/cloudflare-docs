@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 1
 meta:
   title: GraphQL Analytics
+updated: 2023-01-04
 ---
 
 # GraphQL Analytics

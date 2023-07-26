@@ -123,7 +123,7 @@ This will cause any token issued by the Broker to have a default expiration of 7
 
 * We strongly recommend setting a per-broker expiration configuration via the **expiration** (integer seconds) field, which will implicitly set an expiration timestamp for all credentials generated for that broker via the `exp` JWT claim.
 * Using short-lived credentials – for example, 7 to 30 days – with an automatic rotation policy can reduce the risk of credential compromise and the need to actively revoke credentials after-the-fact.
-* You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/platform/triggers/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
+* You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/configuration/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
 
 ## Authorization and Access Control
 

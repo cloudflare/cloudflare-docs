@@ -27,7 +27,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | 1        | [Keyless SSL](/ssl/keyless-ssl/)                                 |
     | 2        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
     | 3        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)     |
-    | 4        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/) |
+    | 4        | [Custom Hostname (Cloudflare for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/) |
     | 5        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
     | 6        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/) |
     | 7        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
@@ -77,7 +77,7 @@ If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudf
 
 #### Scenario 1
 
-Customer1 uses Cloudflare for authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/) `shop.*example.com*`. Afterward, traffic starts routing over Customer2’s zone:
+Customer1 uses Cloudflare for authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) `shop.*example.com*`. Afterward, traffic starts routing over Customer2’s zone:
 
 - If Customer1 wants to regain control of their zone, Customer 1 contacts Customer2 and requests them to delete the Custom Hostname record. Another possibility is to stop proxying (gray-cloud) the record.
 - If Customer1 is already proxying a new Custom Hostname for `www.example.com`, Customer2 creates and verifies `www.example.com` so traffic starts routing over Customer2’s zone. Since this new Custom Hostname is the last one validated, the new custom hostname on Customer1’s zone enters a _moved_ status.

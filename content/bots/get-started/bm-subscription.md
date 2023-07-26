@@ -15,7 +15,7 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 This Enterprise product provides the most flexibility to customers by:
 
 - Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-- Allowing customers to take action on this score with firewall rules or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
+- Allowing customers to take action on this score with [custom rules](/waf/custom-rules/) or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
 - Allowing customers to view this score in Bot Analytics or Logs.
 
 ---
@@ -71,9 +71,9 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 {{</Aside>}}
 
-### Step 3 — Create a firewall rule for automated traffic
+### Step 3 — Create a custom rule for automated traffic
 
-Based on your analysis of **automated** traffic, create a [firewall rule](/firewall/cf-firewall-rules/) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
+Based on your analysis of **automated** traffic, create a [custom rule](/waf/custom-rules/) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
 {{<example>}}
 
@@ -93,21 +93,21 @@ Based on your analysis of **automated** traffic, create a [firewall rule](/firew
 </table>
 {{</example>}}
 
-### Step 4 — Create additional firewall rules
+### Step 4 — Create additional custom rules
 
-Create firewall rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds and other considerations, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots/) or [Bot Management variables](/bots/reference/bot-management-variables/).
+Create custom rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds and other considerations, refer to the [WAF documentation](/waf/custom-rules/use-cases/challenge-bad-bots/) or [Bot Management variables](/bots/reference/bot-management-variables/).
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 
 - If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
 - If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
-- If your firewall rule has a [**Challenge Solve Rate (CSR)**](/bots/concepts/challenge-solve-rate/) higher than 3%, consider lowering your challenge threshold.
+- If your custom rule has a [**Challenge Solve Rate (CSR)**](/bots/concepts/challenge-solve-rate/) higher than 3%, consider lowering your challenge threshold.
 
 The best approach is to start small and slowly increase your threshold to prevent widespread issues.
 
 ### Step 5 — Continue monitoring domain traffic
 
-You can adjust your firewall rules at any point. Set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/security-events/) to see if your rules need additional tuning.
+You can adjust your custom rules at any point. Set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/security-events/) to see if your rules need additional tuning.
 
 ---
 
@@ -117,7 +117,7 @@ You can adjust your firewall rules at any point. Set aside time to review [Bot A
 
 {{<render file="_static-resources-bm.md">}}
 
-For more details, see [Static resource protection](/bots/reference/static-resources/).
+For more details, refer to [Static resource protection](/bots/reference/static-resources/).
 
 ### Verified bots
 
@@ -125,7 +125,7 @@ Some automated traffic is good! To allow good bots like Google or Bing, use the 
 
 ### Mobile traffic
 
-To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your firewall rules.
+To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your custom rules.
 
 ### `Skip` action
 

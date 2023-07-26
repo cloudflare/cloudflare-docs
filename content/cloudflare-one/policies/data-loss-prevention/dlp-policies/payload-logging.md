@@ -26,7 +26,7 @@ The matching private key is required to view logs. If you lose your private key,
 
 ## 3. Enable payload logging for a DLP policy
 
-You can enable payload logging for any Allow or Block HTTP policy that uses the [DLP Profile](/cloudflare-one/policies/filtering/http-policies/#dlp-profile) selector.
+You can enable payload logging for any Allow or Block HTTP policy that uses the [DLP Profile](/cloudflare-one/policies/gateway/http-policies/#dlp-profile) selector.
 
 1. Go to **Gateway** > **Firewall Policies** > **HTTP**.
 
@@ -42,7 +42,7 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 
 1. Go to **Logs** > **Gateway** > **HTTP**.
 
-2. Navigate to the DLP log you are interested in reviewing and expand the row.
+2. Go to the DLP log you are interested in reviewing and expand the row.
 
 3. Select **Decrypt Payload Log**.
 

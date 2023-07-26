@@ -16,7 +16,7 @@ Most of the parameters listed below are also configurable in Zero Trust under **
 
 ## Required for full Cloudflare Zero Trust features
 
-For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features which depend on the team name are [HTTP policies](/cloudflare-one/policies/filtering/http-policies/), [Browser Isolation](/cloudflare-one/policies/browser-isolation/), and [device posture](/cloudflare-one/identity/devices/).
+For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features which depend on the team name are [HTTP policies](/cloudflare-one/policies/gateway/http-policies/), [Browser Isolation](/cloudflare-one/policies/browser-isolation/), and [device posture](/cloudflare-one/identity/devices/).
 
 ### `organization`
 
@@ -85,7 +85,7 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `auto_connect`
 
-If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
+If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
 
 **Value Type:** `integer`
 

@@ -8,7 +8,7 @@ meta:
 
 # Cloudflare Tunnel setup
 
-Through an integration with [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), you can send traffic to a key server through a secure channel and avoid exposing your key server to the public Internet.
+Through an integration with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), you can send traffic to a key server through a secure channel and avoid exposing your key server to the public Internet.
 
 ---
 

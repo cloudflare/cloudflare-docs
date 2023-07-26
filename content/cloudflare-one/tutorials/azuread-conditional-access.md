@@ -27,7 +27,7 @@ We suggest naming the IdP integration after the target application, for example 
 2. Go to **Branding & properties**.
 
 3. In **Home page URL**, enter the hostname of the protected application.
-   ![Customer Management portal fields and home page URL](/cloudflare-one/static/zero-trust-security/azuread-access-policies/homepage-url.png)
+   ![Customer Management portal fields and home page URL](/images/cloudflare-one/zero-trust-security/azuread-access-policies/homepage-url.png)
 
 4. Return to the **Azure Active Directory** dashboard and go to **Enterprise applications**.
 
@@ -37,7 +37,7 @@ We suggest naming the IdP integration after the target application, for example 
 
 7. To show the application in the Microsoft App Launcher, change **Visible to users** to **Yes**. The application will appear when the user goes to [**My Apps**](https://myapplications.microsoft.com/).
 
-8. Next, navigate to **Conditional Access** and [build a new policy](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-conditional-access-policies).
+8. Next, go to **Conditional Access** and [build a new policy](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-conditional-access-policies).
 
 9. Create and enable any additional policies for your application.
 
@@ -53,7 +53,7 @@ To enforce your Conditional Access policies on a Cloudflare Access application:
 
 4. For **Identity providers**, select only the IdP integration that was configured for this application. This limits which IdPs are shown to the user.
 
-![List of identity providers highlighting the Azure AD option](/cloudflare-one/static/zero-trust-security/azuread-access-policies/access-app-idp.png)
+![List of identity providers highlighting the Azure AD option](/images/cloudflare-one/zero-trust-security/azuread-access-policies/access-app-idp.png)
 
 5. Finally, create an [Access policy](/cloudflare-one/policies/access/) to require logins from the selected IdP. For example:
 

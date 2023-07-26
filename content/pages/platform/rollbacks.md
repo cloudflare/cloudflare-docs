@@ -11,7 +11,7 @@ Any production deployment that has been successfully built is a valid rollback t
 
 In order to perform a rollback, go to **Deployments** in your Pages project. Browse the **All deployments** list and select the three dotted actions menu for the desired target. Select **Rollback to this deployment** for a confirmation window to appear. When confirmed, your project's production deployment will change instantly.
 
-![Deployments for your Pages project that can be used for rollbacks](/pages/platform/media/rollbacks.png)
+![Deployments for your Pages project that can be used for rollbacks](/images/pages/platform/rollbacks.png)
 
 ## Related resources
 

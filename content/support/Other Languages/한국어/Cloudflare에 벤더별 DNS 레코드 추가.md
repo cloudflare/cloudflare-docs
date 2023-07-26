@@ -169,7 +169,7 @@ _CNAME 레코드_의 예는 다음과 같습니다.
 6.  'verify.squarespace.com' CNAME 레코드에 아래와 같이 _DNS 전용_이라고 표시됐는지 확인하세요.
 
 ![Squarespace에서 확보한 cloudflarecontent.com DNS 레코드의 스크린샷
-](/support/static/dns_ui_update_squarespace_records.png)
+](/images/support/dns_ui_update_squarespace_records.png)
 
 올바로 설정되면, Squarespace DNS 설정 페이지에 '설정에 문제가 있습니다'가 나타납니다. **이것은 예상된 행동입니다**. 
 

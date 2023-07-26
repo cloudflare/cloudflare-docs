@@ -175,7 +175,7 @@ _POST_ 또는 _GET_. 아무 것도 지정하지 않으면 둘 다 일치되고 �
 
 -   **차단** **\-** 임계값을 초과하면, Cloudflare는 HTTP 429 오류를 냅니다.
 -   **레거시 캡차** **\-** 방문자는 CAPTCHA 인증 질문을 통과해야 합니다. 통과한 경우, Cloudflare는 요청을 허락합니다.
--   **JS 인증 질문** **\-** 방문자가 Cloudflare Javascript 인증 질문을 통과해야 합니다. 통과한 경우, Cloudflare는 요청을 허락합니다.
+-   **JS 인증 질문** **\-** 방문자가 Cloudflare JavaScript 인증 질문을 통과해야 합니다. 통과한 경우, Cloudflare는 요청을 허락합니다.
 -   **로그 -** 요청이 [Cloudflare Logs](https://support.cloudflare.com/hc/articles/216672448)에 로깅됩니다.. 이를 통해 실제에 적용하기 전에 규칙을 테스트할 수 있습니다.
 
 #### **금지 기간**
@@ -216,7 +216,7 @@ ___
 
 4\. **속도 제한 규칙 작성**을 클릭합니다. 새로운 규칙의 세부 사항을 지정할 대화 상자가 열립니다.
 
-![예시 규칙 구성이 표시된 속도 제한 규칙 생성 팝업 대화 상자. 이 규칙은 한 시간 동안 분당 요청 수가 150건이 넘는 IP 주소의 요청을 차단합니다.](/support/static/previous-rate-limiting-create-rule.png)
+![예시 규칙 구성이 표시된 속도 제한 규칙 생성 팝업 대화 상자. 이 규칙은 한 시간 동안 분당 요청 수가 150건이 넘는 IP 주소의 요청을 차단합니다.](/images/support/previous-rate-limiting-create-rule.png)
 
 5\. 서술적인 **규칙 이름**을 입력합니다.
 
@@ -251,7 +251,7 @@ ___
 
 1\. **고급 기준**을 확장합니다.
 
-![속도 제한 규칙의 고급 기준 구성 시 사용할 수 있는 필드.](/support/static/previous-rate-limiting-advanced-criteria.png)
+![속도 제한 규칙의 고급 기준 구성 시 사용할 수 있는 필드.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
 2\. **메서드** 드롭 다운에서 값을 선택합니다. 기본값은 _ANY_로 모든 HTTP 메서드와 일치합니다.
 
@@ -277,7 +277,7 @@ ___
 
 1\. **고급 응답**을 확장합니다.
 
-![속도 제한 규칙의 고급 응답 구성 시 사용할 수 있는 필드.](/support/static/previous-rate-limiting-advanced-response.png)
+![속도 제한 규칙의 고급 응답 구성 시 사용할 수 있는 필드.](/images/support/previous-rate-limiting-advanced-response.png)
 
 2\. 기본값 이외에 _사용자 지정 JSON_ 또는 _사용자 지정 택스트_를 **응답 유형** 형식으로 선택합니다.than the default: .
 
@@ -326,7 +326,7 @@ ___
 
 2\. **URL에 대한 우회 규칙**에 속도 제한 규칙의 예외를 적용할 URL을 입력합니다.각 URL을 하나의 행으로 입력해야 합니다. URL에 지정된 HTTP 또는 HTTPS는 규칙이 저장될 때 자동으로 삭제되며 대신 해당 규칙은 HTTP와 HTTPS 둘 다에 적용됩니다.
 
-![속도 제한 규칙을 우회한 2개의 URL 구성(행당 하나씩)](/support/static/previous-rate-limiting-bypass.png)
+![속도 제한 규칙을 우회한 2개의 URL 구성(행당 하나씩)](/images/support/previous-rate-limiting-bypass.png)
 
 3\. (선택 사항) 요금제에 따라 추가적인 속도 제한 기능을 구성할 수 있습니다.
 

@@ -20,7 +20,9 @@ There are two different ways to submit a phish sample:
     {{<directory-listing>}}
 
 - **Team submission**: To be used when IT administrators or security teams submit to Area 1. Submit original phish samples as an attachment in EML format to the appropriate [Team Submissions address](https://horizon.area1security.com/support/service-addresses/). For example, if you think an email should be marked as spoof, send it to the `SPOOF` address listed in Team Submissions. <br />
-Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future. 
+Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future.
+
+After submitting a phish sample to the team address, you will receive an update from `status@submission.area1reports.com` regarding the investigation and the verdict. The feedback is directly provided to customers by our threat research team, bypassing the support channel, to expedite the process.
 
 ## What happens after a phish submission
 
@@ -28,7 +30,7 @@ After you or your users submit a phish sample, Area 1 adds that sample directly 
 
 ### Phish submission feedback
 
-Use the following keywords to search for submitted phish samples on Area 1 portal detection search:
+Use the following keywords to search for submitted phish samples on the Area 1 dashboard:
 
 - `phish_submission`
 - `user_malicious_submission`

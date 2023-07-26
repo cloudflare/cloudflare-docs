@@ -61,7 +61,7 @@ You can customize a variety of options for your waiting rooms.
         <code>host</code>
       </td>
       <td>Yes</td>
-      <td>Host name for which the waiting room will be applied (no wildcards).</td>
+      <td>Hostname for which the waiting room will be applied (no wildcards).</td>
       <td>
         Do not include <code>http://</code> or <code>https://</code>.
       </td>
@@ -137,14 +137,36 @@ You can customize a variety of options for your waiting rooms.
       </td>
       <td></td>
     </tr>
+        <tr>
+      <td>Additional Hostnames and Paths</td>
+      <td>
+        <code>additional_routes</code>
+      </td>
+      <td>No</td>
+      <td>
+        Add additional hostnames and/or paths to your waiting room coverage.
+      </td>
+      <td>
+        API only. Additional hostnames must be within the same zone. Hostname and path combinations must be unique per waiting room.
+      </td>
+      <td></td>
+    </tr>
+        <tr>
+      <td>Custom Cookie Suffix</td>
+      <td>
+        <code>cookie_suffix</code>
+      </td>
+      <td>Required when using additional_routes.</td>
+      <td>
+        Customize the suffix of your waiting room cookie. Suffix will be added to <code>_cfwaitingroom</code>.
+      </td>
+      <td>
+        API only. Ensure your cookie name is compliant. Do not change this often.
+      </td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
-
-{{<Aside type="note" header="Note">}}
-
-You can configure only one waiting room per `host/path` combination.
-
-{{</Aside>}}
 
 ## Additional details
 

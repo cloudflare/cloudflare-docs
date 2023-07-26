@@ -16,7 +16,7 @@ HTTP validation involves adding a DCV token to your customer's origin.
 
 If your custom hostname does not include a wildcard, Cloudflare will always and automatically attempt to complete DCV through [HTTP validation](#http-automatic), even if you have selected **TXT** for your validation method.
 
-This HTTP validation should succeed as long as your customer is pointing to your custom hostname and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/reference/troubleshooting/#certificate-authority-authorization-caa-records) blocking your chosen certificate authority.
+This HTTP validation should succeed as long as your customer is pointing to your custom hostname and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#certificate-authority-authorization-caa-records) blocking your chosen certificate authority.
 
 ## Wildcard custom hostnames
  
@@ -46,7 +46,7 @@ Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/s
  
 Cloudflare is able to serve a random token from our edge due to the fact that `site.example.com` has a CNAME in place to `$CNAME_TARGET`, which ultimately resolves to Cloudflare IPs. If your customer has not yet added the CNAME, the CA will not be able to retrieve the token and the process will not complete.
  
-We will attempt to retry this validation check for a finite period before timing out. Refer to [Validation Retry Schedule](/ssl/reference/validation-backoff-schedule/) for more details.
+We will attempt to retry this validation check for a finite period before timing out. Refer to [Validation Retry Schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) for more details.
  
 {{</Aside>}}
  

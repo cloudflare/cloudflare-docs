@@ -36,11 +36,11 @@ Currently, **Managed Challenge** actions are available in the following security
 
 - [IP Access Rules](/waf/tools/ip-access-rules/)
 - [User Agent Blocking](/waf/tools/user-agent-blocking/)
-- [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128)
+- [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)
 - [Custom rules](/waf/custom-rules/)
 - [WAF Managed Rules](/waf/managed-rules/)
 - [Rate limiting rules](/waf/rate-limiting-rules/)
-- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](https://support.cloudflare.com/hc/articles/360035387431#managed-challenge).
+- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](/bots/troubleshooting/#why-am-i-seeing-a-managed-challenge-action-for-firewall-rules).
 - [Firewall rules](/firewall/)
 - [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
 
@@ -75,6 +75,10 @@ If your visitors are using an up-to-date version of a major browser — such as 
 Challenges are not supported by Microsoft Internet Explorer.
 
 If your visitors encounter issues using a major browser besides Internet Explorer, they should upgrade their browser.
+
+### Mobile browsers
+
+Challenges are not supported for desktop mode on mobile browsers.
 
 ---
 

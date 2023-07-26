@@ -172,17 +172,17 @@ Podrías reenviar:
 a:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/support/static/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/images/support/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 Esta regla coincidiría con:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/support/static/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/images/support/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 que termina siendo reenviado a:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/support/static/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/images/support/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 Para usar un carácter literal _$_ en la URL de reenvío, sortéalo añadiendo una barra invertida (\\) delante: _\\$_.
 
@@ -735,11 +735,11 @@ ___
 
 **Causa principal**: puede deberse a un problema de configuración en una regla de página. Cuando se crea una regla de página que utiliza dos comodines, como una regla de _Reenvío de URL_, es posible crear una regla que mencione el segundo comodín con el marcador de posición $2. Véase el ejemplo siguiente:
 
-![Ejemplo de configuración de regla de página con dos comodines. La URL de reenvío contiene un marcador de posición $2, que se sustituirá por el contenido que coincida con el segundo ](/support/static/page-rule-create.png)
+![Ejemplo de configuración de regla de página con dos comodines. La URL de reenvío contiene un marcador de posición $2, que se sustituirá por el contenido que coincida con el segundo ](/images/support/page-rule-create.png)
 
 Al actualizar la misma regla, puedes eliminar uno de los comodines en el campo **Si la URL coincide** y guardarlo. Véase el ejemplo siguiente:
 
-![Configuración incorrecta de la regla de página con un solo comodín, pero que sigue utilizando el marcador de posición $2 en la URL de reenvío. Esta configuración hace que ](/support/static/page-rule-update.png)
+![Configuración incorrecta de la regla de página con un solo comodín, pero que sigue utilizando el marcador de posición $2 en la URL de reenvío. Esta configuración hace que ](/images/support/page-rule-update.png)
 
 Si lo haces, el marcador de posición $2 mencionará a un comodín que ya no existe y, por lo tanto, aparecerá un "_Error 500 (error interno del servidor)"_ cuando una URL active la regla de la página.
 
@@ -790,7 +790,7 @@ Si especificas un puerto en el campo **si la URL coincide** de una regla de pág
 
 ### Uso de Page Rules con Workers
 
-Si la URL de la solicitud actual coincide tanto con una regla de página como con una [ruta personalizada de Workers](/workers/platform/routes), no se aplicarán algunos ajustes de Page Rules. Si necesitas más información sobre el uso de Page Rules con Workers, consulta [Workers: Page Rules](/workers/platform/workers-with-page-rules/) en la documentación para desarrolladores.
+Si la URL de la solicitud actual coincide tanto con una regla de página como con una [ruta personalizada de Workers](/workers/platform/routes), no se aplicarán algunos ajustes de Page Rules. Si necesitas más información sobre el uso de Page Rules con Workers, consulta [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) en la documentación para desarrolladores.
 
 ___
 

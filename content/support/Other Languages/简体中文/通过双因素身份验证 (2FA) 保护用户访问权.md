@@ -32,7 +32,7 @@ ___
 
 4.向下滚动到 **Two-Factor Authentication** 部分，然后单击以将其切换为 _On_ 。
 
-![2FA_enable.png](/support/static/2FA_enable.png)
+![2FA_enable.png](/images/support/2FA_enable.png)
 
 ___
 
@@ -51,13 +51,13 @@ ___
 
 -   如果您无法扫描二维码，请单击 **Can't scan QR code, Follow alternative steps** 手动配置身份验证应用。
 
-![2FA_scan_QR_code.png](/support/static/2FA_scan_QR_code.png)
+![2FA_scan_QR_code.png](/images/support/2FA_scan_QR_code.png)
 
 3.输入密码，然后再次单击 **Next** 以查看您的备份查看代码。
 
 4.您看到备份代码后，我们建议您将其保存在安全的位置。您可以单击 **Download** 、 **Print** 或 **Copy** 保存代码，然后单击 **Next** 。
 
-![2FA_review_and_backup_codes_v2.png](/support/static/2FA_review_and_backup_codes_v2.png)
+![2FA_review_and_backup_codes_v2.png](/images/support/2FA_review_and_backup_codes_v2.png)
 
 您可以在以下屏幕上或随时在 **Authentication** 选项卡中重新生成备份代码。 
 
@@ -65,7 +65,7 @@ ___
 
 6.您还可以选择请求一组新的备份代码。单击 **regenerate them now** 以保存一组新的双因素备份代码。
 
-![2FA_configuration_complete.png](/support/static/2FA_configuration_complete.png)
+![2FA_configuration_complete.png](/images/support/2FA_configuration_complete.png)
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 5.输入您的密码、身份验证应用代码或备份代码，然后单击 **Disable** 。
 
-![2FA_disable.png](/support/static/2FA_disable.png)
+![2FA_disable.png](/images/support/2FA_disable.png)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 3.在登录屏幕中输入备份代码，然后单击 **Log in**。
 
-![2FA_backup_code_login_annontated.png](/support/static/2FA_backup_code_login_annontated.png)
+![2FA_backup_code_login_annontated.png](/images/support/2FA_backup_code_login_annontated.png)
 
 4.备份代码一经使用，即刻失效。
 

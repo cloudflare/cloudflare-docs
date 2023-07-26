@@ -1,0 +1,29 @@
+name: Label PRs
+
+# **What it does**: Uses the files to label PRs with updated doc areas && size estimates.
+# **Why we have it**: Easier scanning of repo PRs && backend reporting on our team's work.
+# **Who does it impact**: PCX team
+
+on: [pull_request_target]
+
+jobs:
+  
+  label_products:
+    name: Label products
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/label-products
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    continue-on-error: true
+
+  label_size:
+    name: Label size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/label-size
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    continue-on-error: true

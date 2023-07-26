@@ -19,13 +19,13 @@ You may need to adjust the behavior of specific rules in case of false positives
 
 Adjust the behavior of the rules in the managed ruleset by modifying the following parameters:
 
-*   The performed **action** when an attack is detected
-*   The **sensitivity level** of attack detection mechanisms
+* The performed **action** when an attack is detected
+* The **sensitivity level** of attack detection mechanisms
 
 To adjust rule behavior, do one of the following:
 
-*   [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
-*   [Configure Network-layer DDoS Attack Protection managed ruleset overrides via API](/ddos-protection/managed-rulesets/network/configure-api/).
+* [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
+* [Configure Network-layer DDoS Attack Protection managed ruleset overrides via API](/ddos-protection/managed-rulesets/network/configure-api/).
 
 You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 

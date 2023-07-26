@@ -32,7 +32,7 @@ Before removing your payment method from file, you must cancel all Cloudflare pa
 
 {{<Aside type="warning">}}
 
-If you currently subscribe to any [add-on services](https://support.cloudflare.com/hc/articles/115004555148), Cloudflare must always have a payment method on file. If you need to remove a payment method, then you must enter a new one to replace it. Otherwise, you will see an error.
+If you currently subscribe to any [add-on services](/support/account-management-billing/billing-add-on-service/), Cloudflare must always have a payment method on file. If you need to remove a payment method, then you must enter a new one to replace it. Otherwise, you will see an error.
 
 You also cannot delete your payment method if a payment fails or if there is an outstanding balance. Until we process payment, you can only add or edit your payment method.
 
@@ -66,11 +66,11 @@ If paying by credit card:
 
 7. Review the suggested address in the pop-up window. If the information is correct, select **Confirm**. 
 
-If paying by Paypal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
+If paying by PayPal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
 
 ## Update billing email address
 
-Your billing email address is particularly important if you have [opted into email invoices](/fundamentals/account-and-billing/account-setup/create-billing-profile/#step-4---opt-in-to-email-invoices).
+Your billing email address is particularly important if you have [opted into email invoices](/fundamentals/account-and-billing/account-setup/create-billing-profile/#enable-email-invoices).
 
 To update your billing email address:
 
