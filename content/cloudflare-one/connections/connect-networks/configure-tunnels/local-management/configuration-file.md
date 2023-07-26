@@ -143,6 +143,28 @@ ingress:
   - service: http_status:404
 ```
 
+### Validate ingress rules
+
+To validate the ingress rules in your configuration file, run:
+
+```sh
+$ cloudflared tunnel ingress validate
+```
+
+This will ensure that the set of ingress rules specified in your config file is valid.
+
+### Test ingress rules
+
+To verify that `cloudflared` will proxy the right traffic to the right local service, use `cloudflared tunnel ingress rule`. This checks a URL against every rule, from first to last, and shows the first rule that matches. For example:
+
+```sh
+$ cloudflared tunnel ingress rule https://foo.example.com
+Using rules from /usr/local/etc/cloudflared/config.yml
+Matched rule #3
+	hostname: *.example.com
+	service: https://localhost:8000
+```
+
 ## Update a configuration file
 
 When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/) to propagate the new configuration with minimal downtime.

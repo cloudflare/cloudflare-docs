@@ -1,5 +1,5 @@
 ---
-title: Remotely-managed (dashboard) tunnels
+title: Remotely-managed (dashboard) tunnel
 pcx_content_type: how-to
 weight: 1
 layout: single

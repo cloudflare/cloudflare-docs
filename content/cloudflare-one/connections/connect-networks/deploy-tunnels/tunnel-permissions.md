@@ -19,7 +19,7 @@ Account members with Cloudflare Access and DNS [permissions](/cloudflare-one/clo
 Two files control permissions for a locally-managed tunnel:
 
 - **An account certificate** (`cert.pem`) is issued for a Cloudflare account when you login to `cloudflared`.  Make sure you are intentional about the locations and machines you store this certificate on, as this certificate allows users to create, delete, and manage all tunnels for the account.
-- **A tunnel credentials filee** (`<TUNNEL-UUID>.json`) is issued for a tunnel when you create the tunnel. The credentials file only allows the user to run that specific tunnel, and do nothing else. Hence, as an admin, you can share tunnel credentials with users who will run the tunnel.
+- **A tunnel credentials file** (`<TUNNEL-UUID>.json`) is issued for a tunnel when you create the tunnel. The credentials file only allows the user to run that specific tunnel, and do nothing else. Hence, as an admin, you can share tunnel credentials with users who will run the tunnel.
 
 Refer to the table below for a comparison between the two files and the purposes for which they are intended.
 
