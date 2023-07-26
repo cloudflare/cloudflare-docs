@@ -14,11 +14,11 @@ meta:
 
 ## Disable Version Management
 
-If you disable Zone Versioning, all your zone settings will revert to those in your [Version Zero](/version-management/about/#versions). Confirm that these settings are accurate before proceeding.
-
 To disable Zone Versioning:
 
-1. Send a `GET` to the `/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_select_configuration/entrypoint` endpoint.
+1. [Deploy](/version-management/how-to/environments/#change-environment-version) **Version Zero** to your **Production** environment. When you disable Zone Versioning, all your zone settings will revert to those in your Version Zero, so you should validate these setting are correct before proceeding.
+
+2. Send a `GET` to the `/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_select_configuration/entrypoint` endpoint.
 
     ```sh
     curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_select_configuration/entrypoint' \
@@ -31,9 +31,9 @@ To disable Zone Versioning:
     - The top-level ruleset `id`.
     - The rule `id` of every rule that has the zone's name as the zone field in the `expression` property.
 
-2. Using the `id` of those rules, send [`DELETE` requests](/api/operations/deleteAccountRulesetRule) for every rule in the ruleset.
+3. Using the `id` of those rules, send [`DELETE` requests](/api/operations/deleteAccountRulesetRule) for every rule in the ruleset.
 
-3. Then, send a `GET` request to find all HTTP applications (or versions of your zone).
+4. Then, send a `GET` request to find all HTTP applications (or versions of your zone).
 
     ```sh
     curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/http_applications" \
@@ -43,7 +43,7 @@ To disable Zone Versioning:
 
     Save the `id` of each HTTP application.
 
-4. Using the `id` of those HTTP applications, send [`DELETE` requests](/api/operations/deleteAccountRulesetRule) for application.
+5. Using the `id` of those HTTP applications, send [`DELETE` requests](/api/operations/deleteAccountRulesetRule) for application.
 
     ```sh
     curl --request DELETE "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/http_applications/<HTTP_APPLICATION_ID>" \
