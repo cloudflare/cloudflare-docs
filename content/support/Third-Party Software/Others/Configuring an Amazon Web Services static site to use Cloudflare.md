@@ -41,7 +41,7 @@ To create and configure your subdomain S3 bucket, follow these instructions from
 
 ### Task 2 - Set up an S3 bucket for a apex domain
 
-After you've set up your subdomain bucket, you can create and configure your root domain bucket. Follow these instructions from Amazon:
+After you've set up your subdomain bucket, you can create and configure your apex domain bucket. Follow these instructions from Amazon:
 
 1.  Use the AWS management console to [Create an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-bucket.html). For the **Bucket name**, use the domain URL without the `https://` part; for example, `example.com`.
 2.  Next, you need to redirect requests from this bucket's URL to the subdomain bucket URL you created. Follow the steps in [](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/static-website-hosting.html)[](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/redirect-website-requests.html)[Redirect Requests to an S3 Bucket Hosted Website to Another Host](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/redirect-website-requests.html). For **Target Bucket or Domain**, enter the same bucket name that you used for the subdomain bucket in Task 1; for example, `www.example.com`.
