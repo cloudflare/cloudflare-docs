@@ -169,7 +169,7 @@ curl --request POST \
 
 ## Additional information
 
-Code blocks with example requests that include a JSON body should use `bash` syntax, just like example requests without a body.
+Code blocks with example requests that include a JSON body should use `bash` syntax, similarly to example requests without a body.
 
 ## Full request example
 
