@@ -21,8 +21,6 @@ weight: 3
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
 
-Currently, mTLS does not work with HTTP/3 traffic.
-
 ![mTLS handshake diagram](/images/cloudflare-one/identity/devices/mtls.png)
 
 ## Add mTLS authentication to your Access configuration
@@ -245,3 +243,9 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
 You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be found on the [Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template).
 
 {{<render file="_forward-client-certificate.md" productFolder="ssl">}}
+
+## Known limitations
+
+mTLS does not currently work for:
+- HTTP/3 traffic
+- Cloudflare Pages site served on a [custom domain](/pages/platform/custom-domains/)
