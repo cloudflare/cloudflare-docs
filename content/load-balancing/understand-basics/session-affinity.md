@@ -50,7 +50,7 @@ If you enable Session Affinity, choose one of the following options:
 
 - **By Cloudflare cookie only**: Sets a `cflib` cookie to track the associated origin web server.
 - **By Cloudflare cookie and Client IP fallback**: Sets a `cflib` cookie, but also uses the client IP address when no session affinity cookie is provided.
-- **By HTTP header**
+- **By HTTP header**.
 
 {{<Aside type="warning" header="Important">}}
 
