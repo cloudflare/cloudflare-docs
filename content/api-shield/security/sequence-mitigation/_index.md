@@ -6,7 +6,7 @@ weight: 4
 
 # Sequence Mitigation
 
-Sequence Mitigation allows you to enforce request patterns for authenticated clients communicating with their API. This feature utilizes the same underlying system that powers Sequence Analytics.
+Sequence Mitigation allows you to enforce request patterns for authenticated clients communicating with your API. This feature utilizes the same underlying system that powers Sequence Analytics.
 
 ## Limitations
 
