@@ -1,6 +1,6 @@
 ---
 title: Local development
-weight: 6
+weight: 7
 pcx_content_type: concept
 ---
 

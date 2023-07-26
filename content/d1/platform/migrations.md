@@ -17,6 +17,13 @@ Currently, the migrations system aims to be simple yet effective. With the curre
 
 Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run.
 
+## Applying migrations
+
+When running a migration in D1, ...
+
+* Foreign keys
+* ...
+
 ## Wrangler customizations
 
 By default, migrations are created in the `migrations/` folder in your Worker project directory. Creating migrations will keep a record of applied migrations in the `d1_migrations` table found in your database.

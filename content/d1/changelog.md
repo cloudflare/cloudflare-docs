@@ -7,6 +7,16 @@ rss: file
 
 # Changelog
 
+## 2023-07-30
+
+### Foreign key enforcement
+
+Databases using D1's new experimental backend now have [foreign key constraints](/d1/learning/foreign-keys/) enforced by default. Foreign key constraints allow you to enforce relationships across tables: for example, creating a strict binding between a `user_id` in a `users` table and the `user_id` in an `orders` table, so that no order can be created against a user that does not exist.
+
+Foreign key constraints can be relaxed during a [migration](/d1/platform/migrations/) by setting `PRAGMA defer_foreign_keys = on` within a migration or [batch query](/d1/platform/client-api/#batch-statements), which can be useful when making schema changes.
+
+Read more about the experimental back end in the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to-11/).
+
 ## 2023-06-16
 
 ### Generated columns documentation
