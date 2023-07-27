@@ -8,6 +8,16 @@ pcx_content_type: concept
 
 D1 has built-in support for creating and restoring backups of your databases, including support for scheduled automatic backups and manual backup management.
 
+{{<Aside type="warning" header="Time Travel">}}
+
+The snapshot based backups described in this documentation are deprecated, and limited to the original alpha databases.
+
+Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/learning/backups/) used for legacy alpha databases.
+
+To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: beta` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
+
+{{</Aside>}}
+
 ## Automatic backups
 
 D1 automatically backs up your databases every hour on your behalf, and [retains backups for 24 hours](/d1/platform/limits/). Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
