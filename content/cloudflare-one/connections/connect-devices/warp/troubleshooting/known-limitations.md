@@ -12,9 +12,9 @@ Below, you will find information on devices, software, and configurations that a
 
 The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) for a list of supported operating systems.
 
-## Managed Network on Legacy Windows Server
+## Managed network on legacy Windows Server
 
-When a managed network certificate is served from IIS 8.5 on Windows Server 2012 R2 the alternate network detection check will not work. Please serve the certificate from a supported device, as referenced in the [Managed Network](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) documentation. 
+[Managed network detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
 
 ## Multi-user support on Windows
 
