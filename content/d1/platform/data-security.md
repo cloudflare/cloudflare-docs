@@ -7,8 +7,8 @@ pcx_content_type: concept
 
 This page details the data security properties of D1, including:
 
-* Encryption-at-rest (EAR)
-* Encryption-in-transit (EIT)
+* Encryption-at-rest (EAR).
+* Encryption-in-transit (EIT).
 * Cloudflare's compliance certifications.
 
 ## Encryption at Rest
