@@ -536,7 +536,7 @@ To quickly disable schema validation for a whole zone, use `PATCH`. This operati
 ---
 header: cURL command
 ---
-$ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/settings/schema_validation" \
+curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/settings/schema_validation" \
   -header "Authorization: Bearer <API_TOKEN>" \
   -header 'Content-Type: application/json' \
   -data '{

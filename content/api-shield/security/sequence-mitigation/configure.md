@@ -86,8 +86,8 @@ The response will reflect the rule that has been written with its ID. In case so
 header: Example using cURL
 ---
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
--H 'Content-Type: application/json' \
--d ‘{
+-header 'Content-Type: application/json' \
+-data ‘{
   "title": "string",
   "kind": "block",
   "action": "block",
@@ -112,8 +112,8 @@ The response will reflect the rules that have been written with their IDs in cas
 header: Example using cURL
 ---
 curl -X PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
--H 'Content-Type: application/json' \
--d ‘{
+-header 'Content-Type: application/json' \
+-data ‘{
   "rules": [
     {
       "title": "Some title",
