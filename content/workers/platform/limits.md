@@ -62,8 +62,8 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
-| [CPU runtime](#cpu-runtime) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min Cron Trigger |     |
-| [Duration](#duration)       |                                            |                                             | No limit\*                                  |
+| [CPU runtime](#cpu-runtime) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms Cron trigger | N/A |     |
+| [Duration](#duration)       |                                            |                                             | 30 s HTTP request <br/> 15 min Cron Trigger*                                |
 
 {{</table-wrap>}}
 
