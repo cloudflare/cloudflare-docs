@@ -75,8 +75,8 @@ Use cURL or any other API client tool to send the new configuration to Cloudflar
 header: Example using cURL
 ---
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
--H 'Content-Type: application/json' \
--d '{
+-header 'Content-Type: application/json' \
+-data '{
     "token_type": "jwt",
     "title": "example title",
     "description": "example description",
@@ -133,8 +133,8 @@ Use the `PUT` command to update keys.
 header: Example using cURL
 ---
 curl -X PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}/credentials' \
--H 'Content-Type: application/json' \
--d '{
+-header 'Content-Type: application/json' \
+-data '{
         "keys": [
             {
                 "kty": "EC",
@@ -175,8 +175,8 @@ You can only modify the following fields with `PATCH`: `title`, `description`, `
 header: Example using cURL
 ---
 curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}' \
--H 'Content-Type: application/json' \
--d '{
+-header 'Content-Type: application/json' \
+-data '{
     "description": "example description",
     "allow_absent_token": false,
 }'
