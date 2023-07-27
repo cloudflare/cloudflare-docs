@@ -24,6 +24,12 @@ You may want to enforce that an API user requests `GET /api/v1/users/{user_id}/a
 
 Using Sequence Mitigation, you can enforce that request pattern with two new Sequence Mitigation rules.
 
+{{<Aside type="note">}}
+
+You can create Sequence Mitigation rules for a sequence even if the sequence is not listed in [Sequence Analytics](/api-shield/security/sequence-analytics/).
+
+{{</Aside>}}
+
 You can also set up a negative security model with Sequence Mitigation. See [Configuration](/api-shield/security/sequence-mitigation/configure/#configure) to understand how to distinguish between rule types using the `kind` field.
 
 ## Configure 
@@ -70,7 +76,7 @@ Use the `GET` command to list rules.
 ---
 header: cURL command
 ---
-curl -X GET 'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules’
+curl --request GET 'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules’
 ```
 
 ### Add a single sequence rule
@@ -85,9 +91,9 @@ The response will reflect the rule that has been written with its ID. In case so
 ---
 header: Example using cURL
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
--header 'Content-Type: application/json' \
--data ‘{
+curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
+--header 'Content-Type: application/json' \
+--data ‘{
   "title": "string",
   "kind": "block",
   "action": "block",
@@ -111,12 +117,12 @@ The response will reflect the rules that have been written with their IDs in cas
 ---
 header: Example using cURL
 ---
-curl -X PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
--header 'Content-Type: application/json' \
--data ‘{
+curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
+--header 'Content-Type: application/json' \
+--data ‘{
   "rules": [
     {
-      "title": "Some title",
+      "title": "<RULE_TITLE>",
       "kind": "block",
       "action": "block",
       "sequence": [
@@ -137,5 +143,5 @@ Use the `DELETE` command with its rule ID to delete a rule.
 ---
 header: cURL command
 ---
-curl -X DELETE ‘https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules/rules/d4909253-390f-4956-89fd-92a5b0cd86d8’
+curl --request DELETE ‘https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules/rules/d4909253-390f-4956-89fd-92a5b0cd86d8’
 ```
