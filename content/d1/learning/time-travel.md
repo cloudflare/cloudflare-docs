@@ -99,7 +99,7 @@ You can undo a restore by:
 * Taking note of the previous bookmark returned as part of a `wrangler d1 time-travel restore` operation
 * Restoring directly to a bookmark in the past, prior to your last restore.
 
-To fetch a bookmark from an earlier state
+To fetch a bookmark from an earlier state:
 
 ```sh
 # Get a historical bookmark
@@ -116,4 +116,4 @@ $ wrangler d1 time-travel info YOUR_DATABASE
 
 * You can quickly get the Unix timestamp from the command-line in macOS and Windows via `date %+s`.
 * Time Travel does not yet allow you to clone or fork an existing database to a new copy. In the future, Time Travel will allow you to easily fork (clone) an existing database into a new database, or overwrite an existing database.
-* You can restore a database back to a point in time up to 30 days in the past (Workers Paid plans) or 7 days (Workers free plans). See the [Limits](/d1/platform/limits/) page for details on Time Travel's limits.
+* You can restore a database back to a point in time up to 30 days in the past (Workers Paid plan) or 7 days (Workers Free plan). See the [Limits](/d1/platform/limits/) page for details on Time Travel's limits.
