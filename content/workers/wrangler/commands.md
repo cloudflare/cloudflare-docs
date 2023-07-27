@@ -186,7 +186,7 @@ $ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 Restore a database to a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
 ```sh
-$ wrangler d1 time-travel <DATABASE_NAME> [OPTIONS]
+$ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -204,7 +204,7 @@ $ wrangler d1 time-travel <DATABASE_NAME> [OPTIONS]
 Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
 
 ```sh
-$ wrangler d1 time-travel <DATABASE_NAME> [OPTIONS]
+$ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
