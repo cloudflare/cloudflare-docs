@@ -11,9 +11,9 @@ rss: file
 
 ### Time Travel
 
-[Time Travel](/d1/learning/time-travel/) is now available. Time Travel allows you to restore a D1 database back to any minute within the last 30 days (Workers paid plans) or 7 days (Workers free plans), at no additional cost for storage or restore operations.
+[Time Travel](/d1/learning/time-travel/) is now available. Time Travel allows you to restore a D1 database back to any minute within the last 30 days (Workers Paid plan) or 7 days (Workers Free plan), at no additional cost for storage or restore operations.
 
-Refer to the [Time Travel documentation](/d1/learning/time-travel/) to learn how to travel backwards in time.
+Refer to the [Time Travel](/d1/learning/time-travel/) documentation to learn how to travel backwards in time.
 
 Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/learning/backups/) used for legacy alpha databases.
 
