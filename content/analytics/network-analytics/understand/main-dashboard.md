@@ -38,10 +38,12 @@ You can filter by the following parameters:
 
 * Mitigation action taken by Cloudflare
 * Mitigation system that performed the action
-* Source IP, port, ASN
-* Destination IP, destination IP range (using `/24` prefixes), and destination port
-* The Cloudflare data center city and country of where the traffic was observed
+* Source IP, port, ASN, tunnel
+* Destination IP, port, IP range (using `/24` prefixes), tunnel
+* Source Cloudflare data center and data center country of where the traffic was observed
+* Packet size
 * TCP flag
+* TTL
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="filter parameters">}}
 
@@ -57,12 +59,16 @@ You can choose one of the following dimensions:
 * Destination IP
 * Destination IP range
 * Destination port
+* Destination tunnels
 * Mitigation system
 * Source ASN
-* Source country
+* Data center country
 * Source data center
 * Source IP
 * Source port
+* Source tunnels
+* Packet size
+* Protocol
 * TCP flag
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="dimensions">}}
