@@ -157,6 +157,7 @@
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
   <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
 
   {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>

@@ -68,15 +68,15 @@ You can create Zero Trust policies to manage access to specific applications on 
 8. Modify the policies to include additional identity-based conditions. For example:
 
    - **Policy 1**
-     | Action | Selector | Operator | Value |
-     |--|--|--|--|
-     | Allow | Destination IP |in|`10.128.0.7` |
-     | |User email| Matches regex| `.*@example.com`|
+     | Selector       | Operator      | Value            | Logic | Action |
+     | -------------- | ------------- | ---------------- | ----- | ------ |
+     | Destination IP | in            | `10.128.0.7`     | And   | Allow  |
+     | User email     | Matches regex | `.*@example.com` |       |        |
 
    - **Policy 2**
-     | Action | Selector | Operator | Value |
-     |--|--|--|--|
-     | Block | Destination IP |in|`10.128.0.7` |
+     | Selector       | Operator | Value        | Action |
+     | -------------- | -------- | ------------ | ------ |
+     | Destination IP | in       | `10.128.0.7` | Block  |
 
    Policies are evaluated in [numerical order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/gateway/network-policies/).
 

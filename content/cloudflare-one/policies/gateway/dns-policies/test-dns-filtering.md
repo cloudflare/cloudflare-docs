@@ -24,11 +24,55 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 3. If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
 
-   ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-disabled.png)
+   ```sh
+   ---
+   highlight: [6]
+   ---
+   $ dig example.com
+
+   ; <<>> DiG 9.10.6 <<>> example.com
+   ;; global options: +cmd
+   ;; Got answer:
+   ;; ->>HEADER<<- opcode: QUERY, status: REFUSED, id: 6503
+   ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0
+
+   ;; QUESTION SECTION:
+   ;example.com.                   IN      A
+
+   ;; Query time: 46 msec
+   ;; SERVER: 172.64.36.1#53(172.64.36.1)
+   ;; WHEN: Tue Mar 10 20:22:18 CDT 2020
+   ;; MSG SIZE  rcvd: 29
+   ```
 
    If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
 
-   ![Verify that a domain is blocked when the block page is disabled.](/images/cloudflare-one/faq/blocked-enabled.png)
+   ```sh
+   ---
+   highlight: [6,15,16]
+   ---
+   $ dig example.com
+
+   ; <<>> DiG 9.10.6 <<>> example.com
+   ;; global options: +cmd
+   ;; Got answer:
+   ;; ->>HEADER<<- opcode: QUERY, status: NOERROR id: 14531
+   ;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+   ;; OPT PSEUDOSECTION:
+   ; EDNS: version: 0, flags:; udp: 1452
+   ;; QUESTION SECTION:
+   ;example.com.                   IN      A
+
+   ;;ANSWER SECTION:
+   example.com.            60      IN      A                  162.159.36.12
+   example.com.            60      IN      A                  162.159.46.12
+
+   ;; Query time: 53 msec
+   ;; SERVER: 172.64.36.1#53(172.64.36.1)
+   ;; WHEN: Tue Mar 10 20:19:52 CDT 2020
+   ;; MSG SIZE  rcvd: 83
+   ```
 
 ### Test a security or content category
 
@@ -40,15 +84,15 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 - **One-word category** — For categories with one-word names (for example, _Malware_), the test domain uses the following format:
 
-  ```txt
-  <NAME_OF_CATEGORY>.testcategory.com
-  ```
+   ```txt
+   <NAME_OF_CATEGORY>.testcategory.com
+   ```
 
 - **Multi-word category** — For categories with multiple words in the name (for example, _Parked & For Sale Domains_), the test domain uses the following format:
 
-  - Remove any spaces between the words
-  - Replace `&` with `and`
-  - Lowercase all letters
+   - Remove any spaces between the words
+   - Replace `&` with `and`
+   - Lowercase all letters
 
 #### Common test domains
 

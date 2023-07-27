@@ -110,7 +110,7 @@ You may have configured [HTTP Response Header Modification Rules](/rules/transfo
 
 ___
 
-## Kapersky Antivirus
+## Kaspersky Antivirus
 
 To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
 Antivirus, allow `dash.cloudflare.com` in Kaspersky.

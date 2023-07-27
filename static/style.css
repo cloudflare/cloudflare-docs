@@ -5276,7 +5276,7 @@ pre {
   flex-direction: row;
   column-gap: 1em;
 
-  align-items: flex-end;
+  align-items: center;
 }
 
 .DocsMarkdown--pill {
@@ -5286,9 +5286,9 @@ pre {
   padding: 4px 8px;
 
   position: relative;
-  bottom: 1.8em;
-  height: 18px;
+  margin-bottom: 0.75em;
 
+  height: 18px;
   border-radius: 20px;
 
   flex: none;
@@ -5300,6 +5300,12 @@ pre {
   font-size: 12px;
   line-height: 150%;
   /* identical to box height, or 18px */
+}
+
+/* Pills on levels lower than H1 */
+.DocsMarkdown-pill-lower {
+  margin-bottom: initial;
+  margin-top: 2.25em;
 }
 
 .DocsMarkdown--pill-tab {
@@ -5587,7 +5593,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 }
 
 .tutorialPreReqHeader::before {
-  height: 0 !important; 
+  height: 0 !important;
 }
 
 .tutorialStep {
@@ -5650,6 +5656,6 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   }
 
   .tutorialPreReqHeader {
-    margin-top: 4em !important; 
+    margin-top: 4em !important;
   }
 }

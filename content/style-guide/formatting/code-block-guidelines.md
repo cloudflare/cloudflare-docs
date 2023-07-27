@@ -10,7 +10,7 @@ You can create code blocks by:
 + Using triple-acute characters as a "fence" around the code block. (Recommended)
 + Indenting lines by four spaces or one tab.
 
-To define the syntax highlighting language used for the code block, enter a language name after the first fence. Refer to the [List of languages used in Cloudflare developer documentation](#/#list-of-languages-being-used-in-cloudflare-developer-documentation) for a list of supported languages.
+To define the syntax highlighting language used for the code block, enter a language name after the first fence. Refer to the [List of languages used in Cloudflare developer documentation](#list-of-languages-used-in-cloudflare-developer-documentation) for a list of supported languages.
 
 Use the `txt` language when there is no appropriate syntax highlighting (for example, a fragment of an Apache configuration file).
 
@@ -107,7 +107,7 @@ Multi-line curl commands with a JSON body should use `bash` syntax highlighting,
 {{<Aside type="note">}}JSON fragments may appear with a red background in GitHub because they are not valid JSON. Make it clear in the documentation that it is a fragment and not an entire piece of valid JSON content.
 {{</Aside>}}
 
-## List of languages being used in Cloudflare Developer Documentation
+## List of languages used in Cloudflare developer documentation
 
 + `bash` (alias: `curl`)
 + `c`
@@ -134,4 +134,4 @@ Multi-line curl commands with a JSON body should use `bash` syntax highlighting,
 + `xml`
 + `yaml` (alias: `yml`)
 
-Different capitalizations of the languages above are also supported (but not recommended). For example, `JavaScript` will be rendered using the `javascript` language, and `HTML` will use the `html` language.
+Different capitalizations of these languages are also supported (but not recommended). For example, `JavaScript` will use the `javascript` language, and `HTML` will use the `html` language.
