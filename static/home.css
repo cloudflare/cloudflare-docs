@@ -5275,6 +5275,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     box-shadow: none;
 }
 
+.DocSearch-Button-Key {
+    font-family: sans-serif;
+    padding-top: .1em !important;
+}
+
 [theme=dark] .DocSearch-Button-Key {
     --docsearch-key-gradient: rgba(var(--color-rgb), .05);
     --docsearch-muted-color: var(--color);
