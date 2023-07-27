@@ -10,7 +10,7 @@ You can adopt techniques to optimize Workers KV performance.
 
 ## Optimize `get()` long tail performance
 
-Workers KV allows you to customize the [`cacheTTL`](https://developers.cloudflare.com/workers/runtime-apis/kv/#cache-ttl) parameter when reading a value.
+Workers KV allow you to customize the [`cacheTTL`](https://developers.cloudflare.com/workers/runtime-apis/kv/#cache-ttl) parameter when reading a value.
 
 Workers KV is used to store information such as authentication tokens. If not specified, the default `cacheTTL` value is 1 minute. If you use Workers KV for cryptographic material, any changes or revocations are reflected globally without delay.
 
@@ -20,7 +20,7 @@ recently written value.
 Most Workers KV requests are not for security-sensitive keys. To optimize the long-tail performance of infrequently accessed keys, specify a longer
 `cacheTTL` value (for example, 86,400 to request the entire day). 
 
-With the [new architecure](https://blog.cloudflare.com/faster-workers-kv-architecture/), you will see updated values within ~1 minute of the write, regardless of the `cacheTTL` value. 
+With the [new architecure](https://blog.cloudflare.com/faster-workers-kv-architecture/), you will see updated values within 1 minute of the write, regardless of the `cacheTTL` value. 
 
 {{<Aside type="note" header="Decoupled cacheTTL and visible writes availability">}}
 A longer `cacheTTL` will result in the`cacheTTL` taking that duration for a `get()` to report the least value that was written within the interim. Contact support to use the new architecture. 
@@ -90,7 +90,7 @@ Shortening the cacheTTL within your extra caching layer will ensure all keys wil
 
 <!-- CON -->
 {{<Aside type="warning">}}
-Not as effective at improving performance as increasing the cacheTTL. If the key is evicted from KV's cache due to insufficient usage, you will still suffer a stampeding herd of slow requests.
+This approach is not as effective at improving performance as increasing the cacheTTL. If the key is evicted from KV's cache due to insufficient usage, you will still suffer a stampeding herd of slow requests.
 {{</Aside>}}
 
 {{<Aside type="note" header="What does cardinality and distribution mean?">}}
@@ -168,7 +168,7 @@ Storing the value within metadata makes the value accessible during the list, av
 
 Storing the value within metadata is not suitable for all problem domains as it requires that values fit within the limit and that the set of keys you are trying to read are guaranteed to be lexicographically next to each other.
 
-## Avoid using the GET REST API at the Edge
+## Avoid using the GET REST API 
 
 Using the REST API to read a key will affect performance because you always have to do a long distance round trip before you hit a cache. 
 
@@ -195,7 +195,7 @@ it to KV for reading. -->
 
 Reads have a "refreshTTL" of 1 minute. A write is noticed within 1 minute of a read being issued.
 
-Contact customer support to change the default for your namespace.
+Contact customer support to change the default for your KV namespace.
 
 ## Benchmarking Workers KV
 

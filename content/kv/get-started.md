@@ -21,6 +21,8 @@ To use Workers KV, you will need:
 
 ## 1. Create a KV namespace 
 
+A KV namespace is a key-value database that is replicated to Cloudflare’s global network.
+
 You can create a KV namespace via Wrangler or the Cloudflare dashboard.
 
 ### Create a KV namespace via Wrangler
