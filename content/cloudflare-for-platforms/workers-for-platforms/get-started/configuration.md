@@ -109,7 +109,7 @@ export default {
 };
 ```
 
-Moreover, you need to define a simple metadata file for the user Worker:
+Do the following to define a simple metadata file for the user Worker:
 
 ```js
 ---
