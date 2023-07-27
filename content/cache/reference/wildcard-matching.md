@@ -23,7 +23,7 @@ example.com/t\*st would match:
 - To match every page on a domain and its subdomains, write `*example.com/*`. Writing `example.com` won’t work.
 - A wildcard (`*`) in a Page Rule URL will match even if no characters are present and may include any part of the URL, including the query string.
 
-## Referencing wildcard matches
+## Reference wildcard matches
 
 You can reference a matched wildcard later using the `$X` syntax, where `X` indicates the index of a glob pattern. As a result, `$1` represents the first wildcard match, `$2` represents the second wildcard match, and so on.
 
