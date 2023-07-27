@@ -528,7 +528,7 @@ Copy the `productId` value for use in the remaining test queries.
 
 {{</Aside>}}
 
-Next, read the document you just created:
+Next, read the document you created:
 
 ```sh
 ---
