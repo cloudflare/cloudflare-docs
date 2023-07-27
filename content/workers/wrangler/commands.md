@@ -194,9 +194,9 @@ $ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--bookmark` {{<type>}}string{{</type>}}
-  - ...
+  - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - ...
+  - A Unix timestamp or JavaScript date-time string within the last 30 days.
   {{</definitions>}}
 
 ### `time-travel info`
@@ -212,7 +212,7 @@ $ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - ...
+  - A Unix timestamp or JavaScript date-time string within the last 30 days.
   {{</definitions>}}
 
 ### `backup create`
