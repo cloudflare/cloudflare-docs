@@ -28,7 +28,7 @@ Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflar
  
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](//workers/wrangler/commands/#deploy) your Workers projects.
 
 {{</feature>}}
 
@@ -54,6 +54,12 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{</related>}}
 
+{{<related header="D1" href="/d1/" product="d1">}}
+
+D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+
+{{</related>}}
+
 {{<related header="Queues" href="/queues/" product="queues">}}
 
 Cloudflare Queues integrates with Cloudflare Workers to allow developers to send and receive messages with guaranteed delivery, offering at-least once delivery, message batching, and no charge for egress bandwidth.
@@ -72,12 +78,10 @@ Cloudflare Queues integrates with Cloudflare Workers to allow developers to send
 
 {{<resource header="HTMLRewriter" href="/workers/runtime-apis/html-rewriter/" icon="reference-architecture">}}Parse and transform HTML from inside a Worker.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn which storage option is best for your project.{{</resource>}}
+{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
-
-{{<resource header="Works on Workers" href="https://workers.cloudflare.com/works" icon="learning-center-book">}}Explore third-party packages that work on Workers, submitted by Cloudflare users.{{</resource>}}
  
 {{</resource-group>}}
