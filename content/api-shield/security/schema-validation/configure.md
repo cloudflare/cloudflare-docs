@@ -41,7 +41,7 @@ Endpoints must be listed in Endpoint Management for Schema Validation to match r
 
 {{</Aside>}}
 
-## Use cases
+## Configuration
 
 ### Upload and activate a schema
 
@@ -223,7 +223,7 @@ header: Result
 }
 ```
 
-You can add all operations in a schema that do not already exist in Endpoint Management by combining two commands as one. The example requires the `jq` tool.
+You can add all operations in a schema that do not already exist in Endpoint Management by combining two commands as one. There is a maximum of 20 operations for this API call. The example requires the `jq` tool.
 
 ```bash
 ---
@@ -369,13 +369,15 @@ header: Result
 
 ### List all schemas
 
-You can get an overview of the schemas currently active on a zone using `GET`.
+You can get an overview of the schemas currently active on a zone using `GET`. 
+
+`validation_enabled=true` is an optional parameter.
 
 ```bash
 ---
 header: cURL command
 ---
-$ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas?validation_enabled=true&omit_source=true" \
+$ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas?omit_source=true" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H 'Content-Type: application/json'
 ```
