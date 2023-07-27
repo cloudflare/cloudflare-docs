@@ -5286,6 +5286,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     box-shadow: none;
 }
 
+.DocSearch-Button-Key > svg {
+    height: unset !important;
+    width: unset !important;
+  }
+
 .DocSearch-Button {
     margin: 0 48px 0 16px;
 }

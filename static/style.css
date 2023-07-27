@@ -4575,6 +4575,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   box-shadow: none;
 }
 
+.DocSearch-Button-Key > svg {
+  height: unset !important;
+  width: unset !important;
+}
+
 .DocsMobileHeader {
   position: absolute;
   display: flex;
