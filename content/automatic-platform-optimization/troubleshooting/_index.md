@@ -21,7 +21,7 @@ If your Cloudflare dashboard can't detect the WordPress plugin after trying the 
 
 {{<Aside type="note">}}
 
-The Cloudflare APO Wordpress plugin does not support multisite WordPress installation.
+The Cloudflare APO WordPress plugin does not support multisite WordPress installation.
 
 {{</Aside>}}
 
