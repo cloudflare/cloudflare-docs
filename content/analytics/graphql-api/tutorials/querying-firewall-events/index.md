@@ -51,7 +51,7 @@ echo '{ "query":
   https://api.cloudflare.com/client/v4/graphql/
 ```
 
-The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, e.g.,:
+The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, for example:
 
 ```bash
 ... | curl \

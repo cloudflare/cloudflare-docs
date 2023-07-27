@@ -27,8 +27,8 @@ ___
 
 ## Edge Network errors
 
--   `400` - Bad Request intercepted at the Cloudflare Edge (e.g. missing or bad HTTP header)
--   `403` - Security functionality (e.g. Web Application Firewall, Browser Integrity Check, [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/), and most 1xxx error codes)
+-   `400` - Bad Request intercepted at the Cloudflare Edge (for example, missing or bad HTTP header)
+-   `403` - Security functionality (for example, Web Application Firewall, Browser Integrity Check, [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/), and most 1xxx error codes)
 -   `409` - DNS errors typically in the form of 1000 or 1001 error code
 -   `413` - File size upload exceeded the maximum size allowed (configured under the Speed app)
 -   `444` - Used by Nginx to indicate that the server has returned no information to the client, and closed the connection. This error code is internal to Nginx and is **not** returned to the client.
@@ -56,9 +56,9 @@ ___
 
 ## 52x errors
 
--   `520` - This is essentially a "catch-all" response for when the origin server returns something unexpected, or something that is not tolerated/cannot be interpreted by our edge (i.e. protocol violation or empty response).
+-   `520` - This is essentially a "catch-all" response for when the origin server returns something unexpected, or something that is not tolerated/cannot be interpreted by our edge (that is, protocol violation or empty response).
 -   `522` - Our edge could not establish a TCP connection to the origin server.
--   `523` - Origin server is unreachable (e.g. the origin IP changed but DNS was not updated, or due to network issues between our edge and the origin).
+-   `523` - Origin server is unreachable (for example, the origin IP changed but DNS was not updated, or due to network issues between our edge and the origin).
 -   `524` - Our edge established a TCP connection, but the origin did not reply with a HTTP response before the connection timed out.
 
 ___
@@ -77,4 +77,4 @@ You can filter out specific error(s) by selecting one or more in the legend. Onc
 ![Error analytics by Cloudflare data center
 ](/images/support/hc-import-status_codes_error_by_data_center.png)
 
-In this example, by clicking on `404` in the legend we removed it from being displayed in the UI.
+In this example, by selecting `404` in the legend we removed it from being displayed in the UI.

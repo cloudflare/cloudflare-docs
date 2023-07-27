@@ -40,7 +40,7 @@ The purpose of Get started content is to help users go from not using a product 
 ## Template
 
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: get-started
@@ -63,7 +63,6 @@ All the things you need to do before you start configuring your product, both wi
 ## Next steps
  
 Point to more complex setup options.
-}
 ```
 
 ## Example
