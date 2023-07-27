@@ -71,7 +71,7 @@ You can also [purchase additional rules](https://www.cloudflare.com/features-pag
 
 {{<Aside type="note" header="Note">}}
 
-We do not support non-ASCII characters (e.g. punycode/unicode domain) in Page Rules. Instead, you can URL-encode the string using [Punycode converter](https://www.punycoder.com/) as a workaround.
+We do not support non-ASCII characters (for example, punycode/unicode domain) in Page Rules. Instead, you can URL-encode the string using [Punycode converter](https://www.punycoder.com/) as a workaround.
 
 {{</Aside>}}
 

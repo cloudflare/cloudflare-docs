@@ -22,7 +22,7 @@ An example of writing a single message to a Queue:
 
 ```ts
 type Environment = {
-  readonly MY_QUEUE: Queue<any>;
+  readonly MY_QUEUE: Queue;
 };
 
 export default {
@@ -53,7 +53,7 @@ const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
 A binding that allows a producer to send messages to a Queue.
 
 ```ts
-interface Queue<Body = any> {
+interface Queue<Body = unknown> {
   send(body: Body, options?: { contentType?: QueuesContentType }): Promise<void>;
   sendBatch(messages: Iterable<MessageSendRequest<Body>>): Promise<void>;
 }
@@ -61,12 +61,12 @@ interface Queue<Body = any> {
 
 {{<definitions>}}
 
-- {{<code>}}send(body{{<param-type>}}any{{</param-type>}}, options?{{<param-type>}}{ contentType?: QueuesContentType }{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+- {{<code>}}send(body{{<param-type>}}unknown{{</param-type>}}, options?{{<param-type>}}{ contentType?: QueuesContentType }{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
   - Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   - When the promise resolves, the message is confirmed to be written to disk.
 
-- {{<code>}}sendBatch(body{{<param-type>}}Iterable\<MessageSendRequest\<any\>>{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+- {{<code>}}sendBatch(body{{<param-type>}}Iterable\<MessageSendRequest\<unknown\>>{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
   - Sends a batch of messages to the Queue. Each item in the provided [Iterable](https://www.typescriptlang.org/docs/handbook/iterators-and-generators.html) must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
   - When the promise resolves, the messages are confirmed to be written to disk.
@@ -78,7 +78,7 @@ interface Queue<Body = any> {
 A wrapper type used for sending message batches.
 
 ```ts
-type MessageSendRequest<Body = any> = {
+type MessageSendRequest<Body = unknown> = {
   body: Body;
   contentType?: QueuesContentType;
 };
@@ -86,7 +86,7 @@ type MessageSendRequest<Body = any> = {
 
 {{<definitions>}}
 
-- {{<code>}}body{{</code>}} {{<type>}}any{{</type>}}
+- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}} 
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
@@ -159,7 +159,7 @@ In service worker syntax, `event` provides the same fields and methods as `Messa
 A batch of messages that are sent to a consumer Worker.
 
 ```ts
-interface MessageBatch<Body = any> {
+interface MessageBatch<Body = unknown> {
   readonly queue: string;
   readonly messages: Message<Body>[];
   ackAll(): void;
@@ -192,7 +192,7 @@ interface MessageBatch<Body = any> {
 A message that is sent to a consumer Worker.
 
 ```ts
-interface Message<Body = any> {
+interface Message<Body = unknown> {
   readonly id: string;
   readonly timestamp: Date;
   readonly body: Body;
@@ -211,7 +211,7 @@ interface Message<Body = any> {
 
   - A timestamp when the message was sent.
 
-- {{<code>}}body{{</code>}} {{<type>}}any{{</type>}}
+- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}} 
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.

@@ -35,10 +35,10 @@ API value: `allow`
 
 Policies with Allow actions allow network traffic to reach certain IPs or ports. For example, the following configuration allows specific users to reach a given IP address:
 
-| Selector       | Operator | Value           | Action |
-| -------------- | -------- | --------------- | ------ |
-| Destination IP | In       | `92.100.02.102` | Allow  |
-| Email          | In       | `*@example.com` |        |
+| Selector       | Operator | Value           | Logic | Action |
+| -------------- | -------- | --------------- | ----- | ------ |
+| Destination IP | In       | `92.100.02.102` | And   | Allow  |
+| Email          | In       | `*@example.com` |       |        |
 
 ### Audit SSH
 
@@ -68,11 +68,11 @@ API value: `l4_override`
 
 Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
 
-| Selector       | Operator | Value           | Action           |
-| -------------- | -------- | --------------- | ---------------- |
-| Destination IP | In       | `95.92.143.151` | Network Override |
-| User Email     | In       | `*@example.com` |                  |
-| Override IP    |          | 10.0.0.1        |                  |
+| Selector       | Operator | Value           | Logic | Action           |
+| -------------- | -------- | --------------- | ----- | ---------------- |
+| Destination IP | In       | `95.92.143.151` | And   | Network Override |
+| User Email     | In       | `*@example.com` | And   |                  |
+| Override IP    |          | 10.0.0.1        |       |                  |
 
 ## Selectors
 
