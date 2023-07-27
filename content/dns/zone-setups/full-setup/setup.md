@@ -148,7 +148,7 @@ When your domain is **Active**:
 - CLI commands will show your Cloudflare-assigned nameservers
 
 ```txt
-*Linux/Unix*
+*Linux/UNIX*
 dig <DOMAIN_NAME> +trace @1.1.1.1 
 dig <DOMAIN_NAME> +trace @8.8.8.8
 
