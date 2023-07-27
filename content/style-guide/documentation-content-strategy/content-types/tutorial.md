@@ -98,7 +98,7 @@ Step 1 content
 
 {{</*/tutorial-step*/>}}
 
-{{</*tutorial-step title="Step 2 content" optional=true >}}
+{{</*tutorial-step title="Step 2 content" optional=true */>}}
 
 Step 2 content
 
