@@ -32,19 +32,32 @@ Time Travel introduces the concept of a "bookmark" to D1: a bookmark represents 
 
 Bookmarks can be derived from a [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) (seconds since Jan 1st, 1970), and conversion between a specific timestamp and a bookmark is deterministic (stable).
 
+## Timestamps
+
+Time Travel supports two timestamp formats:
+
+* [Unix timestamps](https://developer.mozilla.org/en-US/docs/Glossary/Unix_time), which correspond to seconds since January 1st, 1970 at midnight. This is always in UTC.
+* The [JavaScript date-time string format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format), which is a simplified version of the ISO-8601 timestamp format. An valid date-time string for the July 27, 2023 at 11:18AM in Americas/New_York (EST) would look like `2023-07-27T11:18:53.000-04:00`. 
+
 ## Retrieve a bookmark
 
 You can retrieve a bookmark for the current timestamp by calling the `d1 info` command, which defaults to returning the current bookmark:
 
 ```sh
 $ wrangler d1 time-travel info YOUR_DATABASE
+
+# Example output
+🚧 Time Traveling...
+⚠️ The current bookmark is '00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683'
+⚡️ To restore to this specific bookmark, run:
+ `wrangler d1 time-travel restore YOUR_DATABASE --bookmark=00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683`
 ```
 
-To retrieve the bookmark for a timestamp in the past, pass the `--at-timestamp` flag with a valid Unix or RFC3339 timestamp:
+To retrieve the bookmark for a timestamp in the past, pass the `--timestamp` flag with a valid Unix or RFC3339 timestamp:
 
 ```sh
 # Using an RFC3339 timestamp, including the timezone:
-$ wrangler d1 time-travel info YOUR_DATABASE --timestamp='2023-07-09T17:31:11+00:00"
+$ wrangler d1 time-travel info YOUR_DATABASE --timestamp="2023-07-09T17:31:11+00:00"
 ```
 
 ## Restore a database
@@ -58,14 +71,24 @@ Restoring a database to a specific point-in-time is a _destructive_ operation, a
 {{</Aside>}}
 
 ```sh
-$ wrangler d1 time-travel restore YOUR_DATABASE --at-timestamp=UNIX_TIMESTAMP
+$ wrangler d1 time-travel restore YOUR_DATABASE --timestamp=UNIX_TIMESTAMP
 
 # Example output:
-...
+🚧 Restoring database YOUR_DATABASE from bookmark 00000080-ffffffff-00004c60-390376cb1c4dd679b74a19d19f5ca5be
+
+⚠️ This will overwrite all data in database YOUR_DATABASE.
+In-flight queries and transactions will be cancelled.
+
+✔ OK to proceed (y/N) … yes
+⚡️ Time travel in progress...
+✅ Database YOUR_DATABASE restored back to bookmark 00000080-ffffffff-00004c60-390376cb1c4dd679b74a19d19f5ca5be
+
+↩️ To undo this operation, you can restore to the previous bookmark: 00000085-ffffffff-00004c6d-2510c8b03a2eb2c48b2422bb3b33fad5
 ```
 
 Note that:
 
+* Timestamps are converted to a deterministic, stable bookmark. The same timestamp will always represent the same bookmark.
 * Queries in flight will be cancelled, and an error returned to the client
 * The restore operation will return a [bookmark](#terminology) that allows you to [undo](#undo-a-restore) and revert the database.
 
@@ -73,12 +96,20 @@ Note that:
 
 You can undo a restore by:
 
-* Taking note of the previous bookmark returned as part of a `wrangler d1 restore` operation
+* Taking note of the previous bookmark returned as part of a `wrangler d1 time-travel restore` operation
 * Restore directly to a bookmark in the past, prior to your last restore.
+
+To fetch a bookmark from an earlier state
 
 ```sh
 # Get a historical bookmark
-$ wrangler d1 time-travel info 
+$ wrangler d1 time-travel info YOUR_DATABASE
+
+# Example output
+🚧 Time Traveling...
+⚠️ The current bookmark is '00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683'
+⚡️ To restore to this specific bookmark, run:
+ `wrangler d1 time-travel restore YOUR_DATABASE --bookmark=00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683`
 ```
 
 ## Notes
