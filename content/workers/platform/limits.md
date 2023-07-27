@@ -341,5 +341,5 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 
 ## Log size
 
-- You can log (`console.log()`) a maximum of 128KB of data to the console for a single request. After you exceed this limit, further log statements will not be recorded or appear when tailing the logs of your Worker.
-- Refer to the [Workers Trace Event Logpush docs](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+- You can log (`console.log()`) a maximum of 128 KB of data to the console for a single request. After you exceed this limit, further log statements will not be recorded or appear when tailing the logs of your Worker.
+- Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
