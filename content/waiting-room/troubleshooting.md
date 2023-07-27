@@ -60,7 +60,7 @@ A manual tab refresh has no effect on a user's position in your waiting room.
 
 However, if they close their tab and then try to access the application again during active queueing, they will lose their spot and have to go to the back of the queue.
 
-## Monitorizing your waiting room
+## Monitor your waiting room
 
 ### Why do I observe a few users being queued in the dashboard?
 
