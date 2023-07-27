@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
   const cachedSchema = await context.env.API_DOCS_KV.get("schema", "json")
   if (cachedSchema) {
-    return new Response(cachedSchema, {
+    return new Response(JSON.stringify(cachedSchema), {
       headers: { 'Content-type': 'application/json' }
     })
   }
