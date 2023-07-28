@@ -723,6 +723,10 @@ Exactly one of `VALUE` or `--path` is required.
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -790,6 +794,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Interact with a preview namespace instead of production.
 - `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Only list keys that begin with the given prefix.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -835,6 +843,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -872,6 +884,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -917,6 +933,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -1001,6 +1021,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
