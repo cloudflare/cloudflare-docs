@@ -69,9 +69,11 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 ## Duration
 
-Duration is a measurement of wall-clock time — the total amount of time from the start to end of an invocation of a Worker. There is no hard limit on the duration of a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request.
+Duration is a measurement of wall-clock time — the total amount of time from the start to end of an invocation of a Worker. There is no hard limit on the duration of a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
+{{<Aside type="note"}}
 Cloudflare updates the Workers runtime a few times per week. When this happens, any in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated. While your application should follow the best practice of handling disconnects by retrying requests, this scenario is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
+{{</Aside>}}
 
 ---
 
@@ -80,12 +82,6 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is different from wall-clock time (duration)
 
 ---
-
-## TODO — need home for these two pieces content, doesn't _quite_ belong here.
-When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
-
-* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
-* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
 
 ## KV limits
 
