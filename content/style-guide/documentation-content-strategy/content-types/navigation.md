@@ -37,4 +37,4 @@ pcx_content_type: navigation
 
 [Logs: Enable destinations](/logs/get-started/enable-destinations/)
 
-[Cloudflare Tunnel: Get Started](cloudflare-one/connections/connect-networks/get-started/)
+[Cloudflare Tunnel: Get Started](/cloudflare-one/connections/connect-networks/get-started/)
