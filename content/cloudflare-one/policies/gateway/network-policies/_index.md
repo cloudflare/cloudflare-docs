@@ -112,6 +112,10 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 {{</Aside>}}
 
+### Protocol Detection
+
+{{<render file="gateway/_protocol-detection.md">}}
+
 ### Proxy Endpoint
 
 {{<render file="gateway/_proxy-endpoint.md">}}
