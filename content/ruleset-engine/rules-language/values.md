@@ -14,7 +14,7 @@ The values that populate the lookup tables of the Rules language are drawn from 
 - **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.path)` converts the value of `http.request.uri.path` to lowercase.
 - **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
 
-When working with values in rule expressions, keep in mind the notes outlined below for escape characters, case sensitivity, and boolean values.
+When working with values in rule expressions, keep in mind the information in the following sections.
 
 ## Escape characters in values
 
