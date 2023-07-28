@@ -195,7 +195,7 @@ $ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 - `--bookmark` {{<type>}}string{{</type>}}
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
   {{</definitions>}}
 
 ### `time-travel info`
@@ -211,7 +211,7 @@ $ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
   {{</definitions>}}
 
 ### `backup create`
@@ -429,7 +429,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 ~/my-worker $ wrangler dev
 ⬣ Listening at http://localhost:8787
 ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
+│ [b] open a browser, [d] open DevTools, [l] turn on local mode, [c] clear console, [x] to exit                        │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
