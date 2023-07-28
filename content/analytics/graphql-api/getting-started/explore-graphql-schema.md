@@ -10,7 +10,7 @@ Many GraphQL clients are support browsing GraphQL schema by taking care of
 [introspection][1]. In this page, we will cover GraphiQL and Altair clients.
 
 [GraphiQL][2] and [Altair][3] are open-source GraphQL clients that provide a
-descent tool to compose a query, execute it, and inspect the results. And as a
+tool to compose a query, execute it, and inspect the results. And as a
 bonus, they also allow you to browse GraphQL schema.
 
 ## Prerequisites
