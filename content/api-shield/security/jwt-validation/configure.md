@@ -74,7 +74,7 @@ Use cURL or any other API client tool to send the new configuration to Cloudflar
 ---
 header: Example using cURL
 ---
-curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
+curl POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
 --header 'Content-Type: application/json' \
 --data '{
     "token_type": "jwt",
@@ -174,7 +174,7 @@ You can only modify the following fields with `PATCH`: `title`, `description`, `
 ---
 header: Example using cURL
 ---
-curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}' \
+curl PATCH 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}' \
 --header 'Content-Type: application/json' \
 --data '{
     "description": "example description",

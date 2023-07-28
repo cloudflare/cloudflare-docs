@@ -24,7 +24,7 @@ API endpoints are subject to change.
 
 API Shield uses your configured session identifier to track sessions. You must configure a session identifier that is unique per end user of your API in order for Sequence Mitigation to function as expected.
 
-### Request Limitations
+### Request limitations
 
 API Shield currently stores the last 10 requested endpoints by each API user identified by the session identifier. Sequence Mitigation de-duplicates requests to the same endpoint while building the sequence. 
 
@@ -36,9 +36,9 @@ To illustrate, in the original sequence example listed in the [Configuration](/a
 
 Sequence Mitigation de-duplicated the two requests to `GET /api/v1/accounts/{account_id}/balance` and stored them as a single request.
 
-### Time Limitations
+### Time limitations
 
-Sequence Mitigation rules have a lookback period of ten minutes. If you create a rule that one path must be requested before another path and more than ten minutes elapses between a user requesting each path, the rule will not match.
+Sequence Mitigation rules have a lookback period of 10 minutes. If you create a rule that one path must be requested before another path and more than 10 minutes elapses between a user requesting each path, the rule will not match.
 
 ## Availability
 
