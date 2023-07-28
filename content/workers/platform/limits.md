@@ -81,8 +81,11 @@ CPU time is the amount of time the CPU actually spends doing work, during a give
 
 ---
 
-## TODO — need home for this content
+## TODO — need home for these two pieces content, doesn't _quite_ belong here.
 When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
+
+* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
+* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
 
 ## KV limits
 
