@@ -200,16 +200,7 @@ Open your terminal and run the following command to upload a Durable Object Work
 $ wrangler dev
 ```
 
-## 8. Test your Durable Objects project
-
-If you copy the `DurableObjectExample` and fetch handler code from above into a generated Wrangler project, publish it using a `--new-class` migration, and make a request to it, you will notice that your request was stored in a Durable Object:
-
-```sh
-$ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.workers.dev/ --data "important data!"
-***.***.***.*** stored important data!
-```
-
-## 9. Deploy your Durable Object Worker
+## 8. Deploy your Durable Object Worker
 
 Use [Wrangler](/workers/wrangler/), the Workers CLI to deploy your Durable Object.
 
