@@ -37,7 +37,13 @@ Bookmarks can be derived from a [Unix timestamp](https://en.wikipedia.org/wiki/U
 Time Travel supports two timestamp formats:
 
 * [Unix timestamps](https://developer.mozilla.org/en-US/docs/Glossary/Unix_time), which correspond to seconds since January 1st, 1970 at midnight. This is always in UTC.
-* The [JavaScript date-time string format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format), which is a simplified version of the ISO-8601 timestamp format. An valid date-time string for the July 27, 2023 at 11:18AM in Americas/New_York (EST) would look like `2023-07-27T11:18:53.000-04:00`. 
+* The [JavaScript date-time string format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format), which is a simplified version of the ISO-8601 timestamp format. An valid date-time string for the July 27, 2023 at 11:18AM in Americas/New_York (EST) would look like `2023-07-27T11:18:53.000-04:00`.
+
+## Requirements
+
+
+* [`Wrangler`](/workers/wrangler/install-and-update/) `v3.4.0` or later installed to use Time Travel commands.
+* A database on D1's new `beta` backend. You can check whether a database is using this backend via `wrangler d1 info DB_NAME` - the output show `version: beta`.
 
 ## Retrieve a bookmark
 
@@ -115,5 +121,5 @@ $ wrangler d1 time-travel info YOUR_DATABASE
 ## Notes
 
 * You can quickly get the Unix timestamp from the command-line in macOS and Windows via `date %+s`.
-* Time Travel does not yet allow you to clone or fork an existing database to a new copy. In the future, Time Travel will allow you to easily fork (clone) an existing database into a new database, or overwrite an existing database.
+* Time Travel does not yet allow you to clone or fork an existing database to a new copy. In the future, Time Travel will allow you to fork (clone) an existing database into a new database, or overwrite an existing database.
 * You can restore a database back to a point in time up to 30 days in the past (Workers Paid plan) or 7 days (Workers Free plan). See the [Limits](/d1/platform/limits/) page for details on Time Travel's limits.
