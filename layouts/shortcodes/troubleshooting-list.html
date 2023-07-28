@@ -1,0 +1,63 @@
+{{- $current := .Page.RelPermalink -}}
+{{- $section := index (split $current "/") 1 }}
+
+{{- $faqArray := slice -}}
+{{- $troubleshootingArray := slice -}}
+{{- $troubleshootingArrayWithPath := slice -}}
+{{- $link := "" -}}
+
+
+{{- range (where .Site.Pages "Section" $section).ByWeight -}}
+  {{- $x := .RelPermalink -}}
+  {{- if (not .Params.hidden) -}}
+  {{- if or (eq .Params.pcx_content_type "troubleshooting") (eq .Params.pcx_content_type "faq") -}}
+  {{- $troubleshootingArray = $troubleshootingArray | append (dict "link" .RelPermalink "title" .Title "resource_type" .Params.pcx_content_type ) -}}
+  {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $index2, $item2 := $troubleshootingArray -}}
+  {{- $rellink := "" -}}
+  {{- $title := "" -}}
+  {{- $self_length := sub (len (split $item2.link "/")) 2 -}}
+  {{- $path := slice -}}
+  {{- range $index, $item := (split $item2.link "/") -}}
+  {{- if gt (len $item ) 0 -}}
+    {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item).Path -}}
+    {{- $page := $.Site.GetPage $rellink -}}
+    {{- $title = $page.Title -}}
+    {{- if and (ne $index 1) (ne $index $self_length) -}}
+      {{- $path = $path | append $title -}}
+    {{- end -}}
+  {{- end -}}
+  {{- end -}}
+  {{- $item2 := merge $item2 (dict "path" $path) -}}
+  {{- $troubleshootingArrayWithPath = $troubleshootingArrayWithPath | append $item2 -}}
+{{- end -}}
+
+{{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".resource_type" "desc" -}}
+
+<table>
+<thead>
+  <tr>
+    <th>Location</th>
+    <th>Resource</th>
+    <th>Type</th>
+  </tr>
+</thead>
+<tbody>
+{{- range $troubleshootingArrayWithPath -}}
+{{- $link = printf "[%s](%s)" .title .link -}}
+{{- $resource_title := "" -}}
+{{- if eq .resource_type "troubleshooting" -}}
+{{- $resource_title = title .resource_type -}}
+{{- else -}}
+{{- $resource_title = upper .resource_type -}}
+{{- end -}}
+<tr>
+  <td>{{- delimit .path " > " -}}</td>
+  <td>{{- $.Page.RenderString $link -}}</td>
+  <td>{{ $resource_title }}</td>
+</tr>
+{{- end -}}
+</tbody>
+</table>
