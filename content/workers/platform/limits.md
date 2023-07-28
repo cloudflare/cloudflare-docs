@@ -79,7 +79,12 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
 
-CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is different from wall-clock time (duration)
+CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
+
+{{<Aside type="note"}}
+On the Unbound billing model, [Scheduled Workers](/workers/configuration/cron-triggers/) (Cron Triggers) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a Scheduled Worker may run for up to 15 minutes.
+{{</Aside>}}
+
 
 ---
 
