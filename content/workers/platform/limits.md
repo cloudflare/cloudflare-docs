@@ -58,32 +58,31 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | Bundled Usage Model                         | Unbound Usage Model                         |
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#usage-models)                         | [Unbound Usage Model]([Bundled Usage Model](/workers/platform/pricing/#usage-models)                         |
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
-| [CPU runtime](#cpu-runtime) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min Cron Trigger |     |
-| [Duration](#duration)       |                                            |                                             | No limit\*                                  |
+| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/platform/javascript-apis/#consumer) |     |
+| [Duration](#duration)       |   none                                         |  none                                           | none                                  |
 
 {{</table-wrap>}}
 
-### Bundled Usage Model
+## Duration
 
-Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a Worker is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/workers/platform/pricing/#usage-models).
+Duration is a measurement of wall-clock time — the total amount of time from the start to end of an invocation of a Worker. There is no hard limit on the duration of a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request.
 
-{{<Aside type="note" header="No limit* for duration">}}
+Cloudflare updates the Workers runtime a few times per week. When this happens, any in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated. While your application should follow the best practice of handling disconnects by retrying requests, this scenario is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
 
-There is no hard limit for duration. 
+---
 
-Cloudflare updates the Workers runtime a few times per week. When this happens, in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated.
+## CPU time
 
-While your application should follow the best practice of handling disconnects by retrying requests, the scenario described above is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
+CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is different from wall-clock time (duration)
 
-{{</Aside>}}
+---
 
-### Unbound Usage Model
-
-The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds of CPU time for HTTP requests and up to 15 minutes of CPU time for Cron Triggers. [Duration](#duration) is not capped but after 30 seconds there is a slightly higher chance of eviction. Learn more about [Usage Model pricing](/workers/platform/pricing/#usage-models).
+## TODO — need home for this content
+When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
 ## KV limits
 
@@ -193,31 +192,6 @@ If a Worker processes a request that pushes the Worker over the 128MB limit, the
 3. Find **Invocation Statuses** and examine _Exceeded Resources_.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
-
----
-
-## CPU runtime
-
-Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
-
-* A Worker may consume up to **10 milliseconds** on the Free plan.
-* A Worker or [Scheduled Worker](/workers/configuration/cron-triggers/) may consume up to **50 milliseconds** of CPU time with the Bundled usage model on the Paid Plan.
-* A Worker may run for up to **30 seconds** with the Unbound usage model on the Paid Plan.
-* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
-* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
-* A [Queue consumer Worker](/queues/platform/javascript-apis/#consumer) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, per invocation.
-
-There is no limit on the real runtime for a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
-
----
-
-## Duration
-
-Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128 MB of [memory](/workers/platform/limits/#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
-
-For example, when a Worker executes via a [scheduled event](/workers/runtime-apis/scheduled-event/), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
-
-Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/durable-objects/).
 
 ---
 
