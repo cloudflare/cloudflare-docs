@@ -69,7 +69,7 @@ Update your `wrangler.toml` configuration file with the Browser Rendering API bi
 filename: wrangler.toml
 ---
 name = "browser-worker"
-main = "src/index.ts"
+main = "src/worker.js"
 compatibility_date = "2023-03-14"
 compatibility_flags = [ "nodejs_compat" ]
 
@@ -97,7 +97,7 @@ export default {
 			url = new URL(url).toString(); // normalize
 			img = await env.BROWSER_KV_DEMO.get(url, { type: "arrayBuffer" });
 			if (img === null) {
-				const browser = await puppeteer.launch(env.<MYBROWSER>);
+				const browser = await puppeteer.launch(env.MYBROWSER);
 				const page = await browser.newPage();
 				await page.goto(url);
 				img = await page.screenshot();
@@ -165,7 +165,7 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
-This Worker instantiates a browser using Puppeteer, opens a new page, navigates to whatever you put in the `"url"` parameter, takes a screenshot of the page, stores the screenshot in KV, closes the browser, and responds with the JPEG image of the screenshot.
+This Worker instantiates a browser using Puppeteer, opens a new page, navigates to what you put in the `"url"` parameter, takes a screenshot of the page, stores the screenshot in KV, closes the browser, and responds with the JPEG image of the screenshot.
 
 If your Worker is running in production, it will store the screenshot to the production KV namespace. If you are running `wrangler dev`, it will store the screenshot to the dev KV namespace.
 
@@ -173,7 +173,7 @@ If the same `"url"` is requested again, it will use the cached version in KV ins
 
 ## 6. Test
 
-Run `npx wrangler dev --remote` to test your Worker.
+Run `npx wrangler dev --remote` to test your Worker locally before deploying to Cloudflare's global network.
 
 To test taking your first screenshot, go to the following URL: `<LOCAL_HOST_URL>/?url=https://example.com`.
 
