@@ -39,6 +39,6 @@ Directive         | Supported keywords | Monitored
 
 ## More resources
 
-For more information on CSP directives and their allowed values, refer to the following resources in the MDN documentation:
+For more information on CSP directives and their values, refer to the following resources in the MDN documentation:
 * [Content-Security-Policy response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
 * [CSP source values](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/Sources)
