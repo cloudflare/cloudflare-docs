@@ -63,7 +63,7 @@ Choose any hostname presented in the list. Cloudflare will issue a certificate s
 
 ## Create a Tunnel
 
-Next, [create a Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/install-and-setup/tunnel-guide/local/ with the command below.
+Next, create a tunnel with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>

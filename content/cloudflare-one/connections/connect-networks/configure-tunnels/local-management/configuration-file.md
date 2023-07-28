@@ -8,7 +8,7 @@ weight: 2
 
 {{<Aside type="note">}}
 
-[Quick tunnels](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#quick-tunnels) do not need a configuration file.
+[Quick tunnels](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#quick-tunnels) do not need a configuration file.
 
 {{</Aside>}}
 
@@ -167,7 +167,7 @@ Matched rule #3
 
 ## Update a configuration file
 
-When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/install-and-setup/deploy-cloudflared-replicas/) to propagate the new configuration with minimal downtime.
+When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) to propagate the new configuration with minimal downtime.
 
 1. Have a `cloudflared` instance running with the original version of the configuration file.
 2. Start a `cloudflared` replica running with the updated version of the configuration file.

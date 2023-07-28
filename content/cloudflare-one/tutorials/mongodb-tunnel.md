@@ -232,7 +232,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
-If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, refer to the list of [useful terms](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/#certpem).
+If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, refer to the list of [useful terms](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem).
 
 Store the `JSON` file as a Kubernetes secret.
 
