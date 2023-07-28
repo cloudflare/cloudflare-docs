@@ -24,8 +24,8 @@ After enabling the prefix advertisement or advertising a new prefix, do the foll
 
 To configure IP prefix assignment from your Cloudflare account home, use the **Status** drop-down list in the **IP Prefixes** dialog, as outlined below.
 
-1.  Log in to your Cloudflare dashboard.
-2.  Navigate to Account Home > **IP Addresses** > **IP Prefixes**.
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2.  Go to **IP Addresses** > **IP Prefixes**.
 3.  To edit a prefix, select **Edit** at the end of the entry.
 4.  From **Edit IP Prefixes**, under **Status**, select _Advertised_ or _Withdrawn_.
 5.  Select **Save** to commit your changes.
@@ -40,9 +40,18 @@ Most dynamic advertisement operations require that you supply the Cloudflare ID 
 
 ## Obtain Prefix IDs
 
-You can obtain Prefix IDs from the **IP Prefixes** page in your Cloudflare Account Home.
-
-1.  Select the expander for the entry whose Prefix ID you want to obtain.
-2.  To obtain the Prefix ID, refer to the **API Tag** value. To add the value to your clipboard, select **Copy**.
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **IP Addresses** > **IP Prefixes**.
+3. Find the CIDR for which you want the Prefix ID, and select the arrow next to it.
+4. The Prefix ID is the value under **API Tag**. Select **Copy** to add the value to your clipboard.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 To obtain Prefix IDs using the API, refer to the [List Prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API.
+ 
+{{</tab>}}
+{{</tabs>}}

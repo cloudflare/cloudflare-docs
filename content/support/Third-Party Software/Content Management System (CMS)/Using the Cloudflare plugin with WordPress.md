@@ -65,7 +65,7 @@ After configuring the Cloudflare WordPress plugin, customize your Cloudflare con
 -   Cache Static HTML with [**Cloudflare Page Rules**](https://support.cloudflare.com/hc/articles/236166048-Caching-Static-HTML-with-WordPress-WooCommerce)
 -   Optimize images with [**Polish**](https://support.cloudflare.com/hc/en-us/articles/360000607372-Using-Cloudflare-Polish-to-compress-images) and [**Mirage**](https://support.cloudflare.com/hc/en-us/articles/219178057-Configuring-Cloudflare-Mirage)
 -   Enable [**HTTP/2**](https://support.cloudflare.com/hc/en-us/articles/115002816808-How-do-I-enable-HTTP-2-Server-Push-in-WordPress)
--   [**Minify**](https://support.cloudflare.com/hc/en-us/articles/200168196-How-do-I-minify-HTML-CSS-and-JavaScript-to-optimize-my-site-) HTML, CSS, and JavaScript
+-   [**Minify**](/speed/optimization/content/auto-minify/) HTML, CSS, and JavaScript
 
 ___
 

@@ -5,11 +5,11 @@ pcx_content_type: configuration
 
 # Configure custom headers
 
-Some of R2's [extensions](/r2/api/s3/extensions/) require setting a specific header in order to use them when using them through the S3 compatible API. For some functionality you may want to set a request header on all requests of a certain type being made. Other times you may want to configure a different header for each individual request. This page contains some examples on how to do so with `boto3` and with `aws-sdk-js-v3`.
+Some of R2's [extensions](/r2/api/s3/extensions/) require setting a specific header when using them in the S3 compatible API. For some functionality you may want to set a request header on an entire category of requests. Other times you may want to configure a different header for each individual request. This page contains some examples on how to do so with `boto3` and with `aws-sdk-js-v3`.
 
 ## Setting a custom header on all requests
 
-In order to use certain functionality, for example to use the `cf-create-bucket-if-missing` header, you may want to set it for all `PutObject` requests you're making.
+When using certain functionality, like the `cf-create-bucket-if-missing` header, you may want to set a constant header for all `PutObject` requests you're making.
 
 ### Set a header for all requests with `boto3`
 
@@ -36,7 +36,7 @@ response = client.put_object(Bucket="my_bucket", Key="my_file", Body="file_conte
 print(response)
 ```
 
-### Set a header for all requests with `aws-sdk-js-v3
+### Set a header for all requests with `aws-sdk-js-v3`
 
 `aws-sdk-js-v3` allows the customization of request behavior through the use of its [middleware stack](https://aws.amazon.com/blogs/developer/middleware-stack-modular-aws-sdk-js/). This example adds a middleware to the client which adds a header to every `PutObject` request being made.
 

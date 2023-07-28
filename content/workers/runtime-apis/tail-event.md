@@ -30,10 +30,9 @@ export default {
 
 {{<definitions>}}
 
-- `events` {{<type>}}Array{{</type>}}
+- `events` {{<type>}}array{{</type>}}
 
-  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker.  For Workers for Platforms customers with a Tail Worker installed on the Dispatch Worker, `events` will contain two elements: one for the Dispatch Worker and one for the User Worker. 
-
+  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the User Worker.
 
 - `env` {{<type>}}object{{</type>}}
 
@@ -53,12 +52,12 @@ Written using the Service Worker syntax, handle `TailEvent` in Workers functions
 ---
 filename: index.js
 ---
-addEventListener('tail', event  => 
-    fetch("<YOUR_ENDPOINT>", {
-      method: "POST",
-      body: JSON.stringify(events),
-    })
-  );
+addEventListener('tail', event =>
+  fetch("<YOUR_ENDPOINT>", {
+    method: "POST",
+    body: JSON.stringify(event.traces),
+  })
+);
 ```
 
 ### Properties
@@ -68,6 +67,10 @@ addEventListener('tail', event  =>
 - `event.type` {{<type>}}string{{</type>}}
 
   - The type of event. This will always return `"tail"`.
+
+- `event.traces` {{<type>}}array{{</type>}}
+
+  - An array of [`TailItems`](/workers/runtime-apis/tail-event/#tailitems). One `TailItem` is collected for each event that triggers a Worker. For Workers for Platforms customers with a Tail Worker installed on the dynamic dispatch Worker, `events` will contain two elements: one for the dynamic dispatch Worker and one for the user Worker.
 
 - {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
@@ -92,7 +95,7 @@ addEventListener('tail', event  =>
 
 - `eventTimestamp` {{<type>}}number{{</type>}}
 
-  - Measured in epoch time. 
+  - Measured in epoch time.
 
 - `logs` {{<type>}}array{{</type>}}
 
@@ -101,25 +104,27 @@ addEventListener('tail', event  =>
 - `exceptions` {{<type>}}array{{</type>}}
 
   - An array of [`TailExceptions`](/workers/runtime-apis/tail-event/#tailexceptions). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
-  
+
 - `outcome` {{<type>}}string{{</type>}}
 
   - The outcome of the Worker invocation, one of:
-    - An uncaught JavaScript exception.
-    - A fetch handler that does not result in a Response.
-    - An internal error.
     - `unknown`: outcome status was not set.
     - `ok`: The worker invocation succeeded.
     - `exception`: An unhandled exception was thrown.  This can happen for many reasons, including:
-      - `exceededCpu`: The Worker invocation exceeded either its CPU limits.
-      - `exceededMemory`: The Worker invocation exceeded memory limits. 
-      - `scriptNotFound`: An internal error from difficulty retrieving the script.
-      - `canceled`: The worker invocation was canceled before it completed. Commonly because the client disconnected before a response could be sent.
+      - An uncaught JavaScript exception.
+      - A fetch handler that does not result in a Response.
+      - An internal error.
+    - `exceededCpu`: The Worker invocation exceeded either its CPU limits.
+    - `exceededMemory`: The Worker invocation exceeded memory limits.
+    - `scriptNotFound`: An internal error from difficulty retrieving the Worker script.
+    - `canceled`: The worker invocation was canceled before it completed. Commonly because the client disconnected before a response could be sent.
 
 {{</definitions>}}
 
 {{<Aside type="note" header="Outcome is not the same as HTTP status.">}}
-A Worker can have a successful outcome when it successfully sends a `404` or `5xx` error.  Likewise, a Worker can have an unsuccessful outcome even after successfully sending a `200` response. For example, when an asynchronous task registered via `waitUntil()` later exceeds CPU or memory limits. 
+Outcome is equivalent to the exit status of a script and an indicator of whether it has fully run to completion. A Worker outcome may differ from a response code if, for example:
+- a script successfully processes a request but is logically designed to return a `4xx`/`5xx` response.
+- a script sends a successful `200` response but an asynchronous task registered via `waitUntil()` later exceeds CPU or memory limits.
 {{</Aside>}}
 
 ### `FetchEventInfo`
@@ -145,15 +150,15 @@ A Worker can have a successful outcome when it successfully sends a `404` or `5x
 
   - Contains the data from [`IncomingRequestCfProperties`](/workers/runtime-apis/request/#incomingrequestcfproperties).
 
-- `headers` {{<type>}}Object{{</type>}}
+- `headers` {{<type>}}object{{</type>}}
 
   - Header name/value entries (redacted by default). Header names are lowercased, and the values associated with duplicate header names are concatenated, with the string `", "` (comma space) interleaved, similar to [the Fetch standard](https://fetch.spec.whatwg.org/#concept-header-list-get).
 
-- `method` {{<type>}}String{{</type>}}
+- `method` {{<type>}}string{{</type>}}
 
   - The HTTP request method.
 
-- `url` {{<type>}}String{{</type>}}
+- `url` {{<type>}}string{{</type>}}
 
   - The HTTP request URL (redacted by default).
 
@@ -163,13 +168,13 @@ A Worker can have a successful outcome when it successfully sends a `404` or `5x
 
 {{<definitions>}}
 
-- `getUnredacted()` {{<type>}}Object{{</type>}}
+- `getUnredacted()` {{<type>}}object{{</type>}}
 
   - Returns a TailRequest object with unredacted properties
 
 {{</definitions>}}
 
-Some of the properties of `TraceRequest` are redacted by default to make it harder to accidentally record sensitive information, like user credentials or API tokens. The redactions use heuristic rules, so they are subject to false positives and negatives. Clients can call `getUnredacted()` to bypass redaction, but they should always be careful about what information is retained, whether using the redaction or not.
+Some of the properties of `TailRequest` are redacted by default to make it harder to accidentally record sensitive information, like user credentials or API tokens. The redactions use heuristic rules, so they are subject to false positives and negatives. Clients can call `getUnredacted()` to bypass redaction, but they should always be careful about what information is retained, whether using the redaction or not.
 
 - Header redaction: The header value will be the string `“REDACTED”` when the (case-insensitive) header name is `cookie`/`set-cookie` or contains a substring `"auth”`, `“key”`, `“secret”`, `“token”`, or `"jwt"`.
 - URL redaction: For each greedily matched substring of ID characters (a-z, A-Z, 0-9, '+', '-', '_') in the URL, if it meets the following criteria for a hex or base-64 ID, the substring will be replaced with the string `“REDACTED”`.
@@ -199,11 +204,11 @@ Records information sent to console functions.
 
   - Measured in epoch time.
 
-- `level` {{<type>}}String{{</type>}}
+- `level` {{<type>}}string{{</type>}}
 
   - A string indicating the console function that was called. One of: `debug`, `info`, `log`, `warn`, `error`.
 
-- `message` {{<type>}}Object{{</type>}}
+- `message` {{<type>}}object{{</type>}}
 
   - The array of parameters passed to the console function.
 {{</definitions>}}
@@ -220,11 +225,11 @@ Records an unhandled exception that occurred during the Worker invocation.
 
   - Measured in epoch time.
 
-- `name` {{<type>}}String{{</type>}}
+- `name` {{<type>}}string{{</type>}}
 
   - The error type (For example,`Error`, `TypeError`, etc.).
 
-- `message` {{<type>}}Object{{</type>}}
+- `message` {{<type>}}object{{</type>}}
 
   - The error description (For example, `"x" is not a function`).
 

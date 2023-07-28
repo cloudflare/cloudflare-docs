@@ -53,6 +53,6 @@ macOS has two firewalls: an application-based firewall and a port-based firewall
 
 ### On Windows
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Run the `Get-NetFirewallProfile -Name Public` command to check the Firewall status of your public interface.
 1. Look for the value of **Enabled** which must be set to **True**.

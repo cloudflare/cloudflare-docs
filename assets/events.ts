@@ -113,7 +113,7 @@ export function tabs() {
   // Find all tab wrappers
   let wrappers = document.querySelectorAll(".tabs-wrapper");
 
-  addEventListener("load", () => {
+  addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");

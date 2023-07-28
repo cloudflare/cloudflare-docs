@@ -11,7 +11,7 @@ DNS locations are usually physical entities like offices, homes, retail stores, 
 
 To add a DNS location to Gateway:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **DNS Locations**.
 
 2. Select **Add a DNS location**.
 
@@ -33,7 +33,7 @@ When trying to configure a DNS location over IPv4, you may run into a **Your sou
 
 This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
-If you think someone else is wrongfully using this IPv4 address, [let us know](https://forms.gle/o9dLMjmCg6QtaDJ88).
+If you think someone else is wrongfully using this IPv4 address, [contact Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/#getting-help-with-an-issue).
 
 {{</Aside>}}
 
@@ -52,7 +52,7 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 
 8. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
 
-You can now apply [DNS policies](/cloudflare-one/policies/filtering/dns-policies/) to your location using the [DNS Location](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
+You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [DNS Location](/cloudflare-one/policies/gateway/dns-policies/#dns-location) selector.
 
 {{<Aside type="warning" header="Warning">}}
 

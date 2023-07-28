@@ -24,7 +24,7 @@ First, double-check if you have a filter defined. If you do, it may be too stric
 
 If you are confident in your filter, check the sample rate you used when creating the session. For example, a sample of 100 means you will receive one log for every 100 requests to your zone.
 
-Finally, make sure the destination is proxied through Cloudflare (also known as orange clouded). We cannot log your request if it does not go through our edge network.
+Finally, make sure the destination is proxied through Cloudflare (also known as orange clouded). We cannot log your request if it does not go through Cloudflare's global network.
 
 ## I am getting an error fetching my data. How can I solve this?
 

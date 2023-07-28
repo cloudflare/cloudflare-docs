@@ -16,7 +16,7 @@ Contact your sales team for more information on these steps.
 
 ## Step 2 — Obtain ICP and vet domain content
 
-1. [Obtain Internet Content Provider (ICP) filings or licenses](/china-network/concepts/icp/#obtain-an-icp-number) for all the root domains you wish to onboard.
+1. [Obtain Internet Content Provider (ICP) filings or licenses](/china-network/concepts/icp/#obtain-an-icp-number) for all the apex domains you wish to onboard.
 
 2. Present valid ICP filings or licenses for the zones you are onboarding.
 

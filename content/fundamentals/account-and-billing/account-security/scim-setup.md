@@ -22,7 +22,7 @@ This guide will use Okta as the SCIM provider.
 ## Limitations
 
 - You cannot automatically deprovision users under domains that do not have the SSO connector.
-- You cannot update [user attributes](/cloudflare-one/policies/filtering/identity-selectors/) from the SCIM provider.
+- You cannot update [user attributes](/cloudflare-one/policies/gateway/identity-selectors/) from the SCIM provider.
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
 - Currently, we do not support Okta Integration Network (OIN) integration. This integration is in review.
 

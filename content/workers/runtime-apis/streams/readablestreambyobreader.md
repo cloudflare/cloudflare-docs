@@ -58,5 +58,5 @@ In practice, the Workers team has found that `read` typically fills only 1% of t
 
 ## Related resources
 
-- [Using Streams](/workers/learning/using-streams/)
+- [Streams](/workers/runtime-apis/streams/)
 - [Background about BYOB readers in the Streams API WHATWG specification](https://streams.spec.whatwg.org/#byob-readers)

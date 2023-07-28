@@ -21,9 +21,10 @@ This is not an exhaustive list of Cloudflare products and features.
 
 {{<table-wrap>}}
 
-| Product | Customer zone | Saas zone | Notes |
+| Product | Customer zone | Saas provider zone | Notes |
 | --- | --- | --- | --- |
-| [Cloudflare Access](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) | Yes | Yes |
+| [Access](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) | Yes | Yes |
+| [API Shield](/api-shield/) | Yes | No |
 | [Argo Smart Routing](/argo-smart-routing/) | No | Yes | Customer zones can still use Smart Routing for non-O2O traffic. |
 | [Bot Management](/bots/plans/bm-subscription/) | Yes* | Yes* | Bot Management cannot be enabled on both the customer zone and the SaaS zone |
 | [Browser Integrity Check](/fundamentals/security/browser-integrity-check/) | Yes | Yes |
@@ -36,8 +37,8 @@ This is not an exhaustive list of Cloudflare products and features.
 | [IPv6 Compatibility](/support/network/understanding-and-configuring-cloudflares-ipv6-support/) | Yes | Yes* | If the customer zone has **IPv6 Compatibility** enabled, generally the SaaS zone should as well.<br/><br/>If not, make sure the SaaS zone enables [Pseudo IPv4](/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4). |
 | [Load Balancing](/load-balancing/) | No | Yes | Customer zones can still use Load Balancing for non-O2O traffic. |
 | [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) | Yes* | Yes | Page Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
-| [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/) | Yes | Yes |
-| [Origin Rules](/rules/origin-rules/) | Yes* | Yes | Origin Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
+| [Mirage](/speed/optimization/images/mirage/) | Yes | Yes |
+| [Origin Rules](/rules/origin-rules/) | No | Yes | Origin Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Polish](/images/polish/) | Yes* | Yes | Polish only runs on cached assets. If the customer zone is bypassing cache for SaaS zone destined traffic, then images optimized by Polish will not be loaded from origin. |
 | [Rate Limiting](/waf/rate-limiting-rules/) | Yes* | Yes | Rate Limiting rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Security Level](/fundamentals/security/security-level/) | Yes | Yes |

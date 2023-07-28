@@ -6,7 +6,7 @@ weight: 10
 
 # Glossary
 
-Review the definitions for terms used across Cloudflare.
+Review the definitions for terms used across Cloudflare's documentation.
 
 ## account
 
@@ -17,6 +17,10 @@ Accounts group one or more members together with specific roles or permissions. 
 An allowlist list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
 
 **Related terms:** blocklist
+
+## apex domain
+
+Apex domain is used to refer to a domain that does not contain a subdomain part, such as `example.com` (without `www.`). It is also known as "root domain" or "naked domain".
 
 ## API key
 
@@ -98,7 +102,7 @@ A network of remote servers used to store and maintain data.
 
 `cloudflared` is the software that powers Cloudflare Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
-**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/)
+**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
 
 ## content delivery network (CDN)
 
@@ -292,7 +296,7 @@ SSL public and private keys are essentially long strings of characters used for 
 
 ## roles
 
-Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](https://support.cloudflare.com/hc/articles/205065067#12345682).
+Authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/account-and-billing/members/roles/).
 
 ## root certificate
 
@@ -330,7 +334,7 @@ Static content is website content that can be delivered to an end user directly 
 
 ## Subject Alternative Name (SAN)
 
-The SAN field of an SSL certificate specifies additional hostnames (sites, IP addresses, common names, subdomains, root domains, etc.) protected by a single SSL Certificate.
+The SAN field of an SSL certificate specifies additional hostnames (sites, IP addresses, common names, subdomains, apex domains, etc.) protected by a single SSL Certificate.
 
 ## subscription, add-on, or plan extension
 

@@ -25,7 +25,7 @@ Your IdP will now be listed in the **Login methods** card.
 
 ## Test IdPs in Zero Trust
 
-To test if an IdP is correctly configured, navigate to **Settings** > **Authentication**. Next, click **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
+To test if an IdP is correctly configured, go to **Settings** > **Authentication**. Next, select **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
 ### Your provider is connected
 

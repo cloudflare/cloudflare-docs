@@ -45,7 +45,7 @@ Include or exclude query strings, optimize cache keys, or enable tiered cache to
 - [Choose a cache level](/cache/how-to/set-caching-levels/)
 - [Enable Tiered Cache with Argo](/cache/how-to/tiered-cache/#enable-tiered-cache)
 - [Configure custom cache keys (Enterprise only)](/cache/how-to/cache-keys/)
-- [Enable Prefetch URLs (Enterprise only)](/fundamentals/speed/prefetch-urls/)
+- [Enable Prefetch URLs (Enterprise only)](/speed/optimization/content/prefetch-urls/)
 
 ## Secure your cache configuration
 
@@ -61,15 +61,17 @@ To provide Cloudflare services to our customers, we may need to alter your HTML 
 
 These code alterations only occur on the cacheable objects found at Cloudflare's edge and do not affect the original source. The changes will also be removed if the specific feature is disabled and the cache is purged.
 
-Review the list of Cloudflare features that function in this manner.
+Review the list of Cloudflare features that function in this manner:
 
-- [Auto Minify](/support/speed/optimization-file-size/using-cloudflare-auto-minify/)
-- [Rocket Loader](/fundamentals/speed/rocket-loader/)
+- [Auto Minify](/speed/optimization/content/auto-minify/)
+- [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Polish](/images/polish/)
-- [Mirage](/support/speed/optimization-delivery/configuring-cloudflare-mirage/)
+- [Mirage](/speed/optimization/images/mirage/)
 - [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)
 - [Email address obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
-- [Bot Management Javascript Detections](/bots/reference/javascript-detections/)
+- [Bot Management JavaScript Detections](/bots/reference/javascript-detections/)
+
+organise
 
 ## Troubleshoot
 

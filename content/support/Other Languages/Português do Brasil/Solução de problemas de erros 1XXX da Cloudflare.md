@@ -376,7 +376,7 @@ Você solicitou uma página em um site (`tunel.exemplo.com`) que está na rede d
 ### Solução
 
 -   **Se você for um visitante desse site**: tente novamente daqui a alguns minutos.
--   **Se você for o proprietário desse site**: certifique-se de que o _cloudflared_ está sendo executado e pode alcançar a rede. Você pode querer ativar o [balanceamento de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para o seu túnel.
+-   **Se você for o proprietário desse site**: certifique-se de que o _cloudflared_ está sendo executado e pode alcançar a rede. Você pode querer ativar o [balanceamento de carga](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) para o seu túnel.
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### Causa comum
 
-Um Cloudflare Worker excede um [limite de tempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
+Um Cloudflare Worker excede um [limite de tempo de CPU](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Tempo de CPU é o tempo gasto na execução de código (por exemplo, loops, análise de JSON etc). O tempo gasto em solicitações de rede (busca, resposta) não conta para o tempo de CPU.
 
 ### Solução
 

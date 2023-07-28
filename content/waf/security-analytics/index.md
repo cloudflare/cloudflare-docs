@@ -102,7 +102,7 @@ Additionally, you can use the slider tool below the chart to filter incoming req
 
 The main chart displays the following data for the selected time frame, according to the selected tab:
 
-* **HTTP requests**: Requests mitigated by a Cloudflare security product (blocked or challenged) and requests that were not mitigated. Unmitigated requests include requests handled using one of the following actions: _Log_, _Skip_, _Allow_.
+* **HTTP requests**: Requests mitigated by a Cloudflare security product and requests that were not mitigated. Mitigated requests include requests blocked or challenged by Cloudflare's application security products such as the WAF and HTTP DDoS protection. Unmitigated requests include requests handled using one of the following actions: _Log_, _Skip_, _Allow_.
 * **Attack analysis**: [WAF attack score](/waf/about/waf-attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
 * **Bot analysis**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, or _Likely human_.
 

@@ -12,10 +12,13 @@ meta:
 {{<plan type="all">}}
 
 {{<render file="_rules-definition.md">}}
+<br>
+
+Rules features require that you [proxy the DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) of your domain (or subdomain) through Cloudflare.
 
 ---
 
-## Products
+## Features
 
 {{<feature header="Transform Rules" href="/rules/transform/">}}
 Adjust the URI path, query string, and HTTP headers of requests and responses on the Cloudflare global network.

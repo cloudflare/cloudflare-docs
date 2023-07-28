@@ -257,12 +257,12 @@ updates](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
 
 **Resolution**
 
-[Contact your hosting provider](#h_cf28c038-16c1-4841-a85f-f905240aaebe) to exclude the following common causes at your origin web server:
+Contact your hosting provider to exclude the following common causes at your origin web server:
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](https://support.cloudflare.com/hc/articles/360026016272) support
--   The [cipher suites](/ssl/reference/cipher-suites/) accepted by Cloudflare does not match the cipher suites supported by the origin web server
+-   No [SNI](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support
+-   The [cipher suites](/ssl/reference/cipher-suites/supported-cipher-suites/) accepted by Cloudflare does not match the cipher suites supported by the origin web server
 
 {{<Aside type="tip">}}
 If 525 errors occur intermittently, review the origin web server error
@@ -275,7 +275,7 @@ level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 
 **Additional checks**
 
--   Check if you have a certificate installed on your origin server. You can check [this article](https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
+-   Check if you have a certificate installed on your origin server. You can check [this article](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
 -   [Review the cipher suites](/ssl/reference/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
 -   Check your server's error logs from the timestamps you see 525s to ensure there are errors that could be causing the connection to be reset during the SSL handshake.
 
@@ -412,6 +412,7 @@ ___
 
 HTTP error 530 is returned with an accompanying 1XXX error displayed. Search for the specific [1XXX error within the Cloudflare Help Center](https://support.cloudflare.com/hc/sections/200820298) for troubleshooting information.
 
+Enabling [Load Balancing](/load-balancing/) in China will cause a `530` error.
 ___
 
 ## Related resources

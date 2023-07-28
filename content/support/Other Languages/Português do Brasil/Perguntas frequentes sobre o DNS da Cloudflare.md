@@ -186,7 +186,7 @@ ___
 
 ## Por que vejo centenas de registros de DNS aleatórios depois de adicionar meu domínio?
 
-Isso pode acontecer se você tinha um registro curinga \* configurado em seu DNS autoritativo anterior. Você pode remover esses registros em massa usando a API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record . Ou você também pode excluir seu domínio do Painel de controle da Cloudflare, excluir o registro curinga de seu DNS autoritativo e adicionar novamente o domínio
+Isso pode acontecer se você tinha um registro curinga \* configurado em seu DNS autoritativo anterior. Você pode remover esses registros em massa usando a API: /api/operations/dns-records-for-a-zone-delete-dns-record . Ou você também pode excluir seu domínio do Painel de controle da Cloudflare, excluir o registro curinga de seu DNS autoritativo e adicionar novamente o domínio
 
 ___
 

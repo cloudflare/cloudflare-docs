@@ -37,7 +37,7 @@ ___
 
 ## Problemas conhecidos sobre cookies SameSite e cf\_clearance
 
-Quando um desafio [Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136) ou Javascript é resolvido como para uma [**Regra de firewall**](https://support.cloudflare.com/hc/articles/360016473712) ou [**Regra de acesso via IP**](https://support.cloudflare.com/hc/articles/217074967), um cookie **cf\_clearance** é definido no navegador do cliente. O cookie _cf\_clearance_ tem uma vida útil padrão de 30 minutos, mas é configurado pelo [**tempo de validade do desafio**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) na guia **Configurações** do aplicativo Cloudflare **Firewall**.
+Quando um desafio [Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136) ou JavaScript é resolvido como para uma [**Regra de firewall**](https://support.cloudflare.com/hc/articles/360016473712) ou [**Regra de acesso via IP**](https://support.cloudflare.com/hc/articles/217074967), um cookie **cf\_clearance** é definido no navegador do cliente. O cookie _cf\_clearance_ tem uma vida útil padrão de 30 minutos, mas é configurado pelo [**tempo de validade do desafio**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) na guia **Configurações** do aplicativo Cloudflare **Firewall**.
 
 O Cloudflare usa o **SameSite**\=_None_ desde o cookie **cf\_clearance** para que as solicitações de visitantes de diferentes hostnames não sejam atendidas com desafios ou erros posteriores. Quando usado, o **SameSite**\=_None_ deve atuar em conjunto com o sinalizador _Secure_.
 

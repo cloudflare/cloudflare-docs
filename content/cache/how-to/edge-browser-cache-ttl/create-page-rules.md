@@ -71,7 +71,7 @@ You can also [purchase additional rules](https://www.cloudflare.com/features-pag
 
 {{<Aside type="note" header="Note">}}
 
-We do not support non-ASCII characters (e.g. punycode/unicode domain) in Page Rules. Instead, you can URL-encode the string using [Punycode converter](https://www.punycoder.com/) as a workaround.
+We do not support non-ASCII characters (for example, punycode/unicode domain) in Page Rules. Instead, you can URL-encode the string using [Punycode converter](https://www.punycoder.com/) as a workaround.
 
 {{</Aside>}}
 
@@ -112,7 +112,7 @@ Enterprise domains can cache content by device type to target visitors with cont
 
 Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, or `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
 
-To purge resources using Cache By Device Type, you must [purge by Cache-Tag](/cache/how-to/purge-cache/#purge-using-cache-tags).
+To purge resources using Cache By Device Type, you must [purge by Cache-Tag](/cache/how-to/purge-cache/purge-by-tags/).
 
 ## Cache Everything
 
