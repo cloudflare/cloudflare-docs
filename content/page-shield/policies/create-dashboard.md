@@ -19,7 +19,7 @@ meta:
     * To refresh the displayed sources based on Page Shield's detected resources, select **Refresh suggestions**.
 
     {{<Aside type="note">}}
-For a list of supported CSP directives, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).
+For a list of supported CSP directives and keywords, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).
     {{</Aside>}}
 
 8. Under **Then take action**, select the desired action:
