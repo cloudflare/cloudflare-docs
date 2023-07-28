@@ -77,7 +77,7 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 
 ---
 
-## CPU time
+CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
 
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is different from wall-clock time (duration)
 
