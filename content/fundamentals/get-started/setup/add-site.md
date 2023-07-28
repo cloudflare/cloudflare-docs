@@ -6,7 +6,7 @@ weight: 2
 
 # Add a website or application to Cloudflare
 
-When you add a site to Cloudflare, you need to create a new domain within Cloudflare and then perform additional steps to activate that domain.
+When you add a website or application to Cloudflare, you need to create a new Cloudflare zone and perform additional steps to activate the zone.
 
 {{<Aside type="note">}}
 

@@ -61,7 +61,7 @@ routes = [
 ]
 ```
 
-Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable. If using `zone_id`, find your zone ID by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > select your zone > find the **Zone ID** in the lefthand side of **Overview**.
+Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable.If using `zone_id`, first [find your zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 To add multiple routes:
 

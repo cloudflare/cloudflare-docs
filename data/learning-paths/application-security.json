@@ -52,7 +52,7 @@
       {
         "type": "module",
         "title": "Before you begin",
-        "description": "Before you can secure your website or application, make sure you have already <a href='/learning-paths/get-started/'>added that site to Cloudflare</a>.",
+        "description": "Before you can secure your website or application added as a Cloudflare zone, make sure you have already <a href='/fundamentals/get-started/setup/add-site/'>added that site to Cloudflare</a>.",
         "estimated_time": 30
       },
       {
