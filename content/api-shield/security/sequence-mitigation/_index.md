@@ -14,8 +14,15 @@ Sequence Mitigation allows you to enforce request patterns for authenticated cli
 
 To track requests to API endpoints, they must be added to [Endpoint Management](/api-shield/management-and-monitoring/). Add your endpoints to endpoint management via [API Discovery](/api-shield/security/api-discovery/), [Schema Validation](/api-shield/security/schema-validation/), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) through the Cloudflare dashboard.
 
+{{<Aside type="note">}}
+
+API endpoints are subject to change.
+
+{{</Aside>}}
+
 ### Session Identifiers
-API Shield uses your configured Session Identifier to track sessions. You must configure a session identifier that is unique per end user of your API in order for Sequence Mitigation to function as expected.
+
+API Shield uses your configured session identifier to track sessions. You must configure a session identifier that is unique per end user of your API in order for Sequence Mitigation to function as expected.
 
 ### Request Limitations
 
