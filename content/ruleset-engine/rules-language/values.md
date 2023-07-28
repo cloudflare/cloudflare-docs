@@ -127,5 +127,5 @@ http.host in {"example.com" "example.net"}
 
 ip.src in {198.51.100.1 198.51.100.3..198.51.100.7 192.0.2.0/24 2001:0db8::/32}
 
-tcp.dstport in { 8000..8009 8080..8089 }
+tcp.dstport in {8000..8009 8080..8089}
 ```
