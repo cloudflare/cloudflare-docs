@@ -30,10 +30,11 @@
     {{- end -}}
   {{- end -}}
   {{- end -}}
-  {{- $item := merge $item (dict "path" $path) -}}
+  {{- $item := merge $item (dict "path" (delimit $path " > ")) -}}
   {{- $troubleshootingArrayWithPath = $troubleshootingArrayWithPath | append $item -}}
 {{- end -}}
 
+{{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".path" -}}
 {{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".resource_type" "desc" -}}
 
 <table>
@@ -54,7 +55,7 @@
 {{- $resource_title = upper .resource_type -}}
 {{- end -}}
 <tr>
-  <td>{{- delimit .path " > " -}}</td>
+  <td>{{- .path -}}</td>
   <td>{{- $.Page.RenderString $link -}}</td>
   <td>{{ $resource_title }}</td>
 </tr>
