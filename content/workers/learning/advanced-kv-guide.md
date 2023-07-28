@@ -6,20 +6,19 @@ weight: 7
 
 # Best Practices for Workers KV
 
-This guide provides best practices for optimizing Workers KV latency as well as covering advanced tricks 
+This guide provides best practices for optimizing Workers KV latency as well as covering advanced tricks
 that our customers sometimes employ for their problem domain, including:
 
-* Reducing TTFB latency through the [`cacheTtl`](/workers/runtime-apis/kv/#cache-ttl) parameter without sacrificing
-consistency latency.
-* Avoiding the use of redundant caching layers.
-* Using Workers KV's [bindings API](/workers/runtime-apis/kv/) instead of the administrative REST API for user-facing workloads.
-* Ensuring correctness when you have concurrent writes to manage.
-* How to get early access to get sub 1 minute consistency latency.
-* Guidance on subtleties that crop up that make it hard to synthetically test Workers KV performance as a proxy to
-predict production performance.
-* Improving your observability of KV performance.
+- Reducing TTFB latency through the [`cacheTtl`](/workers/runtime-apis/kv/#cache-ttl) parameter without sacrificing
+  consistency latency.
+- Avoiding the use of redundant caching layers.
+- Using Workers KV's [bindings API](/workers/runtime-apis/kv/) instead of the administrative REST API for user-facing workloads.
+- Ensuring correctness when you have concurrent writes to manage.
+- Guidance on subtleties that crop up that make it hard to synthetically test Workers KV performance as a proxy to
+  predict production performance.
+- Improving your observability of KV performance.
 
-As background, it's best to review [how KV works](/workers/learning/how-kv-works.md) before reading this document.
+As background, it's best to review [how KV works](/workers/learning/how-kv-works) before reading this document.
 
 # Performance optimizations
 
@@ -27,7 +26,7 @@ As background, it's best to review [how KV works](/workers/learning/how-kv-works
 
 ### Embrace long cacheTtl
 
-*TLDR*: Set a long cacheTtl (e.g. 86400 to represent 1 day).
+_TLDR_: Set a long cacheTtl (e.g. 86400 to represent 1 day).
 
 When reading a value, KV let's you customize the [`cacheTtl`](https://developers.cloudflare.com/workers/runtime-apis/kv/#cache-ttl) parameter.
 Since Cloudflare is a security-first company and KV is sometimes used to store things like authentication tokens, the default `cacheTtl` value
@@ -38,8 +37,7 @@ recently written value.
 Most Workers KV requests however are not for security-sensitive keys. To optimize the long-tail performance of infrequently accessed keys, specify a longer
 `cacheTtl` value (e.g. 86400 to request the entire day). Historically, a blocker for many customers was that this meant that your reads wouldn't see writes
 for the duration of the cacheTtl. However, as described in our [architecture blog post](https://blog.cloudflare.com/faster-workers-kv-architecture/),
-most customers today are using the new architecture - you will see updated values within ~1 minute of the write, regardless of the `cacheTtl` value. See also the
-[section](#noticing-updated-values-within-seconds) below about how to explore getting sub minute global consistency.
+most customers today are using the new architecture - you will see updated values within ~1 minute of the write, regardless of the `cacheTtl` value.
 
 {{<Aside type="note" header="Decoupled cacheTTL and visible writes availability">}}
 A small fixed list of customers which are comprised of early closed betas and our largest ENT customers are currently excluded as we scale up the system. A longer
@@ -70,22 +68,22 @@ cacheTtl in your extra caching layer and KV.
 
 The recommendations to solve this problem in the order Cloudflare recommends applying them:
 
-* Don't put cache in front of KV.
-  * Pros: the system behaves optimally from a performance perspective. You can also leverage [notice writes more quickly than 1 minute](#noticing-updated-values-within-seconds).
-  * Cons: Today you get charged for cache reads. Larger customers should work with support and longer-term we hope to adjust our pricing to obviate the pricing differential.
-* Set a longer `cacheTtl`
-  * Pros: Improved latency across the board.
-  * Cons: You may see prolonged stale reads by 1 extra KV cycle because the extra cache layer isn't letting KV know to refresh the asset (e.g if your extra cache layer caches
-  for 1 minute, it will take you 2 minutes to see a write (a longer `cacheTtl` without an extra cache layer in front of KV doesn't have this problem).
-* Probabilistically direct some subset of cache hits (e.g. 1%) to KV anyway in a `waitUntil`. **NOTE**: The `waitUntil` is important because KV will abort work if you return a response
+- Don't put cache in front of KV.
+  - Pros: the system behaves optimally from a performance perspective.
+  - Cons: Today you get charged for cache reads. Larger customers should work with support and longer-term we hope to adjust our pricing to obviate the pricing differential.
+- Set a longer `cacheTtl`
+  - Pros: Improved latency across the board.
+  - Cons: You may see prolonged stale reads by 1 extra KV cycle because the extra cache layer isn't letting KV know to refresh the asset (e.g if your extra cache layer caches
+    for 1 minute, it will take you 2 minutes to see a write (a longer `cacheTtl` without an extra cache layer in front of KV doesn't have this problem).
+- Probabilistically direct some subset of cache hits (e.g. 1%) to KV anyway in a `waitUntil`. **NOTE**: The `waitUntil` is important because KV will abort work if you return a response
   before KV does its work and no refresh will take place.
-  * Pros: KV will see more representative usage patterns and thus ensure that the most recent value is always in the cache.
-  * Cons: You need to manually fine tune the probability and you may not have sufficient observability to see problems. Consider following the steps in [improving observability](#improving-observability) to
-  make sure you can see this problem.
-* Shorten the TTL within your extra caching layer
-  * Pros: All keys will mostly avoid the stampeding herd of cold KV accesses
-  * Cons: Not as effective at improving performance as increasing the cacheTtl. If the key is evicted from KV's cache due to insufficient usage, you will still suffer a stampeding
-  herd of slow requests.
+  - Pros: KV will see more representative usage patterns and thus ensure that the most recent value is always in the cache.
+  - Cons: You need to manually fine tune the probability and you may not have sufficient observability to see problems. Consider following the steps in [improving observability](#improving-observability) to
+    make sure you can see this problem.
+- Shorten the TTL within your extra caching layer
+  - Pros: All keys will mostly avoid the stampeding herd of cold KV accesses
+  - Cons: Not as effective at improving performance as increasing the cacheTtl. If the key is evicted from KV's cache due to insufficient usage, you will still suffer a stampeding
+    herd of slow requests.
 
 {{<Aside type="note" header="What does cardinality and distribution mean?">}}
 [Cardinality](https://en.wikipedia.org/wiki/Cardinality) is a mathemtical concept. Within the context of Workers KV, it means "how many distinct keys
@@ -108,15 +106,18 @@ coalescing the need to fetch them somehow so that a single cached fetch retrieve
 of the values. The reason this helps is that long tail retrieval is that the cooler keys share access patterns with the hotter
 keys and are thus more likely to be present in the cache. Some approaches to accomplishing this are described below.
 
-
 #### Merging into a "super" KV entry
+
 One coalescing technique is to make all the keys and values part of a super key/value object. For example, something like this:
+
 ```
 key1: value1
 key2: value2
 key3: value3
 ```
+
 becomes
+
 ```
 coalesced: {
   key1: value1,
@@ -175,7 +176,7 @@ writers, there's no guarantee about a winner. This is even more problematic if y
 partial update of a value. A lot of customers have success creating a [Durable Object](/workers/learning/using-durable-objects)
 and making it responsible for all the writes to your KV namespace. This way, you can serialize access for writing the value.
 
-*Caution**: Workers KV is an eventually consistent system. If you try to do a read/modify/write operation where the read is
+\*Caution\*\*: Workers KV is an eventually consistent system. If you try to do a read/modify/write operation where the read is
 coming from KV, you can cause modifications to be lost because there's no guarantee that you will always read the most recent
 value written, even if the write is from the same data center. Additionally, where a Durable Object is running moves around
 outside of your control.
@@ -185,31 +186,25 @@ ground truth that you read/modify/write and then write the updated value to KV t
 R2 with conditional upload). That way your value is updated in a strongly consistent fashion and once that happens, you publish
 it to KV for reading.
 
-# Noticing updated values within seconds
-
-Currently, reads have a "refreshTtl" of 1 minute. This means that a write is noticed within 1 minute of a read being issued.
-While we aren't yet ready to let customers customize the refreshTtl themselves within the Runtime API, if this is important
-to your use-case, please contact support to change the default for your namespace and we can work with you.
-
 # Benchmarking Workers KV
 
 Benchmarking to predict what your Workers KV performance will look like in production is tricky and nuanced. It's best to try
 to put production load onto the system and then measure real-world performance rather than trying to do a synthetic test.
 Examples of issues that can trip up even internal engineers who know all the technical details:
 
-* You don't have [permission](https://blog.cloudflare.com/mitigating-spectre-and-other-security-threats-the-cloudflare-workers-security-model/#step1disallowtimersandmultithreading)
-within the Runtime to get accurate timing measurements. That means you have to know to time externally to the system. At the same time,
-external timings are subject to sources of error that have nothing to do with Workers KV performance, particularly as described below.
-* A low traffic Worker is more subject to cold starts even though in practice cold starts don't exist once production traffic is flowing.
-* Within something we call "MCP"s, we have multiple virtual data centers within a single PoP. Which virtual data center you hit
-is random and today such data centers have disjoint caches and require even more traffic to keep the cache warm regardless of which
-virtual data center you randomly get routed to.
-* [wrk](https://github.com/wg/wrk) can typically generate substantial enough load from a single machine (thousands of requests
-per second) which should probably be enough to representative and overcome such issues, but it requires careful tuning of
-parameters to achieve max throughput and you have little to no visibility into Cloudflare's internal network to know if you succeeded.
-* Synthetic tests are typically hand-written and often fail to reproduce real-world access patterns for keys (if you have multiple keys).
-If you have a recording you can play through of the access patterns, that might work well. A representative recording is difficult
-to capture in practice because of the global nature of Cloudflare Workers.
+- You don't have [permission](https://blog.cloudflare.com/mitigating-spectre-and-other-security-threats-the-cloudflare-workers-security-model/#step1disallowtimersandmultithreading)
+  within the Runtime to get accurate timing measurements. That means you have to know to time externally to the system. At the same time,
+  external timings are subject to sources of error that have nothing to do with Workers KV performance, particularly as described below.
+- A low traffic Worker is more subject to cold starts even though in practice cold starts don't exist once production traffic is flowing.
+- Within something we call "MCP"s, we have multiple virtual data centers within a single PoP. Which virtual data center you hit
+  is random and today such data centers have disjoint caches and require even more traffic to keep the cache warm regardless of which
+  virtual data center you randomly get routed to.
+- [wrk](https://github.com/wg/wrk) can typically generate substantial enough load from a single machine (thousands of requests
+  per second) which should probably be enough to representative and overcome such issues, but it requires careful tuning of
+  parameters to achieve max throughput and you have little to no visibility into Cloudflare's internal network to know if you succeeded.
+- Synthetic tests are typically hand-written and often fail to reproduce real-world access patterns for keys (if you have multiple keys).
+  If you have a recording you can play through of the access patterns, that might work well. A representative recording is difficult
+  to capture in practice because of the global nature of Cloudflare Workers.
 
 In essence, Cloudflare's infrastructure gets faster the more traffic you put on them, and synthetic tests often cannot generate
 enough load to simulate that properly.
@@ -220,10 +215,10 @@ We are working on providing customers with deeper insights into how KV performs 
 you will gain insights into your performance that might otherwise be difficult or impossible for you to capture from outside KV. In the meantime,
 we've added a `cacheStatus` field to the response object returned from `list` and `getWithMetadata`. The values defined are as follows:
 
-* `MISS`: The current data center doesn't have this value. The value will be retrieved through upper tiers or from the central data store.
-* `HIT`: The current data center serviced this value.
-* `REVALIDATE`: A `HIT` and Workers KV took this as an opportunity to trigger a background refresh of the value.
-* `STALE`: A `HIT` where Workers KV noticed it's deep within the default 1 minute refresh interval for the asset.
+- `MISS`: The current data center doesn't have this value. The value will be retrieved through upper tiers or from the central data store.
+- `HIT`: The current data center serviced this value.
+- `REVALIDATE`: A `HIT` and Workers KV took this as an opportunity to trigger a background refresh of the value.
+- `STALE`: A `HIT` where Workers KV noticed it's deep within the default 1 minute refresh interval for the asset.
 
 You can then leverage [Workers Analytics Engine](/analytics/analytics-engine/) to record this information and build basic visualizations
 to measure your cache performance.

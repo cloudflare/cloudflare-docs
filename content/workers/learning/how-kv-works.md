@@ -6,7 +6,7 @@ title: How KV works
 # How KV works
 
 Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers,
-then caches that data in Cloudflare's data centers after access.  KV supports exceptionally high read volumes with low
+then caches that data in Cloudflare's data centers after access. KV supports exceptionally high read volumes with low
 latency, making it possible to build highly dynamic APIs and websites that respond as quickly as a cached static file
 would. While reads are periodically revalidated in the background, requests which are not in cache and need to hit the
 centralized back end can see high latencies.
@@ -63,10 +63,8 @@ If you need stronger consistency guarantees, consider using [Durable Objects](/w
 Alternatively, if you are happy with the read behavior but need finer-grained guarantees about the behavior of concurrent
 writes into KV, that is described in the [advanced topic on concurrent writes](/workers/learning/advanced-kv-guide#concurrent-writers-to-a-single key).
 
-We also are working on making changes possible to visible [within seconds](/workers/learning/advanced-kv-guide#noticing-updated-values-within-seconds)
-and hope to eventually make this self-serve.
-
 KV does not perform like an in-memory datastore, such as [Redis](https://redis.io). Accessing KV values, even when locally cached, has significantly more latency than reading a value from memory within a Worker script.
 
 ## Security
+
 All values are encrypted at rest with 256-bit AES-GCM, and only decrypted by the process executing your Worker scripts or responding to your API requests.
