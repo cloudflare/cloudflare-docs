@@ -21,7 +21,7 @@ To access your waiting room’s analytics in the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Traffic** > **Waiting Room**.
 3. Expand the waiting room you would like to review metrics for, to display a preview of your waiting room analytics. The preview gives you insights into peak traffic through your waiting room over the last 24 hours including: Maximum active users, Maximum queued users and Typical time in queue for queued users.
-4. Select **View More** under the Waiting Room Analytics section to see more historical analytics for your waiting room.
+4. Select **View More** under the Waiting Room Analytics section to get more historical analytics for your waiting room.
 5. The time range for all of the metrics displayed defaults to the last 24 hours. To change the time range, select from the drop down. You can select any time range from the last 30 days that is a minimum of 30 minutes.
 
 ## Event Analytics
@@ -30,7 +30,7 @@ If your waiting room has a completed scheduled event, you can quickly access the
 
 To save this event information, you can either select **Download data** or **Print report**. If you delete the event, the time period link will no longer appear in your dashboard. If you edit the timing of the event, the time period link will update as well.
 
-If you do not see a link to your event’s analytics, one of the following may have happened:
+If you do not get a link to your event’s analytics, one of the following may have happened:
 
 - Your event has not happened yet.
 - Your event started more than 30 days ago.

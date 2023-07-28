@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: How KV works
-weight: 7
 ---
 
 # How KV works
@@ -60,7 +59,7 @@ exists noticing a value is created as when a value is changed.
 Workers KV is not currently ideal for situations where you need support for atomic operations or where values must be
 read and written in a single transaction.
 
-If you need stronger consistency guarantees, consider using [Durable Objects](/workers/learning/using-durable-objects/).
+If you need stronger consistency guarantees, consider using [Durable Objects](/workers/configuration/durable-objects/).
 Alternatively, if you are happy with the read behavior but need finer-grained guarantees about the behavior of concurrent
 writes into KV, that is described in the [advanced topic on concurrent writes](/workers/learning/advanced-kv-guide#concurrent-writers-to-a-single key).
 

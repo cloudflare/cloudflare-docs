@@ -75,7 +75,7 @@ You will need to provide the token contained in the file when creating a job.
 
 {{<Aside type="note" header="Note">}}
 
-When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
+When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it is uploaded.
 
 {{</Aside>}}
 

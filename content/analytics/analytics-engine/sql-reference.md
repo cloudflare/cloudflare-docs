@@ -738,7 +738,7 @@ We also support the `BETWEEN` operator for checking a value is in an inclusive r
 
 | Operator  | Description |
 |-----|----------|
-| `-` | negation operator (e.g. `-42`) |
+| `-` | negation operator (for example, `-42`) |
 
 {{</table-wrap>}}
 

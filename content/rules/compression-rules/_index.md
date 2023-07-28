@@ -32,7 +32,7 @@ Compression Rules are available to Enterprise customers.
 
 ## Relevant fields
 
-The following fields are commonly used in expressions of Compression Rules:
+The following fields are commonly used in expressions of compression rules:
 
 {{<table-wrap>}}
 

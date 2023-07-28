@@ -61,7 +61,7 @@ To provide Cloudflare services to our customers, we may need to alter your HTML 
 
 These code alterations only occur on the cacheable objects found at Cloudflare's edge and do not affect the original source. The changes will also be removed if the specific feature is disabled and the cache is purged.
 
-Review the list of Cloudflare features that function in this manner.
+Review the list of Cloudflare features that function in this manner:
 
 - [Auto Minify](/speed/optimization/content/auto-minify/)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
@@ -69,7 +69,9 @@ Review the list of Cloudflare features that function in this manner.
 - [Mirage](/speed/optimization/images/mirage/)
 - [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)
 - [Email address obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
-- [Bot Management Javascript Detections](/bots/reference/javascript-detections/)
+- [Bot Management JavaScript Detections](/bots/reference/javascript-detections/)
+
+organise
 
 ## Troubleshoot
 

@@ -8,7 +8,7 @@ meta:
 
 # Install a certificate using the WARP client
 
-The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on devices enrolled in your Zero Trust organization. The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/filtering/http-policies/tls-decryption/), display custom block pages, and more.
+The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on devices enrolled in your Zero Trust organization. The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), display custom block pages, and more.
 
 ## Supported platforms
 
@@ -41,6 +41,8 @@ WARP only installs the system certificate — it does not install the certificat
 
 The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
 
+The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` for easy reference by scripts or tools.
+
 ### macOS
 
 1. Open **Keychain Access**.
@@ -49,6 +51,9 @@ The default Cloudflare certificate is named **Cloudflare for Teams ECC Certifica
 4. You should see **This certificate is marked as trusted for all users**. If the certificate is not trusted:
     1. Select **Trust**.
     2. Set **When using this certificate** to _Always Trust_.
+  
+The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for easy reference by scripts or tools.
+
 
 ### Linux
 
@@ -59,6 +64,7 @@ If you do not see the certificate, run the following command to update the syste
 ```sh
 $ update-ca-certificates
 ```
+The certificate is also placed in `/var/lib/cloudflare-warp/installed_cert.pem` for easy reference by scripts or tools.
 
 ## Uninstall the certificate
 

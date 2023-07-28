@@ -13,8 +13,8 @@ meta:
 <div>
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP with Gateway                                                                         | All plans                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | WARP with Gateway                                                                                 | All plans                                                     |
 
 </div>
 </details>
@@ -39,7 +39,7 @@ You are now ready to start requiring WARP for your Access applications.
 
 ## 2. Add the check to an Access policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access > Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Locate the application for which you want to require WARP.
 

@@ -64,9 +64,6 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 ### Country steering 
 
-{{<Aside type="note">}}
-Currently, China is not supported for Geo steering.{{</Aside>}}
-
 #### Via the dashboard
 
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):

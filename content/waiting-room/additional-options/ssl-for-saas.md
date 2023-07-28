@@ -10,7 +10,7 @@ If your application is using a custom hostname — meaning your SaaS provider is
 
 ## Applications on Cloudflare
 
-If your application is already using Cloudflare, create a waiting room using the [normal process](/waiting-room/how-to/create-waiting-room/).
+If your application is already using Cloudflare, create a waiting room using the [typical process](/waiting-room/how-to/create-waiting-room/).
 
 ## Applications not on Cloudflare
 

@@ -8,10 +8,7 @@ product:
 
 meta:
   title: Cloudflare Apps docs
-  description:
-    Simplify the way you create and manage email addresses. With Email
-    Routing, you can create any number of custom email addresses that you can
-    use in situations where you do not want to share your real email address.
+  description: Learn how to create and market tools for website owners.
   author: "@cloudflare"
   
 

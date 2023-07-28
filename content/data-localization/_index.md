@@ -8,9 +8,13 @@ meta:
 
 # Data Localization Suite
 
-The Data Localization Suite (DLS) is a set of products that helps customers who want to maintain local control over their traffic while retaining the security benefits of a global network.
+The Data Localization Suite (DLS) is a collection of tools that enable customers to choose the location where Cloudflare inspects and stores data, while maintaining the security and performance benefits of our global network.
 
-DLS is currently available for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information about purchasing DLS.
+{{<Aside type="note">}}
+
+This feature is available as a paid add-on for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information.
+
+{{</Aside>}}
 
 The Data Localization Suite consists of the following products:
 

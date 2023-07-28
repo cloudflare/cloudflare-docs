@@ -25,7 +25,7 @@ To add the Stream Player to a web page, you can either:
 ></iframe>
 ```
 
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/stream-player) 
+[Run and edit this code in your browser on StackBlitz.](https://workers.new/stream/stream-player) 
 
 Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
 

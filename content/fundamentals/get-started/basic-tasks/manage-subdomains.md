@@ -16,11 +16,11 @@ If you have already added a subdomain at your host, create a corresponding [DNS 
 
 ## Set up redirects
 
-### Redirect a subdomain to root domain
+### Redirect a subdomain to the apex domain
 
 {{<render file="_redirect-subdomain-to-root.md">}}
 
-### Redirect root domain to a subdomain
+### Redirect the apex domain to a subdomain
 
 {{<render file="_redirect-root-to-subdomain.md">}}
 

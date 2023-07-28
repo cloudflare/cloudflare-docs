@@ -152,4 +152,4 @@ Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for mo
 
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
 * Learn [how to debug D1](/d1/learning/debug-d1/).
-* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1.
+* Understand how to [access logs](/workers/observability/log-from-workers/) generated from your Worker and D1.

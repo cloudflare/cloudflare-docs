@@ -4564,10 +4564,20 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   box-shadow: none;
 }
 
+.DocSearch-Button-Key {
+  font-family: sans-serif;
+  padding-top: .1em !important;
+}
+
 [theme=dark] .DocSearch-Button-Key {
   --docsearch-key-gradient: rgba(var(--color-rgb), .05);
   --docsearch-muted-color: var(--color);
   box-shadow: none;
+}
+
+.DocSearch-Button-Key > svg {
+  height: unset !important;
+  width: unset !important;
 }
 
 .DocsMobileHeader {
@@ -5276,7 +5286,7 @@ pre {
   flex-direction: row;
   column-gap: 1em;
 
-  align-items: flex-end;
+  align-items: center;
 }
 
 .DocsMarkdown--pill {
@@ -5286,9 +5296,9 @@ pre {
   padding: 4px 8px;
 
   position: relative;
-  bottom: 1.8em;
-  height: 18px;
+  margin-bottom: 0.75em;
 
+  height: 18px;
   border-radius: 20px;
 
   flex: none;
@@ -5300,6 +5310,12 @@ pre {
   font-size: 12px;
   line-height: 150%;
   /* identical to box height, or 18px */
+}
+
+/* Pills on levels lower than H1 */
+.DocsMarkdown-pill-lower {
+  margin-bottom: initial;
+  margin-top: 2.25em;
 }
 
 .DocsMarkdown--pill-tab {
@@ -5494,13 +5510,17 @@ pre {
   background: rgba(110, 110, 110, 0.5);
 }
 
+/* Mermaid theme */
+
 .mermaid {
-  background: #f5f5f5 !important;
+  background-color: var(--background-color);
 }
 
 [theme="dark"] .mermaid {
-  background: #222222 !important;
+  background-color: var(--background-color);
 }
+
+/* RSS icon */
 
 .RSS svg {
   opacity: 0.7;
@@ -5578,4 +5598,78 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 
 [theme="dark"] #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
+}
+
+.tutorialPreReqs {
+  padding-left: 2em;
+  border: 2px solid gray;
+  border-radius: 15px;
+}
+
+.tutorialPreReqHeader::before {
+  height: 0 !important;
+}
+
+.tutorialStep {
+  padding-left: 2em;
+  border-left: .5px solid gray;
+  counter-increment: stepCounter;
+}
+
+.tutorialStep:not(:first-of-type) {
+  margin-top: 5em;
+}
+
+.tutorialStepHeader {
+  margin-top: 0;
+}
+
+.tutorialStepHeader::before {
+  height: 0 !important;
+}
+
+.tutorialStepContainer {
+  margin-top: 4em;
+  padding-bottom: 1em;
+  counter-reset: stepCounter;
+}
+
+.optionalStepCounter {
+  border: 2px solid gray !important;
+  border-radius: 0% !important;
+}
+
+.stepCounter {
+  padding-right: .35em;
+  padding-left: .35em;
+  margin-right: .5em;
+  border: 2px solid var(--orange-5);
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.stepCounter::before {
+  content: counter(stepCounter);
+}
+
+.optionalStepCounter::before {
+  content: counter(stepCounter);
+}
+
+@media (max-width: 768px) {
+  .tutorialStep:not(:first-of-type) {
+    /* had to increase this margin, but didn't exactly understand why */
+    margin-top: 7em;
+  }
+
+  .tutorialStep {
+    /* using 2em seemed a bit of a waste on mobile */
+    padding-left: 1em;
+    /* had to increase this margin, but didn't exactly understand why */
+    margin-top: 7em;
+  }
+
+  .tutorialPreReqHeader {
+    margin-top: 4em !important;
+  }
 }

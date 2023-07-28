@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Brand Protection (beta)
-weight: 6
+weight: 7
 ---
 
 {{<beta>}} Brand Protection {{</beta>}}
@@ -40,7 +40,7 @@ To investigate a query:
 1. Go to the **Monitored queries** section to view all your queries.
 2. Select a monitored query to inspect all the domains that matched your query.
 3. Next to the domain, select **Investigate**. This will take you to the **Investigate** section in the sidebar.
-4. In this section, you have the **Domain overview**, the **WHOIS** section that provides details about the date the domain was created, registrant and nameservers, and the **Domain history** that provides information on the domain category and when it was last changed. Refer to [Domain categories](/cloudflare-one/policies/filtering/domain-categories/#security-risk-subcategories) for more details.
+4. In this section, you have the **Domain overview**, the **WHOIS** section that provides details about the date the domain was created, registrant and nameservers, and the **Domain history** that provides information on the domain category and when it was last changed. Refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/#security-risk-subcategories) for more details.
 
 ## Brand Protection Alerts
 
