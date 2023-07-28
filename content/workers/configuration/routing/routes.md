@@ -23,7 +23,7 @@ To add a route, you must have:
 
 1. An [active Cloudflare zone](/dns/zone-setups/).
 2. A Worker to invoke.
-3. An orange-clouded DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
+3. An orange-clouded DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-zone-apex/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
 
 {{<Aside type="warning">}}
 Route setup will differ depending on if your application's origin is a Worker or not. If your Worker is your application's origin, use [Custom Domains](/workers/configuration/routing/custom-domains/).
@@ -37,7 +37,7 @@ Routes can also be created via the API. Refer to the [Workers Routes API documen
 
 ### Set up a route in the dashboard
 
-Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
+Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-zone-apex/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
 
 To set up a route in the dashboard:
 
@@ -49,7 +49,7 @@ To set up a route in the dashboard:
 
 ### Set up a route in `wrangler.toml`
 
-Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
+Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-zone-apex/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
 
 To configure a route using your `wrangler.toml` file, refer to the following example.
 
@@ -61,7 +61,7 @@ routes = [
 ]
 ```
 
-Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable. If using `zone_id`, find your zone ID by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > select your website > find the **Zone ID** in the lefthand side of **Overview**.
+Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable.If using `zone_id`, first [find your zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 To add multiple routes:
 

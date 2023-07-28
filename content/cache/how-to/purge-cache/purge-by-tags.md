@@ -6,7 +6,7 @@ weight: 3
 
 # Purge cache by cache-tags (Enterprise only)
 
-Cache-tag purging makes multi-file purging easier because you can bulk purge by adding cache-tags to your assets, such as web pages, image files, and more. Note that Tag, Hostname and Prefix purges are only available for Enterprise customers.
+Cache-tag purging makes multi-file purging easier because you can bulk purge by adding cache-tags to your assets, such as webpages, image files, and more. Note that Tag, Hostname and Prefix purges are only available for Enterprise customers.
 
 ## General workflow for cache-tags
 

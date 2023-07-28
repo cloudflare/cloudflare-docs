@@ -95,7 +95,7 @@ echo '{
 </div>
 </details>
 
-From our test, we see the following results (these are extracted from results of the query for readability):
+From our test, we got the following results (these are extracted from results of the query for readability):
 
 - 15:35:00 UTC              
   - `"totalActiveUsers": 137,`
