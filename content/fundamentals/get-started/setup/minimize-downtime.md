@@ -23,7 +23,7 @@ This setting prevents Cloudflare from proxying your traffic before you have an a
 
 Take extra time to confirm the accuracy of your DNS records before activating your domain, paying special attention to:
 
-- [Root domain records (`example.com`)](/dns/manage-dns-records/how-to/create-root-domain/)
+- [Zone apex records (`example.com`)](/dns/manage-dns-records/how-to/create-zone-apex/)
 - [Subdomain records (`www.example.com` or `blog.example.com`)](/dns/manage-dns-records/how-to/create-subdomain/)
 - [Email records](/dns/manage-dns-records/how-to/email-records/)
 
