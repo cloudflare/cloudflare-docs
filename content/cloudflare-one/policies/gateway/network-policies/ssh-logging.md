@@ -1,7 +1,7 @@
 ---
 title: SSH proxy and command logs
 pcx_content_type: how-to
-weight: 2
+weight: 3
 ---
 
 # Configure SSH proxy and command logs
@@ -103,7 +103,7 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
    ```sh
    $ ./ssh-log-cli generate-key-pair -o sshkey
    $ ls
-   README.md	ssh-log-cli	sshkey	sshkey.pub
+   README.md ssh-log-cli sshkey sshkey.pub
    ```
 
    This command outputs two files, an `sshkey.pub` public key and a matching `sshkey` private key.
