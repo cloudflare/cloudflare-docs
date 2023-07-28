@@ -13,7 +13,7 @@ Outbound Workers sit between your customer’s Workers and the public Internet. 
 
 Outbound Workers can be used to:
 
-- Log all subrequests to identify malicious hosts or usage patterns.
+- Log all subrequests to identify malicious domains or usage patterns.
 - Create, allow, or block lists for hostnames requested by user Workers.
 - Configure authentication to your APIs behind the scenes (without end developers needing to set credentials).
 
