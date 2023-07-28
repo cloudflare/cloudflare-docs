@@ -98,7 +98,7 @@
         "estimated_time": 45,
         "pages": [
           {
-            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/",
+            "url_path": "/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/",
             "link_title": "Create a Cloudflare Tunnel",
             "additional_description": "Cloudflare Tunnel will run on a host locally in your network and make a persistent, outbound QUIC connection to Cloudflare."
           },
@@ -126,7 +126,7 @@
             
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/#2-connect-an-application",
+            "url_path": "/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2-connect-an-application",
             "link_title": "Create public hostname routes in Cloudflare Tunnel"
           }
         ]

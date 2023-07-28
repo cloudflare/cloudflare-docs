@@ -218,7 +218,7 @@ You can now use `cloudflared` to control Cloudflare Tunnel connections in your C
 
 ### Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 

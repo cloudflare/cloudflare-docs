@@ -6,7 +6,7 @@ weight: 4
 
 # Tunnel run parameters
 
-This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/) tunnels. These flags can also be added as key/value pairs to your [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
+This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/) tunnels. These flags can also be added as key/value pairs to your [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/).
 
 ## `autoupdate-freq`
 
@@ -156,4 +156,4 @@ For remotely-managed tunnels only.
 | ------------- | -------------------- |
 | `cloudlared tunnel --token <TUNNEL_TOKEN> run <UUID or NAME>` | `TUNNEL_TOKEN`       |
 
-Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).

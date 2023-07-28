@@ -29,7 +29,7 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 <summary>Via the dashboard</summary>
 <div>
 
-1. To create a remotely-managed tunnel, follow the [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/).
+1. To create a remotely-managed tunnel, follow the [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 2. On the **Tunnels** page, select your newly created tunnel. The **Connectors** section shows all of the `cloudflared` instances for that tunnel.
 3. Select **Configure**.
 4. Select the operating system of the host where you want to deploy a replica.
@@ -44,7 +44,7 @@ The new replica will appear on the **Connectors** list for the tunnel.
 <summary>Via the command line</summary>
 <div>
 
-1. To create a locally-managed tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/).
+1. To create a locally-managed tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/).
 
 2. Next, run your newly created tunnel.
 
@@ -77,7 +77,7 @@ You can run the same tunnel across various `cloudflared` processes for up to 100
 
 {{<Aside type="note" header="Deploy replicas with Kubernetes">}}
   
-For information about running `cloudflared` instances in a Kubernetes deployment, refer to our guides for tunnels managed [remotely via the dashboard](/cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/) or [locally via the CLI](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
+For information about running `cloudflared` instances in a Kubernetes deployment, refer to our guides for tunnels managed [remotely via the dashboard](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/) or [locally via the CLI](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
   
 {{</Aside>}}
 

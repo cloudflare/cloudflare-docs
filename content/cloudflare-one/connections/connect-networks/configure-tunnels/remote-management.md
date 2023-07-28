@@ -1,16 +1,16 @@
 ---
 pcx_content_type: how-to
-title: Remotely-managed tunnels
+title: Remotely-managed tunnel
 weight: 1
 ---
 
-# Configure remotely-managed tunnels
+# Configure a remotely-managed tunnel
 
-If you created a Cloudflare Tunnel from the dashboard, the tunnel runs as a service on your OS.  
+If you created a Cloudflare Tunnel [from the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), the tunnel runs as a service on your OS.  
 
 ## Add tunnel run parameters
 
-You can modify the Cloudflare Tunnel service with one or more [general-purpose tunnel parameters](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/).
+You can modify the Cloudflare Tunnel service with one or more [general-purpose tunnel parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/).
 
 ### Linux
 

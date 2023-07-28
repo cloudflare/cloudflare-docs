@@ -23,7 +23,7 @@ While SMB was developed for Microsoft Windows, Samba provides SMB connectivity f
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/). You can skip the connect an application step and go straight to connecting a network.
+1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
 
 2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
 
@@ -64,7 +64,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/).
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `smb.example.com`).
 

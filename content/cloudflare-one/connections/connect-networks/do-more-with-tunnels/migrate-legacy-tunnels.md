@@ -12,10 +12,6 @@ Originally, a Cloudflare Tunnel connection corresponded to a DNS record in your 
 
 Today, Cloudflare Tunnel’s architecture distinguishes between the persistent objects (DNS records, `cloudflared`) and the ephemeral objects (the connections). To do that, it assigns permanent names and UUIDs to tunnels, which makes them more stable and easier to use. Since the name and UUID for a tunnel do not change, your DNS record never needs to be cleaned up or recreated when Cloudflare Tunnel restarts. In the event of a restart, the enrolled instance of `cloudflared` connects back to that UUID address.
 
-## Prerequisites
-
-
-
 ## Check for legacy tunnels
 
 To check if you still have legacy tunnels:
@@ -37,7 +33,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
 
 2. Obtain a new origin certificate by running `cloudflared login`. While named tunnels are scoped to an account, for legacy reasons the login page requires selecting a zone.
 
-3. [Create a tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#3-create-a-tunnel-and-give-it-a-name).
+3. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#3-create-a-tunnel-and-give-it-a-name).
 
     ```sh
     cloudflared tunnel create <TUNNEL-NAME>
@@ -57,7 +53,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
       cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
       ```
 
-5. Next, create a [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/) with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if in the past you used to run `cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000`, you should add an equivalent ingress rule to your configuration file:
+5. Next, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if in the past you used to run `cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000`, you should add an equivalent ingress rule to your configuration file:
 
     ```yml
     ingress:
@@ -67,7 +63,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
     # Note that the last rule is the catch-all rule and is required.
     ```
 
-6. [Run your tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#6-run-the-tunnel).
+6. [Run your tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#6-run-the-tunnel).
 
 ## Make sure everything works
 

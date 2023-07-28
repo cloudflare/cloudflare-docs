@@ -12,7 +12,7 @@ For example, an organization may want to expose two distinct virtual private clo
 
 ## Prerequisites
 
-- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#1-download-and-install-cloudflared) on each private network.
+- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#1-download-and-install-cloudflared) on each private network.
 
 {{<render file="_warp-to-tunnel-client.md">}}
 
@@ -90,7 +90,7 @@ We now have two overlapping IP addresses routed over `staging-vnet` and `product
  
 ## Enable virtual networks
 
-1. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
+1. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
    
     ```txt
     tunnel: <Tunnel-UUID>

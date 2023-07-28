@@ -46,7 +46,7 @@ If [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryptio
 
 ### Connect private networks
 
-With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). To connect a private network to Cloudflare, refer to our [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/).
+With Clientless Web Isolation, users can reach any private IP resource you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). For more information, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/).
 
 For example, if you added `192.0.2.1` to your tunnel, users can connect to your application through the remote browser by going to `https://<your-team-name>.cloudflareaccess.com/browser/http://192.0.2.1`.
 
