@@ -24,7 +24,7 @@ For a list of supported CSP directives and keywords, refer to [CSP directives su
 
 8. Under **Then take action**, select the desired action:
 
-    - _Allow_: Enforces the CSP directives configured in the policy, blocking any other resources (scripts) from being loaded on your website, and logging any [policy violations](/page-shield/policies/violations/).
-    - _Log_: Logs any policy violations without blocking any resources (scripts) not covered by the policy.
+    - _Allow_: Enforces the CSP directives configured in the policy, blocking any other resources from being loaded on your website, and logging any [policy violations](/page-shield/policies/violations/).
+    - _Log_: Logs any policy violations without blocking any resources not covered by the policy.
 
 9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
