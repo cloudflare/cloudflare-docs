@@ -12,7 +12,7 @@ This guide will instruct you through:
 - Instantiating and communicationg with a Durable Object from another Worker via the `Fetch` API.
 - Deploying a Durable Object.
 
-## Prerequisites
+{{<render file="_prereqs.md" productFolder="workers">}}
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages), if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
