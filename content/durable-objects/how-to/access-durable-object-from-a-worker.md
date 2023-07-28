@@ -8,9 +8,9 @@ weight: 16
 
 To access a Durable Object from a Worker, you must first create a Durable Object namespace binding in your Worker. The namespace is, in turn, configured to use a particular class and controls access to instances of that class.
 
-Durable Objects namespace bindings allow you to generate Durable Object IDs and connect to Durable Objects.
+Durable Object bindings for communication between a Worker and a Durable Object.
 
-If you are using [Wrangler environments](/workers/wrangler/environments/), you must specify any Durable Object namespace bindings you wish to use on a per-environment basis.
+If you are using [Wrangler environments](/workers/wrangler/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis.
 
 ## 1. Create Durable Object IDs
 
@@ -114,9 +114,9 @@ let stub = env.EXAMPLE_CLASS.get(id);
 
 ## 3. Use `fetch()` handler method
 
-The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Durable Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](/durable-objects/how-to/access-durable-object-from-a-worker/).
+The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Durable Object. These requests are not sent from the public Internet, but from other Workers using a Durable Object binding.
 
-The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
+The `fetch()` method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
 

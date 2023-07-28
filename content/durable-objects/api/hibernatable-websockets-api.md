@@ -16,7 +16,7 @@ Durable Objects WebSockets support includes:
 
 The Hibernatable WebSocket API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/workers/runtime-apis/kv/).
 
-For WebSocket proxy use-cases, refer to the [standard WebSocket API](/workers/runtime-apis/websockets/use-websockets/#write-a-websocket-client) documentation.
+For WebSocket proxy use-cases, refer to the [standard WebSocket API documentation](/workers/runtime-apis/websockets/use-websockets/#write-a-websocket-client).
 
 {{<Aside type="note">}}
 
@@ -64,13 +64,13 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
   - <br/> Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
 
-- {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}<br/>optional{{</prop-meta>}}){{</code>}}: {{<type>}}void{{</type>}}
+- {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}: {{<type>}}void{{</type>}}
 
   - <br/> Sets an application level auto response that does not wake hibernated WebSockets. 
   
   - `state.setWebSocketAutoResponse` receives `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this Object to automatically reply with `response` when it receives the specified `request`. 
 
-  - `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the websocket from hibernation, thereby preventing unnecessary duration charges.
+  - `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the WebSocket from hibernation, preventing unnecessary duration charges.
 
   - Both `request` and `response` are limited to 2048 characters each.
 

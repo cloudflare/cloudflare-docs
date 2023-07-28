@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 16
 ---
 
-# Durable Objects TypeScript Rollup ES Modules template
+# Durable Objects TypeScript Rollup ES modules template
 
 Use this template to use TypeScript. 
 

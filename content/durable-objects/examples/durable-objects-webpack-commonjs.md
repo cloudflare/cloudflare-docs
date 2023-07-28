@@ -6,7 +6,7 @@ weight: 16
 
 # Durable Objects Webpack CommonJS template
 
-Use this template to bundle external dependencies with your code using Rollup or Webpack. 
+Use this template to bundle external dependencies with your code using Rollup or webpack. 
 
 ```js
 module.exports = class Counter {

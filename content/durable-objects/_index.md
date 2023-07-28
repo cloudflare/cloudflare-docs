@@ -60,7 +60,7 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 
 {{<related header="D1" href="/d1/" product="d1">}}
 
-Built on SQLite, D1 is Cloudflare’s first queryable relational database. Create an entire database by importing data or defining your tables and writing your queries within a Worker or through the API.
+D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 {{</related>}}
 

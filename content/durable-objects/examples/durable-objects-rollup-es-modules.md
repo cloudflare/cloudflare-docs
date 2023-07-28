@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 16
 ---
 
-# Durable Objects Rollup ES Modules template
+# Durable Objects Rollup ES modules template
 
 Use this template to use ES modules. 
 

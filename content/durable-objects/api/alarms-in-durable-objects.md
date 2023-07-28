@@ -6,7 +6,7 @@ weight: 16
 
 # Alarms 
 
-Durable Objects alarms allow you to schedule the Durable Object to be waken up at a time in the future.
+Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future.
 
 When the alarm's schedlued time comes, the `alarm()` handler will be called.
 

@@ -14,11 +14,11 @@ Updating code for an existing Durable Object class does not require a migration.
 {{</Aside>}}
 
 
-The most common migration performed is a new class migration, which informs the system that a new Durable Object class is being uploaded.
+The most common migration performed is a new class migration, which informs the runtime that a new Durable Object class is being uploaded.
 
 Migrations can also be used for transferring stored data between two Durable Object classes. Rename migrations are used to transfer stored Durable Objects between two Durable Object classes in the same script. Transfer migrations are used to transfer stored Durable Objects between two Durable Object classes in different scripts.
 
-The destination class (the class that stored Durable Objects are being transferred to) for a rename or transfer migration must be exported by the deployed script.
+The destination class (the class that stored Durable Objects are being transferred to) for a rename or transfer migration must be exported by the deployed Worker.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -83,7 +83,7 @@ Note that `.toml` files do not allow line breaks in inline tables (the `{key = "
 
 ### Durable Object migrations through Wrangler CLI
 
-It is possible to define a migration through extra arguments to the `wrangler deploy` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
+It is possible to define a migration through extra arguments to the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
 
 You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler deploy` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
 

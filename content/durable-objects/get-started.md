@@ -9,7 +9,7 @@ pcx_content_type: get-started
 This guide will instruct you through:
 
 - Writing a class that defines a Durable Object.
-- Instantiating and communicationg with a Durable Object from another Worker via the Fetch API.
+- Instantiating and communicationg with a Durable Object from another Worker via the `Fetch` API.
 - Deploying a Durable Object.
 
 ## Prerequisites
@@ -24,7 +24,7 @@ Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://gith
 
 ## 1. Enable Durable Objects in the dashboard
 
-To enable Durable Objects, you will need to purchase Workers Paid plan:
+To enable Durable Objects, you will need to purchase the Workers Paid plan:
 
  1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
  2. Go to **Workers & Pages** > **Plans**. 
@@ -32,9 +32,9 @@ To enable Durable Objects, you will need to purchase Workers Paid plan:
 
  ## 2. Create a Worker project
 
-You will access your Durable Object from a Worker, the producer Worker. 
+You will access your Durable Object from a [Worker](/workers/).
 
-To create a producer Worker, run:
+To create a Worker project, run:
 
 ```sh
 $ npm create cloudflare@latest # or 'yarn create cloudflare@latest'
@@ -47,7 +47,7 @@ In your terminal, you will be asked a series of questions related to your projec
 4. Answer `no` to using Git.
 5. Answer `no` to deploying your Worker.
 
-This will create a new directory, which will include both a `src/worker.js` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a class to define a Durable Object.
+This will create a new directory, which will include both a `src/worker.js` file to write your code, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, create a class to define a Durable Object.
 
  ## 3. Write a class to define a Durable Object
 
@@ -88,13 +88,13 @@ A Worker can pass information to a Durable Object via headers, the HTTP method, 
 
 {{<Aside type="note">}}
 
-HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code – possibly other Durable Objects, or Workers. Durable Objects use HTTP for familiarity, but plan to introduce other protocols in the future.
+HTTP requests received by a Durable Object do not come directly from the Internet. HTTP requests come from other Workers and other Durable Objects. Durable Objects use HTTP for familiarity, but plan to introduce other protocols in the future.
 
 {{</Aside>}}
 
 ## 4. Configure Durable Object bindings
 
-Configure Durable Object bindings in the `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
+Durable Object bindings for communication between a Worker and a Durable Object. Configure Durable Object bindings in your Worker project's `wrangler.toml` by providing a binding name (for this guide, use `EXAMPLE_CLASS`) and the class name (`DurableObjectExample`).
 
 ```toml
 ---
@@ -174,15 +174,10 @@ In the code above, you have:
 5. Forwarded the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL.  The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept  permanently.
 6. Received an HTTP response back to the client with `return response`.
 
-Refer to [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
+Refer to [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/) to learn more about communicating to a Durable Object.
 
 ## 7. Deploy your Durable Object Worker
 
-{{<Aside type="warning" header="Custom Wrangler installation instructions">}}
-
-You must use [Wrangler latest version](/workers/wrangler/install-and-update/) to manage Durable Objects.
-
-{{</Aside>}}
 
 Use [Wrangler](/workers/wrangler/), the Workers CLI to deploy your Durable Object.
 

@@ -28,7 +28,7 @@ You can request adjustments to limits that conflict with your project goals by c
 
 Durable Objects can scale horizontally across many Durable Objects. Each individual Object is inherently single-threaded.
 
-An individual Object has a soft limit of 1000 requests per second. A simple get on a small value that directly returns the response may realize a higher request throughput.
+An individual Object has a soft limit of 1,000 requests per second. A simple get on a small value that directly returns the response may realize a higher request throughput.
 
 Correspondingly, a Durable Object that (for example) serializes and/or deserializes large JSON values or performs larger `list()` operations may be more limited in terms of request throughput. A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/platform/troubleshooting/#error-durable-object-is-overloaded) error to the caller.
 
