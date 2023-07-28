@@ -925,6 +925,8 @@
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
 /workers/wrangler-legacy/migration/ /workers/wrangler/migration/ 301
+/workers/wrangler/migration/deprecations/ /workers/wrangler/deprecations/ 301
+/workers/wrangler/migration/migrating-from-wrangler-1/ /workers/wrangler/migration/v1-to-v2/ 301
 /workers/learning/service-worker/ /workers/learning/migrate-to-module-workers/#service-worker-syntax/ 301
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
@@ -945,6 +947,9 @@
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
 /workers/platform/triggers/ /workers/platform/ 301
+/workers/platform/triggers/routes/ /workers/configuration/routing/routes/ 301
+/workers/platform/triggers/custom-domains/ /workers/configuration/routing/custom-domains/ 301
+/workers/platform/triggers/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/learning/using-durable-objects/ /workers/configuration/durable-objects/ 301
 /workers/platform/languages/ /workers/learning/languages/ 301
 /workers/platform/protocols/ /workers/learning/protocols/ 301
