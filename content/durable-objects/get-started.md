@@ -10,7 +10,7 @@ This guide will instruct you through:
 
 - Writing a class that defines a Durable Object.
 - Instantiating and communicationg with a Durable Object from another Worker via the Fetch API.
-- Uploading the Durable Object and Worker to Cloudflare's servers using Wrangler. 
+- Deploying a Durable Object.
 
 ## Prerequisites
 
@@ -118,15 +118,7 @@ Each table contains the following fields:
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.  
 
-Migrations require a migration tag, which is defined by the `tag` property in each migration entry. 
-
-Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
-
-The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
-
-All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/wrangler/environments/).
-
-To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
+To configure a Durable Object migration in `wrangler.toml` file:
 
 ```toml
 ---
@@ -141,7 +133,7 @@ Refer to [Durable Objects migrations](/durable-objects/learning/durable-objects-
 
 ## 6. Instantiate and communicate with a Durable Object
 
-The `fetch` handler allows you to communicate to a Durable Object from a Worker. 
+The `fetch()` handler allows you to communicate to a Durable Object from a Worker. 
 
 {{<Aside type="note">}}
 Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects. 
@@ -150,12 +142,9 @@ This is achieved by configuring a binding in the calling Worker for each Durable
 
 A Worker talks to a Durable Object through a [stub](/durable-objects/how-to/create-durable-object-stubs/). 
 
-The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` method sends HTTP [requests](/workers/runtime-apis/request/) to the instance.
+The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` handler sends HTTP [requests](/workers/runtime-apis/request/) to the instance.
 
-
-Durable Objects must be written in ES Modules syntax. ES Modules differ from regular JavaScript files in that they have imports and exports. For example, [to write a class that defines a Durable Object](/durable-objects/get-started/#1-write-a-class-to-define-a-durable-object), you use `export class DurableObjectExample`. 
-
-To implement a fetch handler, export a method named `fetch()` in an `export default {}` block.
+To implement a `fetch()` handler, export a method named `fetch()` in an `export default {}` block:
 
 ```js
 ---
@@ -187,7 +176,7 @@ In the code above, you have:
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/) to  learn more about communicating to a Durable Object.
 
-## 7. Upload a Durable Object Worker
+## 7. Deploy your Durable Object Worker
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
@@ -195,30 +184,16 @@ You must use [Wrangler latest version](/workers/wrangler/install-and-update/) to
 
 {{</Aside>}}
 
-To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. 
+Use [Wrangler](/workers/wrangler/), the Workers CLI to deploy your Durable Object.
 
-Open your terminal and run the following command to upload a Durable Object Worker:
-
-```sh
-$ wrangler dev
-```
-
-### Specify the main module
-
-Workers that use ES Modules syntax must have a main module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `main = "src/worker.js"` section of `wrangler.toml`. 
-
-Refer to [Custom builds documentation](/workers/wrangler/custom-builds/) for more details.
-
-## 8. Test your Durable Objects project
-
-If you copy the `DurableObjectExample` and fetch handler code from above into a generated Wrangler project, publish it using a `--new-class` migration, and make a request to it, you will notice that your request was stored in a Durable Object:
+Open your terminal and run the following command to deploy a Durable Object Worker:
 
 ```sh
-$ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.workers.dev/ --data "important data!"
-***.***.***.*** stored important data!
+$ wrangler deploy
 ```
 
-By finishing this tutorial, you have now created a class that defines a Durable Object, configured bindings and migrations, uploaded and tested your Durable Objects project. 
+By finishing this tutorial, you have successfully created and deployed a Durable Object.
+
 
 ### Related resources
 
