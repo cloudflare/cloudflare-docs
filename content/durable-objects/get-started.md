@@ -192,6 +192,8 @@ Open your terminal and run the following command to deploy a Durable Object Work
 $ wrangler deploy
 ```
 
+Once deployed, you should be able to see your newly created Durable Object on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
+
 By finishing this tutorial, you have successfully created and deployed a Durable Object.
 
 
