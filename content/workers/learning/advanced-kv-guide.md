@@ -196,7 +196,7 @@ Examples of issues that can trip up even internal engineers who know all the tec
   within the Runtime to get accurate timing measurements. That means you have to know to time externally to the system. At the same time,
   external timings are subject to sources of error that have nothing to do with Workers KV performance, particularly as described below.
 - A low traffic Worker is more subject to cold starts even though in practice cold starts don't exist once production traffic is flowing.
-- Within something we call "MCP"s, we have multiple virtual data centers within a single PoP. Which virtual data center you hit
+- Within something we call "MCP"s, we have multiple virtual data centers within a single data center. Which virtual data center you hit
   is random and today such data centers have disjoint caches and require even more traffic to keep the cache warm regardless of which
   virtual data center you randomly get routed to.
 - [wrk](https://github.com/wg/wrk) can typically generate substantial enough load from a single machine (thousands of requests
