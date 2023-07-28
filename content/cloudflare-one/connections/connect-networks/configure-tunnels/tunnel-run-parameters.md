@@ -6,7 +6,7 @@ weight: 4
 
 # Tunnel run parameters
 
-This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/) tunnels. These flags can also be added to your [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/) for locally-managed tunnels.
+This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/) tunnels. These flags can also be added as key/value pairs to your [configuration file](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/configuration-file/).
 
 ## `autoupdate-freq`
 
@@ -144,7 +144,7 @@ Specifies the maximum number of retries for connection/protocol errors. Retries 
 | ---------------------- | -------------------- |
 | `cloudlared tunnel --tag <KEY=VAL> run <UUID or NAME>` | `TUNNEL_TAG`         |
 
-Specifies custom tags used to identify this tunnel. Multiple tags may be specified by adding additional `--tag <KEY=VAL>` flags.
+Specifies custom tags used to identify this tunnel. Multiple tags may be specified by adding additional `--tag <KEY=VAL>` flags to the command. If entering multiple tags into a configuration file, delimit with commas: `tag: {KEY1=VALUE1, KEY2=VALUE2}`.
 
 ## `token`
 
