@@ -200,7 +200,7 @@ done;
 
 ## Configure Cloudflare Tunnel
 
-Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare Tunnel. Start by [downloading and installing](/cloudflare-one/connections/connect-networks/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`.
+Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare Tunnel. Start by [downloading and installing](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) the Cloudflare Tunnel daemon, `cloudflared`.
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
