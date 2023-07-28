@@ -10,4 +10,4 @@ title: I activated through a hosting partner. Can I still use the free Cloudflar
 
 ## Overview
 
-If you have signed up for Cloudflare through a [Cloudflare hosting partner](http://www.cloudflare.com/hosting-partners) or by using CNAME setup, you may enable the [IPv6 Compatibility](https://blog.cloudflare.com/introducing-cloudflares-automatic-ipv6-gatewa/) feature for the record(s) that are delegated to Cloudflare, but the root domain will not benefit from Cloudflare's free IPv6 compatibility.
+If you have signed up for Cloudflare through a [Cloudflare hosting partner](http://www.cloudflare.com/hosting-partners) or by using CNAME setup, you may enable the [IPv6 Compatibility](https://blog.cloudflare.com/introducing-cloudflares-automatic-ipv6-gatewa/) feature for the record(s) that are delegated to Cloudflare, but the apex domain will not benefit from Cloudflare's free IPv6 compatibility.

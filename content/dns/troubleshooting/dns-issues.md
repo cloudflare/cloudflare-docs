@@ -26,8 +26,8 @@ Verify that the domain or subdomain was correctly spelled in the request URL.
 
 Ensure that you have the necessary DNS records in the **DNS** app of your Cloudflare dashboard. This includes having the following records:
 
--   The [root domain](/dns/manage-dns-records/how-to/create-root-domain/) (e.g., `example.com`)
--   Existing [subdomains](/dns/manage-dns-records/how-to/create-subdomain/) (`www.example.com`, `blog.example.com`)
+-   The [zone apex](/dns/manage-dns-records/how-to/create-zone-apex/) (e.g., `example.com`) record.
+-   Existing [subdomains](/dns/manage-dns-records/how-to/create-subdomain/) (`www.example.com`, `blog.example.com`) records.
 
 {{<Aside type="note">}}
 If you have a [partial zone setup](/dns/zone-setups/partial-setup), ensure your DNS records also exist in your authoritative nameservers.

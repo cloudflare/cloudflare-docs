@@ -35,7 +35,7 @@ To create an Origin CA certificate in the dashboard:
 5.  Choose either:
     - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
     - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
-6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone root and first level wildcard hostname are included by default.
+6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone apex and first level wildcard hostname are included by default.
 7.  Choose a **Certificate Validity** period.
 8.  Select **Create**.
 9.  Choose the **Key Format**:

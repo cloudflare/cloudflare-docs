@@ -180,6 +180,40 @@ $ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 - Note that you must provide either `--command` or `--file` for this command to run successfully.
   {{</definitions>}}
 
+### `time-travel restore`
+
+Restore a database to a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
+
+```sh
+$ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to execute a query on.
+- `--bookmark` {{<type>}}string{{</type>}}
+  - A D1 bookmark representing the state of a database at a specific point in time.
+- `--timestamp` {{<type>}}string{{</type>}}
+  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
+  {{</definitions>}}
+
+### `time-travel info`
+
+Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
+
+```sh
+$ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to execute a query on.
+- `--timestamp` {{<type>}}string{{</type>}}
+  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
+  {{</definitions>}}
+
 ### `backup create`
 
 Initiate a D1 backup.

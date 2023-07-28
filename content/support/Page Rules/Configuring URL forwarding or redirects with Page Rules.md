@@ -82,7 +82,7 @@ ___
 
 ## Advanced forwarding options
 
-If you use a basic redirect, such as forwarding the root domain to www.example.com, then you lose anything else in the URL.
+If you use a basic redirect, such as forwarding the apex domain (`example.com`) to `www.example.com`, then you lose anything else in the URL.
 
 For example, you could set up the pattern:
 
@@ -110,7 +110,7 @@ www.example.com/some-particular-page.html
 
 The solution is to use variables. Each wildcard corresponds to a variable when can be referenced in the forwarding address. The variables are represented by a $ followed by a number. To refer to the first wildcard you'd use $1, to refer to the second wildcard you'd use $2, and so on.
 
-To fix the forwarding from the root to www in the above example, you could use the same pattern:
+To fix the forwarding from the apex to `www` in the above example, you could use the same pattern:
 
 ```
 example.com/*
