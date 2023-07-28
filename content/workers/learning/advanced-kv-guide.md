@@ -132,7 +132,7 @@ This works best if you don't think you'll need to update the values independentl
 careful about how you synchronize.
 
 **Pros**: Infrequently accessed keys are kept in the cache.
-**Cons**: Size of the resultant value can easily push your worker out of it's memory limits. Safely updating the value requires a [locking mechanism](#concurrent-writers) of some kind.
+**Cons**: Size of the resultant value can push your worker out of it's memory limits. Safely updating the value requires a [locking mechanism](#concurrent-writers) of some kind.
 
 #### Storing in metadata and shared prefix
 
@@ -154,7 +154,7 @@ every 30s to make sure it's always present within Cloudflare's caches.
 
 If you have small values that fit within the [metadata limit](/workers/platform/limits/#kv-limits), you can store the value within the metadata instead.
 This makes the value accessible during the list, avoiding the need to do a second I/O round-trip while iterating in case a lookup ends up missing the local cache.
-This isn't necessarily suitable for all problem domains obviously as it requires that values fit within the limit and that the set of keys you are trying to read
+This isn't necessarily suitable for all problem domains as it requires that values fit within the limit and that the set of keys you are trying to read
 are guaranteed to be lexicographically next to each other.
 
 {{<Aside type="note" header="List performance note">}}
