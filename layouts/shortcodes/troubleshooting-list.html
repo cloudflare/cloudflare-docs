@@ -15,23 +15,23 @@
   {{- end -}}
   {{- end -}}
 {{- end -}}
-{{- range $index2, $item2 := $troubleshootingArray -}}
+{{- range $index, $item := $troubleshootingArray -}}
   {{- $rellink := "" -}}
   {{- $title := "" -}}
-  {{- $self_length := sub (len (split $item2.link "/")) 2 -}}
+  {{- $self_length := sub (len (split $item.link "/")) 2 -}}
   {{- $path := slice -}}
-  {{- range $index, $item := (split $item2.link "/") -}}
-  {{- if gt (len $item ) 0 -}}
-    {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item).Path -}}
+  {{- range $index2, $item2 := (split $item.link "/") -}}
+  {{- if gt (len $item2 ) 0 -}}
+    {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item2).Path -}}
     {{- $page := $.Site.GetPage $rellink -}}
     {{- $title = $page.Title -}}
-    {{- if and (ne $index 1) (ne $index $self_length) -}}
+    {{- if and (ne $index2 1) (ne $index2 $self_length) -}}
       {{- $path = $path | append $title -}}
     {{- end -}}
   {{- end -}}
   {{- end -}}
-  {{- $item2 := merge $item2 (dict "path" $path) -}}
-  {{- $troubleshootingArrayWithPath = $troubleshootingArrayWithPath | append $item2 -}}
+  {{- $item := merge $item (dict "path" $path) -}}
+  {{- $troubleshootingArrayWithPath = $troubleshootingArrayWithPath | append $item -}}
 {{- end -}}
 
 {{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".resource_type" "desc" -}}
