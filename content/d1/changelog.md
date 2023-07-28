@@ -9,6 +9,14 @@ rss: file
 
 ## 2023-07-27
 
+### New default storage subsystem
+
+Databases created via the dashboard and wrangler (as of `v3.4.0`) now use D1's new storage subsystem by default. The new backend can [be 6 - 20x faster](https://blog.cloudflare.com/d1-turning-it-up-to-11/) than D1's original alpha backend.
+
+To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the version field in the output.
+
+Databases with `version: beta` use the new storage backend and support the [Time Travel](/d1/learning/time-travel/) API. Databases with `version: alpha` only use D1's older, legacy backend.
+
 ### Time Travel
 
 [Time Travel](/d1/learning/time-travel/) is now available. Time Travel allows you to restore a D1 database back to any minute within the last 30 days (Workers Paid plan) or 7 days (Workers Free plan), at no additional cost for storage or restore operations.
