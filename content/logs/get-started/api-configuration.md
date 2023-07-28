@@ -172,10 +172,13 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 To check if the selected **logpull_options** are valid:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin 
--d '{ "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true”,
-"dataset": "http_requests", 
-}' | jq .
+$ curl -s -X POST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin \
+     -H "X-Auth-Email: <EMAIL>" \
+     -H "X-Auth-Key: <API_KEY>" \
+     -d '{
+     "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+     "dataset": "http_requests"
+     }' | jq .
 ```
 
 Response
