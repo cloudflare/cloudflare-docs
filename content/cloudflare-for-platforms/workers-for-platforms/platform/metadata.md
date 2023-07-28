@@ -61,9 +61,9 @@ filename: metadata.json
 }
 ```
 
-## Keys
+## Attributes
 
-Keys are configurable at the top-level.
+The following attributues are configurable at the top-level.
 
 {{<Aside type="note">}}
 At a minimum, the `main_module` key is required to publish a user Worker.
@@ -71,9 +71,14 @@ At a minimum, the `main_module` key is required to publish a user Worker.
 
 {{<definitions>}}
 
-- `main_module` {{<type>}}strin{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `main_module` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The path to the module entry point of the user Worker that will be executed. For example, `main.js`.
+
+
+- `bindings` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The bindings for the user Worker to enable interactions with other resources.
 
 
 {{</definitions>}}
