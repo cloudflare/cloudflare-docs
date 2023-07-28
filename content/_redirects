@@ -945,6 +945,9 @@
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
 /workers/platform/triggers/ /workers/platform/ 301
+/workers/platform/triggers/routes/ /workers/configuration/routing/routes/ 301
+/workers/platform/triggers/custom-domains/ /workers/configuration/routing/custom-domains/ 301
+/workers/platform/triggers/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/learning/using-durable-objects/ /workers/configuration/durable-objects/ 301
 /workers/platform/languages/ /workers/learning/languages/ 301
 /workers/platform/protocols/ /workers/learning/protocols/ 301
