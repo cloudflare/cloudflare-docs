@@ -11,7 +11,7 @@ rss: file
 
 ### New default storage subsystem
 
-Databases created via the dashboard and wrangler (as of `v3.4.0`) now use D1's new storage subsystem by default. The new backend can [be 6 - 20x faster](https://blog.cloudflare.com/d1-turning-it-up-to-11/) than D1's original alpha backend.
+Databases created via the Cloudflare dashboard and Wrangler (as of `v3.4.0`) now use D1's new storage subsystem by default. The new backend can [be 6 - 20x faster](https://blog.cloudflare.com/d1-turning-it-up-to-11/) than D1's original alpha backend.
 
 To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the version field in the output.
 
