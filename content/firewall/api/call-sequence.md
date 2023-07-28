@@ -24,16 +24,15 @@ In this sequence, a single `POST` request to the `/firewall/rules` endpoint take
 
 Below is an example call and response using this method:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '[
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '[
   {
     "filter": {
       "expression": "http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34"
