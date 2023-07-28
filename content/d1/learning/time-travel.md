@@ -41,10 +41,9 @@ Time Travel supports two timestamp formats:
 
 ## Requirements
 
-To use Time Travel:
 
-* You must have [`wrangler`](/workers/wrangler/install-and-update/) `v3.4.0` or greater installed to use Time Travel commands.
-* You must be using a database on D1's new `beta` backend. You can check whether a database is using this backend via `wrangler d1 info DB_NAME` - the output show `version: beta`.
+* [`Wrangler`](/workers/wrangler/install-and-update/) `v3.4.0` or later installed to use Time Travel commands.
+* A database on D1's new `beta` backend. You can check whether a database is using this backend via `wrangler d1 info DB_NAME` - the output show `version: beta`.
 
 ## Retrieve a bookmark
 
