@@ -114,8 +114,6 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 You can also configure how `cloudflared` sends requests to your [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) services.
 
-To update the configuration via the dashboard:
-
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tunnels**.
 2. Choose a tunnel and select **Configure**.
 3. Select the **Public Hostname** tab.
@@ -123,4 +121,4 @@ To update the configuration via the dashboard:
 5. Under **Additional application settings**, modify one or more [origin configuration parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/).
 6. Select **Save hostname**.
 
-The new origin configuration is now in effect.
+The new configuration is now in effect.
