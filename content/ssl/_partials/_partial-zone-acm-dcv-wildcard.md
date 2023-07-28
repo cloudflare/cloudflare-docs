@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-For wildcard hostname certificates, certificate issuance and renewal varies based on the type of certificate you are using:
+For wildcard hostname certificates you will have to order an Advanced certificate. We **do not** provide wildcard hostname **Universal SSL certificates** for zones on a **Partial/CNAME Set Up**, certificate issuance and renewal varies based on the type of certificate you are using:
 
 - **Universal**: Perform DCV using one of the available [methods](/ssl/edge-certificates/changing-dcv-method/methods/).
 - **Advanced**: In most cases, you can opt for [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/), which greatly simplifies certificate management.
