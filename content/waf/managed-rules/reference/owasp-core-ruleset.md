@@ -151,7 +151,7 @@ highlight: 12,14-16
       </div>
     </details>
 
-3.  Update the rule you just identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+3.  Update the rule you identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
 
      <details>
       <summary>Request</summary>
@@ -362,7 +362,7 @@ highlight: 12,14-16
       </div>
     </details>
 
-4.  Update the rule you just identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
+4.  Update the rule you identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
 
     * `"score_threshold": 60`
     * `"action": "managed_challenge"`
