@@ -16,6 +16,8 @@ It can vary from about 25 seconds to over a minute. If you leave your speed tab 
 
 Check your firewall rules to make sure that you allow traffic from Observatory to request your site.
 
+{{<render file="_user-agents.md">}}
+
 ## Why might users not see any Real User Monitoring (RUM) data on the map in Observatory?
 
 There are several reasons why users might not see any Real User Monitoring (RUM) data on the map in Observatory:
