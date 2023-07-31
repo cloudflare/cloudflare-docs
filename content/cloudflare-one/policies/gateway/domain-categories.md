@@ -11,7 +11,7 @@ Cloudflare Gateway allows you to block known and potential security risks on the
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
 {{<Aside type="note" header="Subdomain Category">}}
-Subdomains that have not been assigned a category will inherit the category of their parent domain.{{</Aside>}}
+Subdomains that have not been assigned a category will inherit the category of their parent domain. When a subdomain becomes categorised, it will carry only its own cateogry. Subdomains will not both inherit their parent domain categories and also carry their own.{{</Aside>}}
 
 ## Security categories
 
