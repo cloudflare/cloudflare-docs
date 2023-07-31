@@ -47,7 +47,6 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Production branch     | `main`             |
 | Build command         | `npm run build`    |
 | Build directory       | `dist`             |
-| Environment Variables | `NODE_VERSION: 17` |
 
 </div>
 

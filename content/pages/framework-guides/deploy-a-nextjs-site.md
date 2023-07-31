@@ -121,11 +121,10 @@ To deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
-5. Click on **Save and Deploy** to start the deployment. This first deployment will not be fully functional as the next step is also necessary.
-6. In your Pages project, go to **Settings** > **Functions** > **Compatibility Flags**.
-7. Configure a `nodejs_compat` flag for both production and preview.
-8. Above **Compatibility Flags**, go to **Compatibility Date**  and configure a compatibility date that is at least `2022-11-30` for both production and preview.
+4. Click on **Save and Deploy** to start the deployment. This first deployment will not be fully functional as the next step is also necessary.
+5. In your Pages project, go to **Settings** > **Functions** > **Compatibility Flags**.
+6. Configure a `nodejs_compat` flag for both production and preview.
+7. Above **Compatibility Flags**, go to **Compatibility Date**  and configure a compatibility date that is at least `2022-11-30` for both production and preview.
 
 {{<Aside type="note" header="Note">}}
 
@@ -168,8 +167,6 @@ To deploy your site to Pages:
    | Build directory      | `out`           |
 
    {{</table-wrap>}}
-
-4. Next.js requires a specific Node.js version to build successfully. Refer to [System Requirements in Next.js Installation guide](https://nextjs.org/docs/getting-started/installation) to review the required Node.js version. To set your Node.js version, go to your Pages project > **Settings** > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of the required version. For example, if the required Node.js version on Next.js's Installation guide is Node.js `16.8` or later, your environment variable value must be set to `16` or greater.
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 

@@ -82,7 +82,6 @@ To deploy your site to Pages:
 | Production branch     | `main`             |
 | Build command         | `npm run build`    |
 | Build directory       | `dist/public`      |
-| Environment Variables | `NODE_VERSION: 17` |
 
 </div>
 

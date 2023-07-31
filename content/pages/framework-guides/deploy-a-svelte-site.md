@@ -137,15 +137,8 @@ Select the new GitHub repository that you created and, in **Set up builds and de
 | Production branch     | `main`                   |
 | Build command         | `npm run build`          |
 | Build directory       | `.svelte-kit/cloudflare` |
-| Environment Variables | `NODE_VERSION: 16`       |
 
 </div>
-
-{{<Aside type="warning">}}
-
-You can select the _SvelteKit_ preset from the **Framework preset** input, it auto populates the values for you, but you still need to manually insert the node version environment variable.
-
-{{</Aside>}}
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
