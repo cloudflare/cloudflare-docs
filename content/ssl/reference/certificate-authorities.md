@@ -7,7 +7,7 @@ weight: 5
 
 # Certificate authorities
 
-For publicly trusted certificates, Cloudlfare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and device ubiquity](#features-limitations-and-device-ubiquity).
+For publicly trusted certificates, Cloudlfare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and browser compatibility](#features-limitations-and-device-ubiquity).
 
 ## Availability per certificate type and encryption algorithm
 
@@ -23,7 +23,7 @@ For publicly trusted certificates, Cloudlfare partners with different certificat
 
 {{</table-wrap>}}
 
-## Features, limitations and device ubiquity
+## Features, limitations and browser compatibility
 
 {{<Aside type="warning" header="Universal SSL">}}
 {{<render file="_universal-ssl-validity.md">}}
@@ -37,7 +37,7 @@ For publicly trusted certificates, Cloudlfare partners with different certificat
 * Duplicate certificate limit of [5 certificates](https://letsencrypt.org/docs/rate-limits/) per week.
 
 <details>
-<summary>Device ubiquity</summary>
+<summary>Browser compatibility</summary>
 <div>
 
 {{<Aside type="warning">}}
@@ -75,7 +75,7 @@ Browsers (Chrome, Safari, Edge, Opera) generally trust the same root certificate
 * Cloudflare will be supporting ECDSA with Google Trust Services soon.
 
 <details>
-<summary>Device ubiquity</summary>
+<summary>Browser compatibility</summary>
 <div>
 
 Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser. All browsers or operating systems that depend on these root programs are covered.
