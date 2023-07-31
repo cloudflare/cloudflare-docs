@@ -216,7 +216,6 @@ By finishing this tutorial, you have successfully created, tested and deployed a
 
 ### Related resources
 
-
 - [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/).
 - [Create Durable Object stubs](/durable-objects/how-to/create-durable-object-stubs/).
 - [Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.
