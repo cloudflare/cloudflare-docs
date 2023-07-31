@@ -11,18 +11,6 @@
       {
           "folder": "cipa",
           "uid": "dns-filtering-create-policy2"
-      },
-      {
-          "folder": "cipa",
-          "uid": "dns-filtering-connect-devices2"
-      },
-      {
-          "folder": "cipa",
-          "uid": "dns-filtering-plan-deployment2"
-      },
-      {
-          "folder": "cipa",
-          "uid": "dns-filtering-deploy2"
       }
   ],
   "title": "Children's Internet Protection Act (CIPA)",

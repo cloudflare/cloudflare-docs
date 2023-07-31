@@ -1,12 +1,12 @@
 ---
-title: DNS filtering
+title: Children's Internet Protection Act (CIPA)
 type: developers-site
 layout: home
 new_learning_path: true
 pcx_content_type: learning-path
 meta:
-    title: Get started with DNS filtering
-    description: Protect corporate devices from malware, phishing, and other prohibited content.
+    title: Children's Internet Protection Act (CIPA)
+    description: Prevent children from accessing obscene or harmful content over the internet.
 ---
 
 {{<learning-path file="cipa.json">}}
