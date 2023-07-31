@@ -5,6 +5,8 @@ title: Durable Objects migrations
 
 # Durable Objects migrations
 
+A migration is a mapping process from a class name to a runtime state.
+
 You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
 
 {{<Aside type="note">}}
@@ -12,7 +14,6 @@ You must initiate a migration process when you create a new Durable Object class
 Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler deploy`](/workers/wrangler/commands/#deploy). This is true even for changes to how code interacts with persistent storage. Because of [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
 
 {{</Aside>}}
-
 
 The most common migration performed is a new class migration, which informs the runtime that a new Durable Object class is being uploaded.
 
@@ -42,7 +43,7 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 Migrations require a migration tag, which is defined by the `tag` property in each migration entry. 
 
-Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given Worker script has a migration tag set on it, all future Worker script deployments must include a migration tag.
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
@@ -90,7 +91,7 @@ You should provide an `--old-tag` value whenever possible. This value should be 
 The list of CLI migration arguments that can be added to `wrangler deploy` is as follows:
 
 ```bash
---old-tag <tag name> # Optional if your script does not have a migration tag set yet.
+--old-tag <tag name> # Optional if your Worker script does not have a migration tag set yet.
 --new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
 
 # Each of the migration directives can be specified multiple times if you are
