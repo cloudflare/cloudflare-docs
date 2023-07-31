@@ -6,7 +6,7 @@ weight: 16
 
 # Access a Durable Object from a Worker
 
-To access a Durable Object from a Worker, you must first create a Durable Object namespace binding in your Worker. The namespace is, in turn, configured to use a particular class and controls access to instances of that class.
+To access a Durable Object from a Worker, you must first create a Durable Object binding in your Worker project's `wrangler.toml` file. The binding is configured to use a particular class and controls access to instances of that class.
 
 Durable Object bindings for communication between a Worker and a Durable Object.
 

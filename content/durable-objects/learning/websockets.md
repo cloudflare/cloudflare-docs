@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: WebSockets in Durable Objects
 ---
-
 # WebSockets in Durable Objects
 
 Durable Objects are a coordinated state tool for [Cloudflare Workers](/workers/), which are often used in parallel with WebSockets to persist state over multiple clients and connections. 

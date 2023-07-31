@@ -14,28 +14,20 @@ This guide will instruct you through:
 
 {{<render file="_prereqs.md" productFolder="workers">}}
 
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages), if you have not already.
-2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). 
-
-{{<Aside type="note" header="Node.js version manager">}}
-Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed later in this guide, requires a Node version of `16.13.0` or later.
-{{</Aside>}}
 
 ## 1. Enable Durable Objects in the dashboard
 
 To enable Durable Objects, you will need to purchase the Workers Paid plan:
 
- 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+ 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
  2. Go to **Workers & Pages** > **Plans**. 
  3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
  ## 2. Create a Worker project
 
-You will access your Durable Object from a [Worker](/workers/).
+You will access your Durable Object from a [Worker](/workers/). Your Worker application is an interface to interact with your Durable Object.
 
 To create a Worker project, run:
-
 
 {{<tabs labels="npm | yarn">}}
 {{<tab label="npm" default="true">}}
@@ -54,6 +46,8 @@ $ yarn create cloudflare@latest
 {{</tab>}}
 {{</tabs>}}
 
+Running `create cloudlfare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
+
 In your terminal, you will be asked a series of questions related to your project: 
 
 1. Name your new Worker directory by specifying where you want to create your application.
@@ -64,24 +58,21 @@ In your terminal, you will be asked a series of questions related to your projec
 
 This will create a new directory, which will include both a `src/worker.js` file to write your code, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, create a class to define a Durable Object.
 
-
 ## 3. Configure Durable Object bindings
 
-Configure Durable Object bindings in your Worker project's `wrangler.toml` by providing a binding name (for this guide, use `EXAMPLE_CLASS`) and the class name (`DurableObjectExample`).
+[Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. Configure Durable Object bindings in your Worker project's `wrangler.toml` by providing a binding name (for this guide, use `EXAMPLE_CLASS`) and the class name (`DurableObjectExample`).
 
 ```toml
 ---
 filename: wrangler.toml
 ---
-[durable_objects]
-bindings = [
-  { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
+[[durable_objects.bindings]]
+name = "EXAMPLE_CLASS"
+class_name = "DurableObjectExample"
 ]
 ```
 
-The `[durable_objects]` section has one subsection called `bindings`, which is an array of tables. 
-
-Each table contains the following fields:
+The `[[durable_objects.bindings]]` section contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
@@ -93,7 +84,7 @@ A migration is a mapping process from a class name to a runtime state. You perfo
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.  
 
-To configure a Durable Object migration in `wrangler.toml` file:
+To configure a Durable Object migration in your Worker's `wrangler.toml` file:
 
 ```toml
 ---
@@ -113,9 +104,9 @@ Before you create and access a Durable Object, you must define its behavior by e
 If you do not use JavaScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class.
 {{</Aside>}}
 
-Your class `DurableObjectExample` will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
+Your `DurableObjectExample` class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it. 
 
-Note that this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
+Note that this means bindings are no longer global variables. For example, if you had a secret binding with a `binding` name of `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 ```js
 ---
@@ -126,6 +117,8 @@ export class DurableObjectExample {
 }
 ```
 Workers communicate with a Durable Object via the fetch API. Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
+
+Your `worker.js` file should now look like:
 
 ```js
 ---
@@ -148,7 +141,6 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 {{</Aside>}}
 
-
 ## 6. Instantiate and communicate with a Durable Object
 
 The `fetch()` handler allows you to instantiate and communicate to a Durable Object from a Worker. 
@@ -158,7 +150,7 @@ Durable Objects do not receive requests directly from the Internet. Durable Obje
 This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 {{</Aside>}}
 
-To implement a `fetch()` handler, export a method named `fetch()` in an `export default {}` block:
+To implement a `fetch()` handler, export a method named `fetch()` in an `export default {}` block. Add the following to your `worker.js` file's existing class and fetch handler:
 
 ```js
 ---
@@ -190,11 +182,9 @@ In the code above, you have:
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/) to learn more about communicating to a Durable Object.
 
-## 7. Upload a Durable Object Worker
+## 7. Develop a Durable Object Worker locally
 
-To upload Workers that implement or bind to Durable Objects, use [Wrangler](/workers/wrangler/), the Workers CLI. 
-
-Open your terminal and run the following command to upload a Durable Object Worker:
+To test your Durable Object locally, run [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
 $ wrangler dev
@@ -202,20 +192,18 @@ $ wrangler dev
 
 ## 8. Deploy your Durable Object Worker
 
-Use [Wrangler](/workers/wrangler/), the Workers CLI to deploy your Durable Object.
-
-Open your terminal and run the following command to deploy a Durable Object Worker:
+To deploy your Durable Object Worker:
 
 ```sh
 $ wrangler deploy
 ```
 
-Once deployed, you should be able to see your newly created Durable Object on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
+Once deployed, you should be able to see your newly created Durable Object Worker on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
+
+Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 By finishing this tutorial, you have successfully created, tested and deployed a Durable Object.
-
 ### Related resources
-
 - [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/).
 - [Create Durable Object stubs](/durable-objects/how-to/create-durable-object-stubs/).
 - [Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.
