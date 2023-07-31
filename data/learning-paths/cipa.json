@@ -2,15 +2,15 @@
   "modules": [ 
       {
           "folder": "cipa",
-          "uid": "dns-filtering-concepts2"
+          "uid": "cipa-concepts"
       },
       {
           "folder": "cipa",
-          "uid": "dns-filtering-account2"
+          "uid": "cipa-getting-started"
       },
       {
           "folder": "cipa",
-          "uid": "dns-filtering-create-policy2"
+          "uid": "cipa-configuration"
       }
   ],
   "title": "Children's Internet Protection Act (CIPA)",

@@ -1,7 +1,7 @@
 ---
 title: Create a Zero Trust organization
 pcx_content_type: learning-unit
-weight: 3
+weight: 2
 layout: learning-unit
 ---
 

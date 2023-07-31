@@ -1,5 +1,5 @@
 {
-    "summary": "Set up an account for Cloudflare Zero Trust.",
+    "summary": "Get started by creating a Cloudflare account and proxying your traffic through our Global network.",
     "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Set up a Cloudflare account. </li>\n<li>Create a Zero Trust organization to manage your devices and policies. </li>\n</ul>\n",
     "levels": [
         "beginner"
@@ -9,5 +9,5 @@
     ],
     "type": "module",
     "title": "Account setup",
-    "url": "/learning-paths/modules/cipa/dns-filtering-account2/"
+    "url": "/learning-paths/modules/cipa/cipa-getting-started/"
 }

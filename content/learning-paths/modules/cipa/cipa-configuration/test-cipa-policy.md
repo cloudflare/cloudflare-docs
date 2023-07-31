@@ -1,7 +1,7 @@
 ---
-title: Test a policy
+title: Test the CIPA policy
 pcx_content_type: learning-unit
-weight: 4
+weight: 3
 layout: learning-unit
 ---
 

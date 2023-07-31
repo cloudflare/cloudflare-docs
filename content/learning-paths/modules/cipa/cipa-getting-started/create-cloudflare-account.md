@@ -1,7 +1,7 @@
 ---
 title: Create a Cloudflare account
 pcx_content_type: learning-unit
-weight: 2
+weight: 1
 layout: learning-unit
 ---
 
