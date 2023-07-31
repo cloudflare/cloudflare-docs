@@ -6,9 +6,9 @@ weight: 2
 
 # Environments
 
-KV namespaces can be used with [environments](/workers/wrangler/environments/#environments). This is useful when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to have these bindings point to different KV namespaces (like one for staging and one for production).
+KV namespaces can be used with [environments](/workers/wrangler/environments/#environments). This is useful when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to have these bindings point to different KV namespaces (for example, one for staging and one for production).
 
-The following code in the `wrangler.toml` file shows you how to have two environments that have two different namespaces but the same binding name.
+The following code in the `wrangler.toml` file shows you how to have two environments that have two different KV namespaces but the same binding name:
 
 ```toml
 ---
@@ -24,7 +24,6 @@ kv_namespaces = [
   { binding = "MY_KV", id = "a825455ce00f4f7282403da85269f8ea" }
 ]
 ```
-
 Using the same binding name for two different KV namespaces keeps your Worker code simple. In the `staging` environment, `MY_KV.get("KEY")` will read from the namespace ID `e29b263ab50e42ce9b637fa8370175e8`. In the `production` environment, `MY_KV.get("KEY")` will read from the namespace ID `a825455ce00f4f7282403da85269f8ea`.
 
 To insert a value into a `staging` KV namespace, run:
@@ -41,9 +40,9 @@ $ wrangler kv:key put --namespace-id=<YOUR_ID> "<KEY>" "<VALUE>"
 
 Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. 
 
-Specifying an environment with the optional `--env` flag  allows you to publish Workers running the same code but with different namespaces. 
+Specifying an environment with the optional `--env` flag  allows you to publish Workers running the same code but with different KV namespaces. 
 
-For example, you could use separate staging and production namespaces for KV data in your `wrangler.toml` file:
+For example, you could use separate staging and production KV namespaces for KV data in your `wrangler.toml` file:
 
 ```toml
 ---
@@ -66,7 +65,7 @@ kv_namespaces = [
 ]
 ```
 
-With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. 
+With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the KV namespace `MY_KV` under `env.production`. 
 
 For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
 
