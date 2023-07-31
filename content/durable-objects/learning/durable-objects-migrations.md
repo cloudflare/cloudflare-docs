@@ -17,7 +17,7 @@ Updating code for an existing Durable Object class does not require a migration.
 
 The most common migration performed is a new class migration, which informs the runtime that a new Durable Object class is being uploaded.
 
-Migrations can also be used for transferring stored data between two Durable Object classes. Rename migrations are used to transfer stored Durable Objects between two Durable Object classes in the same script. Transfer migrations are used to transfer stored Durable Objects between two Durable Object classes in different scripts.
+Migrations can also be used for transferring stored data between two Durable Object classes. Rename migrations are used to transfer stored Durable Objects between two Durable Object classes in the same Worker script. Transfer migrations are used to transfer stored Durable Objects between two Durable Object classes in different scripts.
 
 The destination class (the class that stored Durable Objects are being transferred to) for a rename or transfer migration must be exported by the deployed Worker.
 

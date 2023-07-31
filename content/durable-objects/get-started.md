@@ -161,7 +161,7 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/workers/wrangler/environments/) script.
+  - `script_name` - Optional. Defaults to the current [environment's](/workers/wrangler/environments/) Worker script.
 
 ## 6. Configure Durable Object classes with migrations
 

@@ -12,7 +12,7 @@ weight: 16
 
 The `wrangler dev` command opens a tunnel from your local development environment to Cloudflare's global network, letting you test your Durable Objects code in the Workers environment as you write it.
 
-`wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler deploy`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+`wrangler tail` displays a live feed of console and exception logs for each request served by your Worker script, including both normal Worker requests and Durable Object requests. After doing a `wrangler deploy`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
 ## Common errors
 
