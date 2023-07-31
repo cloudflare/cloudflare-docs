@@ -8,7 +8,8 @@ rss: file
 # Changelog
 
 ## 2023-07-31
-- Added `uk` language
+
+- Added `uk` language.
 
 ## 2023-05-25
 
