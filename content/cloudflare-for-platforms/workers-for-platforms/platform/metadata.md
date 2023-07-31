@@ -89,9 +89,6 @@ Analogue to regular Workers, user Workers can also interact with other Cloudflar
 
 
 
-```
-
-
 
 
 
