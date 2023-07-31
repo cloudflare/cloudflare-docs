@@ -17,7 +17,6 @@ This guide will get you started with creating and managing configured Health Che
     * **Health change thresholds**, which specify the number of consecutive passed or failed checks before an origin changes status.
 4. Select **Save and Deploy**.
 
-
 ## Manage Health Checks
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
