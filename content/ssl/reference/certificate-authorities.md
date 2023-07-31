@@ -29,12 +29,15 @@ For publicly trusted certificates, Cloudlfare partners with different certificat
 {{<render file="_universal-ssl-validity.md">}}
 {{</Aside>}}
 
+---
+
 ### Let's Encrypt
 
 * Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 90 days.
 * [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 7 days.
 
 #### Limitations
+
 * Hostname on certificate can contain up to 10 levels of subdomains.
 * Duplicate certificate limit of [5 certificates](https://letsencrypt.org/docs/rate-limits/) per week.
 
@@ -53,6 +56,8 @@ Browsers (Chrome, Safari, Edge, Opera) generally trust the same root certificate
 #### Other resources
 
 [Let's Encrypt Root CAs](https://letsencrypt.org/certificates/) 
+
+---
 
 ### Google Trust Services
 
@@ -75,9 +80,13 @@ This section summarizes commonly requested client support information. For the c
 Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser. All browsers or operating systems that depend on these root programs are covered.
 In addition, some of Google Trust Services' [root CAs](https://pki.goog/faq/#faq-27) may rely on a cross-signature to ensure optimal support across a wide range of devices.
 
+---
+
 ### Sectigo
 
 Only used for [Backup certificates](/ssl/edge-certificates/backup-certificates/)
+
+---
 
 ### DigiCert
 
@@ -100,6 +109,7 @@ This section summarizes commonly requested client support information. For the c
 
 [DigiCert Root CAs](https://www.digicert.com/kb/digicert-root-certificates.htm)
 
+---
 
 ## CAA records
 
