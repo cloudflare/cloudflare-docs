@@ -23,12 +23,14 @@ weight: 2
 
 6. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/speed-test/test-results/) for more information.
 
-{{<Aside type="note" header="Cloudflare Observatory tests are generated with the following user agents:">}}
+{{<Aside type="note">}}
 
-- Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36
+Cloudflare Observatory tests are generated with the following user agents:
+
+- Mozilla/5.0 (Linux; Android 11; Moto G Power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36
 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
 
-and originate from ASN 15169.
+Cloudflare Observatory tests originate from ASN 15169.
 
 {{</Aside>}}
 
