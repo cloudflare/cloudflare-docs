@@ -13,8 +13,6 @@ For customers using Microsoft Office 365, setting up Area 1 via Microsoft Graph 
 
 ![Email flow when setting up Area 1 with the Microsoft Graph API](/images/email-security/deployment/api-setup/ms-graph/ms-graph.png)
 
-{{<Aside type="note">}}For this beta release, scanning Microsoft 365 domains via the Microsoft Graph API is only available for onboarding new domains. This option will not show up on domains already onboarded on your Area 1 dashboard. If you want to use Microsoft Graph API with a domain already set up, you will need to delete it and add it again.{{</Aside>}}
-
 ## User roles
 
 Area 1 uses two roles for retraction and directory integration purposes:
