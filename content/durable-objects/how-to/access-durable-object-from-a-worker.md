@@ -34,8 +34,11 @@ filename: index.js
 ---
 let id = OBJECT_NAMESPACE.newUniqueId();
 ```
-
 The `newUniqueId()` method on a Durable Object namespace creates a new Durable Object ID randomly. `newUniqueId()` will never return the same ID twice. Thus, it is guaranteed that the Durable Object does not yet exist and has never existed at the time the method returns.
+
+{{<Aside type="note" header="Durable Object namespace">}}
+A Durable Object namespace is a a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
+{{</Aside>}}
 
 When generating an ID randomly, you need to store the ID somewhere to reach the same Durable Object again in the future. For example, you can store the ID in Workers KV, in an external database, or in a cookie in the user's browser.
 
@@ -99,7 +102,7 @@ let id = OBJECT_NAMESPACE.idFromString(hexId);
 
 This method parses an ID that was previously stringified. This is useful with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere as a string.
 
-This method will throw an exception if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw an exception if the ID was originally created for a different namespace.
+This method will throw an exception if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw an exception if the ID was originally created for a different Durable Object namespace.
 
 ## 2. Construct the stub using the ID 
 
