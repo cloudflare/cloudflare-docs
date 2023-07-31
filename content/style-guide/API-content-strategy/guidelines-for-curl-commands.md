@@ -190,7 +190,7 @@ curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 
 Include the complete response (including any empty error and message arrays, if present) using `json` syntax highlighting.
 
-A response starts either with an object `({ ... })` or a list `([ ... ])`. The initial character should appear on its own line, as well as the last character.
+A response starts either with an object (`{ ... }`) or a list (`[ ... ]`). The initial character should appear on its own line, as well as the last character.
 
 ```txt
 ({|[)
