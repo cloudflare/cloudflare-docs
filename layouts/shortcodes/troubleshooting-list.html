@@ -5,13 +5,19 @@
 {{- $troubleshootingArray := slice -}}
 {{- $troubleshootingArrayWithPath := slice -}}
 {{- $link := "" -}}
+{{- $title := "" -}}
 
 
 {{- range (where .Site.Pages "Section" $section).ByWeight -}}
   {{- $x := .RelPermalink -}}
   {{- if (not .Params.hidden) -}}
   {{- if or (eq .Params.pcx_content_type "troubleshooting") (eq .Params.pcx_content_type "faq") -}}
-  {{- $troubleshootingArray = $troubleshootingArray | append (dict "link" .RelPermalink "title" .Title "resource_type" .Params.pcx_content_type ) -}}
+  {{- with .Params.meta.title -}}
+    {{- $title = . -}}
+    {{- else -}}
+    {{- $title = .Title -}}
+  {{- end -}}
+  {{- $troubleshootingArray = $troubleshootingArray | append (dict "link" .RelPermalink "title" $title "resource_type" .Params.pcx_content_type ) -}}
   {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -24,9 +30,9 @@
   {{- if gt (len $item2 ) 0 -}}
     {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item2).Path -}}
     {{- $page := $.Site.GetPage $rellink -}}
-    {{- $title = $page.Title -}}
+    {{- $title2 := $page.Title -}}
     {{- if and (ne $index2 1) (ne $index2 $self_length) -}}
-      {{- $path = $path | append $title -}}
+      {{- $path = $path | append $title2 -}}
     {{- end -}}
   {{- end -}}
   {{- end -}}
@@ -37,11 +43,13 @@
 {{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".path" -}}
 {{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".resource_type" "desc" -}}
 
+<div class="DocsMarkdown--table-wrap">
+  <div class="DocsMarkdown--table-wrap-inner">
 <table>
 <thead>
   <tr>
-    <th>Location</th>
     <th>Resource</th>
+    <th>Location</th>
     <th>Type</th>
   </tr>
 </thead>
@@ -55,10 +63,12 @@
 {{- $resource_title = upper .resource_type -}}
 {{- end -}}
 <tr>
-  <td>{{- .path -}}</td>
   <td>{{- $.Page.RenderString $link -}}</td>
+  <td>{{- .path -}}</td>
   <td>{{ $resource_title }}</td>
 </tr>
 {{- end -}}
 </tbody>
 </table>
+</div>
+</div>
