@@ -231,7 +231,7 @@ header: cURL command
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
---data "(curl -s "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
+--data "(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
 --header "Authorization: Bearer <API_TOKEN>" | jq ".result.new_operations")"
 ```
 
