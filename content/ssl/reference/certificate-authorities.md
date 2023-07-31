@@ -9,11 +9,11 @@ weight: 5
 
 For publicly trusted certificates, Cloudlfare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and device ubiquity](#features-limitations-and-device-ubiquity).
 
-## Availability per certificate type and chain
+## Availability per certificate type and encryption algorithm
 
 {{<table-wrap>}}
 
-| Certificate         | Chain | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [Sectigo](#sectigo) | [DigiCert](#digicert)                 |
+| Certificate         | Algorithm | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [Sectigo](#sectigo) | [DigiCert](#digicert)                 |
 |---------------------|-------|---------------|-----------------------|---------|--------------------------|
 | [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br />✅<br /> <sub>Deprecating soon</sub> |
 | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br /> ✅<br /> <sub>Deprecating soon</sub> |
