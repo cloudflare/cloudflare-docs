@@ -214,7 +214,6 @@ Once deployed, you should be able to see your newly created Durable Object on th
 
 By finishing this tutorial, you have successfully created, tested and deployed a Durable Object.
 
-
 ### Related resources
 
 
