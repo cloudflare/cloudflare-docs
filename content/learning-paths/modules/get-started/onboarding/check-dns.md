@@ -31,7 +31,7 @@ F --> C
 
 For more details on these errors and how to fix them, refer to the following resources:
 
-- [`DNS_PROBE_FINISHED_NXDOMAIN`](/dns/zone-setups/troubleshooting/dns-probe-finished-nxdomain/)
+- [`DNS_PROBE_FINISHED_NXDOMAIN`](/dns/troubleshooting/dns-probe-finished-nxdomain/)
 - [Cloudflare 5xx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/)
 - [Cloudflare 1xxx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
 - [Add a record on the zone apex](/dns/manage-dns-records/how-to/create-zone-apex/)
