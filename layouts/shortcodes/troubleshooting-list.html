@@ -17,7 +17,7 @@
     {{- else -}}
     {{- $title = .Title -}}
   {{- end -}}
-  {{- $troubleshootingArray = $troubleshootingArray | append (dict "link" .RelPermalink "title" $title "resource_type" .Params.pcx_content_type ) -}}
+   {{- $troubleshootingArray = $troubleshootingArray | append (dict "link" .RelPermalink "title" $title "resource_type" .Params.pcx_content_type ) -}}
   {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -26,21 +26,25 @@
   {{- $title := "" -}}
   {{- $self_length := sub (len (split $item.link "/")) 2 -}}
   {{- $path := slice -}}
+  {{- $allSectionsWeight := 0 -}}
+
   {{- range $index2, $item2 := (split $item.link "/") -}}
   {{- if gt (len $item2 ) 0 -}}
     {{- $rellink = printf "%s/%s" $rellink (urls.Parse $item2).Path -}}
     {{- $page := $.Site.GetPage $rellink -}}
+    {{/* Add weight of current section to global page weight calculation: currPageWeight * 10^(8-index2) */}}
+    {{- $allSectionsWeight = (add $allSectionsWeight (mul $page.Weight (math.Pow 10 (sub 8 $index2)))) -}}
     {{- $title2 := $page.Title -}}
     {{- if and (ne $index2 1) (ne $index2 $self_length) -}}
       {{- $path = $path | append $title2 -}}
     {{- end -}}
   {{- end -}}
   {{- end -}}
-  {{- $item := merge $item (dict "path" (delimit $path " > ")) -}}
+  {{- $item := merge $item (dict "path" (delimit $path " > ") "calculatedWeight" $allSectionsWeight) -}}
   {{- $troubleshootingArrayWithPath = $troubleshootingArrayWithPath | append $item -}}
 {{- end -}}
 
-{{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".path" -}}
+{{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".calculatedWeight" -}}
 {{- $troubleshootingArrayWithPath = sort $troubleshootingArrayWithPath ".resource_type" "desc" -}}
 
 <div class="DocsMarkdown--table-wrap">
@@ -71,4 +75,4 @@
 </tbody>
 </table>
 </div>
-</div>
+</div> 
