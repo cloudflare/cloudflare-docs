@@ -21,7 +21,7 @@ Workers KV is a data storage that allows you to store and retrieve data globally
 ## Features
 
 {{<feature header="Key-value storage" href="/kv/get-started/">}}
-Learn how Workers KV stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access.
+Learn how Workers KV stores and retrieves data.
 {{</feature>}}
 
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}

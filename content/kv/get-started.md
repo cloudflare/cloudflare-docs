@@ -123,6 +123,6 @@ Refer to the [`kv:bulk`](/kv/platform/kv-commands/#kvbulk) documentation to writ
 
 ## Related resources
 
+* [Workers KV methods](/kv/learning/methods/)
 * [Environments](/workers/platform/environments/)
 * [`kv` command documentation](/kv/platform/kv-commands/)
-* [`wrangler.toml` configuration documentation](/workers/wrangler/configuration)
