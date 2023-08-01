@@ -8,6 +8,8 @@ weight: 2
 
 This page lists Cloudflare requirements for custom certificates and explains how to upload and update these certificates using Cloudflare dashboard or API.
 
+If you need the certificate quota increased you should contact the [Cloudflare Support](https://developers.cloudflare.com/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/). That can helps you also on the renewal process, if you want to upload a new certificate instead change the existing one.
+
 ## Certificate requirements
 
 Before accepting custom certificates, Cloudflare parses them and checks for validity according to a list of requirements.
