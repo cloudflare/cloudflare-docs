@@ -1,7 +1,7 @@
 ---
 title: SSH proxy and command logs
 pcx_content_type: how-to
-weight: 2
+weight: 3
 ---
 
 # Configure SSH proxy and command logs
