@@ -34,12 +34,6 @@ jobs:
         run: pnpm run crawl
         if: success()
 
-      - name: Check - Broken header links
-        uses: untitaker/hyperlink@0.1.27
-        with:
-          args: public/ --sources content/ --check-anchors
-        continue-on-error: true
-
       
   # lint:
   #   name: Lint
