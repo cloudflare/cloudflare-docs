@@ -13,7 +13,7 @@ For publicly trusted certificates, Cloudlfare partners with different certificat
 
 {{<table-wrap>}}
 
-| Certificate         | Algorithm | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [Sectigo](#sectigo) | [DigiCert](#digicert)                 |
+| Certificate         | Algorithm | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [Sectigo](#sectigo) | [DigiCert](#digicert-deprecating-soon)                 |
 |---------------------|-------|---------------|-----------------------|---------|--------------------------|
 | [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br />✅<br /> <sub>Deprecating soon</sub> |
 | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br /> ✅<br /> <sub>Deprecating soon</sub> |
@@ -49,9 +49,7 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts ISRG’s “ISRG Root X1” certificate.
-
-Browsers (Chrome, Safari, Edge, Opera) generally trust the same root certificates as the operating system they are running on. Firefox is the exception, having its own root store.
+The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts ISRG’s “ISRG Root X1” certificate. You can find the full list of supported clients in [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
 
 #### Other resources
 
@@ -69,7 +67,7 @@ Browsers (Chrome, Safari, Edge, Opera) generally trust the same root certificate
 * Punycode domains are not yet supported.
 * Cloudflare will be supporting ECDSA with Google Trust Services soon.
 
-#### Browser compatibility
+#### Browser compatibility (most compatible)
 
 {{<Aside type="warning">}}
 
@@ -88,7 +86,7 @@ Only used for [Backup certificates](/ssl/edge-certificates/backup-certificates/)
 
 ---
 
-### DigiCert
+### DigiCert (deprecating soon)
 
 * Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days.
 
@@ -96,12 +94,7 @@ Only used for [Backup certificates](/ssl/edge-certificates/backup-certificates/)
 
 #### Browser compatibility
 
-{{<Aside type="warning">}}
-
-This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, always refer to the respective [certificate authority documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
-
-{{</Aside>}}
-
+Refer to the respective [certificate authority documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
 
 #### Other resources
 
