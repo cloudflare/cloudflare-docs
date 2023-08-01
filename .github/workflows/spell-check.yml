@@ -34,7 +34,7 @@ jobs:
       - name: Install alex
         run: npm install -g alex
 
-       - name: Get Changed Files from Pull Request
+      - name: Get Changed Files from Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
