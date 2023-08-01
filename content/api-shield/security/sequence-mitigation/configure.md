@@ -91,7 +91,7 @@ The response will reflect the rule that has been written with its ID. In case so
 ---
 header: Example using cURL
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
+curl --request POST "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
 --header "Content-Type: application/json" \
 --data '{
   "title": "string",
