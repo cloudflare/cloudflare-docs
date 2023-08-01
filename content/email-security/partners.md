@@ -33,7 +33,7 @@ Your newly created account should show up in the list. If not, refresh the page.
 3. In **Delegated Accounts** > **Accounts**, select the parent account where you want to create a child account.
 4. Select **Create New customer**.
 5. Enter their information, and make sure you select _Advantage_ in **Account Type**.
-6. Scroll down to the **Email Traffic Related Information** section, and enter the information related to your email provider. The number to enter in **Looback Hops** will depend on your email configuration and where Area 1 is in the chain of events. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information.
+6. Scroll down to the **Email Traffic Related Information** section, and enter the information related to your email provider. The number to enter in **Loopback Hops** will depend on your email configuration and where Area 1 is in the chain of events. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information.
 7. For **Daily Email Volume** and **Number of Email Users** make sure you enter the appropriate values for your organization.
 8. Select **Save**.
 
