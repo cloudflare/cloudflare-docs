@@ -38,8 +38,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Get file names, filter out deleted files, and only include markdown files
-          files=$(gh pr diff ${{ github.event.pull_request.number }} --name-status | awk '$1 != "D" {print $2}' | grep -E "\.md$" | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ' ')
+          # Get the base and head branches of the pull request
+          base_branch=$(gh pr view ${{ github.event.pull_request.number }} --json base_ref_name -q .base_ref_name)
+          head_branch=$(gh pr view ${{ github.event.pull_request.number }} --json head_ref_name -q .head_ref_name)
+
+          # Get the list of changed files between the base and head branches, filter by markdown files
+          files=$(git diff --name-only $base_branch...$head_branch --diff-filter=d | grep -E "\.md$|\.markdown$" | xargs -I {} sh -c 'echo "\"./{}\""' | tr '\n' ' ')
+
           echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
       - name: Output Changed Files
