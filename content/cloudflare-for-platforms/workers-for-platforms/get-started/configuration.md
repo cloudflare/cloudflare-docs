@@ -131,7 +131,7 @@ Update the necessary fields and run the following command:
 5. Add the script name `customer-worker-1` to `<SCRIPT_NAME>`.
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch_namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <AUTH_KEY>" \
 -H "Content-Type: multipart/form-data" \
@@ -142,7 +142,7 @@ If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` he
 
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch_namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
 -H "Authorization: Bearer <BEARER_TOKEN>" \
 -H "Content-Type: multipart/form-data" \
 -F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
