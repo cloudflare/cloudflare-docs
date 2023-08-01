@@ -6,7 +6,7 @@ weight: 1
 
 # Migrate from Wrangler v2 to v3
 
-There are no special instructions for migrating Wrangler v2 to v3. You should be able to update the package via [our update guide](/workers/wrangler/install-and-update/#update-wrangler) and experience no disruption to your workflow.
+There are no special instructions for migrating from Wrangler v2 to v3. You should be able to update Wrangler by following the instructions in [Install/Update Wrangler](/workers/wrangler/install-and-update/#update-wrangler). You should experience no disruption to your workflow.
 
 {{<Aside type="note">}}
 
