@@ -98,6 +98,10 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 {{<render file="gateway/_destination-port.md">}}
 
+### Detected Protocol
+
+{{<render file="gateway/_protocol-detection.md">}}
+
 ### Device Posture
 
 {{<render file="gateway/_device-posture.md">}}
@@ -111,10 +115,6 @@ Gateway matches network traffic against the following selectors, or criteria.
 To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > **Proxy**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
 
 {{</Aside>}}
-
-### Protocol Detection
-
-{{<render file="gateway/_protocol-detection.md">}}
 
 ### Proxy Endpoint
 
