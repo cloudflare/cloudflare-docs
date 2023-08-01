@@ -29,7 +29,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
 Next [create list items](/api/operations/lists-create-list-items). This will add elements to the current list.
 
 ```bash
-curl POST https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: <YOUR_EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
