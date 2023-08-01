@@ -35,7 +35,7 @@ To use certain Cloudflare features, however, you may need to update the headers 
 | --- | --- |
 | [Rocket Loader](/speed/optimization/content/rocket-loader/), [Mirage](/speed/optimization/images/mirage/) | `script-src 'self' ajax.cloudflare.com;` |
 | [Cloudflare Apps](https://support.cloudflare.com/hc/articles/115000304631), [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036) | `script-src 'self' 'unsafe-inline'`|
-| [Web Analytics](/analytics/web-analytics) | `script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com` |
+| [Web Analytics](/analytics/web-analytics) | `script-src static.cloudflareinsights.com; connect-src 'self' cloudflareinsights.com` |
 | [Bot products](/bots/) | Refer to [JavaScript detections and CSPs](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp).|
 | [Page Shield](/page-shield/) | Refer to [Page Shield CSP Header format](/page-shield/reference/csp-header/). |
 | [Zaraz](/zaraz/) | No updates required ([details](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).|
