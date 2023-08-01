@@ -15,7 +15,7 @@ Gateway supports the detection, logging, and filtering of application protocols 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Firewall**.
 2. Enable **Protocol Detection**.
 
-You can now use **Detected Protocol** as a selector in a [Network policy](/cloudflare-one/policies/gateway/network-policies/#detected-protocol).
+You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudflare-one/policies/gateway/network-policies/#detected-protocol).
 
 ## Supported protocols
 
