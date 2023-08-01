@@ -24,7 +24,7 @@ Unless specifically set in a page rule, Cloudflare does not override or insert `
 
 {{<Aside type="note" header="Note">}}
 - Setting high Browser Cache TTL values means that the assets will be cached for a long time by users’ browsers.
-- If you modify cached assets, the new assets may not be displayed to repeat visitors before the Browser Cache TTL duration.
+- If you modify cached assets, the new assets may not be displayed to repeat visitors before the Browser Cache TTL expires.
 - Purging Cloudflare’s cache does not affect assets stored by a visitor’s browser.
 {{</Aside>}}
 
