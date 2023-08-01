@@ -7,6 +7,15 @@ rss: file
 
 # Changelog
 
+## 2023-08-01
+
+### Per-database limit now 500 MB
+
+Databases using D1's [new storage subsystem)[/d1/changelog/#new-default-storage-subsystem] can now grow to 500 MB each, up from the previous 100 MB limit. This applies to both existing and newly created databases.
+
+Visit the [Limits documentation](
+/d1/platform/limits/) for full details on what limits currently apply to D1.
+
 ## 2023-07-27
 
 ### New default storage subsystem
