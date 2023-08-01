@@ -9,11 +9,11 @@ updated: 2023-01-12
 
 # Deliver emails to the junk email folder and user managed quarantine
 
-In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the user’s junk folder, and `SPAM` and `SPOOF` messages to the user managed quarantine.
+In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages to the user’s junk folder, and `SPAM` and `SPOOF` messages to the user managed quarantine.
 
 ## Configure domains
 
-{{<render file="_o365-use-case-configure-domain.md" withParameters="Only `Malicious` should be checked.">}}
+{{<render file="_o365-use-case-configure-domain.md" withParameters="Only `MALICIOUS` should be checked.">}}
 
 ## Create quarantine policies
 
