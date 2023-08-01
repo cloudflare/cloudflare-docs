@@ -36,7 +36,7 @@ Find your [account ID in the Cloudflare dashboard](/fundamentals/get-started/bas
 
 | Permission | Description |
 |------------|-------------|
-| Admin Read and Write | Allows the ability to create, list, modify, and delete buckets and their associated configurations. This includes the ability to write, read, and list objects within buckets. |
-| Admin Read only | Allows the ability to list buckets and view their associated configurations. This includes the ability to read and list objects within buckets. |
-| Object Read & Write | Allows the ability to read, write, and list objects. When applied to specific buckets, the permission only applies to objects within the selected buckets. |
-| Object Read only | Allows the ability to read and list objects. When applied to specific buckets, the permission only applies to objects within the selected buckets. |
+| Admin Read and Write | Allows the ability to create, list and delete buckets, and edit bucket configurations in addition to list, write, and read object access. |
+| Admin Read only | Allows the ability to list buckets and view bucket configuration in addition to list and read object access. |
+| Object Read & Write | Allows the ability to read, write, and list objects in specific buckets. |
+| Object Read only | Allows the ability to read and list objects in specific buckets. |
