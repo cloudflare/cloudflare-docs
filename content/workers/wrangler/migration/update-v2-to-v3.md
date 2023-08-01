@@ -8,7 +8,7 @@ weight: 1
 
 There are no special instructions for migrating from Wrangler v2 to v3. You should be able to update Wrangler by following the instructions in [Install/Update Wrangler](/workers/wrangler/install-and-update/#update-wrangler). You should experience no disruption to your workflow.
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
 If you tried to update to Wrangler v3 prior to v3.3 you may have experienced some compatibility issues with older operating systems. Please try again with the latest v3 where those have been resolved.
 
