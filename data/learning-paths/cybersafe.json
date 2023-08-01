@@ -1,0 +1,27 @@
+{
+  "modules": [ 
+      {
+          "folder": "cybersafe",
+          "uid": "cybersafe-concepts"
+      },
+      {
+          "folder": "cybersafe",
+          "uid": "cybersafe-getting-started"
+      },
+      {
+          "folder": "cybersafe",
+          "uid": "cybersafe-configuration"
+      }
+  ],
+  "title": "Project Cybersafe",
+  "uid": "cybersafe",
+  "path": "/learning-paths/cybersafe/",
+  "priority": 5,
+  "description": "Prevent children from accessing obscene or harmful content over the internet.",
+  "products": [
+    "Cloudflare Gateway",
+    "WARP",
+    "DNS"
+    ],
+  "category": ["Security","Zero Trust"]
+}

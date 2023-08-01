@@ -1,0 +1,13 @@
+{
+    "summary": "Get started by creating a Cloudflare account and onboarding your traffic through our secure global network.",
+    "abstract": "",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "network admin"
+    ],
+    "type": "module",
+    "title": "Account Setup and Onboarding Traffic",
+    "url": "/learning-paths/modules/cybersafe/cybersafe-getting-started/"
+}

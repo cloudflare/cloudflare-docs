@@ -1,17 +1,35 @@
 ---
-title: Enable Traffic
+title: Various methods to onboard traffic
 pcx_content_type: learning-unit
 weight: 3
 layout: learning-unit
 ---
 
+# Overview
+
+Gateway can be invoked using various methods:
+
+1. DNS Only
+   1. DNS over HTTP
+   2. DNS over TLS
+   3. Locations
+2. WARP
+   1. Local deployment
+   2. Bulk deployment
+   3. 
+
 The fastest way to start filtering DNS queries is to change your DNS resolver to use a specific Gateway endpoint. You can make this change at the browser, OS, or router level.
 
+
+
+
+--------------------
 Choose this option if:
 
 - You want to try out DNS filtering without installing software.
 - You do not need to filter by user identity.
 - You want to apply blanket DNS policies to all devices in a physical location, such as a retail store or office.
+--------------
 
 ## Change DNS resolver in browser
 
