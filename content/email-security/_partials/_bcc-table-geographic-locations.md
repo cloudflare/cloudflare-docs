@@ -15,3 +15,5 @@ Host | Location | Note
 `<customer_name>@journaling.mailstream-bom.mxrecord.mx` | India | Best option to ensure all email traffic processing happens within India.
 `<customer_name>@journaling.mailstream-india-primary.mxrecord.mx` | India | Same as `mailstream-bom.mxrecord.mx`, with fallback to US servers.
 `<customer_name>@journaling.mailstream-asia.mxrecord.mx` | India | Best option for companies with a broader Asia presence.
+`<customer_name>@journaling.mailstream-syd.area1.cloudflare.net` | Australia | Best option to ensure all email traffic processing happens within Australia
+`<customer_name>@journaling.mailstream-australia.area1.cloudflare.net` | Australia | Best option to ensure all email traffic processing happens in Australia, with India and the US as backup

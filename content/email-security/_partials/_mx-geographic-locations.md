@@ -18,5 +18,6 @@ Host | Location | Note
 `mailstream-bom.mxrecord.mx` | India | Best option to ensure all email traffic processing happens within India. For compliance purposes use this MX record. Note, however, there is no redundancy should something go wrong.
 `mailstream-india-primary.mxrecord.mx` | India | Same as `mailstream-bom.mxrecord.mx`, with fallback to US servers.
 `mailstream-asia.mxrecord.mx` | India | Best option for companies with a broader Asia presence.
-
+`mailstream-syd.area1.cloudflare.net` | Australia | Best option to ensure all email traffic processing happens within Australia
+`mailstream-australia-primary.area1.cloudflare.net` | Australia | Best option to ensure all email traffic processing happens in Australia, with India and the US as backup
 {{</table-wrap>}}
