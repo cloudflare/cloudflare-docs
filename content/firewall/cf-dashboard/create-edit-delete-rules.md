@@ -18,7 +18,7 @@ When an incoming HTTP request matches a firewall rule expression, Cloudflare per
 
 ## Create a firewall rule
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2. Go to **Security** > **WAF** > **Firewall rules**.
 

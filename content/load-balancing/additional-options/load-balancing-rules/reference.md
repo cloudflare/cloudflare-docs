@@ -149,7 +149,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-timestamp-sec"><code>http.request.timestamp.sec</code></a><br />{{<type>}}Integer{{</type>}}</td>
       <td><code>Timestamp</code></td>
       <td>
-        <p>Represents the timestamp when Cloudflare received the request, expressed as UNIX time in seconds. This value is 10 digits long.
+        <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.
         </p>
         <p>Example value:
         <br /><code class="InlineCode">1484063137</code>

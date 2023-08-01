@@ -9,7 +9,7 @@ meta:
 
 # Configure URL normalization in the dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2. Go to **Rules** > **Settings**.
 

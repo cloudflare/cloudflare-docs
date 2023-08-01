@@ -13,7 +13,7 @@ Before you can [create a new gateway](/web3/how-to/manage-gateways/#create-a-gat
 To subscribe to a Web3 gateway (if you have not already subscribed):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2. Select your account and website.
 3. Go to **Web3**.
 4. Click **Subscribe to Web3 Gateways**.
 5. Choose which gateways you want to subscribe to.
@@ -27,7 +27,7 @@ To subscribe to a Web3 gateway (if you have not already subscribed):
 To update an existing subscription or subscribe to an additional gateway:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2. Select your account and website.
 3. Go to **Web3**.
 4. Click **Manage Subscriptions**.
 5. To update existing gateway subscriptions, click **Change**. To purchase access to a new gateway, click **Subscribe**.

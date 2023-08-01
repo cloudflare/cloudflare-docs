@@ -18,7 +18,7 @@ ___
 To enable Auto Minify on your website:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Select your account and zone.
+2.  Select your account and website.
 3.  Go to **Speed** > **Optimization** > **Content Optimization**.
 4.  For **Auto Minify**, select the file types to minify.
 

@@ -12,7 +12,7 @@ Refer to [Request header modification examples](/rules/transform/request-header-
 
 To create a rule:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2. Go to **Rules** > **Transform Rules**.
 

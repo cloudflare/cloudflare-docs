@@ -143,12 +143,12 @@ Wait up to 24 hours while your registrar updates your nameservers.
 When your domain is **Active**:
 
 - You will receive an email from Cloudflare.
-- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Zones** page of your account.
+- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
 - Online tools such as https://www.whatsmydns.net/ will show your Cloudflare-assigned nameservers (most of these tools use cached query results, so it may take longer for them to show the updated nameservers).
 - CLI commands will show your Cloudflare-assigned nameservers
 
 ```txt
-*Linux/UNIX*
+*Linux/Unix*
 dig <DOMAIN_NAME> +trace @1.1.1.1 
 dig <DOMAIN_NAME> +trace @8.8.8.8
 

@@ -13,7 +13,7 @@ title: Managing Cloudflare Apps
 To find and manage Apps:
 
 1.  Log into the [Cloudflare dashboard.](https://dash.cloudflare.com/login)
-2.  Select your account and zone.
+2.  Select your account and website.
 3.  Go to **Apps**.
 
 To view apps currently installed on your site, visit the **Installed Apps** tab.

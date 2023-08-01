@@ -12,7 +12,7 @@ By default, Brotli compression is enabled for domains on Free and Pro plans and 
 
 To enable Brotli compression:
 
-1. [Log in to the Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+1. [Log in to the Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3. For **Brotli**, toggle the switch to **On**.
 

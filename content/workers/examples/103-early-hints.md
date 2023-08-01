@@ -12,7 +12,7 @@ layout: example
 
 To ensure Early Hints are enabled:
 
-1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and zone.
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and website.
 2. Go to **Speed** -> **Optimization** > **Content Optimization**.
 3. Enable the **Early Hints** toggle to on.
 

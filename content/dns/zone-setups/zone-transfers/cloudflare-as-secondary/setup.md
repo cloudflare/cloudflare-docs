@@ -84,9 +84,9 @@ To create a peer DNS server using the API, send a [POST request](/api/operations
 To create a secondary zone using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. In the top navigation bar, click **Add zone**.
+2. In the top navigation bar, click **Add site**.
 3. Enter your zone name and choose **Secondary DNS** (if this option is not available, contact your account team).
-4. Click **Continue**.
+4. Click **Add site**.
 5. Select your plan type.
 6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
     {{<Aside type="warning">}}Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.

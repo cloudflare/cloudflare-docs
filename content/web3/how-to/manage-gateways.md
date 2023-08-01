@@ -39,7 +39,7 @@ If you need to edit other fields, [delete the gateway](#delete-a-gateway) and cr
 To edit a gateway using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2. Select your account and website.
 3. Go to **Web3**.
 4. On a specific gateway, click **Edit**.
 5. Update the **Gateway Description** and — if editing an **IPFS** gateway — the value for the [DNSLink](/web3/ipfs-gateway/concepts/dnslink/).
@@ -65,7 +65,7 @@ When your gateway is stuck in an **Error** [status](/web3/reference/gateway-stat
 To refresh a gateway using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2. Select your account and website.
 3. Go to **Web3**.
 4. On a gateway, click the dropdown then **Refresh**.
  
@@ -95,7 +95,7 @@ You have the ability to block access to one or more:
 To add an item to the blocklist using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2. Select your account and website.
 3. Go to **Web3**.
 4. On a specific gateway, click the dropdown then **Blocklist**.
 5. Click **Add entry**.
@@ -127,7 +127,7 @@ When you delete a gateway, Cloudflare will automatically remove all associated h
 To delete a gateway using the dashboard: 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2. Select your account and website.
 3. Go to **Web3**.
 4. On a specific gateway, click the dropdown then **Remove**.
 5. Click **Delete hostname**.
