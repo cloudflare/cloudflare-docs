@@ -45,7 +45,7 @@ For publicly trusted certificates, Cloudlfare partners with different certificat
 
 {{<Aside type="warning">}}
 
-This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, always refer to the respective [certificate authority documentation](https://letsencrypt.org/docs/certificate-compatibility/).
+This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, refer to [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/).
 
 {{</Aside>}}
 
@@ -71,7 +71,7 @@ The main determining factor for whether a platform can validate Let’s Encrypt 
 
 {{<Aside type="warning">}}
 
-This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, always refer to the respective [certificate authority documentation](https://pki.goog/faq/).
+This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, refer to [Google Trust Services documentation](https://pki.goog/faq/).
 
 {{</Aside>}}
 
@@ -87,7 +87,7 @@ In addition, some of Google Trust Services' [root CAs](https://pki.goog/faq/#faq
 
 #### Browser compatibility
 
-Refer to the respective [certificate authority documentation](https://www.sectigo.com/knowledge-base/detail/SSL-Browser-Compatibility-1527076085062/kA01N000000zFJt).
+Refer to [Sectigo documentation](https://www.sectigo.com/knowledge-base/detail/SSL-Browser-Compatibility-1527076085062/kA01N000000zFJt).
 
 ---
 
@@ -98,11 +98,11 @@ Refer to the respective [certificate authority documentation](https://www.sectig
 
 #### Browser compatibility
 
-Refer to the respective [certificate authority documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
+Refer to [DigiCert documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
 
 #### Limitations
 
-Due to sanctions imposed by the United States, DigiCert is legally prohibited or restricted from offering its products and services to specific countries or regions. Refer to [DigiCert documentation](https://knowledge.digicert.com/solution/Embargoed-Countries-and-Regions.html) for details.
+Due to sanctions imposed by the United States, DigiCert is legally prohibited or restricted from offering its products and services to specific countries or regions. Refer to [Embargoed countries and regions](https://knowledge.digicert.com/solution/Embargoed-Countries-and-Regions.html) for details.
 
 #### Other resources
 

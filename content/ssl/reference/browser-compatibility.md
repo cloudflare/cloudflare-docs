@@ -20,7 +20,7 @@ Paid plans have additional compatibility, also supporting RSA algorithm.
 
 ## Other certificate types
 
-Refer to [Certificate authorities](/ssl/reference/certificate-authorities/) for a detailed list of Cloudflare SSL/TLS offerings, the different algorithms they support, browser compatibility for each CA.
+Refer to [Certificate authorities](/ssl/reference/certificate-authorities/) for a detailed list of Cloudflare SSL/TLS offerings, the different algorithms available, and browser compatibility for each CA.
 
 ## Non-SNI support
 
