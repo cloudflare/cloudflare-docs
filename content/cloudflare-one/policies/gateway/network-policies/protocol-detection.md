@@ -6,7 +6,7 @@ weight: 2
 
 # Application protocol detection
 
-{{<Aside header="Availability">}}Application protocol detection is available in early access for Enterprise customers. For more information, contact your Cloudflare Customer Success Manager.{{</Aside>}}
+{{<Aside header="Availability">}}Application protocol detection is available in early access for Enterprise users. For more information, contact your Cloudflare Customer Success Manager.{{</Aside>}}
 
 Gateway supports the detection, logging, and filtering of application protocols using packet attributes.
 

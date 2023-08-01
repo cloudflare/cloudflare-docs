@@ -10,3 +10,5 @@ The inferred application protocol based on our [detection mechanism](/cloudflare
 | UI name           | API example                       |
 | ----------------- | --------------------------------- |
 | Detected Protocol | `net.protocol.detection == "ssh"` |
+
+{{<Aside>}}This selector is only available in early access for Enterprise users. For more information, contact your Cloudflare Customer Success Manager.{{</Aside>}}
