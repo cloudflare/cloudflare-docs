@@ -13,8 +13,8 @@ rss: file
 
 Databases using D1's [new storage subsystem](/d1/changelog/#new-default-storage-subsystem) can now grow to 500 MB each, up from the previous 100 MB limit. This applies to both existing and newly created databases.
 
-Visit the [Limits documentation](
-/d1/platform/limits/) for full details on what limits currently apply to D1.
+Refer to [Limits](/d1/platform/limits/) to learn about D1's limits.
+
 
 ## 2023-07-27
 
