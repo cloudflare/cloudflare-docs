@@ -21,19 +21,19 @@ You can now use **Detected Protocol** as a selector in a [Network policy](/cloud
 
 Gateway supports detection and filtering of the following protocols:
 
-| Protocol | Notes                                                                                           |
-| -------- | ----------------------------------------------------------------------------------------------- |
-| HTTP     | All cleartext HTTP. Multiple selectors. One is `HTTP` for 1.1, the other is `HTTP2` for HTTP/2. |
-| SSH      |                                                                                                 |
-| TLS      | Single selector which can map to version 1.1 through 1.3.                                       |
-| DCE/RPC  |                                                                                                 |
-| MQTT     |                                                                                                 |
-| TPKT     | Typically used to initiate RDP sessions. Use this to filter RDP.                                |
-| DNP3     |                                                                                                 |
+| Protocol | Notes                                                                               |
+| -------- | ----------------------------------------------------------------------------------- |
+| HTTP     | The policy builder includes separate values for HTTP/1.1 and HTTP/2.                |
+| SSH      |                                                                                     |
+| TLS      | Gateway detects TLS versions 1.1 through 1.3 with the _TLS_ value.                  |
+| DCE/RPC  |                                                                                     |
+| MQTT     |                                                                                     |
+| TPKT     | Because TPKT initiates RDP sessions, you can filter RDP traffic with this protocol. |
+| DNP3     |                                                                                     |
 
-## Example
+## Example network policy
 
-You can create network policies using detections rather than relying on common ports. For example, you can block all SSH traffic without blocking port 22 or any non-default ports:
+You can create network policies that filter traffic based on protocol detections rather than common ports. For example, you can block all SSH traffic on your network without blocking port 22 or any other non-default ports:
 
 | Selector          | Operator | Value | Action |
 | ----------------- | -------- | ----- | ------ |
