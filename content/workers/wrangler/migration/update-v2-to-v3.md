@@ -10,7 +10,7 @@ There are no special instructions for migrating from Wrangler v2 to v3. You shou
 
 {{<Aside type="warning">}}
 
-If you tried to update to Wrangler v3 prior to v3.3 you may have experienced some compatibility issues with older operating systems. Please try again with the latest v3 where those have been resolved.
+If you tried to update to Wrangler v3 prior to v3.3, you may have experienced some compatibility issues with older operating systems. Please try again with the latest v3 where those have been resolved.
 
 {{</Aside>}}
 
