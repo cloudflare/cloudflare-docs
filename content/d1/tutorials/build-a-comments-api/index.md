@@ -18,13 +18,21 @@ First, use [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packag
 $ npx wrangler init d1-example
 ```
 
+{{<Aside type="note">}}
+> During the initialization process, Wrangler will ask you "What type of application do you want to create?". Choose "Hello World" script for this tutorial.
+{{</Aside>}}
+## Install Hono
 In this example, you will use [Hono](https://github.com/honojs/hono), an Express.js-style framework, to build your API. To use Hono in this project, install it using npm:
 
 ```sh
 $ npm install hono
 ```
 
-Next, in `src/index.js`, initialize a new Hono app, and define the following endpoints - `GET /API/posts/:slug/comments`, and `POST /get/api/:slug/comments`:
+## Initialize your Hono application
+
+In `src/worker.js`, initialize a new Hono application, and define the following endpoints:
+- `GET /API/posts/:slug/comments`.
+- `POST /get/api/:slug/comments`.
 
 ```js
 import { Hono } from 'hono'
@@ -72,11 +80,11 @@ $ wrangler d1 execute d1-example --command "SELECT name FROM sqlite_schema WHERE
 
 Executing on d1-example:
 
-┌─────────────────┐
-│ name            │
-├─────────────────┤
-│ sqlite_sequence │
-└─────────────────┘
+┌───────┐
+│ name  │
+├───────┤
+│ d1_kv │
+└───────┘
 ```
 
 You can also pass a SQL file - perfect for initial data seeding in a single command. Create `schemas/schema.sql`, which will create a new `comments` table for your project:
@@ -122,7 +130,7 @@ In this function, you accept a `slug` URL query parameter and set up a new SQL s
 
 ## Insert data
 
-By completing the previous step, you have built read-only access to your data. Next, you will define another endpoint function in `src/index.js` that allows creating new comments, by inserting data into the database:
+The previous steps grant read-only access to your data. To create new comments by inserting data into the database, define another endpoint in `src/worker.js`:
 
 ```js
 app.post('/api/posts/:slug/comments', async c => {
@@ -156,7 +164,7 @@ After you have logged in, confirm that your `wrangler.toml` file is configured s
 
 ```toml
 name = "d1-example"
-main = "src/index.js"
+main = "src/worker.js"
 compatibility_date = "2022-07-15"
 
 [[ d1_databases ]]
@@ -184,7 +192,7 @@ $ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 
 This application is just an API back end, best served for use with a front-end UI for creating and viewing comments. To test this back-end with a prebuild front-end UI, refer to the example UI in the [example-frontend directory](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend). Notably, the [`loadComments` and `submitComment` functions](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
 
-Note that interacting with this API from a front end will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your back-end API. Luckily, Hono has a quick way to enable this for your application. Import the `cors` module and add it as middleware to your API in `src/index.js`:
+Interacting with this API from a front-end will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your back-end API. Hono allows you to easily enable Cross-Origin Resource Sharing for your application. Import the `cors` module and add it as middleware to your API in `src/worker.js`:
 
 ```typescript
 ---
