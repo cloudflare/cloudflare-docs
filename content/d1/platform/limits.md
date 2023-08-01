@@ -14,7 +14,7 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 | Feature                                            | Limit                                        |
 | -------------------------------------------------- | -------------------------------------------- | 
 | Databases                                          | 10 per account <sup>1</sup>                  |
-| Database size                                      | 100 MB <sup>2</sup>                          |
+| Database size                                      | 500 MB [new storage subsystem](/d1/changelog/#new-default-storage-subsystem) - 100 MB (legacy alpha backend) <sup>2</sup>                          |
 | [Time Travel](/d1/learning/time-travel/) duration (point-in-time recovery)      | 30 days (Workers Paid) / 7 days (Free)       |
 | Maximum Time Travel restore operations             | 10 restores per 10 minute (per database)     |
 | Queries per Worker invocation (see [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make))                      | 50 (Bundled) / 1000 (Unbound)
