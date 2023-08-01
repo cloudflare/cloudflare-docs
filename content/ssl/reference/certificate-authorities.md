@@ -7,7 +7,7 @@ weight: 5
 
 # Certificate authorities
 
-For publicly trusted certificates, Cloudlfare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and browser compatibility](#features-limitations-and-device-ubiquity).
+For publicly trusted certificates, Cloudlfare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and browser compatibility](#features-limitations-and-browser-compatibility).
 
 ## Availability per certificate type and encryption algorithm
 
@@ -49,18 +49,18 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts ISRG’s “ISRG Root X1” certificate. You can find the full list of supported clients in [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
+The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts ISRG’s “ISRG Root X1” certificate. You can find the full list of supported clients in the [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
 
 #### Other resources
 
-[Let's Encrypt Root CAs](https://letsencrypt.org/certificates/) 
+[Let's Encrypt Root CAs](https://letsencrypt.org/certificates/)
 
 ---
 
 ### Google Trust Services
 
 * Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days.
-* [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) valid for 14 days.
+* [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 14 days.
 
 #### Limitations
 
@@ -82,13 +82,19 @@ In addition, some of Google Trust Services' [root CAs](https://pki.goog/faq/#faq
 
 ### Sectigo
 
-Only used for [Backup certificates](/ssl/edge-certificates/backup-certificates/)
+* Only used for [Backup certificates](/ssl/edge-certificates/backup-certificates/).
+* Backup certificates are valid for 90 days.
+
+#### Browser compatibility
+
+Refer to the respective [certificate authority documentation](https://www.sectigo.com/knowledge-base/detail/SSL-Browser-Compatibility-1527076085062/kA01N000000zFJt).
 
 ---
 
 ### DigiCert (deprecating soon)
 
 * Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days.
+* [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 30 days.
 
 [TLD restrictions](https://knowledge.digicert.com/solution/Embargoed-Countries-and-Regions.html)
 
