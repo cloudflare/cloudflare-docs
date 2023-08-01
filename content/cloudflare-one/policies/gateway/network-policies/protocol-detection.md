@@ -21,15 +21,16 @@ You can now use **Protocol Detection** as a selector in a [Network policy](/clou
 
 Gateway supports detection and filtering of the following protocols:
 
-- SSH
-- HTTP/1.1 and HTTP/2
-- TLS 1.0 to 1.3
-- QUIC
-- Unencrypted DNS (UDP and TCP)
-- RDP
-- DCE/RPC
-- MQTT
-- DNP3
+| Protocol | Notes                                                                                           |
+| -------- | ----------------------------------------------------------------------------------------------- |
+| SSH      |                                                                                                 |
+| HTTP     | All cleartext HTTP. Multiple selectors. One is `HTTP` for 1.1, the other is `HTTP2` for HTTP/2. |
+| TLS      | Single selector which can map to version 1.1 through 1.3.                                       |
+| DCE/RPC  |                                                                                                 |
+| MQTT     |                                                                                                 |
+| DNP3     |                                                                                                 |
+| MQTT     |                                                                                                 |
+| TPKT     | Typically used to initiate RDP sessions. Use this to filter RDP.                                |
 
 ## Example
 
