@@ -60,7 +60,7 @@ The details of each connection/script include:
 ## Export script and connection data in CSV format
 
 {{<Aside type="note">}}
-Only available to customers on Business and Enterprise plans.
+Only available to Enterprise customers with a paid add-on.
 {{</Aside>}}
 
 To export script or connection information in CSV format, select **Download CSV** in one of the cards in the **Monitors** tab (**Active connections** or **Active scripts**). Use this feature to extract data from Page Shield that you can review and annotate.

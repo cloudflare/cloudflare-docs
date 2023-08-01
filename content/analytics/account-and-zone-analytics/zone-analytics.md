@@ -22,9 +22,9 @@ ___
 
 To view metrics for your website:
 
-1.  Log in to the Cloudflare dashboard.
-2.  Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
-3.  Next, click the **Analytics** app icon.
+1. Log in to the Cloudflare dashboard.
+2. Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
+3. Next, select the **Analytics** app icon.
 
 Once it loads, the Analytics app displays a set of tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to _Review your website metrics_ below.
 
@@ -74,7 +74,7 @@ To receive more detailed metrics, **Add filter**. You can also filter each metri
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
 
 {{<Aside type="note">}}
-To opt out of the new Web Traffic Analytics, click **Switch back to the
+To opt out of the new Web Traffic Analytics, select **Switch back to the
 old experience** on the left side of the page.
 {{</Aside>}}
 
@@ -84,28 +84,28 @@ For this tab, the number and type of charts may vary based on existing data and 
 
 -   **Threats** - Displays a data summary and an area chart showing threats against the site.
 -   **Threats by Country** - Is an interactive map highlighting the countries where threats originated. It also includes data tables with statistics on **Top Threat Countries / Regions** and **Top Crawlers / Bots.**
--   **Rate Limiting** (add-on service) - Features a line chart highlighting matching and blocked requests, based on rate limits.  To learn more, consult [Rate Limiting Analytics](https://support.cloudflare.com/hc/en-us/articles/115003414428-Rate-Limiting-Analytics).
+-   **Rate Limiting** (add-on service) - Features a line chart highlighting matching and blocked requests, based on rate limits.  To learn more, consult [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics).
 -   **Overview** - Displays a set of pie charts for: **Total Threats Stopped**, **Traffic Served Over SSL**, and **Types of Threats Mitigated**. If available, the expandable **Details** link display a table with numerical data.
 
 ### Performance
 
 The metrics aggregated under this tab span multiple Cloudflare services.  The panels available include:
 
--   **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](https://support.cloudflare.com/hc/articles/115001255631-Argo-Analytics).
+-   **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](/argo-smart-routing/analytics/).
 -   **Overview** - Displays a set of pie charts for: **Client HTTP Version Used**, **Bandwidth Saved**, and **Content Type Breakdown**. If available, the expandable **Details** link display a table with numerical data.
 
 ### DNS
 
-The DNS tab presents several statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](https://support.cloudflare.com/hc/articles/360020348832-Understanding-a-CNAME-Setup).
+The DNS tab presents statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
 
-The metrics panels available under the DNS tab include:
+The metrics panels available under the DNS tab may include:
 
--   **DNS Queries** - Displays several area charts and data tables for DNS record metrics including queries by _Response Code_, _Record Type_ as well as records that return an _NXDOMAIN_ response (dns record doesn’t exist). You can filter by one or several DNS records by entering record names (for example, www.example.com) in the dropdown near the top.
--   **DNS Queries by Data Center** - Lets you view DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _Traffic_, _NXDOMAIN_, and _NOERROR_.
+-   **DNS Queries** - Displays area charts and data tables for DNS record metrics. For free plans, this section includes _Queries by Response Code_ and, for Pro and above, this section also includes _Queries by Record Type_. Records that return an _NXDOMAIN_ response (dns record doesn’t exist) are also considered. For zones in Enterprise plan, you can also filter by one or several DNS records by entering record names (for example, www.example.com) in the dropdown near the top.
+-   **DNS Queries by Data Center** - Displays DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _DNS Traffic_, _NXDOMAIN_, and _NOERROR_. This section is available to zones in Pro plan or above.
 
 ### Workers
 
-This panel features metrics for Cloudflare Workers. To learn more, read [Cloudflare analytics with Workers](https://support.cloudflare.com/hc/articles/360007553512-Cloudflare-analytics-with-Workers).
+This panel features metrics for Cloudflare Workers. To learn more, read [Cloudflare analytics with Workers](/analytics/account-and-zone-analytics/analytics-with-workers/).
 
 ### Logs
 

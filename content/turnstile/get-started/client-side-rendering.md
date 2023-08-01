@@ -152,6 +152,8 @@ If a given widget has timed out, expired or needs to be reloaded, you can use th
 
 Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`. This will not call any callback and will remove all related DOM elements.
 
+To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
+
 ## Configurations
 
 | JavaScript Render Parameters | Data Attribute | Description |
@@ -167,7 +169,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `after-interactive-callback` | `data-after-interactive-callback` | A JavaScript callback invoked when challenge has left interactive mode. |
 | `unsupported-callback` | `data-unsupported-callback` | A JavaScript callback invoked when a given client/browser is not supported by Turnstile. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
-| `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`zh-cn` and `zh-tw`.|
+| `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`uk`,`zh-cn` and `zh-tw`.|
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
 | `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge expires. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |

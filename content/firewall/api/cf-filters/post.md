@@ -8,33 +8,32 @@ weight: 4
 
 This example creates several filters using a single API call.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '[
-  { 
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/filters" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '[
+  {
     "expression": "ip.src eq 93.184.216.0"
   },
   {
-    "expression": "http.request.uri.path matches \"^/api/.*$\"", 
+    "expression": "http.request.uri.path matches \"^/api/.*$\"",
     "description": "/api"
   },
   {
-    "expression": "not http.request.uri.path matches \"^/api/.*$\"", 
+    "expression": "not http.request.uri.path matches \"^/api/.*$\"",
     "description": "not /api"
   },
   {
-    "expression": "(http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")", 
+    "expression": "(http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
     "description": "Login"
   },
   {
-    "expression": "ip.src eq 93.184.216.0 and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")", 
+    "expression": "ip.src eq 93.184.216.0 and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
     "description": "Login from office"
   }
 ]'

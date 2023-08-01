@@ -5,15 +5,15 @@ title: Add player enhancements
 
 # Add player enhancements
 
-With player enhancements, you can modify your video player to incorporate elements of your branding, such as your logo, and customize additional options to present to your viewers.
+With player enhancements, you can modify your video player to incorporate elements of your branding such as your logo, and customize additional options to present to your viewers.
 
 The player enhancements are automatically applied to videos using the Stream Player, but you will need to add the details via the `publicDetails` property when using your own player.
 
 ## Properties
 
-- `title`: The title that appears when viewers hover over the video. The title can differ from the file name of the video. 
-- `share_link`: Provides the user with a click-to-copy option to easily share the video URL.
-- `channel_link`: The HTTPS URL users will be directed to when selecting the logo from the video player. 
+- `title`: The title that appears when viewers hover over the video. The title may differ from the file name of the video.
+- `share_link`: Provides the user with a click-to-copy option to easily share the video URL. This is commonly set to the URL of the page that the video is embedded on.
+- `channel_link`: The URL users will be directed to when selecting the logo from the video player.
 - `logo`: A valid HTTPS URL for the image of your logo.
 
 ## Customize your own player

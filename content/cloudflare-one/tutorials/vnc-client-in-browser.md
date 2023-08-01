@@ -39,7 +39,7 @@ There are a number of VNC versions, deployments, and instances. This tutorial fo
 
 ## Configure VNC on your virtual machine
 
-This section covers how to install a VNC server with TightVNC and the Gnome User Interface. If you already have a VNC server installed, you can skip this step.
+This section covers how to install a VNC server with TightVNC and the GNOME desktop environment. If you already have a VNC server installed, you can skip this step.
 
 1. Open a terminal window for your VM.
 
@@ -97,7 +97,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
 ## Configure Cloudflare Tunnel on your machine
 
-1. Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) to install `cloudflared`.
+1. Follow [these instructions](/cloudflare-one/connections/connect-networks/downloads/) to install `cloudflared`.
 
 2. Authenticate `cloudflared` with the command:
 
@@ -129,7 +129,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
    As you do that, replace `<HOSTNAME>` with the domain you wish to use to expose your VNC server in the browser. Also, replace `5901` with the port your VNC server is running on. To get a list of ports, run `sudo ss -lnpt` and look for `VNC` to get the value that should be specified in your configuration file.
 
-6. [Route your Tunnel](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) to your website.
+6. [Route your Tunnel](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) to your website.
 
 7. Run your Tunnel:
 
@@ -137,7 +137,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
    $ cloudflared tunnel --config path/config.yaml run <NAME>
    ```
 
-8. Follow [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
+8. Follow [this guide](/cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
 
 At this point you have a running VNC server and a Cloudflare Tunnel on your machine ready to accept inbound VNC requests.
 
@@ -145,7 +145,7 @@ At this point you have a running VNC server and a Cloudflare Tunnel on your mach
 
 The last step is to create a Zero Trust application to run your VNC server in the Browser.
 
-1. Open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access > Applications**.
+1. Open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Applications**.
 
 2. Select **Add an application** and choose **Self-hosted**.
 

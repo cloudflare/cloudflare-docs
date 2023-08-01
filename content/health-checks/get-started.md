@@ -30,3 +30,9 @@ This guide will get you started with creating and managing configured Health Che
 You can also enable, disable, or delete configured Health Checks.
 
 {{</Aside>}}
+
+{{<Aside type="note">}}
+
+Authenticated origin pull is not supported by Standalone Health Checks.
+
+{{</Aside>}}

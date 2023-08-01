@@ -739,6 +739,20 @@
           "ent": "Yes"
         }
       }
+    },
+    "reverse_zones": {
+      "title": "Reverse zones",
+      "link": "/dns/additional-options/reverse-zones/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
     }
   },
   "email": {
@@ -776,7 +790,7 @@
     "title": "Network",
     "0_rtt": {
       "title": "0-RTT Connection Resumption",
-      "link": "/fundamentals/network/0-rtt-connection-resumption/",
+      "link": "/speed/optimization/protocol/0-rtt-connection-resumption/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1028,7 +1042,7 @@
       }
     },
     "config_rules": {
-      "title": "Configuration rules",
+      "title": "Configuration Rules",
       "link": "/rules/configuration-rules/",
       "properties": {
         "availability": {
@@ -1049,7 +1063,7 @@
       }
     },
     "compression_rules": {
-      "title": "Compression rules",
+      "title": "Compression Rules",
       "link": "/rules/compression-rules/",
       "properties": {
         "availability": {
@@ -1811,7 +1825,7 @@
     "title": "Speed",
     "amp": {
       "title": "AMP Real URL",
-      "link": "/fundamentals/speed/amp-real-ulr/",
+      "link": "/speed/optimization/other/amp-real-ulr/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1839,7 +1853,7 @@
     },
     "automatic_signed_exchanges": {
       "title": "Automatic Signed Exchanges (SXGs)",
-      "link": "/fundamentals/speed/signed-exchanges/",
+      "link": "/speed/optimization/other/signed-exchanges/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1853,7 +1867,7 @@
     },
     "auto_minify": {
       "title": "Auto Minify",
-      "link": "/support/speed/optimization-file-size/using-cloudflare-auto-minify/",
+      "link": "/speed/optimization/content/auto-minify/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1867,7 +1881,7 @@
     },
     "brotli": {
       "title": "Brotli compression",
-      "link": "/support/speed/optimization-file-size/what-will-cloudflare-compress/",
+      "link": "/speed/optimization/content/brotli/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1926,7 +1940,7 @@
     },
     "mirage": {
       "title": "Mirage",
-      "link": "https://support.cloudflare.com/hc/articles/219178057",
+      "link": "/speed/optimization/images/mirage/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1940,7 +1954,7 @@
     },
     "mobile_redirect": {
       "title": "Mobile redirect",
-      "link": "/support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/",
+      "link": "/speed/optimization/other/mobile-redirect/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1968,7 +1982,7 @@
     },
     "prefetch_urls": {
       "title": "Prefetch URLs",
-      "link": "/fundamentals/speed/prefetch-urls/",
+      "link": "/speed/optimization/content/prefetch-urls/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1996,7 +2010,7 @@
     },
     "rocket_loader": {
       "title": "Rocket Loader",
-      "link": "/fundamentals/speed/rocket-loader/",
+      "link": "/speed/optimization/content/rocket-loader/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2703,6 +2717,14 @@
           "pro": "No",
           "biz": "No",
           "ent": "Paid add-on"
+        },
+        "seo_crawler": {
+          "title": "SEO Crawler Bypassing",
+          "link": "/waiting-room/reference/best-practices/#waiting-room-and-seo",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
         }
       }
     }

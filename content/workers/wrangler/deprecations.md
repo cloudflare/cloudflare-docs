@@ -17,13 +17,13 @@ The following commands are deprecated in Wrangler as of Wrangler v3. These comma
 
 The `wrangler generate` command is deprecated, but still active in v3. `wrangler generate` will be fully removed in v4.
 
-Try using `npm create cloudflare` for new Workers and Pages projects.
+Try using `npm create cloudflare@latest` for new Workers and Pages projects.
 
 #### `init`
 
 The `wrangler init` command is deprecated, but still active in v3. It will be fully removed in v4.
 
-Try using `npm create cloudflare` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
+Try using `npm create cloudflare@latest` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
 
 #### `publish`
 
@@ -62,8 +62,8 @@ Wrangler v2 introduces new fields for configuration and new features for develop
 - JSON bindings for `vars`.
 - Local mode for `wrangler dev`.
 - Module system (for both modules and service worker format Workers).
-- Devtools.
-- Typescript support.
+- DevTools.
+- TypeScript support.
 - Sharing development environment on the Internet.
 - Wider platform compatibility.
 - Developer hotkeys.

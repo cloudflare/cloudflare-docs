@@ -20,7 +20,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
+- **Name**: A subdomain or the zone apex (`@`), which must:
   - Be 63 characters or less
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
@@ -96,7 +96,7 @@ header: Response
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
+- **Name**: A subdomain or the zone apex (`@`), which must:
   - Be 63 characters or less
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)

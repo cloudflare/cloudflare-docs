@@ -17,11 +17,6 @@ Supported file extensions: gif, ico, jpg, jpeg, and png.
 {{<Aside type="note">}}
 Hotlink Protection will deny access to requests when the HTTP referer
 does not include your website domain name (and is not blank).
-**Example:**
-
-> curl <http://example.com/logo.png> -H \'Referer:referesite.com\' -svo
-> /dev/null\
-> \< HTTP/1.1 403 Forbidden
 {{</Aside>}}
 
 ## Enable Hotlink Protection
@@ -29,7 +24,7 @@ does not include your website domain name (and is not blank).
 To enable Hotlink Protection on your website:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Select your account and website.
+2.  Select your account and zone.
 3.  Go to **Scrape Shield**.
 4.  For **Hotlink Protection**, switch the toggle to **On**.
 

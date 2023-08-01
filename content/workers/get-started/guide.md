@@ -128,7 +128,7 @@ To experiment with more Workers code, refer to [Workers Examples](/workers/examp
 
 ## 4. Deploy your project
 
-If you did not deploy your Worker during [step 1](/workers/get-started/guide/#1-create-a-new-project), deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+If you did not deploy your Worker during [step 1](/workers/get-started/guide/#1-create-a-new-project), deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [custom domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 $ npx wrangler deploy
@@ -138,7 +138,7 @@ Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 {{<Aside type="note" header="Note">}}
 
-When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. These errors should resolve themselves after a minute or so.
+When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
 
 {{</Aside>}}
 

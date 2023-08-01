@@ -326,7 +326,7 @@ Common causes for Error 1016 are:
 
 -   A missing DNS _A record_ that mentions origin IP address.
 -   A _CNAME record_ in the Cloudflare DNS points to an unresolvable external domain.
--   The origin host names (CNAMEs) in your Cloudflare [Load Balancer](/load-balancing/) default, region, and fallback pools are unresolvable. Use a fallback pool configured with an origin IP as a backup in case all other pools are unavailable.
+-   The origin hostnames (CNAMEs) in your Cloudflare [Load Balancer](/load-balancing/) default, region, and fallback pools are unresolvable. Use a fallback pool configured with an origin IP as a backup in case all other pools are unavailable.
 -   When creating a Spectrum app with a CNAME origin, you need first to create a CNAME on the Cloudflare DNS side that points to the origin. Please see [Spectrum CNAME origins](/spectrum/get-started/#create-a-spectrum-application-using-a-cname-record) for more details
 
 ### Resolution
@@ -437,7 +437,7 @@ You've requested a page on a website (`tunnel.example.com`) that is on the Cloud
 ### Resolution
 
 -   **If you are a visitor of this website**: Please try again in a few minutes.
--   **If you are the owner of this website**: Ensure that _cloudflared_ is running and can reach the network. You may wish to enable [load balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) for your tunnel.
+-   **If you are the owner of this website**: Ensure that _cloudflared_ is running and can reach the network. You may wish to enable [load balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) for your tunnel.
 
 ___
 
@@ -544,7 +544,7 @@ ___
 
 ### Common cause
 
-A Cloudflare Worker exceeds a [CPU time limit](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). CPU time is the time spent executing code (for example, loops, parsing JSON, etc). Time spent on network requests (fetching, responding) does not count towards CPU time.
+A Cloudflare Worker exceeds a [CPU time limit](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). CPU time is the time spent executing code (for example, loops, parsing JSON, etc). Time spent on network requests (fetching, responding) does not count towards CPU time.
 
 ### Resolution
 

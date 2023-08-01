@@ -116,7 +116,7 @@ A misconfigured Gateway firewall policy can result in traffic to some or all sit
 
 ### The device does not have a root certificate installed
 
-Installing and trusting a [root CA](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) is a necessary step to enable advanced security features such as Browser Isolation, [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/), AV scanning, and device posture.
+Installing and trusting a [root CA](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) is a necessary step to enable advanced security features such as Browser Isolation, [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), AV scanning, and device posture.
 
 If the root CA is not installed on the device, you will see untrusted certificate warnings on every website. Example warnings include `Certificate not trusted`, `Not trusted identity` or `SSL Error`.
 
@@ -146,7 +146,7 @@ Below are the most common reasons why turning on WARP blocks a specific applicat
 
 ### TLS Decryption is enabled and the app or site does certificate pinning
 
-Some applications do not support SSL inspection or are otherwise [incompatible with TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#limitations). Gateway provides a [list of applications known to perform certificate pinning](/cloudflare-one/policies/filtering/application-app-types/#do-not-inspect-applications).
+Some applications do not support SSL inspection or are otherwise [incompatible with TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations). Gateway provides a [list of applications known to perform certificate pinning](/cloudflare-one/policies/gateway/application-app-types/#do-not-inspect-applications).
 
 #### Solution (if the app has a private certificate store)
 
@@ -156,7 +156,7 @@ Refer to [our instructions](/cloudflare-one/connections/connect-devices/warp/use
 
 #### Solution (last resort)
 
-If you cannot install the certificate on the application, create a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) to exclude the application from Gateway inspection.
+If you cannot install the certificate on the application, create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exclude the application from Gateway inspection.
 
 ### A Gateway firewall policy is blocking the app or site
 
@@ -168,7 +168,7 @@ You may have a Gateway DNS, Network, or HTTP in place that accidentally blocks a
 
 ### Split Tunnel settings are misconfigured for the app or site
 
-Some applications require traffic to flow either all inside or all outside of the WARP tunnel. For instance, in order to use Airdrop or communicate with a local printer, traffic must be outside the tunnel. For applications like Microsoft Teams to function properly, all Microsoft Teams traffic must be either fully inside the tunnel or fully outside the tunnel.
+Some applications require traffic to flow either all inside or all outside of the WARP tunnel. For instance, in order to use AirDrop or communicate with a local printer, traffic must be outside the tunnel. For applications like Microsoft Teams to function properly, all Microsoft Teams traffic must be either fully inside the tunnel or fully outside the tunnel.
 
 #### Solution
 

@@ -18,7 +18,7 @@ Cloudflare respects the origin web server’s cache headers in the following ord
 
 Note: If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.
 
-For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
+For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
 ## Default cached file extensions
 
@@ -50,7 +50,7 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 
 - 100MB Free and Pro
 - 200MB Business
-- 500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
+- 500MB Enterprise by default. Contact [Customer Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to request a limit increase.
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
 

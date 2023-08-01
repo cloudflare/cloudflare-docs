@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Zaraz
 ---
 
-{{<beta>}} Cloudflare Zaraz {{</beta>}}
+# Cloudflare Zaraz
 
 {{<description>}}
 Offload third-party tools and services to the cloud and improve the speed and security of your website.

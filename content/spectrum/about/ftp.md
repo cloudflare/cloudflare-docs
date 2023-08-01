@@ -30,11 +30,11 @@ Spectrum is able to protect servers serving FTP traffic in _passive mode only_. 
 
 Passive mode in combination with EPSV works out of the box with no origin-side configuration required. Note that the client must also support EPSV for this to work. Traditional passive mode with PASV is possible with minimal origin-side configuration (see below, Protecting an FTP server with Spectrum)
 
-## Protecting an FTP Server with Spectrum
+## Protect an FTP Server with Spectrum
 
 Configuring Spectrum to protect your FTP server requires creating a set of Spectrum applications that point to your origin and some configuration on the FTP server.
 
-### Protecting the Control Port
+### Protect the Control Port
 
 The control plane runs on port 21 by default, and there is nothing special that needs to be to protect this part of the FTP server. In the example below, replace 198.51.100.1 with the IP of the origin server.
 
@@ -42,7 +42,7 @@ The control plane runs on port 21 by default, and there is nothing special that 
 
 This configuration proxies incoming connections to the origin. However, if clients issue a PASV command, they will still receive the IP of the actual origin for the data connection. This is not preferred, as this exposes the origin's IP to the client instead of being masked behind Spectrum. Steps to prevent this are documented in sections below.
 
-### Protecting Data Ports
+### Protect Data Ports
 
 Most FTP servers allow configuration of the port range that the server will use to open data connections. It is recommended to specify a port range to prevent accidentally exposing other ports on the server. For each port in the range, create a corresponding Spectrum application that maps to that port.
 

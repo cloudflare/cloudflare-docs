@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 4
 meta:
     Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API setup.
+updated: 2023-07-31
 ---
 
 # Office 365 Graph API set up with Area 1
@@ -11,8 +12,6 @@ meta:
 For customers using Microsoft Office 365, setting up Area 1 via Microsoft Graph API is quick and easy. The following email flow shows how this works:
 
 ![Email flow when setting up Area 1 with the Microsoft Graph API](/images/email-security/deployment/api-setup/ms-graph/ms-graph.png)
-
-{{<Aside type="note">}}For this beta release, scanning Microsoft 365 domains via the Microsoft Graph API is only available for onboarding new domains. This option will not show up on domains already onboarded on your Area 1 dashboard. If you want to use Microsoft Graph API with a domain already set up, you will need to delete it and add it again.{{</Aside>}}
 
 ## User roles
 

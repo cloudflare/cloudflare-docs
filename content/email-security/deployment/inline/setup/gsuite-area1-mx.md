@@ -5,6 +5,7 @@ weight: 2
 layout: single
 meta:
    title: Deploy and configure Google Workspace with Area 1 as MX Record
+updated: 2022-09-30
 ---
 
 # Deploy and configure Google Workspace with Area 1 as MX Record

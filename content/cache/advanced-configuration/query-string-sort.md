@@ -17,7 +17,7 @@ Query String Sort changes this behavior. If two query strings exist with the sam
 
 `/example/file?word=alpha&word=beta and /example/file?word=beta&word=alpha`
 
-are sorted to:
+would be sorted to:
 
 `/example/file?word=alpha&word=beta`
 
@@ -49,9 +49,9 @@ For example in the WordPress admin UI, you might notice any of the following beh
 -   Inability to drag any widget to a sidebar in **Appearance** \> **Widgets**
 -   Inability to edit menus in **Appearance** \> **Menus**
 
-To understand why this happens, note that WordPress [concatenates Javascript files](https://wordpress.org/support/article/editing-wp-config-php/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
+To understand why this happens, note that WordPress [concatenates JavaScript files](https://wordpress.org/support/article/editing-wp-config-php/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
 
-### Identifying the problem
+### Identify the problem
 
 The screenshot below shows an example where resources in the Media Library are not rendered correctly and the browser debugging console reveals that the page is throwing an error:
 
@@ -80,7 +80,7 @@ This type of error indicates that Query String Sort is inadvertently breaking so
 
 After sorting, the query then goes to Cloudflare's cache infrastructure (and to the origin server, if the resource is not in the Cloudflare cache or is not cacheable). The origin server then serves the concatenated scripts, which are ordered differently. Because scripts might depend on other scripts, this process might break dependencies.
 
-### Responding to the issue
+### Respond to the issue
 
 Start by analyzing your site or application behavior around the use of query strings. Do you have assets served with multiple possible arrangements of query strings?
 
@@ -92,7 +92,7 @@ To minimize problems, consider:
 -   Use Cloudflare **Page Rules** to enable **Query String Sort** for URLs where preserving the query string parameter order is not important.
 -   Alternatively, use Cloudflare **Page Rules** to disable **Query String Sort** for URLs where a specific parameter order is required. For example, disable Query String Sort for `example.com/wp-admin/load-scripts.php*` or any URLs with similar requirements (replace example.com with your domain name).
 
-To learn more about Page Rules, visit [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
+To learn more about Page Rules, visit [Understanding and Configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
 ___
 

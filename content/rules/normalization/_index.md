@@ -13,6 +13,8 @@ When you enable URL normalization, all incoming URLs are normalized before they 
 
 URL normalization does not perform any redirects, and therefore it will not change the address displayed in the visitor's browser. The normalization operation, when enabled, occurs on the global network and affects Cloudflare features executed later and (optionally) the URL received at the origin server.
 
+{{<render file="_rules-requirements.md" withParameters="URL normalization requires">}}
+
 ***
 
 ## Availability

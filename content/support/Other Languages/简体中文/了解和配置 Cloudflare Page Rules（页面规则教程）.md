@@ -32,42 +32,11 @@ ___
 允许的页面规则默认数量取决于域的计划，如下表所示。
 
 | **计划** | **允许的页面规则** |
-| --- | --- |
-| 
-免费
-
- | 
-
-3
-
- |
-| 
-
-Pro
-
- | 
-
-20
-
- |
-| 
-
-Business
-
- | 
-
-50
-
- |
-| 
-
-企业
-
- | 
-
-125
-
- |
+| -------- | ------------------ |
+| 免费     | 3                  |
+| Pro      | 20                 |
+| Business | 50                 |
+| 企业     | 125                |
 
 对于 Free、Pro 和 Business 计划中的域名，您可以[购买额外的规则](https://www.cloudflare.com/features-page-rules/) （最多 100 条）。
 
@@ -196,9 +165,9 @@ ___
 
 **计划**
 
- |
-| --- | --- | --- |
-| 
+ |     |
+ | --- ||  |
+ |     |
 
 始终使用 HTTPS
 
@@ -771,7 +740,7 @@ ___
 
 ### 将页面规则用于 Workers
 
-如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/platform/workers-with-page-rules/)。
+如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/configuration/workers-with-page-rules/)。
 
 ___
 

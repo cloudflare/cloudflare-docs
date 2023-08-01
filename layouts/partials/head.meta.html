@@ -91,7 +91,7 @@
   {{- $lastModifiedDays := math.Round (div $diffMod.Hours 24) -}}
   <meta name="pcx_last_modified" content="{{- $lastModifiedDays -}}">
   
-  {{- with .Context.Params.last_reviewed -}}
+  {{- with .Context.Params.updated -}}
   {{- $lastReview := . | time -}}
   {{- $diffReview := now.Sub $lastReview -}}
   <meta name="pcx_last_reviewed" content="{{- math.Round (div $diffReview.Hours 24) -}}" />
@@ -157,6 +157,7 @@
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
   <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
 
   {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
