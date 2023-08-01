@@ -9,7 +9,7 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy a:
 
-* Full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge). 
+* Full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 * Static site Next.js project with [static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -93,7 +93,7 @@ export async function GET(request: Request) {
 {{</tab>}}
 {{</tabs>}}
 
-For more examples of this and for Next.js versions prior to v13.3.1, refer to `@cloudflare/next-on-pages` [examples document](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/examples.md). Additionally, ensure that your application is not using any [unsupported APIs](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis) or [features](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/supported.md).
+For more examples of this and for Next.js versions prior to v13.3.1, refer to [`@cloudflare/next-on-pages` examples](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/examples.md). Additionally, ensure that your application is not using any [unsupported APIs](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis) or [features](https://github.com/cloudflare/next-on-pages/blob/main/docs/supported.md).
 
 ### Create a GitHub repository
 
