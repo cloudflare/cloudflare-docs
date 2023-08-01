@@ -96,8 +96,6 @@ Refer to the respective [certificate authority documentation](https://www.sectig
 * Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days.
 * [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 30 days.
 
-[TLD restrictions](https://knowledge.digicert.com/solution/Embargoed-Countries-and-Regions.html)
-
 #### Browser compatibility
 
 Refer to the respective [certificate authority documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
