@@ -20,4 +20,4 @@ Refer to [Deprecations](/workers/wrangler/deprecations/#wrangler-v3) for more de
 
 ## Additional assistance
 
-If you do have an issue or need further assistance, please [file an issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) in the `workers-sdk` repo on GitHub.
+If you do have an issue or need further assistance, [file an issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) in the `workers-sdk` repo on GitHub.
