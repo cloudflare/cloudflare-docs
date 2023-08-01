@@ -54,11 +54,11 @@ NAMESPACE.list({prefix?: string, limit?: number, cursor?: string})
 
 All arguments are optional:
 
-- `prefix` is a string that represents a prefix you can use to filter all keys.
+- `prefix` is a `string` that represents a prefix you can use to filter all keys.
 - `limit` is the maximum number of keys returned. The default is 1,000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
-- `cursor` is a string used for paginating responses.
+- `cursor` is a `string` used for paginating responses.
 
-The `list()` method returns a promise which resolves with an object that looks like this:
+The `list()` method returns a promise which resolves with an object that looks like the following:
 
 ```json
 {
@@ -74,9 +74,9 @@ The `list()` method returns a promise which resolves with an object that looks l
 }
 ```
 
-The `keys` property will contain an array of objects describing each key. That object will have one to three keys of its own: the `name` of the key and optionally the key's `expiration` and `metadata` values.
+The `keys` property will contain an array of objects describing each key. That object will have one to three keys of its own: the `name` of the key and optionally, the key's `expiration` and `metadata` values.
 
-The `name` is a string, the `expiration` value is a number, and `metadata` is whatever type was set initially. The `expiration` value will only be returned if the key has an expiration and will be in the absolute value form, even if it was set in the TTL form. Any `metadata` will only be returned if the given key has non-null associated metadata.
+The `name` is a `string`, the `expiration` value is a number, and `metadata` is whatever type was set initially. The `expiration` value will only be returned if the key has an expiration and will be in the absolute value form, even if it was set in the TTL form. Any `metadata` will only be returned if the given key has non-null associated metadata.
 
 Additionally, if `list_complete` is `false`, there are more keys to fetch, even if the `keys` array is empty. You will use the `cursor` property to get more keys. Refer to [Pagination](#pagination) for more details.
 

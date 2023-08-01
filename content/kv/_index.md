@@ -14,7 +14,7 @@ Create a global, low-latency, key-value data storage.
 
 {{<plan type="paid">}}
 
-Workers KV is an eventually consistent type of data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency. 
+Workers KV is a data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency. 
 
 ---
 

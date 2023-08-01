@@ -59,7 +59,7 @@ There are two ways to specify when a key should expire:
 
  - Set a key's expiration time to live (TTL) using a relative number of seconds from the current time. For example, if you wanted a key to expire 10 minutes after creating it, you would set its expiration TTL to `600`.
 
-Both of these options are usable when writing a key inside a Worker or when writing keys using the API.
+Use both options when writing a key inside a Worker or when writing keys using the API.
 
 As of January 2022, expiration targets that are less than 60 seconds into the future are not supported. This is true for both expiration methods.
 
@@ -67,9 +67,9 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put()` method has an optional third parameter. 
 
-It accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set either `expiration` or `expirationTtl`, depending on how you want to specify the key’s expiration time. 
+It accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtL`, depending on how you want to specify the key’s expiration time. 
 
-To do this, run one of the two commands below to set an expiration when writing a key from within a Worker:
+To use `expiration` or `expirationTtL`, run one of the two commands below to set an expiration when writing a key from within a Worker:
 
 {{<definitions>}}
 
@@ -87,7 +87,7 @@ You can also [write with an expiration on the command line via Wrangler](/worker
 
 To associate some metadata with a key-value pair, set `metadata` to any arbitrary object (must serialize to JSON) in the `put()` options object on a `put()` call. 
 
-To do this in a Worker:
+To do this in your Worker script:
 
 ```js
 await NAMESPACE.put(key, value, {

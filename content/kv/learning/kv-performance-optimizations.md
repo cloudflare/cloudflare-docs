@@ -32,6 +32,10 @@ Workers KV is optimized to transparently refresh values in the background based 
 
 Adding the Cache API in front of the `get()` will mean that your application will experience a high amount of requests that experience cold KV reads. 
 
+{{<Aside type="note" header="Hot and cold KV reads">}}
+A hot KV read is a read that is in the colocated cache. Instead, a cold KV read is a read that is not in the colocated cache.
+{{</Aside>}}
+
 Setting the expiry within your fronting Cache instance to be the `cacheTTL` you use for Workers KV may cause you to miss KV and receive a cold read. 
 
 For example, if you perform 10k RPS to that key, you will miss 10k RPS for the duration it takes to refetch. Workers KV solves this problem by refreshing in the background so that the expiry is set in the future. 
@@ -123,7 +127,7 @@ To reduce cardinality by coalescing keys, you can either:
 
 One coalescing technique is to make all the keys and values part of a super key/value object. For example:
 
-```
+```ts
 key1: value1
 key2: value2
 key3: value3
@@ -131,7 +135,7 @@ key3: value3
 
 becomes
 
-```
+```ts
 coalesced: {
   key1: value1,
   key2: value2,
@@ -155,7 +159,7 @@ Size of the resultant value can push your Worker out of its memory limits. Safel
 If you do not want to [merge into a single KV entry](/kv/learning/kv-performance-optimizations/#merge-into-a-super-kv-entry) and your associated values fit within the [metadata limit](/workers/platform/limits/#kv-limits), store the values within the metadata instead of the body. If you name the keys with a shared unique prefix, your list operation will contain the value letting you bulk read multiple keys at once through a single, cacheable list operation.
 
 {{<Aside type="note" header="List performance note">}}
-List operations are not "write aware". While list operations are subject to tiering, they only stay cached for up to one minute past when it was last read, even at upper tiers. By comparison, get operations are cached at the upper tiers for a service managed duration that is always longer than your cacheTTL. The cacheTTL lets you extend the duration of a single key lookup at the data center closest to the request.
+List operations are not "write aware". While list operations are subject to tiering, they only remain cached for up to 1 minute past when it was last read, even at upper tiers. By comparison, `get()` operations are cached at the upper tiers for a service managed duration that is always longer than your cacheTTL. The cacheTTL lets you extend the duration of a single key lookup at the data center closest to the request.
 {{</Aside>}}
 
 List operations are only ever cached for 1 minute. They are still subject to [tiered caching](https://blog.cloudflare.com/faster-workers-kv-architecture#a-new-horizontally-scaled-tiered-cache). Requests within the region and globally are amortized to keep the asset closer to your request. However, you still need to be reading the value about once every 30 seconds to make sure it is always present within Cloudflare's caches.
@@ -181,7 +185,7 @@ A `get()` or `getWithMetadata()`, and a `list()` operation within your Worker wi
 This is even more problematic if you have structured data and want to do a partial update of a value. A lot of customers have success creating a [Durable Object](/workers/learning/using-durable-objects) and making it responsible for all the writes to your KV namespace. This way, you can serialize access for writing the value.
 
 {{<Aside type="warning" header="Workers KV is eventually consistent">}}
-Workers KV is an eventually consistent system. Doing a read-modify-write operation where the read is coming from KV can cause changes to be lost, because there is no guarantee that you will always read the most recent value written, even if the write is from the same data center. 
+Workers KV is an eventually consistent database. Performing a read-modify-write operation where the read is coming from KV can cause changes to be lost, because there is no guarantee that you will always read the most recent value written, even if the write is from the same data center. 
 {{</Aside>}}
 
 Use Durable Objects or R2 if you do not want to lose a mutation.
@@ -206,7 +210,7 @@ You may encounter the following issues:
 * You do not have [permission](https://blog.cloudflare.com/mitigating-spectre-and-other-security-threats-the-cloudflare-workers-security-model/#step1disallowtimersandmultithreading) within the Runtime to get accurate timing measurements. That means you have to know to time externally to the system. At the same time, external timings are subject to sources of error that are out of scope for Workers KV performance.
 * A low traffic Worker is more subject to cold starts, even though cold starts do not exist once production traffic is flowing.
 * Within "MCP"s, we have multiple virtual data centers within a single PoP. Which virtual data center you hit is random. Such data centers have disjoint caches and require even more traffic to keep the cache warm regardless of which virtual data center you randomly get routed to.
-* [wrk](https://github.com/wg/wrk) can generate thousands of requests per second. which should probably be enough to representative and overcome such issues, but it requires careful tuning of parameters to achieve max throughput and you have little to no visibility into Cloudflare's internal network to know if you succeeded.
+* [wrk](https://github.com/wg/wrk) can generate thousands of requests per second. Generating thousands of requests per second should be enough to overcome such issues. However, it requires careful tuning of parameters to achieve max throughput, and you have little to no visibility into Cloudflare's internal network to know if you succeeded.
 * Synthetic tests are hand-written and often fail to reproduce real-world access patterns for keys (if you have multiple keys). If you have a recording you can play through of the access patterns, that might work well. A representative recording is difficult to capture in practice because of the global nature of Cloudflare Workers.
 
 
