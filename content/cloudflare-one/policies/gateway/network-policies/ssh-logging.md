@@ -17,9 +17,7 @@ You can create network policies to manage and monitor SSH access to your applica
 
 ## 1. Ensure Unix usernames match user SSO identities
 
-Cloudflare Gateway will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure.
-
-To proxy SSH traffic through WARP, the user's Unix username must match their email address prefix. Issued short-lived certificates will be valid for the user's email address prefix. For example, if a user in your Okta or GSuite organization is registered as `jdoe@example.com`, they would log in to the SSH server as `jdoe`.
+To authenticate to an SSH server through WARP, the user's Unix username must match their email address prefix. For example, if a user in your Okta or GSuite organization is registered as `jdoe@example.com`, they would log in to the SSH server as `jdoe`.
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 
@@ -29,7 +27,7 @@ $ sudo adduser jdoe
 
 ## 2. Generate a Gateway SSH proxy CA
 
-Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin.
+Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin. The Gateway SSH proxy CA will fetch the user's SSO identity from a token and issue a short-lived certificate for the user's email address prefix.
 
 {{<Aside type="note">}}
 Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
