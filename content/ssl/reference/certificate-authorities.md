@@ -100,6 +100,10 @@ Refer to the respective [certificate authority documentation](https://www.sectig
 
 Refer to the respective [certificate authority documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
 
+#### Limitations
+
+Due to sanctions imposed by the United States, DigiCert is legally prohibited or restricted from offering its products and services to specific countries or regions. Refer to [DigiCert documentation](https://knowledge.digicert.com/solution/Embargoed-Countries-and-Regions.html) for details.
+
 #### Other resources
 
 [Status page](https://status.digicert.com/)

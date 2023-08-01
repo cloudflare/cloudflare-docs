@@ -28,6 +28,14 @@ Although [SNI extensions](https://www.cloudflare.com/learning/ssl/what-is-sni/) 
 
 If your visitors use devices that have not been updated since 2011, they may not have SNI support.
 
-To support non-SNI requests, you can [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) and specify a value of `Legacy` for its client support.
+To support non-SNI requests, you can:
+
+* [Upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) and specify a value of `Legacy` for its client support.
+    
+    {{<Aside type="warning">}}
 
 Unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for [custom certificates](/ssl/edge-certificates/custom-certificates/).
+    
+{{</Aside>}}
+
+* (Paid plans only) [Contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) and request a set of dedicated IPs for your zone.
