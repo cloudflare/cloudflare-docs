@@ -175,10 +175,10 @@ To check if the selected **logpull_options** are valid:
 curl -s -X POST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
- --data '{
-     "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
-     "dataset": "http_requests"
-     }' | jq .
+--data '{
+  "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+  "dataset": "http_requests"
+}' | jq .
 ```
 
 Response
