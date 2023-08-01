@@ -24,7 +24,7 @@ During the initialization process, Wrangler will ask you "What type of applicati
 
 ## 1. Install Hono
 
-In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Express.js-style framework, to build your API. To use Hono in this project, install it using npm:
+In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Express.js-style framework, to build your API. To use Hono in this project, install it using `npm`:
 
 ```sh
 $ npm install hono
