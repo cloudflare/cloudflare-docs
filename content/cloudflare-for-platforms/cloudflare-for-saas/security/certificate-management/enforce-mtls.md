@@ -1,6 +1,6 @@
 ---
 title: TLS Management
-pcx_content_type: reference
+pcx_content_type: concept
 weight: 4
 meta:
   title: TLS Settings — Cloudflare for SaaS
