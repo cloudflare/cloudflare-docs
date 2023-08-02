@@ -1,6 +1,6 @@
 {
-    "summary": "Get started by creating a Cloudflare account and onboarding your traffic through our secure global network.",
-    "abstract": "",
+    "summary": "Get started by creating a Cloudflare account, reviewing the Gateway connection options and testing and onboarding your traffic.",
+    "abstract": "<p>By the end of this module, you will:</p>\n<ul>\n<li> Have a Cloudflare and Zero Trust Account configured. </li>\n<li> Understand the various connection methods to proxy traffic through Cloudflare. </li>\n<li> Deep dive into the agentless method. </li>\n<li> Test and deploy your DNS traffic. </li></ul>",
     "levels": [
         "beginner"
     ],
@@ -8,6 +8,6 @@
         "network admin"
     ],
     "type": "module",
-    "title": "Account Setup and Onboarding Traffic",
+    "title": "Getting started",
     "url": "/learning-paths/modules/cybersafe/cybersafe-getting-started/"
 }

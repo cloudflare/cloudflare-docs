@@ -1,6 +1,6 @@
 {
-    "summary": "Enable our CIPA filtering policies to faciliate compliance.",
-    "abstract": "",
+    "summary": "Enable our CIPA filtering policies.",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li> Identify the minimum CIPA filters to facilitate compliance.</li>\n <li> Learn other ways to protect your network from unwanted traffic. </li></ul>",
     "levels": [
         "beginner"
     ],
@@ -8,6 +8,6 @@
         "network admin"
     ],
     "type": "module",
-    "title": "Configuring CIPA",
+    "title": "Configuring CIPA Filters",
     "url": "/learning-paths/modules/cybersafe/cybersafe-configuration/"
 }

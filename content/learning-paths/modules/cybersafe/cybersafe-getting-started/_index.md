@@ -1,10 +1,10 @@
 ---
-title: Account setup
+title: Getting started
 pcx_content_type: overview
 weight: 1
 layout: learning-module
 ---
 
-# Account setup
+# Getting started
 
 {{<learning-module-summary>}}

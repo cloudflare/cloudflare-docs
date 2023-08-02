@@ -1,10 +1,10 @@
 ---
-title: Connect a test device to Gateway
+title: Configuring CIPA filters
 pcx_content_type: overview
 weight: 1
 layout: learning-module
 ---
 
-# Connect a test device to Gateway
+# Configuring CIPA filters
 
 {{<learning-module-summary>}}
