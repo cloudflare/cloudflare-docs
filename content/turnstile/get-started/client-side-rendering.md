@@ -37,12 +37,12 @@ Check out the [demo](https://demo.turnstile.workers.dev/) and its [source code](
 
 Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
 
-For example:
 <div>
 
 ```html
 ---
 highlight: [4]
+header: Example
 ---
 
 <form action="/login" method="POST">
