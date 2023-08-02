@@ -418,7 +418,7 @@ Sie haben eine Seite auf einer Website angefordert (`tunnel.beispiel.com`), die 
 ### Lösung
 
 -   **Wenn Sie Besucher dieser Website sind**: Bitte versuchen Sie es in ein paar Minuten erneut.
--   **Wenn Sie der Besitzer dieser Website sind**: Überprüfen Sie, ob _cloudflared_ ausgeführt wird und das Netzwerk erreicht werden kann. Möglicherweise sollten Sie [Load Balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) für Ihren Tunnel aktivieren.
+-   **Wenn Sie der Besitzer dieser Website sind**: Überprüfen Sie, ob _cloudflared_ ausgeführt wird und das Netzwerk erreicht werden kann. Möglicherweise sollten Sie [Load Balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) für Ihren Tunnel aktivieren.
 
 ___
 
@@ -525,7 +525,7 @@ ___
 
 ### Häufige Ursache
 
-Ein Cloudflare-Worker überschreitet ein [CPU-Zeitlimit](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Die CPU-Zeit ist die Zeit, die mit der Ausführung von Code verbracht wird (z. B. Schleifen, JSON-Parsing usw.). Die Zeit, die mit Netzwerkanfragen verbracht wird (Abrufen, Antworten), zählt nicht zur CPU-Zeit.
+Ein Cloudflare-Worker überschreitet ein [CPU-Zeitlimit](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). Die CPU-Zeit ist die Zeit, die mit der Ausführung von Code verbracht wird (z. B. Schleifen, JSON-Parsing usw.). Die Zeit, die mit Netzwerkanfragen verbracht wird (Abrufen, Antworten), zählt nicht zur CPU-Zeit.
 
 ### Lösung
 

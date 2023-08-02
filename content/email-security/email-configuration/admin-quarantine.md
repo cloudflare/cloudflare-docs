@@ -10,9 +10,9 @@ Admin Quarantine allows you to automatically prevent incoming messages from reac
 
 The messages sent to Admin Quarantine are determined by your [domain settings](/email-security/email-configuration/domains-and-routing/domains/).
 
-Enabling quarantine by disposition is hierarchical and you cannot enable only one disposition if there are other dispositions above it. For example, if you try to enable just `Spam`, Area 1 will also enable `Malicious`, the disposition that sits above `Spam`. Similarly, if you enable `Spoof` everything above this disposition will be enabled. `Malicious` is the only disposition that can be enabled without additional dispositions.
+Enabling quarantine by disposition is hierarchical and you cannot enable only one disposition if there are other dispositions above it. For example, if you try to enable just `SPAM`, Area 1 will also enable `MALICIOUS`, the disposition that sits above `SPAM`. Similarly, if you enable `SPOOF` everything above this disposition will be enabled. `MALICIOUS` is the only disposition that can be enabled without additional dispositions.
     
-![Choosing a disposition is hierarchical](/email-security/static/admin-quarantine/quarantine-by-disposition.png)
+![Choosing a disposition is hierarchical](/images/email-security/admin-quarantine/quarantine-by-disposition.png)
 
 ## Quarantine emails by disposition
 
@@ -41,7 +41,7 @@ You can view and potentially release emails that were sent to **Admin Quarantine
 
 2. Go to **Email** > **Admin Quarantine**.
 
-    ![Access Admin Quarantine to review emails](/email-security/static/admin-quarantine/access-quarantine.png)
+    ![Access Admin Quarantine to review emails](/images/email-security/admin-quarantine/access-quarantine.png)
 
 3. Review emails as needed.
 
@@ -57,10 +57,10 @@ From **Admin Quarantine**, you can also release quarantined emails by selecting 
 
 4. Select **...** > **Release**.
 
-    ![Select release to remove emails from quarantine](/email-security/static/admin-quarantine/release-emails.png)
+    ![Select release to remove emails from quarantine](/images/email-security/admin-quarantine/release-emails.png)
 
 5. Select **Release** to confirm that you want to release the selected email.
 
 6. (Optional) You can also release multiple messages, by selecting the box next to each message you want to release.
 
-These email messages will then be sent to the original recipients from the `quarantine@area1reports.com` email address with the original message attached in a ZIP file.
+{{<Aside type="note">}}After being released from quarantine, Area 1 forwards the original email messages to their destination. These emails will arrive at email inboxes from the original sender, not Area 1.{{</Aside>}}

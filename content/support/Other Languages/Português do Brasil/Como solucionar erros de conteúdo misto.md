@@ -21,7 +21,7 @@ Geralmente, o problema se deve a uma solicitação de recursos HTTP para uma pá
 
 De modo geral, se o seu site carregar todos os recursos de forma segura em HTTPS, os visitantes observarão um ícone de cadeado (geralmente um cadeado verde) na barra de endereço do seu navegador:
 
-![green-lock-icon.png](/support/static/green-lock-icon.png)
+![green-lock-icon.png](/images/support/green-lock-icon.png)
 
 Isso indica que seu site tem um certificado SSL ativo e que todos os recursos carregados pelo site são carregados em HTTPS. O cadeado verde garante aos visitantes que sua conexão é segura. Um dos [sintomas de conteúdo misto](https://support.cloudflare.com/hc/pt-br/articles/200170476-Como-solucionar-erros-de-conte%C3%BAdo-misto#h_a6c5a05b-baba-4f88-a75c-d61f206366ed) é que aparecem ícones diferentes ao invés do ícone de cadeado verde.
 
@@ -35,11 +35,11 @@ Abaixo estão os sinais de que seu navegador da web está observando conteúdo m
 
 Para advertências de conteúdo misto, o navegador da web carrega os recursos, mas os usuários não veem o ícone de cadeado verde na URL. As mensagens de advertência aparecem nas ferramentas de depuração do navegador:
 
-![mixed-content-warning.png](/support/static/mixed-content-warning.png)
+![mixed-content-warning.png](/images/support/mixed-content-warning.png)
 
 Para erros de conteúdo misto, o navegador se recusa a carregar os recursos em uma conexão não segura:
 
-![mixed-content-error.png](/support/static/mixed-content-error.png)
+![mixed-content-error.png](/images/support/mixed-content-error.png)
 
 Informações sobre como usar as ferramentas de depuração do navegador para localizar esses problemas podem ser encontradas na documentação do [Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content) e do [Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content). Alternativamente, você pode visualizar o código-fonte da sua página e localizar referências específicas a _http://_ nos caminhos para outros recursos.
 

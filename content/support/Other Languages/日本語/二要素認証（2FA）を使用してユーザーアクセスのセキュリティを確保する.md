@@ -29,7 +29,7 @@ Configureログインの二要素認証を有効にするには、次の手順�
 3.  **「認証（Authentication）」**タブをクリックします。 
 4.  **「二要素認証（Two-Factor Authentication）」**セクションまでスクロールダウンし、クリックして_「オン（On）」_に切り替えます。
 
-![旧URL：https://support.cloudflare.com/hc/article_attachments/360038176711/2FA_enable.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/support/static/hc-import-2fa_enable.png)
+![旧URL：https://support.cloudflare.com/hc/article_attachments/360038176711/2FA_enable.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_enable.png)
 
 ___
 
@@ -48,13 +48,13 @@ ___
 
 -   QRコードをスキャンできない場合は、**「QRコードをスキャンできない。別の手順を実行する（Can't scan QR code, Follow alternative steps）」**をクリックして、認証アプリを手動で設定します。
 
-![モバイルデバイスでQRコードをスキャンして2FAを有効にする方法を示す画面のスクリーンショット](/support/static/2FA_scan_QR_code.png)
+![モバイルデバイスでQRコードをスキャンして2FAを有効にする方法を示す画面のスクリーンショット](/images/support/2FA_scan_QR_code.png)
 
 3\. パスワードを入力し、**「次へ（Next）」**を再度クリックして、バックアップコードを確認します。
 
 4\. バックアップコードを確認したら、安全な場所に保管しておいてください。**「ダウンロード（Download）」**、**「印刷（Print）」**、または**「コピー（Copy）」**をクリックして、コードを保存してから、**「次へ（Next）」**をクリックします。
 
-![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176771/2FA_review_and_backup_codes_v2.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/support/static/hc-import-2fa_review_and_backup_codes_v2.png)
+![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176771/2FA_review_and_backup_codes_v2.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_review_and_backup_codes_v2.png)
 
 バックアップ コードは、次の画面で再生成するか、**「認証（Authentication）」**タブでいつでも再再生することができます。
 
@@ -62,7 +62,7 @@ ___
 
 6\. また、新しいバックアップコード一式をリクエストすることもできます。 **「今すぐ再生成する（Regenerate them now）」**をクリックして、新しい二要素認証のバックアップコード一式を保存します。
 
-![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176791/2FA_configuration_complete.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/support/static/hc-import-2fa_configuration_complete.png)
+![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176791/2FA_configuration_complete.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_configuration_complete.png)
 
 ___
 
@@ -78,7 +78,7 @@ Cloudflareアカウントの2FAを無効にするには、次の手順に従い�
 4.  **「二要素認証（Two-Factor Authentication）」**セクションまでスクロールダウンし、クリックして_「オン（On）」_に切り替えます。確認画面が表示されます。
 5.  パスワード、認証アプリコード、またはバックアップコードを入力してから、**「無効にする（Disable）」**をクリックします。
 
-![旧URL：https://support.cloudflare.com/hc/article_attachments/360038195192/2FA_disable.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/support/static/hc-import-2fa_disable.png)
+![旧URL：https://support.cloudflare.com/hc/article_attachments/360038195192/2FA_disable.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_disable.png)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 3\. ログイン画面にバックアップコードを入力してから、**「ログイン（Log in）」**をクリックします。
 
-![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176971/2FA_backup_code_login_annontated.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/support/static/hc-import-2fa_backup_code_login_annontated.png)
+![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176971/2FA_backup_code_login_annontated.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_backup_code_login_annontated.png)
 
 4\. 一度使用したバックアップコードは無効になります。
 

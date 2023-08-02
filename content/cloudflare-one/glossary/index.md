@@ -81,7 +81,7 @@ DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS req
 
 ## DoH subdomain
 
-Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as a _unique id_). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, navigate to **Gateway** > **DNS Locations**, expand the card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
+Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as a _unique id_). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, go to **Gateway** > **DNS Locations**, expand the card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
 
 | DNS over HTTPS hostname                               | DoH subdomain |
 | ----------------------------------------------------- | ------------- |
@@ -145,7 +145,7 @@ A protocol, or technical standard, for using a desktop computer remotely. RDP wa
 
 ## SafeSearch
 
-[SafeSearch](/cloudflare-one/policies/filtering/dns-policies/#safesearch) is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
+[SafeSearch](/cloudflare-one/policies/gateway/dns-policies/#safesearch) is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
 ## SAML
 

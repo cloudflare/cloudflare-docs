@@ -7,7 +7,7 @@ layout: list
 
 # How we detect phish
 
-Area 1 uses a variety of factors to determine whether a given email message, a web domain or URL, or specific network traffic is part of a phishing campaign (marked with a `Malicious` [disposition](/email-security/reference/dispositions-and-attributes/)) or other common campaigns (for example, `Spam`).
+Area 1 uses a variety of factors to determine whether a given email message, a web domain or URL, or specific network traffic is part of a phishing campaign (marked with a `MALICIOUS` [disposition](/email-security/reference/dispositions-and-attributes/)) or other common campaigns (for example, `SPAM`).
 
 These small pattern assessments are dynamic in nature and — in many cases — no single one in and of itself will determine the final verdict. Instead, our automated systems uses a combination of factors and non-factors to clearly distinguish between a valid phishing campaign and benign traffic.
 
@@ -32,7 +32,7 @@ For example, a particular sender IP in a Comcast range might have a mix of good 
 | Malicious URLs within an archive attached to the message | Campaigns obfuscating the payload within attachments. | Attachments decomposed recursively (both in archive formats and compound document formats) to extract URLs, followed by above mentioned URL detection mechanisms. |
 | Malicious URLs behind URL shortening services | Campaigns leveraging Bitly, Owly, and similar services at multiple levels of redirection to hide the target URL. | URL shorteners crawled in real time at the moment of message delivery to get to the eventual target URL, followed by URL detection methods. Real-time shorterners are intentionally not crawled ahead of time due to the dynamic nature of these services and the variation of target URLs based on time and source. |
 | Instant crawl of URLs within message body | Typical phish campaigns with a socially engineered call to action URL that will implant a malware (for example, Watering Hole attacks, Malvertizing, or scripting attacks). | Heuristics applied to URLs in message bodies that are not already detected from ahead of time crawling and those deemed suspicious according to strict criteria are crawled in real time. |
-| Credential Harvesters | Form-based credential submission attacks, leveraging known brands (Office 365, Paypal, Dropbox, Google, and more). | Continuous Web crawling, computer vision on top brand lures, ML models, and infrastructure association. |
+| Credential Harvesters | Form-based credential submission attacks, leveraging known brands (Office 365, PayPal, Dropbox, Google, and more). | Continuous Web crawling, computer vision on top brand lures, ML models, and infrastructure association. |
 | Domain Spoof Attacks | Campaigns spoofing sender domains to refer to the recipient domain or some known partner domain. | Header mismatches, email authentication assessments, sender reputation analysis, homographic analysis, and punycode manipulation assessments. |
 | Domain proximity attacks | Campaigns taking advantage of domain similarity to confuse the end user (for example, `sampledoma1n.com` or `sampledomaln.com` compared to `sampledomain.com`). | Header mismatches, email authentication assessments, and sender reputation analysis. |
 | Email Auth violations  | Campaigns taking advantage of incorrect or invalid sender Auth records (SPF/DKIM/DMARC) and bypassing incoming Auth-based controls. | Assessment of sender authentication records against published SPF/DKIM/DMARC records, which is applied in combination with overall message attributes. |

@@ -14,5 +14,5 @@ To reduce incoming malicious requests, you could:
 - Build [rate limiting rules](/waf/rate-limiting-rules/) to protect against specific patterns of requests.
 - Enable [bot protection](/bots/get-started/) or set up [Bot Management for Enterprise](/learning-paths/bot-management/) to protect against automated abuse.
 - Explore [network-layer DDoS attack protection](/ddos-protection/managed-rulesets/network/).
-- Configure your zone's [Security level](/support/firewall/settings/understanding-the-cloudflare-security-level/) globally or selectively (depending on your needs).
+- Configure your zone's [Security Level](/fundamentals/security/security-level/) globally or selectively (depending on your needs).
 - Review the rest of Cloudflare's [security options](/learning-paths/application-security/).

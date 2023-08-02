@@ -15,9 +15,9 @@ Before getting started:
 
 - Create an R2 bucket and set up R2 API tokens.
 
-    1. Navigate to the R2 UI > **Create bucket**.
+    1. Go to the R2 UI > **Create bucket**.
 
-    2. Click **Manage R2 API Tokens**.
+    2. Select **Manage R2 API Tokens**.
 
     3. Select **Create API token**.
 
@@ -39,28 +39,18 @@ Before getting started:
 
 Enable Logpush to R2 via the dashboard.
 
-1.  Log in to the Cloudflare dashboard.
+{{<render file="_enable-logpush-job.md">}}
 
-2.  Select the Enterprise account or domain you want to use with Logpush.
+7. In **Select a destination**, choose **R2 Object Storage**.
 
-3.  Go to **Analytics & Logs** > **Logs**.
-
-4.  Click **Add Logpush job** and a modal window will open.
-
-5.  Select the dataset you want to push to a storage service.
-
-6.  Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7.  Select R2.
-
-8.  Enter the following destination information:
+8. Enter the following destination information:
     - Bucket path, for example, `cloudflare-logs/http_requests/example.com`
     - R2 access key ID
     - R2 secret access key
 
-9.  Click **Validate access**.
+9. Select **Validate access**.
 
-10.  Click **Save and Start Pushing** to finish enabling the Logpush job.
+10. Select **Save and Start Pushing** to finish enabling the Logpush job.
 
 ## Manage via API
 

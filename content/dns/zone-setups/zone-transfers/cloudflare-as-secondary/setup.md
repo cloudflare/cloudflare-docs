@@ -10,7 +10,7 @@ meta:
 
 With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can keep your primary DNS provider and use Cloudflare as a secondary DNS provider.
 
-{{<render file="_secondary-dns-override.md">}}
+{{<render file="_secondary-dns-override.md">}} <br />
 
 ## Before you begin
 
@@ -41,14 +41,6 @@ Get the following values from your Cloudflare account:
 - [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
 - [Zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/)
 - [Nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names), which should have **secondary** in the name.
-
-### DNSSEC
-
-If you want [DNSSEC](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) available for your secondary zone, you will need one of the following setups (reach out to your account team for more details):
-
-- **Hidden primary**: Since Cloudflare secondary nameservers are the only nameservers authoritatively responding to DNS queries, Cloudflare can sign records on the fly.
-- **Pre-signed zones**: If your primary DNS provider signs records and transfers out the signatures, Cloudflare serves records and DNSSEC signatures as is without doing any signing. Cloudflare only supports NSEC records (and not NSEC3 records) and this setup does not support [Secondary Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/).
-- **Multi-signer DNSSEC**: Both Cloudflare and your primary DNS provider know the signing keys of the other provider and perform their own online signing in accordance with [RFC 8901](https://datatracker.ietf.org/doc/html/rfc8901).
 
 ---
 
@@ -92,9 +84,9 @@ To create a peer DNS server using the API, send a [POST request](/api/operations
 To create a secondary zone using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. In the top navigation bar, click **Add site**.
+2. In the top navigation bar, click **Add zone**.
 3. Enter your zone name and choose **Secondary DNS** (if this option is not available, contact your account team).
-4. Click **Add site**.
+4. Click **Continue**.
 5. Select your plan type.
 6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
     {{<Aside type="warning">}}Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.

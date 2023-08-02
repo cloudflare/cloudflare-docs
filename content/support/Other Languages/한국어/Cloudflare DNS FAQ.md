@@ -209,7 +209,7 @@ ___
 
 ## 내 도메인을 추가한 후 임의 DNS 레코드 수백 개가 표시되는 이유는 무엇입니까?
 
-이는 이전의 권한 있는 DNS에서 와일드카드 \* 레코드가 구성되었을 때 발생할 수 있습니다. https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record API를 사용하여 이러한 레코드를 대량으로 제거할 수 있습니다. 또는 Cloudflare Dashboard에서 도메인을 삭제한 다음 신뢰할 수 있는 DNS에서 와일드카드 레코드를 삭제하고 도메인을 다시 추가할 수도 있습니다.
+이는 이전의 권한 있는 DNS에서 와일드카드 \* 레코드가 구성되었을 때 발생할 수 있습니다. /api/operations/dns-records-for-a-zone-delete-dns-record API를 사용하여 이러한 레코드를 대량으로 제거할 수 있습니다. 또는 Cloudflare Dashboard에서 도메인을 삭제한 다음 신뢰할 수 있는 DNS에서 와일드카드 레코드를 삭제하고 도메인을 다시 추가할 수도 있습니다.
 
 ___
 

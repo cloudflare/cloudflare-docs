@@ -43,7 +43,7 @@ To check which features are available to different plan types, refer to [Plans](
 
 Some Cloudflare products run before a waiting room acts on traffic:
 
-- DDos Mitigation
+- DDoS Mitigation
 - Web Application Firewall (WAF)
 - Bot Management
 - Page Rules
@@ -60,9 +60,9 @@ A manual tab refresh has no effect on a user's position in your waiting room.
 
 However, if they close their tab and then try to access the application again during active queueing, they will lose their spot and have to go to the back of the queue.
 
-## Monitorizing your waiting room
+## Monitor your waiting room
 
-### Why do I see a few users being queued in the dashboard?
+### Why do I observe a few users being queued in the dashboard?
 
 Some users might be queued before your waiting room reaches is limit due to architectural designs. For more details on the behavior and how to fix it, refer to [​​Queueing activation](/waiting-room/how-to/monitor-waiting-room#queueing-activation).
 
@@ -80,4 +80,4 @@ If you have Rate Limiting, check your [rate limiting rules](/waf/rate-limiting-r
 
 The Waiting Room queue page refreshes every 20 seconds by populating the refresh header. If you have a rule set to block requests from a specific IP within 20 seconds, the user in the waiting room will be blocked. Make sure your rules allow at least one request every 20 seconds.
 
-Your user also might not have [cookies](/waiting-room/reference/waiting-room-cookie) enabled. If they do not enable cookies and your waiting room is actively queueing traffic, they will not reach your end point until the queueing stops.
+Your user also might not have [cookies](/waiting-room/reference/waiting-room-cookie) enabled. If they do not enable cookies and your waiting room is actively queueing traffic, they will not reach your endpoint until the queueing stops.

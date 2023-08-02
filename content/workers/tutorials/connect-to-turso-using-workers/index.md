@@ -133,7 +133,7 @@ $ turso db show my-db --url
 libsql://my-db-<your-github-username>.turso.io
 ```
 
-Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/platform/environment-variables/) for your project:
+Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/configuration/environment-variables/) for your project:
 
 ```toml
 ---
@@ -155,7 +155,7 @@ $ turso db tokens create my-db -e none
 To keep this token secret:
 
 1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore` file if you are using Git.
-* You will also [create a Secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
+* You will also [create a Secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential.
 
 First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
 
@@ -298,7 +298,7 @@ With your environment configured and your code ready, you will now test your Wor
 To run a local instance of our Worker (entirely on your machine), run the following command:
 
 ```sh
-$ npx wrangler dev --local
+$ npx wrangler dev
 ```
 
 You should be able to review output similar to the following:
@@ -380,6 +380,6 @@ To clean up the resources you created as part of this tutorial:
 ## Related resources
 
 * Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
-* Understand how to [debug your Cloudflare Worker](/workers/learning/debugging-workers/).
+* Understand how to [debug your Cloudflare Worker](/workers/observability/debug-workers/).
 * Join the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF).
 * Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).

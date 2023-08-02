@@ -5,7 +5,7 @@ weight: 13
 layout: single
 ---
 
-# Enabling log retention
+# Enable log retention
 
 By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (refer to [Data retention period](/logs/logpull/understanding-the-basics/#data-retention-period)).
 
@@ -68,4 +68,4 @@ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.
 
 ## Audit
 
-Turning log retention on or off is recorded in **Cloudflare Audit Logs**.
+Turning log retention on or off is recorded in [Cloudflare Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/#access-audit-logs).

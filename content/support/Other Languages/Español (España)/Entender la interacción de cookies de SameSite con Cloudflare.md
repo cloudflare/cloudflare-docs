@@ -33,7 +33,7 @@ ___
 
 ## Problemas conocidos con las cookies SameSite y cf\_clearance
 
-Cuando un [CAPTCHA de Cloudflare](https://support.cloudflare.com/hc/articles/200170136) o un desafío de Javascript se resuelve como una [**Regla de firewall**](https://support.cloudflare.com/hc/articles/360016473712) o una [**Regla de acceso IP**](https://support.cloudflare.com/hc/articles/217074967), se configura una cookie de **cf\_clearance** en el navegador del cliente. La cookie _cf\_clearance_ tiene una vida predeterminada de 30 minutos, pero se configura mediante la [**Duración del acceso autorizado**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) en la pestaña **Configuración** de la aplicación **Firewall** de Cloudflare .
+Cuando un [CAPTCHA de Cloudflare](https://support.cloudflare.com/hc/articles/200170136) o un desafío de JavaScript se resuelve como una [**Regla de firewall**](https://support.cloudflare.com/hc/articles/360016473712) o una [**Regla de acceso IP**](https://support.cloudflare.com/hc/articles/217074967), se configura una cookie de **cf\_clearance** en el navegador del cliente. La cookie _cf\_clearance_ tiene una vida predeterminada de 30 minutos, pero se configura mediante la [**Duración del acceso autorizado**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) en la pestaña **Configuración** de la aplicación **Firewall** de Cloudflare .
 
 Cloudflare utiliza **SameSite**\=_None_, ya que la cookie **cf\_clearance**, de modo que las solicitudes de los visitantes de diferentes nombres de host no se cumplan con desafíos o errores posteriores. Cuando se usa **SameSite**\=_None_, debe configurarse junto con la marca _Secure_.
 

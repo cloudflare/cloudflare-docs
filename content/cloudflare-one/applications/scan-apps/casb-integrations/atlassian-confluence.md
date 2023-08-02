@@ -6,7 +6,7 @@ rss: file
 
 # Atlassian Confluence
 
-The Atlassian Confluence integration detects a variety of data loss prevention, account misconfiguration, and user security risks in an integrated Atlassian Confluence Cloud account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Atlassian Confluence;;Atlassian Confluence Cloud account">}}
 
 {{<Aside type="note">}}
 At this time, the CASB integration for Confluence is only compatible with Confluence Cloud accounts. Support for Confluence Data Center will come at a future date.
@@ -34,9 +34,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Confluence Cloud integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/manage-findings/#severity-levels).
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Atlassian Confluence;;atlassian-confluence">}}
 
 ### Access security
 

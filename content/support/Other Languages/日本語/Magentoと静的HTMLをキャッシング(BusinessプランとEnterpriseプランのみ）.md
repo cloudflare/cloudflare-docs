@@ -51,7 +51,7 @@ ___
 
 -   最後に _Edge Cache TTL_ を設定すると、オリジンからキャッシュ済みファイルが戻る前にCloudflareが保持できる最長期間を定義できます。長いEdge Cache TTL時間を設定しても、この時間が切れる前なら実行可能です。
 
-![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/support/static/hc-import-page_rules_caching_static_html_with_magento.png)
+![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/images/support/hc-import-page_rules_caching_static_html_with_magento.png)
 
 6\.  **保存とデプロイ**をクリックします。
 
@@ -79,7 +79,7 @@ Magento 1.8.x と1.9.xは、Megentoフォーム全体で [Cross Site Request Fo
 
 プラグインをインストールしたら、 _システム (System) -> 設定 (Configration) -> TURPENTINE -> Varnish オプション (Varnish Option)_ の順に移動し、「Use VCL fix」オプションを検索し、「無効にする」に設定し、保存します。
 
-![Use VCL fix option set to Disable.](/support/static/hc-import-use_vcl_fix_magento_cache_static_html.png)
+![Use VCL fix option set to Disable.](/images/support/hc-import-use_vcl_fix_magento_cache_static_html.png)
 
 ___
 

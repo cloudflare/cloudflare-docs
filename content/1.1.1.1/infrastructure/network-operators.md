@@ -5,7 +5,7 @@ title: Network operators
 
 # Network operators
 
-Network operators, including Internet Service Providers (ISPs), device manufacturers, public WiFi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/1.1.1.1/setup/) and [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) in place of operating their own recursive DNS infrastructure.
+Network operators, including Internet Service Providers (ISPs), device manufacturers, public Wi-Fi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/1.1.1.1/setup/) and [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) in place of operating their own recursive DNS infrastructure.
 
 Using 1.1.1.1 can improve performance for end-users due to Cloudflare's extensive [global network](https://www.cloudflare.com/network/), as well as provide higher overall cache hit rates due to our regional caches.
 
@@ -25,7 +25,7 @@ Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) 
 
 {{<Aside type="note">}}
 
-[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/filtering/dns-policies/), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
+[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/gateway/dns-policies/), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
 
 If you require additional controls over our public 1.1.1.1 resolver, [contact us](https://www.cloudflare.com/products/zero-trust/).
 

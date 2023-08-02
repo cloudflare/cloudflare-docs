@@ -39,7 +39,7 @@ export const onRequestPost: PagesFunction[] = [
 ];
 ```
 
-This Plugin only exposes a single route. It will be available wherever it is mounted . In the above example, because it is mounted in `functions/register.ts`, it will validate requests to `/register`. The Plugin is mounted with a single object parameter with the following properties.
+This Plugin only exposes a single route. It will be available wherever it is mounted. In the above example, because it is mounted in `functions/register.ts`, it will validate requests to `/register`. The Plugin is mounted with a single object parameter with the following properties.
 
 [`secret`](https://dashboard.hcaptcha.com/settings) (mandatory) and [`sitekey`](https://dashboard.hcaptcha.com/sites) (optional) can both be found in your hCaptcha dashboard.
 

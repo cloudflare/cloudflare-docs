@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;productPathTunnel;;productPathProbe
 ---
 
 #  Configure tunnel endpoints
@@ -14,8 +14,8 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 
 - **Tunnel name**: A name with 15 or fewer characters that does not contain spaces or special characters. The name cannot be shared with other tunnels.
 - **Cloudflare endpoint address**: The public IP address of the Cloudflare side of the tunnel.
-- **Customer endpoint**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them.
-  - This value is not required for IPsec tunnels, unless your router is using an IKE ID of type `ID_IPV4_ADDR`.
+- **Customer endpoint**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them. <br> 
+This value is not required for IPsec tunnels, unless your router is using an IKE ID of type `ID_IPV4_ADDR`.
 - **Interface address**: A 31-bit (recommended) or 30-bit subnet (`/31` or `/30` in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
   - `10.0.0.0/8`
   - `172.16.0.0/12`
@@ -55,9 +55,12 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 8. In **Customer GRE endpoint**, enter your router’s public IP address.
 9. In **Cloudflare GRE endpoint**, enter the Anycast address you received from your account team.
 10. Leave the default values for **TTL** and **MTU**.
-11. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
-12. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
-13. After adding your tunnel information, select **Add tunnels** to save your changes.
+11. Choose the [**Health check frequency**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
+12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Probe construction]($8) for more information.
+13. **Health check target** is the customer end of the tunnel. Leave the default option as is, unless you need to change the target address for some reason.
+14. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
+15. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
+16. After adding your tunnel information, select **Add tunnels** to save your changes.
  
 </div>
 </details>
@@ -71,16 +74,19 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `31` or `30`).
 8. In **Customer endpoint**, enter your router’s public IP address.
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team.
+10. Choose the [**Health check frequency**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
+11. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Probe construction]($8) for more information.
+12. **Health check target** is the customer end of the tunnel. Leave the default option as is, unless you need to change the target address for some reason.
 
 {{<Aside type="note">}}IPsec tunnels will not function without a pre-shared key (PSK).{{</Aside>}}
 
-10. If you do not have a pre-shared key yet: 
+13. If you do not have a pre-shared key yet: 
     1. Select **Add pre-shared key later**.
     2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels.**
     3. Select **Add tunnels**.
-    4. Your tunnel will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
-    5. Choose **Generate a new pre-shared key** > **Done**.
-11. If you already have a pre-shared key:
+    4. The Cloudflare dashboard will load the list of tunnels you have configured. The IPsec tunnel you have just created will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
+    5. Choose **Generate a new pre-shared key**. Save the key to a safe place, and select **Done**.
+14. If you already have a pre-shared key:
     1. Select **Use my own pre-shared key**.
     2. Paste your key in **Your pre-shared key**.
     3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
@@ -100,22 +106,21 @@ Create a `POST` request [using the API](/api/operations/magic-gre-tunnels-create
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
-    "gre_tunnels": [
-      {
-        "name": "<TUNNEL_NAME>",
-        "description": "<TUNNEL_DESCRIPTION>",
-        "interface_address": "<INTERFACE_ADDRESS>",
-        "cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
-        "customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
-      }
-    ]
-  }'
+curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "gre_tunnels": [
+    {
+      "name": "<TUNNEL_NAME>",
+      "description": "<TUNNEL_DESCRIPTION>",
+      "interface_address": "<INTERFACE_ADDRESS>",
+      "cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
+      "customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
+    }
+  ]
+}'
 ```
 
 </div>
@@ -130,22 +135,21 @@ Create a `POST` request [using the API](/api/operations/magic-i-psec-tunnels-cre
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
-    "ipsec_tunnels": [
-      {
-        "name": "<TUNNEL_NAME>", 
-        "description": "<TUNNEL_DESCRIPTION>", 
-        "interface_address": "<INTERFACE_ADDRESS>", 
-        "cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-        "customer_endpoint": "<CUSTOMER_ENDPOINT>"
-      }
-    ]
-  }'
+curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "ipsec_tunnels": [
+    {
+      "name": "<TUNNEL_NAME>", 
+      "description": "<TUNNEL_DESCRIPTION>", 
+      "interface_address": "<INTERFACE_ADDRESS>", 
+      "cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+      "customer_endpoint": "<CUSTOMER_ENDPOINT>"
+    }
+  ]
+}'
 ```
 
 This will generate a response like the following:
@@ -186,10 +190,9 @@ This will generate a response like the following:
 2. Create a `POST` request to generate a PSK. Use the tunnel `id` you received from the previous command (exemplified by `<YOUR_TUNNEL_ID>` above):
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/ipsec_tunnels/<YOUR_TUNNEL_ID>/psk_generate \
-  --header 'X-Auth-Email: <EMAIL>' 
-  --header 'X-Auth-Key: <API_KEY>'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
+--header 'X-Auth-Email: <EMAIL>' 
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 You will receive a response like the following:

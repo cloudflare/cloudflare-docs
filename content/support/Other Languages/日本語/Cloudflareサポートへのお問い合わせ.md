@@ -39,7 +39,7 @@ Cloudflareのお客様は、コミュニティ、チャット、サポートチ�
 
 3\. **Contact Support**をクリックします。_緊急時電話サポートホットライン - 認証_カードまでスクロールダウンします。
 
-![](/support/static/contact_support_ent_phone_card.png)
+![](/images/support/contact_support_ent_phone_card.png)
 
 4.シングルユーストークンを使用して認証するには、 **Get a single-use token**（シングルユーストークンを入手）をクリックします。トークンコードが記載されたポップアップウィンドウが表示されます。コードは30秒ごとに自動更新されます。
 

@@ -1,11 +1,11 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
-title: FAQ
+title: General FAQ
 weight: 1
 ---
 
-# FAQ
+# General FAQ
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -22,7 +22,7 @@ Cloudflare never limits or caps DNS queries, but the pricing depends on your pla
 
 For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries.
 
-For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote. Any overages will not be charged.
+For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 ## Should the cloud icon beside my DNS record be orange or gray?
 
-By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
+By default, only A and CNAME records that handle web traffic (HTTP and HTTPS) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 {{<Aside type="note">}}
 Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the root domain.
+server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
 {{</Aside>}}
 
 ___

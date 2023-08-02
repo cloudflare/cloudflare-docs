@@ -10,17 +10,13 @@ meta:
 
 {{<render file="_full-setup-definition.md">}}
 
----
+{{<tutorial>}}
 
-## Before you begin
+{{<tutorial-prereqs>}}
 
-Before update your domain nameservers, make sure that you:
+Before you update your domain nameservers, make sure that you:
 
 - Already own a domain name (such as `example.com` or `cloudflare.com`).
-- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
-- Disabled DNSSEC at your registrar (where you bought your domain name).
-  
-{{<render file="_dnssec-providers.md">}}
 
 {{<Aside type="note">}}
 
@@ -30,27 +26,36 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{</Aside>}}
 
----
+- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+- Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
+  
+{{<render file="_dnssec-providers.md">}}
 
-## Add site to Cloudflare
+{{<render file="_dnssec-enabled-migration.md">}}
+
+{{</tutorial-prereqs>}}
+
+{{<tutorial-step title="Add site to Cloudflare">}}
 
 In the Cloudflare dashboard, [add your domain](/fundamentals/get-started/setup/add-site/).
 
----
+{{</tutorial-step>}}
 
-## Review DNS records
+{{<tutorial-step title="Review DNS records">}}
 
 When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a full setup, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
-{{<render file="_dns-auto-scan-info.md">}}
+{{<render file="_dns-scan-intro.md">}} <br />
+
+{{<render file="_dns-scan-note.md">}}
 
 {{<render file="_dns-scan-procedure.md">}}
 
 {{<render file="_dns-nxdomain-warning.md">}}
 
----
+{{</tutorial-step>}}
 
-## Update your nameservers
+{{<tutorial-step title="Update your nameservers">}}
 
 {{<render file="_nameserver-preamble.md">}}
 
@@ -138,12 +143,12 @@ Wait up to 24 hours while your registrar updates your nameservers.
 When your domain is **Active**:
 
 - You will receive an email from Cloudflare.
-- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
+- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Zones** page of your account.
 - Online tools such as https://www.whatsmydns.net/ will show your Cloudflare-assigned nameservers (most of these tools use cached query results, so it may take longer for them to show the updated nameservers).
 - CLI commands will show your Cloudflare-assigned nameservers
 
 ```txt
-*Linux/Unix*
+*Linux/UNIX*
 dig <DOMAIN_NAME> +trace @1.1.1.1 
 dig <DOMAIN_NAME> +trace @8.8.8.8
 
@@ -158,10 +163,14 @@ If you see unexpected results, refer to our [troubleshooting suggestions](/dns/z
 
 {{</Aside>}}
 
----
+{{</tutorial-step>}}
 
-## Re-enable DNSSEC
+{{<tutorial-step title="Re-enable DNSSEC">}}
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
 
 You should now [enable DNSSEC](/dns/dnssec/) to protect from domain spoofing.
+
+{{</tutorial-step>}}
+
+{{</tutorial>}}

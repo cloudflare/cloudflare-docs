@@ -66,7 +66,7 @@ If you are not receiving emails intended for your new email address, review your
 2.  Go to **DNS**.
 3.  Your domain should have records similar to the following:
 
-![Your iCloud custom email domain should have a specific set of records created by default.](/support/static/icloud-custom-domain-dns-example.png)
+![Your iCloud custom email domain should have a specific set of records created by default.](/images/support/icloud-custom-domain-dns-example.png)
 
 If your domain has records similar to those listed above and you are still experiencing problems with your new email address, contact [Apple Support](https://support.apple.com/).
 
@@ -81,7 +81,7 @@ That’s because there’s more to setting up a website than purchasing a domain
 If you want your domain to be a fully functioning website, you will need to:
 
 1.  **Build your website**: Either using [Cloudflare Pages](/pages/), a website builder, or files hosted on a server.
-2.  **Update your Cloudflare DNS**: To direct visitors looking for your domain name to the actual content on your website ([detailed guide](/dns/manage-dns-records/how-to/create-root-domain/)).
+2.  **Update your Cloudflare DNS**: To direct visitors looking for your domain name to the actual content on your website ([detailed guide](/dns/manage-dns-records/how-to/create-zone-apex/)).
 
 ___
 

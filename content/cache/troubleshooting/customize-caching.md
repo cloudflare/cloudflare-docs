@@ -70,8 +70,8 @@ As an alternative to *Edge Cache TTL*, you could use the [Origin Cache Control](
 To learn more about the technique described, consult:
 
 -   [Caching Anonymous Page Views](https://blog.cloudflare.com/caching-anonymous-page-views/)
--   [Caching Anonymous Page Views with WordPress or WooCommerce](https://support.cloudflare.com/hc/articles/236166048)
--   [Caching Anonymous Page Views with Magento 1 and Magento 2](https://support.cloudflare.com/hc/articles/236168808)
+-   [Caching Anonymous Page Views with WordPress or WooCommerce](/support/third-party-software/content-management-system-cms/caching-static-html-with-wordpresswoocommerce/)
+-   [Caching Anonymous Page Views with Magento 1 and Magento 2](/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/)
 -   [How do I cache static HTML?](/cache/concepts/customize-cache/)
 
 Note that the Cloudflare **Caching** app allows you to purge the cache so that new requests are sent to the origin for re-fetching. To learn more, refer to [How do I purge my cache?](/cache/how-to/purge-cache/)

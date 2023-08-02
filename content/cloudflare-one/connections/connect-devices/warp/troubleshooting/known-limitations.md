@@ -12,6 +12,10 @@ Below, you will find information on devices, software, and configurations that a
 
 The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) for a list of supported operating systems.
 
+## Managed network on legacy Windows Server
+
+[Managed network detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
+
 ## Multi-user support on Windows
 
 The WARP client does not support multiple users on a single Windows device. WARP uses hard-coded global paths to store settings and keys and does not save information on a per-user basis. Therefore, after one user logs into WARP, their settings will apply to all traffic from the device.
@@ -22,11 +26,11 @@ Because of how the WARP client instantiates the local DNS Proxy, it is incompati
 
 ## Comcast DNS servers
 
-Comcast DNS traffic to `75.75.75.75` and `75.75.75.76` cannot be proxied through WARP. This is because Comcast rejects DNS traffic that is not sent directly from the user's device.
+Comcast DNS traffic to `75.75.75.75` and `75.75.76.76` cannot be proxied through WARP. This is because Comcast rejects DNS traffic that is not sent directly from the user's device.
 
 To work around the issue, you can either:
 
-- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes `75.75.75.75/32` and `75.75.75.76/32` from WARP.
+- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes `75.75.75.75/32` and `75.75.76.76/32` from WARP.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
 ## HP Velocity

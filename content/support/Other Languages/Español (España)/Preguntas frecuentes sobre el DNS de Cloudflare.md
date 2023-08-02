@@ -188,7 +188,7 @@ ___
 
 ## ¿Por qué veo cientos de registros DNS aleatorios después de añadir mi dominio?
 
-Esto puede ocurrir cuando se ha configurado un registro comodín \* en tu anterior DNS autoritativo. Puedes eliminar estos registros de forma masiva utilizando la API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record. También puedes eliminar tu dominio desde el panel de control de Cloudflare, luego eliminar el registro comodín de tu DNS autoritativo, y después volver a añadir el dominio de nuevo.
+Esto puede ocurrir cuando se ha configurado un registro comodín \* en tu anterior DNS autoritativo. Puedes eliminar estos registros de forma masiva utilizando la API: /api/operations/dns-records-for-a-zone-delete-dns-record. También puedes eliminar tu dominio desde el panel de control de Cloudflare, luego eliminar el registro comodín de tu DNS autoritativo, y después volver a añadir el dominio de nuevo.
 
 ___
 

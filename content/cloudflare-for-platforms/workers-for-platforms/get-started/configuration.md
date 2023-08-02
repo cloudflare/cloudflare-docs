@@ -62,7 +62,7 @@ To create a Worker, run `wrangler init` followed by your Worker project name:
 $ wrangler init <YOUR_WORKER>
 ```
 
-To create a dynamic dispatch Worker, create a [binding](/workers/platform/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
+To create a dynamic dispatch Worker, create a [binding](/workers/configuration/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
 
 ```toml
 ---
@@ -98,6 +98,28 @@ Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-fo
 
 You will now upload `customer-worker-1` into your dispatch namespace that you created in step 2. This user Worker has a simple `fetch()` handler that sends a `Hello world` response.
 
+```js
+---
+filename: main.js
+---
+export default {
+  fetch(request) {
+    return new Response('Hello World');
+  },
+};
+```
+
+Do the following to define a simple metadata file for the user Worker:
+
+```js
+---
+filename: metadata.json
+---
+{
+    "main_module": "main.js"
+}
+```
+
 You will use the Cloudflare API to upload the user Worker. This will upload the user Worker to a dispatch namespace. User Workers must be uploaded via the Cloudflare API as Wrangler does not support this operation. Workers uploaded this way will appear in Account Home > your account > **Workers for Platforms** > your namespace.
 
 Update the necessary fields and run the following command:
@@ -109,34 +131,28 @@ Update the necessary fields and run the following command:
 5. Add the script name `customer-worker-1` to `<SCRIPT_NAME>`.
 
 ```bash
-curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'X-Auth-Key: <AUTH_KEY> \
--H 'Content-Type: application/javascript' \
---data "addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-})
-
-async function handleRequest(request) {
-  return new Response('Hello world');
-}"
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <AUTH_KEY>" \
+-H "Content-Type: multipart/form-data" \
+-F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
 ```
 
 If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) with **Workers Edit** permission. Select **Account**, **Workers Script**, and **Edit**. Then, add the token to the `"Authorization: Bearer <API_TOKEN>"` header. 
 
 
 ```bash
-curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
--H 'Authorization: Bearer <API_TOKEN>' \
--H 'Content-Type: application/javascript' \
---data "addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-})
-
-async function handleRequest(request) {
-  return new Response('Hello world');
-}"
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
+-H "Authorization: Bearer <BEARER_TOKEN>" \
+-H "Content-Type: multipart/form-data" \
+-F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
 ```
+
+{{<Aside type="note">}}
+
+For more information on the `metadata.json` refer to [Metadata configuration](/cloudflare-for-platforms/workers-for-platforms/platform/metadata/).
+
+{{</Aside>}}
 
 ## 5. Test a request
 
