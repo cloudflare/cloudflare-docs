@@ -16,14 +16,14 @@ You can use the API to [configure cipher suites](/ssl/reference/cipher-suites/).
 
 {{<feature-table id="ssl.minimum_tls">}}
 
-## Using Minimum TLS Version in Cloudflare SSL/TLS
+## Setup
 
-You can manage the TLS version your domain uses when proxied through Cloudflare.
+### Zone-level
+
+To manage the TLS version applied to your whole zone when proxied through Cloudflare:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
-To update this setting in the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2.  Select your zone.
@@ -33,10 +33,15 @@ To update this setting in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To update your **Minimum TLS Version** with the API, send a [`PATCH`](/api/operations/zone-settings-change-minimum-tls-version-setting) request with the `value` parameter specifying your preferred minimum version.
- 
+Use the [Change Minimum TLS Version setting](/api/operations/zone-settings-change-minimum-tls-version-setting) endpoint, specifying your preferred minimum version in the `value` parameter.
+
 {{</tab>}}
 {{</tabs>}}
 
-Selecting a minimum version ensures that all subsequent, newer versions of the protocol are also supported. TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption. In this case, it means that Cloudflare also accepts requests encrypted with all TLS versions beyond 1.0.
+### Per-hostname
 
+[Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) users also have the option to specify minimum TLS versions per specific hostnames in their Cloudflare zone.
+
+This is currently only available via the API:
+
+(**INSERT API LINKS**)
