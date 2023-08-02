@@ -29,7 +29,7 @@ layout: list
       <td>Citrix Netscaler ADC - Remote Code Execution - CVE:CVE-2023-3519</td>
       <td>N/A</td>
       <td>Log</td>
-      <td>This rule is released as Log Mode, will be toggled to blocking on 7th August, 2023</td>
+      <td>This rule is released in Log mode; it will be toggled to Block on 2023-08-07</td>
     </tr>
   </tbody>
 </table>
