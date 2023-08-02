@@ -1,16 +1,16 @@
 ---
-title: Application protocol detection
+title: Protocol detection
 pcx_content_type: how-to
 weight: 2
 ---
 
-# Application protocol detection
+{{<early-access>}}Protocol detection{{</early-access>}}
 
-{{<Aside header="Availability">}}Application protocol detection is available in early access for Enterprise users. For more information, contact your account team.{{</Aside>}}
+{{<Aside header="Availability">}}Protocol detection is available in early access for Enterprise users. For more information, contact your account team.{{</Aside>}}
 
-Gateway supports the detection, logging, and filtering of application protocols using packet attributes.
+Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
-## Enable application protocol detection
+## Enable protocol detection
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Firewall**.
 2. Enable **Protocol Detection**.
@@ -21,15 +21,15 @@ You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudfl
 
 Gateway supports detection and filtering of the following protocols:
 
-| Protocol | Notes                                                                               |
-| -------- | ----------------------------------------------------------------------------------- |
-| HTTP     | The policy builder includes separate values for HTTP/1.1 and HTTP/2.                |
-| SSH      |                                                                                     |
-| TLS      | Gateway detects TLS versions 1.1 through 1.3 with the _TLS_ value.                  |
-| DCE/RPC  |                                                                                     |
-| MQTT     |                                                                                     |
-| TPKT     | Because TPKT initiates RDP sessions, you can filter RDP traffic with this protocol. |
-| DNP3     |                                                                                     |
+| Protocol | Notes                                                                                       |
+| -------- | ------------------------------------------------------------------------------------------- |
+| HTTP     | The policy builder includes separate values for HTTP/1.1 and HTTP/2.                        |
+| SSH      |                                                                                             |
+| TLS      | Gateway detects TLS versions 1.1 through 1.3 with the _TLS_ value.                          |
+| DCE/RPC  |                                                                                             |
+| MQTT     |                                                                                             |
+| TPKT     | TPKT commonly initiates RDP sessions, so you can use it to identify and filter RDP traffic. |
+| DNP3     |                                                                                             |
 
 ## Example network policy
 
