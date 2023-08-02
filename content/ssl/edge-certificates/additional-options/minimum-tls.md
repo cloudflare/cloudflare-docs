@@ -10,12 +10,6 @@ Minimum TLS Version only allows HTTPS connections from visitors that support the
 
 For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed to connect.
 
-{{<Aside type="warning">}}
-Minimum TLS Version currently applies to the whole zone. If you need different minimum TLS versions for specific hostnames or paths, consider the following alternatives:
-* Use [subdomain setups](/dns/zone-setups/subdomain-setup/) to manage Cloudflare settings for one or more subdomains separately.
-* Use [Workers](/workers/examples/block-on-tls/) to set a different behavior based on the TLS version of incoming requests.
-{{</Aside>}}
-
 You can use the API to [configure cipher suites](/ssl/reference/cipher-suites/).
 
 ## Availability
