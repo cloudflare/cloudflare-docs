@@ -20,7 +20,7 @@ All billing period dates on invoices and the dashboard are in UTC/GMT timezone, 
 
 To disable a subscription:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and website.
 
 2. Select the feature you want to disable under **Active Subscriptions** (Free or Pro customers) or **Plan Extensions** (Enterprise customers).
 

@@ -16,7 +16,7 @@ To create a new custom rule:
 
 1. Log in to the Cloudflare dashboard.
 
-2. Select the **Zones** tab and choose the zone for which you want to create a rule.
+2. Select the **Websites** tab and choose the site for which you want to create a rule.
 
 3. Go to **Security** > **WAF** > **Custom rules**.
 

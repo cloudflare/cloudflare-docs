@@ -32,7 +32,7 @@ You can manage the TLS version your domain uses when proxied through Cloudflare.
 To update this setting in the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2.  Select your zone.
+2.  Select your website.
 3.  Go to **SSL/TLS** > **Edge Certificates**.
 4.  For **Minimum TLS Version**, select an option.
  

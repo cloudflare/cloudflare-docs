@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and website.
 
 2. Select **SSL/TLS** > **Custom Hostnames**.
 

@@ -8,7 +8,7 @@ _build:
 To create a gateway using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
+2. Select your account and website.
 3. Go to **Web3**.
 4. Click **Create Web3 Gateway**.
 5. Enter the following information:

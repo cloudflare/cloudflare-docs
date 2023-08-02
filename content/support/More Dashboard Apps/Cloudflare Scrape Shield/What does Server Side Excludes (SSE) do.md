@@ -13,7 +13,7 @@ If there is sensitive content on your website that you want visible to real visi
 To enable Server-side on your website:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Select your account and zone.
+2.  Select your account and website.
 3.  Go to **Scrape Shield**.
 4.  For **Server-side**, switch the toggle to **On**.
 

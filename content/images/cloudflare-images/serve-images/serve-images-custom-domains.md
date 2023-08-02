@@ -35,7 +35,7 @@ By default, Images are served from the `/cdn-cgi/imagedelivery/` path. You can u
 
 To create a rule:
 
-1. Log in to the Cloudflare dashboard and select your account and zone. 
+1. Log in to the Cloudflare dashboard and select your account and website. 
 2. Select **Rules** > **Transform Rules**.
 3. Select **Create rule**.
 4. Under **When incoming requests match...**, select **Edit expression**
