@@ -91,7 +91,7 @@ The response will reflect the rule that has been written with its ID. In case so
 ---
 header: Example using cURL
 ---
-curl --request POST "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
+curl POST "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/seqrules/rules" \
 --header "Content-Type: application/json" \
 --data '{
   "title": "string",
@@ -117,7 +117,7 @@ The response will reflect the rules that have been written with their IDs in cas
 ---
 header: Example using cURL
 ---
-curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
+curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/seqrules" \
 --header "Content-Type: application/json" \
 --data '{
   "rules": [
