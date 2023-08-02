@@ -66,7 +66,7 @@ To learn more about Upstash, refer to the [Upstash documentation](https://docs.u
     ```sh
     $ npm install @upstash/kafka
     ```
-4. Use the [upstash-kafka](https://github.com/upstash/upstash-kafka/blob/main/README.md) Javascript SDK to send data to Kafka.
+4. Use the [upstash-kafka](https://github.com/upstash/upstash-kafka/blob/main/README.md) JavaScript SDK to send data to Kafka.
 Check out an [example](https://docs.upstash.com/kafka/real-time-analytics/realtime_analytics_serverless_kafka_setup#option-1-cloudflare-workers) published by Upstash. Replace `url`, `username` and `password` with the variables set by the integration. 
 
 ### Set up an integration with Upstash QStash:
