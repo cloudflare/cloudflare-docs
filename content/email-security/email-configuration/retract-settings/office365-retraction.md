@@ -59,3 +59,7 @@ The authorization process grants Area 1 access to the Azure environment with the
 ## 4. Manual message retraction
 
 {{<render file="_manual-retraction.md">}}
+
+## Geographic locations
+
+{{<render file="_bcc-table-geographic-locations.md">}}
