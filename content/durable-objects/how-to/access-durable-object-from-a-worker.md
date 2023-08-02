@@ -37,7 +37,7 @@ let id = OBJECT_NAMESPACE.newUniqueId();
 The `newUniqueId()` method on a Durable Object namespace creates a new Durable Object ID randomly. `newUniqueId()` will never return the same ID twice. Thus, it is guaranteed that the Durable Object does not yet exist and has never existed at the time the method returns.
 
 {{<Aside type="note" header="Durable Object namespace">}}
-A Durable Object namespace is a a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
+A Durable Object namespace is a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
 {{</Aside>}}
 
 When generating an ID randomly, you need to store the ID somewhere to reach the same Durable Object again in the future. For example, you can store the ID in Workers KV, in an external database, or in a cookie in the user's browser.
