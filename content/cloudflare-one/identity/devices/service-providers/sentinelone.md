@@ -58,4 +58,4 @@ Device posture data is gathered from the SentinelOne Management APIs. For more i
 | Infected          | Whether the device is infected     |
 | Active Threats      | Number of active threats on the device   |
 | Is Active | Whether the SentinelOne Agent is active |
-| Network status      | Whether the device is connected to the Internet   |
+| Network status      | Whether the SentinelOne Agent is connected to the SentinelOne service   |
