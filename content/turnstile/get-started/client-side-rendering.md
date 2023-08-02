@@ -41,8 +41,8 @@ Turnstile is often used to protect forms on websites such as login forms, contac
 
 ```html
 ---
-highlight: [4]
 header: Example
+highlight: [4]
 ---
 
 <form action="/login" method="POST">
