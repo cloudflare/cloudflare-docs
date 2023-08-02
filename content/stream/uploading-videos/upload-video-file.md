@@ -71,6 +71,10 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
   - If this key is present, the video playback for this video will be required to use signed urls after upload.
 
+- `scheduledDeletion`
+
+  - Specifies a date and time when a video is deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. 
+
 - `allowedorigins`
 
   - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/viewing-videos/securing-your-stream/#security-considerations) for the video.
