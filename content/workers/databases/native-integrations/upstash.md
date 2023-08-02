@@ -66,7 +66,7 @@ To set up an integration with Upstash:
 
 `Redis.fromEnv(env)` automatically picks up the default `url` and `token` names created in the integration. 
 
-If you've renamed the secrets, you must declare them explicitly like in the [Upstash basic example](https://docs.upstash.com/redis/sdks/redis-ts/getstarted#basic-usage)
+If you have renamed the secrets, you must declare them explicitly like in the [Upstash basic example](https://docs.upstash.com/redis/sdks/redis-ts/getstarted#basic-usage).
 
 {{</Aside>}}
 
