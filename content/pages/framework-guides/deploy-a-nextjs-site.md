@@ -208,15 +208,15 @@ export async function GET(request: Request) {
 ## The Image component
 
 The Cloudflare network does not provide the same image optimization support as the Vercel network does, because of this
-the Next.js' `<Image />` component behaves differently from how it would when deployed to the Vercel network.
+the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
 
  - If you build your application as a static one the `<Image />` component won't actually serve images at all.
 
- - If you build your application using `@cloudflare/next-on-pages` the component will work but not perform any image optimization,
-regardless on the props you provide to it.
+ - If you build your application using `@cloudflare/next-on-pages` the component will work but not perform any image optimization
+(regardless of the props you pass to it).
 
 Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for
- the `<Image />` component, which allow you to use any image optimization service you want. In case you'd like to use the [Cloudflare
+ the `<Image />` component which allow you to use any image optimization service you want. In case you'd like to use the [Cloudflare
  Images](https://www.cloudflare.com/en-gb/products/cloudflare-images) please check out our [Next.js image resizing integration guide](/images/image-resizing/integration-with-frameworks/#nextjs).
 
 
