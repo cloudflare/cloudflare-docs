@@ -4,17 +4,14 @@ pcx_content_type: reference
 weight: 4
 meta:
   title: TLS Settings — Cloudflare for SaaS
+  description: Learn more about TLS settings available to use with Cloudflare for SaaS.
 ---
 
 # TLS Settings — Cloudflare for SaaS
 
+## Mutual TLS
+
 [Mutual TLS (mTLS)](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) adds an extra layer of protection to application connections by validating certificates on the server and the client. When building a SaaS application, you may want to enforce mTLS to protect sensitive endpoints related to payment processing, database updates, and more.
-
-[Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) allows you to choose a cryptographic standard [for your zone](/api/operations/zone-settings-change-minimum-tls-version-setting) as a whole, per [hostnames in your zone](**INSERT API LINK**), or per [custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname). Cloudflare recommends TLS 1.2 to comply with the Payment Card Industry (PCI) Security Standards Council.
-
-[Cipher suites](/ssl/reference/cipher-suites/) are a combination of ciphers used to negotiate security settings during the [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). As a SaaS provider, you can specify configurations for cipher suites [on your zone](/api/operations/zone-settings-change-ciphers-setting) as a whole, per [hostnames in your zone](**INSERT API LINK**), or on [individual custom hostnames](/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
-
-## Enable mTLS
 
 Once you have [added a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/), you can enable mTLS by using Cloudflare Access. Go to [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) and [add mTLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) with a few clicks.
 
@@ -24,7 +21,11 @@ Currently, you cannot add mTLS policies for custom hostnames using [API Shield](
 
 {{</Aside>}}
 
-## Enable Minimum TLS Version
+## Minimum TLS Version
+
+[Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) allows you to choose a cryptographic standard [for your zone](/api/operations/zone-settings-change-minimum-tls-version-setting) as a whole, per [hostnames in your zone](**INSERT API LINK**), or per [custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname). Cloudflare recommends TLS 1.2 to comply with the Payment Card Industry (PCI) Security Standards Council.
+
+To set up Minimum TLS Version for a custom hostname via the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to your account and website.
 
@@ -40,22 +41,10 @@ While TLS 1.3 is the most recent and secure version, it is not supported by some
 
 ## Cipher suites
 
+[Cipher suites](/ssl/reference/cipher-suites/) are a combination of ciphers used to negotiate security settings during the [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). As a SaaS provider, you can specify configurations for cipher suites: 
+
+* [On your zone](/api/operations/zone-settings-change-ciphers-setting) as a whole.
+* Per [hostnames in your zone](**INSERT API LINK**).
+* On [individual custom hostnames](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname).
+
 For security and regulatory reasons, you may want to only allow connections from certain cipher suites. Cloudflare provides recommended values and full cipher suite reference in our [Cipher suites documentation](/ssl/reference/cipher-suites/).
-
-<details>
-<summary>Restrict cipher suites for zone</summary>
-<div>
-
-Refer to [change ciphers setting on a zone](/api/operations/zone-settings-change-ciphers-setting).
-
-</div>
-</details>
-
-<details>
-<summary>Restrict cipher suites for custom hostname</summary>
-<div>
-
-Refer to [SSL properties of a custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname).
-
-</div>
-</details>
