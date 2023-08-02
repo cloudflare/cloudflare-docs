@@ -81,6 +81,10 @@ Refer to the [Environment Variables](/workers/platform/environment-variables) do
 
 ## 2. Interact with your KV namespace
 
+You can interact with your KV namespace via Wrangler or via a Worker.
+
+### Interact with your KV namespace via Wrangler
+
 To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively:
 
 ```sh
@@ -118,6 +122,8 @@ A KV namespace can be specified in two ways:
     ```
 
 Refer to the [`kv:bulk`](/kv/platform/kv-commands/#kvbulk) documentation to write a file of multiple key-value pairs to a given KV namespace.
+
+## Interact with your KV namespace via a Worker
 
 
 
