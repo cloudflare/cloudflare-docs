@@ -444,7 +444,7 @@ kv_namespaces = [
 
 ### Queues
 
-[Queues](/queues/) is Cloudflare's global message queueing service, providing guaranteed delivery and message batching. To interact with a Queue with Workers, you need a producer Worker to send messages to the Queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/learning/delivery-guarantees/) and [message batching](/queues/learning/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
 
 To bind Queues to your producer Worker, assign an array of the below object to the `[[queues.producers]]` key.
 
@@ -452,11 +452,11 @@ To bind Queues to your producer Worker, assign an array of the below object to t
 
 - `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the Queue, used on the Cloudflare dashboard.
+  - The name of the queue, used on the Cloudflare dashboard.
 
 - `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The binding name used to refer to the Queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
+  - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
 
 {{</definitions>}}
 
@@ -477,7 +477,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
 - `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the Queue, used on the Cloudflare dashboard.
+  - The name of the queue, used on the Cloudflare dashboard.
 
 - `max_batch_size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -493,9 +493,9 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of another Queue to send a message if it fails processing at least `max_retries` times.
+  - The name of another queue to send a message if it fails processing at least `max_retries` times.
   - If a dead_letter_queue is not defined, messages that repeatedly fail processing will be discarded.
-  - If there is no Queue with the specified name, it will be created automatically.
+  - If there is no queue with the specified name, it will be created automatically.
 
 - `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
