@@ -26,7 +26,7 @@ To retrieve those values:
 2. Go to **Settings** > **Users** > **Create new Service User**.
 3. Select **Create New Service User**.
 4. Enter a **Name** and **Expiration Date** and select **Next**.
-5. Choose a **Scope of Access** for the account and/or site.
+5. Set **Scope of Access** to _Viewer_.
 6. Select **Create User**. SentinelOne will generate an API Token for this user.
 7. Copy the **API Token** to a safe location.
 8. Select **Close**.
@@ -53,9 +53,9 @@ To retrieve those values:
 
 Device posture data is gathered from the SentinelOne Management APIs. For more information, refer to `https://<S1-DOMAIN>.sentinelone.net/api-doc/overview`.
 
-| Selector      | Description         | Value        |
-| ------------- | ------------------- | ------------ |
-| Infected          | Whether the device is infected     | _true_ or _false_ |
-| Active Threats      | Count of active threats on the device   | `0` to `xxx` |
-| Is Active | Whether the SentinelOne Agent is active | _true_ or _false_ |
-| Network status      | Whether the device is connected to the Internet   | _connected_, _disconnected_, _connecting_, or _disconnecting_   |
+| Selector      | Description         |
+| ------------- | ------------------- |
+| Infected          | Whether the device is infected     |
+| Active Threats      | Number of active threats on the device   |
+| Is Active | Whether the SentinelOne Agent is active |
+| Network status      | Whether the device is connected to the Internet   |
