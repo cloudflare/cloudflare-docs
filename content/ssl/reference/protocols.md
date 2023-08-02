@@ -17,20 +17,6 @@ Cloudflare supports the following TLS protocols:
 
 TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption.
 
-## Test supported TLS versions
-
-To properly test supported TLS versions, attempt a request to your Cloudflare domain while specifying a TLS version. For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
-
-```sh
-$ curl https://www.example.com -svo /dev/null --tls-max 1.1
-```
-
-If the TLS version you are testing is blocked by Cloudflare, the TLS handshake is not completed and returns an error:
-
-**`* error:1400442E:SSL routines:CONNECT_CR_SRVR_HELLO:tlsv1 alert`**
-
-For guidance on which TLS version to use, review the information outlined below.
-
 ## Understand TLS versions
 
 A higher TLS version implies a stronger cryptographic standard. TLS 1.2 includes fixes for known vulnerabilities found in previous versions.
