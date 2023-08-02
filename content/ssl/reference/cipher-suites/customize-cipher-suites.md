@@ -12,16 +12,21 @@ With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-
 
 This process will not lead to any downtime in your SSL/TLS protection.
 
+## Setup
+
 Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
-- [Hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
+- [Per-hostname](**INSERT API LINK**)
+- [Custom hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
+
+{{<Aside type="warning">}}
 
 When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
 
-{{<Aside type="note">}}
-Note that this process only refers to connections between clients and the Cloudflare network. For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
 {{</Aside>}}
+
+Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
 
 ## Cipher suite values
 
