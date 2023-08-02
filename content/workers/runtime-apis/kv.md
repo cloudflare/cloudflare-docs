@@ -356,7 +356,7 @@ A KV namespace is a key-value database that is replicated to Cloudflare's global
 
 The name of your binding does not need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
 
-This is not the case with ES modules format, refer to [Referencing KV using ES modules](/workers/runtime-apis/kv/#referencing-kv-from-durable-objects-and-workers-using-modules-syntax).
+This is not the case with ES modules format, refer to [Reference KV using ES modules](/workers/runtime-apis/kv/#reference-kv-from-durable-objects-and-workers-using-es-modules-format).
 
 When you create a namespace, it will have a name you choose (for example, `My tasks`), and an assigned ID (for example, `06779da6940b431db6e566b4846d64db`).
 
