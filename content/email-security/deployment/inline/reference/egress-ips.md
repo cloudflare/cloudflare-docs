@@ -71,6 +71,10 @@ For customers in Europe, add all our US IP addresses. Additionally, you need to 
 
 For customers in India, add all our US IP addresses.
 
+## Australia
+
+For customers in Australia, add all our US IP addresses.
+
 [^1]: Office 365 does not support this subnet mask range. If you use Office 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to **Office 365 `/24` addresses** for a list of these IPv4 addresses.
 
 [^2]: Office 365 does not support IPv6 addresses.

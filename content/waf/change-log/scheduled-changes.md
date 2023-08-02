@@ -24,21 +24,12 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-07-10</td>
-      <td>2023-07-24</td>
+      <td>2023-07-31</td>
+      <td>2023-08-07</td>
       <td>Block</td>
-      <td>100591</td>
-      <td>...777f5c34</td>
-      <td>Fortigate VPN - Remote Code Execution - CVE:CVE-2023-27997</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-07-10</td>
-      <td>2023-07-24</td>
-      <td>Block</td>
-      <td>100592</td>
-      <td>...0bd669ca</td>
-      <td>Code Injection - Generic</td>
+      <td>100593</td>
+      <td>...c3b6a372</td>
+      <td>Adobe ColdFusion - Auth Bypass, Remote Code Execution - CVE:CVE-2023-29298, CVE:CVE-2023-38203, CVE:CVE-2023-26360</td>
       <td>N/A</td>
     </tr>
   </tbody>

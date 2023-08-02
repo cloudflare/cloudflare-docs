@@ -7,6 +7,15 @@ rss: file
 
 # Changelog
 
+## 2023-08-01
+
+### Per-database limit now 500 MB
+
+Databases using D1's [new storage subsystem](/d1/changelog/#new-default-storage-subsystem) can now grow to 500 MB each, up from the previous 100 MB limit. This applies to both existing and newly created databases.
+
+Refer to [Limits](/d1/platform/limits/) to learn about D1's limits.
+
+
 ## 2023-07-27
 
 ### New default storage subsystem
@@ -25,12 +34,6 @@ Refer to the [Time Travel](/d1/learning/time-travel/) documentation to learn how
 
 Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/learning/backups/) used for legacy alpha databases.
 
-## 2023-06-16
-
-### Generated columns documentation
-
-We've published new documentation describing how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
-
 ## 2023-06-28
 
 ### Metrics and analytics
@@ -38,6 +41,12 @@ We've published new documentation describing how to use D1's support for [genera
 You can now view [per-database metrics](/d1/platform/metrics-analytics/) via both the [Cloudflare dashboard](https://dash.cloudflare.com/) and the [GraphQL Analytics API](/analytics/graphql-api/).
 
 D1 currently exposes read & writes per second, query response size, and query latency percentiles.
+
+## 2023-06-16
+
+### Generated columns documentation
+
+New documentation has been published on how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
 
 ## 2023-06-12
 

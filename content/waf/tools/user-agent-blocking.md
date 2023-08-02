@@ -44,11 +44,11 @@ Issue a `POST` request for the [Create a User Agent Blocking rule](/api/operatio
 For example:
 
 ```bash
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/ua_rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '{
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id/firewall/ua_rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Block Bad Bot web spider",
   "mode": "block",
   "configuration": {

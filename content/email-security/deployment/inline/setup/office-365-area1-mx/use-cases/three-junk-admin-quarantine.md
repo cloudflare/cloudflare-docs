@@ -9,7 +9,7 @@ updated: 2023-01-12
 
 # Deliver emails to the junk email folder and administrative quarantine
 
-In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the users’s junk email folder, and `Malicious`, `Spam`, and `Spoof` messages to the administrative quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages to the users’s junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ## Configure domains
 
@@ -29,4 +29,4 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 
 ## Create transport rules
 
-{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 Deliver to Junk Email folder`;;`SUSPICIOUS`, `BULK`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules.png;;`Area 1 User Quarantine Message`;;`MALICIOUS`, `SPAM`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-user-quarantine.png">}}
+{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 Deliver to Junk Email folder`;;`SUSPICIOUS`, `BULK`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules.png;;`Area 1 User Quarantine Message`;;`MALICIOUS`, `UCE`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-user-quarantine.png">}}
