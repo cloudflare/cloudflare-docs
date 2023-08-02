@@ -9,7 +9,7 @@ Use the [Cache API](/workers/runtime-apis/cache/) to store R2 objects in Cloudfl
 
 {{<Aside type="note">}}
 
-You will need to [connect a custom domain](/r2/buckets/public-buckets/) to your R2 bucket in order to use the Cache API. Cache API operations in the Cloudflare Workers dashboard editor, Playground previews, and any `*.workers.dev` deployments will have no impact.
+You will need to [connect a custom domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) to your Worker in order to use the Cache API. Cache API operations in the Cloudflare Workers dashboard editor, Playground previews, and any `*.workers.dev` deployments will have no impact.
 
 {{</Aside>}}
 
