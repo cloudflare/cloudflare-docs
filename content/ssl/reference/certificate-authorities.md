@@ -117,4 +117,17 @@ Due to sanctions imposed by the United States, DigiCert is legally prohibited or
 {{<render file="_caa-records-definition.md">}}
 <br/>
 
-{{<render file="_caa-records-added-by-cf.md">}}
+If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf. If you need to add CAA records, refer to the [Add CAA records page](/ssl/edge-certificates/caa-records/).
+
+You can see the CAA record content for each CA in the following table:
+
+{{<table-wrap>}}
+
+| Certificate Authority | CAA record content                       |
+|-----------------------|------------------------------------------|
+| Let's Encrypt         | `letsencrypt.org`                        |
+| Google Trust Services | `pki.goog; cansignhttpexchanges=yes`     |
+| DigiCert              | `digicert.com; cansignhttpexchanges=yes` |
+| Sectigo               | `sectigo.com`                            |
+
+{{</table-wrap>}}

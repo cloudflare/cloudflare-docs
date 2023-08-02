@@ -38,7 +38,7 @@ If you are on Business or Enterprise plan, you can [upload a certificate](/ssl/e
 
 ### What CAA records do I need in order to allow issuance from Cloudflare CAs?  
 
-You can find CAA records associated with every Cloudflare CA under the [`dig` example for CAA records](/ssl/reference/certificate-authorities/#caa-records). If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf.
+You can find CAA records associated with every Cloudflare CA in the [certificate authorities reference page](/ssl/reference/certificate-authorities/). If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf.
 
 ### I am missing the CAs that Cloudflare uses in my trust store. What should I do?  
 
