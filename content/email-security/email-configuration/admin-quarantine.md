@@ -63,4 +63,4 @@ From **Admin Quarantine**, you can also release quarantined emails by selecting 
 
 6. (Optional) You can also release multiple messages, by selecting the box next to each message you want to release.
 
-After being released, Area 1 forwards the original email messages to their destination. These emails should arrive at your inbox from the original sender, not Area 1. 
+{{<Aside type="note">}}After being released from quarantine, Area 1 forwards the original email messages to their destination. These emails should arrive at your inbox from the original sender, not Area 1.{{</Aside>}}
