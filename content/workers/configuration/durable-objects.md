@@ -179,7 +179,7 @@ The fetch handler in the example below implements the Worker that talks to the D
 
 We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) for convenience, but it is not required.
 
-ES Modules differ from regular JavaScript files in that they have imports and exports. [As shown earlier](/workers/configuration/durable-objects/#writing-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
+ES Modules differ from regular JavaScript files in that they have imports and exports. [As shown earlier](/workers/configuration/durable-objects/#write-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
 ```js
 // In modules-syntax workers, you use `export default` to export your script's
@@ -600,7 +600,7 @@ To solve this you can either do less work per request, or send fewer requests, f
 
 #### Error: Your account is generating too much load on Durable Objects. Please back off and try again later.
 
-There is a limit on how quickly you can [create new objects or lookup different existing objects](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
+There is a limit on how quickly you can [create new objects or lookup different existing objects](/workers/runtime-apis/durable-objects/#obtain-an-object-stub). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
 
 #### Error: Durable Object reset because its code was updated.
 
