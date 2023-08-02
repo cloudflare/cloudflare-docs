@@ -8,7 +8,7 @@ weight: 13
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
-For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed to connect.
+For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 ([if enabled](/ssl/edge-certificates/additional-options/tls-13/)) will be allowed to connect.
 
 {{<Aside type="note">}}
 
@@ -54,7 +54,7 @@ This is currently only available via the API:
 
 ## Test supported TLS versions
 
-To test supported TLS versions, attempt a request to your website or application while specifying a TLS version. 
+To test supported TLS versions, attempt a request to your website or application while specifying a TLS version.
 
 For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
 

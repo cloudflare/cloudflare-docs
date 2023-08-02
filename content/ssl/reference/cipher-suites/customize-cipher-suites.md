@@ -8,7 +8,7 @@ meta:
 
 # Customize cipher suites
 
-With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific cipher suites.
+With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific cipher suites.
 
 This process will not lead to any downtime in your SSL/TLS protection.
 
@@ -17,8 +17,8 @@ This process will not lead to any downtime in your SSL/TLS protection.
 Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
-- [Per-hostname](**INSERT API LINK**)
-- [Custom hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
+- [Per-hostname](**INSERT API LINK**) (regular zones only)
+- [Custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) (Cloudflare for SaaS zones only)
 
 {{<Aside type="warning">}}
 
@@ -40,4 +40,6 @@ To specify certain cipher suites, include an array of applicable cipher suites u
 
 ## Reset to default values
 
-To reset to the default cipher suites, send an empty array in the `value` field.
+For zones and custom hostnames, to reset to the default cipher suites, send an empty array in the `value` field.
+
+For specific hostname settings, use the [DELETE command](**INSERT LINK**).
