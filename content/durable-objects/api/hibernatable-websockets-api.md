@@ -32,7 +32,6 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 {{</Aside>}}
 
-
 ## WebSocket extensions
 
 {{<definitions>}}
@@ -46,7 +45,6 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 - {{<code>}}webSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
 
   - Retrieves the most recent value passed to `serializeAttachment`, or null if none exists.
-
 
 ## `state` methods for WebSockets
 

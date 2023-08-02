@@ -14,7 +14,6 @@ This guide will instruct you through:
 
 {{<render file="_prereqs.md" productFolder="workers">}}
 
-
 ## 1. Enable Durable Objects in the dashboard
 
 To enable Durable Objects, you will need to purchase the Workers Paid plan:
