@@ -1,7 +1,7 @@
 ---
-title: Verify device connectivity
+title: Verify local connectivity
 pcx_content_type: learning-unit
-weight: 1
+weight: 4
 layout: learning-unit
 ---
 

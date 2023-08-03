@@ -6,18 +6,22 @@
       },
       {
           "folder": "cybersafe",
-          "uid": "cybersafe-getting-started"
+          "uid": "cybersafe-account-creation"
       },
       {
+        "folder": "cybersafe",
+        "uid": "cybersafe-gateway-onboarding"
+      },      
+      {
           "folder": "cybersafe",
-          "uid": "cybersafe-configuration"
-      }    
+          "uid": "cybersafe-area1-onboarding"
+      }   
   ],
   "title": "Project Cybersafe Schools",
   "uid": "cybersafe",
   "path": "/learning-paths/cybersafe/",
   "priority": 5,
-  "description": "Prevent children from accessing obscene or harmful content over the internet.\n\nSee [Project Cybersafe Schools](https://www.cloudflare.com/cybersafe-schools/) to learn more and apply to the program.",
+  "description": "Prevent children from accessing obscene or harmful content over the internet.See [Project Cybersafe Schools](https://www.cloudflare.com/cybersafe-schools/) to apply.",
   "products": [
     "Cloudflare Gateway",
     "WARP",

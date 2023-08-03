@@ -1,5 +1,5 @@
 ---
-title: What is Project Cybersafe Schools and CIPA?
+title: Project Cybersafe Schools and CIPA
 pcx_content_type: learning-unit
 weight: 2
 layout: learning-unit

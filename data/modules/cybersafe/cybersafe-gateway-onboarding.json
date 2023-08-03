@@ -1,0 +1,13 @@
+{
+    "summary": "Now that your Cloudflare environment is ready and you have an understanding of the technical concepts involved, it's time to test and onboarding your DNS traffic.",
+    "abstract": "",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "network admin"
+    ],
+    "type": "module",
+    "title": "Onboarding your DNS Traffic",
+    "url": "/learning-paths/modules/cybersafe/cybersafe-gateway-onboarding/"
+}

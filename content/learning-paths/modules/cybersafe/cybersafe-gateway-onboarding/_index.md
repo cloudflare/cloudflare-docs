@@ -1,10 +1,10 @@
 ---
-title: Getting started
+title: Onboarding Cloudflare Gateway
 pcx_content_type: overview
 weight: 1
 layout: learning-module
 ---
 
-# Getting started
+# Onboarding Cloudflare Gateway
 
 {{<learning-module-summary>}}
