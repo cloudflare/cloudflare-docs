@@ -50,7 +50,10 @@ Use the [Change Minimum TLS Version setting](/api/operations/zone-settings-chang
 
 This is currently only available via the API:
 
-(**INSERT API LINKS**)
+* Use the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint to specify different values for `min_tls_version`.
+* Use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint to clear previously defined `min_tls_version` setting.
+
+Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
 ## Test supported TLS versions
 

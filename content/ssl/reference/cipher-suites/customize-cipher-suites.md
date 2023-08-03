@@ -12,21 +12,23 @@ With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-
 
 This process will not lead to any downtime in your SSL/TLS protection.
 
+{{<Aside type="note">}}
+
+Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
+
+{{</Aside>}}
+
 ## Setup
 
 Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
-- [Per-hostname](**INSERT API LINK**) (regular zones only)
+- [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
 - [Custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) (Cloudflare for SaaS zones only)
-
-{{<Aside type="warning">}}
 
 When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
 
-{{</Aside>}}
-
-Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
+Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
 ## Cipher suite values
 
@@ -42,4 +44,4 @@ To specify certain cipher suites, include an array of applicable cipher suites u
 
 For zones and custom hostnames, to reset to the default cipher suites, send an empty array in the `value` field.
 
-For specific hostname settings, use the [DELETE command](**INSERT LINK**).
+For specific hostname settings, use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint.
