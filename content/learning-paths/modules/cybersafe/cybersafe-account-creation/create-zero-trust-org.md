@@ -8,5 +8,3 @@ layout: learning-unit
 To set up a Zero Trust organization:
 
 {{<render file=_choose-team-name.md productFolder="cloudflare-one">}}
-
-Welcome to Cloudflare Zero Trust!
