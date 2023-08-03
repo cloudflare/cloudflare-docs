@@ -20,7 +20,7 @@ The `wrangler dev` command opens a tunnel from your local development environmen
 
 In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker code, and that the file extension is `.mjs` instead of `.js` if using ES modules syntax.
 
-### Cannot apply `--delete-class` migration to class
+### Cannot apply `--delete-class` migration to class.
 
 When deleting a migration using `wrangler deploy --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
 
@@ -38,7 +38,7 @@ To solve this error, you can either do less work per request, or send fewer requ
 
 There is a limit on how quickly you can [create new Durable Objects or lookup different existing Durable Objects](/durable-objects/how-to/create-durable-object-stubs/). Those lookups are usually cached, meaning attempts for the same set of recently accessed Durable Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
 
-### Durable Object reset because its code was updated
+### Durable Object reset because its code was updated.
 
 Reset in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
 

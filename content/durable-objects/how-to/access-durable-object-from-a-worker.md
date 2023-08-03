@@ -6,9 +6,9 @@ weight: 16
 
 # Access a Durable Object from a Worker
 
-To access a Durable Object from a Worker, you must first create a Durable Object binding in your Worker project's `wrangler.toml` file. The binding is configured to use a particular class and controls access to instances of that class.
+To access a Durable Object from a Worker, you must first create a [Durable Object binding](/workers/configuration/bindings/#durable-object-bindings) in your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular class and controls access to instances of that class.
 
-Durable Object bindings for communication between a Worker and a Durable Object.
+Durable Object bindings allow for communication between a Worker and a Durable Object.
 
 If you are using [Wrangler environments](/workers/wrangler/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis.
 
@@ -26,12 +26,9 @@ All three methods will allow you to create Durable Object IDs.
 
 ### Generate IDs randomly
 
-The following code gives you a new Durable Object ID. You can add this code in your `index.js` file.
+The following code gives you a new Durable Object ID. Add the following to your Worker code.
 
 ```js
----
-filename: index.js
----
 let id = OBJECT_NAMESPACE.newUniqueId();
 ```
 The `newUniqueId()` method on a Durable Object namespace creates a new Durable Object ID randomly. `newUniqueId()` will never return the same ID twice. Thus, it is guaranteed that the Durable Object does not yet exist and has never existed at the time the method returns.
@@ -57,9 +54,6 @@ When you construct a new unique ID, the system knows that the same ID will not b
 The following code allows you to use a name (which is a `String`) to extract the ID of your Durable Object. 
 
 ```js
----
-filename: index.js
----
 let id = OBJECT_NAMESPACE.idFromName(name);
 ```
 
@@ -85,9 +79,6 @@ After the Durable Object has been accessed the first time, location information 
 ### Parse previously-created IDs from strings
 
 ```js
----
-filename: index.js
----
 let id = OBJECT_NAMESPACE.idFromString(hexId);
 ```
 
@@ -109,9 +100,6 @@ This method will throw an exception if it is passed an ID that was not originall
 Construct the stub for the Durable Object using the ID. A stub is a client Durable Object used to send messages to the Durable Object.
 
 ```js
----
-filename: index.js
----
 let stub = env.EXAMPLE_CLASS.get(id);
 ```
 
@@ -124,8 +112,5 @@ The `fetch()` method takes a [`Request`](/workers/runtime-apis/request/) as the 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
 
 ```js
----
-filename: index.js
----
 let response = await stub.fetch(request);
 ```

@@ -10,9 +10,9 @@ Durable Object metrics are powered by GraphQL.
 
 The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. 
 
-You can use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspection/) to get information on the fields exposed by each data sets.
+Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspection/) to get information on the fields exposed by each data sets.
 
-## Example of GraphQL query for Durable Objects
+## Example GraphQL query for Durable Objects
 
 ```js
   viewer {

@@ -6,7 +6,9 @@ weight: 16
 
 # Environments
 
-If you are using Wrangler [environments](/workers/wrangler/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. 
+[Wrangler](/workers/wrangler/install-and-update/) allows you to deploy the same Worker application with different configuration for each [environment](/workers/wrangler/environments/).
+
+If you are using Wrangler environments, you must specify any [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings) you wish to use on a per-environment basis. 
 
 Durable Object bindings are not inherited. For example, you can define an environment named `staging` as below:
 

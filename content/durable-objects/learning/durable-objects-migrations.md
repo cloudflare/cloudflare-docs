@@ -7,7 +7,14 @@ title: Durable Objects migrations
 
 A migration is a mapping process from a class name to a runtime state.
 
-You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing Durable Objects class. This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
+You must initiate a migration process when you:
+
+* Create a new Durable Object class.
+* Rename a Durable Object class.
+* Delete a Durable Object class.
+* Transfer an existing Durable Objects class.
+
+This process informs the Workers runtime of the changes and provides it with instructions on how to deal with those changes.
 
 {{<Aside type="note">}}
 
@@ -17,7 +24,10 @@ Updating code for an existing Durable Object class does not require a migration.
 
 The most common migration performed is a new class migration, which informs the runtime that a new Durable Object class is being uploaded.
 
-Migrations can also be used for transferring stored data between two Durable Object classes. Rename migrations are used to transfer stored Durable Objects between two Durable Object classes in the same Worker script. Transfer migrations are used to transfer stored Durable Objects between two Durable Object classes in different scripts.
+Migrations can also be used for transferring stored data between two Durable Object classes:
+
+* Rename migrations are used to transfer stored Durable Objects between two Durable Object classes in the same Worker code file. 
+* Transfer migrations are used to transfer stored Durable Objects between two Durable Object classes in different Worker code files.
 
 The destination class (the class that stored Durable Objects are being transferred to) for a rename or transfer migration must be exported by the deployed Worker.
 
@@ -25,19 +35,26 @@ The destination class (the class that stored Durable Objects are being transferr
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data.
 
-After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their Durable Object binding configuration in the `wrangler.toml` file for their next deployment.
 
 {{</Aside>}}
 
 Migrations can also be used to delete a Durable Object class and its stored Durable Objects.
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="warning" header="Delete migrations">}}
 
 Running a delete migration will delete all Durable Object instances associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting.
 
 {{</Aside>}}
 
 ### Durable Object migrations in `wrangler.toml`
+
+A migration is a mapping process from a class name to a runtime state. You perform a migration when:
+
+* Creating a new Durable Object class.
+* Renaming an existing Durable Object class.
+* Deleting an existing Durable Object class.
+* Transferring an existing Durable Object class.
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. 
 
@@ -47,7 +64,7 @@ Migration tags are treated like unique names and are used to determine which mig
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
-All migrations are applied at deployment. Each migration can only be applied once per [environment](/workers/wrangler/environments/).
+All migrations are applied at deployment. Each migration can only be applied once per [environment](/durable-objects/platform/environments/).
 
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 
@@ -84,7 +101,7 @@ Note that `.toml` files do not allow line breaks in inline tables (the `{key = "
 
 ### Durable Object migrations through Wrangler CLI
 
-It is possible to define a migration through extra arguments to the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
+It is possible to define a migration through extra arguments to the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command. When taking this route, any migrations listed in the [`wrangler.toml`](/workers/wrangler/configuration/#migrations) configuration file are ignored.
 
 You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler deploy` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
 

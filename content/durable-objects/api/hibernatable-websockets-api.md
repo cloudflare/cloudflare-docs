@@ -6,7 +6,7 @@ weight: 16
 
 {{<beta>}}Hibernatable WebSockets API{{</beta>}}
 
-The Hibernatable WebSockets API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/alarms-in-durable-objects/), to be removed from memory while keeping its WebSockets connected ("hibernation").
+The Hibernatable WebSockets API allows a Durable Object that is not currently running an event handler (such as handling a WebSocket message, HTTP request, or [alarms](/durable-objects/api/alarms-in-durable-objects/)) to be removed from memory while keeping its WebSockets connected ("hibernation").
 
 Durable Objects WebSockets support includes:
 
@@ -40,11 +40,11 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
   - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
   
-  - If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) and pass the corresponding key to this method so it can be retrieved later.
+  - If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2,048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) and pass the corresponding key to this method so it can be retrieved later.
 
 - {{<code>}}webSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
 
-  - Retrieves the most recent value passed to `serializeAttachment`, or null if none exists.
+  - Retrieves the most recent value passed to `serializeAttachment`, or `null` if none exists.
 
 ## `state` methods for WebSockets
 
@@ -70,7 +70,7 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
   - `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the WebSocket from hibernation, preventing unnecessary duration charges.
 
-  - Both `request` and `response` are limited to 2048 characters each.
+  - Both `request` and `response` are limited to 2,048 characters each.
 
   - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Setting `state.setWebSocketAutoResponse()` without any argument will stop an actor from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
 

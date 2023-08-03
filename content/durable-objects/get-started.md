@@ -18,7 +18,7 @@ This guide will instruct you through:
 
 To enable Durable Objects, you will need to purchase the Workers Paid plan:
 
- 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+ 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
  2. Go to **Workers & Pages** > **Plans**. 
  3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
@@ -154,13 +154,20 @@ filename: wrangler.toml
 [[durable_objects.bindings]]
 name = "EXAMPLE_CLASS"
 class_name = "DurableObjectExample"
+
+# or
+
+[durable_objects]
+bindings = [
+  { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" }
+]
 ```
 
 The `[[durable_objects.bindings]]` section contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/workers/wrangler/environments/) Worker script.
+  - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/platform/environments/) Worker script.
 
 ## 6. Configure Durable Object classes with migrations
 
@@ -193,7 +200,7 @@ $ wrangler dev
 To deploy your Durable Object Worker:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 Once deployed, you should be able to see your newly created Durable Object Worker on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.

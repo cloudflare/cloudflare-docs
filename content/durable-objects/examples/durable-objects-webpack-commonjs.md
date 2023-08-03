@@ -45,4 +45,4 @@ module.exports = class Counter {
   }
 }
 ```
-You can find the full code [on GitHub](https://github.com/cloudflare/durable-objects-webpack-commonjs). 
+Find the [full code for this example on GitHub](https://github.com/cloudflare/durable-objects-webpack-commonjs).

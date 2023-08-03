@@ -46,8 +46,6 @@ Learn how to schedule the Object to be waken up at a time in the future.
 
 {{</feature>}}
 
-
-
 ---
 
 ## Related products
