@@ -1,7 +1,7 @@
 ---
 title: Testing in your browser
 pcx_content_type: learning-unit
-weight: 5
+weight: 6
 layout: learning-unit
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Connection methods
 pcx_content_type: learning-unit
-weight: 3
+weight: 4
 layout: learning-unit
 ---
 
