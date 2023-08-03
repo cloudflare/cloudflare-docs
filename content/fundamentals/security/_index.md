@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Security
-weight: 7
+title: Security settings
+weight: 9
 ---
 
-# Security
+# Security settings
 
 {{<directory-listing>}}

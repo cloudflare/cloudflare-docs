@@ -9,7 +9,7 @@ When deploying your Pages project, you may wish to point custom domains (or subd
 
 {{<Aside type="note" header="Purging the cache">}}
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/#purge-everything) in the dashboard to ensure the latest build gets served.
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) in the dashboard to ensure the latest build gets served.
 
 {{</Aside>}}
 
@@ -55,7 +55,7 @@ If your site is already managed as a Cloudflare zone, the CNAME record will be a
 
 {{<Aside type="note">}}
 
-To ensure a custom domain is added successfully, you must go through the [Add a custom domain](#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+To ensure a custom domain is added successfully, you must go through the [Add a custom domain](#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-522-connection-timed-out).
 
 {{</Aside>}}
 

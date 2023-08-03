@@ -16,7 +16,7 @@ At the moment, Cloudflare does not support packet fragmentation for UDP packets.
 
 Minecraft Java Edition is supported but Minecraft Bedrock Edition is not supported.
 
-## Listening on ports configuration
+## Listen on ports configuration
 
 By default, Spectrum is configured to listen on all ports, which can raise concerns for security auditors. However, it is important to note that Spectrum will only proxy connections from edge ports that are specifically configured within Cloudflare.
 

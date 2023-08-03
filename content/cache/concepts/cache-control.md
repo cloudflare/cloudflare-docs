@@ -34,7 +34,7 @@ Directives can be broken down into four groups: cacheability, expiration, revali
 Cacheability refers to whether or not a resource should enter a cache, and the directives below indicate a resource’s cacheability.
 
 - `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
-- `private` — Indicates the response message is intended for a single user (e.g. a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
+- `private` — Indicates the response message is intended for a single user (for example, a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
 - `no-store` — Indicates any cache (i.e., a client or proxy cache) must not store any part of either the immediate request or response.
 
 ### Expiration
@@ -73,8 +73,8 @@ The `stale-if-error` directive is ignored if [Always Online](/cache/how-to/alway
 Additional directives that influence cache behavior are listed below.
 
 - `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload.
-- `vary` — Cloudflare does not consider vary values in caching decisions. Nevertheless, vary values are respected when [Vary for images](/cache/advanced-configuration/vary-for-images/) is configured and when the vary header is [`vary: accept-encoding`](https://support.cloudflare.com/hc/en-us/articles/200168396-What-will-Cloudflare-compress-).
-- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g., `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
+- `vary` — Cloudflare does not consider vary values in caching decisions. Nevertheless, vary values are respected when [Vary for images](/cache/advanced-configuration/vary-for-images/) is configured and when the vary header is [`vary: accept-encoding`](/speed/optimization/content/brotli/).
+- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (for example, `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
 
 ## Origin Cache-Control behavior
 

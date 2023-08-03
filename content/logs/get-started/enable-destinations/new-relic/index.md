@@ -15,21 +15,11 @@ Cloudflare Logpush supports pushing logs directly to New Relic via the Cloudflar
 
 To enable a Logpush service to New Relic via the dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+{{<render file="_enable-logpush-job.md">}}
 
-2.  Select the Enterprise account or domain you want to use with Logpush.
+7. In **Select a destination**, choose **New Relic**.
 
-3.  Go to **Analytics & Logs** > **Logs**.
-
-4.  Select **Add Logpush job** and a modal window will open.
-
-5.  Select the dataset you want to push to a storage service.
-
-6.  Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7.  Select **New Relic**.
-
-8.  Enter the **New Relic Logs Endpoint**:
+8. Enter the **New Relic Logs Endpoint**:
 
     US: `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 
@@ -37,9 +27,9 @@ To enable a Logpush service to New Relic via the dashboard:
 
     Use the region that matches the one that has been set on your New Relic account. The `<NR_LICENSE_KEY>` field can be found on the New Relic dashboard. It can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
 
-9.  Select **Validate access**.
+9. Select **Validate access**.
 
-10.  Select **Save and Start Pushing** to finish enabling Logpush.
+10. Select **Save and Start Pushing** to finish enabling Logpush.
 
 Once connected, Cloudflare lists New Relic as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 

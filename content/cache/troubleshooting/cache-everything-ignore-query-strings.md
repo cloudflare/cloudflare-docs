@@ -8,12 +8,13 @@ title: Cache Everything while ignoring query strings
 
 There might be times when you wish to cache content resources that are not in the list of file extensions that Cloudflare [caches by default](/cache/concepts/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (`form.html`) associated with the following URLs is cached in the Cloudflare edge network:
 
-`https://www.example.com/support/form.html?param1=abc&param2=def`
+```txt
+https://www.example.com/support/form.html?param1=abc&param2=def
 
-`https://www.example.com/support/form.html?param1=ghi&param2=jkl`
+https://www.example.com/support/form.html?param1=ghi&param2=jkl
 
-`https://www.example.com/support/form.html?param1=stu&param2=vwx`
-
+https://www.example.com/support/form.html?param1=stu&param2=vwx
+```
 ___
 
 ## Page Rules limitations
@@ -77,6 +78,6 @@ ___
 
 ## Related resources
 
--   [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427)
+-   [Understanding and Configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)
 -   [Using Custom Cache Keys](/cache/how-to/cache-keys/)
 -   [How do I use Cache Everything with Cloudflare?](/cache/concepts/customize-cache/)

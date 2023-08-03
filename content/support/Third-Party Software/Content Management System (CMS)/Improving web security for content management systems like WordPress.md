@@ -6,10 +6,6 @@ title: Improving web security for content management systems like WordPress
 
 # Improving web security for content management systems like WordPress
 
-
-
-## Overview
-
 Content Management Systems make it easy to create, update, and manage content. However, they can also introduce vulnerabilities that may lead to server compromise and data theft.
 
 There are many Cloudflare features that can be used for preventing such attacks, but they can also disrupt normal administrative processes such as logging in or uploading images. With proper configuration, you can protect your site from attacks without losing important functionality.

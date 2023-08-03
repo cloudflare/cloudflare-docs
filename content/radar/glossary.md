@@ -10,13 +10,13 @@ This page provides a list of terms and concepts to help you understand Radar and
 
 ## Application-level Attacks
 
-Layer 7 attack information based on requests that were mitigated. Including the most frequent mitigation techniques as well as trending of mitigated request volume over time.
+Layer 7 attack information based on mitigated requests, including the most frequent mitigation techniques as well as the trend of mitigated request volume over time. Selected location or ASN is the source of the mitigated requests.
 
 ## Autonomous Systems
 
 The Internet is a network of networks, and autonomous systems are the networks that make up the Internet. More specifically, an autonomous system (AS) is a large network or group of networks that has a unified routing policy - the process by which a path through one or more networks is chosen.
 
-Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASs, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more [here](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
+Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASes, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more [here](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
 
 ## BGP Announcements
 
@@ -37,6 +37,26 @@ In Cloudflare Radar, you can inspect the detected route leak events on the corre
 * `Vantage Points`: The number of route collectors that observed a route leak event.
 
 Learn more about our route leak detection system design and usages  in [How we detect route leaks and our new Cloudflare Radar route leak service](https://blog.cloudflare.com/route-leak-detection-with-cloudflare-radar/) blog post.
+
+## BGP Origin Hijacks
+
+[BGP origin hijack](https://en.wikipedia.org/wiki/bgp_hijacking) is one type of BGP anomaly where networks falsely announce
+ownership for groups of IP addresses (prefixes) that they do not own, control, or route to. A BGP origin hijack can redirect Internet traffic to the hijacker from its
+legitimate destination, causing data loss with potential leak of private/confidential information.
+
+In Cloudflare Radar, you can inspect the detected BGP origin hijack events in the "BGP Origin Hijacks" table. The columns
+of the table are defined as follows:
+
+* `ID`: Event ID, clickable and navigates to the event details page.
+* `Detected Origin`: The AS that originated the prefixes at the time of detection, potentially being a BGP hijacker.
+* `Expected Origin(s)`: The AS(es) that are expected to originate the corresponding prefixes based on various evidences.
+* `Start Time (UTC)` and `Duration`: The detected timestamp in UTC with a human-readable time duration for how long the event lasted. Ongoing events will not have a duration value, indicated by the `--` sign.
+* `BGP Messages`: The number of BGP messages that contain the detected anomaly.
+* `Prefixes`: The prefixes hijacked during the event, showing only one full prefix due to table space limitation.
+* `Confidence`: The level of confidence that we have on the event being a true hijacks. Values can be `High`, `Medium`, or `Low`.
+* `Tags`: The relevant evidence presented as short tags, presenting key facts we compiled using additional data sources, such as RPKI validation results or network relationship.
+
+You can also access the detection result programmatically via our [public API](https://developers.cloudflare.com/api/operations/radar-get-bgp-hijacks-events) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
 
 ## Certificates
 
@@ -65,13 +85,15 @@ In some cases, a domain may be miscategorized. For example, a social media site 
 
 Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
+Trending domains are domains which are currently experiencing an increase in popularity. Domains Trending Today are domains spiking in popularity, reflecting increased interest potentially related to a particular event or a topic. Domains Trending This Week are domains that have steadily grown in popularity, reflecting an increase of their user base over the week.
+
 ## Geographical Distribution
 
 Countries contributing traffic to this AS, and their relative contribution as percentage of the total AS traffic seen by Cloudflare.
 
 ## Internet Outages
 
-Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government direction. Outages may be sub-national or national in geographic scope, or may just impact one or more ASNs.
+Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government direction. Outages may be sub-national or national in geographic scope, or may impact one or more ASNs.
 
 ## Internet traffic trends
 
@@ -94,7 +116,11 @@ The IQI methodology requires a minimum number of measurements to generate estima
 
 ## Network-level DDoS Attacks
 
-Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range.
+Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
+
+Industry categories include business types grouped by their primary activities, such as information technology and services, retail, or telecommunications. Vertical categories are high-level groupings that incorporate related industries, such as the "Internet and Telecom" vertical, which includes industries such as "Internet" and "Telecommunications".
+
+Network-level DDoS attacks graphs are based on traffic measured in bytes.
 
 ## Traffic type filter
 

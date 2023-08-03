@@ -15,6 +15,12 @@ This will add the specified endpoints to your list of managed endpoints. You can
 
 Cloudflare will start collecting [performance data](/api-shield/management-and-monitoring/#endpoint-performance-analysis) on your endpoint when you save an endpoint.
 
+{{<Aside type="note">}}
+
+When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will not be populated.
+
+{{</Aside>}}
+
 ## Access
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.

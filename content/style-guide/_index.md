@@ -16,3 +16,5 @@ Understanding Cloudflare style is the first step in being able to write, review,
 + A seamless customer experience across Cloudflare products
 + Minimized customer confusion
 + Simplified translation process
+
+Visit the [Cloudflare Docs](https://github.com/cloudflare/cloudflare-docs) repository to contribute to developer documentation.

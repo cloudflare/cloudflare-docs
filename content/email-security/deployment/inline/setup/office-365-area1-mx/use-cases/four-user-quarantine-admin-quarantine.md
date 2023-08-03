@@ -4,11 +4,12 @@ pcx_content_type: tutorial
 weight: 4
 meta:
     title: User managed quarantine and administrative quarantine - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the user managed quarantine and administrative quarantine
 
-In this tutorial, you will learn to deliver `Spam` and `Spoof` messages to the user managed quarantine, and `Malicious` messages to the administrative quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the user managed quarantine, and `MALICIOUS` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ## Configure domains
 
@@ -60,4 +61,4 @@ To configure anti-spam policies:
 
 ## Create transport rules
 
-{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 User Quarantine Message`;;`SPAM`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Area 1 User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}
+{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 User Quarantine Message`;;`UCE`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Area 1 User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}

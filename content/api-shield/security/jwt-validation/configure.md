@@ -70,12 +70,13 @@ Refer to the example below to view the configuration using information required 
 
 Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
-Example using cURL:
-
-```json
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
--H 'Content-Type: application/json' \
--d '{
+```bash
+---
+header: Example using cURL
+---
+curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
+--header "Content-Type: application/json" \
+--data '{
     "token_type": "jwt",
     "title": "example title",
     "description": "example description",
@@ -127,12 +128,13 @@ It is highly recommended to validate the output of the API call to check that th
 
 Use the `PUT` command to update keys. 
 
-Example with cURL:
-
-```json
-curl -X PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}/credentials' \
--H 'Content-Type: application/json' \
--d '{
+```bash
+---
+header: Example using cURL
+---
+curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}/credentials' \
+--header 'Content-Type: application/json' \
+--data '{
         "keys": [
             {
                 "kty": "EC",
@@ -168,12 +170,13 @@ You can only modify the following fields with `PATCH`: `title`, `description`, `
 
 {{</Aside>}}
 
-Example with cURL: 
-
-```json
-curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}' \
--H 'Content-Type: application/json' \
--d '{
+```bash
+---
+header: Example using cURL
+---
+curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}" \
+--header "Content-Type: application/json" \
+--data '{
     "description": "example description",
     "allow_absent_token": false,
 }'

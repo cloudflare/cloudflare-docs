@@ -5,6 +5,7 @@ weight: 1
 layout: single
 meta:
    title: Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
+updated: 2023-01-12
 ---
 
 # Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
@@ -171,7 +172,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
     </div>
 
-{{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, `Malicious` and `Spam` detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
+{{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, `MALICIOUS` and `SPAM` detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
 
 ### Manage the Admin Quarantine
 

@@ -199,7 +199,7 @@ Now let’s **create a route 53 domain** for the cluster. Kops uses DNS for di
 $ aws route53 create-hosted-zone --name k8saws.usualwebsite.com --caller-reference 1
 ```
 
-It will automatically create four name server (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
+It will automatically create four nameserver (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
 
 As Authoritative DNS for my domain usualwebsite.com I am using Cloudflare DNS. Just simply [add four NS records](/dns/manage-dns-records/how-to/create-dns-records/) under your DNS provider.
 
@@ -370,7 +370,7 @@ ___
 
 ## Argo Tunnel Ingress Controller
 
-In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
+In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
 
 ### **Cloudflare TunnelIngress**
 

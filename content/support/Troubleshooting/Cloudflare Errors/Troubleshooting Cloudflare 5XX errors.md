@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 title: Troubleshooting Cloudflare 5XX errors
-source: 
+source:
 ---
 
 # Troubleshooting Cloudflare 5XX errors – Cloudflare Help Center
@@ -33,7 +33,7 @@ However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in
 
 1.  Your domain name
 2.  The time and timezone of the 500 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 500 error was observed (replace _www.example.com_ with your actual domain and host name)
+3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 500 error was observed (replace _www.example.com_ with your actual domain and hostname)
 
 {{<Aside type="note">}}
 If you observe blank or white pages when visiting your website, confirm
@@ -80,8 +80,8 @@ If the error does not mention “cloudflare,” contact your hosting provider fo
 To avoid delays processing your inquiry, provide these required details to [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476):
 
 1.  Time and timezone the issue occurred.
-2.  URL that resulted in the HTTP 502 or 504 response (for example: _https://www.example.com/images/icons/image1.png_)
-3.  Output from browsing to _www.example.com/cdn-cgi/trace_ (replace _www.example.com_ with the domain and host name that caused the HTTP 502 or 504 error)
+2.  URL that resulted in the HTTP 502 or 504 response (for example: `https://www.example.com/images/icons/image1.png`)
+3.  Output from browsing to `<YOUR_DOMAIN>/cdn-cgi/trace`.
 
 ___
 
@@ -95,11 +95,11 @@ HTTP error 503 occurs when your origin web server is overloaded. There are two p
 
 -   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
 
-**Resolution**: A connectivity issue occured in a Cloudflare data center. Provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
+**Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the following information:
 
 1.  Your domain name
 2.  The time and timezone of the 503 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 503 error was observed (replace _www.example.com_ with your actual domain and host name)
+3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 503 error was observed (replace _www.example.com_ with your actual domain and hostname)
 
 ___
 
@@ -111,10 +111,8 @@ Error 520 occurs when the origin server returns an empty, unknown, or unexpected
 
 {{<Aside type="note">}}
 A quick workaround while further investigating 520 errors is to either
-make the record
-[DNS-only](/dns/manage-dns-records/reference/proxied-dns-records)
-in the Cloudflare **DNS** app or [temporarily pause
-Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753).
+make the record [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records)
+in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
 {{</Aside>}}
 
 [Contact your hosting provider or site administrator](#h_cf28c038-16c1-4841-a85f-f905240aaebe) and request a review of your origin web server error logs for crashes and to check for these common causes:
@@ -135,10 +133,10 @@ If 520 errors continue after contacting your hosting provider or site administra
 
 -   Full URL(s) of the resource requested when the error occurred
 -   Cloudflare **cf-ray** from the 520 error message
--   Output from _http://www.example.com/cdn-cgi/trace_ (replace _www.example.com_ with your hostname and domain where the 520 error occurred)
--   Two [HAR files](https://support.cloudflare.com/hc/articles/203118044):
+-   Output from `http://<YOUR_DOMAIN>/cdn-cgi/trace`
+-   Two [HAR files](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file):
     -   one with Cloudflare enabled on your website, and
-    -   the other with [Cloudflare temporarily disabled](https://support.cloudflare.com/hc/articles/200169176).
+    -   the other with [Cloudflare temporarily disabled](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
 
 ___
 
@@ -185,7 +183,7 @@ If you are using [Cloudflare Pages](/pages/), verify that you have a custom doma
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](https://support.cloudflare.com/hc/articles/200172476):
 
--   An [MTR or traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
+-   An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
 -   Details from the hosting provider’s investigation such as pertinent logs or conversations with the hosting provider.
 
 ___
@@ -201,10 +199,10 @@ Error 523 occurs when Cloudflare cannot contact your origin web server. This typ
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator:
 
--   An [MTR or traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP from the logs of the origin web server.
+-   An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP from the logs of the origin web server.
 -   If you use [Railgun](/railgun/) (deprecated) via a Cloudflare Hosting Partner, [contact your hosting provider](#h_cf28c038-16c1-4841-a85f-f905240aaebe) to troubleshoot the 523 errors.
 -   If you manage your [Railgun](/railgun/) (deprecated) installation, provide the following:
-    -   A [traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) to your origin web server from your Railgun server.
+    -   A [traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) to your origin web server from your Railgun server.
     -   The most recent syslog file from your Railgun server.
 
 ___
@@ -259,12 +257,12 @@ updates](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
 
 **Resolution**
 
-[Contact your hosting provider](#h_cf28c038-16c1-4841-a85f-f905240aaebe) to exclude the following common causes at your origin web server:
+Contact your hosting provider to exclude the following common causes at your origin web server:
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](https://support.cloudflare.com/hc/articles/360026016272) support
--   The [cipher suites](/ssl/reference/cipher-suites/) accepted by Cloudflare does not match the cipher suites supported by the origin web server
+-   No [SNI](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support
+-   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="tip">}}
 If 525 errors occur intermittently, review the origin web server error
@@ -277,7 +275,7 @@ level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 
 **Additional checks**
 
--   Check if you have a certificate installed on your origin server. You can check [this article](https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
+-   Check if you have a certificate installed on your origin server. You can check [this article](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
 -   [Review the cipher suites](/ssl/reference/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
 -   Check your server's error logs from the timestamps you see 525s to ensure there are errors that could be causing the connection to be reset during the SSL handshake.
 
@@ -305,7 +303,7 @@ Request your server administrator or hosting provider to review the origin web s
 -   Certificate is signed by a [Certificate Authority](https://support.cloudflare.com/hc/articles/360026016272) (not self-signed)
 -   The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**
 -   Your origin web server accepts connections over port SSL port 443
--   [Temporarily pause Cloudflare](https://support.cloudflare.com/hc/articles/200169176) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace www.example.com with your hostname and domain) to verify no issues exists with the origin SSL certificate:
+-   [Temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 
 ![Screen showing an SSL certificate with no errors.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
@@ -414,6 +412,7 @@ ___
 
 HTTP error 530 is returned with an accompanying 1XXX error displayed. Search for the specific [1XXX error within the Cloudflare Help Center](https://support.cloudflare.com/hc/sections/200820298) for troubleshooting information.
 
+Enabling [Load Balancing](/load-balancing/) in China will cause a `530` error.
 ___
 
 ## Related resources
@@ -421,5 +420,5 @@ ___
 -   [Gathering information to troubleshoot site issues](https://support.cloudflare.com/hc/en-us/articles/203118044)
 -   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16)
 -   [Customizing Cloudflare error pages](https://support.cloudflare.com/hc/articles/200172706)
--   [MTR/Traceroute Diagnosis and Usage](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87)
+-   [MTR/Traceroute Diagnosis and Usage](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute)
 -   [Cloudflare Community Tips](https://community.cloudflare.com/tag/communitytip)

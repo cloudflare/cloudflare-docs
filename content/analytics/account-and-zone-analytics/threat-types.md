@@ -12,7 +12,7 @@ Cloudflare classifies the threats that it blocks or challenges. To help you unde
 
 The source of the request was not legitimate or the request itself was malicious. Users would receive a [1010 error page](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1010-the-owner-of-this-website-has-banned-your-access-based-on-your-browsers-signature) in their browser.
 
-Cloudflare's [Browser Integrity Check](/support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/) looks for common HTTP headers abused most commonly by spammers and denies them access to your page. It will also challenge visitors that do not have a user agent or a non standard user agent (also commonly used by bots, crawlers, or visitors).
+Cloudflare's [Browser Integrity Check](/fundamentals/security/browser-integrity-check/) looks for common HTTP headers abused most commonly by spammers and denies them access to your page. It will also challenge visitors that do not have a user agent or a non standard user agent (also commonly used by bots, crawlers, or visitors).
 
 ## Blocked hotlink
 
@@ -26,7 +26,7 @@ _Note: An interactive challenge page is a difficult to read word or set of numbe
 
 ## Browser challenge
 
-A bot gave an invalid answer to the JavaScript challenge (in most cases this won't happen, bots typically do not respond to the challenge at all, so "failed" JavaScript challenges would not get logged).
+A bot gave an invalid answer to the JavaScript challenge (in most cases this will not happen, bots typically do not respond to the challenge at all, so "failed" JavaScript challenges would not get logged).
 
 _Note: During a JavaScript challenge you will be shown an interstitial page for about five seconds while Cloudflare performs a series of mathematical challenges to make sure it is a legitimate human visitor._
 

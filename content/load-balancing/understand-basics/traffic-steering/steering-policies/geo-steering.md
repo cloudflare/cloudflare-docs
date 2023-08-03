@@ -64,9 +64,6 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 ### Country steering 
 
-{{<Aside type="note">}}
-Currently, China is not supported for Geo steering.{{</Aside>}}
-
 #### Via the dashboard
 
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
@@ -97,3 +94,9 @@ For help finding data center identifiers, refer to [this community thread](https
 Any data center not explicitly defined will fall back to using the corresponding `country_pool`, then `region_pool` mapping (if it exists), and finally to associated default pools.
 
 {{<Aside type="note">}}PoP steering is only available to Enterprise customers and only accessible via the API.{{</Aside>}}
+
+
+### Failover behavior
+
+A fallback pool will be used if there is only one pool in the same region and it is unavailable.
+If there are multiple pools in the same region, the order of the pools will be respected. For example, if the first pool is unavailable, the second pool will be used.

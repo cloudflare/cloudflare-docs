@@ -15,11 +15,7 @@ layout: single
 
 {{<render file="_disable_dnssec.md">}}
 
-{{<Aside type="note">}}
-
-If your previous provider allows you to add DNSKEY records on the zone apex and use these records in responses to DNS queries, refer to this [migration tutorial](/dns/dnssec/dnssec-active-migration/) to learn how to migrate a zone with DNSSEC enabled.
-
-{{</Aside>}}
+{{<render file="_dnssec-enabled-migration.md">}}
 
 ---
 
@@ -45,7 +41,7 @@ Cloudflare automatically adds **DS** records for domains using Cloudflare Regist
 
 ## Other DNSSEC setup options
 
-If you are using Cloudflare as your Secondary DNS provider and want to configure DNSSEC on your secondary zone(s), you have [three options](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#dnssec) depending on your setup.
+If you are using Cloudflare as your Secondary DNS provider and want to configure DNSSEC on your secondary zone(s), you have [three options](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/) depending on your setup.
 
 If you want to set up DNSSEC on a subdomain zone, refer to [Subdomain DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/).
 

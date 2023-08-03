@@ -10,11 +10,11 @@ Occasionally, you may want to upgrade or downgrade the plan associated with a sp
 
 ## Limitations
 
-If you decide to downgrade or remove a domain, Cloudflare does not issue refunds. Refer to our [billing policy](https://support.cloudflare.com/hc/articles/200170286) for more information.
+If you decide to downgrade or remove a domain, Cloudflare does not issue refunds. Refer to our [billing policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/) for more information.
 
 Upgrades are processed immediately, but downgrades are not processed until the end of the billing period. When downgrading, you are allowed to continue using the higher plans' products until the new billing period begins.
 
-If you downgrade your plan, your plan may have access to [fewer Page Rules](https://support.cloudflare.com/hc/articles/218411427#h_5a7SkOsNo5d5LE7e9IRiz). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/) if you do not want to be charged.
+If you downgrade your plan, your plan may have access to [fewer Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/) if you do not want to be charged.
 
 For additional help, refer to [this Community thread](https://community.cloudflare.com/t/communitytip-page-rules-best-practices-when-downgrading-pro-to-free/305725).
 
@@ -43,6 +43,12 @@ Then, send a [`PUT`](/api/operations/zone-subscription-update-zone-subscription)
  
 {{</tab>}}
 {{</tabs>}}
+
+{{<Aside type="note">}}
+
+If you are an Enterprise customer and cannot change your plan type, contact your Customer Success Manager.
+
+{{</Aside>}}
 
 ## Change plan duration
 

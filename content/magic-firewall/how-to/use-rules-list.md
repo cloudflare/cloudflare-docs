@@ -13,15 +13,15 @@ meta:
 To use this feature first [create a new IP list](/api/operations/lists-create-a-list).
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/lists \
--H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --data '{
     "name":"iplist",
     "description":"This contains IPs that should be allowed.",
     "kind":"ip"
-    }'
+}'
 ```
 
 ## Add IPs to the List
@@ -29,14 +29,14 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/l
 Next [create list items](/api/operations/lists-create-list-items). This will add elements to the current list.
 
 ```bash
-    curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rules/lists/${list_id}/items \
-    -H 'Content-Type: application/json' \
-    -H 'X-Auth-Email: user@example.com' \
-    -H 'X-Auth-Key: 00000000000' \
-    --data '[
-        {"ip":"10.0.0.1"},
-        {"ip":"10.10.0.0/24"}
-    ]'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '[
+    {"ip":"10.0.0.1"},
+    {"ip":"10.10.0.0/24"}
+]'
 ```
 
 ## Use the List in a Rule
@@ -44,17 +44,17 @@ Next [create list items](/api/operations/lists-create-list-items). This will add
 Finally add a Magic Firewall rule referencing the List into an existing ruleset:
 
 ```bash
-    curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/${ruleset_id}/rules \
-    -H 'Content-Type: application/json' \
-    -H 'X-Auth-Email: user@example.com' \
-    -H 'X-Auth-Key: 00000000000' \
-    --data '{
-        "action": "skip",
-        "action_parameters": {
-            "ruleset": "current"
-        },
-        "expression": "ip.src in $iplist",
-        "description": "Allowed IPs from iplist",
-        "enabled": true
-    }'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+    "action": "skip",
+    "action_parameters": {
+        "ruleset": "current"
+    },
+    "expression": "ip.src in $iplist",
+    "description": "Allowed IPs from iplist",
+    "enabled": true
+}'
 ```

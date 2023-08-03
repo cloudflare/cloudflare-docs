@@ -20,7 +20,9 @@ There are two different ways to submit a phish sample:
     {{<directory-listing>}}
 
 - **Team submission**: To be used when IT administrators or security teams submit to Area 1. Submit original phish samples as an attachment in EML format to the appropriate [Team Submissions address](https://horizon.area1security.com/support/service-addresses/). For example, if you think an email should be marked as spoof, send it to the `SPOOF` address listed in Team Submissions. <br />
-Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future. 
+Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future.
+
+After submitting a phish sample to the team address, you will receive an update from `status@submission.area1reports.com` regarding the investigation and the verdict. The feedback is directly provided to customers by our threat research team, bypassing the support channel, to expedite the process.
 
 ## What happens after a phish submission
 
@@ -28,7 +30,7 @@ After you or your users submit a phish sample, Area 1 adds that sample directly 
 
 ### Phish submission feedback
 
-Use the following keywords to search for submitted phish samples on Area 1 portal detection search:
+Use the following keywords to search for submitted phish samples on the Area 1 dashboard:
 
 - `phish_submission`
 - `user_malicious_submission`
@@ -52,3 +54,12 @@ To enable PSR:
 {{<Aside type="note">}}
 PSR works only for the phish samples submitted to [user submission addresses](https://horizon.area1security.com/support/service-addresses/). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.
 {{</Aside>}}
+
+## False positives
+
+If you find emails in your Area 1 account that are actually false positives, you can report them from the Area 1 dashboard:
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+2. Select the **Search** bar.
+3. Search for the message that you want to report as a false positive, and select **Report as false positive**.
+4. (Optional) You can also select emails in bulk to report as false positives. Select all emails that apply > **Report as FP**.

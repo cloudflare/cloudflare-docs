@@ -28,7 +28,7 @@ Device posture with Kolide requires the Kolide agent and the Cloudflare WARP cli
 3. Select **Kolide**.
 4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
 5. Enter the **Client secret** you noted down above.
-6. Choose a **polling frequency** for how often Cloudflare Zero Trust should query Kolide for information.
+6. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query Kolide for information.
 7. Select **Save**.
 
 {{<render file="posture/_test-posture-provider.md">}}

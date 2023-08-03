@@ -20,7 +20,7 @@ Users new to D1 and/or Cloudflare Workers should visit the [D1 tutorial](/d1/get
 
 Local development sessions create a standalone, local-only environment that mirrors the production environment D1 runs in so that you can test your Worker and D1 _before_ you deploy to production.
 
-An existing [D1 binding](/workers/wrangler/configuration/#d1-database) of `DB` would be available to your Worker when running locally.
+An existing [D1 binding](/workers/wrangler/configuration/#d1-databases) of `DB` would be available to your Worker when running locally.
 
 To start a local development session:
 
@@ -152,4 +152,4 @@ Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for mo
 
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
 * Learn [how to debug D1](/d1/learning/debug-d1/).
-* Understand how to [access logs](/workers/learning/logging-workers/) generated from your Worker and D1.
+* Understand how to [access logs](/workers/observability/log-from-workers/) generated from your Worker and D1.

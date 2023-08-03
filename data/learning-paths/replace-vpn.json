@@ -50,7 +50,7 @@
       {
         "type": "module",
         "title": "Review prerequisites",
-        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/download-warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-apps/do-more-with-tunnels/hosting-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-apps/install-and-setup/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
+        "description": "Make sure that you have the following:<br /><br /><ol><li>A device that can run <a href='/cloudflare-one/connections/connect-devices/warp/download-warp/'>WARP</a>, Cloudflare's endpoint agent.</li><li>A private network with applications or services that are available locally or via a VPN.</li><li>A host server that can run the lightweight Cloudflare Tunnel daemon process (<a href='/cloudflare-one/connections/connect-networks/downloads/system-requirements/'>requirements</a>).</li><li>The ability for that host server to connect to the Internet on the <a href='/cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/'>required ports</a> and to connect locally to the private network applications.</li></ol>"
       },
       {
         "type": "module",
@@ -64,7 +64,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+            "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
@@ -94,21 +94,21 @@
       {
         "type": "module",
         "title": "Connect private network to Cloudflare",
-        "description": "<a href='/cloudflare-one/connections/connect-apps/'>Cloudflare Tunnel</a> connects applications and services to Cloudflare’s network. Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any host machine and proxies local traffic once validated from the Cloudflare network.<br/>",
+        "description": "<a href='/cloudflare-one/connections/connect-networks/'>Cloudflare Tunnel</a> connects applications and services to Cloudflare’s network. Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any host machine and proxies local traffic once validated from the Cloudflare network.<br/>",
         "estimated_time": 45,
         "pages": [
           {
-            "url_path": "/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/",
+            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/",
             "link_title": "Create a Cloudflare Tunnel",
             "additional_description": "Cloudflare Tunnel will run on a host locally in your network and make a persistent, outbound QUIC connection to Cloudflare."
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/",
+            "url_path": "/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/",
             "link_title": "Create private network routes in Cloudflare Tunnel",
             "additional_description": "Routes determine which private IP addresses are available to users in your Zero Trust organization. It's okay to make these routes relatively wide, since you can add granular security control with Zero Trust policies."
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#create-zero-trust-policies",
+            "url_path": "/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/#create-zero-trust-policies",
             "link_title": "Build Zero Trust policies",
             "additional_description": "While the Cloudflare Tunnel will advertise a relatively broad range, you can restrict network access by user identity, device posture, domain request, IP, port, protocol, and more."
           }
@@ -126,7 +126,7 @@
             
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#2-connect-an-application",
+            "url_path": "/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/#2-connect-an-application",
             "link_title": "Create public hostname routes in Cloudflare Tunnel"
           }
         ]
@@ -148,7 +148,7 @@
             "additional_description": "We recommend <a href='/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/'>manually deploying</a> the client during your pilot and revisiting <a href='/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/'>automated deployments</a> during implementation."
           },
           {
-            "url_path": "/cloudflare-one/policies/filtering/initial-setup/network/#connect-devices",
+            "url_path": "/cloudflare-one/policies/gateway/initial-setup/network/#connect-devices",
             "link_title": "Enable the Proxy",
             "additional_description": "This will allow WARP to build a Wireguard-based, encrypted tunnel on your device to route traffic to Cloudflare."
           },

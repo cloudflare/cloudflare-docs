@@ -31,7 +31,7 @@ While Cloudflare Web Analytics uses a JavaScript beacon, Cloudflare’s edge ana
 
 ### Why am I not seeing all the metrics for single-page application (SPA) or multiple-page application (MPA)?
 
-Every route change that occurs in the single-page app will send the measurement of the route before the route is changed to the beacon endpoint. The measurement for the last route change will be sent whenever the user leaves the tab or closes the browser window. That will trigger `visibilityState` to a hidden state. Whenever that happens, Beacon JS sends the payload using the [Navigator.sendBeacon method](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) that should not be cancelled even when the browser window is closed. However, due to compatibility, old browsers would fallback to using Ajax (`XmlHttpRequest`), which can be cancelled when the browser window is closed, so the last payload that gets sent to the beacon endpoint can be lost. Also, due to various network conditions, there can be data loss when the payload is sent to the beacon endpoint.
+Every route change that occurs in the single-page app will send the measurement of the route before the route is changed to the beacon endpoint. The measurement for the last route change will be sent whenever the user leaves the tab or closes the browser window. That will trigger `visibilityState` to a hidden state. Whenever that happens, Beacon JS sends the payload using the [Navigator.sendBeacon method](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) that should not be cancelled even when the browser window is closed. However, due to compatibility, old browsers would fallback to using AJAX (`XmlHttpRequest`), which can be cancelled when the browser window is closed, so the last payload that gets sent to the beacon endpoint can be lost. Also, due to various network conditions, there can be data loss when the payload is sent to the beacon endpoint.
 
 ### For the same site, why would I see more data reported with an automatic setup?
 
@@ -77,7 +77,7 @@ Add the following script:
 
 ### Can I use the same JS Snippet for a different domain?
 
-No. However, if the root domain is the same, you can use the same site tag. For example, if you have provided us a hostname `example.com` when registering a site, you can use the JS snippet from that site for `abc.example.com` and `def.example.com` since they use the same root domain. When payload gets sent to the beacon endpoint, we validate the hostname with postfix matching, so if your domain shares the same root domain, that would work.
+No. However, if the apex domain (also known as "root domain" or "naked domain") is the same, you can use the same site tag. For example, if you have provided us a hostname `example.com` when registering a site, you can use the JS snippet from that site for `abc.example.com` and `def.example.com` since they use the same apex domain. When payload gets sent to the beacon endpoint, we validate the hostname with postfix matching, so if your domain shares the same apex domain, that would work.
 
 ### Can I use automatic setup with a DNS-only domain (CNAME setup)?
 

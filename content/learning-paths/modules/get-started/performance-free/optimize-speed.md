@@ -15,7 +15,7 @@ In the [Speed section](https://dash.cloudflare.com/?to=/:account/:zone/speed/opt
 
 {{<Aside type="note">}}
 
-Within the **Speed** section, you can use [Observatory](/fundamentals/speed/speed-test/) to assess the performance of your website.
+Within the **Speed** section, you can use [Observatory](/speed/speed-test/) to assess the performance of your website.
 
 {{</Aside>}}
 

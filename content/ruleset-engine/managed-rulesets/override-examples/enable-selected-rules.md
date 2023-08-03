@@ -22,15 +22,16 @@ The following `PUT` request uses the [Update ruleset](/ruleset-engine/rulesets-a
 
 In this example:
 
-*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a managed ruleset for requests in the specified zone (`<ZONE_ID>`).
+*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a managed ruleset for requests in the specified zone (`{zone_id}`).
 *   `"enabled": false` defines an override at the ruleset level to disable all rules in the managed ruleset.
 *   `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -73,15 +74,16 @@ In this example:
 *   `"enabled": false` defines an override at the ruleset level to disable all rules in the managed ruleset.
 *   `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\"",
+      "expression": "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\"",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {

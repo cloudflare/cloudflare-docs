@@ -7,7 +7,7 @@ _build:
 
 ## Allow corporate domains
 
-This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a [blocked category](/learning-paths/modules/security/dns-filtering-create-policy/recommended-policies/#block-content-categories) like `Newly seen domains` or `Login pages`.
+This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a [blocked category](/learning-paths/modules/security/dns-filtering-create-policy/recommended-policies/#block-content-categories) like `Newly seen domains` or `Login pages`.
 
 | Selector | Operator | Value             | Action | Precedence |
 | -------- | -------- | ----------------- | ------ | ---------- |
@@ -15,12 +15,12 @@ This policy allows users to access official corporate domains. By deploying the 
 
 ## Block security threats
 
-Block [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
+Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
 {{<render file="gateway/_block-security-categories.md">}}
 
 ## Block content categories
 
-The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/filtering/domain-categories/).
+The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
 | Selector           | Operator | Value                                                     | Action |
 | ------------------ | -------- | --------------------------------------------------------- | ------ |
@@ -57,7 +57,7 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 
 ## Block online tracking
 
-To safeguard user privacy, some organizations will block tracking domains such as `dig.whatsapp.com` as well as other tracking domains embedded at the OS level. Refer to [this repository](https://github.com/nextdns/native-tracking-domains/tree/28991a0d5b2ab6d35588a74af82162ea7caff420/domains) for a list of widespread tracking domains that you can add to your blocklist.
+To safeguard user privacy, some organizations will block tracking domains such as `dig.whatsapp.com` as well as other tracking domains embedded at the OS level. This policy is implemented by creating a custom blocklist. Refer to [this repository](https://github.com/nextdns/native-tracking-domains/tree/28991a0d5b2ab6d35588a74af82162ea7caff420/domains) for a list of widespread tracking domains that you can add to your blocklist.
 
 | Selector | Operator | Value                  | Action |
 | -------- | -------- | ---------------------- | ------ |

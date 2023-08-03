@@ -346,6 +346,8 @@ const next_value = await NAMESPACE.list({ cursor: cursor });
 
 Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch; check `list_complete` instead. The reason it is possible to have an empty array in `keys`, but still have more keys to fetch, is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
 
+When de-paginating a large result set while also providing a `prefix` argument, the `prefix` argument must be provided in all subsequent calls along with the initial arguments.
+
 ## KV bindings
 
 ### Reference KV from Workers
@@ -354,7 +356,7 @@ A KV namespace is a key-value database that is replicated to Cloudflare's global
 
 The name of your binding does not need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
 
-This is not the case with ES modules format, refer to [Referencing KV using ES modules](/workers/runtime-apis/kv/#referencing-kv-from-durable-objects-and-workers-using-modules-syntax).
+This is not the case with ES modules format, refer to [Reference KV using ES modules](/workers/runtime-apis/kv/#reference-kv-from-durable-objects-and-workers-using-es-modules-format).
 
 When you create a namespace, it will have a name you choose (for example, `My tasks`), and an assigned ID (for example, `06779da6940b431db6e566b4846d64db`).
 

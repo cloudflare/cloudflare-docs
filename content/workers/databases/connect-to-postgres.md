@@ -35,7 +35,7 @@ There are two ways to connect to a Postgres database:
 
 A connection string combines the username, password, host, port and (optional) database name as a single URL-like string.
 
-To set your connection string as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_URL` is an example variable name for this secret to be accessed in your Worker:
+To set your connection string as a [secret](https://developers.cloudflare.com/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_URL` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_URL
@@ -56,7 +56,7 @@ const result = await client.query({
 
 ### Set explicit host and port parameters
 
-You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/platform/environment-variables/) via the [dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/platform/environment-variables/#environment-variables-via-wrangler), as follows:
+You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/configuration/environment-variables/) via the [dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler), as follows:
 
 ```toml
 ---
@@ -71,7 +71,7 @@ DB_PORT = "5432"
 DB_NAME = "neondb"
 ```
 
-To set your password as a [secret](https://developers.cloudflare.com/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
+To set your password as a [secret](https://developers.cloudflare.com/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_PASSWORD
@@ -209,6 +209,6 @@ Follow the [changelog](/workers/platform/changelog/) for updates to these caveat
 
 ## Next steps
 
-* Refer to the list of [supported database integrations](/workers/learning/integrations/databases/) to understand other ways to connect to existing databases.
+* Refer to the list of [supported database integrations](/workers/databases/connecting-to-databases/) to understand other ways to connect to existing databases.
 * Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker.
-* Understand the [protocols supported by Workers](/workers/platform/protocols).
+* Understand the [protocols supported by Workers](/workers/learning/protocols/).

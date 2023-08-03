@@ -79,7 +79,7 @@ postgresql://username:password@host:port/database
 
 Replace `username`, `password`, `host`, `port`, and `database` with the appropriate values for your PostgreSQL database.
 
-Set your connection string as a [secret](/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
+Set your connection string as a [secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
 
 ```sh
 $ wrangler secret put DB_URL
@@ -91,7 +91,7 @@ $ wrangler secret put DB_URL
 
 ### Set explicit parameters
 
-Configure each database parameter as an [environment variable](/workers/platform/environment-variables/) via the [Cloudflare dashboard](/workers/platform/environment-variables/#environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
+Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
 
 ```toml
 ---
@@ -106,7 +106,7 @@ DB_PORT = "5432"
 DB_NAME = "productsdb"
 ```
 
-To set your password as a [secret](/workers/platform/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
+To set your password as a [secret](/workers/configuration/environment-variables/#add-secrets-to-your-project) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 $ wrangler secret put DB_PASSWORD

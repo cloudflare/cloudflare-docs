@@ -215,7 +215,7 @@ If you do not have access to your 2FA account or backup codes, use a verified de
 
 1\. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
-2\. On the **Two-Factor Authentication** page, click **Can't access your 2FA device or backup codes?**.
+2\. On the **Two-Factor Authentication** page, next to *Lost all 2FA devices and backup codes?* click **Try recovery**.
 
 3\. Click **Begin recovery**.
 

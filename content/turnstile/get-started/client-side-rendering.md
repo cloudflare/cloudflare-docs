@@ -37,11 +37,11 @@ Check out the [demo](https://demo.turnstile.workers.dev/) and its [source code](
 
 Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
 
-For example:
 <div>
 
 ```html
 ---
+header: Example
 highlight: [4]
 ---
 
@@ -142,7 +142,11 @@ Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [sourc
 
 ## Access a widget's state
 
-In addition to the `render()` function, Turnstile supports obtaining the widget's response from a `widgetId` via the `turnstile.getResponse(widgetId: string)` function.
+In addition to the `render()` function, Turnstile supports obtaining the widget's response from a `widgetId` via the `turnstile.getResponse(widgetId: string)` function. If you omit the `widgetId`, `turnstile.getResponse()` returns the response from the last created widget.
+
+After some time, a widget may become expired and needs to be refreshed (by calling `turnstile.reset(widgetId: string)`). If a widget has expired, `turnstile.getResponse()` will still return the last response, but the response will no longer be valid because it has expired.
+
+You can check if a widget has expired by either subscribing to the `expired-callback` or using the `turnstile.isExpired(widgetId: string)` function, which returns `true` if the widget is expired. If you omit `widgetId`, `turnstile.isExpired()` returns whether the last created widget is expired or not.
 
 ## Reset a widget
 
@@ -151,6 +155,8 @@ If a given widget has timed out, expired or needs to be reloaded, you can use th
 ## Remove a widget
 
 Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`. This will not call any callback and will remove all related DOM elements.
+
+To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
 
 ## Configurations
 
@@ -167,7 +173,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `after-interactive-callback` | `data-after-interactive-callback` | A JavaScript callback invoked when challenge has left interactive mode. |
 | `unsupported-callback` | `data-unsupported-callback` | A JavaScript callback invoked when a given client/browser is not supported by Turnstile. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
-| `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`zh-cn` and `zh-tw`.|
+| `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`uk`,`zh-cn` and `zh-tw`.|
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
 | `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge expires. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
