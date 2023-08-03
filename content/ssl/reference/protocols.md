@@ -25,7 +25,7 @@ As of June 2018, TLS 1.2 is the version required by the Payment Card Industry (P
 
 TLS 1.3, which offers additional security and performance improvements, was approved by the Internet Engineering Task Force (IETF) in May 2018.
 
-## Decide what version to use
+## Decide which version to use
 
 Not all browser versions support TLS 1.2 and above. Depending on your particular business situation, this may present some limitations in using stronger encryption standards.
 
