@@ -105,7 +105,7 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     D) Given the following array in a JSON object attribute:<br/>
     `{ "network_ids": [123, 456] }`<br/>
-    The following function call will `123`:<br/>
+    The following function call will return `123`:<br/>
     `lookup_json_integer(http.request.body.raw, "network_ids", 0) == 123`
 
     E) Given the following root-level array of JSON objects:<br/>
