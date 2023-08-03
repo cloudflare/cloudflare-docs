@@ -1,12 +1,13 @@
 ---
-updated: 2023-06-29
-difficulty: Beginner
-content_type: 📝 Tutorial
-pcx_content_type: tutorial
+type: example
+summary: Create a simple Durable Object.
+tags:
+  - Durable Objects
+pcx_content_type: configuration
 title: Durable Object example
+weight: 3
+layout: example
 ---
-
-## Durable Object example
 
 ```js
 // Worker

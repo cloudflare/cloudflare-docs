@@ -1,12 +1,13 @@
 ---
-updated: 2022-02-07
-difficulty: Beginner
-content_type: 📝 Tutorial
-pcx_content_type: tutorial
-title: Build a counter
+type: example
+summary: Build a counter using Durable Objects.
+tags:
+  - Durable Objects
+pcx_content_type: configuration
+title: Build a counter 
+weight: 3
+layout: example
 ---
-
-## Build a counter
 
 The complete example code is included for both the Worker and the Durable Object for a basic counter below. Refer to [Durable Objects template](https://github.com/cloudflare/durable-objects-template) for the full code template.
 
@@ -89,5 +90,3 @@ export class Counter {
 ### Related resources
 
 - [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
-
-

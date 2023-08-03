@@ -1,12 +1,13 @@
 ---
+type: example
+summary: Bundle external dependencies with your code using Rollup or Webpack. 
+tags:
+  - Durable Objects
+pcx_content_type: configuration
 title: Durable Objects Webpack CommonJS template
-pcx_content_type: concept
-weight: 16
+weight: 3
+layout: example
 ---
-
-# Durable Objects Webpack CommonJS template
-
-Use this template to bundle external dependencies with your code using Rollup or webpack. 
 
 ```js
 module.exports = class Counter {

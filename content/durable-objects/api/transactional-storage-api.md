@@ -47,13 +47,13 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<any>{{</type>}}
 
-  - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.<br><br>
+  - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
   **Supported options:**
 
 - {{<code>}}allowConcurrency{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
-    - By default, the system will pause delivery of I/O events to the object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
+    - By default, the system will pause delivery of I/O events to the Object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
@@ -125,7 +125,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type>}}Promise\<Map\<string, any>\>{{</type>}}
 
-  - Returns keys and values associated with the current Durable Object according to the parameters in the provided options object.
+  - Returns keys and values associated with the current Durable Object according to the parameters in the provided options Object.
 
 <br/>**Supported options:**
 
@@ -170,7 +170,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}txn{{</code>}}
 
-  - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
+  - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `state.storage` Object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
 - {{<code>}}deleteAll(){{</code>}} : {{<type>}}Promise{{</type>}}
 
@@ -212,4 +212,3 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
 - [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/).
-

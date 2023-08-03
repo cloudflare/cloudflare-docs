@@ -1,12 +1,13 @@
 ---
-title: Durable Objects TypeScript Rollup ES Modules template
-pcx_content_type: concept
-weight: 16
+type: example
+summary: Create Durable Objects TypeScript Rollup using ES modules template.
+tags:
+  - Durable Objects
+pcx_content_type: configuration
+title: Durable Objects TypeScript Rollup ES modules template
+weight: 3
+layout: example
 ---
-
-# Durable Objects TypeScript Rollup ES modules template
-
-Use this template to use TypeScript. 
 
 ```js
 export class CounterTs {

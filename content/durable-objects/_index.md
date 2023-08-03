@@ -85,14 +85,3 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
  
 {{</resource-group>}}
-
-
-
-
-
-
-
-
-
-
-

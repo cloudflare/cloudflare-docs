@@ -1,12 +1,13 @@
 ---
-title: Durable Objects Rollup ES Modules template
-pcx_content_type: concept
-weight: 16
+type: example
+summary: Create Durable Objects Rollup using ES modules template.
+tags:
+  - Durable Objects
+pcx_content_type: configuration
+title: Durable Objects Rollup ES modules template
+weight: 3
+layout: example
 ---
-
-# Durable Objects Rollup ES modules template
-
-Use this template to use ES modules. 
 
 ```js
 export class Counter {
