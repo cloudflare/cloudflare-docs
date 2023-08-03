@@ -5281,7 +5281,8 @@ pre {
 /* Alpha, Beta, and Deprecated pills */
 .DocsMarkdown-alpha,
 .DocsMarkdown-beta,
-.DocsMarkdown-deprecated {
+.DocsMarkdown-deprecated,
+.DocsMarkdown-early-access {
   display: flex;
   flex-direction: row;
   column-gap: 1em;
@@ -5345,6 +5346,11 @@ pre {
   width: 79px;
   background: var(--red-6);
   color: var(--red-0);
+}
+
+.DocsMarkdown--pill-early-access {
+  background-color: var(--blue-8);
+  color: var(--blue-0);
 }
 
 /* Product tagline */
