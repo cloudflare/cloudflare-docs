@@ -30,9 +30,9 @@ This example invokes the [Create a zone ruleset rule](/api/operations/createZone
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "ruleset": "current"
@@ -48,9 +48,9 @@ This example invokes the [Create a zone ruleset rule](/api/operations/createZone
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "phases": [
@@ -74,9 +74,9 @@ This example invokes the [Create a zone ruleset rule](/api/operations/createZone
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "phases": [
@@ -99,9 +99,9 @@ This example uses the [Create a zone ruleset rule](/api/operations/createZoneRul
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "products": [

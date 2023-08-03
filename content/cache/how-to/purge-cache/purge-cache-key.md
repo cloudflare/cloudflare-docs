@@ -16,7 +16,7 @@ To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` 
 
 For a Cache Key based on device type, purge the asset by passing the `CF-Device-Type` header with the API purge request (valid headers include mobile, desktop, and tablet).
 
-See the example API request below to purge all mobile assets on the root web page.
+Refer to the example API request below to purge all mobile assets on the root webpage.
 
 ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"

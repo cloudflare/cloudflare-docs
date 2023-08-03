@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Split Tunnels
-weight: 6
+weight: 3
 ---
 
 # Configure Split Tunnels
@@ -148,4 +148,4 @@ Removing default Split Tunnel entries may cause users to lose Internet connectiv
 
 4. Find the IP address or hostname in the list and select **Delete**.
 
-If you need to revert to the default Split Tunnels entries, select **Restore default entries**.
+If you need to revert to the default Split Tunnel entries recommended by Cloudflare, select **Restore default entries**.

@@ -22,6 +22,12 @@ The Browser Cache TTL sets the expiration for resources cached in a visitor’s 
 
 Unless specifically set in a page rule, Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**.
 
+{{<Aside type="note" header="Note">}}
+- Setting high Browser Cache TTL values means that the assets will be cached for a long time by users’ browsers.
+- If you modify cached assets, the new assets may not be displayed to repeat visitors before the Browser Cache TTL expires.
+- Purging Cloudflare’s cache does not affect assets stored by a visitor’s browser.
+{{</Aside>}}
+
 {{<feature-table id="cache.browser_cache_ttl">}}
 
 For more information on setting the Browser Cache TTL, refer to [Set Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/set-browser-ttl/).

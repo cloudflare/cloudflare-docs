@@ -226,7 +226,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 4. In the **Settings** tab, select **Variables**.
 
-5. Under **Environment Variables**, add the following [secret variables](/workers/configuration/environment-variables/#environment-variables-via-the-dashboard):
+5. Under **Environment Variables**, add the following [secret variables](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard):
    - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
    - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
 

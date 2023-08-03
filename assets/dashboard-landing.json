@@ -353,12 +353,12 @@
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
-          "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
-          "title": "Create root domain"
+          "url_path": "/dns/manage-dns-records/how-to/create-zone-apex/",
+          "title": "Create zone apex record"
         },
         {
           "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
-          "title": "Create subdomain"
+          "title": "Create subdomain records"
         }
       ]
     },

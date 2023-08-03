@@ -51,7 +51,7 @@ To retrieve those values:
 5. Enter the **Client ID** and **Client secret** you noted down above.
 6. Enter your **Rest API URL**.
 7. Enter your **Customer ID**.
-8. Choose a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
+8. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
 9. Select **Save**.
 
 {{<render file="posture/_test-posture-provider.md">}}

@@ -150,7 +150,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 
 {{<Aside type="note">}}
 
-You should perform [Multipart uploads](/cloudflare-for-platforms/workers-for-platforms/platform/multipart/) if you want to use ES Modules syntax.
+For more information on the `metadata.json` refer to [Metadata configuration](/cloudflare-for-platforms/workers-for-platforms/platform/metadata/).
 
 {{</Aside>}}
 

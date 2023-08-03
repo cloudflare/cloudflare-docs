@@ -95,7 +95,7 @@ type MessageSendRequest<Body = unknown> = {
 
   - The explicit content type of a message so it can be previewed correctly with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature. Optional argument.
   - As of now, this option is for internal use. In the future, `contentType` will be used by alternative consumer types to explicitly mark messages as serialized so they can be consumed in the desired type.
-  - See [QueuesContentType](#QueuesContentType) for possible values.
+  - See [QueuesContentType](#queuescontenttype) for possible values.
 
 {{</definitions>}}
 

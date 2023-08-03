@@ -39,19 +39,9 @@ Before getting started:
 
 Enable Logpush to R2 via the dashboard.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+{{<render file="_enable-logpush-job.md">}}
 
-2. Select the Enterprise account or domain you want to use with Logpush.
-
-3. Go to **Analytics & Logs** > **Logs**.
-
-4. Select **Add Logpush job** and a modal window will open.
-
-5. Select the dataset you want to push to a storage service.
-
-6. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7. Select R2.
+7. In **Select a destination**, choose **R2 Object Storage**.
 
 8. Enter the following destination information:
     - Bucket path, for example, `cloudflare-logs/http_requests/example.com`

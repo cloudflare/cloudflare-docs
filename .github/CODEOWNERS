@@ -38,8 +38,8 @@
 /content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF
-/content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
-/content/waf/ @cloudflare/firewall @cloudflare/pcx-technical-writing
+/content/firewall/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/content/waf/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
 
 # Magic products
 /content/magic-transit/ @cloudflare/pcx-technical-writing

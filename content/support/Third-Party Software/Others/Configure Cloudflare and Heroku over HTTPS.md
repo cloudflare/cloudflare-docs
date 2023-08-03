@@ -24,7 +24,7 @@ ___
 
 ## Step 2 - Add a subdomain in Cloudflare DNS
 
-Below, you will need to add DNS records for a subdomain and a root domain. Learn how to [Managing DNS records in Cloudflare](https://support.cloudflare.com/hc/articles/360019093151).
+Below, you will need to add DNS records for a subdomain and the apex domain (also known as "root domain"). Learn how to [Managing DNS records in Cloudflare](https://support.cloudflare.com/hc/articles/360019093151).
 
 ### Step 2a - Add a subdomain
 

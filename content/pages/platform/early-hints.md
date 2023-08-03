@@ -5,7 +5,7 @@ title: Early Hints
 
 # Early Hints
 
-[Early Hints](/cache/advanced-configuration/early-hints/) help the browser to load webpages faster. Early Hints is enabled automatically on all `pages.dev` domains. [To enable](/cache/advanced-configuration/early-hints/#enabling-early-hints) Early Hints for your custom domains:
+[Early Hints](/cache/advanced-configuration/early-hints/) help the browser to load webpages faster. Early Hints is enabled automatically on all `pages.dev` domains. [To enable](/cache/advanced-configuration/early-hints/#enable-early-hints) Early Hints for your custom domains:
 
 1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com). 
 2. Select your account and zone.
