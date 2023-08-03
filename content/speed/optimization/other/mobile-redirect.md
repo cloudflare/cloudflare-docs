@@ -59,10 +59,10 @@ ___
 
 ## Allow full site view
 
-To allow your end users to view the full site on mobile, you'll need to set the value of the following cookie _on the root domain only_ to 0 (zero) at your origin server:
+To allow your end users to view the full site on mobile, you will need to set the value of the following cookie _on the apex domain only_ to 0 (zero) at your origin server:
 
 `__cf_mob_redir = 0; domain=.example.com`
 
-In this example, replace .example.com with your root domain.
+In this example, replace .example.com with your apex domain.
 
 To renew the mobile redirect, delete the cookie, or set it to expire after whatever duration you choose.

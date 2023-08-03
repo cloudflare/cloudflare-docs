@@ -336,3 +336,10 @@ Durable Objects have been built such that the number of Objects in the system do
 ## Image Resizing with Workers 
 
 When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.
+
+---
+
+## Log size
+
+- You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/tail-workers/).
+- Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.

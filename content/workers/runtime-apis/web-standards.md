@@ -139,7 +139,7 @@ The `URLPattern` API provides a mechanism for matching URLs based on a convenien
 
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/configuration/compatibility-dates/#global_navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
 
 ## Unhandled promise rejections
 

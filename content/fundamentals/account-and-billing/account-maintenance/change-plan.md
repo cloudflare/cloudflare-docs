@@ -44,6 +44,12 @@ Then, send a [`PUT`](/api/operations/zone-subscription-update-zone-subscription)
 {{</tab>}}
 {{</tabs>}}
 
+{{<Aside type="note">}}
+
+If you are an Enterprise customer and cannot change your plan type, contact your Customer Success Manager.
+
+{{</Aside>}}
+
 ## Change plan duration
 
 {{<tabs labels="Dashboard | API">}}

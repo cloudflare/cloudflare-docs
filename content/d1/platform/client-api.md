@@ -211,7 +211,7 @@ return new Response(dump, {
     headers: {
         'Content-Type': 'application/octet-stream'
     }
-};
+});
 ```
 
 

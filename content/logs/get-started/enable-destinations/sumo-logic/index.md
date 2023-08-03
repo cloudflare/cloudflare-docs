@@ -17,19 +17,9 @@ Enable Logpush to Sumo Logic via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+{{<render file="_enable-logpush-job.md">}}
 
-2. Select the Enterprise account or domain you want to use with Logpush.
-
-3. Go to **Analytics & Logs** > **Logs**.
-
-4. Select **Add Logpush job**. A modal window opens where you will need to complete several steps.
-
-5. Select the dataset you want to push to a storage service.
-
-6. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7. Select **Sumo Logic**.
+7. In **Select a destination**, choose **Sumo Logic**.
 
 8. Enter or select the **HTTP Source Address**. Note that the same collector can be used for multiple Logpush jobs, but each job must have a dedicated source.
 
@@ -61,5 +51,5 @@ To enable Logpush to Sumo Logic:
 
 * Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/docs/manage/ingestion-volume/log-ingestion/).
 
-* To analyze and visualize Cloudflare Logs using the Cloudflare App for Sumo Logic, follow the steps in the Sumo Logic integration documentation to [install the Cloudflare App](https://help.sumologic.com/docs/integrations/saas-cloud/cloudflare/#installing-the-cloudflare-app) and [view the Cloudflare Dashboards](https://help.sumologic.com/docs/integrations/saas-cloud/cloudflare/#viewing-the-cloudflare-dashboards).
+* To analyze and visualize Cloudflare Logs using the Cloudflare App for Sumo Logic, follow the steps in the Sumo Logic integration documentation to [install the Cloudflare App](https://help.sumologic.com/docs/integrations/saas-cloud/cloudflare/#installing-the-cloudflare-app) and [view the Cloudflare dashboards](https://help.sumologic.com/docs/integrations/saas-cloud/cloudflare/#viewing-the-cloudflare-dashboards).
 {{</Aside>}}

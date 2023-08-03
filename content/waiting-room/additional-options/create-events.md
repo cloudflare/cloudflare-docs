@@ -14,15 +14,15 @@ Any properties set on the event will override the default property on the waitin
 
 ## Create an event from the dashboard
 
-1.  Within your application, go to **Traffic** > **Waiting Room**.
-2.  Expand a waiting room  and select **Schedule event**.
-3.  Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
-4.  You can also enable the pre-queueing — in this case you need to define a pre-queueing time. And you can also select **Shuffle at event start** and all users in the pre-queue will be randomly admitted at event start.
+1. Within your application, go to **Traffic** > **Waiting Room**.
+2. Expand a waiting room  and select **Schedule event**.
+3. Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
+4. You can also enable the pre-queueing — in this case you need to define a pre-queueing time. And you can also select **Shuffle at event start** and all users in the pre-queue will be randomly admitted at event start.
 
     {{<Aside type="note">}}Enabling pre-queuing will send all new users to your pre-queue during the pre-queueing time period. If you would like to also pre-queue users already active, make the pre-queueing time period longer than the session duration and disable session renewal in the **Settings** section. Once active users sessions expire, they will be placed into the pre-queue before your event starts.{{</Aside>}}
 
-5.  Select **Next**.
-6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base waiting room, the corresponding Event setting will update as well.
+5. Select **Next**.
+6. In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base waiting room, the corresponding Event setting will update as well.
 
     {{<Aside type="note">}}If you choose to override the values of Total active users, you must also override the number of New users per minute, and vice versa.{{</Aside>}}
 
@@ -31,9 +31,11 @@ Any properties set on the event will override the default property on the waitin
 9.  Select **Next** and review your Event details and settings.
 10.  Select **Save**.
 
+{{<Aside type="note">}}The waiting room must be set to enabled for the event to activate. If your event is set to enabled but your waiting room is not, the event will not activate.{{</Aside>}}
+
 In your waiting room page, in the **Next Event** column you can visualize the date of the next event scheduled. This columns will read `N/A` in case there is no event scheduled for that waiting room. You can always suspend, edit or delete your event.
 
-{{<Aside type="note">}}You have a limit of five events per waiting room.{{</Aside>}}
+{{<Aside type="note">}}You have a limit of five events per waiting room. To create a new event after you have reached this limit, you can delete a previous event.{{</Aside>}}
 
 ## Create an event via API
 
@@ -57,7 +59,7 @@ Though most parameters are identical to those in a regular waiting room, there a
 - `shuffle_at_event_start`: If **true** and `prequeue_start_time` is not null, users in the prequeue will be shuffled randomly at the `event_start_time`. Commonly used to ensure fairness if your event is using a [**FIFO** queueing method](#set-up-a-lottery).
 - `prequeue_start_time`: ISO 8601 timestamp that marks when to begin queueing all users before the event starts. Must occur at least **5 minutes before** `event_start_time`.
 - `description`: A text description providing more detail about the event.
-- `suspended`: If **true**, the event is ignored and traffic is handled based on the waiting room's normal configuration.
+- `suspended`: If **true**, the event is ignored and traffic is handled based on the waiting room's typical configuration.
 
 ### Queueing methods
 
@@ -93,6 +95,15 @@ To edit an event, use a [PATCH request](/api/operations/waiting-room-patch-event
 You can disable an event by setting its `suspended` parameter to `true`.
 
 Additionally, events will not become active if a waiting room itself is **Disabled**.
+
+## Schedule a maintenance page
+
+Follow these steps if you would like to deploy a scheduled maintenance page, with no queueing before or after the maintenance window.
+
+1. [Create a waiting room](/waiting-room/how-to/create-waiting-room/) with [Passthrough](/waiting-room/reference/queueing-methods/#passthrough) queueing method enabled.
+2. Create a waiting room event for this room with [Reject](/waiting-room/reference/queueing-methods/#reject) queueing method enabled. 
+
+After the scheduled event has ended, users will have access to your site.  You can end the maintenance window before the scheduled event is over by setting the event to disabled.
 
 ## Other API commands
 

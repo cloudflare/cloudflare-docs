@@ -59,7 +59,7 @@ account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
 ```
 
-To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#3-create-your-bucket):
+To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 2](#2-create-your-bucket):
 
 ```toml
 [[r2_buckets]]

@@ -30,7 +30,7 @@ Once you have [created and activated a waiting room](/waiting-room/get-started/)
 
 - If a page is not experiencing heavy traffic, a visitor accesses the page directly.
 - If page traffic crosses a [user-defined threshold](/waiting-room/reference/configuration-settings/#session-duration), a visitor enters a virtual waiting room until it is their turn to access the page:
-  - Each user receives a [cookie](/waiting-room/reference/waiting-room-cookie/) to manage the dynamic outflow of requests from the waiting room to the origin website in First In First Out (FIFO) order.
+  - Each user receives a [cookie](/waiting-room/reference/waiting-room-cookie/) to manage the dynamic outflow of requests from the waiting room to the origin website in [First In First Out (FIFO)](/waiting-room/reference/queueing-methods/#first-in-first-out-fifo) order.
   - While in the waiting room, the user's browser automatically refreshes every 20 seconds to give them updated information about their estimated wait time.
   - When a user exits the waiting room and reaches your application, they can leave and re-enter without waiting for the length of time specified by the [session duration](/waiting-room/reference/configuration-settings/#session-duration).
   - Because waiting rooms support dynamic inflow and [outflow](/waiting-room/reference/configuration-settings/#session-duration), new spots appear more quickly and estimated wait times are lower and more accurate.

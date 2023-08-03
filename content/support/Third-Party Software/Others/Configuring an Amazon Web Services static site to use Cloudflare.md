@@ -28,7 +28,7 @@ An AWS S3 bucket is a public cloud storage resource. These buckets are similar t
 In this guide, let's assume that you'd like your site to be available via both:
 
 -   A subdomain URL, such as `https://www.example.com`, and
--   the root domain URL, such as `https://example.com`.
+-   the apex domain (also known as "root domain") URL, such as `https://example.com`.
 
 To accomplish this, you will need to configure two S3 buckets by completing the tasks below.
 
@@ -39,9 +39,9 @@ To create and configure your subdomain S3 bucket, follow these instructions from
 1.  Use the AWS management console to [Create an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-bucket.html). For the **Bucket name**, use the subdomain URL without the `https://` part; for example, `www.example.com`.
 2.  Then, [Configure an S3 Bucket for Static Website Hosting](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/static-website-hosting.html). After you save the static website hosting configuration, you can skip disabling public access for your bucket.
 
-### Task 2 - Set up an S3 bucket for a root domain
+### Task 2 - Set up an S3 bucket for a apex domain
 
-After you've set up your subdomain bucket, you can create and configure your root domain bucket. Follow these instructions from Amazon:
+After you've set up your subdomain bucket, you can create and configure your apex domain bucket. Follow these instructions from Amazon:
 
 1.  Use the AWS management console to [Create an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-bucket.html). For the **Bucket name**, use the domain URL without the `https://` part; for example, `example.com`.
 2.  Next, you need to redirect requests from this bucket's URL to the subdomain bucket URL you created. Follow the steps in [](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/static-website-hosting.html)[](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/redirect-website-requests.html)[Redirect Requests to an S3 Bucket Hosted Website to Another Host](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/redirect-website-requests.html). For **Target Bucket or Domain**, enter the same bucket name that you used for the subdomain bucket in Task 1; for example, `www.example.com`.
@@ -93,18 +93,18 @@ Before setting up your site on Cloudflare, ensure you have the URLs or endpoints
 To get started:
 
 1.  Follow the instructions to [Create a Cloudflare account and add a website](https://support.cloudflare.com/hc/articles/201720164). If you already have an account, you can go directly to **Add a domain to Cloudflare**.
-2.  When you get to the step to verify your DNS records in the **DNS query results** screen, you will need to create two new CNAME records for the subdomain and root domain URLs, respectively.
+2.  When you get to the step to verify your DNS records in the **DNS query results** screen, you will need to create two new CNAME records for the subdomain and apex domain URLs, respectively.
 3.  Click **Add Record** to create the subdomain DNS record (e.g., `www.example.com`). Follow instructions for adding a _CNAME_ record in [Managing DNS records in Cloudflare](https://support.cloudflare.com/hc/articles/360019093151).
     -   In the **Name** field, enter the subdomain name; for example, _www_.
     -   In the **Value** field, enter the subdomain bucket endpoint. Do not include the `https://` part.
     -   Click **Save**.
-4.  Next for the root domain (e.g. `example.com`), click **Add Record.** Follow instructions for adding a _CNAME_ record in [Managing DNS records in Cloudflare](https://support.cloudflare.com/hc/articles/360019093151).
-    -   In the **Name** field, enter the root domain name; for example, _example.com_.
-    -   In the **Value** field, the root domain bucket endpoint. Do not include the `https://` part.
+4.  Next for the apex domain (e.g. `example.com`), click **Add Record.** Follow instructions for adding a _CNAME_ record in [Managing DNS records in Cloudflare](https://support.cloudflare.com/hc/articles/360019093151).
+    -   In the **Name** field, enter the apex domain name; for example, _example.com_.
+    -   In the **Value** field, the apex domain bucket endpoint. Do not include the `https://` part.
     -   Click **Save**.
 5.  To finish, [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/articles/205195708).
 
-Once your site is fully configured in Cloudflare, your visitors can access your AWS S3 hosted content using either the subdomain or root domain endpoint you set up.
+Once your site is fully configured in Cloudflare, your visitors can access your AWS S3 hosted content using either the subdomain or apex domain endpoint you set up.
 
 ___
 

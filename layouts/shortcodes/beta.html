@@ -10,9 +10,10 @@
         </span>
         <span>{{- .Page.RenderString .Inner -}}</span>
         {{- printf "</%s>" $heading | safeHTML -}}
+        <div class="DocsMarkdown--pill DocsMarkdown--pill-beta DocsMarkdown-pill-lower">Beta</div>
     <!-- Otherwise render as <h1> -->
     {{- else -}}
         <h1 id="{{- $ID -}}">{{- .Page.RenderString .Inner -}}</h1>
+        <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>
     {{- end -}}
-    <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>
 </div>
