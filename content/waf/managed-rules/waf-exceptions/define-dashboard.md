@@ -38,7 +38,7 @@ To add a WAF exception at the account level (Enterprise plans only):
     - **Skip all remaining rules**: Skips all remaining rules of WAF managed rulesets. If you select this option, proceed to [4. Create the exception](#4-create-the-exception).
     - **Skip specific rules from a Managed Ruleset**: Skips one or more rules of a managed ruleset.
 
-3. Select **Select ruleset**.
+2. Select **Select ruleset**.
 
 3. Next to the ruleset containing the rule(s) you wish to skip, select **Select rules**.
 
