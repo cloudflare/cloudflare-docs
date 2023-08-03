@@ -21,7 +21,7 @@
   "uid": "cybersafe",
   "path": "/learning-paths/cybersafe/",
   "priority": 5,
-  "description": "Prevent children from accessing obscene or harmful content over the internet.See [Project Cybersafe Schools](https://www.cloudflare.com/cybersafe-schools/) to apply.",
+  "description": "Prevent children from accessing obscene or harmful content over the internet. See [Project Cybersafe Schools](https://www.cloudflare.com/cybersafe-schools/) to apply.",
   "products": [
     "Cloudflare Gateway",
     "WARP",

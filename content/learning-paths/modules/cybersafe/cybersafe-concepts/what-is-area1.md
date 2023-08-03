@@ -6,3 +6,7 @@ layout: learning-unit
 ---
 
 {{<render file="_email-security-description" productFolder="email-security">}}
+
+## How Area 1 detects phishing attacks
+
+{{<render file="_reference-detect-phish" productFolder="email-security">}}
