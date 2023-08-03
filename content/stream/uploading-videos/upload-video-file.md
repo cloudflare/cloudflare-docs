@@ -73,7 +73,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `scheduledDeletion`
 
-  - Specifies a date and time when a video is deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. 
+  - Specifies a date and time when a video is deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. The specified date and time cannot be earlier than 30 days from the video's created timestamp.
 
 - `allowedorigins`
 
