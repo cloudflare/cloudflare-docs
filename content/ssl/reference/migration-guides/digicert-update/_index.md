@@ -14,4 +14,4 @@ Cloudflare will begin deprecating DigiCert as a Certificate Authority available 
 
 This change will not impact existing certificates issued from DigiCert that Cloudflare is currently serving, but it will impact new certificate orders and renewals.
 
-Consider the [CAs and certificates FAQ](/ssl/edge-certificates/troubleshooting/ca-faq/) for commonly asked questions that you may have.
+Refer to [CAs and certificates FAQ](/ssl/edge-certificates/troubleshooting/ca-faq/) for commonly asked questions that you may have.

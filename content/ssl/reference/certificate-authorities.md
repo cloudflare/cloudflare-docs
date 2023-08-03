@@ -117,9 +117,9 @@ Refer to [DigiCert documentation](https://www.digicert.com/support/resources/faq
 {{<render file="_caa-records-definition.md">}}
 <br/>
 
-If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf. If you need to add CAA records, refer to the [Add CAA records page](/ssl/edge-certificates/caa-records/).
+If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf. If you need to add CAA records, refer to [Add CAA records](/ssl/edge-certificates/caa-records/).
 
-You can see the CAA record content for each CA in the following table:
+The following table lists the CAA record content for each CA:
 
 {{<table-wrap>}}
 

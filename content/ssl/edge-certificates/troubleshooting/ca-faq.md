@@ -3,7 +3,7 @@ pcx_content_type: faq
 title: CAs and certificates FAQ
 meta:
     title: CAs and edge certificates FAQ
-    description: Consider answers to commonly asked questions about the certificates you can get through Cloudflare and the CAs that Cloudflare partners with.
+    description: Get answers to commonly asked questions about the certificates you can obtain through Cloudflare and the CAs that Cloudflare partners with.
 ---
 
 # CAs and edge certificates FAQ
@@ -22,7 +22,7 @@ Yes. Cloudflare can issue both RSA and ECDSA certificates.
 
 Cloudflare uses Let’s Encrypt, Google Trust Services, Sectigo, and DigiCert. You can see a complete list of products and available CAs and algorithms in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
 
-[DigiCert will soon be removed as a CA from the Cloudflare pipeline](https://developers.cloudflare.com/ssl/reference/migration-guides/digicert-update/) and Sectigo is only used for [backup certificates](/ssl/edge-certificates/backup-certificates/).
+[DigiCert will soon be removed as a CA from the Cloudflare pipeline](/ssl/reference/migration-guides/digicert-update/) and Sectigo is only used for [backup certificates](/ssl/edge-certificates/backup-certificates/).
 
 ### Are there any CA limitations I should know about?
 
@@ -34,7 +34,7 @@ In the [certificate authorities reference page](/ssl/reference/certificate-autho
 
 ### I do not want to use one of the CAs that Cloudflare partners with. What can I do?  
 
-If you are on Business or Enterprise plan, you can [upload a certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) from the CA of your choice.
+If you are on a Business or Enterprise plan, you can [upload a certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) from the CA of your choice.
 
 ### What CAA records do I need in order to allow issuance from Cloudflare CAs?  
 
@@ -50,7 +50,7 @@ You can use Cloudflare [CFSSL trust store](https://github.com/cloudflare/cfssl_t
 
 To be able to specify a CA, you must purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/). Through Advanced Certificate Manager, you can choose the certificate authority when ordering an advanced certificate or you can choose a default CA when using [Total TLS](/ssl/edge-certificates/additional-options/total-tls/).
 
-If you are on Business or Enterprise plan, you can [upload a certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) from the CA of your choice. In this case, certificate issuance and renewal will have to be managed by you.
+If you are on a Business or Enterprise plan, you can [upload a certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) from the CA of your choice. In this case, certificate issuance and renewal will have to be managed by you.
 
 ### Does Cloudflare issue both RSA and ECDSA certificates for Universal certificates?  
 
