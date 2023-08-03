@@ -110,7 +110,7 @@ On iOS, the user does not need to re-authenticate — registration data from the
 {{</tab>}}
 {{</tabs>}}
 
-Once users have enrolled, the migration process is complete.  The 1.1.1.1 app will revert to [consumer mode](#what-to-do-with-the-old-app) and ignore the existing MDM configuration profile. If you do not wish to keep the 1.1.1.1 app, you may uninstall it and delete its MDM configuration.
+Once users have enrolled, the migration process is complete. The 1.1.1.1 app will revert to [consumer mode](#what-to-do-with-the-old-app) and ignore the existing MDM configuration profile. If you do not wish to keep the 1.1.1.1 app, you may uninstall it and delete its MDM configuration.
 
 ### Verify migration
 
