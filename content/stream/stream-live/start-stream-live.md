@@ -80,6 +80,12 @@ header: Response
 
   - The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 
+- `scheduledDeletion` {{<type>}}string{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
+
+  - Specifies a date and time when a video is deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. Minimum value is `30`.
+
+  Note that if the value is added to a live input while a stream is live, the property will only apply to future streams. 
+
 - `allowedOrigins` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
 
   - The `allowedOrigins` property can optionally be invoked to provide a list of allowed origins. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
