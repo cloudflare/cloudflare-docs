@@ -111,7 +111,7 @@ Durable Objects do not receive requests directly from the Internet. Durable Obje
 This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 {{</Aside>}}
 
-To implement a `fetch()` handler, export a method named `fetch()` in an `export default {}` block. Add the following to your `worker.js` file's existing class and fetch handler:
+To communicate with a Durable Object, add the following to your `worker.js` file's existing class and fetch handler :
 
 ```js
 ---
@@ -174,7 +174,7 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
   - `name` - Required. The binding name to use within your Worker.
   - `class_name` - Required. The class name you wish to bind to.
-  - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/platform/environments/) Worker entry point.
+  - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/platform/environments/) Worker code.
 
 ## 6. Configure Durable Object classes with migrations
 

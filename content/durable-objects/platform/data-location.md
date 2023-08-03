@@ -16,7 +16,7 @@ Durable Objects can be created so that they only run and store data within a spe
 Jurisdictions are available to all Durable Objects users. 
 {{</Aside>}}
 
-To use a jurisdiction, first create a jurisidictional subnamespace in your Worker's entry point:
+To use a jurisdiction, first create a jurisidictional subnamespace in your Worker's code:
 
 ```js
 let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');

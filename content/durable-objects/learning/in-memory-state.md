@@ -32,7 +32,7 @@ export class Counter {
 }
 ```
 
-A given instance of a Durable Object may share global memory with other instances defined in the same Worker entry point. 
+A given instance of a Durable Object may share global memory with other instances defined in the same Worker code. 
 
 In the example above, using a global variable `value` instead of the instance variable `this.value` would be incorrect. Two different instances of `Counter` will each have their own separate memory for `this.value`, but might share memory for the global variable `value`, leading to unexpected results. Because of this, it is best to avoid global variables.
 
