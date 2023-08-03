@@ -44,4 +44,3 @@ Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspect
 ```
 
 Refer to the [Querying Workers Metrics](/analytics/graphql-api/tutorials/querying-workers-metrics/) tutorial for authentication and to learn more about querying Workers data sets.
-

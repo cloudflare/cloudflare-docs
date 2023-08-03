@@ -32,13 +32,13 @@ export class Counter {
 }
 ```
 
-A given instance of a Durable Object may share global memory with other instances defined in the same Worker script. 
+A given instance of a Durable Object may share global memory with other instances defined in the same Worker entry point. 
 
 In the example above, using a global variable `value` instead of the instance variable `this.value` would be incorrect. Two different instances of `Counter` will each have their own separate memory for `this.value`, but might share memory for the global variable `value`, leading to unexpected results. Because of this, it is best to avoid global variables.
 
 {{<Aside type="note" header="Built-in caching">}}
 
-The Durable Object's storage has a built-in in-memory cache of its own. If you use `get()` to retrieve a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could use `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Build a counter example](/durable-objects/examples/build-a-counter/) for a sample of this approach.
+The Durable Object's storage has a built-in in-memory cache of its own. If you use `get()` to retrieve a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could use `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Build a counter example](/durable-objects/examples/build-a-counter/) to learn more about this approach.
 
 However, in applications with more complex state, explicitly storing state in your Object may be easier than making transactional storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 

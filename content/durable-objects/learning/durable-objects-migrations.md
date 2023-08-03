@@ -67,7 +67,7 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 Migrations require a migration tag, which is defined by the `tag` property in each migration entry. 
 
-Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given Worker script has a migration tag set on it, all future Worker script deployments must include a migration tag.
+Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given Worker entry point has a migration tag set on it, all future Worker entry point deployments must include a migration tag.
 
 The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
@@ -115,7 +115,7 @@ You should provide an `--old-tag` value whenever possible. This value should be 
 The list of CLI migration arguments that can be added to `wrangler deploy` is as follows:
 
 ```bash
---old-tag <tag name> # Optional if your Worker script does not have a migration tag set yet.
+--old-tag <tag name> # Optional if your Worker entry point does not have a migration tag set yet.
 --new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
 
 # Each of the migration directives can be specified multiple times if you are

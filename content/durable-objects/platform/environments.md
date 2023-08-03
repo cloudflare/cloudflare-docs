@@ -34,9 +34,9 @@ durable_objects.bindings = [
 ]
 ```
 
-`"EXAMPLE_CLASS"` in the staging environment is bound to a different Worker script name compared to the top-level `"EXAMPLE_CLASS"` binding, and will therefore access different Durable Objects with different persistent storage. 
+`"EXAMPLE_CLASS"` in the staging environment is bound to a different Worker entry point name compared to the top-level `"EXAMPLE_CLASS"` binding, and will therefore access different Durable Objects with different persistent storage. 
 
-If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level Worker script name explicitly:
+If you want an environment-specific binding that accesses the same Objects as the top-level binding, specify the top-level Worker entry point name explicitly:
 
 ```toml
 ---
