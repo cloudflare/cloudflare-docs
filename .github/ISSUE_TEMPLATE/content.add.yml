@@ -29,6 +29,7 @@ body:
         - DDoS Protection
         - DMARC Management
         - DNS
+        - Durable Objects
         - Email Routing
         - Email Security
         - Firewall
