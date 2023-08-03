@@ -1,20 +1,22 @@
 ---
 pcx_content_type: reference
-title: Project Cybersafe
+title: Project Cybersafe Schools
 ---
 
-# Project Cybersafe
+# Project Cybersafe Schools
 
 Project Cybersafe grants eligible schools with free access to Cloudflare's [Email Security](/email-security/) and [Gateway](cloudflare-one/policies/gateway/) products. 
 
--- needs work. maybe add more from blog
+## School Eligibility
+
+{{<render file="_cybersafe-school-eligibility.md" productFolder="fundamentals">}}
 
 ## Children’s Internet Protection Act (CIPA)
 
 {{<render file="_cybersafe-description.md" productFolder="fundamentals">}}
 
 
-### Requirements
+### CIPA Requirements
 
 {{<render file="_cybersafe-requirements.md" productFolder="fundamentals">}}
 
