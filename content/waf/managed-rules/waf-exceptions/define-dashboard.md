@@ -29,7 +29,7 @@ To add a WAF exception at the account level (Enterprise plans only):
 
     ![The Add exception page in the Cloudflare dashboard](/images/waf/waf-exception-create.png)
 
-2. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. The filter expression uses the [Rules language](/ruleset-engine/rules-language/).
+2. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. When the expression matches, the WAF will evaluate the exception skipping one or more rules of WAF managed rulesets. The filter expression uses the [Rules language](/ruleset-engine/rules-language/).
 
 ## 3. Select the rules to skip
 
@@ -60,6 +60,10 @@ To add a WAF exception at the account level (Enterprise plans only):
 
 ## 4. Create the exception
 
-4. (Optional) To disable logging for requests matching the WAF exception, disable **Log matching requests**.
+1. (Optional) To disable logging for requests matching the WAF exception, disable **Log matching requests**.
 
-5. To save and deploy your exception, select **Deploy**. If you are not ready to deploy your exception, select **Save as Draft**.
+2. To save and deploy your exception, select **Deploy**. If you are not ready to deploy your exception, select **Save as Draft**.
+
+{{<Aside type="note">}}
+WAF exceptions only apply to rules executing a managed ruleset listed after them. For example, if you are skipping a rule belonging to the Cloudflare OWASP Core Ruleset, make sure the exception is listed in **Security** > **WAF** > **Managed rules** _before_ the execute rule deploying this managed ruleset.
+{{</Aside>}}
