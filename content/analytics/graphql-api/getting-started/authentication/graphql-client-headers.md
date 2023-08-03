@@ -20,7 +20,6 @@ weight: 41
       ![Editing HTTP Headers](/images/analytics/GraphiQL-edit-http-headers-token.png)
     - **Key authentication**:
       Enter `X-AUTH-KEY` in the **Header Name** field, and paste your Global API Key in the **Header value** field, then select **Save**.
-      ![Editing HTTP Headers](/images/analytics/GraphiQL-edit-http-headers-complete.png)
 6. Select anywhere outside the **Edit HTTP Headers** window in GraphiQL to close it and return to the main GraphiQL display.
 7. Enter `https://api.cloudflare.com/client/v4/graphql` in the **GraphQL Endpoint** field
     ![Editing GraphQL Endpoint](/images/analytics/GraphiQL-response-pane.png)
