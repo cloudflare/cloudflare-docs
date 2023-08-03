@@ -22,7 +22,7 @@ build_configs:
     icon: /icons/framework-icons/logo-next-js.svg
   next-js-static:
     display_name: Next.js (Static HTML Export)
-    build_command: npx next build && npx next export
+    build_command: npx next build
     build_output_directory: out
     icon: /icons/framework-icons/logo-next-js.svg
   nuxt-js:
