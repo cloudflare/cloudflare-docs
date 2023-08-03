@@ -1,5 +1,5 @@
 ---
-title: What is Area 1?
+title: What is Area 1 email security?
 pcx_content_type: learning-unit
 weight: 5
 layout: learning-unit

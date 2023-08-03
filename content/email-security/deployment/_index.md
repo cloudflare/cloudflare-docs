@@ -8,4 +8,6 @@ weight: 2
 
 {{<render file="_setup-overview.md">}}
 
+Select a deployment method to get started.
+
 {{<directory-listing>}}
