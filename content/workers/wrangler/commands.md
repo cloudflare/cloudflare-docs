@@ -1259,7 +1259,7 @@ $ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - If omitted, Wrangler expects to receive input from stdin rather than a file.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -1271,7 +1271,7 @@ $ wrangler secret:bulk [<FILENAME>] [OPTIONS]
     {{</definitions>}}
 
   {{<Aside type="note">}}
-  Below is an example of uploading secrets from a JSON file redirected to stdin. When complete, the output summary will show the number of secrets uploaded and number failed.
+  Below is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
   ```json
   ---
