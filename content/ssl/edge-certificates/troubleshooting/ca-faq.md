@@ -20,13 +20,13 @@ Yes. Cloudflare can issue both RSA and ECDSA certificates.
 
 ### Which certificate authorities does Cloudflare use?  
 
-Cloudflare uses Let’s Encrypt, Google Trust Services, Sectigo and DigiCert. You can see a complete list of products and available CAs and algorithms in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
+Cloudflare uses Let’s Encrypt, Google Trust Services, Sectigo, and DigiCert. You can see a complete list of products and available CAs and algorithms in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
 
-[DigiCert will soon be removed as a CA from the Cloudflare pipeline](https://developers.cloudflare.com/ssl/reference/migration-guides/digicert-update/) and Sectigo is only used for backup certificates.
+[DigiCert will soon be removed as a CA from the Cloudflare pipeline](https://developers.cloudflare.com/ssl/reference/migration-guides/digicert-update/) and Sectigo is only used for [backup certificates](/ssl/edge-certificates/backup-certificates/).
 
 ### Are there any CA limitations I should know about?
 
-You can find the list of limitations for every CA in our pipeline in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
+You can find a list of limitations for every CA in our pipeline in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
 
 ### What clients are supported by the CAs that Cloudflare offers?  
 
@@ -64,4 +64,4 @@ Certificates issued from Google Trust Services will only receive an RSA certific
 
 When [ordering an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can choose the CA through the UI or API.
 
-[Total TLS](/ssl/edge-certificates/additional-options/total-tls/) allows you to get full certificate coverage. When enabling Total TLS, you can choose the CA that will be used for all Total TLS certs.
+[Total TLS](/ssl/edge-certificates/additional-options/total-tls/) allows you to get full certificate coverage. When enabling Total TLS, you can choose the CA that will be used for all Total TLS certificates.
