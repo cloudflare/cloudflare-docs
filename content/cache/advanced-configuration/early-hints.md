@@ -7,7 +7,7 @@ pcx_content_type: concept
 
 Early Hints takes advantage of “server think time” to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response. By sending these hints to a browser before the full response is prepared, the browser can figure out how to load the webpage faster for the end user.
 
-Formally, Early Hints is a [web standard](https://httpwg.org/specs/rfc8297.html) that defines a new HTTP status code (103 Early Hints) that defines new interactions between a client and server. 103s are served to clients while a 200 OK (or error) response is prepared, which is the “server think time.” You can enable Cloudflare's edge to cache and send 103 Early Hints responses with Link headers from your HTML pages. The response contains hints about which assets will likely be needed to fully render the web page. This "hinting" speeds up page loads and generally reduces user-perceived latency.
+Formally, Early Hints is a [web standard](https://httpwg.org/specs/rfc8297.html) that defines a new HTTP status code (103 Early Hints) that defines new interactions between a client and server. 103s are served to clients while a 200 OK (or error) response is prepared, which is the “server think time.” You can enable Cloudflare's edge to cache and send 103 Early Hints responses with Link headers from your HTML pages. The response contains hints about which assets will likely be needed to fully render the webpage. This "hinting" speeds up page loads and generally reduces user-perceived latency.
 
 {{<Aside type="note" header="Note">}}
 
@@ -21,14 +21,14 @@ For more information about Early Hints, refer to the [Cloudflare](https://blog.c
 
 {{<feature-table id="speed.early_hints">}}
 
-## Enabling Early Hints
+## Enable Early Hints
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 2.  From the dashboard, select **Speed** > **Optimization**.
 3.  Go to the **Content Optimization** tab.
 4.  For **Early Hints**, toggle the switch to **On**.
 
-## Generating Early Hints
+## Generate Early Hints
 
 Early Hints are only generated and cached:
 
@@ -42,7 +42,7 @@ Early Hints cache entries are keyed by request URI and ignore query strings.
 
 {{</Aside>}}
 
-## Emitting Early Hints
+## Emit Early Hints
 
 Cloudflare will asynchronously look up and emit a cached 103 Early Hints response ahead of a main response.
 

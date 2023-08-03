@@ -148,7 +148,7 @@ While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NA
 
 ## D1 databases
 
-Cloudflare [D1](/d1/) is Cloudflare's first SQL database built on SQLite. To bind your D1 database to your Pages Function:
+[D1](/d1/) is Cloudflare’s native serverless database. To bind your D1 database to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.

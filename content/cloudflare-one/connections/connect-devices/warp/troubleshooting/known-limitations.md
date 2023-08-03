@@ -12,6 +12,10 @@ Below, you will find information on devices, software, and configurations that a
 
 The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) for a list of supported operating systems.
 
+## Managed network on legacy Windows Server
+
+[Managed network detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
+
 ## Multi-user support on Windows
 
 The WARP client does not support multiple users on a single Windows device. WARP uses hard-coded global paths to store settings and keys and does not save information on a per-user basis. Therefore, after one user logs into WARP, their settings will apply to all traffic from the device.

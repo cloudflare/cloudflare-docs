@@ -11,7 +11,7 @@ Internet Content Provider (ICP) is a licensing regime instated by the Telecommun
 
 Under ICP, all websites with their own domain name that operate inside China must obtain a license, whether hosted on a server in mainland China or provided to visitors from China via a CDN. Licenses are issued at the provincial level. You can use the Ministry of Industry and Information Technology (MIIT) website to [check if a domain already has an ICP number](https://beian.miit.gov.cn/#/Integrated/recordQuery) (only available in Chinese).
 
-All public websites in mainland China must have an ICP number [displayed on the website's home page](#display-your-icp-number). Websites with the same root domain can share the same ICP number. China-based hosting providers are instructed to shut down any website (often without notice) without an ICP number.
+All public websites in mainland China must have an ICP number [displayed on the website's home page](#display-your-icp-number). Websites with the same apex domain can share the same ICP number. China-based hosting providers are instructed to shut down any website (often without notice) without an ICP number.
 
 ## Types of ICP
 

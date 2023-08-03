@@ -80,7 +80,7 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     `len(http.host)`
 
-- <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}String{{</type>}}
 
   - Returns the string value associated with the supplied `key` in `field`.<br/>
   The `field` must be a string representation of a valid JSON object.<br/>

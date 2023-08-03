@@ -64,24 +64,59 @@ Guiding, straightforward, educational, authoritative
 
 ## Template
 
+We have a pre-built set of tutorial shortcodes that help organize and format tutorials:
+
+- Wrap the entire process within a [`tutorial`](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/tutorial.html) shortcode.
+- Include a [`tutorial-prereqs`](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/tutorial-prereqs.html) shortcode to wrap around any steps someone needs to take before getting started, which has a few input parameters defined in shortcode definition.
+- Wrap individual steps in a [`tutorial-step`](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/tutorial-step.html) shortcode, which has a few input parameters defined in shortcode definition.
+
 ```
-{
 ---
-weight: xx
+header: Tutorial example
+---
+
+---
 pcx_content_type: tutorial
+updated: 2023-06-30
 ---
  
 # Second-person imperative verb phrase that reflects user goal or job-to-be-done
  
 Context for tutorial, intended audience (optional)
  
-Prerequisites
- 
-1. Step one
-2. Step two
-3. Step three
-4. ...
-}
+{{</*tutorial*/>}}
+
+{{</*tutorial-prereqs*/>}}
+
+Various pre-reqs
+
+{{</*/tutorial-prereqs*/>}}
+
+{{</*tutorial-step title="Step 1"*/>}}
+
+Step 1 content
+
+{{</*/tutorial-step*/>}}
+
+{{</*tutorial-step title="Step 2 content" optional=true */>}}
+
+Step 2 content
+
+{{</*/tutorial-step*/>}}
+
+{{</*tutorial-step title="Step 3 content"*/>}}
+
+Step 3 content
+
+{{</*/tutorial-step*/>}}
+
+{{</*tutorial-step title="Step 4"*/>}}
+
+Step 4 content
+
+{{</*/tutorial-step*/>}}
+
+{{</*/tutorial*/>}}
 ```
 
 ## Examples

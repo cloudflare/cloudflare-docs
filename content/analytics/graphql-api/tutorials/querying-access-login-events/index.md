@@ -104,4 +104,4 @@ Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/fe
 }
 ```
 
-You can compare the query results to your Access policies to see why a user was blocked. For example, if your application requires a valid mTLS certificate, Access blocked the request shown above because `mtlsStatus`, `mtlsCommonName`, and `mtlsCertSerialId` are empty.
+You can compare the query results to your Access policies to understand why a user was blocked. For example, if your application requires a valid mTLS certificate, Access blocked the request shown above because `mtlsStatus`, `mtlsCommonName`, and `mtlsCertSerialId` are empty.

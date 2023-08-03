@@ -18,7 +18,7 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 
 Before you start this tutorial, ensure you have:
 
-- All the [prerequisites](/waiting-room/#prerequisites) completed.
+- All the [prerequisites](/waiting-room/about/#prerequisites) completed.
 - For this tutorial, we will use an open source tool from Apache, [JMeter](https://jmeter.apache.org/). You can download the binary from [JMeter's website](https://jmeter.apache.org/download_jmeter.cgi). 
 
 ---

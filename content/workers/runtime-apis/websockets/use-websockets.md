@@ -86,7 +86,7 @@ async function handleRequest(request) {
 }
 ```
 
-WebSockets emit a number of [Events](/workers/runtime-apis/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
+WebSockets emit a number of [Events](/workers/runtime-apis/websockets/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
 
 ```js
 async function handleRequest(request) {
@@ -122,13 +122,13 @@ websocket.addEventListener('message', event => {
 });
 ```
 
-WebSocket clients can send messages back to the server using the [`send`](/workers/runtime-apis/websockets/#send) function:
+WebSocket clients can send messages back to the server using the [`send`](/workers/runtime-apis/websockets/websockets/#send) function:
 
 ```js
 websocket.send('MESSAGE');
 ```
 
-When the WebSocket interaction is complete, the client can close the connection using [`close`](/workers/runtime-apis/websockets/#close):
+When the WebSocket interaction is complete, the client can close the connection using [`close`](/workers/runtime-apis/websockets/websockets/#close):
 
 ```js
 websocket.close();

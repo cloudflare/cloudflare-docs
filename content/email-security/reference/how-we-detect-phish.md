@@ -7,7 +7,7 @@ layout: list
 
 # How we detect phish
 
-Area 1 uses a variety of factors to determine whether a given email message, a web domain or URL, or specific network traffic is part of a phishing campaign (marked with a `Malicious` [disposition](/email-security/reference/dispositions-and-attributes/)) or other common campaigns (for example, `Spam`).
+Area 1 uses a variety of factors to determine whether a given email message, a web domain or URL, or specific network traffic is part of a phishing campaign (marked with a `MALICIOUS` [disposition](/email-security/reference/dispositions-and-attributes/)) or other common campaigns (for example, `SPAM`).
 
 These small pattern assessments are dynamic in nature and — in many cases — no single one in and of itself will determine the final verdict. Instead, our automated systems uses a combination of factors and non-factors to clearly distinguish between a valid phishing campaign and benign traffic.
 
