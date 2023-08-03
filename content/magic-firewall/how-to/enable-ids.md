@@ -14,8 +14,6 @@ You can enable IDS through the dashboard or via the API.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-## Enable IDS
-
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic Firewall** > **IDS**.
 3. Enable IDS.
