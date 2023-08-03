@@ -161,6 +161,13 @@ class_name = "DurableObjectExample"
 bindings = [
   { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" }
 ]
+
+# or
+
+[durable_objects]
+bindings = [
+  { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" }
+]
 ```
 
 The `[[durable_objects.bindings]]` section contains the following fields:
