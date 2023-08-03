@@ -1273,20 +1273,18 @@ $ wrangler secret list
 
 ## `secret:bulk`
 
-Manage multiple secrets for a Worker.
-
-### `json`
-
-The path to a JSON file containing secrets in key-value pairs to upload.
+Upload multiple secrets for a Worker at once.
 
 ```sh
-$ wrangler secret:bulk <JSON> [OPTIONS]
+$ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `JSON` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The JSON file of key-value pairs to upload, in form {"key": value, ...}
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
@@ -1297,20 +1295,20 @@ $ wrangler secret:bulk <JSON> [OPTIONS]
     {{</definitions>}}
 
   {{<Aside type="note">}}
-  Below is an example of uploading secrets from a JSON file.
+  Below is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
   ```json
+  ---
+  filename: secrets.json
+  ---
   {
     "secret-name-1": "secret-value-1",
     "secret-name-2": "secret-value-2"
   }
   ```
 
-  {{</Aside>}}
-  {{<Aside type="note">}}
-  When complete the output summary will show the number of secrets uploaded and number failed.
-
-  ```
+  ```sh
+  $ wrangler secret:bulk < secrets.json
   🌀 Creating the secrets for the Worker "script-name"
   ✨ Successfully created secret for key: secret-name-1
   ...
