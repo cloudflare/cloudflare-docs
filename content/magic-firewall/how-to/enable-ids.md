@@ -80,4 +80,4 @@ Similarly, sending a patch request with the `enabled` field set to `true` will e
 
 ## Next steps
 
-You must configure Logpush to log detected risks. Refer to  [Configure a Logpush destination](/magic-firewall/how-to/use-logpush-with-ids/) for more information. Additionally, all traffic that is analyzed can be accessed via [network analytics](/analytics/network-analytics/). Refer to [GraphQL Analytics](/magic-firewall/tutorials/graphql-analytics/) to query the analytics data.
+You must configure Logpush to log detected risks. Refer to [Configure a Logpush destination](/magic-firewall/how-to/use-logpush-with-ids/) for more information. Additionally, all traffic that is analyzed can be accessed via [network analytics](/analytics/network-analytics/). Refer to [GraphQL Analytics](/magic-firewall/tutorials/graphql-analytics/) to query the analytics data.
