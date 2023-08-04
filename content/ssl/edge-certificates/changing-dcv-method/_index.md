@@ -13,9 +13,15 @@ meta:
 {{<render file="_dcv-definition.md">}}
 <br/>
 
-For certificates issued through Cloudflare, this process may be done automatically or it may require you to take action, as described in the following sections.
+{{<Aside type="note">}}
+
+Refer to [Domain control validation flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) to learn more about the steps and parties involved in the DCV process.
+
+{{</Aside>}}
 
 For [custom certificates](/ssl/edge-certificates/custom-certificates/), DCV will always be handled by you, when you request the certificate from the CA.
+
+For certificates issued through Cloudflare, this process may be done automatically or it may require you to take action, as described in the following sections.
 
 ---
 
