@@ -13,36 +13,43 @@ meta:
 
 {{<description>}}
 
-Create low-latency, permanent, and consistent storage.
+A globally distributed coordination API with strongly consistent storage.
 
 {{</description>}}
 
 {{<plan type="paid">}}
 
-Durable Objects are Cloudflare's storage and coordination solution. Durable Objects provide you with scalable compute and strong transactional consistency. With Durable Objects, you can coordinate requests without accessing storage. 
+Durable Objects provide a powerful API for coordinating the actions of multiple clients or users, each with private, transactional and strongly consistent storage attached.
 
+Developers use Durable Objects to to build collaborative editing, interactive chat, multiplayer games and other applications that have a strong need to coordinate the actions of multiple clients, without requring you to build serialization and coordination primitives on your own. 
 
-Use Durable Objects to facilitate real-time chat, collaborative editing, video conferencing, game sessions and more.
+You can create millions of (or more) Durable Objects, representing a document, chat session, multiplayer game or other aspect of your system where events need to be coordinated or serialized. Each Durable Object is automatically located as close to the client or user as possible, minimizing latency between the client and Durable Objects.
 
 ---
 
 ## Features
 
+{{<feature header="Transactional Storage API" href="/durable-objects/learning/in-memory-state/">}}
+
+Understand how Durable Objects can act as a powerful coordination API for managing the actions of multiple clients or events.
+
+{{</feature>}}
+
 {{<feature header="Transactional Storage API" href="/durable-objects/api/transactional-storage-api/">}}
 
-Learn how Durable Objects provide consistent key-value storage.
+Learn how Durable Objects provide strongly consistent, serializable key-value storage.
 
 {{</feature>}}
 
 {{<feature header="Hibernatable WebSockets API" href="/durable-objects/api/hibernatable-websockets-api/">}}
 
-Learn how the Hibernatable WebSockets API allows you to keep a long-term connection.
+Learn how the Hibernatable WebSockets API allows you to manage the connections of multiple clients at scale.
 
 {{</feature>}}
 
 {{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms-in-durable-objects/">}}
 
-Learn how to schedule the Object to be waken up at a time in the future. 
+Learn how to trigger a Durable Object to wake up and perform compute in the future at customizable intervals.
 
 {{</feature>}}
 
@@ -58,7 +65,7 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 
 {{<related header="D1" href="/d1/" product="d1">}}
 
-D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+D1 is Cloudflare’s SQL-based native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 {{</related>}}
 
@@ -73,6 +80,8 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 ## More resources
 
 {{<resource-group>}}
+
+{{<resource header="Built with Durable Objects" href="https://workers.cloudflare.com/built-with/collections/durable-objects/" icon="reference-architecture">}}See what other developers have built with Durable Objects.{{</resource>}}
  
 {{<resource header="Limits" href="/durable-objects/platform/limits/" icon="documentation-clipboard">}}Learn about Durable Objects limits.{{</resource>}}
 
