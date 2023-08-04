@@ -83,8 +83,9 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 - <code id="function-lookup_json_integer">{{<name>}}lookup_json_integer{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}Integer{{</type>}}
 
   - Returns the integer value associated with the supplied `key` in `field`.<br/>
-  The `field` must be a string representation of a valid JSON object.<br/>
-  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON object to obtain a specific integer value.
+  The `field` must be a string representation of a valid JSON document.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific integer value.<br>
+  Note: This function only works for plain integers. For example, it will not work for floating numbers with a zero decimal part such as `42.0`.
 
   - _Examples:_
 
