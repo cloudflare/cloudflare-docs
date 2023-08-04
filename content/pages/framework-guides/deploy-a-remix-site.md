@@ -135,7 +135,7 @@ Refer to the [Remix documentation](https://remix.run/docs/en/main/guides/data-lo
 
 #### Durable Objects
 
-Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/workers/runtime-apis/durable-objects/#durable-object-class-definition).
+Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
 ```ts
 export const loader = async ({ context, params }: LoaderArgs) => {
