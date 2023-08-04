@@ -58,11 +58,11 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#usage-models)                         | [Unbound Usage Model]([Bundled Usage Model](/workers/platform/pricing/#usage-models)                         |
+| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#usage-models)                         | [Unbound Usage Model](/workers/platform/pricing/#usage-models)                         |
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
-| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/platform/javascript-apis/#consumer) |     |
+| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/platform/javascript-apis/#consumer) |     |
 | [Duration](#duration)       |   none                                         |  none                                           | none                                  |
 
 {{</table-wrap>}}
