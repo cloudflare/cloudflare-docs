@@ -11,15 +11,6 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 {{</Aside>}}
 
-## Before you start (Magic Transit customers only)
-
-If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from _Withdrawn_ to _Advertised_), make sure you disable [Advanced TCP Protection](/ddos-protection/tcp-protection/) first.
-
-After enabling the prefix advertisement or advertising a new prefix, do the following:
-
-1.  Ensure that the traffic is being successfully routed via the Cloudflare network. Check the Network Analytics dashboard or [use `traceroute`](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) to analyze the path IP packets are taking.
-2.  Re-enable Advanced TCP Protection.
-
 ## Configure dynamic advertisement via the dashboard
 
 To configure IP prefix assignment from your Cloudflare account home, use the **Status** drop-down list in the **IP Prefixes** dialog, as outlined below.
@@ -42,16 +33,16 @@ Most dynamic advertisement operations require that you supply the Cloudflare ID 
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **IP Addresses** > **IP Prefixes**.
 3. Find the CIDR for which you want the Prefix ID, and select the arrow next to it.
 4. The Prefix ID is the value under **API Tag**. Select **Copy** to add the value to your clipboard.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 To obtain Prefix IDs using the API, refer to the [List Prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API.
- 
+
 {{</tab>}}
 {{</tabs>}}
