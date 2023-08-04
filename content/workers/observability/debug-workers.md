@@ -5,65 +5,43 @@ title: Debug Workers
 
 # Debug Workers
 
-Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production. In this article, you will learn how to effectively debug your Workers application, as well as review some code samples to help you get started:
+Having visibility into issues, and being able to address them quickly is a critical part of developing an application. There are many tools to help identify issues in your Cloudflare Workers so you can respond appropriately.
 
 {{<youtube id="8iPmy7ePYDE">}}
 
 ---
 
-## Local testing with `wrangler dev`
+## Debug locally
 
-The [`wrangler dev`](/workers/wrangler/commands/#dev) command starts a local server for developing your Worker. `wrangler dev` allows you to get feedback quickly while iterating by exposing logs on `localhost` and to experiment without deploying to production. `wrangler dev` can significantly reduce the time it takes to test and debug new features.
+For local development, there is the Wrangler CLI. Running the [`wrangler dev`](/workers/wrangler/commands/#dev) command, you can start a local server for developing your Worker. `wrangler dev` will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the Miniflare simulator.
 
-`wrangler dev` will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the Miniflare simulator.
-
-In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products, such as [R2](/r2/), [KV](/kv/api/), [D1](/d1/), and [Durable Objects](/durable-objects/).
-
-### Local testing against remote resources
-
-`wrangler dev` runs locally by default. To deploy your application to the edge preview service, and make it available for access on `localhost`, run `wrangler dev --remote`:
-
-```sh
-$ wrangler dev
-
-  Built successfully, built project size is 27 KiB.
-  Using namespace for Workers Site "__app-workers_sites_assets_preview"
-  Uploading site files
-  Listening on http://localhost:8787
-
-[2020-05-28 10:42:33] GET example.com/ HTTP/1.1 200 OK
-[2020-05-28 10:42:35] GET example.com/static/nav-7cb303.png HTTP/1.1 200 OK
-[2020-05-28 10:42:36] GET example.com/sw.js HTTP/1.1 200 OK
-```
-
-In the output above, you can begin to see log lines for the URLs being requested locally.
-
-{{<Aside type="info">}}
-
-Unlike `wrangler dev`, which provides local instances of resources to develop against, `wrangler dev --remote` will leverage remote production resources specified in your `wrangler.toml`. These resources will use production data, and will count towards account usage for billing purposes.
-
-{{</Aside>}}
+Read more about this in our [local development and testing guide](/workers/learning/local-development-and-testing).
 
 ### DevTools
 
-Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/devtools/) to view logs/sources, set breakpoints, and profile CPU/memory usage. With `wrangler dev` running, press the <kbd>d</kbd> key in your terminal to open a DevTools session connected to your Worker.
+When running `wrangler dev`, you will see the following in your CLI:
 
-{{<Aside type="warning">}}
+```sh
+------------------
+wrangler dev now uses local mode by default, powered by 🔥 Miniflare and 👷 workerd.
+To run an edge preview session for your Worker, use wrangler dev --remote
 
-Breakpoint debugging is only supported when running `wrangler dev` locally, without the `--remote` flag.
+⎔ Starting local server...
+
+[mf:inf] Ready on http://127.0.0.1:8787/
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ [b] open a browser, [d] open Devtools, [l] turn off local mode, [c] clear console, [x] to exit          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```
+
+If you press `d` on your keyboard, a new DevTools session will open up so you can debug. Here, you can view console logs, view network requests, take memory snapshots, and see CPU usage.
+
+{{<Aside type="note">}}
+
+In addition to the CLI, DevTools sessions are also available via the Workers Dashboard editor.
 
 {{</Aside>}}
 
-### Customize `wrangler dev`
+## Debug via logs
 
-You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/wrangler/commands/#dev) for available configuration options.
-
-{{<Aside type="warning">}}
-
-There is a bug associated with `wrangler dev --remote` documented in the [Known issues section](/workers/platform/known-issues/#wrangler-dev).
-
-{{</Aside>}}
-
-## Livestream logs from deployed Workers with `wrangler tail`
-
-To get more insight into currently deployed Workers, run [`wrangler tail`](/workers/wrangler/commands/#tail). `wrangler tail` starts a session to livestream logs from a deployed Worker.
+There are a variety of ways to get log messages from Workers, to view them, and to store them. Read the [Log from Workers guide](/workers/learning/log-from-workers) for detailed information.
