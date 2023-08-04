@@ -10,7 +10,7 @@ meta:
 
 In order to obtain [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates, Cloudflare partners with different publicly trusted [certificate authorities (CAs)](/ssl/reference/certificate-authorities/).
 
-However, every time a CA will issue or renew a certificate, the requester must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing an HTTP token at a standard URL path (`/.well-known/pki-validation`), or placing a TXT record at the authoritative DNS provider.
+However, every time a CA is requested to issue or renew a certificate, the requester must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing an HTTP token at a standard URL path (`/.well-known/pki-validation`), or placing a TXT record at the authoritative DNS provider.
 
 ## Where Cloudflare sits in the DCV process
 
@@ -27,7 +27,7 @@ In summary, five steps have to succeed after Cloudflare requests a CA to issue o
 1. Cloudflare receives the DCV tokens from the CA.
 2. Cloudflare either places the tokens on your behalf ([Full DNS setup](/dns/zone-setups/full-setup/), [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/)), or makes the tokens available for you to place them.
 2. Cloudflare polls the validation URLs to check for the tokens.
-3. After Cloudflare can see that the tokens are placed via multiple DNS resolvers, the CA is asked to check as well.
+3. After Cloudflare can confirm that the tokens are placed via multiple DNS resolvers, the CA is asked to check as well.
 4. If the CA can confirm the tokens are placed, the certificate gets issued. If the CA cannot confirm the tokens are placed, the certificate is not issued and the tokens are no longer valid.
 
 ## Aspects to consider
