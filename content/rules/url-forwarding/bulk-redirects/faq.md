@@ -16,17 +16,13 @@ To troubleshoot runtime errors related to Bulk Redirects, refer to [Troubleshoot
 
 In this situation, Cloudflare will use the URL redirect of the first rule that triggers. This will be determined by the order of the Bulk Redirect Rules enabling each Bulk Redirect List in the `http_request_redirect` phase entry point ruleset.
 
-## I get an error when uploading a CSV list of redirects to a list. How can I solve this issue?
+## How can I solve the following error: "This account has reached the limit on the number of URL matching items on the same hostname/path"?
 
-You may get the following error when uploading items to a Bulk Redirect List:
+You may get this error when adding items to a Bulk Redirect List.
 
-```txt
-This account has reached the limit on the number of URL matching items on the same hostname/path
-```
+You can have any number of URL redirects with the same source hostname (with different paths) or same source path (with different hostnames). However, you can have a maximum of 16 source URLs with the same hostname and path across all lists, either enabled by a Bulk Redirect Rule or not.
 
-You can have any number of redirects with the same source hostname (with different paths) or same source path (with different hostnames). However, there is a maximum of 16 source URLs with the same hostname and path across all lists, either enabled by a Bulk Redirect Rule or not.
-
-If you receive this error when uploading a CSV file, check if you have any unused Bulk Redirect Lists with the source hostname and path that caused the error, and remove such items from the list.
+If you receive this error, check if you have any unused Bulk Redirect Lists with the source hostname and path that caused the error, and remove such items from the list.
 
 ## How many URL redirects can I have in a single Bulk Redirect List?
 
