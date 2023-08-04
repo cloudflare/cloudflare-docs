@@ -6,7 +6,7 @@ new_learning_path: true
 pcx_content_type: learning-path
 meta:
     title: Project Cybersafe
-    description: Prevent children from accessing obscene or harmful content over the internet.
+    description: Prevent children from accessing obscene or harmful content over the Internet.
 ---
 
 {{<learning-path file="cybersafe.json">}}
