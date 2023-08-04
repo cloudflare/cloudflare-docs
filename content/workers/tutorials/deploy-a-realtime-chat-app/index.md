@@ -8,7 +8,7 @@ title: Deploy a real-time chat application
 
 # Deploy a real-time chat application
 
-In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/workers/configuration/durable-objects/). 
+In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/). 
 
 This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
 

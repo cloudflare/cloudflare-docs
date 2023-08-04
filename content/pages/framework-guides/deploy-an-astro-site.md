@@ -119,7 +119,7 @@ export default defineConfig({
 
 ## Use bindings in your Astro application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/configuration/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 In Astro you can add server-side code via [endpoints](https://docs.astro.build/en/core-concepts/endpoints/), in such endpoints you can then use the `getRuntime()` method to access Cloudflare's environment and consecutively any bindings set for your application.
 
