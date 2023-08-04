@@ -3,6 +3,12 @@ pcx_content_type: configuration
 title: Durable Objects
 ---
 
+<!-- 
+
+Do not write on this page. Make edits to the /durable-objects/get-started doc instead.
+
+-->
+
 # Durable Objects
 
 Durable Objects are available to anyone with a Workers paid subscription. Enable Durable Objects for your account by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > going to **Workers & Pages** > selecting your Worker and in **Metrics**, opting in to pricing.
