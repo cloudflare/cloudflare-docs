@@ -116,6 +116,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 13. Select **Save** to complete the configuration.
 
 14. In the **Assignments** tab, add the users and groups you want to synchronize with Cloudflare Access.
+15. In the **Push Groups** tab, enable the Push Groups function
 
 Provisioning will begin immediately. To verify the integration, select **View Logs** in the Okta SCIM application.
 
