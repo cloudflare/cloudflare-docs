@@ -20,9 +20,10 @@ After creating your organization key and authorizing Area 1:
 7. In Target, paste the URL that suits your organization. KnowBe4 has different URLs for different regions:
     KnowBe4 instance | URL
     ---              | ---
-    United States    |	https://area1.vendor.training.knowbe4.com/v1
-    European Union   | https://area1.vendor.eu.knowbe4.com/v1
-    Canada           | https://area1.vendor.ca.knowbe4.com/v1
-    United Kingdom   | https://area1.vendor.uk.knowbe4.com/v1
-    Germany          | https://area1.vendor.da.knowbe4.com/v1
-8. Select **Publish Webhook**.
+    United States    | `https://area1.vendor.training.knowbe4.com/v1`
+    European Union   | `https://area1.vendor.eu.knowbe4.com/v1`
+    Canada           | `https://area1.vendor.ca.knowbe4.com/v1`
+    United Kingdom   | `https://area1.vendor.uk.knowbe4.com/v1`
+    Germany          | `https://area1.vendor.da.knowbe4.com/v1`
+8. Select _Expanded_ from the drop-down menu for **Malicious Style**, **Suspicious Style**, and **Spoof Style**.
+9. Select **Publish Webhook**.
