@@ -28,6 +28,7 @@ body:
         - DDoS Protection
         - DMARC Management
         - DNS
+        - Durable Objects
         - Email Routing
         - Email Security
         - Firewall
@@ -91,8 +92,8 @@ body:
     attributes:
       label: What changes are you suggesting?
       description: |
-        - Give as much detail as you can to help us understand the change you want to see. 
-        - Why should the docs be changed? What use cases does it support? 
+        - Give as much detail as you can to help us understand the change you want to see.
+        - Why should the docs be changed? What use cases does it support?
         - What is the expected outcome?
 
   - type: textarea

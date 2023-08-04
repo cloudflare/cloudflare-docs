@@ -3,6 +3,12 @@ pcx_content_type: concept
 title: Durable Objects
 ---
 
+<!-- 
+
+Do not write on this page. Make edits to the /durable-objects/get-started doc instead. 
+
+-->
+
 # Durable Objects
 
 Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
