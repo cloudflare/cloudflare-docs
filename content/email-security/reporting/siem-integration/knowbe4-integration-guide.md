@@ -15,9 +15,9 @@ After creating your organization key and authorizing Area 1:
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Select **New Webhook**.
-5. In an **App Type**, select **SIEM**.
+5. In **App Type**, select **SIEM**.
 6. Choose _KnowBe4_ from the dropdown, and paste your organization key into the **Auth Code** section.
-7. In Target, paste the URL that suits your organization. KnowBe4 has different URLs for different regions:
+7. In **Target**, paste the URL that suits your organization. KnowBe4 has different URLs for different regions:
     KnowBe4 instance | URL
     ---              | ---
     United States    | `https://area1.vendor.training.knowbe4.com/v1`

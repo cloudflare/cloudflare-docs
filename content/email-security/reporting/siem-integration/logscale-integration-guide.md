@@ -15,7 +15,7 @@ After creating your Ingest Token:
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Select **New Webhook**.
-5. In an **App Type**, select **SIEM**.
+5. In **App Type**, select **SIEM**.
 6. Choose _Crowdstrike_ from the dropdown, and paste your Ingest Token into the **Auth Code** section.
-7. In Target, paste the URL `https://cloud.community.humio.com/api/v1/ingest/hec/raw`.
+7. In **Target**, paste the URL `https://cloud.community.humio.com/api/v1/ingest/hec/raw`.
 8. Select **Publish Webhook**.
