@@ -337,7 +337,7 @@ database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 
 ### Durable Objects
 
-[Durable Objects](/workers/configuration/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
+[Durable Objects](/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 To bind Durable Objects to your Worker, assign an array of the below object to the `durable_objects.bindings` key.
 
@@ -374,7 +374,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/configuration/durable-objects/#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/learning/durable-objects-migrations/).
 
 {{<definitions>}}
 
