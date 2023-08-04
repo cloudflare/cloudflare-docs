@@ -17,7 +17,7 @@ The latest deployment for a Worker is considered the active deployment. You can 
 
 {{<Aside type="note">}}
 
-Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [R2](/r2/), and [Durable Objects](/workers/configuration/durable-objects/) are not tracked with deployments.
+Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [R2](/r2/), and [Durable Objects](/durable-objects/) are not tracked with deployments.
 
 {{</Aside>}}
 
@@ -85,7 +85,7 @@ Rollbacks are only valid to the latest 10 deployments.
 
 Rollbacks will not be allowed if external resources have been deleted or modified between the target deployment and the active deployment. Specifically, rollbacks will not be allowed if:
 
-- A Durable Object migration has occurred between the active deployment and target deployment.
+- A [Durable Object migration](/durable-objects/learning/durable-objects-migrations/) has occurred between the active deployment and target deployment.
 - If the target deployment has a binding to an R2 bucket, KV namespace, or queue that no longer exists.
 - If the target deployment has a binding to a D1 database (this limitation will be removed in the future).
 

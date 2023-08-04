@@ -72,9 +72,9 @@ It is ideal for projects that require:
 To get started with Durable Objects:
 
 * Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects//).
-* Get started with [Durable Objects](/workers/configuration/durable-objects/).
-* Review the [Durable Objects Runtime API](/workers/runtime-apis/durable-objects/).
-* Learn about Durable Objects [Limits](/workers/platform/limits/#durable-objects-limits/).
+* Review the [Durable Objects documentation](/durable-objects/).
+* Get started with [Durable Objects](/durable-objects/get-started/).
+* Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
 ## D1
 
