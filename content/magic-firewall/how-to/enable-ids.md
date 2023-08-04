@@ -3,10 +3,10 @@ title: Enable IDS
 pcx_content_type: how-to
 weight: 5
 meta:
-  title: Enable Intrusion Detection Systems (IDS)
+  title: Enable Intrusion Detection System (IDS)
 ---
 
-# Enable Intrusion Detection Systems (IDS)
+# Enable Intrusion Detection System (IDS)
 
 Cloudflare's IDS takes advantage of the threat intelligence powered by our global network and extends the capabilities of the Cloudflare Firewall to monitor and protect your network from malicious actors.
 
@@ -55,7 +55,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 
 With this ruleset added, IDS will start inspecting packets and report any anomalous traffic. Next, you can [configure Logpush](/magic-firewall/how-to/use-logpush-with-ids/) to start receiving details about the anomalous traffic.
 
-3. Use the rule created in the previous step to enable or disable IDS. The Rulesets API documentation describes [how to patch a rule](/ruleset-engine/rulesets-api/update-rule/). <br> For example, the following patch request to set the `enabled` field to `false` will disable IDS. The ruleset and rule ID from the ruleset created in the previous step are used below.
+3. Use the rule created in the previous step to enable or disable IDS. The Rulesets API documentation describes [how to patch a rule](/ruleset-engine/rulesets-api/update-rule/). <br><br> For example, the following patch request to set the `enabled` field to `false` will disable IDS. The ruleset and rule ID from the ruleset created in the previous step are used below.
 
 ```bash
 curl --request PATCH \
