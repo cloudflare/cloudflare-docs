@@ -23,7 +23,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 ### Deploy `cloudflared` replicas
 
-To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it as multiple different processes. If your tunnel runs as a service, only one `cloudflared` instance is allowed per host.
+To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it on multiple hosts. If your tunnel runs as a service, only one `cloudflared` instance is allowed per host.
 
 <details>
 <summary>Via the dashboard</summary>
@@ -33,7 +33,7 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 2. On the **Tunnels** page, select your newly created tunnel. The **Connectors** section shows all of the `cloudflared` instances for that tunnel.
 3. Select **Configure**.
 4. Select the operating system of the host where you want to deploy a replica.
-5. Copy the installation command and run it on the host. 
+5. Copy the installation command and run it on the host.
 
 The new replica will appear on the **Connectors** list for the tunnel.
 
