@@ -1,6 +1,6 @@
 ---
 title: KnowBe4
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 meta:
     description: KnowBe4 integration guide
 updated: 2023-08-04

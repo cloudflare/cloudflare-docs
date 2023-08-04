@@ -1,6 +1,6 @@
 ---
 title: LogScale
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 meta:
     description: Falcon LogScale integration guide
 updated: 2023-08-04
