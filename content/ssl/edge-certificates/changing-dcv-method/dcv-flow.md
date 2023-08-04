@@ -10,7 +10,7 @@ meta:
 
 In order to obtain [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates, Cloudflare partners with different publicly trusted [certificate authorities (CAs)](/ssl/reference/certificate-authorities/).
 
-However, every time a CA will issue or renew a certificate, the requestor must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing a token on a standard URL path (`/.well-known/pki-validation`).
+However, every time a CA will issue or renew a certificate, the requestor must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing an HTTP token at a standard URL path (`/.well-known/pki-validation`), or placing a TXT record at the authoritative DNS provider.
 
 ## Where Cloudflare sits in the DCV process
 
@@ -32,5 +32,7 @@ In summary, five steps have to succeed after Cloudflare requests a CA to issue o
 
 ## Aspects to consider
 
+* DCV tokens also have [validity periods](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/). If you are handling the DCV process manually, it is recommended that you place the tokens as soon as the certificate is up for renewal. Otherwise, the tokens may expire and new tokens will be required.
 * Settings that interfere with the validation URLs can cause issues with your certificate issuance or renewal. Refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
 * The DCV tokens are generated and controlled by the CA and not by Cloudflare.
+* Cetificate authority authorization (CAA) records may block certificate issuance. Refer to [CAA records](/ssl/edge-certificates/caa-records/).
