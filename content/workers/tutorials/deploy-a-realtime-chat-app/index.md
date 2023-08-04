@@ -32,12 +32,12 @@ After you have cloned the repository, authenticate Wrangler by running:
 $ wrangler login
 ```
 
-## Publish your project
+## Deploy your project
 
 When you are ready to deploy your application, run:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 Your application will be deployed to your `*.workers.dev` subdomain. 
@@ -90,7 +90,7 @@ tag = "v2"
 deleted_classes = ["ChatRoom", "RateLimiter"]
 ```
 
-Then run `wrangler publish`.
+Then run `npx wrangler deploy`.
 
 To delete your Worker:
 

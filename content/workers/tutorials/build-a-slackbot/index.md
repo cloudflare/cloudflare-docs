@@ -697,20 +697,18 @@ export default async request => {
 };
 ```
 
-## Publish
+## Deploy
 
-By completing the preceding steps, you have finished writing the code for your Slack bot. You can now publish your application.
+By completing the preceding steps, you have finished writing the code for your Slack bot. You can now deploy your application.
 
-Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
+Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `npx wrangler deploy`, which will build and deploy your code.
 
-![Animated gif of running the `wrangler publish` command to deploy your Workers application](/images/workers/tutorials/slackbot/publish.gif)
-
-Publishing your Workers application should now cause issue updates to start appearing in your Slack channel, as the GitHub webhook can now successfully reach your Workers webhook route:
+Deploying your Workers application should now cause issue updates to start appearing in your Slack channel, as the GitHub webhook can now successfully reach your Workers webhook route:
 
 ![When you create new issue, a Slackbot will now appear in your Slack channel](/images/workers/tutorials/slackbot/create-new-issue.gif)
 
 ## Related resources
 
-In this tutorial, you built and published a Cloudflare Workers application that can respond to GitHub webhook events, and allow GitHub API lookups within Slack. If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/codewithkristian/workers-slack-bot).
+In this tutorial, you built and deployed a Cloudflare Workers application that can respond to GitHub webhook events, and allow GitHub API lookups within Slack. If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/codewithkristian/workers-slack-bot).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).

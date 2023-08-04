@@ -85,7 +85,7 @@ Type `.quit` to exit the shell.
 
 ## Use Wrangler to create a Workers project
 
-The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to create, locally develop, and publish your Workers projects.
+The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to create, locally develop, and deploy your Workers projects.
 
 To create a new Workers project (named `worker-turso-ts`), run the following:
 
@@ -346,17 +346,17 @@ You should see the text `“Added”`. If you load the first URL with the `/user
 
 Quit Wrangler by typing `q` into the shell where it was started.
 
-## Publish to Cloudflare
+## Deploy to Cloudflare
 
-After you have validated that your Worker can connect to your Turso database, publish your Worker. Run the following Wrangler command to publish our Worker publicly:
+After you have validated that your Worker can connect to your Turso database, deploy your Worker. Run the following Wrangler command to deploy your Worker to the Cloudflare global network:
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 The first time you run this command, it will launch a browser, ask you to sign in with your Cloudflare account, and grant permissions to Wrangler.
 
-The `publish` command will output the following:
+The `deploy` command will output the following:
 
 ```sh
 Your worker has access to the following bindings:
@@ -368,13 +368,13 @@ Published worker-turso-ts (0.19 sec)
 Current Deployment ID: f9e6b48f-5aac-40bd-8f44-8a40be2212ff
 ```
 
-You have now published a Worker that can connect to your Turso database, query it, and insert new data.
+You have now deployed a Worker that can connect to your Turso database, query it, and insert new data.
 
 ## Optional: Clean up
 
 To clean up the resources you created as part of this tutorial:
 
-* If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the published Worker.
+* If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the deployed Worker.
 * You can also delete your Turso database via `turso db destroy my-db`.
 
 ## Related resources

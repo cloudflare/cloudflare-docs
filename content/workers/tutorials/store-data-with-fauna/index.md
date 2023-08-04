@@ -91,12 +91,12 @@ header: Create a Workers function
 ---
 $ git clone https://github.com/fauna-labs/fauna-workers
 $ cd fauna-workers
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
-{{<Aside type="note" header="Publish before storing secrets">}}
+{{<Aside type="note" header="Deploy before storing secrets">}}
 
-You must publish a version of your project before storing your server secret in the next step.
+You must deploy a version of your project before storing your server secret in the next step.
 
 {{</Aside>}}
 
@@ -509,16 +509,16 @@ header: Read product response
 }
 ```
 
-Finally, deploy your Worker using the [`wrangler publish`][wrangler-publish] command:
+Finally, deploy your Worker using the [`wrangler deploy`][wrangler-deploy] command:
 
 ```sh
 ---
 header: Deploying your Worker
 ---
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
-This publishes the Worker to your `*.workers.dev` subdomain.
+This deploys the Worker to `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 ## Updating inventory quantity
 
@@ -662,13 +662,13 @@ header: Update product response
 }
 ```
 
-Update your Worker by publishing it to Cloudflare.
+Update your Worker by deploying it to Cloudflare global network.
 
 ```sh
 ---
 header: Updating your Worker in Cloudflare
 ---
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 ## Complete code
@@ -913,4 +913,4 @@ If you would like to speak directly with a Fauna expert about building your appl
 [worktop]: https://github.com/lukeed/worktop
 [wrangler-dev]: /workers/wrangler/commands/#dev
 [wrangler-init]: /workers/wrangler/commands/#init
-[wrangler-publish]: /workers/wrangler/commands/#publish
+[wrangler-deploy]: /workers/wrangler/commands/#deploy

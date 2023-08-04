@@ -253,7 +253,7 @@ async function handleEvent(event) {
 }
 ```
 
-## Publish
+## Deploy
 
 Your i18n tool built on Cloudflare Workers is complete and it is time to deploy it to your domain.
 
@@ -288,19 +288,19 @@ bucket = "./public"
 entry-point = "workers-site"
 ```
 
-Using `wrangler`, publish to Cloudflare’s network, using the `publish` command:
+Using `wrangler`, deploy to Cloudflare’s network, using the `deploy` command:
 
 ```sh
 ---
 theme: dark
 ---
-~/i18n-example $ wrangler publish
+~/i18n-example $ npx wrangler deploy
 ```
 
 ![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)
 
 ## Related resources
 
-In this tutorial, you built and published an i18n tool using `HTMLRewriter`. To review the full source code for this application, refer to the [repository on GitHub](https://github.com/signalnerve/i18n-example-workers).
+In this tutorial, you built and deployed an i18n tool using `HTMLRewriter`. To review the full source code for this application, refer to the [repository on GitHub](https://github.com/signalnerve/i18n-example-workers).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).

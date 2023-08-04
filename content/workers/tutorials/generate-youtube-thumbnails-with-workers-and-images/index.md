@@ -353,7 +353,7 @@ Adding a query parameter with custom text, you should receive:
 
 ![Follow the instructions above to receive an output image](/images/workers/tutorials/youtube-thumbnails/build-serverles.png)
 
-To publish your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
 ```toml
 ---
@@ -364,13 +364,13 @@ name = "worker-to-text"
 
 ```
 
-Then run the `wrangler publish` command to publish your Worker.
+Then run the `npx wrangler deploy` command to deploy your Worker.
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
-A `.workers.dev` domain will be generated for your Worker after running `wrangler publish`. You will use this domain in the main thumbnail image.
+A `.workers.dev` domain will be generated for your Worker after running `wrangler deploy`. You will use this domain in the main thumbnail image.
 
 ## Create a Worker to display the original image
 
@@ -528,7 +528,7 @@ name = "thumbnail-image"
 Deploy your Worker by running:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 The command deploys your Worker to custom `workers.dev` subdomain. Go to your `.workers.dev` subdomain and go to the `/thumbnail` route.
