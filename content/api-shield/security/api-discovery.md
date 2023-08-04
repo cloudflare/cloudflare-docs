@@ -59,7 +59,7 @@ To access Machine Learning-based Discovery, log in to the [Cloudflare dashboard]
 
 If all of your zone’s API traffic contains the session identifier that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. We expect Machine Learning-based Discovery to excel in discovering API traffic regardless of whether your API uses a session identifier.
 
-If you feel there is an error, please direct the feedback to your account team.
+If you feel that there is an error, direct the feedback to your account team.
 
 ## Availability
 
