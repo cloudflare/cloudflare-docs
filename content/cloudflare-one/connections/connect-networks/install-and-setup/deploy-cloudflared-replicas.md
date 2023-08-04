@@ -23,7 +23,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 ### Deploy `cloudflared` replicas
 
-To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it as multiple different processes.
+To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it on multiple hosts. If your tunnel runs as a service, only one `cloudflared` instance is allowed per host.
 
 <details>
 <summary>Via the dashboard</summary>
