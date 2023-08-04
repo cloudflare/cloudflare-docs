@@ -67,7 +67,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{</table-wrap>}}
 
-## Duration
+### Duration
 
 Duration is a measurement of wall-clock time — the total amount of time from the start to end of an invocation of a Worker. There is no hard limit on the duration of a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. Use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
@@ -76,7 +76,7 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 {{</Aside>}}
 
 ---
-
+### CPU time
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
 
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
