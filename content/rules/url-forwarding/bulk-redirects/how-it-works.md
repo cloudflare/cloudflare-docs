@@ -28,6 +28,10 @@ The following URL redirect parameters control the matching behavior between the 
 
     - With this configuration and **Subpath matching** enabled, an incoming request to `example.com/foo/bar` will be redirected to `https://example.com/qux/bar`.
 
+    {{<Aside type="note" header="Note">}}
+URL redirects with **Subpath matching** enabled cannot contain more than 16 `/` (slash) characters in the source URL path.
+    {{</Aside>}}
+
 - **Include subdomains** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
     - If true, the source URL hostname of the URL redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL redirect:
@@ -85,17 +89,6 @@ The URL of an incoming request matches a URL redirect in a list if:
 2. The hostname is the same as the hostname in the source URL of the URL redirect definition. If **Include subdomains** is enabled, the subdomains of the hostname in the redirect definition will also match.
 
 3. The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the URL redirect's source URL when determining if there is a match. For example, a URL redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
-
-    {{<Aside type="note" header="Note">}}
-
-URL redirects with **Subpath matching** enabled are only considered for request paths with 16 or fewer slashes. For example, if there is a configured URL redirect with source URL set to `example.com/foo` and with **Subpath matching** enabled:
-
-- This URL redirect would be considered for an incoming request with path `/1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16` (16 slashes in path).
-- This URL redirect would _not_ be considered for an incoming request with path `/1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16/17` (17 slashes in path).
-
-This does not affect URL redirects with **Subpath matching** disabled. Exact path matches are always considered, even for redirects with **Subpath matching** enabled.
-
-    {{</Aside>}}
 
 ### Determining the URL redirect to apply
 
