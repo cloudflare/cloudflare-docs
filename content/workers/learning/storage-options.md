@@ -73,7 +73,7 @@ To get started with Durable Objects:
 
 * Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects//).
 * Review the [Durable Objects documentation](/durable-objects/).
-* Get started with [Durable Objects](//durable-objects/get-started/).
+* Get started with [Durable Objects](/durable-objects/get-started/).
 * Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
 ## D1
