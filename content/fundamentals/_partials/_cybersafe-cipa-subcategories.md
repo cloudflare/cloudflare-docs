@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Cloudflare’s recommended CIPA rule blocks the following: 
+Cloudflare’s recommended CIPA rule blocks the following content subcategories: 
 - Adult Themes
 - Alcohol
 - Anonymizer

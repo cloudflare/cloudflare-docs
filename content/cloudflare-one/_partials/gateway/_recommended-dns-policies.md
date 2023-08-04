@@ -71,9 +71,9 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 | ----------- | -------- | --------- | ------ |
 | Resolved IP | in list  | `DShield` | Block  |
 
-## Block CIPA Filter
+## CIPA Filter
 
-The [CIPA Filter](/fundamentals/security/cybersafe/#requirements) is a collection of subcategories that encompass a wide range of topics that could be harmful or inappropriate for minors. It is used as a part of [Project Cybersafe](/) to block access to unwanted or harmful online content.
+The CIPA Filter is a collection of subcategories that encompass a wide range of topics that could be harmful or inappropriate for minors. It is used as a part of [Project Cybersafe Schools](/fundamentals/security/cybersafe/) to block access to unwanted or harmful online content.
 
 
 | Selector           | Operator | Value         | Action |
