@@ -23,15 +23,17 @@ Both paths serve a similar purpose — allowing users to log in to their account
 
 API Discovery runs this process across all your endpoints, generating a simple map of endpoints that might look like:
 
-`login/{customer_identifier}` <br />
-`auth` <br />
-`account/{customer_identifier}` <br />
-`password_reset` <br />
-`logout` <br />
+```
+login/{customer_identifier}
+auth
+account/{customer_identifier}
+password_reset
+logout
+```
 
 {{<render file="_blog-post.md">}}
 
-### Inbox View
+### Inbox view
 
 API Shield first catalogs your discovered API endpoints in an email inbox-style view. From API Discovery, you can save endpoints to [Endpoint Management](/api-shield/management-and-monitoring/) or ignore endpoints to remove them from view.
 
