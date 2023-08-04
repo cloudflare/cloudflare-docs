@@ -2,7 +2,7 @@
 title: LogScale
 pcx_content_type: tutorial
 meta:
-    description: Crowdstrike Falcon LogScale integration guide
+    description: Falcon LogScale integration guide
 updated: 2023-08-04
 ---
 # Crowdstrike Falcon LogScale
