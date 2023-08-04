@@ -24,11 +24,11 @@ Both paths serve a similar purpose — allowing users to log in to their account
 API Discovery runs this process across all your endpoints, generating a simple map of endpoints that might look like:
 
 ```
-login/{customer_identifier}
-auth
-account/{customer_identifier}
-password_reset
-logout
+/api/login/{customer_identifier}
+/api/auth
+/api/account/{customer_identifier}
+/api/password_reset
+/api/logout
 ```
 
 {{<render file="_blog-post.md">}}
