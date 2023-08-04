@@ -54,7 +54,7 @@ Lifecycle is tied to the top-level Worker. If a child Worker is still processing
 
 ### Context
 
-Service bindings live on the environment context. This means Service bindings can be used from within a Durable Object, as long as the environment context remains intact.
+Service bindings live on the environment context. This means Service bindings can be used from within a [Durable Object](/durable-objects/), as long as the environment context remains intact.
 
 ### Limits
 
