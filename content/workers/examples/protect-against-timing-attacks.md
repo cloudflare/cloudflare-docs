@@ -11,7 +11,7 @@ layout: example
 
 To avoid timing attacks in your code, you can replace equality checks with the [`crypto.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function in your Workers application.
 
-To use this function, you can create a new [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) and encode the string values to instances of `ArrayBuffer` using [`encoder.encode`](/workers/runtime-apis/encoding/#methods). This is needed because `crypto.timingSafeEqual` compares `ArrayBuffer` instances, not strings. With the encoded values, you can then replace the standard JavaScript equality check (`===`) with `crypto.timingSafeEqual`. Note that the strings must be the same length in order to compare to `timingSafeEqual`. The below code shows how to implement string equality checks with `crypto.timingSafeEqual`:
+To use this function, create a new [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) and encode the string values to instances of `ArrayBuffer` using [`encoder.encode`](/workers/runtime-apis/encoding/#methods). This is needed because `crypto.timingSafeEqual` compares `ArrayBuffer` instances, not strings. With the encoded values, replace the standard JavaScript equality check (`===`) with `crypto.timingSafeEqual`. Note that the strings must be the same length in order to compare to `timingSafeEqual`. The below code shows how to implement string equality checks with `crypto.timingSafeEqual`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
