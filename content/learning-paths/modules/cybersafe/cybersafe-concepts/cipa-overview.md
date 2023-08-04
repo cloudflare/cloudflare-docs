@@ -4,7 +4,8 @@ pcx_content_type: learning-unit
 weight: 2
 layout: learning-unit
 ---
-## Project Cybersafe Schools
+
+Project Cybersafe Schools grants eligible schools with free access to Cloudflare’s Email Security and Gateway products.
 
 Like other under-resourced organizations, schools face cyber attacks from malicious actors that can impact schools’ ability to safely perform a basic function – teach children. Schools face email, phishing, and ransomware attacks that slow access and threaten leaks of confidential student data.
 
@@ -26,3 +27,5 @@ Apply to [Project Cybersafe Schools](https://www.cloudflare.com/cybersafe-school
 
 ### Configuration 
 {{<render file="_cybersafe-configuration.md" productFolder="fundamentals">}}
+
+{{<render file="_cybersafe-cipa-subcategories.md" productFolder="fundamentals">}}
