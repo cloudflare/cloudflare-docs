@@ -204,7 +204,7 @@ The [Durable Objects Transactional Storage API](/durable-objects/api/transaction
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 5.  Each alarm write is billed as a single write request unit.
 
-Requests that hit the [Durable Objects in-memory cache](/durable-objects/api/transactional-storage-api/) or that use the [multi-key versions of get/put/delete methods](/durable-objects/api/transactional-storage-api/#methods) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/learning/in-memory-state/) or that use the [multi-key versions of get/put/delete methods](/durable-objects/api/transactional-storage-api/#methods) are billed the same as if they were a normal, individual request for each key.
 
 ## Service bindings
 
