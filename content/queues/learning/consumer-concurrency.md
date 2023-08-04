@@ -24,7 +24,7 @@ The number of consumers concurrently invoked for a queue will autoscale based on
 * The ratio of failed (versus successful) invocations.
 * The value of `max_concurrency` set for that consumer.
 
-Where possible, Queues will optimize for keeping your backlog from growing exponentialy, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
+Where possible, Queues will optimize for keeping your backlog from growing exponentially, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
 
 ### Example
 

@@ -94,7 +94,7 @@ async function handleRequest(request) {
 }
 ```
 
-Begin by modifying the starter code to handle a `POST` response and renaming the request handler. Use the `request.method` property of [`Request`](/workers/runtime-apis/request/) to check if the request is a `POST` request, and send an error response if the request is not a `POST` request. The `simpleResponse` function is an easy wrapper for you to respond with requests using your Worker.
+Begin by modifying the starter code to handle a `POST` response and renaming the request handler. Use the `request.method` property of [`Request`](/workers/runtime-apis/request/) to check if the request is a `POST` request, and send an error response if the request is not a `POST` request. The `simpleResponse` function is a wrapper for you to respond with requests using your Worker.
 
 ```js
 ---

@@ -43,7 +43,7 @@ You will find the following files and folders in the `hello-world-rust` director
 * `README.md` - Boilerplate readme for working with the template project.
 * `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
 * `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/runtime-apis/webassembly/rust/#bundling-worker-build)).
-* `src` - Rust source directory, pre-populated with simple Hello World Worker.
+* `src` - Rust source directory, pre-populated with Hello World Worker.
 
 ## 2. Develop locally
 
@@ -88,7 +88,7 @@ There is some counterintuitive behavior going on here:
 
 #### `event` macro
 
-This macro allows you to easily define entrypoints to your Worker. The `event` macro supports the following events:
+This macro allows you to define entrypoints to your Worker. The `event` macro supports the following events:
 
 * `fetch` - Invoked by an incoming HTTP request.
 * `scheduled` - Invoked by [`Cron Triggers`](/workers/configuration/cron-triggers/).
@@ -187,7 +187,7 @@ import { myFunction } from "path/to/mylib.js";
 
 [`wasm-bindgen-futures`](https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/) (part of the `wasm-bindgen` project) provides interoperability between Rust
 Futures and JavaScript Promises. `workers-rs` invokes the entire event handler function using `spawn_local`, meaning that you can program using async Rust, which is turned
-into a single JavaScript Promise and run on the JavaScript event loop. Calls to imported JavaScript runtime APIs are automatically converted to Rust Futures that can be easily invoked from async Rust functions.
+into a single JavaScript Promise and run on the JavaScript event loop. Calls to imported JavaScript runtime APIs are automatically converted to Rust Futures that can be invoked from async Rust functions.
 
 ### Bundling (`worker-build`)
 
