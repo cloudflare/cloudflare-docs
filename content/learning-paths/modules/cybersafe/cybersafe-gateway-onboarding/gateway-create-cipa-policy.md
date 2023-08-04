@@ -7,7 +7,7 @@ layout: learning-unit
 
 ## Create CIPA policy
 
-1. Go to **Gateway** > **Firewall policies**.
+1. Go to **Gateway** > **Firewall Policies**.
 2. Create a policy to block using the CIPA filter:
     {{<render file="gateway/_block-cipa.md" productFolder="cloudflare-one">}}
 3. In **Logs** > **Gateway** > **DNS**, verify that you see the blocked domain.

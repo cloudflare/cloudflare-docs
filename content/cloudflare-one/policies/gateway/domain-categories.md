@@ -210,6 +210,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 32          | Security Risks         | 128            | Parked & For Sale Domains                  |
 | 32          | Security Risks         | 169            | New Domains                                |
 | 32          | Security Risks         | 177            | Newly Seen Domains                         |
+| 34          | CIPA         | 182            | CIPA Filter                         |
 
 {{</table-wrap>}}
 

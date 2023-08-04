@@ -11,7 +11,7 @@ To add a DNS location to Gateway:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **DNS Locations**.
 
-2. Select **Add a DNS location**.
+2. Select **Add a location**.
 
 3. Choose a name for your DNS location.
 
@@ -42,4 +42,4 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 
      [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.
 
-6. Select **Add DNS location**.
+6. Select **Add location**.
