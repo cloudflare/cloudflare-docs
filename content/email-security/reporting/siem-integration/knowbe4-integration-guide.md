@@ -1,21 +1,28 @@
 ---
-title: LogScale
+title: KnowBe4
 pcx_content_type: tutorial
 meta:
-    description: Crowdstrike Falcon LogScale integration guide
+    description: KnowBe4 integration guide
 updated: 2023-08-04
 ---
-# Crowdstrike Falcon LogScale
+# KnowBe4
 
-For this tutorial, you will need a working Falcon LogScale account. You will also need to create a new Ingest Token in your LogScale account. Ingest Tokens identify repositories and are used to configure data ingestion to your repository. Refer to [Falcon LogScale documentation](https://library.humio.com/falcon-logscale-cloud/ingesting-data-tokens.html) for more information.
+For this tutorial, you will need a working KnowBe4 account with the SecurityCoach add-on. You will also need to create an organization key to use in Area 1. This organization key will let you integrate KnowBe4 with Area 1 Refer to [KnowBe4 documentation](https://support.knowbe4.com/hc/articles/13129840202643) for more information.
 
-After creating your Ingest Token:
+After creating your organization key and authorizing Area 1:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Select **New Webhook**.
 5. In an **App Type**, select **SIEM**.
-6. Choose _Crowdstrike_ from the dropdown, and paste your Ingest Token into the **Auth Code** section.
-7. In Target, paste the URL `https://cloud.community.humio.com/api/v1/ingest/hec/raw`.
+6. Choose _KnowBe4_ from the dropdown, and paste your organization key into the **Auth Code** section.
+7. In Target, paste the URL that suits your organization. KnowBe4 has different URLs for different regions:
+    KnowBe4 instance | URL
+    ---              | ---
+    United States    |	https://area1.vendor.training.knowbe4.com/v1
+    European Union   | https://area1.vendor.eu.knowbe4.com/v1
+    Canada           | https://area1.vendor.ca.knowbe4.com/v1
+    United Kingdom   | https://area1.vendor.uk.knowbe4.com/v1
+    Germany          | https://area1.vendor.da.knowbe4.com/v1
 8. Select **Publish Webhook**.
