@@ -35,4 +35,4 @@ In summary, five steps have to succeed after Cloudflare requests a CA to issue o
 * DCV tokens also have [validity periods](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/). If you are handling the DCV process manually, it is recommended that you place the tokens as soon as the certificate is up for renewal. Otherwise, the tokens may expire and new tokens will be required.
 * Settings that interfere with the validation URLs can cause issues with your certificate issuance or renewal. Refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
 * The DCV tokens are generated and controlled by the CA and not by Cloudflare.
-* Cetificate authority authorization (CAA) records may block certificate issuance. Refer to [CAA records](/ssl/edge-certificates/caa-records/).
+* Certificate authority authorization (CAA) records may block certificate issuance. Refer to [CAA records](/ssl/edge-certificates/caa-records/).
