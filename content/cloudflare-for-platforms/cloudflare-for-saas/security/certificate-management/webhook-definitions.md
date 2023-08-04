@@ -12,7 +12,7 @@ The following section details the data Cloudflare sends to a webhook destination
 
 ## Certificate validation
 
-Before a Certificate Authority will issue a certificate for a domain, the requestor must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).
+Before a Certificate Authority will issue a certificate for a domain, the requester must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).
 
 ### Validation succeeded
 

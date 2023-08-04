@@ -10,14 +10,14 @@ meta:
 
 In order to obtain [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates, Cloudflare partners with different publicly trusted [certificate authorities (CAs)](/ssl/reference/certificate-authorities/).
 
-However, every time a CA will issue or renew a certificate, the requestor must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing an HTTP token at a standard URL path (`/.well-known/pki-validation`), or placing a TXT record at the authoritative DNS provider.
+However, every time a CA will issue or renew a certificate, the requester must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing an HTTP token at a standard URL path (`/.well-known/pki-validation`), or placing a TXT record at the authoritative DNS provider.
 
 ## Where Cloudflare sits in the DCV process
 
 For the use cases mentioned above, there are three different parties involved in the process:
 
 * The website or application for which the certificate is issued.
-* The requestor (Cloudflare).
+* The requester (Cloudflare).
 * The CA that processes the request.
 
 ## Steps in the process
