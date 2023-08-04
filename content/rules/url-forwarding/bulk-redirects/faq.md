@@ -16,6 +16,14 @@ To troubleshoot runtime errors related to Bulk Redirects, refer to [Troubleshoot
 
 In this situation, Cloudflare will use the URL redirect of the first rule that triggers. This will be determined by the order of the Bulk Redirect Rules enabling each Bulk Redirect List in the `http_request_redirect` phase entry point ruleset.
 
+## How can I solve the following error: "This account has reached the limit on the number of URL matching items on the same hostname/path"?
+
+You may get this error when adding items to a Bulk Redirect List.
+
+You can have any number of URL redirects with the same source hostname (with different paths) or same source path (with different hostnames). However, you can have a maximum of 16 source URLs with the same hostname and path across all lists, either enabled by a Bulk Redirect Rule or not.
+
+If you receive this error, check if you have any unused Bulk Redirect Lists with the source hostname and path that caused the error, and remove such items from the list.
+
 ## How many URL redirects can I have in a single Bulk Redirect List?
 
 Each account has a maximum number of URL redirects across all lists which depends on your Cloudflare plan. If you wish, you can use all the URL redirects available in your plan in a single Bulk Redirect List, but you will not be able to create any other URL redirects in a different list. Refer to [Availability](/rules/url-forwarding/#availability) for more information.
