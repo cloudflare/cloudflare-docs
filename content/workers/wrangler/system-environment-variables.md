@@ -9,7 +9,7 @@ System Environment Variables are local environment variables that can change Wra
 
 1. Create an `.env` file in your project directory. Set the values of your environment variables in your [`.env`](/workers/wrangler/system-environment-variables/#example-env-file) file. This is the recommended way to set these variables, as it persists the values between Wrangler sessions.
 
-2. Inline the values in your Wrangler command. For example, `WRANGLER_LOG="debug" wrangler publish` will set the value of `WRANGLER_LOG` to `"debug"` for this execution of the command.
+2. Inline the values in your Wrangler command. For example, `WRANGLER_LOG="debug" wrangler deploy` will set the value of `WRANGLER_LOG` to `"debug"` for this execution of the command.
 
 3. Set the values in your shell environment. For example, if you are using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 

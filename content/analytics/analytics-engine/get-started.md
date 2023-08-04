@@ -58,7 +58,7 @@ binding = "<BINDING_NAME>"
 dataset = "<DATASET_NAME>"
 ```
 
-Save the changes that you made to your `wrangler.toml` file. Republish your Worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
+Save the changes that you made to your `wrangler.toml` file. Redeploy your Worker by running `npx wrangler deploy` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
 
 ## 3. Write data from your Worker
 

@@ -113,10 +113,10 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 The [Cron Trigger](/workers/configuration/cron-triggers/) in this example schedules the script to run every minute. Learn more about [supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
 {{</Aside>}}
 
-5. Publish the Worker to your Workers account.
+5. Deploy the Worker to Cloudflare's global network.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 6. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.

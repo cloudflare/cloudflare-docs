@@ -19,7 +19,7 @@ Custom builds are configured by adding a `[build]` section in your `wrangler.tom
 
 - `command` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used. This command will be run as part of `wrangler dev` and `wrangler publish`.
+  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used. This command will be run as part of `wrangler dev` and `wrangler deploy`.
 
 - `cwd` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

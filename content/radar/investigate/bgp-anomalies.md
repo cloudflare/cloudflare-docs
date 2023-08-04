@@ -334,8 +334,7 @@ Peer Count: *${event.peer_ip_count}*
 
 Note that the webhook is considered secret and should be set to the environment via `wrangler secret put WEBHOOK_URL` command.
 
-The last step is to publish the app with command `wrangler publish` and the app should be up and running on your Cloudflare
-account, and will be triggered to execute every five minutes.
+The last step is to deploy the application with command `npxwrangler deploy` and the app should be up and running on your Cloudflare account, and will be triggered to execute every five minutes.
 
 ### Send email alerts from Workers
 

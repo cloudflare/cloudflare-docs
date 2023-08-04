@@ -163,4 +163,4 @@ routes = [
 ]
 ```
 
-4. Run `wrangler publish` to create the Custom Domain your Worker will run on.
+4. Run `npx  wrangler deploy` to create the Custom Domain your Worker will run on.

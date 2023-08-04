@@ -23,7 +23,7 @@ Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [
 
 ## Creating a new deployment
 
-New deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. Create a new deployment via the Cloudflare dashboard, [Workers API](/api/), or Wrangler (with [`wrangler publish` command](/workers/wrangler/commands#publish) or [`wrangler rollback` command](/workers/wrangler/commands#rollback)) .
+New deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. Create a new deployment via the Cloudflare dashboard, [Workers API](/api/), or Wrangler (with [`wrangler deploy` command](/workers/wrangler/commands/#deploy) or [`wrangler rollback` command](/workers/wrangler/commands#rollback)) .
 
 Notably, this does not include changes to bound resources. For example, if two Workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Changes to the service binding on Worker A will also not trigger a new deployment for Worker B.
 
@@ -62,7 +62,8 @@ Deployments are in active development. To give feedback, request a [live chat](h
 {{</Aside>}}
 
 ## Rollbacks
-Rollbacks are a way to quickly deploy an older deployment to the Cloudflare global network. This could be useful if a breaking change or unintended publish is made to a production Worker.
+
+Rollbacks are a way to quickly deploy an older deployment to the Cloudflare global network. This could be useful if a breaking change or unintended deployment is made to a production Worker.
 
 Perform a rollback via [Wrangler](/workers/configuration/deployments/#via-wrangler-1) or the [Cloudflare dashboard](/workers/configuration/deployments/#via-the-cloudflare-dashboard-1).
 
