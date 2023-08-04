@@ -36,7 +36,7 @@ rss: file
 
 ## 2023-05-26
 
-- A new [Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) (beta) has been added to [Durable Objects](/durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
+- A new [Hibernation API](/durable-objects/api/hibernatable-websockets-api/) (beta) has been added to [Durable Objects](/durable-objects/). The Hibernation API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
 
 ## 2023-05-16
 
