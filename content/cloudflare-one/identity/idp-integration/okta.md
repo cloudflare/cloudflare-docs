@@ -93,7 +93,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 6. On the **Sign-on Options** tab, ensure that **SAML 2.0** is selected. Select **Done** to create the integration.
 
-7. On the **Provisioning** tab, and select **Configure API Integration**.
+7. On the **Provisioning** tab, select **Configure API Integration**.
 
 8. Select **Enable API integration**.
 
@@ -115,7 +115,8 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 13. Select **Save** to complete the configuration.
 
-14. In the **Assignments** tab, add the users and groups you want to synchronize with Cloudflare Access.
+14. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group.
+15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder.
 
 Provisioning will begin immediately. To verify the integration, select **View Logs** in the Okta SCIM application.
 
