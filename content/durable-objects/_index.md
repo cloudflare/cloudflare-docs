@@ -21,9 +21,8 @@ A globally distributed coordination API with strongly consistent storage.
 
 Durable Objects provide a powerful API for coordinating the actions of multiple clients or users, each with private, transactional and strongly consistent storage attached.
 
-Developers use Durable Objects to to build collaborative editing, interactive chat, multiplayer games and other applications that have a strong need to coordinate the actions of multiple clients, without requring you to build serialization and coordination primitives on your own. 
+Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives on your own. 
 
-You can create millions of (or more) Durable Objects, representing a document, chat session, multiplayer game or other aspect of your system where events need to be coordinated or serialized. Each Durable Object is automatically located as close to the client or user as possible, minimizing latency between the client and Durable Objects.
 
 ---
 
@@ -31,7 +30,7 @@ You can create millions of (or more) Durable Objects, representing a document, c
 
 {{<feature header="Transactional Storage API" href="/durable-objects/learning/in-memory-state/">}}
 
-Understand how Durable Objects can act as a powerful coordination API for managing the actions of multiple clients or events.
+Learn how Durable Objects coordinate connections of multiple clients or events.
 
 {{</feature>}}
 
@@ -49,7 +48,7 @@ Learn how the Hibernatable WebSockets API allows you to manage the connections o
 
 {{<feature header="Durable Objects Alarms" href="/durable-objects/api/alarms-in-durable-objects/">}}
 
-Learn how to trigger a Durable Object to wake up and perform compute in the future at customizable intervals.
+Learn how to use alarms to trigger a Durable Object and perform compute in the future at customizable intervals.
 
 {{</feature>}}
 
@@ -81,7 +80,7 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{<resource-group>}}
 
-{{<resource header="Built with Durable Objects" href="https://workers.cloudflare.com/built-with/collections/durable-objects/" icon="reference-architecture">}}See what other developers have built with Durable Objects.{{</resource>}}
+{{<resource header="Built with Durable Objects" href="https://workers.cloudflare.com/built-with/collections/durable-objects/" icon="reference-architecture">}}Browse what other developers are building with Durable Objects.{{</resource>}}
  
 {{<resource header="Limits" href="/durable-objects/platform/limits/" icon="documentation-clipboard">}}Learn about Durable Objects limits.{{</resource>}}
 
