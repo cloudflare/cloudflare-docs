@@ -49,7 +49,7 @@ Deploy dynamic front-end applications in record time.
 
 ## Coming soon
 
-* **Larger databases**: During the alpha period, the maximum per-database size is limited to 100 MB. We plan to support not only larger databases, but more databases, in the near future.
+* **Larger databases**: During the alpha period, the maximum per-database size is limited to 500 MB. We plan to support not only larger databases, but more databases, in the near future.
 
 * **Read replication**: D1 will create and distribute replicas of your data across the Cloudflare global network, reducing the latency for your read queries. Cloudflare distributes your data close to where your users are and keeps your read replicas up to date with changes.
 
