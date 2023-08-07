@@ -58,8 +58,8 @@ Turnstile integrations for popular content managment systems:
 - [Craft CMS](https://plugins.craftcms.com/turnstile)
 - [SilverStripe](https://github.com/webbuilders-group/silverstripe-turnstile)
 - [Statamic](https://statamic.com/addons/aryeh-raber/captcha)
-- [Wordpress](https://wordpress.org/plugins/simple-cloudflare-turnstile)
- 
+- [WordPress](https://wordpress.org/plugins/simple-cloudflare-turnstile)
+
 ## Other
 
 Other resources related to integrating Turnstile:
