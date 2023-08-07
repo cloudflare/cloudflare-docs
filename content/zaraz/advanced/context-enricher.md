@@ -52,7 +52,7 @@ Now that your Worker is published, you can select it in your Zaraz settings:
 3. Select your Context Enricher Worker.
 4. Save your settings.
 
-Your Context Enricher will now run on all Zaraz requests on that given zone.
+Your Context Enricher will now run on all Zaraz requests in that given zone.
 
 ## Example Worker Variables
 
