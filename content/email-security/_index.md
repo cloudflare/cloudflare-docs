@@ -13,7 +13,7 @@ Stop phishing attacks with Area 1 cloud-native email security service.
 
 {{<plan id="email.email_security.properties.availability.summary">}}
 
-{{<render file="_email-security-description">}}
+{{<render file="_email-security-description.md">}}
 
 ---
  
