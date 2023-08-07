@@ -1,6 +1,6 @@
 ---
 title: Reference
-pcx_content_type: Content
+pcx_content_type: concept
 ---
 
 # Reference
