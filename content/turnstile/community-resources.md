@@ -53,7 +53,7 @@ Libraries that both support the both client-side rendering and server-side valid
 
 ## Integrations
 
-Turnstile integrations for popular content managment systems:
+Turnstile integrations for popular content management systems:
 
 - [Craft CMS](https://plugins.craftcms.com/turnstile)
 - [SilverStripe](https://github.com/webbuilders-group/silverstripe-turnstile)
