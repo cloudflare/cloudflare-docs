@@ -29,41 +29,41 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Create virtual environment
         run: python -m venv venv
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Activate virtual environment
         run: source venv/bin/activate
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Install codespell
         run: pip install codespell
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Install case-police
         run: npm install -g case-police
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Install alex
         run: npm install -g alex
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Spelling Errors
         run: codespell --count --skip="*.js,./.git,./content/support/Other Languages/*" ${{ env.CHANGED_FILES }}
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Case Police
         run: case-police ${{ env.CHANGED_FILES }} --disable DoS
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Create .alexrc file
         run: |
           echo '{ "allow": ["actors-actresses", "attacks", "attack", "hooks", "host-hostess", "hostesses-hosts", "invalid", "just", "period", "remains"], "profanitySureness": 2 }' > .alexrc
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
 
       - name: Alex (inclusive language)
         run: alex ${{ env.CHANGED_FILES }}
-        if: ${{ env.CHANGED_FILES != '' }}
+        if: ${{ !cancelled() && env.CHANGED_FILES != '' }}
