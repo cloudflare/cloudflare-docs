@@ -34,4 +34,4 @@ Cloudflare’s recommended CIPA rule blocks the following content subcategories:
 - Violence
 - Weapons
 
-Review the [Domain Categories](/cloudflare-one/policies/gateway/domain-categories/) for more information. 
+Review the [domain categories](/cloudflare-one/policies/gateway/domain-categories/) for more information. 

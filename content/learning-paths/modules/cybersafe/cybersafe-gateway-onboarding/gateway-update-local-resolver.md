@@ -12,10 +12,10 @@ With a Gateway location created, you have the ability to send traffic to your en
 To configure your device to send traffic to Gateway:
 
 <details>
-<summary>Mac OSX</summary>
+<summary>macOS</summary>
 <div>
 
-![Mac OSX DNS Resolver Options](/images/dns/dns-resolvers-macosx.png)
+![macOS DNS Resolver Options](/images/dns/dns-resolvers-macosx.png)
 
 </div>
 </details>
