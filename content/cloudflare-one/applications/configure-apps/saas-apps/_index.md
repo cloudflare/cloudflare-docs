@@ -34,7 +34,9 @@ Obtain the following URLs from your SaaS application account:
 
 7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
-Note: For any IdP that supports group syncronization (Okta, AzureAD, Google Workspace, etc.), Access will automatically send a SAML Attribute titled "groups" with all of the user's associated groups as attribute values.
+{{<Aside type="note" header="IdP groups">}}
+If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
+{{</Aside>}}
 
 9. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
