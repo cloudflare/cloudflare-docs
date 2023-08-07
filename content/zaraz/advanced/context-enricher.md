@@ -56,7 +56,7 @@ Your Context Enricher will now run on all Zaraz requests on that given zone.
 
 ## Example Worker Variables
 
-### Adding additional information using an API
+### Adding arbitrary information using an API
 
 You can use the Context Enricher to add additional information to your context. For example, you could use an API to get the current weather for the user's location and add it to the context.
 
