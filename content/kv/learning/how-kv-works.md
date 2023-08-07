@@ -64,7 +64,3 @@ Refer to [KV performance optimizations](/kv/learning/kv-performance-optimization
 ## Security
 
 All values are encrypted at rest with 256-bit AES-GCM, and only decrypted by the process executing your Worker scripts or responding to your API requests.
-
-
-
-

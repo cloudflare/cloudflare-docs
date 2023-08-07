@@ -6,7 +6,7 @@ weight: 7
 
 # Write key-value pairs
 
-To create a new key-value pair, or to update the value for a particular key, call the `put()` method on any KV namespace you have bound to your Worker script. 
+To create a new key-value pair, or to update the value for a particular key, call the `put()` method on any KV namespace you have bound to your Worker code. 
 
 The basic form of the method  `put()` looks like this:
 
@@ -20,7 +20,7 @@ await NAMESPACE.put(key, value);
 
 - `key` {{<type>}}string{{</type>}}
 
-  - The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
+  - The key to associate with the value. A key cannot be empty, have a `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
 
 - `value` {{<type>}}string{{</type>}} | {{<type>}}ReadableStream{{</type>}} | {{<type>}}ArrayBuffer{{</type>}}
   - The value to store. The type is inferred.
@@ -67,7 +67,7 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put()` method has an optional third parameter. 
 
-It accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtL`, depending on how you want to specify the key’s expiration time. 
+The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtL`, depending on how you want to specify the key’s expiration time. 
 
 To use `expiration` or `expirationTtL`, run one of the two commands below to set an expiration when writing a key from within a Worker:
 

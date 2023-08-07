@@ -212,5 +212,3 @@ You may encounter the following issues:
 * Within "MCP"s, we have multiple virtual data centers within a single PoP. Which virtual data center you hit is random. Such data centers have disjoint caches and require even more traffic to keep the cache warm regardless of which virtual data center you randomly get routed to.
 * [wrk](https://github.com/wg/wrk) can generate thousands of requests per second. Generating thousands of requests per second should be enough to overcome such issues. However, it requires careful tuning of parameters to achieve max throughput, and you have little to no visibility into Cloudflare's internal network to know if you succeeded.
 * Synthetic tests are hand-written and often fail to reproduce real-world access patterns for keys (if you have multiple keys). If you have a recording you can play through of the access patterns, that might work well. A representative recording is difficult to capture in practice because of the global nature of Cloudflare Workers.
-
-

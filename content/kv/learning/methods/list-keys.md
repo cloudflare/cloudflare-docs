@@ -139,7 +139,7 @@ const cursor = value.cursor;
 const next_value = await NAMESPACE.list({ cursor: cursor });
 ```
 
-Checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch. Instead, check `list_complete`. 
+Checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch. Instead, use `list_complete`. 
 
 It is possible to have an empty array in `keys`, but still have more keys to fetch, because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
 

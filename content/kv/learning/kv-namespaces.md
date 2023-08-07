@@ -50,5 +50,3 @@ To bind the namespace to your Worker in the Cloudflare dashboard:
 4. Select **Settings** > **Variables**.
 5. Go to **KV Namespace Bindings**.
 6. Select **Add binding**.
-
-

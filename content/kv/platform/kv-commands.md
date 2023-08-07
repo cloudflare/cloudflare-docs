@@ -432,4 +432,3 @@ $ wrangler kv:bulk delete --binding=MY_KV allthethingsdelete.json
 ? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
 Success!
 ```
----

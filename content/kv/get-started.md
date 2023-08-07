@@ -20,7 +20,7 @@ To use Workers KV, you will need:
 
 ## 1. Create a KV namespace 
 
-A KV namespace is a key-value database that is replicated to Cloudflare’s global network.
+A KV namespace is a key-value database replicated to Cloudflare’s global network.
 
 You can create a KV namespace via Wrangler or the Cloudflare dashboard.
 
@@ -125,7 +125,11 @@ Refer to the [`kv:bulk`](/kv/platform/kv-commands/#kvbulk) documentation to writ
 
 ## Interact with your KV namespace via a Worker
 
+You can now access the binding from within a Worker. In your Worker script, use the KV `get()` method to fetch the data you stored in your KV database:
 
+```js
+let value = await <YOUR_BINDING>.get("KEY");
+```
 
 ## Related resources
 
