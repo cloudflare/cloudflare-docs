@@ -16,6 +16,8 @@ Cloudflare automatically sends email notifications 30 and 14 days before your cu
 
 {{<Aside type="note">}}
 When renewing a custom certificate, you can reuse a [previously generated CSR](/ssl/edge-certificates/additional-options/certificate-signing-requests/).
+
+If you are on an Enterprise plan and want to renew a custom (modern) certificate, consider requesting access to [Staging environment (Beta)](/ssl/edge-certificates/staging-environment/).
 {{</Aside>}}
 
 ## Expired certificates
@@ -26,10 +28,10 @@ If no valid replacement is available, Cloudflare will remove the custom certific
 
 Affected domains and subdomains will fall back to any other active certificate covering the hostnames on the expiring certificate.
 
-## Migrate from custom to other certificate types
+## Migrate to other certificate types
 
 If you no longer want to use your custom certificate but still want your website or application to be covered with SSL/TLS, you can do the following:
 
 1. Go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
-2. Make sure there is already an **active** [universal](/ssl/edge-certificates/universal-ssl/) or [advanced](/ssl/edge-certificates/advanced-certificate-manager/) covering the same hostnames.
+2. Make sure there is already an active [universal](/ssl/edge-certificates/universal-ssl/) or [advanced](/ssl/edge-certificates/advanced-certificate-manager/) certificate covering the same hostnames.
 3. Delete your custom certificate.
