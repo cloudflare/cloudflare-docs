@@ -17,3 +17,5 @@ You can find the CSR of a rule by going to its corresponding dashboard page:
 ## Common scenarios
 
 {{<render file="_challenge-solve-recommendations.md">}}
+
+Rules in Challenge mode will start generating a Captcha Solve Rate data (CSR) which indicates the falsepositive percentage. Historically, Bot Management users see a false positive rate of less than 1%. If you see arate higher than 3%; you should consider lowering your threshold in small increments (3-5 points at a time) until it drops.
