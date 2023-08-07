@@ -15,7 +15,7 @@ Having visibility into issues, and being able to address them quickly is a criti
 
 For local development, there is the Wrangler CLI. Running the [`wrangler dev`](/workers/wrangler/commands/#dev) command, you can start a local server for developing your Worker. `wrangler dev` will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the Miniflare simulator.
 
-Read more about this in our [local development and testing guide](/workers/learning/local-development-and-testing).
+Read more about this in our [local development and testing guide](/local-development-and-testing).
 
 ### DevTools
 
@@ -44,4 +44,4 @@ In addition to the CLI, DevTools sessions are also available via the Workers Das
 
 ## Debug via logs
 
-There are a variety of ways to get log messages from Workers, to view them, and to store them. Read the [Log from Workers guide](/workers/learning/log-from-workers) for detailed information.
+There are a variety of ways to get log messages from Workers, to view them, and to store them. Read the [Log from Workers guide](/log-from-workers) for detailed information.
