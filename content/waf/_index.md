@@ -42,7 +42,7 @@ Review mitigated requests (rule matches) using an intuitive interface. Tailor yo
 
 {{<feature header="Security Analytics" href="/waf/security-analytics/" cta="Explore Security Analytics">}}
 {{<plan type="business">}}
-Displays information about all incoming HTTP requests, including those not affected by security measures.
+Get information about all incoming HTTP requests, including those not affected by security measures.
 {{</feature>}}
 
 ---
