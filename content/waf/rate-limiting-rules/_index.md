@@ -24,7 +24,7 @@ Besides these two parameters, rate limiting rules require the following addition
 *   **Period**: The period of time to consider (in seconds) when evaluating the rate.
 *   **Requests per period**: The number of requests over the period of time that will trigger the rate limiting rule.
 *   **Duration** (or mitigation timeout): Once the rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field.
-*   **Action behavior**: By default, Cloudflare will apply the rule action for the configured duration (or mitigation timeout), regardless of the request rate during this period. Some Enterprise customers can configure the rule to throttle requests over the maximum rate, allowing incoming requests when the rate is lower than the configured limit.
+*   **Action behavior**: By default, Cloudflare will apply the rule action for the configured duration (or mitigation timeout), regardless of the request rate during this period. Some Enterprise customers can configure the rule to [throttle requests](/waf/rate-limiting-rules/parameters/#with-the-following-behavior) over the maximum rate, allowing incoming requests when the rate is lower than the configured limit.
 
 Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on mandatory and optional parameters.
 
