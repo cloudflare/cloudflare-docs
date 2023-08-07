@@ -17,5 +17,3 @@ You can find the CSR of a rule by going to its corresponding dashboard page:
 ## Common scenarios
 
 {{<render file="_challenge-solve-recommendations.md">}}
-
-Rules in Challenge mode will start generating Challenge Solve Rate data (CSR) which indicates the false positive percentage. Historically, Bot Management users see a false positive rate of less than 1%. If you see a rate higher than 3%; you should consider lowering your threshold in small increments of 3 to 5 points at a time until it drops.
