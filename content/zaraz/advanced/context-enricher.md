@@ -45,7 +45,7 @@ To see the documentation for the Zaraz Context object, click [here](/zaraz/refer
 
 ## Configuring your Context Enricher
 
-Now that your Worker is published, you can easily select it in your Zaraz settings:
+Now that your Worker is published, you can select it in your Zaraz settings:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Go to **Zaraz** > **Settings**.
