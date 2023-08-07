@@ -10,20 +10,6 @@ You can check for an existing root ruleset from the dashboard or via the [Accoun
 
 By default, you can create a maximum of 100 rules. We recommend you create lists of IP addresses to reference within rules to streamline rule management.
 
-## Managed lists
-
-{{<Aside type="note">}}Available for customers with a Magic Firewall Advanced plan{{</Aside>}}
-
-You can  create rules with managed lists. Managed lists are [lists of IP addresses](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
-
-You can access these managed lists when you create rules with either _IP destination address_ or _IP source address_ in the **Field** drop-down, and _is in list_ or _is not in list_ from the **Operator** drop-down.
-
-For example:
-
-Field                    | Operator     | Value
------------------------- | ------------ | ---
-_IP Destination Address_ | _is in list_ | _Anonymizers_
-
 ## Add a rule
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
