@@ -27,15 +27,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Docusaurus* as your **Framework preset**. Your selection will provide the following information.
 
-{{<table-wrap>}}
-
-| Configuration option | Value                       |
-| -------------------- | --------------------------- |
-| Production branch    | `main`                      |
-| Build command        | `npm run build`             |
-| Build directory      | `build`                     |
-
-{{</table-wrap>}}
+{{<pages-build-preset framework="docusaurus">}}
 
 4. Go to **Environment variables (advanced)** > **Add variable** > create a `NODE_VERSION` variable with a value of `16`.
 

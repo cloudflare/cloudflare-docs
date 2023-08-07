@@ -43,7 +43,9 @@ To deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and choose _Eleventy_ from the Framework preset dropdown.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Eleventy_ as your **Framework preset**. Your selection will provide the following information:
+
+{{<pages-build-preset framework="eleventy">}}
 
 {{<Aside type="note">}}
 

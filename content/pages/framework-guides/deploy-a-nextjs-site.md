@@ -9,7 +9,7 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy:
 
-* Full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge). 
+* Full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 * Next.js projects which can be [statically exported](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
 
 ## Consider if you need the Edge Runtime
@@ -111,15 +111,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js_ as your **Framework preset**. Your selection will provide the following information.
 
-   {{<table-wrap>}}
-
-   | Configuration option | Value                              |
-   | -------------------- | ---------------------------------- |
-   | Production branch    | `main`                             |
-   | Build command        | `npx @cloudflare/next-on-pages@1`  |
-   | Build directory      | `.vercel/output/static`            |
-
-   {{</table-wrap>}}
+{{<pages-build-preset framework="next-js">}}
 
 4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
 5. Click on **Save and Deploy** to start the deployment. This first deployment will not be fully functional as the next step is also necessary.
@@ -159,15 +151,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js (Static HTML Export)_ as your **Framework preset**. Your selection will provide the following information.
 
-   {{<table-wrap>}}
-
-   | Configuration option | Value           |
-   | -------------------- | --------------- |
-   | Production branch    | `main`          |
-   | Build command        | `npm run build` |
-   | Build directory      | `out`           |
-
-   {{</table-wrap>}}
+{{<pages-build-preset framework="next-js-static">}}
 
 4. Next.js requires a specific Node.js version to build successfully. Refer to [System Requirements in Next.js Installation guide](https://nextjs.org/docs/getting-started/installation) to review the required Node.js version. To set your Node.js version, go to your Pages project > **Settings** > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of the required version. For example, if the required Node.js version on Next.js's Installation guide is Node.js `16.8` or later, your environment variable value must be set to `16` or greater.
 

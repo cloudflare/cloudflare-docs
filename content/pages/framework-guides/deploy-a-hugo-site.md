@@ -171,15 +171,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value    |
-| -------------------- | -------- |
-| Production branch    | `main`   |
-| Build command        | `hugo`   |
-| Build directory      | `public` |
-
-</div>
+{{<pages-build-preset framework="hugo">}}
 
 {{<Aside type="note" header="Base URL configuration">}}
 
