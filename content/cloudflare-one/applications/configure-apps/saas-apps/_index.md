@@ -34,15 +34,19 @@ Obtain the following URLs from your SaaS application account:
 
 7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
-8. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+{{<Aside type="note" header="IdP groups">}}
+If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
+{{</Aside>}}
 
-9. {{<render file="_access-block-page.md">}}
+9. (Optional) Under **Application Appearance**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-10. Next, choose the **Identity providers** you want to enable for your application.
+10. {{<render file="_access-block-page.md">}}
 
-11. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
+11. Next, choose the **Identity providers** you want to enable for your application.
 
-12. Select **Next**.
+12. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
+
+13. Select **Next**.
 
 ## 2. Add an Access policy
 
