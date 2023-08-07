@@ -43,19 +43,19 @@ The [Windows Teredo](https://learn.microsoft.com/en-us/windows/win32/teredo/abou
 
 ## Docker on Linux with bridged networking
 
-Currently [Docker](https://www.docker.com/products/container-runtime/) on 
-Linux does not respond to underlying network tunnel mtu changes. This can be seen with WARP Gateway enabled
-when a basic TLS GET `curl -v https://cloudflare.com > /dev/null` fails 
-inside a Docker container that is using the default bridge network driver. 
-Until Docker changes this behaviour, WARP + Docker users on Linux can modify 
-`/etc/docker/daemon.json` to include: 
-```
+Currently [Docker](https://www.docker.com/products/container-runtime/) on Linux does not perform the underlying network tunnel MTU changes required by WARP. This can cause connectivity issues inside of a Docker container when WARP is enabled on the host machine. For example, `curl -v https://cloudflare.com > /dev/null` will fail if run from a Docker container that is using the default bridge network driver.
+
+Until Docker changes this behaviour, WARP + Docker users on Linux can manually reconfigure the MTU on the Docker network interface. You can either modify `/etc/docker/daemon.json` to include:
+
+```json
   {
       "mtu":1420
   }
-``` 
-or create a Docker network with a configuration modified for a working mtu size:
 ```
-  docker network create \
-    -o "com.docker.network.driver.mtu=1420" my-docker-network
+
+or create a Docker network with a working MTU size:
+
+```sh
+$ docker network create -o "com.docker.network.driver.mtu=1420" my-docker-network
 ```
+
