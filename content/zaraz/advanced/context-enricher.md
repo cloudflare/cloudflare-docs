@@ -32,8 +32,8 @@ export default {
 
     // Here goes your modification to the system or client objects.
     /*
-      For example, to change the country to "Pirate's Island", use:
-      system.device.location.country = 'Pirate\'s Island';
+      For example, to change the country to a fictitious "Pirate's Island" ("PI"), use:
+      system.device.location.country = 'PI';
     */
 
     return new Response(JSON.stringify({ system, client }));
@@ -63,16 +63,15 @@ You can use the Context Enricher to add information to your context. For example
 ```js
 function getWeatherForLocation({ client, system }) {
   // Get the location from the context.
-  const { country, city } = system.device.location;
-  const WEATHER_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+  const { city } = system.device.location;
 
   // Get the weather from an API.
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${WEATHER_API_KEY}`
+    `https://wttr.in/${encodeURIComponents(city)}?format=j1`
   ).then((response) => response.json());
 
   // Add the weather to the context.
-  system.device.weather = weather;
+  client.weather = weather;
 
   return { client, system };
 }
@@ -89,6 +88,8 @@ export default {
   },
 };
 ```
+
+Now, you can use the weather property anywhere in Zaraz by choosing the `Track Property` from the attributes input and entering `weather`.
 
 ### Masking sensitive information, such as emails
 
