@@ -45,7 +45,7 @@ Libraries that only support the server-side validation of Turnstile:
 
 ## Fullstack libraries
 
-Libraries that both suport the both client-side rendering and server-side validation of Turnstile:
+Libraries that both support the both client-side rendering and server-side validation of Turnstile:
 
 - [Nuxt](https://www.npmjs.com/package/@nuxtjs/turnstile)
 - [Laravel](https://github.com/romanzipp/Laravel-Turnstile)
