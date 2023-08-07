@@ -14,6 +14,10 @@ If you tried to update to Wrangler v3 prior to v3.3, you may have experienced so
 
 {{</Aside>}}
 
+## Additional dependencies
+
+As a result of updating the Miniflare storage system, `better-sqlite3` is now a dependency of Wrangler v3. If you do not have this installed, view the package's [installation instructions](https://www.npmjs.com/package/better-sqlite3) on npm for more information.
+
 ## Deprecations
 
 Refer to [Deprecations](/workers/wrangler/deprecations/#wrangler-v3) for more details on what is no longer supported in v3.
