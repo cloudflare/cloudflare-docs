@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    
+  },
+  "exclude": [
+    "node_modules",
+    ".yarn",
+    ".vite"
+  ],
+  "include": [
+    "client/**/*",
+    "playwright/**/*"
+  ],
+  "vueCompilerOptions": {
+    "target": 3,
+    "plugins": [
+      "@volar/vue-language-plugin-pug"
+    ]
+  }
+}

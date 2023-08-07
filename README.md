@@ -1,108 +1,293 @@
-# Cloudflare Docs
+<div align="center">
+  
+<img src="https://raw.githubusercontent.com/ietf-tools/common/main/assets/logos/datatracker.svg" alt="IETF Datatracker" height="125" />
 
-**[View the docs →](https://developers.cloudflare.com/)**
+[![Release](https://img.shields.io/github/release/ietf-tools/datatracker.svg?style=flat&maxAge=300)](https://github.com/ietf-tools/datatracker/releases)
+[![License](https://img.shields.io/github/license/ietf-tools/datatracker)](https://github.com/ietf-tools/datatracker/blob/main/LICENSE)
+[![Code Coverage](https://codecov.io/gh/ietf-tools/datatracker/branch/feat/bs5/graph/badge.svg?token=V4DXB0Q28C)](https://codecov.io/gh/ietf-tools/datatracker)  
+[![Python Version](https://img.shields.io/badge/python-3.9-blue?logo=python&logoColor=white)](#prerequisites)
+[![Django Version](https://img.shields.io/badge/django-4.x-51be95?logo=django&logoColor=white)](#prerequisites)
+[![Node Version](https://img.shields.io/badge/node.js-16.x-green?logo=node.js&logoColor=white)](#prerequisites)
+[![MariaDB Version](https://img.shields.io/badge/postgres-14-blue?logo=postgresql&logoColor=white)](#prerequisites)
 
-[Contribute to the docs](https://github.com/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md)
+##### The day-to-day front-end to the IETF database for people who work on IETF standards.
 
-## Setup
+</div>
 
-You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install Hugo](https://gohugo.io/getting-started/installing) instructions for your operating system guides to get started.
+- [**Production Website**](https://datatracker.ietf.org)
+- [Changelog](https://github.com/ietf-tools/datatracker/releases)
+- [Contributing](https://github.com/ietf-tools/.github/blob/main/CONTRIBUTING.md)
+- [Getting Started](#getting-started) - *[ tl;dr ](#the-tldr-to-get-going)*
+    - [Creating a Fork](#creating-a-fork)
+    - [Git Cloning Tips](#git-cloning-tips)
+    - [Docker Dev Environment](docker/README.md)
+- [Database & Assets](#database--assets)
+- [Old Datatracker Branches](https://github.com/ietf-tools/old-datatracker-branches/branches/all)
+- [Frontend Development](#frontend-development)
+    - [Intro](#intro)
+    - [Vite](#vite-vue-3)
+    - [Parcel](#parcel-legacyjquery)
+    - [Bootstrap](#bootstrap)
+    - [Serving Static Files via CDN](#serving-static-files-via-cdn)
+    - [Handling of External Javascript and CSS Components](#handling-of-external-javascript-and-css-components)
+    - [Handling of Internal Static Files](#handling-of-internal-static-files)
+    - [Changes to Template Files](#changes-to-template-files)
+    - [Deployment](#deployment)
+- [Running Tests](#running-tests)
+    - [Python](#python-tests)
+    - [Frontend](#frontend-tests)
+    - [Diff Tool](#diff-tool)
 
-> **Important:** This project is built with version `0.110.0+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
+---
 
-You must also have a recent version of Node.js (14+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
+### Getting Started
 
+This project is following the standard **Git Feature Workflow** development model. Learn about all the various steps of the development workflow, from creating a fork to submitting a pull request, in the [Contributing](https://github.com/ietf-tools/.github/blob/main/CONTRIBUTING.md) guide.
+
+> Make sure to read the [Styleguides](https://github.com/ietf-tools/.github/blob/main/CONTRIBUTING.md#styleguides) section to ensure a cohesive code format across the project.
+
+You can submit bug reports, enhancement and new feature requests in the [discussions](https://github.com/ietf-tools/datatracker/discussions) area. Accepted tickets will be converted to issues.
+
+#### Creating a Fork
+
+Click the <kbd>Fork</kbd> button in the top-right corner of the repository to create a personal copy that you can work on.
+
+> Note that some GitHub Actions might be enabled by default in your fork. You should disable them by going to **Settings** > **Actions** > **General** and selecting **Disable actions** (then Save).
+
+#### Git Cloning Tips
+
+As outlined in the [Contributing](https://github.com/ietf-tools/.github/blob/main/CONTRIBUTING.md) guide, you will first want to create a fork of the datatracker project in your personal GitHub account before cloning it.
+
+Because of the extensive history of this project, cloning the datatracker project locally can take a long time / disk space. You can speed up the cloning process by limiting the history depth, for example *(replace `USERNAME` with your GitHub username)*:
+
+- To fetch only up to the 10 latest commits:
+    ```sh
+    git clone --depth=10 https://github.com/USERNAME/datatracker.git
+    ```
+- To fetch only up to a specific date:
+    ```sh
+    git clone --shallow-since=DATE https://github.com/USERNAME/datatracker.git
+    ```
+
+#### The tl;dr to get going
+
+Note that you will have to have cloned the datatracker code locally - please read the above sections.
+
+Datatracker development is performed using Docker containers. You will need to be able to run docker (and docker-compose) on your machine to effectively develop. It is possible to get a purely native install working, but it is _very complicated_ and typically takes a first time datatracker developer a full day of setup, where the docker setup completes in a small number of minutes.
+
+Many developers are using [VS Code](https://code.visualstudio.com/) and taking advantage of VS Code's ability to start a project in a set of containers. If you are using VS Code, simply start VS Code in your clone and inside VS Code choose `Restart in container`.
+
+If VS Code is not available to you, in your clone, type `cd docker; ./run`
+
+Once the containers are started, run the tests to make sure your checkout is a good place to start from (all tests should pass - if any fail, ask for help at tools-develop@). Inside the app container's shell type:
 ```sh
-$ curl https://get.volta.sh | bash
-$ volta install node
+ietf/manage.py test --settings=settings_postgrestest
 ```
 
-Finally, install the Node.js dependencies for this project using npm or another package manager:
+Note that we recently moved the datatracker onto PostgreSQL - you may still find older documentation that suggests testing with settings_sqlitetest. That will no longer work.
+
+For a more detailed description of getting going, see [docker/README.md](docker/README.md).
+
+#### Overview of the datatracker models
+
+A beginning of a [walkthrough of the datatracker models](https://notes.ietf.org/iab-aid-datatracker-database-overview) was prepared for the IAB AID workshop.
+
+#### Docker Dev Environment
+
+In order to simplify and reduce the time required for setup, a preconfigured docker environment is available.
+
+Read the [Docker Dev Environment](docker/README.md) guide to get started.
+
+### Database & Assets
+
+Nightly database dumps of the datatracker are available as Docker images: `ghcr.io/ietf-tools/datatracker-db:latest`  
+
+> Note that to update the database in your dev environment to the latest version, you should run the `docker/cleandb` script.
+
+### Frontend Development
+
+#### Intro
+
+We now use `yarn` to manage assets for the Datatracker, and `vite`/`parcel` to package them. `yarn` maintains its `node` packages under the `.yarn` directory.
+
+The datatracker uses 2 different build systems, depending on the use case:
+- [**Vite**](https://vitejs.dev/) for Vue 3 pages / components
+- [**Parcel**](https://parceljs.org/) for legacy pages / jQuery
+
+#### Vite *(Vue 3)*
+
+Pages will gradually be updated to Vue 3 components. These components are located under the `/client` directory.
+
+Each Vue 3 app has its own sub-directory. For example, the agenda app is located under `/client/agenda`.
+
+The datatracker makes use of the Django-Vite plugin to point to either the Vite.js server or the precompiled production files. The `DJANGO_VITE_DEV_MODE` flag, found in the `ietf/settings_local.py` file determines whether the Vite.js server is used or not.
+
+In development mode, you must start the Vite.js development server, in addition to the usual Datatracker server:
 
 ```sh
-$ npm install
+yarn dev
 ```
 
-## Development
+Any changes made to the files under `/client` will automatically trigger a hot-reload of the modified components.
 
-When making changes to the site, including any content changes, you may run a local development server by running the following command:
+To generate production assets, run the build command:
 
 ```sh
-$ npm run dev
+yarn build
 ```
 
-This spawns a server that will be accessible via `http://localhost:5173` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
+This will create packages under `ietf/static/dist-neue`, which are then served by the Django development server, and which must be uploaded to the CDN.
 
-Additionally, this project includes a CI step for ensuring consistent code style. This applies to all files within the project, including markdown (`*.md`) files, but will not affect the content itself or the content's output display. To see the style error(s), you may run:
+#### Parcel *(Legacy/jQuery)*
+
+The Datatracker includes these packages from the various Javascript and CSS files in `ietf/static/js` and `ietf/static/css` respectively, bundled using Parcel.
+Static images are likewise in `ietf/static/images`.
+
+Whenever changes are made to the files under `ietf/static`, you must re-run the build command to package them:
+
+``` shell
+yarn legacy:build
+```
+
+This will create packages under `ietf/static/dist/ietf`, which are then served by the Django development server, and which must be uploaded to the CDN.
+
+#### Bootstrap
+
+The "new" datatracker uses Twitter Bootstrap for the UI.
+
+Get familiar with <https://getbootstrap.com/getting-started/> and use those UI elements, CSS classes, etc. instead of cooking up your own.
+
+Some ground rules:
+
+-   Think hard before tweaking the bootstrap CSS, it will make it harder to upgrade to future releases.
+-   No `<style>` tags in the HTML! Put CSS into the "morecss" block of a template instead.
+-   CSS that is used by multiple templates goes into static/css/ietf.css or a new CSS file.
+-   Javascript that is only used on one template goes into the "js" block of that template.
+-   Javascript that is used by multiple templates goes into static/js/ietf.js or a new js file.
+-   Avoid CSS, HTML styling or Javascript in the python code!
+
+#### Serving Static Files via CDN
+
+##### Production Mode
+
+If resources served over a CDN and/or with a high max-age don't have different URLs for different versions, then any component upgrade which is accompanied by a change in template functionality will have a long transition time during which the new pages are served with old components, with possible breakage. We want to avoid this.
+
+The intention is that after a release has been checked out, but before it is deployed, the standard django `collectstatic` management command will be run, resulting in all static files being collected from their working directory location and placed in an appropriate location for serving via CDN. This location will have the datatracker release version as part of its URL, so that after the deployment of a new release, the CDN will be forced to fetch the appropriate static files for that release.
+
+An important part of this is to set up the `STATIC_ROOT` and `STATIC_URL` settings appropriately. In 6.4.0, the setting is as follows in production mode:
+
+```
+STATIC_URL = "https://www.ietf.org/lib/dt/%s/"%__version__
+STATIC_ROOT = CDN_ROOT + "/a/www/www6s/lib/dt/%s/"%__version__
+```
+
+The result is that all static files collected via the `collectstatic` command will be placed in a location served via CDN, with the release version being part of the URL.
+
+##### Development Mode
+
+In development mode, `STATIC_URL` is set to `/static/`, and Django's `staticfiles` infrastructure makes the static files available under that local URL root (unless you set `settings.SERVE_CDN_FILES_LOCALLY_IN_DEV_MODE` to `False`). It is not necessary to actually populate the `static/` directory by running `collectstatic` in order for static files to be served when running `ietf/manage.py runserver` -- the `runserver` command has extra support for finding and serving static files without running collectstatic.
+
+In order to work backwards from a file served in development mode to the location from which it is served, the mapping is as follows:
+
+| Development URL | Working copy location |
+| --------------- | --------------------- |
+| localhost:8000/static/ietf/*  |  ietf/static/ietf/* |
+| localhost:8000/static/secr/*  |  ietf/secr/static/secr/*|
+
+#### Handling of External Javascript and CSS Components
+
+In order to make it easy to keep track of and upgrade external components, these are now handled by a tool called `yarn` via the configuration in `package.json`.
+
+To add a new package, simply run (replace `<package-name>` with the NPM module name):
+```sh
+yarn add <package-name>
+```
+
+#### Handling of Internal Static Files
+
+Previous to this release, internal static files were located under `static/`, mixed together with the external components. They are now located under `ietf/static/ietf/` and `ietf/secr/static/secr`, and will be collected for serving via CDN by the `collectstatic` command. Any static files associated with a particular app will be handled the same way (which means that all `admin/` static files automatically will be handled correctly, too).
+
+#### Changes to Template Files
+
+In order to make the template files refer to the correct versioned CDN URL (as given by the STATIC_URL root) all references to static files in the templates have been updated to use the `static` template tag when referring to static files. This will automatically result in both serving static files from the right place in development mode, and referring to the correct versioned URL in production mode and the simpler `/static/` URLs in development mode.
+
+#### Deployment
+
+During deployment, it is now necessary to run the management command:
 
 ```sh
-$ npm run lint
-```
+ietf/manage.py collectstatic
+````
+before activating a new release.
 
-Finally, some of these code-style errors may be fixed automatically. To do so, you may run:
+## Running Tests
 
+### Python Tests
+
+From a datatracker container, run the command:
 ```sh
-$ npm run format
+./ietf/manage.py test --settings=settings_postgrestest
 ```
 
-## Deployment
+> You can limit the run to specific tests using the `--pattern` argument.
 
-Our docs are deployed using [Cloudflare Pages](https://pages.cloudflare.com). Every commit pushed to production will automatically deploy to [developers.cloudflare.com](https://developers.cloudflare.com), and any pull requests opened will have a corresponding staging URL available in the pull request comments.
+### Frontend Tests
 
-## Visual Studio Code snippets
+Frontend tests are done via Playwright. There're 2 different type of tests:
 
-This repository includes a file with [Visual Studio Code snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) for the most common Hugo shortcodes used Developer Docs.
+- Tests that test Vue pages / components and run natively without any external dependency.
+- Tests that require a running datatracker instance to test against (usually legacy views).
 
-The available snippets are:
+> Make sure you have Node.js 16.x or later installed on your machine.
 
-Prefixes | Description
----|---
-`asideheader` | Inserts an `Aside` shortcode with header text.
-`asidenoheader` | Inserts an `Aside` shortcode without a header.
-`ccol` | Surrounds the current selection with `content-column` shortcodes.
-`tblwrap` | Surrounds the current selection with `table-wrap` shortcodes.
-`directory` | Inserts a `directory-listing` shortcode.
-`headerfullfile` | Inserts a file header for a complete Markdown file.
-`metatitle` | Inserts meta title fields in existing Markdown header. Used to complement a full file header.
-`metadescription` | Inserts meta description fields in existing Markdown header. Used to complement a full file header.
-`headerpartialfile` | Inserts a header for a partial Markdown file.
-`headerpartialfileparams` | Inserts a header for a partial Markdown file with input parameters.
-`partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
-`partialincludeparams` or `renderpartialparams` | Inserts a `render` shortcode to include content from a partial with input parameters in the current document.
-`twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
-`detailssection` or `collapsible` | Inserts a collapsible `<details>` HTML element.
+#### Run Vue Tests
 
-Triggering one of the available snippets will insert their body content at the current cursor position.
+> :warning: All commands below **MUST** be run from the `./playwright` directory, unless noted otherwise.
 
-Additionally, the following snippets support surrounding existing text:
-* `Aside with header`
-* `Aside without header`
-* `Surround with content-column`
-* `Surround with table-wrap`
-* `Create collapsible details section`
+1. Run **once** to install dependencies on your system:
+    ```sh
+    npm install
+    npm run install-deps
+    ```
 
-### How to use
+2. Run in a **separate process**, from the **project root directory**:
+    ```sh
+    yarn preview
+    ```
 
-Note: Make sure you open the root folder of your cloned repository in Visual Studio Code (VSCode), so that VSCode correctly detects the snippets file stored in the `.vscode/` sub-folder.
+3. Run the tests, in of these 3 modes, from the `./playwright` directory:
 
-To enter a snippet:
-1. Enter the snippet prefix and press `Ctrl+Space` (`Command+Space` on a Mac).
-2. Select the desired snippet and press `Enter`.
-3. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
+    3.1 To run the tests headlessly (command line mode):
+    ```sh
+    npm test
+    ```
+    3.2 To run the tests visually **(CANNOT run in docker)**:
+    ```sh
+    npm run test:visual
+    ```
 
-To surround existing content with a snippet:
-1. Select the text you wish to surround with a snippet.
-2. Enter the snippet prefix (temporarily replacing the selected text) and press `Ctrl+Space` (`Command+Space` on a Mac).
-3. Select the desired snippet and press `Enter`. VSCode will insert the snippet body and paste the previously selected content in the correct location.
-4. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
+    3.3 To run the tests in debug mode **(CANNOT run in docker)**:
+    ```sh
+    npm run test:debug
+    ```
 
-## For Cloudflare employees
+#### Run Legacy Views Tests
 
-To get write access to this repo, please reach out to the **Developer Docs** room in chat.
+First, you need to start a datatracker instance (dev or prod), ideally from a docker container, exposing the 8000 port.
 
-## License and Legal Notices
+> :warning: All commands below **MUST** be run from the `./playwright` directory.
 
-Except as otherwise noted, Cloudflare and any contributors grant you a license to the Cloudflare Developer Documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE), and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE).
+1. Run **once** to install dependencies on your system:
+```sh
+npm install
+npm run install-deps
+```
 
-Cloudflare products and services referenced in the documentation may be either trademarks or registered trademarks of Cloudflare in the United States and/or other countries. The licenses for this project do not grant you rights to use any Cloudflare names, logos, or trademarks. Cloudflare's general trademark guidelines can be found at [https://www.cloudflare.com/trademark/](https://www.cloudflare.com/trademark/).
-Cloudflare and any contributors reserve all other rights, whether under their respective copyrights, patents, or trademarks, whether by implication, estoppel, or otherwise.
+2. Run the tests headlessly (command line mode):
+```sh
+npm run test:legacy
+```
+
+### Diff Tool
+
+To compare 2 different datatracker instances and look for diff, read the [diff tool instructions](dev/diff).

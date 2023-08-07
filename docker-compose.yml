@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/app.Dockerfile
+                
+        init: true
+        
+        # Overrides default command so things don't shut down after the process ends.
+        command: sleep infinity
+        
+        # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+        # network_mode: service:db
+
+        depends_on:
+            - db
+            - mq
+
+        ipc: host
+
+        environment:
+            DISPLAY: host.docker.internal:0
+            # USER: django
+            # UID: 1001
+            # GID: 1001
+            # DATADIR: data
+            # DJANGO_SETTINGS_MODULE: settings_postgrestest
+        
+        # Uncomment the next line to use a non-root user for all processes.
+        # user: dev
+        
+        # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+        # (Adding the "ports" property to this file will not forward from a Codespace.)
+                
+    db:
+        image: ghcr.io/ietf-tools/datatracker-db:latest
+        #  build:
+        #      context: ..
+        #      dockerfile: docker/db.Dockerfile
+        restart: unless-stopped
+        volumes:
+            - postgresdb-data:/var/lib/postgresql/data
+            
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        restart: unless-stopped
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=dev@ietf.org
+            - PGADMIN_DEFAULT_PASSWORD=dev
+            - PGADMIN_CONFIG_LOGIN_BANNER="Login with dev@ietf.org / dev"
+            - PGADMIN_DISABLE_POSTFIX=True
+            - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+            - SCRIPT_NAME=/pgadmin
+        volumes:
+            - ./docker/configs/pgadmin-servers.json:/pgadmin4/servers.json
+
+    static:
+        image: ghcr.io/ietf-tools/static:latest
+        restart: unless-stopped
+
+    mq:
+        image: rabbitmq:3-alpine
+        restart: unless-stopped
+
+    celery:
+        image: ghcr.io/ietf-tools/datatracker-celery:latest
+        init: true
+        environment:
+            CELERY_APP: ietf
+            CELERY_ROLE: worker
+            UPDATE_REQUIREMENTS_FROM: requirements.txt
+            DEV_MODE: yes
+        command:
+            - '--loglevel=INFO'
+        depends_on:
+            - db
+        restart: unless-stopped
+        stop_grace_period: 1m
+        volumes:
+            - .:/workspace
+            - app-assets:/assets
+
+#  Celery Beat is a periodic task runner. It is not normally needed for development,
+#  but can be enabled by uncommenting the following.
+#
+#    beat:
+#        image: ghcr.io/ietf-tools/datatracker-celery:latest
+#        init: true
+#        environment:
+#            CELERY_APP: ietf
+#            CELERY_ROLE: beat
+#            UPDATE_REQUIREMENTS_FROM: requirements.txt
+#        command:
+#            - '--loglevel=INFO'
+#        depends_on:
+#            - db
+#        restart: unless-stopped
+#        stop_grace_period: 1m
+#        volumes:
+#            - .:/workspace
+
+volumes:
+    postgresdb-data:
+    app-assets:

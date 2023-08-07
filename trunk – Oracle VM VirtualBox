@@ -1,0 +1,1753 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://www.virtualbox.org/browser/vbox/trunk/.scm-settings
+Subject: =?utf-8?Q?.scm-settings=20in=20vbox/trunk=20=E2=80=93=20Oracle=20VM=20Vir?=
+ =?utf-8?Q?tualBox?=
+Date: Sat, 5 Aug 2023 08:38:11 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----"
+
+
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: text/html
+Content-ID: <frame-960FE3CF48521B6284E30E6FD5AF6AD6@mhtml.blink>
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/browser/vbox/trunk/.scm-settings
+
+<!DOCTYPE html><html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- # block head (placeholder in theme.html) -->
+        <!-- # block head (content inherited from layout.html) -->
+    <title>
+.scm-settings in vbox/trunk          â€“ Oracle VM VirtualBox
+
+    </title>
+
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if IE]><script>
+        if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+        </script><![endif]-->
+
+    <link rel="search" href="https://www.virtualbox.org/search">
+    <link rel="help" href="https://www.virtualbox.org/wiki/TracGuide">
+    <link rel="alternate" href="https://www.virtualbox.org/export/100800/vbox/trunk/.scm-settings" title="Original Format" type="text/plain">
+    <link rel="start" href="https://www.virtualbox.org/wiki">
+    <link rel="stylesheet" href="https://www.virtualbox.org/chrome/common/css/trac.css" type="text/css">
+    <link rel="stylesheet" href="https://www.virtualbox.org/chrome/common/css/code.css" type="text/css">
+    <link rel="stylesheet" href="https://www.virtualbox.org/pygments/trac.css" type="text/css">
+    <link rel="stylesheet" href="https://www.virtualbox.org/chrome/common/css/browser.css" type="text/css">
+    <link rel="prev" href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings?rev=98103" title="Revision 98103">
+    <link rel="icon" href="https://www.virtualbox.org/favicon.ico" type="image/x-icon">
+    
+    <link type="application/opensearchdescription+xml" rel="search" href="https://www.virtualbox.org/search/opensearch" title="Search Oracle VM VirtualBox">
+    
+    
+    
+    
+    
+    
+    
+    <!--   # include 'site_head.html' (layout.html) -->
+
+<link rel="stylesheet" type="text/css" href="https://www.virtualbox.org/chrome/site/style.css">
+
+    <!--   end of site_head.html -->
+    <!-- # endblock head (content inherited from layout.html) -->
+
+
+    
+    <!-- # endblock head (placeholder in theme.html) -->
+  </head> 
+  <body>
+    <!-- # block body (content inherited from theme.html) -->
+    <!--   # include 'site_header.html' (theme.html) -->
+
+    <!-- Add site-specific header -->
+    <div id="vboxstring">
+      <img src="https://www.virtualbox.org/graphics/vboxlogodown.png" alt="VirtualBox">
+    </div>
+    
+    <div id="vboxlinks">
+      <a href="https://www.virtualbox.org/wiki/VirtualBox">About</a><br>
+      <a href="https://www.virtualbox.org/wiki/Screenshots">Screenshots</a><br>
+      <a href="https://www.virtualbox.org/wiki/Downloads">Downloads</a><br>
+      <a href="https://www.virtualbox.org/wiki/Documentation">Documentation</a><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.virtualbox.org/wiki/End-user_documentation">End-user docs</a><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.virtualbox.org/wiki/Technical_documentation">Technical docs</a><br>
+      <a href="https://www.virtualbox.org/wiki/Contributor_information">Contribute</a><br>
+      <a href="https://www.virtualbox.org/wiki/Community">Community</a><br>
+    </div>
+    <div id="center">
+      <form style="text-align: right" action="https://www.virtualbox.org/search" method="get">
+        <div>
+          <input id="vboxsearch" type="text" name="q" size="10" accesskey="f" value="search...">
+          
+          
+          
+        </div>
+      </form>
+    <!--   end of site_header.html -->
+
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="https://www.virtualbox.org/">
+          <img alt="Oracle VM VirtualBox" src="https://www.virtualbox.org/graphics/vbox_logo2_gradient.png"></a>
+
+
+      </div>
+      <form id="search" action="https://www.virtualbox.org/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="">
+          <input type="submit" value="Search">
+        </div>
+      </form>
+          <div id="metanav" class="nav">
+      <ul><li class="first"><a href="https://www.virtualbox.org/login">Login</a></li><li class="last"><a href="https://www.virtualbox.org/prefs">Preferences</a></li></ul>
+    </div>
+
+    </div>
+        <div id="mainnav" class="nav">
+      <ul><li class="active last first"><a href="https://www.virtualbox.org/browser">Browse Source</a></li></ul>
+    </div>
+
+
+    <div id="main">
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+        <ul>
+          <li class="first"><span>â† <a class="prev" href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings?rev=98103" title="Revision 98103">Previous Revision</a></span></li>
+          <li><span class="missing">Next Revision â†’</span></li>
+          <li><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings?annotate=blame" title="Annotate each line with the last changed revision (this can be time consuming...)">Blame</a></li>
+          <li class="last"><a href="https://www.virtualbox.org/log/vbox/trunk/.scm-settings">Revision Log</a></li>
+        </ul>
+        <hr>
+      </div>
+
+      
+
+      
+
+      <!-- # block content (placeholder in theme.html) -->
+    <div id="content" class="browser">
+
+      <h1>
+
+
+<a class="pathentry first" href="https://www.virtualbox.org/browser?order=name" title="Go to repository index">source:</a>
+<a class="pathentry" href="https://www.virtualbox.org/browser/vbox?order=name" title="View vbox">vbox</a><span class="pathentry sep">/</span><a class="pathentry" href="https://www.virtualbox.org/browser/vbox/trunk?order=name" title="View trunk">trunk</a><span class="pathentry sep">/</span><a class="pathentry" href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings?order=name" title="View .scm-settings">.scm-settings</a><br style="clear: both">
+      </h1>
+
+      <div id="diffrev">
+        <form action="https://www.virtualbox.org/changeset" method="get">
+          <div>
+            <label title="Show the diff against a specific revision">
+              View diff against:
+              <input type="text" name="old" size="6">
+              
+              
+              
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div id="jumprev">
+        <form action="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#" method="get">
+          <div>
+            <label for="rev" title="">
+              View revision:</label>
+            <input type="text" id="rev" name="rev" value="" size="6">
+          </div>
+        </form>
+      </div>
+
+      <div id="jumploc">
+        <form action="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#" method="get">
+          <div class="buttons">
+            <label for="preselected">Visit:</label>
+            <select id="preselected" name="preselected">
+              <option selected="selected"></option>
+              <optgroup label="branches">
+                <option value="/browser/vbox/trunk">trunk</option>
+              </optgroup>
+            </select>
+            <input type="submit" value="Go!" title="Jump to the chosen preselected path" style="display: none;">
+          </div>
+        </form>
+      </div>
+      <div class="trac-tags">
+      </div>
+      <table id="info">
+        <tbody><tr>
+          <th>
+            <a href="https://www.virtualbox.org/changeset/98108/vbox/trunk/.scm-settings" title="View differences">Last change</a>
+ on this file was             <a href="https://www.virtualbox.org/changeset/98108/vbox" title="View changeset 98108">98108</a>, checked in by <span class="trac-author">vboxsync</span>, <a class="timeline" href="https://www.virtualbox.org/timeline?from=2023-01-17T23%3A40%3A56Z&amp;precision=second" title="See timeline at Jan 17, 2023 11:40:56 PM">7 months ago</a>          </th>
+        </tr>
+        <tr>
+          <td class="message searchable">
+            <p>
+Manual (C) year updates.<br>
+</p>
+
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <ul class="props">
+              <li>
+Property                 <strong>svn:eol-style</strong>
+ set to                 <em><code>native</code></em>
+              </li>
+              <li>
+Property                 <strong>svn:keywords</strong>
+ set to                 <em><code>Author Date Id Revision</code></em>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <strong>File size:</strong>
+            <span title="2756 bytes">2.7 KB</span>
+          </td>
+        </tr>
+      </tbody></table>
+      <div id="preview" class="searchable">
+
+<table class="code"><thead><tr><th class="lineno" title="Line numbers (click to hide column)" style="cursor: pointer;">Line</th><th class="content">&nbsp;</th></tr></thead><tbody><tr><th id="L1"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L1">1</a></th><td># $Id: .scm-settings 98108 2023-01-17 23:40:56Z vboxsync $
+</td></tr><tr><th id="L2"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L2">2</a></th><td>## @file
+</td></tr><tr><th id="L3"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L3">3</a></th><td># Top level source code massager settings.
+</td></tr><tr><th id="L4"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L4">4</a></th><td>#
+</td></tr><tr><th id="L5"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L5">5</a></th><td># This will be loaded when scm is pointed to any file or directory in the
+</td></tr><tr><th id="L6"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L6">6</a></th><td># VirtualBox source tree.  It will recursively load all .scm-settings files
+</td></tr><tr><th id="L7"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L7">7</a></th><td># it find in or above directories or files it's told to work on.  So,
+</td></tr><tr><th id="L8"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L8">8</a></th><td># .scm-settings files can be placed in sub-directories in the tree to provide
+</td></tr><tr><th id="L9"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L9">9</a></th><td># additional settins specific to that sub-tree.
+</td></tr><tr><th id="L10"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L10">10</a></th><td>#
+</td></tr><tr><th id="L11"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L11">11</a></th><td>
+</td></tr><tr><th id="L12"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L12">12</a></th><td>#
+</td></tr><tr><th id="L13"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L13">13</a></th><td># Copyright (C) 2010-2023 Oracle and/or its affiliates.
+</td></tr><tr><th id="L14"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L14">14</a></th><td>#
+</td></tr><tr><th id="L15"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L15">15</a></th><td># This file is part of VirtualBox base platform packages, as
+</td></tr><tr><th id="L16"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L16">16</a></th><td># available from https://www.virtualbox.org.
+</td></tr><tr><th id="L17"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L17">17</a></th><td>#
+</td></tr><tr><th id="L18"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L18">18</a></th><td># This program is free software; you can redistribute it and/or
+</td></tr><tr><th id="L19"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L19">19</a></th><td># modify it under the terms of the GNU General Public License
+</td></tr><tr><th id="L20"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L20">20</a></th><td># as published by the Free Software Foundation, in version 3 of the
+</td></tr><tr><th id="L21"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L21">21</a></th><td># License.
+</td></tr><tr><th id="L22"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L22">22</a></th><td>#
+</td></tr><tr><th id="L23"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L23">23</a></th><td># This program is distributed in the hope that it will be useful, but
+</td></tr><tr><th id="L24"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L24">24</a></th><td># WITHOUT ANY WARRANTY; without even the implied warranty of
+</td></tr><tr><th id="L25"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L25">25</a></th><td># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+</td></tr><tr><th id="L26"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L26">26</a></th><td># General Public License for more details.
+</td></tr><tr><th id="L27"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L27">27</a></th><td>#
+</td></tr><tr><th id="L28"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L28">28</a></th><td># You should have received a copy of the GNU General Public License
+</td></tr><tr><th id="L29"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L29">29</a></th><td># along with this program; if not, see &lt;https://www.gnu.org/licenses&gt;.
+</td></tr><tr><th id="L30"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L30">30</a></th><td>#
+</td></tr><tr><th id="L31"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L31">31</a></th><td># SPDX-License-Identifier: GPL-3.0-only
+</td></tr><tr><th id="L32"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L32">32</a></th><td>#
+</td></tr><tr><th id="L33"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L33">33</a></th><td>
+</td></tr><tr><th id="L34"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L34">34</a></th><td>
+</td></tr><tr><th id="L35"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L35">35</a></th><td>#
+</td></tr><tr><th id="L36"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L36">36</a></th><td># Global settings.
+</td></tr><tr><th id="L37"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L37">37</a></th><td>#
+</td></tr><tr><th id="L38"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L38">38</a></th><td># Only consider directories and files that are part of a SVN working set.
+</td></tr><tr><th id="L39"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L39">39</a></th><td>#
+</td></tr><tr><th id="L40"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L40">40</a></th><td>--only-svn-dirs
+</td></tr><tr><th id="L41"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L41">41</a></th><td>--only-svn-files
+</td></tr><tr><th id="L42"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L42">42</a></th><td>--set-svn-eol
+</td></tr><tr><th id="L43"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L43">43</a></th><td>--set-svn-executable
+</td></tr><tr><th id="L44"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L44">44</a></th><td>--set-svn-keywords
+</td></tr><tr><th id="L45"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L45">45</a></th><td>
+</td></tr><tr><th id="L46"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L46">46</a></th><td>#
+</td></tr><tr><th id="L47"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L47">47</a></th><td># Directories to ignore.
+</td></tr><tr><th id="L48"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L48">48</a></th><td>#
+</td></tr><tr><th id="L49"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L49">49</a></th><td># These are simple string patterns (see iprt/string.h) and we'll match both the
+</td></tr><tr><th id="L50"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L50">50</a></th><td># base name as well as the absolute path of each directory we consider for
+</td></tr><tr><th id="L51"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L51">51</a></th><td># recursion against these patterns.
+</td></tr><tr><th id="L52"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L52">52</a></th><td>#
+</td></tr><tr><th id="L53"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L53">53</a></th><td>--filter-out-dirs  ".svn"
+</td></tr><tr><th id="L54"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L54">54</a></th><td>--filter-out-dirs  "/*out*/."
+</td></tr><tr><th id="L55"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L55">55</a></th><td>--filter-out-dirs  "/kBuild/."
+</td></tr><tr><th id="L56"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L56">56</a></th><td>--filter-out-dirs  "/*kBuild_*/."
+</td></tr><tr><th id="L57"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L57">57</a></th><td>--filter-out-dirs  "/*kBuild.*/."
+</td></tr><tr><th id="L58"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L58">58</a></th><td>--filter-out-dirs  "/*_kBuild*/."
+</td></tr><tr><th id="L59"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L59">59</a></th><td>--filter-out-dirs  "/SlickEdit/."
+</td></tr><tr><th id="L60"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L60">60</a></th><td>
+</td></tr><tr><th id="L61"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L61">61</a></th><td>
+</td></tr><tr><th id="L62"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L62">62</a></th><td>#
+</td></tr><tr><th id="L63"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L63">63</a></th><td># Files to ignore.
+</td></tr><tr><th id="L64"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L64">64</a></th><td>#
+</td></tr><tr><th id="L65"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L65">65</a></th><td># Same format as for the directories, except that we'll also apply them to
+</td></tr><tr><th id="L66"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L66">66</a></th><td># files specified directly on the command line.
+</td></tr><tr><th id="L67"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L67">67</a></th><td>#
+</td></tr><tr><th id="L68"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L68">68</a></th><td>--filter-out-files "/vslick.h"
+</td></tr><tr><th id="L69"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L69">69</a></th><td>--filter-out-files "/.dir-locals.el"
+</td></tr><tr><th id="L70"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L70">70</a></th><td>--filter-out-files "*/.gitignore"
+</td></tr><tr><th id="L71"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L71">71</a></th><td>--filter-out-files "*/PkgInfo"
+</td></tr><tr><th id="L72"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L72">72</a></th><td>--filter-out-files "*/*-PkgInfo"
+</td></tr><tr><th id="L73"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L73">73</a></th><td>--filter-out-files "*.crt"
+</td></tr><tr><th id="L74"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L74">74</a></th><td>--filter-out-files "*.plist"
+</td></tr><tr><th id="L75"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L75">75</a></th><td>--filter-out-files "*.provisionprofile"
+</td></tr><tr><th id="L76"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L76">76</a></th><td>--filter-out-files "*/Doxyfile*"
+</td></tr><tr><th id="L77"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L77">77</a></th><td>--filter-out-files "*/COPYING"
+</td></tr><tr><th id="L78"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L78">78</a></th><td>--filter-out-files "*/COPYING.LIB"
+</td></tr><tr><th id="L79"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L79">79</a></th><td>--filter-out-files "*/COPYING.CDDL"
+</td></tr><tr><th id="L80"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L80">80</a></th><td>--filter-out-files "*/COPYING.GPLv2"
+</td></tr><tr><th id="L81"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L81">81</a></th><td>--filter-out-files "*/COPYING.UBDL"
+</td></tr><tr><th id="L82"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L82">82</a></th><td>--filter-out-files "*.desktop"
+</td></tr><tr><th id="L83"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L83">83</a></th><td>--filter-out-files "*/.swagger-codegen-ignore"
+</td></tr><tr><th id="L84"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L84">84</a></th><td>--filter-out-files "*/.swagger-codegen/VERSION"
+</td></tr><tr><th id="L85"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L85">85</a></th><td>
+</td></tr><tr><th id="L86"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L86">86</a></th><td>
+</td></tr><tr><th id="L87"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L87">87</a></th><td>#
+</td></tr><tr><th id="L88"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L88">88</a></th><td># Header guards are by default relative to the parent directory.
+</td></tr><tr><th id="L89"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L89">89</a></th><td>#
+</td></tr><tr><th id="L90"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L90">90</a></th><td>--guard-prefix VBOX_INCLUDED_SRC_
+</td></tr><tr><th id="L91"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L91">91</a></th><td>--guard-relative-to-dir {parent}
+</td></tr><tr><th id="L92"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L92">92</a></th><td>--fix-header-guard-endif
+</td></tr><tr><th id="L93"><a href="https://www.virtualbox.org/browser/vbox/trunk/.scm-settings#L93">93</a></th><td>
+</td></tr></tbody></table>
+
+      </div>
+      <div id="anydiff">
+        <form action="https://www.virtualbox.org/diff" method="get">
+          <div class="buttons">
+            
+
+            
+
+            
+            
+            <input type="submit" value="View changes..." title="Select paths and revs for Diff">
+          </div>
+        </form>
+      </div>
+
+<div class="trac-help">
+  <strong>Note:</strong>
+ See   <a href="https://www.virtualbox.org/wiki/TracBrowser">TracBrowser</a>
+ for help on using the repository browser.
+</div>
+    </div>
+        <!-- # block content (content inherited from layout.html) -->
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="https://www.virtualbox.org/export/100800/vbox/trunk/.scm-settings" class="">
+            Original Format</a>
+        </li>
+      </ul>
+    </div>
+    <!-- # endblock content (content inherited from layout.html) -->
+
+      <!-- # endblock content (placeholder in theme.html) -->
+    </div>
+
+    <div id="footer"><hr>
+      <a id="tracpowered" href="https://trac.edgewall.org/"><img src="https://www.virtualbox.org/chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered"></a>
+      <p class="left">
+Powered by         <a href="https://www.virtualbox.org/about"><strong>Trac 1.4.3.2</strong></a>
+        <br>
+ By         <a href="http://www.edgewall.org/">Edgewall Software</a>
+.      </p>
+      <p class="right"></p>
+    </div>
+    <!--   # include 'site_footer.html' (theme.html) -->
+
+</div><!-- center -->
+<div id="vboxfooter">
+  <p style="text-align:center">
+    <a href="https://www.oracle.com/"><span style="background-image: url(/graphics/oracle-logo-new.svg); width: 100px; height: 24px; background-repeat: no-repeat; background-position: 0 11px; background-size: 100% 100%; display: inline-block"></span> Â© 2023 Oracle</a><br>
+    <a href="https://www.oracle.com/virtualization/virtualbox/resources.html">Contact</a> â€“ <a href="https://www.oracle.com/html/privacy.html">Privacy policy</a> â€“ <a href="https://www.oracle.com/html/terms.html">Terms of Use</a>
+  </p>
+</div>
+
+    <!--   end of site_footer.html -->
+    <!-- # endblock body (content inherited from theme.html) -->
+   </body></html>
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/chrome/common/css/trac.css
+
+@charset "utf-8";
+
+html { overflow-y: scroll; }
+
+body { font-size: 100%; background: rgb(255, 255, 255); color: rgb(0, 0, 0); margin: 0.5em; padding: 0px; }
+
+body, th, tr { font-style: normal; font-family: Roboto, "Segoe UI", Verdana, "Bitstream Vera Sans", Helvetica, sans-serif; }
+
+h1, h2, h3, h4 { font-weight: bold; letter-spacing: -0.018em; break-after: avoid; }
+
+h1 { font-size: 1.8em; margin: 0.15em 1em 0.5em 0px; }
+
+h2 { font-size: 1.6em; }
+
+h3 { font-size: 1.2em; }
+
+hr { border-right: none; border-bottom: none; border-left: none; border-image: initial; border-top: 1px solid rgb(204, 204, 187); margin: 2em 0px; }
+
+address { font-style: normal; }
+
+img { border: none; }
+
+.underline { text-decoration: underline; }
+
+ol.loweralpha { list-style-type: lower-alpha; }
+
+ol.upperalpha { list-style-type: upper-alpha; }
+
+ol.lowerroman { list-style-type: lower-roman; }
+
+ol.upperroman { list-style-type: upper-roman; }
+
+ol.arabic { list-style-type: decimal; }
+
+:link, :visited { text-decoration: none; color: rgb(187, 0, 0); border-bottom: 1px dotted rgb(187, 187, 187); }
+
+:link:hover, :visited:hover { background-color: rgba(238, 238, 238, 0.5); color: rgb(85, 0, 0); border-radius: 0.1em; box-shadow: rgba(238, 238, 238, 0.5) 0px 0px 0px 0.15em; }
+
+h1 :link, h1 :visited, h2 :link, h2 :visited, h3 :link, h3 :visited, h4 :link, h4 :visited, h5 :link, h5 :visited, h6 :link, h6 :visited { color: inherit; }
+
+.anchor:link, .anchor:visited { border: none; color: rgb(215, 215, 215); font-size: 0.8em; vertical-align: text-top; }
+
+* > .anchor:link, * > .anchor:visited { visibility: hidden; }
+
+h1:hover .anchor, h2:hover .anchor, h3:hover .anchor, h4:hover .anchor, h5:hover .anchor, h6:hover .anchor, span:hover .anchor { visibility: visible; }
+
+h1:target, h2:target, h3:target, h4:target, h5:target, h6:target, span:target { background: rgb(251, 255, 182); box-shadow: rgba(172, 172, 172, 0.25) 0px 0px 0.4em 0.1em; }
+
+.tracini table.wiki tbody tr:target { background: rgb(255, 255, 187); }
+
+.tracini .tracini-option { border: none; position: relative; }
+
+.tracini .tracini-option:link:hover, .tracini .tracini-option:visited:hover { background-color: transparent; }
+
+.tracini tr[id]:hover .tracini-option::before { content: "Â¶"; position: absolute; display: block; left: -1em; width: 1em; color: rgb(215, 215, 215); z-index: 1; }
+
+@media screen {
+  a.ext-link .icon { background: url("../extlink.gif") left center no-repeat; padding-left: 15px; }
+  a.mail-link .icon { background: url("../envelope.png") left center no-repeat; padding-left: 16px; }
+  a.trac-rawlink, a.trac-ziplink { background: url("../download.png") right center no-repeat; padding-right: 16px; border-bottom: none; }
+}
+
+input, textarea, select, .trac-button { margin: 2px; }
+
+input, select, button { font-style: normal; font-size: 0.9em; font-family: Roboto, "Segoe UI", Verdana, "Bitstream Vera Sans", Helvetica, sans-serif; }
+
+textarea { white-space: pre-wrap; font-size: 1em; }
+
+input, select, .trac-button { vertical-align: middle; }
+
+select { background: linear-gradient(to top, rgb(219, 219, 219) 0%, rgb(238, 238, 238) 30%, rgb(251, 251, 251) 100%); border-radius: 0.2em; padding-bottom: 0.15em; }
+
+select[disabled] { background: rgb(253, 253, 253); }
+
+input[type="button"], input[type="submit"], input[type="reset"], .trac-button { background: rgb(238, 238, 238); color: rgb(34, 34, 34); border: 1px solid rgb(187, 187, 187); border-radius: 0.3em; box-shadow: rgb(204, 204, 204) 0.1em 0.1em 0.1em 0px; padding: 0.25em 0.5em 0.35em; font-size: 0.9em; text-shadow: rgb(221, 221, 221) 0.04em 0.04em; cursor: pointer; }
+
+input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover, .trac-button:hover { background: rgb(246, 246, 246); box-shadow: rgb(153, 153, 153) 0.1em 0.1em 0.2em 0px; text-shadow: rgb(252, 252, 252) 0.04em 0.04em; }
+
+input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:active, .trac-button:active, .inlinebuttons a:active { position: relative; top: 0.1em; left: 0.1em; }
+
+input[type="button"][disabled], input[type="submit"][disabled], input[type="reset"][disabled], .trac-button[disabled] { background: rgb(246, 246, 246); border-style: solid; color: rgb(153, 153, 153); }
+
+input[type="text"], input.textwidget, textarea { border: 1px solid rgb(215, 215, 215); border-radius: 0.3em; box-shadow: rgb(246, 246, 246) 0.1em 0.1em 0.4em 0px inset; }
+
+input[type="text"], input.textwidget { padding: 0.25em 0.5em; }
+
+input[type="text"]:focus, input.textwidget:focus, textarea:focus { border: 1px solid rgb(136, 136, 102); }
+
+option { border-bottom: 1px dotted rgb(215, 215, 215); }
+
+fieldset { border: 1px solid rgb(215, 215, 215); border-radius: 0.4em; margin: 1em 0px; background: rgb(247, 247, 240); box-shadow: rgb(231, 231, 231) 0.1em 0.1em 1em 0px inset; padding: 1em; }
+
+p.hint, span.hint, span.trac-datetimehint { color: rgb(102, 102, 102); font-size: 0.9em; font-style: italic; margin: 0.5em 0px; padding-left: 1em; }
+
+label.trac-textarea-hint { color: rgb(102, 102, 102); display: block; font-size: 0.9em; font-style: italic; margin: 0.25em 0px; text-align: right; }
+
+span.hint { vertical-align: middle; }
+
+p.help { color: rgb(102, 102, 102); font-size: 90%; margin: 1em 0.5em 0.5em; }
+
+legend { color: rgb(153, 153, 153); margin-left: 0.6em; padding: 0px 0.25em; font-size: 90%; font-weight: bold; }
+
+label.disabled, .disabled span.hint, .disabled p.help, .disabled legend, .disabled input, .disabled select, .readonly span.hint, .readonly p.help { color: rgb(215, 215, 215); }
+
+.buttons { margin: 0.5em 0.5em 0.5em 0px; }
+
+.buttons form, .buttons form div { display: inline; }
+
+.buttons input { margin: 1em 0.5em 0.1em 0px; }
+
+.inlinebuttons input, .inlinebuttons .trac-button, .inlinebuttons a { border: 1px solid rgb(221, 221, 221); border-radius: 1em; height: 1.6em; padding: 0px 0.4em 0.1em; font-size: 70%; box-shadow: none; margin: 0px 0.1em 0.1em; background: none; color: rgb(128, 128, 128); cursor: pointer; }
+
+.uisymbols .inlinebuttons input[type="button"], .uisymbols .inlinebuttons input[type="submit"], .uisymbols .inlinebuttons .trac-button, .uisymbols .inlinebuttons a { font-size: 100%; }
+
+.inlinebuttons input[type="button"]:hover, .inlinebuttons input[type="submit"]:hover, .inlinebuttons .trac-button:hover, .inlinebuttons a:hover { background: rgb(246, 246, 246); color: rgb(51, 51, 51); box-shadow: rgb(223, 223, 223) 0.1em 0.1em 0.4em 0px; }
+
+input[type="button"].trac-delete, input[type="submit"].trac-delete, .trac-button.trac-delete { color: rgb(211, 19, 19); }
+
+input[type="button"].trac-delete:hover, input[type="submit"].trac-delete:hover, .trac-button.trac-delete:hover { color: rgb(227, 19, 19); }
+
+textarea { font-family: "Open Sans Mono", Consolas, "Lucida Console", monospace; }
+
+textarea.trac-fullwidth, input.trac-fullwidth, button.trac-fullwidth { box-sizing: border-box; margin-left: 0px; margin-right: 0px; width: 100%; }
+
+textarea.trac-fullwidth { padding: 2px; }
+
+form.mod { margin: 1em 0px; }
+
+form.mod .field { margin: 0.5em 0px; }
+
+form.mod .field.description { margin-top: 1em; }
+
+form.mod .field label { padding-left: 0.2em; }
+
+form.mod #changeinfo .field { margin: 0.25em 0px 0.75em; }
+
+form.mod #changeinfo .options { padding: 0px 0px 0.5em 1em; }
+
+#header hr { display: none; }
+
+#header h1 { margin: 1.5em 0px -1.5em; padding: 0px; }
+
+#header img { border: none; margin: 0px 0px -3em; }
+
+#header :link, #header :visited, #header :link:hover, #header :visited:hover { background: transparent; color: rgb(85, 85, 85); margin-bottom: 2px; border: none; padding: 0px; }
+
+#header h1 :link:hover, #header h1 :visited:hover { color: rgb(0, 0, 0); }
+
+#search { clear: both; font-size: 0.8em; height: 2.2em; margin: 0px 0px 1em; text-align: right; }
+
+#search input { font-size: 1em; }
+
+#search label { display: none; }
+
+.nav h2, .nav hr { display: none; }
+
+.nav ul { font-size: 0.9em; list-style: none; margin: 0px; padding: 0px; text-align: right; }
+
+.nav li { border-right: 1px solid rgb(215, 215, 215); display: inline-block; padding: 0px 0.75em; white-space: nowrap; }
+
+.nav li.last { border-right: none; }
+
+#metanav { padding-top: 0.3em; }
+
+#metanav form.trac-logout { display: inline; margin: 0px; padding: 0px; }
+
+#metanav form.trac-logout button { margin: 0px; padding: 0px; border-width: 0px 0px 1px; border-top-style: initial; border-right-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-left-color: initial; border-image: initial; outline: 0px; background: transparent; font-family: inherit; font-size: 100%; color: rgb(187, 0, 0); border-bottom-style: dotted; border-bottom-color: rgb(187, 187, 187); cursor: pointer; }
+
+#metanav form.trac-logout button:hover { background-color: rgba(238, 238, 238, 0.5); color: rgb(85, 0, 0); border-radius: 0.1em; box-shadow: rgba(238, 238, 238, 0.5) 0px 0px 0px 0.15em; }
+
+#metanav form.trac-logout button:active { position: static; }
+
+#mainnav { font-size: 0.9em; font-weight: 600; letter-spacing: 0.03em; box-shadow: rgb(242, 242, 242) 0px 0.3em 1em; border: 1px solid rgb(228, 228, 228); border-radius: 0.4em; margin: 0.66em 0px 0.33em; }
+
+#mainnav ul { margin: -1px; }
+
+#mainnav li { background: linear-gradient(rgb(242, 242, 242) 0%, rgb(250, 250, 250) 25%, rgb(254, 254, 254) 49%, rgb(255, 255, 255) 51%, rgb(250, 250, 250) 85%, rgb(242, 242, 242) 100%); border: 1px solid rgb(228, 228, 228); margin: 0px 0.3em 0px -0.4em; padding: 0.4em 0px; font-weight: 600; text-transform: uppercase; }
+
+#mainnav .first, #mainnav .first :link { border-top-left-radius: 0.5em; border-bottom-left-radius: 0.5em; }
+
+#mainnav .last, #mainnav .last :link { border-top-right-radius: 0.5em; border-bottom-right-radius: 0.5em; margin-right: 0px; }
+
+#mainnav :link, #mainnav :visited { border-bottom: none; color: rgb(102, 102, 102); padding: 0.5em 20px; }
+
+#mainnav :link:hover, #mainnav :visited:hover { background: linear-gradient(rgb(136, 136, 136) 0%, rgb(85, 85, 85) 25%, rgb(51, 51, 51) 49%, rgb(51, 51, 51) 51%, rgb(68, 68, 68) 85%, rgb(136, 136, 136) 100%); color: rgb(238, 238, 238); padding: 0.5em 20px; }
+
+#mainnav .active { border: 1px solid rgb(102, 102, 102); }
+
+#mainnav .active :link, #mainnav .active :visited { background: linear-gradient(rgb(85, 85, 85) 0%, rgb(51, 51, 51) 25%, rgb(17, 17, 17) 49%, rgb(0, 0, 0) 51%, rgb(51, 51, 51) 75%, rgb(85, 85, 85) 100%); color: rgb(238, 238, 238); }
+
+#ctxtnav { min-height: 1em; padding: 0.4em 0px; }
+
+#ctxtnav li ul { background: rgb(247, 247, 247); color: rgb(204, 204, 204); border: 1px solid; padding: 0px; display: inline; margin: 0px; }
+
+#ctxtnav li li { padding: 0px; }
+
+#ctxtnav li li :link, #ctxtnav li li :visited { padding: 0px 1em; }
+
+#ctxtnav li li :link:hover, #ctxtnav li li :visited:hover { background: rgb(187, 187, 170); color: rgb(255, 255, 255); }
+
+.trac-nav, .trac-topnav { float: right; font-size: 80%; }
+
+.trac-topnav { margin-top: 14px; }
+
+#altlinks { clear: both; margin-top: 0.4em; text-align: center; }
+
+#altlinks h3 { font-size: 1.1em; letter-spacing: normal; margin: 0px; }
+
+#altlinks ul { list-style: none; margin: 0px; padding: 0px; }
+
+#altlinks li { border-right: 1px solid rgb(215, 215, 215); display: inline; font-size: 1.1em; line-height: 1.5; padding: 0px 1em; white-space: nowrap; }
+
+#altlinks li.last { border-right: none; }
+
+#altlinks li :link, #altlinks li :visited { background-repeat: no-repeat; color: rgb(102, 102, 102); border: none; padding: 0px 0px 2px; }
+
+#altlinks li a.ics { background: url("../ics.png") left center no-repeat; padding-left: 22px; }
+
+#altlinks li a.rss { background: url("../feed.png") left center no-repeat; padding-left: 20px; }
+
+#footer { clear: both; color: rgb(187, 187, 187); font-size: 0.9em; height: 31px; padding: 0.25em 0px; }
+
+#footer :link, #footer :visited { color: rgb(187, 187, 187); }
+
+#footer hr { display: none; }
+
+#footer #tracpowered { border: 0px; float: left; }
+
+#footer #tracpowered:hover { background: transparent; }
+
+#footer p { margin: 0px; }
+
+#footer p.left { float: left; margin-left: 1em; padding: 0px 1em; border-left: 1px solid rgb(215, 215, 215); border-right: 1px solid rgb(215, 215, 215); }
+
+#footer p.right { float: right; text-align: right; }
+
+#content { position: relative; }
+
+div.trac-content { padding: 0.5rem 1rem; margin: 0.3em auto; border: 1px solid rgb(228, 228, 228); border-radius: 0.4em; box-shadow: rgb(242, 242, 242) 0.3em 0.3em 0.4em; }
+
+div.trac-content.borderless { border: none; box-shadow: none; }
+
+div.trac-draft { background: url("../draft.png") rgb(251, 251, 251); }
+
+.trac-author-anonymous, .trac-author-none { font-style: italic; }
+
+.trac-author-user { font-weight: bold; color: rgb(102, 102, 102); }
+
+.uinohelp .trac-help { display: none; }
+
+.trac-help { clear: both; color: rgb(153, 153, 153); font-size: 90%; margin: 1em; text-align: right; }
+
+.trac-help :link, .trac-help :visited { cursor: help; }
+
+.trac-help hr { display: none; }
+
+.trac-nodatetimehint .trac-datetimehint { display: none; }
+
+.foldable :link, .foldable :visited { background: url("../expanded.png") 4px 50% no-repeat; border: 1px solid rgb(228, 228, 228); border-radius: 0.3em; box-shadow: rgb(215, 215, 215) 0.1em 0.15em 0.3em 0px; color: rgb(34, 34, 34); text-shadow: rgb(252, 252, 252) 0.04em 0.04em; padding: 0.2em 0.5em 0.3em 20px; }
+
+.foldable :link:hover, .foldable :visited:hover { background-color: transparent; }
+
+.collapsed > .foldable :link, .collapsed > .foldable :visited { background-image: url("../collapsed.png"); }
+
+.collapsed > div, .collapsed > table, .collapsed > ul, .collapsed > dl { display: none; }
+
+fieldset > legend.foldable :link, fieldset > legend.foldable :visited { color: rgb(102, 102, 102); font-size: 110%; text-shadow: rgb(221, 221, 221) 0.04em 0.04em; }
+
+.collapsed legend.foldable { background: white; }
+
+.expander { background: url("../expander_normal.png") 0px 50% no-repeat; cursor: pointer; padding-left: 8px; margin-left: 4px; }
+
+.expander:hover { background: url("../expander_normal_hover.png") 0px 50% no-repeat; }
+
+.expander.expanded { background: url("../expander_open.png") 0px 50% no-repeat; padding-left: 12px; margin-left: 0px; }
+
+.expander.expanded:hover { background: url("../expander_open_hover.png") 0px 50% no-repeat; }
+
+h2 .trac-count, h3 .trac-count { margin-left: 0.2em; vertical-align: baseline; color: rgb(153, 153, 153); font-size: 90%; font-weight: normal; }
+
+#prefs { background: rgb(247, 247, 240); border: 1px solid rgb(212, 212, 212); border-radius: 11px; box-shadow: rgb(212, 212, 212) 0.1em 0.3em 0.5em 0px; float: right; font-size: 0.9em; padding: 0.8em; position: relative; margin: 0px 1em 1em; }
+
+#prefs input, #prefs select { font-size: 0.9em; vertical-align: middle; }
+
+#prefs fieldset { background: transparent; border: none; box-shadow: none; margin: 0.5em; padding: 0px; }
+
+#prefs fieldset legend { background: transparent; color: rgb(0, 0, 0); font-size: 0.9em; font-weight: normal; margin: 0px 0px 0px -1.5em; padding: 0px; }
+
+#prefs .buttons { text-align: right; }
+
+#info { margin: 1em 0px 0px; background: rgb(247, 247, 240); border: 1px solid rgb(215, 215, 215); border-collapse: collapse; border-spacing: 0px; clear: both; width: 100%; }
+
+#info th, #info td { font-size: 0.9em; padding: 2px 0.5em; vertical-align: top; }
+
+#info th { font-weight: bold; text-align: left; }
+
+#info td.message { width: 100%; }
+
+#info .message ul { padding: 0px; margin: 0px 2em; }
+
+#info .message p { margin: 0.5em 0px; padding: 0px; }
+
+#info .message hr { margin: 0.5em 0px; padding: 0px; }
+
+a.trac-diff::after { content: "âˆ†"; }
+
+.wikipage h1, .wikipage h2, .wikipage h3, .wikipage h4, .wikipage h5, .wikipage h6 { margin-left: -1.5rem; margin-right: -1rem; }
+
+.wikipage table h1, .wikipage table h2, .wikipage table h3 { margin-left: -1rem; margin-right: -0.25rem; }
+
+div.compact > p:first-child { margin-top: 0px; }
+
+div.compact > p:last-child { margin-bottom: 0px; }
+
+#delete-confirm li { list-style-type: square; }
+
+.rtl { direction: rtl; }
+
+.rtl div.wiki-toc { float: left; }
+
+.rtl .wiki-toc ul ul, .wiki-toc ol ol { padding-right: 1.2em; }
+
+a.missing:link, a.missing:visited, a.missing, span.missing, a.forbidden, span.forbidden { color: rgb(102, 102, 102); }
+
+a.missing::after { content: "?"; }
+
+a.missing:hover { color: rgb(0, 0, 0); }
+
+a.closed:link, a.closed:visited, span.closed { text-decoration: line-through; }
+
+.important { background: rgb(255, 204, 187); border: 1px dotted rgb(221, 0, 0); color: rgb(85, 0, 0); padding: 0px 0.5em; margin: 0.5em; }
+
+dl.wiki dt { font-weight: bold; }
+
+dl.compact dt { float: left; padding-right: 0.5em; }
+
+dl.compact dd { margin: 0px; padding: 0px; }
+
+pre.wiki, pre.literal-block { background: rgb(247, 247, 247); border: 1px solid rgb(215, 215, 215); box-shadow: rgba(210, 215, 220, 0.3) 0.3em 0.3em 0.75em 0.1em; border-radius: 0.3em; margin: 1em 1.75em; padding: 0.25em; overflow: auto; }
+
+div.wiki-code { margin: 1em 1.75em; }
+
+code, tt { color: rgb(102, 0, 0); font-family: "Open Sans Mono", Consolas, "Lucida Console", monospace; border: 1px solid rgb(238, 221, 204); border-radius: 0.25em; padding: 0px 0.15em; background: rgb(252, 252, 252); margin: 0px 0.1em; white-space: pre-wrap; }
+
+h1 code, h2 code, h3 code, h4 code, h5 code, h6 code { color: rgb(85, 0, 0); font-weight: 500; }
+
+pre { font-family: "Open Sans Mono", Consolas, "Lucida Console", monospace; font-size: 0.9em; }
+
+blockquote.citation { margin: -0.6em 0px 0px; border-style: solid; border-width: 0px 0px 0px 2px; padding-left: 0.5em; border-color: rgb(187, 68, 68); }
+
+.citation blockquote.citation { border-color: rgb(68, 187, 68); }
+
+.citation .citation blockquote.citation { border-color: rgb(68, 68, 187); }
+
+.citation .citation .citation blockquote.citation { border-color: rgb(204, 85, 85); }
+
+li blockquote.citation { margin-top: 0px; }
+
+table.wiki { border: 1px solid rgb(204, 204, 204); border-collapse: collapse; border-spacing: 0px; box-shadow: rgba(210, 215, 220, 0.3) 0.3em 0.3em 0.75em 0.1em; }
+
+table.wiki td { border: 1px solid rgb(204, 204, 204); padding: 0.1em 0.25em; }
+
+table.wiki th { border: 1px solid rgb(187, 187, 187); padding: 0.1em 0.25em; background-color: rgb(247, 247, 247); }
+
+table.wiki tbody tr.even { background-color: rgb(252, 252, 252); }
+
+table.wiki tbody tr.odd { background-color: rgb(247, 247, 247); }
+
+.wikitoolbar { margin-top: 0.3em; border-style: solid; border-color: rgb(215, 215, 215); border-image: initial; border-width: 1px 1px 1px 0px; height: 18px; width: 234px; }
+
+.wikitoolbar :link, .wikitoolbar :visited { background: url("../edit_toolbar.png") no-repeat transparent; border-width: 1px; border-style: solid; border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(215, 215, 215); border-image: initial; cursor: default; display: block; float: left; width: 24px; height: 16px; }
+
+.wikitoolbar :link:hover, .wikitoolbar :visited:hover { background-color: transparent; border: 1px solid rgb(255, 187, 34); }
+
+.wikitoolbar a.trac-wikitoolbar-em { background-position: 0px 0px; }
+
+.wikitoolbar a.trac-wikitoolbar-strong { background-position: 0px -16px; }
+
+.wikitoolbar a.trac-wikitoolbar-heading { background-position: 0px -32px; }
+
+.wikitoolbar a.trac-wikitoolbar-link { background-position: 0px -48px; }
+
+.wikitoolbar a.trac-wikitoolbar-code { background-position: 0px -64px; }
+
+.wikitoolbar a.trac-wikitoolbar-hr { background-position: 0px -80px; }
+
+.wikitoolbar a.trac-wikitoolbar-np { background-position: 0px -96px; }
+
+.wikitoolbar a.trac-wikitoolbar-br { background-position: 0px -112px; }
+
+.wikitoolbar a.trac-wikitoolbar-img { background-position: 0px -128px; }
+
+div.trac-resizable { display: inline-table; width: 100%; }
+
+div.trac-resizable > div { display: table-cell; }
+
+div.trac-resizable textarea { display: block; margin-bottom: 0px; }
+
+div.trac-grip { height: 5px; overflow: hidden; background: url("../grip.png") center 1px no-repeat rgb(238, 238, 238); border-width: 0px 1px 1px; border-style: solid; border-color: rgb(221, 221, 221); border-image: initial; cursor: s-resize; }
+
+#attachments > div.attachments { padding: 0px 0px 1em 1em; }
+
+#attachments dl.attachments { margin-left: 2em; padding: 0px; }
+
+#attachments dt { display: list-item; list-style: square; }
+
+#attachments dd { font-style: italic; margin-left: 0px; padding-left: 0px; }
+
+#attachments p { margin-left: 2em; font-size: 90%; color: rgb(102, 102, 102); }
+
+#attachments > div.attachments > p { float: right; margin: 0.4em 0px; }
+
+#attachments span.trac-author { font-style: italic; }
+
+.attachment #preview { margin-top: 1em; }
+
+table.listing { clear: both; border-bottom: 1px solid rgb(215, 215, 215); border-collapse: collapse; border-spacing: 0px; box-shadow: rgb(242, 242, 242) 0.3em 0.3em 0.4em 0px; margin: 1em 0px; width: 100%; }
+
+table.listing th { text-align: left; padding: 0px 1em 0.1em 0px; font-size: 1em; }
+
+table.listing th.sel, table.listing td.sel { text-align: center; width: 1%; }
+
+table.listing thead tr { background: rgb(247, 247, 240); }
+
+table.listing thead th { border-width: 1px; border-style: solid; border-color: rgb(215, 215, 215) rgb(215, 215, 215) rgb(153, 153, 153); border-image: initial; font-size: 1em; font-weight: bold; padding: 2px 0.5em; vertical-align: bottom; white-space: nowrap; }
+
+table.listing thead th :link:hover, table.listing thead th :visited:hover { background-color: transparent; }
+
+table.listing thead th a { border: none; padding-right: 12px; }
+
+table.listing th.asc a, table.listing th.desc a { font-weight: bold; background-position: 100% 50%; background-repeat: no-repeat; }
+
+table.listing th.asc a { background-image: url("../asc.png"); }
+
+table.listing th.desc a { background-image: url("../desc.png"); }
+
+table.listing tbody td, table.listing tbody th { border: 1px dotted rgb(221, 221, 221); padding: 0.3em 0.5em; vertical-align: top; }
+
+table.listing tbody td a:hover, table.listing tbody th a:hover { background-color: transparent; }
+
+table.listing tbody tr { border-top: 1px solid rgb(221, 221, 221); }
+
+table.listing tbody tr.even { background-color: rgb(252, 252, 252); }
+
+table.listing tbody tr.odd { background-color: rgb(247, 247, 247); }
+
+table.listing tbody tr:hover td { background: rgb(238, 238, 221) !important; }
+
+table.listing tbody tr.focus { background: rgb(221, 221, 255) !important; }
+
+table.listing pre { white-space: pre-wrap; }
+
+#fieldhist td { padding: 0px 0.5em; }
+
+#fieldhist td.date, #fieldhist td.diff, #fieldhist td.version, #fieldhist td.author { white-space: nowrap; }
+
+#fieldhist td.version { text-align: center; }
+
+#fieldhist td.comment { width: 100%; }
+
+#fieldhist .inlinebuttons { display: none; float: right; }
+
+.uisymbols #fieldhist .inlinebuttons a { font-size: 85%; }
+
+.suggestions { background: rgb(255, 255, 255); border: 1px solid rgb(136, 136, 102); color: rgb(34, 34, 34); }
+
+.suggestions ul { font-family: sans-serif; max-height: 20em; min-height: 3em; list-style: none; margin: 0px; overflow: auto; padding: 0px; width: 440px; }
+
+* html .suggestions ul { height: 10em; }
+
+.suggestions li { background: rgb(255, 255, 255); cursor: pointer; padding: 2px 5px; }
+
+.suggestions li.selected { background: rgb(185, 185, 185); }
+
+#content.error .message, div.system-message { background: rgb(255, 221, 204); border: 2px solid rgb(221, 0, 0); color: rgb(85, 0, 0); padding: 0.5em; margin: 1em 0px; }
+
+#content.error div.message pre, div.system-message pre { margin-left: 1em; overflow: hidden; white-space: pre-wrap; }
+
+div.system-message p { margin: 0px; }
+
+div.system-message p.system-message-title { font-weight: bold; }
+
+span.system-message { float: left; background: rgb(255, 221, 204); padding: 0.2em; margin: 1px; border-radius: 0.25em; }
+
+div.system-message { border-radius: 0.4em; box-shadow: rgb(242, 242, 242) 0.3em 0.3em 0.4em 0px; }
+
+#warning.system-message, .warning.system-message { background: rgb(255, 255, 187); border: 1px solid rgb(187, 187, 136); }
+
+#warning.system-message li { list-style-type: square; }
+
+#notice.system-message, .notice.system-message { background: rgb(221, 255, 221); border: 1px solid rgb(136, 187, 136); }
+
+#notice.system-message li { list-style-type: square; }
+
+div.system-message .trac-close-msg { display: none; float: right; font-size: 80%; border: 1px solid rgb(221, 221, 221); border-radius: 1em; padding: 0px 0.4em 0.1em; box-shadow: none; margin: 0px 0.1em 0.1em 0px; background: none; color: rgb(211, 19, 19); height: 1.4em; }
+
+div.system-message .trac-close-msg:hover { background: rgb(246, 246, 246); color: rgb(51, 51, 51); text-shadow: rgb(252, 252, 252) 0.04em 0.04em; box-shadow: rgb(153, 153, 153) 0.1em 0.1em 0.6em 0px; }
+
+.uisymbols div.system-message .trac-close-msg > span { display: none; }
+
+.uisymbols div.system-message .trac-close-msg::after { content: "x"; }
+
+#content.error form.newticket { display: inline; }
+
+#content.error form.newticket textarea { display: none; }
+
+#content.error #traceback { margin-left: 1em; }
+
+#content.error #traceback :link, #content.error #traceback :visited { border: none; }
+
+#content.error #tbtoggle { font-size: 80%; }
+
+#content.error #traceback div { margin-left: 1em; }
+
+#content.error #traceback h3 { font-size: 95%; margin: 0.5em 0px 0px; }
+
+#content.error #traceback :link var, #content.error #traceback :visited var { font-family: "Open Sans Mono", Consolas, "Lucida Console", monospace; font-style: normal; font-weight: bold; }
+
+#content.error #traceback span.file { color: rgb(102, 102, 102); font-size: 85%; }
+
+#content.error #traceback ul { list-style: none; margin: 0.5em 0px; padding: 0px; }
+
+#content.error #traceback table.code td { white-space: pre; font-size: 90%; }
+
+#content.error #traceback table.code tr.current td { background: rgb(230, 230, 230); }
+
+#content.error #traceback table { margin: 0.5em 0px 1em; }
+
+#content.error #traceback th, #content.error #traceback td { font-size: 85%; padding: 1px; }
+
+#content.error #traceback th var { font-family: "Open Sans Mono", Consolas, "Lucida Console", monospace; font-style: normal; }
+
+#content.error #traceback td code { white-space: pre; }
+
+#content.error #traceback pre { font-size: 95%; }
+
+#content .paging { margin: 0px 0px 2em; padding: 0.5em 0px 0px; font-size: 85%; line-height: 2em; text-align: center; }
+
+#content .paging .current { padding: 0.1em 0.3em; border: 1px solid rgb(51, 51, 51); background: rgb(153, 153, 153); color: rgb(255, 255, 255); }
+
+#content .paging :link, #content .paging :visited { padding: 0.1em 0.3em; border: 1px solid rgb(102, 102, 102); background: transparent; color: rgb(102, 102, 102); }
+
+#content .paging :link:hover, #content .paging :visited:hover { background: rgb(153, 153, 153); color: rgb(255, 255, 255); border-color: rgb(51, 51, 51); }
+
+#content .paging .previous a, #content .paging .next a { font-size: 150%; font-weight: bold; border: none; }
+
+#content .paging .previous a:hover, #content .paging .next a:hover { background: transparent; color: rgb(102, 102, 102); }
+
+#content h2 .numresults { color: rgb(102, 102, 102); font-size: 90%; }
+
+#content.about a.logo { border: none; float: right; margin-left: 2em; }
+
+#content.about a.logo img { display: block; }
+
+#content.about #python-logo img { width: 140px; height: 56px; }
+
+#content.about p.copyright { color: rgb(153, 153, 153); font-size: 90%; }
+
+#environmentinfo h2 { margin-top: 2em; }
+
+#environmentinfo table { margin: 1em; width: auto; }
+
+#environmentinfo table th, #environmentinfo table td { border: 1px solid rgb(221, 221, 221); font-size: 90%; }
+
+#environmentinfo table th { background: rgb(247, 247, 247); font-weight: bold; white-space: nowrap; }
+
+#environmentinfo table td.file { color: rgb(102, 102, 102); }
+
+#environmentinfo table tr.disabled th, #environmentinfo table tr.disabled td { color: rgb(153, 153, 153); }
+
+#environmentinfo #config th, #content.about #config td { padding: 3px; }
+
+#environmentinfo #config tr.modified { background: rgb(255, 255, 221); }
+
+#environmentinfo #config tr.modified td.value { font-style: italic; }
+
+#environmentinfo #config td.doc { padding: 3px 1em; }
+
+.trac-placeholder { background: rgb(238, 238, 221); }
+
+@media screen {
+  .searchword0 { background: rgb(255, 255, 153); }
+  .searchword1 { background: rgb(204, 255, 204); }
+  .searchword2 { background: rgb(204, 255, 255); }
+  .searchword3 { background: rgb(204, 204, 255); }
+  .searchword4 { background: rgb(255, 204, 255); }
+}
+
+@media print {
+  #header, #altlinks, #footer, .trac-help, #warning, #notice { display: none; }
+  .nav, form, .buttons form, form .buttons, form .inlinebuttons, .noprint, .trac-nav, .trac-topnav, #attachments > div.attachments > p { display: none; }
+  form.printableform { display: block; }
+  pre.wiki, pre.literal-block { box-shadow: none; }
+  :link, :visited { border-bottom: none; }
+  div.trac-content { box-shadow: none; border: none; }
+  .foldable :link, .foldable :visited { text-shadow: none; box-shadow: none; }
+}
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/chrome/common/css/code.css
+
+@charset "utf-8";
+
+div.code { background: rgb(247, 247, 247); border: 1px solid rgb(215, 215, 215); overflow: auto; border-radius: 0.3em; box-shadow: rgba(210, 215, 220, 0.3) 0.3em 0.3em 0.75em 0.1em; }
+
+div.code pre { margin: 0px; overflow: auto; padding: 0.25em; border-radius: 0.3em; }
+
+@media print {
+  div.code { box-shadow: none; }
+  div.code pre { white-space: pre-wrap; }
+}
+
+table.code { border-width: 0px 1px 1px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-right-color: rgb(221, 221, 221); border-bottom-color: rgb(221, 221, 221); border-left-color: rgb(221, 221, 221); border-image: initial; border-spacing: 0px; border-top-style: initial; border-top-color: initial; border-collapse: collapse; empty-cells: show; font-size: 0.9em; line-height: 120%; padding: 0px; margin: 0px auto; table-layout: fixed; width: 100%; box-shadow: rgba(210, 215, 220, 0.3) 0.3em 0.3em 0.75em 0.1em; }
+
+table.code th { border-right: 1px solid rgb(215, 215, 215); border-bottom: 1px solid rgb(215, 215, 215); font-size: 0.9em; }
+
+table.code th.lineno { width: 4em; }
+
+table.code thead th { background: rgb(238, 238, 238); border-top: 1px solid rgb(215, 215, 215); color: rgb(153, 153, 153); padding: 0px 0.25em; text-align: center; white-space: nowrap; }
+
+table.code thead th.content { text-align: left; }
+
+table.code thead th.content span.recover { background: rgb(247, 247, 247); border-left: 1px solid; border-right: 1px solid; cursor: pointer; margin: 0px 1em 0px 0px; padding: 0px 0.5em; }
+
+table.code tbody th { background: rgb(238, 238, 221); color: rgb(136, 136, 102); font-weight: normal; padding: 0px 0.5em; text-align: right; vertical-align: top; }
+
+table.code tbody th :link, table.code tbody th :visited { border: none; color: rgb(136, 136, 102); text-decoration: none; }
+
+table.code tbody th :link:hover, table.code tbody th :visited:hover { color: rgb(0, 0, 0); }
+
+table.code tbody tr:hover td { background: rgb(238, 238, 221); }
+
+table.code td { font-family: "Open Sans Mono", Consolas, "Lucida Console", monospace; overflow: hidden; padding: 1px 2px; vertical-align: top; white-space: pre-wrap; }
+
+table.code tr.hilite th { background: rgb(204, 204, 255); }
+
+table.code tr.hilite td { background: rgb(221, 221, 255); }
+
+.image-file { background: rgb(238, 238, 238); padding: 0.3em; }
+
+.image-file img { background: url("../imggrid.png"); }
+
+.code-block span { font-family: "Open Sans Mono", Consolas, "Lucida Console", monospace; }
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/pygments/trac.css
+
+@charset "utf-8";
+
+div.code pre .hll { background-color: rgb(255, 255, 204); }
+
+div.code pre { background: rgb(255, 255, 255); }
+
+div.code pre .c { color: rgb(153, 153, 136); font-style: italic; }
+
+div.code pre .err { color: rgb(166, 23, 23); background-color: rgb(227, 210, 210); }
+
+div.code pre .k { font-weight: bold; }
+
+div.code pre .o { font-weight: bold; }
+
+div.code pre .cm { color: rgb(153, 153, 136); font-style: italic; }
+
+div.code pre .cp { color: rgb(153, 153, 153); font-weight: bold; }
+
+div.code pre .c1 { color: rgb(153, 153, 136); font-style: italic; }
+
+div.code pre .cs { color: rgb(153, 153, 153); font-weight: bold; font-style: italic; }
+
+div.code pre .gd { color: rgb(0, 0, 0); background-color: rgb(255, 221, 221); }
+
+div.code pre .ge { font-style: italic; }
+
+div.code pre .gr { color: rgb(170, 0, 0); }
+
+div.code pre .gh { color: rgb(153, 153, 153); }
+
+div.code pre .gi { color: rgb(0, 0, 0); background-color: rgb(221, 255, 221); }
+
+div.code pre .go { color: rgb(136, 136, 136); }
+
+div.code pre .gp { color: rgb(85, 85, 85); }
+
+div.code pre .gs { font-weight: bold; }
+
+div.code pre .gu { color: rgb(170, 170, 170); }
+
+div.code pre .gt { color: rgb(170, 0, 0); }
+
+div.code pre .kc { font-weight: bold; }
+
+div.code pre .kd { font-weight: bold; }
+
+div.code pre .kn { font-weight: bold; }
+
+div.code pre .kp { font-weight: bold; }
+
+div.code pre .kr { font-weight: bold; }
+
+div.code pre .kt { color: rgb(68, 85, 136); font-weight: bold; }
+
+div.code pre .m { color: rgb(0, 153, 153); }
+
+div.code pre .s { color: rgb(187, 136, 68); }
+
+div.code pre .na { color: rgb(0, 128, 128); }
+
+div.code pre .nb { color: rgb(153, 153, 153); }
+
+div.code pre .nc { color: rgb(68, 85, 136); font-weight: bold; }
+
+div.code pre .no { color: rgb(0, 128, 128); }
+
+div.code pre .ni { color: rgb(128, 0, 128); }
+
+div.code pre .ne { color: rgb(153, 0, 0); font-weight: bold; }
+
+div.code pre .nf { color: rgb(153, 0, 0); font-weight: bold; }
+
+div.code pre .nn { color: rgb(85, 85, 85); }
+
+div.code pre .nt { color: rgb(0, 0, 128); }
+
+div.code pre .nv { color: rgb(0, 128, 128); }
+
+div.code pre .ow { font-weight: bold; }
+
+div.code pre .w { color: rgb(187, 187, 187); }
+
+div.code pre .mf { color: rgb(0, 153, 153); }
+
+div.code pre .mh { color: rgb(0, 153, 153); }
+
+div.code pre .mi { color: rgb(0, 153, 153); }
+
+div.code pre .mo { color: rgb(0, 153, 153); }
+
+div.code pre .sb { color: rgb(187, 136, 68); }
+
+div.code pre .sc { color: rgb(187, 136, 68); }
+
+div.code pre .sd { color: rgb(187, 136, 68); }
+
+div.code pre .s2 { color: rgb(187, 136, 68); }
+
+div.code pre .se { color: rgb(187, 136, 68); }
+
+div.code pre .sh { color: rgb(187, 136, 68); }
+
+div.code pre .si { color: rgb(187, 136, 68); }
+
+div.code pre .sx { color: rgb(187, 136, 68); }
+
+div.code pre .sr { color: rgb(128, 128, 0); }
+
+div.code pre .s1 { color: rgb(187, 136, 68); }
+
+div.code pre .ss { color: rgb(187, 136, 68); }
+
+div.code pre .bp { color: rgb(153, 153, 153); }
+
+div.code pre .vc { color: rgb(0, 128, 128); }
+
+div.code pre .vg { color: rgb(0, 128, 128); }
+
+div.code pre .vi { color: rgb(0, 128, 128); }
+
+div.code pre .il { color: rgb(0, 153, 153); }
+
+table.code td .hll { background-color: rgb(255, 255, 204); }
+
+table.code td { background: rgb(255, 255, 255); }
+
+table.code td .c { color: rgb(153, 153, 136); font-style: italic; }
+
+table.code td .err { color: rgb(166, 23, 23); background-color: rgb(227, 210, 210); }
+
+table.code td .k { font-weight: bold; }
+
+table.code td .o { font-weight: bold; }
+
+table.code td .cm { color: rgb(153, 153, 136); font-style: italic; }
+
+table.code td .cp { color: rgb(153, 153, 153); font-weight: bold; }
+
+table.code td .c1 { color: rgb(153, 153, 136); font-style: italic; }
+
+table.code td .cs { color: rgb(153, 153, 153); font-weight: bold; font-style: italic; }
+
+table.code td .gd { color: rgb(0, 0, 0); background-color: rgb(255, 221, 221); }
+
+table.code td .ge { font-style: italic; }
+
+table.code td .gr { color: rgb(170, 0, 0); }
+
+table.code td .gh { color: rgb(153, 153, 153); }
+
+table.code td .gi { color: rgb(0, 0, 0); background-color: rgb(221, 255, 221); }
+
+table.code td .go { color: rgb(136, 136, 136); }
+
+table.code td .gp { color: rgb(85, 85, 85); }
+
+table.code td .gs { font-weight: bold; }
+
+table.code td .gu { color: rgb(170, 170, 170); }
+
+table.code td .gt { color: rgb(170, 0, 0); }
+
+table.code td .kc { font-weight: bold; }
+
+table.code td .kd { font-weight: bold; }
+
+table.code td .kn { font-weight: bold; }
+
+table.code td .kp { font-weight: bold; }
+
+table.code td .kr { font-weight: bold; }
+
+table.code td .kt { color: rgb(68, 85, 136); font-weight: bold; }
+
+table.code td .m { color: rgb(0, 153, 153); }
+
+table.code td .s { color: rgb(187, 136, 68); }
+
+table.code td .na { color: rgb(0, 128, 128); }
+
+table.code td .nb { color: rgb(153, 153, 153); }
+
+table.code td .nc { color: rgb(68, 85, 136); font-weight: bold; }
+
+table.code td .no { color: rgb(0, 128, 128); }
+
+table.code td .ni { color: rgb(128, 0, 128); }
+
+table.code td .ne { color: rgb(153, 0, 0); font-weight: bold; }
+
+table.code td .nf { color: rgb(153, 0, 0); font-weight: bold; }
+
+table.code td .nn { color: rgb(85, 85, 85); }
+
+table.code td .nt { color: rgb(0, 0, 128); }
+
+table.code td .nv { color: rgb(0, 128, 128); }
+
+table.code td .ow { font-weight: bold; }
+
+table.code td .w { color: rgb(187, 187, 187); }
+
+table.code td .mf { color: rgb(0, 153, 153); }
+
+table.code td .mh { color: rgb(0, 153, 153); }
+
+table.code td .mi { color: rgb(0, 153, 153); }
+
+table.code td .mo { color: rgb(0, 153, 153); }
+
+table.code td .sb { color: rgb(187, 136, 68); }
+
+table.code td .sc { color: rgb(187, 136, 68); }
+
+table.code td .sd { color: rgb(187, 136, 68); }
+
+table.code td .s2 { color: rgb(187, 136, 68); }
+
+table.code td .se { color: rgb(187, 136, 68); }
+
+table.code td .sh { color: rgb(187, 136, 68); }
+
+table.code td .si { color: rgb(187, 136, 68); }
+
+table.code td .sx { color: rgb(187, 136, 68); }
+
+table.code td .sr { color: rgb(128, 128, 0); }
+
+table.code td .s1 { color: rgb(187, 136, 68); }
+
+table.code td .ss { color: rgb(187, 136, 68); }
+
+table.code td .bp { color: rgb(153, 153, 153); }
+
+table.code td .vc { color: rgb(0, 128, 128); }
+
+table.code td .vg { color: rgb(0, 128, 128); }
+
+table.code td .vi { color: rgb(0, 128, 128); }
+
+table.code td .il { color: rgb(0, 153, 153); }
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/chrome/common/css/browser.css
+
+@charset "utf-8";
+
+#prefs { margin-top: -0.6em; }
+
+* html #prefs { width: 34em; }
+
+#prefs fieldset { margin: 0px; }
+
+#prefs fieldset label { display: block; }
+
+#prefs .buttons { margin-top: -2.3em; }
+
+#prefs .choice { float: left; margin: 0px 0.6em 0px 0.3em; border-right: 1px dotted rgb(215, 215, 215); }
+
+#file-legend { margin-top: 3em; }
+
+h1 { margin: 0px; padding: 0px 0px 0.5em; }
+
+h1 :link, h1 :visited { border: none; }
+
+h1 :link, h1 :visited { color: rgb(187, 0, 0); }
+
+h1 .first:link, h1 .first:visited { color: rgb(153, 153, 136); }
+
+h1 .sep { color: rgb(102, 102, 102); padding: 0px 0.1em; }
+
+h1 .pathentry { float: left; padding: 0px 0.1em; }
+
+h1.repoindex { margin-top: 1em; }
+
+#diffrev, #jumprev, #jumploc { float: right; font-size: 0.9em; margin: 0px 0px 0.6em 2em; }
+
+#diffrev form, #jumprev form, #jumploc form { margin: 0px; }
+
+#diffrev input, #jumprev input, #jumploc select, #jumploc input { font-size: 0.9em; margin: 0px; }
+
+#jumploc div.buttons { margin: 0px; }
+
+table.code th.blame { width: 5em; }
+
+table.code th.blame a { color: rgb(221, 221, 221); }
+
+div.message { background: rgb(236, 236, 236); border: 1px solid rgb(206, 206, 206); margin: 0px; padding: 8px; box-shadow: rgb(153, 153, 153) 0.2em 0.4em 0.7em 1px; border-radius: 0.4em; }
+
+div.message div.inlinebuttons { float: right; }
+
+div.message div.embedded { clear: right; }
+
+table.dirlist { margin-top: 0px; }
+
+table.dirlist td.rev, table.dirlist td.age, table.dirlist td.author, table.dirlist td.change { color: rgb(136, 136, 136); white-space: nowrap; vertical-align: middle; }
+
+table.dirlist td.rev { font-family: monospace; letter-spacing: -0.01em; text-align: right; }
+
+table.dirlist td.size { color: rgb(136, 136, 136); white-space: nowrap; text-align: right; vertical-align: middle; font-size: 70%; }
+
+table.dirlist td.size a.trac-rawlink, table.dirlist td.size a.trac-ziplink { margin-left: 0.3em; }
+
+table.dirlist td.age { border-width: 0px 2px 0px 0px; border-style: solid; font-size: 85%; }
+
+table.dirlist td.name { width: 100%; white-space: nowrap; }
+
+table.dirlist td.name a.parent { background: url("../parent.png") 0px 50% no-repeat; padding-left: 20px; }
+
+table.dirlist td.name a.dir { background: url("../folder.png") 0px 50% no-repeat; font-weight: 500; padding-left: 20px; }
+
+table.dirlist td.name a.file { background: url("../file.png") 0px 50% no-repeat; padding-left: 20px; }
+
+table.dirlist td.name a, table.dirlist td.rev a { border-bottom: none; }
+
+table.dirlist td.author, table.dirlist td.change { font-size: 85%; }
+
+table.dirlist td.rev a.chgset { background: url("../changeset.png") 100% 50% no-repeat; padding: 0px 0px 0px 5px; margin: 0px 5px 0px 0px; }
+
+table.dirlist td.description { padding-left: 2em; }
+
+table.dirlist td.description > :first-child { margin-top: 0px; }
+
+table.dirlist td.description > :last-child { margin-bottom: 0px; }
+
+table.dirlist td span.loading { background: url("../loading.gif") 0px 50% no-repeat; padding-left: 20px; font-style: italic; }
+
+#content.browser div.description { padding: 0px 0.5em; }
+
+#anydiff { margin-top: 1em; }
+
+#anydiff form, #anydiff div, #anydiff h2 { display: inline; }
+
+#anydiff form th { text-align: right; }
+
+#anydiff input { vertical-align: baseline; margin: 0px -0.5em 0px 1em; }
+
+@media print {
+  #anydiff form { display: none; }
+}
+
+tr.diff input { padding: 0px 1em; margin: 0px; }
+
+table.trac-graph tbody tr { height: 2em; }
+
+table.trac-graph tbody tr td.trac-graph { padding: 0px; background-color: rgb(252, 252, 252); }
+
+table.trac-graph th.trac-graph, table.trac-graph td.trac-graph { display: none; }
+
+table.trac-graph td.summary { white-space: nowrap; }
+
+@media print {
+  th.diff, td.diff { display: none; }
+}
+
+table.chglist { margin-top: 0px; }
+
+.chglist td.diff, .chglist td.rev, .chglist td.age, .chglist td.author, .chglist td.change { white-space: nowrap; vertical-align: middle; }
+
+.chglist td.author { color: rgb(136, 136, 136); }
+
+.chglist td.change span { border: 1px solid rgb(153, 153, 153); float: left; margin: 0.2em 0.5em 0px 0px; width: 0.8em; height: 0.8em; }
+
+.chglist td.diff { padding: 1px; }
+
+.chglist td.change .comment { display: none; }
+
+.chglist td.age { font-size: 85%; }
+
+.chglist td.author { font-size: 85%; }
+
+.chglist td.rev { font-family: monospace; letter-spacing: -0.01em; text-align: right; }
+
+.chglist td.rev a { border-bottom: none; }
+
+.chglist td.rev a.chgset { background-repeat: no-repeat; background-image: url("../changeset.png"); background-position: 100% 50%; padding: 0px 0px 0px 5px; margin: 0px 5px 0px 0px; }
+
+.chglist td.summary, .chglist td.log { width: 100%; font-size: 85%; vertical-align: middle; }
+
+.chglist td.summary *, .chglist td.log * { margin-top: 0px; }
+
+.chglist tr.verbose { border-top: none; }
+
+.chglist tr.verbose td.filler, .chglist tr.verbose td.log { border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1px solid rgb(221, 221, 221); color: rgb(51, 51, 51); }
+
+.chglist tr.verbose td { border: none; }
+
+.chglist tr.verbose td.diff, .chglist tr.verbose td.filler { border-left: 1px solid rgb(221, 221, 221); }
+
+.chglist tr.verbose td.summary, .chglist tr.verbose td.log { border-right: 1px solid rgb(221, 221, 221); }
+
+#paging { margin: 1em 0px; }
+
+#info { margin: 0px; }
+
+#info .props { color: rgb(102, 102, 102); list-style: square; margin: 0px 0px 0.4em 1.6em; padding: 0px; }
+
+#info .props > li { padding: 2px 0px; overflow: auto; }
+
+.trac-toggledeleted { display: none; margin-left: 3em; white-space: nowrap; }
+
+#preview { background: rgb(255, 255, 255); clear: both; margin: 0px; }
+
+#preview .code-block { border-top: 1px solid rgb(153, 153, 153); margin: 0px; }
+
+#preview .image-file { overflow: hidden; }
+
+#preview .image-file img { max-width: 100%; }
+
+.chglist td.summary .branch, .chglist td.summary .tag, .chglist td.summary .trac-bookmark, .browser .trac-tags .branch, .browser .trac-tags .tag, .browser .trac-tags .trac-bookmark { color: rgb(119, 119, 119); font-size: 80%; background: rgb(246, 246, 246); border: 1px solid rgb(221, 221, 221); margin: 0px 0px 0px 0.5em; padding: 0px 0.2em; }
+
+.chglist td.summary .head, .browser .trac-tags .head { background: rgb(208, 255, 208); border: 1px solid rgb(153, 221, 153); }
+
+.chglist td.summary .tag, .browser .trac-tags .tag { background: rgb(255, 255, 170); border: 1px solid rgb(255, 238, 0); }
+
+.chglist td.summary .trac-bookmark, .browser .trac-tags .trac-bookmark { background: rgb(187, 221, 255); border: 1px solid rgb(153, 170, 238); }
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/chrome/site/style.css
+
+@charset "utf-8";
+
+body { margin: 0px 14px; background: url("/graphics/vbox_gradient.png") repeat-x white; }
+
+#logo, #logo:hover, #logo:visited, #logo:link, #logo:link:hover, #logo:visited:hover, #logo img { position: absolute; top: 0px; left: 10px; text-decoration: none; background: transparent; margin: 0px; font-size: 0px; }
+
+#logo img { left: 0px; color: transparent; }
+
+#vboxlinks { position: absolute; top: 170px; left: 20px; }
+
+#vboxstring { position: absolute; top: 0px; left: 230px; }
+
+.trac-modifiedby, .trac-help { display: none; }
+
+.pathentry { display: none; }
+
+#center { margin: 75px 10px 0px 150px; }
+
+#content { margin-top: 0px; border-left: 1px dotted rgb(136, 136, 136); border-bottom: 1px dotted rgb(136, 136, 136); padding: 0px 20px 10px 10px; }
+
+.wikipage { padding-left: 10px; }
+
+.wikipage h1, .wikipage h2, .wikipage h3 { margin-left: 0px; }
+
+#searchable { text-align: justify; display: inline-block; padding: 0px; margin: 0px; }
+
+#mainnav { display: none; }
+
+#search { display: none; }
+
+#content.wiki > #attachments { display: none; }
+
+body, th, td { font-family: Verdana, "Bitstream Vera Sans", sans-serif; }
+
+h1, h2, h3, h4 { font-family: Arial, Helvetica, sans-serif; font-weight: bold; letter-spacing: 0.02em; text-align: left; }
+
+h1.section, h2.section, h3.section, h4.section { font-family: Arial, Helvetica, sans-serif; color: black; background: none; }
+
+h1 :link, h1 :visited, h2 :link, h2 :visited, h3 :link, h3 :visited { border: none; }
+
+h1.section { font-size: 200%; border-bottom: 1px dotted rgb(136, 136, 136); margin: 0px 0px 0.5em; padding: 0px; }
+
+h2.section { font-size: 150%; border: none; margin: 0px 0px 0.9em; padding: 0px; }
+
+h3.section { font-size: 125%; border: none; margin: 0px 0px 1em; padding: 0px; }
+
+td { text-align: left; }
+
+:link, :visited { text-decoration: none; color: rgb(0, 0, 204); border-bottom: none; }
+
+:link:hover, :visited:hover { background: rgb(0, 0, 204); color: white; }
+
+#content #results dt a:hover { color: white; }
+
+#metanav form.trac-logout button { color: rgb(0, 0, 204); border-bottom: 0px; }
+
+#metanav form.trac-logout button:hover { background: rgb(0, 0, 204); color: white; }
+
+@media screen {
+  .searchword0 { color: rgb(0, 0, 204); }
+  .searchword1 { color: rgb(0, 0, 204); }
+  .searchword2 { color: rgb(0, 0, 204); }
+  .searchword3 { color: rgb(0, 0, 204); }
+  .searchword4 { color: rgb(0, 0, 204); }
+}
+
+.anchor { display: none; }
+
+.screenshot a:hover { text-decoration: none; background: transparent; border-bottom: none; }
+
+#vboxfooter { color: rgb(170, 170, 170); }
+
+#vboxlinks { padding-top: 20px; line-height: 200%; }
+
+#vboxsearch { color: rgb(102, 102, 102); background: white; margin: 0px 3px 0px 0px; border: 1px solid rgb(204, 204, 204); padding: 1px; }
+
+.newsflash { float: right; width: 220px; height: auto; margin: 1em 0em 1em 1em; border: 2px outset rgb(153, 153, 102); padding: 0.5em; background: rgb(255, 255, 221); font-size: 0.85em; }
+
+.newsflash h3 { font-size: 100%; font-family: inherit; font-weight: bold; margin: 0px; padding: 0px; color: rgb(153, 153, 102); border-bottom: 1px solid rgb(221, 221, 153); }
+
+.newsflash ul { list-style: square; margin-left: 1em; padding: 0px; }
+
+.newsflash li { margin-bottom: 0.5em; }
+
+#footer, #altlinks { display: none; }
+
+#newticketguide { background: rgb(255, 221, 204); border: 2px solid rgb(221, 0, 0); font-style: italic; margin: 1em 0px; padding: 0px 0.5em; }
+
+@media print {
+  body { background: rgb(255, 255, 255); }
+  body, p, table, td { font-size: 10pt !important; }
+  h1 { font-size: 16pt !important; }
+  #topbar, #topnav, #left, #right { display: none; margin: 0px; }
+  #ew-header { display: none; }
+  #ew-content { border-left: none; }
+  #ew-footer { background: transparent; border: none; }
+  #wrapper { background: transparent; margin: 0px; padding: 0px; }
+  #main { background: transparent; width: 100%; margin: 0px; padding: 0px; border-top: 9px solid rgb(187, 0, 0); border-left: none; }
+  input[type="submit"] { display: none; }
+}
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: image/png
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/graphics/vbox_gradient.png
+
+‰PNG
+
+   IHDR      ´   ¤Â   sRGB ®Îé   bKGD ÿ ÿ ÿ ½§“   	pHYs     šœ   tIMEØ‘Ø¿>   õIDAThŞíšÑÄ0CÁê®·Ít«õvpT£—&ÿ
+¶!4ıùşî2Ê<W·mØ¦aÅ=ÚßH
+ÕôX ä€Ü3\á#9ñ¬^ÒœâĞê g"¿!TJrrš:0š“ïuºÕÈQ+M+¡ì:ªÓAšãJ FlAV¼±ŠƒU,I0¡š­c¥kÅÙtãÈ¨£íÑy‘ÆNæ`®H·r‰ÂüH6€¥³ê—ƒ3vhgƒTœ6çó±8ÿæhµ=äüş81èº¡‚ö9EÁêÂd5à1œÕ	Zå M+;Ôüs©‘P)´Ê'døã¢kÛÛÔ    IEND®B`‚
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: image/png
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/graphics/vboxlogodown.png
+
+‰PNG
+
+   IHDR  Z   y   ÷|~   	pHYs     šœ  
+OiCCPPhotoshop ICC profile  xÚSgTSé=÷ŞôBKˆ€”KoR RB‹€‘&*!	Jˆ!¡ÙQÁEEÈ ˆ€ŒQ,Š
+Øä!¢ƒ£ˆŠÊûá{£kÖ¼÷æÍşµ×>ç¬ó³ÏÀ–H3Q5€©BàƒÇÄÆáä.@
+$p ³d!sı# ø~<<+"À¾ xÓ ÀM›À0‡ÿêB™\€„Àt‘8K€ @zB¦ @F€˜&S   `Ëcbã P- `'æÓ €ø™{ [”! ‘  eˆD h; ¬ÏVŠE X0 fKÄ9 Ø- 0IWfH °· ÀÎ²  0Qˆ…) { `È##x „™ FòW<ñ+®ç*  x™²<¹$9E[-qWW.(ÎI+6aaš@.Ây™24àóÌ   ‘àƒóıxÎ®ÎÎ6¶_-ê¿ÿ"bbãşåÏ«p@  át~Ñş,/³€;€mş¢%îh^ u÷‹f²@µ  éÚWópø~<<E¡¹ÙÙåääØJÄB[aÊW}şgÂ_ÀWılù~<ü÷õà¾â$2]GøàÂÌôL¥Ï’	„bÜæGü·ÿüÓ"ÄIb¹X*ãQqDšŒó2¥"‰B’)Å%Òÿdâß,û>ß5 °j>{‘-¨]cöK'XtÀâ÷  ò»oÁÔ(€hƒáÏwÿï?ıG % €fI’q  ^D$.TÊ³?Ç  D *°AôÁ,ÀÁÜÁü`6„B$ÄÂBB
+d€r`)¬‚B(†Í°*`/Ô@4ÀQh†“p.ÂU¸=púaÁ(¼	AÈa!ÚˆbŠX#™…ø!ÁH‹$ ÉˆQ"K‘5H1RŠT UHò=r9‡\Fº‘;È 2‚ü†¼G1”²Q=ÔµC¹¨7„F¢Ğdt1š ›Ğr´=Œ6¡çĞ«hÚ>CÇ0Àè3Äl0.ÆÃB±8,	“cË±"¬«Æ°V¬»‰õcÏ±wEÀ	6wB aAHXLXNØH¨ $4Ú	7	„QÂ'"“¨K´&ºùÄb21‡XH,#Ö/{ˆCÄ7$‰C2'¹I±¤TÒÒFÒnR#é,©›4H#“ÉÚdk²9”, +È…ääÃä3ää!ò[
+b@q¤øSâ(RÊjJåå4åe˜2AU£šRİ¨¡T5ZB­¡¶R¯Q‡¨4uš9ÍƒIK¥­¢•Óhh÷i¯ètºİ•N—ĞWÒËéGè—èôw†ƒÇˆg(›gw¯˜L¦Ó‹ÇT071ë˜ç™™oUX*¶*|‘Ê
+•J•&•*/T©ª¦ªŞªUóUËT©^S}®FU3Sã©	Ô–«UªPëSSg©;¨‡ªg¨oT?¤~Yı‰YÃLÃOC¤Q ±_ã¼Æ c³x,!k«†u5Ä&±ÍÙ|v*»˜ı»‹=ª©¡9C3J3W³Ró”f?ã˜qøœtN	ç(§—ó~ŠŞï)â)¦4L¹1e\kª–—–X«H«Q«Gë½6®í§¦½E»YûAÇJ'\'GgÎçSÙSİ§
+§M=:õ®.ªk¥¡»Dw¿n§î˜¾^€Lo§Şy½çú}/ıTımú§õGX³$ÛÎ<Å5qo</ÇÛñQC]Ã@C¥a•a—á„‘¹Ñ<£ÕFFŒiÆ\ã$ãmÆmÆ£&&!&KMêMîšRM¹¦)¦;L;LÇÍÌÍ¢ÍÖ™5›=1×2ç›ç›×›ß·`ZxZ,¶¨¶¸eI²äZ¦Yî¶¼n…Z9Y¥XUZ]³F­­%Ö»­»§§¹N“N«ÖgÃ°ñ¶É¶©·°åØÛ®¶m¶}agbg·Å®Ãî“½“}º}ı=‡Ù«Z~s´r:V:ŞšÎœî?}Åô–é/gXÏÏØ3ã¶Ë)ÄiS›ÓGgg¹sƒóˆ‹‰K‚Ë.—>.›ÆİÈ½äJtõq]ázÒõ›³›Âí¨Û¯î6îiî‡ÜŸÌ4Ÿ)Y3sĞÃÈCàQåÑ?Ÿ•0kß¬~OCOgµç#/c/‘W­×°·¥wª÷aï>ö>rŸã>ã<7Ş2ŞY_Ì7À·È·ËOÃo_…ßC#ÿdÿzÿÑ §€%g‰A[ûøz|!¿?:Ûeö²ÙíAŒ ¹AA‚­‚åÁ­!hÈì­!÷ç˜Î‘Îi…P~èÖĞaæa‹Ã~'…‡…W†?pˆXÑ1—5wÑÜCsßDúD–DŞ›g1O9¯-J5*>ª.j<Ú7º4º?Æ.fYÌÕXXIlK9.*®6nl¾ßüíó‡ââã{˜/È]py¡ÎÂô…§©.,:–@LˆN8”ğA*¨Œ%òw%
+yÂÂg"/Ñ6ÑˆØC\*NòH*Mz’ì‘¼5y$Å3¥,å¹„'©¼LLİ›:šv m2=:½1ƒ’‘qBª!M“¶gêgæfvË¬e…²şÅn‹·/•Ék³¬Y-
+¶B¦èTZ(×*²geWf¿Í‰Ê9–«+ÍíÌ³ÊÛ7œïŸÿíÂá’¶¥†KW-Xæ½¬j9²<qyÛ
+ã+†V¬<¸Š¶*mÕO«íW—®~½&zMk^ÁÊ‚ÁµkëU
+å…}ëÜ×í]OX/Yßµaú†>‰Š®Û—Ø(Üxå‡oÊ¿™Ü”´©«Ä¹dÏfÒféæŞ-[–ª—æ—nÙÚ´ßV´íõöEÛ/—Í(Û»ƒ¶C¹£¿<¸¼e§ÉÎÍ;?T¤TôTúT6îÒİµa×ønÑî{¼ö4ìÕÛ[¼÷ı>É¾ÛUUMÕfÕeûIû³÷?®‰ªéø–ûm]­NmqíÇÒı#¶×¹ÔÕÒ=TRÖ+ëGÇ¾şïw-6UœÆâ#pDyäé÷	ß÷:ÚvŒ{¬áÓvg/jBšòšF›Sšû[b[ºOÌ>ÑÖêŞzüGÛœ4<YyJóTÉiÚé‚Ó“gòÏŒ•}~.ùÜ`Û¢¶{çcÎßjoïºtáÒEÿ‹ç;¼;Î\ò¸tò²ÛåW¸Wš¯:_mêtê<ş“ÓOÇ»œ»š®¹\k¹îz½µ{f÷é7Îİô½yñÿÖÕ9=İ½ózo÷Å÷õßİ~r'ıÎË»Ùw'î­¼O¼_ô@íAÙCİ‡Õ?[şÜØïÜjÀw óÑÜG÷…ƒÏş‘õC™Ë††ë8>99â?rıéü§CÏdÏ&ş¢şË®/~øÕë×ÎÑ˜Ñ¡—ò—“¿m|¥ıêÀë¯ÛÆÂÆ¾Éx31^ôVûíÁwÜwï£ßOä| (ÿhù±õSĞ§û“““ÿ˜óüc3-Û    cHRM  z%  €ƒ  ùÿ  €é  u0  ê`  :˜  o’_ÅF  %IDATxÚì}ipÇ•ffUõ}ßİ@ã¾o 	ğ¾%Q·dËòmÉçÚ;c‡wfbc½³±GÌn„=³±3š™•fÖcmY²%$J"%^â	‚x$HÜ7İ¾ÏªÚM‚`£++û€H-ó‹úÕù2ëeæ«÷^¾|	ğW‡ aA
+„„	·Å‘)q@x@@@@´‚4q@˜@@@@Œb,c€€ e,y@@@   ‘KÚAJçÑÒ´Â"–ä;   ¸«õ€€€€÷ˆ‡D@@@´"2‰@äÁmí€ğ€€€à±@Ñˆ8    ÆJ&Ü6ˆ<    ÚÄ‰J$  H¤?!  ¸k,í€€€à¶8 L   H‰Âb,c€€€D;    ÚAÚ ¨D¢d„	)q@x@@@@Œ‚{ÄÉF@@°d,<pò`aÁ}¥ÿúèè¸ÏàyBJ«Q—•:êk‹v2fŸwp‹Åç$	ÃĞ„Q÷ÅXx°:44<ºïİcñøò#‘ÈÜ¼«÷|ßcìlok&Ãö¹ÆôÌÌoí£i:ã§(?²{{ÇšÂ¨‡]°,{èèñ4Yp÷³ÁóŸş´ÔYd6ÉÈ}®µƒD"™H$…
+$“IâÑº_â z}<Ï£Jñ¼R©”Ëe˜Dı`2‘ÌÂ(Lm|rzaÁƒ œH$FÇ',¹Ï/D½×„˜nŸ?À²lV­ÓE3´L*“H2+}à7÷¹=^†aÒzëæîm›»1‰¾ûşÑ±	!‚ÉdòÉ½»3êü“S¢Ä]®òåø|‹ƒ•á8î­?¼7;7˜º…EA¹Lf6›œEv»ÍZVZ,“ÉÈ¸€T&e£Qïöx“É$¢\0ÂÏ¹œdÙÔ²* T)3R‹%8„!ûóÜü‚Ûí¡è»QŞËY,&‹™h.â+R\à1„¬ØLB,÷ùCÃ£  ½NÛÜTßÙŞªÕjˆv vÛÍ[#èr¡P	ò‡Ï.35‡ú±rêôÙ«ı7Ò~Ü´aİ®í›ÉzÏ_}(”ƒEŸÿÄ©³ç.\~d×Ö5­M»8ĞiÔ¢åÁ >÷9µ¬µµQŸYÈeRQâ:ö¾‹ç]îœç1YíŸY|D£Ñw÷t»=»wlyˆÅ„8:Ò¢ÏÆ
+9ÎRá8”wÇd4È–}iI±(}›Õ|ß#)gç]óóªù.cˆÉÆU`õÉ3ç ¤vïØüĞŠ`1%“@`ñx"‹*•ââ€ãy–åĞÚĞ8V”9­ó¼kA¨®L*­ª(»ï+nnŞÅÌO"
+°Š!¸OÒ   Nœ>[Qæ¬®*8hĞéL&ÃìœQ.™LF"1håĞ®Z-
+ÉĞÌ®m›Şzçı¤ÀîÑî[¬€¯nvÖ…˜ÉdÁç©@<6®«?>r¼²¼”¦é‡O@ !4ôhq  ğŠÇs¼ˆ8°ÙÌ¹ŞX_ıÃï~ãÓ“=SÓ³ÑXŒå8š¦¥R‰İbÙ´am©³è¾³,™LŞœÇD|†Úº¡Ñh (x  H²¬ßÄÙ†˜s]¾:Ğ±¦ùa  ÷Áü¼«¹¡F´›L¢í³Ql›ÕôÂs³—H$x‡”0Ìƒ#ª½‹>ï¢/ŸyLÄ¸v€i, ‹Éä²ï~ëEµJÉŞÙêr»½‡?=uµP”øõ›CíŸ8   °YÍ8"3U`0‹Å…ş•0ŒZ¥Â¡CÑ”„~ãÆ¦¦g9T Î«=ô¦%¶Î)6ò"CB3¤–ÂCìVËW¿øÌœ8s]q|b:‰©”Š‡K¤ä«CøAc-
+!şU*jµòsm_O¡­^‚ü\….³¢Øî›nÎ	{¬ áH$ªT™8HieJ"a§JRJ&‰MÑíñ"şµÛÌ2Œà‚‰Dr|r*O-—âNX i Ì7™LÚÙŞüÁÁ£(Õƒç#‘ÈÃ6šw|µF­öxEC¡H$•JEÄA Düë,²ÃÏ·j0áB²"¾ƒBˆƒÂ–ÉX¬¦ªBˆ>¹…Rq •2ÅE6´8ˆÇã^/ât‡#ˆõzíÈbã\no0‚T*:­F!p|sl|
+9ùşÿ‰BJ&“`8Æã	6Éò€§(J*‘(•r­FÕ©¡¬¿êÚY@ÒiÕ
+¹,‰¢4ÁüÎY'“¬?†"‘H4
+s'•HT*…B!×¨Uµêœ+u‡¥%Eö+×n KÏÌÌ×V–£ËCaÄ¿FBbï…+oÆ}e]Wg›è[-úü=ç.Ás!™dKŠí-µ÷¼ÔœkßşOFÆ&–>v«ù¾ÿu™T
+ ğùƒ=çúÀc¹ç.^Aéc“Ç÷$’·ƒ&xS(›ºÚ…¶EÆ&¦¯]¿•9óÏó<ßµ¶M¯Óf¬;42~ãÖHæeÉó¢6®[£R)³óî+×§fæfçışd2™öeZ¯Õ–8­MuuÕ/  08‡W( 3’RÊå*•-$4Meï
+ây042várÿØÄ´Ç»˜L²+%”T"µYMå¥ÅkÛ[6‹(M×‚§÷âUD†(çšŞØÕ‘ö…#§Ï^ä8.³Päyç7®o×Ş9¦ÀÀ;Ãi4èD»åõù!røyøü¡¥R‰ÕjBS8{ñÊèØ¤Ğ¿%Åîuk0ÄAà“c§3şUUQÚÚ\·|Aşãë¿OÓh(š’Éd)úÂœ
+#c“#÷v^§Õt¯kcÖMN9~A°®¦Ò 0.ÃcG÷.Šjm®SkT˜=_\ô_ºzıÂ¥ş9×ÂÊœ&R<Ş÷âå~g‘ıéÇwV–—d'Ä$„bHÈ‹kÊLŠ†Œh¾¥R³vC#ãû›˜šFX!<bñøøäÌøäÌÉ‹uUïÙjE¦ğ+d½.£?´ €ò²âêÊ²´OİÃ'¾<Ëîí–^ó®v`ÅH1ä÷Ñò2{ıBÿjÔ*­J…¦ Åt?M	Ï’EŸŸK²©ê‚ÛûË_¿½Òº±˜Œô
+t~‡iH	õòâ/"XÍFh EyÅqü•=ç.İ™Èá˜ğäôì+¯ıæ‰=ÛvmÛv •¸ÚÚA"™Dl‡§ R(ğµƒX<¾oÿ¡ó—²b Ë²WûoÜ~tçæ[ó‰è5šµíÍGOœES»x©?Myï¿~]e÷Ö2‰4İw  °YM&ƒŞtx¼>´'‰Äã‚9Ô*¥TÊäoXæ£†Â‘h,¦‘0 €wöfØµYŒK­äoß!,a¡4p…ñMŠÕãÜŞ<_pÿÇÇ(
+îÜÚÏ‚¼u>¾ƒH4
+¡œ\4M)•rLæ‡Â‘×^ÿıèøTnL$’ï8êö,~éÙÇ„ÊlXÛvâÌy´â626ÉqìrËtDXÑ ÙÚšë–¿#•â„@&•Øm"ÑnïbÊİ*ô„ÂD²ªb‡Q÷öÈáíB‰<HY,ƒôœ»408,¤ÅÜÓ¥BˆÁ÷E»vh*çº¢\ŠÅãùË‚Ş;pt`pkh –ï “TÎÌ÷ú|ÑXQQ­Rê´*œ>„Ã‘øåïr–K8İÛ÷‡÷
+µb³š:ZÅü>ÉéÙåïèr£RnZß.‘ĞË[I¥¥»³Qn/‡Â(ŒÙyThGUE)ƒ¸U‰„é›dÙh,öá¡ãˆ©€Ù<qãË®^İ,&#M,†òà‘S<Ïc†$Ës”ïÒ vùšHœrI±C©Pˆv€çÁëo½715[8sáÓÓç…Úêêl¥0<6¹TşjÿM„A¤×i×´Ô§5q8pØ­¢¦f BpgbjQİf1apA$‚ˆnvøÓŸ?ˆğqdµğĞîíãû« şòd”V«V*
+u7:>u¥ÿfaV1¶@ÈM&º=‹½® +VW–âtàØ©Şë:fnøøÈ)Ÿ?˜±­êÊ²’b‘3„—®ŞXzé¡Ñ	DÉ­×.ÿì¥À,ß(*)¶‰vwjf®±®RèßÙ9TªV-º/%:Â8;[h‡ğåşÁó}×õs†6uK­8ì–Ÿşğ› †¦gæ\¿~ë}„Óx]Gó®­İKã%F&•
+õY40EA¡º¢k‚Í+µJá,²­´˜är™É ×¨•R©B„&§çâi,/÷ßèhkÈÇÑ»´†qF™çÅ•ŒÆâ¿Û÷ÚK¯Ójº×¶ŠöÁåö<"²ëdĞk;ÛËJŠX–»9<vşR4Š2RÁĞ'ÇNéÙG3ş»}óº×÷¢úÄÔ¬kÁm·™ÁĞĞÈ¢Wİk[V¾à=÷,è´j™LŠö¸O	f"‘sÙhĞéujˆY*bU‚¼h€§Ï#|xZµJ¯Ó,µ¢K«+oo¤I ˆÈèhÔkqD*¾Ó¦©Õs% ÊK‹‡)Š²YŒõUEv«Ù¨·ZŒiA2nÏâÉ‹Ÿ;ƒNl3>1Ã²¬øJ…
+R“iAÊÇşëGÆ'gĞ”·o^«Q‹‡l9Şƒº«©,ıÎ×Ÿ×ÜÙî]×Ñ´¾³åÕş=Zõ^¼ºkëz³É°ò¯Ö¦Z£^ëŞ¼ã8îÆĞˆÃnŸB´²®½Y§Í‘Yn;uZ‹É09=‡è«×ë27CÁP  ¨W–3•çJ P _qEÊ;£A'Ä†·µ”i@e·`E@CÁ}NF‰v¦±¶R¯U××T:Fø¹Å¨vïg‘íÿşf"¦gÑçõúlc#ñFY4Ïn,ÿÕïJ†ã¸p$êó<^t"O @uEÉî-]¢ğ‚. 
+XÍÆï|íYİ½¡µ%_yş±W_Q1‰^í¿¹sËú
+B¾ucç¾ ª÷]¾¾sÓºÓgû„õtÉÆum_ğ;!Õå%hq†c±DÆ§“Óó1á]Æb»­ ék
+'G§U?óØƒNãõ†Ç&r™põÂ¤ñÁ_ÒˆO Æî½¸¿¦¢´¦¢³·ëÚšnŸê½„pÓÎÌºìb—â`îæ?ÊI–½:p+«Ùe·š¾ı•g%!Ø×GÑù'÷lÕk3D”v¶6i¸|Ù±+·vméÊøWgkã‡‡N"TøÙy÷èøôè„ ÔİÙ*4Fé—²;D¼‰¾@À»è+²gˆ¬E^šb6ê
+à§/t=½Vó“ïuéu6­oãyÁê…Ú0¿«Úñ¼˜™-L°@*wVØÜµ!  .·'O{0+c¡°XÛÖøÕ/ìÅÌqpæüeÄ¿Åkg[ƒP7uµ£ÅÁô¬+*3e*¶š-õÕç.õÕ†Âÿòûı~=]Â0[ºÛ…:F¥íoZ­"¢ãøÑÉ™Œ{£Â?ç°[Vw+9[: Ğ4õÒW.rX—W„T>4!n÷ ²"RP4CçÁ(Ugpâ"»AàÅmE7ûlG¹`"¡i‡İO&qÚ…£S³óh¯#a„ª7ÔT˜›úş@ptbF¨ú®­]H+?5#Ø·Î5%N‡e&ÍUUVl×iÔ¾ êòôÌ|F×œË-èÉÔiMzóMjÄ!‚işä­MuUø3Ã%²rıa(Í‚ï‹³ÑHú*—J
+™×——¨<Şúy_Ğ#I–}ïÀ±?9ñÈöO=¶A&ãŸôPi~êªË¯ TÈËœ·gAaht¢¹¾JÈ»ÑP[9Óç¶ˆQ·ÓÅÜyT*…SÌ7îYô§Õ,úóÂâ@¯ÓH¤ÌÊZ™=/
+   6ó®m]¸]‚ÙÜôÙ«Ğ±R”xÒÊÏ˜E’e?8tâïùV8E4zkdıU°ZŒèn‹†üy3­²¥gë†Ş®¹¡ºº²A–Yù!µ™×À‚èœËWˆfŸ?€ğØW–c~±Åæ²*¿ğäN•"»‹:qâ‚©ÂMPM	†P`Ä²3KÎ|˜7
+ÅF~ÕÒ\º6øO¿Ù÷ãï}Yø‹ˆR¤R©V­D¿‚Ã.r  !(´5ÕXÍ†ù…ìbÌwmY‡î³rlÊJD"ŸÜ^Ÿ?`ĞßcC"Ì @]UîJ)“©¥±º£µ>‡õYXÿ:‰¢(†Ôì
+•D¤àÀ	:ÄqzäßEA«ÙHSTJŠ%’l Š £€–K„c§ÎoßÔ™Ù¡îCYÓr™T©‰¤·Ğ†Â
+r™dÓú¶w>8Š?.µmM"™Ğ™•öW©X d4÷Biù®İBLk›ÅX˜ø›Ç®ŞĞÙ’C0ã‚¹´×“áşç®ğ¼w1àr{CáH,`“,€€çù2ğ3zçµó…\ş~ò²V£JEO¥:éÚàÑ“çGÆ§Eé¿wàÓuíê)dâñúà¯V­RÈeèî)ärQí ‘H"rnZ¿æ£#§#‘æ€nİØ!Ê±Æ‚É U*äèD1³ó•eEË§"<Y§U™ôZ\cCÎßâ é²øàÅÏÀì¤[Îjs>u…E ˜u¹ûoß˜™[˜™[@’äÌõÓX-%a(
+êN´T§Ş¾±cK÷šwö}ïàqëİ8zòÜÓn]!â¡0ju(2ZìäR	MSˆ(ÏH4Æ²,ÅÅ¤kk¬9sş*Î¸8‹¬-u¢\eV²T¯Õ”97QW¼nZw7I™?r{'«ÊœJŒ»^ñ?˜ŸY™LU :.»0$(¾’kæaâåúİğ#g.õßäy~U¨ T ×#™CÑ/<µ+H8r]½·oà©=[¨{£i‰diåÑ4-Ú	ÃĞÇ³,‹¦³{Ëú×pÆ««½I.Ï`Îd”Õõ5åhq093¿¼âäŒ¡CVW–ÒŠ-ŒŸ“aúƒÎf!¤¬¾ó`Á³øÖ»‡NŸ»\˜Ñ…PV;•2 Ï?±³ÿÆÈ2wrz~zÎí,º'6/‘d9äÙœ¾1‚*ÂÌÚê²ÚÊÒCc¢lè½4°w÷&©Ø­LÆ.9"nÏE_ /…*#, €İbÄ×Zów\ƒUóºJË½«îŠÅİS wcÂëÌàğø_¿öæ¢/P İM¼QŒ¸ì(&
+„û£RÈvn^ûÏoîGPà8nd|²´ØšîVA1ú/ahJìÎ,Å4zÇ'g¯ôß\·¦Q´ÅÑI¥Åô¹4¯/07ïY*pÌH%’Òb;~àÀÓ?«¨·ìùÀlÃñtİœ…Õ“Á¡ñŸÿÍë…’˜ y¼uaIµ5Öˆ&P½~k,ûiÿ<Bš¢ÑD.÷ß¸9Š94ÇN]í“ñÄ\±Ã\RdC,rçoU”9  ñD¡®˜ŒZ“Q›EşQÑ/0…µÖÅ…Aöy€ †/±W4ÂÛ©?s|GJ¤3¯ÿ•_şA<_# E-åMJ&YÔ·ƒ…b#ä±†AÊjÑÛ­¦‰)”½àr/¦QíË²ù3¦)F"rUå¡ã½ø³©ïÚàÀ­‘ÆÚ
+¤+Q`Z•ÛĞ›1“Óó©ºn¯ß-¶j³˜D-–,5ölAA¼­¬ì­õìööø|b©¨BÿôÛ÷q²¦»³¹³­A«QJ$
+Bãşç+¿šuåÃñØ£A^[¿4M—ÙĞâ ‘H¦SsmÄâ	& -J)—ItÆ&fú®f5?×$œ»¤å;X2§HôÁœËª;?ïF¸ÄZª
+˜ "ß>Õ&Ë"]‰<Çó·Jù®^¾puËNW{Ó¾ñ¬J)OÓ
+ÑÚ5ÄÛ-qö?D“>2eIk'‚„¦)#G’‰ú+È%YôyVZ)AÆƒtäúÜJô\ìnj®Tø‚`¢Şº*‘cğãSs©À©>dÊºªÒBÓrä|¨¯°>	‰5ŞÏq›{>bdÓõ \Ö•%?şîÕ*ùªp pÎƒü;#êÍeh:­ŠTÂPÈ”³Áp4O ÛM²I¹˜µTç9—§çÂµl¿g,Ë=}A–J·c1êÑÁHÁPdÑÒjÔC£‚6…B.3õ°€ö48Ô0ÊP9ô
+£
+ÌŠ,º0Çñ,ËÃ\
+¾ãœËÓwí&¢î3n•J¤¹Ú7Tl„x£1œ&¤€>˜˜šÃiä2CÓ1¤}‰Æ—n:Ëˆx"‰ŞfÖiÔˆŸ8{3Ú:§z¯<óÈ–´Ë”)³MƒvyÜaFoâÔ¬‹å9—°ıYQê0´÷çÈ`Aˆ¬2Y	rû†ã¸X"¾'G'gá†¦©¾bu9P@6æGjzÎ&à,²¦UQ*ezz©'BÑ(ºİH4†öX-¡º^ŸÿÃ#™ïdœÎëëé¢LQ)ù™éik¬Fsªpdlb‘¡¼µ±A?ã#¨°ˆˆë ÛQ8N2Y™L$P,æÜD»×n bÌzF¥Ì·8ÀßÀb ¸ï Y}q10ƒ¼$eí¦Õ’0ŒEìxòÂ‚İôäô<šBcM¹PİÃ'Ï‚™ó²ÙÌÆo¾°Mù£Ãg‚¡pfâVì¹[vrfşÖ(êÖ§’’õAÑÀ*¨ÙÓº6~	S³®ÕèÌ$òø©L*ÍZ²dõ‰Ùyô š¢JŠ3Ìaƒ^ƒnöæè$ºéqäv†Q¯-sÚ3VG£‡ŸªØ½¶¹«£Ñh@e¬r{}½}™µ„_¡¦Ò™æXNƒkÁ{şÒuáY%©,/¾_¾ºB9«²"Ëq\VÔ,&‘ÌÌ¼{5ŞQ4Ö w-øl½ùÍ–c§/¢«;,ÅvóÊŠEb×ŒO£›F^âæ,²(•²ŒÏœ¿æršç-õ•[Dr|>q ~%qDb@h6è«Ë¢óîÅ¾k‚ -&ƒÅ +lØ(XøàªD%F£ñ¬¨9í"ú×øä¬P]ÑáˆvÑu£±àÁªP¡F£3‚Ô®]9qFäÂå¶Æj†fVÖm[oW¯ŒİÀàØà*ŸRGK]ÆŠÉûÁ!Á‹^lfC}up}»H0òõ[ãçú®¯¤OQwöf3>eÈDi<Ï#6KÊKìšFÓ_ù`n§çIfÙ«ÔÃĞ"¶³wÑŸA‡ÕˆÖ¿úG¯­¬x®oàà±³93
+pÎåq{|+ŒM¡3ğÀBŒN,Çd Èu¶ŒOÌşï×ŞDïÛËeÒ½;º2V¯*qØ‘;–e?:rZ¨õŸFÔ•0LGSMÆŠçúFÆ3¦·4T)¤
+€ÎæZ«Y$½Ê‡‡Ïdh-~jËsŞ\¿¦¾àÚøgOgù#—IĞG9n/úøµj¥^+b…şËÛCáÈR•ùïßşòÿão^GxpEßQ‰ôY„#±O>í]YëÄÙKÿé/ÿ}Ô¿ £3ëòf”Wt	 Ş½è{ç£Oöó@$şNaóúV§Ã’±]™LRsçn.!<Ö{şòõ•uOö^>quxtİšúò{Æv÷@åhØÖİ–*¦KkDVnßµ›7†ÆVÄ ëT8í†I$“ÙÊš¢*K‹V#7,D™Ü’njÕJµRîŞ¢óB÷«}?üÆ³šãy6Éº<>­F©Q)¾t‘Í„ˆùM‰˜?û‹¿kk¬<˜[¸5†“’ík«,+º€Œoıİ{‡=>ÿön3´‘hìÆĞÄGÇÎ^¸2ˆs´bÌqÃ»S%üÇ_¼ªV*dR‰DÂpïr/NÍºâ	ñù¬×ª¿şÜD7ön_¼GÄÖø«Wßüş×Ú±¡}é—Çz_ûíû(u†¢Ú½
+,àÁá	á8UE‰c©âîÍGÅ<#z®¡ºì}Jt¸‡İfpØŒãSóÙ„Õb(²á*DäSngÔ*yeY‘gÛ{æBÿÕ#&ƒ–çA4›_Xü¯úrgK­PùMëš{…İ±Kûh‘‘í;¶5Vş~ÿQÑ¹rìtŸJ©ˆÆâø/8gÃT*9:bhlú×ï|¼}ã©DÂ²¬İš9³äEšçùÑ‰¯ZùÅ½fÊ?ßTW^Sá¼9‚ÚY†"ÿëÕ·ŞşàÓò;Ïó#³Óóh‘ºµ«µ¥!ó)£÷Fëzİİàj*‹ÍFZ:Ş{ù¹½›—Ç,3h2ÓÑR—ƒ8ho®‘Ê¤`5pÓŸ ĞÖX}îÒ‘R(E–™â^D[µå¹é_¸{0™PVâĞ¨”äb €x"Ïáì³cz­R!Gç\|ãİÃoí?Êó Èfúë¿ø‰4ãA‰UËû…'¶íÚÒ)¢ã0ôs{·üâ•ß¢‹ñ<?:9;:‰%•:Í×¾°'ã{Oô\D]	ÙÚPµ¼¢J¥h©¯<rê"Úó}èäÅ—_¼§@‰šgµ•ÎZ[é\¥Œ¹›'ç3m•ŒèEi¹”%ìt˜[+sà°R!«©pæö&ƒfç–\…l¨)Cœ³å¡Z-×kU¢±,Çq\0I&y\µ•5öîìzùÅÇp&Ã¶m;7uª]†¡ÿø;ÏÙLÛúÃşcˆºR©¤¡&ıpPwg£h£]ğø°6SOM…çË4û§¦Âyó‹à¨Ò9<ÕåÎk›²âÆìœMóÉİs˜=ßşòã_|b[Î¼zbgwn	,ŸÜ½áO~ğ¢Tà\#Î IIE©³¹p$êDrN"’­¤{éKıñËÏSÂœ?úÖ3èX~||ï«Ov·7fle|r®·eQ:íæ"›9­ÖÚÖ:ÑÀ–`(r¼çòİF(§ÃÒPS–Õ‹9¬Æ‡æÌ|áyRyàËÏìRÈ³°ƒ¼ş š`wGã#ÛÖá”J˜Ÿ~ï…'vm@GÎ£-)²~ûËg;eŸÚ³ñGßzÖbÔ¥İS-kñ%`<‘ôxı‚ã\8´6Tıüg?xñéYM•RñŸÿİKÍuù4­TÈÿì‡_~ú‘MB­|rü<ÚıÙŞRKQékY©·Ô‹+‡ŸO%h€R©|lè§[–§Pî´Ë¤å•Şq1"xIs{ªË?ıŞ¢‰î– “ˆ³âGß|¦¡ëbõ’"ë/şüß<¶}ÓaúÂó€mô©İİßÁ–MÿÛ—ı£—¥ Ë$:4‡íMU;6¶c6º(ã“?(ŠZÛZû_şä¥Ÿÿì{m•9Ì»YÿßÿıwöîXŸ[j+ùç?Ø½¹Cˆş‚ÛûÑQ‘“Mëîó€  F'gOö^I•gpôê5UûœÀÃ-]­0w-.ß´Ü w£1÷Ù´½{^£~åWÿŠpAªKwoéÜµ©C´-¥\ößşôÛ¯ıvÿc½Â8ÍÓ{6>½g“ZuûÆq‹Aït˜‡'Şt»/>µ£¤Èú~ış´pò[aW{Ã·¾øhÕ2­Øn1dtªã3öÇ/?8|Jd3Œ¦)©D’‘fnŞš¦:Mi‘Õn16Ö–7×UØ-|á
+™ì§ß}á‘­ëŞşğøÙ¾ÌË)ªËÜİ½­{™QæıOÎ c=ŒzMY±-#‹êªJ,&="¨9…œ}dËZ  ¼2¼ Úïh,>:9‡Ë/sÚDça|j>‰d<éÍóœR!/»Q ÆÆ'ç„fÇqN‡E«Væùa‰Dcg.ô\˜Æâ<ÏS%—ImfCSmy}uis]y¶
+m_ÿĞ¡çûoù¡T~…LZl7o\Û´µ«Í´âhÊÄŒ+§Ïf‡–—ØeR¬´t¡pôDï•½W'¦çƒ¡H*VO*aô:Mk}ÅÖ®¶–úteØå^ty|iírg1êDíÕ{Ş÷Ú­ãg¯O„ÂQ–ã €†–Ë¥f£®º¼¸Äa©¯*º¿Œçù‹×nCo1Ó4¥Ë:Õ¬—¯Ò¶ cSs—ú‡®^›…"‘hli_QÂ0*¥ÜjÒ·5V6ÕV´ÔWàL[£SñDRH`‰.Š‰éù@(‚’w<!¬«* À«#n@@@@ Ä¢	P„w´ŠH‚”8 ÖÁmq@x@@@E1î5ˆ<     €ÿ7 õ±A Y-Y    IEND®B`‚
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: image/png
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/graphics/vbox_logo2_gradient.png
+
+‰PNG
+
+   IHDR   Œ   ´   FéÄş   	pHYs     šœ  
+OiCCPPhotoshop ICC profile  xÚSgTSé=÷ŞôBKˆ€”KoR RB‹€‘&*!	Jˆ!¡ÙQÁEEÈ ˆ€ŒQ,Š
+Øä!¢ƒ£ˆŠÊûá{£kÖ¼÷æÍşµ×>ç¬ó³ÏÀ–H3Q5€©BàƒÇÄÆáä.@
+$p ³d!sı# ø~<<+"À¾ xÓ ÀM›À0‡ÿêB™\€„Àt‘8K€ @zB¦ @F€˜&S   `Ëcbã P- `'æÓ €ø™{ [”! ‘  eˆD h; ¬ÏVŠE X0 fKÄ9 Ø- 0IWfH °· ÀÎ²  0Qˆ…) { `È##x „™ FòW<ñ+®ç*  x™²<¹$9E[-qWW.(ÎI+6aaš@.Ây™24àóÌ   ‘àƒóıxÎ®ÎÎ6¶_-ê¿ÿ"bbãşåÏ«p@  át~Ñş,/³€;€mş¢%îh^ u÷‹f²@µ  éÚWópø~<<E¡¹ÙÙåääØJÄB[aÊW}şgÂ_ÀWılù~<ü÷õà¾â$2]GøàÂÌôL¥Ï’	„bÜæGü·ÿüÓ"ÄIb¹X*ãQqDšŒó2¥"‰B’)Å%Òÿdâß,û>ß5 °j>{‘-¨]cöK'XtÀâ÷  ò»oÁÔ(€hƒáÏwÿï?ıG % €fI’q  ^D$.TÊ³?Ç  D *°AôÁ,ÀÁÜÁü`6„B$ÄÂBB
+d€r`)¬‚B(†Í°*`/Ô@4ÀQh†“p.ÂU¸=púaÁ(¼	AÈa!ÚˆbŠX#™…ø!ÁH‹$ ÉˆQ"K‘5H1RŠT UHò=r9‡\Fº‘;È 2‚ü†¼G1”²Q=ÔµC¹¨7„F¢Ğdt1š ›Ğr´=Œ6¡çĞ«hÚ>CÇ0Àè3Äl0.ÆÃB±8,	“cË±"¬«Æ°V¬»‰õcÏ±wEÀ	6wB aAHXLXNØH¨ $4Ú	7	„QÂ'"“¨K´&ºùÄb21‡XH,#Ö/{ˆCÄ7$‰C2'¹I±¤TÒÒFÒnR#é,©›4H#“ÉÚdk²9”, +È…ääÃä3ää!ò[
+b@q¤øSâ(RÊjJåå4åe˜2AU£šRİ¨¡T5ZB­¡¶R¯Q‡¨4uš9ÍƒIK¥­¢•Óhh÷i¯ètºİ•N—ĞWÒËéGè—èôw†ƒÇˆg(›gw¯˜L¦Ó‹ÇT071ë˜ç™™oUX*¶*|‘Ê
+•J•&•*/T©ª¦ªŞªUóUËT©^S}®FU3Sã©	Ô–«UªPëSSg©;¨‡ªg¨oT?¤~Yı‰YÃLÃOC¤Q ±_ã¼Æ c³x,!k«†u5Ä&±ÍÙ|v*»˜ı»‹=ª©¡9C3J3W³Ró”f?ã˜qøœtN	ç(§—ó~ŠŞï)â)¦4L¹1e\kª–—–X«H«Q«Gë½6®í§¦½E»YûAÇJ'\'GgÎçSÙSİ§
+§M=:õ®.ªk¥¡»Dw¿n§î˜¾^€Lo§Şy½çú}/ıTımú§õGX³$ÛÎ<Å5qo</ÇÛñQC]Ã@C¥a•a—á„‘¹Ñ<£ÕFFŒiÆ\ã$ãmÆmÆ£&&!&KMêMîšRM¹¦)¦;L;LÇÍÌÍ¢ÍÖ™5›=1×2ç›ç›×›ß·`ZxZ,¶¨¶¸eI²äZ¦Yî¶¼n…Z9Y¥XUZ]³F­­%Ö»­»§§¹N“N«ÖgÃ°ñ¶É¶©·°åØÛ®¶m¶}agbg·Å®Ãî“½“}º}ı=‡Ù«Z~s´r:V:ŞšÎœî?}Åô–é/gXÏÏØ3ã¶Ë)ÄiS›ÓGgg¹sƒóˆ‹‰K‚Ë.—>.›ÆİÈ½äJtõq]ázÒõ›³›Âí¨Û¯î6îiî‡ÜŸÌ4Ÿ)Y3sĞÃÈCàQåÑ?Ÿ•0kß¬~OCOgµç#/c/‘W­×°·¥wª÷aï>ö>rŸã>ã<7Ş2ŞY_Ì7À·È·ËOÃo_…ßC#ÿdÿzÿÑ §€%g‰A[ûøz|!¿?:Ûeö²ÙíAŒ ¹AA‚­‚åÁ­!hÈì­!÷ç˜Î‘Îi…P~èÖĞaæa‹Ã~'…‡…W†?pˆXÑ1—5wÑÜCsßDúD–DŞ›g1O9¯-J5*>ª.j<Ú7º4º?Æ.fYÌÕXXIlK9.*®6nl¾ßüíó‡ââã{˜/È]py¡ÎÂô…§©.,:–@LˆN8”ğA*¨Œ%òw%
+yÂÂg"/Ñ6ÑˆØC\*NòH*Mz’ì‘¼5y$Å3¥,å¹„'©¼LLİ›:šv m2=:½1ƒ’‘qBª!M“¶gêgæfvË¬e…²şÅn‹·/•Ék³¬Y-
+¶B¦èTZ(×*²geWf¿Í‰Ê9–«+ÍíÌ³ÊÛ7œïŸÿíÂá’¶¥†KW-Xæ½¬j9²<qyÛ
+ã+†V¬<¸Š¶*mÕO«íW—®~½&zMk^ÁÊ‚ÁµkëU
+å…}ëÜ×í]OX/Yßµaú†>‰Š®Û—Ø(Üxå‡oÊ¿™Ü”´©«Ä¹dÏfÒféæŞ-[–ª—æ—nÙÚ´ßV´íõöEÛ/—Í(Û»ƒ¶C¹£¿<¸¼e§ÉÎÍ;?T¤TôTúT6îÒİµa×ønÑî{¼ö4ìÕÛ[¼÷ı>É¾ÛUUMÕfÕeûIû³÷?®‰ªéø–ûm]­NmqíÇÒı#¶×¹ÔÕÒ=TRÖ+ëGÇ¾şïw-6UœÆâ#pDyäé÷	ß÷:ÚvŒ{¬áÓvg/jBšòšF›Sšû[b[ºOÌ>ÑÖêŞzüGÛœ4<YyJóTÉiÚé‚Ó“gòÏŒ•}~.ùÜ`Û¢¶{çcÎßjoïºtáÒEÿ‹ç;¼;Î\ò¸tò²ÛåW¸Wš¯:_mêtê<ş“ÓOÇ»œ»š®¹\k¹îz½µ{f÷é7Îİô½yñÿÖÕ9=İ½ózo÷Å÷õßİ~r'ıÎË»Ùw'î­¼O¼_ô@íAÙCİ‡Õ?[şÜØïÜjÀw óÑÜG÷…ƒÏş‘õC™Ë††ë8>99â?rıéü§CÏdÏ&ş¢şË®/~øÕë×ÎÑ˜Ñ¡—ò—“¿m|¥ıêÀë¯ÛÆÂÆ¾Éx31^ôVûíÁwÜwï£ßOä| (ÿhù±õSĞ§û“““ÿ˜óüc3-Û    cHRM  z%  €ƒ  ùÿ  €é  u0  ê`  :˜  o’_ÅF  k¦IDATxÚìuœç•µŸ·¸‡GlK–™™d’™!fvâ“8›l6‰N²†Ø‰bf¶e¶E–%YÌÒh˜š»êış(èêYr’İäÛ)ÿÚİš‘fº«N]8÷Ü{Åg¯}Q2zŒ›y(£§`ôØ’Cbô$Œ[˜QÄŒ[˜Ñs0zŒZ˜Ñc4†=F]Òè1ê’FQ—4zŒU.i1£Ç f/£ÇhĞ;zŒ½£Ç¨…=F³¤¯£¹.ÎîÛgBk==ƒÌY¼–µí}£¨LåP…­ÇÕ³ÓÖ­47¦)	…’„ú¦:mNÓÛ;À‡«ÚYº¦“bÙEÈ,éÿÈ·¦od×©c1m‹’+ÈI¾|Ì‘PD`¦Rì·[’½v˜À‡+6²dm'}ƒùQ¤ü_	zÓ	‹İ§eÛIÍ ªAŞ)%@TrèH”E³ØiûIì¶İxV­ïæı¥èìËŒæÿW¼LhI³çöãimJá¸‚’×"@q%(ª@Q…’ë}O€ŠD"Èº P3®™­Æ7ÑÓ3À¼åm¬lëÆuåÿQÀüÄÜºÊö[5³í¤&ë”\(:0 „ï¤MW‰Yíê$7ĞÍ¤)Sè/iôfÏú‰Š@)(U—bÚŞ)öÉäX¾®‹…+7’-”F-Ì¿Û‘Œ›l7©‰¶ƒeè”(8~|"%Š‰)ĞM[‡kVòì«¯ğàS¯Ò> 9öğı9çäÃÙvûmÉ:*İƒë"„ğ,ô¬TIÔ˜ÍÛM`ç©cY¼r#‹×tĞ3û?ñİ›_ÿ·µ­-õ	vİv“Ç7 ¥‚ã
+\)ı@Ö‹hƒ Ö²44Ö­XÂãO<ÎCÏ½ÇšÍˆ¡(‚|¡€mêL?`g>sŞ±ìºË”„Iç€CÉqŠwgIRxÏ0XBÒÖÑË¼åØĞÕşÎÿ?sËÿVOU&¯g÷mÇÒ˜áJÇb	-‰Ô
+…˜¥ ºeæÏy‡;ï„—g¯¢+†CS®ëP,9˜¦R’ÍÑT…½vÚšO9ã<W³ØØç’/;(>XğŸ]ß¥ë€­@f0ËÂUYº®‹Òÿ‡i¹øŞ¿	`â¶ÁÔ‰l?¹…ú¸ã‚ëú”`ğ€¢(*q[PàµW_æ±çfğê¬e”-LËDP³êl?es¬¤X*c[Šä%ÇaÏ¶æ¬ãâÄ£¤¾¹‘¶~—lŞ‚k G,J¹<ËÖv°l}7}™ÿÒrñŸ~ó_0é;Nnf»­šÑÕ·&DÜgU¤MS±Mèïêäõ×^á®ŸáİE”Õ8–i 
+IÙqÉæ4Ö%9ş°½øÒÅ'°Ëv“xåùüşö'™ñîB29â¶åeOÅ2…b‘­Ç7sÙ'à´ã¦ÑØÚBWFÒŸ-pwå?+>p4§Ìš¶®n§«/‹ûoî¯Ä÷ÿE3qLš}w@KC·2 Jğ¤Äi1…˜	ë×ñĞÃsÿSo±tc4ÓĞHŠ¥2Ù\‘ñ­õ\xÚa|şücÓ\ã¸lììe\k ‹W®ç·y’‡y‹î¾Aâ¶‰®«”J¹|‘æ†$'Oß‡ÏœS¶™DGºKH	^!Bà¸Â‹st1$½}ƒ|°¼Õ{ÿm#şë_0†®²ó6­ì8¥™TÜB–®ëY’ˆAñ©6m4!Y<ÿ}ò9xeË7æÑ¬$†¦ ’|¡H±XfÇ©¸øôÃ9çÄiŒi®Ã•’'^šÉm{‘·ç.áÈwå²3§søş» °tuw?:ƒ»{••k;°LÓĞq\—l®@]*Î‰‡íÉÙ'Ê~ûìÂ`YĞÑ_¦ìx™5V„ç®ä39–¯ëdÉÚ.rÅ¯´\üàÖ·ş×SŸ²ÙiJ3;LiF*8 ¥bMüÀ˜n±Èì÷Şã‘'ŸçñWçĞ™Õ1íºª ¥)%ûì6•N9”sN<˜DÌb0›çñ—Şãæ{Ÿç­9‹,Ó ›+ ©*‡ï¿3—Ÿ}GOÛË4èéä/½ÌıO¾Áœ…+Ñ5ËÔq]I&—ÇÔ5¦°qì»+ªmÓÖ[¦Xv}WUù®ôş¬
+°p¡TfÕ†.–¯ï¦³/ûï˜Şö¿˜æúûï2‘q-I„+ÀÔ¾ï„KTU`ÛPÌyëW¸í®‡™1o=9icÙ6ª )½»_UUößc[¾xÑ	œxøŞ(Š``0Çİ¿Æï|šE+Öaè–iTÿ.	¹B§ì°û[óùãœÆĞ5Je‡Ÿy‹îxŠ9W€„˜múÿ¦€ã¸ì¹ãÖ|îüc9áÈÀ´ØØï’+–=‹#«c)ñÓr‰…K[W?óWl¤½7ğÿ’€ùÑmoÿ¾;UL_ÏŞ;¥.a+nøv"@ñİÄ,èéìáñÇãş'_cÎ².JÂÆ´L$ã’ÉˆY'±7W\x<ûîºŠâÍX¶ºÏıçŸxşÕÙÄSq’q;Ì¨†œŸÉ,K”ÊÛn=sN<ˆOy$Í)Êe‡×g~ÈïoŠçß˜K±TÈŞ¿Ù~ë±œuüA\pÆ‘4´Ô±¡WÒŸ-)Eøàh>Ÿ“ÉdY´º“z(;î¿`®úËÿ`b–Î.S›Ùn«&â†®âdN<0eÂÊ¥+yæ¹¸ÿ‰Wø`õ Š™Â44’²ãÍhnLsÒûğÉ3§³÷.Û 0oÑ*–¯içÈƒv%³èîäîÇfpï“o0gá
+tMÅ4´!$[´+%dr
+%vİ~g{ çŸrS&¶ğÚ{¹ío/ñô«³éî÷dUQ(–ÊäE&iäÂSå”cbò6éÎ@Ï`ÉçˆDxWV	ª C¸”òyÖvô³xM'ƒ¹â¿`~ü×.`Zâì:µ•ÉcÓ(Bx¥ê7ŠªøÄ¶ª+—.ãî{à¾gŞf}¿‚a'04pıRblsgŸx0_¸àx&Œm`Ñòõüæ/Oğğso3˜Í³ã6øä™Ó9÷¤i¤“1Š¥2O½2‹?Üùs®@SÕ!ïÙu=ÏĞUöØq2gŸp w>2ƒ7ç,¢¥±3ÙŸ+/9m&`ùêüæ/óğsïĞÑİm¾+“É¨KÄ8åÈ}øÜ'0uêÖô «¿ŒëJŸ¬ôÁkĞ‰"Ö·÷²|Cí½ƒÿë,²øñíïüÃß‚¢Æ7'Ùg‡±´6Ä0¢ÛñªÅ±¸@–]f½û·İõ /ÍZIû ÄŠ¥Ğïoç
+EJ¥2ÛMÏ§Ï9šsO<˜Æú$ 3Ş]ÈîzšWßYÀ`6O<f…w{._¤©>Åí¿şï½ _ıémÜñÈ+^ãù	
+Å…b™æ†'Oß‡‹N;”½vÂ·~y;7ß÷qÛôİ_dÂæ°}wâ‹Ï{n@[G/w=ö*7ßû<+Öµcêz%@ÎHØ&ÓöŞOu‡´'YG¡½Ï¡Trñ+!`ªÜ²"1„¤§oEk:Yß5€ó¿T-ÿ‡ÆĞU¶ŸÔÀÛ¶·t¯L,)BœÈ`4M%fCn0Ç3Ï<Ãß|…Wg¯ ãÚXVUñÙ¼g’Øc;>uÖ‘œxøŞ$6eÇá‘çßåö‡^fÆÌqÊ1(Â'Ô<kQàkŸ<™ï}ş¤”|ãç·sÛƒ/‘ŒÛ8®K¾PB‚½w™Â™ÇÀ±‡ìÁxŸ—ùéäÚ[#³<I„+)–Jd} ¸R2m¯¸äGpÂá{¡©*½ıyşn}àEŞ·MUı Û³\ª"Ø·©œsÒ4Ÿ~ V"A[$W,‡¤¨ÜUÁ½¦
+‰¡HJ…ËÖw³|}ùbù0?¹ãİ¿0õI‹=·keëq)Eõœ¿&‰*¤éP:6tğÒ+¯ò×ûàÅ¸z
+Ë²PHé²–©sĞ;ğésæ¤#öFÁ`6ÏS¯Ìâ†ÛŸfæüe¨ŠJÌ6QEôkCß»â|õÒøúÏÿÊ­¼D,fR(”inLqĞÛqÑ©‡rÈ>;„2À½O¼Á•?¾ÛÒ‘²ùØvë1œ}ÂA¬XÓÎ¾J©TÆq]öß};®¸àX;l/b–A¹ìğĞ³osË/ğîÜ%Keb¶‰‚\¾H©ì°ÓÔñ|ê¬é{øşÔ54Ò5(ÌEä¨«ôÿ Ğ…‹,—hë`Éºîÿ±j¹øé0Š"Ógm[™Ğ’ôîWFÌi­nB`š*–	ëW¯ç¾äG_eyGÅL`7Ìxâ¶É	‡ïÅ—/;™½všxè­¼ÈŸï¥«ÛÂÔ8T£`q¥$_(ñƒ/Å—.:)á«?û7ß÷‰¸Å6“ÆpÎ	rÎ	ÑÚ”Æu%½Ò	 cŸúîŸ(—
+¥1Ó`ÚŞ;pé'ç˜i»óÆ¬Eœóåk)—E„ÜO©ì0u«1|úœc¸øôÃHÄ, Şš³˜ëşüÏ½>—B±DÌ6Ñ…B©L¡PblKg —y4cÇ¥+½ƒe¨!d4» ‰&Ú»úY¶Îãsş™îJül£©
+SÆ×³Çv­Ô'LO”pö¢âˆeÇ*X–‚¦Àü¹ïs×ñÔk°¢=™¨GW=‘d©ìÍhiHsŞÉ‡pá©‡²Ëv“ X½¾“?ßÿ>ûKWmÀ¶L]«J0®”Še~tåÙ|áÂã(•¾tÕŸyğ¹w8í¨ıøÄ±ûsØ¾;b™:ÅR™'_™Ãã/ÍäsçÍ>»Laş’µœyåµlììeÇ)ã9ıèı8ş°=ÙyÛ	¼ª“?s5]½ºVUøRò|¡ÄÔ­Æğ‰ãä“gNgÂ/(Ÿ59·?ü
+÷?ù:İ}ƒÄ,]SÃWsCŠãÙsO>Œ½öØ‰ş¢ «?ĞæPu~¥
+é»+á’ÉæX¶¶‹uÿ”j¹¸ú®÷60{l?†İ·mÅTŠOˆÚL'øªEQP(óÁûs¹ãşGxäÅÙtm¬x]UÒ¥Xöj4S&¶rÚ1ûñ™sfÒ¸f –¬ÜÀm{‘;y•ö®>b¶wr£©ïp`)Ë\õ•s¹â‚c)—®»í	ÖlèâKÏ¶[{™Íúöxy6÷>ùs?\Íõß»˜NÆš]\ôÍH&,.8y§¹¶U!øú39ÎûÊu¼5{±OÜÉ!€	½úU±Íõ\pê¡\ú‰#*™ÕšüñÎ§yüÅ÷X¹¾Ã«YiZHÄ,ƒcŞ•K>q$»ï¶%Å¤³¿Tu3ÊHúXEH4\Ür‘Um½,^İù•“ŠŸß½y€Ù}»1ì³ã84é TÁCy-E(¨¢Ì—¾ö=îzzj¼™X<îÿ[ïß—Ë“'¶òÅ‹çÇ@Â'ÔŞš³˜îxŠggÌa “'óø‘H6!Š8RR*9üü›rùÙGĞİ7ˆ êÓ	¤„·ß_ÊÌàå·Ğ;Åq\şóŠÓùÂÇ ¥äoÏ¾Ãä	-ì½³ç{ú2hš’}ŸÿÁMÜıøk¤1\×3h ÊK._ ·9îĞ=ùÂ…Ç³ïnSèíÏpÿSoğûÛŸdİÆî0Í—R’ËB°óÔq|í²“8üˆCYÓ]rYemà8R [”XáÇÙü?¦fµÙ»MmÁĞBªÇ­ñ;àÈÈ‡Ÿşìgéñì«3)¼ ¶ÄIlË`—í&…`Xµ®ƒ×g~HO_†t26,X‚“êYï¢”—_}çb.ûÄáßiH'èìàw?ÇCÏ¾Ã’Um”7´—Ÿu_¸à˜xg»èÿtÏó
+E®şúù \sËcüíé·¨KÆ+ä[ä½–ÀÛ¦Awï oÌú“§ï¦.gçm'bèzÇ"„@ÓTòù¶ea$èÍI/söf8PI\s‰ëFkcœ¾l\Û?¦AOüòÍ³0¿½ı45%¨K™¸GÉ»²ömWˆ9	Ø¦‚ã¸<ğô›üî/3wá
+/àSU„€¼/¢>çÄi|åÒÙa/NèìéçOw=ÃÍ÷=OGw?ñ˜å5F ë±¾¿üöÅ|ê,Ï²8®Ë;s—òØ‹ïñÔ«sÙĞÑƒe˜†¢(fóœpØüîû—bè^{V¡Pâµ™‹xì¥Y<öÒLRq‹'oşc›ëyfÆ\>ùİ?¢)
+Š"†X—ÚG”ÌæßÚÀgÎ;†OŸs4uÉ 3?X’ŒšZaƒŠøv[åòóOäÄcÅQt2ÙrUæ=Ïe,êmH˜
++Ö÷ğî«˜4¡…îş<k7şƒ ó«ÍÌ'ÛE¬Â2¶Û®•¦†8†îk+ÃúH)çÜ„Øôg
+üæ¶Ç¸ùŞçèìé'³Âôw “§>çŠãÊKN]Àªuüğ·÷ğèïùu³Ê•Çq¸á‡ŸáÜ“¦o Ë33æğ×G^eÖ+(—â1İ’ƒ”v§m'pÏµW’NÆèêà±gqï“o2éZJ¥2uÉ·ÿê‹ì³ë.[ËYW^Oß@]S‘R˜¨µÌæ‰Û&gŸp0ÿñù3×âq;»ú¸öæG¸åÉå‹$âÇ#%dryÒ	›óO=‚Ï\|v*AÆEº²:nñŸlhIªdó%^yo9½ğ>]=ƒœ4}¬˜MGÏ?¦§JüúŞ™›˜3Ù–KÖ#]Ï§S6ÛLn¢®.úé ¶òÎ›¨¦¼%¨ªÀÔ`ÙšN®¹ùAî~lï„ÿ32¹“'¶ğÍËOãâÓGñ)Ğ™,ãG¿½ßú ]S±-×õ\Ú¯¾}1{ïº¸ãi1‡õí=èšæÉ-#$Â/(åÎk¾Dgw?7İ÷/½½€ö®>LCGSU²¹¿ış¥œqÌ~ôæ8ëÊë˜·h¶e„`)~‘H2Y¯9ñˆ½ùşÏb‡)ãÈŠüö¯Oòßw?Ã†ö^1+ü|^¼"9yú~|ñò³˜´Õ8r’rÙ­j¶“NFiK0>åe¡s·qÛ£ï±fC/ª*Ğ•C÷ÛÅĞéÏùGtˆl6`N›¶-k—·á8.šïHš›RLšXm{'Ó©QÆEÍfğE]÷4!oÌZÂ/ozggÌÁ44LC³‹b±Ì{nÇ·>sÇLÛÃ7ï.O½2›_Üø0ïÍ[Še°Çv4Ö'yñÍÈäò~&U±&`Âj¹ªpÂa{ÑÓ7È«ï}H¾P$f¨~°Ù?˜ãk—È7/?Çu¹ü»ÿÍÓ¯Î!3« L4H-KL?pW¾yù)²ïNp\î}â5®»õqæ/YCÌ2Ğ4ï÷•üBå!ûîÄç/9ıöÙ•BòE'ÜVW·]	–c‚¸!èîËrû³yuæ
+JÄ6u!Ğ5ı÷Ü\äçı]€¹æ¾Y›˜öŸLÇº.ÊÅ2ªª ø™‰”ÓT™0¡––Š¢àJh×º¨€²ñ¬M±ìrÏc¯qım²hÙ:b¶‰ª*ş]W@J8÷¤i|íS§„wj6Wà¦ûçÆ{cùš˜ºN<f±&Á#šQ©ŠB±ìP.;X¦^¦Lc§íÎm¿¸!×şùq~~ã#$ãÖà6^f–ÉæÙe»I|á¢ã8ÿ¤i!cüúÌùÅñÜkïc™•›Âu%™l)“ÆğÉsãìÓM#“•ÍC…¡­Šª@ƒ-hŠ	ÊÃKï®àöÇgÓÑ“ñ¯„çÁ6uvÛn,Â0(»^Hü÷‚F\{ÿææÈ½·b°£‚¯LS„W4T„ßr!]’I‹I“I&mß¿Êa­LxÇHÏÿê*øñÍî|Š¾lU|3˜Í“ŒÛ\~ÎQ|ëÓ§‘Jxn°«w€_İô·=øùBÉ7ñÊÖ·Z¶P9iQ°Kevİnw\ó%êSqxú-.ıöh¬K ùqK0Rz‚òÁL–†_¾ôD>uÖ‘!g³|ÍF®úİı<ôì[H)‰Ùfx²Ù<1Kç’3æÓJº!É@FÀ—ˆ°—4 %.ĞXºº‹?Şÿó–nÄ2µŸRÅ¯¥)$lƒm·ªG³m/9ÕŸùcé™;û³?z7õ˜Ğœ@”J…råNöÿS„Ÿ”‹½=ƒ‹%b¶®«á¿'|³ş«Ô#q\0MÃ÷Û‰“ÜŸL6ÏÜWQ,;ºji_}g=ûŠì±ãd1‹£Ş“Ø‡şA>X¼†R©Œ®©U!ú=_Ñ‹_,•¹òâã9pí HÄ,êÓq>X¼†şšª „g\)Èä0+.8~x9G´+º¦ÒÙ3ÀU¿¿o\ıŞ›·”˜m…YX¾P¢T*qêQûñë|SO>G˜äò®1+5ª¶u›4Ø‚¾~h¸ïÚº‰UÅiŠE(ÄLƒ„­¡F˜tÿüoÎ5öqı³7ËÂìµm1·LoMSC—¤ P
+(B ü
+³ij´­£±1å[ŠÕ­åñßPp­Ÿym.¿üï‡xkÎ"LCOz …9h¯íùîç?ÁìŞ5Ï¾6—kn~”·æ.Æ2¯9m6¸ÖºàÑT•SÜ‡/\xl(’Z±¶îx†G‡®Ş„èšÊñ‡îÉ7.?…·è¹É|»{ëşüËV·Y^¬”Ê…B‘=wšÌ—Æ1GîGÁÅJx†f™ª€:ê,ã¸¼2s%ylk6ö· P¯©Š‚ê¦.eÓÚ “¬÷je¢ö¦ı8.éú¿m`¶ŸPO«­Ò×=è»$ÍUü_®(>ãêƒÇ£î<75fl#ñ„]UqeğàßeªğNô_z™koy”•kÛ=.&’U¸®Ë)GíW•‰8ËÎàúÛ÷.œm…æ¦€ãÅ%’L®@*asùYÓùìyGÓX—]ÌÏşø m=|û³§sÈ>;†|Ïs¯ÍåG¿½¹®À¶tMæ`Æã`.?ï8.:ïx4Kc0S0”Œô>\÷bUÀÒÕİÜôàLŞ™¿ÓĞĞuÅ·¾µP<ë¢U­ ¦±Î¦>¡P×\‡ë¸aÕßãšÄoş6g³ ³Uk’­ë,z:û=À@••QÀü?KEú†-cÑ4mØÌ‰!uYïç(zú³üö/sÃO‘ÉHÄÌ°y,“õ2£‹N;œoæ4ZÓ fóÜxÏsüæ/OĞÛŸ!·CÆx8àDÇuÉdŒm®ãSgMçÒ3÷K¨‚ üİ÷—rÕïîãåwæ£*J‹Éz—œy$Ÿ¹ôTZÆÖ1éÃÓFÎ‡¡Bƒ%0UÈäŠÜúğ\Ÿ±˜RÙÁ¶4ß/]	Ÿ•ˆ…ÑT!Zb¤c’º¦zœ²ã}^%°0ÏÊ¨'œû¹VûÏá–¡Ñš4Ée<ÔpÅK9]ÏE}d ƒr¹<ƒ„–]‘$D¤b˜½;.fé¾ÿÎwØŞôd˜¿d%ÇA×T¿Z¯Ï\È£/¼‹‚]·ßŠ˜mràÛsÊ‘ûP(•™·h5¹BMS«~ÇHBpUlhïaÑòõì·û¶l=¡Åÿ¼‚åk6ò_×ßÃ\s'KW··ÍĞŠŠ%Š…Ç¶?ÿşg8ÿìé(–E.ïı…êó(ítÕs?–@S$Ï¾¹‚«o~×ç®A×U]üCBkPPTÍS.FâEÑHÆuL,Ûô®M•^ˆÈó<~÷ĞæY˜º„É^“êélëEU@*®Ìòúì÷Øw·}hM×{T¿~`+C%„D(^RHÙ4·6aYÖ°±Lu*¢ÁñÿüÔ«³ùÉïïgîÂ•˜¦¡©H?¾Éå‹ì»ë6üğËç2ıÀ]ÃûöÜ%üø†xsÖ"¿¶3R}j0›§±.Éy'MãkŸ:™úT<L»o¼ç9~û—'èèî#³CYv\òù;LÏW>û	N>î@Ê
+ds²òQjË(şŸmÒ†—<¬ÚĞÇï›Åë³×`*†¡T’Q¡$UÕ04îà(IT4Õ{(ŠÆØF‹†”Šaé¡UQqM[neÄï»Y€‰[:lÓHÇú0šªQ,tsé·¯‚ô$¾rîÑ½ï^”KP*W€ãÆ­8(ªB]}Š†æT5Ğ”ˆá]SÍPrn{àE~yãÃ¬më"¯\<¯‰:x7~òµóÙÑ¯O<öâ{üôcş’5^É ’2gr4UáìãâÛŸ=IãšÂ¸èÇ_ãê?=ÈŠµ±-3h]?NiªKğ¥ËNá¢s%7,Ê°}FÔ $xm(2@W¹|™¿>6ûŸÿB±LÜÖ+@Qj9e™h2Ç²¥È·Íg·CÎ¦¬$P°S	ÍõiEUC°Eñ”"FtÉ›tI'ûùÍJ«!˜Ô” 7˜«˜2<Nàµ÷ŞeÉ†<¯ÌZÈòëÙvb3cpŸ	²ŠUf­äsY²™Š"0MËóÒOş†qQ‘?¨ŠÂŞ»lÃÇ€¦©Ì^°œL¶€nxœ„¦*,\¶{ŸxÎîvÚvÉ¸Íö“ÇqÖñÑÜbŞ¢U´wõáº’|±Äq‡îÉõÿyŸ;ïÒ~ğ™søÒU7ó‡;&›/³Ì˜™lMQ¸ğôÃ¹öªÏsüô½(©*ùrô¼U¼ˆ> +Ò!eTà…wVñã_çÅwWah*¦©V¹à‡¹TM#f©ôu¬dş³Ù°±´^¢eë=pĞ=FQĞTº¤NÌR«a°şW)ânÖã†GŞß,£(‚ÃwC×†nïÃ#PP°—oıüç¼µ¢„©kşd„8—œ4Ó;€„#_(ú.ÉsSjàÆñdŒú¦&,Ë®Îš†qMQÏÜ|³,çW7>Ì“/Ïò è3ªë2É±õø¾zÙÉ\pê¡¡lrm[×Üü(ó¯æKÏ)GîŞq³¬àú[ã¡gßöÚs#"ªb©L©Tfú»òÅOÆáûíH%'²¦7"ĞââMtˆëŞZºº‡[™Çï¬ÂÔ,Ó¿¸Š¨‹GÜyÌm9×Íê•‹X·aŠ¢"%LLØîàó(¹ºª¢k:º¦3©E#•Òq]7Ô;W±áÊ¦ƒÿa]Ò60 ‡ï2–¶o  ·5~xİ¯xv^_Èr:K¶Pd÷í'ğõN`Ï©ÛP*:”]‰k‚'pSª¦ªKS×ØäŒx?ÑïÀyüå™üğº{X¸l-–ex(P,;dryöÚi
+?üò9a}Ê«ÉĞÅtt÷sõŸäö‡^&W(†İÑìiÊÄ¾sÅYœyÒ4¤€Ly„4Ï—OJ<ím\Mäeî|b!w<1Ÿ|±L"¦‡Ùe@pnÈ4MÃRËl\¿„eË—Q,•ÑüÔ½\.±Mƒ`òşçQv†¦¡k†¦3±Y!6)•J>G¦ |v^(blø&\ÒIçmKÀ„¦å\Á¯Xû½Á†Æ¬ys˜¿¦İ'×E`êm}<õÆûlìëa—©hH$)—ÚRIÕ›-ä³ä2(Šê¹©M¡}ğl¿õ8.8ı0šÒÌ¿œÎt]CS,Ó`}G/<õ&ïÎ[ÊÛL`LsŠ"Èæ
+\ûçÇ¸â‡7ñÒÛ`êº?*„ˆTÁâ[Ÿ=ƒkøößm*Y	%·*qñù)üÊ«ı$TˆkŞ…zñíU|ÿ†×yş­•˜†ŠmªUİ!ù	¡³u
+ëY8&kÖ­÷ƒİ
+“í:eZÒéñ»ûb-UUÑ5”-±,×qB·£ˆJˆ!BmÕ°	lÑœŞ²ëÁû[½±`©dœHƒtx˜†”’{Ÿ~‡™Wqù©‡qì~»£H…b¹èùe@AúÏ …R±D×Æä3¤š0LkDkS[ú—@Ì2ùÂ…Çqâ{sÍ-pß¯‡¶é)Û™1‡7f-âsçËÎÛNäš[aÎÂ•Äm“TDı—ËÑ5•³OœÆ×>}:»n30èz¿[­E¯¬pH† Sõ¾µº­Ÿ[|ŸgßX‰ª(¤†_‹«ğVDê]¦¡3Èêe‹Y½f5®+C«ıôBºè†~"‚_GŠ
+}÷X#£PÑï§•*ÑÜ‚ ¹Tö²›ÚH4•H ¥ËĞ1ÉŞ/NÄ,V¯ïæ»¿¿ŸXÀÏ:š©cÇxl­¯£Q¤—q ñ‰@Af`|.C²®d]#Š¢øA´4Dš,·ßÌïşër.:íp~ø›{xõèº†ih$bãòë›ö3Mİ N)KìµË~ø•ó9rÿ)û@	ù”a€‚ğ@d*Şİ\.»Ü÷ìBşüğ<2%¶áÍ>GåßºŠâ‘Šªb’Ş®•,Z4ßC¢iÓÑëÿŞ2†CÕÇBôŠ`Œ¨?u8ˆUüÒoY±*59ÿp Ù¢9½¹‚CRQÂ¨Nú9™H„É¦º"]åù·0sáJÎ?î .>şbšA®Pğª©5µEUôwu‘ô¬HU·èQCßH h²Øo·©<rãwyâ¥÷¸ê·÷±pÙ¿Ö£YCXŞÁL)ÇğÍÏÎ9'MÃÖ5oÌ|„’røt_G¢ùé­÷×qÃ=³X¼ªÛÔHÆ
+;®T‚[ïB{î©TèbÁ¼hïè@e«Ró;¥ƒnZ T„"½j½P¼[J/|Êİ.•@É%dçEĞ™*k¬âï³0+Qu!#¿Wº¤’qTÿ0D=b–A6[ä÷÷¼ÀŒÙ‹ùÌé‡sø;R*:”œQ;%WñÚUJÅİ×cö“¬oòNR05SˆAƒUU8í¨ı8t¿ùËƒ/ñÛ[§½»/Ô
+K	ƒÙuÉ8ß½â,>}îÑŒiLSòr)¾ÿ=UHÿd
+Ö´õqóƒsxáíUH‰˜QÉRYH †®¡*yÖ®ş€•«WP*9¨êf¬¥ÒÍXXKR¡(¨ª@U\Ç©œÍ{(D•	áµ,C­Ì¦ì:aõ¥”$ãq!‡m4ªª·M>X²¯]{7g¹7Ÿ:éPÆ5Ô‘+q#õ… 5Ûû”¹Ì Å|D]±TŸZ~4h$PêSq¾zéIœvÌşüô÷÷óèóïÒ30HÜ29õ¨ıø/œÉ®S'âz@U6ìM.@óOl¾PâñW—póƒsèî÷z¯ƒ4V¦UõÁ¢ª†ƒëX´øzzû}÷£nÖõ*Úº÷‡!T¿ŞUqIJ4îŒt“‰¨F( Î&\“¦eó-ŒCHZªe)]LÃ@WE; 	NÖpjz Ëô‚â»Ÿz›—ßû/œ=S§í…p¡è”*ı6¤â'Š¢"]èî$?8@²¡	3–¨rSb˜êBpº‚÷8y\37ÿì
+Ş<{1w?:ƒ“Ú—£ÚÍ‹Õj³°ÊXÍM!ıNÁÌëùİİï²`y'¶iŒ›!IX• F¥ø…Jéô³dñ¬Y·!t]±÷Šê_ŠèfÜ }µ¢ «>,dõøÊïkÂ{]]"ag†¦C¶pIhÑqPTkHñÎÔutUx¦»FÍª#µa!ˆÛ&]½~ø§Gxîí|ñ¬éì>e…¢×äüBEñ§U)pÊ¥½í°b	âõhºJ‰aËRQ7%€÷Ø.M9™o48Â/±+ş	ŞĞ1À-ÍæÙ·–ã8ŒY>h}ÉAÄÂ(ŠÀĞuL½Ì†¶…,_±Äc‹‡‰S„Ÿ«Gãˆ¡…RéU§X5õ/ªêÁÄõ³W‰DLºï¤‘óâFúAğH'aË\’ã1†(_èJ‰¡ë*äœá+¿lÒuİaÕö€WÓAåÕ™‹™ıáj>yê4Î?z?ê1rÅÒõÇ¬ú–VF´|vR!G,UL#"Ù”¡)kãMq<Õ|‘g¶‹%‡'g,á–‡ç°±+CÜ6Ğ5%Tµ!”*nEQUb¦J!ßÉ¼E°¾­UÕFK-û4ÎEÏ™” ë:šn!Ci‰UáJÿßááØ•j×DX¾a¨;Şïßâ WQ<íé£®èš@–«Ït­r_Q\×ë#
+„ÔUòI?(.–Ê\wÇs<ûÖ|¾qá1LÛm*Ò•”é*øBÿ«¤+ÉôtQÈ¯kÄ°cCÜÔH…ğM7şîH†jµ–¶sıoóş’v,S'7#¿p0«BÁ4ttµÀÚ5óX¶r9ãè~6,Q• fÚ”Ã ÚËçUD 9ñ¯—ËD$‰Æ£Î&ğ½CİÒgIîĞáÒõÌ¬&†<‚@Îõ7„DŸkÍ­ª($b&‹Wnäs?»ƒİ+Ï™Î”1MdóE¯©+2ó_ø“#„"pJE:Û0bqbéTM¯üìa€³‰RU(Ş¿íîËñ‡{ßã™7—á8ˆ™‘­D\Qp£h$m…¾ŞU,Yº€şATuhP;Ü¸’Mª•s%Ñ4U3qKî«ï4ÅE¨n9"'Ò§*7’ˆdÛ‚‘xÿ÷)[ÄH×ÛXæµŠVÆ¶ºNÜ6ırØÓµ4µqºÚÍpÀñZG%>?‹™VrùiÓ8súŞØ†N¡XB*A­&Ú	à¹¿b6ƒS,`%Ò˜ñdÅMm8µ@	Ş{±äğÄ«K¸íÑ¹lèô„×û‰²³QğX¦pûXºt!k×­C"6é~>
+0ÃõmK)ÑU¡h5¥Ï¢¨ˆp…2k¿S·R&ğŒJ¥rí¥ëb/ãÅ0Ê Æ×ôÈ;‰a$léæŠ¢-€FİRğ5ÇqªNT`u¢ñÇ›´uöóŸx„çßıo\p4{n7‘¢?ù)óo}ÆSº.¹şnJù,vªÍ´ÂJÑ4|8amp¢­èäú;ßáÖcÛ^ÿ“¨şë
+`TMÇ6\úº—°tÙBrùâÈAíí0Ñæ»¡]^?’â°šª¡¨:*^v„_`×O¨%²6ó]O(ÆòãÒ@˜%Bƒ9¸[da‚–ê"ÑudÌÄ•Y¯º"<“ëB<n¡ªjdÒ‚¨¸©àdDA|=ŠuMeÆÌ%Ì^¸šóß+Î<Œ¦tÂSùùÓÂE_ïı>§T$ÓÓaÇ1iU«²6Õ@ñ¾ÖÓŸãÆ¿ÍáÑWSv\’	+Ô‘TÅ<í1µ:²ÔÁ‡óçÑÕÓƒê[•Ú‘kµ )•ËÔ§âKıƒhš…¢ê…P*²)]ÏzÕküŒ_â Èˆ;HA†¦ØÊ–j:ÈİWiYPH'c~=É+Ø}æÜc¸óº¯ĞTŸb`0WÍø®IQT¿ºªªj•ËÉ4Ç,ƒRÙáO¼ÊÙÿq¾<ÓÔ0Ã r˜¡ şû,æ2d{Ú)f*`	û_¤X¸ïÙ…\ô½Ç¸÷™¨Š'çz~B°„}C
+ºn’0Kl\7‹Y³_§«§UÕ*œÕAípÚÖŞè‘ÍhH'ùÁ—Îñ­°ëµü¨ºÏÃ¨¡ \¸.®ã"ı¬4Jâ‰ µ³Ÿ¡ÏÃ=Elù
+¿²ãbD-„ •t"Ò{sº¦qÖñ2yB+ı÷wøÏëïáù×ç‘òçªÔ¦ÛµG`Y”HÜ1$(¶M–­îà«×ÜÏË3så¹ÓÙa«V
+Å’¿)¤’„dÅsS…L?N¹€K¢h&Auaş²N~Ï,^Ÿ³–˜¥zä[pE'I¼ ÖÖ%ùÌ>X¾¾aƒÚM¶›²,ÑBh¹\æëŸ:•İwØŠ•kÛéêÀÔ$¦a"TÕ³Š@*^zíº®t}‡$Ã¶Ş*q”u•BdÅˆÊ*İ¯ç½6ãTM?p<‰e4ÔS„B2é ı`µo ËAç|—ßp?7şø3|óÓ§0É9#Yšá|{íg†¦òÀó³8ãâOÍğåF„lCšŸ7UìÁ)åŞ_ÒÁeÿõoÌ]G*a`šoU"–Å×!HLÃÀÖY³âmæ¾ÿ.™,š¦ËnÉ#èÌKáh’­Æ7“ˆÛì¶ı$N9r_xy¦Jé`Ùq„¢zq‹Ni
+HÇÁu¥o<}Àø¼²(oqKÕ7‰\Ò–} Çu½à*RŞw¥$ˆ‡­'ùb‰¶Î^,CçîÇ_gúEWqø~;sŞ‰1˜É“Í«öÕšã(h>JB(„ a›f
+üğqîwoáõ÷—·¯5£fPFpÁãnÜ²WøpE™|‰dÜ¨’0Ša­¦é$mèïZÀœÙ¯°nÃßılz¤ÚpÙbôÌÌqÄ;sø~;ÑÓ7È©GíË;û9W^|}è¤”tõxÚ]×Å²c‘ş$*ÒsI•vÓJEºª3JÖˆ¤†„C\f¥zº9²OŞEÛŠ¤+I&âx*GA>_¢³»Ÿ=w‚¡k,Y¹/]õgN8|/İwGÎ9ş rù"åÈ”ÇáH¾òéUÑ»¦³Şz9~ïV®ºùIÚ{½ıH«nÅòT3Íšª iJ„b€E(¡³D¹ƒ¥‹^gÑâKÎˆòƒMe8ä¸.†®ñ­ÏœÊ]×~™sN<˜t2Îù'OcŞâÕl5¾™î~„sğîŠe.–¥AÆ¦) ¤[5a‚PSİTQûUô9Áç[ô–7’WÒçT2*¼ØC×Uñ=Î8f\×Å2­XÏkï}Èî;LâGWÅŸ~t9‰˜ş‹Æ5µ`Ù\B+Š]Wrı/ğ‰oü7¾4Çg>•
+×(+¦9:Ù)”Ôœ]ÕˆE:ÖÏaîÜ7hïìÖıl*^©è+7‚À¶L,Óà}wä¼“¦ñÈóï‘Éæ™~à.¼ôö|î}âurù"G°3™l£§íá÷·KL;V1 "hÂóbéºá£rƒÈPX%"¯£ZiøBÖ¾TÒ«Íy¸‘•¼Q‰C<ÃğÙ^ÓĞycö"Öoìæ·ßÿ¤ˆº.³,gÛ­Çòè‹3Éå‹¼xû÷Ù÷©dsÅ!òÀ‘À²9ÖFQÉ¸Åªõ]\ş£ÛùúµPô0GûRe¤W×sµ„wVPÒ4Åé`ŞÜ—Y¶b9 ŒÔ”.×~–è‘/ùêe'qğŞ;™Ìxo!–®áY‹Øw×mX¶ª†t‚L¶ÀÛLàk?»?İõŒ×C-$†•ë<AÀª(à–Ë>X‚ÃK³½ÑU.Â•!) "
+Âès4íğ?Ú¡²9ÿIéeQ‰¢ëºÄ,Ëcfı`[¿¸ña¶Ÿ2'où.S&¶ÒÙ=@sC
+×uùòOoãºÛäGWÅÄqáâZà’ÍÕ!º†¡«<÷ÖB:z*V&Ë(H+½ÇA5ZW6¶­¦0³iõÛfdDÃYOEQ˜4¶‘|¡ˆ®iì±ãÖ\væØ–ÁVã›éÈˆ[ôfYµ®ƒ¿>ô2ÏÌ˜®i¨Š·NÙË +4To)BÃÈ€•wƒÏ,Bæ)BÙ†cùsõõßâ´ZúBãJíù`Ûaê²äHSU29NşÌÕüêÛóÈŸ¾EgO?]=ƒ!Ø}‡­¸ş¶')J\rÚ!üø¡ªùB	ËĞF´,[º­,Ïñ‘ÿÌ÷İŠˆˆQÂJÙ$8>*uÉÍªªJ"f‘Í1í§Œ£o Ë{l‡ih|ù’èîËğË›!“Í“JÄ¼95Rbh*šaûÜŠ+ÍŠ%?†q}ë"k\OPÅ,İ©X*äˆ}×Ê–vc»ÃİåRb™–¯È—U:^UU¸òÇæ;¿º“úT‚{Ÿ|ƒ¾,ûí¶¿ùŞ%¼>k1S&¶’ŒÛX†Îñ‡îQÅ
+o‰+I¦àJoĞpşD*åÑ€0Z}–C¼lÏ2œU)•½¦á­ÈÉæ´4¦ùÕMrÍ-3˜Í³±³Ÿ#Úÿ¾ç9:ºû½Ï DêHºŠnØ5d›wÁ=q½7m¢2Oz)ä©d•î®Šp‰6tGJ(JŞÌG¨¤P¢<¬KÄ­ª±[Râ·TØ<3cŸóŸüí™·±-ƒùKÖ²Ã6ãxä_gëñÍ¸®Ë^;Oæ†\ÆÖZ(•Ã|”¶%‚–šªuíEß|l*Ø­}Îå‹ì¶ı$.9ıP4ÍSßåó%’1›¶®>öÚy2oÏ[ÊÕ7>Äşg}—¹®ªŒ›•ÀšŠjX‘wï[)=-od<xä‹ªVdiãõ‡CE®sõu¯ŒvÙ¢™U²ªûÙÇ¦ôêI‰˜–jZËôèkÃĞxwŞ2rù¿ùËÓ¸®äÙ×ßg “ç¨wñ²ıw¦TrÂ1©Aó¾JtŠˆDH 9RYû£,Køğ¿V(–Ùg×m¸ï7_áÒ3'n[˜†N®XÂ4u.?s:1Ûäñ—gÓŞ=ÀªõX–>tyªt±LE5ˆT?PO,å¸åĞ%¹QµcX ğÓíğºÊH[n9~Oúº-|x¦Ñ/M	+½ª·ÍM.BB`:<ÿ.–®åÍÙ‹yöµ÷¹ûñ7H%lß'~ğÛØiêxZ›ÒH	;L®©Šå!D×Ç^#Zš@vé7–)Q‹#6;v©­“E­J0à:fœsÂ\wÛ“tv³×›íÛÜ¢¥1Åw¯¿‡B±äğçßÛF¨zUC½‚Ÿ!•P¯„t+GFø˜À!E^‡]›"?Èšë¿¥e”İÊ†¨Ğ&aë#^š¨d!ZXv^|ë>{Î‘yà.˜†ÎŒ™²deûí6•½vÌ³·~Çoü;o;‰¾ì°€JXÎÌ¿ÄĞŠ´øh—TË!yÊB/~P…\¡D<fò‹oœOsCšën{’í'õ;(TZSLĞÌCÏ¿ËôKÂºö¿k4’VEîÒõZ‰U=lNÜ¨[.UxY©#Uì‹º'¢ ÙŒ‡öqÌ»ãJ´HÖ‰1Ë¨úPQ·T›åÀ6u^xs}ƒ9¾|Éñ<=c.—~é„ª*tõòöÜ¥Ì[´Š»¯û2×Şú8·?ô
+¥²6ÏW¬ÒéF‚^)Cqµ"©h[„Ÿ}*›q~jÁâ¸’­'xC×´uqğ^Û“ÉåÙvë±tt÷sşÉ³Ó6X¸|ªª`hŠªpßÓoy3òtÍs#›°ŒAfê±#Nø¾Eà–JŞDE†1fôºÔ¶Ç(àª™è)a“ŞÆ”DxçÆÌ¶0¡>Õ¿xª¢ğÆ¬éé¤TviHÇùë/¿@wß ¾0“'_™Í/oz”—ßYÀÕ_?u»™³`í]½#V³kÜíÃ¿7Qü €BY‰dY†co‹¥'¾'._O¾XâÊ‹ãš??A®PdâØ&¶ßz,7?ğ"ïµ=+×vpÊ¿bÉê¤6NsÔ¾Ûa:ìXÂË\|«(ƒÍ.%(U¥º "A/‰ƒğ_+U¯ÅĞ±j•×[şŸã‚P•J”ís1Ktş0ì0äè$í Öa:KVn`Õºvf-XÁôK~Ìâ•Øu»‰´6¥i¬Kòê»rÄEWa:ß¼üŠ5Ë1G´”’ª™À‘íBC¢›ZŸ>‚‰J4<å [×•l?e_¹ôÆ·6P*y¤dÿ`m·ÃáûïÄ§LãÙ‹Èäò,^Õ†ªˆ08ukİ”C@#¤‹mÇªRß`f²[,†,¯Ë¢Ò )£…Çáÿ«%ìÂ™Ì|Œ ÆñèŞHŞ/üª±5d7Û¦VÄDUºªĞÖŞÃ~{¸?±µ)¡kŠeÖmìöú¢5­êîş(Xn:ô­¦ †IG*8®Ëä‰­X–ãº”ÉÉÓ÷æØi»ó×‡_ESUŠ¥r˜N+êÓq®úıß¸ó±×Ã-sU	ÁvUWNCºÃ²qQ"2ï.•ŠŞ†%áÏ·ÔVGKF¸ÖÃó0[%IMŒ¨Š#R‰XÍ¨áSÛ›€ÆqÇÁĞUÖ¬ïä•wĞÕ3Èy'Ì`6ª*ôög½é™>Œ®/;nU¯Òp€›È„ßs•mÁ°Ao –L®À”‰­ÜôÓÏahŞàÁÏwÛOÏÆÎ>zu.u	rù"Ûm=!¼å£Ç\ú3fÍ_áJ#ioğŒëzaÁ0Ïø{‘7ë_§Pğ³£HqQVÜÂpÙÏÈèÜ›-šŞíˆ€T2*dUWs­Êİuİ*íÈpºU×uÑT•;›AÜ¶¸çú¯0qLßøÅtú%şd<Æ@&ë©èJ.Mõ)Ú;{¼6ÑÈ ÃjòEVht1´Í1:æa$¿UÊÃ²ÃSÆ±Ã”ñ¼ôö|ú39nşég1üîßo'_(8ş°=Ø~Ê8nº÷yú²äóE]Å	hûÀ²ÔZ” 45îÈkqQµJ?TUSôúÓ]Ç/	H"µ¤jÊ`ÈÌ;!ª¿uGAßÓ–><bG	­LPOªK%=á»éÀwSÛÌkãºHIß@†Ë¿÷'¶ßÌı>“'¶P,•I%l^ü´}vdÁ3¿áök¿B:c0“«B”5d’r•ôÔ©²(Q^£V¢Z,•iiJóËo_ÌÜE«yùí4¤ì0e<×ÿå)_b*Ì’ÍÌæùêOoãÇßğfúªJxÜà|V¥Ö²ca\¿âl˜ÁÒ‰jçY.Cy¦Òh¤OL†½vU#G„Z¹¾lâÚo±âÎËpÅr¹ªìP.—ÙzÒDNš¾ùB‘²ãlv3<`¼‡®©¬mëâœ/_Ç³ñÍOL¡è-/–Ê”—CöÙÑ›¿+/İñ#ÛÇ­:Á®+«‡ºé"&vñ?[ ¶²ãĞÒ˜&³Øj\3m½ì¹ãÖ|ñÂãPU…~,]G*n³Õ¸f.;ã0Şš³˜ã?ù3.]KÜ6*ÁÚKÑöáM¸£b©¸¾ÿ®Ô7MğÇyDb))òáÏ®Ë@ƒ=D~Q•ñ$ÍØB=Œâ7yÉšŞu]iğ«o~Š_|ó\,Ó ›/~d <’
+ï@×ÅĞ¼9pß»ö>÷ƒ›éìéçGWM]:î)÷—õ»9ó‹¿æš[ã®ë¾ÊöSÆS(–jüŠüŞWV
+y5àq—DÌæşß}ƒÉ[™<¡…kÛIÄ,ú³Ø¦ë¸”Š%„”´4¦(ËæèèêóÛˆ )¬"G#¹£ k W`Lsß¿òB=ùB2ÔEüª-¤K¹XES¢Vß"@õ%Jøìu“yÃºEÕßrı·4I
+Jãª?,XDˆ+Ç)Ó±¡›sÜ÷UöŞy2}Ù!qÌG'Ë!–éu<şéîçÌæyısÔÁ»òüïsú±ûóŞÃ¿äÍÙ‹Øãä¯±fCg¸eØ ·v&C&³WÇhÒ“qi®#n›Lİj,ó—¬%•ŒÑÛïíw*K ]V¯ëà¤OıŒ{˜¥£
+<µ@d­e‰º¥HE&›cúA»ñão~ŸÊ‚õÒ_Ğ*B!H·L¹PˆœWYe>£nWñ[¼‹²‰ëLùT*ÊøÍl¯ğu1Q±‚ë»˜˜Nó×«?ÏgÏ=Ê›k[v†€as@S÷šÊ`6Ç§¾û'n¸ãYş|õ\pÊ!üí™·xğ™·yæ¶ÿâÌã¬X—a*ÔCäª{SÂîE0˜ÍÓ?eâØ&&ŒmdÅš¤1ºûH'mò…åb‰L6ÇüÅ«ÃX%´˜5 ‰~=IXŠÅš¦ò¹Oâ¢sÎæƒu«Ûsn7rõÃ¦ºR‘b©v#GÂÙ1¢Ò¥!ü½ÂŸ)³9×şcT«%®ëTVÂQ³Ê¯ôôöSèËòÓ/Åõß»”dÜ&“+ŒX_úÈÌ,RmÕT•˜eğÛÛŸâ“ÿñGTEAW5æ/YÍÉŸ¹š¯_~
+ûìºM±™²¥†¼S",§âO˜êÈ²ÓÔ‰Ô¥â¬ÛØM2n10¥T,ñüks½BŸ”èªRåj¢±KU
+‰_pİ!kãÆ4òƒ¯^Âî{LãÍ…YsºZ‰N…Pœˆà”
+^©¶I6íˆğƒ^%:ªœafâVš²µ$)=Ú¸’”Ê =4°û=¿ª¢R*—Y½|='°{ì°ßúÕ¼úŞ‡$#{>JEW[NˆŠ«êSqf/XÉ[³³Õø&î½ş«üìO²ã1_Æ¶t,ÓŞJ–a=k‰;¿—4*†±¢¬¸†î>Øc[Ö´uÑŞÙC"f’/yó½…Ìœ³S×"j}ª
+ˆ•ö5rƒšàÖq]
+…"GOÛ“óÎ8‘•í*‹–xs…Rñ"B®I?öpò¹pr8OÏßÑ©¸T%|t¨Jege R°— BÒ*k’B±ˆ4¬Š¤ê©IßóÌßÆ¶.M;ñ¾uù)”‡B±´Ih¸=ĞS7²LDÜbåº¾zõ_øù7/äO?ù,º¦…™R <Uêx9$]’!EDîÁ…lëèe¿İ·eñŠõ¨Bğ·§ŞäÉ—fbêŞ~×©VëÄœI¡İZWù<…‚7‚ÿ+Ÿúg~:s—;lèÎ‡;ñ-Š"×Øz‰öJ¤i!QjU‰|?\‚şXQı±´§:@W_?«Ú»pì$¨Zä$×¬VÂú³ô¶wóíKOàÆŸ|–±-Ö¸¨MÍBiÜYğœŒY¼öŞB¾ä*¶4–~ôiÇÍ²›N’ÂéæbhZ}/:z ˜÷áJ]ãõ÷>¤«Ç#‡ÊGÑQ°ds¦NË}å2&MŞw/yıÓ!X¢dŠß…)¤Ì=«ŞgÙû3Qı5Ì¡Q¼fµ	zŒ*+kŞ°?©ª éW«?Ó+„Šª¨lhï¤£½ƒ¶™LJWştoUï¡\BõŠt«V¬gúîÛ²ÏßæÊŸŞÆó¯Ï«ZøıQ ‰Nz¨‡É¸Í†ön¿ü'ì¼íDt=*şÕCíHQ	€Cq´”U€Q…õmİ|°x5ïÌ]Š¡«h¾Ù–Na¦R’‘‘¬±’ãR,–8qú¾œ}Êñ,XU¢}]¦¡…ÜH0á»b<°èšƒ¥f™÷Ê¬Y´€ºÆVtM÷w&yózƒNRUxëıTÅ_-™Å7b²ê5‡Ño	‚mÙôôòÂ+¯³®7ƒcØš™šÍ_T…ö]h…·_}?úÊ98®K¾PBÃoÁi Ãk0›³`ÅĞ¡<Ãİr˜j5ÕÖ¦Ò$gòôŒÙœş¹Ÿ3˜É¡³l¢V%":ÎÂ¸5V2_(bY:ßºâ;úxŞ\¡£¯€¡«-J$S! Ş,£Œê´óÜ_®céû³°b)LÃòZPTMñ íñ.ŞO5ˆYBFTÖ1Rá`TQqxÑ×ÚÇã+Š‚¦ëØ¶M*&Ÿ/ğøÓÏ³Ç.;±Ï;£séD¦ÀRU¸QU•l6O¡Pä‹gNg÷í·â[¿¼ƒ%+×“ŒÌùÿ¨˜f$-Œ"„¿ÚO,¨é¨uAAm†ˆ\Q=}ƒ(/^‘EVëø¢ÖÄ­ıZ•ÍØm‡­¹ô¬“(PÏÌûP55lÙiŒˆ+’¾e°í"íËfóüİ7a%H¦0Mİ0ÑtUSQ5ÅwG¥‰¶¼Š<ø£`‡¶ËBåÏQîfËb^?‚ÖTÃ0ˆÇÔ×7ĞØÔÂ»³çñà£O’Q,¤j„
+õ hUUbğõkV­gßmÆñÔßáÇÈ@&_Eë”*c˜ô<
+ è6™CmPuONµ”ÉË.*se¢àø(ë-\–ÊeÎ:á¾ô©YÓm³pe?šêYYUC4M“Äcf?{7OÜú»Î³,fÃ°¼©šªæY?†	Şsà–‚¬(k*Ôn:©<Gi[0×¹2¹H(®‚nhØ¶‰ë&)»Şx‰6ğç[ïäôÓOb\Cµ\ˆÔoDXÍÒŸÜ¤ªtvö³MnüÁ'9l¿ù_İA._$fUã*¢ã[£j»Z`UÉ6#ËÉEmğÅB•±K®[½×@~„Ğ|8Z0Ê­4×§øüÅ§R×¸5oÎïÇu%†®„ÙKÅõøcÈü4Æ4%¢ÜÃc7ş«W“¨kÂŒ%±­8¦ic˜º¡{VJ×P5]WÑtUSP5Qy¨~ ì?‚*ŞˆØ‘X~Ğ>Î.Zow£‚ªiè¦‰åJ’eÇ‘”ÉÆ¶6núó5ı0ÜgWôrüŞej¦O HU!W(²au½;OÀ·uïÌ]RµaDÖĞå›Ê¦jˆˆ4l7ºÑudÕv’°” >òşa¸¬,RJ²¹í³#gt4½¹83õxVEUÂ‘©ÁÎ€€yš°,—îuyì–ëp\;Õˆa%°¬8ºa¡é:šn jš®¡iŞ¸4UÜ“Šªi(š?JEõ'n*PŠ`h0l!"Ãn¨Ãx
+.EñÌ£”*®«slÇÅq7!xôÉçX¶|9çœy*1QD¸åŠ^@V2/^ğNïºµÙql=şîë|çº»¹ûÑX¦õgi6gÚ$U‘T•ºÊm‰ÈÂˆèÕaŸU±;Ìß‰şöRÙA 9ç”Ã8bÚ!¼¿<Kïà f$°â²}°hš s™õâÃ¼öØ½XIÏªXFÓŒ¡é&ºaøoµaèhºŠn¨…Ñ¼M³º¦†ñŒªTÒk1LJ]Û*ÜD+­[hªŠ«é8†KÌö@S.98eXó.çÚkoàâË.`BC
+Í)„Så0ö]UUºº¼u€øî%ºÏN|ë%“Í{û±¥ï’üT3Ú‘°IæXT_I)†__İ§-G(RÊa2-)†ßˆT˜?{á)Ø©	¼6¯×o#VB",œG£Tê=Óh"ËCÿ}-«-$–lÆ´â˜Fİ´ÑtÃ0½ÁÚºîz44C7ü?ÖFõ'>±MÏ(Uq¦"ªST9rññÚLDpÅıCÓTCÇu½Á8å²ƒã}¼ĞÑ¾‘_^ıÎ»ğLØs'–Ş¥{*ªB¡XbÃêœ}Äì0y,ß¹æ.^o!é¤7Wß•ád6©éµßf–0¢fè!•©Ö¯ÖÂÈ^»®$—/pèş»pêñGÒ1hğáât]‰´*Ã´"{à‰%:WsÏï®¢˜wˆ%1Œ8†acX6ºnbš&†áÅ-†á•BÓÀ0tCÃ4utİÛ¤Úª¦Tq4Á.HÅŠ•pdHÅEEe[ÔfR™cÑôJª‚ÔT¤¡ûÚ\ÛS¬;n8‰ºÁM7İÉâi{qÁùç`ËÂuüØ¢:ˆnÛ°n#Û©ã¾k¯ä'7>Â­÷¿ˆ¢(º:bJÖp+RJGV3uµ&¦ªŸàz6¥¬)–ÊX¦Î%gÍŞ{íË+éÏ†ô~iªU%“W5•DJcş[Ïñô7 Çš0ci=æ¥Í¦Ã413Šeê˜¦>›¦C÷Ü’®)Ş”-U	Y_U©ˆ¢„w#;­Ò_¾Å.)¸³+A¡—!ÁU<äšºcº8e/©R 0ã­÷Y¼x9_ÿú—hNYhNÑa¢g_Tb%U¥§»ÃĞ¹ækç²Ï.Søî5wÑİ;HÜ6GtAµK×İdj3¤o[TÜ”[ÃÙÈMÄÂ¹|ñc¹ü¼“1cxcA7ŠşäğYµ*¾[°,+&yôæŸ³xÎ{˜‰Vt#†iØ¾²0Ï™†ç†LÓğ b˜†·ØÔ4LÃÀĞ5ßUiŞNÕcèß-…V ĞXÙG>Äëo¶Ô#)J…UUÅkj“Ío•Ğ¥ŠéêŞØÏH»fhø… ½³ƒoë‡\vùLÛwLé÷Ñˆá×c	U¡\.³nÕzÎ8d7öØa+¾şó¿òÊÛHÆídÚ´TBS·JÜ…i§KÉšş×g«8p7N=şHVt¸¬_Ú¡)•½I‘éA•XàÍˆI¦,r™n¹ê¿èéîÁL4aš^¤ëºÄ*2°lËwfZşÃ4¼¹Å~_¶î[U«X%²Š8F)Dˆ:1¤&*ëoÄÇ
+y+ƒ€•0UÖ¥RbH‰ë•±ŸÑäÖêº:Ûùõ5`ñ‰Gqéeç’T$å|ÎoıŒX1Yİ]Ù¾±‹ñé$÷üúKüì¦G¹åş(;T©ë†CÍØ†šAa·ã~œêæ÷\mêœêtvÙuwæ¬ W(cjjUƒYÅUFjX–I"m²ìƒ7¹ÿÿ…Ğ°ì:+®{­¦`|ëb™¦ßºX¦7'Ï2ü¯¾KÒumÈàì0WjgïÕ¶Ë%A5±Å¯wñ¤ïCáö‘‘ªêÅ/†t\ˆÌX“Ò%)®+q—‡}†÷ßŸÃ7¾õUvŞz"ÅL?•9?bH’ªª*´\«¯<‹ıv›Ê·~yİı¡‹1¯Û±â¸²frf¥œ¿)·Ë™4®‰Ow2ŞÀ[»ÑT¥Ê)5®êg!éú4ªVæÙ¿İÈ›ßŠ™œ€i%0Ìºa£i&šf i&ºïj<P˜~Übxàñ¿n€]Gík¡ö¥RKÔÎı©¶Á#é¨`Óë7#SŠj`ıú„ª jª·î×4üi‹ÙÄã1’©$õõu444PWßHª®‘­ä[ßû)ï,XO£(j(ä©ŞàN(;t—kÛ8aÿyææïrØ~;Ñ?˜¾ÅEé¯uOÑ¶W¥¦ù<¢F¦¿<—/pÔ!{ğ¥ËÏ§-c³puº_¿ˆ°è\Å/ô©ŠBcK=}k¹ÿÆ_°dŞ4³	C³ÑuU·PUM5ĞtM×ĞuÃğ²  n1üìÈ4ƒxÆÏŠ|âÎ³,+
+†Dİv¦`mf=4¡|ÌH9×U(ÁÖ
+Ï¬ G€9C±X¤ÏRÈeÈùÅ57pÆ©ÇræÉÇ¢—s8¥"¡ìÉw!BÈpäº;{iNØÜù‹Ïóû{çÚ??A©,½EáwSÖ§5C„ÚÒÙpBhd„zmlT(–HÄ->yöqŒ›4•÷Wg(–?^©´‡w°ÿZH0-ƒÆ–æÏ|‰§ï»…Dº•tÓxºÚQuU3ÑTUÑQ5MÓC ¦çLÓizqLôÙ0utC÷™_å$^12²RĞ/H‚¨
+ùsíñ±ªÕ•	 ı‹XA«@C¡¢Ñ*ñN¨q)—Ëds9²Ù™Á~d©Ä˜ñxàoO°tÉr>{ùEŒI'(å2!±/kbé6ÊdòhÅßºøxv:ï^skÚº"Y•Mµµé´¬Ü ¾²¦WVÍ¸ËåLİj,ç~%µVõy{ƒ]ó%!]—Â´U¾ï|ğŞbÉ&šÇnE¾GÕÿ¡£*F¸³@Ó4tÃãV,CÇ05S­·iêX–ijŞ "ÍrÃ«z«Š@Ó"<K¤–©:äy¤®Oåã(4E¿~KhPÅª¡ºêé1CÃ2ub1‹DÌ"‘LÄH%â$	b±ºaĞ:f,“'OeáÂåüèÇ×0{Ñ*ôD:4ñÑ9%•f+7p—¶Nİg{¸ñ[uĞ®ôæp\YÅ«Œ”%Ñ³VÍGQ*rùÇºŸ¾øL6fmV´ «Ş~ÅhL úqJ 5Q… eL3ÙLwÿá*æ½;ƒtãxêšÆR×ĞŒ¢i^ª«(Â›£hšî¹C÷¶µ¦Çàš†·–Y‰[<ÎÅ{êw+šİJ]M‰lcİ¥ˆ^W1ìõÖE|Ü(¦*]ö,Öw'@ªZA´ª„D˜ã”ÉåâôÄˆÅbô—Š444`«:q;Æúukùù/~ËYgÂi'…VÌP.#o]Fšï+kë{zúiˆYÜú“Oóß¼Ì/ozÔŸPK¤T“üÕ@©Û¡P(‰Ûœv-&3oM–²#Ñµ¨ bMÂÍhLÃ ±¥‰ù³fğôı7#¥B}ëVÄ“õ¤êH×5²®m5ªª{i®ª¢hZ¸@Ôc?•¶ô0;ò,‹OĞl¯¥Gb%Œc#"‹Ö¯ (›ÎŒşn—Tëšª_GiúH|Tt ğô,ù\xÜÆ²m
+ííÄbu1‹¸ec™&íí¹ï¾ÇXºtŸºô\Z’‹’¢š<‹¶©¡ÍĞ‹e¾vÁÑì4eÿqİ½JÎĞáµAñQ©¨©¤tÙq›	ì³çNH«‘× )"tAUä—8+¾<5™JbZOİ#ï½ö±d#©úfbÉ:â©:êš‰'ãdsYÿâ©>]ïÕ~t- ƒêÇ,zÄU`1M-¿3@­æ^*®¨ µ"©MQ-»ø8€„â…©®+ĞÔè€š ¤ÑÀ”¸e‡d"N"Ã2M„ô¶ Lœ8K³|æÒ$fÇ˜;g!Wÿò÷|æò‹ØqÊ8ÊÙošE0zDŠhëõA».İİµ÷vìğ»¯¢+‚bÙ©Ê!G†dVµ•Q8èàÙ8àĞß1€>„ˆÖ‡‹0R¤ÉçúxèÆkX¶puÍã‰%ˆ'ë‰§Ò$ÓiAL&ƒPt?;ô²MõãC÷¹—€ÁÕ#)µQ)øÌ®—F{.I·ÂVÃÕ°e$Ò:2L‘qdÀˆ¿$rÈ*ªRàÀ5I$”%RS±,ƒxÂ"™Œ‹YØ¦ÆÚ¶NÚs{TüÌÀ00MË²X»f5?ùÉu\xÑ™3ı ”ü N¹42Iï»ş¾AZb‰S.(6Î©«ìE”eí9OöH'}™¤B%Ğõ%OèšFCs+Ë>œÉ£·ÿ|¾HãØÉØñ:âÉ:âÉ4‰dŠºº4Mu,_·b.‡­im¯x€ÑuİÒæ€ƒñâ@Û6C—TqQQ7¤D]j\Q¥ ¸%®(’Vÿ}€‘5Êú Qü“îº¾Gè”XÍõ@“LÅI$ãÄ,ƒ5m¨ªBsSÂçt?¨3±‹më¹íÏ÷°|ÙJ.8ÿtê,ƒr>º¨¡ê,Îœ²šJvÍ<²fÂRYŠZ§z,ÁÇ‰Åã¼üÄ¼ùÂ£VŠ†–‰X±4v"M<™&H’L%il¨#™Óñ~—7ëEQ¾e1ü 7("Z–eÄãvÌğ¶3±m#tEÑ˜%ˆ[0¨jåóG]Ğpš—M†ü&½Y¾.+Q,¼’WU0to¶o*§>b]?½v™:ICW1rJ÷¬mÚÌxå]V¬XÍç>	ÛNl¡œÀ"?¢D8²…	gêF,L0|(ì­Š/JÕ7P(d¹ï¦«Y¾p.©ú±ØÉz,ñv<E, ‘HJ¦hi®Ãº{zQEµĞO!§º·Ü4ˆÙ&ñ¸I"nc[&¶å¹¡˜¼Ö=a”Ÿije´0”	5áG`äHóû#¿XñÅ¢®â¢{z{p½Ñæš¦b™&©Tœt2ÁÆÂ s—là€İ¶¦¡Ş¥ß§Ø==‡îešeZ¬Y³šı×¯¹ø²s8æˆp2}¸N9”_u"ÁĞ]ÕÃU©¾#£SÀ£å¨ux3ùê›Ç²üÃ9<q×ïÈf²4´l…Où`IbÇRØññXœx"IsS=Í-if~°œÜà Šã ~VäëY,ËôÁbÙEñkEU	À¢…ésP-‘˜…ê‘øJ¸’‘;+†Œòw½’MvnT/~’
+®èŠ@èVÆÑlÓ$JR_W‡X»ÕûX±¾ŸmÆ×áJOÑ˜Xİ—ìçúõë¹å¿ïbé’å\tÑ$tİë-fü¥ˆşODÑí—íµ
+u.£E¸è¦{ª³ ÛaÇ’Ìxú^Ş|ş!TÍ¢¾yBÅªÄ’Xñ¶ÇÇ‰Ç“Ô¥SŒ›¦äº¬\Ó,dQüÍ´šaú©³I<f‘LÄ<°X&1ßºÄü×–î)ë4ŸÁ­¨è"ÙZdQX´%-äX„R#	ÚÀˆO’rh[i´ŸGo+»‹ôzëP4Tâq›¦æzZ’qr¹Aæ.ídÇ­I%¼aÅ‘ÆrT…'=Ô±,‹yuk6ğÙ+.a«Ö4¥Ì@+<‚GÕµ¤àwÈ^&Ú%œìDªr©Ì#½ù3gjK<YóÜObÇâX±¶'HL&3&Eccœ9×“Ë(ô jªê¹!Ë4ˆÅËb³b¶gUbAÌbê~«ø
+º@§«„1W¤g?¼GªcAmUhs°ğ±º†--Õ€e¸ŸÔi!ÑtCJŒb	Ó4©¯¯£¥¹‘%×Ğ9°3K×ö±İ¤:\W‹\LÕï³Ñ}U¼®é˜†ÅŠå+ùş÷~Á'?}>‡¸2ÛçóI³)‡T«Õû=²
+,é$ **éúfÖ._Äcwü–¾.Z&aÅ+±ŠKx@‰ÙØ±ñxœd2Iccš	ãÒdV¬íEú(f2Äâu‚Î²°cñ¸M,î½¶l³êÔŠ¼ Î‹_\çõ%2ÆCT‡+Y¬24`›eaş±aïp¢ì*‘·âuª*~Úl’LÆ3¶…åk6Ét³h]=“Æ¤¨Kx›<„B•îTÕ¿uBóiôuëÖrı¯ÿ›e§ÇYgOB-ãó~Ö3Rü"j,Œâ+5*ò„`È…a˜Ø±ï½ò$/?vBÕihè[•$v<‰å[Ë¶}7'‘LP_ŸdÂ¸4¦e2kQ;Rºt¯_ªhèº‰eÙ^E?f“ˆÇˆÇı¸Å6½‡e†<Œî÷©JÅ²DwUz‹»”,Jd\ÇH«}6šòwàeH/¬Ş¸Î]¼Ñ(X¦FÉ6ÉÇlš›˜<¡•Şgçí¶eùÆ»n•&ƒÁHK§êO!Pƒ}×šŠª{Z;ãáûdé’\ñ¥Ë˜PŸÀÍeª; †99Jdı1Ñ)¾e‰Å’HWğø¿çƒw^&QßJ<Q€’ô­J3fcÇâÄã1‰8étŠ	cê©OÅX¾¡Ì@NPè[GçêU$’XVÌ—Ø¤Rq’I›¸í½1ïaÛ:¶Ÿf‡Bn?Ğ!9X1$ª-*Ìæ]óma6mI*>jïä*~W&³I¥’Œ?†¶™óØØ¶†	-ut8´¦=Ï™²×;YŠZiÔÒtÃ´Xòá*¾óõ«øÜ•Ÿäà}vAd{½]N¢Z$©ÈMƒ†u¯,X…dº‰¶Õ+xìößĞÛÙN}Ë$ìxÚjc‰ŠU‰Å°l4ñxœd"N*•dLk-qÖwKÚú44‘eùûo¡ëV–XÌ&•LN'HÄmâq‹DÂ{öb¬Ó¹‚âé”ª‰—¢ŠÁ
+–‘‡m¶…ù{+2ºÀAlş÷X«š‚iX1‹x"Nss#[m=w_]wÜ–’L1X”ÄL­ÂVÖôòàwòU€££ëk×­æ×Wÿ%gÄÙgGÜÍƒS¤zÑnu7§·ÛÈû®®XvšÙ¯?ÏŒÇïÂu¤GÄÙ)ìX+–Àô & K"÷ù–­ÍqÖwX¾AbYïğ*ík×“®kÁ´bX–M*¤¡1E:'™Œ‘HØ`b9¦ğ-ªZØjr±jÉFXjóé©n-iS„Y…³C\®éØ–E<#J1nìXú{úyéÅ—Ùæ²s)”ªâb™jÕ8ópĞM¤'9¬öjª®±qãî½ãA–-_Áç¯¸Œ‰é²á¥h§B0¶K¶ÇuÏİsßxxª‘Dc#–Ä²ãXvÓaÅ¬J6äƒ%•HL&iiNÑÒg]G–™»hhl¥kí,>xı5l+…m%ˆÇ44ÔÑÒ\OcCÊwI1qË/xDnhaÌ¢ø1JÕĞ¦!ED\MD$6bëÖæá@ıÆw¾÷Ã7¶¬úY·İaŠÃb8édEÙæ-µ””]—5K–P*;ï8Õ+6¦t„»¥…Z)ªê‹4UC3,ËfñÂ%¼õÖ{ÔO˜Èø‰ãÑİ’'ÊRT¤fğáªnÚº3èºJ"YGWÛ»ı·¬üp.õÍHÖ5“HÔOxô~< ˆO$H$’P’IêRiêê7&MKK‚…Ë;˜ñŞ*ìDQZÇó÷ŞJf D"YO]}=-­MŒŸĞÂ˜ÖFêê!`â	+tG†á×‰‚Z‘?·8¼I”hC}EV*”ˆrPÑ•#nß#mç†"ş½ö¥¢ìQİ÷#}Kíßõ„W*¶å•	Ê¥ù±yò¹<¯>û,--vÀîHeé¢iº_¥2ñ@ŞZEñRN]C3t¯7Ç4Y·v5¿şéoXuÑYœtÌÁ4ë®”ôg½¹¶–iH&X8ç=^zøœR™ÖqS°ÎŠcY6¦ebZ&–ÃŠÙ•˜%¤¾.Ikk3¦óÊÛ‹™9-uõÍ˜¢›·şm½¤ë©o¨cÌ˜&&Nhelk#)R¾+²m“XÌ5ºj¤31×/j‹½5İŸ‚á»Èå¦ƒİ.(gŠTÕwì©"m!àö¾.½ƒÊ³ß<‰‚aéÄ¤…ã&(•)½™³»ûLÓà}wFÁAº^1-fÕX?¥TıQ$`4ÍP=é¢¯‰íhoãÎ[îbéâe\pÑ'hH'¥­-i:Š¼øÄÃÌzõ9â©â­XvÒ‹WüXÃ°¿EÕòRç˜Z—¦†$­c’tõe¸÷ş×Yºº‹æÖ1¤byæ¼ò<Ëç/¡¾¡‰†ÆFZ[›™8qãÆ5ÑÔ”&N[Ä}7äév½‚âHñÉ°mÂCæİˆˆVHl,›ÅÃğÏ(?RS`i¨~ö´ŒÒ4‘q‰ëHœ²C¹\¦T,sç-wP*Ëôi»c™
+Å|×S×<İªZóĞ=-«¦+lÑÔ1-Û6I$,˜³_¯»½öÛ“Æ†:V­ÙÈ»o¾MûºõŒ›4ÕK“ƒXÅŠaZV(¾6LËãl‹D"NC}‚ÖÖ:T]å…×fóÂŒ9äJĞÒ:††Do¾ÊòyÒĞÔLcc-­ÍŒ×Êøñ-47×“NÇI$lbAgV¸¥*ëzaÅ•ÃÚ5}•Bov–ô±§7T©í"EÇè×74~K%CVeh·ëzm·®ër×-e`àN8ú †N!W¦Xò°fé©¤ùƒr4Í+\ºÀĞLCÁ4½HvÜ&™JÒİİÅ«ÏÏ T*ã:etÃdÒ”mÑÛĞcaX¶ßÇìÔ0LË"n[¤Ó1ššÒ˜¦Î¼…Kyæ…·X´l©t#­c›iLYøú:×µÓÔÒêƒ¥…qc[hmm¤µ¥úú¤Çìú.(Ğçzœâr†\`1ràúÊ?\Ş°% ©y2l#ñcX„¦FF¸Êª…B(<~ï}¬_·sÎ:‘æ”@!—+ã8^àghMÁĞ<°¾ŠŞ45b¾®$•ŒQW—&—ËQ(–pÇÏ²4T¿%UÓM4M÷Tûşd„XÌ¤>§¾.‹dá’<şô«Ìû`	ŠªSßÔÂ¸qõ¤c>˜1Yth3††zÏÛLKK#--õ4Ô§<‹åÇ+~§b Q¨Íx¶Ô’lŠû¸ü›ö¬Ô‚¦’N ‘¡*Ò¡XJğç¾½¾•~•¢£¦i¼ıÒ+¬\º‚Oœs»l7ÛÔ(r9pÜ`šÄ¶ÀĞ,CÅ2,Ãc–c¶A"a“ÍæÉç”Je’<«şä&OÌdÇLb¶_EĞÖŞÅ3ŞdÎ¼%,[±Ç•X¦Å˜1MLŞf,ÙîÌŸ¹ˆ¸§nL4·41¦µ™ÖÖššê¨¯K[a¬bèŞä(U‰¦ÌÃåŸån6ë÷ôäßóF¹1òß“á¶¶Ê_Æ‚©µ+]\Ç¥X*QÈé¤££›5kÛXµj-+W¬¡¿¿ŸƒšÎô#¦1©¹ÅRI2-0˜ËQ*—PÔ2º†W*—NÙ¡X*S(–(JáâÇq|¢1²¼A(”‡lşAV®ŞÀû–°tÅZú3hšîNÓLš4–”­°vÑbœ\ºúêê¼Ï––&Zš=«ÒÔTG:'³B~Å£ùEHÊ‰šéµÖ¤:†ùçcXÀôü}€Ùh>82²º³jZf0ÓÅõ•Êä2™]]=¬[·‘5k6°bÕZÖ­Yiš|ôtØ_Æ54"Ê0˜/0˜ÉÓ;˜e0W W(P.—8(Âõ¡®ƒë8”Je
+…"¹|şÁ,]İ}lìè¢½£‡®Ş~2¹ùB)Œ·TM¥¥¹I“Æ3ÚW® ÓÓC2‘¢®¾tº¦Æzššhnn ¹©úú$éTÜ§ùæˆ8%"@Œà
+ñ?¡€üûó÷‚§
+8‘¿è-–ğæÌ”ËeŠÅ¹\Ş~ÚÛ»Y»¶Õ«×³v];ˆ§Sì¼çîìµç455¢
+rÑe0[`0—g ›g “c ›'›Ï“ÍÈfÈe2d³Y2™àul&C±Pôâ,4<¨Ä“1/³IØ8Å<}íìî&Oª«£¾®úúzëhjª§©É‹UÒé‰„í7Í{“.5\4^©¬³š2o®PûŸ
+˜¾Á¢ügş‚ÍĞ°Úü¿ '˜o›ÏÈd²tuõ²¡­“uë6²nİF6nì ££§Xb»=weÊÔmH¥ÓÔ×7¡jùB‰Áll®H&_ —+2˜É’ôÀ’Í’ÍfÉçr”Š\é¢é¡[X†Š*z:;éÚØ†,–‰'’¤ÓuÔÕ¥½!õu!XêÓ¤Òq’	¯3ÂĞµ
+Å¯­&GÁRË±ü+€ÅLæŸ˜-SeªÖ
+nªT.S*–ÈåôõÒİİÇÆ´mì¤mC'í]tw÷éë£\vH67Ò4¦…æ1­ÔÕ7 hBQ)–\
+Å"¥bÉ{”K•m$ÒÁ)—)æsr9z;;éíì¢\*a™&±x’d2I*•ôÁ’ö@Ò¦¡>M]]‚x<F<æ¹Ío_Uj´ÃÑ’Š&ùW². ¢ÿ0›ĞHà‘xëğÇ¥T*S,Édóô÷gèíí§³«—n:»zèîê¥·w€¾şrÙ,0,¡i˜¶Gé{¼Ù|Å¢·]Eº.…|şŞ>²ƒ¸¥ªªy"'Û&‘LJ%I§’ÔÕ{ ilH“®KN%H$b^œâ?U•Jš\å~j€Rr şeb–iÀŒ ábWzóó<6Ø¡P(’ÉæÈfódè¤·g€î>z{Ì08˜%3˜%—ÏS,)•J”Ëeo ’”	c%…÷Tn^3]<#‘ˆyEÆºét’t*AÊ×°ÄlËëÆl„C	g+Ê¦ƒÚhëqm&ô¿0Ù]Àlõ‰î(½À8_(’ÏÈç
+d²y2™™L–l6ï´9o1F©TÆ);>#ÃVRÕ×ÖÁ,9ÓÀ¶-b1;f’ˆÇÂDË2CÙd(lR•MÆ'#RûAºı+ Fûx›]Š
+ áN)¯ÏÉÒ±KÅ’EÙçXŠÅ…B‘b±ä»±e¿NåM.—aéß»Q‘~êšæË¼¦w]÷Ÿƒyş‘¹q¡õ!ù8Œì¿
+Pşá¥ÿ- ÉH£š”•ı…†¡ãú£ì×	ÇÚÅqh£¬,µ}ÈAoêPBÌãÕâëÍ½à›ƒñ/x7kğï
+†õõëR$HE¢jC÷Eãçƒ×Ã]L1Œˆ:z¥Ã¯#†N?®åüW?4ñï—¸ •zÖ°Ã·Ä’³i¤9pÿ?Úÿ…Ï[ö7ræµ9?ã_)[aş§-`³—¬ÿ_Iuóø<Œ‚àcY˜Ñ“6zlş¡Œ‚ÑcÔÂŒ£fôÍ’FÑ,iôuI£Çè1jaFÑfôuI£Ç¿¢KõI£Ç¹¤Q¼Œ£.iôÌè1ê’FQ3zŒfô=ª\Ò¨O=F-ÌèñO³0£ç`ôµ0£Ç(`FQÀŒ£€=F3zŒ•ãÿ üÌšÚƒD)    IEND®B`‚
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: image/png
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/chrome/common/trac_logo_mini.png
+
+‰PNG
+
+   IHDR   k      L   PLTE  )*(130>?=­%$]_]Ædd‡‡‡—™–ÔŒŠ«««Ü¤¥ä¸·ÑÊÇÎÎÎïåäıÿüÿÿÿ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    åV²   tRNSÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ¯¬ä  FIDATxœµ–‹’ƒ EÁ°X¡ÿÿ×EH‡¸íN›•†–ãMB(sCÛa<÷/cã)!.œ ¥ş
+Ë´.;3ÆäX»è‚¨ÙGY nÒôa–
+G»[M’ëÁš¥”6\!q W®ãÄÌ§µÈdğL|‘ÚŞ²€XÕÀ$Ë–ñ®yv¯)&z"GUG}¾ŒÙbM¨ƒu¤ÌPP;VtH}ºÙÜ|¯ÊGÏÚD*Àˆ{¸’µ„[z{	Œ…hiIBˆ¦¹»eADdÖVì3°©6¬µ°â‚â0+6ÒƒMGôl•®µ‘œÃ P©<yÖáŠšò+Zô$õÓU1XŠîHàˆ5£ÛÊ³<ìÔÕÄeê“™…5,\±Èc`õ51`…~«HØ‘#9f!ŠÏQœ~™ (x»2JªÄ+VÂ5 /éª‹âš¥.¯NOËZj–Ì£%ï<¶¾ÀrÆí¦*…eé²† “•G¨H6:f¢P…Ù7@ıRf–Ù6º&m±1YH5ÉCÃœÿèYBLÕª¶“U¶¨è+·½hcíƒƒ½82mÏrÔB8ùŠf|Û{¡ŞÊaXÎ©~-Ö’hoO÷}XJÕ‡˜ÍÈ6‰êÂ¥›v8èµ^ÚjÑüóñó=Şß°"r+V@yïã*éáéòç½úğ¸gÅİe
+”©X>óÊ¹üáO–ËÙRÛVü#-tµ¬]/³è«u]±Ğ™ûë8Hº.S°~|½¼/ûN¾ƒ‹~öù:üıíQ¦ƒÜÛ•Ò    IEND®B`‚
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn----
+Content-Type: image/svg+xml
+Content-Transfer-Encoding: binary
+Content-Location: https://www.virtualbox.org/graphics/oracle-logo-new.svg
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="0 0 231 30" width="231" height="30" preserveAspectRatio="xMinYMin meet">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Oracle Logo</dc:title>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <title>Oracle Logo</title>
+ <g fill-rule="nonzero" fill="#c74634">
+  <path d="M99.61,19.52h15.24l-8.05-13L92,30H85.27l18-28.17a4.29,4.29,0,0,1,7-.05L128.32,30h-6.73l-3.17-5.25H103l-3.36-5.23m69.93,5.23V0.28h-5.72V27.16a2.76,2.76,0,0,0,.85,2,2.89,2.89,0,0,0,2.08.87h26l3.39-5.25H169.54M75,20.38A10,10,0,0,0,75,.28H50V30h5.71V5.54H74.65a4.81,4.81,0,0,1,0,9.62H58.54L75.6,30h8.29L72.43,20.38H75M14.88,30H32.15a14.86,14.86,0,0,0,0-29.71H14.88a14.86,14.86,0,1,0,0,29.71m16.88-5.23H15.26a9.62,9.62,0,0,1,0-19.23h16.5a9.62,9.62,0,1,1,0,19.23M140.25,30h17.63l3.34-5.23H140.64a9.62,9.62,0,1,1,0-19.23h16.75l3.38-5.25H140.25a14.86,14.86,0,1,0,0,29.71m69.87-5.23a9.62,9.62,0,0,1-9.26-7h24.42l3.36-5.24H200.86a9.61,9.61,0,0,1,9.26-7h16.76l3.35-5.25h-20.5a14.86,14.86,0,0,0,0,29.71h17.63l3.35-5.23h-20.6" transform="translate(-0.02 0)"></path>
+ </g>
+</svg>
+
+------MultipartBoundary--jQQMKzOd8YApKSFqYpmCyx5pYSz2Kxez2qcrWXilmn------
