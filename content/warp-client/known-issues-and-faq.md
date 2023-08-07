@@ -70,5 +70,5 @@ The WARP client for Windows requires .NET Framework version 4.7.2 or later to be
 
 - Applications or sites that rely on location information to enforce content licensing agreements (for example, certain games, video streaming, music streaming, or radio streaming) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
 
-- See [Known Limitations](/cloudflare-one/connections/connect-devices/warp/troubleshooting/known-limitations/)
+- Refer to [Known Limitations](/cloudflare-one/connections/connect-devices/warp/troubleshooting/known-limitations/)
   for information on devices, software, and configurations that are incompatible with Cloudflare WARP.
