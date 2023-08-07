@@ -71,6 +71,15 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 | ----------- | -------- | --------- | ------ |
 | Resolved IP | in list  | `DShield` | Block  |
 
+## CIPA Filter
+
+The CIPA Filter is a collection of subcategories that encompass a wide range of topics that could be harmful or inappropriate for minors. It is used as a part of [Project Cybersafe Schools](/fundamentals/security/cybersafe/) to block access to unwanted or harmful online content.
+
+
+| Selector           | Operator | Value         | Action |
+| ------------------ | -------- | ------------- | ------ |
+| Content Categories | in       | `CIPA Filter` | Block  |
+
 ## Hide explicit search results
 
 SafeSearch is a feature of search engines that helps you filter explicit or offensive content. You can enable SafeSearch on search engines like Google, Bing, Yandex, YouTube, and DuckDuckGo:

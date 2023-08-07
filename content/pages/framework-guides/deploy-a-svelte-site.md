@@ -48,7 +48,7 @@ To use SvelteKit with Cloudflare Pages, you need to add the [Cloudflare adapter]
 ---
 filename: svelte.config.js
 ---
-- import adapter from '@sveltejs/adapter-auto;
+- import adapter from '@sveltejs/adapter-auto';
 + import adapter from '@sveltejs/adapter-cloudflare';
 
 /** @type {import('@sveltejs/kit').Config} */
