@@ -27,4 +27,4 @@ Project Cybersafe grants eligible schools with free access to Cloudflare's [Emai
 
 ### Onboarding Guide
 
-For a comprehensive guide, refer to the [Project Cybersafe Learning Path](/learning-paths/cybersafe/), which takes you step by step through the technical concepts, creating and onboarding your traffic, and enabling the CIPA filters.
+For a comprehensive guide, refer to the [Project Cybersafe Learning Path](/learning-paths/cybersafe/), which takes you step by step through the technical concepts, creating an account, onboarding your traffic, and enabling the CIPA filters.

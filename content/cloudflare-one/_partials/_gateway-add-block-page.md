@@ -13,4 +13,4 @@ For DNS policies, you will need to enable the block page on a per-policy basis.
 4. Enable **Display block page**.
 5. Select **Save policy**.
 
-Users will now see a block page when they are blocked by this DNS policy.
+Visitors will now see a block page when they are blocked by this DNS policy.
