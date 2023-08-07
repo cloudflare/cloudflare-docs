@@ -8,6 +8,7 @@ import * as load_balancing from "data/learning-paths/load-balancing.json";
 import * as workers from "data/learning-paths/workers.json";
 import * as prevent_ddos_attacks from "data/learning-paths/prevent-ddos-attacks.json";
 import * as get_started_free from "data/learning-paths/get-started-free.json";
+import * as cybersafe from "data/learning-paths/cybersafe.json";
 
 let learning_paths = [
   get_started_free,
@@ -20,6 +21,7 @@ let learning_paths = [
   dns_filtering,
   optimize_site_speed,
   application_security,
+  cybersafe
 ];
 
 export { learning_paths };
