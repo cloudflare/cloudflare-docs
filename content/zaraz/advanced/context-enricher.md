@@ -14,7 +14,7 @@ The Context Enricher is only available for accounts on a [Workers Paid plan](/wo
 
 ## Creating a Worker
 
-To use a Worker Variable, you first need to create a new Cloudflare Worker. You can do this through the Cloudflare dashboard or by using [Wrangler](/workers/get-started/guide/).
+To use a Context Enricher, you first need to create a new Cloudflare Worker. You can do this through the Cloudflare dashboard or by using [Wrangler](/workers/get-started/guide/).
 
 To create a new Worker in the Cloudflare dashboard:
 
