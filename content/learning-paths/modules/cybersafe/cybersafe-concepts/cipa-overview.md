@@ -15,7 +15,7 @@ PCS will help support small K-12 public school districts, for free, by providing
 
 {{<render file="_cybersafe-school-eligibility.md" productFolder="fundamentals">}}
 
-Apply to [Project Cybersafe Schools](https://www.cloudflare.com/cybersafe-schools/).
+Apply to [Project Cybersafe Schools](https://www.cloudflare.com/lp/cybersafe-schools/).
 
 ## Children’s Internet Protection Act (CIPA)
 
