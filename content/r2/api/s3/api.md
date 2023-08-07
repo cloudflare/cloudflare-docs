@@ -145,3 +145,19 @@ Below is a list of implemented object-level operations. Refer to the Feature col
 Even though `ListObjects` is a supported operation, it is recommended that you use `ListObjectsV2` instead when developing applications. For more information, refer to [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html).
 
 {{</Aside>}}
+
+### Unimplemented object-level operations
+
+<details>
+<summary> Click to expand a list of unimplemented object-level operations. </summary>
+
+{{<table-wrap style="width:110%">}}
+
+| API Name       | Feature                           |
+| ---------------| --------------------------------- |
+| ❌ [GetObjectTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer |
+| ❌ [PutObjectTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner <br> ❌ Request Payer: <br> &emsp; ❌ x-amz-request-payer <br> ❌ Checksums: <br> &emsp; ❌  x-amz-sdk-checksum-algorithm |
+| ❌ [DeleteObjectTagging](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjectTagging.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
+
+{{</table-wrap>}}
+</details>
