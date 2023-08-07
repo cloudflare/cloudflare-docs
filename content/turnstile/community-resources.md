@@ -45,7 +45,7 @@ Libraries that only support the server-side validation of Turnstile:
 
 ## Fullstack libraries
 
-Libraries that both support the both client-side rendering and server-side validation of Turnstile:
+Libraries that both suport the both client-side rendering and server-side validation of Turnstile:
 
 - [Nuxt](https://www.npmjs.com/package/@nuxtjs/turnstile)
 - [Laravel](https://github.com/romanzipp/Laravel-Turnstile)
@@ -59,7 +59,7 @@ Turnstile integrations for popular content managment systems:
 - [SilverStripe](https://github.com/webbuilders-group/silverstripe-turnstile)
 - [Statamic](https://statamic.com/addons/aryeh-raber/captcha)
 - [Wordpress](https://wordpress.org/plugins/simple-cloudflare-turnstile)
- 
+
 ## Other
 
 Other resources related to integrating Turnstile:
