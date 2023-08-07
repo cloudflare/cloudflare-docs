@@ -94,7 +94,7 @@ export default {
 
 Let's assume we want to redact sensitive information, such as emails. For this, we're going to replace all occurrences of email addresses throughout the context. Please keep in mind, that this is only an example and might not fit all edge or use cases.
 
-For the sake of simplicity of this example, we're going to replace all strings that contain an @ symbol:
+For the sake of simplicity of this example, we're going to replace all strings that contain an `@` symbol:
 
 ```js
 function redactEmailAddressesFromObject(context) {
