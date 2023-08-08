@@ -88,7 +88,6 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Magic Transit Prefix Read                                    | Grants read access to manage a user's Magic Transit prefixes.                                         |
 | Magic Transit Prefix Edit                                    | Grants write access to manage a user's Magic Transit prefixes.                                        |
 | Page Shield Read                                             | Grants read access to Page Shield.                                                                    |
-| Page Shield Edit                                             | Grants write access to Page Shield.                                                                   |
 | Bulk URL Redirects Read                                      | Grants read access to Bulk URL Redirects.                                                             |
 | Bulk URL Redirects Edit                                      | Grants write access to Bulk URL Redirects.                                                            |
 | Rule Policies Read                                           | Grants read access to Rule Policies.                                                                  |
@@ -145,7 +144,6 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Origin Edit                      | Grants write access to Origin Rules.                                     |
 | Page Rules Read                  | Grants read access to Page Rules.                                        |
 | Page Rules Edit                  | Grants write access to Page Rules.                                       |
-| Page Shield Read                 | Grants read access to Page Shield.                                       |
 | Page Shield Edit                 | Grants write access to Page Shield.                                      |
 | SSL and Certificates Read        | Grants read access to SSL configuration and certificate management.      |
 | SSL and Certificates Edit        | Grants write access to SSL configuration and certificate management.     |
