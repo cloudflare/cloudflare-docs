@@ -58,7 +58,7 @@ These are the target IP addresses for bidirectional tunnel health checks:
 
 #### Add IPsec tunnels
 
-1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/#dashboard-instructions) instructions to create the required IPsec tunnels with the following options:
+1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
     - **Tunnel name**: `SFO_IPSEC_TUN01`
     - **Interface address**: `10.252.2.96/31`
     - **Customer endpoint**: `203.0.113.254`
