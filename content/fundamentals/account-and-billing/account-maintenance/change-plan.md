@@ -16,6 +16,8 @@ Upgrades are processed immediately, but downgrades are not processed until the e
 
 If you downgrade your plan, your plan may have access to [fewer Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/account-and-billing/account-maintenance/cancel-subscription/) if you do not want to be charged.
 
+The Enterprise App Sec Advanced and Enterprise App Sec Core plans cannot be downgraded and require reaching out to support for downgrading.
+
 For additional help, refer to [this Community thread](https://community.cloudflare.com/t/communitytip-page-rules-best-practices-when-downgrading-pro-to-free/305725).
 
 ## Change plan type
