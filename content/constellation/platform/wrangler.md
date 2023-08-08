@@ -5,7 +5,7 @@ weight: 30
 ---
 
 {{<Aside>}}
-Wrangler local developement for Constellation is not supported yet. You need to use the [`--remote`](https://developers.cloudflare.com/workers/wrangler/commands/#dev) flag.
+Wrangler local development for Constellation is not supported yet. You need to use the [`--remote`](https://developers.cloudflare.com/workers/wrangler/commands/#dev) flag.
 {{</Aside>}}
 
 

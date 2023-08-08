@@ -12,7 +12,7 @@ Our vision is to support multiple runtimes. Currently, we only support the ONNX 
 
 | <div style="width:50px">Key</div> | Name | Description |
 | ------- | ----- | -----|
-| `ONNX` | ONNX Runtime | Cross-platform machine-learning model accelerator. ONNX Runtime can be used with converted models from PyTorch, Tensorflow/Keras, TFLite, scikit-learn, and other frameworks. |
+| `ONNX` | ONNX Runtime | Cross-platform machine-learning model accelerator. ONNX Runtime can be used with converted models from PyTorch, TensorFlow/Keras, TFLite, scikit-learn, and other frameworks. |
 | `XGBoost` | Scalable and Flexible Gradient Boosting | XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, flexible, and portable. |
 
 Use Wrangler to list the models Cloudflare supports:
