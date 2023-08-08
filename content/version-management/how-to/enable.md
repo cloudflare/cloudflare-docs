@@ -14,9 +14,23 @@ meta:
 
 ## Disable Version Management
 
+{{<Aside type="warning">}}
+
+When you disable Zone Versioning, all your zone settings will revert to those in your **Version Zero**.
+
+{{</Aside>}}
+
 To disable Zone Versioning:
 
-1. [Deploy](/version-management/how-to/environments/#change-environment-version) **Version Zero** to your **Production** environment. When you disable Zone Versioning, all your zone settings will revert to those in your Version Zero, so you should validate these settings are correct before proceeding.
+1. Confirm that **Version Zero** has the correct settings for your zone:
+
+    1. Use the [comparison feature](/version-management/how-to/compare-versions/) to view the differences between your current **Production** version and **Version Zero**.
+
+    2. If there are differences, make changes to **Version Zero** so it matches your current **Production** version.
+
+    3. [Promote](/version-management/how-to/environments/#promote-a-version) **Version Zero** to your **Production** environment.
+
+    4. Confirm that your new **Production** environment functions as expected.
 
 2. Send a `GET` request to the `/accounts/{account_id}/rulesets/phases/http_request_select_configuration/entrypoint` endpoint.
 
