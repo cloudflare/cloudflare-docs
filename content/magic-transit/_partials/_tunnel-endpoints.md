@@ -44,7 +44,9 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 ## Add tunnels
 
-### Dashboard instructions
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
@@ -100,9 +102,10 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 </div>
 </details>
-
-### API instructions
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 <details>
 <summary>GRE tunnel</summary>
 <div>
@@ -206,9 +209,9 @@ You will receive a response like the following:
 ```json
 {
   "result": {
-    "ipsec_id": "IPSEC_ID",
-    "ipsec_tunnel_id": "IPSEC_TUNNEL",
-    "psk": "YOUR_PSK_KEY",
+    "ipsec_id": "<IPSEC_ID>",
+    "ipsec_tunnel_id": "<IPSEC_TUNNEL>",
+    "psk": "<YOUR_PSK_KEY>",
     "psk_metadata": {
       "last_generated_on": "2023-04-21T10:48:15.953887008Z"
     }
@@ -223,6 +226,9 @@ You will receive a response like the following:
 
 </div>
 </details>
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Next steps
 
