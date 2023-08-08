@@ -34,7 +34,7 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 {{<Aside type="warning" header="Support for local development">}}
 
-WebSockets do not hibernate when using local development environments such as `wrangler dev` or Miniflare. Hibernatable WebSocket events such as `webSocketMessage()` will be delivered, but your Durable Object will never be evicted from memory. Hibernation will be fully supported in local development for GA. Use `wrangler dev --remote` or deploy a test/staging Durable Object namespace to production when debugging state management issues.
+WebSockets do not hibernate when using local development environments such as `wrangler dev` or Miniflare. Hibernatable WebSocket events such as `webSocketMessage()` will be delivered, but your Durable Object will never be evicted from memory. Hibernation will be fully supported in local development for General Availability (GA). Use `wrangler dev --remote` or deploy a test/staging Durable Object namespace to production when debugging state management issues.
 {{</Aside>}}
 
 ## WebSocket extensions
