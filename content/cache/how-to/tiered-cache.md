@@ -102,7 +102,7 @@ curl --request GET \
 </div>
 </details>
 
-For more API examples and configuration options for Tiered Cache, refer to the [API documentation](https://developers.cloudflare.com/api/operations/tiered-caching-get-tiered-caching-setting).
+For more API examples and configuration options for Tiered Cache, refer to the [API documentation](/api/operations/tiered-caching-get-tiered-caching-setting).
 
 {{<Aside type="note">}}
 

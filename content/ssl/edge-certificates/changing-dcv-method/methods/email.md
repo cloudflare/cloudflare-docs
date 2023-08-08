@@ -43,6 +43,8 @@ Once you locate your certificate, find the following values:
 
 {{<render file="_dcv-validate-patch.md">}}
 
-## Renew DCV tokens
+## Renewal
 
-{{<render file="_dcv-token-renewal.md">}}
+{{<render file="_dcv-certificate-renewal.md">}}
+
+If any one of the conditions is not met, the certificate renewal falls back to your chosen method  and you will need to repeat the DCV process manually.

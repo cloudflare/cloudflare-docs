@@ -7,10 +7,10 @@ layout: learning-unit
 
 Often, you might want to set up redirects within Cloudflare.
 
-## Redirect a subdomain to root domain
+## Redirect a subdomain to apex domain
 
 {{<render file="_redirect-subdomain-to-root.md" productFolder="fundamentals">}}
 
-## Redirect root domain to a subdomain
+## Redirect apex domain to a subdomain
 
 {{<render file="_redirect-root-to-subdomain.md" productFolder="fundamentals">}}

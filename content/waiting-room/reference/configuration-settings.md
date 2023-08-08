@@ -61,7 +61,7 @@ You can customize a variety of options for your waiting rooms.
         <code>host</code>
       </td>
       <td>Yes</td>
-      <td>Host name for which the waiting room will be applied (no wildcards).</td>
+      <td>Hostname for which the waiting room will be applied (no wildcards).</td>
       <td>
         Do not include <code>http://</code> or <code>https://</code>.
       </td>

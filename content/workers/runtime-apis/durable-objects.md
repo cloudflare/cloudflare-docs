@@ -3,6 +3,12 @@ pcx_content_type: configuration
 title: Durable Objects
 ---
 
+<!-- 
+
+Do not write on this page. Make edits to the /durable-objects/get-started doc instead.
+
+-->
+
 # Durable Objects
 
 Durable Objects are available to anyone with a Workers paid subscription. Enable Durable Objects for your account by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > going to **Workers & Pages** > selecting your Worker and in **Metrics**, opting in to pricing.
@@ -13,7 +19,7 @@ Durable Objects provide low-latency coordination and consistent permanent storag
 
 Durable Objects consist of a class that defines a template for creating Durable Objects, and a Workers script that instantiates and uses those Durable Objects. The class and the Workers script are linked together with a binding.
 
-Learn more about [using Durable Objects](/workers/learning/using-durable-objects/).
+Learn more about [using Durable Objects](/durable-objects/).
 
 ---
 
@@ -353,7 +359,7 @@ The `alarm()` handler will be called once every 10 seconds. If an unexpected err
 
 ### `fetch()` handler method
 
-The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#accessing-a-durable-object-from-a-worker).
+The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#access-a-durable-object-from-a-worker).
 
 The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
 
@@ -363,7 +369,7 @@ If the method fails with an uncaught exception, the exception will be thrown int
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events.
 
-The Hibernation API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/workers/learning/using-durable-objects/#alarms-in-durable-objects), to be removed from memory while keeping its WebSockets connected ("hibernation").
+The Hibernation API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/alarms-in-durable-objects/), to be removed from memory while keeping its WebSockets connected ("hibernation").
 
 {{<Aside type="note">}}
 
@@ -373,9 +379,7 @@ A Durable Object that hibernates will not incur billable [Duration (GB-sec) char
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
-[Code updates](/workers/learning/using-durable-objects/#global-uniqueness) will disconnect all WebSockets.
-
-`wrangler dev` does not currently work with the Hibernation API.
+[Code updates](/durable-objects/platform/known-issues/#global-uniqueness) will disconnect all WebSockets.
 
 #### WebSocket extensions
 
@@ -392,12 +396,26 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 - {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. After calling `ws.accept()`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object. `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
+  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect. After calling `state.acceptWebSocket(ws)`, the WebSocket is accepted. Therefore, you can use its `send()` and `close()` methods to send messages. Its `addEventListener()` method won't ever receive any events as they'll be delivered to the Durable Object. `tags` are optional string tags which can be used to look up the WebSocket with `getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
   - This API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 - {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
+
+- {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
+
+  - Sets an application level auto-response that doesn't wake hibernated WebSockets. `state.setWebSocketAutoResponse` receives `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this object to automatically reply with `response` when it receives the specified `request`. `setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `setWebSocketAutoResponse()` handles application level ping/pongs without waking the websocket from hibernation, thereby preventing unnecessary duration charges.
+  - Both `request` and `response` are limited to 2048 characters each.
+  - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Doing so, will stop an actor from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
+
+- {{<code>}}state.getWebSocketAutoResponse(){{</code>}} : {{<type>}}Object | null{{</type>}}
+
+  - Gets the `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` currently set, or `null` if there's none. Each `WebSocketRequestResponsePair(request{{<param-type>}}string{{</param-type>}}, response{{<param-type>}}string{{</param-type>}})` object provides methods for `getRequest()` and  `getResponse()`.
+
+- {{<code>}}state.getWebSocketAutoResponseTimestamp(ws{{<param-type>}}WebSocket{{</param-type>}}){{</code>}} : {{<type>}}Date | null{{</type>}}
+
+  - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
 
 #### `webSocketMessage()` handler method
 
@@ -623,4 +641,4 @@ The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/ope
 
 ## Related resources
 
-- [Learn how to use Durable Objects](/workers/learning/using-durable-objects/)
+- [Learn how to use Durable Objects](/durable-objects/)

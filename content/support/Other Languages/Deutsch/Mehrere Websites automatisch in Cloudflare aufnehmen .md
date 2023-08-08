@@ -77,7 +77,7 @@ ___
 
 ## Domains über flarectl (das Cloudflare-Befehlszeilentool) aufnehmen
 
-Sie können Domains auch mit flarectl aufnehmen, dem offiziellen Befehlszeilentool von Cloudflare. Sie können ein [vorbereitetes Paket für Ihr Betriebssystem (Windows, MacOS / Darwin, Linux) herunterladen](https://github.com/cloudflare/cloudflare-go/releases) und Domains erstellen, die dieses verwenden.
+Sie können Domains auch mit flarectl aufnehmen, dem offiziellen Befehlszeilentool von Cloudflare. Sie können ein [vorbereitetes Paket für Ihr Betriebssystem (Windows, macOS / Darwin, Linux) herunterladen](https://github.com/cloudflare/cloudflare-go/releases) und Domains erstellen, die dieses verwenden.
 
 Sie müssen zuerst Ihre API-Anmeldeinformationen festlegen:
 

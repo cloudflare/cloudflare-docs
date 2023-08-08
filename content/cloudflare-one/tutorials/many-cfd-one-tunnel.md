@@ -8,7 +8,7 @@ title: Use cloudflared to expose a Kubernetes app to the Internet
 
 # Use cloudflared to expose a Kubernetes app to the Internet
 
-You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, [cloudflared](https://github.com/cloudflare/cloudflared), to create those connections.
+You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, [cloudflared](https://github.com/cloudflare/cloudflared), to create those connections.
 
 The same Tunnel can be run from multiple instances of `cloudflared`, giving you the ability to run many `cloudflared` replicas to scale your system when incoming traffic changes.
 
@@ -25,7 +25,7 @@ This architecture allows `cloudflared` instances to proxy Internet traffic into 
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) the lightweight Cloudflare Tunnel daemon, `cloudflared`. Reference our installation guide for instructions on how to install `cloudflared` on your operating system.
+Start by [downloading and installing](/cloudflare-one/connections/connect-networks/downloads/) the lightweight Cloudflare Tunnel daemon, `cloudflared`. Reference our installation guide for instructions on how to install `cloudflared` on your operating system.
 
 ## Login to Cloudflare
 
@@ -58,12 +58,12 @@ $ kubectl create secret generic tunnel-credentials \
 ## Associate your Tunnel with a DNS record
 
 1.  Go to the Cloudflare dashboard.
-1.  Navigate to the DNS tab.
+1.  Go to the DNS tab.
 1.  Now create a CNAME targeting `.cfargotunnel.com`. In this example, the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`.
 
 You can also create multiple CNAME records targeting the same Tunnel, if desired.
 
-Alternatively, you can perform this step from the command line by running `cloudflared tunnel route dns <tunnel> <hostname>`. For example, `cloudflared tunnel route dns example-tunnel tunnel.example.com`. You can use a similar method to route traffic to `cloudflared` from a [Cloudflare Load Balancer](https://www.cloudflare.com/load-balancing/), see [docs](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) for details.
+Alternatively, you can perform this step from the command line by running `cloudflared tunnel route dns <tunnel> <hostname>`. For example, `cloudflared tunnel route dns example-tunnel tunnel.example.com`. You can use a similar method to route traffic to `cloudflared` from a [Cloudflare Load Balancer](https://www.cloudflare.com/load-balancing/), see [docs](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) for details.
 
 ## Deploy `cloudflared`
 

@@ -154,5 +154,18 @@ To proceed with the installation, here is an example of the XML code you will ne
 <key>support_url</key>
 <string>https://support.example.com</string>
 ```
+If your MDM tool does not support XML, you may need to convert the XML to JSON. Here is an example below:
+
+```json
+{
+  "organization": "your-team-name",
+  "gateway_unique_id": "your_gateway_doh_subdomain",
+  "onboarding": true,
+  "switch_locked": true,
+  "auto_connect": 0,
+  "service_mode": "warp",
+  "support_url": "https://support.example.com"
+}
+```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each value.

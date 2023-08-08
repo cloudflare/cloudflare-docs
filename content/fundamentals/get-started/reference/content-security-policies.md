@@ -33,7 +33,7 @@ To use certain Cloudflare features, however, you may need to update the headers 
 
 | Feature(s) | Updated headers |
 | --- | --- |
-| [Rocket Loader](/fundamentals/speed/rocket-loader/), [Mirage](https://support.cloudflare.com/hc/articles/219178057) | `script-src 'self' ajax.cloudflare.com;` |
+| [Rocket Loader](/speed/optimization/content/rocket-loader/), [Mirage](/speed/optimization/images/mirage/) | `script-src 'self' ajax.cloudflare.com;` |
 | [Cloudflare Apps](https://support.cloudflare.com/hc/articles/115000304631), [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036) | `script-src 'self' 'unsafe-inline'`|
 | [Web Analytics](/analytics/web-analytics) | `script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com` |
 | [Bot products](/bots/) | Refer to [JavaScript detections and CSPs](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp).|

@@ -4,6 +4,15 @@
   {{- $metaTruncateLength := 150 -}}
   {{- $title := "" -}}
 
+  <!-- Evaluate content type against standards -->
+
+  {{- $availableContentTypes := slice
+    "changelog" "concept" "configuration" "faq" "get-started" "glossary"
+    "how-to" "integration-guide" "learning-path" "learning-unit" "migration" 
+    "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
+    "tutorial"
+    -}}
+
   <!-- Pull the product group -->
 
   {{- $productGroup := "" -}}
@@ -45,7 +54,7 @@
   {{- $folderPlaceholder := "" -}}
   {{ $rssFeed := "" }}
 
-  {{- if (in $.Context.RelPermalink "/learning-paths/modules/") -}}
+  {{- if or (in $.Context.RelPermalink "/learning-paths/modules/") (eq $.Context.Params.no_index true ) -}}
   <meta name="robots" content="noindex">
   {{- end -}}
 
@@ -77,18 +86,35 @@
 
   <!-- Add metadata for reporting -->
   <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
-  <meta name="pcx_last_modified" content="{{- $.Context.Lastmod.Format "2006-01-02" -}}">
-  {{- with .Context.Params.last_reviewed -}}
-  <meta name="pcx_last_reviewed" content="{{ .Format "2006-01-02" }}" />
+  {{- $lastMod := $.Context.Lastmod.Format "2006-01-02"  | time -}}
+  {{- $diffMod := now.Sub $lastMod -}}
+  {{- $lastModifiedDays := math.Round (div $diffMod.Hours 24) -}}
+  <meta name="pcx_last_modified" content="{{- $lastModifiedDays -}}">
+  
+  {{- with .Context.Params.updated -}}
+  {{- $lastReview := . | time -}}
+  {{- $diffReview := now.Sub $lastReview -}}
+  <meta name="pcx_last_reviewed" content="{{- math.Round (div $diffReview.Hours 24) -}}" />
+  {{- else -}}
+  <meta name="pcx_last_reviewed" content="Not set" />
   {{- end -}}
+
   {{- with .Context.Params.pcx_content_type -}}
+  {{- if in $availableContentTypes . -}}
   <meta name="pcx_content_type" content="{{ . }}" />
+  {{- else -}}
+  <meta name="pcx_content_type" content="Invalid content type" />
   {{- end -}}
+  {{- else -}}
+  <meta name="pcx_content_type" content="Not set" />
+  {{- end -}}
+
   {{- if ne $productGroup "" -}}
   <meta name="pcx_content_group" content="{{$productGroup}}" />
   {{- end -}}
-  {{ with $.Context.Params.rss -}}
 
+    <!--Add rss feed links if specified-->
+  {{ with $.Context.Params.rss -}}
   {{ if eq . "folder" }}
 
   {{ $folderPlaceholder = ".atom" }}
@@ -129,8 +155,9 @@
   <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
 
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.4.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.4.0"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
 
   {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>

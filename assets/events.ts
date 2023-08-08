@@ -90,7 +90,9 @@ function $tab(ev: MouseEvent) {
   ev.preventDefault();
 
   // Get the tabs for this tab block
-  const tabBlockId = (ev.target as HTMLElement).getAttribute("data-id");
+  const tabBlockId = (ev.target as HTMLElement)
+    .closest("[data-id]")
+    ?.getAttribute("data-id");
 
   let tabs = document.querySelectorAll(
     `div[tab-wrapper-id="${tabBlockId}"] > .tab`
@@ -100,8 +102,9 @@ function $tab(ev: MouseEvent) {
     (tabs[i] as HTMLElement).style.display = "none";
   }
 
-  let target = ev.target;
-  let link = (target as HTMLElement).getAttribute("data-link");
+  let link = (ev.target as HTMLElement)
+    .closest("[data-link]")
+    ?.getAttribute("data-link");
 
   document.getElementById(`${link}-${tabBlockId}`).style.display = "block";
 }
@@ -110,7 +113,7 @@ export function tabs() {
   // Find all tab wrappers
   let wrappers = document.querySelectorAll(".tabs-wrapper");
 
-  addEventListener("load", () => {
+  addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
@@ -243,7 +246,7 @@ export function toggleSidebar() {
         ".DocsContent",
         ".DocsMarkdown",
         ".DocsSidebar--sections .toggleSidebar",
-        ".breadcrumb"
+        ".breadcrumb",
       ];
 
       classToggleList.forEach(function (querySelector) {

@@ -12,11 +12,11 @@ Cloudflare uses a Multi-Factor Authentication (MFA) method for increased account
 
 Cloudflare will challenge any login attempt if the user provides the correct credentials from an unrecognized IP address.
 
-![Cloudflare will send an email when your account is logged into from an unknown IP address.](/support/static/hc-import-account_access_email.png)
+![Cloudflare will send an email when your account is logged into from an unknown IP address.](/images/support/hc-import-account_access_email.png)
 
 Cloudflare challenges the login by sending a one time code that expires in 30 minutes to the email we have on file for the account. Once the correct code is provided through the dashboard, that IP will be recorded and further login attempts from that IP address won't be challenged for 90 days.
 
-![When your account is logged into from an unknown IP address, you have to enter an authentication token from an email sent to your email address on file.](/support/static/hc-import-login_authentication.png)
+![When your account is logged into from an unknown IP address, you have to enter an authentication token from an email sent to your email address on file.](/images/support/hc-import-login_authentication.png)
 
 By checking “remember this computer,” that device/browser will not receive MFA challenges for up to 14 days. After 14 days, Cloudflare will begin checking the IP address again for logins from that device/browser.
 

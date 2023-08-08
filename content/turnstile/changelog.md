@@ -7,6 +7,11 @@ rss: file
 
 # Changelog
 
+## 2023-07-31
+
+- Added [`[turnstile.isExpired]`](/turnstile/get-started/client-side-rendering/#access-a-widgets-state).
+- Added `uk` language.
+
 ## 2023-05-25
 
 - Added idempotency support for `POST /siteverify` requests via the `idempotency_key` parameter.

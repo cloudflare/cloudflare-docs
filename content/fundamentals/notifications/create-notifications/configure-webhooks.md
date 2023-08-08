@@ -47,7 +47,7 @@ In the above example, `"text"` will vary depending on the alert that was fired.
 
 Cloudflare generic webhook notifications will only be dispatched to a publicly resolvable IP address on port 80 or 443.
 
-If you want to receive the generic webhook notification on a private IP address or different port you can either receive and forward the notification using [Workers](/workers/) or set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to route to your connected application.
+If you want to receive the generic webhook notification on a private IP address or different port you can either receive and forward the notification using [Workers](/workers/) or set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to route to your connected application.
 
 ### Use generic webhooks with Workers
 

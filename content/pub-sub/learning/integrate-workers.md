@@ -52,7 +52,7 @@ You should be familiar with setting up a [Worker](/workers/get-started/guide/) b
   
 {{</Aside>}}
 
-To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
+To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/configuration/environment-variables/). To do so, we can fetch the public keys from our Broker:
 
 ```sh
 $ wrangler pubsub broker public-keys YOUR_BROKER --namespace=NAMESPACE_NAME
@@ -173,7 +173,7 @@ const worker = {
     // Retrieve this from your Broker's "publicKey" field.
     //
     // Each Broker has a unique key to distinguish between your Broker vs. others
-    // We store these keys in environmental variables (/workers/platform/environment-variables/)
+    // We store these keys in environmental variables (/workers/configuration/environment-variables/)
     // to avoid needing to fetch them on every request.
     let publicKeys = env.BROKER_PUBLIC_KEYS;
 
@@ -202,7 +202,7 @@ const worker = {
 export default worker;
 ```
 
-Once you've published your Worker using `wrangler publish`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
+Once you have deployed your Worker using `wrangler deploy`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
 
 ```sh
 $ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --on-publish-url="https://your.worker.workers.dev"

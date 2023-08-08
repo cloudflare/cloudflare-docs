@@ -20,9 +20,13 @@ For customers in the United States, enter the following IP addresses:
   - `104.30.32.0/19`[^1]
   - `158.51.64.0/26`
   - `158.51.65.0/26`
-  - `134.195.26.0/23`
+  - `134.195.26.0/23`[^1]
+- **IPv6**:
+  - `2405:8100:c400::/38`[^2]
 
-- **Office 365 `/24` addresses (to be used instead of the `/19` subnet):**
+## Office 365 `/24` addresses
+
+To be used instead of the `/19` and `/23` subnets:
   - `104.30.32.0/24`
   - `104.30.33.0/24`
   - `104.30.34.0/24`
@@ -56,9 +60,6 @@ For customers in the United States, enter the following IP addresses:
   - `104.30.62.0/24`
   - `104.30.63.0/24`
 
-- **IPv6**:
-  - `2405:8100:c400::/38`
-
 ## Europe
 
 For customers in Europe, add all our US IP addresses. Additionally, you need to add the following IP addresses for our European data centers:
@@ -70,4 +71,10 @@ For customers in Europe, add all our US IP addresses. Additionally, you need to 
 
 For customers in India, add all our US IP addresses.
 
+## Australia
+
+For customers in Australia, add all our US IP addresses.
+
 [^1]: Office 365 does not support this subnet mask range. If you use Office 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to **Office 365 `/24` addresses** for a list of these IPv4 addresses.
+
+[^2]: Office 365 does not support IPv6 addresses.

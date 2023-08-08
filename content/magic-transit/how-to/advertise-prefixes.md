@@ -73,7 +73,7 @@ You can only delete a prefix with an **Unapproved** status. To delete prefixes w
 
 Use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare’s global network for on-demand deployment scenarios. BGP Control works by establishing BGP sessions to Cloudflare’s globally distributed Route Reflectors, which will initiate propagation of your prefix advertisement across Cloudflare's global network.
 
-Prefixes can be advertised from Cloudflare’s network in a supported on-demand method such as BGP Control, or dynamically via the UI, API, or [Flow-based monitoring](/magic-transit/flow-based-monitoring/). Prefixes advertised via BGP Control cannot be advertised dynamically as this method is configured during the onboarding of your prefix.
+Prefixes can be advertised from Cloudflare’s network in a supported on-demand method such as BGP Control, or dynamically via the UI, API, or [Magic Network Monitoring](/magic-transit/magic-network-monitoring/). Prefixes advertised via BGP Control cannot be advertised dynamically as this method is configured during the onboarding of your prefix.
 
 ![BGP diagram for Magic Transit](/images/magic-transit/bgp-diagram.png)
 

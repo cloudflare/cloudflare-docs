@@ -16,12 +16,12 @@ The following Uptycs values are needed to set up the Uptycs posture check:
 - Client key
 - Client Secret
 - Customer ID
-- REST API URL (`https://{domain}.{domainsuffix}`) 
+- REST API URL (`https://{domain}.{domainsuffix}`)
 
 To obtain these values:
 
 1. Open your Uptycs console.
-1. Navigate to **Account Settings** > **API Key**.
+1. Go to **Account Settings** > **API Key**.
 1. Generate and download your `.json` file. This file will contain your **Client key**, **Client Secret**, **Customer ID**, and **REST API URL**.
 
 ## 2. Add Uptycs as a service provider

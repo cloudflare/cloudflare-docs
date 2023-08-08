@@ -27,7 +27,7 @@ To access the **Create Custom Token** page, follow these steps:
 
 1.  In your user profile page, select the **API Tokens** tab.
 
-2.  In the **API Tokens** page, click **Create Token**.
+2.  In the **API Tokens** page, select **Create Token**.
 
 ![API Tokens tab](/images/analytics/user-profile-api-tokens-tab.png)
 
@@ -65,7 +65,7 @@ This example scopes zone-level permissions for read access to the Analytics API:
 
 ![IP Address Filtering configuration page](/images/analytics/create-custom-token-ip-address-filtering.png)
 
-1.  To define how long the token is valid, click the **TTL** (time-to-live) start/end date picker.
+1.  To define how long the token is valid, select the **TTL** (time-to-live) start/end date picker.
 
 ![TTL configuration page](/images/analytics/create-custom-token-ttl.png)
 
@@ -75,13 +75,13 @@ The next section of this walkthrough covers how to review and test your API toke
 
 ## Review and create your API token
 
-Once you click **Continue to summary**, the **API Token Summary** page displays.
+Once you select **Continue to summary**, the **API Token Summary** page displays.
 
 Use the **API Token Summary** to confirm that you have scoped the API Token to the desired permissions and resources before creating it.
 
 ![API Token Summary page](/images/analytics/api-token-summary.png)
 
-Once you have validated your API token configuration, click **Create Token**.
+Once you have validated your API token configuration, select **Create Token**.
 
 ## Copy and test your API token
 
@@ -89,16 +89,16 @@ When you create a new token, a confirmation page displays that includes your tok
 
 ![Page displaying your API token and the `curl`command to test your token](/images/fundamentals/api/token-complete.png)
 
-To copy the token to your device's clipboard, click the **Copy** button.
+To copy the token to your device's clipboard, select the **Copy** button.
 
 {{<Aside type="warning" header="Warning">}}
 
 The token displays only on the confirmation page, so copy the token and store it safely, since anyone who has the token can use it to access your data.
 
-If you lose the token, you can [regenerate it from the API Tokens page](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys#12345681), so that you do not have to configure all the permissions again.
+If you lose the token, you can [regenerate it from the API Tokens page](/fundamentals/api/get-started/create-token/), so that you do not have to configure all the permissions again.
 
 {{</Aside>}}
 
 To test your token, copy the `curl` command and paste it into a terminal.
 
-When you have finished, click **View all API tokens**.
+When you have finished, select **View all API tokens**.

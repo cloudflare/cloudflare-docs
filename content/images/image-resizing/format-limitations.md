@@ -60,7 +60,7 @@ WebP         | N/A                                               | 2,560 pixels 
 
 All images have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
 
-GIF animations are limited to a total of 100 megapixels (the sum of sizes of all frames). Animations that exceed this limit will be truncated. Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
+GIF animations are limited to a total of 50 megapixels (the sum of sizes of all frames). Animations that exceed this will be passed through unchanged without applying any transformations. Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
 
 {{<Aside type="warning" header="Important">}}
 SVG files are passed through without resizing. This format is inherently scalable and does not need resizing. Cloudflare does not support the HEIC (HEIF) format and does not plan to support it.

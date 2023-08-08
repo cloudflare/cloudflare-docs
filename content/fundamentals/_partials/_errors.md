@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Refer to [Troubleshooting Cloudflare 5XX errors](https://support.cloudflare.com/hc/articles/115003011431) to learn how to troubleshoot these errors.
+Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) to learn how to troubleshoot these errors.

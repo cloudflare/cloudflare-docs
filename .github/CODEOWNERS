@@ -1,0 +1,59 @@
+# Default owners if not more specific match
+* @cloudflare/pcx-technical-writing
+
+# More dev-specific files
+/.github/ @kodster28 @pedrosousa @haleycode @codewithkristian
+/.github/CODEOWNERS @cloudflare/pcx-technical-writing
+/components/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
+*.js @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
+*.ts @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
+
+# Analytics & Logs
+/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
+/content/data-localization/ @soheiokamoto @tlozoot @cloudflare/pcx-technical-writing
+/content/logs/ @bharatnc @jherre @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
+
+# API & Zones
+/content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
+/content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
+
+# Cloudflare One
+/content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
+
+# Developer platform
+/content/d1/ @elithrar @rozenmd @cloudflare/pcx-technical-writing
+/content/images/ @GregBrimble @cloudflare/pcx-technical-writing
+/content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
+/content/pub-sub/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
+/content/queues/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
+/content/r2/ @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/content/stream/ @tsmith512 @cloudflare/pcx-technical-writing
+/content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
+/content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
+/content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/platform/changelog/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
+
+# Firewall Rules & WAF
+/content/firewall/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/content/waf/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+
+# Magic products
+/content/magic-transit/ @cloudflare/pcx-technical-writing
+/content/magic-firewall/ @arges @cloudflare/pcx-technical-writing
+/content/magic-wan/ @cloudflare/pcx-technical-writing
+
+# Radar
+/content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
+
+# Support 
+/content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
+
+# Turnstile
+/content/turnstile/ @migueldemoura @punkeel @worenga @cloudflare/pcx-technical-writing
+
+# Waiting Room
+/content/waiting-room/ @aolache @cloudflare/pcx-technical-writing

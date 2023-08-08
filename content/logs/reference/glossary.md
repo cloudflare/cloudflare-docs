@@ -93,11 +93,11 @@ Total threats stopped indicates the number of suspicious and bad requests aimed 
 
 #### Bad browser score
 
-The bad browser score indicates that the source of the request was not legitimate or that the request itself was malicious. This value results from the [Cloudflare Browser Integrity Check (BIC)](https://support.cloudflare.com/hc/articles/200170086) feature. Users would see a Cloudflare error `1010` page in their browser. Cloudflare’s Browser Integrity Check looks for common HTTP headers used most often by spammers, and blocks access to your page. It also challenges visitors that do not have a user agent or use a non-standard user agent (commonly used by bots, crawlers, or visitors).
+The bad browser score indicates that the source of the request was not legitimate or that the request itself was malicious. This value results from the [Cloudflare Browser Integrity Check (BIC)](/fundamentals/security/browser-integrity-check/) feature. Users would see a Cloudflare error `1010` page in their browser. Cloudflare’s Browser Integrity Check looks for common HTTP headers used most often by spammers, and blocks access to your page. It also challenges visitors that do not have a user agent or use a non-standard user agent (commonly used by bots, crawlers, or visitors).
 
 #### Blocked hotlink score
 
-The Blocked hotlink value results from the [Cloudflare Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
+The Blocked hotlink value results from the [Cloudflare Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) feature. Hotlink Protection ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
 
 #### Bad IP
 

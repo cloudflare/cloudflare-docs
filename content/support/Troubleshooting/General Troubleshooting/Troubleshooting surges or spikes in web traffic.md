@@ -57,7 +57,7 @@ ___
 
 Cloudflare offsets most of the load to your website via caching and request filtering, but some traffic will still pass through to your host. Knowing the limits of your plan can help prevent a bottleneck from your host. 
 
-Once you are aware of your plan limits, you can use a feature like [Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) to restrict how many times anyone user can make a request to your website.
+Once you are aware of your plan limits, you can use a feature like [Rate Limiting](/waf/rate-limiting-rules/) to restrict how many times anyone user can make a request to your website.
 
 ___
 
@@ -108,4 +108,4 @@ ___
 
 -   [Understanding and Configuring Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-)
 -   [Caching static HTML](https://support.cloudflare.com/hc/articles/202775670)
--   [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)
+-   [Rate limiting rules](/waf/rate-limiting-rules/)

@@ -28,4 +28,4 @@ ___
 4.  「**最適化**」タブをクリックします。
 5.  **Brotli**スイッチを_On_に切り替えます。
 
-![brotli_on.png](/support/static/brotli_on.png)
+![brotli_on.png](/images/support/brotli_on.png)

@@ -56,7 +56,7 @@ Si vous représentez une société commerciale, vous devrez également fournir l
 
 ## Que dois-je faire après avoir reçu un numéro ICP ?
 
-Après avoir reçu votre numéro ICP et le certificat, veuillez les insérer au bas de la page d'accueil de votre site web. Voir l'exemple ci-dessous : ![](/support/static/Screen_Shot_2015-09-13_at_7.12.19_PM.png)
+Après avoir reçu votre numéro ICP et le certificat, veuillez les insérer au bas de la page d'accueil de votre site web. Voir l'exemple ci-dessous : ![](/images/support/Screen_Shot_2015-09-13_at_7.12.19_PM.png)
 
 -   什么是ICP网站备案，为什么网站必须备案才能在中国大陆运营？
     
@@ -79,7 +79,7 @@ Après avoir reçu votre numéro ICP et le certificat, veuillez les insérer au 
     
     申请ICP备案的流程如下所示：
     
-    ![](/support/static/icp.png)
+    ![](/images/support/icp.png)
     
     所需文件材料
     
@@ -110,7 +110,7 @@ Après avoir reçu votre numéro ICP et le certificat, veuillez les insérer au 
 
 申请ICP备案的流程如下所示：
 
-![](/support/static/icp.png)
+![](/images/support/icp.png)
 
 所需文件材料
 

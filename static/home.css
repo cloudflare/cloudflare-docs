@@ -5275,11 +5275,21 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     box-shadow: none;
 }
 
+.DocSearch-Button-Key {
+    font-family: sans-serif;
+    padding-top: .1em !important;
+}
+
 [theme=dark] .DocSearch-Button-Key {
     --docsearch-key-gradient: rgba(var(--color-rgb), .05);
     --docsearch-muted-color: var(--color);
     box-shadow: none;
 }
+
+.DocSearch-Button-Key > svg {
+    height: unset !important;
+    width: unset !important;
+  }
 
 .DocSearch-Button {
     margin: 0 48px 0 16px;

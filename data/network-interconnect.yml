@@ -13,7 +13,6 @@ meta:
     connecting over the Internet.
   author: '@cloudflare'
   
-
 externals:
   - title: Blog announcement
     url: https://blog.cloudflare.com/cloudflare-network-interconnect/

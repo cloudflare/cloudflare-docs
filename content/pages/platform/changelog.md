@@ -93,4 +93,4 @@ rss: file
 ## 2022-06-08
 
 * Added branch alias in PR comments.
-![Branch alias in PR comment](/pages/platform/media/branch_alias_pr_comment.png)
+![Branch alias in PR comment](/images/pages/platform/branch_alias_pr_comment.png)

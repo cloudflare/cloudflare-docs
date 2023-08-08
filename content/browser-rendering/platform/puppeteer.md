@@ -22,20 +22,44 @@ npm install @cloudflare/puppeteer --save-dev
 
 Once the [browser binding](/browser-rendering/platform/wrangler/#bindings) is configured and the `@cloudflare/puppeteer` library is installed, Puppeteer can be used in a Worker:
 
-```javascript
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
 import puppeteer from "@cloudflare/puppeteer";
 
 export default {
-    async fetch(request: Request, env: Env): Promise<Response> {
-        const browser = await puppeteer.launch(env.MYBROWSER);
-        const page = await browser.newPage();
-        await page.goto("https://example.com");
-        const metrics = await page.metrics();
-        await browser.close();
-        return new Response(JSON.stringify(metrics));
-    },
+	async fetch(request, env) {
+		const browser = await puppeteer.launch(env.MYBROWSER);
+		const page = await browser.newPage();
+		await page.goto("https://example.com");
+		const metrics = await page.metrics();
+		await browser.close();
+		return Response.json(metrics);
+	},
 };
 ```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+interface Env {
+	MYBROWSER: Fetcher;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const browser = await puppeteer.launch(env.MYBROWSER);
+		const page = await browser.newPage();
+		await page.goto("https://example.com");
+		const metrics = await page.metrics();
+		await browser.close();
+		return Response.json(metrics);
+	},
+};
+```
+{{</tab>}}
+{{</tabs>}}
 
 This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the `env.MYBROWSER` browser, opens a [new page](https://pptr.dev/api/puppeteer.browser.newpage), [goes to](https://pptr.dev/api/puppeteer.page.goto) https://example.com/, gets the page load [metrics](https://pptr.dev/api/puppeteer.page.metrics), [closes](https://pptr.dev/api/puppeteer.browser.close) the browser and prints metrics in JSON.
 

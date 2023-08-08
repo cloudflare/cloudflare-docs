@@ -49,6 +49,6 @@ For more details on these errors and how to fix them, refer to the following res
 - [`ERR_SSL_VERSION_OR_CIPHER_MISMATCH`](/ssl/troubleshooting/version-cipher-mismatch/)
 - [`ERR_TOO_MANY_REDIRECTS`](/ssl/troubleshooting/too-many-redirects/)
 - [Cloudflare 5xx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/)
-- [Common SSL/TLS errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/)
+- [Common SSL/TLS errors](/ssl/troubleshooting/general-ssl-errors/)
 - [Universal SSL/TLS certificates](/ssl/edge-certificates/universal-ssl/)
 - [Cloudflare encryption modes](/ssl/origin-configuration/ssl-modes/)

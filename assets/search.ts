@@ -21,6 +21,7 @@
       apiKey,
       container: '#algolia',
       maxResultsPerGroup: 20,
+      insights: true,
       searchParameters: {
         optionalFilters: facetFilters
       },

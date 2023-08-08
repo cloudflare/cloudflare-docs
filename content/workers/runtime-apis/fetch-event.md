@@ -53,7 +53,7 @@ addEventListener('fetch', event => {
 
 ### Bindings
 
-When a Worker is deployed using the Service Worker syntax, any [bindings](/workers/platform/environment-variables/) will be made available as global runtime variables.
+When a Worker is deployed using the Service Worker syntax, any [bindings](/workers/configuration/environment-variables/) will be made available as global runtime variables.
 
 ---
 
@@ -81,7 +81,7 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - The [bindings](/workers/platform/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
+  - The [bindings](/workers/configuration/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
 
 - {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
@@ -95,7 +95,7 @@ export default {
 
 ### Bindings
 
-When deploying a Worker using ES modules, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
+When deploying a Worker using ES modules, any [bindings](/workers/configuration/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
 
 ---
 

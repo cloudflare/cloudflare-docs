@@ -15,9 +15,9 @@ Before you use the Constellation client API, you need to:
 * Create a Constellation project and [configure the binding](/constellation/platform/wrangler/#bindings).
 * Import the `@cloudflare/constellation` library in your code:
 
-   ```javascript
-      import { Tensor, run } from "@cloudflare/constellation";
-   ```
+```javascript
+import { Tensor, run } from "@cloudflare/constellation";
+```
 
 ## Tensor class
 

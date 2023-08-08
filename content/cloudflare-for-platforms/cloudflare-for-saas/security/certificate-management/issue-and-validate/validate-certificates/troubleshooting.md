@@ -40,7 +40,7 @@ If a certificate issuance times out, the error message will indicate where the t
 - Timed Out (Deployment)
 - Timed Out (Deletion)
 
-To fix this error, send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) through the API or select **Refresh** for the specific custom hostname in the dashboard.
+To fix this error, send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) through the API or select **Refresh** for the specific custom hostname in the dashboard. If these return an error, delete and recreate the custom hostname.
 
 ---
 
@@ -49,5 +49,3 @@ To fix this error, send a [PATCH request](/api/operations/custom-hostname-for-a-
 You can send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to request an immediate validation check on any certificate. The PATCH data only needs include the same `ssl` object as the original request.
 
 ---
-
-##

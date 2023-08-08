@@ -8,6 +8,10 @@ weight: 4
 
 By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis.
 
+Currently, we only provide SCIM support for Azure Active Directory and Okta in Self-Hosted Access applications.
+
+For more information about SCIM support, refer to the [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/) blog post.
+
 This guide will use Okta as the SCIM provider.
 
 ## Prerequisites
@@ -18,7 +22,7 @@ This guide will use Okta as the SCIM provider.
 ## Limitations
 
 - You cannot automatically deprovision users under domains that do not have the SSO connector.
-- You cannot update [user attributes](/cloudflare-one/policies/filtering/identity-selectors/) from the SCIM provider.
+- You cannot update [user attributes](/cloudflare-one/policies/gateway/identity-selectors/) from the SCIM provider.
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
 - Currently, we do not support Okta Integration Network (OIN) integration. This integration is in review.
 

@@ -16,7 +16,7 @@ The list of related products is representative but not comprehensive.
 
 |  Network layer       | Protocol and related products   |
 |----------------------|---------------------------------|
-| 7 Application layer  | **HTTP, DNS**</br> [Authoritative DNS](/dns), [CDN](https://www.cloudflare.com/cdn/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), [Stream](/stream), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [WAF](/waf), [Bot Management](/bots) |
+| 7 Application layer  | **HTTP, DNS**</br> [Authoritative DNS](/dns), [CDN](https://www.cloudflare.com/cdn/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [Stream](/stream), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [WAF](/waf), [Bot Management](/bots) |
 | 6 Presentation layer |                                 |
 | 5 Session layer      |                                 |
 | 4 Transport layer    | **TCP/UDP**</br> [Spectrum](/spectrum), [Argo Smart Routing](/argo-smart-routing/), [Load Balancing](/load-balancing/understand-basics/proxy-modes/) |

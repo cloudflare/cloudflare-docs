@@ -43,7 +43,7 @@ ___
 
 ## SameSite 和 cf\_clearance Cookie 的已知问题
 
-在解决了 [Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136) 或 Javascript 质询（例如对于 [**Firewall Rule**](https://support.cloudflare.com/hc/articles/360016473712) 或 [**IP Access Rule**](https://support.cloudflare.com/hc/articles/217074967)），客户端浏览器中会设置一个 **cf\_clearance** Cookie。_cf\_clearance_ Cookie 的默认寿命是 30 分钟，但可以通过Cloudflare **Firewall** 应用的 **Settings** 选项卡中的 [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) 进行配置。
+在解决了 [Cloudflare CAPTCHA](https://support.cloudflare.com/hc/articles/200170136) 或 JavaScript 质询（例如对于 [**Firewall Rule**](https://support.cloudflare.com/hc/articles/360016473712) 或 [**IP Access Rule**](https://support.cloudflare.com/hc/articles/217074967)），客户端浏览器中会设置一个 **cf\_clearance** Cookie。_cf\_clearance_ Cookie 的默认寿命是 30 分钟，但可以通过Cloudflare **Firewall** 应用的 **Settings** 选项卡中的 [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) 进行配置。
 
 Cloudflare 自 **cf\_clearance** Cookie 起使用 **SameSite**\=_None_，以便来自不同主机名的访问者请求不会遇到后续的质询或错误。使用 **SameSite**\=_None_ 时，必须与 _Secure_ 标志一同设置。
 

@@ -6,14 +6,12 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/platform/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
 {{<Aside type="note">}}
 Local development uses local storage. It cannot access data stored on Cloudflare’s servers.
-
-By default, data in local development is not persisted. This means if you write a value into KV, for example, the next time you start local dev, it will no longer exist. Enable persistence with the `--persist` flag.
 {{</Aside>}}
 
 ## KV namespaces
@@ -59,7 +57,7 @@ While developing locally, interact with your KV namespace by adding `-k <BINDING
 
 ## Durable Object namespaces
 
-[Durable Objects](/workers/learning/using-durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. To bind your DO namespace to your Pages Function:
+[Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. To bind your DO namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -150,7 +148,7 @@ While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NA
 
 ## D1 databases
 
-Cloudflare [D1](/d1/) is Cloudflare's first SQL database built on SQLite. To bind your D1 database to your Pages Function:
+[D1](/d1/) is Cloudflare’s native serverless database. To bind your D1 database to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -242,10 +240,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 ```
 {{</tab>}}
 {{</tabs>}}
-
-### Interact with your Service binding locally
-
-While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
 
 ## Queue Producers
 
@@ -355,7 +349,7 @@ At this time, Wrangler does not support interacting with Analytics Engine during
 
 ## Environment variables
 
-An [environment variable](/workers/platform/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain text. Set your environment variables directly within the Cloudflare Pages dashboard for both your production and preview environments at runtime and build-time.
+An [environment variable](/workers/configuration/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain text. Set your environment variables directly within the Cloudflare Pages dashboard for both your production and preview environments at runtime and build-time.
 
 To add Pages project environment variables:
 

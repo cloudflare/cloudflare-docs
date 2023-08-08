@@ -11,7 +11,7 @@ In this guide, you will create a new Hugo application and deploy it using Cloudf
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-Go to [Deploying with Cloudflare Pages](#deploy-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/#connect-your-git-provider-to-pages).
+Go to [Deploying with Cloudflare Pages](#deploy-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages).
 
 ## Install Hugo
 
@@ -171,15 +171,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value    |
-| -------------------- | -------- |
-| Production branch    | `main`   |
-| Build command        | `hugo`   |
-| Build directory      | `public` |
-
-</div>
+{{<pages-build-preset framework="hugo">}}
 
 {{<Aside type="note" header="Base URL configuration">}}
 

@@ -17,11 +17,11 @@ It is common for a misconfigured Gateway policy to accidentally block traffic to
 5. In the browser, go to `malware.testcategory.com`. You should see a generic Gateway block page.
 
 {{<Aside type="note">}}
-[Custom block pages](/cloudflare-one/policies/filtering/configuring-block-page/) require you to install a root certificate on the device.
+[Custom block pages](/cloudflare-one/policies/gateway/configuring-block-page/) require you to install a root certificate on the device.
 {{</Aside>}}
 
 6. In **Logs** > **Gateway** > **DNS**, verify that you see the blocked domain.
 7. Slowly re-enable or add other policies to your configuration.
-8. When testing against frequently-visited sites, you may need to [clear the DNS cache](/cloudflare-one/policies/filtering/dns-policies/test-dns-filtering/#clear-dns-cache) in your browser or OS. Otherwise, the DNS lookup will return the locally-cached IP address and bypass your DNS policies.
+8. When testing against frequently-visited sites, you may need to [clear the DNS cache](/cloudflare-one/policies/gateway/dns-policies/test-dns-filtering/#clear-dns-cache) in your browser or OS. Otherwise, the DNS lookup will return the locally-cached IP address and bypass your DNS policies.
 
 You have now validated DNS filtering on a test device.

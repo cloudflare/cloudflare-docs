@@ -30,4 +30,4 @@ To configure these settings for your organization:
 4. Save the profile.
 5. Under **Global settings**,
     1. (Recommended) Enable **Admin override code** if you turned on **Lock WARP switch**.
-    2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/).
+    2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/policies/gateway/configuring-block-page/).

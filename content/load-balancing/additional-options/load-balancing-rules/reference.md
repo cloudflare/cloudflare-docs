@@ -97,7 +97,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-host"><code>http.host</code></a><br />{{<type>}}String{{</type>}}</td>
       <td>(API-only)</td>
       <td>
-        <p>Represents the host name used in the full request URI.
+        <p>Represents the hostname used in the full request URI.
         </p>
         <p>Example value:
         <br /><code class="InlineCode">www.example.org</code>
@@ -325,7 +325,7 @@ If your traffic is not proxied through Cloudflare, you have access to all the fi
         <p>When <code>true</code>, this field indicates that the EDNS Client Subnet (ECS) address was sent with the DNS request.
         </p>
       </td>
-    </tr>  
+    </tr>
     <tr id="field-dns-rr-opt-client-addr">
       <td valign="top"><code class>dns.rr.opt.client.addr</code><br />{{<type>}}String{{</type>}}</td>
       <td>(API-only)</td>

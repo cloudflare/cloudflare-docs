@@ -14,8 +14,9 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 | Feature                                            | Limit                                        |
 | -------------------------------------------------- | -------------------------------------------- | 
 | Databases                                          | 10 per account <sup>1</sup>                  |
-| Database size                                      | 100 MB <sup>2</sup>                          |
-| Time Travel duration (point-in-time recovery)      | 30 days (Workers Paid) / 7 days (Free)       |
+| Database size                                      | 500 MB [new storage subsystem](/d1/changelog/#new-default-storage-subsystem) - 100 MB (legacy alpha backend) <sup>2</sup>                          |
+| [Time Travel](/d1/learning/time-travel/) duration (point-in-time recovery)      | 30 days (Workers Paid) / 7 days (Free)       |
+| Maximum Time Travel restore operations             | 10 restores per 10 minute (per database)     |
 | Queries per Worker invocation (see [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make))                      | 50 (Bundled) / 1000 (Unbound)
 | Maximum [database backups](/d1/learning/backups/)  | 24 hours (backups are hourly) (alpha only)   |
 | Maximum number of columns per table                | 100                                          |
@@ -27,11 +28,12 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 
 {{<Aside type="note">}}
 
-If you would like to explore other storage solutions for your application, Cloudflare also offers [Workers KV](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), and [R2](/r2/get-started/). 
+If you would like to explore other storage solutions for your application, Cloudflare also offers [Workers KV](/workers/runtime-apis/kv/), [Durable Objects](/durable-objects/), and [R2](/r2/get-started/). 
 
-Refer to the [Storage options guide](/workers/platform/storage-options/) to review which storage option is right for your use case.
+Refer to the [Storage options guide](/workers/learning/storage-options/) to review which storage option is right for your use case.
 
 {{</Aside>}}
 
-* <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Note that not all limits can be increased.
-* <sup>2</sup> This is an alpha-only limit, and we intend to increase this as D1 moves towards General Availability (GA).
+<sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Note that not all limits can be increased.
+
+<sup>2</sup> This is an alpha-only limit, and we intend to increase this as D1 moves towards General Availability (GA).

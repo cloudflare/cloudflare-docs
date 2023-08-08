@@ -174,7 +174,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 ### vars
 
-The `vars` key defines a table of [environment variables](/workers/platform/environment-variables/) provided to your Worker script. All values are plaintext values.
+The `vars` key defines a table of [environment variables](/workers/configuration/environment-variables/) provided to your Worker script. All values are plaintext values.
 
 Usage:
 
@@ -271,7 +271,7 @@ You can also define your `kv_namespaces` using an [alternative TOML syntax](http
 
 ### site
 
-A [Workers Site](/workers/platform/sites/) generated with [`wrangler generate --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#generate) or [`wrangler init --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#init).
+A [Workers Site](/workers/configuration/sites/start-from-scratch) generated with [`wrangler generate --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#generate) or [`wrangler init --site`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#init).
 
 Usage:
 
@@ -619,7 +619,7 @@ globs = ["**/*.js", "**/*.cjs"]
 
   - `globs` {{<prop-meta>}}required{{</prop-meta>}}
 
-    - Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
+    - UNIX-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
 
   - `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
 

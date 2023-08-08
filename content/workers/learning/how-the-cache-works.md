@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: How the Cache works
-weight: 6
 ---
 
 # How the Cache works
@@ -71,9 +70,9 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
 - To purge an asset globally, you must use the standard cache purge options. Based on cache API implementation, not all cache purge endpoints function for purging assets stored by the Cache API.
 
-  - All assets on a zone can be purged by using the [Purge Everything](/cache/how-to/purge-cache/#purge-everything) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
+  - All assets on a zone can be purged by using the [Purge Everything](/cache/how-to/purge-cache/purge-everything/) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
 
-  - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
+  - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/purge-by-tags/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
 
 - Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/cache-keys/#create-custom-cache-keys). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
 
@@ -87,7 +86,7 @@ Other means to control Cloudflare’s cache that are not mentioned in this docum
 
 {{<Aside type="note" header="What should I use: the Cache API or fetch for caching objects on Cloudflare?">}}
 
-For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no backend (that is, the entire project is on Workers as in [Workers Sites](/workers/platform/sites/)) the Cache API is the only option to customize caching.
+For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no backend (that is, the entire project is on Workers as in [Workers Sites](/workers/configuration/sites/start-from-scratch)) the Cache API is the only option to customize caching.
 
 The asset will be cached under the hostname specified within the Worker's subrequest — not the Worker's own hostname. Therefore, in order to purge the cached asset, the purge will have to be performed for the hostname included in the Worker subrequest.
 

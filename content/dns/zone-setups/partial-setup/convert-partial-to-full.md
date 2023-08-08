@@ -28,7 +28,7 @@ At least 24 hours prior to converting your application, disable DNSSEC at your a
 
 {{<Aside type="note">}}
 
-As a best practice, you should also delete the previous [zone activation TXT record](/dns/zone-setups/partial-setup/setup/#step-1--add-your-domain-to-cloudflare) at your authoritative DNS provider. To locate this value in the Cloudflare dashboard, go to **DNS** > **Records** and find the **Verification TXT Record**.
+As a best practice, you should also delete the previous [zone activation TXT record](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) at your authoritative DNS provider. To locate this value in the Cloudflare dashboard, go to **DNS** > **Records** and find the **Verification TXT Record**.
   
 {{</Aside>}}
 

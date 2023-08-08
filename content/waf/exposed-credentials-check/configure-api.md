@@ -43,10 +43,10 @@ To create and deploy a custom ruleset, follow the workflow described in [Work wi
 
 This example creates a new custom ruleset with a rule that checks for exposed credentials. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will log the request with exposed credentials in the Cloudflare logs.
 
-```json
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
   "name": "Custom Ruleset A",
   "kind": "custom",
   "description": "This ruleset includes a rule checking for exposed credentials.",
@@ -69,7 +69,7 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 ```json
 ---
-highlight: [15,16,17,18]
+highlight: 15-18
 ---
 {
   "result": {
@@ -111,10 +111,10 @@ After creating a custom ruleset, deploy it to a phase so that it executes. Refer
 
 This example creates a new custom ruleset with a rule that checks for exposed credentials in JSON responses. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
 
-```json
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
   "name": "Custom Ruleset B",
   "kind": "custom",
   "description": "This ruleset includes a rule checking for exposed credentials.",
@@ -149,7 +149,7 @@ The response returns the created ruleset. Note the presence of the following ele
 
 ```json
 ---
-highlight: [12,13,14,15,16,17,18,19,20,23,24,25,26]
+highlight: 12-20,23-26
 ---
 {
   "result": {

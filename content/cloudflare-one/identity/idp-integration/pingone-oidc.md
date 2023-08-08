@@ -10,7 +10,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 
 ## Set up PingOne as an OIDC provider
 
-1. In your PingIdentity environment, navigate to **Connections** > **Applications**.
+1. In your PingIdentity environment, go to **Connections** > **Applications**.
 2. Select **Add Application**.
 3. Enter an **Application Name**.
 4. Select **OIDC Web App** and then **Save**.
@@ -19,7 +19,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 7. Copy the **Client ID**, **Client Secret**, and **Environment ID** to a safe place. These ids will be used in a later step to add PingOne to Zero Trust.
 8. In the **Configuration** tab, select the pencil icon.
 9. In the **Redirect URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) and select **Save**.
-10. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Settings** > **Authentication**.
+10. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 11. Under **Login methods**, select **Add new**.
 12. Select **PingOne**.
 13. Input the **Client ID**, **Client Secret**, and **Environment ID** generated previously.

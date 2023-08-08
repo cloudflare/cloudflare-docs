@@ -13,7 +13,7 @@ WordPress relies on making loopback requests in order to monitor and occasionall
 
 {{<Aside type="note">}}
 
-Loopback requests may also be blocked by [I’m Under Attack mode](/support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/) or certain [Firewall rules](/firewall/). 
+Loopback requests may also be blocked by [I’m Under Attack mode](/fundamentals/security/under-attack-mode/) or certain [Firewall rules](/firewall/). 
 
 {{</Aside>}}
 

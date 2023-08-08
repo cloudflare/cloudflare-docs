@@ -38,7 +38,7 @@ To retrieve those values:
 3. Select **Tanium**.
 4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
 5. Enter the **Client Secret** and **Rest API URL** you noted down above.
-6. Choose a **polling frequency** for how often Cloudflare Zero Trust should query Tanium for information.
+6. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query Tanium for information.
 7. Select **Save**.
 
 {{<render file="/posture/_test-posture-provider.md">}}

@@ -9,7 +9,7 @@ layout: single
 
 ## Dummy sitekeys and secret keys
 
-The following sitekeys and secret keys are available for testing.
+The following sitekeys and secret keys are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
 
 | Sitekey | Description | Visibility |
 | --- | --- | --- |

@@ -24,7 +24,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Billing | Can edit the account’s [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/) and subscriptions |
 | Cloudflare Access | Can edit [Cloudflare Access](/cloudflare-one/policies/access/) policies. |
 | Cache Purge | Can purge the edge cache. |
-| Cloudflare Gateway | Can edit [Cloudflare Gateway](/cloudflare-one/policies/filtering/) and read [Access](/cloudflare-one/identity/). |
+| Cloudflare Gateway | Can edit [Cloudflare Gateway](/cloudflare-one/policies/gateway/) and read [Access](/cloudflare-one/identity/). |
 | Cloudflare Images | Can access [Cloudflare Images](/images/cloudflare-images/) data. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
 | Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), and [R2](/r2/). |

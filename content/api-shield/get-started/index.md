@@ -29,7 +29,7 @@ After setting up session identifiers and allowing some time for Cloudflare to le
 
 Schema Validation protects your APIs by ensuring only requests matching your API schema are allowed to communicate with your origin.
 
-While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](https://developers.cloudflare.com/api-shield/reference/classic-schema-validation/). 
+While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](/api-shield/reference/classic-schema-validation/). 
 
 {{<Aside type="note">}}
 It is recommended to start with Schema Validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
@@ -39,7 +39,7 @@ If you do not have a schema to upload, continue reading this guide to learn how 
 
 ## Enable the Sensitive Data Detection ruleset and accompanying rules
 
-API Shield works with Cloudflare WAF’s [Sensitive Data Detection](https://developers.cloudflare.com/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify API endpoints that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
+API Shield works with Cloudflare WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify API endpoints that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
 
 {{<Aside type="note">}}
 A subscription is required for Sensitive Data Detection. Contact your account team if you are not entitled for Sensitive Data Detection.
@@ -89,11 +89,13 @@ By importing the learned schema, you can protect API endpoints found via API Dis
 
 You can import your learned schemas to Schema Validation 2 using the [API](/api-shield/security/schema-validation/) or the classic version of Schema Validation using the [Cloudflare dashboard](/api-shield/reference/classic-schema-validation/). Schema Validation 2 focuses on giving you granular control and lets you set mitigation actions for each endpoint individually. 
 
-## View Sequence Analytics
+## View and configure Sequence Analytics
 
 [Sequence Analytics](/api-shield/security/sequence-analytics/) surfaces a subset of important API request sequences found in your API traffic over time.
 
 You can observe the top sequences in your API traffic that contain endpoints stored in Endpoint Management. We rank sequences by Correlation Score. High-scoring sequences contain API requests which are likely to occur together in order.
+
+[Sequence Mitigation](/api-shield/security/sequence-mitigation/) allows you to enforce request patterns for authenticated clients communicating with your API. Use Sequence Analytics to better understand the request sequences used by your API clients.
 
 You should apply all possible API Shield protections (rate limiting suggestions, Schema Validation, JWT Validation, and mTLS) to API endpoints found in high correlation score sequences that make up the critical request flows in your application. You should also check their specific endpoint order with your development team.
 

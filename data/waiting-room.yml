@@ -5,6 +5,7 @@ product:
   title: Waiting Room
   url: /waiting-room/
   group: Application performance
+  additional_groups: [Developer platform]
   preview_tryout: true
 
 meta:
@@ -13,7 +14,6 @@ meta:
     when they are trying to access web pages that have high volumes of traffic.
   author: '@cloudflare'
   
-
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/waiting-rooms
 

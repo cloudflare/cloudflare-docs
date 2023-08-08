@@ -14,7 +14,7 @@ This tutorial will guide you through deploying simple application on Kubernetes 
 
 The following diagram shows the output of this tutorial is deployed application running inside the Kubernetes cluster on GKE and AWS instances with Cloudflare Load Balancer distributing the traffic between them.
 
-![Diagram showing the output of this tutorial with the deployed application running inside the Kubernetes cluster on GKE and AWS instances with Cloudflare Load Balancer distributing the traffic between them.](/support/static/hc-import-kubernetes_gke_http_aws_elb_with_cf_lb.png)
+![Diagram showing the output of this tutorial with the deployed application running inside the Kubernetes cluster on GKE and AWS instances with Cloudflare Load Balancer distributing the traffic between them.](/images/support/hc-import-kubernetes_gke_http_aws_elb_with_cf_lb.png)
 
 ___
 
@@ -45,7 +45,7 @@ In this tutorial I am using [Google Cloud Shell](https://cloud.google.com/shell
 
 Go to the [Kubernetes Engine](https://console.cloud.google.com/kubernetes?_ga=2.151836153.-1932148812.1510627946). Click the Activate Google Cloud Shell button at the top of the console window. A Cloud Shell session opens inside a new frame at the bottom of the console and displays a command-line prompt.
 
-![You can find the Activate Google Cloud Shell button at the top of the console window.](/support/static/hc-import-google_cloud_shell.png)
+![You can find the Activate Google Cloud Shell button at the top of the console window.](/images/support/hc-import-google_cloud_shell.png)
 
 Set default configuration values by running the following commands:
 
@@ -199,7 +199,7 @@ Now let’s **create a route 53 domain** for the cluster. Kops uses DNS for di
 $ aws route53 create-hosted-zone --name k8saws.usualwebsite.com --caller-reference 1
 ```
 
-It will automatically create four name server (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
+It will automatically create four nameserver (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
 
 As Authoritative DNS for my domain usualwebsite.com I am using Cloudflare DNS. Just simply [add four NS records](/dns/manage-dns-records/how-to/create-dns-records/) under your DNS provider.
 
@@ -370,7 +370,7 @@ ___
 
 ## Argo Tunnel Ingress Controller
 
-In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
+In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
 
 ### **Cloudflare TunnelIngress**
 
@@ -378,4 +378,4 @@ To make it easy to work with Kubernetes we have developed a Cloudflare Tunnel In
 
 The Cloudflare Tunnel controller will manage ingress tunnels in a single namespace of the cluster. Multiple controllers can exist in different namespaces, with different credentials for each namespace.
 
-![Diagram of Cloudflare Load Balancer integrating with AWS, GKE, and Cloudflare Tunnel.](/support/static/hc-import-kub_warp_cf_lb_gke_aws_diagrams.png)
+![Diagram of Cloudflare Load Balancer integrating with AWS, GKE, and Cloudflare Tunnel.](/images/support/hc-import-kub_warp_cf_lb_gke_aws_diagrams.png)

@@ -17,7 +17,7 @@ Cloudflare 的 CDN 服务可以帮助在我们庞大的全球网络中缓存您�
 
 ### 缓存匿名页面访问量
 
-![Creating a cache rule for anonymous page views.](/support/static/hc-import-screen_shot_2017_03_09_at_16_54_36_1_.png)
+![Creating a cache rule for anonymous page views.](/images/support/hc-import-screen_shot_2017_03_09_at_16_54_36_1_.png)
 
 Cloudflare 的“[Bypass Cache on Cookie](https://support.cloudflare.com/hc/en-us/articles/236166048)”功能允许 Cloudflare 完全缓存未登录的页面。这意味着您的服务器可以节省时间和资源，无需重新生成 HTML 实际上是静态的页面，同时不会干扰动态行为 - 只要用户登录 WordPress 控制面板或向 WooCommerce 添加内容，即可绕过Edge Cache。
 
@@ -27,11 +27,11 @@ Cloudflare 的“[Bypass Cache on Cookie](https://support.cloudflare.com/hc/en-u
 
 在启用 **Polish** 后，您可以压缩图像和删除元数据来显著缩短图像和网页加载时间。无锁优化将剥离大部分元数据，如 EXIF 数据，但不会改变图像细节。有损优化将剥离大部分元数据，同时将图像压缩约 15%。
 
-![The different options you have to configure Cloudflare Polish.](/support/static/hc-import-cms_wordpress_polish.png)
+![The different options you have to configure Cloudflare Polish.](/images/support/hc-import-cms_wordpress_polish.png)
 
 如果您希望针对移动访问者优化您的站点，启用 **Mirage 图像优化**将允许根据最终用户网络连接和设备类型优化和交付图像：
 
-![Enable Mirage to optimize images for mobile visitors.](/support/static/hc-import-screen_shot_2016_09_30_at_15_29_04.png)
+![Enable Mirage to optimize images for mobile visitors.](/images/support/hc-import-screen_shot_2016_09_30_at_15_29_04.png)
 
 ### 启用 HTTP/2
 
@@ -39,7 +39,7 @@ Cloudflare 的“[Bypass Cache on Cookie](https://support.cloudflare.com/hc/en-u
 
 **启用 SSL** 后，还必须确保将用户重定向到 HTTPS 版本，以便可以通过 HTTP/2 加载。您可以使用 _Always use HTTPS_ **Page Rule** 来执行此操作：
 
-![Create a page rule to ensure your Wordpress website is correctly loaded over HTTP/2](/support/static/hc-import-screen_shot_2016_09_30_at_15_34_14.png)
+![Create a page rule to ensure your Wordpress website is correctly loaded over HTTP/2](/images/support/hc-import-screen_shot_2016_09_30_at_15_34_14.png)
 
 Cloudflare 的 **WordPress 插件**允许您使用 HTTP/2 服务器推送向用户推送必要的资产，从而大幅减少加载 CSS 和 JavaScript 所需的往返次数。有关设置的教程，请参阅[如何在 WordPress 中启用 HTTP/2 服务器推送指南](https://support.cloudflare.com/hc/articles/115002816808)。
 

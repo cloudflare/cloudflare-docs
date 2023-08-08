@@ -52,25 +52,25 @@ To connect a custom domain to your bucket:
 2. Go to **Settings**.
 3. Go to **Domain Access**.
 
-![Follow the steps below to enable Domain Access](/r2/static/public-buckets-domain-access.png)
+![Follow the steps below to enable Domain Access](/images/r2/public-buckets-domain-access.png)
 
 4. Select **Connect Domain**.
 
-![Follow the steps described to connect a custom domain to your bucket](/r2/static/public-buckets-connect-domain.png)
+![Follow the steps described to connect a custom domain to your bucket](/images/r2/public-buckets-connect-domain.png)
 
 5. Enter the domain name you want to connect to and select **Continue**.
 
-![Add Domain](/r2/static/public-buckets-add-domain.png)
+![Add Domain](/images/r2/public-buckets-add-domain.png)
 
 6. Review the new record that will be added to the DNS table and select **Connect Domain**.
 
 Your domain is now connected. It takes a few minutes for the status to change from **Initializing** to **Active**. Refresh to review the status update. If the status has not changed, select the *...* next to your bucket and select **Retry connection**.
 
-![Active and Allowed](/r2/static/public-buckets-active-allowed.png)
+![Active and Allowed](/images/r2/public-buckets-active-allowed.png)
 
 To view the added DNS record, select *...* next to the connected domain and select **Manage DNS**.
 
-![Manage Cloudflare DNS](/r2/static/public-buckets-manage-cloudflare-dns.png)
+![Manage Cloudflare DNS](/images/r2/public-buckets-manage-cloudflare-dns.png)
 
 {{<Aside type="note">}}
 
@@ -94,11 +94,11 @@ To disable a domain:
 3. Scroll down to **Domain Access**.
 4. Next to the domain you want to disable, select **...** and select **Disable domain**.
 
-![Disable Domain](/r2/static/public-buckets-disable-domain.png)
+![Disable Domain](/images/r2/public-buckets-disable-domain.png)
 
 5. The badge under **Access to Bucket** will update to **Not allowed**.
 
-![Not Allowed](/r2/static/public-buckets-not-allowed-2.png)
+![Not Allowed](/images/r2/public-buckets-not-allowed-2.png)
 
 #### Remove domain
 
@@ -111,7 +111,7 @@ To remove a domain:
 3. Scroll down to **Domain Access**.
 4. Select **...** next to the domain to disable and select **Remove domain**.
 
-![Remove Domain](/r2/static/public-buckets-remove-domain.png)
+![Remove Domain](/images/r2/public-buckets-remove-domain.png)
 
 5. Select ‘Remove domain’ in the confirmation window. The CNAME record pointing to the domain will also be removed as part of this step. You can always add the domain again.
 
@@ -133,28 +133,28 @@ To enable access management, Cache and bot management features, you must set up 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
 
-![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
+![Choose R2 from the side menu](/images/r2/public-buckets-r2.png)
 
 2. In. **R2**, select the bucket you want to enable public access for.
 
-![Select your bucket](/r2/static/public-buckets-bucket.png)
+![Select your bucket](/images/r2/public-buckets-bucket.png)
 
 3. Go to **Settings**.
 
-![Select settings](/r2/static/public-buckets-settings.png)
+![Select settings](/images/r2/public-buckets-settings.png)
 
 4. In **Settings**, go to **Bucket Access**.
 
-![Select bucket access](/r2/static/public-buckets-not-allowed.png)
+![Select bucket access](/images/r2/public-buckets-not-allowed.png)
 
 5. Under **Bucket Access**, select **Allow Access**.
 
-![Allow access](/r2/static/public-buckets-allow-access.png)
+![Allow access](/images/r2/public-buckets-allow-access.png)
 
 6. You will be prompted to confirm your choice. In the confirmation dialog, type ‘allow’ to confirm and select **Allow**.
 7. You can now access the bucket and its objects using the Public Bucket URL.
 
-![Show Public Bucket URL](/r2/static/public-buckets-allowed.png)
+![Show Public Bucket URL](/images/r2/public-buckets-allowed.png)
 
 You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
 
@@ -166,24 +166,20 @@ To disable public access for your bucket:
 
 1. In **R2**, select the bucket for which you want to turn off public access.
 
-![Choose R2 from the side menu](/r2/static/public-buckets-r2.png)
+![Choose R2 from the side menu](/images/r2/public-buckets-r2.png)
 
 2. Go to **Settings**.
 
-![Select settings](/r2/static/public-buckets-settings.png)
+![Select settings](/images/r2/public-buckets-settings.png)
 
 3. Scroll down to **Public Access**.
 
-![Public Access](/r2/static/public-buckets-allowed.png)
+![Public Access](/images/r2/public-buckets-allowed.png)
 
 3. Select **Disallow Access**.
 
-![Disallow access](/r2/static/public-buckets-disallow-access.png)
+![Disallow access](/images/r2/public-buckets-disallow-access.png)
 
 4. In the confirmation dialog, type ‘disallow’ to confirm and select **Disallow**.
 
 Your bucket and its objects can no longer be accessed using the Public Bucket URL. 
-
-## Configure CORS for your bucket
-
-Currently, you have to use the S3 API `PutBucketCors` to configure CORS for your bucket.

@@ -28,7 +28,7 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 
 {{<render file="gateway/_doh-instructions.md">}}
 
-Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
+Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/gateway/dns-policies/#dns-location) selector.
 
 ### Configure operating system for DoH
 
@@ -152,10 +152,10 @@ highlight: [3, 4, 7]
 ### 2. Enable DoH functionality for the service token
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <API_KEY>" \
-     -H "Content-Type: application/json" \
+curl --request PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
+     --header "X-Auth-Email: <YOUR_EMAIL>" \
+     --header "X-Auth-Key: <API_KEY>" \
+     --header "Content-Type: application/json"
 ```
 
 If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
@@ -250,8 +250,8 @@ Request a DoH token for the user, using your service token to authenticate into 
 ```bash
 curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \
      -H "Cf-Access-Client-Id: <CLIENT_ID>" \
-     -H "Cf-Access-Client-Secret: <CLIENT_SECRET>"
-     -H "Content-Type: application/json" \
+     -H "Cf-Access-Client-Secret: <CLIENT_SECRET>" \
+     -H "Content-Type: application/json"
 ```
 
 The response contains a unique DoH token associated with the user. This token expires in 24 hours. We recommend setting up a refresh flow for the DoH token instead of generating a new one for every DoH query.
@@ -277,7 +277,7 @@ curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com'
      -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
 ```
 
-If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/filtering/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
+If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/gateway/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
 
 <details>
 <summary>Example response</summary>
@@ -311,4 +311,4 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </div>
 </details>
 
-You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
+You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/gateway/identity-selectors/).

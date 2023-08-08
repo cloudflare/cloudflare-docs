@@ -70,9 +70,9 @@ You can also use the back button near the zone name.
 
 ## Zones
 
-Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones[^1]. Use your zone to monitor security and performance, update configurations, and apply zone-level products and services.
+Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones[^1], which have a direct impact on the security and performance of your website, application, or API. Use your zone to monitor security and performance, update configurations, and apply zone-level products and services.
 
-Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/how-to/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
+Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/how-to/cache-rules/) - only affect your website, application, or API for that zone and not other zones, even if they are contained within the same account.
 
 
 

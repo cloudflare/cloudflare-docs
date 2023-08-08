@@ -12,7 +12,7 @@ You will receive an invoice in the **Billing** section of your Cloudflare accoun
 * Add a new domain to a Cloudflare account
 * Enable or renew a subscription or add-on service
 
-For any historical invoices not included in the **Billing** section, [contact Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
+For any historical invoices not included in the **Billing** section, [contact Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 {{<Aside type="note">}}
 
@@ -63,7 +63,7 @@ Invoices cannot be re-generated once issued. Any pending billing updates or chan
 
 ### Change in billing contact information
 
-If your billing contact information has changed, [update your Cloudflare email address](https://support.cloudflare.com/hc/articles/203471284#12345679) as soon as possible.
+If your billing contact information has changed, [update your Cloudflare email address](/fundamentals/account-and-billing/account-maintenance/change-password-or-email/#change-email-address) as soon as possible.
 
 ### Change in Cloudflare subscription or account
 

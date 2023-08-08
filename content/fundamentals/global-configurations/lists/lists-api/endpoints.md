@@ -42,7 +42,7 @@ The Lists API supports the operations outlined below. Visit the associated links
   <tbody>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-create-a-list">Create a list</a>
+        <a href="/api/operations/lists-create-a-list">Create a list</a>
       </td>
       <td>
         <code class="InlineCode">POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
@@ -51,7 +51,7 @@ The Lists API supports the operations outlined below. Visit the associated links
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-get-lists">Get lists</a>
+        <a href="/api/operations/lists-get-lists">Get lists</a>
       </td>
       <td>
         <code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
@@ -62,7 +62,7 @@ The Lists API supports the operations outlined below. Visit the associated links
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-get-a-list">Get a list</a>
+        <a href="/api/operations/lists-get-a-list">Get a list</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -76,7 +76,7 @@ The Lists API supports the operations outlined below. Visit the associated links
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-update-a-list">Update a list</a>
+        <a href="/api/operations/lists-update-a-list">Update a list</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -88,13 +88,13 @@ The Lists API supports the operations outlined below. Visit the associated links
           Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.
         </p>
         <p>
-          To update an item in a list, use the <a href="https://developers.cloudflare.com/api/operations/lists-update-all-list-items">Update all list items</a> operation.
+          To update an item in a list, use the <a href="/api/operations/lists-update-all-list-items">Update all list items</a> operation.
         </p>
       </td>
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-delete-a-list">Delete a list</a>
+        <a href="/api/operations/lists-delete-a-list">Delete a list</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -131,7 +131,7 @@ When you make requests to a list while a bulk operation on that list is in progr
   <tbody>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-get-list-items">Get list items</a>
+        <a href="/api/operations/lists-get-list-items">Get list items</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -146,7 +146,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-get-a-list-item">Get a list item</a>
+        <a href="/api/operations/lists-get-a-list-item">Get a list item</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -159,7 +159,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-create-list-items">Create list items</a>
+        <a href="/api/operations/lists-create-list-items">Create list items</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -179,7 +179,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-update-all-list-items">Update all list items</a>
+        <a href="/api/operations/lists-update-all-list-items">Update all list items</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -201,7 +201,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/lists-delete-list-items">Delete list items</a>
+        <a href="/api/operations/lists-delete-list-items">Delete list items</a>
       </td>
       <td>
         <code class="InlineCode">

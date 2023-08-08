@@ -8,13 +8,21 @@ title: Detection IDs
 {{<render file="_detection-ids">}}
 <br/>
 
-With customer configurable heuristics, you can choose unique actions for different bots, detected through Cloudflare’s heuristics engine. You can block, allow, or serve alternate content to specific bots to meet the unique needs of your site's traffic.
-	
+If you are having an issue with one of our heuristics, detection IDs allow you to decide which heuristics to enforce on your zones using customer configurable heuristics. You can choose unique actions for different bots, detected through Cloudflare’s heuristics engine. You can block, allow, or serve alternate content to specific bots to meet the unique needs of your site’s traffic.
+
 {{<Aside type="note">}}
 
-You can use `cf.bot_management.detection_ids` fields in tools such as Custom Rules, Advanced Rate Limiting, Transform Rules, Legacy Firewall Rules, and Workers (as `request.cf.botManagement.detectionIds`).
+A request can trigger multiple detection IDs.
 
 {{</Aside>}}
+
+You can use `cf.bot_management.detection_ids` fields in tools such as:
+
+- [Custom Rules](/waf/custom-rules/)
+- [Advanced Rate Limiting](/waf/rate-limiting-rules/)
+- [Transform Rules](/rules/transform/)
+- Legacy Firewall Rules
+- [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
 
 ## Bot Detection IDs via Logpush
 

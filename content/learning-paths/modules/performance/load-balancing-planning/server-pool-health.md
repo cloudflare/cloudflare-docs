@@ -25,7 +25,7 @@ Based on the characteristics of your server pools, you have several customizatio
 {{<render file=_pool-health-threshold.md productFolder="load-balancing">}}
 <br/>
 
-#### Health check regions
+#### Health monitor regions
 
 {{<render file=_health-check-regions.md productFolder="load-balancing">}}
 

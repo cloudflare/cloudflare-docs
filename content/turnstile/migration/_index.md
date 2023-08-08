@@ -10,7 +10,7 @@ layout: single
 Customers using alternate services can switch to Cloudflare Turnstile.
 Step-by-step guides for select services are available below to assist with the upgrade process.
 
-If there is no guide available yet, it's recommended to start from [scratch](/turnstile/get-started/).
+[Get started with Turnstile](/turnstile/get-started/) if there is no guide available yet. 
 
 ## Guides
 

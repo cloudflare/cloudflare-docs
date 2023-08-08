@@ -15,7 +15,7 @@ In the [security section](https://dash.cloudflare.com/?to=/:account/:zone/securi
 - [Rate limiting rules](/waf/rate-limiting-rules/)
 - [IP access rules](/waf/tools/ip-access-rules/)
 - [User Agent Blocking rules](/waf/tools/user-agent-blocking/)
-- Various [Security settings](/support/firewall/settings/)
+- Various [Security settings](/fundamentals/security/)
 
 ## Scrape Shield
 

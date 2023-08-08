@@ -16,6 +16,12 @@ By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you
 
 All users in your email domain must exist as a member in your Cloudflare account and IdP.  To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/account-and-billing/members/).
 
+{{<Aside>}}
+
+Cloudflare dashboard SSO does not support users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
+
+{{</Aside>}}
+
 ## 1. Set up an IdP
 
 Add an IdP to Cloudflare Zero Trust by following [our detailed instructions](/cloudflare-one/identity/idp-integration/).
@@ -26,7 +32,7 @@ Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/
 
 Ask your account team to approve and create your SSO domain. An SSO domain is the email domain associated with the members in your Cloudflare account. For example, if your SSO domain is configured for emails ending in `@yourcompany.com`, a member with email `@test.com` would not see the **Log in with SSO** option and would have to enter their username and password.
 
-Once your SSO domain is approved, a new **SSO App** application will appear under **Access** > **Applications**. The application is pre-configured wtih `allow email domain` as the default rule and your IdP as the authentication providers.
+Once your SSO domain is approved, a new **SSO App** application will appear under **Access** > **Applications**. The application is pre-configured with `allow email domain` as the default rule and your IdP as the authentication providers.
 
 ### SSO domain requirements
 

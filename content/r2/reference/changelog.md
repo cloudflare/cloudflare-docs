@@ -6,6 +6,27 @@ rss: file
 
 # Changelog
 
+## 2023-07-05
+
+- Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than ranged reads on smaller files. Performance should now be consistently good independent of filesize.
+
+## 2023-06-21
+
+- [Multipart ETags](/r2/objects/multipart-objects/#etags) are now MD5 hashes.
+
+## 2023-06-16
+
+- Fixed a bug where calling [GetBucket](/api/operations/r2-get-bucket) on a non-existent bucket would return a 500 instead of a 404.
+- Improved S3 compatibility for ListObjectsV1, now nextmarker is only set when truncated is true.
+- The R2 worker bindings now support parsing conditional headers with multiple etags. These etags can now be strong, weak or a wildcard. Previously the bindings only accepted headers containing a single strong etag.
+- S3 putObject now supports sha256 and sha1 checksums. These were already supported by the R2 worker bindings
+- CopyObject in the S3 compatible api now supports Cloudflare specific headers which allow the copy operation to be conditional on the state of the destination object.
+
+## 2023-04-01
+
+- [GetBucket](/api/operations/r2-get-bucket) is now available for use through the Cloudflare API.
+- [Location hints](https://developers.cloudflare.com/r2/buckets/data-location/) can now be set when creating a bucket, both through the S3 API, and the dashboard.
+
 ## 2023-03-16
 
 - The ListParts API has been implemented and is available for use.
@@ -97,7 +118,7 @@ rss: file
 ## 2022-08-17
 
 - The S3 `DeleteObjects` operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 `DeleteObject` operation was not affected by this.
-- Fixed presigned URL support for the S3 `ListBuckets` and `ListObjects` operations. 
+- Fixed presigned URL support for the S3 `ListBuckets` and `ListObjects` operations.
 
 ## 2022-08-06
 
@@ -136,7 +157,7 @@ rss: file
 ## 2022-07-13
 
 - S3 XML documents sent to R2 that have an XML declaration are not rejected with `400 Bad Request` / `MalformedXML`.
-- Minor S3 XML compatability fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.
+- Minor S3 XML compatibility fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.
 - Beta `ListMultipartUploads` support.
 
 ## 2022-07-06

@@ -75,7 +75,7 @@ The table below shows additional cookies used by the Challenge Platform.
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cf_clearance`                                                | Clearance Cookie stores the proof of challenge passed. It is used to no longer issue a challenge if present. It is required to reach an origin server.                    |
 | `cf_chl_XXXX`                                                 | This cookie is used to check whether the [Cloudflare Edge server](https://www.cloudflare.com/en-gb/learning/cdn/glossary/edge-server/) supports cookies. It can be deleted if seen.           |
-| `cf_chl_rc_i`; `cf_chl_rc_ni`                                 | These cookies are for internal use which allows Cloudflare to identify production issues on clients.                                                                                          |
+| `cf_chl_rc_i`; `cf_chl_rc_ni`; `cf_chl_rc_m`                  | These cookies are for internal use which allows Cloudflare to identify production issues on clients.                                                                                          |
 
 {{<Aside type="warning">}}
 

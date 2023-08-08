@@ -8,21 +8,20 @@ meta:
 
 # Create a waiting room
 
-A waiting room can be created from the dashboard or via API.
+You can create a waiting room from the dashboard or via API.
 
 ## Create a waiting room from the dashboard
 
 {{<Aside>}}For additional context on creating a waiting room, refer to [Get started](/waiting-room/get-started/).{{</Aside>}}
 
-1.  Within your application, go to **Traffic** > **Waiting Room**.
-2.  Select **Create**.
-3.  Customize the [settings](/waiting-room/reference/configuration-settings/) for your waiting room. For additional guidance refer to [Best practices](/waiting-room/reference/best-practices/).
-4.  Select **Next**.
-5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using this waiting room to manage traffic for your mobile app or API, enable the JSON response toggle. Make sure that you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) for your client (mobile or web app).
-6.  Select **Next**.
-7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room).
-8.  Select **Save**. Your new waiting room will be enabled by default.
-
+1. Within your application, go to **Traffic** > **Waiting Room**.
+2. Select **Create**.
+3. Customize the [settings](/waiting-room/reference/configuration-settings/) for your waiting room. For additional guidance refer to [Best practices](/waiting-room/reference/best-practices/).
+4. Select **Next**.
+5. If you wish to [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using this waiting room to manage traffic for your mobile app or API, enable the JSON response toggle. Make sure that you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) for your client (mobile or web app).
+6. Select **Next**.
+7. Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room).
+8. Select **Save**. Your new waiting room will be enabled by default.
 
 ## Create a waiting room via the API
 
@@ -40,14 +39,14 @@ The Cloudflare API base URL is:
 https://api.cloudflare.com/client/v4
 ```
 
-For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
+For authentication instructions, refer to [Create an API token](/fundamentals/api/get-started/create-token/).
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
+For help with endpoints and pagination, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
 Configure your waiting room with the following required parameters in the `data` field:
 
 *  `name` - A unique name for the waiting room. Use only alphanumeric characters, hyphens, and underscores.
-*  `host` - Host name for which you want to configure a waiting room.
+*  `host` - Hostname for which you want to configure a waiting room.
 *  `total_active_users` - The total number of active user sessions on the route at a point in time.
 *  `new_users_per_minute` - The number of new users gaining entry into the route every minute.
 

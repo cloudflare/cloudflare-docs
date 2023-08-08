@@ -11,7 +11,7 @@ You can scan HTTP traffic for sensitive data through Secure Web Gateway policies
 
 ## Prerequisites
 
-Enable [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/).
+Enable [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
 
 ## 1. Configure a DLP profile
 
@@ -23,24 +23,16 @@ DLP scans will not start until you [create a DLP policy](#2-create-a-dlp-policy)
 
 ## 2. Create a DLP policy
 
-DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP policy](/cloudflare-one/policies/filtering/http-policies/). To start logging or blocking traffic, create a policy for DLP:
+DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-policies/). To start logging or blocking traffic, create a policy for DLP:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
-2. Select **Create a policy**.
-3. Build an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) using the [DLP Profile](/cloudflare-one/policies/filtering/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
+2. Select **Add a policy**.
+3. Build an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) using the [DLP Profile](/cloudflare-one/policies/gateway/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
 
-   | Policy name                       |
-   | --------------------------------- |
-   | Only allow SSN uploads to Workday |
-
-   | Selector     | Operator | Value                          |
-   | ------------ | -------- | ------------------------------ |
-   | DLP Profiles | in       | `U.S. Social Security Numbers` |
-   | Application  | not in   | `Workday`                      |
-
-   | Action |
-   | ------ |
-   | Block  |
+   | Selector     | Operator | Value                          | Logic | Action |
+   | ------------ | -------- | ------------------------------ | ----- | ------ |
+   | DLP Profiles | in       | `U.S. Social Security Numbers` | And   | Block  |
+   | Application  | not in   | `Workday`                      |       |        |
 
 4. Select **Create policy**.
 

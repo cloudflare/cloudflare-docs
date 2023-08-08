@@ -25,6 +25,7 @@ If you experience any issues, make sure you are not blocking specific [user agen
 If your domain is not yet active on Cloudflare or you want to measure the before and after improvements of using Cloudflare, Cloudflare recommends using the following third-party tools:
 
 - [GTmetrix](https://gtmetrix.com/)
+- [DebugBear](https://www.debugbear.com/test/website-speed)
 - [Lighthouse](https://developer.chrome.com/docs/lighthouse/)
 - [WebPageTest](https://www.webpagetest.org/)
 

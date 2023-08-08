@@ -1,12 +1,11 @@
 ---
 pcx_content_type: configuration
 title: Configuration
-weight: 3
 ---
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deploying setup for a Worker.
 
 {{<Aside type="warning">}}
 Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
@@ -43,19 +42,19 @@ kv_namespaces = [
 
 ## Environments
 
-The configuration for a Worker can become complex when you define different [environments](/workers/platform/environments/), and each environment has its own configuration.
+The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `wrangler deploy --env staging`.
 
-The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/platform/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
+The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
 ## Inheritable keys
 
 Inheritable keys are configurable at the top-level, and can be inherited (or overridden) by environment-specific configuration.
 
 {{<Aside type="note">}}
-At a minimum, the `name`, `main` and `compatibility_date` keys are required to publish a Worker.
+At a minimum, the `name`, `main` and `compatibility_date` keys are required to deploy a Worker.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -70,7 +69,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `compatibility_date` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/platform/compatibility-dates/).
+  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `account_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -78,7 +77,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `compatibility_flags` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/platform/compatibility-dates/).
+  - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -86,11 +85,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `route` {{<type-link href="#types-of-routes">}}Route{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A route that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
+  - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
 
 - `routes` {{<type-link href="#types-of-routes">}}Route[]{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - An array of routes that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
+  - An array of routes that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
 
 - `tsconfig` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -114,7 +113,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `no_bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Skip internal build steps and directly publish your Worker script. You must have a plain JavaScript Worker with no dependencies.
+  - Skip internal build steps and directly deploy your Worker script. You must have a plain JavaScript Worker with no dependencies.
 
 - `minify` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -130,7 +129,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `keep_vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether Wrangler should keep variables configured in the dashboard on publish. Refer to [source of truth](#source-of-truth).
+  - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
 - `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -150,7 +149,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/platform/environment-variables/).
+  - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/configuration/environment-variables/).
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -194,7 +193,7 @@ Example: `"example.com/*"`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -214,7 +213,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -222,7 +221,7 @@ Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
 
 ### Custom Domain route
 
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
+This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{<definitions>}}
 
@@ -232,7 +231,7 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 {{</definitions>}}
 
@@ -247,7 +246,7 @@ route = { pattern = "example.com", custom_domain = true }
 
 ## Triggers
 
-Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/platform/triggers/cron-triggers/#supported-cron-expressions).
+Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
 
 {{<definitions>}}
 
@@ -270,7 +269,7 @@ crons = ["* * * * *"]
 
 ## Custom builds
 
-You can configure a custom build step that will be run before your Worker is published. Refer to [Custom builds](/workers/wrangler/custom-builds/).
+You can configure a custom build step that will be run before your Worker is deployed. Refer to [Custom builds](/workers/wrangler/custom-builds/).
 
 {{<definitions>}}
 
@@ -304,7 +303,7 @@ watch_dir = "build_watch_dir"
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/platform/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/platform/client-api/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -338,7 +337,7 @@ database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 
 ### Durable Objects
 
-[Durable Objects](/workers/learning/using-durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
+[Durable Objects](/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 To bind Durable Objects to your Worker, assign an array of the below object to the `durable_objects.bindings` key.
 
@@ -375,7 +374,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/learning/durable-objects-migrations/).
 
 {{<definitions>}}
 
@@ -478,7 +477,7 @@ r2_buckets  = [
 
 ### Service bindings
 
-A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/platform/bindings/about-service-bindings/).
+A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/configuration/bindings/about-service-bindings/).
 
 To bind other Workers to your Worker, assign an array of the below object to the `services` key.
 
@@ -494,7 +493,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/wrangler/environments/).
 
 {{</definitions>}}
 
@@ -542,7 +541,7 @@ dataset = "<DATASET_NAME>"
 
 To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
 
-To create a [binding](/workers/platform/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
+To create a [binding](/workers/configuration/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
 
 {{<definitions>}}
 
@@ -696,7 +695,7 @@ If you depend on Node.js APIs, either directly in your own code or via a library
 
 ### Use runtime APIs directly
 
-A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
+A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
 
 ```toml
 ---
@@ -704,8 +703,6 @@ header: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_compat" ]
 ```
-
-{{<render file="_nodejs-compat-local-dev.md">}}
 
 ### Add polyfills using Wrangler
 
@@ -728,7 +725,7 @@ This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in i
 Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
 {{</Aside>}}
 
-[Workers Sites](/workers/platform/sites) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
+[Workers Sites](/workers/configuration/sites/) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
 
 {{<definitions>}}
 

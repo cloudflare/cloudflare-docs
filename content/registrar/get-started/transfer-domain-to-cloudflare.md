@@ -14,6 +14,10 @@ This section contains generic instructions on how to transfer your domain to Clo
 
 ---
 
+{{<render file="_requirements.md">}}
+
+---
+
 {{<render file="_before-you-begin.md">}}
 
 ---

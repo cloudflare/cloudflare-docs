@@ -5,7 +5,7 @@ layout: single
 weight: 6
 ---
 
-# Wokers Analytics Engine FAQ
+# Workers Analytics Engine FAQ
 
 Below you will find answers to our most commonly asked questions.
 

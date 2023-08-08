@@ -26,7 +26,7 @@ To start, install the [Simply Static](https://wordpress.org/plugins/simply-stati
 
 Search for `Simply Static` and confirm that the resulting plugin that you will be installing matches the plugin below.
 
-![Simply Static plugin](../media/simply-static.png)
+![Simply Static plugin](/images/pages/how-to/simply-static.png)
 
 Select **Install** on the plugin. After it has finished installing, select **Activate**.
 

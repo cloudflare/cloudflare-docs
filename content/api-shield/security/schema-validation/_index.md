@@ -24,6 +24,10 @@ The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (
 
 Currently, API Shield cannot validate some features of API schemas, including the following: all responses, external references, non-basic path templating, or unique items.
 
+There is a limit of 1000 total operations for enabled schemas. We will raise this limit in the near future.
+
+Schema Validation 2.0 is only available via API. Changes will not reflect in the Cloudflare dashboard until a future release.
+
 ## Body inspection
 
 API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.

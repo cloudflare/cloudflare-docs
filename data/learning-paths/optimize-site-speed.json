@@ -57,20 +57,18 @@
         "estimated_time": 60,
         "pages": [
           {
-            "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200168196",
+            "url_path": "/speed/optimization/content/auto-minify/",
             "link_title": "Auto Minify",
             "additional_description": "Remove unnecessary characters from HTML, JavaScript, and CSS files."
           },
           {
-            "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200168396",
+            "url_path": "/speed/optimization/content/brotli/",
             "link_title": "Brotli",
             "additional_description": "Apply gzip and brotli compression to some types of content."
           },
           {
             "external_link": true,
-            "url_path": "/fundamentals/speed/rocket-loader/",
+            "url_path": "/speed/optimization/content/rocket-loader/",
             "link_title": "Rocket Loader",
             "additional_description": "Defer JavaScript loading until after page content (applied through client-side JavaScript)."
           },
@@ -87,7 +85,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/219178057",
+            "url_path": "/speed/optimization/images/mirage/",
             "link_title": "Mirage",
             "additional_description": "Lazy load all images in a browser (applied through client-side JavaScript)."
           }

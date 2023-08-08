@@ -6,7 +6,7 @@ weight: 123
 
 # Pathing status
 
-## Understanding pathing
+## Understand pathing
 
 Cloudflare issues the following **Edge Pathing Statuses**:
 
@@ -82,7 +82,7 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 
 {{</table-wrap>}}
 
-## Understanding response fields
+## Understand response fields
 
 The response status appears in three places in a request:
 

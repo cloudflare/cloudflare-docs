@@ -18,7 +18,7 @@ Build serverless applications and deploy instantly across the globe for exceptio
  
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure. 
 
-Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
+Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in over 300 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
  
@@ -28,13 +28,13 @@ Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflar
  
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](//workers/wrangler/commands/#deploy) your Workers projects.
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/workers/platform/bindings/">}}
+{{<feature header="Bindings" href="/workers/configuration/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
@@ -51,6 +51,12 @@ The Playground is a sandbox which gives you an instant way to preview and test a
 {{<related header="R2" href="/r2/" product="r2">}}
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+{{</related>}}
+
+{{<related header="D1" href="/d1/" product="d1">}}
+
+D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 {{</related>}}
 
@@ -72,12 +78,10 @@ Cloudflare Queues integrates with Cloudflare Workers to allow developers to send
 
 {{<resource header="HTMLRewriter" href="/workers/runtime-apis/html-rewriter/" icon="reference-architecture">}}Parse and transform HTML from inside a Worker.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn which storage option is best for your project.{{</resource>}}
+{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
-
-{{<resource header="Works on Workers" href="https://workers.cloudflare.com/works" icon="learning-center-book">}}Explore third-party packages that work on Workers, submitted by Cloudflare users.{{</resource>}}
  
 {{</resource-group>}}

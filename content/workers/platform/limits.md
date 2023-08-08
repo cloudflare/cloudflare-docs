@@ -15,7 +15,7 @@ title: Limits
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
+| [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
@@ -37,7 +37,7 @@ Request headers observe a total limit of 32 KB, but each header is limited to 16
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
-Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to have a request body limit beyond 500 MB.
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
 
 {{<table-wrap>}}
 
@@ -137,7 +137,7 @@ Durable Objects are only available on the Workers Paid plan.
 | [Storage per object](#durable-objects)     | unlimited                                      |
 | [Key size](#durable-objects)               | 2048 bytes                                     |
 | [Value size](#durable-objects)             | 128 KiB                                        |
-| [Websocket message size](#durable-objects) | 1 MiB                                          |
+| [WebSocket message size](#durable-objects) | 1 MiB                                          |
 | [CPU per request](#durable-objects)        | 30s                                            |
 
 {{</table-wrap>}}
@@ -170,7 +170,7 @@ Workers being rate-limited by Anti-Abuse Protection are also visible from the Cl
 
 ### Daily request
 
-Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/triggers/routes/) in two modes: 1) Fail open and 2) Fail closed.
+Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/configuration/routing/routes/) in two modes: 1) Fail open and 2) Fail closed.
 
 #### Fail open
 
@@ -201,10 +201,10 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
 
 * A Worker may consume up to **10 milliseconds** on the Free plan.
-* A Worker or [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may consume up to **50 milliseconds** of CPU time with the Bundled usage model on the Paid Plan.
+* A Worker or [Scheduled Worker](/workers/configuration/cron-triggers/) may consume up to **50 milliseconds** of CPU time with the Bundled usage model on the Paid Plan.
 * A Worker may run for up to **30 seconds** with the Unbound usage model on the Paid Plan.
-* A [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
-* A [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
+* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
+* A [Scheduled Worker](/workers/configuration/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
 * A [Queue consumer Worker](/queues/platform/javascript-apis/#consumer) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, per invocation.
 
 There is no limit on the real runtime for a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
@@ -217,7 +217,7 @@ Duration is the measurement of wall-clock time. This is measured in Gigabyte-sec
 
 For example, when a Worker executes via a [scheduled event](/workers/runtime-apis/scheduled-event/), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
-Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/workers/learning/using-durable-objects/).
+Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/durable-objects/).
 
 ---
 
@@ -273,7 +273,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+A Worker can be up to 10 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 ## Worker startup time
 
@@ -291,7 +291,7 @@ App Workers do not count towards this limit.
 
 ## Number of routes per zone
 
-Each zone has a limit of 1,000 [routes](/workers/platform/triggers/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ---
 
@@ -323,10 +323,23 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 - Storage values of up to 128 KiB (131072 bytes)
 
-- Websocket messages of up to 1 MiB (1048576 bytes). This limit applies to messages received, not sent or proxied through.
+- WebSocket messages of up to 1 MiB (1048576 bytes). This limit applies to messages received, not sent or proxied through.
 
 - 30s of CPU time per request, including websocket messages
 
 Durable Objects scale well across Objects, but each object is inherently single-threaded. A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload.
 
 Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your account team.
+
+---
+
+## Image Resizing with Workers 
+
+When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.
+
+---
+
+## Log size
+
+- You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/tail-workers/).
+- Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.

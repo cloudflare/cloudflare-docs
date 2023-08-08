@@ -54,6 +54,12 @@ For example, this configuration blocks every request to the application, except 
 
 ### Bypass
 
+{{<Aside type="warning" header="Warning">}}
+
+Bypass does not enforce any Access security controls and requests are not logged. This should be tested before deploying to production. Consider using Service Auth if you would like to enforce policies and maintain logging without requiring user authentication.
+
+{{</Aside>}}
+
 The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
 
 A Bypass policy based on IP ranges for an internal application could look like this, where you can input your office's IP addresses in the `Value` field:
@@ -74,7 +80,7 @@ This ensures that everyone connecting from outside your specified IP range will 
 
 {{<Aside type="note">}}
 
-When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
+When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
 
 {{</Aside>}}
 

@@ -3,10 +3,10 @@ pcx_content_type: how-to
 title: Create a rule in the dashboard
 weight: 3
 meta:
-  title: Create a Configuration Rule in the dashboard
+  title: Create a configuration rule in the dashboard
 ---
 
-# Create a Configuration Rule in the dashboard
+# Create a configuration rule in the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Configuration Rules**.

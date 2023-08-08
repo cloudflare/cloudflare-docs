@@ -35,17 +35,17 @@ Por el momento, solo Chrome y Firefox tienen acceso a la función HAR de forma p
 
 1\. Haz clic derecho en cualquier lugar de la página del navegador y selecciona **Inspeccionar elemento**.
 
-2\. Las herramientas del desarrollador aparecen en la parte inferior o en el costado izquierdo del navegador. Haz clic en la pestaña **Network** (Red) ![gathering_har_file_network.png](/support/static/gathering_har_file_network.png)
+2\. Las herramientas del desarrollador aparecen en la parte inferior o en el costado izquierdo del navegador. Haz clic en la pestaña **Network** (Red) ![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
 
 3\. Marca **Preserve log** (Conservar registro)
 
 4\. Haz clic en el registro
 
- ![gathering_har_file_record.png](/support/static/gathering_har_file_record.png)
+ ![gathering_har_file_record.png](/images/support/gathering_har_file_record.png)
 
 5\. Navega a la URL que genera los problemas. Una vez que hayas experimentado el problema, haz clic con el botón derecho en cualquiera de los elementos de la pestaña **Network** (Red) y selecciona **Save all as HAR with Content** (Guardar todo como HAR con contenido).
 
- ![save_har_with_content.png](/support/static/save_har_with_content.png)
+ ![save_har_with_content.png](/images/support/save_har_with_content.png)
 
  6. Adjunta el archivo HAR a tu ticket de asistencia.
 

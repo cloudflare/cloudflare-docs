@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Migrate to ES modules format
-weight: 9
 ---
 
 # Migrate to ES modules format
@@ -12,11 +11,11 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 
 There are several reasons to migrate your Workers to the ES modules format:
 
-1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/workers/learning/using-durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
+1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
 2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
 3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
 
-## Migrate a simple Worker
+## Migrate a Worker
 
 The following example demonstrates a Worker that redirects all incoming requests to a URL with a `301` status code.
 
@@ -37,7 +36,7 @@ addEventListener('fetch', event => {
 });
 ```
 
-Workers using ES modules format replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The example code above becomes:
+Workers using ES modules format replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The previous example code becomes:
 
 ```js
 export default {
@@ -53,7 +52,7 @@ export default {
 
 ## Bindings
 
-[Bindings](/workers/platform/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
+[Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
 
 Workers using ES modules format do not rely on any global bindings. However, Service Worker syntax accesses bindings on the global scope.
 
@@ -134,6 +133,80 @@ async function getTodos(env) {
 }
 
 export { getTodos }
+```
+
+## Environment variables
+
+[Environment variables](/workers/configuration/environment-variables/) are accessed differently in code written in ES modules format versus Service Worker format.
+
+Review the following example environment variable configuration in `wrangler.toml`:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+
+# Define top-level environment variables
+# under the `[vars]` block using
+# the `key = "value"` format
+[vars]
+API_ACCOUNT_ID = "<EXAMPLE-ACCOUNT-ID>"
+```
+
+### Environment variables in Service Worker format
+
+In Service Worker format, the `API_ACCOUNT_ID` is defined in the global scope of your Worker application. Your `API_ACCOUNT_ID` environment variable is available to use anywhere in your Worker application's code.
+
+```js
+---
+filename: worker.js
+---
+addEventListener("fetch", async (event) => {
+  console.log(API_ACCOUNT_ID) // Logs "<EXAMPLE-ACCOUNT-ID>"
+  return new Response("Hello, world!")
+})
+```
+
+### Environment variables in ES modules format
+
+In ES modules format, environment variables are only available inside the `env` parameter that is provided at the entrypoint to your Worker application.
+
+```js
+---
+filename: worker.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    console.log(env.API_ACCOUNT_ID) // Logs "<EXAMPLE-ACCOUNT-ID>"
+    return new Response("Hello, world!")
+  },
+};
+```
+
+
+---
+
+## Cron Triggers
+
+To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax-es-modules), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
+
+This example code:
+
+```js
+addEventListener("scheduled", (event) => {
+  // ...
+});
+```
+
+Then becomes:
+
+```js
+export default {
+  async scheduled(event, env, ctx) {
+    // ...
+  },
+};
 ```
 
 ## Access `event` or `context` data

@@ -8,6 +8,10 @@ meta:
 
 # Remove a domain
 
+You can remove domains from Cloudflare if needed.
+
+However, Cloudflare will still retain your configuration history for 18 months, which is the default retention period for the zone's [audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). 
+
 ## Before removing your domain
 
 If you experience website issues, we recommend [temporarily pausing Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/) to evaluate your website's performance.
@@ -46,6 +50,6 @@ If you need to re-add the domain in a different account, make sure the current s
 
 {{<Aside type="note">}}
 
-Cloudflare retains your configuration history for 18 months, which is the default retention period for the zone's [audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). 
+If you are an Enterprise customer and cannot remove your domain, contact your Customer Success Manager.
 
 {{</Aside>}}

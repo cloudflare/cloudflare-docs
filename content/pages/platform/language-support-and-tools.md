@@ -14,21 +14,25 @@ Cloudflare Pages' build environment has broad support for a variety of languages
 
 If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
-{{<Aside type="warning" header="v2 Beta">}}
+{{<Aside type="warning" header="V2 Build System">}}
 
-We have recently annouced a [v2 beta](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) which brings several improvements to our build system. To migrate to this new version, configure your Pages project settings in the dashboard:
+We have recently announced a [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) which brings several improvements to project builds. To migrate to this new version, configure your Pages project settings in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** > in **Overview**, select your Pages project.
 3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
 
-Notably, we have made changes to the default versions of languages and tools that are included. Submit feedback on v2 beta's selection in the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev). If there are tools and languages you use that are missing, or if you experience any problems when migrating to v2, submit your feedback in the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev).
+Notably, we have made changes to the default versions of languages and tools that are included. To submit feedback on v2's selection, missing tools and languages, or problems you are experiencing when migrating to v2, join the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev).
 
 If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v2. To fix this, you must specify the version you wish to use. Find details on how to do this for each of these languages and tools on this page. For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION` environment variable or by adding a `.node-version` or `.nvmrc` file to your project.
 
-During this beta period, we are aware of, and are in the process of fixing, the following issues:
+We are aware of some outstanding issues with the v2 build system that we intend on fixing:
 
-- `Pipfile` support for setting a Python version
+- Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
+- Detecting Yarn version from `yarn.lock` file version.
+- Detecting pnpm version detection based `pnpm-lock.yaml` file version.
+- Detecting Node.js and package managers from `package.json` -> `"engines"`.
+- `pipenv` and `Pipfile` support.
 
 {{</Aside>}}
 

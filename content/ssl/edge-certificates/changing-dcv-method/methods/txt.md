@@ -57,8 +57,12 @@ This means that a wildcard certificate covering `example.com` and `*.example.com
 
 {{<render file="_dcv-validate-patch.md">}}
 
-## Renew DCV tokens
+TXT records used for DCV can be removed from your authoritative DNS provider as soon as the certificate is issued.
 
-{{<render file="_dcv-token-renewal.md">}}
+## Renewal
+
+{{<render file="_dcv-certificate-renewal.md">}}
+
+{{<render file="_dcv-renewal-fallback.md">}}
 
 [^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.
