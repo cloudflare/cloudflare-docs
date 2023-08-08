@@ -10,7 +10,7 @@ When you set up Area 1 using an [inline deployment](/email-security/deployment/i
 
 Refer to this page for reference on what IP subnet mask ranges to use.
 
-{{<Aside type="warning" header="Aditional information for O365">}}
+{{<Aside type="warning" header="Additional information for O365">}}
 Office 365 does not support IPv6 addresses nor the following IPv4 subnet mask ranges: 
 - `104.30.32.0/19`
 - `134.195.26.0/23`
