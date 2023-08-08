@@ -27,7 +27,7 @@ $ sudo adduser jdoe
 
 ## 2. Generate a Gateway SSH proxy CA
 
-Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin. The Gateway SSH proxy CA will fetch the user's SSO identity from a token and issue a short-lived certificate for the user's email address prefix.
+Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin. The Gateway SSH proxy issues a short-lived certificate for the email address prefix that was used to enroll the WARP client.
 
 {{<Aside type="note">}}
 Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
