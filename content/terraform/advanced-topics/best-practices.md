@@ -9,15 +9,15 @@ Though all Terraform deployments are unique, follow these best practices to set 
 
 ## Manage Terraform resources in Terraform
 
-Terraform works best when it manages all changes to a resource.
+Terraform works best when it manages all changes to and the lifecycle of a resource.
 
-After any options on the state file, Terraform attempts to call the read operation and sync the remote into the local state. If there are differences in the local and remote - caused by managing resources outside of Terraform - you will need to delete and recreate the resource in the state file (usually via importing).
+After any operation on the configuration, Terraform attempts to reconcile the differences by syncing the remote into the local state. If there are differences in the local and remote - caused by managing resources outside of Terraform - you may need to delete and recreate the resource in the state file (usually via importing) as not all resources support in-place updates.
 
 ## Directory structure
 
-Cloudflare recommends using a separate based on accounts, zones, and products. This setup lets you have fine-grained owners and scoped Terraform operations to a specific product in a zone. It also allows more closely align owners with Cloduflare's [default roles](/fundamentals/account-and-billing/members/roles/), as well as additional tools like AWS or GCP storage by permissioning separate state files.
+Cloudflare recommends using a directory structure that relies on a combination of accounts, zones, and products for isolating changes. This setup lets you have fine-grained owners and scoped Terraform operations to a specific product in a zone. It also allows more closely align owners with Cloudflare's [default roles](/fundamentals/account-and-billing/members/roles/), as well as additional tools like AWS or GCP storage by permissioning separate state files.
 
-For Rulesets, you can extend this even further by partitioning at the phase level (WAF, redirects, origin rules).
+For products that encompass many responsibilities such as Rulesets, you can extend this even further by partitioning at the phase level (WAF, redirects, origin rules).
 
 ```txt
 example-tf/
@@ -91,16 +91,16 @@ example-tf/
 
 Terraform modules are ways of encapsulating multiple resources with logic in an abstracted interface. Consider the example where a module sets up up default load balancer with a pool, some DNS entries, and perhaps a page rule. The end user may use it like this:
 
-```txt
+```hcl
 module "example" "an_example_site" {
   domain = "example.com"
   origin_ip = "192.168.0.1"
 }
 ```
 
-In reality, however, it will actually be doing this.
+In terms of Terraform resources, however, it will perform this.
 
-```txt
+```hcl
 resource "cloudflare_record" "example_1" {
   zone_id = var.cloudflare_zone_id
   name    = "terraform"
@@ -187,7 +187,9 @@ resource "cloudflare_page_rule" "example_page_rule" {
 }
 ```
 
-While convenient, this setup can cause unanticipated issues. If this module is shared and changes internally, the module may have resources out of sync or recreated.
+While convenient, this setup can cause unanticipated issues. If this module is shared and changes internally, the module may have resources out of sync or recreated. 
+
+Using modules also increases the difficulty of debugging or reproducing issues as you must then factor in potential logic bugs outside of Terraform core and the Cloudflare provider.
 
 {{<Aside type="warning">}}
 
