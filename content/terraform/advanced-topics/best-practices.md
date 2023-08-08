@@ -15,7 +15,7 @@ After any operation on the configuration, Terraform attempts to reconcile the di
 
 ## Directory structure
 
-Cloudflare recommends using a directory structure that relies on a combination of accounts, zones, and products for isolating changes. This setup lets you have fine-grained owners and scoped Terraform operations to a specific product in a zone. It also allows more closely align owners with Cloudflare's [default roles](/fundamentals/account-and-billing/members/roles/), as well as additional tools like AWS or GCP storage by permissioning separate state files.
+Cloudflare recommends using a directory structure that relies on a combination of accounts, zones, and products for isolating changes. This setup lets you have fine-grained owners and scoped Terraform operations to a specific product in a zone. It also more closely aligns owners with Cloudflare's [default roles](/fundamentals/account-and-billing/members/roles/), as well as additional tools like AWS or GCP storage by permissioning separate state files.
 
 For products that encompass many responsibilities such as Rulesets, you can extend this even further by partitioning at the phase level (WAF, redirects, origin rules).
 
@@ -193,7 +193,7 @@ Using modules also increases the difficulty of debugging or reproducing issues a
 
 {{<Aside type="warning">}}
 
-This advice also applies to [Terraform dynamic blocks](https://www.terraform.io/language/expressions/dynamic-blocks) that allow you to do logic in your HCL. Since this dynamic blocks are always evaluated, you can get yourself into situations where you have logic bugs in your configuration (and making the end result unreproducible).
+This advice also applies to [Terraform dynamic blocks](https://www.terraform.io/language/expressions/dynamic-blocks) that allow you to do logic in your HCL. Since these dynamic blocks are always evaluated, you can get yourself into situations where you have logic bugs in your configuration (and making the end result unreproducible).
 
 {{</Aside>}}
 
@@ -215,8 +215,8 @@ To minimize drift, use Terraform and a CI/CD pipeline that runs across both doma
 
 ## Store credentials safely
 
-We recommend not storing Cloudflare credentials as plaintext.
+We do not recommend storing Cloudflare credentials as plaintext.
 
-Locally, you can use a third-party tool like [cf-vault](https://github.com/jacobbednarz/cf-vault/).
+Locally, you can use a third-party tool like [cf-vault](https://github.com/jacobbednarz/cf-vault/) to store your Cloudflare credentials.
 
 For CI pipelines, use an internal or secret storage tool (such as [Vault](https://www.hashicorp.com/products/vault/secrets-management)).
