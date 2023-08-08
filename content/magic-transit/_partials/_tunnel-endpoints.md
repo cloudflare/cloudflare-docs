@@ -44,7 +44,9 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 ## Add tunnels
 
-### Dashboard instructions
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
@@ -100,7 +102,10 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 </div>
 </details>
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 ### API instructions
 
 <details>
@@ -223,6 +228,9 @@ You will receive a response like the following:
 
 </div>
 </details>
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Next steps
 
