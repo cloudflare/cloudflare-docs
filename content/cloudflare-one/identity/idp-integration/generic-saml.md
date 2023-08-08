@@ -68,7 +68,7 @@ Cloudflare Access supports SAML (Security Assertion Markup Language) attributes 
 
 [**SAML attributes**](#saml-attributes) refer to specific data points or characteristics that the IdP shares about the authenticated user. These attributes often include details like email address, name, or role, and are passed along to the service provider upon successful authentication.
 
-[**SAML headers**](#saml-headers) are metadata in the SAML protocol communication. The headers are used to convey information about the sender, recipient, and the message itself. These headers can be leveraged to provide extra context or control over the communication.
+[**SAML headers**](#saml-headers) are metadata in the SAML protocol communication which convey information about the sender, recipient, and the message itself. These headers can be leveraged to provide extra context or control over the communication.
 
 #### SAML attributes
 
