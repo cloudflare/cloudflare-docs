@@ -50,6 +50,6 @@ If you need to re-add the domain in a different account, make sure the current s
 
 {{<Aside type="note">}}
 
-If you are an Enterprise customer and cannot remove your domain, contact your Customer Success Manager.
+For Enterprise customers you need to [Change your site plan](https://developers.cloudflare.com/fundamentals/account-and-billing/account-maintenance/change-plan/) to the free plan to get the **Remove Site from Cloudflare** option. If you are an Enterprise customer and cannot remove your domain, contact your Customer Success Manager.
 
 {{</Aside>}}
