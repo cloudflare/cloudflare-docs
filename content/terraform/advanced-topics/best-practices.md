@@ -98,7 +98,7 @@ module "example" "an_example_site" {
 }
 ```
 
-In terms of Terraform resources, however, it will perform this.
+In terms of Terraform resources, however, the above example would be translated to:
 
 ```hcl
 resource "cloudflare_record" "example_1" {
@@ -187,7 +187,7 @@ resource "cloudflare_page_rule" "example_page_rule" {
 }
 ```
 
-While convenient, this setup can cause unanticipated issues. If this module is shared and changes internally, the module may have resources out of sync or recreated. 
+While convenient, this setup can cause unanticipated issues. If this module is shared and then changes internally, the module may have resources out of sync or recreated. 
 
 Using modules also increases the difficulty of debugging or reproducing issues as you must then factor in potential logic bugs outside of Terraform core and the Cloudflare provider.
 
