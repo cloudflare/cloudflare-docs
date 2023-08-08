@@ -209,9 +209,9 @@ You will receive a response like the following:
 ```json
 {
   "result": {
-    "ipsec_id": "IPSEC_ID",
-    "ipsec_tunnel_id": "IPSEC_TUNNEL",
-    "psk": "YOUR_PSK_KEY",
+    "ipsec_id": "<IPSEC_ID>",
+    "ipsec_tunnel_id": "<IPSEC_TUNNEL>",
+    "psk": "<YOUR_PSK_KEY>",
     "psk_metadata": {
       "last_generated_on": "2023-04-21T10:48:15.953887008Z"
     }
