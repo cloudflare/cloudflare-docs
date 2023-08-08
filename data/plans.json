@@ -2603,9 +2603,9 @@
         "analytics": {
           "title": "Analytics",
           "free": "No",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
+          "pro": "3 days",
+          "biz": "30 days",
+          "ent": "90 days"
         }
       }
     },
