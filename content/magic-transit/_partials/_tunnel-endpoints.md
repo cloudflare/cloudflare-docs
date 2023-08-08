@@ -106,8 +106,6 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-### API instructions
-
 <details>
 <summary>GRE tunnel</summary>
 <div>
