@@ -31,7 +31,7 @@ $ npm create cloudflare@latest
 Complete the following steps to get started:
 1. **In which directory do you want to create your application?** -  Enter your project name or leave blank and we'll generate one for you.
 2. **What type of applicaiton do you want to create?** -  Select `Website or web app`.
-3. **Which development framework do you want to use??** -  Select `Astro`.
+3. **Which development framework do you want to use?** -  Select `Astro`.
 
 
 ### Astro config
