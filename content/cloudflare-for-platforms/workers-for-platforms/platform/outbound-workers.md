@@ -120,6 +120,6 @@ export default {
 
 {{<Aside type ="note">}}
 
-Outbound Workers do not intercept fetch requests from Service Bindings or mTLS certificate bindings. 
+Outbound Workers do not intercept fetch requests made from Durable Objects or mTLS certificate bindings. 
 
 {{</Aside>}}
