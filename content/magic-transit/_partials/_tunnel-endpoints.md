@@ -28,7 +28,7 @@ This value is not required for IPsec tunnels, unless your router is using an IKE
 
 ### GRE tunnels
 
-You can set up GRE tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API make sure you already have an [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) before you begin.
+You can set up GRE tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
 
 ### IPsec tunnels
 
