@@ -6,7 +6,7 @@ weight: 7
 
 # List keys
 
-Use a list operation to view all the keys that live in a given KV namespace.
+Use a list operation to view all the keys that live in a given Workers KV namespace.
 
 An example:
 

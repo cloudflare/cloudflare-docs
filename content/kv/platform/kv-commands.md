@@ -103,7 +103,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 {{</definitions>}}
 
-### Delete a KV namespace called MY_KV:
+### Delete a KV namespace called MY_KV
 
 ```sh
 $ wrangler kv:namespace delete --binding=MY_KV

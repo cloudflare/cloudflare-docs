@@ -12,7 +12,7 @@ To get the value for a given key, call the `get()` method on any KV namespace yo
 NAMESPACE.get(key);
 ```
 
-The `get()` method returns a promise you can `await` to get the value. If the key is not found, the promise will resolve with the literal value `null`.
+The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
 
 The `get()` method may return stale values. If a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to be visible. 
 
@@ -75,7 +75,17 @@ For simple values, use the default `text` type which provides you with your valu
 
 For large values, the choice of `type` can have a noticeable effect on latency and CPU usage. For reference, the `type` can be ordered from fastest to slowest as `stream`, `arrayBuffer`, `text`, and `json`.
 
-## Cache TTL parameter
+## CacheTTL parameter
+
+`cacheTTL` is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from. 
+
+Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTTL` is useful if your data is write-once or write-rarely. 
+
+{{<Aside type="note" header="Cold and Hot Read">}}
+A cold read is a read that is not cached within the colocated cache. A hot read is (?). 
+{{</Aside>}}
+
+`cacheTTL` is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
 
 The `get()` options object also accepts a `cacheTTL` parameter:
 
@@ -85,13 +95,11 @@ NAMESPACE.get(key, { cacheTTL: 3600 });
 
 The `cacheTTL` parameter must be an integer greater than or equal to `60`, which is the default. 
 
-The `cacheTTL` parameter defines the length of time in seconds that a KV result is cached in the global network location it is accessed from. Defining the length of time in seconds can be useful for reducing cold read latency on keys that are read relatively infrequently. It is useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
-
 The effective `cacheTTL` of an already cached item can be reduced by getting it again with a lower `cacheTTL`. For example, if you did `NAMESPACE.get(key, {cacheTTL: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTTL: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTTL`, which defaults to 60 seconds.
 
 ## Metadata
 
-Get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata()` method on a KV namespace you have bound in your Worker script:
+Get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata()` method on a KV namespace you have bound in your Worker code:
 
 ```js
 const { value, metadata } = await NAMESPACE.getWithMetadata(key);

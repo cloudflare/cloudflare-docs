@@ -6,9 +6,9 @@ weight: 7
 
 # KV bindings
 
-KV bindings allow communication between a Worker and a KV namespace.
+KV bindings allow for communication between a Worker and a KV namespace.
 
-## Reference KV from Workers
+## Reference Workers KV from Workers
 
 A KV namespace is a key-value database that is replicated to Cloudflare's global network. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 

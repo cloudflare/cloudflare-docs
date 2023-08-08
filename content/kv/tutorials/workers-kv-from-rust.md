@@ -469,4 +469,4 @@ impl WorkersKv {
 }
 ```
 
-Refer to the [full code](https://github.com/fkettelhoit/workers-kv-from-rust) as an example repository.
+Find the [full code for this example on GitHub](https://github.com/fkettelhoit/workers-kv-from-rust).

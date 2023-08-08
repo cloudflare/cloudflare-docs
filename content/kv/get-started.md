@@ -13,22 +13,26 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-To use Workers KV, you will need:
-
 1. A [Cloudflare account](/fundamentals/account-and-billing/account-setup/), if you do not have one already. 
 2. [Wrangler](/workers/wrangler/install-and-update/) installed.
 
-## 1. Create a KV namespace 
+## 1. Enable Workers KV in the dashboard
 
-A KV namespace is a key-value database replicated to Cloudflare’s global network.
+To enable Workers KV, you will need to purchase the Workers Paid plan:
 
-You can create a KV namespace via Wrangler or the Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers & Pages** > **Plans**.
+3. Select **Purchase Workers Paid** and complete the payment process to enable Workers KV.
+
+## 2. Create a KV namespace 
+
+A [KV namespace](/kv/learning/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
+
+You can create a KV namespace via Wrangler or the dashboard.
 
 ### Create a KV namespace via Wrangler
 
 [Wrangler](/workers/wrangler/) allows you to put, list, get, and delete entries within your KV namespace.
-
-To use Workers KV, you must create a KV namespace. 
 
 {{<Aside type="note">}}
 KV operations are scoped to your account.
@@ -38,7 +42,7 @@ To create a KV namespace via Wrangler:
 
 1. Open your terminal and run `wrangler kv:namespace create <YOUR_NAMESPACE>`.
 
-The `kv:namespace` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
+The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
 
 ```sh
 $ wrangler kv:namespace create <YOUR_NAMESPACE>
@@ -67,7 +71,7 @@ Binding names do not need to correspond to the namespace you created. It is an e
 
 A binding is how your Worker interacts with external resources such as [KV Namespaces](/kv/learning/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. 
 
-Refer to the [Environment Variables](/workers/platform/environment-variables) documentation for more information.
+Refer to the [Environment Variables documentation](/workers/platform/environment-variables) for more information.
 
 {{</Aside>}}
 
@@ -79,7 +83,7 @@ Refer to the [Environment Variables](/workers/platform/environment-variables) do
 4. Enter a name for your namespace. 
 5. Select **Add**.
 
-## 2. Interact with your KV namespace
+## 3. Interact with your KV namespace
 
 You can interact with your KV namespace via Wrangler or via a Worker.
 
