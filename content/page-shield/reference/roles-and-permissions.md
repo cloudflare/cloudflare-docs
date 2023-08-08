@@ -3,7 +3,7 @@ title: Roles and permissions
 pcx_content_type: reference
 weight: 5
 meta:
-  description: The user roles and API token permissions required to access and configure Page Shield.
+  description: User roles and API token permissions required to access and configure Page Shield.
 ---
 
 # Roles and permissions
@@ -13,8 +13,8 @@ Cloudflare users with the following [roles](/fundamentals/account-and-billing/me
 * Administrator
 * Super Administrator - All Privileges
 * Page Shield
-* Domain Page Shield
 * Page Shield Read _(read-only access)_
+* Domain Page Shield
 * Domain Page Shield Read _(read-only access)_
 
 ## API token permissions
