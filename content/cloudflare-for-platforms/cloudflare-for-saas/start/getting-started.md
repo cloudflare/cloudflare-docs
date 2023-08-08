@@ -52,7 +52,7 @@ To finish the custom hostname setup, your customer needs to set up a `CNAME` rec
 Your customer's `CNAME` record might look like the following:
 
 ```txt
-mystore.com CNAME customers.saasprovider.com
+www.mystore.com CNAME customers.saasprovider.com
 ```
 
 This record would route traffic in the following way:
@@ -60,12 +60,12 @@ This record would route traffic in the following way:
 ```mermaid
 flowchart TD
 accTitle: How traffic routing works with a CNAME target
-A[Request to <code>mystore.com</code>] --> B[<code>customers.saasprovider.com</code>]
+A[Request to <code>www.mystore.com</code>] --> B[<code>customers.saasprovider.com</code>]
 B --> C[<code>proxy-fallback.saasprovider.com</code>]
 ```
 <br/>
 
-Requests to `mystore.com` would go to your `CNAME` target (`customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
+Requests to `www.mystore.com` would go to your `CNAME` target (`customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
 
 [^1]: {{<render file="_regional-services.md">}}
 
