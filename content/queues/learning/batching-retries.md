@@ -103,6 +103,12 @@ Each retry counts as an additional read operation per [Queues pricing](/queues/p
 
 When a single message within a batch fails to be delivered, the entire batch is retried, unless you have [explicitly acknowledged](#explicit-acknowledgement) a message (or messages) within that batch. For example, if a batch of 10 messages is delivered, but the 8th message fails to be delivered, all 10 messages will be retried and thus redelivered to your consumer in full.
 
+{{<Aside type="warning" header="Retried messages and consumer concurrency">}}
+
+Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/learning/consumer-concurrency/) to learn more. 
+
+{{</Aside>}}
+
 ## Dead Letter Queues
 
 A Dead Letter Queue (DLQ) is a common concept in a messaging system, and represents where messages are sent when a delivery failure occurs with a consumer after `max_retries` is reached. A Dead Letter Queue is just like any other queue, and can be produced to and consumed from independently. 

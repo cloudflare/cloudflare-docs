@@ -26,6 +26,12 @@ The number of consumers concurrently invoked for a queue will autoscale based on
 
 Where possible, Queues will optimize for keeping your backlog from growing exponentially, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
 
+{{<Aside type="warning" header="Consumer concurrency and retried messages">}}
+
+Retrying messages with `.retry()` or calling `.retryAll()` on a batch will count as a failed invocation and cause the consumer to autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is something higher, it is usually due to messages being retried, preventing your consumer from scaling up.
+
+{{</Aside>}}
+
 ### Example
 
 If you are writing 100 messages/second to a queue with a single concurrent consumer that takes 5 seconds to process a batch of 100 messages, the number of messages in-flight will continue to grow at a rate faster than your consumer can keep up.
