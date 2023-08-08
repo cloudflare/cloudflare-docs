@@ -71,7 +71,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
   - If this key is present, the video playback for this video will be required to use signed urls after upload.
 
-- `scheduledDeletion`
+- `scheduleddeletion`
 
   - Specifies a date and time when a video will be deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. The specified date and time cannot be earlier than 30 days from the video's created timestamp.
 
