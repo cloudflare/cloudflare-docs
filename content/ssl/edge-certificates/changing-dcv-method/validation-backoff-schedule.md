@@ -10,7 +10,9 @@ meta:
 
 Domain control validation (DCV) has to happen before a Certificate Authority (CA) will issue a certificate for a domain. If DCV fails during issuance or renewal, Cloudflare automatically retries it on a schedule.
 
-If you use [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) or if [Cloudflare automatically performs DCV for you](/ssl/edge-certificates/changing-dcv-method/), this page is only informational. If you have to manually perform DCV, remember that DCV tokens have a [fixed validity period](#dcv-tokens-validity) and consider the following information on how often Cloudflare checks for a valid token.
+If you use [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) or if [Cloudflare automatically performs DCV for you](/ssl/edge-certificates/changing-dcv-method/), this page is only informational.
+
+If you have to manually perform DCV, consider the following information on how often Cloudflare checks for a valid token and remember that DCV tokens have a [fixed validity period](#dcv-tokens-validity).
 
 {{<Aside type="note">}}
 You can also request an immediate recheck by using the [Edit SSL Certificate Pack Validation Method endpoint](/api/operations/ssl-verification-edit-ssl-certificate-pack-validation-method), specifying the same `validation_method` as the [method](/ssl/edge-certificates/changing-dcv-method/methods/) you currently use.
