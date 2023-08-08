@@ -64,14 +64,21 @@ addEventListener("fetch", async (event) => {
 {{</tab>}}
 {{</tabs>}}
 
-## Reference KV from a Module Worker
+## Reference Workers KV from Durable Objects and Workers using ES modules format
 
-When using the Module Worker syntax, `env` is passed in the fetch handler. 
+[Durable Objects](/durable-objects/) use ES modules. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object). 
+
+An example might look like:
 
 ```js
-export default {
-  async fetch(request, env) {
-    const valueFromKV = await env.NAMESPACE.get("someKey");
+export class DurableObject {
+  constructor(state, env) {
+    this.state = state;
+    this.env = env;
+  }
+
+  async fetch(request) {
+    const valueFromKV = await this.env.NAMESPACE.get("someKey");
     return new Response(valueFromKV);
   }
 }
