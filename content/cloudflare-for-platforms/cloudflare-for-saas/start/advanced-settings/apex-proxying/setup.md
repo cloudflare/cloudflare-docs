@@ -12,7 +12,7 @@ To set up Cloudflare for SaaS for [apex proxying](/cloudflare-for-platforms/clou
 
 ---
 
-{{<render file="_get-started-prereqs.md" withParameters="(this should be the zone associated with your IP prefixes).">}}
+{{<render file="_get-started-prereqs.md" withParameters="(this should be within the account associated with your IP prefixes).">}}
 
 ---
 
