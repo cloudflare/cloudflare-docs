@@ -9,11 +9,11 @@ meta:
 
 # Cloudflare Advanced DNS Protection
 
-Cloudflare Advanced DNS Protection, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), provide stateful protection against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/).
+Cloudflare Advanced DNS Protection, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), provides stateful protection against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/).
 
 ## How it works
 
-Cloudflare's Advanced DNS Protection works by first learning you traffic patterns and forming a baseline of the type of DNS queries you normally receive. Later, the system will be able to distinguish between legitimate and malicious queries, protecting your DNS infrastructure without impacting legitimate traffic.
+Cloudflare's Advanced DNS Protection works by first learning your traffic patterns and forming a baseline of the type of DNS queries you normally receive. Later, the system will be able to distinguish between legitimate and malicious queries, protecting your DNS infrastructure without impacting legitimate traffic.
 
 Advanced DNS Protection provides protection for both DNS-over-UDP and DNS-over-TCP traffic. DNS-over-TCP traffic will first go through the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system and then through the Advanced DNS Protection system.
 
@@ -25,9 +25,9 @@ Advanced DNS Protection is available to all [Magic Transit](/magic-transit/) cus
 
 Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
-## Get started
+## Configure
 
-To get started with Advanced DNS Protection, refer to [Setup](/ddos-protection/dns-protection/setup/).
+Currently, you must configure the Advanced DNS Protection via API. For more information, refer to [Configure via API](/ddos-protection/dns-protection/configure-api/).
 
 ---
 
