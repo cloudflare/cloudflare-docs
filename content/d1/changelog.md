@@ -7,6 +7,18 @@ rss: file
 
 # Changelog
 
+## 2023-08-09
+
+### Bind D1 from the Cloudflare dashboard
+
+You can now [bind a D1 database](/d1/get-started/#3-bind-your-worker-to-your-d1-database) to your Workers directly in the Cloudflare dashboard. To do so, navigate to a Worker project -> click on **Settings** -> **Variables** -> and scroll down to **D1 Database Bindings**.
+
+Note: If you have previously deployed a Worker with a D1 database binding with a version of `wrangler` prior to `3.5.0`, you must upgrade to [`wrangler v3.5.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.5.0) first before you can edit your D1 database bindings in the dashboard. New Workers projects do not have this limitation.
+
+Legacy D1 alpha users who had previously prefixed their database binding manually with `__D1_BETA__` should remove this as part of this upgrade. Your Worker scripts should call your D1 database via `env.BINDING_NAME` only. Refer to the latest [D1 getting started guide](/d1/get-started/#3-bind-your-worker-to-your-d1-database) for best practices.
+
+We recommend that all D1 alpha users begin using wrangler `3.5.0` (or later) to benefit from improve TypeScript types and future D1 API improvements.
+
 ## 2023-08-01
 
 ### Per-database limit now 500 MB
