@@ -9,14 +9,14 @@ title: Limits
 
 | Feature                               | Free                  | Paid        |
 | ------------------------------------- | --------------------- | ----------  |
-| Reads                                 | 100,000 reads per day | unlimited   |
-| Writes to different keys              | 1,000 writes per day  | unlimited   |
+| Reads                                 | 100,000 reads per day | Unlimited   |
+| Writes to different keys              | 1,000 writes per day  | Unlimited   |
 | Writes to same key                    | 1 per second          | 1 per second|
 | Operations/worker invocation          | 1000                  | 1000        |
 | Namespaces                            | 100                   | 100         |
-| Storage/account                       | 1 GB                  | unlimited   |
-| Storage/namespace                     | 1 GB                  | unlimited   |
-| Keys/namespace                        | unlimited             | unlimited   |
+| Storage/account                       | 1 GB                  | Unlimited   |
+| Storage/namespace                     | 1 GB                  | Unlimited   |
+| Keys/namespace                        | Unlimited             | Unlimited   |
 | Key size                              | 512 bytes             | 512 bytes   |
 | Key metadata                          | 1024 bytes            | 1024 bytes  |
 | Value size                            | 25 MiB                | 25 MiB      |

@@ -18,7 +18,7 @@ This guide will instruct you through:
 
 ## 1. Enable Workers KV in the dashboard
 
-To enable Workers KV, you will need to purchase the Workers Paid plan:
+Enable Workers KV for your account by purchasing the Workers Paid plan:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Workers & Pages** > **Plans**.
@@ -135,8 +135,10 @@ You can now access the binding from within a Worker. In your Worker script, use 
 let value = await <YOUR_BINDING>.get("KEY");
 ```
 
+At the end of this tutorial, you have learned how to create and interact with a KV namespace.
+
 ## Related resources
 
-* [Workers KV methods](/kv/learning/methods/)
-* [Environments](/workers/configuration/environment-variables/)
+* [Workers KV API](/kv/workers-kv-api/)
+* [Workers KV Environments](/kv/platform/environments/)
 * [`kv` command documentation](/kv/platform/kv-commands/)
