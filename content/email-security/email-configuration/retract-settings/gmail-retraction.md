@@ -156,6 +156,8 @@ You have to upload the private key generated in the previous step to Area 1. Thi
 
 ## 3. Configure auto-retraction actions in Area 1
 
+{{<Aside type="warning" header="Important">}}If you choose the hard delete retraction for Gmail, email messages will be permanently deleted. These messages cannot be recovered, even by admins.{{</Aside>}}
+
 {{<render file="_auto-retraction.md" withParameters="Google Gmail messages cannot be recovered, even by the admin.">}}
 
 ## 4. Adjust the hop count in Area 1
