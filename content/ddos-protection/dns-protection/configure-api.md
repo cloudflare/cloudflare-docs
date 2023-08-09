@@ -18,7 +18,7 @@ To obtain the complete endpoint, append the Advanced DNS Protection API endpoint
 https://api.cloudflare.com/client/v4
 ```
 
-The `{account_id}` argument is the account ID (a hexadecimal string). You can find this value in the Cloudflare dashboard.
+The `{account_id}` argument is the [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) (a hexadecimal string). You can find this value in the Cloudflare dashboard.
 
 The following table summarizes the available operations.
 
@@ -34,7 +34,7 @@ You must set the `policy` parameter to one of the following values:
 * `drop_unprofiled_only`
 * `drop_both`
 
-For more information on the `mode` and `sensitivity` parameters and the supported values, refer to [Settings](/ddos-protection/dns-protection/settings/).
+For more information on the `mode` and `sensitivity` parameters and the supported values, refer to [Policy settings](/ddos-protection/dns-protection/settings/).
 
 ## Examples
 
