@@ -140,5 +140,5 @@ At the end of this tutorial, you have learned how to create and interact with a 
 ## Related resources
 
 * [Workers KV API](/kv/workers-kv-api/)
-* [Workers KV Environments](/kv/platform/environments/)
+* [Workers KV Environments](/workers/configuration/environment-variables/)
 * [`kv` command documentation](/kv/platform/kv-commands/)
