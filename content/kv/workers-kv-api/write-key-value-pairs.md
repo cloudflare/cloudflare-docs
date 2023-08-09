@@ -38,7 +38,7 @@ Due to the eventually consistent nature of Workers KV, concurrent writes can end
 
 Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. 
 
-Refer to [How KV works](/kv/learning/how-kv-works/) for more information on this topic.
+Refer to [How KV works](/kv/learning/how-workers-kv-works/) for more information on this topic.
 {{</Aside>}}
 
 ## Write data in bulk
