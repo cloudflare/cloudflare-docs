@@ -10,7 +10,7 @@ meta:
 
 ---
 
-{{<render file="_get-started-prereqs.md">}}
+{{<render file="_get-started-prereqs.md" withParameters="on a **Free** plan.">}}
 
 ---
 
