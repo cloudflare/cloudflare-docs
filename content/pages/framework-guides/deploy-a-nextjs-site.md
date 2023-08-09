@@ -205,19 +205,15 @@ export async function GET(request: Request) {
 };
 ```
 
-## The Image component
+## `Image` component
 
-The Cloudflare network does not provide the same image optimization support as the Vercel network does, because of this
-the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
+The Cloudflare network does not provide the same image optimization support as the Vercel network does, because of this the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
 
- - If you build your application as a static one the `<Image />` component won't actually serve images at all.
+ - If you build your application as a static site, the `<Image />` component will not serve any images.
 
- - If you build your application using `@cloudflare/next-on-pages` the component will work but not perform any image optimization
-(regardless of the props you pass to it).
+ - If you build your application using `@cloudflare/next-on-pages`, the component will work but it will not perform any image optimization (regardless of the [props](https://react.dev/learn/passing-props-to-a-component) you pass to it).
 
-Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for
- the `<Image />` component which allow you to use any image optimization service you want. In case you'd like to use the [Cloudflare
- Images](https://www.cloudflare.com/en-gb/products/cloudflare-images) please check out our [Next.js image resizing integration guide](/images/image-resizing/integration-with-frameworks/#nextjs).
+Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for the `<Image />` component, which allow you to use any image optimization service you want. To use [Cloudflare Images](/images/cloudflare-images/), refer to the [Next.js image resizing integration guide](/images/image-resizing/integration-with-frameworks/#nextjs).
 
 
 {{<render file="_learn-more.md" withParameters="Next.js">}}
