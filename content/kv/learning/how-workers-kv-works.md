@@ -35,7 +35,7 @@ Infrequently read values are pulled from other data centers or the central store
 
 ## Performance
 
-To improve Workers KV performance, increase the [`cacheTTL`](/kv/learning/kv-performance-optimizations/#optimize-get-long-tail-performance) parameter up from its default 60 seconds. 
+To improve Workers KV performance, increase the [`cacheTTL` parameter](/kv/learning/methods/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. 
 
 Workers KV achieves this performance by caching which makes reads eventually-consistent with writes. 
 

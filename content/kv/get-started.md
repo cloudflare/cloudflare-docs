@@ -138,5 +138,5 @@ let value = await <YOUR_BINDING>.get("KEY");
 ## Related resources
 
 * [Workers KV methods](/kv/learning/methods/)
-* [Environments](/workers/platform/environments/)
+* [Environments](/workers/configuration/environment-variables/)
 * [`kv` command documentation](/kv/platform/kv-commands/)
