@@ -25,7 +25,7 @@ Elastic recommends the AWS S3 SQS mode.
 
 ## Enable Logpush Job in Cloudflare
 
-Determine which method you want to use, and configure the appropriate Logpush job in the Cloudflare Dashboard or via the API.
+Determine which method you want to use, and configure the appropriate Logpush job in the Cloudflare dashboard or via the API.
 
 Elastic supports the default JSON format.
 

@@ -14,7 +14,7 @@ WPMU (WordPress Multi-User) is the earlier version of WordPress Multi-Site, whic
 
 **To use a WPMU site configuration with Cloudflare, do the following:**
 
-1\. Add the root domain to Cloudflare (example.com) and point the DNS to Cloudflare, using the Cloudflare nameservers specified during the signup process and making the DNS change at your registrar.
+1\. Add the apex domain (also known as "root domain" or "naked domain", e.g. `example.com`) to Cloudflare and point the DNS to Cloudflare, using the Cloudflare nameservers specified during the signup process and making the DNS change at your registrar.
 
 2\. Define the wildcard subdomains in your DNS zone file during the signup process. Cloudflare cannot proxy wildcard DNS entries, so to benefit from Cloudflare performance and security, you must explicitly define any entries in your zone file as either CNAMEs or A record entries.
 

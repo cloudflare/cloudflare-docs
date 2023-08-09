@@ -176,13 +176,16 @@ The update process can take up to an hour. During this period you may observe se
 1. Use the [Check WAF update compatibility](#api-operations) operation to determine if the zone can update to the new WAF, given its current configuration:
 
     ```bash
-    $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waf_migration/check?phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>"
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waf_migration/check?phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>"
     ```
 
     Example response:
 
     ```json
+    ---
+    highlight: 3
+    ---
     {
       "result": {
         "compatible": true,
@@ -199,8 +202,8 @@ The update process can take up to an hour. During this period you may observe se
 2. To get the new WAF configuration corresponding to your current configuration, use the [Get new WAF configuration](#api-operations) operation:
 
     ```bash
-    $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waf_migration/config?phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>"
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waf_migration/config?phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>"
     ```
 
     Example response:
@@ -248,10 +251,10 @@ The returned configuration in the example above, which would match the existing 
 3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the Update zone entry point ruleset operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
 
     ```bash
-    $ curl -X PUT \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=validation&phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>" \
-    -d '{
+    curl --request PUT \
+    "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=validation&phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --data '{
       "name": "default",
       "rules": [
         {
@@ -282,10 +285,10 @@ The returned configuration in the example above, which would match the existing 
 4. To finish the migration and disable WAF managed rules, set the configuration for the new WAF using the settings you obtained in step 2 and possibly adjusted in step 3. Make sure you include the `waf_migration=pending&phase_two=1` query string parameters.
 
     ```bash
-    $ curl -X PUT \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=pending&phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>" \
-    -d '{
+    curl --request PUT \
+    "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=pending&phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --data '{
       "name": "default",
       "rules": [
         {

@@ -21,21 +21,21 @@ Not all SaaS applications support tenant control. Examples of common application
 
 This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 
-1.  Create a policy with the following values:
+2. Add a policy with the following values:
 
     - Action: `Allow`
     - Selector: `Application`
     - Operator: `In`
     - Value: select the application you would like to inject custom headers for.
 
-1.  Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
+3. Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
 
     - Custom Header Name: Restrict-Access-To-Tenants
     - Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
 
-1.  Select **Create policy**.
+4. Select **Create policy**.
 
 Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to an Office 365 application with a personal account, authentication will fail.
 

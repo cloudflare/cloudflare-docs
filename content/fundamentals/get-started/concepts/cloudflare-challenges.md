@@ -64,9 +64,9 @@ When your application sends a challenge, your visitors either receive a non-inte
 
 ### Common issues
 
-Challenges are not supported by Microsoft Internet Explorer. If you are currently using Internet Explorer, try using another major web browser (Chrome, Safari, Firefox).
+Challenges are not supported by Microsoft Internet Explorer. If you are currently using Internet Explorer, try using another modern web browser (Chrome, Safari, Firefox). If you are already using a modern web browser, make sure it is using the latest version.
 
-If you are already using a major web browser, make sure it is using the latest version.
+When a request is sent with a referer header, the user will receive a challenge page as a response. Upon solving the challenge page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
 
 ### Supported browsers
 
@@ -78,7 +78,7 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 ### Mobile browsers
 
-Challenges are not supported for desktop mode on mobile browsers.
+Challenges are not supported for desktop mode on mobile browsers or mobile mode on desktop browsers.
 
 ---
 
@@ -92,7 +92,6 @@ When observing a Cloudflare Challenge page, a visitor could:
 - Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
 - Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (for example, images).
-
 
 ---
 

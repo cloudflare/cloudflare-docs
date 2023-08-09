@@ -18,6 +18,10 @@ An allowlist list of items (usually websites, IP addresses, email addresses, etc
 
 **Related terms:** blocklist
 
+## apex domain
+
+Apex domain is used to refer to a domain that does not contain a subdomain part, such as `example.com` (without `www.`). It is also known as "root domain" or "naked domain".
+
 ## API key
 
 An API key is unique to each Cloudflare user and used to confirm identity when using the [Cloudflare API](/api/).
@@ -330,7 +334,7 @@ Static content is website content that can be delivered to an end user directly 
 
 ## Subject Alternative Name (SAN)
 
-The SAN field of an SSL certificate specifies additional hostnames (sites, IP addresses, common names, subdomains, root domains, etc.) protected by a single SSL Certificate.
+The SAN field of an SSL certificate specifies additional hostnames (sites, IP addresses, common names, subdomains, apex domains, etc.) protected by a single SSL Certificate.
 
 ## subscription, add-on, or plan extension
 

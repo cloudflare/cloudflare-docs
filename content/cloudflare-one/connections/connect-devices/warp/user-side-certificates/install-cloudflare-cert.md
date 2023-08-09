@@ -106,7 +106,7 @@ $ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.ke
 4. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
 ```sh
-$ echo | sudo cat - Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
+$ echo | sudo tee -a /etc/ssl/cert.pem < Cloudflare_CA.pem
 ```
 
 ### iOS

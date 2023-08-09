@@ -131,6 +131,8 @@ Notifications can be sent to an email address or a webhook.
 
 You will need to add all of the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
 
+Once you update your DNS records, you can either [wait for the next retry](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) or request an immediate recheck.
+
 {{<render file="_dcv-validate-patch.md">}}
 
 Once the certificate has been validated, the certificate status will change to **Active**. 

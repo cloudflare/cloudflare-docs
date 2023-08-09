@@ -5,7 +5,7 @@ layout: list
 weight: 2
 ---
 
-{{<beta>}}Run test{{</beta>}}
+# Run test
 
 {{<content-column>}}
 
@@ -22,6 +22,8 @@ weight: 2
 5. Then, you can select, depending on your plan, **Run test once**, **Run daily test** or **Run weekly test**. Refer to the [Quotas](/speed/speed-test/run-speed-test/#quotas) section for information on the test frequency available for your plan.
 
 6. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/speed-test/test-results/) for more information.
+
+{{<render file="_user-agents.md">}}
 
 ### Recommendations
 

@@ -29,19 +29,19 @@ instructional, straightforward
 [**Context**](/style-guide/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they will accomplish.
 
   Provide context to the reader that is not in the section heading.
-  
+
   End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there is more material (such as a note) between the context and the procedure.
-  
+
   Do not provide context for steps with a partial sentence that is completed by the numbered steps.
-  
+
   Mention any unique considerations between the 3rd-party and Cloudflare.
 
 [**Prerequisites**](/style-guide/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
-  
+
   For 3rd-party integration guides, include information about what you need to interact with the third party for the following steps.
 
 [**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
-  
+
   Link out for basic concepts (Regex, JavaScript, web server maintenance).
 
 {{<Aside type="warning">}}
@@ -52,7 +52,7 @@ They easily become out-of-date, especially if we can not access the 3rd-party pr
 {{</Aside>}}
 
 [**Links**](/style-guide/documentation-content-strategy/component-attributes/links/): May be a bulleted list that references the 3rd-party product or in-text links to the 3rd-party process documentation.
-  
+
   Link to reputable sources within reason.
 
 ### Optional components
@@ -79,60 +79,58 @@ It may become a bigger problem if we can not access the 3rd-party product.
 Single procedure 3rd-party integration guide
 
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: integration-guide
-
 ---
+
 # Second-person imperative verb phrase with 3rd-party name included
- 
+
 Context for procedure
- 
+
 Prerequisites
- 
+
 1. Step one
 2. Step two
 3. Step three
 4. ...
-}
 ```
 
 3rd-party integration guide with multiple procedures that must be completed in order
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: integration-guide
 ---
- 
+
 # Second-person imperative verb phrase with 3rd-party name included
- 
+
 Context for procedure
- 
+
 Prerequisites
-  
-## 1. Second-person imperative verb phrase  
- 
-1. Step one
-2. Step two
-3. Step three
-4. ...    
- 
-## 2. Second-person imperative verb phrase  
- 
-1. Step one
-2. Step two
-3. Step three
-4. ...      
- 
-## 3. Second-person imperative verb phrase  
- 
+
+## 1. Second-person imperative verb phrase
+
 1. Step one
 2. Step two
 3. Step three
 4. ...
-}
+
+## 2. Second-person imperative verb phrase
+
+1. Step one
+2. Step two
+3. Step three
+4. ...
+
+## 3. Second-person imperative verb phrase
+
+1. Step one
+2. Step two
+3. Step three
+4. ...
 ```
 
 ## Examples
@@ -144,7 +142,7 @@ Prerequisites
 
 **Linking to external documentation**:
 
-+ [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/#sending-a-text-with-twilio/)
++ [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/#sending-a-text-with-twilio)
 
 (Discouraged but acceptable scenario) **How to with instructions in 3rd-party environment and within Cloudflare dashboard**:
 

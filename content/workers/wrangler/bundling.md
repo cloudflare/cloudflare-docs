@@ -5,7 +5,7 @@ title: Bundling
 
 # Bundling
 
-By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `wrangler publish --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
+By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `wrangler deploy --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
 
 {{<Aside type="note">}}
 We recommend using Wrangler's inbuilt bundling, but we understand there are cases where you will need more flexibility. We have built an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which lets you run your own build before Wrangler's built-in one.
@@ -55,11 +55,11 @@ Wrangler respects the [conditional `exports` field](https://nodejs.org/api/packa
 Disabling bundling is not recommended and has a number of major tradeoffs that are detailed below. Most users should be able to ignore this section.
 {{</Aside>}}
 
-Opt out of bundling by using the `--no-bundle` command line flag: `wrangler publish --no-bundle`. If you opt out of bundling, Wrangler will not process your code and a number of features will not be available. You can use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use `wrangler dev` and `wrangler publish`.
+Opt out of bundling by using the `--no-bundle` command line flag: `wrangler deploy --no-bundle`. If you opt out of bundling, Wrangler will not process your code and a number of features will not be available. You can use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use `wrangler dev` and `wrangler deploy`.
 
 ### D1 bindings
 
-During the [beta period for D1](/workers/platform/betas/), D1 bindings will not be available to a Worker published with `--no-bundle`.
+During the [beta period for D1](/workers/platform/betas/), D1 bindings will not be available to a Worker deployed with `--no-bundle`.
 
 ### Editing via the Cloudflare dashboard
 

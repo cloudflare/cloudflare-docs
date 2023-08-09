@@ -3,6 +3,12 @@ pcx_content_type: configuration
 title: Durable Objects
 ---
 
+<!-- 
+
+Do not write on this page. Make edits to the /durable-objects/get-started doc instead.
+
+-->
+
 # Durable Objects
 
 Durable Objects are available to anyone with a Workers paid subscription. Enable Durable Objects for your account by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > going to **Workers & Pages** > selecting your Worker and in **Metrics**, opting in to pricing.
@@ -13,7 +19,7 @@ Durable Objects provide low-latency coordination and consistent permanent storag
 
 Durable Objects consist of a class that defines a template for creating Durable Objects, and a Workers script that instantiates and uses those Durable Objects. The class and the Workers script are linked together with a binding.
 
-Learn more about [using Durable Objects](/workers/configuration/durable-objects/).
+Learn more about [using Durable Objects](/durable-objects/).
 
 ---
 
@@ -363,7 +369,7 @@ If the method fails with an uncaught exception, the exception will be thrown int
 
 Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events.
 
-The Hibernation API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/workers/configuration/durable-objects/#alarms-in-durable-objects), to be removed from memory while keeping its WebSockets connected ("hibernation").
+The Hibernation API allows a Durable Object that is not currently running an event handler, such as handling a WebSocket message, HTTP request, or [alarm](/durable-objects/api/alarms-in-durable-objects/), to be removed from memory while keeping its WebSockets connected ("hibernation").
 
 {{<Aside type="note">}}
 
@@ -373,7 +379,7 @@ A Durable Object that hibernates will not incur billable [Duration (GB-sec) char
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
-[Code updates](/workers/configuration/durable-objects/#global-uniqueness) will disconnect all WebSockets.
+[Code updates](/durable-objects/platform/known-issues/#global-uniqueness) will disconnect all WebSockets.
 
 #### WebSocket extensions
 
@@ -635,4 +641,4 @@ The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/ope
 
 ## Related resources
 
-- [Learn how to use Durable Objects](/workers/configuration/durable-objects/)
+- [Learn how to use Durable Objects](/durable-objects/)

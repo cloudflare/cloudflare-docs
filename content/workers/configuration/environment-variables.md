@@ -95,7 +95,7 @@ filename: wrangler secret put
 $ wrangler secret put <KEY>
 ```
 
-To add a secret to a Worker using the Cloudflare dashboard, follow the [environment variables setup instructions](/workers/configuration/environment-variables/#environment-variables-via-the-dashboard) and make sure to encrypt your secret.
+To add a secret to a Worker using the Cloudflare dashboard, follow the [environment variables setup instructions](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) and make sure to encrypt your secret.
 
 {{<Aside type="warning" header="Use secrets for sensitive information">}}
 

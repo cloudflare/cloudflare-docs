@@ -14,7 +14,7 @@ The values that populate the lookup tables of the Rules language are drawn from 
 - **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.path)` converts the value of `http.request.uri.path` to lowercase.
 - **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
 
-When working with values in rule expressions, keep in mind the notes outlined below for escape characters, case sensitivity, and boolean values.
+When working with values in rule expressions, keep in mind the information in the following sections.
 
 ## Escape characters in values
 
@@ -92,12 +92,40 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 ## Lists
 
-[Lists](/fundamentals/global-configurations/lists/) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support different kinds of list items.
+Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/fundamentals/global-configurations/lists/#list-types).
 
-To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). This example expression filters requests from IP addresses that are in an [IP List](/fundamentals/global-configurations/lists/ip-lists/) named `office_network`:
+
+To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
+
+The following example expression filters requests from IP addresses that are in an [IP List](/fundamentals/global-configurations/lists/ip-lists/) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
 ```
 
 List names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Lists](/fundamentals/global-configurations/lists/).
+
+### Inline lists
+
+Inline lists allow you to directly include a list of values in a simple expression that uses the `in` operator.
+
+Elements in an inline list can be strings, integers, or IP addresses/ranges. All elements of an inline list must have the same data type and they must be literal values. To specify inline list elements, enter them individually, separating elements with a space. Inline lists can contain duplicate values.
+
+Additionally, for some data types you can use ranges as elements:
+* For integer values, enter ranges in the form `<start_value>..<end_value>`. An inline list can contain both integer ranges and integer values.
+* For IP addresses, you can enter:
+    * Explicit IP ranges in the form `<start_address>..<end_address>` (for example, `198.51.100.3..198.51.100.7`).
+    * CIDR ranges (for example, `192.0.2.0/24` or `2001:0db8::/32`).
+
+    An inline list can contain explicit IP ranges, CIDR ranges, and individual IP addresses.
+
+```sql
+---
+header: Examples
+---
+http.host in {"example.com" "example.net"}
+
+ip.src in {198.51.100.1 198.51.100.3..198.51.100.7 192.0.2.0/24 2001:0db8::/32}
+
+tcp.dstport in {8000..8009 8080..8089}
+```

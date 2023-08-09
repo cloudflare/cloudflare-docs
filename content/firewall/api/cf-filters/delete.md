@@ -8,16 +8,16 @@ weight: 7
 
 ## Delete multiple filters
 
-This example deletes filters with IDs `<FILTER_ID_1>` and `<FILTER_ID_2>`.
+This example deletes filters with IDs `{filter_id_1}` and `{filter_id_2}`.
 
 ```bash
 ---
 header: Request
 ---
-curl -X DELETE \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters?id=<FILTER_ID_1>&id=<FILTER_ID_2>" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/filters?id={filter_id_1}&id={filter_id_2}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -41,16 +41,16 @@ header: Response
 
 ## Delete a single filter
 
-This example deletes a single filter with ID `<FILTER_ID>`.
+This example deletes a single filter with ID `{filter_id}`.
 
 ```bash
 ---
 header: Request
 ---
-curl -X DELETE \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>"
--H "X-Auth-Email: <EMAIL>"
--H "X-Auth-Key: <API_KEY>"
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/filters/{filter_id}"
+--header "X-Auth-Email: <EMAIL>"
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json

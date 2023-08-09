@@ -83,7 +83,7 @@ Additionally, the following snippets support surrounding existing text:
 
 ### How to use
 
-Note: Make sure you open the root folder of your cloned repository in Visual Studio Code (VSCode), so that VSCode correctly detects the snippets file stored in the `.vscode/` sub-folder.
+Note: Make sure you open the root folder of your cloned repository in Visual Studio Code (VS Code), so that VS Code correctly detects the snippets file stored in the `.vscode/` sub-folder.
 
 To enter a snippet:
 1. Enter the snippet prefix and press `Ctrl+Space` (`Command+Space` on a Mac).
@@ -93,7 +93,7 @@ To enter a snippet:
 To surround existing content with a snippet:
 1. Select the text you wish to surround with a snippet.
 2. Enter the snippet prefix (temporarily replacing the selected text) and press `Ctrl+Space` (`Command+Space` on a Mac).
-3. Select the desired snippet and press `Enter`. VSCode will insert the snippet body and paste the previously selected content in the correct location.
+3. Select the desired snippet and press `Enter`. VS Code will insert the snippet body and paste the previously selected content in the correct location.
 4. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
 
 ## For Cloudflare employees

@@ -69,16 +69,16 @@ Suppose you have a list of policies arranged in the following order of precedenc
 - DNS policies:
   {{<render file="gateway/_order-of-precedence-dns.md">}}
 - HTTP policies:
-  | Precedence | Selector | Operator | Value | Action |
-  | ------ | ---------------| ---------| ----------------| -------------- |
-  | 1 | Host | is | `example.com` | Block |
-  | 2 | Host | is | `test2.example.com` | Do Not Inspect |
+  | Precedence | Selector | Operator | Value               | Action         |
+  | ---------- | -------- | -------- | ------------------- | -------------- |
+  | 1          | Host     | is       | `example.com`       | Block          |
+  | 2          | Host     | is       | `test2.example.com` | Do Not Inspect |
 - Network policies:
-  | Precedence | Selector | Operator | Value | Action |
-  | ------ | ---------------| ---------| ----------------| -------------- |
-  | 1 | Destination Port | is | `80` | Block |
-  | 2 | Destination port | is | `443` | Allow |
-  | 3 | SNI Domain | is | `test.example.com` | Block |
+  | Precedence | Selector         | Operator | Value              | Action |
+  | ---------- | ---------------- | -------- | ------------------ | ------ |
+  | 1          | Destination Port | is       | `80`               | Block  |
+  | 2          | Destination port | is       | `443`              | Allow  |
+  | 3          | SNI Domain       | is       | `test.example.com` | Block  |
 
 When a user goes to `https://test.example.com`, Gateway performs the following operations:
 

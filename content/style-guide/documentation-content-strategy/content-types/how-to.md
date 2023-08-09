@@ -53,7 +53,7 @@ Do not provide context for steps with a partial sentence that is completed by th
 Single procedure how-to
 
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: how-to
@@ -67,14 +67,14 @@ Context for procedure (optional)
 1. Step two
 1. Step three
 1. ...
+
 Next steps sentence - what users should see as the end result and/or actionable next steps.
-}
 ```
 
 How-to with multiple procedures
 
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: how-to
@@ -99,15 +99,14 @@ Next steps sentence - what users should see as the end result and/or actionable 
 1. Step two
 1. Step three
 1. ...
- 
+
 Next steps sentence - what users should see as the end result and/or actionable next steps.
-}
 ```
 
 How-to with multiple procedures that must be completed in order
 
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: how-to
@@ -143,5 +142,4 @@ Next steps sentence - what users should see as the end result and/or actionable 
 1. ...
  
 Next steps sentence - what users should see as the end result and/or actionable next steps.
-}
 ```

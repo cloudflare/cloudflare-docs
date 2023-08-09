@@ -49,7 +49,7 @@ Accessible, welcoming, conversational, outspoken
 ## Template
 
 ```
-{
+
 ---
 title: Overview
 weight: xx
@@ -94,7 +94,7 @@ Description of external resource related to current product.
 {{</*/resource*/>}}
  
 {{</*/resource-group*/>}}
-}
+
 ```
 
 ## Additional Information

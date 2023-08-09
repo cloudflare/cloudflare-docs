@@ -45,7 +45,7 @@ You can [bring your own certificate](/cloudflare-one/connections/connect-devices
 
 ### Logs and Analytics
 
-By default, Cloudflare will store and deliver logs from data centers across our global edge network. To maintain regional control over your data, you can use [Customer Metadata Boundary](/data-localization/metadata-boundary/) and restrict data storage to a specific geographic region. For more information refer to the section about [Logpush datasets supported](/data-localization/metadata-boundary/logpush-datasets/).
+By default, Cloudflare will store and deliver logs from data centers across our global network. To maintain regional control over your data, you can use [Customer Metadata Boundary](/data-localization/metadata-boundary/) and restrict data storage to a specific geographic region. For more information refer to the section about [Logpush datasets supported](/data-localization/metadata-boundary/logpush-datasets/).
 
 Customers also have the option to reduce the logs that Cloudflare stores:
 - You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/) 

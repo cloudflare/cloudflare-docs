@@ -6,7 +6,7 @@ weight: 2
 
 # Customize a waiting room
 
-A waiting room can be customized from the dashboard or via API.
+You can customize your waiting room from the dashboard or via API.
 
 ## Customize a waiting room from the dashboard
 
@@ -120,7 +120,7 @@ To preview the appearance of a waiting room:
 
 ### Troubleshooting
 
-If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).
+If you notice something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).
 
 ## Customize a waiting room via API
 

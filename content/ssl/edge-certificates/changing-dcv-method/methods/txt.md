@@ -55,6 +55,8 @@ This means that a wildcard certificate covering `example.com` and `*.example.com
 
 ### Complete DCV
 
+Once you update your DNS records, you can either [wait for the next retry](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) or request an immediate recheck.
+
 {{<render file="_dcv-validate-patch.md">}}
 
 TXT records used for DCV can be removed from your authoritative DNS provider as soon as the certificate is issued.

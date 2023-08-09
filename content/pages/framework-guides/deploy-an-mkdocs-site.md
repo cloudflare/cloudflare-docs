@@ -43,15 +43,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *MkDocs* as your **Framework preset**. Your selection will provide the following information:
 
-{{<table-wrap>}}
-
-| Configuration option | Value                       |
-| -------------------- | --------------------------- |
-| Production branch    | `main`                      |
-| Build command        | `mkdocs build`               |
-| Build directory      | `site`                      |
-
-{{</table-wrap>}}
+{{<pages-build-preset framework="mkdocs">}}
 
 4. Go to **Environment variables (advanced)** > **Add variable** > and add the variable `PYTHON_VERSION` with a value of `3.7`.
 
