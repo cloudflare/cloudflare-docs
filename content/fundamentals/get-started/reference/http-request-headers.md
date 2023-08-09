@@ -96,6 +96,12 @@ The `CF-IPCountry` header contains a two-character country code of the originati
 
 To add this header to requests, along with other HTTP headers with location information for the visitor's IP address, [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
+{{<Aside type="note">}}
+
+The `CF-IPCountry` header is removed from requests made from a Worker to an origin that is not proxied behind Cloudflare.
+
+{{</Aside>}}
+
 ## CF-Visitor
 
 Currently, this header is a JSON object, containing only one key called “scheme”. The header will be either HTTP or HTTPS, and it is only relevant if you need to enable Flexible SSL in your Cloudflare settings. For example: `CF-Visitor: { \"scheme\":\"https\"}`.
