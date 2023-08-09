@@ -23,7 +23,7 @@ To create a new Worker in the Cloudflare dashboard:
 3. Give a name to your Worker and select **Deploy**.
 4. Select **Edit code**.
 
-You have now created a basic Worker that responds with "Hello world." To make this worker functional when using it as a Context Enricher, you need to change the code to return the context back:
+You have now created a basic Worker that responds with "Hello world." To make this Worker functional when using it as a Context Enricher, you need to change the code to return the context back:
 
 ```js
 export default {
