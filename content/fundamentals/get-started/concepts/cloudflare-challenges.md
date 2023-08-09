@@ -132,4 +132,4 @@ When a request is sent with a referer header, the user will receive a challenge 
 
 ### Cross-origin resource sharing (CORS) preflight requests
 
-Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, excludes user credentials that include cookies. As a result, the `cf_clearance` cookie will not be sent with the request, causing it to fail to bypass a challenge page (non-interactive, managed or interactive challenge).
+Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, excludes user credentials that include cookies. As a result, the `cf_clearance` cookie will not be sent with the request, causing it to fail to bypass a challenge page (non-interactive, managed, or interactive challenge).
