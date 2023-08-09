@@ -444,4 +444,4 @@ By completing this guide, you have successfully deployed your own blog, powered 
 - Blog front end: https://github.com/signalnerve/nuxt-sanity-blog
 - Sanity dataset: https://github.com/signalnerve/sanity-blog-schema
 
-If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more](/pages/tutorials/build-an-api-with-pages-functions/).
+If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. Refer to the [Build an API for your front end using Pages Functions tutorial](/pages/tutorials/build-an-api-with-pages-functions/) to learn more.
