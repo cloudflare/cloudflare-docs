@@ -62,12 +62,6 @@ For more on why Cloudflare does not recommend using Interactive Challenge, in fa
 
 When your application sends a challenge, your visitors either receive a non-interactive or an interactive challenge page.
 
-### Common issues
-
-Challenges are not supported by Microsoft Internet Explorer. If you are currently using Internet Explorer, try using another modern web browser (Chrome, Safari, Firefox). If you are already using a modern web browser, make sure it is using the latest version.
-
-When a request is sent with a referer header, the user will receive a challenge page as a response. Upon solving the challenge page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
-
 ### Supported browsers
 
 If your visitors are using an up-to-date version of a major browser — such as Chrome, Firefox, Safari, Microsoft Edge, Chrome and Safari on mobile — they will receive the challenge correctly.
@@ -125,3 +119,17 @@ For additional help, refer to [our FAQ for Challenges](/firewall/known-issues-an
 ## Multi-language support
 
 Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser UI. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
+
+## Common issues
+
+### Deprecated browser support
+
+Challenges are not supported by Microsoft Internet Explorer. If you are currently using Internet Explorer, try using another modern web browser (Chrome, Safari, Firefox). If you are already using a modern web browser, make sure it is using the latest version.
+
+### Referer header
+
+When a request is sent with a referer header, the user will receive a challenge page as a response. Upon solving the challenge page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
+
+### Cross-origin resource sharing (CORS) preflight requests
+
+Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, excludes user credentials that include cookies. As a result, the `cf_clearance` cookie will not be sent with the request, causing it to fail to bypass a challenge page (non-interactive, managed or interactive challenge).
