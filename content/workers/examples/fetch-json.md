@@ -72,7 +72,7 @@ const handler: ExportedHandler = {
      * Use await gatherResponse(..) in an async function to get the response body
      * @param {Response} response
      */
-    async function gatherResponse(response) {
+    async function gatherResponse(response: Response) {
       const { headers } = response;
       const contentType = headers.get("content-type") || "";
       if (contentType.includes("application/json")) {
