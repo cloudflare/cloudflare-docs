@@ -64,7 +64,7 @@ Finally, you will need to configure your SaaS application to require users to lo
    - **Access Entity ID or Issuer**
    - **Public key**
 
-   You can either manually enter this data into your SaaS application or upload the application's metadata XML file. The metadata is available at the URL: `<your-SSO-endpoint>/saml-metadata`
+   You can either manually enter this data into your SaaS application or upload the application's metadata XML file. The metadata is available at the URL: `<your-SSO-endpoint>/saml-metadata` (e.g. example.cloudflareaccess.com/cdn-cgi/access/saml-metadata )
 
 2. Select **Done**.
 
