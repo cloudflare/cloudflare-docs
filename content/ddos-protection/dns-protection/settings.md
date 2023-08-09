@@ -22,15 +22,15 @@ Advanced DNS Protection policies can have one of the following execution modes: 
 
 * **Disabled**
 
-    * Cloudflare will collect data about DNS queries, but the protection provided by Advanced DNS Protection systems will be disabled.
+    * Cloudflare will collect data about DNS queries, but the protection provided by Advanced DNS Protection systems will be disabled. API value: `disabled`.
 
 * **Monitor**
 
-    * Protection systems will not apply any mitigation to DNS attacks identified by the Advanced DNS Protection.
+    * Protection systems will not apply any mitigation to DNS attacks identified by the Advanced DNS Protection. API value: `monitoring`.
 
 * **Enabled**
 
-    * Advanced DNS Protection systems will protect you against DNS attacks by applying mitigation actions to incoming packets identified as belonging to an attack.
+    * Advanced DNS Protection systems will protect you against DNS attacks by applying mitigation actions to incoming packets identified as belonging to an attack. API value: `enabled`.
 
 {{</definitions>}}
 
@@ -42,3 +42,5 @@ The sensitivity level of the Advanced DNS Protection system for the current type
 * A high sensitivity level means that smaller spikes in the DNS packet rate may trigger a mitigation action.
 
 The default sensitivity level is _Medium_.
+
+The API values are the following: `low`, `medium`, or `high`.
