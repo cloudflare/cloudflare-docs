@@ -43,4 +43,4 @@ The sensitivity level of the Advanced DNS Protection system for the current type
 
 The default sensitivity level is _Medium_.
 
-The API values are the following: `low`, `medium`, or `high`.
+The API values are the following: `low`, `medium`, and `high`.
