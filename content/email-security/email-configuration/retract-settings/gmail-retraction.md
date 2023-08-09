@@ -156,7 +156,7 @@ You have to upload the private key generated in the previous step to Area 1. Thi
 
 ## 3. Configure auto-retraction actions in Area 1
 
-{{<render file="_auto-retraction.md">}}
+{{<render file="_auto-retraction.md" withParameters="Google Gmail messages cannot be recovered, even by the admin.">}}
 
 ## 4. Adjust the hop count in Area 1
 
