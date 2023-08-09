@@ -321,6 +321,7 @@
 # fundamentals
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/account-and-billing/members/roles/ 301
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/account-and-billing/members/ 301
+/fundamentals/account-and-billing/account-security/scim-setup/ /fundamentals/account-and-billing/account-security/ 301
 /fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
