@@ -71,7 +71,7 @@ Binding names do not need to correspond to the namespace you created. It is an e
 
 A binding is how your Worker interacts with external resources such as [KV Namespaces](/kv/learning/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. 
 
-Refer to the [Environment Variables documentation](/workers/platform/environment-variables) for more information.
+Refer to the [Environment documentation](/kv/platform/environments/) for more information.
 
 {{</Aside>}}
 
@@ -139,6 +139,6 @@ At the end of this tutorial, you have learned how to create and interact with a 
 
 ## Related resources
 
-* [Workers KV API](/kv/workers-kv-api/)
+* [KV API](/kv/api/)
 * [Environments](/kv/platform/environments/)
 * [`kv` command documentation](/kv/platform/kv-commands/)

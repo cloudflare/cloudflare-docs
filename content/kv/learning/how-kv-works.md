@@ -37,7 +37,7 @@ Infrequently read values are pulled from other data centers or the central store
 
 ## Performance
 
-To improve KV performance, increase the [`cacheTTL` parameter](/kv/workers-kv-api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. 
+To improve KV performance, increase the [`cacheTTL` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. 
 
 KV achieves high performance by caching which makes reads eventually-consistent with writes. 
 
