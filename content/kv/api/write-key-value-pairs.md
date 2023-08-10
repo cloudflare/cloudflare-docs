@@ -31,14 +31,14 @@ This method returns a `Promise` that you should `await` on to verify a successfu
 
 The maximum size of a value is 25 MiB.
 
-You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [write data via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write key-value pairs from the command line with Wrangler](/kv/platform/kv-commands/#create) and [write data via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 {{<Aside type="note">}} 
 Due to the eventually consistent nature of KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace. 
 
 Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. 
 
-Refer to [How KV works](/kv/learning/how-workers-kv-works/) for more information on this topic.
+Refer to [How KV works](/kv/learning/how-kv-works/) for more information on this topic.
 {{</Aside>}}
 
 ## Write data in bulk

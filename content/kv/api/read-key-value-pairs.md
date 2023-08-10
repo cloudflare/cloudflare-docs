@@ -31,7 +31,7 @@ export default {
 };
 ```
 
-You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
+You can [read key-value pairs from the command line with Wrangler](/kv/platform/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
 
 #### Types
 
@@ -58,7 +58,7 @@ For large values, the choice of `type` can have a noticeable effect on latency a
 
 Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTTL` is useful if your data is write-once or write-rarely. 
 
-{{<Aside type="note" header="Cold and Hot Read">}}
+{{<Aside type="note" header="Hot and Cold read">}}
 A cold read is a read that is not cached within the colocated cache. A hot read is (?). 
 {{</Aside>}}
 

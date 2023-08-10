@@ -12,7 +12,7 @@ Manage KV namespaces.
 
 The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using KV.
 
-## `create`
+## create
 
 Creates a new KV namespace.
 
@@ -78,6 +78,49 @@ $ wrangler kv:namespace list | jq "."
 ]
 ```
 
+## list
+
+Outputs a list of all keys in a given KV namespace.
+
+```sh
+$ wrangler kv:key list [OPTIONS]
+```
+
+{{<Aside type="warning">}}
+Exactly one of `--binding` or `--namespace-id` is required.
+{{</Aside>}}
+
+{{<definitions>}}
+
+- `--binding` {{<type>}}string{{</type>}}
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` {{<type>}}string{{</type>}}
+  - The ID of the namespace to delete.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with a preview namespace instead of production.
+- `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Only list keys that begin with the given prefix.
+
+{{</definitions>}}
+
+
+### Pass the Wrangler command through the `jq` command
+
+```sh
+$ wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
+[
+  {
+    "name": "public_key"
+  },
+  {
+    "name": "public_key_with_expiration",
+    "expiration": "2019-09-10T23:18:58Z"
+  }
+]
+```
+
 ## delete
 
 Deletes a given KV namespace.
@@ -127,7 +170,7 @@ Deleted namespace 15137f8edf6c09742227e99b08aaf273
 
 Manage key-value pairs within a KV namespace.
 
-## `put`
+## put
 
 Writes a single key-value pair to a particular KV namespace.
 
@@ -194,50 +237,8 @@ Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac9
 $ wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
 Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
-## list
 
-Outputs a list of all keys in a given KV namespace.
-
-```sh
-$ wrangler kv:key list [OPTIONS]
-```
-
-{{<Aside type="warning">}}
-Exactly one of `--binding` or `--namespace-id` is required.
-{{</Aside>}}
-
-{{<definitions>}}
-
-- `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
-- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment.
-- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with a preview namespace instead of production.
-- `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Only list keys that begin with the given prefix.
-
-{{</definitions>}}
-
-
-### Pass the Wrangler command through the `jq` command
-
-```sh
-$ wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
-[
-  {
-    "name": "public_key"
-  },
-  {
-    "name": "public_key_with_expiration",
-    "expiration": "2019-09-10T23:18:58Z"
-  }
-]
-```
-
-### `get`
+## get
 
 Reads a single value by key from the given KV namespace.
 
