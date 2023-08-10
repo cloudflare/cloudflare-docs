@@ -6,12 +6,9 @@ weight: 7
 
 # List keys
 
-Use a list operation to view all the keys that live in a given Workers KV namespace.
+Use a list operation to view all the keys that live in a given KV namespace.
 
 An example:
-
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
 
 ```js
 export default {
@@ -22,23 +19,6 @@ export default {
   },
 };
 ```
-
-{{</tab>}}
-{{<tab label="js/sw">}}
-
-```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  const value = await NAMESPACE.list();
-
-  return new Response(value.keys);
-}
-```
-{{</tab>}}
-{{</tabs>}}
 
 You can also [list keys on the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
 
@@ -94,9 +74,6 @@ List all the keys starting with a particular prefix.
 
 For example, you may have structured your keys with a user, a user ID, and key names, separated by colons (such as `user:1:<key>`). You could get the keys for user number one by using the following code:
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
-
 ```js
 export default {
   async fetch(request, env, ctx) {
@@ -105,21 +82,6 @@ export default {
   },
 };
 ```
-{{</tab>}}
-{{<tab label="js/sw">}}
-```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  const value = await NAMESPACE.list({ prefix: "user:1:" });
-
-  return new Response(value.keys);
-}
-```
-{{</tab>}}
-{{</tab>}}
 
 This will return all keys starting with the `"user:1:"` prefix.
 

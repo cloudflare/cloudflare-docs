@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Workers KV API
+title: API
 weight: 3
 ---
 
-# Workers KV API
+# API
 
 {{<directory-listing>}}

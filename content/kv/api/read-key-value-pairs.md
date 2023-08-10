@@ -18,9 +18,6 @@ The `get()` method may return stale values. If a given key has recently been rea
 
 An example of reading a key from within a Worker:
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
-
 ```js
 export default {
   async fetch(request, env, ctx) {
@@ -33,26 +30,6 @@ export default {
   },
 };
 ```
-
-{{</tab>}}
-{{<tab label="js/sw">}}
-
-```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  const value = await NAMESPACE.get("first-key");
-  if (value === null) {
-    return new Response("Value not found", { status: 404 });
-  }
-
-  return new Response(value);
-}
-```
-{{</tab>}}
-{{</tabs>}}
 
 You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
 

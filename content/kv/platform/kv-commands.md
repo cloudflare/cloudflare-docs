@@ -8,9 +8,9 @@ weight: 2
 
 ## `kv:namespace`
 
-Manage Workers KV namespaces.
+Manage KV namespaces.
 
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using Workers KV.
+The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using KV.
 
 ## `create`
 
@@ -125,7 +125,7 @@ Deleted namespace 15137f8edf6c09742227e99b08aaf273
 
 ## `kv:key`
 
-Manage key-value pairs within a Workers KV namespace.
+Manage key-value pairs within a KV namespace.
 
 ## `put`
 
@@ -307,7 +307,7 @@ Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 ## `kv:bulk`
 
-Manage multiple key-value pairs within a Workers KV namespace in batches.
+Manage multiple key-value pairs within a KV namespace in batches.
 
 ### `put`
 

@@ -1,14 +1,14 @@
 ---
 pcx_content_type: concept
-title: How Workers KV works
+title: How KV works
 weight: 7
 ---
 
-# How Workers KV works
+# How KV works
 
-Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access. 
+KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access. 
 
-Workers KV supports exceptionally high read volumes with low latency, making it possible to build highly dynamic APIs and websites that respond as quickly as a cached static file would. 
+KV supports exceptionally high read volumes with low latency, making it possible to build highly dynamic APIs and websites that respond as quickly as a cached static file would. 
 
 While reads are periodically revalidated in the background, requests which are not in cache and need to hit the centralized back end can experience high latencies.
 
@@ -24,22 +24,22 @@ Initial reads from a location do not have a cached value. The data must be read 
 
 <!-- Frequent reads from the same location return the cached value without reading from a central data store, resulting in faster response times. -->
 
-Frequent reads from the same location return the cached value without reading from anywhere else, resulting in the fastest response times. Workers KV operates diligently to keep the latest value in the cache by refreshing from upper tiers and the central data stores in the background. 
+Frequent reads from the same location return the cached value without reading from anywhere else, resulting in the fastest response times. KV operates diligently to keep the latest value in the cache by refreshing from upper tiers and the central data stores in the background. 
 
 Refreshing from upper tiers and the central data stores in the background is done carefully so that assets that are being accessed continue to be kept served from the cache without any stalls.
 
 ![As mentioned above, frequent reads will return a cached value.](/images/kv/kv-fast-read.svg)
 
-Because Workers KV stores data centrally and uses a hybrid push/pull-based replication to store data in cache, it is generally suitable for use cases where you need to write relatively infrequently, but read quickly and frequently.
+Because KV stores data centrally and uses a hybrid push/pull-based replication to store data in cache, it is generally suitable for use cases where you need to write relatively infrequently, but read quickly and frequently.
 
-Workers KV is optimized for high-read applications. Workers KV reach its full performance when data is being read frequently.
+KV is optimized for high-read applications. KV reach its full performance when data is being read frequently.
 Infrequently read values are pulled from other data centers or the central store, while more popular values are cached in the data centers they are requested from.
 
 ## Performance
 
-To improve Workers KV performance, increase the [`cacheTTL` parameter](/kv/workers-kv-api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. 
+To improve KV performance, increase the [`cacheTTL` parameter](/kv/workers-kv-api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. 
 
-Workers KV achieves high performance by caching which makes reads eventually-consistent with writes. 
+KV achieves high performance by caching which makes reads eventually-consistent with writes. 
 
 Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out or for them to see reads to trigger a refresh. 
 
@@ -50,18 +50,18 @@ KV does not perform like an in-memory datastore, such as [Redis](https://redis.i
 
 ## Consistency
 
-Workers KV achieves high performance by being eventually-consistent. Changes are usually immediately visible in the Cloudflare global network location at which they are made but may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out. 
+KV achieves high performance by being eventually-consistent. Changes are usually immediately visible in the Cloudflare global network location at which they are made but may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out. 
 
 Visibility of changes takes longer in locations which have recently read a previous version of a given key (including reads that indicated the key did not exist, which are also cached locally). 
 
 {{<Aside type="note">}}
-Workers KV is not ideal for situations where you need support for atomic operations or where values must be read and written in a single transaction.
+KV is not ideal for situations where you need support for atomic operations or where values must be read and written in a single transaction.
 If you need stronger consistency guarantees, consider using [Durable Objects](/durable-objects/). 
 {{</Aside>}}
 
 One pattern is to send all of your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.
 
-<!-- Workers KV does not perform like an in-memory datastore, such as [Redis](https://redis.io). Accessing KV values, even when locally cached, has significantly more latency than reading a value from memory within a Worker script. -->
+<!-- KV does not perform like an in-memory datastore, such as [Redis](https://redis.io). Accessing KV values, even when locally cached, has significantly more latency than reading a value from memory within a Worker script. -->
 
 <!-- Refer to [KV performance optimizations](/kv/learning/kv-performance-optimizations/) to learn more about performance optimizations technique. -->
 

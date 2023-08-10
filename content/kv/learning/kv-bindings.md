@@ -8,7 +8,7 @@ weight: 7
 
 KV bindings allow for communication between a Worker and a KV namespace.
 
-## Reference Workers KV from Workers
+## Reference KV from Workers
 
 A KV namespace is a key-value database that is replicated to Cloudflare's global network. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 
@@ -35,8 +35,6 @@ kv_namespaces = [
 
 With this, the deployed Worker will have a `TODO` global variable. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
 
 ```js
 export default {
@@ -50,23 +48,8 @@ export default {
   },
 };
 ```
-{{</tab>}}
-{{<tab label="js/sw">}}
 
-```js
-addEventListener("fetch", async (event) => {
-  // Get the value for the "to-do:123" key
-  // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-  let value = await TODO.get("to-do:123");
-
-  // Return the value, as is, for the Response
-  event.respondWith(new Response(value));
-});
-```
-{{</tab>}}
-{{</tabs>}}
-
-## Reference Workers KV from Durable Objects and Workers using ES modules format
+## Reference KV from Durable Objects and Workers using ES modules format
 
 [Durable Objects](/durable-objects/) use ES modules. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object). 
 

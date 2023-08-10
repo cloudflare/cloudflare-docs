@@ -11,7 +11,7 @@ layout: single
 
 {{<render file="_tutorials-wrangler-v1-warning.md">}}
 
-This tutorial will teach you how to read and write to Workers KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers KV API.
+This tutorial will teach you how to read and write to KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS KV API.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -31,7 +31,7 @@ $ git commit -m 'Initial commit'
 ```
 ## 1. Create and bind a KV namespace
 
-To access Workers KV, you have to define a binding for a particular [KV namespace](/kv/get-started/#1-create-a-kv-namespace) in the `wrangler.toml` file generated in your new project's directory. 
+To access KV, you have to define a binding for a particular [KV namespace](/kv/get-started/#1-create-a-kv-namespace) in the `wrangler.toml` file generated in your new project's directory. 
 
 If you do not have an existing KV namespace, create one using [`wrangler`](/workers/wrangler/install-and-update/). 
 

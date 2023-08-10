@@ -21,7 +21,7 @@ Workers KV is a data storage that allows you to store and retrieve data globally
 ## Features
 
 {{<feature header="Key-value storage" href="/kv/get-started/">}}
-Learn how Workers KV stores and retrieves data.
+Learn how KV stores and retrieves data.
 {{</feature>}}
 
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
@@ -64,9 +64,9 @@ Built on SQLite, D1 is Cloudflare’s first queryable relational database. Creat
 
 {{<resource-group>}}
 
-{{<resource header="Limits" href="/kv/platform/limits/" icon="documentation-clipboard">}} Learn about Workers KV limits. {{</resource>}}
+{{<resource header="Limits" href="/kv/platform/limits/" icon="documentation-clipboard">}} Learn about KV limits. {{</resource>}}
 
-{{<resource header="Pricing" href="/kv/platform/pricing/" icon="price">}} Learn about Workers KV pricing. {{</resource>}}
+{{<resource header="Pricing" href="/kv/platform/pricing/" icon="price">}} Learn about KV pricing. {{</resource>}}
 
 {{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
 

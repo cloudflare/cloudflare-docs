@@ -42,7 +42,7 @@ To create a KV namespace via Wrangler:
 
 1. Open your terminal and run `wrangler kv:namespace create <YOUR_NAMESPACE>`.
 
-The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
+The `kv:namespace` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
 
 ```sh
 $ wrangler kv:namespace create <YOUR_NAMESPACE>
@@ -140,5 +140,5 @@ At the end of this tutorial, you have learned how to create and interact with a 
 ## Related resources
 
 * [Workers KV API](/kv/workers-kv-api/)
-* [Workers KV Environments](/workers/configuration/environment-variables/)
+* [Environments](/kv/platform/environments/)
 * [`kv` command documentation](/kv/platform/kv-commands/)

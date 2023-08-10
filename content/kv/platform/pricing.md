@@ -18,4 +18,4 @@ weight: 12
 
 {{</table-wrap>}}
 
-1.  The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these [limits](/kv/platform/limits/), further operations of that type will fail with an error.
+1.  The Workers Free plan includes limited KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these [limits](/kv/platform/limits/), further operations of that type will fail with an error.

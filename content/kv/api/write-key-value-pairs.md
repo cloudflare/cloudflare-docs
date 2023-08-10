@@ -34,7 +34,7 @@ The maximum size of a value is 25 MiB.
 You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [write data via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 {{<Aside type="note">}} 
-Due to the eventually consistent nature of Workers KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace. 
+Due to the eventually consistent nature of KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace. 
 
 Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. 
 
@@ -51,7 +51,7 @@ A `key` and a `value` are required for each KV pair. The entire request size mus
 
 ## Expiring keys
 
-Workers KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time or after a certain amount of time has passed since the key was last modified.
+KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time or after a certain amount of time has passed since the key was last modified.
 
 Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace’s storage usage for billing purposes.
 
