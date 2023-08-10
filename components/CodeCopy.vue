@@ -6,16 +6,20 @@ function copyCode(e: MouseEvent) {
   const highlightedCode = (
     e.target as HTMLElement
   )?.parentElement?.parentElement?.querySelector("pre code");
+  
   if (highlightedCode) {
     // the markdown's code blocks adds a class "CodeBlock--token-unselectable", if it is not supposed to be copied.
     // clone the code node, we do not want to modify the DOM.
     const code = highlightedCode.cloneNode(true) as HTMLElement;
-    const unselectableTokens = code.getElementsByClassName(
-      "CodeBlock--token-unselectable"
-    );
-    for (let i = 0; i < unselectableTokens.length; i++) {
-      unselectableTokens[i].remove();
-    }
+    const unselectableTokens: HTMLCollectionOf<Element> = code.getElementsByClassName("CodeBlock--token-unselectable");
+
+    // Convert the HTMLCollection to an array for easier manipulation
+    const elementsToRemove: Element[] = Array.from(unselectableTokens);
+
+    // Loop through the array and remove each element
+    elementsToRemove.forEach((element: Element) => {
+      element.parentNode?.removeChild(element);
+    });
     const lines = code.querySelectorAll(".CodeBlock--row");
     let textLines: string[] = [];
     lines.forEach((line) =>
