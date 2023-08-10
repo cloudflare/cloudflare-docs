@@ -129,7 +129,7 @@ Writes the application's process identifier (PID) to this file after the first s
 | ---------- | ------- | --------------------------- |
 | `protocol` | `auto`  | `TUNNEL_TRANSPORT_PROTOCOL` |
 
-Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `http2`, `h2mux`, and `quic`.
+Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `http2`, and `quic`.
 
 The `auto` value will automatically configure the `quic` protocol. If `cloudflared` is unable to establish UDP connections, it will fallback to using the `http2` protocol.
 
