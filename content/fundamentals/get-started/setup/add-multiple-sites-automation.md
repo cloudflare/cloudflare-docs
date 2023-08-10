@@ -125,9 +125,9 @@ ___
 
 ## Limitations
 
-You cannot have more pending sites than active sites associated with your Cloudflare account. We recommend waiting until your pending sites have been processed before adding additional domains.
+There are limitations on the number of domains you can add at a time. If you attempt to add more than 50 domains at a time, any additional domains will be blocked until your current domains are active.
 
-There are also limitations on the number of domains you can add at a time. If you attempt to add more than 50 domains at a time, any additional domains will be blocked until your current domains are processed.
+After that, you cannot have more pending sites than active sites associated with your Cloudflare account. We recommend waiting until your pending sites have been [activated](/dns/zone-setups/reference/domain-status/) before adding additional domains.
 
 ## Common issues
 
