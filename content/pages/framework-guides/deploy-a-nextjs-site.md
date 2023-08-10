@@ -9,7 +9,7 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy a:
 
-* Full-stack Next.js project which use the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge). 
+* Full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge). 
 * Static site Next.js project with [static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -20,7 +20,7 @@ The Edge Runtime allows applications to use server-side features such as [Edge A
 
 For more information about the Edge Runtime, refer to [the official Next.js documentation](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) which explains the differences between the Edge Runtime and traditional Node.js servers, or [read the Cloudflare announcement blog post](https://blog.cloudflare.com/next-on-pages).
 
-## A. Use the Edge Runtime
+## Use the Edge Runtime
 
 ### 1. Select your Next.js project
 
@@ -133,7 +133,7 @@ The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of yo
 
 {{</Aside>}}
 
-## B. Use a static export
+## Use a static export
 
 ### 1. Select your Next.js project
 
