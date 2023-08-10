@@ -39,7 +39,7 @@ end
 
 ```bash
 
-config vpn ipsec phase1
+config vpn ipsec phase1-interface
     edit "<A-NAME>"
         set interface "port1"
         set ike-version 2
@@ -56,7 +56,7 @@ end
 ### IPsec Phase 2
 
 ```bash
-config vpn ipsec phase2-interface
+config vpn ipsec phase2
     edit "<SAME-NAME-AS-PHASE1>"
         set phase1name "<PHASE1-NAME>"
         set proposal aes128gcm

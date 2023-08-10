@@ -84,5 +84,6 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 - {{<code>}}max_concurrency{{</code>}} {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
+  - Refer to [Consumer concurrency](/queues/learning/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
 
 {{</definitions>}}

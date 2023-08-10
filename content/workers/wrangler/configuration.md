@@ -442,6 +442,83 @@ kv_namespaces = [
 ]
 ```
 
+### Queues
+
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/learning/delivery-guarantees/) and [message batching](/queues/learning/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
+
+To bind Queues to your producer Worker, assign an array of the below object to the `[[queues.producers]]` key.
+
+{{<definitions>}}
+
+- `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the queue, used on the Cloudflare dashboard.
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.producers]]
+  queue = "my-queue"
+  binding = "MY_QUEUE"
+```
+
+To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
+
+{{<definitions>}}
+
+- `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the queue, used on the Cloudflare dashboard.
+
+- `max_batch_size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of messages allowed in each batch.
+
+- `max_batch_timeout` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of seconds to wait for messages to fill a batch before the batch is sent to the consumer Worker.
+
+- `max_retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
+
+- `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of another queue to send a message if it fails processing at least `max_retries` times.
+  - If a dead_letter_queue is not defined, messages that repeatedly fail processing will be discarded.
+  - If there is no queue with the specified name, it will be created automatically.
+
+- `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
+  - Refer to [Consumer concurrency](/queues/learning/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.consumers]]
+  queue = "my-queue"
+  max_batch_size = 10
+  max_batch_timeout = 30
+  max_retries = 10
+  dead_letter_queue = "my-queue-dlq"
+  max_concurrency = 5
+```
+
 ### R2 buckets
 
 [Cloudflare R2 Storage](/r2) allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.

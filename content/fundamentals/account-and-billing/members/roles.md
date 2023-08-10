@@ -26,6 +26,8 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Cache Purge | Can purge the edge cache. |
 | Cloudflare Gateway | Can edit [Cloudflare Gateway](/cloudflare-one/policies/gateway/) and read [Access](/cloudflare-one/identity/). |
 | Cloudflare Images | Can access [Cloudflare Images](/images/cloudflare-images/) data. |
+| Cloudflare R2 Admin | Can edit Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
+| Cloudflare R2 Read | Can read Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
 | Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), and [R2](/r2/). |
 | Cloudflare Zero Trust | Can edit [Cloudflare for Zero Trust](/cloudflare-one/). |

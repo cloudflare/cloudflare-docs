@@ -16,7 +16,7 @@ In a normal Cloudflare for SaaS [setup](/cloudflare-for-platforms/cloudflare-for
 
 However, most DNS providers do not allow `CNAME` records at the zone's root[^1]. This means that your customers have to use a subdomain as a vanity domain (`shop.example.com`) instead of their domain apex (`example.com`).
 
-This limitation does not apply with apex proxying. Cloudflare assigns a set of IP prefixes to your account (or uses your own if you have [BYOIP](/byoip/)). This means that customers can create a standard `A` record to route traffic to your domain, which can support the domain apex.
+This limitation does not apply with apex proxying. Cloudflare assigns a set of IP prefixes - cost associated, reach out to your account team - to your account (or uses your own if you have [BYOIP](/byoip/)). This means that customers can create a standard `A` record to route traffic to your domain, which can support the domain apex.
 
 [^1]: Cloudflare offers this functionality through [CNAME flattening](/dns/cname-flattening/).
 
