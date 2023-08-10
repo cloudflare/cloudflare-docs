@@ -21,6 +21,15 @@ Opening port 443 for connections to `update.argotunnel.com` is optional. Failure
 
 {{</Aside>}}
 
+## Setting the Region Parameter to US 
+
+When setting the [region parameter to US](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#region) the above destinations, `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com`, will be replaced with the following: 
+
+| Destination | Port | Protocols |
+| ----------- | -------- | --------- |
+| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+
 ## Test connectivity with dig
 
 To test your connectivity to Cloudflare, you can use the `dig` command to query the hostnames listed above. Note that `cloudflared` defaults to connecting with IPv4.
