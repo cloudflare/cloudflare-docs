@@ -78,7 +78,7 @@ To trigger this scan via the Cloudflare API:
     flarectl --json zone info --zone=$domain | jq -r '.[].ID' >> ids.txt
   done
   ```
-3. For each line in `ids.txt`, make an API call to trigger the DNS quick scan.
+3. For each line in `ids.txt`, make an API call to trigger the [DNS quick scan](/api/operations/dns-records-for-a-zone-scan-dns-records).
 
   ```go
   for id in $(cat id.txt); do \  
