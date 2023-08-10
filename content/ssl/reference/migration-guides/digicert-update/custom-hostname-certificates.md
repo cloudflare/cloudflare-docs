@@ -1,19 +1,19 @@
 ---
 pcx_content_type: reference
-title: Custom hostnames
+title: SSL for SaaS
 weight: 3
 layout: list
 meta:
-    title: Custom hostname certificates - DigiCert migration guide
+    title: SSL for SaaS certificates - DigiCert migration guide
 ---
 
-# Custom hostnames
+# SSL for SaaS
 
 {{<render file="_digicert-offboarding-paused">}}
 
-Before the hard deadline, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [custom hostname certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing custom hostname certificates.
+Before the hard deadline, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [SSL for SaaS certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing SSL for SaaS certificates.
 
-After the hard deadline, Cloudflare will stop using DigiCert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
+After the hard deadline, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
 
 ## Summary of changes
 
@@ -24,7 +24,7 @@ This table provides a summary of the differences between DigiCert and our other 
 | --- | --- | --- | --- |
 | Domain Control <br/> Validation (DCV) | To get a certificate issued for a wildcard custom hostname, one TXT DCV record is required to complete Domain Control Validation. | To get a certificate issued for a wildcard custom hostname, two TXT DCV records will be required to complete validation. | [Wildcard custom hostnames](#wildcard-custom-hostnames) will require additional DCV tokens. [Non-wildcard custom hostnames](#non-wildcard-custom-hostnames) will automatically renew as long as the hostname is proxying through Cloudflare. |
 | API | Customers can choose `“digicert”` as the issuing CA when using the [custom hostnames API](/api/operations/custom-hostname-for-a-zone-create-custom-hostname). | Customers can only choose `“lets_encrypt”` or `“google”` when using the [custom hostnames API](/api/operations/custom-hostname-for-a-zone-create-custom-hostname). | If you are currently using DigiCert as the issuing CA when creating custom hostnames, [switch your integration](#update-values) to use Let’s Encrypt or Google. |
-| DCV Methods | CNAME and Email DCV are available. | CNAME and Email DCV will be deprecated. Customers will be required to use [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) or [DNS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV. | When certificates come up for renewal that are using CNAME or Email DCV, Cloudflare will automatically choose HTTP DCV as the default method for non-wildcard custom hostnames and TXT DCV for wildcard custom hostnames. |
+| DCV Methods | CNAME and Email DCV are available. | CNAME and Email DCV will be deprecated. Customers will be required to use [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV. | When certificates come up for renewal that are using CNAME or Email DCV, Cloudflare will automatically choose HTTP DCV as the default method for non-wildcard custom hostnames and TXT DCV for wildcard custom hostnames. |
 | Validity period | Custom hostname certificates have a 1 year validity period. | Custom hostnames certificates will have a 90 day validity period. | If you are using [wildcard custom hostnames](#wildcard-custom-hostnames), your customers will need to place DCV tokens at their DNS provider more frequently. [Non-wildcard custom hostname certificates](#non-wildcard-custom-hostnames) will automatically renew, as long as the hostname is actively proxying through Cloudflare. Cloudflare will handle the renewals at a more frequent rate. |
 {{</table-wrap>}}
 
