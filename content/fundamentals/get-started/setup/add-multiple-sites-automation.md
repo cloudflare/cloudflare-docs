@@ -100,7 +100,7 @@ For each domain to become active on Cloudflare, it needs to use Cloudflare for i
 
   ```sh
   $ for domain in $(cat domains.txt); do 
-      flarectl zone info --zone=$domain; 
+      flarectl zone info --zone=$domain 
   done
   ```
 
