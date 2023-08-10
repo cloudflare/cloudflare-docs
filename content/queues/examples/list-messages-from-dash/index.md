@@ -9,6 +9,7 @@ meta:
 ---
 
 # List and ack messages from the dashboard
+
 ## List messages from the dashboard
 
 Listing messages from the dashboard allows you to debug Queues or Queue producers without a consumer Worker. Fetching a batch of messages to preview will not acknowledge or retry the message or affect its position in the Queue. The Queue can still be consumed normally by a consumer Worker.
@@ -33,12 +34,12 @@ This will preview a batch of messages currently in the Queue.
 
 ## Acknowledge messages from the dashboard
 
-Acknowledging messages from the dashboard will permanently remove them from the Queue, with equivalent behavior as `ack()` in a Worker.
+Acknowledging messages from the [Cloudflare dashboard](https://dash.cloudflare.com) will permanently remove them from the queue, with equivalent behavior as `ack()` in a Worker.
 
 1. Select the checkbox to the left of each row to select the message for acknowledgement, or select the checkbox in the table header to select all messages.
 2. Select **Acknowledge messages**.
-3. Confirm that you want to acknowledge the messages, and select **Acknowledge messages**.
+3. Confirm you want to acknowledge the messages, and select **Acknowledge messages**.
 
-This will remove the selected messages from the Queue and prevent consumers from processing them further.
+This will remove the selected messages from the queue and prevent consumers from processing them further.
 
-Refer to the [Get Started guide](/queues/get-started/) to learn how to process and acknowledge messages from a Queue in a Worker.
+Refer to the [Get Started guide](/queues/get-started/) to learn how to process and acknowledge messages from a queue in a Worker.
