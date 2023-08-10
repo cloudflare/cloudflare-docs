@@ -10,8 +10,8 @@ Users can implement a positive security model with Cloudflare Tunnel by restrict
 
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
-| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
 | `api.cloudflare.com`        | 443  | TCP (HTTPS) |
 | `update.argotunnel.com`     | 443  | TCP (HTTPS) |
 
@@ -27,8 +27,8 @@ When setting the [region parameter to US](https://developers.cloudflare.com/clou
 
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
-| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `us-region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `us-region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
 
 ## Test connectivity with dig
 
