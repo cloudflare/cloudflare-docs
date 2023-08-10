@@ -51,7 +51,7 @@ Add domains using [flarectl](https://github.com/cloudflare/cloudflare-go/release
 
 3. Create your domains using `flarectl`:
   ```sh
-  $ for domain in $(cat domains.txt); do \
+  $ for domain in $(cat domains.txt); do
       flarectl zone create --zone=$domain 
   done
   ```
@@ -74,7 +74,7 @@ To trigger this scan via the Cloudflare API:
 2. Use `flarectl` to compile a list of zone IDs into a new file (named `ids.txt`).
 
   ```sh
-  $ for domain in $(cat domains.txt); do \
+  $ for domain in $(cat domains.txt); do
     flarectl --json zone info --zone=$domain | jq -r '.[].ID' >> ids.txt
   done
   ```
