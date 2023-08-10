@@ -9,7 +9,9 @@ meta:
 
 # Advanced certificates
 
-On **October 4, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/). This will not affect existing advanced certificates.
+Starting on **August 22, 2023**, new Cloudflare accounts will not have the option to choose DigiCert as a certificate authority (CA) for [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
+
+On **October 4, 2023**, Cloudflare will stop using DigiCert as a CA for new advanced certificates. This will not affect existing advanced certificates.
 
 On **October 11, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 

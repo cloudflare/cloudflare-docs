@@ -9,7 +9,9 @@ meta:
 
 # SSL for SaaS
 
-On **October 18, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [SSL for SaaS certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing SSL for SaaS certificates.
+Starting on **August 29, 2023**, new Cloudflare accounts will not have the option to choose DigiCert as a certificate authority (CA) for [SSL for SaaS certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
+
+On **October 18, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new SSL for SaaS certificates. This will not affect existing SSL for SaaS certificates.
 
 On **October 25, 2023**, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
 
