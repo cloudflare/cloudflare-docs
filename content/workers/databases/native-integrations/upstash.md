@@ -1,10 +1,12 @@
 ---
-pcx_content_type: concept
+pcx_content_type: configuration
 title: Upstash
 ---
 # Upstash
 
-[Upstash](https://upstash.com/) is a serverless database with Redis and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless. 
+[Upstash](https://upstash.com/) is a serverless database with Redis and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless.
+
+{{<render file="_database_integrations_definition.md">}}
 
 ## Upstash Redis
 
