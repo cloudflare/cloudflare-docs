@@ -11,4 +11,3 @@ You can apply $1 policies to a growing list of popular web applications. Refer t
 | UI name     | API example                        |
 | ----------- | ---------------------------------- |
 | Application | `any(app.hosts_ids[*] in {505})`   |
-|             | `any(app.support_ids[*] in {652})` |
