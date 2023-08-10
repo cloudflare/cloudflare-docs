@@ -12,8 +12,8 @@ Users can implement a positive security model with Cloudflare Tunnel by restrict
 
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
-| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2` and `quic`) |
-| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2` and `quic`) |
+| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
 | `api.cloudflare.com`        | 443  | TCP (HTTPS) |
 | `update.argotunnel.com`     | 443  | TCP (HTTPS) |
 
@@ -29,8 +29,8 @@ When the [`region` parameter](/cloudflare-one/connections/connect-networks/insta
 
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
-| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2` and `quic`) |
-| `us-region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2` and `quic`) |
+| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `us-region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
 
 ## Test connectivity with dig
 
