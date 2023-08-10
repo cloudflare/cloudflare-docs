@@ -50,9 +50,9 @@ Add domains using [flarectl](https://github.com/cloudflare/cloudflare-go/release
   ```
 
 3. Create your domains using `flarectl`:
-  ```go
-  for domain in $(cat domains.txt); do
-    flarectl zone create --zone=$domain; 
+  ```sh
+  $ for domain in $(cat domains.txt); do \
+      flarectl zone create --zone=$domain 
   done
   ```
 
@@ -73,19 +73,19 @@ To trigger this scan via the Cloudflare API:
 1. Open your command line.
 2. Use `flarectl` to compile a list of zone IDs into a new file (named `ids.txt`).
 
-  ```go
-  for domain in $(cat domains.txt); do
+  ```sh
+  $ for domain in $(cat domains.txt); do \
     flarectl --json zone info --zone=$domain | jq -r '.[].ID' >> ids.txt
   done
   ```
 3. For each line in `ids.txt`, make an API call to trigger the [DNS quick scan](/api/operations/dns-records-for-a-zone-scan-dns-records).
 
-  ```go
-  for id in $(cat id.txt); do \  
-    curl --request POST \
-    --url "https://api.cloudflare.com/client/v4/zones/$id/dns_records/scan" \
-    -H "Content-Type: application/json" \
-    -H "Authorization: Bearer $CF_API_TOKEN" \; 
+  ```sh
+  $ for id in $(cat ids.txt); do  
+      curl --request POST \
+      --url "https://api.cloudflare.com/client/v4/zones/$id/dns_records/scan" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Bearer $CF_API_TOKEN"
   done
   ```
 
@@ -98,9 +98,9 @@ For each domain to become active on Cloudflare, it needs to use Cloudflare for i
 1. Open your command line.
 2. Use `flarectl` to get a list nameservers associated with each domain. 
 
-  ```go
-  for domain in $(cat domains.txt); do 
-    flarectl zone info --zone=$domain; 
+  ```sh
+  $ for domain in $(cat domains.txt); do 
+      flarectl zone info --zone=$domain; 
   done
   ```
 
