@@ -9,11 +9,11 @@ meta:
 
 # SSL for SaaS
 
-{{<render file="_digicert-offboarding-paused">}}
+On **October 18, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [SSL for SaaS certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing SSL for SaaS certificates.
 
-Before the hard deadline, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [SSL for SaaS certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/). This will not affect existing SSL for SaaS certificates.
+On **October 25, 2023**, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
 
-After the hard deadline, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
+The default CA - for API orders that do not specify `certificate_authority` - and the CA used for certificate renewals will shift to either Let's Encrypt or Google Trust Services.
 
 ## Summary of changes
 
@@ -30,22 +30,22 @@ This table provides a summary of the differences between DigiCert and our other 
 
 ## Domain Control Validation (DCV) updates
 
-CNAME and Email DCV will be deprecated, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/), [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/), or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV.
+CNAME and Email DCV will be deprecated on **October 18, 2023**, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/), [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/), or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV.
 
 Also, the maximum validity period for certificates will be decreased from 1 year to 90 days. This means that certificates will be renewed - and require DCV - more frequently.
 
 ## Required actions
 
-### Before hard deadline
+### Before October 18, 2023
 
 If your system integrates with the Cloudflare for SaaS API to [create custom hostnames](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
 - The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 
-### After the hard deadline
+### Before October 25, 2023
 
-We recommend that you migrate all your current custom hostnames away from DigiCert before the hard deadline. This give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
+We recommend that you migrate all your current custom hostnames away from DigiCert before October 25, 2023. This will give you the control to migrate custom hostnames to the new system in a controlled manner instead of having Cloudflare manage the offboarding when the certificates come up for renewal.
 
 #### Identify certificates
 
@@ -68,7 +68,7 @@ You should [update](/cloudflare-for-platforms/cloudflare-for-saas/security/certi
     {{</Aside>}}
 
 - **DCV Method**: You can only update this value when your certificate is up for renewal. If your certificate was previously using **Email** or **CNAME** validation and you do not update this value, Cloudflare will automatically set your DCV method to **TXT** or **HTTP** when the custom hostname comes up for renewal. We will use **HTTP** validation for non-wildcard custom hostname renewals and TXT-based DCV for wildcard custom hostname renewals.
-    - *Dashboard*: Update the value for **Certificate validation method** to either be [**HTTP Validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [**TXT Validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
+    - *Dashboard*: Update the value for **Certificate validation method** to either be [HTTP Validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [TXT Validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
     - *API*: Update the value sent in the `"method"` field under the SSL object to either be [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard custom hostnames](#non-wildcard-custom-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 
 
