@@ -35,6 +35,7 @@ To set up an integration with Supabase:
     ```
 
 4. Add the Supabase database integration to your Worker:
+
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
@@ -43,7 +44,7 @@ To set up an integration with Supabase:
 
 5. In your Worker, install the `@supabase/supabase-js`  driver to connect to your database and start manipulating data:
 
-    ```
+    ```sh
     npm install @supabase/supabase-js
     ```
 
