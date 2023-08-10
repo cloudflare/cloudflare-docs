@@ -347,6 +347,15 @@
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
+/support/account-management-billing/account-management/ /fundamentals/account-and-billing/ 301
+/support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/简体中文/通过自动化将多个站点添加到-cloudflare/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/한국어/자동화를-통해-여러-사이트를-cloudflare에-추가/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/español-españa/cómo-añadir-varios-sitios-en-cloudflare-mediante-automatización/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/français-france/ajout-de-plusieurs-sites-à-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/日本語/自動化機能を使ってcloudflareに複数のサイトを追加する/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/português-do-brasil/como-adicionar-vários-sites-à-cloudflare-via-automação/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
 /support/firewall/settings/ /fundamentals/security/ 301
 /support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /fundamentals/security/under-attack-mode/ 301
 /support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /fundamentals/security/browser-integrity-check/ 301
