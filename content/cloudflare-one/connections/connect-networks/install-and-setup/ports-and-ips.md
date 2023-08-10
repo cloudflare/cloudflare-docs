@@ -28,7 +28,7 @@ When setting the [region parameter to US](https://developers.cloudflare.com/clou
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
 | `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+| `us-region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
 
 ## Test connectivity with dig
 
