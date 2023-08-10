@@ -20,7 +20,7 @@ $ npm install -g gatsby-cli
 With Gatsby installed, you can create a new project using `gatsby new`. The `new` command accepts a GitHub URL for using an existing template. As an example, use the `gatsby-starter-lumen` template by running the following command in your terminal. You can find more in [Gatsby's Starters section](https://www.gatsbyjs.com/starters/?v=2):
 
 ```sh
-$ gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lumen
+$ npx gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lumen
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
@@ -35,15 +35,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value          |
-| -------------------- | -------------- |
-| Production branch    | `main`         |
-| Build command        | `gatsby build` |
-| Build directory      | `public`       |
-
-</div>
+{{<pages-build-preset framework="gatsby">}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `gatsby`, your project dependencies, and building your site, before deploying it.
 

@@ -43,11 +43,7 @@ To deploy your site to Pages:
 
 <div>
 
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `build`         |
+{{<pages-build-preset framework="create-react-app">}}
 
 </div>
 

@@ -32,17 +32,22 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 {{</Aside>}}
 
+{{<Aside type="warning" header="Support for local development">}}
+
+WebSockets do not hibernate when using local development environments such as `wrangler dev` or Miniflare. Hibernatable WebSocket events such as `webSocketMessage()` will be delivered, but your Durable Object will never be evicted from memory. Hibernation will be fully supported in local development for General Availability (GA). Use `wrangler dev --remote` or deploy a test/staging Durable Object namespace to production when debugging state management issues.
+{{</Aside>}}
+
 ## WebSocket extensions
 
 {{<definitions>}}
 
-- {{<code>}}webSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}WebSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
   
   - If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2,048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) and pass the corresponding key to this method so it can be retrieved later.
 
-- {{<code>}}webSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
+- {{<code>}}WebSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
 
   - Retrieves the most recent value passed to `serializeAttachment`, or `null` if none exists.
 
@@ -60,7 +65,9 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 - {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}
 
-  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
+  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets <sup>1</sup> are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
+
+  - <sup>1</sup> `getWebSockets()` may still return websockets even after `ws.close()` has been called. For example, if your server-side WebSocket (the Durable Object) sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the `CLOSING` "readyState". The client might send more messages, so the WebSocket is technically not disconnected.
 
 - {{<code>}}state.setWebSocketAutoResponse(webSocketRequestResponsePair{{<param-type>}}WebSocketRequestResponsePair{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}: {{<type>}}void{{</type>}}
 
@@ -72,7 +79,7 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
   - Both `request` and `response` are limited to 2,048 characters each.
 
-  - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Setting `state.setWebSocketAutoResponse()` without any argument will stop an actor from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
+  - If `state.setWebSocketAutoResponse()` is set without any argument, it will remove any previously set auto-response configuration. Setting `state.setWebSocketAutoResponse()` without any argument will stop a Durable Object from replying with `response` for a `request`. It will also stop updating the last timestamp of a `request`, but if there was any auto-response timestamp set, it will remain accessible with `state.getWebSocketAutoResponseTimestamp()`.
 
 - {{<code>}}state.getWebSocketAutoResponse(){{</code>}} : {{<type>}}Object | null{{</type>}}
 

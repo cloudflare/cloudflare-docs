@@ -24,21 +24,29 @@ This value is not required for IPsec tunnels, unless your router is using an IKE
 - **TTL**: Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
 - **MTU**: Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
 
-## IPsec tunnels
+## Tunnels
+
+### GRE tunnels
+
+You can set up GRE tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
+
+### IPsec tunnels
 
 You can [use IPsec]($4) as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's global network and define static routes to direct traffic down the correct tunnel.
 
-You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API make sure you already have an [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) before you begin.
+You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
 
 {{<Aside type="note" header="Note">}}$2 only supports Internet Key Exchange version 2 (IKEv2).{{</Aside>}}
 
-## Technical requirements for GRE and IPsec tunnels
+### Technical requirements for GRE and IPsec tunnels
 
 Refer to [Tunnels and encapsulation]($6) to learn about the technical requirements for GRE and IPsec tunnels used in $2.
 
 ## Add tunnels
 
-### Dashboard instructions
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
@@ -94,9 +102,10 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 </div>
 </details>
-
-### API instructions
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 <details>
 <summary>GRE tunnel</summary>
 <div>
@@ -200,9 +209,9 @@ You will receive a response like the following:
 ```json
 {
   "result": {
-    "ipsec_id": "IPSEC_ID",
-    "ipsec_tunnel_id": "IPSEC_TUNNEL",
-    "psk": "YOUR_PSK_KEY",
+    "ipsec_id": "<IPSEC_ID>",
+    "ipsec_tunnel_id": "<IPSEC_TUNNEL>",
+    "psk": "<YOUR_PSK_KEY>",
     "psk_metadata": {
       "last_generated_on": "2023-04-21T10:48:15.953887008Z"
     }
@@ -217,6 +226,9 @@ You will receive a response like the following:
 
 </div>
 </details>
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Next steps
 

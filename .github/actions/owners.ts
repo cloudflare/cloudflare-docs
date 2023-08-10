@@ -16,7 +16,7 @@ export const OWNERS: Record<string, string[]> = {
   "automatic-platform-optimization": ["dcpena"],
   bots: ["patriciasantaana"],
   "browser-rendering": ["deadlypants1973"],
-  byoip: [], // TODO
+  byoip: ["patriciasantaana"],
   cache: ["angelampcosta"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],

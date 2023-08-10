@@ -55,13 +55,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 <div>
 
-| Configuration option  | Value                   |
-| --------------------- | ----------------------- |
-| Production branch     | `main`                  |
-| Framework preset      | `Astro`                 |
-| Build command         | `npm run build`         |
-| Build directory       | `dist`                  |
-| Environment Variables | `NODE_VERSION: 16.12.0` |
+{{<pages-build-preset framework="astro">}}
 
 </div>
 

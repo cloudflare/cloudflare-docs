@@ -49,20 +49,6 @@ Running a delete migration will delete all Durable Object instances associated w
 
 ### Durable Object migrations in `wrangler.toml`
 
-A migration is a mapping process from a class name to a runtime state. You perform a migration when:
-
-* Creating a new Durable Object class.
-* Renaming an existing Durable Object class.
-* Deleting an existing Durable Object class.
-* Transferring an existing Durable Object class.
-
-A migration is a mapping process from a class name to a runtime state. You perform a migration when:
-
-* Creating a new Durable Object class.
-* Renaming an existing Durable Object class.
-* Deleting an existing Durable Object class.
-* Transferring an existing Durable Object class.
-
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. 
 
 Migrations require a migration tag, which is defined by the `tag` property in each migration entry. 

@@ -218,7 +218,7 @@
 /d1/learning/using-d1-from-pages/ /pages/platform/functions/bindings/#d1-databases 301
 /d1/migrations/ /d1/platform/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
-/d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
+/d1/wrangler-commands/ /workers/wrangler/commands/#d1 301
 
 # ddos-protection
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
@@ -321,6 +321,7 @@
 # fundamentals
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/account-and-billing/members/roles/ 301
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/account-and-billing/members/ 301
+/fundamentals/account-and-billing/account-security/scim-setup/ /fundamentals/account-and-billing/account-security/ 301
 /fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
@@ -1057,6 +1058,7 @@
 /cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/identity/devices/warp-client-checks/require-gateway/ 301
 /cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
 /cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
+/cloudflare-one/identity/devices/uptycs/ /cloudflare-one/identity/devices/service-providers/uptycs/ 301
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
