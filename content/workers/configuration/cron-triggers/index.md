@@ -27,7 +27,7 @@ Refer to the following examples to write your code:
 
 ### 2. Update configuration
 
-After you have updated your Worker code to include a `"scheduled"` event, you must upate your Worker project configuration.
+After you have updated your Worker code to include a `"scheduled"` event, you must update your Worker project configuration.
 
 #### Update configuration via `wrangler.toml`
 
@@ -44,9 +44,16 @@ crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 # - At 11:59PM on the last weekday of the month
 ```
 
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+
+```toml
+[env.dev.triggers]
+crons = ["0 * * * *"]
+```
+
 #### Update configuration via the dashboard
 
-Add Cron Triggers to Workers with the Cloudflare API, or in the dashboard. To add Cron Triggers in the Cloudflare dashboard:
+To add Cron Triggers in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
