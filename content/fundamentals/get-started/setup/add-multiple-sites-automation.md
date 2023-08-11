@@ -59,7 +59,7 @@ Add domains using [flarectl](https://github.com/cloudflare/cloudflare-go/release
 
 {{<Aside type="warning">}}
 
-If you attempt to add more than 50 domains at a time, any additional domains will be blocked until your current domains are processed.
+{{<render file="_automation-number-limitations.md">}}
 
 {{</Aside>}}
 
@@ -127,7 +127,8 @@ ___
 
 ## Limitations
 
-There are limitations on the number of domains you can add at a time. If you attempt to add more than 50 domains at a time, any additional domains will be blocked until your current domains are active.
+{{<render file="_automation-number-limitations.md">}}
+<br/>
 
 After that, you cannot have more pending sites than active sites associated with your Cloudflare account. We recommend waiting until your pending sites have been [activated](/dns/zone-setups/reference/domain-status/) before adding additional domains.
 
