@@ -17,4 +17,4 @@ weight: 1
 
 You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [DNS Location](/cloudflare-one/policies/gateway/dns-policies/#dns-location) selector.
 
-{{<render file="gateway/_add-locations-static-ip-warning">}}
+{{<render file="gateway/_add-locations-static-ip-warning.md">}}
