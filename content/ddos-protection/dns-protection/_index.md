@@ -43,7 +43,9 @@ Each policy has a mode and a sensitivity level. For more information on these se
 
 Cloudflare collects DNS-related data such as query type (for example, `A` record) and the queried domains. For details, refer to [Data collection](/analytics/network-analytics/reference/data-collection/).
 
-You can [opt out](/ddos-protection/dns-protection/settings/) from this data collection, but this means that you will not be protected by the Advanced DNS Protection system.
+{{<Aside type="warning">}}
+Currently, to disable this data collection you must remove your prefixes from the protection system using the [Delete prefix](/ddos-protection/tcp-protection/api/#prefix-operations) API operation, but this operation will remove the prefixes from both Advanced DNS Protection and [Advanced TCP Protection](/ddos-protection/tcp-protection/).
+{{</Aside>}}
 
 ---
 
