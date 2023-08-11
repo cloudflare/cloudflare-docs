@@ -184,7 +184,7 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ## Verify tunnel status on Cloudflare dashboard
 
-{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic WAN** > **Tunnel health**" >}}
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
 
 ### Make Cloudflare health checks work
 

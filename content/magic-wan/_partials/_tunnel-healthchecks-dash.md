@@ -15,7 +15,7 @@ Not all data centers will be relevant to you at all times. You can refer to the 
 To check for Anycast tunnel health:
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to $1, and select View.
+2. Go to $1, and select **View**.
 3. In **Cloudflare colos**, you can choose one or more Cloudflare data centers to filter out the traffic that shows up in your Anycast tunnels. For example, if you chose the Lisbon data center, your Anycast tunnels would only show connections to that data center. 
 4. Below, you have a list of all your Anycast tunnels, as well as their current health status. Find the tunnel you wish to inspect and select the arrow (**>**) before it to open its details.
 5. The details pane shows the connection status between different Cloudflare servers and your tunnel. Select **Traceroute for details** in one of the Cloudflare servers shown to check for issues between Cloudflare and your origin network.
