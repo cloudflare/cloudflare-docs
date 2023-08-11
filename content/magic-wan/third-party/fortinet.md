@@ -39,7 +39,7 @@ end
 
 ```bash
 
-config vpn ipsec phase1
+config vpn ipsec phase1-interface
     edit "<A-NAME>"
         set interface "port1"
         set ike-version 2
@@ -47,6 +47,7 @@ config vpn ipsec phase1
         set peertype any
         set proposal aes128gcm-prfsha256
         set localid "<FQDN-FROM-CF-DASH>"
+        set dhgrp 14
         set remote-gw <CF-ANYCAST-IP>
         set psksecret <PSK>
 end
@@ -55,10 +56,12 @@ end
 ### IPsec Phase 2
 
 ```bash
-config vpn ipsec phase2-interface
+config vpn ipsec phase2
     edit "<SAME-NAME-AS-PHASE1>"
         set phase1name "<PHASE1-NAME>"
         set proposal aes128gcm
+        set dhgrp 14
+        set pfs enable
         set replay disable
         set auto-negotiate enable
         set keylifeseconds 14400
@@ -155,6 +158,7 @@ config vpn ipsec phase1
         set peertype any
         set proposal aes128gcm-prfsha256
         set localid "<FQDN-FROM-CF-DASH>"
+        set dhgrp 14
         set remote-gw <CF-ANYCAST-IP>
         set psksecret <PSK>
 end
@@ -167,6 +171,8 @@ config vpn ipsec phase2-interface
     edit "<SAME-NAME-AS-PHASE1>"
         set phase1name "<PHASE1-NAME>"
         set proposal aes128gcm
+        set dhgrp 14
+        set pfs enable
         set replay disable
         set auto-negotiate enable
         set keylifeseconds 14400

@@ -48,7 +48,7 @@ To use SvelteKit with Cloudflare Pages, you need to add the [Cloudflare adapter]
 ---
 filename: svelte.config.js
 ---
-- import adapter from '@sveltejs/adapter-auto;
+- import adapter from '@sveltejs/adapter-auto';
 + import adapter from '@sveltejs/adapter-cloudflare';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -103,7 +103,7 @@ In addition to the Cloudflare adapter, review other adapters you can use in your
 
 - [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto)
 
-  SvelteKit's default adapter  automatically chooses the adapter for your current environment. If you use this adapter, [no configuration is needed](https://kit.svelte.dev/docs/adapter-auto). However, the default adapter introduces a few disadvantages for local development because it has no way of knowing what platform the application is going to be deployed to. 
+  SvelteKit's default adapter  automatically chooses the adapter for your current environment. If you use this adapter, [no configuration is needed](https://kit.svelte.dev/docs/adapter-auto). However, the default adapter introduces a few disadvantages for local development because it has no way of knowing what platform the application is going to be deployed to.
 
 To solve this issue, provide a `CF_PAGES` variable to SvelteKit so that the adapter can detect the Pages platform. For example, when locally building the application: `CF_PAGES=1 vite build`.
 
@@ -132,12 +132,7 @@ Select the new GitHub repository that you created and, in **Set up builds and de
 
 <div>
 
-| Configuration option  | Value                    |
-| --------------------- | ------------------------ |
-| Production branch     | `main`                   |
-| Build command         | `npm run build`          |
-| Build directory       | `.svelte-kit/cloudflare` |
-| Environment Variables | `NODE_VERSION: 16`       |
+{{<pages-build-preset framework="sveltekit">}}
 
 </div>
 

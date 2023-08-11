@@ -34,4 +34,4 @@ The dashboard only supports delegation of an entire prefix. If you want to deleg
 
 If Account A delegates use of part or all of a prefix to Account B via a prefix delegation, Account B can also use the [Spectrum API](/spectrum/about/byoip/) with the IPs it was delegated access to.
 
-**Example:** Account A is the primary owner of prefix 1.2.3.4/24. Account A delegates the use of 1.2.3.4/32 to Account B. Account B can now use the Spectrum API to create a Spectrum app with 1.2.3.4/32.
+**Example:** Account A is the primary owner of prefix 1.2.3.0/24. Account A delegates the use of 1.2.3.0/32 to Account B. Account B can now use the Spectrum API to create a Spectrum app with 1.2.3.0/32.

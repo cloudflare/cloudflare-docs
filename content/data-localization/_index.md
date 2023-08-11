@@ -36,6 +36,7 @@ Support by product and region is summarized in the following table:
 | ISO 27001 Certified European Union | &#x2705;[^25] | &#x2705; | Can use EU metadata boundary. |
 | Germany | &#x2705;[^25] | &#x2705; | Can use EU metadata boundary. |
 | Singapore | &#x2705;[^25] | &#x2705; | ✘ |
+| South Korea | &#x2705;[^25] | &#x2705; | ✘ |
 
 Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
 
@@ -99,7 +100,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^4]:API shield will not yet work with Customer Metadata Boundary enabled outside of US region.
 [^5]:Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.
 [^6]:Cannot be used with Customer Metadata Boundary outside of US region.
-[^7]:[Jurisdiction restrictions for Durable Objects](/workers/runtime-apis/durable-objects/#restrict-objects-to-a-jurisdiction).
+[^7]:[Jurisdiction restrictions for Durable Objects](/durable-objects/platform/data-location/#restrict-durable-objects-to-a-jurisdiction).
 [^8]:You can not yet specify region location for object storage; this is expected in 2023.
 [^9]:Argo cannot be used with Regional Services.
 [^10]:Argo cannot be used with Customer Metadata Boundary.

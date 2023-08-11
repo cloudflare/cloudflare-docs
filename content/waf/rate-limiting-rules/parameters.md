@@ -10,37 +10,18 @@ The available rate limiting rule parameters are the following:
 
 {{<definitions>}}
 
-- **When incoming requests match** {{<type>}}String{{</type>}}
+- **If incoming requests match** {{<type>}}String{{</type>}}
 
   - Field name in the API: `expression` (rule field).
   - Defines the criteria for the rate limiting rule to match a request.
 
-- **Choose action** {{<type>}}String{{</type>}}
+- **Cache status** > **Also apply rate limiting to cached assets** {{<type>}}Boolean{{</type>}}
 
-  - Field name in the API: `action` (rule field).
-  - Action to perform when the rate specified in the rule is reached.
-  - Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+  - Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option).
+  - If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
+  - In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
-- **Duration** {{<type>}}Number{{</type>}}
-
-  - Field name in the API: `mitigation_timeout`.
-  - Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
-  - In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
-  - You cannot define a duration when using one of the challenge actions. In this case, when visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
-  - When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
-
-- **Requests** {{<type>}}Number{{</type>}}
-
-  - Field name in the API: `requests_per_period`.
-  - The number of requests over the period of time that will trigger the rule.
-
-- **Period** {{<type>}}Number{{</type>}}
-
-  - Field name in the API: `period`.
-  - The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
-  - The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), or `3600` (one hour).
-
-- **With the same** {{<type>}}Array&lt;String&gt;{{</type>}}
+- **With the same characteristics** {{<type>}}Array&lt;String&gt;{{</type>}}
 
   - Field name in the API: `characteristics`.
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
@@ -81,7 +62,7 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
 
 {{</Aside>}}
 
-- **Increment counter when** {{<type>}}String{{</type>}}
+- **Use custom counting expression** > **Increment counter when** {{<type>}}String{{</type>}}
 
   - Field name in the API: `counting_expression` (optional).
   - Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
@@ -90,11 +71,30 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
   - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
   - In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
-- **Also apply rate limiting to cached assets** {{<type>}}Boolean{{</type>}}
+- **When rate exceeds** > **Requests** {{<type>}}Number{{</type>}}
 
-  - Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option).
-  - If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
-  - In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
+  - Field name in the API: `requests_per_period`.
+  - The number of requests over the period of time that will trigger the rule.
+
+- **When rate exceeds** > **Period** {{<type>}}Number{{</type>}}
+
+  - Field name in the API: `period`.
+  - The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
+  - The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), or `3600` (one hour).
+
+- **Then take action** {{<type>}}String{{</type>}}
+
+  - Field name in the API: `action` (rule field).
+  - Action to perform when the rate specified in the rule is reached.
+  - Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+
+- **For duration** {{<type>}}Number{{</type>}}
+
+  - Field name in the API: `mitigation_timeout`.
+  - Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
+  - In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
+  - You cannot define a duration when using one of the challenge actions. In this case, when visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
+  - When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
 
 - **With response type** {{<type>}}String{{</type>}}
 

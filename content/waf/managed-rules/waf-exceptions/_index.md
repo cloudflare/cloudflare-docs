@@ -34,5 +34,3 @@ WAF exceptions have priority over [overrides](/ruleset-engine/managed-rulesets/o
 If you define a WAF exception that skips all remaining rules, the expressions of those rules are not evaluated.
 
 If you define a WAF exception that skips a rule of a managed ruleset, the expression of the rule that executes the managed ruleset is evaluated and the managed ruleset rules are executed except for that specific rule, which is bypassed.
-
-Currently, WAF exceptions are not logged in Security Events.

@@ -44,6 +44,7 @@ $ warp-cli settings
 | Operating system         | `macOS`                                                                                                                                          | Any mode           |
 | Operating system version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode           |
 | Managed network          | [Network location](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) of the device                              | Any mode           |
+| SAML Attributes |  Attribute name and value from a [SAML IdP](/cloudflare-one/policies/gateway/identity-selectors/#generic-saml-idp)| Gateway with WARP |
 
 ## Order of precedence
 

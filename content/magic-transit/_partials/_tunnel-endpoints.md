@@ -24,21 +24,29 @@ This value is not required for IPsec tunnels, unless your router is using an IKE
 - **TTL**: Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
 - **MTU**: Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
 
-## IPsec tunnels
+## Tunnels
+
+### GRE tunnels
+
+You can set up GRE tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
+
+### IPsec tunnels
 
 You can [use IPsec]($4) as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's global network and define static routes to direct traffic down the correct tunnel.
 
-You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API make sure you already have an [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) before you begin.
+You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
 
 {{<Aside type="note" header="Note">}}$2 only supports Internet Key Exchange version 2 (IKEv2).{{</Aside>}}
 
-## Technical requirements for GRE and IPsec tunnels
+### Technical requirements for GRE and IPsec tunnels
 
 Refer to [Tunnels and encapsulation]($6) to learn about the technical requirements for GRE and IPsec tunnels used in $2.
 
 ## Add tunnels
 
-### Dashboard instructions
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $3.
@@ -51,11 +59,11 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
  
 5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
-7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `31` or `30`).
+7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 8. In **Customer GRE endpoint**, enter your router’s public IP address.
-9. In **Cloudflare GRE endpoint**, enter the Anycast address you received from your account team.
+9. In **Cloudflare GRE endpoint**, enter the Anycast address you received from your account team (typically begins with `172.x.x.x`).
 10. Leave the default values for **TTL** and **MTU**.
-11. Choose the [**Health check frequency**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
+11. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Probe construction]($8) for more information.
 13. **Health check target** is the customer end of the tunnel. Leave the default option as is, unless you need to change the target address for some reason.
 14. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
@@ -71,10 +79,10 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
-7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `31` or `30`).
+7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 8. In **Customer endpoint**, enter your router’s public IP address.
-9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team.
-10. Choose the [**Health check frequency**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
+9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team (typically begins with `172.x.x.x`).
+10. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 11. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Probe construction]($8) for more information.
 12. **Health check target** is the customer end of the tunnel. Leave the default option as is, unless you need to change the target address for some reason.
 
@@ -85,7 +93,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
     2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels.**
     3. Select **Add tunnels**.
     4. The Cloudflare dashboard will load the list of tunnels you have configured. The IPsec tunnel you have just created will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
-    5. Choose **Generate a new pre-shared key**. Save the key to a safe place, and select **Done**.
+    5. Choose **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Save the key to a safe place, and select **Done**.
 14. If you already have a pre-shared key:
     1. Select **Use my own pre-shared key**.
     2. Paste your key in **Your pre-shared key**.
@@ -94,9 +102,10 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 
 </div>
 </details>
-
-### API instructions
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 <details>
 <summary>GRE tunnel</summary>
 <div>
@@ -200,9 +209,9 @@ You will receive a response like the following:
 ```json
 {
   "result": {
-    "ipsec_id": "IPSEC_ID",
-    "ipsec_tunnel_id": "IPSEC_TUNNEL",
-    "psk": "YOUR_PSK_KEY",
+    "ipsec_id": "<IPSEC_ID>",
+    "ipsec_tunnel_id": "<IPSEC_TUNNEL>",
+    "psk": "<YOUR_PSK_KEY>",
     "psk_metadata": {
       "last_generated_on": "2023-04-21T10:48:15.953887008Z"
     }
@@ -217,6 +226,9 @@ You will receive a response like the following:
 
 </div>
 </details>
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Next steps
 

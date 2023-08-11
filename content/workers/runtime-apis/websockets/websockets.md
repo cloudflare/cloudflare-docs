@@ -9,7 +9,7 @@ title: WebSockets
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
 
-When using WebSockets with Durable Objects, we recommend using the [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) which adds additional extensions to the standard `WebSocket` object.
+When using WebSockets with Durable Objects, we recommend using the [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/) which adds additional extensions to the standard `WebSocket` object.
 
 ## Constructor
 

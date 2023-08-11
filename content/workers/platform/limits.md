@@ -217,7 +217,7 @@ Duration is the measurement of wall-clock time. This is measured in Gigabyte-sec
 
 For example, when a Worker executes via a [scheduled event](/workers/runtime-apis/scheduled-event/), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
-Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/workers/configuration/durable-objects/).
+Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/durable-objects/).
 
 ---
 

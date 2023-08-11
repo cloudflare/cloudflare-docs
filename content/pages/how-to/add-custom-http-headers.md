@@ -88,10 +88,10 @@ zone_id = "FILL-IN-YOUR-ZONE-ID"
 
 If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
-Once you have configured your `wrangler.toml`, run `wrangler publish` in your terminal to deploy your Worker:
+Once you have configured your `wrangler.toml`, run `wrangler deploy` in your terminal to deploy your Worker:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 After you have deployed your Worker, your desired HTTP header adjustments will take effect. While the Worker is deployed, you should continue to see the content from your Pages application as normal.
