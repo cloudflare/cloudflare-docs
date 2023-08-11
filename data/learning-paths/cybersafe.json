@@ -7,15 +7,15 @@
       {
           "folder": "cybersafe",
           "uid": "cybersafe-account-creation"
+      }, 
+      {
+          "folder": "cybersafe",
+          "uid": "cybersafe-area1-onboarding"
       },
       {
         "folder": "cybersafe",
         "uid": "cybersafe-gateway-onboarding"
-      },      
-      {
-          "folder": "cybersafe",
-          "uid": "cybersafe-area1-onboarding"
-      }   
+      }           
   ],
   "title": "Project Cybersafe Schools",
   "uid": "cybersafe",
