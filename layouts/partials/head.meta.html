@@ -41,8 +41,6 @@
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
   {{- $title = print .Context.Title " | Training" -}}
 
-  {{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
-
   {{- else -}}
   {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
   {{- end -}}
