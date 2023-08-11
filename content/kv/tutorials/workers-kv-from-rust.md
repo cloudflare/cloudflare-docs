@@ -17,8 +17,6 @@ This tutorial will teach you how to read and write to KV directly from Rust, by 
 
 ## Prerequisites
 
-To get started:
-
 1.  Open your terminal and run the `git clone` command to create a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/).
 2.  `cd` into the new project.
 3.  Use the current state of the git repository as the initial commit by running the `git add` and `git commit` commands in your terminal.
@@ -33,7 +31,7 @@ $ git commit -m 'Initial commit'
 
 To access KV, you have to define a binding for a particular [KV namespace](/kv/get-started/#1-create-a-kv-namespace) in the `wrangler.toml` file generated in your new project's directory. 
 
-If you do not have an existing KV namespace, create one using [`wrangler`](/workers/wrangler/install-and-update/). 
+If you do not have an existing KV namespace, create one using [Wrangler](/workers/wrangler/install-and-update/). 
 
 For example, a KV namespace called `KV_FROM_RUST` would be created by running:
 
