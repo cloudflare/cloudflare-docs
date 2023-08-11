@@ -30,7 +30,8 @@ Users will now see a custom message when they are blocked by this HTTP policy.
 
 ## Enable the block page for DNS policies
 
-{{<render file="_gateway-add-block-page.md">}}
+{{<render file="gateway/_add-block-page.md">}}
+
 ## Troubleshoot the block page
 
 If your users see a "Warning: Potential Security Risk Ahead" message in their browser when visiting a blocked page, check that you have correctly installed the Cloudflare certificate on their device.
@@ -39,10 +40,11 @@ If your users see a "Warning: Potential Security Risk Ahead" message in their br
 
 ## Customize the block page
 
-{{<render file="_gateway-customize-block-page.md">}}
+{{<render file="gateway/_customize-block-page.md">}}
+
 ### Add a logo image
 
-{{<render file="_gateway-add-logo-image.md">}}
+{{<render file="gateway/_add-logo-image.md">}}
 
 ### Allow users to email an administrator
 
