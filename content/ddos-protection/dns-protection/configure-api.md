@@ -27,15 +27,6 @@ Operation | Verb + Endpoint
 Get Advanced DNS Protection configuration | `GET` `/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection`
 Update Advanced DNS Protection configuration | `PATCH` `/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection`
 
-## Parameter values
-
-You must set the `policy` parameter to one of the following values:
-
-* `drop_unprofiled_only`
-* `drop_both`
-
-For more information on the `mode` and `sensitivity` parameters and the supported values, refer to [Policy settings](/ddos-protection/dns-protection/settings/).
-
 ## Examples
 
 ### Get Advanced DNS Protection configuration
@@ -54,8 +45,9 @@ header: Example response
 {
   "result": {
     "mode": "<MODE>",
-    "policy": "<POLICY>",
     "sensitivity": "<SENSITIVITY>",
+    "rate": <RATE>,
+    "burst": <BURST>,
     "created_on": "2023-08-01T13:10:38.762503+01:00",
     "modified_on": "2023-08-01T13:10:38.762503+01:00",
   },
@@ -69,7 +61,7 @@ header: Example response
 
 The following example updates the configuration of Advanced DNS Protection.
 
-The request body can contain only the fields you want to update (from `mode`, `policy`, and `sensitivity`).
+The request body can contain only the fields you want to update (from `mode`, `sensitivity`, `rate`, and `burst`).
 
 ```bash
 curl --request PATCH \
@@ -77,8 +69,9 @@ curl --request PATCH \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
   "mode": "<NEW_MODE>",
-  "policy": "<NEW_POLICY>",
-  "sensitivity": "<NEW_SENSITIVITY>"
+  "sensitivity": "<NEW_SENSITIVITY>",
+  "rate": <NEW_RATE>,
+  "burst": <NEW_BURST>
 }'
 ```
 
@@ -89,8 +82,9 @@ header: Example response
 {
   "result": {
     "mode": "<NEW_MODE>",
-    "policy": "<NEW_POLICY>",
     "sensitivity": "<NEW_SENSITIVITY>",
+    "rate": <NEW_RATE>,
+    "burst": <NEW_BURST>,
     "created_on": "2023-08-01T13:10:38.762503+01:00",
     "modified_on": "2023-08-01T13:10:38.762503+01:00",
   },
