@@ -93,7 +93,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
     2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels.**
     3. Select **Add tunnels**.
     4. The Cloudflare dashboard will load the list of tunnels you have configured. The IPsec tunnel you have just created will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
-    5. Choose **Generate a new pre-shared key**. Save the key to a safe place, and select **Done**.
+    5. Choose **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Save the key to a safe place, and select **Done**.
 14. If you already have a pre-shared key:
     1. Select **Use my own pre-shared key**.
     2. Paste your key in **Your pre-shared key**.
