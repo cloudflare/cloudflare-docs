@@ -8,11 +8,11 @@ layout: single
 
 ## Background
 
-Cron Triggers allow users to map a cron expression to a Worker using a [ScheduledEvent](/workers/runtime-apis/scheduled-event/) listener that enables Workers to be executed on a schedule.
+Cron Triggers allow users to map a cron expression to a Worker using a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) listener that enables Workers to be executed on a schedule.
 
 Cron Triggers are ideal for running periodic jobs for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
 
-Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker.
+Cron Triggers execute on UTC time.
 
 ## Add a Cron Trigger
 
@@ -118,7 +118,7 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 The recommended way of testing Cron Triggers is using Wrangler. 
 
-{{<Aside type="note" header="Cron Trigger changes take time to propogate">}}
+{{<Aside type="note" header="Cron Trigger changes take time to propagate">}}
 
 Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
 
@@ -143,6 +143,10 @@ It can take up to 30 minutes before events are displayed in **Past Events** when
 {{</Aside>}}
 
 Refer to [Metrics and Analytics](/workers/observability/metrics-and-analytics/) for more information.
+
+## Limits
+
+Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker.
 
 ## Green Compute
 
