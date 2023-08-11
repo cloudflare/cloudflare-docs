@@ -3,7 +3,6 @@ pcx_content_type: how-to
 type: overview
 title: Create custom rules in the dashboard
 weight: 2
-layout: list
 ---
 
 # Create custom rules in the dashboard
@@ -28,11 +27,11 @@ To create a new custom rule:
 
 6. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-7. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
+7. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
 8. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
 
-9. To save and deploy your rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ## Configuring a custom response for blocked requests
 
