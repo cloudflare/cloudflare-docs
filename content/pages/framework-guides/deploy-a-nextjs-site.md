@@ -22,7 +22,7 @@ For more information about the Edge Runtime, refer to [the official Next.js docu
 
 ## Use the Edge Runtime
 
-### 1. Select your Next.js project
+### Select your Next.js project
 
 If you already have a Next.js project that you wish to deploy, change to its directory and proceed to the next step. Otherwise, use `create-next-app` to create a new Next.js project:
 
@@ -36,7 +36,7 @@ After creating your project, a new `my-app` directory will be generated using th
 $ cd my-app
 ```
 
-### 2. Configure the application to use the Edge Runtime
+### Configure the application to use the Edge Runtime
 
 The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (for example, API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
 
@@ -95,7 +95,7 @@ export async function GET(request: Request) {
 
 For more examples of this and for Next.js versions prior to v13.3.1, refer to [`@cloudflare/next-on-pages` examples](https://github.com/cloudflare/next-on-pages/blob/main/docs/examples.md). Additionally, ensure that your application is not using any [unsupported APIs](https://nextjs.org/docs/app/api-reference/edge#unsupported-apis) or [features](https://github.com/cloudflare/next-on-pages/blob/main/docs/supported.md).
 
-### 3. Create a GitHub repository
+### Create a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
@@ -105,7 +105,7 @@ git branch -M main
 git push -u origin main
 ```
 
-### 4. Deploy your application to Cloudflare Pages
+### Deploy your application to Cloudflare Pages
 
 To deploy your application to Cloudflare Pages, you need to install the `@cloudflare/next-on-pages` package. This library builds your Next.js project in a format that can be deployed to Pages, and handles the runtime logic for your application.
 
@@ -135,7 +135,7 @@ The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of yo
 
 ## Use a static export
 
-### 1. Select your Next.js project
+### Select your Next.js project
 
 If you already have a Next.js project that you wish to deploy, ensure that it is [configured for static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports), change to its directory, and proceed to the next step. Otherwise, use `create-next-app` to create a new Next.js project.
 
@@ -149,7 +149,7 @@ After creating your project, a new `my-app` directory will be generated using th
 $ cd my-app
 ```
 
-### 2. Create a GitHub repository
+### Create a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
@@ -159,7 +159,7 @@ git branch -M main
 git push -u origin main
 ```
 
-### 3. Deploy your application to Cloudflare Pages
+### Deploy your application to Cloudflare Pages
 
 To deploy your site to Pages:
 
