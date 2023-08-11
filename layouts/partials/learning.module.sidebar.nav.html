@@ -1,18 +1,8 @@
 {{- $url := .RelPermalink -}}
-{{- $urlSplit := (split $url "/") -}}
 {{- $root := relURL (printf "/%s/" .Section) -}}
 {{- $DATA := (index $.Site.Data .Section) -}}
 
 {{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
-{{- $page := $.Site.GetPage (replaceRE "/$" "" $url) -}}
-{{- $pageType := $page.Kind -}}
-{{- $pageModule := "" -}}
-
-{{- if eq $pageType "section" -}}
-  {{ $pageModule = index $urlSplit (sub (len $urlSplit) 2) }}
-{{- else -}}
-  {{ $pageModule = index $urlSplit (sub (len $urlSplit) 3) }}
-{{- end -}}
 
 <div class="DocsSidebar">
   <div class="DocsSidebar--sections">
@@ -70,9 +60,15 @@
         <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
 
         <ul class="DocsSidebar--nav">
-          {{ with .Site.GetPage "section" $pageModule }}
-            {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url "ShowTime" true) }}
-          {{ end }}
+          {{- $current := .Page.RelPermalink -}}
+          
+            {{- range .FirstSection.Pages.ByWeight -}}
+            {{- $x := .RelPermalink -}}
+              {{- if (eq (index (split $x "/") 2) (index (split $current "/") 2)) -}}
+                {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url "isCollapsible" false) }}
+              {{- end -}}
+            {{- end -}}
+         
         </ul>
       </div>
       <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
