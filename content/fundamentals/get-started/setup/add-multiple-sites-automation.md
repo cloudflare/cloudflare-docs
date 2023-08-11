@@ -1,18 +1,18 @@
 ---
 pcx_content_type: tutorial
 source: https://support.cloudflare.com/hc/en-us/articles/360000841472-Adding-Multiple-Sites-to-Cloudflare-via-Automation
-title: Add Multiple Sites via Automation
+title: Add Multiple Sites via automation
 ---
 
-# Add Multiple Sites via Automation
+# Add Multiple Sites via automation
 
 To add multiple sites to Cloudflare at once and more efficiently, you can do so via the Cloudflare API.
 
 Adding multiple sites can be useful when you:
 
--   Have multiple domains mapping back to a single, canonical domain (common for domains in different countries - such as `.com.au`, `.co.uk` - that you want protected by Cloudflare).
--   Are a [partner](https://www.cloudflare.com/partners/), agency, or IT consultancy, and manage multiple domains on behalf of your customers.
--   Are moving an existing set of sites over to Cloudflare.
+- Have multiple domains mapping back to a single, canonical domain (common for domains in different countries - such as `.com.au`, `.co.uk` - that you want protected by Cloudflare).
+- Are a [partner](https://www.cloudflare.com/partners/), agency, or IT consultancy, and manage multiple domains on behalf of your customers.
+- Are moving an existing set of sites over to Cloudflare.
 
 Using the API will allow you to add multiple sites quickly & efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 
@@ -22,7 +22,7 @@ ___
 
 {{<tutorial-prereqs>}}
 
-To add multiple sites to Cloudflare via Automation, you need:
+To add multiple sites to Cloudflare via automation, you need:
 
 - An existing [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
 - Basic familiarity with the command line.
