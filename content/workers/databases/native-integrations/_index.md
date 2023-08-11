@@ -21,7 +21,7 @@ If you rotate or delete database credentials, you must delete the integration an
 
 ## Database limits
 
-At this time, Database Integrations only support access to one database per provider. To add multiple, you must manually configure secrets.
+At this time, Database Integrations only support access to one database per provider. To add multiple, you must manually configure [secrets](/workers/configuration/environment-variables/).
 
 ## Supported platforms
 
