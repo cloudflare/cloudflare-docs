@@ -29,7 +29,7 @@ Refer to the following examples to write your code:
 
 After you have updated your Worker code to include a `"scheduled"` event, you must update your Worker project configuration.
 
-#### via `wrangler.toml`
+#### Via `wrangler.toml`
 
 If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
@@ -51,7 +51,7 @@ You also can set a different Cron Trigger for each [environment](/workers/wrangl
 crons = ["0 * * * *"]
 ```
 
-#### via the dashboard
+#### Via the dashboard
 
 To add Cron Triggers in the Cloudflare dashboard:
 
