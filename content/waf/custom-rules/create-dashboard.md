@@ -26,7 +26,7 @@ To create a new custom rule:
 
     ![Custom rule creation page in the Cloudflare dashboard](/images/waf/custom-rules/firewall-custom-rule-create.png)
 
-6. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
+6. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
 7. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
@@ -40,7 +40,7 @@ When you select the _Block_ action in a custom rule you can optionally define a 
 
 The custom response has three settings:
 
-* **Response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
+* **With response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
 
     | Dashboard value | API value |
     |---|---|
@@ -49,5 +49,5 @@ The custom response has three settings:
     | Custom JSON | `"application/json"` |
     | Custom XML | `"text/xml"` |
 
-* **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
+* **With response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
 * **Response body**: The body of the response. Configure a valid body according to the response type you selected.
