@@ -180,7 +180,7 @@ export default {
 };
 ```
 
-After you have updated your Worker with the above code, run `wrangler publish` . 
+After you have updated your Worker with the above code, run `npx wrangler deploy`. 
 
 You can now use this Worker to perform multipart uploads. You can either send requests from your existing application to this Worker to perform uploads or use a script to upload files through this Worker.
 

@@ -56,7 +56,7 @@ const result = await client.query({
 
 ### Set explicit host and port parameters
 
-You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/configuration/environment-variables/) via the [dashboard](/workers/configuration/environment-variables/#environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/configuration/environment-variables/#environment-variables-via-wrangler), as follows:
+You can pass parameters one-by-one to the `pg` client instead of providing a connection string. These parameters can be configured as [environmental variables](/workers/configuration/environment-variables/) via the [dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or via [`wrangler.toml`](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler), as follows:
 
 ```toml
 ---

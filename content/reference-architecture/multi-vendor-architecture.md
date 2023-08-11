@@ -69,7 +69,7 @@ Cloudflare is configured as the primary DNS provider and A records are configure
 
 **2. Secondary DNS setup with Secondary DNS override**
 
-Cloudflare is configured as a secondary provider and all DNS records are transferred from the primary provider. Cloudflare provides a feature called [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/#:~:text=With%20Secondary%20DNS%20override%2C%20you,CNAME%20records%20can%20be%20proxied.) that allows customers to override the response served from Cloudflare secondary nameservers. This allows for customers to take advantage of leveraging zone transfers to automatically sync between DNS providers. It also provides the flexibility to update select records in Cloudflare DNS to redirect certain traffic to another service provider like Cloudflare. In this case, the response will be Cloudflare Anycast IP addresses allowing for Cloudflare to be the proxy.
+Cloudflare is configured as a secondary provider and all DNS records are transferred from the primary provider. Cloudflare provides a feature called [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) that allows customers to override the response served from Cloudflare secondary nameservers. This allows for customers to take advantage of leveraging zone transfers to automatically sync between DNS providers. It also provides the flexibility to update select records in Cloudflare DNS to redirect certain traffic to another service provider like Cloudflare. In this case, the response will be Cloudflare Anycast IP addresses allowing for Cloudflare to be the proxy.
 
 **3. Partial / CNAME setup**
 
@@ -77,7 +77,7 @@ In this setup, Cloudflare is not the authoritative DNS provider and the customer
 
 Converting to CNAME setup ensures the hostname eventually resolves to Cloudflare IPs. This is useful when customers don’t want to change their current DNS setup but still want to use other Cloudflare services.
 
-If a customer's current DNS provider doesn’t support CNAME on the zone apex (sometimes called the "root domain" or "naked domain") like Cloudflare does with [CNAME Flattening](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/#:~:text=With%20Secondary%20DNS%20override%2C%20you,CNAME%20records%20can%20be%20proxied.), you must purchase Static IPs from Cloudflare and create an A record to those Static IPs in the provider DNS. In Cloudflare, you can then create an A record to point the zone apex to the origin.
+If a customer's current DNS provider doesn’t support CNAME on the zone apex (sometimes called the "root domain" or "naked domain") like Cloudflare does with [CNAME Flattening](/dns/cname-flattening/), you must purchase Static IPs from Cloudflare and create an A record to those Static IPs in the provider DNS. In Cloudflare, you can then create an A record to point the zone apex to the origin.
 
 Many customers using Cloudflare services take advantage of the cross-product integration and innovations along with simplicity of a single UI for management and operational simplicity and use multiple Cloudflare services together like CDN and WAF. Although not recommended, it’s also possible to use security services like WAF with other CDN providers by setting up DNS to forward traffic through Cloudflare via CNAME and disabling Cloudflare caching via Cache Rules.
 
@@ -188,7 +188,7 @@ It’s important to note here that the third party services are looking at end-t
 
 Both providers’ configurations are kept in sync by the administrators, pushing out changes via Terraform which makes calls to each provider's API. Keep in mind that while Cloudflare does have full API support for every feature, this may not be the case for every provider.
 
-If only one external DNS provider is used, it does create a single point of failure if that DNS provider has an outage. A way to mitigate this risk is to implement a multi-vendor DNS solution; this is discussed in more detail in the [Multi-vendor DNS options](#multi-vendor-dns-options) section in this document.
+If only one external DNS provider is used, it does create a single point of failure if that DNS provider has an outage. A way to mitigate this risk is to implement a multi-vendor DNS solution; this is discussed in more detail in the [Multi-vendor DNS options](#multi-vendor-dns-setup-options) section in this document.
 
 Another challenge of a parallel approach is keeping configurations in sync across providers to deliver a consistent end user experience. This means the administrators need to be familiar with the configuration management of both vendors and understand how feature parity can be achieved.
 

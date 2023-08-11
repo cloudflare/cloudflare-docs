@@ -19,7 +19,7 @@ Cloudflare enables email address obfuscation automatically when you sign up.
 To change the Email Address Obfuscation setting for your zone:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Select your account and zone.
+2.  Select your account and website.
 3.  Go to **Scrape Shield**.
 4.  For **Server Side Excludes**, switch the toggle to **On**.
 

@@ -1,6 +1,6 @@
 ---
 title: Sumo Logic
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 meta:
     description: Sumo Logic integration guide
 updated: 2023-01-26

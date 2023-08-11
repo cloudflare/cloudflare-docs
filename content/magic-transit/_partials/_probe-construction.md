@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: healthCheckFrequencyURL;;productName;;onboardingURL;;configureTunnelEndpointsURL
+inputParameters: healthCheckFrequencyURL;;productName;;onboardingURL;;configureTunnelEndpointsURL;;urlChangeHealthCheckType
 ---
 
 # Probe construction
@@ -20,7 +20,7 @@ When a probe attempt fails for a [healthy](#health-state-and-prioritization) tun
 
 {{<Aside type="note" header="Note">}}
 
-To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply instead of an ICMP echo request. To use echo request packets, contact your Cloudflare account team.
+To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply instead of an ICMP echo request. To use echo request packets, change your health check type to **Request** in your tunnels. Refer to [Configure tunnel endpoints]($5) to learn how to change this setting.
 
 {{</Aside>}}
 

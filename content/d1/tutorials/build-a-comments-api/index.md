@@ -173,7 +173,7 @@ app.post('/api/posts/:slug/comments', async c => {
 
 ## 7. Deploy your Hono application
 
-With your application ready for deployment, use Wrangler to build and publish your project to the Cloudflare network.
+With your application ready for deployment, use Wrangler to build and deploy your project to the Cloudflare network.
 
 Begin by running `wrangler whoami` to confirm that you are logged in to your Cloudflare account. If you are not logged in, Wrangler will prompt you to login, creating an API key that you can use to make authenticated requests automatically from your local machine.
 
@@ -193,7 +193,7 @@ database_name = "<YOUR_DATABASE_NAME>"
 database_id = "<YOUR_DATABASE_UUID>"
 ```
 
-Now, run `wrangler publish` to publish your project to Cloudflare. When it has successfully published, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:
+Now, run `npx wrangler deploy` to deploy your project to Cloudflare. When it has successfully deployed, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:
 
 ```sh
 # Note: Your workers.dev deployment URL may be different

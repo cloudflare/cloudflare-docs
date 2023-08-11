@@ -46,10 +46,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
     ![Remove site from Cloudflare is an option under Advanced Actions](/images/fundamentals/get-started/remove-domain.png)
 
+    {{<Aside type="note">}}If you are using an Enterprise domain, [change your domain plan](/fundamentals/account-and-billing/account-maintenance/change-plan/#change-plan-type) to **Free**, which will give you access to **Remove Site from Cloudflare**.<br/><br/>If this does not work, contact your Customer Success Manager.
+    {{</Aside>}}
+
 3. Select **Confirm**.
-
-{{<Aside type="note">}}
-
-If you are an Enterprise customer and cannot remove your domain, contact your Customer Success Manager.
-
-{{</Aside>}}

@@ -16,7 +16,7 @@ This page covers examples for the following scenarios:
 - Modify existing URLs to be compatible with Image Resizing
 - Add parameters to every image that passes through Image Resizing
 
-To create a rule, log in to the Cloudflare dashboard and select your account and zone. Then, select **Rules** > **Transform Rules**.
+To create a rule, log in to the Cloudflare dashboard and select your account and website. Then, select **Rules** > **Transform Rules**.
 
 ## Before you start
 

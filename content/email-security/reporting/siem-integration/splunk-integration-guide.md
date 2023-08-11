@@ -1,6 +1,6 @@
 ---
 title: Splunk
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 meta:
     description: Splunk Cloud integration guide
 updated: 2023-01-26

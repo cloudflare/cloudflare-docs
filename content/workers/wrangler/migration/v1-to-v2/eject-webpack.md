@@ -122,4 +122,4 @@ command = "npm run build" # or "yarn build"
 
 6. Test your project.
 
-Try running `wrangler publish` to test that your configuration works as expected.
+Try running `npx wrangler deploy` to test that your configuration works as expected.

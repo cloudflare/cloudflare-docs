@@ -63,7 +63,7 @@ To ensure a custom domain is added successfully, you must go through the [Add a 
 
 To detach a custom domain from your Pages project, you must modify your zone's DNS records.
 
-First, log in to the Cloudflare dashboard > select your account in **Account Home** > select your zone > **DNS**.
+First, log in to the Cloudflare dashboard > select your account in **Account Home** > select your website > **DNS**.
 
 Then, in **DNS** > **Records**:
 

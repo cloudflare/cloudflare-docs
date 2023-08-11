@@ -195,7 +195,7 @@ $ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 - `--bookmark` {{<type>}}string{{</type>}}
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
   {{</definitions>}}
 
 ### `time-travel info`
@@ -211,7 +211,7 @@ $ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}}
-  - A Unix timestamp or JavaScript date-time `string` within the last 30 days.
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
   {{</definitions>}}
 
 ### `backup create`
@@ -429,7 +429,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 ~/my-worker $ wrangler dev
 ⬣ Listening at http://localhost:8787
 ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ [b] open a browser, [d] open Devtools, [l] turn on local mode, [c] clear console, [x] to exit                        │
+│ [b] open a browser, [d] open DevTools, [l] turn on local mode, [c] clear console, [x] to exit                        │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
@@ -723,6 +723,10 @@ Exactly one of `VALUE` or `--path` is required.
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -790,6 +794,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Interact with a preview namespace instead of production.
 - `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Only list keys that begin with the given prefix.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -835,6 +843,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -872,6 +884,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -917,6 +933,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -1001,6 +1021,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with local persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for local persisted data
 
 {{</definitions>}}
 
@@ -1249,20 +1273,18 @@ $ wrangler secret list
 
 ## `secret:bulk`
 
-Manage multiple secrets for a Worker.
-
-### `json`
-
-The path to a JSON file containing secrets in key-value pairs to upload.
+Upload multiple secrets for a Worker at once.
 
 ```sh
-$ wrangler secret:bulk <JSON> [OPTIONS]
+$ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `JSON` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The JSON file of key-value pairs to upload, in form {"key": value, ...}
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
@@ -1273,20 +1295,20 @@ $ wrangler secret:bulk <JSON> [OPTIONS]
     {{</definitions>}}
 
   {{<Aside type="note">}}
-  Below is an example of uploading secrets from a JSON file.
+  Below is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
   ```json
+  ---
+  filename: secrets.json
+  ---
   {
     "secret-name-1": "secret-value-1",
     "secret-name-2": "secret-value-2"
   }
   ```
 
-  {{</Aside>}}
-  {{<Aside type="note">}}
-  When complete the output summary will show the number of secrets uploaded and number failed.
-
-  ```
+  ```sh
+  $ wrangler secret:bulk < secrets.json
   🌀 Creating the secrets for the Worker "script-name"
   ✨ Successfully created secret for key: secret-name-1
   ...

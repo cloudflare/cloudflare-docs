@@ -5,7 +5,7 @@ title: Configuration
 
 # Configure `wrangler.toml`
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker.
+Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deploying setup for a Worker.
 
 {{<Aside type="warning">}}
 Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
@@ -45,7 +45,7 @@ kv_namespaces = [
 The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or publish with the `-e` / `--env` flag in the `wrangler` commands like `wrangler publish --env staging`.
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `wrangler deploy --env staging`.
 
 The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
@@ -54,7 +54,7 @@ The majority of keys are inheritable, meaning that top-level configuration can b
 Inheritable keys are configurable at the top-level, and can be inherited (or overridden) by environment-specific configuration.
 
 {{<Aside type="note">}}
-At a minimum, the `name`, `main` and `compatibility_date` keys are required to publish a Worker.
+At a minimum, the `name`, `main` and `compatibility_date` keys are required to deploy a Worker.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -85,11 +85,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `route` {{<type-link href="#types-of-routes">}}Route{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A route that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
+  - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
 
 - `routes` {{<type-link href="#types-of-routes">}}Route[]{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - An array of routes that your Worker should be published to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
+  - An array of routes that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
 
 - `tsconfig` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -113,7 +113,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `no_bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Skip internal build steps and directly publish your Worker script. You must have a plain JavaScript Worker with no dependencies.
+  - Skip internal build steps and directly deploy your Worker script. You must have a plain JavaScript Worker with no dependencies.
 
 - `minify` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -129,7 +129,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `keep_vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether Wrangler should keep variables configured in the dashboard on publish. Refer to [source of truth](#source-of-truth).
+  - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
 - `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -269,7 +269,7 @@ crons = ["* * * * *"]
 
 ## Custom builds
 
-You can configure a custom build step that will be run before your Worker is published. Refer to [Custom builds](/workers/wrangler/custom-builds/).
+You can configure a custom build step that will be run before your Worker is deployed. Refer to [Custom builds](/workers/wrangler/custom-builds/).
 
 {{<definitions>}}
 
@@ -337,7 +337,7 @@ database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 
 ### Durable Objects
 
-[Durable Objects](/workers/configuration/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
+[Durable Objects](/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 To bind Durable Objects to your Worker, assign an array of the below object to the `durable_objects.bindings` key.
 
@@ -374,7 +374,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/configuration/durable-objects/#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/learning/durable-objects-migrations/).
 
 {{<definitions>}}
 
@@ -440,6 +440,83 @@ header: wrangler.toml
 kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
+```
+
+### Queues
+
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/learning/delivery-guarantees/) and [message batching](/queues/learning/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
+
+To bind Queues to your producer Worker, assign an array of the below object to the `[[queues.producers]]` key.
+
+{{<definitions>}}
+
+- `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the queue, used on the Cloudflare dashboard.
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.producers]]
+  queue = "my-queue"
+  binding = "MY_QUEUE"
+```
+
+To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
+
+{{<definitions>}}
+
+- `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the queue, used on the Cloudflare dashboard.
+
+- `max_batch_size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of messages allowed in each batch.
+
+- `max_batch_timeout` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of seconds to wait for messages to fill a batch before the batch is sent to the consumer Worker.
+
+- `max_retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
+
+- `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of another queue to send a message if it fails processing at least `max_retries` times.
+  - If a dead_letter_queue is not defined, messages that repeatedly fail processing will be discarded.
+  - If there is no queue with the specified name, it will be created automatically.
+
+- `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
+  - Refer to [Consumer concurrency](/queues/learning/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.consumers]]
+  queue = "my-queue"
+  max_batch_size = 10
+  max_batch_timeout = 30
+  max_retries = 10
+  dead_letter_queue = "my-queue-dlq"
+  max_concurrency = 5
 ```
 
 ### R2 buckets

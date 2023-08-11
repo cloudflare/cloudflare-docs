@@ -77,7 +77,3 @@ As of now, Custom Managed Components do not support the use of the following met
 - `manager.proxy`
 - `manager.route`
 - `manager.serve`
-- `manager.get`
-- `manager.set`
-- `manager.useCache`
-- `manager.invalidateCache`

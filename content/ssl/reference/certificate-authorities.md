@@ -96,13 +96,13 @@ Refer to [Sectigo documentation](https://www.sectigo.com/knowledge-base/detail/S
 * Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days.
 * [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 30 days.
 
-#### Browser compatibility
-
-Refer to [DigiCert documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
-
 #### Limitations
 
 Due to sanctions imposed by the United States, DigiCert is legally prohibited or restricted from offering its products and services to specific countries or regions. Refer to [Embargoed countries and regions](https://knowledge.digicert.com/solution/Embargoed-Countries-and-Regions.html) for details.
+
+#### Browser compatibility
+
+Refer to [DigiCert documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
 
 #### Other resources
 
@@ -117,4 +117,17 @@ Due to sanctions imposed by the United States, DigiCert is legally prohibited or
 {{<render file="_caa-records-definition.md">}}
 <br/>
 
-{{<render file="_caa-records-added-by-cf.md">}}
+If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf. If you need to add CAA records, refer to [Add CAA records](/ssl/edge-certificates/caa-records/).
+
+The following table lists the CAA record content for each CA:
+
+{{<table-wrap>}}
+
+| Certificate authority | CAA record content                       |
+|-----------------------|------------------------------------------|
+| Let's Encrypt         | `letsencrypt.org`                        |
+| Google Trust Services | `pki.goog; cansignhttpexchanges=yes`     |
+| DigiCert              | `digicert.com; cansignhttpexchanges=yes` |
+| Sectigo               | `sectigo.com`                            |
+
+{{</table-wrap>}}
