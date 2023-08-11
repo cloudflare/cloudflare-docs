@@ -6,7 +6,7 @@ weight: 5
 
 # Policy settings
 
-Each Advanced DNS Protection policy has the following settings: mode, sensitivity level, rate, and burst.
+Each Advanced DNS Protection policy has the following settings: mode, rate, burst, and sensitivity level.
 
 You may need to adjust these settings in case of false positives or due to specific DNS traffic patterns.
 
@@ -30,21 +30,17 @@ Advanced DNS Protection policies can have one of the following execution modes: 
 
 {{</definitions>}}
 
+## Rate and burst
+
+The rate and burst parameters of a token bucket algorithm that the protection system applies to non-legitimate DNS queries. Queries considered non-legitimate cost 1 token, and when the token bucket is empty, non-legitimate queries are dropped until the token bucket refills. This is the same token bucket algorithm used in the [Advanced TCP Protection](/ddos-protection/tcp-protection/).
+
 ## Sensitivity level
 
-The sensitivity level of the Advanced DNS Protection system for the current type of DNS queries (profiled or unprofiled).
+The sensitivity level of the Advanced DNS Protection system for the DNS queries considered non-legitimate.
 
-* A lower sensitivity level means that bigger spikes in the DNS packet rate may trigger a mitigation action.
-* A higher sensitivity level means that smaller spikes in the DNS packet rate may trigger a mitigation action.
+* A `low` sensitivity level will only subject packets to the token bucket algorithm that are most probably part of an attack.
+* A `medium` sensitivity level will subject packets to the token bucket algorithm for which the system is less confident that they are part of an attack. This means that some legitimate DNS queries may be dropped.
 
-The default sensitivity level is `medium`.
+The default sensitivity level is `low`.
 
 The API values are the following: `low`, `medium`, `high`, and `very_high`.
-
-## Rate
-
-TBD
-
-## Burst
-
-TBD
