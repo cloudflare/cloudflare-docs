@@ -10,7 +10,7 @@ layout: single
 
 Cron Triggers allow users to map a cron expression to a Worker using a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) listener that enables Workers to be executed on a schedule.
 
-Cron Triggers are ideal for running periodic jobs for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
+Cron Triggers are ideal for running periodic jobs, such as for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
 
 Cron Triggers execute on UTC time.
 
@@ -37,11 +37,11 @@ Refer to the example below for a sample `wrangler.toml` Cron Triggers configurat
 
 ```toml
 [triggers]
-crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
-# Schedule crons triggers:
+# Schedule cron triggers:
 # - At every 3rd minute
 # - At 3PM on first day of the month
 # - At 11:59PM on the last weekday of the month
+crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 ```
 
 You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
