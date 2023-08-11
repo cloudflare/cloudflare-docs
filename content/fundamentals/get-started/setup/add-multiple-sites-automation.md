@@ -1,10 +1,10 @@
 ---
 pcx_content_type: tutorial
-source: https://support.cloudflare.com/hc/en-us/articles/360000841472-Adding-Multiple-Sites-to-Cloudflare-via-Automation
+source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add Multiple Sites via automation
 ---
 
-# Add Multiple Sites via automation
+# Add multiple sites via automation
 
 To add multiple sites to Cloudflare at once and more efficiently, you can do so via the Cloudflare API.
 
@@ -14,7 +14,7 @@ Adding multiple sites can be useful when you:
 - Are a [partner](https://www.cloudflare.com/partners/), agency, or IT consultancy, and manage multiple domains on behalf of your customers.
 - Are moving an existing set of sites over to Cloudflare.
 
-Using the API will allow you to add multiple sites quickly & efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
+Using the API will allow you to add multiple sites quickly and efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 
 ___
 
@@ -50,6 +50,7 @@ Add domains using [flarectl](https://github.com/cloudflare/cloudflare-go/release
   ```
 
 3. Create your domains using `flarectl`:
+
   ```sh
   $ for domain in $(cat domains.txt); do
       flarectl zone create --zone=$domain 
@@ -78,14 +79,15 @@ To trigger this scan via the Cloudflare API:
     flarectl --json zone info --zone=$domain | jq -r '.[].ID' >> ids.txt
   done
   ```
+
 3. For each line in `ids.txt`, make an API call to trigger the [DNS quick scan](/api/operations/dns-records-for-a-zone-scan-dns-records).
 
   ```sh
   $ for id in $(cat ids.txt); do  
       curl --request POST \
       --url "https://api.cloudflare.com/client/v4/zones/$id/dns_records/scan" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: Bearer $CF_API_TOKEN"
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer $CF_API_TOKEN"
   done
   ```
 
@@ -131,4 +133,4 @@ After that, you cannot have more pending sites than active sites associated with
 
 ## Common issues
 
-If any errors were returned in this process, the domain may not be registered (or only just registered), be a subdomain, or otherwise been invalid. For more details, refer to [Why can't I add my domain to Cloudflare?](/dns/zone-setups/troubleshooting/cannot-add-domain/).
+If any errors were returned in this process, the domain may not be registered (or only just registered), be a subdomain, or otherwise been invalid. For more details, refer to [Cannot add domain](/dns/zone-setups/troubleshooting/cannot-add-domain/).
