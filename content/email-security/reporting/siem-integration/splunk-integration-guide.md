@@ -1,6 +1,6 @@
 ---
 title: Splunk
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 meta:
     description: Splunk Cloud integration guide
 updated: 2023-01-26
@@ -101,7 +101,7 @@ The next step is to configure Area 1 to push the Email Detection Event to the Sp
 3. In the Add Webhooks page, enter the following settings: 
     - **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of the previous step.
     - **Target**: Enter the target URI of your Splunk instance. It will typically have the `https://<host>:8088/services/collector` format. Refer to [Request formats](#request-formats) to learn more about how your Splunk subscription affects the URI.
-    - For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook. Sending `Spam` and `Bulk` dispositions will generate a high number of events.
+    - For the dispositions (`MALICIOUS`, `SUSPICIOUS`, `SPOOF`, `SPAM`, `BULK`) choose which (if any) you want to send to the webhook. Sending `SPAM` and `BULK` dispositions will generate a high number of events.
 4. Select **Publish Webhook**.
 
 Your Splunk integration will now show up in the All Webhooks panel.

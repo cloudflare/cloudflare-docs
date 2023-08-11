@@ -26,7 +26,7 @@ $ export CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN>
 
 ### Create a Turnstile widget
 
-Here is an example configuration:
+Example configuration:
 
 ```tf
 ---
@@ -103,11 +103,9 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-
-
 ### Review the Terraform plan
 
-Now you can run a `terraform plan` which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully:
+You can run `terraform plan`, which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully:
 
 ```sh
 $ terraform plan
@@ -144,7 +142,6 @@ Changes to Outputs:
 
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
 ```
-
 
 ### Apply the Terraform changes
 
@@ -191,7 +188,7 @@ turnstile_example_secretkey = <sensitive>
 turnstile_example_sitekey = "0x4AAAAAAAEe4wQdBshJxBeK"
 ```
 
-You have successfuly created a Turnstile widget. Go to [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
+You have successfuly created a Turnstile widget. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
 
 ### Retrieve the secret key
 Use `terraform output` to get your secret key:

@@ -33,7 +33,7 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 ### Step 1 - Create a reverse DNS zone
 
-1.  Within your account, click **Add zone**.
+1.  Within your account, click **Add site**.
 
 2.  For your site name, use the reverse IP address:
 

@@ -1,11 +1,11 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
-title: FAQ
+title: General FAQ
 weight: 1
 ---
 
-# FAQ
+# General FAQ
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 

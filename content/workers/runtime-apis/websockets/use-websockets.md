@@ -86,7 +86,7 @@ async function handleRequest(request) {
 }
 ```
 
-WebSockets emit a number of [Events](/workers/runtime-apis/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
+WebSockets emit a number of [Events](/workers/runtime-apis/websockets/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
 
 ```js
 async function handleRequest(request) {
@@ -122,13 +122,13 @@ websocket.addEventListener('message', event => {
 });
 ```
 
-WebSocket clients can send messages back to the server using the [`send`](/workers/runtime-apis/websockets/#send) function:
+WebSocket clients can send messages back to the server using the [`send`](/workers/runtime-apis/websockets/websockets/#send) function:
 
 ```js
 websocket.send('MESSAGE');
 ```
 
-When the WebSocket interaction is complete, the client can close the connection using [`close`](/workers/runtime-apis/websockets/#close):
+When the WebSocket interaction is complete, the client can close the connection using [`close`](/workers/runtime-apis/websockets/websockets/#close):
 
 ```js
 websocket.close();
@@ -180,4 +180,4 @@ Without this compatibility flag, the Workers runtime will strip or ignore the `S
 
 ## Durable Objects and WebSocket state
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Refer to [Durable Objects](/workers/configuration/durable-objects/) to get started, and prefer using the Durable Objects [WebSockets Hibernation API](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) rather than the `.accept` method described above.
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects [WebSockets Hibernation API](/durable-objects/api/hibernatable-websockets-api/) rather than the `.accept` method described above.

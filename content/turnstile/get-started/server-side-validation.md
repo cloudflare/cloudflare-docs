@@ -21,11 +21,12 @@ A response may only be validated once. If the same response is presented twice, 
 
 {{</Aside>}}
 
-Example using cURL:
-
 <div>
 
 ```sh
+---
+header: Example using cURL
+---
 $ curl 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secret=verysecret&response=<RESPONSE>'
 {
   "success": true,
@@ -36,11 +37,12 @@ $ curl 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secre
 ```
 </div>
 
-Example using `fetch` from Cloudflare Workers:
-
 <div>
 
 ```javascript
+---
+header: Example using fetch from Cloudflare Workers
+---
 // This is the demo secret key. In production, we recommend
 // you store your secret key(s) safely.
 const SECRET_KEY = '1x0000000000000000000000000000000AA';
@@ -72,11 +74,12 @@ async function handlePost(request) {
 ```
 </div>
 
-Example of the idempotency functionality:
-
 <div>
 
 ```javascript
+---
+header: Example using indempotency functionality
+---
 // This is the demo secret key. In production, we recommend
 // you store your secret key(s) safely.
 const SECRET_KEY = '1x0000000000000000000000000000000AA';
@@ -123,7 +126,7 @@ async function handlePost(request) {
 ```
 </div>
 
-Check out the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/index.mjs).
+Refer to the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/index.mjs).
 
 ## Accepted parameters
 
@@ -145,12 +148,11 @@ The API accepts `application/x-www-form-urlencoded` and `application/json` reque
 
 It always contains a `success` property, either true or false, indicating whether the operation was successful or not.
 
-In case of a successful validation, the response should be similar to the following:
-
 <div>
 
 ```json
 ---
+header: Successful validation response
 highlight: [2]
 ---
 
@@ -177,6 +179,7 @@ In case of a validation failure, the response should be similar to the following
 
 ```json
 ---
+header: Failed validation response
 highlight: [2]
 ---
 

@@ -1,10 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/217912538-My-DNS-doesn-t-work
-title: DNS issues
+title: General DNS issues
 ---
 
-# DNS issues
+# General DNS issues
 
 In web browsers such as Safari or Chrome, there are several commonly observable DNS errors:
 

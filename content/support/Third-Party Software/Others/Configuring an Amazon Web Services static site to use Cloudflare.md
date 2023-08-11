@@ -102,7 +102,8 @@ To get started:
     -   In the **Name** field, enter the apex domain name; for example, _example.com_.
     -   In the **Value** field, the apex domain bucket endpoint. Do not include the `https://` part.
     -   Click **Save**.
-5.  To finish, [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/articles/205195708).
+5.  Since S3 static sites do not support HTTPS by default, use a [Configuration Rule](/rules/configuration-rules/settings/#ssl) to set the **SSL Mode** to [Flexible](/ssl/origin-configuration/ssl-modes/).
+6.  To finish, [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/articles/205195708).
 
 Once your site is fully configured in Cloudflare, your visitors can access your AWS S3 hosted content using either the subdomain or apex domain endpoint you set up.
 

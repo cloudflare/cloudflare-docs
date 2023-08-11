@@ -76,7 +76,7 @@ Use the `GET` command to list rules.
 ---
 header: cURL command
 ---
-curl GET 'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules’
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules"
 ```
 
 ### Add a single sequence rule
@@ -87,13 +87,13 @@ This adds a single rule to all existing rules. Priority can be used to place the
 
 The response will reflect the rule that has been written with its ID. In case something is not right with the rule, an appropriate error message with a `json` path pointing towards the issue will be provided.
 
-```json
+```bash
 ---
 header: Example using cURL
 ---
-curl POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
---header 'Content-Type: application/json' \
---data ‘{
+curl POST "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/seqrules/rules" \
+--header "Content-Type: application/json" \
+--data '{
   "title": "string",
   "kind": "block",
   "action": "block",
@@ -102,7 +102,7 @@ curl POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token
     "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"
   ],
   "priority": 0
-}’
+}'
 ```
 
 ### Add multiple sequence rules
@@ -113,13 +113,13 @@ This will overwrite any existing rules and replace them with the rules specified
 
 The response will reflect the rules that have been written with their IDs in case something is not right with the rules, an appropriate error message with a `json` path pointing towards the issue will be provided.
 
-```json
+```bash
 ---
 header: Example using cURL
 ---
-curl PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation' \
---header 'Content-Type: application/json' \
---data ‘{
+curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/seqrules" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "title": "<RULE_TITLE>",
@@ -132,7 +132,7 @@ curl PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_
       "priority": 0
     }
   ]
-}’
+}'
 ```
 
 ### Delete a rule
@@ -143,5 +143,5 @@ Use the `DELETE` command with its rule ID to delete a rule.
 ---
 header: cURL command
 ---
-curl DELETE ‘https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules/rules/d4909253-390f-4956-89fd-92a5b0cd86d8’
+curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules/rules/d4909253-390f-4956-89fd-92a5b0cd86d8"
 ```

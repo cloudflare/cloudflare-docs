@@ -1,19 +1,19 @@
 ---
-title: Community Resources
+title: Community resources
 pcx_content_type: reference
 weight: 13
 layout: list
 structured_data: true
 ---
 
-# Community Resources
+# Community resources
 
-Community Resources for our customers to help them integrate Turnstile.
+Community resources for our customers to help them integrate Turnstile.
 
 {{<Aside type="warning">}}
 
-These resources are made by the **community** and not maintained directly
-by Cloudflare.
+These resources are made by the **community** and not maintained directly by Cloudflare.
+
 As such, Cloudflare is not liable for any damages arising from using them.
 
 {{</Aside>}}
@@ -53,13 +53,13 @@ Libraries that both support the both client-side rendering and server-side valid
 
 ## Integrations
 
-Turnstile integrations for popular content managment systems:
+Turnstile integrations for popular content management systems:
 
 - [Craft CMS](https://plugins.craftcms.com/turnstile)
 - [SilverStripe](https://github.com/webbuilders-group/silverstripe-turnstile)
 - [Statamic](https://statamic.com/addons/aryeh-raber/captcha)
-- [Wordpress](https://wordpress.org/plugins/simple-cloudflare-turnstile)
- 
+- [WordPress](https://wordpress.org/plugins/simple-cloudflare-turnstile)
+
 ## Other
 
 Other resources related to integrating Turnstile:

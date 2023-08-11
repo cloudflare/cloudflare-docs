@@ -27,7 +27,7 @@ A network policy consists of an **Action** as well as a logical expression that 
 
 ## Actions
 
-Just like actions in DNS and HTTP policies, actions in network policies define which decision you want to apply to a given set of elements. You can assign one action per policy.
+Like actions in DNS and HTTP policies, actions in network policies define which decision you want to apply to a given set of elements. You can assign one action per policy.
 
 ### Allow
 
@@ -97,6 +97,10 @@ Gateway matches network traffic against the following selectors, or criteria.
 ### Destination Port
 
 {{<render file="gateway/_destination-port.md">}}
+
+### Detected Protocol
+
+{{<render file="gateway/_protocol-detection.md">}}
 
 ### Device Posture
 

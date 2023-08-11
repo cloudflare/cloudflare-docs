@@ -58,7 +58,6 @@ The following table lists the cipher suites Gateway uses for TLS decryption.
 
 | Cipher suite                  | Default | FIPS-compliant |
 | ----------------------------- | ------- | -------------- |
-| CHACHA20-POLY1305-SHA256      | ✅      | ✅             |
 | ECDHE-ECDSA-AES128-GCM-SHA256 | ✅      | ✅             |
 | ECDHE-ECDSA-AES256-GCM-SHA384 | ✅      | ✅             |
 | ECDHE-RSA-AES128-GCM-SHA256   | ✅      | ✅             |

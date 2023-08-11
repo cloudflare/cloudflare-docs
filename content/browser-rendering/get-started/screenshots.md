@@ -45,7 +45,7 @@ $ npm install @cloudflare/puppeteer --save-dev
 
 ## 3. Create a KV namespace
 
-Browser Rendering can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, a [Durable Object](/workers/runtime-apis/durable-objects/#durable-objects) to keep your browser instance alive and share it with multiple requests, or [Queues](/queues/) to handle your jobs asynchronous.
+Browser Rendering can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, a [Durable Object](/durable-objects/) to keep your browser instance alive and share it with multiple requests, or [Queues](/queues/) to handle your jobs asynchronous.
 
 For the purpose of this guide, you are going to use a [KV store](/workers/wrangler/workers-kv/) to cache your screenshots.
 

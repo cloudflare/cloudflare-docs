@@ -46,16 +46,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Framework preset     | `Remix`         |
-| Build command        | `npm run build` |
-| Build directory      | `public`        |
-
-</div>
+{{<pages-build-preset framework="remix">}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `npm`, your project dependencies, and building your site before deploying it.
 
@@ -71,7 +62,7 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 ## Create and add a binding to your Remix application
 
 To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/workers/learning/how-kv-works/), [Durable Objects](/workers/configuration/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
 ### Binding resources to your Remix application
 
@@ -129,7 +120,7 @@ Refer to the [Remix documentation](https://remix.run/docs/en/main/guides/data-lo
 
 #### Durable Objects
 
-Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/workers/runtime-apis/durable-objects/#durable-object-class-definition).
+Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
 ```ts
 export const loader = async ({ context, params }: LoaderArgs) => {
@@ -141,6 +132,6 @@ export const loader = async ({ context, params }: LoaderArgs) => {
 };
 ```
 
-Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/configuration/durable-objects/).
+Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/durable-objects/).
 
 {{<render file="_learn-more.md" withParameters="Remix">}}

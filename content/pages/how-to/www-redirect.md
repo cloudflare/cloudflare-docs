@@ -9,7 +9,7 @@ In this guide, you will learn how to redirect the `www` subdomain to your apex d
 
 To do this:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and website. 
 2. Go to **DNS**. 
 3. Create a DNS record for the `www` subdomain. It must either be an `A` record with the `192.0.2.1` value or an `AAAA` record with the `100::` value. The new DNS record must also have Cloudflare's proxy enabled (orange-clouded) so that it can enact the Page Rule behavior that you will create next.
 

@@ -1,12 +1,12 @@
 ---
-title: Add a website
+title: Add a site
 pcx_content_type: tutorial
 weight: 2
 ---
 
-# Add a website or application to Cloudflare
+# Add site to Cloudflare
 
-When you add a website or application to Cloudflare, you need to create a new Cloudflare zone and perform additional steps to activate the zone.
+When you add a site to Cloudflare, you need to create a new domain within Cloudflare and then perform additional steps to activate that domain.
 
 {{<Aside type="note">}}
 
@@ -24,11 +24,11 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 {{<render file="_disable_dnssec.md" productFolder="dns" >}}
 
-## Step 1 — Create a Cloudflare zone
+## Step 1 — Add site in Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. In the top navigation bar, click **Add zone**.
-3. Enter your website’s apex domain (`example.com`) and then click **Continue**.
+2. In the top navigation bar, click **Add site**.
+3. Enter your website’s apex domain (`example.com`) and then click **Add Site**.
     
     {{<Aside type="note">}}
 If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).

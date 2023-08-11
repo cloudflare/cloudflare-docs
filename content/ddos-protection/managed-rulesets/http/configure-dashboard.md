@@ -20,7 +20,7 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 ## Create a DDoS override
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2. Go to **Security** > **DDoS**.
 
@@ -64,4 +64,4 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 7. Select **Save**.
 
-{{<render file="managed-rulesets/_delete-override.md" withParameters="select your account and zone;;**Security** > **DDoS**">}}
+{{<render file="managed-rulesets/_delete-override.md" withParameters="select your account and website;;**Security** > **DDoS**">}}

@@ -9,7 +9,7 @@ title: Deploy a Next.js site
 
 This guide will instruct you how to deploy:
 
-* Full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge). 
+* Full-stack Next.js projects which use the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
 * Next.js projects which can be [statically exported](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
 
 ## Consider if you need the Edge Runtime
@@ -111,15 +111,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js_ as your **Framework preset**. Your selection will provide the following information.
 
-   {{<table-wrap>}}
-
-   | Configuration option | Value                              |
-   | -------------------- | ---------------------------------- |
-   | Production branch    | `main`                             |
-   | Build command        | `npx @cloudflare/next-on-pages@1`  |
-   | Build directory      | `.vercel/output/static`            |
-
-   {{</table-wrap>}}
+{{<pages-build-preset framework="next-js">}}
 
 4. Click on **Save and Deploy** to start the deployment. This first deployment will not be fully functional as the next step is also necessary.
 5. In your Pages project, go to **Settings** > **Functions** > **Compatibility Flags**.
@@ -158,15 +150,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js (Static HTML Export)_ as your **Framework preset**. Your selection will provide the following information.
 
-   {{<table-wrap>}}
-
-   | Configuration option | Value           |
-   | -------------------- | --------------- |
-   | Production branch    | `main`          |
-   | Build command        | `npm run build` |
-   | Build directory      | `out`           |
-
-   {{</table-wrap>}}
+{{<pages-build-preset framework="next-js-static">}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 
@@ -179,7 +163,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/configuration/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers), and [getServerSideProps](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props). Then, access bindings set for your application by accessing them in your code via `process.env`.
 

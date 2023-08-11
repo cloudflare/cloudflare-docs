@@ -54,3 +54,12 @@ To enable PSR:
 {{<Aside type="note">}}
 PSR works only for the phish samples submitted to [user submission addresses](https://horizon.area1security.com/support/service-addresses/). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.
 {{</Aside>}}
+
+## False positives
+
+If you find emails in your Area 1 account that are actually false positives, you can report them from the Area 1 dashboard:
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+2. Select the **Search** bar.
+3. Search for the message that you want to report as a false positive, and select **Report as false positive**.
+4. (Optional) You can also select emails in bulk to report as false positives. Select all emails that apply > **Report as FP**.

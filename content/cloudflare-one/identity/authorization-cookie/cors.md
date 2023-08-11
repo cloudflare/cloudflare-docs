@@ -210,15 +210,15 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
    })
    ```
 
-5. Publish the Worker to your account.
+5. Deploy the Worker to your account.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 ### 4. Configure the Worker
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/) Account Home, go to **Workers & Pages**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and go to **Workers & Pages**.
 
 2. Select your newly created Worker. In this example, the Worker is called `redirect-worker`.
 
@@ -226,7 +226,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 4. In the **Settings** tab, select **Variables**.
 
-5. Under **Environment Variables**, add the following [secret variables](/workers/configuration/environment-variables/#environment-variables-via-the-dashboard):
+5. Under **Environment Variables**, add the following [secret variables](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard):
    - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
    - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
 

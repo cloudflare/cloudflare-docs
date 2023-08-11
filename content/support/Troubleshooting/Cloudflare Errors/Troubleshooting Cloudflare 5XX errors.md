@@ -262,7 +262,7 @@ Contact your hosting provider to exclude the following common causes at your or
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
 -   No [SNI](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support
--   The [cipher suites](/ssl/reference/cipher-suites/supported-cipher-suites/) accepted by Cloudflare does not match the cipher suites supported by the origin web server
+-   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="tip">}}
 If 525 errors occur intermittently, review the origin web server error

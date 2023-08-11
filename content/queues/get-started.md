@@ -43,9 +43,22 @@ You will access your queue from a Worker, the producer Worker. You must create a
 
 To create a producer Worker, run:
 
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
 ```sh
-$ npm create cloudflare@latest # or 'yarn create cloudflare@latest'
+$ npm create cloudflare@latest
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn create cloudflare@latest
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 In your terminal, you will be asked a series of questions related to your project. 
 

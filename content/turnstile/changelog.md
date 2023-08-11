@@ -9,6 +9,7 @@ rss: file
 
 ## 2023-07-31
 
+- Added [`[turnstile.isExpired]`](/turnstile/get-started/client-side-rendering/#access-a-widgets-state).
 - Added `uk` language.
 
 ## 2023-05-25

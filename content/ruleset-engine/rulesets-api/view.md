@@ -355,7 +355,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
           "drupal",
           "wordpress"
         ],
-        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
+        "description": "Drupal, WordPress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
         "last_updated": "2023-03-19T16:54:32.942986Z",
         "ref": "<RULE_REF_1>",
         "enabled": true
@@ -365,7 +365,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
         "version": "3",
         "action": "block",
         "categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
-        "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
+        "description": "WordPress - Broken Access Control - CVE:CVE-2018-12895",
         "last_updated": "2023-03-19T16:54:32.942986Z",
         "ref": "<RULE_REF_2>",
         "enabled": true
