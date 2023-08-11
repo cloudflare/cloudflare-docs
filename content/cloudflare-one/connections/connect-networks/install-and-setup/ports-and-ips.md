@@ -8,6 +8,10 @@ weight: 3
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
+## Destinations and ports
+
+### Global region (default)
+
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
 | `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
@@ -21,9 +25,9 @@ Opening port 443 for connections to `update.argotunnel.com` is optional. Failure
 
 {{</Aside>}}
 
-## Setting the Region Parameter to US 
+### US region
 
-When setting the [region parameter to US](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#region) the above destinations, `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com`, will be replaced with the following: 
+If you set the [`region` parameter](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to US, `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` are replaced with the following:
 
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
