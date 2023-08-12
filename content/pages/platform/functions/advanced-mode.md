@@ -6,7 +6,7 @@ weight: 9
 
 # Advanced mode
 
-Advanced mode allows you to develop your Pages Functions with a `_workers.js` file rather than the `/functions` directory.
+Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
 
 In some cases, Pages Functions' built-in file path based routing and middleware system is not desirable for existing applications. You may have a Worker that is complex and difficult to splice up into Pages' file-based routing system. For these cases, Pages offers the ability to define a `_worker.js` file in the output directory of your Pages project.
 
@@ -67,8 +67,8 @@ export default {
 In the above code, you have configured your Function to return a response under all requests headed for `/api/`. Otherwise, your Function will fallback to returning static assets.
 
 * The `env.ASSETS.fetch()` function will allow you to return assets on a given request.
-* `env` is the object that contains your environment variables and bindings. 
-* `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. 
+* `env` is the object that contains your environment variables and bindings.
+* `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource.
 * `fetch()` calls to Pages' asset-serving resource and serves the requested asset.
 
 ## Migrate from Workers
