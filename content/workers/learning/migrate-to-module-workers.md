@@ -189,7 +189,7 @@ export default {
 
 ## Cron Triggers
 
-To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax-es-modules), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
+To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
 
 This example code:
 
