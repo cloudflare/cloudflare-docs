@@ -65,7 +65,7 @@ export default {
   - Specifies whether or not to use [TLS](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) when creating the TCP socket.
   - `off` — Do not use TLS.
   - `on` — Use TLS.
-  - `starttls` — Do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#how-to-implement-the-starttls-pattern).
+  - `starttls` — Do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#opportunistic-tls-starttls).
 
 - `allowHalfOpen` {{<type>}}boolean{{</type>}} — Defaults to `false`
   - Defines whether the writable side of the TCP socket will automatically close on end-of-file (EOF). When set to `false`, the writable side of the TCP socket will automatically close on EOF. When set to `true`, the writable side of the TCP socket will remain open on EOF.
