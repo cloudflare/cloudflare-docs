@@ -2,7 +2,6 @@
 {{- $active := (eq .Active $current) -}}
 {{- $isExpand := (and .Context.IsSection (hasPrefix .Active $current)) -}}
 {{- $hasChildren := (and .Context.IsSection (ne .Context.Params.hidechildren true)) -}}
-{{- $isCollapsible := default true .isCollapsible }}
 
 {{- $isSubVisible := (and $isExpand (ne .Active $current)) -}}
 {{- $isParentExpanded := (hasPrefix .Active .Context.Parent.RelPermalink) -}}
@@ -18,7 +17,7 @@
   {{- else -}}
   <li class="DocsSidebar--nav-item">
   {{- end -}}
-    {{- if and ($hasChildren) ($isCollapsible) -}}
+    {{- if $hasChildren -}}
     <button class="Button DocsSidebar--nav-expand-collapse-button"{{ if not $isLinkTabbable }} tabindex="-1"{{ end }}>
       <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
       <span is-visually-hidden>Expand: {{ .Context.Title }}</span>
