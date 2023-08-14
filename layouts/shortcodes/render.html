@@ -51,4 +51,10 @@
     {{- $contentPlaceholder | markdownify -}}
   {{- end -}}
 
+
+{{- else -}}
+<!-- If the partial doesn't exist, create a broken link to call it out -->
+
+<p><a href="/broken-partial-link/">You have a broken reference in your partial.</a></p>
+
 {{- end -}}
