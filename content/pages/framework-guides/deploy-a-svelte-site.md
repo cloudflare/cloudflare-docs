@@ -12,20 +12,17 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 
 ## Setting up a new project
 
-Create a new project by running the [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) command in your terminal, giving it a title:
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new Svelte project, run the following command:
 
 ```sh
-$ npm init svelte@latest my-svelte-app
+$ npm create cloudflare@latest my-svelte-app -- --framework=svelte
 ```
 
-During `init`, SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this tutorial. Choose the options that better suit your project.
+SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this tutorial. Choose the options that better suit your project.
 
-After creating your project, go to your project directory and install its dependencies:
-
-```sh
-$ cd my-svelte-app
-$ npm install
-```
+Create-cloudflare will then install dependencies including the Wrangler CLI and the `@sveltejs/adapter-cloudflare` adapter, and ask a few more setup questions.
 
 After you have installed your project dependencies, start your application:
 
@@ -39,7 +36,9 @@ $ npm run dev
 
 ## SvelteKit Cloudflare configuration
 
-To use SvelteKit with Cloudflare Pages, you need to add the [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare) to your application:
+To use SvelteKit with Cloudflare Pages, you need to add the [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare) to your application.
+
+{{<render file="_c3-adapter.md">}}
 
 1. Install the Cloudflare Adapter by running `npm i --save-dev @sveltejs/adapter-cloudflare` in your terminal.
 2. Include the adapter in `svelte.config.js`:
@@ -121,7 +120,11 @@ If you are using any adapter different from the default SvelteKit adapter, remem
 
 ## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+### Deploying via the create-cloudflare CLI (c3)
+
+If you use create-cloudflare to create your new Svelte project, after installing all dependencies you will be prompted to deploy via the CLI. Your site will be live and you will be provided with a deployment URL.
+
+### Deploying via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.

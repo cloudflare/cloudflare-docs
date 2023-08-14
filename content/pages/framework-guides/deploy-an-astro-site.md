@@ -13,26 +13,29 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 ## Setting up a new project
 
-Create a new project directory and then initiate Astro's official setup tool by running:
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Astro's official setup tool, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new Astro project, run the following command:
 
 ```sh
-$ npm create astro@latest
-$ cd <project-name>
+$ npm create cloudflare@latest my-astro-app -- --framework=astro
 ```
 
 Astro will ask:
 
 1. Which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
 
-2. If you want to install dependencies. Select `Yes`. If you select `No`, you must run `npm install` before running or building your application for the first time.
+2. If you want to set initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#create-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
 
-3. If you want to set initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#create-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
+Create-cloudflare will then install dependencies including the Wrangler CLI and the `@astrojs/cloudflare` adapter, and ask a few more setup questions.
 
 ### Astro configuration
 
 You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
-To enable an SSR site and deploy to Cloudflare Pages, add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
+{{<render file="_c3-adapter.md">}}
+
+Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
 
 ```sh
 $ npm run astro add cloudflare
@@ -44,7 +47,11 @@ $ npm run astro add cloudflare
 
 ## Deploying with Cloudflare Pages
 
-To deploy your site to Pages:
+### Deploying via the create-cloudflare CLI (c3)
+
+If you use create-cloudflare to create your new Astro project, after installing all dependencies you will be prompted to deploy via the CLI. Your site will be live and you will be provided with a deployment URL.  
+
+### Deploying via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.

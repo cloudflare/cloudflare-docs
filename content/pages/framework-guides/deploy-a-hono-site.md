@@ -9,27 +9,12 @@ title: Deploy a Hono site
 
 ## Create a new project
 
-Create a new project by running the following commands in your terminal:
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Hono's official setup tool, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new Hono project, run the following command:
 
 ```sh
-$ mkdir my-hono-app
-$ cd my-hono-app
-$ npm init -y
-
-# Make sure Hono is installed
-$ npm install hono
-
-# Install the required dependencies
-# ESBuild is needed to bundle the hono app code
-# npm-run-all enables us to run multiple npm commands at once
-$ npm install --save-dev wrangler esbuild npm-run-all
-```
-
-If you want your application to use TypeScript, you need to generate a `tsconfig.json` file. To generate a `tsconfig.json` file, run:
-
-```sh
-$ npm install --save-dev typescript
-$ npx tsc --init
+$ npm create cloudflare@latest my-hono-app -- --framework=hono
 ```
 
 Open your project and create a `src/server.js` file (or `src/server.ts` if you are using TypeScript). Add the following content to your file:
