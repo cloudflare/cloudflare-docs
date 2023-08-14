@@ -5,7 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-As discussed previously, all requests to Cloudflare's network pass through our [bot detection engines](/learning-paths/modules/security/bot-management-concepts/bot-detections/).
+As discussed previously, all requests to Cloudflare's network pass through our [bot detection engines](/learning-paths/bot-management/concepts/bot-detections/).
 
 Cloudflare uses this information to surface different signals to help you identify the true origin of a request.
 

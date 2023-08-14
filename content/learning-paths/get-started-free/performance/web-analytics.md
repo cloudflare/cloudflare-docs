@@ -17,7 +17,7 @@ If you want analytics without using third-party tools, check out [Cloudflare Web
 
 ### Setup
 
-So long as your traffic is [proxied through Cloudflare](/learning-paths/modules/get-started/performance-free/default-improvements/), setting up Web Analytics only involves a few steps:
+So long as your traffic is [proxied through Cloudflare](/learning-paths/get-started-free/performance/default-improvements/), setting up Web Analytics only involves a few steps:
 
 {{<render file="_web-analytics-proxied-setup.md" productFolder="analytics">}}
 

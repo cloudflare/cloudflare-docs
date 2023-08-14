@@ -5,7 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-Though Cloudflare automatically hides your origin server IP address when you [proxy your DNS records](/learning-paths/modules/security/ddos-baseline/proxy-dns-records/), there are other ways to discover an IP address.
+Though Cloudflare automatically hides your origin server IP address when you [proxy your DNS records](/learning-paths/prevent-ddos-attacks/baseline/proxy-dns-records/), there are other ways to discover an IP address.
 
 To prevent attackers from discovering your origin's IP address, review the following suggestions.
 

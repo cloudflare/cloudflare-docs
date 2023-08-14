@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-Once you make sure that your Cloudflare SSL/TLS [is working correctly](/learning-paths/modules/get-started/onboarding/check-ssl/), you will likely want to customize your SSL/TLS setup.
+Once you make sure that your Cloudflare SSL/TLS [is working correctly](/learning-paths/get-started-free/onboarding/check-ssl/), you will likely want to customize your SSL/TLS setup.
 
 ---
 

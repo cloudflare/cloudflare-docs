@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-Though most customers choose to implement bot management through [Firewall rules](#firewall), Cloudflare actually makes various [bot signals](/learning-paths/modules/security/bot-management-planning/bot-signals/) available in several different products.
+Though most customers choose to implement bot management through [Firewall rules](#firewall), Cloudflare actually makes various [bot signals](/learning-paths/bot-management/planning/bot-signals/) available in several different products.
 
 ```mermaid
     flowchart LR

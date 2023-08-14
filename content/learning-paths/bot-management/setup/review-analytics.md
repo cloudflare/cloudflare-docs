@@ -37,7 +37,7 @@ Look for traffic groups that _should not_ be blocked — commonly API or mobile 
 
 {{<render file="_bot-analytics-traffic-characteristics.md" productFolder="bots">}}
 
-For more details, refer to [Understand your site's traffic](/learning-paths/modules/security/bot-management-planning/site-traffic/).
+For more details, refer to [Understand your site's traffic](/learning-paths/bot-management/planning/site-traffic/).
 
 ---
 

@@ -7,7 +7,7 @@ layout: learning-unit
 
 After allowing expected traffic, then create a rule that **Logs** automated traffic.
 
-The exact type of rule you implement might be determined by your site's [content](/learning-paths/modules/security/bot-management-planning/site-content/) and [traffic patterns](/learning-paths/modules/security/bot-management-planning/site-traffic/).
+The exact type of rule you implement might be determined by your site's [content](/learning-paths/bot-management/planning/site-content/) and [traffic patterns](/learning-paths/bot-management/planning/site-traffic/).
 
 For example, if you wanted to stop content scraping on your marketing website, you might start off with the following [Firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/).
 

@@ -5,7 +5,7 @@ weight: 4
 layout: learning-unit
 ---
 
-Once you [add and activate](/learning-paths/modules/get-started/onboarding/add-and-activate/) your domain at Cloudflare, you also should check your domain's SSL/TLS certificate is working correctly.
+Once you [add and activate](/learning-paths/get-started-free/onboarding/add-and-activate/) your domain at Cloudflare, you also should check your domain's SSL/TLS certificate is working correctly.
 
 <details>
 <summary>What are SSL/TLS certificates?</summary>

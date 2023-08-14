@@ -26,7 +26,7 @@ The following two rules might be useful for a site protecting against content sc
 
 ## Protect specific endpoints
 
-If bots are [submitting data](/learning-paths/modules/security/bot-management-planning/site-traffic/#bot-attacks) through your forms, your rules may be more focused on protecting specific, more vulnerable endpoints.
+If bots are [submitting data](/learning-paths/bot-management/planning/site-traffic/#bot-attacks) through your forms, your rules may be more focused on protecting specific, more vulnerable endpoints.
 
 | Expression | Action |
 | --- | --- |

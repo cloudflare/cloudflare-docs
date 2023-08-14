@@ -41,12 +41,12 @@
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
   {{- $titleAddition := "" -}}
   {{- if eq (len .Context.Ancestors) 4 -}}
-    {{- $titleAddition = printf " | %s" (index .Context.Ancestors 1).Title -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 1).Title -}}
   {{- else -}}
-    {{- $titleAddition = printf " | %s" (index .Context.Ancestors 0).Title -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
   {{- end -}}
   
-  {{- $title = print .Context.Title $titleAddition " | Learning paths" -}}
+  {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
   {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}

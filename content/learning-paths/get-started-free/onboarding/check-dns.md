@@ -5,7 +5,7 @@ weight: 3
 layout: learning-unit
 ---
 
-Once you [add and activate](/learning-paths/modules/get-started/onboarding/add-and-activate/) your domain at Cloudflare, check that all your DNS records are set up correctly.
+Once you [add and activate](/learning-paths/get-started-free/onboarding/add-and-activate/) your domain at Cloudflare, check that all your DNS records are set up correctly.
 
 ## Can you visit your website?
 

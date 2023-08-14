@@ -9,7 +9,7 @@ Learn about different ways to migrate policies from a third-party DNS filtering 
 
 ## UI
 
-As discussed in a [previous module](/learning-paths/modules/security/dns-filtering-create-policy/), you can download existing allowlists and blocklists from the third-party service and [upload the CSV files](/learning-paths/modules/security/dns-filtering-create-policy/create-list/?learning_path=dns-filtering#create-a-list-from-a-csv-file) to the  Zero Trust dashboard.
+As discussed in a [previous module](/learning-paths/dns-filtering/create-policy/), you can download existing allowlists and blocklists from the third-party service and [upload the CSV files](/learning-paths/dns-filtering/create-policy/create-list/) to the  Zero Trust dashboard.
 
 ## API
 

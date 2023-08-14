@@ -19,11 +19,11 @@ As the store manager, you could solve the problem by opening more checkout lines
 
 Much in the same way, a load balancer distributes traffic across many servers. Without load balancing, too many requests might hit the same server and make it work too hard.
 
-![Too much traffic can overload one of your servers](/learning-paths/modules/performance/static/without-load-balancing-diagram.png)
+![Too much traffic can overload one of your servers](/images/learning-paths/load-balancing/without-load-balancing-diagram.png)
 
 A load balancer spreads requests across your servers, which prevents any one server from working too hard. Load balancing also makes your servers more efficient and lets them respond faster to incoming requests.
 
-![A load balancer distributes traffic across your servers](/learning-paths/modules/performance/static/with-load-balancing-diagram.png)
+![A load balancer distributes traffic across your servers](/images/learning-paths/load-balancing/with-load-balancing-diagram.png)
 
 ## Related resources
 
