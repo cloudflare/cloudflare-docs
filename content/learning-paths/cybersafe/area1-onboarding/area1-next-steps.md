@@ -5,7 +5,7 @@ weight: 4
 layout: learning-unit
 ---
 
-Now that you have learned how Area 1 can protect your inbox from phishing attacks and the two main integration methods, refer to the following resources to onboard and enhace your email security posture:
+Now that you have learned how Area 1 can protect your inbox from phishing attacks and the two main integration methods, refer to the following resources to onboard and enhance your email security posture:
 
 | Resource | Description | 
 | --- | --- |

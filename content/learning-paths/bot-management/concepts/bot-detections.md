@@ -12,7 +12,7 @@ These detections run on all requests coming into the Cloudflare global network, 
 This means that:
 
 - Adding bot management does not add latency to requests.
-- Our bot management platform benefits from the millions of sites and trillions of requests that flow thorugh Cloudflare every day.
+- Our bot management platform benefits from the millions of sites and trillions of requests that flow through Cloudflare every day.
 
 {{<render file="_bm-bot-detection-engines.md" productFolder="bots" >}}
 
