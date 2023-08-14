@@ -5,8 +5,10 @@
 /.github/ @kodster28 @pedrosousa @haleycode @codewithkristian
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /components/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
-*.js @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
-*.ts @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
+/functions/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
+*.js @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
+*.ts @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
+/assets/json-collector.ts @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 /content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
