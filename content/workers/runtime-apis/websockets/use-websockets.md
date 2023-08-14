@@ -28,7 +28,7 @@ const websocket = new WebSocket('wss://example-websocket.signalnerve.workers.dev
 
 {{<Aside type="note">}}
 
-For more details about creating and working with WebSockets in the client, refer to [Writing a WebSocket client](#writing-a-websocket-client).
+For more details about creating and working with WebSockets in the client, refer to [Writing a WebSocket client](#write-a-websocket-client).
 
 {{</Aside>}}
 

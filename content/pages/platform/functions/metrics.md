@@ -54,7 +54,7 @@ To further investigate exceptions, refer to [Debugging and Logging](/pages/platf
 
 The CPU Time per execution chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling).  Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). 
 
-In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-runtime) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
+In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-time) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
 
 ### Duration per execution
 
