@@ -52,7 +52,7 @@
   {{- $folderPlaceholder := "" -}}
   {{ $rssFeed := "" }}
 
-  {{- if or (in $.Context.RelPermalink "/learning-paths/modules/") (eq $.Context.Params.no_index true ) -}}
+  {{- if (eq $.Context.Params.no_index true ) -}}
   <meta name="robots" content="noindex">
   {{- end -}}
 

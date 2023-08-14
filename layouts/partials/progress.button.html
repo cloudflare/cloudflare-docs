@@ -1,19 +1,32 @@
-<div class="progressIndicator">
-<p class="DocsMarkdown--button-group" style="align-items: center;">
-<span class="DocsMarkdown--button-group-content">
-{{- with .PrevInSection -}}
-<a href="{{- .RelPermalink -}}" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
-    <span class="DocsMarkdown--link-content">Next</span>
-</a>
-<br/>
+{{- if eq .Params.layout "learning-module" -}}
+{{- $firstUnitUrl := "" -}}
+{{- range $index, $item := .RegularPages -}}
+{{- if eq $index 0 -}}
+{{- $firstUnitUrl = $item.RelPermalink -}}
 {{- end -}}
-
-{{- with .NextInSection -}}
-<a href="{{- .RelPermalink -}}" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
-    <span class="DocsMarkdown--link-content">Previous</span>
-</a>
 {{- end -}}
+    <a href="{{$firstUnitUrl}}" class="learningNavigation  Button Button-is-docs-primary">
+        <span class="DocsMarkdown--link-content">Start module</span>
+    </a>
+    
+{{- else -}}
+    <div class="progressIndicator">
+    <p class="DocsMarkdown--button-group" style="align-items: center;">
+    <span class="DocsMarkdown--button-group-content">
+    {{- with .PrevInSection -}}
+    <a href="{{- .RelPermalink -}}" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
+        <span class="DocsMarkdown--link-content">Next</span>
+    </a>
+    <br/>
+    {{- end -}}
 
-</span>
-</p>
-</div>
+    {{- with .NextInSection -}}
+    <a href="{{- .RelPermalink -}}" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
+        <span class="DocsMarkdown--link-content">Previous</span>
+    </a>
+    {{- end -}}
+
+    </span>
+    </p>
+    </div>
+{{- end -}}
