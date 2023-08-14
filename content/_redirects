@@ -996,6 +996,7 @@
 /zaraz/advanced/preview-mode/ /zaraz/history/preview-mode/ 301
 
 # cloudflare-one / zero-trust
+/access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
 /cloudflare-one/analytics/ /cloudflare-one/insights/ 301
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/access/ 301
