@@ -111,7 +111,7 @@ Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) abou
 
 The IPv4 vs. IPv6 graph shows the distribution of traffic by IP version, and is intended to highlight IPv6 adoption trends.
 
-Note that prior to January 30, 2023, the IPv6 percentage shown in the chart was calculated as (IPv6 requests / IPv4+IPv6 requests). After that date, the IPv6 percentage is calculated as (IPv6 requests / requests for dual-stacked content).
+Note that prior to January 23, 2023, the IPv6 percentage shown in the chart was calculated as (IPv6 requests / IPv4+IPv6 requests). After that date, the IPv6 percentage is calculated as (IPv6 requests / requests for dual-stacked content).
 
 ## IQI
 
