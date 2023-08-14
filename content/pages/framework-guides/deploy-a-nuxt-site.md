@@ -11,15 +11,17 @@ In this guide, you will create a new Nuxt application and deploy it using Cloudf
 
 ## Create a new project
 
-Create a new project by running the following commands in your terminal:
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Nuxt's official setup tool, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new Nuxt project, run the following command:
 
 ```sh
-$ npx nuxi init my-nuxt-app
-$ cd my-nuxt-app
-$ npm install
+$ npm create cloudflare@latest my-nuxt-app -- --framework=nuxt
 ```
 
-Next, run the application using the command:
+Create-cloudflare will then install dependencies including the Wrangler CLI, and ask a few more setup questions.
+
+After you have installed your project dependencies, start your application:
 
 ```sh
 $ npm run dev
@@ -31,7 +33,11 @@ $ npm run dev
 
 ## Deploying with Cloudflare Pages
 
-To deploy your site to Pages:
+### Deploying via the create-cloudflare CLI (c3)
+
+If you use create-cloudflare to create your new Nuxt project, after installing all dependencies you will be prompted to deploy via the CLI. Your site will be live and you will be provided with a deployment URL.
+
+### Deploying via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
