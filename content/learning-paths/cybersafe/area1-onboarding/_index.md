@@ -1,7 +1,7 @@
 ---
 title: Onboarding Area 1 Email Security
 pcx_content_type: overview
-weight: 1
+weight: 3
 layout: learning-module
 ---
 

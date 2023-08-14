@@ -1,7 +1,7 @@
 ---
 title: Plan your corporate deployment
 pcx_content_type: overview
-weight: 1
+weight: 5
 layout: learning-module
 ---
 

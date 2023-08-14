@@ -1,7 +1,7 @@
 ---
 title: Account Creation
 pcx_content_type: overview
-weight: 1
+weight: 2
 layout: learning-module
 ---
 

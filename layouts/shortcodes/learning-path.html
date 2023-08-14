@@ -3,6 +3,7 @@
 {{- $fileplaceholder := "" -}}
 {{- $totalUnits := 0 -}}
 {{- $totalReadingTime := 0 -}}
+{{- $firstModuleLink := "" -}}
 
 <!-- Get the data from the correct folder -->
 {{- range readDir "./data/learning-paths/" -}}
@@ -13,8 +14,13 @@
 {{- end -}}
 {{- end -}}
 
-<!-- Get all data associated with the path and underlying modules -->
+<!-- Get all data associated with the path and underlying modules and units -->
 {{- $pathData := index $data 0 -}}
+{{- range $index, $item := .Page.Sections -}}
+{{- if eq $index 0 -}}
+{{- $firstModuleLink = $item.RelPermalink -}}
+{{- end -}}
+{{- end -}}
 
 <!-- Render top-level data -->
 <p class="viewOtherPaths"><a href="/learning-paths/"><strong>&lt;</strong>  View other learning paths</a></p>
@@ -26,7 +32,7 @@
 <p>{{- $pathData.detailed_description | markdownify -}}</p>
 <p class="DocsMarkdown--button-group">
   <span class="DocsMarkdown--button-group-content">
-    <a href="/test/" class="getStartedButton learningNavigation Button Button-is-docs-primary">
+    <a href="{{$firstModuleLink}}" class="getStartedButton learningNavigation Button Button-is-docs-primary">
       <span class="getStarted DocsMarkdown--link-content">Start path</span>
     </a>
 </span>
@@ -34,3 +40,9 @@
 </div>
 
 <!-- Render units -->
+
+<div class="background">
+  <p class="estimate"><strong>Modules</strong>: <span>{{$totalUnits}}</span>&emsp;&emsp;&emsp;<strong>Reading time</strong>: <span>{{$totalReadingTime}} min</span></p>
+  
+  </div>
+  

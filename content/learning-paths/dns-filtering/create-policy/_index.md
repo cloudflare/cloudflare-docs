@@ -1,7 +1,7 @@
 ---
 title: Explore DNS policies
 pcx_content_type: overview
-weight: 1
+weight: 3
 layout: learning-module
 ---
 

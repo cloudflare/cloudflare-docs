@@ -1,7 +1,7 @@
 ---
 title: Enable DNS filtering for organization
 pcx_content_type: overview
-weight: 1
+weight: 6
 layout: learning-module
 ---
 
