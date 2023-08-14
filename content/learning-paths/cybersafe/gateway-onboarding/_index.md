@@ -7,4 +7,15 @@ layout: learning-module
 
 # Onboarding Cloudflare Gateway
 
-{{<learning-module-summary>}}
+Now that your Cloudflare environment is ready and you have established a foundation of the technical concepts behind Project Cybersafe Schools, you are ready to test and onboard your DNS traffic.
+
+## Objectives
+
+By the end of this module, you will be able to:
+
+- Explain the different methods to proxy your traffic to Gateway.
+- Create a Gateway location and understand its purpose.
+- Verify your Gateway environment by proxing local DNS traffic.
+- Create a test policy to validate functionality.
+- Deploy Cloudflare’s recommended CIPA rule.
+- Customize the block page to ensure a seamless look and feel.

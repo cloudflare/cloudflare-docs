@@ -7,4 +7,12 @@ layout: learning-module
 
 # Baseline DDoS protection
 
-{{<learning-module-summary>}}
+Get world-class DDoS protection with a few simple steps.
+
+## Objectives
+
+By the end of this module, you will be able to:
+
+- List the built-in DDoS protection measures provided by Cloudflare.
+- Implement a few, simple customizations to improve DDoS protection.
+- Set up DDoS-related notifications.

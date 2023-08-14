@@ -7,4 +7,11 @@ layout: learning-module
 
 # Onboarding Area 1 Email Security
 
-{{<learning-module-summary>}}
+Continue securing your environment by protecting against email phishing attacks.
+
+## Objectives
+
+By the end of this module, you will be able to:
+
+- Identify the minimum CIPA filters to facilitate compliance.
+- Learn other ways to protect your network from unwanted traffic.
