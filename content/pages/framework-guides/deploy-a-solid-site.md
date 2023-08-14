@@ -17,29 +17,27 @@ At the time of writing SolidStart is in beta, this may make the following guide 
 
 ## Create a new project
 
-Create a new project (`my-solid-app`) by running the following command in your terminal:
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Solid's official setup tool, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new Solid project, run the following command:
 
 ```sh
-$ mkdir my-solid-app
-$ cd my-solid-app
-$ npm init solid@latest
+$ npm create cloudflare@latest my-solid-app -- --framework=solid
 ```
 
 You will be prompted to select a starter. Choose any of the available options. You will then be asked if you want to enable Server Side Rendering. Reply `yes`. Finally, you will be asked if you want to use TypeScript, choose either `yes` or `no`.
 
-Then, install the application's dependencies:
+Create-cloudflare will then install dependencies including the Wrangler CLI and the SolidStart Cloudflare Pages adapter, and ask a few more setup questions.
 
-```sh
-$ npm install
-```
-
-After installing dependencies, run your application:
+After you have installed your project dependencies, start your application:
 
 ```sh
 $ npm run dev
 ```
 
 ## SolidStart Cloudflare configuration
+
+{{<render file="_c3-adapter.md">}}
 
 In order to use SolidStart with Cloudflare Pages, add the [SolidStart Cloudflare Pages adapter](https://github.com/solidjs/solid-start/tree/main/packages/start-cloudflare-pages) to your application:
 
@@ -69,7 +67,11 @@ export default defineConfig({
 
 ## Deploying with Cloudflare Pages
 
-To deploy your site to Pages:
+### Deploying via the create-cloudflare CLI (c3)
+
+If you use create-cloudflare to create your new Solid project, after installing all dependencies you will be prompted to deploy via the CLI. Your site will be live and you will be provided with a deployment URL.
+
+### Deploying via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
