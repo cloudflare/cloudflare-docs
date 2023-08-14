@@ -36,7 +36,7 @@ When moving to Cloudflare Pages, remove the Workers application and any associat
 
 ## Migrate headers and redirects
 
-You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
+You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentation](/pages/platform/redirects/). 
 
 {{<Aside type="note">}}
 
