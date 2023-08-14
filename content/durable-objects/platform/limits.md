@@ -17,7 +17,7 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 |  Storage per Object                        | unlimited                                         |
 |  Key size                                  | 2 KiB(2048 bytes)                                 |
 |  Value size                                | 128 KiB (131072 bytes)                            |
-|  Websocket message size                    | 1 MiB (only for received messages)                |
+|  WebSocket message size                    | 1 MiB (only for received messages)                |
 |  CPU per request                           | 30s (including websocket messages)                |
 
 {{<Aside type="note">}}
