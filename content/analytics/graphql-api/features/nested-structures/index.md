@@ -11,7 +11,12 @@ Two kinds of nested structures that behave in special ways are supported: **arra
 
 ## Arrays
 
-Arrays behave as a special kind of single value. There is no way to paginate through, filter, filter by, group, or group by the array.
+The GraphQL API supports two different sorts of arrays:
+
+- Some arrays contain scalar types (for example, `[String]`) and function like ordinary fields that [can be filtered](/analytics/graphql-api/features/filtering/)
+- Some arrays contain more complex types (for example, `[Subrequest]`.) The following section describes their behaviour.
+
+Arrays of non-scalar types behave as a special kind of single value. There is no way to paginate through, filter, filter by, group, or group by the array.
 
 On the other hand, you can choose which fields of the underlying type you want fetched.
 
