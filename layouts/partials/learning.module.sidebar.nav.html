@@ -6,7 +6,7 @@
 {{- $ancestorRefIndex = 0 -}}
 {{- end -}}
 
-{{- $learningPathTitle := (index .Ancestors $ancestorRefIndex).Title -}}
+{{- $learningPathTitle := print (index .Ancestors $ancestorRefIndex).Title " (Learning Path)" -}}
 {{- $learningPathURL := (index .Ancestors $ancestorRefIndex).RelPermalink -}}
 
 <div class="DocsSidebar">
