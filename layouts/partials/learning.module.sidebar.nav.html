@@ -1,6 +1,7 @@
 {{- $url := .RelPermalink -}}
 {{- $DATA := (index $.Site.Data .Section) -}}
 {{- $ancestorRefIndex := 1 -}}
+{{- $moduleCounter := 1 -}}
 
 {{- if eq (len .Ancestors) 3 -}}
 {{- $ancestorRefIndex = 0 -}}
@@ -67,8 +68,10 @@
         <ul class="DocsSidebar--nav">
          {{- range (index .Ancestors $ancestorRefIndex).Sections -}}
 
+         <li class="moduleCounter">Module {{$moduleCounter}}</li>
+
          {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
-         
+         {{- $moduleCounter = add $moduleCounter 1 -}}
          {{- end -}}
         </ul>
       </div>

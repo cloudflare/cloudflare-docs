@@ -297,3 +297,8 @@ label {
   [theme="dark"] .learningSummary a:hover {
     --background-color-alpha: 0.1;
   }
+
+  .moduleCounter {
+    opacity: .7;
+    padding-left: 1em;
+  }
