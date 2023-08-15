@@ -9,4 +9,4 @@ layout: learning-unit
 
 ## How it works
 
-{{<render file="_session-affinity-process.md" productFolder="load-balancing">}}
+{{<render file="_session-affinity-by-cookie-process.md" productFolder="load-balancing">}}
