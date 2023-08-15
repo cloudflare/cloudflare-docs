@@ -73,9 +73,13 @@ KV operations are scoped to your account.
 
 To create a KV namespace via Wrangler:
 
-1. Open your terminal and run `wrangler kv:namespace create <YOUR_NAMESPACE>`.
+1. Open your terminal and run the following command:
 
-The `kv:namespace` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
+```sh
+$ wrangler kv:namespace create <YOUR_NAMESPACE>
+```
+
+The `wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you. 
 
 ```sh
 $ wrangler kv:namespace create <YOUR_NAMESPACE>
@@ -122,7 +126,7 @@ You can interact with your KV namespace via Wrangler or via a Worker.
 
 ### Interact with your KV namespace via Wrangler
 
-To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively:
+To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively. "<KEY>" and "<VALUE>" are values of your choice.
 
 ```sh
 $ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
@@ -155,8 +159,12 @@ A KV namespace can be specified in two ways:
 To access the value using Wrangler, run the `wrangler kv:key get` subcommand in your terminal, and input your key value:
 
 ```sh
-wrangler kv:key get <KEY> [OPTIONS]
+wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --namespace-id
 ```
+
+{{<Aside type="warning">}}
+Exactly one of `--binding` or `--namespace-id` is required.
+{{</Aside>}}
 
 Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
 
