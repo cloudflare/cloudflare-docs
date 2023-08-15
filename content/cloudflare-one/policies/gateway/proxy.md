@@ -12,28 +12,28 @@ The Gateway proxy is required for filtering HTTP and network traffic via the WAR
 
 ## Proxy protocols
 
+Gateway supports proxying TCP, UDP, and ICMP traffic.
+
 ### TCP
 
-The default timings for proxy connections are:
-
-- Connect timeout: 30 seconds
-- Idle timeout: 8 hours
+By default, TCP connection attempts will timeout after 30 seconds and idle connections will disconnect after 8 hours.
 
 ### UDP
 
-To proxy traffic to internal DNS resolvers, select **UDP**. When enabled, all port 443 UDP traffic will be inspected by Gateway.
+The UDP proxy forwards traffic to internal DNS resolvers. This allows Gateway to inspect all port 443 UDP traffic.
+
+When the UDP proxy is enabled, Gateway will force all HTTP/3 traffic to HTTP/2 to allow inspection. Otherwise, HTTP/3 traffic will bypass inspection. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/gateway/http-policies/http3/).
 
 {{<beta heading="h3">}}ICMP{{</beta>}}
 
-To proxy traffic for diagnostic tools such as `ping` and `traceroute`
+The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `traceroute`.
 
-{{<Aside>}}Gateway will proxy ICMP traffic, but it will not log or filter it.{{</Aside>}}
+{{<Aside type="warning" header="Limitation">}}Gateway cannot log or filter ICMP traffic.{{</Aside>}}
 
 ## Enable the Gateway proxy
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. Enable **Proxy** for [TCP](#tcp).
-3. (Optional) Enable **Proxy** for [UDP](#udp).
-4. (Optional) Enable **Proxy** for [ICMP](#icmp).
+2. Enable **Proxy** for TCP.
+3. (Optional) Depending on your use case, you can enable **UDP** or **ICMP**.
 
-Additionally, if you choose to filter HTTP traffic, we recommend you also enable **TLS decryption** to ensure HTTPS is properly filtered.
+If you want to filter HTTP traffic, we recommend you enable [**TLS decryption**](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to ensure HTTPS traffic is filtered.
