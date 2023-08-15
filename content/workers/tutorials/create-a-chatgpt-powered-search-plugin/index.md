@@ -1,0 +1,398 @@
+---
+content_type: 📝 Tutorial
+difficulty: Intermediate
+pcx_content_type: tutorial
+layout: single
+title: Build a ChatGPT search plugin with Notion & Pinecone
+updated: 2023-08-14
+weight: 1
+---
+
+# Build a ChatGPT search plugin with Notion & Pinecone
+
+In this tutorial, you'll use Langchain, a JavaScript package for working with large language models, and Pinecone, a vector database, to index a Notion workspace. You'll then be able to query it using a custom ChatGPT plugin built with Cloudflare Workers.
+
+## Prerequisites
+
+Before you start, make sure you have:
+
+- A Cloudflare account. If you don't have one, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
+- Node.js and npm installed on your machine.
+- Access to a Notion workspace and an integration token.
+- An OpenAI API key.
+- A Pinecone account and API key.
+
+## Step 1: Create a Worker Application
+
+First, use the `c3` CLI to create a new Cloudflare Workers project. You can use the ChatGPT plugin template to start:
+
+```sh
+$ npx create-cloudflare-cli --template chatgpt-plugin <project-name>
+```
+
+Replace `<project-name>` with your desired project name. This will create a new project directory with the specified name and place the ChatGPT plugin template files in this directory.
+
+## Step 2: Create a Pinecone Index
+
+Pinecone provides a vector indexes, which are a special type of database that stores your data as "vectors", and allows quick querying and retrieval. In this tutorial, you'll use a free Pinecone index to store the relevant vectors for your Notion workspace.
+
+To begin, create a Pinecone account. In this tutorial, everything you build will be storable in the free tier. Once you've created an account, you'll then need to wait a few minutes for your project to be created.
+
+In your project dashboard, create a new index. Give it a memorable name (in this tutorial, we'll use the name `example-index`), and in the index configuration, enter a dimension value of `1536`. This is a typical value used in many AI applications, and is the format used by a tool you will later use -- OpenAI's embedding API.
+
+Once your index is created, make sure to grab the following configuration values for use later in your app:
+
+- `PINECONE_API_KEY`: this is a unique API key that allows you to read/write to your Pinecone indexes. You can find this in your project dashboard under the "API Keys" section in the sidebar. You may need to create a new API key if you don't have one already.
+- `PINECONE_ENVIRONMENT`: this is the environment that Pinecone deploys to. This generally includes a region and a number, such as `asia-southeast1-gcp-free`.
+- `PINECONE_INDEX_NAME`: this is the name of the Pinecone index you just created. In this tutorial, we'll use the name `example-index`.
+
+## Step 3: Setting up your Notion Workspace
+
+Once your Pinecone database is ready, you'll need to configure your Notion workspace and create an application.
+
+Due to the way ChatGPT (and large language models in general) understand and process data, it's worth taking a brief moment to look at your Notion workspace and how it is structured. Retrieval in a ChatGPT plugin from a Notion workspace, or any data in general, is best suited for highly structured data. Due to Notion's flexibility, you may find that your content in Notion is naturally _unstructured_, which can cause problems particularly when querying your data via Pinecone.
+
+Because of this, it may make sense to expose a small subset of your Notion workspace to Pinecone -- for instance, an important database or section of your workspace -- instead of _everything_ in the entire workspace.
+
+To begin integrating your Notion content, create a new Notion app at [developers.notion.com](https://developers.notion.com/). Create a new integration (with any name of your choice), and make sure to select the "Internal Integration" option. This will allow you to read and write to your Notion workspace.
+
+Next, you'll need to grant your integration access to your Notion workspace. To do this, navigate to the "Internal Integrations" section in the sidebar, and select the integration you just created. You'll then need to grant your integration access to your Notion workspace. To do this, click the "Authorize" button, and select the workspace you want to index.
+
+Finally, you need to share your Notion workspace with your integration. To do this, navigate to the page you want to index, and click the "..." menu in the top right corner. Find the section called "Connections", and the submenu called "Add Connections". In this menu, find your new integration and click "Add". This will share the selected page with your integration.
+
+{{<Aside type="note">}}
+
+By sharing this page with your integration, _you will also be sharing any subpages of this page_. This means that if you share a top-level page, all subpages will also be shared. If you want to share only a subset of your Notion workspace, you may want to create a new top-level page and move the content you want to index into this page.
+
+{{</Aside>}}
+
+Now, you'll need to grab the following configuration values for use later in your app:
+
+- `NOTION_INTEGRATION_TOKEN`: this is a unique token that allows you to read/write to your Notion workspace. You can find this in your integration dashboard under the "Internal Integration Tokens" section in the sidebar. You may need to create a new integration token if you don't have one already.
+- `NOTION_PAGE_ID`: this is the ID of the Notion page you want to index. You can find this by navigating to the page you want to index, and copying the ID from the URL. For instance, if your page URL is `https://www.notion.so/My-Page-Name-1234567890abcdef1234567890abcdef`, your page ID is `1234567890abcdef1234567890abcdef`.
+
+## Step 4: Indexing Notion Content with Langchain and Pinecone
+
+The `pinecone.ts` file contains the `IndexToPineconeHandler` class used to index Notion content into a Pinecone database. This class does the following:
+
+1. Communicate with Pinecone to create the required index.
+2. Use Langchain's `NotionAPILoader` to load content from a Notion workspace.
+3. Convert this content into vector embeddings using OpenAI.
+4. Store these vectors into our Pinecone index database using `PineconeStore`.
+
+Let's look at the contents of `pinecone.ts`, piece by piece:
+
+```typescript
+// Import necessary libraries
+import { NotionAPILoader } from "langchain/document_loaders/web/notionapi";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai"
+import { PineconeClient } from "@pinecone-database/pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
+
+// Define the class for indexing into Pinecone
+class IndexToPineconeHandler {
+  VECTOR_SIZE = 1536;  // Define vector size constant
+  #env: Record<string, string> = {};  // Initialize a private environment variable
+  pinecone = new PineconeClient();  // Initialize a Pinecone client
+```
+
+This first part imports the necessary libraries for fetching and processing data from Notion, converting it into vector embeddings with OpenAI, and storing it in Pinecone database. It then defines a class `IndexToPineconeHandler`, which will handle indexing Notion content to Pinecone.
+
+```typescript
+  async createIndex(dimension) {
+    const indexes = await this.pinecone.listIndexes()
+    const index = indexes.find(i => i === this.#env.PINECONE_INDEX_NAME)
+
+    if (!index) {
+      console.log("Existing index not found. Creating a new index.")
+      const createRequest = {
+        name: this.#env.PINECONE_INDEX_NAME,
+        dimension,
+        metric: "euclidean",
+      }
+      await this.pinecone.createIndex({ createRequest })
+      console.log("Your index has been created. Please wait a few minutes for it to become ready... document creation may fail in the meantime.")
+    } else {
+      console.log("Existing index found. Skipping index creation.")
+    }
+  }
+```
+
+The `createIndex()` function checks for an existing index in Pinecone and, if none exists, creates a new one. It makes use of the `dimension` argument to define the number of dimensions in the vector space of the index. If the index it's looking for is already in Pinecone, it skips the creation step.
+
+```typescript
+  async generatePineconeDocumentsForNotion() {
+    console.log("Loading documents from Notion...")
+
+    const pageLoader = new NotionAPILoader({
+      clientOptions: {
+        auth: this.#env.NOTION_INTEGRATION_TOKEN
+      },
+      id: this.#env.NOTION_PAGE_ID,
+      type: "page",
+    });
+
+    const pageDocs = await pageLoader.loadAndSplit();
+
+    console.log(`Loaded ${pageDocs.length} documents from Notion.`)
+
+    const pineconeIndex = this.pinecone.Index(this.#env.PINECONE_INDEX_NAME)
+    const res = await PineconeStore.fromDocuments(
+      pageDocs,
+      new OpenAIEmbeddings({
+        openAIApiKey: this.#env.OPENAI_API_KEY,
+      }),
+      { pineconeIndex }
+    );
+
+    console.log(`Created documents in Pinecone.`)
+
+    return res
+  }
+```
+
+The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of "pages" which are then loaded and "split" using Langchain. 
+
+This section is the most complex part of this process, and explaining how it works in detail is out of scope for this tutorial. In short, it takes the content in Notion and splits it into smaller documents, which are then converted into vector embeddings using OpenAI. These vector embeddings are then stored in Pinecone.
+
+```typescript
+  async handle(request: Request, env, ctx) {
+    this.#env = env;
+
+    const unauthorized = () => new Response("Unauthorized", { status: 401 })
+
+    const authHeader = request.headers.get("Authorization")
+    const authToken = this.#env.AUTHORIZATION
+
+    if (authToken && !authHeader) return unauthorized()
+
+    if (authHeader && authToken) {
+      const parsedBearer = authHeader.split("Bearer ")[1]
+      if (parsedBearer !== authToken) return unauthorized()
+    }
+
+    await this.pinecone.init({
+      environment: this.#env.PINECONE_ENVIRONMENT,
+      apiKey: this.#env.PINECONE_API_KEY,
+    });
+
+    await this.createIndex(this.VECTOR_SIZE)
+    await this.generatePineconeDocumentsForNotion()
+
+    return new Response("Done!")
+  }
+}
+
+export const IndexToPinecone = (request, env, ctx) => {
+  const handler = new IndexToPineconeHandler();
+  return handler.handle(request, env, ctx);
+}
+```
+
+Finally, the `handle()` function is the entry point of this class. It first validates the incoming request to check if the user is authorized. If the user is not authorized, it returns an HTTP 401 Unauthorized response. If the user is authorized, it initializes the Pinecone client, creates an index in Pinecone, loads pages from Notion, transforms these pages into vectors, and stores these vector embeddings into the Pinecone index. The function returns a 'Done' message once these steps are completed.
+
+The last part of the code exports a function `IndexToPinecone` as a handler which invokes the `handle()` function of an instantiated `IndexToPineconeHandler` class object. This exported function is what's being used in the main worker script to handle requests related to indexing the Notion content into Pinecone.
+
+{{<Aside type="warning">}}
+
+This API can take a very long time to run, and can easily go over the subrequest limit for standard Workers functions, even on modestly-sized Notion workspaces. It is recommended that you enable Workers Unbound on your deployed application, which will allow additional subrequests to be made.
+
+Alternatively, you can use the Node.js script in the `local-indexing` directory to run this function locally. For more instructions on how to do this, see the [README](URL) on GitHub.
+
+{{</Aside>}}
+
+## Step 5: Querying the Content using Langchain and Pinecone
+
+The `search.ts` file implements the `GetSearch` class designed to provide search functionality to the Notion database indexed in Pinecone. It interacts with OpenAI and Pinecone to query the indexed content from your Notion workspace.
+
+Let's look at the contents of `search.ts`, piece by piece:
+
+This TypeScript module defines a class `GetSearch` that extends the `OpenAPIRoute` class from the `@cloudflare/itty-router-openapi` library. The main purpose of this `GetSearch` class is to provide a specific API route that handles and responds to user queries with relevant content from Notion pages that have been indexed into Pinecone database.
+
+Let's break down the relevant parts of this code:
+
+```typescript
+// Importing necessary libraries
+import { OpenAI } from "langchain/llms/openai";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai"
+import { OpenAPIRoute, Query } from "@cloudflare/itty-router-openapi";
+import { PineconeClient } from "@pinecone-database/pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
+import { VectorDBQAChain } from "langchain/chains";
+```
+
+These are the necessary libraries for the GetSearch class to interact with OpenAI, Pinecone, and Langchain. It also uses the `OpenAPIRoute` class from the `@cloudflare/itty-router-openapi` library to define an OpenAPI-compliant API route, which is necessary for a ChatGPT plugin.
+
+```typescript
+export class GetSearch extends OpenAPIRoute {
+	static schema = {
+		// OpenAPI schema defining the tags, summary, parameters, and responses for this route
+	};
+```
+
+Here, `GetSearch` extends `OpenAPIRoute`, which means it inherits methods and properties from the `OpenAPIRoute` class. The schema object indicates the tags, summary, parameters, and responses for This route.
+
+```typescript
+async handle(request: Request, env, ctx, data: Record<string, any>) {
+	// Instantiates a new Pinecone client and initializes it with the environment and API key
+		const pinecone = new PineconeClient();
+
+		await pinecone.init({
+			environment: env.PINECONE_ENVIRONMENT,
+			apiKey: env.PINECONE_API_KEY,
+		});
+		//... the rest of the code
+}
+```
+
+The `handle()` method is where the main functionality happens. It is an asynchronous function that gets triggered when a request hits the registered API route. It first initializes the Pinecone client and then it fetches necessary information from the request and environment variables.
+
+```typescript
+const pineconeIndex = pinecone.Index(env.PINECONE_INDEX_NAME)
+const vectorStore = await PineconeStore.fromExistingIndex(
+	new OpenAIEmbeddings({ openAIApiKey: env.OPENAI_API_KEY }),
+	{ pineconeIndex }
+);
+```
+
+In the above lines, the Pinecone index is retrieved and then used to create a `VectorStore` from the existing index. This `VectorStore` will be used to perform searches in the vector database.
+
+```typescript
+const model = new OpenAI({
+	openAIApiKey: env.OPENAI_API_KEY,
+});
+const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
+	k: 10,
+	returnSourceDocuments: true,
+});
+```
+
+Here, a new instance of Langchain's OpenAI LLM (Large Language Model) interface is initialized using the OpenAI API key. This is combined with the `vectorStore` to initialize a Vector Database Query Chain. Explaining the functionality of this chain is out of scope, but it can roughly be thought of as an interface to correctly send formatted queries to the Pinecone database.
+
+```typescript
+const response = await chain.call({ query: data.q });
+
+return new Response(JSON.stringify(response), {
+	headers: { "content-type": "application/json" },
+});
+```
+
+Finally, the query from the client request is passed to the query chain, the results are converted to JSON string, and the result is returned as a response. This allows users to make queries against the Notion workspace that has been pre-processed and stored in Pinecone.
+
+## Step 6: Adding the Indexing and Search Routes
+
+Now that you've created the indexing and search functionality, you'll need to add the routes to your application, using the `index.ts` file.
+
+The imported `GetSearch` from "./search" and `IndexToPinecone` from './pinecone' are classes that each define a different route handler for the API.
+
+Here is a breakdown of each part of the code:
+
+```typescript
+// Import necessary libraries and route handlers
+import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
+import { GetSearch } from "./search";
+import { IndexToPinecone } from './pinecone'
+```
+
+The code first imports the necessary libraries. `OpenAPIRouter` is a function for creating open API routers, `GetSearch` and `IndexToPinecone` are two route handlers that have been defined earlier in other modules.
+
+```typescript
+// Create a default router with some descriptions
+export const router = OpenAPIRouter({
+	schema: {
+		info: {
+			title: "Notion Search",
+			description:
+				"A plugin that allows the user to index their Notion workspace and query it",
+			version: "v0.0.1",
+		},
+	},
+	docs_url: "/",
+	aiPlugin: {
+		name_for_human: "Notion Search",
+		name_for_model: "notionsearch",
+		description_for_human: "Notion Workspace Search",
+		description_for_model:
+			"Query your Notion workspace from ChatGPT.",
+		contact_email: "support@example.com",
+		legal_info_url: "http://www.example.com/legal",
+		logo_url: "https://workers.cloudflare.com/resources/logo/logo.svg",
+	},
+});
+```
+
+This part creates a new `OpenAPIRouter` instance and defines the schema, documentation URL and plugin properties using a configuration object.
+
+```typescript
+// Define routes
+router.get("/search", GetSearch); // Search method
+router.original.get("/pinecone", IndexToPinecone); // Indexing method
+
+// 404 for everything else
+router.all("*", () => new Response("Not Found.", { status: 404 }));
+```
+
+This section defines one GET route for each of the imported handlers. Whenever a GET request is sent to `YOUR_WORKER_URL/search`, it will pass the request to `GetSearch` handler. Similarly, `YOUR_WORKER_URL/pinecone` is handled by `IndexToPinecone`. Any other routes will result in a "Not Found" message with HTTP status code 404.
+
+```typescript
+// Export default handler
+export default {
+	fetch: router.handle,
+};
+```
+
+This part exports the router's handle method as a fetch method, which makes this router usable as a worker script. `fetch` is a default entry point for Cloudflare workers, where incoming fetch events will be passed in to be handled by the router.
+
+## Step 7: Deploying Your Worker Application
+
+Once you've created your Worker application and added the required functions, you can then deploy the application to Workers. 
+
+Before you deploy, you'll need to initialize a number of secret values for your application. For each of the following values, run the following command:
+
+```sh
+$ npx wrangler secret put <secret-name>
+```
+
+- `AUTHORIZATION`: this is an optional authorization token that can be used to secure your application. If you don't want to use this, you can leave it blank.
+- `NOTION_INTEGRATION_TOKEN`: this is the Notion integration token you created earlier.
+- `NOTION_PAGE_ID`: this is the ID of the Notion page you want to index.
+- `OPENAI_API_KEY`: this is the OpenAI API key you created earlier.
+- `PINECONE_API_KEY`: this is the Pinecone API key you created earlier.
+- `PINECONE_ENVIRONMENT`: this is the environment that Pinecone deploys to.
+- `PINECONE_INDEX_NAME`: this is the name of the Pinecone index you created earlier.
+
+Here's how to deploy it:
+
+1. Make sure you're in your project's directory, then run the following command:
+
+```sh
+$ npx wrangler deploy
+```
+
+2. Wrangler will package and upload your code.
+
+3. After your application is deployed, Wrangler will provide you with your worker's URL.
+
+Now your Notion Workspace is available and searchable via the provided workers URL.
+
+## Step 8: Add the plugin to ChatGPT
+
+ChatGPT Plugins, which are in alpha, allow you to augment ChatGPT's functionality with custom functionality. When it is appropriate, ChatGPT will query your plugin to provide additional information to the user.
+
+To add a new ChatGPT plugin, select the "Alpha" option at the top of ChatGPT's UI for the model option, and select "Plugins". A new button appear with the test "No plugins enabled". Select this button and select the "Plugin store" option.
+
+In the new modal popup, select "Develop your own plugin". This will allow you to enter a custom plugin URL and use your own plugins directly in ChatGPT. Enter the deployed Workers URL, as seen below:
+
+![ChatGPT's custom plugin UI, allowing you to enter a URL](./custom-plugin.png)
+
+{{ <Aside type="note"> }}
+
+The ChatGPT Plugins API is currently in alpha. This means that the instructions or text above may be out-of-date.
+
+{{ </Aside> }}
+
+## Next steps
+
+To build more with Workers, refer to [Tutorials](/workers/tutorials).
+
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
