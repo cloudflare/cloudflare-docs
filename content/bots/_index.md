@@ -8,7 +8,7 @@ meta:
 
 # Cloudflare bot solutions
 
-Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
+Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots. TEST
 
 While Cloudflare offers several products that relate to bot traffic, this section reviews our bot-specific products, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
 
