@@ -38,8 +38,7 @@ Most admins test by downloading the client and authenticating in with a [one-tim
         {{<render file="_doh-ips.md" productFolder="cloudflare-one">}}
 For more information, refer to [WARP with firewall](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 6. Uninstall any existing third-party software that may manage DNS resolution. Sometmes products placed in a disconnected or disabled state will still interfere with the WARP client.
-7. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/) and install WARP on the device.
-8. Once WARP is installed, manually authenticate into your Zero Trust organization:
+7. Manually install WARP on the device:
 
 <details>
 <summary>Windows and macOS</summary>
