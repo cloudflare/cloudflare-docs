@@ -21,7 +21,7 @@ Workers KV is a data storage that allows you to store and retrieve data globally
 ## Features
 
 {{<feature header="Key-value storage" href="/kv/get-started/">}}
-Learn how KV stores and retrieves data.
+Learn how Workers KV stores and retrieves data.
 {{</feature>}}
 
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}

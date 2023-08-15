@@ -76,6 +76,8 @@ The effective `cacheTTL` of an already cached item can be reduced by getting it 
 
 ## Metadata
 
+A metadata is serializable value you append to each KV entry. 
+
 Get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata()` method on a KV namespace you have bound in your Worker code:
 
 ```js

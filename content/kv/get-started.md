@@ -24,7 +24,40 @@ Enable Workers KV for your account by purchasing the Workers Paid plan:
 2. Go to **Workers & Pages** > **Plans**.
 3. Select **Purchase Workers Paid** and complete the payment process to enable Workers KV.
 
-## 2. Create a KV namespace 
+## 2. Create a Worker project
+
+You can access KV from a Worker.
+
+To create a Worker, run:
+
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npm create cloudflare@latest
+```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn create cloudflare@latest
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+In your terminal, you will be asked a series of questions related to your project. 
+
+1. Name your new Worker directory by specifying where you want to create your application.
+2. Select `"Hello World" script` as the type of application you want to create.
+3. Answer `yes` to using TypeScript.
+4. Answer `no` to using Git.
+5. Answer `no` to deploying your Worker.
+
+This will create a new directory, which will include both a `src/worker.ts` Worker code, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. 
+
+## 3. Create a KV namespace 
 
 A [KV namespace](/kv/learning/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
 
@@ -83,7 +116,7 @@ Refer to [Environment](/kv/platform/environments/) for more information.
 4. Enter a name for your namespace. 
 5. Select **Add**.
 
-## 3. Interact with your KV namespace
+## 4. Interact with your KV namespace
 
 You can interact with your KV namespace via Wrangler or via a Worker.
 
@@ -94,12 +127,6 @@ To write a value to your empty KV namespace using Wrangler, run the `wrangler kv
 ```sh
 $ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
-```
-
-You can now access the binding from within a Worker. In your Worker script, use the KV `get()` method to fetch the data you stored in your KV database:
-
-```js
-let value = await <YOUR_BINDING>.get("KEY");
 ```
 
 Instead of using `--binding`, you may use `--namespace-id` to specify which KV namespace should receive the operation:
@@ -125,9 +152,15 @@ A KV namespace can be specified in two ways:
     $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
     ```
 
-Refer to the [`kv:bulk`](/kv/platform/kv-commands/#kvbulk) documentation to write a file of multiple key-value pairs to a given KV namespace.
+To access the value using Wrangler, run the `wrangler kv:key get` subcommand in your terminal, and input your key value:
 
-## Interact with your KV namespace via a Worker
+```sh
+wrangler kv:key get <KEY> [OPTIONS]
+```
+
+Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
+
+### Interact with your KV namespace via a Worker
 
 You can now access the binding from within a Worker. In your Worker script, use the KV `get()` method to fetch the data you stored in your KV database:
 

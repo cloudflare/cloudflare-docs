@@ -22,8 +22,6 @@ Initial reads from a location do not have a cached value. Data must be read from
 
 ![Initial reads will miss the cache and go to the nearest central data store first.](/images/kv/kv-slow-read.svg)
 
-<!-- Frequent reads from the same location return the cached value without reading from a central data store, resulting in faster response times. -->
-
 Frequent reads from the same location return the cached value without reading from anywhere else, resulting in the fastest response times. KV operates diligently to keep the latest value in the cache by refreshing from upper tiers and the central data stores in the background. 
 
 Refreshing from upper tiers and the central data stores in the background is done carefully so that assets that are being accessed continue to be kept served from the cache without any stalls.
@@ -41,10 +39,9 @@ To improve KV performance, increase the [`cacheTTL` parameter](/kv/api/read-key-
 
 KV achieves high performance by [caching](https://www.cloudflare.com/en-gb/learning/cdn/what-is-caching/) which makes reads eventually-consistent with writes. 
 
-Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out or for them to see reads to trigger a refresh. 
+Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out. Changes may take up to 60 seconds or more to see reads to trigger a refresh. 
 
 Negative lookups indicating that the key does not exist are also cached, so the same delay exists noticing a value is created as when a value is changed.
-<!-- Refer to [Notice updated values within seconds](/kv/learning/kv-performance-optimizations/#notice-updated-values-within-seconds) if you need finer-grained guarantees about the behavior of concurrent writes into KV. -->
 
 KV does not perform like an in-memory datastore, such as [Redis](https://redis.io). Accessing KV values, even when locally cached, has significantly more latency than reading a value from memory within a Worker script.
 
@@ -59,11 +56,7 @@ KV is not ideal for applications where you need support for atomic operations or
 If you need stronger consistency guarantees, consider using [Durable Objects](/durable-objects/). 
 {{</Aside>}}
 
-One pattern is to send all your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.
-
-<!-- KV does not perform like an in-memory datastore, such as [Redis](https://redis.io). Accessing KV values, even when locally cached, has significantly more latency than reading a value from memory within a Worker script. -->
-
-<!-- Refer to [KV performance optimizations](/kv/learning/kv-performance-optimizations/) to learn more about performance optimizations technique. -->
+An approach to achieve write-after-write consistency is to send all of your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.
 
 ## Security
 

@@ -12,7 +12,7 @@ Manage KV namespaces.
 
 The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using KV.
 
-## create
+### create
 
 Creates a new KV namespace.
 
@@ -31,7 +31,7 @@ $ wrangler kv:namespace create <NAMESPACE> [OPTIONS]
 
 {{</definitions>}}
 
-### `create` command to create a KV namespace called `MY_KV`
+#### `create` command to create a KV namespace called `MY_KV`
 
 ```sh
 $ wrangler kv:namespace create "MY_KV"
@@ -42,7 +42,7 @@ kv_namespaces = [
   { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
 ]
 ```
-### `create` command to create a preview KV namespace called `MY_KV`
+#### `create` command to create a preview KV namespace called `MY_KV`
 
 ```sh
 $ wrangler kv:namespace create "MY_KV" --preview
@@ -54,7 +54,7 @@ kv_namespaces = [
 ]
 ```
 
-## list
+### list
 
 Lists all KV namespaces associated with the current account ID.
 
@@ -62,7 +62,7 @@ Lists all KV namespaces associated with the current account ID.
 $ wrangler kv:namespace list
 ```
 
-### Pass the Wrangler command through the `jq` command
+#### Pass the Wrangler command through the `jq` command
 
 ```sh
 $ wrangler kv:namespace list | jq "."
@@ -78,50 +78,7 @@ $ wrangler kv:namespace list | jq "."
 ]
 ```
 
-## list
-
-Outputs a list of all keys in a given KV namespace.
-
-```sh
-$ wrangler kv:key list [OPTIONS]
-```
-
-{{<Aside type="warning">}}
-Exactly one of `--binding` or `--namespace-id` is required.
-{{</Aside>}}
-
-{{<definitions>}}
-
-- `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
-- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment.
-- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with a preview namespace instead of production.
-- `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Only list keys that begin with the given prefix.
-
-{{</definitions>}}
-
-
-### Pass the Wrangler command through the `jq` command
-
-```sh
-$ wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
-[
-  {
-    "name": "public_key"
-  },
-  {
-    "name": "public_key_with_expiration",
-    "expiration": "2019-09-10T23:18:58Z"
-  }
-]
-```
-
-## delete
+### delete
 
 Deletes a given KV namespace.
 
@@ -146,7 +103,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 {{</definitions>}}
 
-### Delete a KV namespace called MY_KV
+#### Delete a KV namespace called MY_KV
 
 ```sh
 $ wrangler kv:namespace delete --binding=MY_KV
@@ -156,7 +113,7 @@ Deleting namespace f7b02e7fc70443149ac906dd81ec1791
 Deleted namespace f7b02e7fc70443149ac906dd81ec1791
 ```
 
-### Delete a preview KV namespace called MY_KV
+#### Delete a preview KV namespace called MY_KV
 
 ```sh
 $ wrangler kv:namespace delete --binding=MY_KV --preview
@@ -170,7 +127,7 @@ Deleted namespace 15137f8edf6c09742227e99b08aaf273
 
 Manage key-value pairs within a KV namespace.
 
-## put
+### put
 
 Writes a single key-value pair to a particular KV namespace.
 
@@ -210,35 +167,35 @@ Exactly one of `VALUE` or `--path` is required.
 {{</definitions>}}
 
 
-### Put a key-value into the KV namespace with binding name of `MY_KV`
+#### Put a key-value into the KV namespace with binding name of `MY_KV`
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value"
 Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-### Put a key-value into the preview KV namespace with binding name of `MY_KV`
+#### Put a key-value into the preview KV namespace with binding name of `MY_KV`
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV --preview "my-key" "some-value"
 Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
 ```
 
-### Put a key-value into a KV namespace, with a time-to-live value of `10000` seconds
+#### Put a key-value into a KV namespace, with a time-to-live value of `10000` seconds
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value" --ttl=10000
 Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-### Put a key-value into a KV namespace, where the value is read from the `value.txt` file
+#### Put a key-value into a KV namespace, where the value is read from the `value.txt` file
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
 Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-## get
+### get
 
 Reads a single value by key from the given KV namespace.
 
@@ -265,14 +222,57 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 {{</definitions>}}
 
-### Gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`
+#### Gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`
 
 ```sh
 $ wrangler kv:key get --binding=MY_KV "my-key"
 value
 ```
 
-### `delete`
+### list
+
+Outputs a list of all keys in a given KV namespace.
+
+```sh
+$ wrangler kv:key list [OPTIONS]
+```
+
+{{<Aside type="warning">}}
+Exactly one of `--binding` or `--namespace-id` is required.
+{{</Aside>}}
+
+{{<definitions>}}
+
+- `--binding` {{<type>}}string{{</type>}}
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` {{<type>}}string{{</type>}}
+  - The ID of the namespace to delete.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with a preview namespace instead of production.
+- `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Only list keys that begin with the given prefix.
+
+{{</definitions>}}
+
+
+#### Pass the Wrangler command through the `jq` command
+
+```sh
+$ wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
+[
+  {
+    "name": "public_key"
+  },
+  {
+    "name": "public_key_with_expiration",
+    "expiration": "2019-09-10T23:18:58Z"
+  }
+]
+```
+
+### delete
 
 Removes a single key value pair from the given namespace.
 
@@ -300,7 +300,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 {{</definitions>}}
 
 
-### Deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`
+#### Deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`
 
 ```sh
 $ wrangler kv:key delete --binding=MY_KV "my-key"
@@ -392,7 +392,7 @@ $ wrangler kv:bulk put --binding=MY_KV allthethingsupload.json
 Success!
 ```
 
-## `delete`
+### delete
 
 Deletes all keys read from a JSON file within a given namespace.
 
@@ -426,7 +426,7 @@ Here is an example of the JSON input:
 ["test_key_1", "test_key_2"]
 ```
 
-### Delete all the keys found in the `allthethingsdelete.json` file
+#### Delete all the keys found in the `allthethingsdelete.json` file
 
 ```sh
 $ wrangler kv:bulk delete --binding=MY_KV allthethingsdelete.json
