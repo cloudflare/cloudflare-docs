@@ -11,39 +11,25 @@ In this guide, you will create a new Angular application and deploy it using Clo
 
 ## Setting up a new project
 
-If you already have [Angular CLI](https://angular.io/cli) installed globally, invoke the `ng` executable directly:
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, scaffold a new Angular project, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new Angular project, run the following command:
 
 ```sh
-# Create the project
-$ ng new my-angular-app
-# Enter the new directory
-$ cd my-angular-app
+$ npm create cloudflare@latest my-angular-app -- --framework=angular
 ```
 
-Alternatively, you can use [`npx`](https://www.npmjs.com/package/npx), which is included with all modern `npm` versions, to avoid the global installation:
-
-{{<Aside type="note">}}
-
-All modern versions of `npm` already include the `npx` executable. You do not need to install anything for this approach.
-
-{{</Aside>}}
-
-```sh
-# Create the project
-$ npx @angular/cli new my-angular-app
-# Enter the new directory
-$ cd my-angular-app
-```
-
-With both approaches, the Angular CLI will prompt you for customization choices. Your answers will not affect the rest of this tutorial. Choose the option that is ideal for your project.
+Create-cloudflare will install dependencies including the Wrangler CLI and the Cloudflare Pages adapter, and ask a few more setup questions.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
 {{<render file="_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Angular">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.

@@ -65,13 +65,11 @@ export default defineConfig({
 
 {{<render file="_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-### Deploying via the create-cloudflare CLI (c3)
+{{<render file="_deploy-via-c3.md" withParameters="Solid">}}
 
-If you use create-cloudflare to create your new Solid project, after installing all dependencies you will be prompted to deploy via the CLI. Your site will be live and you will be provided with a deployment URL.
-
-### Deploying via the Cloudflare dashboard
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.

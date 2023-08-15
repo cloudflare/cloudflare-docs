@@ -11,13 +11,17 @@ In this guide, you will create a new React application and deploy it using Cloud
 
 ## Setting up a new project
 
-Create a new project using `npx`, giving it the title `my-react-app` in your terminal.
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate React's official setup tool, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new React project, run the following command:
 
 ```sh
-$ npx create-react-app my-react-app
+$ npm create cloudflare@latest my-react-app -- --framework=react
 ```
 
-And move into the application's directory via:
+Create-cloudflare will install dependencies including the Wrangler CLI and the Cloudflare Pages adapter, and ask a few more setup questions.
+
+Move into the application's directory via:
 
 ```sh
 $ cd my-react-app
@@ -33,9 +37,11 @@ $ npm start
 
 {{<render file="_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="React">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.

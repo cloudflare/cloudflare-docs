@@ -11,19 +11,23 @@ In this guide, you will create a new Vue application and deploy it using Cloudfl
 
 ## Setting up a new project
 
-First, install the Vue CLI using npm, and then run `vue create` in your terminal to create a new project called `my-vue-app`:
+The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Vue's official setup tool, and provide the option to deploy instantly.
+
+To use create-cloudflare to create a new Vue project, run the following command:
 
 ```sh
-$ npx @vue/cli create my-vue-app
+$ npm create cloudflare@latest my-vue-app -- --framework=vue
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
 
 {{<render file="_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Vue">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
