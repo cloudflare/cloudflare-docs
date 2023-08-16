@@ -235,7 +235,7 @@ export function dropdowns() {
 
 export function toggleSidebar() {
   const toggleButton = document.getElementsByClassName("toggleSidebar");
-  if (toggleButton) {
+  if (toggleButton.length > 0) {
     let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {

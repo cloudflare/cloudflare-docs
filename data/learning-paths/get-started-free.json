@@ -9,5 +9,6 @@
       "SSL/TLS",
       "WAF"
     ],
-    "category": ["Security", "Reliability", "Performance"]
+    "product_group": "Cloudflare essentials",
+    "additional_groups": ["Application security", "Application performance"]
 }
