@@ -39,9 +39,14 @@
 
   {{- $pt := default .Context.Title .Context.Params.meta.title -}}
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
-  {{- $title = print .Context.Title " | Training" -}}
-
-  {{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
+  {{- $titleAddition := "" -}}
+  {{- if eq (len .Context.Ancestors) 4 -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 1).Title -}}
+  {{- else -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
+  {{- end -}}
+  
+  {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
   {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
@@ -54,7 +59,7 @@
   {{- $folderPlaceholder := "" -}}
   {{ $rssFeed := "" }}
 
-  {{- if or (in $.Context.RelPermalink "/learning-paths/modules/") (eq $.Context.Params.no_index true ) -}}
+  {{- if (eq $.Context.Params.no_index true ) -}}
   <meta name="robots" content="noindex">
   {{- end -}}
 

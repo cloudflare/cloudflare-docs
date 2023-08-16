@@ -1,20 +1,5 @@
 {
-    "modules": [ 
-        {
-            "folder": "performance",
-            "uid": "load-balancing-concepts"
-        },
-        {
-            "folder": "performance",
-            "uid": "load-balancing-planning"
-        },
-        {
-            "folder": "performance",
-            "uid": "load-balancing-setup"
-        }
-    ],
     "title": "Load balancing",
-    "uid": "load-balancing",
     "path": "/learning-paths/load-balancing/",
     "priority": 2,
     "description": "Maximize application performance and availability.",

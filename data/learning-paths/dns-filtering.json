@@ -1,32 +1,5 @@
 {
-    "modules": [ 
-        {
-            "folder": "security",
-            "uid": "dns-filtering-concepts"
-        },
-        {
-            "folder": "security",
-            "uid": "dns-filtering-account"
-        },
-        {
-            "folder": "security",
-            "uid": "dns-filtering-create-policy"
-        },
-        {
-            "folder": "security",
-            "uid": "dns-filtering-connect-devices"
-        },
-        {
-            "folder": "security",
-            "uid": "dns-filtering-plan-deployment"
-        },
-        {
-            "folder": "security",
-            "uid": "dns-filtering-deploy"
-        }
-    ],
     "title": "Get started with DNS filtering",
-    "uid": "dns-filtering",
     "path": "/learning-paths/dns-filtering/",
     "priority": 5,
     "description": "Protect corporate devices from malware, phishing, and other prohibited web content.",

@@ -267,6 +267,14 @@ export function toggleSidebar() {
         let isHidden = item.hasAttribute(attr);
         item.toggleAttribute(attr, !isHidden);
       });
+
+      let moduleCounters = document.getElementsByClassName("moduleCounter")
+      if (moduleCounters) {
+        for (const counter of moduleCounters) {
+          let isHidden2 = counter.hasAttribute(attr);
+          counter.toggleAttribute(attr, !isHidden2)
+        }
+      }
     });
   }
 }
