@@ -241,9 +241,9 @@ Below you have examples of a successful result from pinging across both of the v
 
 #### MWAN_IPsec_Tun1
 
-```sh
-$ fortigate # execute ping 10.252.2.90
-$ PING 10.252.2.90 (10.252.2.90): 56 data bytes
+```txt
+fortigate # execute ping 10.252.2.90
+PING 10.252.2.90 (10.252.2.90): 56 data bytes
 64 bytes from 10.252.2.90: icmp_seq=0 ttl=64 time=5.8 ms
 64 bytes from 10.252.2.90: icmp_seq=1 ttl=64 time=5.8 ms
 64 bytes from 10.252.2.90: icmp_seq=2 ttl=64 time=5.8 ms
@@ -257,9 +257,9 @@ round-trip min/avg/max = 5.7/5.7/5.8 ms
 
 #### MWAN_IPsec_Tun2
 
-```sh
-$ fortigate # execute ping 10.252.2.92
-$ PING 10.252.2.92 (10.252.2.92): 56 data bytes
+```txt
+fortigate # execute ping 10.252.2.92
+PING 10.252.2.92 (10.252.2.92): 56 data bytes
 64 bytes from 10.252.2.92: icmp_seq=0 ttl=64 time=6.1 ms
 64 bytes from 10.252.2.92: icmp_seq=1 ttl=64 time=6.1 ms
 64 bytes from 10.252.2.92: icmp_seq=2 ttl=64 time=6.1 ms
