@@ -16,7 +16,6 @@ The FortiGate configuration was tested on two different FortiGate firewalls:
 - FortiGate Virtual Appliance
     - Version 7.0.8
     - Running on VMware ESXi 6.5
-
 - FortiGate FG80F
     - Version 7.0.12
 
