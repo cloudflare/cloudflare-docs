@@ -235,7 +235,7 @@ end
 
 ### Validate communication across virtual tunnel interfaces
 
-Once the virtual tunnel interfaces have been configured, you should be able to ping the IP address associated with the remote-ip attribute.
+Once the virtual tunnel interfaces have been configured, you should be able to ping the IP address associated with the `remote-ip` attribute.
 
 Below you have examples of a successful result from pinging across both of the virtual tunnel interfaces configured in the previous section:
 
