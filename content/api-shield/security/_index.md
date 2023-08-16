@@ -31,7 +31,6 @@ The following table provides examples of how you might match Cloudflare products
 | Improper Inventory Management | [Discovery](/api-shield/security/api-discovery/), [Schema Learning](/api-shield/management-and-monitoring/#endpoint-schema-learning) |
 | Unsafe Consumption of APIs | [JWT Validation], [WAF Managed Rules] |
 
-
 [Schema Validation]: /api-shield/security/schema-validation/
 [Sequence Mitigation]: /api-shield/security/sequence-mitigation/
 [JWT Validation]: /api-shield/security/jwt-validation/
