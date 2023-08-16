@@ -81,7 +81,7 @@ To ensure health checks work as expected, enable asymmetric routing for ICMP. Th
 
 Note that enabling asymmetric routing will affect FortiGate behavior. To learn more, refer to [How FortiGate behaves when asymmetric routing is enabled](https://community.fortinet.com/t5/FortiGate/Technical-Note-How-the-FortiGate-behaves-when-asymmetric-routing/ta-p/198575).
 
-```bash
+```txt
 config system settings
     set asymroute-icmp enable
 end
@@ -92,7 +92,7 @@ end
 For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet’s documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
 
 
-```bash
+```txt
 config system global
     set anti-replay disable
 end
@@ -114,7 +114,7 @@ The following examples assume `wan1` is the external/egress interface of the For
 
 `MWAN_IPsec_Tun1` corresponds to Tunnel 01 of 02 added earlier in the Cloudflare section of the configuration. `MWAN_IPsec_Tun2` corresponds to Tunnel 02 of 02 added earlier in the Cloudflare section of the configuration.
 
-```bash
+```txt
 fortigate # config vpn ipsec phase1-interface
     edit "MWAN_IPsec_Tun1"
         set interface "wan1"
@@ -150,7 +150,7 @@ end
 
 Add two `phase2-interfaces` — one for each of the two `phase1-interfaces` as follows:
 
-```bash
+```txt
 fortigate # config vpn ipsec phase2-interface
     edit "MWAN_IPsec_Tun1"
         set phase1name "MWAN_IPsec_Tun1"
@@ -177,7 +177,7 @@ Create two loopback interfaces to bind the bidirectional health check Anycast IP
 
 Add two loopback interfaces one corresponding to each of the two bidirectional health check Anycast IPs (`172.64.240.253` and `172.64.240.254` respectively):
 
-```bash
+```txt
 fortigate # config system interface
     edit "loopback1"
         set vdom "root"
@@ -208,7 +208,7 @@ These are the only settings that should need to be added to the virtual tunnel i
 
 The following examples assume `wan1` is the external/egress interface of the FortiGate firewall.
 
-```bash
+```txt
 fortigate # config system interface
     edit "MWAN_IPsec_Tun1"
         set vdom "root"
@@ -278,7 +278,7 @@ This sample configuration assumes there are three zones configured on the FortiG
 - `Untrust_Zone`: Contains the WAN interface.
 - `Cloudflare_Zone`: Contains both IPsec Tunnel interfaces.
 
-```bash
+```txt
 fortigate # config system zone
     edit "Cloudflare_Zone"
         set intrazone allow
@@ -299,7 +299,7 @@ end
 
 Create Address Objects to represent the [Cloudflare IPv4 address space](https://www.cloudflare.com/ips) as well as objects for the bidirectional health check Anycast IPs:
 
-```bash
+```txt
 config firewall address
     edit "Cloudflare_IPv4_01"
         set color 9
@@ -378,7 +378,7 @@ end
 
 Create an Address Object that contains all of the Cloudflare IPv4 subnets as specified in the previous section.  You can copy/paste the CLI commands below into an SSH terminal and the objects will get created automatically:
 
-```bash
+```txt
 config firewall addrgrp
     edit "Cloudflare_IPv4_Nets"
         set member "Cloudflare_IPv4_01" "Cloudflare_IPv4_02" "Cloudflare_IPv4_03" "Cloudflare_IPv4_04" "Cloudflare_IPv4_05" "Cloudflare_IPv4_06" "Cloudflare_IPv4_07" "Cloudflare_IPv4_08" "Cloudflare_IPv4_09" "Cloudflare_IPv4_10" "Cloudflare_IPv4_11" "Cloudflare_IPv4_12" "Cloudflare_IPv4_13" "Cloudflare_IPv4_14" "Cloudflare_IPv4_15"
@@ -391,9 +391,9 @@ end
 
 Add a firewall rule to permit the ICMP traffic associated with the reply style bidirectional health checks.
 
-{{<Aside type="note">}}This example assumes this rule is the second rule in the firewall policy (edit 2). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.{{</Aside>}}
+{{<Aside type="note">}}This example assumes this rule is the second rule in the firewall policy (`edit 2`). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.{{</Aside>}}
 
-```bash
+```txt
 fortigate (policy) # show
 config firewall policy
     edit 2
@@ -418,9 +418,9 @@ Policy-based routing rules are required to ensure the traffic associated with th
 
 Add two policy-based routing rules, one for each of the two Magic IPsec tunnels.
 
-{{<Aside type="note">}}This example assumes the rules below are the first and second rules respectively (edit 1 and edit 2). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.{{</Aside>}}
+{{<Aside type="note">}}This example assumes the rules below are the first and second rules respectively (`edit 1` and `edit 2`). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.{{</Aside>}}
 
-```bash
+```txt
 fortigate # config router policy
     edit 1
         set input-device "MWAN_IPsec_Tun1"
@@ -453,7 +453,7 @@ Packet captures allow you to determine whether or not the policy-based routing r
 
 The expected behavior should look like the examples below — traffic ingressing Tunnel 01 of 02 should egress the same tunnel. 
 
-```bash
+```txt
 fortigate # diagnose sniffer packet any 'host 172.64.240.253' 4
 interfaces=[any]
 filters=[host 172.64.240.253]
@@ -470,7 +470,7 @@ filters=[host 172.64.240.253]
 
 Conversely, traffic ingressing Tunnel 02 of 02 should egress the same tunnel:
 
-```bash
+```txt
 fortigate # diagnose sniffer packet any 'host 172.64.240.254' 4
 interfaces=[any]
 filters=[host 172.64.240.254]
@@ -491,7 +491,7 @@ Flow debugging can be helpful when it comes to determining whether or not traffi
 
 Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application’s requirements.
 
-```bash
+```txt
 fortigate # diagnose debug disable 
 fortigate # diagnose debug flow filter clear 
 fortigate # diagnose debug reset 
@@ -524,6 +524,6 @@ The typical use of <kbd>CTRL</kbd> <kbd>C</kbd> will not stop Flow Debugging.
 
 You can disable Flow Debugging simply by typing the following at any point while the debug logs are scrolling by:
 
-```bash
+```txt
 fortigate # diagnose debug disable 
 ```
