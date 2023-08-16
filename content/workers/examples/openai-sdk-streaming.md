@@ -30,7 +30,7 @@ export default {
 		let writer = writable.getWriter()
 		const textEncoder = new TextEncoder();
 
-		// loop over the data as it is streamend from OpenAI and write it using our writeable
+		// loop over the data as it is streamed from OpenAI and write it using our writeable
 		for await (const part of stream) {
 			console.log(part.choices[0]?.delta?.content || '');
 			writer.write(textEncoder.encode(part.choices[0]?.delta?.content || ''));
