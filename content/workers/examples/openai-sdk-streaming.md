@@ -20,7 +20,7 @@ export default {
 		// make our request to the OpenAI API
 		const stream = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
-			messages: [{ role: 'user', content: 'Share your exciement about the OpenAI TypeScript / Node SDK working Cloudflare Workers!' }],
+			messages: [{ role: 'user', content: 'Share your excitement about the OpenAI TypeScript / Node SDK working Cloudflare Workers!' }],
 			stream: true,
 		});
 
