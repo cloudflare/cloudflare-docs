@@ -16,6 +16,8 @@ Gateway supports proxying TCP, UDP, and ICMP traffic.
 
 ### TCP
 
+When the proxy is enabled, Gateway will always forward TCP traffic.
+
 By default, TCP connection attempts will timeout after 30 seconds and idle connections will disconnect after 8 hours.
 
 ### UDP
@@ -34,6 +36,6 @@ The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `tracero
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy** for TCP.
-3. (Optional) Depending on your use case, you can enable **UDP** or **ICMP**.
+3. (Optional) Depending on your use case, you can enable **UDP** and/or **ICMP**.
 
-If you want to filter HTTP traffic, we recommend you enable [**TLS decryption**](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to ensure HTTPS traffic is filtered.
+If you want to inspect HTTP traffic, we recommend you enable [**TLS decryption**](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to include HTTPS traffic.
