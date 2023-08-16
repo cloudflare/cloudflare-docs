@@ -8,25 +8,56 @@ layout: single
 
 ## Background
 
-Cron Triggers allow users to map a cron expression to a Worker script using a [ScheduledEvent](/workers/runtime-apis/scheduled-event/) listener that enables Workers to be executed on a schedule. Cron Triggers are ideal for running periodic jobs for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
+Cron Triggers allow users to map a cron expression to a Worker using a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) listener that enables Workers to be executed on a schedule.
+
+Cron Triggers are ideal for running periodic jobs, such as for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
+
+Cron Triggers execute on UTC time.
 
 ## Add a Cron Trigger
 
-Add Cron Triggers to Workers with the Cloudflare API, or in the dashboard. To add Cron Triggers in the Cloudflare dashboard:
+### 1. Define a scheduled event listener
+
+To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runtime-apis/scheduled-event/) listener, or export a default `scheduled` handler to your Workers code.
+
+Refer to the following examples to write your code:
+
+* [Setting Cron Triggers](/workers/examples/cron-trigger/)
+* [Multiple Cron Triggers](/workers/examples/multiple-cron-triggers/)
+
+### 2. Update configuration
+
+After you have updated your Worker code to include a `"scheduled"` event, you must update your Worker project configuration.
+
+#### Via `wrangler.toml`
+
+If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [`wrangler.toml`](/workers/wrangler/configuration/) file.
+
+Refer to the example below for a sample `wrangler.toml` Cron Triggers configuration:
+
+```toml
+[triggers]
+# Schedule cron triggers:
+# - At every 3rd minute
+# - At 3PM on first day of the month
+# - At 11:59PM on the last weekday of the month
+crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+```
+
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+
+```toml
+[env.dev.triggers]
+crons = ["0 * * * *"]
+```
+
+#### Via the dashboard
+
+To add Cron Triggers in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Triggers** > **Cron Triggers**.
-
-Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker. If a Worker is managed with Wrangler, [Cron Triggers should be exclusively managed through the `wrangler.toml`](/workers/wrangler/configuration/) file.
-
-{{<Aside type="note" header="Requires a ScheduledEvent Listener">}}
-
-To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runtime-apis/scheduled-event/) listener, or export a default `scheduled` handler to the Workers script.
-
-{{</Aside>}}
-
-![After selecting Triggers, add a trigger to execute time-based Workers](/images/workers/platform/triggers/workers-schedule-editor.png)
 
 ## Supported cron expressions
 
@@ -52,11 +83,11 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 - `* * * * *`
 
-  - Every minute
+  - At every minute
 
 - `*/30 * * * *`
 
-  - Every 30 minutes
+  - At every 30th minute
 
 - `45 * * * *`
 
@@ -83,11 +114,17 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 {{</definitions>}}
 
-{{<Aside type="note" header="Testing Cron Triggers and potential delays">}}
+## Test Cron Triggers
 
-The recommended way of testing Cron Triggers is using Wrangler. Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes to propagate to the Cloudflare global network.
+The recommended way of testing Cron Triggers is using Wrangler. 
 
-Cron triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+{{<Aside type="note" header="Cron Trigger changes take time to propagate">}}
+
+Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
+
+{{</Aside>}}
+
+Test  Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 $ wrangler dev --test-scheduled
@@ -95,20 +132,24 @@ $ wrangler dev --test-scheduled
 $ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 ```
 
-{{</Aside>}}
-
-## Viewing past events
+## View past events
 
 Users can review the execution history of their Cron Triggers in **Past Events** under [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
-![Review the activity log of past cron triggers in Past Events](/images/workers/platform/triggers/workers-past-events.png)
+{{<Aside type="note">}}
 
 It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 
+{{</Aside>}}
+
 Refer to [Metrics and Analytics](/workers/observability/metrics-and-analytics/) for more information.
 
-{{<Aside type="note" header="What is Green Compute?">}}
+## Limits
 
-With Green Compute enabled, your Cron Triggers will only run on Cloudflare points of presence that are located in data centers that are powered purely by renewable energy. Organizations may claim that they are powered by 100 percent renewable energy if they have procured sufficient renewable energy to account for their overall energy use. Renewable energy can be purchased in a number of ways, including through on-site generation (wind turbines, solar panels), directly from renewable energy producers through contractual agreements called Power Purchase Agreements (PPA), or in the form of Renewable Energy Credits (REC, IRECs, GoOs) from an energy credit market.
+Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker.
 
-{{</Aside>}}
+## Green Compute
+
+With Green Compute enabled, your Cron Triggers will only run on Cloudflare points of presence that are located in data centers that are powered purely by renewable energy. Organizations may claim that they are powered by 100 percent renewable energy if they have procured sufficient renewable energy to account for their overall energy use.
+
+Renewable energy can be purchased in a number of ways, including through on-site generation (wind turbines, solar panels), directly from renewable energy producers through contractual agreements called Power Purchase Agreements (PPA), or in the form of Renewable Energy Credits (REC, IRECs, GoOs) from an energy credit market.
