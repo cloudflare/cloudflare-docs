@@ -9,5 +9,5 @@
       "SSL/TLS",
       "WAF"
     ],
-    "product_group": ["Application security"]
+    "product_group": "Application security"
 }

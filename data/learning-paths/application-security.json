@@ -10,7 +10,7 @@
       "DDoS protection",
       "Bots"
     ],
-    "product_group": ["Application security"],
+    "product_group": "Application security",
     "elements": [
       {
         "type": "module",

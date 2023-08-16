@@ -7,5 +7,5 @@
     "products": [
       "Workers"
     ],
-    "product_group": ["Developer platform"]
+    "product_group": "Developer platform"
 }

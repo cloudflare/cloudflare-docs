@@ -16,9 +16,14 @@
 {{- $product_array = sort (union $product_array .) -}}
 {{- end -}}
 {{ with .product_group }}
-{{- $product_group_array = sort (union $product_group_array .) -}}
+{{- $product_group_array = $product_group_array | append . -}}
+{{- end -}}
+{{- with .additional_groups -}}
+{{- $product_group_array = union $product_group_array . -}}
 {{- end -}}
 {{- end -}}
+
+{{- $product_group_array = sort (uniq $product_group_array) -}}
 
 <div class="headerInfo">
 <p class="numTrails" id="numTrails">{{$numTrails}} results</p>

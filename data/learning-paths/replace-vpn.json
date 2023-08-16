@@ -9,7 +9,7 @@
       "Cloudflare Tunnel",
       "WARP"
     ],
-    "product_group": ["Cloudflare One"],
+    "product_group": "Cloudflare One",
     "elements": [
       {
         "type": "module",

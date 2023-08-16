@@ -9,7 +9,7 @@
       "Speed",
       "Cache"
     ],
-    "product_group": ["Application performance"],
+    "product_group": "Application performance",
     "elements": [
       {
         "type": "module",

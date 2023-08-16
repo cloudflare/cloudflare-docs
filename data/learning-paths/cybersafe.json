@@ -8,5 +8,6 @@
     "WARP",
     "DNS"
     ],
-  "product_group": ["Application security", "Cloudflare One"]
+  "product_group": "Cloudflare One",
+  "additional_groups": ["Application security"]
 }

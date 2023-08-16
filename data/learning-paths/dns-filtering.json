@@ -7,5 +7,5 @@
         "Cloudflare Gateway",
         "WARP"
       ],
-      "product_group": ["Cloudflare One"]
+      "product_group": "Cloudflare One"
 }
