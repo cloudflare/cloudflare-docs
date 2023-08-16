@@ -173,7 +173,7 @@ end
 
 #### Loopback interfaces
 
-Create two loopback interfaces to bind the bidirectional health check Anycast IPs to the FortiGate firewall. This allows you to specify the respective IP addresses when adding the Firewall Policy and Policy-Based Routing configuration settings.
+Create two loopback interfaces to bind the bidirectional health check Anycast IPs to the FortiGate firewall. This allows you to specify the respective IP addresses when adding the firewall policy and policy-based routing configuration settings.
 
 Add two loopback interfaces one corresponding to each of the two bidirectional health check Anycast IPs (`172.64.240.253` and `172.64.240.254` respectively):
 
