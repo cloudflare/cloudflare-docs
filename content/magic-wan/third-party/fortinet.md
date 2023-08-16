@@ -41,3 +41,5 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
  - **Health check target**: _Custom_.
  - **Target address**: The target address for the first tunnel is always `172.64.240.253`.
  - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](https://developers.cloudflare.com/magic-wan/get-started/configure-tunnels/#add-tunnels) for more information.
+
+ [!](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01.png)
