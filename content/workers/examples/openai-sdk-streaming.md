@@ -4,7 +4,7 @@ summary: Stream.
 tags:
   - AI
 pcx_content_type: configuration
-title: Steam OpenAI API Responses
+title: Stream OpenAI API Responses
 weight: 1001
 layout: example
 ---
