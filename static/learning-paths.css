@@ -302,7 +302,3 @@ label {
     opacity: .7;
     padding-left: 1.5em;
   }
-
-  .moduleCounter.collapsed {
-    opacity: 0;
-  }

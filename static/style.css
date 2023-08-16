@@ -2341,7 +2341,7 @@ html[is-docs-page] body {
 }
 
 @media (min-width: 769px) {
-  .DocsSidebar. {
+  .DocsSidebar.collapsed {
     width: 4.5em;
   }
 
