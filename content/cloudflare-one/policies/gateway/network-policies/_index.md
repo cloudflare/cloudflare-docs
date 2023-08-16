@@ -44,13 +44,15 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 
 API value: `audit_ssh`
 
-Policies with Audit SSH actions allow administrators to log SSH commands matching SSH traffic over port 22. For example, the following configuration logs SSH commands sent to a given IP address:
+Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port 22. For example, the following configuration logs SSH commands sent to a given IP address:
 
 | Selector       | Operator | Value          | Action    |
 | -------------- | -------- | -------------- | --------- |
 | Destination IP | In       | `203.0.113.83` | Audit SSH |
 
 For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
+
+{{<Aside>}}Gateway only detects SSH traffic over port 22. Configuring other ports in your policy will disable SSH auditing.{{</Aside>}}
 
 ### Block
 
