@@ -26,8 +26,6 @@ Enable Workers KV for your account by purchasing the Workers Paid plan:
 
 ## 2. Create a Worker project
 
-You can access KV from a Worker.
-
 To create a Worker, run:
 
 {{<tabs labels="npm | yarn">}}
