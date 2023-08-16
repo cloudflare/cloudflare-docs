@@ -202,9 +202,9 @@ end
 Configure the virtual tunnel interfaces that were automatically added when specifying the `set net-device enable` within the `phase1-interface` settings.
 
 These are the only settings that should need to be added to the virtual tunnel interfaces:
-- **ip**: The local IP address (specify with a `/32` netmask — `255.255.255.255`).
-- **remote-ip**: The value associated with the interface address specified earlier in the Magic IPsec tunnels section (specify with a `/31` netmask — `255.255.255.254`).
-- **alias**: This value is optional.
+- `ip`: The local IP address (specify with a `/32` netmask — `255.255.255.255`).
+- `remote-ip`: The value associated with the interface address specified earlier in the Magic IPsec tunnels section (specify with a `/31` netmask — `255.255.255.254`).
+- `alias`: This value is optional.
 
 The following examples assume `wan1` is the external/egress interface of the FortiGate firewall.
 
