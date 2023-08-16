@@ -14,7 +14,7 @@ layout: example
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const openai = new OpenAI({
-			apiKey: "YOUR API KEY"  // defaults to "OPENAI_API_KEY" environment variable
+			apiKey: env.OPENAI_API_KEY
 		});
 
 		// make our request to the OpenAI API
