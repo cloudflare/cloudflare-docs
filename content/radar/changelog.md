@@ -19,7 +19,8 @@ to start using the new Layer 3 data source by default, fetching the old data sou
 
 ## 2023-01-23
 
-- IPv6 calculation started using only dual-stacked requests as denominator, instead of all requests.
+- IPv6 percentage started to be calculated as (IPv6 requests / requests for dual-stacked content), where as before it
+was calculated as (IPv6 requests / IPv4+IPv6 requests).
 
 ## 2023-01-11
 
