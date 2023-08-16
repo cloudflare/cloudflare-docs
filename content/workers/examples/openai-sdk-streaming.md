@@ -1,6 +1,6 @@
 ---
-type: Use the OpenAI v4 SDK to stream responses from OpenAI
-summary: Stream.
+type: example
+summary: Use the OpenAI v4 SDK to stream responses from OpenAI.
 tags:
   - AI
 pcx_content_type: configuration
