@@ -10,23 +10,24 @@ meta:
 
 You can create a waiting room from the dashboard or via API.
 
-## Create a waiting room from the dashboard
-
 {{<Aside>}}For additional context on creating a waiting room, refer to [Get started](/waiting-room/get-started/).{{</Aside>}}
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 1. Within your application, go to **Traffic** > **Waiting Room**.
 2. Select **Create**.
 3. Customize the [settings](/waiting-room/reference/configuration-settings/) for your waiting room. For additional guidance refer to [Best practices](/waiting-room/reference/best-practices/).
 4. Select **Next**.
 5. If you wish to [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using this waiting room to manage traffic for your mobile app or API, enable the JSON response toggle. Make sure that you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) for your client (mobile or web app).
-6. Select **Next**.
-7. Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room).
-8. Select **Save**. Your new waiting room will be enabled by default.
-
-## Create a waiting room via the API
-
-{{<Aside>}}For additional context on creating a waiting room, refer to [Get started](/waiting-room/get-started/).{{</Aside>}}
-
+6. Select the **Queuing status code** to determine the HTTP status code that is returned when a user is in the waiting room.
+7. Select **Next**.
+8. Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room).
+9. Select **Save**. Your new waiting room will be enabled by default.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 Create a waiting room by appending the following endpoint in the [Waiting Room API](/api/operations/waiting-room-create-waiting-room) to the Cloudflare API base URL.
 
 ```txt
@@ -57,11 +58,10 @@ The following parameters are optional:
 *  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
 *  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](/api/operations/waiting-room-list-waiting-rooms).
 *  `json_response_enabled` - If you are using this waiting room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and set `json_response_enabled` to `true`.
+* `queueing_status_code`: Select the HTTP status code returned to a user while in the queue.  Options are `200`, `202`, and `429`.  If not set, this value will default to `200` (OK).
 * `cookie_suffix`: Customize the suffix of your waiting room cookie. Suffix will be added to `_cfwaitingroom`. This field is required when utilizing `additional_routes`.
 * `additional_routes`: Add additional hostnames and/or paths to your waiting room coverage.
 
-
-## Example
 
 The following example API request configures a waiting room.
 
@@ -81,7 +81,8 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
   "session_duration": 1,
   "disable_session_renewal": false,
   "json_response_enabled": false,
-  "queueing_method": "FIFO",
+  "queueing_method": "fifo",
+  "queueing_status_code": 202,
   "cookie_attributes": {
     "samesite": "auto",
     "secure": "auto"
@@ -120,3 +121,5 @@ The response for the request above is:
   ]
 }
 ```
+{{</tab>}}
+{{</tabs>}}
