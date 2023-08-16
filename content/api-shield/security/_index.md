@@ -25,7 +25,7 @@ The following table provides examples of how you might match Cloudflare products
 | Broken Object Property Level Authorization | [Schema Validation], [JWT Validation] |
 | Unrestricted Resource Consumption | [Rate Limiting], [Sequence Mitigation], [Bot Management], [GraphQL Query Protection] |
 | Broken Function Level Authorization | [Schema Validation], [JWT Validation] |
-| Unrestricted Access to Business Flows | [Sequence Mitigation], [Bot Management], [GraphQL Query Protection] |
+| Unrestricted Access to Sensitive Business Flows | [Sequence Mitigation], [Bot Management], [GraphQL Query Protection] |
 | Server Side Request Forgery | [Schema Validation], [WAF Managed Rules], [WAF Custom Rules](/waf/custom-rules/)
 | Security Misconfiguration | [Sequence Mitigation], [Schema Validation], [WAF Managed Rules], [GraphQL Query Protection]
 | Improper Inventory Management | [Discovery](/api-shield/security/api-discovery/), [Schema Learning](/api-shield/management-and-monitoring/#endpoint-schema-learning) |
