@@ -34,7 +34,7 @@ The following table provides examples of how you might match Cloudflare products
 
 [Schema Validation]: /api-shield/security/schema-validation/
 [Sequence Mitigation]: /api-shield/security/sequence-mitigation/
-[JWT Validation]: /api-shield/security/sequence-analytics/
+[JWT Validation]: /api-shield/security/jwt-validation/
 [GraphQL Query Protection]: /api-shield/security/graphql-protection/
 [Bot Management]: /bots/
 [Rate Limiting]: /waf/rate-limiting-rules/
