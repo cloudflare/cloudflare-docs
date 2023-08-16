@@ -6,5 +6,5 @@
     "products": [
       "Load balancing"
     ],
-    "category": ["Performance", "Reliability"]
+    "product_group": ["Application performance"]
 }

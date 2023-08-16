@@ -10,13 +10,13 @@
 
 {{- $numTrails := len $data -}}
 {{ $product_array := slice }}
-{{ $category_array := slice }}
+{{ $product_group_array := slice }}
 {{- range $data -}}
 {{ with .products }}
 {{- $product_array = sort (union $product_array .) -}}
 {{- end -}}
-{{ with .category }}
-{{- $category_array = sort (union $category_array .) -}}
+{{ with .product_group }}
+{{- $product_group_array = sort (union $product_group_array .) -}}
 {{- end -}}
 {{- end -}}
 
@@ -28,10 +28,10 @@
 <div class="selectorDropdowns">
 
 <div>
-<label for="roles">Category</label>
-<select class="selectorFilter" name="data-category" id="category">
+<label for="product_group">Product group</label>
+<select class="selectorFilter" name="data-product_group" id="product_group">
     <option value="all">Select...</option>
-    {{- range $category_array -}}
+    {{- range $product_group_array -}}
     <option value="{{.}}">{{.}}</option>
     {{- end -}}
 </select>

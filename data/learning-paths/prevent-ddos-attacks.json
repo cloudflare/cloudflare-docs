@@ -9,5 +9,5 @@
       "SSL/TLS",
       "WAF"
     ],
-    "category": ["Security", "Reliability"]
+    "product_group": ["Application security"]
 }

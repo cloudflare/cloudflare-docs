@@ -10,7 +10,7 @@
       "WAF",
       "Cache"
     ],
-    "category": ["Security", "Performance", "Reliability"],
+    "product_group": ["Application security", "Application performance"],
     "elements": [
       {
         "type": "module",

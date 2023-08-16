@@ -9,7 +9,7 @@
       "Cloudflare Tunnel",
       "WARP"
     ],
-    "category": ["Zero Trust"],
+    "product_group": ["Cloudflare One"],
     "elements": [
       {
         "type": "module",

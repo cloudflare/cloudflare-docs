@@ -8,5 +8,5 @@
     "WARP",
     "DNS"
     ],
-  "category": ["Security","Zero Trust"]
+  "product_group": ["Application security", "Cloudflare One"]
 }

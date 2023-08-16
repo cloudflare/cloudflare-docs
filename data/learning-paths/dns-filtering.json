@@ -7,5 +7,5 @@
         "Cloudflare Gateway",
         "WARP"
       ],
-      "category": ["Zero Trust"]
+      "product_group": ["Cloudflare One"]
 }
