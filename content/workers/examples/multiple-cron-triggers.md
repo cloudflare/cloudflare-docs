@@ -77,5 +77,5 @@ Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` 
 ```sh
 $ wrangler dev --test-scheduled
 
-$ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+$ curl "http://localhost:8787/__scheduled?cron=*%2F3+*+*+*+*"
 ```
