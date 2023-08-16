@@ -12,7 +12,7 @@ meta:
 
 ## List messages from the dashboard
 
-Listing messages from the dashboard allows you to debug Queues or Queue producers without a consumer Worker. Fetching a batch of messages to preview will not acknowledge or retry the message or affect its position in the queue. The Queue can still be consumed normally by a consumer Worker.
+Listing messages from the dashboard allows you to debug Queues or queue producers without a consumer Worker. Fetching a batch of messages to preview will not acknowledge or retry the message or affect its position in the queue. The queue can still be consumed normally by a consumer Worker.
 
 To list messages in the dashboard:
 
