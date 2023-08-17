@@ -45,7 +45,7 @@ $ wrangler version
 
 ## Update Wrangler
 
-To update Wrangler only in your current directory containing a `package.json`, run:
+To update the version of Wrangler used in your project, run:
 
 ```sh
 $ npm install wrangler@latest
