@@ -11,9 +11,7 @@ title: Detection IDs
 If you are having an issue with one of our heuristics, detection IDs allow you to decide which heuristics to enforce on your zones using customer configurable heuristics. You can choose unique actions for different bots, detected through Cloudflare’s heuristics engine. You can block, allow, or serve alternate content to specific bots to meet the unique needs of your site’s traffic.
 
 {{<Aside type="note">}}
-
 A request can trigger multiple detection IDs.
-
 {{</Aside>}}
 
 You can use `cf.bot_management.detection_ids` fields in tools such as:
