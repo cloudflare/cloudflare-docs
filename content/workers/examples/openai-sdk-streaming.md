@@ -46,6 +46,6 @@ export default {
 
 {{<Aside type="Note">}}
 
-In order to run this code, you'll need to install the OpenAI SDK by running `npm i openai`.
+In order to run this code, you must install the OpenAI SDK by running `npm i openai`.
 
 {{</Aside>}}
