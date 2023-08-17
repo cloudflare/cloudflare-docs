@@ -19,7 +19,7 @@ The list of related products is representative but not comprehensive.
 | 7 Application layer  | **HTTP, DNS**</br> [Authoritative DNS](/dns), [Bot Management](/bots), [CDN](/cache/), [Cloudflare Access](/cloudflare-one/policies/access/), [Cloudflare Gateway](/cloudflare-one/policies/gateway/) (outbound only), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [Stream](/stream/), [WAF](/waf/) |
 | 6 Presentation layer |                                 |
 | 5 Session layer      |                                 |
-| 4 Transport layer    | **TCP/UDP**</br> [Argo Smart Routing](/argo-smart-routing/), [Cloudflare Gateway](/cloudflare-one/policies/gateway/) (outbound only), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [Spectrum](/spectrum)  |
+| 4 Transport layer    | **TCP/UDP**</br> [Argo Smart Routing](/argo-smart-routing/), [Cloudflare Gateway](/cloudflare-one/policies/gateway/) (outbound only), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [Spectrum](/spectrum/)  |
 | 3 Network layer  | **IP, GRE, any packet/protocol**</br> [Magic Firewall](/magic-firewall), [Magic Transit](/magic-transit), [Magic WAN](/magic-wan) |
 | 2 Datalink layer     | **Direct connection**</br> [Cloudflare Network Interconnect (CNI)](/network-interconnect) |
 | 1 Physical layer     | **Direct connection**</br> [Cloudflare Network Interconnect (CNI)](/network-interconnect) |
