@@ -8,7 +8,7 @@ weight: 5
 
 {{<Aside type="note" header="Traffic handling">}}
 
-When the old replica is stopped, it will drop long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH). UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
+When the old replica is stopped, it will drop long-lived HTTP requests (for example, WebSocket) and TCP connections (for example, SSH). UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
 
 {{</Aside>}}
 
@@ -18,7 +18,7 @@ The infrastructure side is powered by Cloudflare Tunnel, which connects your inf
 
 On the client side, your end users need to be able to easily connect to Cloudflare and, more importantly, your network. This connection is handled by Cloudflare WARP. This client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling and it establishes a secure connection from your users’ devices to the Cloudflare network.
 
-![Diagram displaying connections between a device, Wireguard tunnel, Cloudflare Tunnel and a public cloud.](/images/cloudflare-one/connections/private-ips-diagram.png)
+![Diagram displaying connections between a device, WireGuard tunnel, Cloudflare Tunnel and a public cloud.](/images/cloudflare-one/connections/private-ips-diagram.png)
 
 Follow the steps below to define your internal DNS resolver with Cloudflare Zero Trust and to resolve requests to your private network using Cloudflare Tunnel.
 
