@@ -11,15 +11,15 @@ In this guide, you will create a new Qwik application implemented via [Qwik City
 
 ## Creating a new project
 
-The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Qwik's official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to create a new project. C3 will create a new project directory, initiate Qwik's official setup tool, and provide the option to deploy instantly.
 
-To use create-cloudflare to create a new Qwik project, run the following command:
+To use `create-cloudflare` to create a new Qwik project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-qwik-app -- --framework=qwik
 ```
 
-Create-cloudflare will install additional dependencies including the Wrangler CLI and any necessary adapters, and ask a few more setup questions.
+`create-cloudflare` will install additional dependencies, including the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version) and any necessary adapters, and ask you setup questions.
 
 As part of the `cloudflare-pages` adapter installation, a `functions/[[path]].ts` file will be created. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
 

@@ -13,9 +13,9 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 ## Setting up a new project
 
-The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Astro's official setup tool, and provide the option to deploy instantly.
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@astrojs/cloudflare` adapter, and ask you setup questions.
 
-To use create-cloudflare to create a new Astro project, run the following command:
+To use `create-cloudflare` to create a new Astro project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-astro-app -- --framework=astro
@@ -25,9 +25,9 @@ Astro will ask:
 
 1. Which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
 
-2. If you want to set initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#create-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
+2. If you want to initialize a Git repository. We recommend you to select `No` and follow this guide's [Git instructions](/pages/framework-guides/deploy-an-astro-site/#create-a-github-repository) below. If you select `Yes`, do not follow the below Git instructions precisely but adjust them to your needs.
 
-Create-cloudflare will then install dependencies including the Wrangler CLI and the `@astrojs/cloudflare` adapter, and ask a few more setup questions.
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@sveltejs/adapter-cloudflare` adapter, and ask you setup questions.
 
 ### Astro configuration
 

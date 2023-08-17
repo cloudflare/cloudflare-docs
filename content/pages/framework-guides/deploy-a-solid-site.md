@@ -17,9 +17,9 @@ At the time of writing SolidStart is in beta, this may make the following guide 
 
 ## Create a new project
 
-The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Solid's official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Solid's official setup tool, and provide the option to deploy instantly.
 
-To use create-cloudflare to create a new Solid project, run the following command:
+To use `create-cloudflare` to create a new Solid project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-solid-app -- --framework=solid
@@ -27,7 +27,7 @@ $ npm create cloudflare@latest my-solid-app -- --framework=solid
 
 You will be prompted to select a starter. Choose any of the available options. You will then be asked if you want to enable Server Side Rendering. Reply `yes`. Finally, you will be asked if you want to use TypeScript, choose either `yes` or `no`.
 
-Create-cloudflare will then install dependencies including the Wrangler CLI and the SolidStart Cloudflare Pages adapter, and ask a few more setup questions.
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the SolidStart Cloudflare Pages adapter, and ask you setup questions.
 
 After you have installed your project dependencies, start your application:
 

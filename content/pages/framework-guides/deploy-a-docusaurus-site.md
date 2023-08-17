@@ -11,13 +11,13 @@ title: Deploy a Docusaurus site
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up your project. C3 will create a new project directory, initiate Docusaurus' official setup tool, and provide the option to deploy instantly.
 
-To use create-cloudflare to create a new Docusaurus project, run the following command:
+To use `create-cloudflare` to create a new Docusaurus project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-docusaurus-app -- --framework=docusaurus
 ```
 
-Create-cloudflare will install additional dependencies including the Wrangler CLI and any necessary adapters, and ask a few more setup questions.
+`create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
 
 {{<render file="_tutorials-before-you-start.md">}}
 

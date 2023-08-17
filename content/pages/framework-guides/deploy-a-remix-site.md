@@ -11,15 +11,15 @@ In this guide, you will create a new Remix application and deploy to Cloudflare 
 
 ## Setting up a new project
 
-The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Remix's official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Remix's official setup tool, and provide the option to deploy instantly.
 
-To use create-cloudflare to create a new Remix project, run the following command:
+To use `create-cloudflare` to create a new Remix project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-remix-app -- --framework=remix
 ```
 
-Create-cloudflare will install additional dependencies including the Wrangler CLI and any necessary adapters, and ask a few more setup questions.
+`create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
 
 {{<Aside type="warning" header="Before you deploy">}}
 Your Remix Project will generate a `functions/[[path]].js` file the first time you run `remix dev` or `remix build`. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.

@@ -12,7 +12,8 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 
 ## Setting up a new project
 
-The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
+To use `create-cloudflare` to create a new Svelte project, run the following command:
 
 To use create-cloudflare to create a new Svelte project, run the following command:
 
@@ -20,9 +21,9 @@ To use create-cloudflare to create a new Svelte project, run the following comma
 $ npm create cloudflare@latest my-svelte-app -- --framework=svelte
 ```
 
-SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this tutorial. Choose the options that better suit your project.
+SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this guide. Choose the options that suit your project.
 
-Create-cloudflare will then install dependencies including the Wrangler CLI and the `@sveltejs/adapter-cloudflare` adapter, and ask a few more setup questions.
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@sveltejs/adapter-cloudflare` adapter, and ask you setup questions.
 
 After you have installed your project dependencies, start your application:
 

@@ -30,7 +30,7 @@ If you already have a Next.js project that you wish to deploy, change to its dir
 $ npm create cloudflare@latest my-next-app -- --framework=next
 ```
 
-Create-cloudflare will install additional dependencies including the Wrangler CLI and the `@cloudflare/next-on-pages` adapter, and ask a few more setup questions.
+`create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter, and ask you setup questions.
 
 After creating your project, a new `my-next-app` directory will be generated using the official default template. Change to this directory to continue.
 
@@ -46,7 +46,7 @@ If you created your project using `create-cloudflare`, you can skip this step.
 
 {{</Aside>}}
 
-The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (e.g. API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
+The default template uses traditional Node.js-powered routes that are not supported on Cloudflare Pages. To run your application, you need to opt into the Edge Runtime for any routes that have server-side functionality (for example, API routes or pages that use `getServerSideProps`). To do this, you need to export a `runtime` [route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#runtime) option from each route's file.
 
 ```js
 export const runtime = 'edge';
