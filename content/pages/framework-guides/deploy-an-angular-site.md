@@ -11,15 +11,16 @@ In this guide, you will create a new Angular application and deploy it using Clo
 
 ## Setting up a new project
 
-The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, scaffold a new Angular project, and provide the option to deploy instantly.
+se the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Angular's official setup tool, and provide the option to deploy instantly.
+To use `create-cloudflare` to create a new Angular project, run the following command:
 
-To use create-cloudflare to create a new Angular project, run the following command:
+To use `create-cloudflare` to create a new Angular project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-angular-app -- --framework=angular
 ```
 
-Create-cloudflare will install dependencies including the Wrangler CLI and the Cloudflare Pages adapter, and ask a few more setup questions.
+`create-cloudflare` will install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the Cloudflare Pages adapter, and ask you setup questions.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
