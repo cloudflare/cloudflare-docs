@@ -30,9 +30,7 @@ Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-va
 | `credentials` | This describes the cryptographic public keys that should be used to validate JWTs. This field must be a JSON web key. | See example below. | See note below. |
 
 {{<Aside type="note">}}
-
 For `credentials`, we support `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them. We allow up to 4 different keys in order to aid in key rollover.
-
 {{</Aside>}}
 
 ## Create a Token Validation Configuration JSON object
@@ -119,11 +117,9 @@ It is best practice to rotate keys after some time. To support updating the keys
 The input to updating the keys is the same as when creating a configuration where you supplied the initial keys using the credentials key and needs to be a JWK. 
 
 {{<Aside type="note">}} 
-
 Cloudflare will remove any fields that are unnecessary from each key and will drop keys that we do not support. 
 
 It is highly recommended to validate the output of the API call to check that the resulting keys appear as intended.
-
 {{</Aside>}}
 
 Use the `PUT` command to update keys. 
@@ -165,9 +161,7 @@ You may want to first log requests that fail the policy in the firewall and only
 Use `PATCH` to update other configuration parameters. 
 
 {{<Aside type="note">}} 
-
 You can only modify the following fields with `PATCH`: `title`, `description`, `action`, `enabled`, and `allow_absent_token`. Use `PUT` to modify JWK material. 
-
 {{</Aside>}}
 
 ```bash
@@ -205,20 +199,20 @@ Here is an overview of how JWT Validation processes incoming requests:
 2. We decode the JWT and look for the JWTs header KID claim.
 3. We use the KID and ALG claim to find the correct keys in the list of supplied keys. 
 
-  {{<Aside type="Note">}}
+  {{<Aside type="note">}}
   The absence of matching keys directly marks the JWT as invalid.
   {{</Aside>}}
 
 4. We validate the authenticity of the JWT by checking the signature using the selected key.
 5. Should the JWT contain an EXP claim (expiration time), we validate that the JWT is not expired. 
 
-  {{<Aside type="Note">}} 
+  {{<Aside type="note">}} 
   We allow a mismatch of up to 60 seconds to account for clock drifts between the Cloudflare network and the JWT issuer. A token may still be regarded as valid one minute after it was supposed to expire when both clocks are perfectly in sync.
   {{</Aside>}}
 
 6. Should the JWT contain a NBF claim (not before time), we validate that the JWT is already valid. 
 
-  {{<Aside type="Note">}} 
+  {{<Aside type="note">}} 
   The same accuracy applies as for EXP claims.  As such, a token may be already regarded as valid one minute before its NBF claim in case of perfect synchronization between issuer and validator.
   {{</Aside>}}
 

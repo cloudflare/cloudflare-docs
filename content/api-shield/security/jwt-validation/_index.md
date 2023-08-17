@@ -24,7 +24,5 @@ We intend to remove these limitations in the near future.
 4. JWT Validation only operates for endpoints (host, method, and path) added to [Endpoint Management](/api-shield/management-and-monitoring/). 
 
 {{<Aside type="note">}}
-
 Refer to [configuring JWT Validation](/api-shield/security/jwt-validation/configure/) for more specific limitations around JWT claim support and supported encryption algorithms.
-
 {{</Aside>}}
