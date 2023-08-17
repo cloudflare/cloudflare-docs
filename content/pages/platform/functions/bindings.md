@@ -194,9 +194,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 While developing locally, interact with a D1 database by adding `--d1=<BINDING_NAME>` to your run command.
 
 {{<Aside type="note">}}
-By default, data in local development is not persisted. This means if you create a schema and/or insert data into a D1 table, the next time you start local development, it will no longer exist.
-
-You can enable persistence with the `--persist` flag.
+By default, `wrangler dev` automatically persists data.
 {{</Aside>}}
 
 Specifically:
@@ -502,4 +500,4 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-Please refer to the [Constellation](/constellation/) developers documentation for more information and other [code examples](/constellation/get-started/).
+Refer to the [Constellation](/constellation/) documentation for more information.
