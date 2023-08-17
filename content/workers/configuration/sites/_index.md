@@ -16,7 +16,7 @@ To deploy with Workers Sites, select from one of these three approaches dependin
 
 ## 1. Start from scratch
 
-If you are ready to start a brand new project, this quick start guide will help you set up the infrastructure to deploy a simple HTML website to Workers.
+If you are ready to start a brand new project, this quick start guide will help you set up the infrastructure to deploy a HTML website to Workers.
 
 <p>{{<button type="primary" href="/workers/configuration/sites/start-from-scratch/">}}Start from scratch{{</button>}}</p>
 
