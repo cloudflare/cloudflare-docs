@@ -6,9 +6,7 @@ weight: 3
 
 # Add static assets to an existing Workers project
 
-{{<Aside type="note" header="Cloudflare Pages">}}
-Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
-{{</Aside>}}
+{{<render file="_workers_sites.md">}}
 
 Workers Sites require [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) — make sure to use the [latest version](/workers/wrangler/install-and-update/#update-wrangler).
 
