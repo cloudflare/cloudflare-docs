@@ -4,6 +4,8 @@
 # More dev-specific files
 /.github/ @kodster28 @pedrosousa @haleycode @codewithkristian
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
+/.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
+/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
 /components/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
 /functions/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
 *.js @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
