@@ -107,6 +107,11 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Add metadata for reporting -->
+  {{- if or (ne .Context.Params.layout "home") (eq .Context.Params.pcx_content_type "learning-path") -}}
+  {{- $product := replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
+  <meta name="pcx_product" content="{{- $product -}}">
+  {{- end -}}
+
   <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
   {{- $lastMod := $.Context.Lastmod.Format "2006-01-02"  | time -}}
   {{- $diffMod := now.Sub $lastMod -}}
