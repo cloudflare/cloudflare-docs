@@ -83,11 +83,17 @@ $ cat /etc/ssh/sshd_config
 
 Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Cloudflare Zero Trust will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
 
+Users must specify their desired username to connect with as part of the SSH command:
+
+```sh
+$ ssh <username>@<hostname>
+```
+
 {{<Aside type="note">}}
 If the target resource is already in a user’s `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
 
 ```sh
-$ ssh-keygen -R <targetIP or Hostname>
+$ ssh-keygen -R <targetIP or hostname>
 ```
 
 {{</Aside>}}
