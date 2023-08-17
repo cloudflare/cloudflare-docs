@@ -76,11 +76,3 @@ To delete a secret from your Worker project via the dashboard:
 6. Select **Save and deploy**.
 
 {{<render file="_env_and_secrets.md">}}
-
-
-
-
-
-
-
-
