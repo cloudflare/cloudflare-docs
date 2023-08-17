@@ -52,4 +52,4 @@ For a list of documented Cloudflare request headers, refer to [HTTP request head
 
 ## Related resources
 
-* [Console-logging headers](/workers/examples/logging-headers/#console-logging-headers) - Review how to log headers in the console.
+* [Logging headers to console](/workers/examples/logging-headers/) - Review how to log headers in the console.

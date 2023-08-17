@@ -56,7 +56,7 @@ Use the `spread` operator if you need to quickly stringify a `Headers` object:
 let requestHeaders = JSON.stringify([...request.headers]);
 ```
 
-Or use ES2019 `Object.fromEntries` to convert it to an object:
+Use `Object.fromEntries` to convert the headers to an object:
 
 ```js
 let requestHeaders = Object.fromEntries(request.headers);
