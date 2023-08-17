@@ -12,9 +12,9 @@ Some browsers might already have this setting enabled.
 ## Mozilla Firefox
 
 1. Select the menu button > **Settings**.
-2. In the **General** menu, scroll down to access **Network Settings**.
-3. Select **Settings**.
-4. Select **Enable DNS over HTTPS**. By default, it resolves to Cloudflare DNS.
+2. Select **Privacy & Security**, and scroll down to **DNS over HTTPS**.
+3. Default DNS-over-HTTPS is activated.
+4. Select **Increased Protection** or **Maximum Protection** to choose Cloudflare DNS, which is the default for these options.
 
 ## Google Chrome
 
