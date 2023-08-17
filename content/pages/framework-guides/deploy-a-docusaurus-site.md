@@ -9,7 +9,7 @@ title: Deploy a Docusaurus site
 
 ## Set up a new project
 
-The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Docusaurus' official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up your project. C3 will create a new project directory, initiate Docusaurus' official setup tool, and provide the option to deploy instantly.
 
 To use create-cloudflare to create a new Docusaurus project, run the following command:
 
