@@ -52,7 +52,7 @@ Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway
 
 For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
 
-{{<Aside>}}Gateway only detects SSH traffic over port 22. Configuring other destination ports in your policy will disable SSH auditing.{{</Aside>}}
+{{<Aside>}}Gateway only audits SSH traffic over port 22. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.{{</Aside>}}
 
 ### Block
 
