@@ -24,7 +24,7 @@ By default, TCP connection attempts will timeout after 30 seconds and idle conne
 
 The UDP proxy forwards traffic to internal DNS resolvers. This allows Gateway to inspect all port 443 UDP traffic.
 
-When the UDP proxy is enabled, Gateway will force all HTTP/3 traffic to HTTP/2 to allow inspection. Otherwise, HTTP/3 traffic will bypass inspection. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/gateway/http-policies/http3/).
+When the UDP proxy is enabled, Gateway will force all HTTP/3 traffic to HTTP/2 to allow inspection. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/gateway/http-policies/http3/).
 
 {{<beta heading="h3">}}ICMP{{</beta>}}
 
