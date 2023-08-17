@@ -7,6 +7,6 @@ _build:
 
 {{<Aside type="note">}}
 
-Due to Google Chromecast limitations, Chromecast does not support audio and video delivered separately. To avoid potential issues with playback, we recommend using DASH, instead of HLS, which is a Chromecast supported usecase.
+Due to Google Chromecast limitations, Chromecast does not support audio and video delivered separately. To avoid potential issues with playback, we recommend using DASH, instead of HLS, which is a Chromecast supported use case.
 
 {{</Aside>}}
