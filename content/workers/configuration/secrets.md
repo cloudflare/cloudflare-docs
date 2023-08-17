@@ -72,7 +72,7 @@ To delete a secret from your Worker project via the dashboard:
 2. Select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings**.
 4. Under **Environment Variables**, select **Edit variables**.
-5. Select `X` next to the secret you want to delete.
+5. Select **X** next to the secret you want to delete.
 6. Select **Save and deploy**.
 
 {{<render file="_env_and_secrets.md">}}
