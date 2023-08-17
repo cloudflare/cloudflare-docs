@@ -55,6 +55,9 @@ If you are using [dynamic routes](https://www.gatsbyjs.com/docs/reference/functi
 If you have a dynamic route, such as `/users/[id]`, create your proxy redirect by referring to the following example:
 
 ```
+---
+filename: _redirects
+---
 /users/* /users/[id] 200
 ```
 
