@@ -45,7 +45,7 @@ kv_namespaces = [
 The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
 There is a default (top-level) environment and named environments that provide environment-specific configuration.
 
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `wrangler deploy --env staging`.
+These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `npx wrangler deploy --env staging`.
 
 The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 

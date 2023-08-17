@@ -249,7 +249,7 @@ $ wrangler d1 execute <DATABASE_NAME> --command='SELECT * FROM Customers'
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 # Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
 ```
 

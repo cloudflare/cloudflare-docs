@@ -301,7 +301,7 @@ const landing = `
 
 With all the above steps complete, you have written the code for a QR code generator on Cloudflare Workers.
 
-Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler deploy`, which will build and deploy your code.
+Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `npx wrangler deploy`, which will build and deploy your code.
 
 ```sh
 ---
