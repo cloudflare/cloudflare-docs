@@ -14,7 +14,9 @@ For official instructions on installing Terraform, refer to [Install Terraform](
 
 {{<Aside type="warning">}} 
 
-Terraform maintains your configuration state, this can be broken when configuration changes are made through both Terraform and directly via either the Cloudflare Dashboard or API.  If you are using Terraform, it is recommended that changes are no longer make to zones manually via the Cloudflare Dashboard or Cloudflare API and to use only Terraform to maintain the zone's configuration. This will avoid issues with consistency.
+Terraform maintains your configuration state, which can be broken when you make configuration changes through both Terraform and either the Cloudflare Dashboard or API.  
+
+To avoid this state, make sure you manage Terraform resources only in Terraform. For more details, refer to our [best practices](/terraform/advanced-topics/best-practices/).
 
 {{</Aside>}}
 
