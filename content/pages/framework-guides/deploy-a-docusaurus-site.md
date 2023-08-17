@@ -7,7 +7,7 @@ title: Deploy a Docusaurus site
 
 [Docusaurus](https://docusaurus.io) is a static site generator. It builds a single-page application with fast client-side navigation, leveraging the full power of React to make your site interactive. It provides out-of-the-box documentation features but can be used to create any kind of site such as a personal website, a product site, a blog, or marketing landing pages.
 
-## Setting up a new project
+## Set up a new project
 
 The quickest way to get started is to use the create-cloudflare CLI (c3) tool. This will create a new project directory, initiate Docusaurus' official setup tool, and provide the option to deploy instantly.
 
