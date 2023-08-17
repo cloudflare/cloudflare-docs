@@ -53,14 +53,27 @@ To add a secret via the dashboard:
 
 ## Delete secrets from your project
 
-To delete a secret from your project, run the [`wrangler secret delete` command](/workers/wrangler/commands/#delete-7):
+### Via Wrangler
+
+To delete a secret from your Worker project, run the [`wrangler secret delete` command](/workers/wrangler/commands/#delete-7):
 
 ```sh
 ---
 filename: wrangler secret delete
 ---
-$ wrangler secret delete <KEY> 
+$ wrangler secret delete <KEY>
 ```
+
+### Via the dashboard
+
+To delete a secret from your Worker project via the dashboard:
+
+1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Settings**.
+4. Under **Environment Variables**, select **Edit variables**.
+5. Select `X` next to the secret you want to delete.
+6. Select **Save and deploy**.
 
 {{<render file="_env_and_secrets.md">}}
 
