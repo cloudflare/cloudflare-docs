@@ -500,4 +500,4 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-Please refer to the [Constellation](/constellation/) developers documentation for more information and other [code examples](/constellation/get-started/).
+Refer to the [Constellation](/constellation/) documentation for more information.
