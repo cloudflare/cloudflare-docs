@@ -23,7 +23,7 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 
 ## File download size
 
-When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. The total size of files downloaded per session is therefore limited by the amount of memory available to the remote browser. Best practice is to limit individual files to 512MB.
+When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total download limit per session depends on the amount of memory available to the remote browser. We recommend a maximum individual file size of 512MB.
 
 ## Multifactor authentication
 
