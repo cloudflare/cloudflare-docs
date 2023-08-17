@@ -118,7 +118,7 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 The recommended way of testing Cron Triggers is using Wrangler. 
 
-{{<Aside type="note" header="Cron Trigger changes take time to propagate">}}
+{{<Aside type="note" header="Cron Trigger changes take time to propagate.">}}
 
 Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
 
@@ -144,6 +144,20 @@ It can take up to 30 minutes before events are displayed in **Past Events** when
 
 Refer to [Metrics and Analytics](/workers/observability/metrics-and-analytics/) for more information.
 
+## Remove a Cron Trigger
+
+### Via the dashboard
+
+To delete a Cron Trigger on a deployed Worker via the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers & Pages**, and select your Worker.
+3. Go to **Triggers** > select the three dot icon next to the Cron Trigger you want to remove > **Delete**.
+
+### Via `wrangler.toml`
+
+To disable a Cron Trigger on a deployed Worker, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
+
 ## Limits
 
 Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron Triggers per Worker.
@@ -153,3 +167,7 @@ Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron
 With Green Compute enabled, your Cron Triggers will only run on Cloudflare points of presence that are located in data centers that are powered purely by renewable energy. Organizations may claim that they are powered by 100 percent renewable energy if they have procured sufficient renewable energy to account for their overall energy use.
 
 Renewable energy can be purchased in a number of ways, including through on-site generation (wind turbines, solar panels), directly from renewable energy producers through contractual agreements called Power Purchase Agreements (PPA), or in the form of Renewable Energy Credits (REC, IRECs, GoOs) from an energy credit market.
+
+## Related resources
+
+* [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
