@@ -113,6 +113,7 @@ html {
     margin-top: 3em;
     display: flex;
     flex-direction: column;
+    counter-reset: stepCounter;
 }
 
 .learningPathModule:first-of-type {
@@ -301,4 +302,18 @@ label {
   .moduleCounter {
     opacity: .7;
     padding-left: 1.5em;
+  }
+
+  .stepCounter {
+    padding-right: .35em;
+    padding-left: .35em;
+    margin-right: .5em;
+    border: 2px solid var(--orange-5);
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  
+  .stepCounter::before {
+    content: counter(stepCounter);
+    counter-increment: stepCounter;
   }
