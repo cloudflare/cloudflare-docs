@@ -30,9 +30,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Enable UDP support
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-1.  Scroll down to Firewall settings.
-1.  Ensure the Proxy is enabled and both TCP and UDP are selected.
+To enable UDP support, [enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP and UDP.
 
 ## Create a Local Domain Fallback entry
 
@@ -82,7 +80,7 @@ Use the following troubleshooting strategies if you are running into issues whil
 
 - Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
 
-- Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
+- Ensure that end-user devices are enrolled into WARP by visiting <https://help.teams.cloudflare.com>
 
 - Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
 
