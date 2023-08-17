@@ -22,7 +22,7 @@ By default, TCP connection attempts will timeout after 30 seconds and idle conne
 
 ### UDP
 
-The UDP proxy forwards traffic to internal DNS resolvers. This allows Gateway to inspect all port 443 UDP traffic.
+The UDP proxy forwards UDP traffic such as VoIP, [internal DNS requests](/cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/), and thick client applications.
 
 When the UDP proxy is enabled, Gateway will force all HTTP/3 traffic to HTTP/2 to allow inspection. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/gateway/http-policies/http3/).
 
@@ -37,5 +37,3 @@ The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `tracero
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy** for TCP.
 3. (Optional) Depending on your use case, you can enable **UDP** and/or **ICMP**.
-
-If you want to inspect HTTP traffic, we recommend you enable [**TLS decryption**](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to include HTTPS traffic.
