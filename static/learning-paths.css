@@ -208,6 +208,11 @@ html {
 [theme=dark] .viewOtherPaths a {
     color: #ff9e40;
 }
+
+.pathDetails {
+    margin-top: 0 !important;
+}
+
 .pathDetails div {
     border: none !important;
     padding-left: .5em !important;
