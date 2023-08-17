@@ -89,9 +89,9 @@ async function handleEvent(event) {
 
    For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
 
-5.  Run `wrangler dev` or `wrangler deploy` as you would normally with your Worker project.
+5.  Run `wrangler dev` or `npx wrangler deploy` as you would normally with your Worker project.
     Wrangler will automatically upload the assets found in the configured directory.
 
     ```sh
-    $ wrangler deploy
+    $ npx wrangler deploy
     ```

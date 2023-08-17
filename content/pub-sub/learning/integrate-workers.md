@@ -202,7 +202,7 @@ const worker = {
 export default worker;
 ```
 
-Once you have deployed your Worker using `wrangler deploy`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
+Once you have deployed your Worker using `npx wrangler deploy`, you will need to configure your Broker to invoke the Worker. This is done by setting the `--on-publish-url` value of your Broker to the _publicly accessible_ URL of your Worker:
 
 ```sh
 $ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --on-publish-url="https://your.worker.workers.dev"

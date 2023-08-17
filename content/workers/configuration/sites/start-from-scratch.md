@@ -29,7 +29,7 @@ This guide shows how to quickly start a new Workers Sites project from scratch.
 4.  Deploy your site to Cloudflare:
 
     ```sh
-    $ wrangler deploy
+    $ npx wrangler deploy
     ```
 
 ## Project layout
