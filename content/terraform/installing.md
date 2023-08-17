@@ -12,6 +12,12 @@ Terraform ships as a single binary file. The examples below include installation
 
 For official instructions on installing Terraform, refer to [Install Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
 
+{{<Aside type="warning">}} 
+
+Terraform maintains your configuration state, this can be broken when configuration changes are made through both Terraform and directly via either the Cloudflare Dashboard or API.  If you are using Terraform, it is recommended that changes are no longer make to zones manually via the Cloudflare Dashboard or Cloudflare API and to use only Terraform to maintain the zone's configuration. This will avoid issues with consistency.
+
+{{</Aside>}}
+
 ## Mac
 
 The easiest way to install Terraform on macOS is with Homebrew.
