@@ -1,5 +1,8 @@
 {
     "recommendations": [
-        "mhutchie.git-graph"
+        "mhutchie.git-graph",
+        "imbhargav5.npm-ui",
+        "github.copilot",
+        "yalehuang.chatgpt-ai"
     ]
 }
