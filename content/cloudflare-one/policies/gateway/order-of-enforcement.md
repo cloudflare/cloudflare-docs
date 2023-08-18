@@ -8,6 +8,28 @@ weight: 11
 
 With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies/gateway/initial-setup/) any combination of DNS, network, and HTTP policies.
 
+```mermaid
+flowchart TB
+    start[/"Request"/]-->a1
+    subgraph DNS
+    a1["DNS policy #1"]-->a2["DNS policy #2"]
+    end
+    a2-->b1
+    subgraph Proxy
+    subgraph HTTP
+    b1{{"Do Not Inspect"}}
+    b1-.->b2["Isolate"]
+    b2-->b3["Allow, Block, Do Not Scan"]
+    end
+    subgraph Network
+    b3-->c1["Network policy #1"]
+    b1-->c1
+    c1-->c2["Network policy #2"]
+    end
+    end
+    c2-->finish(Internet)
+```
+
 ## Priority between policy builders
 
 Gateway applies your policies in the following order:
