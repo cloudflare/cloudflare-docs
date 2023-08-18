@@ -1,17 +1,36 @@
 {{- $changelogData := index .Site.Data "changelogs" -}}
 {{- $changelogRendered := slice -}}
+{{- $products := slice -}}
 
 {{- range $index, $product := $changelogData -}}
-
+{{- $products = $products | append $product.productName -}}
 {{- range $index2, $item := $product.entries -}}
-
 {{- $changelogRendered = $changelogRendered | append (merge $item (dict "product" $product.productName)) -}}
-
+{{- end -}}
 {{- end -}}
 
-{{- end -}}
-
+<!-- Order and remove dupe values -->
 {{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}}
+{{- $products = $products | uniq -}}
+
+<div class="selectorDropdowns">
+
+    <div>
+    <label for="product">Product</label>
+    <select class="selectorFilter" name="data-product" id="product">
+        <option value="all">Select...</option>
+        {{- range $products -}}
+        <option value="{{ . | lower }}">{{.}}</option>
+        {{- end -}}
+    </select>
+    </div>
+    <div class="searchInput">
+        <label for="searchInput">Text search</label>
+        <input type="text" id="searchInput" placeholder="Search...">
+    </div>
+</div>
+
+
 
 <div class="DocsMarkdown--table-wrap">
     <div class="DocsMarkdown--table-wrap-inner">
@@ -32,9 +51,9 @@
             </td>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tableBody">
 {{- range $changelogRendered -}}
-<tr>
+<tr class="data-row" data-product="{{.product | lower}}">
     <td>{{ .product }}</td>
     <td>{{ .title }}</td>
     <td>{{ .publish_date }}</td>
@@ -45,3 +64,53 @@
 </table>
 </div>
 </div>
+
+<script>
+    const productsDropdown = document.getElementById("product");
+    const searchInput = document.getElementById("searchInput");
+    const dataRows = document.querySelectorAll(".data-row");
+
+    // Function to update URL parameters
+    function updateURLParams() {
+      const params = new URLSearchParams();
+      if (productsDropdown.value !== "all") {
+        params.set("product", productsDropdown.value);
+      }
+      history.replaceState(null, "", "?" + params.toString());
+    }
+  
+    // Function to filter and show/hide rows
+    function updateTable() {
+      updateURLParams();
+  
+      dataRows.forEach(row => {
+        const productMatch = productsDropdown.value === "all" ||
+                             row.getAttribute("data-product").toLowerCase() === productsDropdown.value.toLowerCase();
+        const searchMatch = searchInput.value.trim() === "" ||
+                           Array.from(row.children).some(cell => cell.textContent.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
+        if (productMatch && searchMatch) {
+          row.style.display = "table-row";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+  
+    // Set initial values from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const productFilter = urlParams.get("product");
+    if (productFilter) {
+      for (const option of productsDropdown) {
+        if (option.value === productFilter.toLowerCase()) {
+            productsDropdown.value = productFilter.toLowerCase();
+        }
+      }
+    }
+  
+    // Initial table update
+    updateTable();
+  
+    // Event listeners
+    productsDropdown.addEventListener("change", updateTable);
+    searchInput.addEventListener("input", updateTable);
+  </script>
