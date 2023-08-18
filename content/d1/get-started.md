@@ -60,6 +60,14 @@ For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --g
 
 ## 2. Create a database
 
+{{<Aside type="note" heading="New, faster storage sub-system">}}
+
+D1 has [a new storage sub-system](/d1/changelog/#new-default-storage-subsystem) that dramatically improves query throughput, latency and reliability. This backend is now the default since `wrangler` version `3.4.0`, and is up to 20x faster than the previous alpha backend.
+
+When using a version of `wrangler` prior to `3.4.0`, you will need to pass the `--experimental-backend` flag to `wrangler d1 create` to create a database on this backend.
+
+{{</Aside>}}
+
 A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familiar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
 
 To create your first D1 database, change into the directory you just created for your Workers project:
@@ -86,22 +94,6 @@ database_id = "<unique-ID-for-your-database>"
 ```
 
 This will create a new D1 database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
-
-{{<Aside type="note" heading="New experimental back-end">}}
-
-D1 has a new experimental storage back-end that dramatically improves query throughput, latency and reliability. The experimental back-end will become the default back-end for all new D1 databases in the near future.
-
-To create a database using the experimental back-end, use `wrangler` and set the `--experimental-backend` flag when creating a database: 
-
-```sh
-$ wrangler d1 create <DATABASE_NAME> --experimental-backend
-```
-
-Databases created with the experimental back-end do not currently support back-ups. Support for back-ups is coming soon. 
-
-Refer to the [announcement blog](https://blog.cloudflare.com/d1-turning-it-up-to-11/) to learn more about experimental back-end.
-
-{{</Aside>}}
 
 ## 3. Bind your Worker to your D1 database
 
