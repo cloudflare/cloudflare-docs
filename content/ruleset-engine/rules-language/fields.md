@@ -791,6 +791,8 @@ The Cloudflare Rules language supports these dynamic fields:
 
 ## Magic Firewall Fields
 
+{{<Aside type="note">}}Some Magic Firewall fields are available only to customers who purchased Magic Firewall's advanced features. Refer to [Magic Firewall plans](/magic-firewall/plans/) for more information.{{</Aside>}}
+
 <table>
   <thead>
    <tr>
