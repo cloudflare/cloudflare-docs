@@ -10,23 +10,34 @@ With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies
 
 ```mermaid
 flowchart TB
+    %% In with user request
     start[/"Request"/]-->a1
+
+    %% DNS policies
     subgraph DNS
     a1["DNS policy #1"]-->a2["DNS policy #2"]
     end
     a2-->b1
+
+    %% Proxied by Gateway
     subgraph Proxy
+
+    %% HTTP policies
     subgraph HTTP
     b1{{"Do Not Inspect"}}
     b1-.->b2["Isolate"]
     b2-->b3["Allow, Block, Do Not Scan"]
     end
+
+    %% Network policies
     subgraph Network
     b3-->c1["Network policy #1"]
     b1-->c1
     c1-->c2["Network policy #2"]
     end
     end
+
+    %% Out to Internet
     c2-->finish(Internet)
 ```
 
