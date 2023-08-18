@@ -5822,3 +5822,13 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   display: inline;
   margin: 0 10px 0 0;
 }
+
+.DocsMarkdown--link-api-icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    margin-left: 4px;
+  }

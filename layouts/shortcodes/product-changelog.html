@@ -1,6 +1,6 @@
 {{- $product := .Get "product" -}}
 {{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
-{{- $changelogData = sort $changelogData "date" "desc" -}}
+{{- $changelogData = sort $changelogData "publish_date" "desc" -}}
 {{- $changelogDates := slice -}}
 
 {{- range $changelogData -}}
@@ -23,4 +23,3 @@
 {{- end -}}
 {{- end -}}
 {{- end -}}
- 

@@ -1,4 +1,4 @@
-{{- $product := replace (delimit (findRE `^\/.*?\/` .RelPermalink 1) "") "/" "" -}}
+{{- $product := $.Params.changelog_file_name -}}
 {{- $productData := index (index .Site.Data $product) "product" -}}
 {{- $title := printf "%s · %s" .Title $productData.title -}}
 {{- $atomLink := print .Permalink "index.xml" -}}

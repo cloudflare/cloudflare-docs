@@ -1,0 +1,47 @@
+{{- $changelogData := index .Site.Data "changelogs" -}}
+{{- $changelogRendered := slice -}}
+
+{{- range $index, $product := $changelogData -}}
+
+{{- range $index2, $item := $product.entries -}}
+
+{{- $changelogRendered = $changelogRendered | append (merge $item (dict "product" $product.productName)) -}}
+
+{{- end -}}
+
+{{- end -}}
+
+{{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}}
+
+<div class="DocsMarkdown--table-wrap">
+    <div class="DocsMarkdown--table-wrap-inner">
+    <table>
+        <thead>
+        <tr>
+            <td>
+                <strong>Product</strong>
+            </td>
+            <td>
+                <strong>Title</strong>
+            </td>
+            <td>
+                <strong>Date</strong>
+            </td>
+            <td>
+                <strong>Description</strong>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+{{- range $changelogRendered -}}
+<tr>
+    <td>{{ .product }}</td>
+    <td>{{ .title }}</td>
+    <td>{{ .publish_date }}</td>
+    <td>{{ .description | $.Page.RenderString }}</td>
+</tr>
+{{- end -}}
+</tbody>
+</table>
+</div>
+</div>

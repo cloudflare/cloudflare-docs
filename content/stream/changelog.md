@@ -3,6 +3,7 @@ pcx_content_type: changelog
 title: Changelog
 weight: 11
 layout: changelog
+changelog_file_name: stream
 outputs:
     - html
     - rss
@@ -10,7 +11,7 @@ outputs:
 
 # Changelog
 
-{{<changelog product="stream">}}
+{{<product-changelog product="stream">}}
 
 ---
 
