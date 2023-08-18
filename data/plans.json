@@ -2601,7 +2601,7 @@
           "ent": "1,000"
         },
         "analytics": {
-          "title": "Analytics",
+          "title": "Analytics retention period",
           "free": "No",
           "pro": "3 days",
           "biz": "30 days",
