@@ -24,9 +24,7 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
 
 {{<Aside type="note">}}
-
 Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.
-
 {{</Aside>}}
 
 To configure the challenge, refer to [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
@@ -58,10 +56,8 @@ highlight: [4]
 
 An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
 
-{{<Aside type= "Note">}}
-
+{{<Aside type= "note">}}
 A form is not protected by having a widget rendered. The corresponding token that is a result of a widget being rendered also needs to be verified using the siteverify API.
-
 {{</Aside>}}
 
 ### Disable implicit rendering
