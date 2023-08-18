@@ -17,6 +17,6 @@ Geolocation is determined from the device's public IP address (typically assigne
 - SA – South America
 - T1 – Tor network
 
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Source Continent IP Geolocation | `$1.geo.continent == "North America"` |
+| UI name                         | API example                           | Evaluation phase  |
+| ------------------------------- | ------------------------------------- | ----------------- |
+| Source Continent IP Geolocation | `$1.geo.continent == "North America"` | Before resolution |
