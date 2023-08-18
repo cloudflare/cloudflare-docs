@@ -13,17 +13,15 @@ layout: single
 
 ## Overview
 
-In this tutorial you learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna][fauna] as its data layer.
+In this tutorial, you will  learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna][fauna] as its data layer.
 
-### Learning goals
+## Learning goals
 
-- How to store and retrieve data from Fauna in your Workers.
+- How to store and retrieve data from Fauna in Workers.
 - How to use Wrangler to store secrets securely.
 - How to use [Hono][hono] as a web framework for your Workers.
 
 Building with Fauna, Workers, and Hono enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
-
-![Fauna architecture connecting to Cloudflare's network to create super fast applications](/images/workers/tutorials/fauna/fauna-cf-workers-diagram.jpg)
 
 Fauna is a document-based database with a flexible schema. This allows you to define the structure of your data – whatever it may be – and store documents that adhere to that structure. In this tutorial, you will build a product inventory, where each `product` document must contain the following properties:
 
@@ -55,21 +53,21 @@ In the Fauna dashboard:
 3. Select the **Classic** [Region Group][fauna-region-groups].
 4. Select **Create**.
 
-![Create your database in Fauna by setting a name and region group](/images/workers/tutorials/fauna/create-database.png)
-
 ### Create the products catalog
 
-Select **New Collection** to create the **Products** collection that stores your inventory documents.
+You will now create a collection to store your inventory documents.
 
-![Create your Products collection by following the directions above](/images/workers/tutorials/fauna/create-collection.png)
+1. Go to **Collections** in the Fauna dashboard. 
+2. Select **New Collection**.
+3. In the **Collection Name** field, name your collection **Products** and select **Save**.
 
 ### Create a server key
 
 You must create a key to connect to the database from your Worker.
 
-Go to the **Security** tab in the Fauna dashboard and create a new key with the **Server** role:
-
-![Create a new key in the Security tab of the Fauna dashboard](/images/workers/tutorials/fauna/new-server-key.png)
+1. Go to **Security** in the Fauna dashboard. 
+2. Select **New Key** to create a new key.
+3. In the **Role** dropdown, choose _Server_.
 
 The Fauna dashboard displays the key's secret. Copy and save this server key to use in a later step.
 
@@ -111,9 +109,9 @@ $ yarn create cloudflare
 To continue with this guide:
 
 1. Give your new Worker application a name.
-2. Select "Hello World" Worker for the type of application.
-3. Select Yes to using TypeScript.
-4. Select Yes to deploying your application.
+2. Select `"Hello World" Worker` for the type of application.
+3. Select `Yes` to using TypeScript.
+4. Select `Yes` to deploying your application.
 
 {{<Aside type="note" header="Deploy before storing secrets">}}
 
