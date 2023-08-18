@@ -104,10 +104,8 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 2           | Adult Themes           | 125            | Nudity                                     |
 | 2           | Adult Themes           | 133            | Pornography                                |
 | 3           | Business & Economy     | 75             | Business                                   |
-| 3           | Business & Economy     | 89             | Economy & Finance  
-|
-| 3           | Business & Economy     | 183            | Cryptocurrency
-                          
+| 3           | Business & Economy     | 89             | Economy & Finance                          |
+| 3           | Business & Economy     | 183            | Cryptocurrency                             | 
 | 6           | Education              | 90             | Education                                  |
 | 6           | Education              | 91             | Educational Institutions                   |
 | 6           | Education              | 144            | Science                                    |
