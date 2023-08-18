@@ -16,10 +16,10 @@ The list of related products is representative but not comprehensive.
 
 |  Network layer       | Protocol and related products   |
 |----------------------|---------------------------------|
-| 7 Application layer  | **HTTP, DNS**</br> [Authoritative DNS](/dns), [CDN](https://www.cloudflare.com/cdn/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [Stream](/stream), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [WAF](/waf), [Bot Management](/bots) |
+| 7 Application layer  | **HTTP, DNS**</br> [Authoritative DNS](/dns), [Bot Management](/bots), [CDN](/cache/), [Cloudflare Access](/cloudflare-one/policies/access/), [Cloudflare Gateway](/cloudflare-one/policies/gateway/) (outbound only), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [Stream](/stream/), [WAF](/waf/) |
 | 6 Presentation layer |                                 |
 | 5 Session layer      |                                 |
-| 4 Transport layer    | **TCP/UDP**</br> [Spectrum](/spectrum), [Argo Smart Routing](/argo-smart-routing/), [Load Balancing](/load-balancing/understand-basics/proxy-modes/) |
-| 3 Network layer  | **IP, GRE, any packet/protocol**</br> [Magic Transit](/magic-transit), [Magic Firewall](/magic-firewall), [Magic WAN](/magic-wan) |
+| 4 Transport layer    | **TCP/UDP**</br> [Argo Smart Routing](/argo-smart-routing/), [Cloudflare Gateway](/cloudflare-one/policies/gateway/) (outbound only), [Load Balancing](/load-balancing/understand-basics/proxy-modes/), [Spectrum](/spectrum/)  |
+| 3 Network layer  | **IP, GRE, any packet/protocol**</br> [Magic Firewall](/magic-firewall), [Magic Transit](/magic-transit), [Magic WAN](/magic-wan) |
 | 2 Datalink layer     | **Direct connection**</br> [Cloudflare Network Interconnect (CNI)](/network-interconnect) |
 | 1 Physical layer     | **Direct connection**</br> [Cloudflare Network Interconnect (CNI)](/network-interconnect) |

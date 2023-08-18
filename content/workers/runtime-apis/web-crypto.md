@@ -514,9 +514,9 @@ If a feature only implements the operation partially, details are listed.
 | RSA OAEP                                           |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | ECDSA                                              | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
 | ECDH                                               |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
-| Ed25519<sup><a href="#footnote 1">1</a></sup>      | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
-| X25519<sup><a href="#footnote 1">1</a></sup>       |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
-| NODE ED25519<sup><a href="#footnote 2">2</a></sup> | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| Ed25519<sup><a href="#footnote-1">1</a></sup>      | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| X25519<sup><a href="#footnote-1">1</a></sup>       |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
+| NODE ED25519<sup><a href="#footnote-2">2</a></sup> | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
 | AES CTR                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | AES CBC                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
 | AES GCM                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
@@ -526,7 +526,7 @@ If a feature only implements the operation partially, details are listed.
 | SHA 256                                            |                     |                         | ✓        |                              |               |                           |             |             |
 | SHA 384                                            |                     |                         | ✓        |                              |               |                           |             |             |
 | SHA 512                                            |                     |                         | ✓        |                              |               |                           |             |             |
-| MD5<sup><a href="#footnote 3">3</a></sup>          |                     |                         | ✓        |                              |               |                           |             |             |
+| MD5<sup><a href="#footnote-3">3</a></sup>          |                     |                         | ✓        |                              |               |                           |             |             |
 | HKDF                                               |                     |                         |          | ✓                            |               |                           |             | ✓           |
 | PBKDF2                                             |                     |                         |          | ✓                            |               |                           |             | ✓           |
 

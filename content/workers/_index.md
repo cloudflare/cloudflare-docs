@@ -20,7 +20,7 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in over 300 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
 
-{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals">}}
  
 ---
 

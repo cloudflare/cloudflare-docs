@@ -45,6 +45,12 @@ Public buckets expose the contents of your R2 bucket directly to the Internet.
 
 {{</feature>}}
 
+{{<feature header="Bucket scoped tokens" href="/r2/api/s3/tokens/">}}
+
+Create bucket scoped tokens for granular control over who can access your data.
+
+{{</feature>}}
+
 ## Related products
 
 {{<related header="Workers" href="/workers/" product="workers">}}

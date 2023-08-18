@@ -79,7 +79,7 @@ filename: wrangler.toml
   max_concurrency = 1
 ```
 
-To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `wrangler deploy` to push your configuration update. 
+To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update. 
 
 <!-- Not yet available but will be very soon 
 ### wrangler CLI

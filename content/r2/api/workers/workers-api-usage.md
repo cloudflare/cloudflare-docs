@@ -185,10 +185,10 @@ This secret is now available as `AUTH_KEY_SECRET` on the `env` parameter in your
 
 ## 6. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler deploy` [command](/workers/wrangler/commands/#deploy) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `npx wrangler deploy` [command](/workers/wrangler/commands/#deploy) to deploy to Cloudflare's global network:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:

@@ -9,7 +9,7 @@ pcx_content_type: get-started
 This guide will instruct you through:
 
 - Writing a class that defines a Durable Object.
-- Instantiating and communicationg with a Durable Object from another Worker via the `Fetch` API.
+- Instantiating and communicating with a Durable Object from another Worker via the `Fetch` API.
 - Deploying a Durable Object.
 
 {{<render file="_prereqs.md" productFolder="workers">}}

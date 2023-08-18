@@ -8,10 +8,14 @@ weight: 3
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
+## Destinations and ports
+
+### Global region (default)
+
 | Destination | Port | Protocols |
 | ----------- | -------- | --------- |
-| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
-| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`h2mux`, `http2`, and `quic`) |
+| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
 | `api.cloudflare.com`        | 443  | TCP (HTTPS) |
 | `update.argotunnel.com`     | 443  | TCP (HTTPS) |
 
@@ -20,6 +24,15 @@ Users can implement a positive security model with Cloudflare Tunnel by restrict
 Opening port 443 for connections to `update.argotunnel.com` is optional. Failure to do so will prompt a log error, but `cloudflared` will still run correctly.
 
 {{</Aside>}}
+
+### US region
+
+If you set the [`region` parameter](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to US, `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` are replaced with the following:
+
+| Destination | Port | Protocols |
+| ----------- | -------- | --------- |
+| `us-region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `us-region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) |
 
 ## Test connectivity with dig
 

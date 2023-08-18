@@ -80,11 +80,45 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     `len(http.host)`
 
+- <code id="function-lookup_json_integer">{{<name>}}lookup_json_integer{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}Integer{{</type>}}
+
+  - Returns the integer value associated with the supplied `key` in `field`.<br/>
+  The `field` must be a string representation of a valid JSON document.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific integer value.<br>
+  Note: This function only works for plain integers. For example, it will not work for floating numbers with a zero decimal part such as `42.0`.
+
+  - _Examples:_
+
+    A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
+    `{ "record_id": "aed53a", "version": 2 }`<br/>
+    The following function call will return `2`:<br/>
+    `lookup_json_integer(http.request.body.raw, "version") == 2`
+
+    B) Given the following nested object:<br/>
+    `{ "product": { "id": 356 } }`<br/>
+    The following function call will return `356`:<br/>
+    `lookup_json_integer(http.request.body.raw, "product", "id") == 356`
+
+    C) Given the following JSON array at the root level:<br/>
+    `["first_item", -234]`<br/>
+    The following function call will return `-234`:<br/>
+    `lookup_json_integer(http.request.body.raw, 1) == -234`
+
+    D) Given the following array in a JSON object attribute:<br/>
+    `{ "network_ids": [123, 456] }`<br/>
+    The following function call will return `123`:<br/>
+    `lookup_json_integer(http.request.body.raw, "network_ids", 0) == 123`
+
+    E) Given the following root-level array of JSON objects:<br/>
+    `[{ "product_id": 123 }, { "product_id": 456 }]`<br/>
+    The following function call will return `456`:<br/>
+    `lookup_json_integer(http.request.body.raw, 1, "product_id") == 456`
+
 - <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}String{{</type>}}
 
   - Returns the string value associated with the supplied `key` in `field`.<br/>
-  The `field` must be a string representation of a valid JSON object.<br/>
-  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON object to obtain a specific value.
+  The `field` must be a string representation of a valid JSON document.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific value.
 
   - _Examples:_
 

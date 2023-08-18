@@ -208,7 +208,7 @@ As you can see, you get the predicted values from the XGBoost and the ONNX Petal
 When you are ready, deploy your Worker:
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 ## Related resources

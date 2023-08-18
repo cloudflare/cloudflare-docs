@@ -403,22 +403,22 @@ If TLS/SSL errors occur, check the following on the origin web server and ensure
 {{<Aside type="tip">}}
 If your origin web server SSL certificate is self-signed, [set
 *validate.cert=0* in
-*railgun.conf*](https://support.cloudflare.com/hc/articles/219336007).
+*railgun.conf*](/railgun/user-guide/railgun-ca-certificates).
 {{</Aside>}}
 
 ___
 
 ## Error 530
 
-HTTP error 530 is returned with an accompanying 1XXX error displayed. Search for the specific [1XXX error within the Cloudflare Help Center](https://support.cloudflare.com/hc/sections/200820298) for troubleshooting information.
+HTTP error 530 is returned with an accompanying 1XXX error displayed. Search for the specific [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) for troubleshooting information.
 
 Enabling [Load Balancing](/load-balancing/) in China will cause a `530` error.
 ___
 
 ## Related resources
 
--   [Gathering information to troubleshoot site issues](https://support.cloudflare.com/hc/en-us/articles/203118044)
--   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16)
--   [Customizing Cloudflare error pages](https://support.cloudflare.com/hc/articles/200172706)
+-   [Gathering information to troubleshoot site issues](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites)
+-   [Contacting Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support)
+-   [Customizing Cloudflare error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/)
 -   [MTR/Traceroute Diagnosis and Usage](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute)
 -   [Cloudflare Community Tips](https://community.cloudflare.com/tag/communitytip)
