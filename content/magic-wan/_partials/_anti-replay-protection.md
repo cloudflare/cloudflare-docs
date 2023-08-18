@@ -16,7 +16,7 @@ Review the information below to learn about replay attacks, why we recommend dis
 
 Replay attacks occur when a malicious actor intercepts and records a packet, and later sends the recorded packet to the target network again with an intent that benefits the attacker.
 
-​​### Example
+### Example
 
 For example, consider a poorly designed IOT garage door opener. The device has a simple protocol for operation: A UDP packet contains the garage door password and either `open` or `shut` in its data segment. The data segment is then encrypted with the garage door’s key and sent from the owner’s phone to either open or close the garage door.
 
