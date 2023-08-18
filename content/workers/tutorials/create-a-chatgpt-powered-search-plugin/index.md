@@ -12,6 +12,8 @@ weight: 1
 
 In this tutorial, you'll use Langchain, a JavaScript package for working with large language models, and Pinecone, a vector database, to index a Notion workspace. You'll then be able to query it using a custom ChatGPT plugin built with Cloudflare Workers.
 
+![Demo](/images/workers/tutorials/chatgpt-search/demo.gif)
+
 ## Prerequisites
 
 Before you start, make sure you have:
@@ -377,6 +379,12 @@ Now your Notion Workspace is available and searchable via the provided workers U
 
 ## Step 8: Add the plugin to ChatGPT
 
+{{<Aside type="note">}}
+
+The ChatGPT Plugins API is currently in alpha. This means that the instructions or text above may be out-of-date.
+
+{{</Aside>}}
+
 ChatGPT Plugins, which are in alpha, allow you to augment ChatGPT's functionality with custom functionality. When it is appropriate, ChatGPT will query your plugin to provide additional information to the user.
 
 To add a new ChatGPT plugin, select the "Alpha" option at the top of ChatGPT's UI for the model option, and select "Plugins". A new button appear with the test "No plugins enabled". Select this button and select the "Plugin store" option.
@@ -384,12 +392,6 @@ To add a new ChatGPT plugin, select the "Alpha" option at the top of ChatGPT's U
 In the new modal popup, select "Develop your own plugin". This will allow you to enter a custom plugin URL and use your own plugins directly in ChatGPT. Enter the deployed Workers URL, as seen below:
 
 ![ChatGPT's custom plugin UI, allowing you to enter a URL](./custom-plugin.png)
-
-{{ <Aside type="note"> }}
-
-The ChatGPT Plugins API is currently in alpha. This means that the instructions or text above may be out-of-date.
-
-{{ </Aside> }}
 
 ## Next steps
 
