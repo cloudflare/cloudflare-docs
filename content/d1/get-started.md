@@ -64,7 +64,7 @@ For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --g
 
 D1 has [a new storage sub-system](/d1/changelog/#new-default-storage-subsystem) that dramatically improves query throughput, latency and reliability. This backend is now the default since `wrangler` version `3.4.0`, and is up to 20x faster than the previous alpha backend.
 
-When using a version of `wrangler` prior to `3.4.0`, you will need to pass the `--experimental-backend` flag to `wrangler d1 create` in order to create a database on this backend.
+When using a version of `wrangler` prior to `3.4.0`, you will need to pass the `--experimental-backend` flag to `wrangler d1 create` to create a database on this backend.
 
 {{</Aside>}}
 
