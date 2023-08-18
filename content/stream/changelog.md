@@ -2,135 +2,17 @@
 pcx_content_type: changelog
 title: Changelog
 weight: 11
-rss: file
+layout: changelog
+outputs:
+    - html
+    - rss
 ---
 
 # Changelog
 
-## 2023-08-08
+{{<changelog product="stream">}}
 
-### Scheduled Deletion
-
-Stream now supports adding a scheduled deletion date to new and existing videos. Live inputs support deletion policies for automatic recording deletion.
-
-For more, refer to the [video on demand](/stream/uploading-videos/) or [live input](/stream/stream-live/) docs.
-
-## 2023-05-16
-
-### Multiple audio tracks now generally available
-
-Stream supports adding multiple audio tracks to an existing video.
-
-For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/) to get started.
-
-## 2023-04-26
-
-### Player Enhancement Properties
-
-Cloudflare Stream now supports player enhancement properties.
-
-With player enhancements, you can modify your video player to incorporate elements of your branding, such as your logo, and customize additional options to present to your viewers.
-
-For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/player-enhancements/) to get started.
-
-## 2023-03-21
-
-### Limits for downloadable MP4s for live recordings
-
-Previously, generating a download for a live recording exceeding four hours resulted in failure.
-
-To fix the issue, now video downloads are only available for live recordings under four hours. Live recordings exceeding four hours can still be played but cannot be downloaded. 
-
-## 2023-01-04
-
-### Earlier detection (and rejection) of non-video uploads
-
-Cloudflare Stream now detects non-video content on upload using [the POST API](/stream/uploading-videos/upload-video-file/) and returns a 400 Bad Request HTTP error with code `10059`.
-
-Previously, if you or one of your users attempted to upload a file that is not a video (ex: an image), the request to upload would appear successful, but then fail to be encoded later on.
-
-With this change, Stream responds to the upload request with an error, allowing you to give users immediate feedback if they attempt to upload non-video content.
-
-## 2022-12-08
-
-### Faster mp4 downloads of live recordings
-
-Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](/stream/stream-live/download-stream-live-videos/).
-
-## 2022-11-29
-
-### Multiple audio tracks (closed beta)
-
-Stream now supports adding multiple audio tracks to an existing video upload. This allows you to:
-
-- Provide viewers with audio tracks in multiple languages
-- Provide dubbed audio tracks, or audio commentary tracks (ex: Director’s Commentary)
-- Allow your users to customize the customize the audio mix, by providing separate audio tracks for music, speech or other audio tracks.
-- Provide Audio Description tracks to ensure your content is accessible. ([WCAG 2.0 Guideline 1.2 1](https://www.w3.org/TR/WCAG20/#media-equiv-audio-desc-only))
-
-To request an invite to the beta, refer to [this post](https://community.cloudflare.com/t/new-in-beta-support-for-multiple-audio-tracks/439629).
-
-## 2022-11-22
-
-### VP9 support for WebRTC live streams (beta)
-
-Cloudflare Stream now supports [VP9](https://developers.google.com/media/vp9) when streaming using [WebRTC (WHIP)](/stream/webrtc-beta/), currently in beta.
-
-## 2022-11-08
-
-### Reduced time to start WebRTC streaming and playback with Trickle ICE
-
-Cloudflare Stream's [WHIP](https://datatracker.ietf.org/doc/draft-ietf-wish-whip/) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
-
-For more, refer to [the docs](/stream/webrtc-beta/).
-
-## 2022-11-07
-
-### Deprecating the "per-video" Analytics API
-
-The “per-video” analytics API is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
-
-The GraphQL Analytics API provides the same functionality and more, with additional filters and metrics, as well as the ability to fetch data about multiple videos in a single request. Queries are faster, more reliable, and built on a shared analytics system that you can [use across many Cloudflare products](/analytics/graphql-api/features/data-sets/).
-
-For more about this change and how to migrate existing API queries, refer to [this post](https://community.cloudflare.com/t/migrate-to-the-stream-graphql-analytics-api-by-feb-1st-2023/433252) and the [GraphQL Analytics API docs](/stream/getting-analytics/fetching-bulk-analytics/).
-
-## 2022-11-01
-
-### Create an unlimited number of live inputs
-
-Cloudflare Stream now has no limit on the number of [live inputs](/api/operations/stream-live-inputs-retrieve-a-live-input) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
-
-For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
-
-## 2022-10-20
-
-### More accurate bandwidth estimates for live video playback
-
-When playing live video, Cloudflare Stream now provides significantly more accurate estimates of the bandwidth needs of each quality level to client video players. This ensures that live video plays at the highest quality that viewers have adequate bandwidth to play.
-
-As live video is streamed to Cloudflare, we transcode it to make it available to viewers at mulitple quality levels. During transcoding, we learn about the real bandwidth needs of each segment of video at each quality level, and use this to provide an estimate of the bandwidth requirements of each quality level the in HLS (`.m3u8`) and DASH (`.mpd`) manifests.
-
-If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS manifest will be lower, ensuring that the most viewers possible view the highest quality level, since it requires relatively little bandwidth. Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the HLS manifest will be higher, ensuring that viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.
-
-This change is particularly helpful if you're building a platform or application that allows your end users to create their own live streams, where these end users have their own streaming software and hardware that you can't control. Because this new functionality adapts based on the live video we receive, rather than just the configuration advertised by the broadcaster, even in cases where your end users' settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements, causing playback quality to decrease unnecessarily. Your end users don't have to be OBS Studio experts in order to get high quality video playback.
-
-No work is required on your end — this change applies to all live inputs, for all customers of Cloudflare Stream. For more, refer to the [docs](/stream/stream-live/#bitrate-estimates-at-each-quality-level-bitrate-ladder).
-
-## 2022-10-05
-
-### AV1 Codec support for live streams and recordings (beta)
-
-Cloudflare Stream now supports playback of live videos and live recordings using the [AV1 codec](https://aomedia.org/av1/), which uses 46% less bandwidth than H.264.
-
-For more, read the [blog post](https://blog.cloudflare.com/av1-cloudflare-stream-beta) or the get started with the [docs](/stream/viewing-videos/av1-playback).
-
-## 2022-09-27
-
-### WebRTC live streaming and playback (beta)
-
-Cloudflare Stream now supports live video streaming over WebRTC, with sub-second latency, to unlimited concurrent viewers.
-
-For more, read the [blog post](https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream) or the get started with example code in the [docs](/stream/webrtc-beta).
+---
 
 ## 2022-09-15
 

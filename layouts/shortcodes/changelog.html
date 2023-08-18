@@ -1,0 +1,26 @@
+{{- $product := .Get "product" -}}
+{{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
+{{- $changelogData = sort $changelogData "date" "desc" -}}
+{{- $changelogDates := slice -}}
+
+{{- range $changelogData -}}
+{{- $changelogDates = $changelogDates | append .publish_date -}}
+{{- end -}}
+
+{{- $changelogDates = $changelogDates | uniq -}}
+
+{{- range $index, $date := $changelogDates -}}
+
+{{- print "## " $date | $.Page.RenderString -}}
+
+{{- range $changelogData -}}
+{{- if eq $date .publish_date -}}
+
+{{- print "### " .title | $.Page.RenderString -}}
+
+{{ .description | $.Page.RenderString }}
+
+{{- end -}}
+{{- end -}}
+{{- end -}}
+ 
