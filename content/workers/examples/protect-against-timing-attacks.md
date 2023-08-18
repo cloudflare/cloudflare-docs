@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Protect against timing attacks using by safely comparing values using timingSafeEqual.
+summary: Protect against timing attacks by safely comparing values using timingSafeEqual.
 tags:
   - Security
 pcx_content_type: configuration
