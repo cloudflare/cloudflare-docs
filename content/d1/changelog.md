@@ -7,6 +7,25 @@ rss: file
 
 # Changelog
 
+## 2023-08-19
+
+### Row count now returned per query
+
+D1 now returns a count of `rows_written` and `rows_read` for every query executed, allowing you to assess the cost of query for both [pricing](/d1/platform/pricing/) and [index optimization](/d1/learning/using-indexes/) purposes.
+
+The `meta` object returned in [D1's Client API](/d1/platform/client-api/) contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for example, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
+
+```json
+"meta": {
+  "duration": 0.20472300052642825,
+  "size_after": 45137920,
+  "rows_read": 5000,
+  "rows_written": 0
+}
+```
+
+Refer to [D1 pricing documentation](/d1/platform/pricing/) to understand how reads and writes are measured. D1 remains free to use during the alpha period.
+
 ## 2023-08-09
 
 ### Bind D1 from the Cloudflare dashboard
