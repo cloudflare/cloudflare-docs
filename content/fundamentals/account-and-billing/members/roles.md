@@ -53,7 +53,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for DNS and Firewall. |
 | Trust & Safety | Can access trust and safety related services. |
 | Turnstile | Grants full access to [Turnstile](/turnstile/). |
-| Turnstile Read| Grants read access to [Turnstile](/turnstile/). |
+| Turnstile Read | Grants read access to [Turnstile](/turnstile/). |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
 | Zaraz Admin | Can edit and publish [Zaraz](/zaraz/) configuration.
