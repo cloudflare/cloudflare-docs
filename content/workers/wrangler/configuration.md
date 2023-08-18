@@ -317,7 +317,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
   - The name of the database. This a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
 
-- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
 
