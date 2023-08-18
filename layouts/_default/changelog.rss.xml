@@ -16,7 +16,7 @@
     <lastBuildDate>TBD</lastBuildDate>
     {{- range $changelogData -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
-    {{- $link := print $permalink "#" (urlize .publish_date) -}}
+    {{- $link := print $permalink "#" (urlize .title) -}}
     <item>
     <title>{{ .title }}</title>
     <link>{{ $link }}</link>
