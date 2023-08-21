@@ -52,6 +52,7 @@ Libraries that both support the both client-side rendering and server-side valid
 Turnstile integrations for popular content management systems:
 
 - [Craft CMS](https://plugins.craftcms.com/turnstile)
+- [Google Forms](https://github.com/ModMalwareInvestigation/turnstile-for-forms)
 - [SilverStripe](https://github.com/webbuilders-group/silverstripe-turnstile)
 - [Statamic](https://statamic.com/addons/aryeh-raber/captcha)
 - [WordPress](https://wordpress.org/plugins/simple-cloudflare-turnstile)
