@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Role scopes
 weight: 4
+aliases:
+    - /fundamentals/account-and-billing/members/scope/
 ---
 
 # Role scopes

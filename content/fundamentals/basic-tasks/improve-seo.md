@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Improve SEO
-weight: 1
 ---
 
 # Improve SEO

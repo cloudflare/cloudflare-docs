@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Access compliance documentation
-weight: 5
 ---
 
 # Access compliance documentation

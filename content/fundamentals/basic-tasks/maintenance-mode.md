@@ -1,7 +1,6 @@
 ---
 title: Maintenance mode
 pcx_content_type: how-to
-weight: 5
 ---
 
 # Maintenance mode

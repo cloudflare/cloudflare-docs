@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Interacting with Cloudflare
-weight: 4
 ---
 
 # How to interact with Cloudflare

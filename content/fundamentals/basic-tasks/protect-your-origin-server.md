@@ -1,12 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Pro
-weight: 2
+title: Protect your origin server
 meta:
-  title: Pro plans — Protect your origin server
+  title: Protect your origin server
 ---
 
-# Protect your origin server — Pro
+# Protect your origin server
 
 {{<render file="_origin-health-overview.md">}}
 
@@ -26,10 +25,12 @@ meta:
 
 {{<render file="_limit-external-connections-network.md" productFolder="learning-paths">}}
 
+{{<render file="_ent-only-network-security.md" productFolder="learning-paths">}}
+
 ## Monitor origin health
 
-{{<render file="_origin-passive-alert.md">}}
-\
+For passive monitoring, [create notifications](/fundamentals/notifications/create-notifications/) for **Origin Error Rate Alerts** to receive alerts when your origin returns 5xx codes above a configurable threshold and **Passive Origin Monitoring** to see when Cloudflare is unable to reach your origin for a few minutes.
+
 {{<render file="_origin-health-check.md">}}
 
 {{<render file="_origin-lb-alert.md">}}
@@ -51,3 +52,6 @@ For more details, refer to [Secure your website](/learning-paths/application-sec
 ### Distribute traffic
 
 {{<render file="_origin-load-balancing.md">}}
+
+\
+{{<render file="_origin-waiting-room.md">}}

@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Test speed
-weight: 5
 ---
 
 # Test speed

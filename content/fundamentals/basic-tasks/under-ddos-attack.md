@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Under a DDoS attack?
-weight: 5
 meta:
     description: Learn a few ways to tell if your application is under a DDoS attack.
 ---

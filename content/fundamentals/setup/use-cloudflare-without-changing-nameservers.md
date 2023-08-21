@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Use Cloudflare without changing nameservers
-weight: 5
 ---
 
 # Use Cloudflare without changing nameservers

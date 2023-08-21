@@ -1,8 +1,7 @@
 ---
 pcx_content_type: navigation
-title: Get started guide
-external_link: /learning-paths/get-started/
-weight: 1
+title: Optimize site speed
+external_link: /learning-paths/optimize-site-speed/
 _build:
   publishResources: false
   render: never

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Basic tasks
-weight: 3
+weight: 4
 ---
 
 # Basic tasks

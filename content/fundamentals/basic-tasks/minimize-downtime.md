@@ -1,7 +1,6 @@
 ---
 title: Minimize downtime
 pcx_content_type: tutorial
-weight: 4
 ---
 
 # Minimize downtime
