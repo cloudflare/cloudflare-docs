@@ -7,39 +7,32 @@ title: Furukawa Electric　FITELnet
 
 This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 to connect Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
 
+## Testing environment
 
-<img src="imgs/FITEL-Cloudflare.jpg" width="100%">
+These configurations were tested on FITELnet F220 and F70 series with the followin firmware versions:
+  - F220 series：Version 01.11(00)
+  - F70 series：Version 01.09(00)
 
---- 
+## IPsec configuration
 
-## IPsec Configuration
-First, configure the IPsec tunnel.
+### Magic WAN configuration
 
-### MagicWAN Configuration 
-In the Cloudflare dashboard, select [Magic WAN] and click [Configure] in Manage Magic WAN Configuration. Under the [Tunnels] tab,
-click [+Create] to create an IPsec tunnel.
-<p>
-<img src="imgs/MagicWan-Potal1.jpg" style="border: 1px black solid;" width="100%">
-</p>
-Select IPsec tunnel and click [Next].
-<p>
-<img src="imgs/MagicWan-Potal2.jpg" style="border: 1px black solid;" width="100%">
-</p>
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to to **Magic WAN** > **Manage Magic WAN Configuration** > **Configure**.
+3. From the **Tunnels** tab, select **Create**.
+4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
+  - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
+  - **Customer endpoint**: The global address for your first FITELnet router.
+  - **Cloudflare endpoint**: The Cloudflare Anycast IP is assigned by your account team.
+5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure this additional setting is defined:
+  - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
+  - **Customer endpoint**: The global address for your second FITELnet router.
 
-| Configuration               | Description                                                                                                             | Router１                                    | Router２                            |
-| ------------------ | -------------------------------------------------------------------------------------------------------------- | --------------------------------------- | ------------------------------- |
-| Tunnel name              | -                                                                                                   | FITEL-tunnel-1                          | FITEL-tunnel-2                  |
-| Description                 | -                                                                                                    | IPsec tunnel with FITELnet No.1         | IPsec tunnel with FITELnet No.2 |
-| Interface address        | IP address of the tunnel interface.<br>A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel.                                          | 10.0.0.1/31                             | 10.0.0.3/31                     |
-| Customer endpoint       | FITELnet router's global address                                                                                  | xxx.xxx.xxx.xxx                         | yyy.yyy.yyy.yyy                 |
-| Cloudflare endpoint | The Cloudflare Anycast IP is assigned by your account team by email.                                                                                   | anycast-address                         | anycast-address                 |
-| Pre-shared key             | The pre-shared key (PSK) is used to authenticate each side of the IPsec tunnel. Enter your own PSK or add the key later to have Cloudflare generate the PSK.| "Use my own pre-shared key"<br>secret-pre-shared-key-1 |      "Use my own pre-shared key"<br>secret-pre-shared-key-2                           |
+### FITELnet router configuration
 
-Create the other IPsec tunnel in the same way.
+Configure both your FITELnet routers with the following settings:
 
-### FITELnet Router Configuration
-Configure the FITELnet router as follows.
-```
+```txt
 interface Tunnel 1
  ip address 10.0.0.0 255.255.255.254
  tunnel mode ipsec map MAP1
@@ -105,53 +98,44 @@ crypto map MAP1 ipsec-isakmp
  match address SELECTOR
  set isakmp-profile PROF1
 exit
-! 
-```  
-  
-Configre the other FITLnet router in the same way.  
+!
+```
 
 ---
 
-## Statico Route Configuration 
-Configure routes for east-west (branch to branch) connections.
+## Static route configuration 
 
-## MagicWAN
-In the Cloudflare dashboard, create a static route.
-Go to [Magic WAN] in the side bar, click [Configure] in Manage Magic WAN Configuration. Click the [Static Routes] tab at the top of the screen.
-Click [+Create] to create a static route.
-<p>
-<img src="imgs/MagicWan-Potal3.jpg" style="border: 1px black solid;" width="100%">
-</p>
-<p>
-<img src="imgs/MagicWan-Potal4.jpg" style="border: 1px black solid;" width="100%">
-</p>
+To configure routes for east-west (branch to branch) connections, refer to the following settings.
 
-| Configuration         | Description                        | Router１                     | Router２                      |
-| ------------ | ------------------------- | ------------------------ | ------------------------- |
-| Description           | -     | FITEL-route-1            | FITEL-route-2             |
-| Prefix      | -         | 192.168.0.0/24           | 192.168.1.0/24            |
-| Tunnel/Next hop| -      | FITEL-tunnel-1 / 10.0.0.0 | FITEL-tunnel-2 / 10.0.0.2 |
-| Priority        | Assign a route priority to each route. Lower values have greater priority.             | 100                      | 100                       |
-| Weight         | Optional weight of the ECMP scope | -                       | -                        |
-| Region code    | Steer your traffic by scoping it to specific Cloudflare data regions                | All regions                | All regions                   |
+### Magic WAN
 
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Manage Magic WAN Configuration** > **Configure**.
+3. Go to **Static Routes** > **Create**.
+4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/) to learn about settings not mentioned here):
+  - **Prefix**: `192.168.0.0/24`
+  - **Tunnel/Next hop**: _FITEL-tunnel-1 / 10.0.0.0_
+5. For the second route, ensure the following settings are defined:
+  - **Prefix**: `192.168.1.0/24`
+  - **Tunnel/Next hop**: _FITEL-tunnel-2 / 10.0.0.2_
 
-Create the other static route in the same way.
+### FITELnet router configuration
 
-### FITELnet Router Configuration
-Configure the FITELnet router as follows.
-```
+To configure static routes for your FITELnet routers, refer to the following settings:
+
+```txt
 ip route 192.168.1.0 255.255.255.0 tunnel 1 
 ```
-Create the other FITELnet router in the same way.
 
 ---
 
-## Connection Test
-### IPsec Status
-In the FITELnet router CLI, you can run "show crypto sa" to check the IPsec establishment status. <br> "Total number of ISAKMP/IPSEC SA" shows the number of establised SAs.  
+## Connection test
 
-```
+### IPsec status
+
+In the FITELnet router CLI, you can run `show crypto sa` to check the status of the IPsec security associations (SAs). `Total number of ISAKMP/IPSEC SA` shows the number of established SAs.  
+
+```txt
 #show crypto sa
 
   IKE_SA
@@ -197,10 +181,12 @@ In the FITELnet router CLI, you can run "show crypto sa" to check the IPsec esta
   Total number of ISAKMP SA 1
   Total number of IPSEC SA 1
 ```
-  
+
 ### Route Status 
-In the FITELnet router CLI, you can run "show ip route" to check the route information. <br> A '*' in the route information indicates that the route information is valid.
-```
+
+In the FITELnet router CLI, you can run `show ip route` to check the route information. A `*` in the route information indicates that the route information is valid.
+
+```txt
 #show ip route
 
 Codes: K - kernel route, C - connected, S - static, R - RIP, O - OSPF,
@@ -214,7 +200,3 @@ S > * 192.168.1.0/24 [100/0] is directly connected, Tunnel1
 <snip>
 #
 ```
-
-## Firmware Version
-F220 series：Version 01.11(00)  
-F70 series：Version 01.09(00)
