@@ -46,7 +46,7 @@ Your markdown file needs to have several special values to pull in the changelog
 
 ```
 ---
-header: Changelog markdown file
+header: /queues/changelog.md
 highlight: [5-9, 14]
 ---
 
@@ -97,7 +97,7 @@ The `product-changelog` component renders data that lives in a file within the [
 
 ```json
 ---
-header: Changelog JSON file
+header: /data/changelogs/queues.json
 ---
 {
     "link": "/queues/changelog/",
