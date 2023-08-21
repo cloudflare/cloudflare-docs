@@ -174,9 +174,7 @@ async function websocket(url) {
 
 ## WebSocket compression
 
-Cloudflare Workers provides experimental support for WebSocket compression via the `web_socket_compression` compatibility flag. Refer to [Experimental Changes](/workers/configuration/compatibility-dates/#experimental-changes) for more information.
-
-Without this compatibility flag, the Workers runtime will strip or ignore the `Sec-WebSocket-Extensions: permessage-deflate` header on all inbound and outbound WebSocket requests.
+Cloudflare Workers supports WebSocket compression. Refer to [WebSocket Compression](/workers/configuration/compatibility-dates/#websocket-compression) for more information.
 
 ## Durable Objects and WebSocket state
 
