@@ -8,7 +8,7 @@ inputParameters: productName
 
 # Anti-replay protection
 
-If you use $1 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. It can be enabled via the [API](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-update-i-psec-tunnel) for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+If you use $1 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. It can be enabled via the [API](https://developers.cloudflare.com/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
 Review the information below to learn about replay attacks, why we recommend disabling IPsec anti-replay, and related considerations.
 
