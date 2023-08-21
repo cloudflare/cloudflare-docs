@@ -36,7 +36,7 @@ Replace `<project-name>` with your desired project name. This will create a new 
 
 ## Step 2: Create a Pinecone Index
 
-Pinecone provides a vector indexes, which are a special type of database that stores your data as "vectors", and allows quick querying and retrieval. In this tutorial, you'll use a free Pinecone index to store the relevant vectors for your Notion workspace.
+Pinecone provides a vector indexes, which are databases that stores your data as "vectors", and allows quick querying and retrieval. In this tutorial, you'll use a free Pinecone index to store the relevant vectors for your Notion workspace.
 
 To begin, create a Pinecone account. In this tutorial, everything you build will be storable in the free tier. Once you've created an account, you'll then need to wait a few minutes for your project to be created.
 
@@ -201,7 +201,7 @@ The last part of the code exports a function `IndexToPinecone` as a handler whic
 
 {{<Aside type="warning">}}
 
-This API can take a very long time to run, and can easily go over the subrequest limit for standard Workers functions, even on modestly-sized Notion workspaces. It is recommended that you enable Workers Unbound on your deployed application, which will allow additional subrequests to be made.
+This API can take a very long time to run, and can quickly go over the subrequest limit for standard Workers functions, even on modestly-sized Notion workspaces. It is recommended that you enable Workers Unbound on your deployed application, which will allow additional subrequests to be made.
 
 Alternatively, you can use the Node.js script in the `local-indexing` directory to run this function locally. For more instructions on how to do this, see the [README](URL) on GitHub.
 
@@ -401,4 +401,4 @@ In the new modal popup, select "Develop your own plugin". This will allow you to
 
 To build more with Workers, refer to [Tutorials](/workers/tutorials).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with other developers and the Cloudflare team.
