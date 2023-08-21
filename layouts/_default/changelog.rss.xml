@@ -17,6 +17,7 @@
     {{- range $changelogDataEntries -}}
     {{- $link := "" -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
+    {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with .title -}}
     {{- $link = print $permalink "#" (urlize .) -}}
     {{- else -}}

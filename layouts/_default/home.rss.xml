@@ -24,6 +24,7 @@
     {{- $rellink := .url -}}
     {{- $product := .product -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
+    {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with .title -}}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
     {{- else -}}
