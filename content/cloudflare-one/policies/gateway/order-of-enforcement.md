@@ -25,20 +25,25 @@ flowchart TB
     %% HTTP policies
     subgraph HTTP
     b1{{"Do Not Inspect"}}
-    b1-.->b2["Isolate"]
+    b1--Not matched-->b2["Isolate"]
     b2-->b3["Allow, Block, Do Not Scan"]
     end
 
     %% Network policies
     subgraph Network
     b3-->c1["Network policy #1"]
-    b1-->c1
+    b1--Matched-->c1
     c1-->c2["Network policy #2"]
     end
     end
 
-    %% Out to Internet
-    c2-->finish(Internet)
+    %% Egress
+    c2-.Enterprise users only.->d1[Egress policy]
+
+
+    %% Finish
+    c2-->finish(Internet) 
+    d1-->finish
 ```
 
 ## Priority between policy builders
