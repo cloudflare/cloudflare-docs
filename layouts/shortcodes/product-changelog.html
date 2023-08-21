@@ -1,4 +1,4 @@
-{{- $product := .Get "product" -}}
+{{- $product := .Page.Params.changelog_file_name -}}
 {{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
 {{- $changelogData = sort $changelogData "publish_date" "desc" -}}
 {{- $changelogDates := slice -}}

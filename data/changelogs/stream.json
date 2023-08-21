@@ -71,6 +71,181 @@
             "publish_date": "2022-09-27",
             "title": "WebRTC live streaming and playback (beta)",
             "description": "Cloudflare Stream now supports live video streaming over WebRTC, with sub-second latency, to unlimited concurrent viewers.\n\nFor more, read the [blog post](https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream) or the get started with example code in the [docs](/stream/webrtc-beta)."
+        }, 
+        {
+            "publish_date": "2022-09-15",
+            "title": "Manually control when you start and stop simulcasting",
+            "description": "You can now enable and disable individual live outputs via the API or Stream dashboard, allowing you to control precisely when you start and stop simulcasting to specific destinations like YouTube and Twitch. For more, [read the docs](/stream/stream-live/simulcasting/#control-when-you-start-and-stop-simulcasting)."
+        }, 
+        {
+            "publish_date": "2022-08-15",
+            "title": "Unique subdomain for your Stream Account",
+            "description": "URLs in the Stream Dashboard and Stream API now use a subdomain specific to your Cloudflare Account: `customer-{CODE}.cloudflarestream.com`. This change allows you to:\n\n1. Use [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) directives specific to your Stream subdomain, to ensure that only videos from your Cloudflare account can be played on your website.\n\n2. Allowlist only your Stream account subdomain at the network-level to ensure that only videos from a specific Cloudflare account can be accessed on your network.\n\nNo action is required from you, unless you use Content Security Policy (CSP) on your website. For more on CSP, read the [docs](/stream/faq/#i-use-content-security-policy-csp-on-my-website-what-domains-do-i-need-to-add-to-which-directives)."
+        }, 
+        {
+            "publish_date": "2022-08-02",
+            "title": "Clip videos using the Stream API",
+            "description": "You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-videos/video-clipping/)."
+        }, 
+        {
+            "publish_date": "2022-07-26",
+            "title": "Live inputs",
+            "description": "The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](/api/operations/stream-live-inputs-list-live-inputs)."
+        }, 
+        {
+            "publish_date": "2022-05-24",
+            "title": "Picture-in-Picture support",
+            "description": "The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now displays a button to activate Picture-in-Picture mode, if the viewer's web browser supports the [Picture-in-Picture API](https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API)."
+        }, 
+        {
+            "publish_date": "2022-05-13",
+            "title": "Creator ID property",
+            "description": "During or after uploading a video to Stream, you can now specify a value for a new field, `creator`. This field can be used to identify the creator of the video content, linking the way you identify your users or creators to videos in your Stream account. For more, read the [blog post](https://blog.cloudflare.com/stream-creator-management/)."
+        }, 
+        {
+            "publish_date": "2022-03-17",
+            "title": "Analytics panel in Stream Dashboard",
+            "description": "The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by **Creator ID**, **Video UID**, and **Country**. For more in-depth analytics data, refer to the [bulk analytics documentation](/stream/getting-analytics/fetching-bulk-analytics/)."
+        }, 
+        {
+            "publish_date": "2022-03-16",
+            "title": "Custom letterbox color configuration option for Stream Player",
+            "description": "The Stream Player can now be configured to use a custom letterbox color, displayed around the video ('letterboxing' or 'pillarboxing') when the video's aspect ratio does not match the player's aspect ratio. Refer to the documentation on configuring the Stream Player [here](/stream/viewing-videos/using-the-stream-player/#basic-options)."
+        }, 
+        {
+            "publish_date": "2022-03-10",
+            "title": "Support for SRT live streaming protocol",
+            "description": "Cloudflare Stream now supports the SRT live streaming protocol. SRT is a modern, actively maintained streaming video protocol that delivers lower latency, and better resilience against unpredictable network conditions. SRT supports newer video codecs and makes it easier to use accessibility features such as captions and multiple audio tracks.\n\nFor more, read the [blog post](https://blog.cloudflare.com/stream-now-supports-srt-as-a-drop-in-replacement-for-rtmp/)."
+        }, 
+        {
+            "publish_date": "2022-02-17",
+            "title": "Faster video quality switching in Stream Player",
+            "description": "When viewers manually change the resolution of video they want to receive in the Stream Player, this change now happens immediately, rather than once the existing resolution playback buffer has finished playing."
+        }, 
+        {
+            "publish_date": "2022-02-09",
+            "title": "Volume and playback controls accessible during playback of VAST Ads",
+            "description": "When viewing ads in the [VAST format](https://www.iab.com/guidelines/vast/#:~:text=VAST%20is%20a%20Video%20Ad,of%20the%20digital%20video%20marketplace.) in the Stream Player, viewers can now manually start and stop the video, or control the volume."
+        }, 
+        {
+            "publish_date": "2022-01-25",
+            "title": "DASH and HLS manifest URLs accessible in Stream Dashboard",
+            "description": "If you choose to use a third-party player with Cloudflare Stream, you can now easily access HLS and DASH manifest URLs from within the Stream Dashboard. For more about using Stream with third-party players, read the docs [here](/stream/viewing-videos/using-own-player/)."
+        }, 
+        {
+            "publish_date": "2022-01-22",
+            "title": "Input health status in the Stream Dashboard",
+            "description": "When a live input is connected, the Stream Dashboard now displays technical details about the connection, which can be used to debug configuration issues."
+        }, 
+        {
+            "publish_date": "2022-01-06",
+            "title": "Live viewer count in the Stream Player",
+            "description": "The [Stream Player](/stream/viewing-videos/using-the-stream-player/) now shows the total number of people currently watching a video live."
+        }, 
+        {
+            "publish_date": "2022-01-04",
+            "title": "Webhook notifications for live stream connections events",
+            "description": "You can now configure Stream to send webhooks each time a live stream connects and disconnects. For more information, refer to the [Webhooks documentation](/stream/stream-live/webhooks)."
+        }, 
+        {
+            "publish_date": "2021-12-07",
+            "title": "FedRAMP Support",
+            "description": "The Stream Player can now be served from a [FedRAMP](https://www.cloudflare.com/press-releases/2021/cloudflare-hits-milestone-in-fedramp-approval/) compliant subdomain."
+        }, 
+        {
+            "publish_date": "2021-11-23",
+            "title": "24/7 Live streaming support",
+            "description": "You can now use Cloudflare Stream for 24/7 live streaming."
+        }, 
+        {
+            "publish_date": "2021-11-17",
+            "title": "Persistent Live Stream IDs",
+            "description": "You can now start and stop live broadcasts without having to provide a new video UID to the Stream Player (or your own player) each time the stream starts and stops. [Read the docs](/stream/stream-live/watch-live-stream/#view-by-live-input-id)."
+        }, 
+        {
+            "publish_date": "2021-10-14",
+            "title": "MP4 video file downloads for live videos",
+            "description": "Once a live video has ended and been recorded, you can now give viewers the option to download an MP4 video file of the live recording. For more, read the docs [here](/stream/stream-live/download-stream-live-videos/)."
+        }, 
+        {
+            "publish_date": "2021-09-30",
+            "title": "Serverless Live Streaming",
+            "description": "Stream now supports live video content! For more information, read the [blog post](https://blog.cloudflare.com/stream-live/) and get started by reading the [docs](/stream/stream-live/)."
+        }, 
+        {
+            "publish_date": "2021-07-26",
+            "title": "Thumbnail previews in Stream Player seek bar",
+            "description": "The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video."
+        }, 
+        {
+            "publish_date": "2021-07-26",
+            "title": "MP4 video file downloads (GA)",
+            "description": "All Cloudflare Stream customers can now give viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/)."
+        }, 
+        {
+            "publish_date": "2021-07-10",
+            "title": "Stream Connect (open beta)",
+            "description": "You can now opt-in to the Stream Connect beta, and use Cloudflare Stream to restream live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.\n\nFor more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/)."
+        }, 
+        {
+            "publish_date": "2021-06-10",
+            "title": "Simplified signed URL token generation",
+            "description": "You can now obtain a signed URL token via a single API request, without needing to generate signed tokens in your own application. [Read the docs](/stream/viewing-videos/securing-your-stream)."
+        }, 
+        {
+            "publish_date": "2021-06-08",
+            "title": "Stream Connect (closed beta)",
+            "description": "You can now use Cloudflare Stream to restream or simulcast live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.\n\nFor more, read the [blog post](https://blog.cloudflare.com/restream-with-stream-connect/) or the [docs](/stream/stream-live/simulcasting/)."
+        }, 
+        {
+            "publish_date": "2021-05-03",
+            "title": "MP4 video file downloads (beta)",
+            "description": "You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/)."
+        }, 
+        {
+            "publish_date": "2021-03-10",
+            "title": "Stream Player 2.0 (preview)",
+            "description": "A brand new version of the Stream Player is now available for preview. New features include:\n\n- Unified controls across desktop and mobile devices\n- Keyboard shortcuts\n- Intelligent mouse cursor interactions with player controls\n- Phased out support for Internet Explorer 11\n\nFor more, refer to [this post](https://community.cloudflare.com/t/announcing-the-preview-build-for-stream-player-2-0/243095) on the Cloudflare Community Forum."
+        }, 
+        {
+            "publish_date": "2021-03-04",
+            "title": "Faster video encoding",
+            "description": "Videos uploaded to Cloudflare Stream are now available to view 5x sooner, reducing the time your users wait between uploading and viewing videos."
+        }, 
+        {
+            "publish_date": "2021-03-29",
+            "title": "Picture quality improvements",
+            "description": "Cloudflare Stream now encodes videos with fewer artifacts, resulting in improved video quality for your viewers."
+        }, 
+        {
+            "publish_date": "2021-03-25",
+            "title": "Improved client bandwidth hints for third-party video players",
+            "description": "If you use Cloudflare Stream with a third party player, and send the `clientBandwidthHint` parameter in requests to fetch video manifests, Cloudflare Stream now selects the ideal resolution to provide to your client player more intelligently. This ensures your viewers receive the ideal resolution for their network connection."
+        }, 
+        {
+            "publish_date": "2021-03-17",
+            "title": "Less bandwidth, identical video quality",
+            "description": "Cloudflare Stream now delivers video using 3-10x less bandwidth, with no reduction in quality. This ensures faster playback for your viewers with less buffering, particularly when viewers have slower network connections."
+        }, 
+        {
+            "publish_date": "2021-01-17",
+            "title": "Removed weekly upload limit, increased max video upload size",
+            "description": "You can now upload videos up to 30GB in size to Cloudflare Stream and also now upload an unlimited number of videos to Cloudflare Stream each week"
+        }, 
+        {
+            "publish_date": "2020-12-14",
+            "title": "Tus support for direct creator uploads",
+            "description": "You can now use the [tus protocol](/stream/uploading-videos/direct-creator-uploads/#advanced-upload-flow-using-tus-for-large-videos) when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.\n\nIn addition, all uploads to Cloudflare Stream made using tus are now faster and more reliable as part of this change."
+        }, 
+        {
+            "publish_date": "2020-12-09",
+            "title": "Multiple audio track mixdown",
+            "description": "Videos with multiple audio tracks (ex: 5.1 surround sound) are now mixed down to stereo when uploaded to Stream. The resulting video, with stereo audio, is now playable in the Stream Player."
+        }, 
+        {
+            "publish_date": "2020-12-02",
+            "title": "Storage limit notifications",
+            "description": "Cloudflare now emails you if your account is using 75% or more of your prepaid video storage, so that you can take action and plan ahead."
         }
     ]
 }
