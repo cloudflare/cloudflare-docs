@@ -44,7 +44,7 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
     - **Health check target**: _Custom_.
     - **Target address**: `172.64.240.254`.
 
-    ![The second IPsec tunnel should have all the values mentioned for the first tunnel, as well as the ones mentioned in the step above.](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01.png)
+    ![The second IPsec tunnel should have all the values mentioned for the first tunnel, as well as the ones mentioned in the step above.](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-02.png)
 
 ### Magic static routes
 
