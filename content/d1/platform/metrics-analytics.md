@@ -17,10 +17,22 @@ D1 currently exports the below metrics:
 | ----------------------- | -------------------------- | ------------------------------------------------------------- |
 | Read Queries (qps)      | `readQueries`              | The number of read queries issued against a database. This is the raw number of read queries, and is not used for billing. |
 | Write Queries (qps)     | `writeQueries`             | The number of write queries issued against a database. This is the raw number of write queries, and is not used for billing. |
+| Rows read (count) | `rowsRead` | The number of rows read (scanned) across your queries. See [Pricing](/d1/platform/pricing/) for more details on how rows are counted. |
+| Rows written (count) | `rowsWritten` | The number of rows written across your queries. |
 | Query Response (bytes)  | `queryBatchResponseBytes`  | The total response size of the serialized query response, including any/all column names, rows and metadata. Reported in bytes. |
 | Query Latency (ms)      | `queryBatchTimeMs`         | The total query response time, including response serialization, on the server-side. Reported in milliseconds. |
 
 Metrics can be queried (and are retained) for the past 31 days.
+
+## Row counts
+
+D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/platform/client-api/#return-object).
+
+* Row counts are a precise count of how many rows were read (scanned) or written by that query.
+* Row counts are distinct from query counts, which are a simple sum of how many queries were executed against a database.
+* Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/learning/using-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.   
+
+Refer to the [Pricing](/d1/platform/pricing/) documentation for more details on how rows are counted.
 
 ## View via the dashboard
 
