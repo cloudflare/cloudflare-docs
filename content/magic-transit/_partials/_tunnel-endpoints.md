@@ -80,7 +80,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
 7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-8. In **Customer endpoint**, enter your router’s public IP address.
+8. In **Customer endpoint**, enter your router’s public IP address. This value is only required it your router is using an IKE ID of type `ID_IPV4_ADDR`.
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team (typically begins with `172.x.x.x`).
 10. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 11. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Probe construction]($8) for more information.
