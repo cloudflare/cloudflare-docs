@@ -130,6 +130,8 @@ Challenges are not supported by Microsoft Internet Explorer. If you are currentl
 
 When a request is sent with a referer header, the user will receive a challenge page as a response. Upon solving the challenge page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
 
+You can add tracking scripts to challenge pages to capture the correct referer header on the initial request. 
+
 ### Cross-origin resource sharing (CORS) preflight requests
 
 Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, excludes user credentials that include cookies. As a result, the `cf_clearance` cookie will not be sent with the request, causing it to fail to bypass a challenge page (non-interactive, managed, or interactive challenge).
