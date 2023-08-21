@@ -163,24 +163,16 @@
             "description": "- When using the S3 API, an empty string and `us-east-1` will now alias to the `auto` region for compatibility with external tools.\n- `GetBucketEncryption`, `PutBucketEncryption` and `DeleteBucketEncrypotion` are now supported (the only supported value currently is `AES256`).\n- Unsupported operations are explicitly rejected as unimplemented rather than implicitly converting them into `ListObjectsV2`/`PutBucket`/`DeleteBucket` respectively.\n- S3 API `CompleteMultipartUploads` requests are now properly escaped."
         },
         {
-            "publish_date": "",
-            "description": ""
+            "publish_date": "2022-05-03",
+            "description": "- Pagination cursors are no longer returned when the keys in a bucket is the same as the `MaxKeys` argument.\n- The S3 API `ListBuckets` operation now accepts `cf-max-keys`, `cf-start-after` and `cf-continuation-token` headers behave the same as the respective URL parameters.\n- The S3 API `ListBuckets` and `ListObjects` endpoints now allow `per_page` to be 0.\n- The S3 API `CopyObject` source parameter now requires a leading slash.\n- The S3 API `CopyObject` operation now returns a `NoSuchBucket` error when copying to a non-existent bucket instead of an internal error.\n- Enforce the requirement for `auto` in SigV4 signing and the `CreateBucket` `LocationConstraint` parameter.\n- The S3 API `CreateBucket` operation now returns the proper `location` response header."
         },
         {
-            "publish_date": "",
-            "description": ""
+            "publish_date": "2022-04-14",
+            "description": "- The S3 API now supports unchunked signed payloads.\n- Fixed `.put()` for the Workers R2 bindings.\n- Fixed a regression where key names were not properly decoded when using the S3 API.\n- Fixed a bug where deleting an object and then another object which is a prefix of the first could result in errors.\n- The S3 API `DeleteObjects` operation no longer returns an error even though an object has been deleted in some cases.\n- Fixed a bug where `startAfter` and `continuationToken` were not working in list operations.\n- The S3 API `ListObjects` operation now correctly renders `Prefix`, `Delimiter`, `StartAfter` and `MaxKeys` in the response.\n- The S3 API `ListObjectsV2` now correctly honors the `encoding-type` parameter.\n- The S3 API `PutObject` operation now works with `POST` requests for `s3cmd` compatibility."
         },
         {
-            "publish_date": "",
-            "description": ""
-        },
-        {
-            "publish_date": "",
-            "description": ""
-        },
-        {
-            "publish_date": "",
-            "description": ""
+            "publish_date": "2022-04-04",
+            "description": "The S3 API `DeleteObjects` request now properly returns a `MalformedXML` error instead of `InternalError` when provided with more than 128 keys."
         }
     ]
 }
