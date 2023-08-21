@@ -64,11 +64,17 @@
 </table>
 </div>
 </div>
+<div class="viewMoreChangesContainer">
+<button id="showAllButton" style="display: none;" class="viewMoreChangesButton">View more changes</button>
+</div>
 
 <script>
     const productsDropdown = document.getElementById("product");
     const searchInput = document.getElementById("searchInput");
     const dataRows = document.querySelectorAll(".data-row");
+    const showAllButton = document.getElementById("showAllButton");
+
+    let MAX_VISIBLE_ROWS = 20;
 
     // Function to update URL parameters
     function updateURLParams() {
@@ -82,6 +88,8 @@
     // Function to filter and show/hide rows
     function updateTable() {
       updateURLParams();
+
+      let visibleRowCount = 0;
   
       dataRows.forEach(row => {
         const productMatch = productsDropdown.value === "all" ||
@@ -90,10 +98,25 @@
                            Array.from(row.children).some(cell => cell.textContent.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
         if (productMatch && searchMatch) {
           row.style.display = "table-row";
+          visibleRowCount++;
+          if (visibleRowCount > MAX_VISIBLE_ROWS) {
+            row.style.display = "none";
+          }
         } else {
           row.style.display = "none";
         }
       });
+
+      if (visibleRowCount > MAX_VISIBLE_ROWS) {
+        showAllButton.style.display = "block";
+      } else {
+        showAllButton.style.display = "none";
+      }
+    }
+
+    function showAllEntries() {
+      MAX_VISIBLE_ROWS += 20;
+      updateTable();
     }
   
     // Set initial values from URL params
@@ -113,4 +136,5 @@
     // Event listeners
     productsDropdown.addEventListener("change", updateTable);
     searchInput.addEventListener("input", updateTable);
+    showAllButton.addEventListener("click", showAllEntries);
   </script>

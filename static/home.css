@@ -5874,3 +5874,21 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     width: 15em;
     padding-left: .5em
 }
+
+.viewMoreChangesContainer {
+    width: 100%;
+}
+
+.viewMoreChangesButton {
+    margin: auto;
+    width: 12em;
+    height: 2em;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.viewMoreChangesButton:hover {
+    text-decoration: underline;
+    transition: text-decoration 0.5s ease-in-out;
+}
