@@ -395,7 +395,7 @@ To add a new ChatGPT plugin, select the "Alpha" option at the top of ChatGPT's U
 
 In the new modal popup, select "Develop your own plugin". This will allow you to enter a custom plugin URL and use your own plugins directly in ChatGPT. Enter the deployed Workers URL, as seen below:
 
-![ChatGPT's custom plugin UI, allowing you to enter a URL](./custom-plugin.png)
+![ChatGPT's custom plugin UI, allowing you to enter a URL](/images/workers/tutorials/chatgpt-search/custom-plugin.png)
 
 ## Next steps
 
