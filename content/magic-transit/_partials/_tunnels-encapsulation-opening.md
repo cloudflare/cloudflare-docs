@@ -76,7 +76,7 @@ end
 
 a --> 1== Cloudflare Anycast GRE <br> single endpoint ==>i --> j
 
-1== Cloudflare Anycast IPSec <br> single endpoint ==>x --> z
+1== Cloudflare Anycast IPsec <br> single endpoint ==>x --> z
 ```
 
 ## IPsec tunnels
