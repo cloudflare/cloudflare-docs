@@ -10,40 +10,47 @@ With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies
 
 ```mermaid
 flowchart TB
-    %% In with user request
-    start[/"Request"/]-->a1
+    %% In with user traffic
+    start(["Traffic"])-->dns0[/"DNS query"/]-->dns1
+    start-->http0a[/"HTTP request"/]-->http0b
+    http0b{{"Port 80 or 443 traffic?"}}
+    http0b--Yes-->http1
+    http0b--No-->network0
 
     %% DNS policies
     subgraph DNS
-    a1["DNS policy #1"]-->a2["DNS policy #2"]
+    dns1["DNS policy #1"]-->dns2["DNS policy #2"]
     end
-    a2-->b1
+    dns2--Resolved by-->dns3["1.1.1.1"]-->internet
 
     %% Proxied by Gateway
     subgraph Proxy
 
     %% HTTP policies
     subgraph HTTP
-    b1{{"Do Not Inspect"}}
-    b1--Not matched-->b2["Isolate"]
-    b2-->b3["Allow, Block, Do Not Scan"]
+    http1{{"Do Not Inspect policies"}}
+    http1--Not matched-->http2["Isolate policies"]
+    http2-->http3["Allow, Block, Do Not Scan policies"]
     end
+
+    http1--Matched-->network0
+    http3-->network0
+    network0[/"Network packet"/]-->network1
 
     %% Network policies
     subgraph Network
-    b3-->c1["Network policy #1"]
-    b1--Matched-->c1
-    c1-->c2["Network policy #2"]
+    network1["Network policy #1"]-->network2["Network policy #2"]
     end
     end
 
     %% Egress
-    c2-.Enterprise users only.->d1[Egress policy]
-
+    subgraph Egress
+    network2-.Enterprise users only.->egress1[Egress policy]
+    end
 
     %% Finish
-    c2-->finish(Internet) 
-    d1-->finish
+    network2--Cloudflare IP applied-->internet([Internet])
+    egress1--Dedicated egress IP applied-->internet
 ```
 
 ## Priority between policy builders
