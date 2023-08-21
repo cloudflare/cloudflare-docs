@@ -5,7 +5,6 @@
 {{- $changelogDataEntries := index $changelogData "entries" -}}
 {{- $changelogDataEntries = sort $changelogDataEntries "date" "desc" -}}
 {{- $permalink := .Permalink -}}
-{{- $link := "" -}}
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -16,6 +15,7 @@
     <atom:link href="{{$atomLink}}" rel="self" />
     <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
     {{- range $changelogDataEntries -}}
+    {{- $link := "" -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
     {{- with .title -}}
     {{- $link = print $permalink "#" (urlize .) -}}

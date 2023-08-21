@@ -5892,3 +5892,12 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     text-decoration: underline;
     transition: text-decoration 0.5s ease-in-out;
 }
+
+.rssLink {
+    text-decoration: underline;
+    color: #0055DC;
+}
+
+[theme=dark] .rssLink {
+    color: #ff9e40;
+}

@@ -146,10 +146,14 @@
   
   {{ $rssFeedURL := print $.Context.Permalink "index.xml" -}}
 
+  {{- if ne $product "" -}}
   {{ printf `
     <link rel="alternate" type="application/rss+xml" href="%s" title="%s - %s - RSS Feed" />` $rssFeedURL $pt ($product | title) | safeHTML }}
 
-
+  {{- else -}}
+  {{ printf `
+    <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeedURL $pt | safeHTML }}
+  {{- end -}}
   {{- end -}}
 
   <!--Add rss feed links if specified via Param -->

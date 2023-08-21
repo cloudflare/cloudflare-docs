@@ -5,7 +5,7 @@
 {{- range $index, $product := $changelogData -}}
 {{- $products = $products | append $product.productName -}}
 {{- range $index2, $item := $product.entries -}}
-{{- $changelogRendered = $changelogRendered | append (merge $item (dict "product" $product.productName)) -}}
+{{- $changelogRendered = $changelogRendered | append (merge $item (dict "product" $product.productName "url" $product.link )) -}}
 {{- end -}}
 {{- end -}}
 
@@ -53,9 +53,19 @@
     </thead>
     <tbody id="tableBody">
 {{- range $changelogRendered -}}
+{{- $link := "" -}}
+{{- $rellink := .url -}}
+{{- $title := "" -}}
+{{ with .title }}
+  {{- $title = . -}}
+  {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
+{{ else }}
+  {{- $title = printf "%s · %s" .product .publish_date -}}
+  {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+{{- end -}}
 <tr class="data-row" data-product="{{.product | lower}}">
     <td>{{ .product }}</td>
-    <td>{{ .title }}</td>
+    <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
     <td>{{ .publish_date }}</td>
     <td>{{ .description | $.Page.RenderString }}</td>
 </tr>
@@ -73,6 +83,7 @@
     const searchInput = document.getElementById("searchInput");
     const dataRows = document.querySelectorAll(".data-row");
     const showAllButton = document.getElementById("showAllButton");
+    let descriptionText = document.getElementById("description")
 
     let MAX_VISIBLE_ROWS = 20;
 
@@ -84,10 +95,37 @@
       }
       history.replaceState(null, "", "?" + params.toString());
     }
+
+    // Function to update description text
+
+    function updateDescriptionText() {
+        let productName = "Changelog"
+        let changelogLink = "/changelog/index.xml"
+        const regexPattern = `developers\.cloudflare\.com(.*?)#`
+        for (const dropdown of productsDropdown) {
+          if (dropdown.selected === true && dropdown.value !== "all") {
+            productName = dropdown.label
+            while (changelogLink === "/changelog/index.xml") {
+              dataRows.forEach(row => {
+                if (row.cells[0].innerText === productName) {
+                  const rawHTML = row.cells[1].innerHTML;
+                  const match = rawHTML.match(regexPattern);
+                  if (match && match[1]) {
+                    const hrefValue = match[1];
+                    changelogLink = hrefValue + "index.xml"
+                  }
+                }
+              })
+            }
+          }
+        }
+        descriptionText.innerHTML = `Subscribe to all ${productName} posts via <a class='rssLink' href=${changelogLink}>RSS</a>.`;
+    }
   
     // Function to filter and show/hide rows
     function updateTable() {
       updateURLParams();
+      updateDescriptionText();
 
       let visibleRowCount = 0;
   
