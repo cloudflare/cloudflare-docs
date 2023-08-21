@@ -1,9 +1,9 @@
 {{- $product := $.Params.changelog_file_name -}}
-{{- $productData := index (index .Site.Data $product) "product" -}}
-{{- $title := printf "%s · %s" .Title $productData.title -}}
+{{- $changelogData := index (index .Site.Data "changelogs") $product -}}
+{{- $title := printf "%s · %s" .Title $changelogData.productName -}}
 {{- $atomLink := print .Permalink "index.xml" -}}
-{{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
-{{- $changelogData = sort $changelogData "date" "desc" -}}
+{{- $changelogDataEntries := index $changelogData "entries" -}}
+{{- $changelogDataEntries = sort $changelogDataEntries "date" "desc" -}}
 {{- $permalink := .Permalink -}}
 {{- $link := "" -}}
 
@@ -11,11 +11,11 @@
   <channel>
     <title>{{ $title }}</title>
     <link>{{ $permalink }}</link>
-    <description>Updates to Cloudflare's {{$productData.title}} product.</description>
+    <description>Updates to Cloudflare's {{$changelogData.productName}} product.</description>
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
-    <lastBuildDate>TBD</lastBuildDate>
-    {{- range $changelogData -}}
+    <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
+    {{- range $changelogDataEntries -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
     {{- with .title -}}
     {{- $link = print $permalink "#" (urlize .) -}}
