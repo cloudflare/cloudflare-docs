@@ -16,7 +16,11 @@
 {{- range $changelogData -}}
 {{- if eq $date .publish_date -}}
 
-{{- print "### " .title | $.Page.RenderString -}}
+{{- with .title -}}
+
+{{- print "### " . | $.Page.RenderString -}}
+
+{{- end -}}
 
 {{ .description | $.Page.RenderString }}
 

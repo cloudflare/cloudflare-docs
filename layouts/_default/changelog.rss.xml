@@ -5,6 +5,7 @@
 {{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
 {{- $changelogData = sort $changelogData "date" "desc" -}}
 {{- $permalink := .Permalink -}}
+{{- $link := "" -}}
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -16,9 +17,13 @@
     <lastBuildDate>TBD</lastBuildDate>
     {{- range $changelogData -}}
     {{ $description := .description | $.Page.RenderString | htmlUnescape }}
-    {{- $link := print $permalink "#" (urlize .title) -}}
+    {{- with .title -}}
+    {{- $link = print $permalink "#" (urlize .) -}}
+    {{- else -}}
+    {{- $link = print $permalink "#" (urlize .publish_date) -}}
+    {{- end -}}
     <item>
-    <title>{{ .title }}</title>
+    <title>{{- with .title -}}{{ . }}{{ else }}{{ .publish_date }}{{ end }}</title>
     <link>{{ $link }}</link>
     <description>{{ $description }}</description>
     <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
