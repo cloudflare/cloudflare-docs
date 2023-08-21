@@ -139,7 +139,7 @@ curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/
 <summary>IPsec tunnel</summary>
 <div>
 
-Create a `POST` request [using the API](/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+Create a `POST` request [using the API](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
 
 Example:
 

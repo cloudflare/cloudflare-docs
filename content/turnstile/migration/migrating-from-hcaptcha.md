@@ -40,12 +40,10 @@ turnstile.render(element, {
 
 </div>
 
-{{<Aside type= "Note">}}
-
+{{<Aside type= "note">}}
 Turnstile supports:
 * the `render()` call
 * hCaptcha invisible mode with the `execute()` call
-
 {{</Aside>}}
 
 ## Server-side integration

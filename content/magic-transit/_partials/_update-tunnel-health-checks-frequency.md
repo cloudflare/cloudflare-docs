@@ -24,4 +24,4 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tu
   }'
 ```
 
-Refer to the API documentation for more information on how to [update a GRE](/api/operations/magic-gre-tunnels-update-gre-tunnel), [IPsec](/api/operations/magic-i-psec-tunnels-update-i-psec-tunnel) or [CNI](/api/operations/magic-interconnects-update-interconnect) tunnel.
+Refer to the API documentation for more information on how to [update a GRE](/api/operations/magic-gre-tunnels-update-gre-tunnel), [IPsec](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) or [CNI](/api/operations/magic-interconnects-update-interconnect) tunnel.

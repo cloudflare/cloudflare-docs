@@ -107,13 +107,11 @@ ___
 If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:
 
 {{<Aside type="warning">}}
-
 The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan).
 
 Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.
 
 Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.
-
 {{</Aside>}}
 
 -   RayIDs

@@ -11,19 +11,15 @@ structured_data: true
 Community resources for our customers to help them integrate Turnstile.
 
 {{<Aside type="warning">}}
-
 These resources are made by the **community** and not maintained directly by Cloudflare.
 
 As such, Cloudflare is not liable for any damages arising from using them.
-
 {{</Aside>}}
 
 {{<Aside type="note">}}
-
 Did we miss your library? [Contribute to our list][1].
 
 [1]: https://github.com/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md#pull-requests
-
 {{</Aside>}}
 
 ## Client-side rendering libraries

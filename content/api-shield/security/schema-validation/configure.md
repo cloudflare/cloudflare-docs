@@ -10,17 +10,13 @@ meta:
 # Configure Schema Validation 2.0
 
 {{<Aside type="note">}}
-
 Schema Validation 2.0 API is currently in an experimental functionality and may change in future updates.
-
 {{</Aside>}}
 
 Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual endpoints and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints. 
 
 {{<Aside type="note">}}
-
 [Classic Schema Validation documentation](/api-shield/reference/classic-schema-validation/) is available for reference only.
-
 {{</Aside>}}
 
 ## Upload schemas via the API to Schema Validation
@@ -42,9 +38,7 @@ Cloudflare recommends you to rerun test traffic and monitor the HTTP response co
 Settings changes may take a few minutes to implement.
 
 {{<Aside type="note">}}
-
 Endpoints must be listed in Endpoint Management for Schema Validation to match requests.
-
 {{</Aside>}}
 
 ## Configuration
@@ -242,9 +236,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operation
 ```
 
 {{<Aside type="note">}}
-
 If you run this command again immediately, it will result in an error as all `new_operations` are now `existing_operations`.
-
 {{</Aside>}}
 
 ### Change the default and operation-specific mitigation action
@@ -407,9 +399,7 @@ header: Result
 ```
 
 {{<Aside type="note">}}
-
 We recommend using the query parameter `omit_source=true` to only display active schemas and not retrieve the source for every schema to get less output.
-
 {{</Aside>}}
 
 ### Delete a schema
@@ -522,9 +512,7 @@ header: Result
 ```
 
 {{<Aside type="note">}}
-
 Parameter schemas are updated between every 24 hours up to one week. To ensure that a parameter schema has not been updated during the inspection, Cloudflare recommends that you pass the `last_updated` timestamp of the parameter-schema feature (not the `last_updated` of the whole operation) as an identifier in the timestamp query parameter.
-
 {{</Aside>}}
 
 ### Disable Schema Validation

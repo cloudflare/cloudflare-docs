@@ -46,9 +46,7 @@ To restore any errantly ignored endpoints, you can filter by **Ignored** and sel
 Check back regularly for new API Discovery results. A badge with the number of endpoints needing review will show in the API Shield dashboard.
 
 {{<Aside type="note">}}
-
 Cloudflare will use your feedback on the ignored endpoints to better train the API Discovery Machine Learning model in a future release.
-
 {{</Aside>}}
 
 ### Machine Learning-based Discovery
