@@ -10,7 +10,7 @@ weight: 1
 
 # Build a ChatGPT search plugin with Notion & Pinecone
 
-In this tutorial, you'll use Langchain, a JavaScript package for working with large language models, and Pinecone, a vector database, to index a Notion workspace. You'll then be able to query it using a custom ChatGPT plugin built with Cloudflare Workers.
+In this tutorial, you'll use [Langchain](https://js.langchain.com), a JavaScript package for working with large language models, and [Pinecone](http://pinecone.io/), a vector database, to index a [Notion](https://www.notion.so/) workspace. You'll then be able to query it using a custom ChatGPT plugin built with Cloudflare Workers.
 
 ![Demo](/images/workers/tutorials/chatgpt-search/demo.gif)
 
@@ -40,7 +40,11 @@ Pinecone provides a vector indexes, which are a special type of database that st
 
 To begin, create a Pinecone account. In this tutorial, everything you build will be storable in the free tier. Once you've created an account, you'll then need to wait a few minutes for your project to be created.
 
-In your project dashboard, create a new index. Give it a memorable name (in this tutorial, we'll use the name `example-index`), and in the index configuration, enter a dimension value of `1536`. This is a typical value used in many AI applications, and is the format used by a tool you will later use -- OpenAI's embedding API.
+In your project dashboard, create a new index. Here is Pinecone's definition of an index:
+
+> An index is the highest-level organizational unit of vector data in Pinecone. It accepts and stores vectors, serves queries over the vectors it contains, and does other vector operations over its contents.
+
+Give your index a memorable name (in this tutorial, we'll use the name `example-index`), and in the index configuration, enter a dimension value of `1536`. This is a typical value used in many AI applications, and is the format used by a tool you will later use -- OpenAI's embedding API.
 
 Once your index is created, make sure to grab the following configuration values for use later in your app:
 
