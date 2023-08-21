@@ -11,7 +11,7 @@
 
 <!-- Order and remove dupe values -->
 {{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}}
-{{- $products = $products | uniq -}}
+{{- $products = sort ($products | uniq) . "asc" -}}
 
 <div class="selectorDropdowns">
 
