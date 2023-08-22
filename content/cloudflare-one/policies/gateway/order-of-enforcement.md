@@ -12,16 +12,15 @@ With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies
 flowchart TB
     %% In with user traffic
     start(["Traffic"])-->dns0[/"DNS query"/]-->dns1
-    start-->http0a[/"HTTP request"/]-->http0b
-    http0b{{"Port 80 or 443 traffic?"}}
-    http0b--Yes-->http1
-    http0b--No-->network0
+    start-->http0{{"HTTP(S) traffic on port 80 or 443?"}}
+    http0--Yes-->http1
+    http0--No-->network0
 
     %% DNS policies
     subgraph DNS
-    dns1["DNS policy #1"]-->dns2["DNS policy #2"]
+    dns1["DNS policies"]
     end
-    dns2--Resolved by-->dns3["1.1.1.1"]-->internet
+    dns1--Resolved by-->dns2["1.1.1.1"]-->internet
 
     %% Proxied by Gateway
     subgraph Proxy
@@ -35,22 +34,21 @@ flowchart TB
 
     http1--Matched-->network0
     http3-->network0
-    network0[/"Network packet"/]-->network1
 
     %% Network policies
     subgraph Network
-    network1["Network policy #1"]-->network2["Network policy #2"]
+    network0[/"Network packet"/]-->network1["Network policies"]
     end
     end
 
     %% Egress
     subgraph Egress
-    network2-.Enterprise users only.->egress1[Egress policy]
+    network1-.Enterprise users only.->egress1[Egress policy]
     end
 
     %% Finish
-    network2--Cloudflare IP applied-->internet([Internet])
-    egress1--Dedicated egress IP applied-->internet
+    network1--Egress with Cloudflare IP-->internet([Internet])
+    egress1--Egress with dedicated IP-->internet
 ```
 
 ## Priority between policy builders
