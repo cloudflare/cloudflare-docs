@@ -74,7 +74,46 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Configure Terraform providers
 
-{{<render file="_terraform_providers.md">}}
+You will need to declare the [providers](https://registry.terraform.io/browse/providers) used to provision the infrastructure.
+
+1. In your configuration directory, create a `.tf` file:
+
+    ```sh
+    $ touch providers.tf
+    ```
+
+2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
+
+    ```txt
+    ---
+    filename: providers.tf
+    ---
+    terraform {
+      required_providers {
+        cloudflare = {
+          source = "cloudflare/cloudflare"
+          version = ">= 4.9.0"
+        }
+        google = {
+          source = "hashicorp/google"
+        }
+        random = {
+          source = "hashicorp/random"
+        }
+      }
+      required_version = ">= 0.13"
+    }
+
+    # Providers
+    provider "cloudflare" {
+      api_token    = var.cloudflare_token
+    }
+    provider "google" {
+      project    = var.gcp_project_id
+    }
+    provider "random" {
+    }
+    ```
 
 ### Configure Cloudflare resources
 
@@ -108,7 +147,7 @@ The following configuration will modify settings in your Cloudflare account.
    resource "cloudflare_record" "http_app" {
      zone_id = var.cloudflare_zone_id
      name    = "http_app"
-     value   = "${cloudflare_argo_tunnel.auto_tunnel.cname}"
+     value   = "${cloudflare_tunnel.auto_tunnel.cname}"
      type    = "CNAME"
      proxied = true
    }
@@ -199,7 +238,7 @@ The following configuration defines the specifications for the GCP virtual machi
      // Configures the VM to run a startup script that takes in the Terraform variables.
      metadata_startup_script = templatefile("./install-tunnel.tpl",
        {
-         tunnel_token = cloudflare_tunnel.auto_tunnel.tunnel_token,
+         tunnel_token = cloudflare_tunnel.auto_tunnel.tunnel_token
        })
    }
    ```
@@ -244,8 +283,7 @@ The following script will install `cloudflared`, create a permissions and config
         image: cloudflare/cloudflared:latest
         restart: always
         container_name: cloudflared
-        environment:
-          TUNNEL_TOKEN: ${tunnel_token}
+        command: tunnel run --token ${tunnel_token} 
     EOF
     cd /tmp
     sudo docker-compose up -d
