@@ -52,7 +52,7 @@ This prevents certificate pinning issues when performing the Android migration.
 {{</tab>}}
 {{<tab label="ios" no-code="true">}}
 
-1. Update the **1.1.1.1** app to version 6.29 or above. The update ensures that 1.1.1.1 can [co-exist](#what-to-do-with-the-old-app) with the new Cloudflare One Agent app.
+1. Update the **1.1.1.1** app to version 6.22 or above. The update ensures that 1.1.1.1 can [co-exist](#what-to-do-with-the-old-app) with the new Cloudflare One Agent app.
 2. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/#ios) the **Cloudflare One Agent** app.
 3. Launch the Cloudflare One Agent app. All settings from 1.1.1.1 will automatically migrate over to the Cloudflare One Agent. The user does not need to reauthenticate.
 
