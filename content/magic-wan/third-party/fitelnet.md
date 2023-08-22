@@ -1,17 +1,17 @@
 ---
 pcx_content_type: integration-guide
-title: Furukawa Electric　FITELnet
+title: Furukawa Electric FITELnet
 ---
 
-# Furukawa Electric　FITELnet
+# Furukawa Electric FITELnet
 
 This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 to connect Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
 
 ## Testing environment
 
 These configurations were tested on FITELnet F220 and F70 series with the followin firmware versions:
-  - F220 series：Version 01.11(00)
-  - F70 series：Version 01.09(00)
+  - F220 series: Version 01.11(00)
+  - F70 series: Version 01.09(00)
 
 ## IPsec configuration
 
@@ -102,8 +102,6 @@ crypto map MAP1 ipsec-isakmp
 exit
 !
 ```
-
----
 
 ## Static route configuration 
 
