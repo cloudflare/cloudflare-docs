@@ -5,13 +5,13 @@ title: Furukawa Electric FITELnet
 
 # Furukawa Electric FITELnet
 
-This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 to connect Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
+This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 to connect to Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
 
 ## Testing environment
 
-These configurations were tested on FITELnet F220 and F70 series with the followin firmware versions:
-  - F220 series: Version 01.11(00)
-  - F70 series: Version 01.09(00)
+These configurations were tested on FITELnet F220 and F70 series with the following firmware versions:
+  - **F220 series**: Version 01.11(00)
+  - **F70 series**: Version 01.09(00)
 
 ## IPsec configuration
 
@@ -20,15 +20,16 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to to **Magic WAN** > **Manage Magic WAN Configuration** > **Configure**.
 3. From the **Tunnels** tab, select **Create**.
-4. For the first IPsec tunnel, ensure the following settings are defined. [Settings not mentioned here](/magic-wan/get-started/configure-tunnels/#add-tunnels) can be left with their default settings:
-  - **Tunnel name**: `FITEL-tunnel-1`
-  - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
-  - **Customer endpoint**: The global address for your first FITELnet router.
-  - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
-5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure this additional setting is defined:
-  - **Tunnel name**: `FITEL-tunnel-2`
-  - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
-  - **Customer endpoint**: The global address for your second FITELnet router.
+4. For the first IPsec tunnel, ensure the following settings are defined. ([settings not mentioned here](/magic-wan/get-started/configure-tunnels/#add-tunnels) can be left with their default settings):
+    - **Tunnel name**: `FITEL-tunnel-1`
+    - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
+    - **Customer endpoint**: The global address for your first FITELnet router.
+    - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
+5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional setting is defined:
+    - **Tunnel name**: `FITEL-tunnel-2`
+    - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
+    - **Customer endpoint**: The global address for your second FITELnet router.
+    - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
 
 ### FITELnet router configuration
 
