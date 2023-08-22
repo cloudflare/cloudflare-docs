@@ -8,7 +8,7 @@ weight: 1
 
 Ansible is a software tool that enables at scale management of infrastructure. Ansible is agentless — all it needs to function is the ability to SSH to the target and Python installed on the target.
 
-Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup process. In this guide, you will use Terraform to deploy an SSH server on Google Cloud and create a Cloudflare Tunnel that makes the server available over the Internet. Terraform will automatically run an Ansible playbook that installs and configures `cloudflared` on the server.
+Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup process. In this guide, you will use Terraform to deploy an SSH server on Google Cloud and create a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/) that makes the server available over the Internet. Terraform will automatically run an Ansible playbook that installs and configures `cloudflared` on the server.
 
 ## Prerequisites
 
@@ -63,7 +63,45 @@ Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_
 
 ### Configure Terraform providers
 
-{{<render file="_terraform_providers.md">}}
+You will need to declare the [providers](https://registry.terraform.io/browse/providers) used to provision the infrastructure.
+
+1. In your configuration directory, create a `.tf` file:
+
+    ```sh
+    $ touch providers.tf
+    ```
+
+2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
+
+    ```txt
+    ---
+    filename: providers.tf
+    ---
+    terraform {
+      required_providers {
+        cloudflare = {
+          source = "cloudflare/cloudflare"
+        }
+        google = {
+          source = "hashicorp/google"
+        }
+        random = {
+          source = "hashicorp/random"
+        }
+      }
+      required_version = ">= 0.13"
+    }
+
+    # Providers
+    provider "cloudflare" {
+      api_token    = var.cloudflare_token
+    }
+    provider "google" {
+      project    = var.gcp_project_id
+    }
+    provider "random" {
+    }
+    ```
 
 ### Configure Cloudflare resources
 
