@@ -232,9 +232,7 @@ You will receive a response like the following:
 
 3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as this value is automatically set.
 
-4. (Optional) If you have devices that do not support disabling anti-replay protection, you can enable this option with a `PUT` request [using the API](https://developers.cloudflare.com/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) to your IPsec tunnel. 
-
-Anti-replay protection is disabled by default. Refer to Refer to [Anti-replay protection]($9) for more information on this topic.
+4. (Optional) If you have devices that do not support disabling anti-replay protection, you can enable this option with a `PUT` request [using the API](https://developers.cloudflare.com/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) to your IPsec tunnel. <br> Anti-replay protection is disabled by default. Refer to Refer to [Anti-replay protection]($9) for more information on this topic.
 
 ```bash
 curl --request PUT \
