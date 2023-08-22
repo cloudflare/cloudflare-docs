@@ -42,7 +42,7 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 
 If you use $2 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
-Refer to [Anti-replay protection]($9) for more information on this topic, or [Add tunnels](#add-tunnels) to learn how to enable the feature for IPsec tunnels.
+Refer to [Anti-replay protection]($9) for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
 
 ### Technical requirements for GRE and IPsec tunnels
 
