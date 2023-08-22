@@ -147,7 +147,9 @@ curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/
 <summary>IPsec tunnel</summary>
 <div>
 
-Create a `POST` request [using the API](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+1. Create a `POST` request [using the API](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+
+Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true`, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel).<br> Refer to Refer to [Anti-replay protection]($9) for more information on this topic.
 
 Example:
 
@@ -163,7 +165,8 @@ curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/
       "description": "<TUNNEL_DESCRIPTION>", 
       "interface_address": "<INTERFACE_ADDRESS>", 
       "cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-      "customer_endpoint": "<CUSTOMER_ENDPOINT>"
+      "customer_endpoint": "<CUSTOMER_ENDPOINT>",
+      "replay_protection": false
     }
   ]
 }'
@@ -231,23 +234,6 @@ You will receive a response like the following:
 ```
 
 3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as this value is automatically set.
-
-4. (Optional) If you have devices that do not support disabling anti-replay protection, you can enable this option with a `PUT` request [using the API](https://developers.cloudflare.com/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) to your IPsec tunnel. <br> Anti-replay protection is disabled by default. Refer to Refer to [Anti-replay protection]($9) for more information on this topic.
-
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---data '{
-  "ipsec_tunnels": [
-    {
-      "replay_protection": true
-    }
-  ]
-}'
-```
 
 
 </div>
