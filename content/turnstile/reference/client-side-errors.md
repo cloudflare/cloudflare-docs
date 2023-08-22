@@ -14,7 +14,7 @@ There are instances where Turnstile may encounter problems, invoking `error-call
 
 The `error-callback` option for explicitly rendering widgets and the `data-error-callback` attribute on implicit rendering provides a JavaScript callback to handle potential errors that occur.
 
-Specifying an error callback is optional, and if no error callback is set, Turnstile will throw a JavaScript exception upon error.
+Specifying an error callback is optional. If no error callback is set, Turnstile will throw a JavaScript exception upon error.
 
 If an error callback returns with a non-falsy result, Turnstile will assume that the error callback handled the error accordingly.
 
@@ -45,10 +45,10 @@ When an error code is marked with `***`, it means that the remaining numbers can
 | `undefined_error` | An unspecific error error occurred with no specific error code associated. | Yes | The challenge should be retried. |
 | `100***` | Error Code Family Initialization Problems: There was a problem initializing Turnstile before a challenge could be started. | No | This could be caused by an old instance of the challenge that was solved. It is advised to reload the page and restart Turnstile. On continuous failures, this is indicative of an automated device. |
 | `102***` | Error Code Family Invalid Parameters: The visitor sent an invalid parameter as part of the challenge towards Turnstile. | Yes | It is advised to retry the challenge. On continuous failures, this is indicative of an automated device. |
-| `102***`,`103***`,`104***`,`106***` | Error Code Family Invalid Parameters: The visitor sent an invalid parameter as part of the challenge towards Turnstile. | Yes | It is advised to retry the challenge. On continuous failures, this is indicative of an automated device. |
+| `102***` `103***` `104***` `106***` | Error Code Family Invalid Parameters: The visitor sent an invalid parameter as part of the challenge towards Turnstile. | Yes | It is advised to retry the challenge. On continuous failures, this is indicative of an automated device. |
 | `105***` | Error Code Family: Turnstile API Compatibility: Turnstile was invoked in a deprecated or invalid way. | No | It is advised to refer to the [Turnstile documentation](/turnstile/) again and refresh the page to obtain the most recent Turnstile version. |
 | `106***` | Error Code Family: Invalid Parameters: The visitor sent unexpected invalid parameters to Turnstile. | No | Verify the visitor's authenticity by other means. |
-| `110100`,`110110` | Invalid sitekey | No | Turnstile was invoked with an invalid sitekey or a sitekey that is no longer active. Verify if the sitekey provided is still active. |
+| `110100` `110110` | Invalid sitekey | No | Turnstile was invoked with an invalid sitekey or a sitekey that is no longer active. Verify if the sitekey provided is still active. |
 | `110200` | Domain not allowed. | No | Turnstile was used on a domain that was not allowed for this widget to be used on. Ensure that the domain Turnstile is intended to run on is allowed in the widget configuration. |
 | `110420` | This error occurs when an unsupported or incorrectly formatted action is submitted. | No | Ensure that the action conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. |
 | `110430` | This error occurs when an unsupported or incorrectly formatted action is submitted. The "Invalid CDATA" error in Turnstile refers to an issue encountered when processing Custom Data (CDATA). This error occurs when the CDATA provided does not adhere to the expected format or contains invalid characters. | No | Ensure that the CDATA conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. | 
