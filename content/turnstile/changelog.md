@@ -8,7 +8,7 @@ rss: file
 # Changelog
 
 ## 2023-08-24
-- Added [Client Side Errors](/turnstile/reference/client-side-errors)
+- Added [Client-side errors](/turnstile/reference/client-side-errors).
 
 ## 2023-07-31
 
