@@ -38,11 +38,11 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 
 {{<Aside type="note" header="Note">}}$2 only supports Internet Key Exchange version 2 (IKEv2).{{</Aside>}}
 
-### Anti-replay protection
+#### Anti-replay protection
 
 If you use $2 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
-Refer to [Anti-replay protection]($9) for more information on this technology, or [Add tunnels](#add-tunnels) to learn how to enable the feature for IPsec tunnels if you need it.
+Refer to [Anti-replay protection]($9) for more information on this topic, or [Add tunnels](#add-tunnels) to learn how to enable the feature for IPsec tunnels.
 
 ### Technical requirements for GRE and IPsec tunnels
 
@@ -106,7 +106,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
     3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
     4. Select **Add tunnels**.
 
-15. (Optional) If you need, you can enable **Replay protection** if you have devices that do not support disabling it. Refer to [Anti-replay protection]($9) for more information.
+15. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to [Anti-replay protection]($9) for more information.
 
 </div>
 </details>
@@ -231,6 +231,26 @@ You will receive a response like the following:
 ```
 
 3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as this value is automatically set.
+
+4. (Optional) If you have devices that do not support disabling anti-replay protection, you can enable this option with a `PUT` request [using the API](https://developers.cloudflare.com/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) to your IPsec tunnel. 
+
+Anti-replay protection is disabled by default. Refer to Refer to [Anti-replay protection]($9) for more information on this topic.
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "ipsec_tunnels": [
+    {
+      "replay_protection": true
+    }
+  ]
+}'
+```
+
 
 </div>
 </details>
