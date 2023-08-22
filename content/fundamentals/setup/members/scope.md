@@ -4,6 +4,7 @@ title: Role scopes
 weight: 4
 aliases:
 - /fundamentals/account-and-billing/members/scope/
+- /testing/
 ---
 
 # Role scopes
