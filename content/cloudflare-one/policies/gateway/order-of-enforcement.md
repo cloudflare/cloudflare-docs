@@ -44,7 +44,7 @@ flowchart TB
 
     %% Egress
     subgraph Egress
-    network1-.Enterprise users only.->egress1[Egress policy]
+    network1-.Enterprise users only.->egress1[Egress policies]
     end
 
     %% Finish
