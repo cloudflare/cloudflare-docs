@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;productPathTunnel;;productPathProbe
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;productPathTunnel;;productPathProbe;;antiReplayPagePath
 ---
 
 #  Configure tunnel endpoints
@@ -37,6 +37,12 @@ You can [use IPsec]($4) as an on-ramp to connect with your entire virtual networ
 You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
 
 {{<Aside type="note" header="Note">}}$2 only supports Internet Key Exchange version 2 (IKEv2).{{</Aside>}}
+
+### Anti-replay protection
+
+If you use $2 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+
+Refer to [Anti-replay protection]($9) for more information on this technology, or [Add tunnels](#add-tunnels) to learn how to enable the feature for IPsec tunnels if you need it.
 
 ### Technical requirements for GRE and IPsec tunnels
 
