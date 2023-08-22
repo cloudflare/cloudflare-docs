@@ -106,6 +106,8 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
     3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
     4. Select **Add tunnels**.
 
+15. (Optional) If you need, you can enable **Replay protection** if you have devices that do not support disabling it. Refer to [Anti-replay protection]($9) for more information.
+
 </div>
 </details>
  
