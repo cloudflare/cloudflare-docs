@@ -12,15 +12,16 @@ With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies
 flowchart TB
     %% In with user traffic
     start(["Traffic"])-->dns0[/"DNS query"/]-->dns1
-    start-->http0{{"HTTP(S) traffic on port 80 or 443?"}}
+    start-->http0{{"HTTP(S) request on port 80 or 443?"}}
     http0--Yes-->http1
     http0--No-->network0
 
     %% DNS policies
     subgraph DNS
     dns1["DNS policies"]
+    style DNS text-align:left
     end
-    dns1--Resolved by-->dns2["1.1.1.1"]-->internet
+    dns1--Resolved by-->dns2["1.1.1.1"]------>internet
 
     %% Proxied by Gateway
     subgraph Proxy
@@ -28,11 +29,11 @@ flowchart TB
     %% HTTP policies
     subgraph HTTP
     http1{{"Do Not Inspect policies"}}
-    http1--Not matched-->http2["Isolate policies"]
+    http1--Inspect-->http2["Isolate policies"]
     http2-->http3["Allow, Block, Do Not Scan policies"]
     end
 
-    http1--Matched-->network0
+    http1--Do Not Inspect-->network0
     http3-->network0
     network0[/"Network packet"/]-->network1
 
