@@ -20,11 +20,13 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to to **Magic WAN** > **Manage Magic WAN Configuration** > **Configure**.
 3. From the **Tunnels** tab, select **Create**.
-4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
+4. For the first IPsec tunnel, ensure the following settings are defined. [Settings not mentioned here](/magic-wan/get-started/configure-tunnels/#add-tunnels) can be left with their default settings:
+  - **Tunnel name**: `FITEL-tunnel-1`
   - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
   - **Customer endpoint**: The global address for your first FITELnet router.
-  - **Cloudflare endpoint**: The Cloudflare Anycast IP is assigned by your account team.
+  - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
 5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure this additional setting is defined:
+  - **Tunnel name**: `FITEL-tunnel-2`
   - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
   - **Customer endpoint**: The global address for your second FITELnet router.
 
