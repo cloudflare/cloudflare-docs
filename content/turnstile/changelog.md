@@ -7,6 +7,9 @@ rss: file
 
 # Changelog
 
+## 2023-08-24
+- Added [Client Side Errors](/turnstile/reference/client-side-errors)
+
 ## 2023-07-31
 
 - Added [`[turnstile.isExpired]`](/turnstile/get-started/client-side-rendering/#access-a-widgets-state).
