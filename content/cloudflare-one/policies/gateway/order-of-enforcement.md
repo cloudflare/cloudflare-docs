@@ -34,10 +34,11 @@ flowchart TB
 
     http1--Matched-->network0
     http3-->network0
+    network0[/"Network packet"/]-->network1
 
     %% Network policies
     subgraph Network
-    network0[/"Network packet"/]-->network1["Network policies"]
+    network1["Network policies"]
     end
     end
 
