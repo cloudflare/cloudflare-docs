@@ -18,7 +18,7 @@ To enable bidirectional tunnel health checks, set the health check’s `target` 
 
 {{<render file="_icmp-mfirewall.md">}}
 
-{{<render file="_update-tunnel-health-checks-frequency.md" withParameters="/magic-transit/reference/probe-construction/">}}
+{{<render file="_update-tunnel-health-checks-frequency.md" withParameters="/magic-transit/reference/probe-construction/;;/magic-transit/how-to/configure-tunnels/#add-tunnels">}}
 
 ## Check for tunnel health in the dashboard
 
