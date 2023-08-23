@@ -22,7 +22,7 @@ To accomplish this, we recommend that you:
 
 {{<render file="_icmp-mfirewall.md" productFolder="magic-transit">}}
 
-{{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/probe-construction/" >}}
+{{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/probe-construction/;;/magic-wan/get-started/configure-tunnels/#add-tunnels" >}}
 
 ## Check for tunnel health in the dashboard
 
