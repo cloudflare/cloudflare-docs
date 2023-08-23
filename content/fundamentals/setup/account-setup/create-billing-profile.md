@@ -2,6 +2,8 @@
 pcx_content_type: tutorial
 title: Create billing profile
 weight: 3
+aliases:
+- /fundamentals/account-and-billing/account-setup/create-billing-profile/
 updated: 2022-08-24
 ---
 

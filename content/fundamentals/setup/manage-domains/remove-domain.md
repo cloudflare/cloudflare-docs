@@ -4,6 +4,8 @@ title: Remove a domain
 weight: 3
 meta:
     title: Remove a domain from Cloudflare
+aliases:
+- /fundamentals/get-started/basic-tasks/manage-domains/remove-domain/
 ---
 
 # Remove a domain

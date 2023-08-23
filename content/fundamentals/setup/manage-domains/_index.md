@@ -2,6 +2,8 @@
 pcx_content_type: navigation
 title: Manage domains
 weight: 3
+aliases:
+- /fundamentals/get-started/basic-tasks/manage-domains/
 ---
 
 # Manage domains

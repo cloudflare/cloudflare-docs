@@ -2,6 +2,8 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
+aliases:
+- /fundamentals/
 ---
 
 # Cloudflare Fundamentals

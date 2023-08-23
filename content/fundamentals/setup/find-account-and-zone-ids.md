@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Find zone and account IDs
 weight: 6
+aliases:
+- /fundamentals/get-started/basic-tasks/find-account-and-zone-ids/
 ---
 
 # Find zone and account IDs

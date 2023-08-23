@@ -2,6 +2,8 @@
 title: Verify email address
 pcx_content_type: how-to
 weight: 2
+aliases:
+- /fundamentals/account-and-billing/account-setup/verify-email-address/
 ---
 
 # Verify email address

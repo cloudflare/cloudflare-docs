@@ -1,6 +1,8 @@
 ---
 title: Account name
 pcx_content_type: how-to
+aliases:
+- /fundamentals/account-and-billing/account-setup/customize-account/account-name/
 ---
 
 # Account name

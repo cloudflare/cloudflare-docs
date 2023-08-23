@@ -1,6 +1,8 @@
 ---
 title: Language preference
 pcx_content_type: how-to
+aliases:
+- /fundamentals/account-and-billing/account-setup/customize-account/language-preference/
 ---
 
 # Language preference

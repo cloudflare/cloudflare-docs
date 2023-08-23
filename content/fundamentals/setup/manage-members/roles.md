@@ -4,6 +4,8 @@ title: Roles
 weight: 3
 meta:
     title: Account roles
+aliases:
+- /fundamentals/account-and-billing/members/roles/
 ---
 
 # Roles
