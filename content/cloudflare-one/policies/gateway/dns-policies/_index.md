@@ -79,7 +79,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
 
-{{<Aside>}}The Override action cannot be used with selectors evaluated during or after resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
+{{<Aside>}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
 
 ### Safe Search
 
@@ -117,25 +117,25 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 Use this selector to match against the IP address of the authoritative nameserver IP address.
 
-| UI name                     | API example                                | Evaluation phase  |
-| --------------------------- | ------------------------------------------ | ----------------- |
-| Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` | During resolution |
+| UI name                     | API example                                | Evaluation phase      |
+| --------------------------- | ------------------------------------------ | --------------------- |
+| Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` | During DNS resolution |
 
 ### Content Categories
 
 Use this selector to block domains belonging to specific [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories). When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).
 
-| UI name            | API example                           | Evaluation phase  |
-| ------------------ | ------------------------------------- | ----------------- |
-| Content Categories | `any(dns.content_category[*] in {1})` | Before resolution |
+| UI name            | API example                           | Evaluation phase      |
+| ------------------ | ------------------------------------- | --------------------- |
+| Content Categories | `any(dns.content_category[*] in {1})` | Before DNS resolution |
 
 ### DNS CNAME Record
 
 Use this selector to filter DNS responses by their `CNAME` records.
 
-| UI name                  | API example                                                   | Evaluation phase |
-| ------------------------ | ------------------------------------------------------------- | ---------------- |
-| DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})` | After resolution |
+| UI name                  | API example                                                   | Evaluation phase     |
+| ------------------------ | ------------------------------------------------------------- | -------------------- |
+| DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})` | After DNS resolution |
 
 {{<Aside>}}
 If one CNAME record points to another CNAME record, each record in the chain will be evaluated. For example, if `abc.example.com` points to `xyz.example.com`, then your DNS policy will evaluate both `abc.example.com` and `xyz.example.com`.
@@ -145,65 +145,65 @@ If one CNAME record points to another CNAME record, each record in the chain wil
 
 Use this selector to filter DNS responses by their `MX` records.
 
-| UI name               | API example                                                 | Evaluation phase |
-| --------------------- | ----------------------------------------------------------- | ---------------- |
-| DNS MX Response Value | `any(dns.response.mx[*] in {"gmail-smtp-in.l.google.com"})` | After resolution |
+| UI name               | API example                                                 | Evaluation phase     |
+| --------------------- | ----------------------------------------------------------- | -------------------- |
+| DNS MX Response Value | `any(dns.response.mx[*] in {"gmail-smtp-in.l.google.com"})` | After DNS resolution |
 
 ### DNS PTR Record
 
 Use this selector to filter DNS responses by their `PTR` records.
 
-| UI name                | API example                                                | Evaluation phase |
-| ---------------------- | ---------------------------------------------------------- | ---------------- |
-| DNS PTR Response Value | `any(dns.response.ptr[*] in {"255.2.0.192.in-addr.arpa"})` | After resolution |
+| UI name                | API example                                                | Evaluation phase     |
+| ---------------------- | ---------------------------------------------------------- | -------------------- |
+| DNS PTR Response Value | `any(dns.response.ptr[*] in {"255.2.0.192.in-addr.arpa"})` | After DNS resolution |
 
 ### DNS Resolver IP
 
 Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered DNS location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all DNS locations. However, each DNS location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address — these both can be used to apply policies to specific registered DNS locations.
 
-| UI name         | API example                               | Evaluation phase  |
-| --------------- | ----------------------------------------- | ----------------- |
-| DNS Resolver IP | `any(dns.resolved_ip[*] == 198.51.100.0)` | Before resolution |
+| UI name         | API example                               | Evaluation phase      |
+| --------------- | ----------------------------------------- | --------------------- |
+| DNS Resolver IP | `any(dns.resolved_ip[*] == 198.51.100.0)` | Before DNS resolution |
 
 ### DNS TXT Record
 
 Use this selector to filter DNS responses by their `TXT` records.
 
-| UI name                | API example                                 | Evaluation phase |
-| ---------------------- | ------------------------------------------- | ---------------- |
-| DNS TXT Response Value | `any(dns.response.txt[*] in {"your_text"})` | After resolution |
+| UI name                | API example                                 | Evaluation phase     |
+| ---------------------- | ------------------------------------------- | -------------------- |
+| DNS TXT Response Value | `any(dns.response.txt[*] in {"your_text"})` | After DNS resolution |
 
 ### DNS Location
 
 Use this selector to apply DNS policies to a specific [Gateway DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) or set of locations.
 
-| UI name      | API example                                             | Evaluation phase  |
-| ------------ | ------------------------------------------------------- | ----------------- |
-| DNS Location | `dns.location in {"location_uuid_1" "location_uuid_2"}` | Before resolution |
+| UI name      | API example                                             | Evaluation phase      |
+| ------------ | ------------------------------------------------------- | --------------------- |
+| DNS Location | `dns.location in {"location_uuid_1" "location_uuid_2"}` | Before DNS resolution |
 
 ### DOH Subdomain
 
 Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each DNS location. For example, a DNS location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`.
 
-| UI name       | API example                      | Evaluation phase  |
-| ------------- | -------------------------------- | ----------------- |
-| DOH Subdomain | `dns.doh_subdomain == "abcdefg"` | Before resolution |
+| UI name       | API example                      | Evaluation phase      |
+| ------------- | -------------------------------- | --------------------- |
+| DOH Subdomain | `dns.doh_subdomain == "abcdefg"` | Before DNS resolution |
 
 ### Domain
 
 Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
 
-| UI name | API example                            | Evaluation stage  |
-| ------- | -------------------------------------- | ----------------- |
-| Domain  | `any(dns.domains[*] == "example.com")` | Before resolution |
+| UI name | API example                            | Evaluation stage      |
+| ------- | -------------------------------------- | --------------------- |
+| Domain  | `any(dns.domains[*] == "example.com")` | Before DNS resolution |
 
 ### Host
 
 Use this selector to match against only the hostname specified — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
-| UI name | API example                      | Evaluation phase  |
-| ------- | -------------------------------- | ----------------- |
-| Host    | `dns.fqdn == "test.example.com"` | Before resolution |
+| UI name | API example                      | Evaluation phase      |
+| ------- | -------------------------------- | --------------------- |
+| Host    | `dns.fqdn == "test.example.com"` | Before DNS resolution |
 
 ### Indicator Feed
 
@@ -213,9 +213,9 @@ Use this selector to match against only the hostname specified — for example,
 
 Use this selector to choose the DNS resource record type that you would like to apply policies against — for example, you can choose to block A records for a domain but not MX records.
 
-| UI name           | API example                | Evaluation phase  |
-| ----------------- | -------------------------- | ----------------- |
-| Query Record Type | `dns.query_rtype == "TXT"` | Before resolution |
+| UI name           | API example                | Evaluation phase      |
+| ----------------- | -------------------------- | --------------------- |
+| Query Record Type | `dns.query_rtype == "TXT"` | Before DNS resolution |
 
 ### Resolved Continent
 
@@ -230,33 +230,33 @@ Use this selector to filter based on the continent that the query resolves to. G
 - SA – South America
 - T1 – Tor network
 
-| UI name                           | API example                     | Evaluation phase |
-| --------------------------------- | ------------------------------- | ---------------- |
-| Resolved Continent IP Geolocation | `dns.dst.geo.continent == "EU"` | After resolution |
+| UI name                           | API example                     | Evaluation phase     |
+| --------------------------------- | ------------------------------- | -------------------- |
+| Resolved Continent IP Geolocation | `dns.dst.geo.continent == "EU"` | After DNS resolution |
 
 ### Resolved Country
 
 Use this selector to filter based on the country that the query resolves to. Geolocation is determined from the IP address in the response. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
 
-| UI name                         | API example                   | Evaluation phase |
-| ------------------------------- | ----------------------------- | ---------------- |
-| Resolved Country IP Geolocation | `dns.dst.geo.country == "RU"` | After resolution |
+| UI name                         | API example                   | Evaluation phase     |
+| ------------------------------- | ----------------------------- | -------------------- |
+| Resolved Country IP Geolocation | `dns.dst.geo.country == "RU"` | After DNS resolution |
 
 ### Resolved IP
 
 Use this selector to filter based on the IP addresses that the query resolves to.
 
-| UI name     | API example                                | Evaluation phase |
-| ----------- | ------------------------------------------ | ---------------- |
-| Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` | After resolution |
+| UI name     | API example                                | Evaluation phase     |
+| ----------- | ------------------------------------------ | -------------------- |
+| Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` | After DNS resolution |
 
 ### Security Categories
 
 Use this selector to block domains (and optionally, [IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
 
-| UI name             | API example                            | Evaluation phase  |
-| ------------------- | -------------------------------------- | ----------------- |
-| Security Categories | `any(dns.security_category[*] in {1})` | Before resolution |
+| UI name             | API example                            | Evaluation phase      |
+| ------------------- | -------------------------------------- | --------------------- |
+| Security Categories | `any(dns.security_category[*] in {1})` | Before DNS resolution |
 
 ### Source Continent
 
@@ -272,9 +272,9 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 Use this selector to apply DNS policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway.
 
-| UI name   | API example                  | Evaluation stage  |
-| --------- | ---------------------------- | ----------------- |
-| Source IP | `dns.src_ip == 198.51.100.0` | Before resolution |
+| UI name   | API example                  | Evaluation stage      |
+| --------- | ---------------------------- | --------------------- |
+| Source IP | `dns.src_ip == 198.51.100.0` | Before DNS resolution |
 
 ### Users
 
