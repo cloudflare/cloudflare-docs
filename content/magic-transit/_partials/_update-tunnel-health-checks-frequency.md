@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: healthChecksUrl
+inputParameters: healthChecksUrl;;addTunnelsPath
 ---
 
 ## Update health check frequency
@@ -12,6 +12,17 @@ By default, Cloudflare servers send [health checks]($1) to each GRE, CNI, or IPs
 
 Available options are `low`, `mid`, and `high`.
 
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+1. Refer to [Add tunnels]($2) to learn how to create or edit your tunnel.
+2. Change the **Health check rate** to your desired rate. For example, _Low_.
+3. Save your changes.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 Here is an example of how you would adjust health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
 
 ```bash
@@ -25,3 +36,6 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tu
 ```
 
 Refer to the API documentation for more information on how to [update a GRE](/api/operations/magic-gre-tunnels-update-gre-tunnel), [IPsec](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) or [CNI](/api/operations/magic-interconnects-update-interconnect) tunnel.
+ 
+{{</tab>}}
+{{</tabs>}}
