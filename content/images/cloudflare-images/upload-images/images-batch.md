@@ -17,7 +17,7 @@ $ curl -H "Authorization: Bearer <CLOUDFLARE_API_TOKEN>" \
 
 {
   "result": {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImtpZCI6ImJhdGNoIn0.eyJzdWIiOiJWaTd3aTVLU0l0eEdGc1dSRzJVczZRIiwiZXhwIjoxNjkxNTk1MjM2fQ.qF8Yx21ohxuYf6RLXvLmX6dYhwVQ81bSeaQQOpwQEC0",
+    "token": "<BATCH_TOKEN>",
     "expiresAt": "2023-08-09T15:33:56.273411222Z"
   },
   "success": true,
