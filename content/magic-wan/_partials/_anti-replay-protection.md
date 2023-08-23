@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;; productPath
+inputParameters: productName;;productPath
 ---
 
 # Anti-replay protection
