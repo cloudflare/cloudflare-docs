@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Account setup
-weight: 2
+weight: 1
 ---
 
 # Set up a new account

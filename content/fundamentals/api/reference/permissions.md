@@ -2,6 +2,8 @@
 title: API token permissions
 pcx_content_type: reference
 weight: 20
+aliases:
+- /fundamentals/api/reference/permissions/
 ---
 
 # API token permissions

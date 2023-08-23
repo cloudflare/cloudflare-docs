@@ -2,6 +2,8 @@
 title: Licenses
 pcx_content_type: reference
 hidden: true
+aliases:
+- /fundamentals/api/licenses/
 ---
 
 # Licenses

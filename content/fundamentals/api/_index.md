@@ -2,6 +2,8 @@
 title: Cloudflare's API
 weight: 4
 pcx_content_type: overview
+aliases:
+- /fundamentals/api/
 ---
 
 # Cloudflare's API

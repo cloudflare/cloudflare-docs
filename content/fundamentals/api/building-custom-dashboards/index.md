@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Building custom views
 weight: 11
+aliases:
+- /fundamentals/customizations/building-custom-dashboards/
 ---
 
 # Building custom views

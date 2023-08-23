@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Members
+title: Manage members
 weight: 2
 meta:
     title: Account members

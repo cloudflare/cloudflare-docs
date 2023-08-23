@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: Manage subdomains
+aliases:
+- /fundamentals/get-started/basic-tasks/manage-subdomains/
 ---
 
 # Manage subdomains

@@ -2,6 +2,8 @@
 title: Make API calls
 pcx_content_type: how-to
 weight: 11
+aliases:
+- /fundamentals/api/how-to/make-api-calls/
 ---
 
 # Make API calls

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Get Global API key (legacy)
 weight: 12
+aliases:
+- /fundamentals/api/get-started/keys/
 ---
 
 # Get Global API key (legacy)

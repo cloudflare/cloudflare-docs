@@ -1,6 +1,8 @@
 ---
 title: Minimize downtime
 pcx_content_type: tutorial
+aliases:
+- /fundamentals/get-started/setup/minimize-downtime/
 ---
 
 # Minimize downtime

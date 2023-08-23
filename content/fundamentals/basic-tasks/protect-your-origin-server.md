@@ -3,6 +3,12 @@ pcx_content_type: how-to
 title: Protect your origin server
 meta:
   title: Protect your origin server
+aliases:
+- /fundamentals/get-started/task-guides/origin-health/
+- /fundamentals/get-started/task-guides/origin-health/free/
+- /fundamentals/get-started/task-guides/origin-health/pro/
+- /fundamentals/get-started/task-guides/origin-health/business/
+- /fundamentals/get-started/task-guides/origin-health/enterprise/
 ---
 
 # Protect your origin server

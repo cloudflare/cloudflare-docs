@@ -4,6 +4,8 @@ title: Change password or email
 weight: 1
 meta:
     description: Learn how to change your Cloudflare password or email.
+aliases:
+- /fundamentals/account-and-billing/account-maintenance/change-password-or-email/
 ---
 
 # Change password or email

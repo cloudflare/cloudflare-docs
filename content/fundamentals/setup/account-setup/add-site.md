@@ -1,7 +1,7 @@
 ---
 title: Add a site
 pcx_content_type: tutorial
-weight: 2
+weight: 4
 ---
 
 # Add site to Cloudflare
@@ -69,6 +69,6 @@ Before your domain can begin using Cloudflare for DNS resolution, you need to [a
 
 To prevent insecure connections and visitor browser errors, [enable SSL/TLS protection](/ssl/get-started/).
 
-## Step 4 - Go beyond the basics
+## Step 4 — Go beyond the basics
 
 For suggestions and guidance about getting the most out of your Cloudflare account, refer to our [Solution guides](/fundamentals/get-started/task-guides/).

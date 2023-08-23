@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Change Super Administrator
 weight: 4
+aliases:
+- /fundamentals/account-and-billing/account-maintenance/change-super-admin/
 ---
 
 # Change Super Administrator

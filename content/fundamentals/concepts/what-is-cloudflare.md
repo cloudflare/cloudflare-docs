@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: What is Cloudflare?
 weight: 1
+aliases:
+- /fundamentals/get-started/concepts/what-is-cloudflare/
 ---
 
 # What is Cloudflare?

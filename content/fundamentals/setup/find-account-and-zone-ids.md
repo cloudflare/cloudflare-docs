@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Find zone and account IDs
-weight: 1
+weight: 6
 ---
 
 # Find zone and account IDs

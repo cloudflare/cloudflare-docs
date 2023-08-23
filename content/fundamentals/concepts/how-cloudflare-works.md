@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: How Cloudflare works
 weight: 2
+aliases:
+- /fundamentals/get-started/concepts/how-cloudflare-works/
 ---
 
 # How Cloudflare works

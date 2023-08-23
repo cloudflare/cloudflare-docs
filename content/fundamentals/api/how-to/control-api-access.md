@@ -2,6 +2,8 @@
 title: Control API Access
 pcx_content_type: concept
 weight: 13
+aliases:
+- /fundamentals/api/how-to/control-api-access/
 ---
 
 # Control API access

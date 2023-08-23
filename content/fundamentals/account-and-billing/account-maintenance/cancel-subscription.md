@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Cancel Cloudflare subscriptions
 weight: 2
+aliases:
+- /fundamentals/account-and-billing/account-maintenance/cancel-subscription/
 ---
 
 # Cancel Cloudflare subscriptions

@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Cloudflare IP addresses
 weight: 3
+aliases:
+- /fundamentals/get-started/concepts/cloudflare-ip-addresses/
 ---
 
 # Cloudflare IP addresses

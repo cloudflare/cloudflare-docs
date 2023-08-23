@@ -1,7 +1,7 @@
 ---
 title: Verify email address
 pcx_content_type: how-to
-weight: 1
+weight: 2
 ---
 
 # Verify email address

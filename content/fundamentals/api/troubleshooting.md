@@ -2,6 +2,8 @@
 pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 5
+aliases:
+- /fundamentals/api/troubleshooting/
 ---
 
 # Troubleshooting API tokens and keys
