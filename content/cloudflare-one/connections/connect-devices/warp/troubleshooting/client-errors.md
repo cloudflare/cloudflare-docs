@@ -6,7 +6,7 @@ weight: 2
 
 # Client errors
 
-This page lists the error codes that can appear in the WARP client GUI.
+This page lists the error codes that can appear in the WARP client GUI. If you do not see your error below, refer to [common issues](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/) or contact Cloudflare Support.
 
 <div class="medium-img">
 
@@ -23,11 +23,14 @@ This page lists the error codes that can appear in the WARP client GUI.
 
 ### Cause
 
-The user did not complete the captive portal login process within the time limit set by WARP.
+[Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection) is turned on and one of the following issues occurred:
+- The user did not complete the captive portal login process within the time limit set by WARP.
+- The captive portal redirected the user to a flow that is not yet supported by the captive portal detection feature.
 
 ### Resolution
 
-Increase the [captive portal timeout](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection) to allow users more time to login.
+1. Increase the [captive portal timeout](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection) to allow users more time to login.
+2. If this does not resolve the issue, allow users to manually [turn off WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch).
 
 ## CF_CONNECTIVITY_FAILURE_UNKNOWN
 
@@ -210,11 +213,14 @@ The device is not connected to a Wi-Fi network or LAN.
 
 ### Symptoms
 
->> How do you get this error message to show up? WARP just switches to consumer mode when there's no registration.
+- Unable to connect WARP
 
 ### Cause
 
-The device is not authenticated to a Zero Trust organization.
+The device is not authenticated to a Zero Trust organization because:
+
+- The device was revoked in Zero Trust.
+- The GUI erroneously deleted the registration after a computer crash.
 
 ### Resolution
 
