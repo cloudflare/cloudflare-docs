@@ -1,6 +1,8 @@
 ---
 pcx_content_type: navigation
 title: The Internet
+aliases:
+- /fundamentals/the-internet/
 ---
 
 # The Internet

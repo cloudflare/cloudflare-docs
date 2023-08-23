@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: Network ports
+aliases:
+- /fundamentals/get-started/reference/network-ports/
 ---
 
 # Network ports

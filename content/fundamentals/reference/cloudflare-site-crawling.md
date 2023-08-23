@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: When does Cloudflare crawl my site?
+aliases:
+- /fundamentals/get-started/reference/cloudflare-site-crawling/
 ---
 
 # When does Cloudflare crawl my site?

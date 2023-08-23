@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Cookies
+aliases:
+- /fundamentals/get-started/reference/cloudflare-cookies/
 ---
 
 # Cloudflare Cookies

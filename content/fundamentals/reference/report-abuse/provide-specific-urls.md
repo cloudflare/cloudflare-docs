@@ -5,6 +5,8 @@ weight: 3
 meta:
     title: Providing specific URLs - Report abuse
     description: Learn how to provide specific asset URLs when submitting an abuse report.
+aliases:
+- /fundamentals/get-started/basic-tasks/report-abuse/provide-specific-urls/
 ---
 
 # Providing specific URLs

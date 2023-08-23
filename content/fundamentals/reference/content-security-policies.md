@@ -3,6 +3,8 @@ pcx_content_type: reference
 title: Content Security Policies (CSPs)
 meta:
   title: Content Security Policies (CSPs) and Cloudflare
+aliases:
+- /fundamentals/get-started/reference/content-security-policies/
 ---
 
 # Content Security Policies (CSPs) and Cloudflare

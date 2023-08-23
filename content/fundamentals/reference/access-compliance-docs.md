@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Access compliance documentation
+aliases:
+- /fundamentals/get-started/basic-tasks/access-compliance-docs/
 ---
 
 # Access compliance documentation

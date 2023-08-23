@@ -2,6 +2,8 @@
 title: Access Cloudflare resources
 pcx_content_type: reference
 layout: list
+aliases:
+- /fundamentals/get-started/basic-tasks/access-cloudflare-resources/
 ---
 
 # Access Cloudflare resources
