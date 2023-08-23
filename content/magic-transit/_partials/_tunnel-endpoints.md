@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;productPathTunnel;;productPathProbe
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;productPathTunnel;;productPathProbe;;antiReplayPagePath
 ---
 
 #  Configure tunnel endpoints
@@ -37,6 +37,12 @@ You can [use IPsec]($4) as an on-ramp to connect with your entire virtual networ
 You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
 
 {{<Aside type="note" header="Note">}}$2 only supports Internet Key Exchange version 2 (IKEv2).{{</Aside>}}
+
+#### Anti-replay protection
+
+If you use $2 and Anycast IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+
+Refer to [Anti-replay protection]($9) for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
 
 ### Technical requirements for GRE and IPsec tunnels
 
@@ -100,6 +106,8 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
     3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
     4. Select **Add tunnels**.
 
+15. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to [Anti-replay protection]($9) for more information.
+
 </div>
 </details>
  
@@ -139,7 +147,9 @@ curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/
 <summary>IPsec tunnel</summary>
 <div>
 
-Create a `POST` request [using the API](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+1. Create a `POST` request [using the API](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+
+Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel). <br> Refer to Refer to [Anti-replay protection]($9) for more information on this topic.
 
 Example:
 
@@ -155,7 +165,8 @@ curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/
       "description": "<TUNNEL_DESCRIPTION>", 
       "interface_address": "<INTERFACE_ADDRESS>", 
       "cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-      "customer_endpoint": "<CUSTOMER_ENDPOINT>"
+      "customer_endpoint": "<CUSTOMER_ENDPOINT>",
+      "replay_protection": false
     }
   ]
 }'
@@ -223,6 +234,7 @@ You will receive a response like the following:
 ```
 
 3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as this value is automatically set.
+
 
 </div>
 </details>
