@@ -24,7 +24,6 @@ $ curl -H "Authorization: Bearer <CLOUDFLARE_API_TOKEN>" \
   "errors": [],
   "messages": []
 }
-
 ```
 
 After getting your token, you can use it to make requests for:
