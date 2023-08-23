@@ -14,6 +14,16 @@ Bidirectional tunnel health checks will work for both reply-style (default) and 
 
 To enable bidirectional tunnel health checks, set the health check’s `target` to an IP address within the prefix `172.64.240.252/30`. You may also need to apply a policy-based route on your device to route ICMP echo reply packets sourced from this address through the tunnel.
 
+## Change health check target
+
+### API 
+
+You can configure the tunnel health check target IP address by updating your [GRE tunnels](/api/operations/magic-gre-tunnels-update-gre-tunnel) or [IPsec tunnels](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel).
+
+### Dashboard
+
+You can also configure the tunnel health check target IP address in the Cloudflare dashboard, by changing the [**Health check target**](/magic-transit/how-to/configure-tunnels/#add-tunnels) to _Custom_, and configuring the IP address for your tunnel health check target to be one from within the prefix range `172.64.240.252/30`.
+
 {{<render file="_icmp-mfirewall.md">}}
 
 {{<render file="_update-tunnel-health-checks-frequency.md" withParameters="/magic-transit/reference/probe-construction/">}}
