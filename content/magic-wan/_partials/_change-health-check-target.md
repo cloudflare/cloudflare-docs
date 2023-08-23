@@ -6,9 +6,6 @@ _build:
 inputParameters: path
 ---
 
-## Change health check target
-
-
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 

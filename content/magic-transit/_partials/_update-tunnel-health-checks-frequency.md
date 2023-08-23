@@ -6,8 +6,6 @@ _build:
 inputParameters: healthChecksUrl;;addTunnelsPath
 ---
 
-## Update health check frequency
-
 By default, Cloudflare servers send [health checks]($1) to each GRE, CNI, or IPsec tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency [via the API](/api/operations/magic-gre-tunnels-update-gre-tunnel) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
 
 Available options are `low`, `mid`, and `high`.
