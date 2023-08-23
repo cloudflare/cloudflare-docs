@@ -8,6 +8,55 @@ weight: 11
 
 With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies/gateway/initial-setup/) any combination of DNS, network, and HTTP policies.
 
+```mermaid
+flowchart TB
+    %% Accessibility
+    accTitle: Gateway order of enforcement
+    accDescr: Flowchart describing the order of enforcement for Gateway policies.
+
+    %% In with user traffic
+    start(["Traffic"])-->dns0[/"DNS query"/]-->dns1
+    start-->http0{{"HTTP(S) request on port 80 or 443?"}}
+    http0--Yes-->http1
+    http0--No-->network0
+
+    %% DNS policies
+    subgraph DNS
+    dns1["DNS policies"]
+    style DNS text-align:left
+    end
+    dns1--Resolved by-->dns2["1.1.1.1"]------>internet
+
+    %% Proxied by Gateway
+    subgraph Proxy
+
+    %% HTTP policies
+    subgraph HTTP
+    http1{{"Do Not Inspect policies"}}
+    http1--Inspect-->http2["Isolate policies"]
+    http2-->http3["Allow, Block, Do Not Scan policies"]
+    end
+
+    http1--Do Not Inspect-->network0
+    http3-->network0
+    network0[/"Network connections"/]-->network1
+
+    %% Network policies
+    subgraph Network
+    network1["Network policies"]
+    end
+    end
+
+    %% Egress
+    subgraph Egress
+    network1-.Enterprise users only.->egress1[Egress policies]
+    end
+
+    %% Finish
+    network1--Egress with Cloudflare IP-->internet([Internet])
+    egress1--Egress with dedicated IP-->internet
+```
+
 ## Priority between policy builders
 
 Gateway applies your policies in the following order:
