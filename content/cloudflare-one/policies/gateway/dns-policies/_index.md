@@ -79,7 +79,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | Is       | `www.example.com` | Override | `1.2.3.4`         |
 
-{{<Aside>}}The Override action cannot be used with selectors evaluated after resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
+{{<Aside>}}The Override action cannot be used with selectors evaluated during or after resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
 
 ### Safe Search
 
@@ -117,9 +117,9 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 Use this selector to match against the IP address of the authoritative nameserver IP address.
 
-| UI name                     | API example                                | Evaluation phase |
-| --------------------------- | ------------------------------------------ | ---------------- |
-| Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` | After resolution |
+| UI name                     | API example                                | Evaluation phase  |
+| --------------------------- | ------------------------------------------ | ----------------- |
+| Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` | During resolution |
 
 ### Content Categories
 
