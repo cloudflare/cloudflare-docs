@@ -154,6 +154,6 @@ For remotely-managed tunnels only.
 
 | Syntax        | Environment Variable |
 | ------------- | -------------------- |
-| `cloudlared tunnel --token <TUNNEL_TOKEN> run <UUID or NAME>` | `TUNNEL_TOKEN`       |
+| `cloudlared tunnel run --token <TUNNEL_TOKEN>` | `TUNNEL_TOKEN`       |
 
 Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
