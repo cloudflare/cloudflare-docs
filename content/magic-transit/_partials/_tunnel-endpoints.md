@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;productPathTunnel;;productPathProbe;;antiReplayPagePath
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;healthCheckRate;;productPathProbe;;antiReplayPagePath
 ---
 
 #  Configure tunnel endpoints
