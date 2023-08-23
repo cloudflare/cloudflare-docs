@@ -14,9 +14,13 @@ Bidirectional tunnel health checks will work for both reply-style (default) and 
 
 To enable bidirectional tunnel health checks, set the health check’s `target` to an IP address within the prefix `172.64.240.252/30`. You may also need to apply a policy-based route on your device to route ICMP echo reply packets sourced from this address through the tunnel.
 
+## Change health check target
+
 {{<render file="_change-health-check-target.md" productFolder="magic-wan" withParameters="/magic-transit/how-to/configure-tunnels/#add-tunnels">}}
 
 {{<render file="_icmp-mfirewall.md">}}
+
+## Update health check frequency
 
 {{<render file="_update-tunnel-health-checks-frequency.md" withParameters="/magic-transit/reference/probe-construction/;;/magic-transit/how-to/configure-tunnels/#add-tunnels">}}
 
