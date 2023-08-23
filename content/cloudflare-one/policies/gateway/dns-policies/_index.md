@@ -193,7 +193,7 @@ Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (D
 
 Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
 
-| UI name | API example                            | Evaluation stage      |
+| UI name | API example                            | Evaluation phase      |
 | ------- | -------------------------------------- | --------------------- |
 | Domain  | `any(dns.domains[*] == "example.com")` | Before DNS resolution |
 
@@ -272,7 +272,7 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 Use this selector to apply DNS policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway.
 
-| UI name   | API example                  | Evaluation stage      |
+| UI name   | API example                  | Evaluation phase      |
 | --------- | ---------------------------- | --------------------- |
 | Source IP | `dns.src_ip == 198.51.100.0` | Before DNS resolution |
 
