@@ -9,7 +9,6 @@ The Images batch API lets you make several requests in sequence while bypassing 
 
 To use the Images batch API, you will need to obtain a batch token and use the token to make several requests. The requests authorized by this batch token are made to a separate endpoint and do not count toward the global API rate limits.
 
-
 To obtain a token, you can use the new `images/v1/batch_token` endpoint as shown in the example below.
 
 ```bash
