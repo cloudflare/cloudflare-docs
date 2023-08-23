@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;healthCheckRate;;productPathProbe;;antiReplayPagePath
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath;;healthCheck;;productPathProbe;;antiReplayPagePath
 ---
 
 #  Configure tunnel endpoints
@@ -71,7 +71,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 10. Leave the default values for **TTL** and **MTU**.
 11. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Probe construction]($8) for more information.
-13. **Health check target** is the customer end of the tunnel. Leave the default option as is, unless you need to change the target address for some reason.
+13. **Health check target** is the customer end of the tunnel. If health checks are not working, change this to _Custom_ and enter an IP address from within the prefix range `172.64.240.252/30`. Refer to [Configure tunnel health checks]($7) for more information.
 14. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
 15. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
 16. After adding your tunnel information, select **Add tunnels** to save your changes.
@@ -90,7 +90,7 @@ Refer to [Tunnels and encapsulation]($6) to learn about the technical requiremen
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team (typically begins with `172.x.x.x`).
 10. Choose the [**Health check rate**]($7) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 11. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Probe construction]($8) for more information.
-12. **Health check target** is the customer end of the tunnel. Leave the default option as is, unless you need to change the target address for some reason.
+12. **Health check target** is the customer end of the tunnel. If health checks are not working, change this to _Custom_ and enter an IP address from within the prefix range `172.64.240.252/30`. Refer to [Configure tunnel health checks]($7) for more information.
 
 {{<Aside type="note">}}IPsec tunnels will not function without a pre-shared key (PSK).{{</Aside>}}
 
