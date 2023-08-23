@@ -35,7 +35,7 @@ flowchart TB
 
     http1--Do Not Inspect-->network0
     http3-->network0
-    network0[/"Network packet"/]-->network1
+    network0[/"Network connections"/]-->network1
 
     %% Network policies
     subgraph Network
