@@ -15,6 +15,7 @@ inputParameters: path
 1. Refer to [Add tunnels]($1) to learn how to create or edit your tunnel.
 2. Change the **Health check target** to _Custom_.
 3. Configure the IP address for your tunnel health check target to be one from within the prefix range `172.64.240.252/30`.
+4. Save your changes.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
