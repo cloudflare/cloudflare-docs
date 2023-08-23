@@ -8,8 +8,17 @@ inputParameters: path
 
 ## Change health check target
 
-### API 
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Refer to [Add tunnels]($1) to learn how to create or edit your tunnel.
+2. Change the **Health check target** to _Custom_.
+3. Configure the IP address for your tunnel health check target to be one from within the prefix range `172.64.240.252/30`.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 You can configure the tunnel health check target IP address by updating your [GRE tunnels](/api/operations/magic-gre-tunnels-update-gre-tunnel) or [IPsec tunnels](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel).
 
 Example:
@@ -24,7 +33,6 @@ curl --request PUT \
     "target": "172.64.240.253"
   }
 ```
-
-### Dashboard
-
-You can also configure the tunnel health check target IP address in the Cloudflare dashboard, by changing the [**Health check target**]($1) to _Custom_, and configuring the IP address for your tunnel health check target to be one from within the prefix range `172.64.240.252/30`.
+ 
+{{</tab>}}
+{{</tabs>}}
