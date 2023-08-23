@@ -10,6 +10,10 @@ With Cloudflare Gateway, you can [enable and configure](/cloudflare-one/policies
 
 ```mermaid
 flowchart TB
+    %% Accessibility
+    accTitle: Gateway order of enforcement
+    accDescr: Flowchart describing the order of enforcement for Gateway policies.
+
     %% In with user traffic
     start(["Traffic"])-->dns0[/"DNS query"/]-->dns1
     start-->http0{{"HTTP(S) request on port 80 or 443?"}}
