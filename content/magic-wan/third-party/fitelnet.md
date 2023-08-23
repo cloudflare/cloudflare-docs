@@ -33,7 +33,7 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 
 ### FITELnet router configuration
 
-Configure both your FITELnet routers with the following settings:
+#### Router 1 settings:
 
 ```txt
 interface Tunnel 1
@@ -88,13 +88,84 @@ crypto isakmp policy P1-POLICY
 exit
 !
 crypto isakmp profile PROF1
- local-address x.x.x.x
- self-identity address x.x.x.x
+ local-address <ROUTER1_ADDRESS>
+ self-identity address <ROUTER1_ADDRESS>
  set isakmp-policy ISAKMP_POLICY
  set ipsec-policy IPsec_POLICY
  set peer anycast-address
  ike-version 2
- local-key secret-pre-shared-key-1
+ local-key <PRE-SHARED-KEY-TUNNEL01>
+exit
+!
+crypto map MAP1 ipsec-isakmp
+ match address SELECTOR
+ set isakmp-profile PROF1
+exit
+!
+```
+
+#### Router 2 settings:
+
+```txt
+interface Tunnel 1
+ ip address 10.0.0.3 255.255.255.254
+ tunnel mode ipsec map MAP1
+ link-state sync-sa
+exit
+!
+
+crypto ipsec policy IPsec_POLICY
+ set security-association always-up
+ set security-association lifetime seconds 28800
+ set security-association transform-keysize aes 256 256 256
+ set security-association transform esp-aes esp-sha256-hmac
+ set mtu 1460
+ set mss 1350
+ set ip df-bit 0
+ set ip fragment post
+ set udp-encapsulation nat-t keepalive interval 30 always-send
+exit
+!
+crypto ipsec selector SELECTOR
+ src 1 ipv4 any
+ dst 1 ipv4 any
+exit
+!
+crypto isakmp keepalive
+crypto isakmp log sa
+crypto isakmp log session
+crypto isakmp log negotiation-fail
+crypto isakmp negotiation always-up-params interval 100 max-initiate 10 max-pending 10 delay 1
+crypto ipsec replay-check disable 
+!
+crypto isakmp policy ISAKMP_POLICY
+ authentication pre-share
+ encryption aes
+ encryption-keysize aes 256 256 256
+ group 14
+ lifetime 14400
+ hash sha sha-256
+ initiate-mode main
+exit
+!
+crypto isakmp policy P1-POLICY
+ authentication pre-share
+ encryption aes
+ encryption-keysize aes 256 256 256
+ group 14
+ lifetime 14400
+ hash sha sha-256
+ initiate-mode main
+exit
+!
+crypto isakmp profile PROF1
+ local-address <ROUTER2_ADDRESS>
+ self-identity address <ROUTER2_ADDRESS>
+ set isakmp-policy ISAKMP_POLICY
+ set ipsec-policy IPsec_POLICY
+ set peer anycast-address
+ ike-version 2
+ local-key <PRE-SHARED-KEY-TUNNEL02>
 exit
 !
 crypto map MAP1 ipsec-isakmp
@@ -122,10 +193,16 @@ To configure routes for east-west (branch to branch) connections, refer to the f
 
 ### FITELnet router configuration
 
-To configure static routes for your FITELnet routers, refer to the following settings:
+#### Router 1
 
 ```txt
-ip route 192.168.1.0 255.255.255.0 tunnel 1 
+ip route 192.168.0.0 255.255.255.0 tunnel 1
+```
+
+#### Router 2
+
+```txt
+ip route 192.168.1.0 255.255.255.0 tunnel 2
 ```
 
 ---
@@ -141,8 +218,8 @@ In the FITELnet router CLI, you can run `show crypto sa` to check the status of 
 
   IKE_SA
     Mode: <I>
-    Local IP : xxx.xxx.xxx.xxx/500
-    Local ID : xxx.xxx.xxx.xxx (ipv4)
+    Local IP : <LOCAL_IP>/500
+    Local ID : <LOCAL_ID> (ipv4)
     Remote IP : anycast-address/500
     Remote ID : anycast-address (ipv4)
     Local Authentication method : Pre-shared key
