@@ -33,7 +33,9 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 
 ### FITELnet router configuration
 
-#### Router 1 settings:
+#### Router 1 settings
+
+Use the CLI to configure these settings:
 
 ```txt
 interface Tunnel 1
@@ -104,7 +106,9 @@ exit
 !
 ```
 
-#### Router 2 settings:
+#### Router 2 settings
+
+Use the CLI to configure these settings:
 
 ```txt
 interface Tunnel 1
@@ -195,11 +199,15 @@ To configure routes for east-west (branch to branch) connections, refer to the f
 
 #### Router 1
 
+Use the CLI to configure these settings:
+
 ```txt
 ip route 192.168.0.0 255.255.255.0 tunnel 1
 ```
 
 #### Router 2
+
+Use the CLI to configure these settings:
 
 ```txt
 ip route 192.168.1.0 255.255.255.0 tunnel 2
@@ -214,7 +222,7 @@ ip route 192.168.1.0 255.255.255.0 tunnel 2
 In the FITELnet router CLI, you can run `show crypto sa` to check the status of the IPsec security associations (SAs). `Total number of ISAKMP/IPSEC SA` shows the number of established SAs.  
 
 ```txt
-#show crypto sa
+show crypto sa
 
   IKE_SA
     Mode: <I>
@@ -265,7 +273,7 @@ In the FITELnet router CLI, you can run `show crypto sa` to check the status of 
 In the FITELnet router CLI, you can run `show ip route` to check the route information. A `*` in the route information indicates that the route information is valid.
 
 ```txt
-#show ip route
+show ip route
 
 Codes: K - kernel route, C - connected, S - static, R - RIP, O - OSPF,
        B - BGP, T - Tunnel, i - IS-IS, V - VRRP track,
