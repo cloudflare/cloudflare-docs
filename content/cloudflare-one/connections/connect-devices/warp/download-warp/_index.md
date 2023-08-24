@@ -52,45 +52,32 @@ Alternatively, download the client from one of the following links after checkin
 
 ## iOS
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>OS Ver</strong>
-      </td>
-      <td>iOS 11+</td>
-    </tr>
-  </tbody>
-</table>
+|                      |    |
+| ---------------------| ---|
+| **OS version**       |iOS 11+ |
 
 [Download from the iOS App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492) or search for “Cloudflare One Agent”.
 
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The Cloudflare One Agent replaces the [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/id1423538627) app that was previously used to connect to Zero Trust. For more information, refer to our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
 ## Android
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>OS Ver</strong>
-      </td>
-      <td>5.0+</td>
-    </tr>
-  </tbody>
-</table>
+|                      |    |
+| ---------------------| ---|
+| **OS version**       |5.0+ |
 
 [Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent) or search for “Cloudflare One Agent”.
 
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The Cloudflare One Agent replaces the [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) app that was previously used to connect to Zero Trust. For more information, refer to our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
 ## ChromeOS
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>OS Ver</strong>
-      </td>
-      <td>Chromebooks manufactured after 2019</td>
-    </tr>
-  </tbody>
-</table>
+|                      |    |
+| ---------------------| ---|
+| **OS version**       |Chromebooks manufactured after 2019 |
 
 Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, [refer to this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify that your device is supported.
