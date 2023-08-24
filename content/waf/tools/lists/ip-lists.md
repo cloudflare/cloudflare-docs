@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: IP Lists
 weight: 2
+aliases:
+- /fundamentals/global-configurations/lists/ip-lists/
 ---
 
 # IP Lists

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Create in the dashboard
 weight: 5
+aliases:
+- /fundamentals/global-configurations/lists/create-dashboard/
 ---
 
 # Create a list in the dashboard

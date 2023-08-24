@@ -3,6 +3,8 @@ pcx_content_type: navigation
 title: Lists API
 weight: 7
 layout: single
+aliases:
+- /fundamentals/global-configurations/lists/lists-api/
 ---
 
 # Lists API

@@ -4,6 +4,8 @@ title: Use lists in expressions
 weight: 6
 meta:
     description: Learn how to use lists in rule expressions.
+aliases:
+- /fundamentals/global-configurations/lists/use-in-expressions/
 ---
 
 # Use lists in expressions
