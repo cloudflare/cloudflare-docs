@@ -44,9 +44,8 @@ Disable public access to your [`r2.dev` subdomain](#disable-managed-public-acces
 ## Connect a bucket to a custom domain
 
 1. Go to **R2** and select your bucket.
-2. Select **Settings**.
-3. Go to **Domain Access**.
-4. Select **Connect Domain**.
+2. On the bucket page, select **Settings**.
+3. Under **Public access** > **Custom Domains**, select **Connect Domain**.
 5. Enter the domain name you want to connect to and select **Continue**.
 6. Review the new record that will be added to the DNS table and select **Connect Domain**.
 
@@ -69,10 +68,10 @@ The specified domain will also remain connected to R2 until you remove it or del
 
 To disable a domain:
 
-1. In **R2**, select the bucket for which you want to disable custom domain access.
-2. Go to **Settings**.
-3. Scroll down to **Domain Access**.
-4. Next to the domain you want to disable, select **...** and select **Disable domain**.
+1. In **R2**, select the bucket you want to modify.
+2. On the bucket page, Select **Settings**.
+3. Under **Public access** > **Custom Domains**, select **Connect Domain**.
+4. Next to the domain you want to disable, select **...** and **Disable domain**.
 5. The badge under **Access to Bucket** will update to **Not allowed**.
 
 ## Remove domain
@@ -81,10 +80,10 @@ Removing a domain will remove custom domain configuration that you have set up o
 
 To remove a domain:
 
-1. In **R2**, select the bucket for which you want to remove domain access.
-2. Go to **Settings**.
-3. Scroll down to **Domain Access**.
-4. Select **...** next to the domain to disable and select **Remove domain**.
+1. In **R2**, select the bucket you want to modify.
+2. On the bucket page, select **Settings**.
+3. Under **Public access** > **Custom Domains**, select **Connect Domain**.
+4. Next to the domain you want to disable, select **...** and **Remove domain**.
 5. Select ‘Remove domain’ in the confirmation window. The CNAME record pointing to the domain will also be removed as part of this step. You can always add the domain again.
 
 The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
@@ -104,11 +103,11 @@ To enable access management, Cache and bot management features, you must set up 
 To enable access through `r2.dev` for your buckets:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
-2. In. **R2**, select the bucket you want to enable public access for.
-3. Go to **Settings**.
+2. In **R2**, select the bucket you want to modify.
+3. On the bucket page, select **Settings**.
 4. In **Settings**, go to **Bucket Access**.
-5. Under **Bucket Access**, select **Allow Access**.
-6. You will be prompted to confirm your choice. In the confirmation dialog, type ‘allow’ to confirm and select **Allow**.
+5. Under **Bucket Details** > **R2.dev subdomain**, select **Allow Access**.
+6. In **Allow Public Access?**, confirm your choice by typing ‘allow’ to confirm and select **Allow**.
 7. You can now access the bucket and its objects using the Public Bucket URL.
 
 You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
@@ -119,10 +118,9 @@ Your bucket will not be exposed to the Internet as an `r2.dev` subdomain after y
 
 To disable public access for your bucket:
 
-1. In **R2**, select the bucket for which you want to turn off public access.
-2. Go to **Settings**.
-3. Scroll down to **Public Access**.
-3. Select **Disallow Access**.
-4. In the confirmation dialog, type ‘disallow’ to confirm and select **Disallow**.
+1. In **R2**, select the bucket you want to modify.
+2. On the bucket page, select **Settings**.
+3. Under **Bucket Details** > **R2.dev subdomain**, select **Disallow Access**.
+4. In **Disallow Public Access?**, type ‘disallow’ to confirm and select **Disallow**.
 
 Your bucket and its objects can no longer be accessed using the Public Bucket URL. 
