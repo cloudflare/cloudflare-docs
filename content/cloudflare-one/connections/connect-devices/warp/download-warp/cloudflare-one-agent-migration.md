@@ -44,7 +44,7 @@ If you downloaded and installed the 1.1.1.1 app manually, here are the recommend
 
     This prevents certificate pinning issues when performing the Android migration.
 
-3. Follow [these instructions](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) to install the Cloudflare One Agent.
+3. Follow [these instructions](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) to install and enroll the Cloudflare One Agent.
 
 {{</tab>}}
 {{<tab label="ios" no-code="true">}}
