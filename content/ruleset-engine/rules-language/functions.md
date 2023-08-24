@@ -254,9 +254,9 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
     <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
-- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}, option{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
-  - Decodes a URL formatted string, as in the following:
+  - Decodes a URL formatted string defined in source, as in the following:
 
     - <code>%20</code> and <code>+</code> decode to space characters <code> </code>
 
@@ -268,6 +268,16 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
     ```txt
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
+
+  - Option parameter is optional. When supplied, the value should be wrapped in quotes, such as <code>"r"</code> or <code>"ur"</code>. There are two options available that can be combined:
+
+    1. <code>u</code> to support decoding percent unicode
+
+      - <code>%E2%98%81%EF%B8%8F</code> will be decoded to emoji <code>☁️</code>
+
+    2. <code>r</code> for decoding recursively
+ 
+      - <code>%2520</code> will be decoded twice (recursively) to space character <code> </code>
 
 - <code id="function-uuidv4">{{<name>}}uuidv4{{</name>}}({{<type>}}Bytes{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -328,7 +338,7 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 - <code>{{<name>}}currentTimeStamp{{</name>}}</code> {{<type>}}Integer{{</type>}}
 
-  - Represents the Unix timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
+  - Represents the UNIX timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
 
 - <code>{{<name>}}lengthOfSeparator{{</name>}}</code> {{<type>}}Integer literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -386,7 +396,7 @@ and is composed of these parentheses-delimited expressions:
     </tr>
     <tr>
       <td valign="top"><code>(\d{10})</code></td>
-      <td>The 10-digit Unix <code>timestamp</code> when the MAC was issued, expressed in seconds.</td>
+      <td>The 10-digit UNIX <code>timestamp</code> when the MAC was issued, expressed in seconds.</td>
       <td valign="top"><code>1484063137</code></td>
     </tr>
     <tr>
