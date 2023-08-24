@@ -1,16 +1,18 @@
 ---
-pcx_content_type: concept
+pcx_content_type: configuration
 title: Upstash
 ---
 # Upstash
 
-[Upstash](https://upstash.com/) is a serverless database with Redis and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless. 
+[Upstash](https://upstash.com/) is a serverless database with Redis and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless.
+
+{{<render file="_database_integrations_definition.md">}}
 
 ## Upstash Redis
 
 To set up an integration with Upstash:
 
-1. You need an existing Upstash database to connect to. [Create a Upstash database](https://docs.upstash.com/redis#create-a-database) or [load data from an existing database to Upstash](https://docs.upstash.com/redis/howto/connectclient).
+1. You need an existing Upstash database to connect to. [Create an Upstash database](https://docs.upstash.com/redis#create-a-database) or [load data from an existing database to Upstash](https://docs.upstash.com/redis/howto/connectclient).
 
 2. Insert some data to your Upstash database. You can add data to your Upstash database in two ways:
     - Use the CLI directly from your Upstash console.
@@ -25,11 +27,11 @@ To set up an integration with Upstash:
     ```
 3. Add the Upstash Redis integration to your Worker:
 
-    a. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    b. In **Account Home**, select **Workers & Pages**.
-    c. In **Overview**, select your Worker.
-    d. Select **Settings** > **Integrations** > **Upstash Redis**. 
-    e. Follow the setup flow, selecting the database created in step 1.
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    2. In **Account Home**, select **Workers & Pages**.
+    3. In **Overview**, select your Worker.
+    4. Select **Settings** > **Integrations** > **Upstash Redis**. 
+    5. Follow the setup flow, selecting the database created in step 1.
     
 4. In your Worker, install the `@upstash/redis`, a HTTP client to connect to your database and start manipulating data:
 
@@ -80,11 +82,11 @@ To set up an integration with Upstash Kafka:
 
 2. Add the Upstash Kafka integration to your Worker:
 
-    a. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    b. In **Account Home**, select **Workers & Pages**.
-    c. In **Overview**, select your Worker.
-    d. Select **Settings** > **Integrations** > **Upstash Kafka**. 
-    e. Follow the setup flow, selecting the cluster and topic.
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    2. In **Account Home**, select **Workers & Pages**.
+    3. In **Overview**, select your Worker.
+    4. Select **Settings** > **Integrations** > **Upstash Kafka**. 
+    5. Follow the setup flow, selecting the cluster and topic.
     
 3. In your Worker, install `@upstash/kafka`, a HTTP/REST based Kafka client:
 
@@ -104,14 +106,16 @@ To set up an integration with Upstash QStash:
 
 2. Add the Upstash QStash integration to your Worker:
 
-    a. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    b. In **Account Home**, select **Workers & Pages**.
-    c. In **Overview**, select your Worker.
-    d. Select **Settings** > **Integrations** > **Upstash QStash**. 
-    e. Follow the setup flow.
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    2. In **Account Home**, select **Workers & Pages**.
+    3. In **Overview**, select your Worker.
+    4. Select **Settings** > **Integrations** > **Upstash QStash**. 
+    5. Follow the setup flow.
     
 3. In your Worker, install the `@upstash/qstash`, a HTTP client to connect to your database QStash endpoint:
+
     ```sh
     $ npm install @upstash/qstash
     ```
-4. Refer to the [Upstash documentation on how to receive webhooks from QStash in your Cloudflare Worker](https://docs.upstash.com/qstash/quickstarts/cloudflare-workers#3-use-qstash-in-your-handler). 
+
+4. Refer to the [Upstash documentation on how to receive webhooks from QStash in your Cloudflare Worker](https://docs.upstash.com/qstash/quickstarts/cloudflare-workers#3-use-qstash-in-your-handler).

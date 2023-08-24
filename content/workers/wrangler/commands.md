@@ -442,7 +442,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 Deploy your Worker to Cloudflare.
 
 ```sh
-$ wrangler deploy [SCRIPT] [OPTIONS]
+$ npx wrangler deploy [SCRIPT] [OPTIONS]
 ```
 
 {{<Aside type="note">}}
@@ -471,7 +471,7 @@ None of the options for this command are required. Also, many can be set in your
   - Use the latest version of the Workers runtime.
 - `--assets` {{<type>}}string{{</type>}}
   - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler deploy --name personal_blog --assets dist/ --latest`.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `npx wrangler deploy --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
@@ -498,7 +498,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--node-compat` {{<type>}}boolean{{</type>}}
   - Enable node.js compatibility.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
+  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
@@ -517,7 +517,7 @@ $ wrangler publish [SCRIPT] [OPTIONS]
 
 {{<Aside type="note">}}
 
-This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
+This command has been deprecated as of v3 in favor of [`npx wrangler deploy`](#deploy). It will be removed in v4.
 
 {{</Aside>}}
 
@@ -1273,20 +1273,18 @@ $ wrangler secret list
 
 ## `secret:bulk`
 
-Manage multiple secrets for a Worker.
-
-### `json`
-
-The path to a JSON file containing secrets in key-value pairs to upload.
+Upload multiple secrets for a Worker at once.
 
 ```sh
-$ wrangler secret:bulk <JSON> [OPTIONS]
+$ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `JSON` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The JSON file of key-value pairs to upload, in form {"key": value, ...}
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
@@ -1297,20 +1295,20 @@ $ wrangler secret:bulk <JSON> [OPTIONS]
     {{</definitions>}}
 
   {{<Aside type="note">}}
-  Below is an example of uploading secrets from a JSON file.
+  Below is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
   ```json
+  ---
+  filename: secrets.json
+  ---
   {
     "secret-name-1": "secret-value-1",
     "secret-name-2": "secret-value-2"
   }
   ```
 
-  {{</Aside>}}
-  {{<Aside type="note">}}
-  When complete the output summary will show the number of secrets uploaded and number failed.
-
-  ```
+  ```sh
+  $ wrangler secret:bulk < secrets.json
   🌀 Creating the secrets for the Worker "script-name"
   ✨ Successfully created secret for key: secret-name-1
   ...

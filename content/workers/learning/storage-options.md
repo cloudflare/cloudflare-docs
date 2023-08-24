@@ -72,9 +72,9 @@ It is ideal for projects that require:
 To get started with Durable Objects:
 
 * Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects//).
-* Get started with [Durable Objects](/workers/configuration/durable-objects/).
-* Review the [Durable Objects Runtime API](/workers/runtime-apis/durable-objects/).
-* Learn about Durable Objects [Limits](/workers/platform/limits/#durable-objects-limits/).
+* Review the [Durable Objects documentation](/durable-objects/).
+* Get started with [Durable Objects](/durable-objects/get-started/).
+* Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
 ## D1
 
@@ -138,7 +138,7 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
 | Cached                                        | Always       | Programmatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
-| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/workers/configuration/durable-objects/#alarms-in-durable-objects) |
+| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms-in-durable-objects/) |
 | Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 500 - 1500 requests/second per Durable Object<sup>3</sup> |
 
 {{</table-wrap>}}

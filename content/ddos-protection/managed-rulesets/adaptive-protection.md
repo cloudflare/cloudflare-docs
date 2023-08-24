@@ -61,7 +61,7 @@ For more information on the types of DDoS attacks covered by Cloudflare's DDoS p
 
 To view traffic flagged by HTTP Adaptive DDoS Protection rules:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 2. Go to **Security** > **Events**.
 3. Filter by `Service equals HTTP DDoS` and by the rule ID.
 

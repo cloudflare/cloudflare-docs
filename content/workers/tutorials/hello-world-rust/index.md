@@ -11,13 +11,13 @@ layout: single
 
 {{<render file="_tutorials-wrangler-v1-warning.md">}}
 
-In this tutorial, you will learn how to generate, build, preview, configure, and publish a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
+In this tutorial, you will learn how to generate, build, preview, configure, and deploy a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Init
 
-Cloudflare's command-line tool for managing Workers projects, [Wrangler](https://github.com/cloudflare/wrangler-legacy), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will use the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
+Cloudflare's command-line tool for managing Workers projects, [Wrangler](https://github.com/cloudflare/wrangler-legacy), supports various templates — pre-built collections of code to get started writing Workers. You will use the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
 
 In the command line, create your Workers project, cloning the [rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template) URL and passing in a project name (for example, `rustwasm-markdown-parser`):
 
@@ -121,17 +121,15 @@ async function handleRequest(request) {
 
 If `wrangler dev` is running, you will see the output of your Rust program in your browser a few seconds after you save it in your editor. Wrangler watches your project for changes then compiles your Rust to WebAssembly and outputs compiler errors.
 
-## Publish
+## Deploy
 
 You have completed writing a Cloudflare Workers function with Rust-generated Wasm.
 
-Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
-
-![GIF of successfully publishing your project with the `wrangler publish` command](/images/workers/tutorials/rust/publish.gif)
+Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `npx wrangler deploy`, which will build and deploy your code.
 
 ## Related resources
 
-In this tutorial, you built and published a Rust-generated WebAssembly serverless function that parses Markdown. If you would like to review the full source code for this application, you can find it [on GitHub](https://github.com/granjef3/rustwasm-markdown-parser).
+In this tutorial, you built and deployed a Rust-generated WebAssembly serverless function that parses Markdown. If you would like to review the full source code for this application, you can find it [on GitHub](https://github.com/granjef3/rustwasm-markdown-parser).
 
 If you enjoyed this tutorial, below you can find other tutorials for building on Cloudflare Workers:
 

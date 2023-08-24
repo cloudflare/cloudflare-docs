@@ -20,12 +20,17 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Super Administrator - All Privileges | Can edit any Cloudflare setting, make purchases, update billing, and manage memberships. Super Administrators can revoke the access of other Super Administrators. |
 | Administrator Read Only | Can access the full account in read-only mode. |
 | Analytics | Can read Analytics. |
+| API Gateway | Grants full access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account. |
+| API Gateway Read | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account. |
 | Audit Logs Viewer | Can view [Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). |
 | Billing | Can edit the account’s [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/) and subscriptions |
 | Cloudflare Access | Can edit [Cloudflare Access](/cloudflare-one/policies/access/) policies. |
 | Cache Purge | Can purge the edge cache. |
+| Cloudflare DEX | Can edit [Cloudflare DEX](/cloudflare-one/insights/dex/). |
 | Cloudflare Gateway | Can edit [Cloudflare Gateway](/cloudflare-one/policies/gateway/) and read [Access](/cloudflare-one/identity/). |
 | Cloudflare Images | Can access [Cloudflare Images](/images/cloudflare-images/) data. |
+| Cloudflare R2 Admin | Can edit Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
+| Cloudflare R2 Read | Can read Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
 | Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), and [R2](/r2/). |
 | Cloudflare Zero Trust | Can edit [Cloudflare for Zero Trust](/cloudflare-one/). |
@@ -43,8 +48,12 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Network Services Write (Magic) | Grants write access to network configurations for Magic services. |
 | Network Services Read (Magic) | Grants read access to network configurations for Magic services. |
 | Minimal Account Access | Can view account, and nothing else. |
+| Page Shield | Grants write access to [Page Shield](/page-shield/) across the whole account. |
+| Page Shield Read | Grants write access to [Page Shield](/page-shield/) across the whole account. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for DNS and Firewall. |
 | Trust & Safety | Can access trust and safety related services. |
+| Turnstile | Grants full access to [Turnstile](/turnstile/). |
+| Turnstile Read | Grants read access to [Turnstile](/turnstile/). |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
 | Zaraz Admin | Can edit and publish [Zaraz](/zaraz/) configuration.

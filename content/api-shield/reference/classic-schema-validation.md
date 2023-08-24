@@ -14,9 +14,7 @@ Use the **API Shield** interface to configure [API Schema Validation](/api-shiel
 Before you can configure Schema Validation for an API, you must obtain an API Schema file matching our [specifications](/api-shield/security/schema-validation/#specifications).
 
 {{<Aside type="note">}}
-
 This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
-
 {{</Aside>}}
 
 ## Create an API Shield with Schema Validation
@@ -30,10 +28,8 @@ To configure Schema Validation in the Cloudflare dashboard:
 
     For example, if your API is available at `http://api.example.com/v1`, include a check for the _Hostname_ field — equal to `api.example.com` — and a check for the _URI Path_ field using a regular expression — matching the regex `^/v1`.
 
-    {{<Aside type="warning" note="Important">}}
-
+    {{<Aside type="warning" header="Important">}}
 To validate the hostname, you must include the _Hostname_ field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
-
      {{</Aside>}}
 
 5.  Select **Next**.

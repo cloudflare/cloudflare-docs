@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-The inferred application protocol based on our [detection mechanism](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
+The inferred network protocol based on our [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
 
 | UI name           | API example                       |
 | ----------------- | --------------------------------- |

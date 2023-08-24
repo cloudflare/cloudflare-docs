@@ -11,7 +11,7 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 
 There are several reasons to migrate your Workers to the ES modules format:
 
-1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/workers/configuration/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
+1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
 2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
 3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
 
@@ -189,7 +189,7 @@ export default {
 
 ## Cron Triggers
 
-To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax-es-modules), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
+To handle a [Cron Trigger](/workers/configuration/cron-triggers/) event in a Worker written with ES modules syntax, implement a [`scheduled()` event handler](/workers/runtime-apis/scheduled-event/#syntax), which is the equivalent of listening for a `scheduled` event in Service Worker syntax.
 
 This example code:
 

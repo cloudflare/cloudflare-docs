@@ -489,7 +489,7 @@ Enterprise plans.
 
 **Who is it for?**
 
-Any customer who wants to receive a notification when Cloudflare is unable to access their origin.
+Any customer who wants to receive a notification when Cloudflare is unable to access their origin, customers will only receive this notification when their origin is returning a `521` error.
 
 **Other options / filters**
 

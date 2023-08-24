@@ -42,7 +42,7 @@ p-values describe what percentile of your traffic fits below the value. For exam
 
 In **Endpoint Management**, you can review our confidence in the recommendation and how many unique sessions we have seen over the last seven (7) days. In general, endpoints with fewer unique sessions and high variability of user behavior will have lower confidence scores.
 
-{{<Aside type="Note">}}
+{{<Aside type="note">}}
 Implementing low confidence rate limits can still be helpful to prevent API abuse. If you are hesitant due to the recommendation’s confidence, we suggest starting your rate limit rule in `log` mode and observing violations of the rule for false positives.
 {{</Aside>}}
 
@@ -54,7 +54,7 @@ To create rate limits:
 2. Go to **Security** > **API Shield**.
 3. In **Endpoint Management**, select an endpoint.
 4. Select **Create rule** to be automatically redirected to the [Advanced Rate Limiting](/waf/rate-limiting-rules/create-zone-dashboard/) rules dashboard.
-{{<Aside type="Note">}}
+{{<Aside type="note">}}
 Your endpoint information, session identifier, and recommended rate limit will be pre-filled into the rule.
 {{</Aside>}}
 5. Give your rule a name, action, and duration. 

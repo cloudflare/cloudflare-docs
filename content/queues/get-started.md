@@ -151,7 +151,7 @@ In a production application, you would likely use a [`try-catch`](https://develo
 With your `wrangler.toml` file and `worker.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 You should see output that resembles the below, with a `*.workers.dev` URL by default.
@@ -232,7 +232,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 With your `wrangler.toml` file and `worker.ts` file configured, publish your consumer Worker by running:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 ## 6. Read messages from your queue

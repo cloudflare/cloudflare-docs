@@ -137,10 +137,10 @@ Durable Objects are only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `.accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. [Prefer using `state.acceptWebSocket()`](/workers/runtime-apis/durable-objects/#websockets-hibernation-api), which will stop incurring duration charges once all event handlers finish running.
+1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. Calling `.accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. [Prefer using `state.acceptWebSocket()`](/durable-objects/api/hibernatable-websockets-api/#state-methods-for-websockets), which will stop incurring duration charges once all event handlers finish running.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
-4. Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/workers/runtime-apis/durable-objects/#websockets-hibernation-api) will not incur additional wall-clock time, and so they will not be charged.
+4. Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/api/hibernatable-websockets-api/#state-methods-for-websockets) will not incur additional wall-clock time, and so they will not be charged.
 
 
 ### Durable Objects billing examples
@@ -183,9 +183,9 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 - 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
 - (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
 
-## Durable Objects storage API
+## Durable Objects Transactional Storage API
 
-The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
+The [Durable Objects Transactional Storage API](/durable-objects/api/transactional-storage-api/) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
 {{<table-wrap>}}
 
@@ -204,7 +204,7 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 5.  Each alarm write is billed as a single write request unit.
 
-Requests that hit the [Durable Objects in-memory cache](/workers/configuration/durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/learning/in-memory-state/) or that use the [multi-key versions of get/put/delete methods](/durable-objects/api/transactional-storage-api/#methods) are billed the same as if they were a normal, individual request for each key.
 
 ## Service bindings
 

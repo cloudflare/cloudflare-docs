@@ -6,15 +6,15 @@ _build:
 inputParameters: productName
 ---
 
-# GRE and IPSec tunnel analytics
+# GRE and IPsec tunnel analytics
 
-[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into $1 traffic entering and leaving Cloudflare’s network through GRE or IPSec tunnels. Start by inspecting information from the source and destination tunnel panels in Network Analytics to learn more about your data.
+[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into $1 traffic entering and leaving Cloudflare’s network through GRE or IPsec tunnels. Start by inspecting information from the source and destination tunnel panels in Network Analytics to learn more about your data.
 
 Source / destination tunnel data in Network Analytics includes:
 
 - A list of your top tunnels by traffic volume.
 - Source and destination IP addresses, ports, and protocols of tunnel traffic.
-- Samples of all GRE or IPSec tunnel traffic entering or leaving Cloudflare’s network.
+- Samples of all GRE or IPsec tunnel traffic entering or leaving Cloudflare’s network.
 - Mitigations applied (DDoS, Magic Firewall, etc.) to traffic entering Cloudflare.
 
 ## Access tunnel analytics
@@ -34,7 +34,7 @@ Source / destination tunnel data in Network Analytics includes:
 ## Feature Notes:
 
 - For Magic Transit customers, `Non-tunnel traffic` will often represent traffic from the public Internet or traffic via [CNIs](/network-interconnect/).
-- For Magic WAN customers, `Non-tunnel traffic` refers to traffic outside of GRE or IPSec tunnels. This can include traffic from:
+- For Magic WAN customers, `Non-tunnel traffic` refers to traffic outside of GRE or IPsec tunnels. This can include traffic from:
     - [WARP](/cloudflare-one/connections/connect-devices/warp/)
     - [CNIs](/network-interconnect/)
     - Traffic destined for the public Internet via [Gateway](/cloudflare-one/policies/gateway/)

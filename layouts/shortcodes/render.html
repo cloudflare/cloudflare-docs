@@ -51,4 +51,14 @@
     {{- $contentPlaceholder | markdownify -}}
   {{- end -}}
 
+
+{{- else -}}
+<!-- If the partial doesn't exist, create a broken link to call it out -->
+<div style="border: 3px solid chartreuse; padding: 1em; border-radius: 10px">
+<p>You have a <a href="/broken-partial-link/">broken reference</a> in your <code>render</code> shortcode:</p>
+<ul>
+  <li><strong>file</strong>: <code>{{$filename}}</code></li>
+  <li><strong>absolute reference</strong>: <code>{{$url}}</code></li>
+</ul>
+</div>
 {{- end -}}

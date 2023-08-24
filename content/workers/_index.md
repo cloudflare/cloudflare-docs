@@ -20,7 +20,7 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in over 300 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
 
-{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals">}}
  
 ---
 
@@ -34,7 +34,7 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{<feature header="Bindings" href="/workers/configuration/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/configuration/durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
