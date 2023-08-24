@@ -42,12 +42,9 @@ If you downloaded and installed the 1.1.1.1 app manually, here are the recommend
     - _Google Chat (Do Not Inspect)_
     - _Google Meet (Do Not Inspect)_
 
-This prevents certificate pinning issues when performing the Android migration.
+    This prevents certificate pinning issues when performing the Android migration.
 
-3. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/#ios) the **Cloudflare One Agent** app.
-4. Install the Cloudflare One Agent: 
-    {{<render file="_enroll-ios-android.md">}}
-5. In the Cloudflare One Agent, turn on the switch to **Connected**.
+3. Follow [these instructions](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) to install the Cloudflare One Agent.
 
 {{</tab>}}
 {{<tab label="ios" no-code="true">}}
