@@ -5,7 +5,7 @@ title: Furukawa Electric FITELnet
 
 # Furukawa Electric FITELnet
 
-This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 to connect to Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
+This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 devices to connect to Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
 
 ## Testing environment
 
@@ -25,11 +25,13 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
     - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
     - **Customer endpoint**: The global address for your first FITELnet router.
     - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
+    - **Pre-shared key**: Create a pre-shared key for your first tunnel.
 5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional setting is defined:
     - **Tunnel name**: `FITEL-tunnel-2`
     - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
     - **Customer endpoint**: The global address for your second FITELnet router.
     - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
+    - **Pre-shared key**: Create a pre-shared key for your second tunnel.
 
 ### FITELnet router configuration
 
