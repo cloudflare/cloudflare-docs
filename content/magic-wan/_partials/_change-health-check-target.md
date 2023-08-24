@@ -25,7 +25,7 @@ Example:
 curl --request PUT \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tunnel_id} \
   --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: ' \
+  --header 'X-Auth-Email: <YOUR_EMAIL>' \
   --data '{
   "health_check": {
     "target": "172.64.240.253"
