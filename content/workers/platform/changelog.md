@@ -10,7 +10,7 @@ rss: file
 
 ## 2023-08-24
 
-- A subset of the `node:crypto` API is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) is enabled.
+- A [subset of the `node:crypto` API](/workers/runtime-apis/nodejs/crypto) is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) is enabled.
 
 ## 2023-07-14
 
