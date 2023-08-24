@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-08-24
+
+- A subset of the `node:crypto` API is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) is enabled.
+
 ## 2023-07-14
 
 - An implementation of the [`util.MIMEType`](https://nodejs.org/api/util.html#class-utilmimetype) API from Node.js is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) is enabled.
