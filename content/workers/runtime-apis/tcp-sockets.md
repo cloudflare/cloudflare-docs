@@ -164,6 +164,10 @@ const reader = socket.readable.getReader(); // This fails
 
 Review descriptions of common error messages you may see when working with TCP Sockets, what the error messages mean, and how to solve them.
 
+### Using TCP Sockets from Pages Functions
+
+In local development, most [frameworks supported by Pages](/pages/framework-guides/) rely on their own development server that uses Node.js as the underlying runtime, rather than [workerd](https://github.com/cloudflare/workerd), the runtime used on Workers. The `connect()` API is not yet available in Node.js. As a result, when in local development, the `cloudflare:sockets` module that provides the `connect()` API is not available. The TCP sockets API is supported by Pages and Pages Functions however — you can test this by deploying your Pages project to Cloudflare.
+
 ### `proxy request failed, cannot connect to the specified address`
 
 Your socket is connecting to an address that was disallowed. Examples of a disallowed address include Cloudflare IPs, `localhost`, and private network IPs.
