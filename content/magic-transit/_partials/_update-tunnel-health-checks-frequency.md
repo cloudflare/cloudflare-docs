@@ -21,7 +21,7 @@ Available options are `low`, `mid`, and `high`.
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-You can adjust the health check frequency by updating your [GRE](/api/operations/magic-gre-tunnels-update-gre-tunnel), [IPsec](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel) or [CNI](/api/operations/magic-interconnects-update-interconnect) tunnels.
+You can adjust the health check frequency by updating your [GRE](/api/operations/magic-gre-tunnels-update-gre-tunnel), [IPsec](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel), or [CNI](/api/operations/magic-interconnects-update-interconnect) tunnels.
 
 Below is an example of how to adjust tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
 
