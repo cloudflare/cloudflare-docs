@@ -92,7 +92,7 @@ If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/connectio
 {{</tab>}}
 {{<tab label="ios" no-code="true">}}
 
-1. Using your MDM tool, update the **1.1.1.1** app to version 6.29 or above. The update ensures that 1.1.1.1 can co-exist with the new Cloudflare One Agent app during the migration.
+1. Using your MDM tool, update the **1.1.1.1** app to version 6.22 or above. The update ensures that 1.1.1.1 can co-exist with the new Cloudflare One Agent app during the migration.
 
 2. Add the **Cloudflare One Agent** app from the App store. Its application ID is `com.cloudflare.cloudflareoneagent`.
 
