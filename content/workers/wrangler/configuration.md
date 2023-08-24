@@ -10,7 +10,7 @@ meta:
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deploying setup for a Worker.
 
 {{<Aside type="warning">}}
-Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
 {{</Aside>}}
 
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
@@ -346,9 +346,9 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
   - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
 
-- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `database_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the database. This a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
+  - The name of the database. This is a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
 
 - `database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
