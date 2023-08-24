@@ -18,11 +18,15 @@ To accomplish this, we recommend that you:
 1. Configure the IP address for your tunnel health check target to be one from within the prefix range `172.64.240.252/30`.
 2. Apply a policy-based route that matches packets with source IP address equal to the configured tunnel health check target (for example  `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.
 
-You can configure the tunnel health check target IP address by updating your [GRE tunnels](/api/operations/magic-gre-tunnels-update-gre-tunnel) or [IPsec tunnels](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel).
+## Change health check target
+
+{{<render file="_change-health-check-target.md" withParameters="/magic-wan/get-started/configure-tunnels/#add-tunnels">}}
 
 {{<render file="_icmp-mfirewall.md" productFolder="magic-transit">}}
 
-{{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/probe-construction/" >}}
+## Update health check frequency
+
+{{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/probe-construction/;;/magic-wan/get-started/configure-tunnels/#add-tunnels" >}}
 
 ## Check for tunnel health in the dashboard
 
