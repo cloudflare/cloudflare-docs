@@ -166,7 +166,9 @@ Review descriptions of common error messages you may see when working with TCP S
 
 ### Using TCP Sockets from Pages Functions
 
-In local development, most [frameworks supported by Pages](/pages/framework-guides/) rely on their own development server that uses Node.js as the underlying runtime, rather than [workerd](https://github.com/cloudflare/workerd), the runtime used on Workers. The `connect()` API is not yet available in Node.js. As a result, when in local development, the `cloudflare:sockets` module that provides the `connect()` API is not available. The TCP sockets API is supported by Pages and Pages Functions however — you can test this by deploying your Pages project to Cloudflare.
+The TCP sockets API is supported by Pages and Pages Functions. However, in local development, most [frameworks supported by Pages](/pages/framework-guides/) rely on their own development server that uses Node.js as the underlying runtime, rather than [workerd](https://github.com/cloudflare/workerd), the Workers Runtime. The `connect()` API is not yet available in Node.js. As a result, when in local development, the `cloudflare:sockets` module that provides the `connect()` API is not available.
+
+To use the TCP Sockets API in local development, you will need to first run the build step for the framework you are using, and then run [`wrangler pages dev <BUILD_DIRECTORY>`](/workers/wrangler/commands/#dev-1). Depending on the framework you are using, you may need to provide the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/), via `--compatibility-flags="nodejs_compat"`.
 
 ### `proxy request failed, cannot connect to the specified address`
 
