@@ -59,7 +59,7 @@ Alternatively, download the client from one of the following links after checkin
 [Download from the iOS App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492) or search for “Cloudflare One Agent”.
 
 {{<Aside type="note" header="Migrate from 1.1.1.1">}}
-The Cloudflare One Agent replaces the [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/id1423538627) app that was previously used to connect to Zero Trust. For more information, refer to our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+The legacy iOS client, [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
 {{</Aside>}}
 
 ## Android
@@ -71,7 +71,7 @@ The Cloudflare One Agent replaces the [1.1.1.1: Faster Internet](https://apps.ap
 [Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent) or search for “Cloudflare One Agent”.
 
 {{<Aside type="note" header="Migrate from 1.1.1.1">}}
-The Cloudflare One Agent replaces the [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) app that was previously used to connect to Zero Trust. For more information, refer to our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
 {{</Aside>}}
 
 ## ChromeOS
