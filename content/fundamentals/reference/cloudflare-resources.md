@@ -1,12 +1,12 @@
 ---
-title: Access Cloudflare resources
+title: Cloudflare resources
 pcx_content_type: reference
 layout: list
 aliases:
 - /fundamentals/get-started/basic-tasks/access-cloudflare-resources/
 ---
 
-# Access Cloudflare resources
+# Cloudflare resources
 
 {{<render file="_cloudflare-resources.md">}}
 

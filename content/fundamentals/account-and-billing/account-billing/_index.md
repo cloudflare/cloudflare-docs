@@ -1,7 +1,7 @@
 ---
-title: Account maintenance
+title: Subscriptions and billing
 pcx_content_type: navigation
-weight: 4
+weight: 2
 aliases:
 - /fundamentals/account-and-billing/account-maintenance/
 ---

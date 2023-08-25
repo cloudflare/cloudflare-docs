@@ -1,11 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Access compliance documentation
+title: Compliance documentation
 aliases:
 - /fundamentals/get-started/basic-tasks/access-compliance-docs/
 ---
 
-# Access compliance documentation
+# Compliance documentation
 
 Super Administrators can access common compliance documentation — for topics like PCI, SOC 2, ISO, and more — through the Cloudflare dashboard.
 
