@@ -34,7 +34,9 @@ For proxied [HTTP/3 traffic](/cloudflare-one/policies/gateway/http-policies/http
 
 ### DNS policies
 
-Gateway evaluates DNS policies in [order of precedence](#order-of-precedence).
+Gateway evaluates DNS policies first in order of DNS resolution, then in [order of precedence](#order-of-precedence).
+
+Gateway evaluates policies before DNS resolution, resolves the DNS query, then evaluates policies again after resolution. Refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors) to see when each selector is evaluated.
 
 ### Network policies
 
