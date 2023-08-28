@@ -878,7 +878,7 @@ The Cloudflare Rules language supports these dynamic fields:
             <code>GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>For Magic Firewall, <code>ip.geoip.country</code> field (which is still available) will check both source and destination addresses.</p>
+         <p>For Magic Firewall, <code>ip.geoip.country</code> field (which is still available) will match on either source or destination address.</p>
          <p> <code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
         </td>
     </tr>
