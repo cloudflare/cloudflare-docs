@@ -26,7 +26,7 @@ Before proceeding, ensure that you have the Anycast IPs associated with your acc
 Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/router — one to each of the two Anycast IP addresses.
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to  to **Magic WAN** > **Manage Magic WAN Configuration** > **Configure**.
+2. Go to  to **Magic WAN** > **Configurations**.
 3. From the **Tunnels** tab, select **Create**.
 4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/get-started/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
     - **Customer Endpoint**: Enter your external/egress interface of the firewall.
@@ -53,7 +53,7 @@ Add two Magic static routes to define the IP address space that exists behind th
 By default, the Magic static routes are defined with the priority set to `100`. Cloudflare leverages [Equal Cost Multipath Routing (ECMP)](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing) and will load balance the traffic equally across the two tunnels. If you prefer to use an Active/Passive model, you can leave the default value for the first route set to `100`, and set the value for the second tunnel to `150` (higher value is a lower priority).
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Manage Magic WAN Configuration** > **Configure**.
+2. Go to **Magic WAN** > **Configurations**.
 3. Go to **Static Routes** > **Create**.
 4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/) to learn about settings not mentioned here):
     - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
