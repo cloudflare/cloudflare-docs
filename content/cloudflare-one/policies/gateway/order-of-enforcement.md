@@ -36,7 +36,16 @@ For proxied [HTTP/3 traffic](/cloudflare-one/policies/gateway/http-policies/http
 
 Gateway evaluates DNS policies first in order of DNS resolution, then in [order of precedence](#order-of-precedence).
 
-Gateway evaluates policies before DNS resolution, resolves the DNS query, then evaluates policies again after resolution. Refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors) to see when each selector is evaluated.
+When DNS queries are received, Gateway evaluates policies with pre-resolution selectors, resolves the DNS query, then evaluates policies with post-resolution selectors. This means policies with selectors evaluated before DNS resolution take precedence. For example, the following set of policies will block `example.com`:
+
+| Precedence | Selector                        | Operator | Value         | Action |
+| ---------- | ------------------------------- | -------- | ------------- | ------ |
+| 1          | Resolved Country IP Geolocation | is       | United States | Allow  |
+| 2          | Domain                          | is       | `example.com` | Block  |
+
+Despite an explicit Allow policy ordered first, policy 2 takes precedence because the _Domain_ selector is evaluated before DNS resolution.
+
+For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors).
 
 ### Network policies
 
