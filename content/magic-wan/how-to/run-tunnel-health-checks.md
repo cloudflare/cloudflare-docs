@@ -30,4 +30,4 @@ To accomplish this, we recommend that you:
 
 ## Check for tunnel health in the dashboard
 
-{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health check**" >}}
