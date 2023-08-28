@@ -14,7 +14,7 @@ There four types of contacts available to configure, each with a priority type:
 - **In-Depth Analyst**: P3 priority.
 - **Executive Contact**: P4 priority.
 
-Area 1 will start by reaching out to P1-class contacts. If our communication is not acknowledged, we will try reaching out to P2-class contacts, and so on and so forth until one of the classes acknowledges our contacts.
+Area 1 will start by reaching out to P1-level contacts. If they do not respond, we will then try reaching out to the other contacts down the list until we receive a reply from one of these groups.
 
 You can enable these special notifications through an opt-in process:
 
