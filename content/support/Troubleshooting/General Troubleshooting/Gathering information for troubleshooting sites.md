@@ -41,17 +41,17 @@ Currently, only Chrome and Firefox can access the HAR feature by default. Other 
   
   2\. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab.
   
-  ![HAR network tab screenshot from Chrome developer tools](/assets/images/support/gathering_har_file_network.png)
+  ![HAR network tab screenshot from Chrome developer tools](/images/support/gathering_har_file_network.png)
 
   3\. Check **Preserve log**.
   
   4\. Click record.
   
-  ![HAR record button in chrome dev tools.](/assets/images/support/gathering_har_file_record.png)
+  ![HAR record button in chrome dev tools.](/images/support/gathering_har_file_record.png)
   
   5\. Browse to the URL that causes issues. Once the issue is experienced, right click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
   
-  ![HAR save menu in Chrome developer tools.](/assets/images/support/gathering_har_file_save.png)
+  ![HAR save menu in Chrome developer tools.](/images/support/gathering_har_file_save.png)
   
   6\. Attach the HAR file to your support ticket.
 
@@ -107,7 +107,7 @@ ___
   
   3\. If debugging mode is enabled, you will see your device listed below “Remote Target” like the example below:
   
-  ![Where to find the Inspect Devices when in Debug Mode for Android.](/assets/images/support/step_1.jpg)
+  ![Where to find the Inspect Devices when in Debug Mode for Android.](/images/support/step_1.jpg)
   
   4\. Type in the URL, select **Open** and **inspect** to open Chrome’s DevTools.
   
@@ -117,11 +117,11 @@ ___
   
   7\. Click **record**.
 
-  ![Where to find the record button in Chrome's dev tools.](/assets/images/support/step_2_-_better.jpg)
+  ![Where to find the record button in Chrome's dev tools.](/images/support/step_2_-_better.jpg)
   
   8\. Browse to the URL that causes issues. Once the issue is experienced, right-click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
   
-  ![How to save HAR content. ](/assets/images/support/step_3.png)
+  ![How to save HAR content. ](/images/support/step_3.png)
   
   9. Attach the HAR file to your support ticket alongside a screen recording from the affected Samsung device. Instructions on how to do this from Samsung devices can be found in [Samsung's documentation here](https://www.samsung.com/au/support/mobile-devices/screen-recorder/).
 </details>
@@ -151,7 +151,7 @@ In certain situations when request is not issued or cancelled by the browser (fo
   4.  Right click on any of the items within the **Console** tab and select **Save as** log file.
   5.  Attach the log file to your support ticket.
   
-  ![How to find the console tab in Chrome's developer tools.](/assets/images/support/console_snapshot.png)
+  ![How to find the console tab in Chrome's developer tools.](/images/support/console_snapshot.png)
 </details>
 
 <details>
