@@ -4,6 +4,8 @@ pcx_content_type: overview
 weight: 1
 aliases:
 - /fundamentals/
+- /fundamentals/get-started/
+- /fundamentals/get-started/basic-tasks/access-cloudflare-resources/
 ---
 
 # Cloudflare Fundamentals
@@ -18,3 +20,11 @@ As you get started with Cloudflare, explore the following resources:
 - [Basic tasks](/fundamentals/basic-tasks/) provide guidance on how to perform common tasks with Cloudflare, particularly those related to new domains.
 - [Cloudflare's API](/fundamentals/api/) provides an overview on interacting with Cloudflare in a programatic way.  
 - [Reference topics](/fundamentals/reference/) offer technical details about different aspects of Cloudflare (common user agents, supported network ports, etc.).
+
+## Resources
+
+{{<render file="_cloudflare-resources.md">}}
+
+{{<Aside type="note">}}
+For additional resources, review [How to Interact with Cloudflare](/fundamentals/get-started/basic-tasks/interact-with-cloudflare/).
+{{</Aside>}}
