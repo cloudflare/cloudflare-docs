@@ -54,7 +54,7 @@ Schema Validation’s default action is visible on the main Schema Validation pa
 
 To change the default action:
 
-1.  Select **Change** on the default action, or visit **Settings**. 
+1. Select **Change** on the default action, or visit **Settings**. 
 2. Choose a new action from the dropdown menu.
 3. Observe the current action and accept the change by selecting **Change default action** in the popup window.
 
@@ -66,7 +66,7 @@ This allows you to be stricter on blocking non-compliant requests on certain end
 
 To change the action on an individual endpoint:
 
-1. Filter to the selected endpoint.
+1. Filter the selected endpoint.
 2. Select the ellipses on the endpoint's row.
 3. Select **Change Action**.
 4. Choose a new action from the dropdown menu and select **Set action**.
