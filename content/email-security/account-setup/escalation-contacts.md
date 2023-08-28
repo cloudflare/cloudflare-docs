@@ -8,6 +8,14 @@ weight: 2
 
 Whenever Area 1 finds an exceptional phishing threat or Email Service irregularity behavior (compromised email servers at a partner or vendor, wire fraud tactics, and more), we try to reach out to our customers.
 
+There four types of contacts available to configure, each with a priority type:
+- **SOC Contact**: P1 priority.
+- **Triage Analyst**: P2 priority.
+- **In-Depth Analyst**: P3 priority.
+- **Executive Contact**: P4 priority.
+
+Area 1 will start by reaching out to P1-class contacts. If our communication is not acknowledged, we will try reaching out to P2-class contacts, and so on and so forth until one of the classes acknowledges our contacts.
+
 You can enable these special notifications through an opt-in process:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
