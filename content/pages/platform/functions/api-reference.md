@@ -68,7 +68,7 @@ The following are the properties on the `context` object which are passed throug
       Passes the request through to the next Function or to the asset server if no other Function is available. 
   
   - `env` [{{<type>}}EnvWithFetch{{</type>}}](#envwithfetch)
-  - `params` [{{<type>}}Params&lt;P&gt;{{</type>}}](#params)
+  - `params` {{<type>}}Params&lt;P&gt;{{</type>}}
 
       Holds the values from [dynamic routing](/pages/platform/functions/routing/#dynamic-routes).
 
