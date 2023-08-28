@@ -99,11 +99,11 @@ addEventListener('tail', event =>
 
 - `logs` {{<type>}}array{{</type>}}
 
-  - An array of [TailLogs](/workers/runtime-apis/tail-event/#taillogs).
+  - An array of [TailLogs](/workers/runtime-apis/tail-event/#taillog).
 
 - `exceptions` {{<type>}}array{{</type>}}
 
-  - An array of [`TailExceptions`](/workers/runtime-apis/tail-event/#tailexceptions). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
+  - An array of [`TailExceptions`](/workers/runtime-apis/tail-event/#tailexception). A single Worker invocation might result in multiple unhandled exceptions, since a Worker can register multiple asynchronous tasks.
 
 - `outcome` {{<type>}}string{{</type>}}
 
