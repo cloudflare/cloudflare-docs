@@ -71,9 +71,9 @@ AVIF format is supported on a best-effort basis. Images that cannot be compresse
 
 ### Progressive JPEG
 
-While you can use `format=jpeg` option to generate images in interlaced progressive JPEG format, we will fallback to baseline JPEG format for small and large images specified as:
+While you can use the `format=jpeg` option to generate images in an interlaced progressive JPEG format, we will fallback to the baseline JPEG format for small and large images specified when:
 
-* the area calculated by width x height, is less than 150 x 150
-* the area calculated by width x height, is greater than 3000 x 3000
+* The area calculated by width x height is less than 150 x 150.
+* The area calculated by width x height is greater than 3000 x 3000.
 
-For example, 50 x 50 tiny image is always formatted by `baseline-jpeg` even if you specify progressive jpeg (`format=jpeg`).
+For example, a 50 x 50 tiny image is always formatted by `baseline-jpeg` even if you specify progressive jpeg (`format=jpeg`).
