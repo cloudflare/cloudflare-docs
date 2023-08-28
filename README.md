@@ -1,108 +1,13 @@
-# Cloudflare Docs
+# RSS Builder by B!Soft MarkBook RSS Feed
 
-**[View the docs →](https://developers.cloudflare.com/)**
-
-[Contribute to the docs](https://github.com/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md)
-
-## Setup
-
-You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install Hugo](https://gohugo.io/getting-started/installing) instructions for your operating system guides to get started.
-
-> **Important:** This project is built with version `0.110.0+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
-
-You must also have a recent version of Node.js (14+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
-
-```sh
-$ curl https://get.volta.sh | bash
-$ volta install node
-```
-
-Finally, install the Node.js dependencies for this project using npm or another package manager:
-
-```sh
-$ npm install
-```
-
-## Development
-
-When making changes to the site, including any content changes, you may run a local development server by running the following command:
-
-```sh
-$ npm run dev
-```
-
-This spawns a server that will be accessible via `http://localhost:5173` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
-
-Additionally, this project includes a CI step for ensuring consistent code style. This applies to all files within the project, including markdown (`*.md`) files, but will not affect the content itself or the content's output display. To see the style error(s), you may run:
-
-```sh
-$ npm run lint
-```
-
-Finally, some of these code-style errors may be fixed automatically. To do so, you may run:
-
-```sh
-$ npm run format
-```
-
-## Deployment
-
-Our docs are deployed using [Cloudflare Pages](https://pages.cloudflare.com). Every commit pushed to production will automatically deploy to [developers.cloudflare.com](https://developers.cloudflare.com), and any pull requests opened will have a corresponding staging URL available in the pull request comments.
-
-## Visual Studio Code snippets
-
-This repository includes a file with [Visual Studio Code snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) for the most common Hugo shortcodes used Developer Docs.
-
-The available snippets are:
-
-Prefixes | Description
----|---
-`asideheader` | Inserts an `Aside` shortcode with header text.
-`asidenoheader` | Inserts an `Aside` shortcode without a header.
-`ccol` | Surrounds the current selection with `content-column` shortcodes.
-`tblwrap` | Surrounds the current selection with `table-wrap` shortcodes.
-`directory` | Inserts a `directory-listing` shortcode.
-`headerfullfile` | Inserts a file header for a complete Markdown file.
-`metatitle` | Inserts meta title fields in existing Markdown header. Used to complement a full file header.
-`metadescription` | Inserts meta description fields in existing Markdown header. Used to complement a full file header.
-`headerpartialfile` | Inserts a header for a partial Markdown file.
-`headerpartialfileparams` | Inserts a header for a partial Markdown file with input parameters.
-`partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
-`partialincludeparams` or `renderpartialparams` | Inserts a `render` shortcode to include content from a partial with input parameters in the current document.
-`twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
-`detailssection` or `collapsible` | Inserts a collapsible `<details>` HTML element.
-
-Triggering one of the available snippets will insert their body content at the current cursor position.
-
-Additionally, the following snippets support surrounding existing text:
-* `Aside with header`
-* `Aside without header`
-* `Surround with content-column`
-* `Surround with table-wrap`
-* `Create collapsible details section`
-
-### How to use
-
-Note: Make sure you open the root folder of your cloned repository in Visual Studio Code (VS Code), so that VS Code correctly detects the snippets file stored in the `.vscode/` sub-folder.
-
-To enter a snippet:
-1. Enter the snippet prefix and press `Ctrl+Space` (`Command+Space` on a Mac).
-2. Select the desired snippet and press `Enter`.
-3. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
-
-To surround existing content with a snippet:
-1. Select the text you wish to surround with a snippet.
-2. Enter the snippet prefix (temporarily replacing the selected text) and press `Ctrl+Space` (`Command+Space` on a Mac).
-3. Select the desired snippet and press `Enter`. VS Code will insert the snippet body and paste the previously selected content in the correct location.
-4. (Optional) Enter or select a value for the first placeholder supported by the snippet, if any, and press `Tab` to move to the next placeholder. Keep replacing placeholders and pressing `Tab`. When there are no more placeholders, pressing `Tab` will end the process.
-
-## For Cloudflare employees
-
-To get write access to this repo, please reach out to the **Developer Docs** room in chat.
-
-## License and Legal Notices
-
-Except as otherwise noted, Cloudflare and any contributors grant you a license to the Cloudflare Developer Documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE), and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE).
-
-Cloudflare products and services referenced in the documentation may be either trademarks or registered trademarks of Cloudflare in the United States and/or other countries. The licenses for this project do not grant you rights to use any Cloudflare names, logos, or trademarks. Cloudflare's general trademark guidelines can be found at [https://www.cloudflare.com/trademark/](https://www.cloudflare.com/trademark/).
-Cloudflare and any contributors reserve all other rights, whether under their respective copyrights, patents, or trademarks, whether by implication, estoppel, or otherwise.
+https://www.markbook.com MarkBook RSS Feed. Keep up to date on the latest news. en-us mrichardson@acadiemgroup.com The Acadiem Group 2020 NEW MarkBook HTML5 is Here! 10 Oct 2020 10:00:00 -0400 
+https://www.markbook.com mrichardson@acadiemgroup.com News Our ALL NEW MarkBook HTML5 Web Application is Here! Flash or Flex is no longer required. Many added features in a clean new look. Now you can use MarkBook on your Chromebook, Android or iPadOS tablet as well as Windows, macOS or Linux devices. (Select tablets only) A new version of the app, 1.1.0 22 Dec 2020 16:30:00 -0400 
+https://www.markbook.com mrichardson@acadiemgroup.com News A new version of the app, 1.1.0, has been launched. It contains a major security update. Please see the Release Notes for the details. A new version of the app, 1.2.0 26 Jan 2021 17:30:00 -0400 
+https://www.markbook.com mrichardson@acadiemgroup.com News A new version of the app, 1.2.0, has been launched. You can now Copy Comments to many students at once and easily input entries on tablets using Numeric Keypad. Please see the Release Notes for the details. A new version of the app, 1.3.0 25 Mar 2021 17:30:00 -0400 
+https://www.markbook.com mrichardson@acadiemgroup.com News A new version of the app, 1.3.0, has been launched. Please see the Release Notes for the details. A new version of the app, 1.4.0 30 Apr 2021 08:00:00 -0400 
+https://www.markbook.com mrichardson@acadiemgroup.com News A new version of the app, 1.4.0, has been launched. Please see the Release Notes for the details. For TDSB users 6 Aug 2021 08:00:00 -0400 http://tdsb.on.ca/ mrichardson@acadiemgroup.com News TDSB users: In preparation for Single Sign On service in September, all usernames now use your Toronto District School Board email address. TDSB-logo.png Attention TDSB Users 18 Sep 2021 01:00:00 -0400 
+https://www.markbook.com mrichardson@acadiemgroup.com News On Saturday September 18th, Single Sign On (SSO) will be implemented for TDSB MarkBook (Cloud) users. After the implementation is completed, teachers will be required to sign onto MarkBook using their TDSB e- mail address and password. Teachers that are already signing onto MarkBook with their TDSB email address will have their existing class data maintained. Teachers that are currently using personal email accounts will need to contact 
+support@markbookapp.com to request existing class data transfers, if required. TDSB-logo.png For TVDSB Users 09 Sep 2022 01:00:00 -0400 
+https://www.markbook.com News On Tuesday, September 6th, Single Sign On (SSO) was implemented for TVDSB MarkBook (Cloud) users. Teachers are now required to sign onto MarkBook using their TVDSB e-mail address and password in the Microsoft 365 Apps environment. Please follow the Information Guidesheet for "Transfer from Individual to Corporate Domain using SSO in MarkBook®”. Teachers that are already signing onto MarkBook with their TVDSB email address will have their existing class data maintained. Teachers that are currently using personal email accounts will need to contact 
+support@markbookapp.com to request existing class data transfers, if required. TVDSB-logo.webp WECDSB 31 Oct 2022 01:00:00 -0400 
+https://www.markbook.com News WECDSB users, please ensure that you have updated ALL of your courses with the most recent Aspen extract that has your first initial and last name in the file name (i.e. see below). Furthermore, please ensure you have submitted a copy (screenshots) of your updated courses to your school-issued Google form. WECDSB-logo.png
