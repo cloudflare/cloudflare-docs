@@ -90,7 +90,7 @@ The following are the properties on the `context` object which are passed throug
 
       Which would return `"Hello nevi"`.
 
-  - `data` [{{<type>}}Data{{</type>}}](#data)
+  - `data` {{<type>}}Data{{</type>}}
   
 {{</definitions>}}
 
