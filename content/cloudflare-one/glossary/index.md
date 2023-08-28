@@ -195,7 +195,7 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 
 ## team name
 
-The customizable portion of your [team domain](#team-domain). You can view your team name in Cloudflare Zero Trust under **Settings** > **Custom Pages**.
+The customizable portion of your [team domain](#team-domain). You can view your team name in Cloudflare Zero Trust under **Settings** > **Account**.
 
 | team domain                             | team name        |
 | --------------------------------------- | ---------------- |
