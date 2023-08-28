@@ -93,7 +93,7 @@ To create a new tag:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Tags**.
 2. Select **Add tags**.
-3. Enter text to use for the tag (for example, `Human Resources`).
+3. Enter up to 35 alphanumeric characters for the tag (for example, `Human Resources`).
 4. Select **Save**.
 
 You can now [add this tag](#tag-an-access-application) to an Access application.
