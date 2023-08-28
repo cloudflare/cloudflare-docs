@@ -10,7 +10,7 @@ meta:
 
 Orange-to-Orange (O2O) is a specific traffic routing configuration where traffic routes through two Cloudflare Zones: the first Cloudflare Zone is owned by customer 1 and the second Cloudflare Zone is owned by customer 2, who is considered a SaaS Provider.
 
-If one or more hostnames are onboarded to a SaaS Provider that uses Cloudflare products as part of their platform, specifically the [Cloudflare for SaaS product](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/), those hostnames will be created as Custom Hostnames in the SaaS Provider's Zone. The Custom Hostnames must be activated to give the SaaS Provider permission to route traffic for the hostname through their Zone.
+If one or more hostnames are onboarded to a SaaS Provider that uses Cloudflare products as part of their platform, specifically the [Cloudflare for SaaS product](/cloudflare-for-platforms/cloudflare-for-saas/), those hostnames will be created as Custom Hostnames in the SaaS Provider's Zone. The Custom Hostnames must be activated to give the SaaS Provider permission to route traffic for the hostname through their Zone.
 
 ## Without O2O
 
