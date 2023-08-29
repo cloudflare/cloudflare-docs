@@ -1,11 +1,11 @@
 ---
 pcx_content_type: reference
-title: When does Cloudflare crawl my site?
+title: Cloudflare crawlers
 aliases:
 - /fundamentals/get-started/reference/cloudflare-site-crawling/
 ---
 
-# When does Cloudflare crawl my site?
+# Cloudflare crawlers
 
 Cloudflare may crawl or make HTTP requests to your site to make sure its protected and performing properly.
 
