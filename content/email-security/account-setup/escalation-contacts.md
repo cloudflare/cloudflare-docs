@@ -8,7 +8,7 @@ weight: 2
 
 Whenever Area 1 finds an exceptional phishing threat or Email Service irregularity behavior (compromised email servers at a partner or vendor, wire fraud tactics, and more), we try to reach out to our customers.
 
-There four types of contacts available to configure, each with a priority type:
+There are four types of contacts available to configure, each with a priority type:
 - **SOC Contact**: P1 priority.
 - **Triage Analyst**: P2 priority.
 - **In-Depth Analyst**: P3 priority.
