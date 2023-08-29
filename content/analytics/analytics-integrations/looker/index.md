@@ -5,7 +5,6 @@ weight: 102
 layout: single
 aliases:
 - /fundamentals/data-products/analytics-integrations/looker/
-
 ---
 
 # Looker

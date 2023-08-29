@@ -5,7 +5,6 @@ weight: 103
 layout: single
 aliases:
 - /fundamentals/data-products/analytics-integrations/new-relic/
-
 ---
 
 # New Relic

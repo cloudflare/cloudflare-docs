@@ -5,7 +5,6 @@ weight: 101
 layout: single
 aliases:
 - /fundamentals/data-products/analytics-integrations/google-cloud/
-
 ---
 
 # Google Cloud
