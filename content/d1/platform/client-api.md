@@ -130,6 +130,8 @@ If the query returns no rows, then first() will return ```null```.
 
 If the query returns rows, but ```column``` does not exist, then first() will throw the ```D1_ERROR``` exception.
 
+stmt.first() does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
+
 ### await stmt.all()
 Returns all rows and metadata.
 
