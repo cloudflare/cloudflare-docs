@@ -1493,7 +1493,7 @@
           "ent": "Yes"
         },
         "managed_rulesets_response": {
-          "title": "Cloudflare Sensitive Data Detection (Beta)",
+          "title": "Cloudflare Sensitive Data Detection",
           "summary": "Enterprise-only",
           "link": "/waf/managed-rules/",
           "free": "No",
