@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: Magic WAN Connector (beta)
 weight: 8
 ---
