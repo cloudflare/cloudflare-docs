@@ -267,10 +267,16 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
       - `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
       - `u`: Enables Unicode percent decoding. For example, `%E2%98%81%EF%B8%8F` will be decoded to a cloud emoji (`☁️`).
 
-  - <em>Example:</em>
+  - <em>Examples:</em>
     <br />
 
     ```txt
+    url_decode("John%20Doe") == "John Doe"
+    url_decode("John+Doe") == "John Doe"
+    url_decode("%2520") == "%20"
+    url_decode("%2520", "r") == " "
+
+    // With the any() function:
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
 
