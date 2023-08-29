@@ -123,7 +123,7 @@
   {{- $diffReview := now.Sub $lastReview -}}
   <meta name="pcx_last_reviewed" content="{{- math.Round (div $diffReview.Hours 24) -}}" />
   {{- else -}}
-  <meta name="pcx_last_reviewed" content="Not set" />
+  <meta name="pcx_last_reviewed" content="500" />
   {{- end -}}
 
   {{- with .Context.Params.pcx_content_type -}}
