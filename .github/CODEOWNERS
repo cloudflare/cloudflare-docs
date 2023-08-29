@@ -2,14 +2,14 @@
 * @cloudflare/pcx-technical-writing
 
 # More dev-specific files
-/.github/ @kodster28 @pedrosousa @haleycode @codewithkristian
+/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
-/components/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
-/functions/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
-*.js @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
-*.ts @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa @haleycode
+/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
+/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
