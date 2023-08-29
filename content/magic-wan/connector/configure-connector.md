@@ -4,6 +4,8 @@ title: Configure Magic WAN Connector (beta)
 weight: 1
 ---
 
+# Configure Magic WAN Connector (beta)
+
 ## Prerequisites
 
 You need Magic WAN to be able to use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
