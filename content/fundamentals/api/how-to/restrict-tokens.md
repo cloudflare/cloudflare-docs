@@ -1,9 +1,7 @@
 ---
 title: Restrict tokens
 pcx_content_type: concept
-weight: 13
-aliases:
-- /fundamentals/api/how-to/restrict-tokens/
+weight: 4
 ---
 
 # Restrict token use

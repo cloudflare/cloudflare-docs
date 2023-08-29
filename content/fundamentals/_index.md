@@ -26,5 +26,5 @@ As you get started with Cloudflare, explore the following resources:
 {{<render file="_cloudflare-resources.md">}}
 
 {{<Aside type="note">}}
-For additional resources, review [How to Interact with Cloudflare](/fundamentals/get-started/basic-tasks/interact-with-cloudflare/).
+For additional resources, review [How to Interact with Cloudflare](/fundamentals/basic-tasks/interact-with-cloudflare/).
 {{</Aside>}}

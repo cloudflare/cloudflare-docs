@@ -26,7 +26,7 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 {{<render file="_disable_dnssec.md" productFolder="dns" >}}
 
-## Step 1 — Add site in Cloudflare
+## 1 — Add site in Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. In the top navigation bar, click **Add site**.
@@ -58,7 +58,7 @@ Additionally, Cloudflare requires your `apex domain` to be one level below a val
     - **Optimize performance**: Speed up your site by enabling [Auto Minify](/speed/optimization/content/auto-minify/) and [Brotli compression](/speed/optimization/content/brotli/).
  8. When you have finished the **Quick Start Guide**, click **Finish**.
 
-## Step 2 — Update nameservers
+## 2 — Update nameservers
 
 {{<render file="_nameserver-preamble.md" productFolder="dns" >}}
 <br/>
@@ -67,10 +67,10 @@ Before your domain can begin using Cloudflare for DNS resolution, you need to [a
 
 {{<render file="_minimize-downtime-tip.md" productFolder="dns" >}}
 
-## Step 3 — Complete SSL/TLS setup
+## 3 — Complete SSL/TLS setup
 
 To prevent insecure connections and visitor browser errors, [enable SSL/TLS protection](/ssl/get-started/).
 
-## Step 4 — Go beyond the basics
+## 4 — Go beyond the basics
 
 For suggestions and guidance about getting the most out of your Cloudflare account, refer to our [Solution guides](/fundamentals/get-started/task-guides/).

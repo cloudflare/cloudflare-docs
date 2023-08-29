@@ -31,8 +31,8 @@ As you get started with Cloudflare, use the following resources.
 | [Cloudflare for Startups](https://www.cloudflare.com/forstartups/) | Help startups accelerate and protect their Internet properties. |
 | [Critical Infrastructure Defense Project (CIDP)](https://www.cloudflare.com/partners/technology-partners/cidp/) | Comprehensive cybersecurity protection for US critical infrastructure. |
 | [Project Cybersafe Schools](https://www.cloudflare.com/lp/cybersafe-schools/) | Grants eligible schools free access to Cloudflare’s Email Security and Gateway products. |
-| [Project Fair Shot](https://www.cloudflare.com/fair-shot/) | Provides Waiting Room to any government agency, hospital, pharmacy, or other organization facilitating the distribution of the COVID-19 vaccine for free until at least July 1, 2023. |
-| [Project Galileo](https://www.cloudflare.com/galileo/) | Cyber security protection for organizations working in the arts, human rights, civil society, journalism, or democracy. |
+| [Project Fair Shot](https://www.cloudflare.com/fair-shot/) | Provides Waiting Room to any government agency, hospital, pharmacy, or other organization facilitating the distribution of the COVID-19 vaccine for free. |
+| [Project Galileo](https://www.cloudflare.com/galileo/) | Cyber security protection for organizations working in the arts, human rights, civil society, journalism, or democracy fields. |
 | [Project Safekeeping](https://www.cloudflare.com/lp/project-safekeeping/) | Provides enterprise-level Zero Trust cybersecurity services to eligible under-resourced organizations that are vital to the basic functioning of our global communities organizations. |
 | [Project Pangea](https://www.cloudflare.com/pangea/) | Helps bring underserved communities secure connectivity to the Internet through our global and interconnected network. |
 | [Workers Launchpad Funding Program](https://www.cloudflare.com/lp/workers-launchpad/) | Find the funding, tools, and community to help scale your startup through the Workers Launchpad. Any startup currently using Cloudflare Workers or other components of the Cloudflare developer platform is eligible to apply. |

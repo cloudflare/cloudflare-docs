@@ -1,9 +1,7 @@
 ---
 title: API token templates
 pcx_content_type: reference
-weight: 21
-aliases:
-- /fundamentals/api/reference/template/
+weight: 4
 ---
 
 # API token templates

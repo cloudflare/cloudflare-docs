@@ -1,9 +1,7 @@
 ---
 pcx_content_type: reference
 title: Limits
-weight: 13
-aliases:
-- /fundamentals/api/reference/limits/
+weight: 2
 ---
 
 # Rate Limits

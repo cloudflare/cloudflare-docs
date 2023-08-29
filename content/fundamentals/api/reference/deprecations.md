@@ -1,9 +1,7 @@
 ---
 title: API deprecations
 pcx_content_type: reference
-weight: 22
-aliases:
-- /fundamentals/api/reference/deprecations/
+weight: 5
 ---
 
 # API v4 deprecations

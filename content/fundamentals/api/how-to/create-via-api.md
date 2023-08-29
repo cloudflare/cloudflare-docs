@@ -1,9 +1,7 @@
 ---
 title: Create tokens via API
 pcx_content_type: how-to
-weight: 12
-aliases:
-- /fundamentals/api/how-to/create-via-api/
+weight: 3
 ---
 
 # Create API tokens via the API
