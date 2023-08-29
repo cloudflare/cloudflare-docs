@@ -2,6 +2,8 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/200170056-Understanding-the-Cloudflare-Security-Level
 title: Security Level
+aliases:
+- /fundamentals/security/security-level/
 ---
 
 # Security Level

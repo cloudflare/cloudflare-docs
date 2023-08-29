@@ -1,7 +1,8 @@
 ---
 pcx_content_type: reference
 title: Challenge Passage
-weight: 7
+aliases:
+- /fundamentals/security/challenge-passage/
 ---
 
 # Challenge Passage

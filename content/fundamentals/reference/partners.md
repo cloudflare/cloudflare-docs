@@ -1,9 +1,10 @@
 ---
 pcx_content_type: reference
 title: Partners
-weight: 8
 meta:
     title: Technology partner integrations
+aliases:
+- /fundamentals/partners/
 ---
 
 # Technology partner integrations
