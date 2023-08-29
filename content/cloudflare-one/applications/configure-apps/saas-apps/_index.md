@@ -64,7 +64,7 @@ Finally, you will need to configure your SaaS application to require users to lo
    - **Access Entity ID or Issuer**
    - **Public key**
 
-   You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO Endpoint URL> + /saml-metadata`. The SSO Endpoint can be copied out of the dashboard.
+   You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO Endpoint>/saml-metadata`. The SSO Endpoint can be copied out of the dashboard.
 
 2. Select **Done**.
 
