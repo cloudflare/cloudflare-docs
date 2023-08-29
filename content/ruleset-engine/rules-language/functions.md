@@ -254,13 +254,18 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
     <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
-- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}, option{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}[, options{{<param-type>}}String{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
-  - Decodes a URL formatted string defined in source, as in the following:
+  - Decodes a URL-formatted string defined in `source`, as in the following:
 
-    - <code>%20</code> and <code>+</code> decode to space characters <code> </code>
+    - `%20` and `+` decode to a space character (` `).
 
-    - <code>%E4%BD</code> decodes to <code>ä½ </code>
+    - `%E4%BD` decodes to `ä½`.
+
+  - The `options` parameter is optional. You must provide any options as a single string wrapped in quotes, such as `"r"` or `"ur"`. The available options are the following:
+
+      - `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
+      - `u`: Enables Unicode percent decoding. For example, `%E2%98%81%EF%B8%8F` will be decoded to a cloud emoji (`☁️`).
 
   - <em>Example:</em>
     <br />
@@ -268,16 +273,6 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
     ```txt
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
-
-  - Option parameter is optional. When supplied, the value should be wrapped in quotes, such as <code>"r"</code> or <code>"ur"</code>. There are two options available that can be combined:
-
-    1. <code>u</code> to support decoding percent unicode
-
-      - <code>%E2%98%81%EF%B8%8F</code> will be decoded to emoji <code>☁️</code>
-
-    2. <code>r</code> for decoding recursively
- 
-      - <code>%2520</code> will be decoded twice (recursively) to space character <code> </code>
 
 - <code id="function-uuidv4">{{<name>}}uuidv4{{</name>}}({{<type>}}Bytes{{</type>}})</code> {{<type>}}String{{</type>}}
 
