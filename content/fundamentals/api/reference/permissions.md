@@ -16,32 +16,53 @@ Each category contains permission groups related to those resources. DNS permiss
 
 To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](/api/operations/permission-groups-list-permission-groups) endpoint.
 
-## Cloudflare dashboard
+## User permissions
 
-### User permissions
+The applicable scope of user permissions is `com.cloudflare.api.user`.
 
-{{<render file="_user-permissions-table.md" withParameters="Edit">}}
-
-### Account permissions
-
-{{<render file="_account-permissions-table.md" withParameters="Edit">}}
-
-### Zone permissions
-
-{{<render file="_zone-permissions-table.md" withParameters="Edit">}}
-
----
-
-## Terraform
-
-### User permissions
-
+{{<tabs labels="Dashboard | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_user-permissions-table.md" withParameters="Edit" >}}
+ 
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+ 
 {{<render file="_user-permissions-table.md" withParameters="Write">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
-### Account permissions
+## Account permissions
 
+The applicable scope of account permissions is `com.cloudflare.api.account`.
+
+{{<tabs labels="Dashboard | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_account-permissions-table.md" withParameters="Edit">}}
+ 
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+ 
 {{<render file="_account-permissions-table.md" withParameters="Write">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
-### Zone permissions
+## Zone permissions
 
+The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
+
+{{<tabs labels="Dashboard | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_zone-permissions-table.md" withParameters="Edit">}}
+ 
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+ 
 {{<render file="_zone-permissions-table.md" withParameters="Write">}}
+ 
+{{</tab>}}
+{{</tabs>}}

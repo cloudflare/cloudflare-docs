@@ -12,44 +12,44 @@
 
 {{- with .Site.GetPage $url -}}
 
-  {{- $contentPlaceholder := .Content }}
-  {{- $expectedParams := split .Params.inputParameters $sep -}}
+{{- $contentPlaceholder := .Content }}
+{{- $expectedParams := split .Params.inputParameters $sep -}}
 
-  <!-- If parameter values are specified in input params, replace throughout partial content -->
-  {{- if ne $parameterValues "" -}}
+<!-- If parameter values are specified in input params, replace throughout partial content -->
+{{- if ne $parameterValues "" -}}
 
-    {{- $parameterValues = split $parameterValues $sep -}}
+{{- $parameterValues = split $parameterValues $sep -}}
 
-    {{- if ne (len $expectedParams) (len $parameterValues) -}}
-      {{ errorf "ERROR in page %s:" $parentPagePath }}
-      {{ errorf "- Incorrect number of parameter values when including partial file: %s" .File.Path }}
-      {{ errorf "- Partial has %d parameters: %q" (len $expectedParams) $expectedParams }}
-      {{ errorf "- Got %d parameter values: %q" (len $parameterValues) $parameterValues }}
-    {{- end -}}
-    {{- $regexPlaceholder := "" -}}
+{{- if ne (len $expectedParams) (len $parameterValues) -}}
+{{ errorf "ERROR in page %s:" $parentPagePath }}
+{{ errorf "- Incorrect number of parameter values when including partial file: %s" .File.Path }}
+{{ errorf "- Partial has %d parameters: %q" (len $expectedParams) $expectedParams }}
+{{ errorf "- Got %d parameter values: %q" (len $parameterValues) $parameterValues }}
+{{- end -}}
+{{- $regexPlaceholder := "" -}}
 
-    {{- range $elem_index, $elem_val := $parameterValues -}}
-      {{ $elem_val := ((default "" $elem_val) | markdownify) }}
-      {{ $elem_index := add $elem_index 1 | string}}
-      {{ $regexPlaceholder = print "\\$" $elem_index }}
-      {{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
-    {{- end -}}
+{{- range $elem_index, $elem_val := $parameterValues -}}
+{{ $elem_val := ((default "" $elem_val) | markdownify) }}
+{{ $elem_index := add $elem_index 1 | string}}
+{{ $regexPlaceholder = print "\\$" $elem_index }}
+{{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
+{{- end -}}
 
-  {{- else -}}
+{{- else -}}
 
-    {{- if ne .Page.Params.inputParameters nil -}}
-      {{ errorf "ERROR in page %s:" $parentPagePath }}
-      {{ errorf "- You must specify input parameter values when including partial file: %s" .File.Path }}
-      {{ errorf "- Partial has %d parameters: %q" (len $expectedParams) $expectedParams }}
-    {{- end -}}
+{{- if ne .Page.Params.inputParameters nil -}}
+{{ errorf "ERROR in page %s:" $parentPagePath }}
+{{ errorf "- You must specify input parameter values when including partial file: %s" .File.Path }}
+{{ errorf "- Partial has %d parameters: %q" (len $expectedParams) $expectedParams }}
+{{- end -}}
 
-  {{- end -}}
-  
-  {{- if $noMarkdown -}}
-    {{- $contentPlaceholder -}}
-  {{- else -}}
-    {{- $contentPlaceholder | markdownify -}}
-  {{- end -}}
+{{- end -}}
+
+{{- if $noMarkdown -}}
+{{- $contentPlaceholder -}}
+{{- else -}}
+{{- $contentPlaceholder | markdownify -}}
+{{- end -}}
 
 
 {{- else -}}

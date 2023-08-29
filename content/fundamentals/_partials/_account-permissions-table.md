@@ -6,8 +6,6 @@ _build:
 inputParameters: editWord
 ---
 
-The applicable scope of account permissions is `com.cloudflare.api.account`.
-
 | Name                                                         | Description                                                                                                                                              |
 | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Access: Apps and Policies Read                               | Grants read access to [Cloudflare Access](/cloudflare-one/policies/access/) account resources.                                                           |

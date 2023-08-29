@@ -6,8 +6,6 @@ _build:
 inputParameters: editWord
 ---
 
-The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
-
 | Name                             | Description                                                                                                                                |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | Access: Apps and Policies Read   | Grants read access to [Cloudflare Access](/cloudflare-one/policies/access/) zone resources.                                                |
