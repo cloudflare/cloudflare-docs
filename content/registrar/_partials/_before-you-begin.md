@@ -11,9 +11,6 @@ _build:
 * [Add the domain](/fundamentals/get-started/setup/add-site/) you are transferring to your Cloudflare account.
 * [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) in the Cloudflare dashboard.
 * [Change your DNS nameservers](/dns/zone-setups/full-setup/) to Cloudflare.
-* Disable DNSSEC by:
-  * Removing the DS record at your current DNS host.
-  * [Disabling DNSSEC](/registrar/get-started/enable-dnssec/) in the Cloudflare dashboard.
 * If initiating multiple transfers, notify your financial institution to prevent them from flagging these charges as fraudulent.
 * Renew your domain if it is within 15 days of expiration.
 * Unlock your domain at your current registrar.

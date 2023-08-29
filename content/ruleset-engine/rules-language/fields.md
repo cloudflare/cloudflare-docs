@@ -375,7 +375,8 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
+         <p>In the WAF, the <code>ip.geoip.country</code> field (which is still available) is equivalent to <code>ip.src.country</code>.</p>
+         <p><code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
       </td>
    </tr>
    <tr id="field-ip-src-subdivision-1-iso-code">
@@ -877,7 +878,8 @@ The Cloudflare Rules language supports these dynamic fields:
             <code>GB</code>
          </p>
          <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
-         <p>This field has the same value as the <code>ip.geoip.country</code> field, which is still available.</p>
+         <p>For Magic Firewall, <code>ip.geoip.country</code> field (which is still available) will match on either source or destination address.</p>
+         <p> <code>ip.geoip.country</code> is being deprecated and we do not recommend using it.</p>
         </td>
     </tr>
     <tr id="field-ip-hdr_len">

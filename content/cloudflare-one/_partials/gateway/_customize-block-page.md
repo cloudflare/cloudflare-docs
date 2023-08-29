@@ -14,10 +14,10 @@ To apply customizations to your block page:
 3. Select **Customize**. Available global customizations include:
 
    - Adding your organization's name
-   - Adding a [logo](#add-a-logo-image)
+   - Adding a [logo](/cloudflare-one/policies/gateway/configuring-block-page/#add-a-logo-image)
    - Adding a header text
    - Adding a global block message, which will be displayed above the policy-specific block message
-   - Adding a [Mailto link](#allow-users-to-email-an-administrator)
+   - Adding a [Mailto link](/cloudflare-one/policies/gateway/configuring-block-page/#allow-users-to-email-an-administrator)
    - Choosing a background color
 
 4. Select **Save**. Your customers will now see your custom block page when visiting a blocked website.
