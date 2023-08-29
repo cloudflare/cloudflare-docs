@@ -37,7 +37,7 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 
 5. (Optional) Toggle the following settings:
 
-   - **Set as Default DNS Location** sets this location as the default in your DNS policy builder.
+   - **Set as Default DNS Location** sets this location as the default DoH endpoint for DNS queries.
    - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS nameservers.
 
      [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.
