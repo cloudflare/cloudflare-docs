@@ -8,7 +8,7 @@ inputParameters: productPath
 
 The Cloudflare dashboard monitors the health of all Anycast tunnels on your account that route traffic from Cloudflare to your origin network.
 
-The dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogenous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
+The dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogeneous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
 
 Not all data centers will be relevant to you at all times. You can refer to the **Average ingress traffic (last hour)** column to understand if a given data center is receiving traffic for your network, and if its health status is relevant to you.
 
