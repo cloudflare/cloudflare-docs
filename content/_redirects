@@ -218,7 +218,7 @@
 /d1/learning/using-d1-from-pages/ /pages/platform/functions/bindings/#d1-databases 301
 /d1/migrations/ /d1/platform/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
-/d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
+/d1/wrangler-commands/ /workers/wrangler/commands/#d1 301
 
 # ddos-protection
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
@@ -237,6 +237,7 @@
 /dns/additional-options/dnssec/ /dns/dnssec/ 301
 /dns/faq/ /dns/troubleshooting/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
+/dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
 /dns/zone-setups/troubleshooting/dns-probe-finished-nxdomain/ /dns/troubleshooting/dns-probe-finished-nxdomain/ 301
 /support/dns/ /dns/ 301
@@ -320,6 +321,7 @@
 # fundamentals
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/account-and-billing/members/roles/ 301
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/account-and-billing/members/ 301
+/fundamentals/account-and-billing/account-security/scim-setup/ /fundamentals/account-and-billing/account-security/ 301
 /fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
@@ -345,6 +347,15 @@
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
+/support/account-management-billing/account-management/ /fundamentals/account-and-billing/ 301
+/support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/简体中文/通过自动化将多个站点添加到-cloudflare/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/한국어/자동화를-통해-여러-사이트를-cloudflare에-추가/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/español-españa/cómo-añadir-varios-sitios-en-cloudflare-mediante-automatización/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/français-france/ajout-de-plusieurs-sites-à-cloudflare-via-automation/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/日本語/自動化機能を使ってcloudflareに複数のサイトを追加する/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
+/support/other-languages/português-do-brasil/como-adicionar-vários-sites-à-cloudflare-via-automação/ /fundamentals/get-started/setup/add-multiple-sites-automation/ 301
 /support/firewall/settings/ /fundamentals/security/ 301
 /support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/ /fundamentals/security/under-attack-mode/ 301
 /support/firewall/settings/understanding-the-cloudflare-browser-integrity-check/ /fundamentals/security/browser-integrity-check/ 301
@@ -390,7 +401,8 @@
 
 # learning-paths
 /learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
-/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/
+/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/ 301
+# more redirects in the /dynamic/ section
 
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
@@ -838,6 +850,8 @@
 /workers/reference/apis/request/ /workers/runtime-apis/request/ 301
 /workers/reference/apis/response/ /workers/runtime-apis/response/ 301
 /workers/reference/apis/streams/ /workers/runtime-apis/streams/ 301
+/workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
+/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
@@ -895,6 +909,7 @@
 /workers/tooling/wrangler/configuration/ /workers/wrangler/configuration/ 301
 /workers/tooling/wrangler/configuration/environments/ /workers/platform/environments/ 301
 /workers/tooling/wrangler/environments/ /workers/platform/environments/ 301
+/workers/platform/environments/ /workers/wrangler/environments/ 301
 /workers/tooling/wrangler/install/ /workers/wrangler/install-and-update/ 301
 /workers/wrangler/install-update/ /workers/wrangler/install-and-update/ 301
 /workers/tooling/wrangler/secrets/ /workers/wrangler/commands/ 301
@@ -924,14 +939,15 @@
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 /workers/wrangler-legacy/migration/eject-webpack/ /workers/wrangler/migration/v1-to-v2/eject-webpack/ 301
 /workers/wrangler-legacy/migration/ /workers/wrangler/migration/ 301
+/workers/wrangler/migration/deprecations/ /workers/wrangler/deprecations/ 301
+/workers/wrangler/migration/migrating-from-wrangler-1/ /workers/wrangler/migration/v1-to-v2/ 301
 /workers/learning/service-worker/ /workers/learning/migrate-to-module-workers/#service-worker-syntax/ 301
 /workers/learning/migrating-to-module-workers/ /workers/learning/migrate-to-module-workers/ 301
+/workers/runtime-apis/durable-objects/ /durable-objects/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
-/workers/platform/environments/ /workers/wrangler/environments/ 301
 /workers/platform/headers/ /workers/runtime-apis/headers/ 301
 /workers/platform/nodejs-compatibility/ /workers/runtime-apis/nodejs/ 301
 /workers/learning/using-websockets/ /workers/runtime-apis/websockets/use-websockets/ 301
-/workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
 /workers/platform/webassembly/ /workers/runtime-apis/webassembly/ 301
 /workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
 /workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
@@ -944,13 +960,17 @@
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
 /workers/platform/triggers/ /workers/platform/ 301
-/workers/learning/using-durable-objects/ /workers/configuration/durable-objects/ 301
+/workers/platform/triggers/routes/ /workers/configuration/routing/routes/ 301
+/workers/platform/triggers/custom-domains/ /workers/configuration/routing/custom-domains/ 301
+/workers/learning/using-durable-objects/ /durable-objects/ 301
+/workers/configuration/durable-objects/ /durable-objects/get-started/ 301
 /workers/platform/languages/ /workers/learning/languages/ 301
 /workers/platform/protocols/ /workers/learning/protocols/ 301
 /workers/platform/storage-options/ /workers/learning/storage-options/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
 /workers/platform/bindings/ /workers/configuration/bindings/ 301
 /workers/platform/bindings/about-service-bindings/ /workers/configuration/bindings/about-service-bindings/ 301
+/workers/platform/triggers/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/compatibility-dates/ /workers/configuration/compatibility-dates/ 301
 /workers/learning/integrations/ /workers/configuration/integrations/ 301
@@ -968,8 +988,6 @@
 /workers/platform/deployments/ /workers/configuration/deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
 /workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
-/workers/runtime-apis/streams/use-streams/ /workers/runtime-apis/streams/ 301
-
 # zaraz
 
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
@@ -979,6 +997,7 @@
 /zaraz/advanced/preview-mode/ /zaraz/history/preview-mode/ 301
 
 # cloudflare-one / zero-trust
+/access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
 /cloudflare-one/analytics/ /cloudflare-one/insights/ 301
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/access/ 301
@@ -1050,6 +1069,7 @@
 /cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/identity/devices/warp-client-checks/require-gateway/ 301
 /cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
 /cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
+/cloudflare-one/identity/devices/uptycs/ /cloudflare-one/identity/devices/service-providers/uptycs/ 301
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
@@ -1168,6 +1188,29 @@
 /fundamentals/speed/speed-test/* /speed/speed-test/:splat 301
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
+/learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301
+/learning-paths/modules/cybersafe/cybersafe-area1-onboarding/* /learning-paths/cybersafe/area1-onboarding/:splat 301
+/learning-paths/modules/cybersafe/cybersafe-concepts/* /learning-paths/cybersafe/concepts/:splat 301
+/learning-paths/modules/cybersafe/cybersafe-gateway-onboarding/* /learning-paths/cybersafe/gateway-onboarding/:splat 301
+/learning-paths/modules/get-started/onboarding/* /learning-paths/get-started-free/onboarding/:splat 301
+/learning-paths/modules/get-started/other-features-free/* /learning-paths/get-started-free/other-features/:splat 301
+/learning-paths/modules/get-started/performance-free/* /learning-paths/get-started-free/performance/:splat 301
+/learning-paths/modules/get-started/security-free/* /learning-paths/get-started-free/security/:splat 301
+/learning-paths/modules/performance/load-balancing-concepts/* /learning-paths/load-balancing/concepts/:splat 301
+/learning-paths/modules/performance/load-balancing-planning/* /learning-paths/load-balancing/planning/:splat 301
+/learning-paths/modules/performance/load-balancing-setup/* /learning-paths/load-balancing/setup/:splat 301
+/learning-paths/modules/security/bot-management-concepts/* /learning-paths/bot-management/concepts/:splat 301
+/learning-paths/modules/security/bot-management-planning/* /learning-paths/bot-management/planning/:splat 301
+/learning-paths/modules/security/bot-management-setup/* /learning-paths/bot-management/setup/:splat 301
+/learning-paths/modules/security/ddos-advanced/* /learning-paths/prevent-ddos-attacks/advanced/:splat 301
+/learning-paths/modules/security/ddos-baseline/* /learning-paths/prevent-ddos-attacks/baseline/:splat 301
+/learning-paths/modules/security/ddos-concepts/* /learning-paths/prevent-ddos-attacks/concepts/:splat 301
+/learning-paths/modules/security/dns-filtering-account/* /learning-paths/dns-filtering/account/:splat 301
+/learning-paths/modules/security/dns-filtering-concepts/* /learning-paths/dns-filtering/concepts/:splat 301
+/learning-paths/modules/security/dns-filtering-connect-devices/* /learning-paths/dns-filtering/connect-devices/:splat 301
+/learning-paths/modules/security/dns-filtering-create-policy/* /learning-paths/dns-filtering/create-policy/:splat 301
+/learning-paths/modules/security/dns-filtering-deploy/* /learning-paths/dns-filtering/deploy/:splat 301
+/learning-paths/modules/security/dns-filtering-plan-deployment/* /learning-paths/dns-filtering/plan-deployment/:splat 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
@@ -1206,18 +1249,3 @@
 
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
-
-# partial redirects (will expand later)
-
-/ssl/_partials/* /ssl/ 301
-/waiting-room/_partials/* /waiting-room/ 301
-/warp-client/_partials/* /warp-client/ 301
-/bots/_partials/* /bots/ 301
-/api-security/_partials/* /api-shield/ 301
-/logs/_partials/* /logs/ 301
-/fundamentals/_partials/* /fundamentals/ 301
-/load-balancing/_partials/* /load-balancing/ 301
-/api-shield/_partials/* /api-shield/ 301
-/registrar/_partials/* /registrar/ 301
-/waf/_partials/* /waf/ 301
-/1.1.1.1/_partials/* /1.1.1.1/ 301

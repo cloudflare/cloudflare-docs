@@ -9,7 +9,7 @@ title: FetchEvent
 
 In Workers, any incoming HTTP requests are referred to as `"fetch"` events. A Worker will respond to the HTTP request with the handler method that was assigned to the `"fetch"` event.
 
-Both the [Service Worker](#syntax-service-worker) and [ES modules](#syntax-module-worker) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
+Both the [Service Worker](#syntax-service-worker) and [ES modules](#syntax-es-modules) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
 
 ---
 

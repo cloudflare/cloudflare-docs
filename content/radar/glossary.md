@@ -107,6 +107,12 @@ Note that a number of factors may affect the accuracy of the geolocation informa
 
 Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
 
+## IPv6 adoption
+
+The IPv4 vs. IPv6 graph shows the distribution of traffic by IP version, and is intended to highlight IPv6 adoption trends.
+
+Note that prior to January 23, 2023, the IPv6 percentage shown in the chart was calculated as (IPv6 requests / IPv4+IPv6 requests). After that date, the IPv6 percentage is calculated as (IPv6 requests / requests for dual-stacked content).
+
 ## IQI
 
 The Internet Quality Index estimates connection performance under average utilization, such as web browsing. It is based on end user measurements against a fixed set of Cloudflare and third-party targets, providing numbers for bandwidth, round-trip time (latency), and DNS response time, aggregated by continent, country, or ASN.
@@ -117,6 +123,10 @@ The IQI methodology requires a minimum number of measurements to generate estima
 ## Network-level DDoS Attacks
 
 Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
+
+Industry categories include business types grouped by their primary activities, such as information technology and services, retail, or telecommunications. Vertical categories are high-level groupings that incorporate related industries, such as the "Internet and Telecom" vertical, which includes industries such as "Internet" and "Telecommunications".
+
+Network-level DDoS attacks graphs are based on traffic measured in bytes.
 
 ## Traffic type filter
 

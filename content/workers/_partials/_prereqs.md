@@ -7,7 +7,7 @@ _build:
 
 ## Prerequisites
 
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages), if you have not already.
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
 3. Install [`Node.js`](https://nodejs.org/en/). 
 

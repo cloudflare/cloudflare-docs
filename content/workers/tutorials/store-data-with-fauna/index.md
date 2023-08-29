@@ -651,4 +651,5 @@ Finally, delete your Fauna database from its settings in the Fauna dashboard:
 
 In this tutorial, you learned how to use Fauna with Cloudflare Workers to create a globally distributed, strongly consistent, next-generation serverless REST API that serves data quickly to a worldwide audience.
 
+
 If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/yusukebe/fauna-workers).

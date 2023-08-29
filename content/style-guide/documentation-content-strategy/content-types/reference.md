@@ -1,6 +1,6 @@
 ---
 title: Reference
-pcx_content_type: Content
+pcx_content_type: concept
 ---
 
 # Reference
@@ -49,7 +49,7 @@ plain, straightforward
 
 Single reference page
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: reference
@@ -68,5 +68,4 @@ Brief description of content in this section.
 ## Concise noun title
  
 Brief description of content in this section.
-}
 ```

@@ -89,11 +89,13 @@ By importing the learned schema, you can protect API endpoints found via API Dis
 
 You can import your learned schemas to Schema Validation 2 using the [API](/api-shield/security/schema-validation/) or the classic version of Schema Validation using the [Cloudflare dashboard](/api-shield/reference/classic-schema-validation/). Schema Validation 2 focuses on giving you granular control and lets you set mitigation actions for each endpoint individually. 
 
-## View Sequence Analytics
+## View and configure Sequence Analytics
 
 [Sequence Analytics](/api-shield/security/sequence-analytics/) surfaces a subset of important API request sequences found in your API traffic over time.
 
 You can observe the top sequences in your API traffic that contain endpoints stored in Endpoint Management. We rank sequences by Correlation Score. High-scoring sequences contain API requests which are likely to occur together in order.
+
+[Sequence Mitigation](/api-shield/security/sequence-mitigation/) allows you to enforce request patterns for authenticated clients communicating with your API. Use Sequence Analytics to better understand the request sequences used by your API clients.
 
 You should apply all possible API Shield protections (rate limiting suggestions, Schema Validation, JWT Validation, and mTLS) to API endpoints found in high correlation score sequences that make up the critical request flows in your application. You should also check their specific endpoint order with your development team.
 

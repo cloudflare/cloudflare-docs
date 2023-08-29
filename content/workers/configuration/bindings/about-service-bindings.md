@@ -1,9 +1,9 @@
 ---
 pcx_content_type: concept
-title: About Service bindings
+title: Service bindings
 ---
 
-# About Service bindings
+# Service bindings
 
 Service bindings are an API that facilitate Worker-to-Worker communication via explicit bindings defined in your configuration.
 

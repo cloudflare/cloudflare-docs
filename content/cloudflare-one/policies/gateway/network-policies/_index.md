@@ -27,7 +27,7 @@ A network policy consists of an **Action** as well as a logical expression that 
 
 ## Actions
 
-Just like actions in DNS and HTTP policies, actions in network policies define which decision you want to apply to a given set of elements. You can assign one action per policy.
+Like actions in DNS and HTTP policies, actions in network policies define which decision you want to apply to a given set of elements. You can assign one action per policy.
 
 ### Allow
 
@@ -35,22 +35,24 @@ API value: `allow`
 
 Policies with Allow actions allow network traffic to reach certain IPs or ports. For example, the following configuration allows specific users to reach a given IP address:
 
-| Selector       | Operator | Value           | Action |
-| -------------- | -------- | --------------- | ------ |
-| Destination IP | In       | `92.100.02.102` | Allow  |
-| Email          | In       | `*@example.com` |        |
+| Selector       | Operator | Value           | Logic | Action |
+| -------------- | -------- | --------------- | ----- | ------ |
+| Destination IP | In       | `92.100.02.102` | And   | Allow  |
+| Email          | In       | `*@example.com` |       |        |
 
 ### Audit SSH
 
 API value: `audit_ssh`
 
-Policies with Audit SSH actions allow administrators to log SSH commands matching SSH traffic over port 22. For example, the following configuration logs SSH commands sent to a given IP address:
+Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:
 
 | Selector       | Operator | Value          | Action    |
 | -------------- | -------- | -------------- | --------- |
 | Destination IP | In       | `203.0.113.83` | Audit SSH |
 
 For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
+
+{{<Aside type="note">}}Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.{{</Aside>}}
 
 ### Block
 
@@ -68,11 +70,11 @@ API value: `l4_override`
 
 Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
 
-| Selector       | Operator | Value           | Action           |
-| -------------- | -------- | --------------- | ---------------- |
-| Destination IP | In       | `95.92.143.151` | Network Override |
-| User Email     | In       | `*@example.com` |                  |
-| Override IP    |          | 10.0.0.1        |                  |
+| Selector       | Operator | Value           | Logic | Action           |
+| -------------- | -------- | --------------- | ----- | ---------------- |
+| Destination IP | In       | `95.92.143.151` | And   | Network Override |
+| User Email     | In       | `*@example.com` | And   |                  |
+| Override IP    |          | 10.0.0.1        |       |                  |
 
 ## Selectors
 
@@ -97,6 +99,10 @@ Gateway matches network traffic against the following selectors, or criteria.
 ### Destination Port
 
 {{<render file="gateway/_destination-port.md">}}
+
+### Detected Protocol
+
+{{<render file="gateway/_protocol-detection.md">}}
 
 ### Device Posture
 

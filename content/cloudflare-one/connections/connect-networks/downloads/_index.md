@@ -49,6 +49,14 @@ Alternatively, download the [latest Darwin amd64 release](https://github.com/clo
 
 ### Windows
 
+Download and install `cloudflared` via [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
+
+```bash
+winget install --id Cloudflare.cloudflared
+```
+
+Alternatively, download the latest release directly:
+
 | Type       | 32-bit                                                                                                     | 64-bit                                                                                                       |
 | ---------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |

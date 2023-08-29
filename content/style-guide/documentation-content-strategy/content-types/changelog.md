@@ -73,16 +73,16 @@ For changes pertaining just to the current file, which means a new entry is crea
 You would use this with a single-page changelog.
 
 ```
-{
+
 ---
 pcx_content_type: changelog
 title: Test page
 weight: 3
 rss: file
 ---
-}
 ```
-For initial implementation reasons, this will not work if the file is named _index.md
+
+For initial implementation reasons, this will not work if the file is named `_index.md`.
 
 ## Folder RSS feed
 
@@ -91,14 +91,13 @@ For changes pertaining to all files within the current folder, which means a new
 You would use this with a changelog that creates new pages for each change.
 
 ```
-{
+
 ---
 pcx_content_type: tutorial
 title: Test page
 weight: 3
 rss: folder
 ---
-}
 ```
 
 ## PR title and commit standards

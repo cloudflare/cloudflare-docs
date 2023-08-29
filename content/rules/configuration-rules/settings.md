@@ -29,7 +29,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -57,7 +57,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -81,7 +81,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -105,7 +105,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -133,7 +133,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -157,7 +157,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -181,7 +181,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -205,7 +205,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -229,7 +229,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -253,7 +253,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -279,7 +279,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -303,7 +303,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -329,7 +329,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -353,7 +353,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -379,7 +379,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>
@@ -403,7 +403,7 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a configuration rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
 </div>
 </details>

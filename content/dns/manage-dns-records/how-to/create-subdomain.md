@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Create subdomain
+title: Create subdomain records
 weight: 4
 ---
 

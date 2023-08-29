@@ -14,9 +14,9 @@ If the `CNAME` target is on the same zone as the `CNAME` record, Cloudflare proc
 
 {{</Aside>}}
 
-## For your root domain
+## For your zone apex
 
-`CNAME` flattening occurs by default for all plans when your domain uses a `CNAME` record for its root domain (`example.com`).
+`CNAME` flattening occurs by default for all plans when your domain uses a `CNAME` record for its zone apex (`example.com`, meaning the record **Name** is set to `@`).
 
 ## For all CNAME records
 

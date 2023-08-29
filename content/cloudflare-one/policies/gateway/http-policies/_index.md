@@ -52,7 +52,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                           |
-| Block        | Display [block page](/cloudflare-one/policies/gateway/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                           |
+| Block        | Display [block page](/cloudflare-one/policies/gateway/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                             |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
@@ -61,10 +61,10 @@ API value: `block`
 
 The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
 
-| Selector         | Operator      | Value          | Action |
-| ---------------- | ------------- | -------------- | ------ |
-| Application      | in            | `Google Drive` | Block  |
-| Upload Mime Type | matches regex | `.*`           |        |
+| Selector         | Operator      | Value          | Logic | Action |
+| ---------------- | ------------- | -------------- | ----- | ------ |
+| Application      | in            | `Google Drive` | And   | Block  |
+| Upload Mime Type | matches regex | `.*`           |       |        |
 
 ### Isolate
 
@@ -117,6 +117,12 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 ### Application
 
 {{<render file="gateway/_application.md" withParameters="HTTP">}}
+
+{{<Aside type="warning" header="Multiple API selectors required for Terraform">}}
+
+When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.support_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.support_ids[*] in {1245})`.
+
+{{</Aside>}}
 
 ### Content Categories
 

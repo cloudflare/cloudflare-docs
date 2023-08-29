@@ -72,9 +72,9 @@ It is ideal for projects that require:
 To get started with Durable Objects:
 
 * Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects//).
-* Get started with [Durable Objects](/workers/configuration/durable-objects/).
-* Review the [Durable Objects Runtime API](/workers/runtime-apis/durable-objects/).
-* Learn about Durable Objects [Limits](/workers/platform/limits/#durable-objects-limits/).
+* Review the [Durable Objects documentation](/durable-objects/).
+* Get started with [Durable Objects](/durable-objects/get-started/).
+* Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
 ## D1
 
@@ -84,7 +84,7 @@ D1 is currently in [public (open) alpha](/workers/platform/betas/).
 
 {{</Aside>}}
 
-Built on SQLite, D1 is Cloudflare’s first [serverless, queryable relational database](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+[D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 D1 is ideal for:
 
@@ -138,13 +138,13 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
 | Cached                                        | Always       | Programmatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
-| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/workers/configuration/durable-objects/#alarms-in-durable-objects) |
+| TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/durable-objects/api/alarms-in-durable-objects/) |
 | Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 500 - 1500 requests/second per Durable Object<sup>3</sup> |
 
 {{</table-wrap>}}
 
-<sup>1</sup> Free accounts are limited to 1GiB.
+<sup>1</sup> Free accounts are limited to 1 GiB.
 <sup>2</sup> A Durable Object namespace is a logical container for as many Durable Objects as you need and is backed by a class implementing the logic all those Durable Objects will share.
-<sup>3</sup> The overall throughput a single Durable Object can sustain strongly correlates to the compute and storage operations a Durable Object performs. A `get()` and/or `put()` workload may allow up to 2,000 req/sec, whereas writing multiple values and serializing a large JSON response may only support 800 - 1,000 req/sec. Offloading compute operations that do not rely on state within your Durable Object to the calling Worker can improve per-object throughput in many cases.
+<sup>3</sup> The overall throughput a single Durable Object can sustain strongly correlates to the compute and storage operations a Durable Object performs. A `get()` and/or `put()` workload may allow up to 2,000 requests/sec, whereas writing multiple values and serializing a large JSON response may only support 800 - 1,000 requests/sec. Offloading compute operations that do not rely on state within your Durable Object to the calling Worker can improve per-object throughput in many cases.
 
 You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.

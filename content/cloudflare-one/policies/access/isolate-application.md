@@ -41,14 +41,10 @@ Traffic to the isolated Access application is filtered by your Gateway [HTTP pol
 
 For example, if your application is hosted on `internal.site.com`, the following policy blocks users from uploading and downloading credit card numbers within the remote browser:
 
-| Selector | Operator | Value               | Operator        |
-| -------- | -------- | ------------------- | -------------- |
-| Domain   | in       | `internal.site.com` | And |
-| DLP Profile | in    | `Financial Information`|
-
-| Action |
-| ------ |
-| Block  |
+| Selector    | Operator | Value                   | Logic | Action |
+| ----------- | -------- | ----------------------- | ----- | ------ |
+| Domain      | in       | `internal.site.com`     | And   | Block  |
+| DLP Profile | in       | `Financial Information` |       |        |
 
 ## Limitations
 

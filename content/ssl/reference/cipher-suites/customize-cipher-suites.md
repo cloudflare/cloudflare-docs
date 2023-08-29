@@ -8,20 +8,27 @@ meta:
 
 # Customize cipher suites
 
-With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific cipher suites.
+With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific cipher suites.
 
 This process will not lead to any downtime in your SSL/TLS protection.
+
+{{<Aside type="note">}}
+
+Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
+
+{{</Aside>}}
+
+## Setup
 
 Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
-- [Hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
+- [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
+- [Custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) (Cloudflare for SaaS zones only)
 
 When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
 
-{{<Aside type="note">}}
-Note that this process only refers to connections between clients and the Cloudflare network. For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
-{{</Aside>}}
+Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
 ## Cipher suite values
 
@@ -35,4 +42,6 @@ To specify certain cipher suites, include an array of applicable cipher suites u
 
 ## Reset to default values
 
-To reset to the default cipher suites, send an empty array in the `value` field.
+For zones and custom hostnames, to reset to the default cipher suites, send an empty array in the `value` field.
+
+For specific hostname settings, use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint.

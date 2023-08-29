@@ -45,7 +45,7 @@ return await fetch(request);
 
 ## Custom ports
 
-For Workers subrequests, custom ports are ignored when using HTTPS and are instead always sent to port `443`. When using HTTP, custom ports are respected.
+For Workers subrequests, when a Worker is deployed, custom ports are ignored and requests are sent to the scheme's default port, such as `443` for HTTPS. Note that when developing a Worker locally, or from within the Cloudflare dashboard using Quick Edit, custom ports are respected and allowed.
 
 For example:
 

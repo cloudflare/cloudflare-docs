@@ -39,14 +39,12 @@ Configurations are useful for parts of the product that are very configuration-i
 ## Template
 
 ```
-{
+
 ---
- 
 weight: xx  
 pcx_content_type: configuration
- 
 ---
- 
+
 # Title
  
 Write an overview of the high-level feature here, not more than 2-3 sentences. Outline what users can achieve with it, and if necessary, link to other parts of the docs.
@@ -84,7 +82,6 @@ Write an overview of the high-level feature here, not more than 2-3 sentences. O
 | - | - | - | 
  
 | Value 1 | Value 2 | Value 3 |
-}
 ```
 
 ## Additional Information

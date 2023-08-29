@@ -7,11 +7,63 @@ rss: file
 
 # Changelog
 
-## 2023-06-16
+## 2023-08-19
 
-### Generated columns documentation
+### Row count now returned per query
 
-We've published new documentation describing how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
+D1 now returns a count of `rows_written` and `rows_read` for every query executed, allowing you to assess the cost of query for both [pricing](/d1/platform/pricing/) and [index optimization](/d1/learning/using-indexes/) purposes.
+
+The `meta` object returned in [D1's Client API](/d1/platform/client-api/) contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for example, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
+
+```json
+"meta": {
+  "duration": 0.20472300052642825,
+  "size_after": 45137920,
+  "rows_read": 5000,
+  "rows_written": 0
+}
+```
+
+Refer to [D1 pricing documentation](/d1/platform/pricing/) to understand how reads and writes are measured. D1 remains free to use during the alpha period.
+
+## 2023-08-09
+
+### Bind D1 from the Cloudflare dashboard
+
+You can now [bind a D1 database](/d1/get-started/#3-bind-your-worker-to-your-d1-database) to your Workers directly in the [Cloudflare dashboard](https://dash.cloudflare.com). To bind D1 from the Cloudflare dashboard, select your Worker project -> **Settings** -> **Variables** -> and select **D1 Database Bindings**.
+
+Note: If you have previously deployed a Worker with a D1 database binding with a version of `wrangler` prior to `3.5.0`, you must upgrade to [`wrangler v3.5.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.5.0) first before you can edit your D1 database bindings in the Cloudflare dashboard. New Workers projects do not have this limitation.
+
+Legacy D1 alpha users who had previously prefixed their database binding manually with `__D1_BETA__` should remove this as part of this upgrade. Your Worker scripts should call your D1 database via `env.BINDING_NAME` only. Refer to the latest [D1 getting started guide](/d1/get-started/#3-bind-your-worker-to-your-d1-database) for best practices.
+
+We recommend all D1 alpha users begin using wrangler `3.5.0` (or later) to benefit from improved TypeScript types and future D1 API improvements.
+
+## 2023-08-01
+
+### Per-database limit now 500 MB
+
+Databases using D1's [new storage subsystem](/d1/changelog/#new-default-storage-subsystem) can now grow to 500 MB each, up from the previous 100 MB limit. This applies to both existing and newly created databases.
+
+Refer to [Limits](/d1/platform/limits/) to learn about D1's limits.
+
+
+## 2023-07-27
+
+### New default storage subsystem
+
+Databases created via the Cloudflare dashboard and Wrangler (as of `v3.4.0`) now use D1's new storage subsystem by default. The new backend can [be 6 - 20x faster](https://blog.cloudflare.com/d1-turning-it-up-to-11/) than D1's original alpha backend.
+
+To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the version field in the output.
+
+Databases with `version: beta` use the new storage backend and support the [Time Travel](/d1/learning/time-travel/) API. Databases with `version: alpha` only use D1's older, legacy backend.
+
+### Time Travel
+
+[Time Travel](/d1/learning/time-travel/) is now available. Time Travel allows you to restore a D1 database back to any minute within the last 30 days (Workers Paid plan) or 7 days (Workers Free plan), at no additional cost for storage or restore operations.
+
+Refer to the [Time Travel](/d1/learning/time-travel/) documentation to learn how to travel backwards in time.
+
+Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/learning/backups/) used for legacy alpha databases.
 
 ## 2023-06-28
 
@@ -20,6 +72,12 @@ We've published new documentation describing how to use D1's support for [genera
 You can now view [per-database metrics](/d1/platform/metrics-analytics/) via both the [Cloudflare dashboard](https://dash.cloudflare.com/) and the [GraphQL Analytics API](/analytics/graphql-api/).
 
 D1 currently exposes read & writes per second, query response size, and query latency percentiles.
+
+## 2023-06-16
+
+### Generated columns documentation
+
+New documentation has been published on how to use D1's support for [generated columns](/d1/learning/generated-columns/) to define columns that are dynamically generated on write (or read). Generated columns allow you to extract data from [JSON objects](/d1/learning/querying-json/) or use the output of other SQL functions.
 
 ## 2023-06-12
 

@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Change the headers sent in a request or returned in a response.
+summary: Example of how to add, change, or delete headers sent in a request or returned in a response.
 tags:
   - Headers
   - Middleware

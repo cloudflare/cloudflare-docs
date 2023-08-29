@@ -51,7 +51,7 @@ For example in the WordPress admin UI, you might notice any of the following beh
 
 To understand why this happens, note that WordPress [concatenates JavaScript files](https://wordpress.org/support/article/editing-wp-config-php/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
 
-### Identifying the problem
+### Identify the problem
 
 The screenshot below shows an example where resources in the Media Library are not rendered correctly and the browser debugging console reveals that the page is throwing an error:
 
@@ -80,7 +80,7 @@ This type of error indicates that Query String Sort is inadvertently breaking so
 
 After sorting, the query then goes to Cloudflare's cache infrastructure (and to the origin server, if the resource is not in the Cloudflare cache or is not cacheable). The origin server then serves the concatenated scripts, which are ordered differently. Because scripts might depend on other scripts, this process might break dependencies.
 
-### Responding to the issue
+### Respond to the issue
 
 Start by analyzing your site or application behavior around the use of query strings. Do you have assets served with multiple possible arrangements of query strings?
 

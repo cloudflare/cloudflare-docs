@@ -74,6 +74,8 @@ The methods `stmt.run()`, `stmt.all()` and `db.batch()` return a typed `D1Result
   success: boolean, // true if the operation was successful, false otherwise
   meta: {
     duration: number, // duration of the operation in milliseconds
+    rows_read: number, // the number of rows read (scanned) by this query
+    rows_written: number // the number of rows written by this query
   }
 }
 ```
@@ -211,7 +213,7 @@ return new Response(dump, {
     headers: {
         'Content-Type': 'application/octet-stream'
     }
-};
+});
 ```
 
 

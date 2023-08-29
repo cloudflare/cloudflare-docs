@@ -18,7 +18,7 @@ Cloudflare respects the origin web server’s cache headers in the following ord
 
 Note: If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.
 
-For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
+For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
 ## Default cached file extensions
 

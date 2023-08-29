@@ -8,7 +8,7 @@ title: Exposed IP addresses
 
 When your DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare speeds up and protects your site.
 
-A `dig` query against your proxied root domain returns a Cloudflare IP address. This way, your origin server’s IP address remains concealed from the public. Remember that orange cloud benefits only apply to HTTP traffic.
+A `dig` query against your proxied apex domain returns a Cloudflare IP address. This way, your origin server’s IP address remains concealed from the public. Remember that orange cloud benefits only apply to HTTP traffic.
 
 Under certain circumstances, the **DNS Records** panel in the Cloudflare dashboard **DNS** app displays a warning whenever you have DNS-only records that may expose your origin server’s IP address. This warning does not block, or in any way affect, traffic destined to your site.
 
@@ -45,4 +45,4 @@ However, there are times when some of your DNS records need to remain DNS-only. 
 To mitigate this risk, we recommend that you:
 
 -   Analyze the impact of hosting multiple services on the same origin server in cases when you cannot avoid having DNS-only records.
--   Proxy all records that share the same origin IP address as your root domain and can be safely proxied through Cloudflare.
+-   Proxy all records that share the same origin IP address as your apex domain and can be safely proxied through Cloudflare.

@@ -6,6 +6,6 @@ weight: 6
 
 # FAQs
 
-Visit the following pages to see commonly asked questions:
+Visit the following pages for commonly asked questions:
 
 {{<directory-listing>}}

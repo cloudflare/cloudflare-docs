@@ -32,7 +32,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 **Workarounds:**
 
 -   Disable the WAF managed rule with id 100203 temporarily,
--   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [Firewall actions](/firewall/cf-firewall-rules/actions).
+-   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [Firewall actions](/firewall/cf-firewall-rules/actions).
 
 **Solution:**
 
@@ -72,9 +72,9 @@ These fields are available via [Cloudflare Firewall Rules](/firewall/cf-firewall
 
 ___
 
-## What is cf.bot\_management.verified\_bot?
+## What is cf.bot\_management.verified\_bot?
 
-A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
+A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
 
 Cloudflare has built an allowlist of good, automated bots, e.g. Google Search Engine, Pingdom, and more.
 
@@ -94,11 +94,11 @@ The JA3 Fingerprint can be null or empty in some cases. The most common case is 
 
 ___
 
-## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
+## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).
 
-As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ___
 
@@ -107,13 +107,11 @@ ___
 If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:
 
 {{<Aside type="warning">}}
-
 The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan).
 
 Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.
 
 Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.
-
 {{</Aside>}}
 
 -   RayIDs
@@ -147,8 +145,8 @@ ___
 If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can disable it under **Security** > **Bots**.
 
 -   For **Free** plans, toggle the **Bot Fight Mode** option to **Off**
--   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
--   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+-   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+-   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 
 {{<render file="_flexible-sbfm.md">}}
 

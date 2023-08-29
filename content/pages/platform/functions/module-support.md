@@ -4,13 +4,13 @@ title: Module support
 weight: 13
 ---
 
-## Module support
+# Module support
 
 Pages Functions provide support for several module types, much like [Workers](https://blog.cloudflare.com/workers-javascript-modules/). This means that you can import and use external modules such as WebAssembly (Wasm), `text` and `binary` files inside your Functions code.
 
 This guide will instruct you on how to use these different module types inside your Pages Functions.
 
-### ECMAScript Modules
+## ECMAScript Modules
 
 ECMAScript modules (or in short ES Modules) is the official, [standardized](https://tc39.es/ecma262/#sec-modules) module system for JavaScript. It is the recommended mechanism for writing modular and reusable JavaScript code. 
 
@@ -36,7 +36,7 @@ export async function onRequest(context) {
 }
 ```
 
-### WebAssembly Modules
+## WebAssembly Modules
 
 [WebAssembly](/workers/runtime-apis/webassembly/) (abbreviated Wasm) allows you to compile languages like Rust, Go, or C to a binary format that can run in a wide variety of environments, including web browsers, Cloudflare Workers, Cloudflare Pages Functions, and other WebAssembly runtimes.
 
@@ -58,7 +58,7 @@ export async function onRequest() {
 }
 ```
 
-### Text Modules
+## Text Modules
 
 Text Modules are a non-standardized means of importing resources such as HTML files as a `String`.
 
@@ -94,8 +94,7 @@ export async function onRequest() {
 }
 ```
 
-
-### Binary Modules
+## Binary Modules
 
 Binary Modules are a non-standardized way of importing binary data such as images as an `ArrayBuffer`.
 

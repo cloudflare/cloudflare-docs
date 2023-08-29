@@ -1,6 +1,6 @@
 ---
 title: Navigation
-pcx_content_type: Content
+pcx_content_type: concept
 ---
 
 # Navigation
@@ -22,7 +22,7 @@ Use the ```{{</*directory-listing*/>}}``` component
 ## Template
 
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: navigation
@@ -30,8 +30,7 @@ pcx_content_type: navigation
  
 # Name of section
  
-<DirectoryListing path="/<first-level folder within product space>/<second-level folder within product space>/<third-level folder within product space>"/>
-}
+{{</*directory-listing*/>}}
 ```
 
 ## Examples

@@ -12,13 +12,11 @@ You can deploy and configure managed rulesets for a zone in **Security** > **WAF
 
 To deploy a managed ruleset for several Enterprise domains in your account, refer to [Deploy a managed ruleset in the dashboard for an account](/waf/managed-rules/deploy-account-dashboard/).
 
-![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There is a configured rule for executing the Cloudflare Managed Ruleset, and there are two managed rulesets available for deployment.](/images/waf/waf-managed-rules-tab.png)
+![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment.](/images/waf/waf-managed-rules-tab.png)
 
 ## Deploy a managed ruleset
 
 To deploy a managed ruleset with the default configuration, under **Managed Rulesets** select **Deploy** next to a managed ruleset. This operation will deploy the managed ruleset for the current zone.
-
-To configure a ruleset before deploying it, select **Configure** instead of **Deploy** and define the ruleset configuration. For more information on the available settings, refer to [Configure a managed ruleset](#configure-a-managed-ruleset).
 
 When you deploy a managed ruleset, the WAF adds an _Execute_ rule, displayed in **Managed rules**, that deploys the managed ruleset.
 
@@ -50,7 +48,7 @@ To configure rule field values for all the rules in a managed ruleset:
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Next to the _Execute_ rule that deploys the managed ruleset you want to configure, select **Edit**.
+3. Next to the _Execute_ rule that deploys the managed ruleset you want to configure, select the managed ruleset name.
 
 4. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
 
@@ -74,7 +72,7 @@ To view the rules of a managed ruleset:
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Next to the _Execute_ rule that deploys the managed ruleset you want to browse, select **Edit**.
+3. Next to the _Execute_ rule that deploys the managed ruleset you want to browse, select the managed ruleset name.
 
 4. Select **Browse rules**.
 
@@ -96,9 +94,9 @@ To apply the rules in the ruleset to a subset of incoming requests, specify a cu
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Next to the _Execute_ rule that deploys the managed ruleset, select **Edit**.
+3. Next to the _Execute_ rule that deploys the managed ruleset, select the managed ruleset name.
 
-4. Select **Edit filter**.
+4. Select **Edit scope**.
 
 5. Under **Set Scope**, select **Custom filter expression**.
 
