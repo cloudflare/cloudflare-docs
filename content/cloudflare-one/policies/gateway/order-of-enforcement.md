@@ -45,7 +45,7 @@ When DNS queries are received, Gateway evaluates policies with pre-resolution se
 
 Despite an explicit Allow policy ordered first, policy 2 takes precedence because the _Domain_ selector is evaluated before DNS resolution.
 
-For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors).
+If a policy contains both pre-resolution and post-resolution selectors, Gateway will evaluate the entire policy after DNS resolution. For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors).
 
 ### Network policies
 
