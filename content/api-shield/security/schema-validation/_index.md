@@ -54,9 +54,14 @@ Schema Validation’s default action is visible on the main Schema Validation pa
 
 To change the default action:
 
-1. Select **Change** on the default action, or visit **Settings**. 
-2. Choose a new action from the dropdown menu.
-3. Observe the current action and accept the change by selecting **Change default action** in the popup window.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **API Shield**.
+3. Select **Schema Validation**.
+4. Under the default `Log` action, select **Change**.
+5. Choose a new action from the dropdown menu.
+6. Observe the current action and accept the change by selecting **Change default action** in the popup window.
+
+Alternatively, you can modify the global action via **Security** > **API Shield** > **Settings**.
 
 ### Change the action of a single endpoint
 
@@ -66,10 +71,12 @@ This allows you to be stricter on blocking non-compliant requests on certain end
 
 To change the action on an individual endpoint:
 
-1. Filter the selected endpoint.
-2. Select the ellipses on the endpoint's row.
-3. Select **Change Action**.
-4. Choose a new action from the dropdown menu and select **Set action**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **API Shield**.
+3. Select **Schema Validation** and filter the selected endpoint.
+4. Select the ellipses on the endpoint's row.
+5. Select **Change Action**.
+6. Choose a new action from the dropdown menu and select **Set action**.
 
 ### Disable Schema Validation without changing actions
 
