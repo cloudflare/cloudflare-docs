@@ -1,18 +1,32 @@
 ---
 weight: 2
 pcx_content_type: reference
-title: IP Addresses
+title: IP addresses
 meta:
   description: Get IPv4 and IPv6 addresses for Cloudflare DNS resolvers, 1.1.1.1 and 1.1.1.1 for families.
 ---
 
-# 1.1.1.1 IP Addresses
+# 1.1.1.1 IP addresses
 
-Consider the sections below to know which IP addresses are used by the different Cloudflare DNS resolvers offering.
+Consider the sections below to know which IPv4 or IPv6 addresses are used by the different Cloudflare DNS resolver offerings.
 
 ## 1.1.1.1
 
+{{<table-wrap>}}
 
+|     Use case    |       IPv4      |                    IPv6                   |
+| --------------- | --------------- | ----------------------------------------- |
+| Public resolver | 1.1.1.1 <br/>1.0.0.1 | 2606:4700:4700::1111 <br/>2606:4700:4700::1001 |
+
+{{</table-wrap>}}
 
 ## 1.1.1.1 for families
 
+{{<table-wrap>}}
+
+| Use case                        | IPv4            | IPv6                                      |
+|---------------------------------|-----------------|-------------------------------------------|
+| Block malware                   | 1.1.1.2 <br/>1.0.0.2 | 2606:4700:4700::1112 <br/>2606:4700:4700::1002 |
+| Block malware and adult content | 1.1.1.3 <br/>1.0.0.3 | 2606:4700:4700::1113 <br/>2606:4700:4700::1003 |
+
+{{</table-wrap>}}
