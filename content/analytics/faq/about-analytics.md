@@ -4,6 +4,8 @@ title: About Cloudflare Analytics
 weight: 1
 meta:
     title: A quick overview of Cloudflare Analytics
+aliases:
+- /fundamentals/data-products/about-analytics/
 ---
 
 # About Cloudflare Analytics
