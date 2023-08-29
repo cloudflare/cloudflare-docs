@@ -1,5 +1,5 @@
 ---
-updated: 2021-11-04
+updated: 2023-08-29
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -13,13 +13,13 @@ layout: single
 
 ## Overview
 
-In this tutorial, you will  learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna][fauna] as its data layer.
+In this tutorial you learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna](https://fauna.com/) as its data layer.
 
 ## Learning goals
 
 - How to store and retrieve data from Fauna in Workers.
 - How to use Wrangler to store secrets securely.
-- How to use [Hono][hono] as a web framework for your Workers.
+- How to use [Hono](https://hono.dev) as a web framework for your Workers.
 
 Building with Fauna, Workers, and Hono enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
 
@@ -30,50 +30,72 @@ Fauna is a document-based database with a flexible schema. This allows you to de
 - **weightLbs** - A floating point number that represents the weight in pounds of the product.
 - **quantity** A non-negative integer that represents how many items of a particular product there are in the inventory.
 
-Documents are stored in the **Products** [collection][fauna-collections]. Collections in document databases are groups of related documents.
+Documents are stored in the **Products** [collection](https://docs.fauna.com/fauna/current/reference/schema_entities/collection/). Collections in document databases are groups of related documents.
 
-For this tutorial, all API endpoints are public. However, Fauna also offers multiple avenues for securing endpoints and collections. Refer to [Choosing an authentication strategy with Fauna][fauna-choosing-authentication-strategy] for more information on authenticating users to your applications with Fauna.
+For this tutorial, all API endpoints are public. However, Fauna also offers multiple avenues for securing endpoints and collections. Refer to [Choosing an authentication strategy with Fauna](https://fauna.com/blog/choosing-an-authentication-strategy-with-fauna) for more information on authenticating users to your applications with Fauna.
 
 ## Set up Fauna
 
 ### Create your database
 
-Open the [Fauna dashboard][fauna-dashboard] in your browser and log in to your Fauna account.
+Open the [Fauna dashboard](https://dashboard.fauna.com/) in your browser and log in to your Fauna account.
 
 {{<Aside type="note" header="Fauna Account">}}
 
-If you do not have a Fauna account, you can [sign up](https://dashboard.fauna.com/signup?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021) and deploy this template using the free tier.
+If you do not have a Fauna account, you can [sign up](https://dashboard.fauna.com/register) and deploy this template using the free tier.
 
 {{</Aside>}}
 
 In the Fauna dashboard:
 
-1. Select **Create database**.
+1. Select **CREATE DATABASE**.
 2. Provide a valid name.
-3. Select the **Classic** [Region Group][fauna-region-groups].
-4. Select **Create**.
+3. Select a [Region Group][fauna-region-groups].
+4. Select **CREATE**.
 
 ### Create the products catalog
 
-You will now create a collection to store your inventory documents.
+To create the products catalog, enter the FQL query in the **SHELL** window on right side of the screen.
 
-1. Go to **Collections** in the Fauna dashboard. 
-2. Select **New Collection**.
-3. In the **Collection Name** field, name your collection **Products** and select **Save**.
+```js
+---
+header: Create a new collection
+---
+Collection.create({ name: "Products" })
+```
 
-### Create a server key
+Click the run button on bottom, you will see the output similar to the following.
 
-You must create a key to connect to the database from your Worker.
+```js
+---
+header: The output
+---
+{
+  name: "Products",
+  coll: Collection,
+  ts: "<timestamp>",
+  indexes: {},
+  constraints: []
+}
+```
 
-1. Go to **Security** in the Fauna dashboard. 
-2. Select **New Key** to create a new key.
-3. In the **Role** dropdown, choose _Server_.
+### Create a secret key
+
+You must create a secret key to connect to the database from your Worker.
+
+Go to the **Explorer** page, hover the database name, and click the key icon.
+
+![Hover over the database name to reveal the Keys icon](/images/workers/tutorials/fauna/keys-icon.png)
+
+Choose **Server Role** and enter a key name.
+
+![Create a new key in the Fauna dashboard](/images/workers/tutorials/fauna/new-server-key.png)
 
 The Fauna dashboard displays the key's secret. Copy and save this server key to use in a later step.
 
 {{<Aside type="warning" header="Protect your keys">}}
 
-Server keys can read and write all documents in all collections and can call all [user-defined functions](https://docs.fauna.com/fauna/current/learn/understanding/user_defined_functions?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021) (UDFs). Protect server keys and do not commit them to source control repositories.
+Server keys can read and write all documents in all collections and can call all [user-defined functions](https://docs.fauna.com/fauna/current/cookbook/data_model/user_defined_functions) (UDFs). Protect server keys and do not commit them to source control repositories.
 
 {{</Aside>}}
 
@@ -81,7 +103,7 @@ Server keys can read and write all documents in all collections and can call all
 
 ### Create a new Worker project
 
-Create a new project by using [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare).
+Create a new project by using [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare).
 
 {{<tabs labels="NPM | Yarn">}}
 {{<tab label="npm" >}}
@@ -109,25 +131,42 @@ $ yarn create cloudflare
 To continue with this guide:
 
 1. Give your new Worker application a name.
-2. Select `"Hello World" Worker` for the type of application.
-3. Select `Yes` to using TypeScript.
-4. Select `Yes` to deploying your application.
+2. Select "Website or web app".
+3. Select "Hono".
+4. Select "No" to skip Git initialization.
+5. Select "No" to skip deploying your application.
 
-{{<Aside type="note" header="Deploy before storing secrets">}}
+Next, navigate to your project directory and update the `wrangler.toml` file to set the name for the Worker.
 
-You must deploy a version of your project before storing your server secret in the next step.
-
-{{</Aside>}}
+```toml
+---
+header: wrangler.toml
+---
+name = "fauna-workers"
+```
 
 ### Add your Fauna secret as an environment variable
 
-After creating and deploying your Worker, store your Fauna client [secret](/workers/wrangler/commands/#put-3) safely with the following command:
+Before developing your Worker, add your Fauna secret key as environment variable.
+
+There are two type of a secret for development or production.
+
+For development, add a `.dev.vars` file on the project root and write your secret.
+
+```plain
+---
+header: .dev.vars
+---
+FAUNA_SECRET=<YOUR SECRET>
+```
+
+For production, your secret safely with [the following command](/workers/wrangler/commands/#put-3):
 
 ```sh
 ---
 header: Store your Fauna secret
 ---
-$ wrangler secret put FAUNA_SECRET
+$ npx wrangler secret put FAUNA_SECRET
 ```
 
 When prompted, paste the Fauna server secret you obtained earlier.
@@ -136,7 +175,7 @@ The `FAUNA_SECRET` environment variable is now injected automatically into your 
 
 ### Install dependencies
 
-First, install the Fauna JavaScript driver.
+Install [the Fauna JavaScript driver](https://github.com/fauna/fauna-js) in your newly created Worker project.
 
 {{<tabs labels="NPM | Yarn">}}
 {{<tab label="npm">}}
@@ -145,7 +184,7 @@ First, install the Fauna JavaScript driver.
 ---
 header: Install the Fauna driver
 ---
-$ npm install faunadb
+$ npm install fauna
 ```
 
 {{</tab>}}
@@ -155,108 +194,43 @@ $ npm install faunadb
 ---
 header: Install the Fauna driver
 ---
-$ yarn add faunadb
+$ yarn add fauna
 ```
 
 {{</tab>}}
 {{</tabs>}}
-
-Next, install the [Hono][hono] framework for Cloudflare Workers.
-
-{{<tabs labels="NPM | Yarn">}}
-{{<tab label="npm">}}
-
-```sh
----
-header: Install the Hono
----
-$ npm install hono
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
----
-header: Install the Hono
----
-$ yarn add hono
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-### JavaScript utility functions
-
-Create a `src/utils.ts` file in the project folder and paste the following code:
-
-```ts
----
-header: src/utils.ts
----
-import { RequestResult } from 'faunadb';
-
-export function getFaunaError(error: unknown) {
-  if (error && typeof error === 'object' && 'requestResult' in error) {
-    if (error.requestResult instanceof RequestResult) {
-      const responseContent = error.requestResult.responseContent;
-      const { code, description } = responseContent.errors[0];
-      let status;
-
-      switch (code) {
-        case 'unauthorized':
-        case 'authentication failed':
-          status = 401;
-          break;
-        case 'permission denied':
-          status = 403;
-          break;
-        case 'instance not found':
-          status = 404;
-          break;
-        case 'instance not unique':
-        case 'contended transaction':
-          status = 409;
-          break;
-        default:
-          status = 500;
-      }
-
-      return { code, description, status };
-    }
-  }
-}
-```
-
-The `getFaunaError()` function extracts the [HTTP response status codes][http-status-codes] and description for the most common errors returned by Fauna.
 
 ### Base inventory logic
 
-Replace the contents of your `src/worker.ts` file with the skeleton of your API:
+Replace the contents of your `src/index.ts` file with the skeleton of your API:
 
 ```ts
 ---
-header: src/worker.ts (skeleton)
+header: src/index.ts
 ---
 import { Hono } from 'hono';
-import faunadb from 'faunadb';
-import { getFaunaError } from './utils';
-
-const { Create, Collection, Get, Ref, Delete, Add, Select, Let, Var, Update } =
-  faunadb.query;
+import { Client, fql, ServiceError } from 'fauna';
 
 type Bindings = {
   FAUNA_SECRET: string;
 };
 
 type Variables = {
-  faunaClient: faunadb.Client;
+  faunaClient: Client;
+};
+
+type Product = {
+  id: string;
+  serialNumber: number;
+  title: string;
+  weightLbs: number;
+  quantity: number;
 };
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
 app.use('*', async (c, next) => {
-  const faunaClient = new faunadb.Client({
+  const faunaClient = new Client({
     secret: c.env.FAUNA_SECRET,
   });
   c.set('faunaClient', faunaClient);
@@ -264,96 +238,85 @@ app.use('*', async (c, next) => {
 });
 
 app.get('/', (c) => {
-  return c.text('Hello World!');
+  return c.text('Hello World');
 });
 
 export default app;
-
 ```
 
-This is a custom middleware to initialize the Fauna client and set the instance with `c.set()` for later use in another handler:
+This is custom middleware to initialize the Fauna client and set the instance with `c.set()` for later use in another handler:
 
 ```js
 ---
 header: Custom middleware for the Fauna Client
 ---
 app.use('*', async (c, next) => {
- const faunaClient = new faunadb.Client({
-  secret: c.env.FAUNA_SECRET,
- });
- c.set('faunaClient', faunaClient);
- await next();
+  const faunaClient = new Client({
+    secret: c.env.FAUNA_SECRET,
+  });
+  c.set('faunaClient', faunaClient);
+  await next();
 });
 ```
 
-You can access `FAUNA_SECRET` environment variables from `c.env.FAUNA_SECRET`. Workers run on a custom JavaScript runtime instead of Node.js, so you can't use `process.env` to access your environment variables.
+You can access `FAUNA_SECRET` environment variable from `c.env.FAUNA_SECRET`. Workers run on a  [custom JavaScript runtime](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
 
 ### Create product documents
 
-Add your first Hono handler to the `src/worker.ts` file. This route accepts `POST` requests to the `/products` endpoint:
+Add your first Hono handler to the `src/index.ts` file. This route accepts `POST` requests to the `/products` endpoint:
 
 ```ts
 ---
 header: Create product documents
 ---
 app.post('/products', async (c) => {
-  const { serialNumber, title, weightLbs } = await c.req.json();
-  const result = await c.get('faunaClient').query<{
-    ref: {
-      id: string;
-    };
-  }>(
-    Create(Collection('Products'), {
-      data: {
-        serialNumber,
-        title,
-        weightLbs,
-        quantity: 0,
-      },
-    })
-  );
-  return c.json({
-    productId: result.ref.id,
-  });
+  const { serialNumber, title, weightLbs } = await c.req.json<Omit<Product, 'id'>>();
+  const query = fql`Products.create({
+    serialNumber: ${serialNumber},
+    title: ${title},
+    weightLbs: ${weightLbs},
+    quantity: 0
+  })`;
+  const result = await c.get('faunaClient').query<Product>(query);
+  return c.json(result.data);
 });
+
 ```
 
-This route applies an FQL query written in JavaScript that creates a new document in the **Products** collection:
+{{<Aside type="warning" header="Handler order">}}
+
+In Hono, you should place your handler below the custom middleware.
+This is because middleware and handlers are executed in sequence from top to bottom.
+If you place the handler first, you cannot retrieve the instance of the Fauna client using `c.get('faunaClient')`.
+
+{{</Aside>}}
+
+This route applied an FQL query in the `fql` function that creates a new document in the **Product** collection:
 
 ```js
 ---
 header: Create query in FQL inside JavaScript
 ---
-Create(
-  Collection('Products'),
-  {
-    data: {
-      serialNumber,
-      title,
-      weightLbs,
-      quantity: 0
-    }
-  }
-)
+fql`Products.create({
+  serialNumber: ${serialNumber},
+  title: ${title},
+  weightLbs: ${weightLbs},
+  quantity: 0
+})`
 ```
 
-To review what a document looks like, navigate to the **Shell** tab in the Fauna dashboard and run the following query:
+To review what a document looks like, run the following query in the Fauna dashboard > Explorer > Region name > Database name like a `cloudflare_rest_api` > the **SHELL** window:
 
 ```js
 ---
 header: Create query in pure FQL
 ---
-Create(
-  Collection('Products'),
-  {
-    data: {
-      serialNumber: "A48432348",
-      title: "Gaming Console",
-      weightLbs: 5,
-      quantity: 0
-    }
-  }
-)
+Products.create({
+  serialNumber: "A48432348",
+  title: "Gaming Console",
+  weightLbs: 5,
+  quantity: 0
+})
 ```
 
 Fauna returns the created document:
@@ -363,45 +326,47 @@ Fauna returns the created document:
 header: Newly created document
 ---
 {
-  ref: Ref(Collection("Products"), "<document_id>"),
-  ts: <timestamp>,
-  data: {
-    serialNumber: "A48432348",
-    title: "Gaming Console",
-    weightLbs: 5,
-    quantity: 0
-  }
+  id: "<document_id>",
+  coll: Products,
+  ts: "<timestamp>",
+  serialNumber: "A48432348",
+  title: "Gaming Console",
+  weightLbs: 5,
+  quantity: 0
 }
 ```
 
-- **ref** - A [reference][fql-reference] to the newly created document.
-- **ts** - The timestamp of the new document creation in microseconds.
-- **data** - The actual content of the document.
-
-Examining the route you create, when the query is successful, the ID of the newly created document is returned in the response body:
+Examining the route you create, when the query is successful, the data newly created document is returned in the response body:
 
 ```js
 ---
-header: Return the new document ID
+header: Return the new document data
 ---
 return c.json({
-  productId: result.ref.id,
+  productId: result.data,
 });
 ```
 
 ### Error handling
 
-If Fauna returns any error, an exception is raised by the client. You catch that exception in `app.onError()` and respond with the result from the `getFaunaError()` utility function.
+If Fauna returns any error, an exception is raised by the client. You can catch this exception in `app.onError()`, then retrieve and respond with the result from the instance of `ServiceError`.
 
 ```ts
 ---
 header: Handle errors
 ---
 app.onError((e, c) => {
-  const faunaError = getFaunaError(e);
-  if (faunaError) {
-    return c.json(faunaError, faunaError?.status);
+  if (e instanceof ServiceError) {
+    return c.json(
+      {
+        status: e.httpStatus,
+        code: e.code,
+        message: e.message,
+      },
+      e.httpStatus
+    );
   }
+  console.trace(e);
   return c.text('Internal Server Error', 500);
 });
 ```
@@ -410,7 +375,7 @@ app.onError((e, c) => {
 
 Next, create a route that reads a single document from the **Products** collection.
 
-Add the following handler to your `src/worker.ts` file. This route accepts `GET` requests at the `/products/:productId` endpoint:
+Add the following handler to your `src/index.ts` file. This route accepts `GET` requests at the `/products/:productId` endpoint:
 
 ```ts
 ---
@@ -418,20 +383,19 @@ header: Retrieve product documents
 ---
 app.get('/products/:productId', async (c) => {
   const productId = c.req.param('productId');
-  const result = await c
-    .get('faunaClient')
-    .query(Get(Ref(Collection('Products'), productId)));
-  return c.json(result);
+  const query = fql`Products.byId(${productId})`;
+  const result = await c.get('faunaClient').query<Product>(query);
+  return c.json(result.data);
 });
 ```
 
-The FQL query uses the [Get][fql-get] function to retrieve a full document from a document reference:
+The FQL query uses the [`byId()`](https://docs.fauna.com/fauna/current/reference/schema_entities/collection/instance-byid) method to retrieve a full document from the **Productions** collection:
 
 ```js
 ---
 header: Retrieve a document by ID in FQL inside JavaScript
 ---
-Get(Ref(Collection('Products'), productId))
+fql`Products.byId(productId)`
 ```
 
 If the document exists, return it in the response body:
@@ -440,14 +404,14 @@ If the document exists, return it in the response body:
 ---
 header: Return the document in the response body
 ---
-return c.json(result);
+return c.json(result.data);
 ```
 
 If not, an error is returned.
 
 ### Delete product documents
 
-The logic to delete product documents is similar to the logic for retrieving products. Add the following route to your `src/worker.ts` file:
+The logic to delete product documents is similar to the logic for retrieving products. Add the following route to your `src/index.ts` file:
 
 ```ts
 ---
@@ -455,20 +419,19 @@ header: Delete product documents
 ---
 app.delete('/products/:productId', async (c) => {
   const productId = c.req.param('productId');
-  const result = await c
-    .get('faunaClient')
-    .query(Delete(Ref(Collection('Products'), productId)));
-  return c.json(result);
+  const query = fql`Products.byId(${productId})!.delete()`;
+  const result = await c.get('faunaClient').query<Product>(query);
+  return c.json(result.data);
 });
 ```
 
-The only difference with the previous route is that you use the [Delete][fql-delete] function to delete a document by providing its reference.
+The only difference from the previous route is that you use the [`delete()`](https://docs.fauna.com/fauna/current/reference/auth/key/delete) method, combined with the `byId()` method, to delete a document.
 
 When the delete operation is successful, Fauna returns the deleted document and the route forwards the deleted document in the response's body. If not, an error is returned.
 
 ## Test and deploy your Worker
 
-Before deploying your Worker, test it locally by using Wrangler's [dev][wrangler-dev] command.
+Before deploying your Worker, test it locally by using Wrangler's [dev](/workers/wrangler/commands/#dev) command.
 You can execute it with NPM or Yarn:
 
 {{<tabs labels="NPM | Yarn">}}
@@ -476,9 +439,9 @@ You can execute it with NPM or Yarn:
 
 ```sh
 ---
-header: Deploy your Worker
+header: Develop your Worker
 ---
-$ npm run start
+$ npm run dev
 ```
 
 {{</tab>}}
@@ -486,9 +449,9 @@ $ npm run start
 
 ```sh
 ---
-header: Deploy your Worker
+header: Develop your Worker
 ---
-$ yarn start
+$ yarn dev
 ```
 
 {{</tab>}}
@@ -545,17 +508,21 @@ The response should be the new document serialized to JSON:
 header: Read product response
 ---
 {
-  "ref": {"@ref":{"id":"<document_id>","collection":{"@ref":{"id":"Products","collection":{"@ref":{"id":"collections"}}}}}},"ts":1617887459975000,
-  "data": {
-    "serialNumber": "H56N33834",
-    "title": "Bluetooth Headphones",
-    "weightLbs":0.5,
-    "quantity":0
-  }
+  "coll": {
+    "name": "Products"
+  },
+  "id": "<document_id>",
+  "ts": {
+    "isoString": "<timestamp>"
+  },
+  "serialNumber": "H56N33834",
+  "title": "Bluetooth Headphones",
+  "weightLbs": 0.5,
+  "quantity": 0
 }
 ```
 
-Finally, deploy your Worker using the [`wrangler deploy`][wrangler-publish] command.
+Finally, deploy your Worker using the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command.
 You can execute this with NPM or Yarn:
 
 {{<tabs labels="NPM | Yarn">}}
@@ -591,7 +558,7 @@ This will present a problem. To calculate the total quantity of a product, you f
 
 Fauna solves this by reading and updating the quantity of a product in a single FQL transaction. It is important to mention that all FQL queries are, in fact, transactions. If anything fails, all changes are reverted back thanks to Fauna's ACID properties.
 
-Add the following route to your `src/worker.ts` file. This route responds to HTTP `PATCH` requests on the `/products/:productId/add-quantity` URL endpoint:
+Add the following route to your `src/index.ts` file. This route responds to HTTP `PATCH` requests on the `/products/:productId/add-quantity` URL endpoint:
 
 ```ts
 ---
@@ -599,22 +566,10 @@ header: Update inventory quantity
 ---
 app.patch('/products/:productId/add-quantity', async (c) => {
   const productId = c.req.param('productId');
-  const { quantity } = await c.req.json();
-  const result = await c.get('faunaClient').query(
-    Let(
-      {
-        productRef: Ref(Collection('Products'), productId),
-        productDocument: Get(Var('productRef')),
-        currentQuantity: Select(['data', 'quantity'], Var('productDocument')),
-      },
-      Update(Var('productRef'), {
-        data: {
-          quantity: Add(Var('currentQuantity'), quantity),
-        },
-      })
-    )
-  );
-  return c.json(result);
+  const { quantity } = await c.req.json<Pick<Product, 'quantity'>>();
+  const query = fql`Products.byId(${productId}){ quantity : .quantity + ${quantity}}`;
+  const result = await c.get('faunaClient').query<Pick<Product, 'quantity'>>(query);
+  return c.json(result.data);
 });
 ```
 
@@ -624,56 +579,8 @@ Examine the FQL query in more detail:
 ---
 header: Update query in FQL inside JavaScript
 ---
-Let(
-  {
-    productRef: Ref(Collection('Products'), productId),
-    productDocument: Get(Var('productRef')),
-    currentQuantity: Select(['data', 'quantity'], Var('productDocument'))
-  },
-  Update(
-    Var('productRef'),
-    {
-      data: {
-        quantity: Add(
-          Var('currentQuantity'),
-          quantity
-        )
-      }
-    }
-  )
-)
+fql`Products.byId(${productId}){ quantity : .quantity + ${quantity}}`;
 ```
-
-This query uses the FQL [Let][fql-let] function to set some variables for use later in the query:
-
-- **productRef** - The **Ref** of the document to update.
-- **productDocument** - The full product document that will be updated.
-- **currentQuantity** - The currently available quantity of the product. You extract the property by using the FQL [Select][fql-select] function.
-
-You can access the values of variables created by `Let` in any subsequent FQL expressions by using the FQL [Var][fql-var] function.
-
-After declaring the variables, `Let` accepts an FQL expression as a second parameter. This expression is where you update your document:
-
-```js
----
-header: Update a product document
----
-Update(
-  Var('productRef'),
-  {
-    data: {
-      quantity: Add(
-        Var('currentQuantity'),
-        quantity
-      )
-    }
-  }
-)
-```
-
-The FQL [Update][fql-update] function only updates the provided properties of a document. In this example, only the `quantity` property is updated.
-
-Finally, this query calculates the new total quantity by adding the value of `quantity` to `currentQuantity` using the FQL [Add][fql-add] function.
 
 {{<Aside type="note" header="Consistency guarantees in Fauna">}}
 
@@ -701,14 +608,7 @@ The response should be the entire updated document with five additional items in
 header: Update product response
 ---
 {
-  "ref": {"@ref":{"id":"<document_id>","collection":{"@ref":{"id":"Products","collection":{"@ref":{"id":"collections"}}}}}},
-  "ts": 1617890383200000,
-  "data": {
-    "serialNumber": "H56N33834",
-    "title": "Bluetooth Headphones",
-    "weightLbs": 0.5,
-    "quantity": 5
-  }
+  "quantity": 5
 }
 ```
 
@@ -737,13 +637,9 @@ $ yarn deploy
 {{</tab>}}
 {{</tabs>}}
 
-## Complete code
+## Cleaning up
 
-If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/yusukebe/fauna-workers).
-
-## Clean up
-
-To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage Service** > **Delete**:
+To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage application** > **Delete**:
 
 ![Delete your Worker by following the steps above](/images/workers/tutorials/fauna/delete-worker.png)
 
@@ -755,25 +651,4 @@ Finally, delete your Fauna database from its settings in the Fauna dashboard:
 
 In this tutorial, you learned how to use Fauna with Cloudflare Workers to create a globally distributed, strongly consistent, next-generation serverless REST API that serves data quickly to a worldwide audience.
 
-To build your own production-ready applications, refer to the [Fauna Workers quickstart](https://github.com/fauna-labs/fauna-workers). The quickstart implements suggested practices like a least-privilege security model and business logic encapsulation in user-defined functions.
-
-If you would like to speak directly with a Fauna expert about building your applications on Cloudflare Workers with Fauna, [contact][fauna-contact] Fauna.
-
-[fauna]: https://fauna.com/?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fauna-choosing-authentication-strategy]: https://fauna.com/blog/choosing-an-authentication-strategy-with-fauna?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fauna-collections]: https://docs.fauna.com/fauna/current/learn/introduction/key_concepts#collections?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fauna-contact]: https://www2.fauna.com/cloudflare-contact?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fauna-dashboard]: https://dashboard.fauna.com/?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fauna-region-groups]: https://docs.fauna.com/fauna/current/api/fql/region_groups#how-to-use-region-groups?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-add]: https://docs.fauna.com/fauna/current/api/fql/functions/add?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-delete]: https://docs.fauna.com/fauna/current/api/fql/functions/delete?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-get]: https://docs.fauna.com/fauna/current/api/fql/functions/get?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-let]: https://docs.fauna.com/fauna/current/api/fql/functions/let?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-reference]: https://docs.fauna.com/fauna/current/api/fql/functions/ref?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-select]: https://docs.fauna.com/fauna/current/api/fql/functions/select?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-update]: https://docs.fauna.com/fauna/current/api/fql/functions/update?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[fql-var]: https://docs.fauna.com/fauna/current/api/fql/functions/var?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
-[hono]: https://hono.dev/
-[http-status-codes]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-[wrangler-dev]: /workers/wrangler/commands/#dev
-[wrangler-publish]: /workers/wrangler/commands/#publish
+If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/yusukebe/fauna-workers).
