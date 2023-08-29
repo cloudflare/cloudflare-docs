@@ -8,17 +8,17 @@ weight: 1
 
 ## Prerequisites
 
-You need Magic WAN to be able to use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
+You need Magic WAN to be able to use the Magic WAN Connector (beta). The Magic WAN Connector (beta) can function as your primary edge device for your network, or be deployed in-line with existing network gear.
 
-Refer to the following steps to configure your Magic WAN Connector.
+Refer to the following steps to configure your Magic WAN Connector (beta).
 
 ## 1. Purchase a Magic WAN Connector device
 
-Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
+Contact your account representative to learn more about purchasing options for the Magic WAN Connector (beta) device.
 
 ## 2. Define a site configuration
 
-Sites represent the local network where you have installed your Magic WAN Connector - for example, a branch office location.
+Sites represent the local network where you have installed your Magic WAN Connector (beta) - for example, a branch office location.
 
 To add a site:
 
@@ -37,13 +37,13 @@ To add a site:
 9. Repeat this process to define your LAN configuration.
 10. Select **Save and exit** to finish your configuration. Tunnels and static routes will be automatically created and associated with your Site once the Magic WAN Connector boots up (refer to the next step).
 
-## 3. Set up your Magic WAN Connector
+## 3. Set up your Magic WAN Connector (beta)
 
-The Connector will only establish a connection to the Cloudflare network when it is activated, so we recommend leaving it deactivated until you are ready to establish the connection.
+The Magic WAN Connector (beta) will only establish a connection to the Cloudflare network when it is activated, so we recommend leaving it deactivated until you are ready to establish the connection.
 
 When the Connector is first activated, one of the ports must be connected to the Internet through a route that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the **Site configuration** step.
 
-When you are ready to connect your Magic WAN Connector to the Cloudflare network, the first step is to navigate to the Cloudflare dashboard and activate the Connector:
+When you are ready to connect your Magic WAN Connector (beta) to the Cloudflare network, the first step is to navigate to the Cloudflare dashboard and activate the Connector:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
