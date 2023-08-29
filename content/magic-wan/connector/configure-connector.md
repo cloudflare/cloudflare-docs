@@ -23,7 +23,7 @@ Sites represent the local network where you have installed your Magic WAN Connec
 To add a site:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Navigate to **Magic WAN** > **Sites**.
+2. Go to **Magic WAN** > **Sites**.
 3. The list of sites will be empty if this is your first time adding a site. Select **Add site** to create a new one and start the configuration wizard.
 4. Add a name and description for your new site. 
 5. Under **Connector**, select **Add Connector**. This will show a list of Magic WAN Connector devices associated with your account.
@@ -54,9 +54,9 @@ When you are ready to connect your Magic WAN Connector (beta) to the Cloudflare 
 {{<Aside type="note">}}
  If your final network configuration is based on a static IP address without a route to the Internet that has DHCP enabled:
 
-1. Wait 60 seconds
+1. Wait 60 seconds.
 2. Remove the route to the Internet with DHCP.
-3. Adjust your physical connections as required in order to match the configuration specified in the *Site configuration* step (for example, static IP WAN plugged into physical port with no DHCP connection)
+3. Adjust your physical connections as required to match the configuration specified in the *Site configuration* step (for example, static IP WAN plugged into physical port with no DHCP connection).
 4. Power cycle the Connector.
 
 {{</Aside>}}
