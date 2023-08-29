@@ -40,7 +40,7 @@ To create a list, follow these steps:
 4. To [add items using a CSV file](#add-items-using-a-csv-file), select **Upload CSV**.
 
 {{<Aside type="note" header="Notes">}}
-{{<render file="_lists-import-notes.md">}}
+{{<render file="_lists-import-notes.md" productFolder="fundamentals">}}
 {{</Aside>}}
 
 ### Add items to a list manually

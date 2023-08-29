@@ -81,7 +81,7 @@ The following user roles have access to the list management functionality:
 
 You can only delete a list when there are no rules (enabled or disabled) that reference that list.<br>
 
-{{<render file="_lists-import-notes.md">}}
+{{<render file="_lists-import-notes.md" productFolder="fundamentals">}}
 
 To replace the entire contents of a list, format the data as an array and use the [Update all list items](/api/operations/lists-update-all-list-items) operation in the [Lists API](/fundamentals/global-configurations/lists/lists-api/endpoints/).
 
