@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Splunk
 weight: 104
 layout: single
+aliases:
+- /fundamentals/data-products/analytics-integrations/splunk/
+
 ---
 
 # Splunk

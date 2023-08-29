@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Datadog
 weight: 98
 layout: single
+aliases:
+- /fundamentals/data-products/analytics-integrations/datadog/
 ---
 
 # Datadog
