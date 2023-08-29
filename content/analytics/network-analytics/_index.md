@@ -1,5 +1,5 @@
 ---
-title: Cloudflare Network Analytics
+title: Network analytics
 pcx_content_type: overview
 weight: 3
 meta:
