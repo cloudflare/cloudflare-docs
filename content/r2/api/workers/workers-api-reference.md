@@ -120,6 +120,9 @@ export default {
 
 - {{<code>}}etag{{<param-type>}}string{{</param-type>}}{{</code>}}
 
+{{<Aside type="warning">}}
+It is recommended to use the `httpEtag` field when returning an etag in a response header. This ensures that the etag is quoted, conforming to [rfc 9110](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3)
+{{</Aside>}}
   - The etag associated with the object upload.
 
 - {{<code>}}httpEtag{{<param-type>}}string{{</param-type>}}{{</code>}}
