@@ -131,10 +131,10 @@ $ yarn create cloudflare
 To continue with this guide:
 
 1. Give your new Worker application a name.
-2. Select "Website or web app".
-3. Select "Hono".
-4. Select "No" to skip Git initialization.
-5. Select "No" to skip deploying your application.
+2. Select "**Website or web app**".
+3. Select "**Hono**".
+4. Select "**No**" to skip Git initialization.
+5. Select "**No**" to skip deploying your application.
 
 Next, navigate to your project directory and update the `wrangler.toml` file to set the name for the Worker.
 
@@ -259,7 +259,7 @@ app.use('*', async (c, next) => {
 });
 ```
 
-You can access `FAUNA_SECRET` environment variable from `c.env.FAUNA_SECRET`. Workers run on a  [custom JavaScript runtime](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
+You can access `FAUNA_SECRET` environment variable from `c.env.FAUNA_SECRET`. Workers run on a [custom JavaScript runtime](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
 
 ### Create product documents
 
@@ -556,8 +556,6 @@ As the last step, implement a route to update the quantity of a product in your 
 
 This will present a problem. To calculate the total quantity of a product, you first need to determine how many items there currently are in your inventory. If you solve this in two queries, first reading the quantity and then updating it, the original data might change.
 
-Fauna solves this by reading and updating the quantity of a product in a single FQL transaction. It is important to mention that all FQL queries are, in fact, transactions. If anything fails, all changes are reverted back thanks to Fauna's ACID properties.
-
 Add the following route to your `src/index.ts` file. This route responds to HTTP `PATCH` requests on the `/products/:productId/add-quantity` URL endpoint:
 
 ```ts
@@ -650,6 +648,5 @@ Finally, delete your Fauna database from its settings in the Fauna dashboard:
 ## Related resources
 
 In this tutorial, you learned how to use Fauna with Cloudflare Workers to create a globally distributed, strongly consistent, next-generation serverless REST API that serves data quickly to a worldwide audience.
-
 
 If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/yusukebe/fauna-workers).
