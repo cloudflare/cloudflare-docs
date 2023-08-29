@@ -20,13 +20,13 @@ To obtain an updated list of token permissions, including the permission ID and 
 
 The applicable scope of user permissions is `com.cloudflare.api.user`.
 
-{{<tabs labels="Dashboard | Terraform">}}
+{{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
 {{<render file="_user-permissions-table.md" withParameters="Edit" >}}
  
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
+{{<tab label="api" no-code="true">}}
  
 {{<render file="_user-permissions-table.md" withParameters="Write">}}
  
@@ -37,13 +37,13 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
 
-{{<tabs labels="Dashboard | Terraform">}}
+{{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
 {{<render file="_account-permissions-table.md" withParameters="Edit">}}
  
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
+{{<tab label="api" no-code="true">}}
  
 {{<render file="_account-permissions-table.md" withParameters="Write">}}
  
@@ -54,13 +54,13 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 
 The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 
-{{<tabs labels="Dashboard | Terraform">}}
+{{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
 {{<render file="_zone-permissions-table.md" withParameters="Edit">}}
  
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
+{{<tab label="api" no-code="true">}}
  
 {{<render file="_zone-permissions-table.md" withParameters="Write">}}
  
