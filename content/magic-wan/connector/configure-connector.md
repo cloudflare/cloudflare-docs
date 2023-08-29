@@ -45,7 +45,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
-3. Select your Connector. Make sure you verify the serial number to choose the right connector you want to activate.
+3. Find the Connector you want to activate, and select **Edit**. Make sure you verify the serial number to choose the right connector you want to activate.
 4. In the new window, the Status dropdown will show as **Inactive**. Select it to change the status to **Activated**.
 5. Select **Update**.
 
