@@ -1,7 +1,7 @@
 ---
 title: API token permissions
 pcx_content_type: reference
-weight: 20
+weight: 3
 ---
 
 # API token permissions

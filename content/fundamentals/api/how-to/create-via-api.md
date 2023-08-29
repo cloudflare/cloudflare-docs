@@ -1,7 +1,7 @@
 ---
 title: Create tokens via API
 pcx_content_type: how-to
-weight: 12
+weight: 3
 ---
 
 # Create API tokens via the API
