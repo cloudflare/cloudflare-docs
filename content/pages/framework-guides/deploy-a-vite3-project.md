@@ -36,8 +36,8 @@ $ git commit -m "Initial commit"                                           vite-
 [main (root-commit) dad4177] Initial commit
  14 files changed, 1452 insertions(+)
 $ gh repo create
-✓ Created repository codewithkristian/vite-vue3-on-pages on GitHub
-✓ Added remote git@github.com:codewithkristian/vite-vue3-on-pages.git
+✓ Created repository kristianfreeman/vite-vue3-on-pages on GitHub
+✓ Added remote git@github.com:kristianfreeman/vite-vue3-on-pages.git
 $ git push
 ```
 

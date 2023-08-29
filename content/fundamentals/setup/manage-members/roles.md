@@ -26,6 +26,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | API Gateway Read | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account. |
 | Audit Logs Viewer | Can view [Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/). |
 | Billing | Can edit the account’s [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/) and subscriptions |
+| Bot Management | Can edit a zone's [Bot Management](/bots/plans/bm-subscription/) configuration. |
 | Cloudflare Access | Can edit [Cloudflare Access](/cloudflare-one/policies/access/) policies. |
 | Cache Purge | Can purge the edge cache. |
 | Cloudflare DEX | Can edit [Cloudflare DEX](/cloudflare-one/insights/dex/). |
@@ -52,6 +53,8 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Minimal Account Access | Can view account, and nothing else. |
 | Page Shield | Grants write access to [Page Shield](/page-shield/) across the whole account. |
 | Page Shield Read | Grants write access to [Page Shield](/page-shield/) across the whole account. |
+| Query Cache Read | Grants read access to Query Cache configuration. |
+| Query Cache Write | Grants write access to Query Cache configuration. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for DNS and Firewall. |
 | Trust & Safety | Can access trust and safety related services. |
 | Turnstile | Grants full access to [Turnstile](/turnstile/). |

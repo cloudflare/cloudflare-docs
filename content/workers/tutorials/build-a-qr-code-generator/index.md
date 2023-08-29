@@ -15,7 +15,7 @@ layout: single
 
 In this tutorial, you will build and publish a Worker application that generates QR codes.
 
-If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/codewithkristian/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
+If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/kristianfreeman/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
 
 ## 1. Create a new Workers project
 
@@ -34,7 +34,7 @@ To configure your Worker:
 * Answer `No` to using TypeScript.
 * Answer `No` to deploying your Worker.
 
-Inside of your new `qr-code-generator` Worker project directory, `worker.js` represents the entry point to your Cloudflare Workers application. 
+Inside of your new `qr-code-generator` Worker project directory, `worker.js` represents the entry point to your Cloudflare Workers application.
 
 All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
 
@@ -171,7 +171,7 @@ async function generateQRCode(request) {
 }
 ```
 
-The `qr-image` package you installed depends on Node.js APIs. For this to work, you need to set the `node_compat` flag in your Wrangler configuration file: 
+The `qr-image` package you installed depends on Node.js APIs. For this to work, you need to set the `node_compat` flag in your Wrangler configuration file:
 
 ```toml
 ---
