@@ -5,9 +5,6 @@ name: Accessibility
 # **Who does it impact**: PCX team
 
 on:
-  schedule:
-    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
-  workflow_dispatch:
   pull_request:
     types:
       - opened
