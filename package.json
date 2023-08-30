@@ -7,6 +7,7 @@
   "scripts": {
     "algolia-crawl": "node bin/algolia-crawl.js",
     "crawl-api-links": "node bin/crawl-api-links.js",
+    "test-accessibility": "node bin/accessibility-check.js",
     "dev:hugo": "hugo --environment development -D -w",
     "dev:wrangler": "wrangler pages dev -- vite",
     "dev:vite": "vite",

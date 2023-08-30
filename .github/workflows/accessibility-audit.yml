@@ -1,4 +1,4 @@
-name: Accessibility audit
+name: Accessibility
 
 # **What it does**: Regularly audits API links in our documentation.
 # **Why we have it**: It's too burdensome to check on every commit like we do for internal links.
@@ -13,27 +13,20 @@ on:
       - opened
 
 jobs:
-  build:
-    runs-on: ubuntu-18.04
-
+  test:
+    name: Test
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install required Linux packages
-        run: |
-          sudo apt-get update
-          sudo apt-get install libgbm-dev
-          sudo apt-get install xvfb
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v3
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v3
         with:
           node-version: 18.1
-      - name: Install npm packages
-        run: |
-          npm ci
-      - name: Build
-        run: |
-          npm run build
-      - name: Accessibility Audits
-        run: |
-          npm install -g @jakepartusch/lumberjack
-          xvfb-run --auto-servernum lumberjack --url https://developers.cloudflare.com
+      
+      - name: Install dependencies
+        run: npm install @actions/core pa11y axios xml2js
+
+      - name: Run accessibility test
+        id: test-accessibility
+        run: npm run test-accessibility
