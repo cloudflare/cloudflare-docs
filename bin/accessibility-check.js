@@ -1,12 +1,11 @@
 import pa11y from "pa11y";
 import axios from "axios";
 import { parseString } from 'xml2js';
-import { EventEmitter } from 'events';
 
-const myEmitter = new EventEmitter();
-myEmitter.setMaxListeners(20);
+process.on('warning', e => console.warn(e.stack));
 
 const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml';
+const urlsToProcess = []; // Array to store URLs for processing
 
 async function processUrlBatch(urls) {
     const promises = urls.map(async (url) => {
@@ -31,7 +30,7 @@ axios.get(sitemapUrl)
                 }
 
                 const urls = result.urlset.url.map(urlObj => urlObj.loc[0]);
-                processUrlBatch(urls);
+                urlsToProcess.push(...urls); // Add individual URLs to the array
             });
         } else {
             console.error('Failed to fetch sitemap. Status code:', response.status);
@@ -40,3 +39,5 @@ axios.get(sitemapUrl)
     .catch(error => {
         console.error('An error occurred:', error);
     });
+
+urlsToProcess.forEach(processUrl);
