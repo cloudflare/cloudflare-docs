@@ -14,23 +14,13 @@ jobs:
     name: Test 2
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install required Linux packages
-        run: |
-          sudo apt-get update
-          sudo apt-get install libgbm-dev
-          sudo apt-get install xvfb
-      - uses: actions/setup-node@v3
+      - uses: a11ywatch/github-action@v2
         with:
-          node-version: 18.1
-      
-      - name: Install npm packages
-        run: |
-          npm install
-      - name: Build
-        run: |
-          npm run build
-      - name: Accessibility Audits
-        run: |
-          npm install -g @jakepartusch/lumberjack
-          xvfb-run --auto-servernum lumberjack --url https://developers.cloduflare.com
+          WEBSITE_URL: https://developers.cloudflare.com
+          SUBDOMAINS: false
+          TLD: false
+          SITEMAP: true
+          FAIL_ERRORS_COUNT: 15
+          LIST: true
+          FIX: false
+          UPGRADE: false
