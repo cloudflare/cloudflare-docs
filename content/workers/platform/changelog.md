@@ -14,7 +14,7 @@ outputs:
 
 {{<product-changelog>}}
 
-<!-- Historical data begins. All changelog entries from 2023 live in /data/changelogs/workers.json -->
+<!-- Historical data begins. All changelog entries from 2023 live in /data/changelogs/workers.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
 
 ## 2022-12-16
 
