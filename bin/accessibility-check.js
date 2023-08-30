@@ -9,10 +9,13 @@ myEmitter.setMaxListeners(20); // Increase
 
 const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml';
 
-function processUrl(url) {
-    pa11y(url).then((results) => {
-    console.log(results)
-});
+async function processUrl(url) {
+    try {
+        const results = await pa11y(url);
+        console.log(results)
+    } catch (error) {
+        console.log("error")
+    }
 }
 
 axios.get(sitemapUrl)
