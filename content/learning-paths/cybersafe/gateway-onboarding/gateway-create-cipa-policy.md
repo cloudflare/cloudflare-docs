@@ -12,4 +12,4 @@ layout: learning-unit
     {{<render file="gateway/_block-cipa.md" productFolder="cloudflare-one">}}
 3. In **Logs** > **Gateway** > **DNS**, verify that you see the blocked domain.
 
-Your environment is now protected against all of the subcategories listed [here](/fundamentals/security/cybersafe/#requirements)!
+Your environment is now protected against all of the subcategories listed [here](/fundamentals/security/cybersafe/#configuration).

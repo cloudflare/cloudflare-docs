@@ -11,6 +11,7 @@ The matrix below includes example devices and links to the integration guides.
 
 Appliance                                                      | GRE tunnel                 | IPsec tunnel
 -------------------------------------------------------------- | -------------------------- | ---
+Alibaba Cloud VPN Gateway                                      | -                          | ✅
 [Aruba EdgeConnect](/magic-wan/third-party/aruba-edgeconnect/) | ✅                          | ✅
 Cisco ASA                                                      | Compatibility on roadmap    | Specifications compatible*
 [Cisco IOS XE](/magic-wan/third-party/cisco-ios-xe/)           | ✅                          | ✅

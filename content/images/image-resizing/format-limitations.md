@@ -68,3 +68,12 @@ SVG files are passed through without resizing. This format is inherently scalabl
 AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
 
 {{</Aside>}}
+
+### Progressive JPEG
+
+While you can use the `format=jpeg` option to generate images in an interlaced progressive JPEG format, we will fallback to the baseline JPEG format for small and large images specified when:
+
+* The area calculated by width x height is less than 150 x 150.
+* The area calculated by width x height is greater than 3000 x 3000.
+
+For example, a 50 x 50 tiny image is always formatted by `baseline-jpeg` even if you specify progressive jpeg (`format=jpeg`).

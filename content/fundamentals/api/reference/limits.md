@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Limits
-weight: 13
+weight: 2
 ---
 
 # Rate Limits

@@ -134,11 +134,11 @@ $ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 ## View past events
 
-Users can review the execution history of their Cron Triggers in **Past Events** under [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
+Users can review the execution history of their Cron Triggers in **Past Cron Events** under [**Logs**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
 {{<Aside type="note">}}
 
-It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
+It can take up to 30 minutes before events are displayed in **Past Cron Events** when creating a new Worker or changing a Worker's name.
 
 {{</Aside>}}
 

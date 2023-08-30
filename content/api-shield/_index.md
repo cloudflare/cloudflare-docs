@@ -25,6 +25,8 @@ As APIs have become more prevalent, however, so have their problems:
 *   With so many endpoints and users, it’s difficult to recognize brute-force attacks against [specific endpoints](/api-shield/security/volumetric-abuse-detection/).
 *   Sophisticated attacks are even harder to recognize, often because even development teams are unaware of common and uncommon [usage patterns](/api-shield/security/sequence-analytics/).
 
+Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
+
 ## Features
 
 Cloudflare offers the following features to help secure your APIs: 

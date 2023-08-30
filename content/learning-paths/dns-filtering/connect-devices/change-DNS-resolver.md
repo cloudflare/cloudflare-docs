@@ -19,8 +19,11 @@ To configure your browser to send traffic to Gateway:
 
 1. Obtain your DNS over HTTPS (DoH) address:
     1. Go to **Gateway** > **DNS Locations**.
-    2. Select the default location.
-    3. Copy your **DNS over HTTPS** hostname: `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`
+    2. Select **Add a location**.
+    3. Enter a name for the location.
+    4. Enable **Set as Default DNS Location**.
+    5. Select **Add location**.
+    6. Copy your **DNS over HTTPS** hostname: `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`
 2. Follow the configuration instructions for your browser:
 
     {{<render file="gateway/_doh-instructions.md" productFolder="cloudflare-one">}}

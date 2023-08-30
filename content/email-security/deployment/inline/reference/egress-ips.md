@@ -55,9 +55,9 @@ For customers in Europe, add all our US IP addresses. Additionally, you need to 
 
 For customers in India, add all our US IP addresses.
 
-## Australia
+## Australia / New Zealand
 
-For customers in Australia, add all our US IP addresses.
+For customers in Australia and New Zealand, add all our US IP addresses.
 
 ## Office 365 `/24` addresses
 

@@ -24,22 +24,49 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-08-14</td>
-      <td>2023-08-21</td>
+      <td>2023-08-30</td>
+      <td>2023-09-04</td>
       <td>Block</td>
-      <td>100595</td>
-      <td>...84dadf5a</td>
-      <td>MobileIron - Auth Bypass - CVE:CVE-2023-35082</td>
-      <td>N/A</td>
+      <td>100597</td>
+      <td>...c5f041ac</td>
+      <td>Information Disclosure - Path Normalization</td>
+      <td>New Detection</td>
     </tr>
     <tr>
-      <td>2023-08-14</td>
-      <td>2023-08-21</td>
-      <td>Disable</td>
-      <td>N/A</td>
-      <td>...48a60154</td>
-      <td>SQLi - Keyword + SubExpress + Comment + BETA</td>
-      <td>N/A</td>
+      <td>2023-08-30</td>
+      <td>2023-09-04</td>
+      <td>Block</td>
+      <td>100598</td>
+      <td>...50cec478</td>
+      <td>Remote Code Execution - Common Bash Bypass</td>
+      <td>New Detection</td>
+    </tr>
+    <tr>
+      <td>2023-08-30</td>
+      <td>2023-09-04</td>
+      <td>Block</td>
+      <td>100599</td>
+      <td>...ec5b0d04</td>
+      <td>Ivanti - Auth Bypass - CVE:CVE-2023-38035</td>
+      <td>New Detection</td>
+    </tr>
+    <tr>
+      <td>2023-08-30</td>
+      <td>2023-09-04</td>
+      <td>Block</td>
+      <td>100601</td>
+      <td>...6912c055</td>
+      <td>Malware - Polymorphic Encoder</td>
+      <td>New Detection</td>
+    </tr>
+    <tr>
+      <td>2023-08-30</td>
+      <td>2023-09-04</td>
+      <td>Block</td>
+      <td>100146B_BETA</td>
+      <td>...efa97b0f</td>
+      <td>SSRF Local BETA</td>
+      <td>This will replace 100146B in Legacy WAF and ...8242627b in new WAF</td>
     </tr>
   </tbody>
 </table>
