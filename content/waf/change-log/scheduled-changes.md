@@ -66,7 +66,7 @@ rss: file
       <td>100146B_BETA</td>
       <td>...efa97b0f</td>
       <td>Malware - Polymorphic Encoder</td>
-      <td>This will replace 100146 in Legacy WAF and ...8242627b in new WAF</td>
+      <td>This will replace 100146B in Legacy WAF and ...8242627b in new WAF</td>
     </tr>
   </tbody>
 </table>
