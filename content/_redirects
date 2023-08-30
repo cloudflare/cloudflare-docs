@@ -490,6 +490,13 @@
 /magic-wan/tutorials/vyos/ /magic-wan/third-party/vyos/ 301
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 
+# notifications
+/fundamentals/notifications/ /notifications/ 301
+/fundamentals/notifications/create-notifications/ /notifications/create-notifications/ 301
+/fundamentals/notifications/create-notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
+/fundamentals/notifications/create-notifications/configure-webhooks/ /notifications//create-notifications/configure-webhooks/ 301
+/fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
+
 # pages
 /pages/getting-started/ /pages/get-started/ 301
 /pages/how-to/deploy-a-gatsby-site/ /pages/framework-guides/deploy-a-gatsby-site/ 301
