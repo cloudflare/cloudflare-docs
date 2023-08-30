@@ -34,6 +34,8 @@ axios.get(sitemapUrl)
     })
     .catch(error => {
         console.error('An error occurred:', error);
+    })
+    .finally(() => {
+        // Process the URLs after the response has been handled
+        urlsToProcess.forEach(processUrl);
     });
-
-urlsToProcess.forEach(processUrl);
