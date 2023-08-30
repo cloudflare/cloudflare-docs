@@ -20,7 +20,7 @@ jobs:
           node-version: 18.1
       
       - name: Install dependencies
-        run: npm install @actions/core pa11y axios xml2js
+        run: npm install @actions/core pa11y puppeteer
 
       - name: Run accessibility test
         id: test-accessibility
