@@ -17,7 +17,7 @@ Some users can apply a single waiting room to multiple hostnames and paths. To d
 You cannot add any hostname and path combinations already configured for another waiting room. Hostnames must belong to the zone that the waiting room is configured on.
 
 A single waiting room can be applied to multiple custom hostnames as long as the following is true:
-- The fallback origin is the same between the custom hostnames
+- The apex domain is the same between the custom hostnames
 - Each custom hostname is [configured explicitly](#custom-hostnames) in SSL for SaaS setup.
 
 ## Custom hostnames
