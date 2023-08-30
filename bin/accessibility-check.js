@@ -7,17 +7,13 @@ process.on('warning', e => console.warn(e.stack));
 const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml';
 const urlsToProcess = []; // Array to store URLs for processing
 
-async function processUrlBatch(urls) {
-    const promises = urls.map(async (url) => {
-        try {
-            const results = await pa11y(url);
-            console.log(results);
-        } catch (error) {
-            console.log("error");
-        }
-    });
-
-    await Promise.all(promises);
+async function processUrl(url) {
+    try {
+        const results = await pa11y(url);
+        console.log(results);
+    } catch (error) {
+        console.log("error");
+    }
 }
 
 axios.get(sitemapUrl)
