@@ -7,17 +7,15 @@ weight: 2
 # Configure webhooks
 
 {{<Aside type="note">}}
-
-This feature is only available if your account has at least one paid feature. For more information, see our [plans page](https://www.cloudflare.com/plans/).
-
+This feature is only available if your account has at least one paid feature. For more information, refer to our [plans](https://www.cloudflare.com/plans/).
 {{</Aside>}}
 
-There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Refer to the [Popular webhook services](#popular-webhook-services) table to learn how to connect your Cloudflare account to them.
+There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Refer to the table below to learn how to connect your Cloudflare account to [popular webhook services](#popular-webhook-services)
 
-To set up webhooks:
+## Set up webhooks 
 
-1. Go to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) on the Cloudflare dashboard.
-2. Select **Destinations**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Notifications** > **Destinations**.
 3. In the **Webhooks** card, select **Create**.
 4. Give your webhook a name, so you can identify it later.
 5. In the **URL** field, enter the URL of the third-party service you previously set up and want to connect to your Cloudflare account.
@@ -28,26 +26,31 @@ The new webhook will appear in the **Webhooks** card.
 
 ## Generic webhooks
 
-If you use a service that is not covered by Cloudflare's currently available webhooks, you can configure your own. Follow steps 1-6 above, and enter a valid webhook URL. It is always recommended to use a secret for generic webhooks. Cloudflare will send your secret in the `cf-webhook-auth` header of every request made. If this header is not present, or is not your specified value, you should reject the webhook.
+If you use a service that is not covered by Cloudflare's currently available webhooks, you can configure your own. Follow the steps above to configure webhooks, and enter a valid webhook URL. It is always recommended to use a secret for generic webhooks. Cloudflare will send your secret in the `cf-webhook-auth` header of every request made. If this header is not present, or is not your specified value, you should reject the webhook.
 
 After selecting **Save and Test**, your webhook should now be configured as a destination you can use to attach to policies.
 
 When Cloudflare sends you a webhook, it will have the following schema:
 
 ```json
+---
+header: Example schema
+---
 {
     "text": "Hello World! This is a test message sent from https://cloudflare.com. If you can see this, your webhook is configured properly."
 }
 ```
 
-In the above example, `"text"` will vary depending on the alert that was fired.
+{{<Aside type="note">}}
+`"text"` will vary depending on the alert that was fired.
+{{</Aside>}}
 
 
 ### Limitations of generic webhooks
 
 Cloudflare generic webhook notifications will only be dispatched to a publicly resolvable IP address on port 80 or 443.
 
-If you want to receive the generic webhook notification on a private IP address or different port you can either receive and forward the notification using [Workers](/workers/) or set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to route to your connected application.
+If you want to receive the generic webhook notification on a private IP address or different port, you can either receive and forward the notification using [Workers](/workers/) or set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to route to your connected application.
 
 ### Use generic webhooks with Workers
 
