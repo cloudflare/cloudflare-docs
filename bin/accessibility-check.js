@@ -2,6 +2,10 @@ import pa11y from "pa11y"
 import core from "@actions/core";
 import axios from "axios"
 import { parseString } from 'xml2js';
+import { EventEmitter } from 'events';
+
+const myEmitter = new EventEmitter();
+myEmitter.setMaxListeners(20); // Increase
 
 const sitemapUrl = 'https://developers.cloudflare.com/sitemap.xml';
 
