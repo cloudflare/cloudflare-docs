@@ -6,8 +6,8 @@ name: Accessibility
 
 on:
   pull_request:
-    types:
-      - opened
+    branches:
+      - production
 
 jobs:
   test:
@@ -27,4 +27,3 @@ jobs:
       - name: Run accessibility test
         id: test-accessibility
         run: npm run test-accessibility
-        
