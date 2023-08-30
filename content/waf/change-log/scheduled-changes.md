@@ -51,8 +51,8 @@ rss: file
       <td>New Detection</td>
     </tr>
     <tr>
-      <td>08-30-2023</td>
-      <td>09-04-2023</td>
+      <td>2023-08-30</td>
+      <td>2023-09-04</td>
       <td>Block</td>
       <td>100601</td>
       <td>...6912c055</td>
