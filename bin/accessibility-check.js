@@ -3,7 +3,7 @@ import puppeteer from "puppeteer";
 import core from "@actions/core";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 120 seconds (120,000 milliseconds)
-let resultsArray = []
+let resultsArray = [];
 
 async function checkLinks() {
   const browser = await puppeteer.launch({
@@ -25,29 +25,42 @@ async function checkLinks() {
       continue; // Skip if the link is in a certain section
     }
 
-    const page2 = await browser.newPage()
-    const result = await pa11y(link, {
-      browser,
-      page: page2,
-      runners: [
-        'axe',
-        'htmlcs'
-      ],
-      includeNotices: true
-    })
+    let pages;
+    pages = [await browser.newPage(), await browser.newPage()];
 
-    for (const issue of result.issues) {
-      if (!resultsArray.contains(issue)) {
-        resultsArray.push(issue)
+    pages.forEach(async function (value, index) {
+      let result;
+      if (index === 0) {
+        result = await pa11y(link, {
+          browser,
+          page: eachPage,
+          runners: ["axe", "htmlcs"],
+          includeNotices: true,
+        });
+      } else {
+        result = await pa11y(link, {
+          browser,
+          page: eachPage,
+          runners: ["axe", "htmlcs"],
+          includeNotices: true,
+          actions: [
+            'click element #ThemeToggle--input',
+            'wait for element #DocsSidebar--sections::before to be added'
+          ]
+        });
       }
-    }
+      for (const issue of result.issues) {
+        if (!resultsArray.contains(issue)) {
+          resultsArray.push(issue);
+        }
+      }
 
-    console.log(result);
-    await page2.close();
-    }
-    await page.close();
-    await browser.close();
+      await eachPage.close();
+    });
   }
+  await page.close();
+  await browser.close();
+  console.log(resultsArray);
+}
 
-
- checkLinks();
+checkLinks();
