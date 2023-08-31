@@ -334,7 +334,7 @@
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/get-started/reference/cdn-cgi-endpoint/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
-/fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
+/notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-ulr/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ 301
@@ -491,11 +491,11 @@
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 
 # notifications
-/fundamentals/notifications/ /notifications/ 301
-/fundamentals/notifications/create-notifications/ /notifications/create-notifications/ 301
-/fundamentals/notifications/create-notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
-/fundamentals/notifications/create-notifications/configure-webhooks/ /notifications/create-notifications/configure-webhooks/ 301
-/fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
+/notifications/ /notifications/ 301
+/notifications/create-notifications/ /notifications/create-notifications/ 301
+/notifications/create-notifications/create-pagerduty/ /notifications/create-notifications/create-pagerduty/ 301
+/notifications/create-notifications/configure-webhooks/ /notifications/create-notifications/configure-webhooks/ 301
+/notifications/notification-available/ /notifications/notification-available/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301

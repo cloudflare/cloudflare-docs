@@ -60,7 +60,7 @@ Deprecated API:
 ## Load Balancing - notification_email
 **End of life date: April 3, 2023**
 
-This field is deprecated and has been moved to [Cloudflare centralized notification service](/fundamentals/notifications/). 
+This field is deprecated and has been moved to [Cloudflare centralized notification service](/notifications/). 
 
 `notification_email` is the email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
 

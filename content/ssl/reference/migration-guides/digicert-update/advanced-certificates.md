@@ -103,7 +103,7 @@ For partial zones[^2], the process depends on whether the certificate uses a wil
 
 ##### Fetch DCV tokens
 
-To automatically fetch tokens for certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **Advanced Certificate Alert** events. This notification will include the DCV tokens associated with new or renewed certificates.
+To automatically fetch tokens for certificates that are coming up for renewal, set up [notifications](/notifications/notification-available/#ssltls) for **Advanced Certificate Alert** events. This notification will include the DCV tokens associated with new or renewed certificates.
 
 Notifications can be sent to an email address or a webhook.
 
