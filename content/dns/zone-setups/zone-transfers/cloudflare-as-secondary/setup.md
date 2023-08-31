@@ -110,7 +110,7 @@ When you have added them, go into your new secondary zone and click **Done, chec
 
 ## Step 5 - Create notifications (optional)
 
-To increase the reliability of your incoming zone transfers, [set up notifications](/fundamentals/notifications/create-notifications/) to be notified when your primaries are failing, when records are updated, [and more](/fundamentals/notifications/notification-available/#dns).
+To increase the reliability of your incoming zone transfers, [set up notifications](/notifications/create-notifications/) to be notified when your primaries are failing, when records are updated, [and more](/notifications/notification-available/#dns).
 
 ## Step 6 - Proxy traffic through Cloudflare (optional)
 
