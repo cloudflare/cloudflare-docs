@@ -20,7 +20,7 @@ By default, the [DNS server](https://www.cloudflare.com/learning/dns/what-is-dns
 </div>
 </details>
 
-You can also set up 1.1.1.1 for Families for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that Cloudflare committed to when launching 1.1.1.1.
+You can also set up [1.1.1.1 for Families](#1111-for-families) for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that Cloudflare committed to when launching 1.1.1.1.
 
 ---
 
