@@ -1256,3 +1256,4 @@
 
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
+/fundamentals/notifications/* /notifications/:splat 301
