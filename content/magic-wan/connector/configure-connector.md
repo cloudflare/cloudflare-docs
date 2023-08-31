@@ -18,7 +18,7 @@ Contact your account representative to learn more about purchasing options for t
 
 ## 2. Define a site configuration
 
-Sites represent the local network where you have installed your Magic WAN Connector - for example, a branch office location.
+Sites represent the local network where you have installed your Magic WAN Connector — for example, a branch office location.
 
 To add a site:
 
