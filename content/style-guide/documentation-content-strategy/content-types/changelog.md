@@ -91,7 +91,7 @@ The `product-changelog` component renders data that lives in a file within the [
     
      - `description` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-        - Markdown string that also follows JSON formatting conventions. Commonly combined with `\n` for adding more spacing.
+        - Markdown string that also follows YAML conventions. For multi-line strings, start the entry with `|-` and then type on an indented new line.
 
 {{</definitions>}}
 
