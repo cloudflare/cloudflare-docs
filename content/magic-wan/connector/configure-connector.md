@@ -33,7 +33,7 @@ To add a site:
 8. Under **WAN configuration**, there should be a **Default WAN interface** automatically created. Select **Edit** in the default interface, or **Create** if there is none. You should only have one WAN interface on this list.
     1. Enter a descriptive name for your WAN.
     2. (Optional) Specify a VLAN ID and port for your WAN.
-    3. Specify whether the WAN IP should be DHCP or static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
+    3. In **Network type**, specify whether the WAN IP should be fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
 
 <div class="medium-img">
 
@@ -43,7 +43,7 @@ To add a site:
 
 Select **Save** when you are finished.
 
-9. Repeat this process to define your LAN configuration. If you choose a static IP for your LAN, you will also have to specify the static IP address, and if the server is DHCP. If it is, you will further need to specify:
+9. Repeat this process to define your LAN configuration. In **Network type** you need to specify if your IP address should be fetched from a DHCP server, or if it is a static address. If you choose a static IP for your LAN, you will also have to specify the static IP address, and if the server is DHCP. If it is, you will further need to specify:
     - The DNS server address
     - The DHCP pool start
     - The DHCP pool end
