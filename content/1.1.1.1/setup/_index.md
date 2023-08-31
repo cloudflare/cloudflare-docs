@@ -11,6 +11,15 @@ meta:
 
 By default, the [DNS server](https://www.cloudflare.com/learning/dns/what-is-dns/) your devices use is provided by your Internet provider. To start using 1.1.1.1 for your DNS queries, you will need to change the DNS settings in your device or router.
 
+<details>
+<summary>Device or router specific guides</summary>
+<div>
+
+{{<directory-listing>}}
+
+</div>
+</details>
+
 You can also set up 1.1.1.1 for Families for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that Cloudflare committed to when launching 1.1.1.1.
 
 ---
