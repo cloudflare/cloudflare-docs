@@ -1,7 +1,7 @@
 (function () {
   let tooEarly = false;
   let btn: HTMLInputElement;
-  let media: MediaQueryList | void;
+  let media: MediaQueryList | undefined;
 
   if (document.readyState !== "loading") init();
   else addEventListener("DOMContentLoaded", init);
@@ -9,7 +9,7 @@
   btn = document.querySelector("#ThemeToggle")!;
   tooEarly = !btn;
 
-  function setter(isDark: boolean) {
+  function setter(isDark: boolean, fromCookie: boolean = false) {
     try {
       let theme = isDark ? "dark" : "light";
       document.documentElement.setAttribute("theme", theme);
@@ -20,7 +20,7 @@
         btn.checked = isDark;
         tooEarly = false;
       } else if (tooEarly) {
-        setTimeout(setter, 1, isDark);
+        setTimeout(setter, 1, isDark, fromCookie);
       }
     } catch (err) {
       // security error
@@ -57,11 +57,12 @@
   }
 
   try {
-    let value = localStorage.theme;
-    let row = value && JSON.parse(value);
-
-    // defaults to "light" theme
-    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+    // Check for the presence of a specific cookie
+    const cookieName = "dark_theme_cookie";
+    const cookieValue = document.cookie.includes(cookieName);
+    
+    // Determine whether to apply dark theme from the cookie
+    setter(cookieValue || (media ? media.matches : false));
   } catch (err) {
     // security error
   }
