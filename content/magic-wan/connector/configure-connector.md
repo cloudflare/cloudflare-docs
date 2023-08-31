@@ -58,7 +58,7 @@ For example:
 
 Select **Save** when you are finished.
 
-10. Select **Save and exit** to finish your configuration. Tunnels and static routes will be automatically created and associated with your Site once the Magic WAN Connector boots up (refer to the next step).
+10. Select **Save and exit** to finish your configuration. Tunnels and static routes will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
 ## 3. Set up your Magic WAN Connector
 
