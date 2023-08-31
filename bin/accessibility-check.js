@@ -61,7 +61,7 @@ async function checkLinks() {
   }
   await page.close();
   await browser.close();
-  console.log(resultsArray);
+  /* console.log(resultsArray); */
 }
 
 checkLinks();
