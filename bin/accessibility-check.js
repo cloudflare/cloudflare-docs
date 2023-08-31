@@ -40,7 +40,7 @@ async function checkLinks() {
       page: page2,
       runners: ["axe", "htmlcs"],
       actions: [
-        'click element #ThemeToggle',
+        'click element #ThemeToggle--toggle',
         'wait for element #DocsSidebar:before to be added'
       ],
     });
