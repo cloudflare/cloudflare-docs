@@ -33,14 +33,14 @@ async function checkLinks() {
       if (index === 0) {
         result = await pa11y(link, {
           browser,
-          page: eachPage,
+          page: value,
           runners: ["axe", "htmlcs"],
           includeNotices: true,
         });
       } else {
         result = await pa11y(link, {
           browser,
-          page: eachPage,
+          page: value,
           runners: ["axe", "htmlcs"],
           includeNotices: true,
           actions: [
