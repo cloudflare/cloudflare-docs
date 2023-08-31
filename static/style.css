@@ -4400,6 +4400,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   color: var(--color);
 }
 
+.DocSearch-Button-Placeholder {
+  color: #000610;
+}
+
 [theme=dark] .DocSearch-Button-Placeholder {
   color: var(--color);
 }
