@@ -49,11 +49,12 @@ async function checkLinks() {
           ]
         });
       }
-      for (const issue of result.issues) {
+      console.log(result)
+      /* for (const issue of result.issues) {
         if (!resultsArray.contains(issue)) {
           resultsArray.push(issue);
         }
-      }
+      } */
 
       await eachPage.close();
     });
