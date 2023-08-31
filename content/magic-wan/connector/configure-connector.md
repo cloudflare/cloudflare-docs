@@ -30,7 +30,7 @@ To add a site:
 6. Choose from the list the correct Connector corresponding to the site you are creating, and select **Add Connector**.
     1. (Optional) You can also define an **Interrupt service window** for your Site. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. Refer to [Set up your Magic WAN Connector](#3-set-up-your-magic-wan-connector) for more details.
 7. Select **Next** to proceed to configuring your network.
-8. Under **WAN configuration**, there should be a **Default WAN interface** automatically created. Select **Edit**.
+8. Under **WAN configuration**, there should be a **Default WAN interface** automatically created. Select **Edit** in the default interface, or **Create** if there is none. You should only have one WAN interface on this list.
     1. Enter a descriptive name for your WAN.
     2. (Optional) Specify a VLAN ID and port for your WAN.
     3. Specify whether the WAN IP should be DHCP or static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
