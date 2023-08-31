@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Configuraton
+title: Configuration
 weight: 1
 ---
 
