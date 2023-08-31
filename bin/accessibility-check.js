@@ -44,8 +44,7 @@ async function checkLinks() {
           runners: ["axe", "htmlcs"],
           includeNotices: true,
           actions: [
-            'click element #ThemeToggle--input',
-            'wait for element #DocsSidebar--sections::before to be added'
+            'click element #ThemeToggle',
           ]
         });
       }
@@ -56,7 +55,7 @@ async function checkLinks() {
         }
       } */
 
-      await eachPage.close();
+      await value.close();
     });
   }
   await page.close();
