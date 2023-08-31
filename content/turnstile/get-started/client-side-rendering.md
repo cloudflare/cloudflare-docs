@@ -138,21 +138,21 @@ Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [sourc
 
 ## Access a widget's state
 
-In addition to the `render()` function, Turnstile supports obtaining the widget's response from a `widgetId` via the `turnstile.getResponse(widgetId: string)` function. If you omit the `widgetId`, `turnstile.getResponse()` returns the response from the last created widget.
+In addition to the `render()` function, Turnstile supports obtaining the widget's response from a `widgetId` or its container via the `turnstile.getResponse(widgetIdOrContainer: string | HTMLElement)` function. If you omit the `widgetIdOrContainer`, `turnstile.getResponse()` returns the response from the last created widget.
 
-After some time, a widget may become expired and needs to be refreshed (by calling `turnstile.reset(widgetId: string)`). If a widget has expired, `turnstile.getResponse()` will still return the last response, but the response will no longer be valid because it has expired.
+After some time, a widget may become expired and needs to be refreshed (by calling `turnstile.reset(widgetIdOrContainer: string | HTMLElement)`). If a widget has expired, `turnstile.getResponse()` will still return the last response, but the response will no longer be valid because it has expired.
 
-You can check if a widget has expired by either subscribing to the `expired-callback` or using the `turnstile.isExpired(widgetId: string)` function, which returns `true` if the widget is expired. If you omit `widgetId`, `turnstile.isExpired()` returns whether the last created widget is expired or not.
+You can check if a widget has expired by either subscribing to the `expired-callback` or using the `turnstile.isExpired(widgetIdOrContainer: string | HTMLElement)` function, which returns `true` if the widget is expired. If you omit `widgetIdOrContainer`, `turnstile.isExpired()` returns whether the last created widget is expired or not.
 
 ## Reset a widget
 
-If a given widget has timed out, expired or needs to be reloaded, you can use the `turnstile.reset(widgetId: string)` function to reset the widget.
+If a given widget has timed out, expired or needs to be reloaded, you can use the `turnstile.reset(widgetIdOrContainer: string | HTMLElement)` function to reset the widget.
 
 ## Remove a widget
 
-Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetId: string)`. This will not call any callback and will remove all related DOM elements.
+Once a widget is no longer needed, it can be removed from the page using `turnstile.remove(widgetIdOrContainer: string | HTMLElement)`. This will not call any callback and will remove all related DOM elements.
 
-To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
+To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`. Or you can pass an `HTMLElement` which contains the widget to remove.
 
 ## Configurations
 
