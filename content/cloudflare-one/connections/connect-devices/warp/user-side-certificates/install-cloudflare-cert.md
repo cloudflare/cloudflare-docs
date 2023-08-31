@@ -53,7 +53,7 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
 
 ### macOS
 
-To install the Cloudflare certificate in macOS, you can use either the Keychain Access application or a terminal.
+To install the Cloudflare certificate in macOS, you can use either the Keychain Access application or a terminal. Both methods require you to [download the Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.crt` format.
 
 #### Keychain Access
 
@@ -67,7 +67,7 @@ In Keychain Access, you can choose the keychain in which you want to install the
 
 To install the certificate with Keychain Access:
 
-1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
+1. Download the Cloudflare certificate.
 
 2. Open the `.crt` file in Keychain Access. If prompted, enter your local password.
 
@@ -75,9 +75,7 @@ To install the certificate with Keychain Access:
 
 4. In the list of certificates, right-click the new certificate and select **Get Info**.
 
-5. Select **Trust**.
-
-6. Under **When using this certificate**, select **Always Trust**.
+5. Select **Trust**. Under **When using this certificate**, select _Always Trust_.
 
 The root certificate is now installed and ready to be used.
 
@@ -85,15 +83,17 @@ The root certificate is now installed and ready to be used.
 
 #### Terminal
 
-You can install the Cloudflare certificate on your terminal, too.
+The following procedure will install the Cloudflare certificate to your keychain via the command line.
 
 1. Download the Cloudflare certificate.
 2. Open Terminal.
-3. Launch the following command:
+3. Add the certificate to your keychain:
 
 ```sh
-$ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <Cloudflare_CA.crt>
+$ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <path-to-Cloudflare_CA.crt>
 ```
+
+   This keychain will allow all users on the system access to the certificate. If you want to install the certificate to a different keychain, replace `System.keychain` with the name of that keychain. For information on the scope of each keychain, refer to [Keychain Access](#keychain-access).
 
 4. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
