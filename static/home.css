@@ -3397,6 +3397,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     top: 48px;
 }
 
+.DocSearch-Button-Placeholder {
+    color: #000610;
+  }
+
 /* dark */
 [theme=dark] .DocsSearch {
     --docsearch-searchbox-background: var(--background-color);
