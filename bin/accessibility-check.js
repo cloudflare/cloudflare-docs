@@ -35,14 +35,12 @@ async function checkLinks() {
           browser,
           page: value,
           runners: ["axe", "htmlcs"],
-          includeNotices: true,
         });
       } else {
         result = await pa11y(link, {
           browser,
           page: value,
           runners: ["axe", "htmlcs"],
-          includeNotices: true,
           actions: [
             'click element #ThemeToggle',
           ]
