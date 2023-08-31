@@ -41,4 +41,6 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 
 <sup>6</sup> Individual queues that reach this limit will receive a `Storage Limit Exceeded` error when calling `send()` or `sendBatch()` on the queue.
 
-<sup>7</sup> Refer to [Worker limits](/workers/platform/limits/#cpu-time).  
+<sup>7</sup> Queues does not support remote development mode in Wrangler. `wrangler dev --remote` will result in error.
+
+<sup>8</sup> Refer to [Worker limits](/workers/platform/limits/#cpu-time).  
