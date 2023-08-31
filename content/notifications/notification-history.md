@@ -23,17 +23,17 @@ GET accounts/:identifier/alerting/v3/history
 ---
 header: Example
 ---
-$ curl -X GET "https://api.cloudflare.com/client/v4/accounts/9a7806061c88ada191ed06f989cc3dac/alerting/v3/history?page=1&per_page=25" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
-     -H "Content-Type: application/json"
+curl "https://api.cloudflare.com/client/v4/accounts/9a7806061c88ada191ed06f989cc3dac/alerting/v3/history?page=1&per_page=25" \
+     --header "X-Auth-Email: user@example.com" \
+     --header "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     --header "Content-Type: application/json"
 ```
 
 ## Availability
 
 Notification History is available to all plans. The amount of history clients have access to depends on the the type of plan:
 
-- **Free, Pro and Business**: History from the past 30 days.
+- **Free, Pro, and Business**: History from the past 30 days.
 - **Enterprise**: History from the past 90 days.
 
 {{<Aside type="note">}}
