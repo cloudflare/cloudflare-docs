@@ -14,7 +14,7 @@ This procedure is only required to enable specific Cloudflare Zero Trust feature
 
 {{</Aside>}}
 
-If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate. You will need to add the certificate to both the [system keychain](#add-the-certificate-to-your-system) and to [individual application stores](#add-the-certificate-to-applications). These steps will need to be performed on each new device that is to be subject to HTTP filtering.
+If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate. You will need to add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 
@@ -49,49 +49,41 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
     ➜  ~ openssl x509 -noout -fingerprint -sha256 -inform pem -in <Cloudflare_CA.pem>
     sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
 
-## Add the certificate to your system
+## Add the certificate to operating systems
 
 ### macOS
 
-You will need to install the root certificate in the **Keychain Access** application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
+To install the Cloudflare certificate in macOS, you can use either the Keychain Access application or a terminal.
 
-| Keychain    | Impact                  |
-| ----------- | ----------------------- |
-| login       | The logged in user      |
-| Local Items | Cached iCloud passwords |
-| System      | All users on the system |
+#### Keychain Access
 
-Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System Keychain affects all users who have access to that machine.
+In Keychain Access, you can choose the keychain in which you want to install the certificate. Each keychain impacts which users will be affected by trusting the root certificate.
 
-To install the certificate in **Keychain Access**:
+| Keychain    | Access scope                                 |
+| ----------- | -------------------------------------------- |
+| login       | The logged in user                           |
+| Local Items | Users with access to cached iCloud passwords |
+| System      | All users on the system                      |
+
+To install the certificate with Keychain Access:
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-2. Double-click the `.crt` file.
+2. Open the `.crt` file in Keychain Access. If prompted, enter your local password.
 
-3. In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and select **Add**.
+3. In **Keychain**, choose the access option that suits your needs and select **Add**.
 
-![macOS popup window for adding certificates](/images/cloudflare-one/connections/keychain-popup.png)
-
-The certificate is now listed in your preferred keychain within the **Keychain Access** application. You can always move the certificate under a different keychain by dragging and dropping the certificate onto the desired keychain on the left.
-
-![Viewing certificate in macOS Keychain Access application](/images/cloudflare-one/connections/listed-in-keych.png)
-
-4. Double-click the certificate.
+4. In the list of certificates, right-click the new certificate and select **Get Info**.
 
 5. Select **Trust**.
 
-![macOS window for certificate configuration](/images/cloudflare-one/connections/cert-click-on-trust.png)
-
-6. From the **When using this certificate** drop-down menu, select **Always Trust**.
-
-![macOS window for configuring certificate trust settings](/images/cloudflare-one/connections/cert-select-always-trust.png)
-
-7. Close the menu.
+6. Under **When using this certificate**, select **Always Trust**.
 
 The root certificate is now installed and ready to be used.
 
-#### Base Operating System
+{{<Aside type="note" header="Change certificate access scope">}}If you want to change user access to the Cloudflare certificate, you can open Keychain Access and move the certificate to a different keychain on the left sidebar.{{</Aside>}}
+
+#### Terminal
 
 You can install the Cloudflare certificate on your terminal, too.
 
@@ -501,7 +493,7 @@ $ defaults read /Library/Preferences/com.google.drivefs.settings
 <details>
 <summary>Windows</summary>
 <div>
- 
+
 1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
 2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
 3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
