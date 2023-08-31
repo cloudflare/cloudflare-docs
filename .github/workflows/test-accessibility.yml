@@ -1,17 +1,20 @@
 name: Accessibility
 
-# **What it does**: Regularly audits API links in our documentation.
-# **Why we have it**: It's too burdensome to check on every commit like we do for internal links.
-# **Who does it impact**: PCX team
+# **What it does**: Regularly audits our live site for accessibility issues
+# **Why we have it**: Because this is too time-consuming for a commit-level check, but absolutely something we should pay attention to.
+# **Who does it impact**: PCX team / FE dev.
 
 on:
   pull_request:
     branches:
       - production
+  schedule:
+    - cron: '0 0 1 * *' # This cron expression triggers the workflow at 00:00 on the 1st day of every month
+  workflow_dispatch:
 
 jobs:
   test:
-    name: Test
+    name: Test accessibility
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

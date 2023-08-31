@@ -3,6 +3,7 @@ import puppeteer from "puppeteer";
 import core from "@actions/core";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 120 seconds (120,000 milliseconds)
+let resultsArray = []
 
 async function checkLinks() {
   const browser = await puppeteer.launch({
@@ -17,12 +18,11 @@ async function checkLinks() {
     elements.map((el) => el.textContent)
   );
 
-  const visitedLinks = [];
-  const brokenLinks = [];
-
   for (const link of sitemapLinks) {
     if (!link) {
       continue; // Skip if the link is empty
+    } else if (link.includes("/support/other-languages/")) {
+      continue; // Skip if the link is in a certain section
     }
 
     const page2 = await browser.newPage()
@@ -32,8 +32,15 @@ async function checkLinks() {
       runners: [
         'axe',
         'htmlcs'
-    ]
+      ],
+      includeNotices: true
     })
+
+    for (const issue of result.issues) {
+      if (!resultsArray.contains(issue)) {
+        resultsArray.push(issue)
+      }
+    }
 
     console.log(result);
     await page2.close();
