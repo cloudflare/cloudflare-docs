@@ -2,6 +2,7 @@
 pcx_content_type: overview
 title: Overview
 weight: 2
+layout: overview
 ---
 
 # Cloudflare DNS
@@ -20,7 +21,7 @@ Cloudflare authoritative DNS provides [CNAME flattening](/dns/cname-flattening/)
 
 ## Features
 
-{{<product-table id="dns">}}
+
 
 ---
  
