@@ -101,52 +101,6 @@ $ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.ke
 $ echo | sudo tee -a /etc/ssl/cert.pem < Cloudflare_CA.pem
 ```
 
-### iOS
-
-iOS only allows the Safari browser to open and install certificates.
-
-1. Open Safari and [download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
-
-![iOS popup message asking for permission to download certificate](/images/cloudflare-one/connections/ios_cert_download.PNG)
-
-2. Select **Allow**.
-
-3. Go to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
-
-{{<Aside type="note">}}
-
-Alternatively, you can go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
-
-{{</Aside>}}
-
-![iOS screen for viewing certificate profile](/images/cloudflare-one/connections/ios_cert_profile.PNG)
-
-4. Select the profile and select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
-
-5. Next, a certificate warning will appear. Select **Install**.
-
-If a second prompt is displayed, select **Install** again.
-
-6. Next, the **Profile Installed** screen will appear. Select **Done**.
-
-![iOS message confirming certificate profile installation](/images/cloudflare-one/connections/ios_profile_installed.PNG)
-
-The certificate is now installed. However, before it can be used, it must be trusted by the device.
-
-7. On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
-
-The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
-
-![iOS screen for configuring certificate trust settings](/images/cloudflare-one/connections/ios_cert_trust1.PNG)
-
-8. Select the slide button next to the Cloudflare certificate you just installed.
-
-9. A confirmation dialogue will appear. Select **Continue**.
-
-![iOS popup message asking to confirm trust setting](/images/cloudflare-one/connections/ios_cert_trust2.PNG)
-
-The root certificate is now installed and ready to be used.
-
 ### Windows
 
 Windows offers two options to install the certificate, each having a different impact on which users will be affected by trusting the root certificate.
@@ -215,6 +169,56 @@ $ sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
 ```sh
 $ sudo update-ca-trust
 ```
+
+#### Nix and NixOS
+
+NixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
+
+### iOS
+
+iOS only allows the Safari browser to open and install certificates.
+
+1. Open Safari and [download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
+
+![iOS popup message asking for permission to download certificate](/images/cloudflare-one/connections/ios_cert_download.PNG)
+
+2. Select **Allow**.
+
+3. Go to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
+
+{{<Aside type="note">}}
+
+Alternatively, you can go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
+
+{{</Aside>}}
+
+![iOS screen for viewing certificate profile](/images/cloudflare-one/connections/ios_cert_profile.PNG)
+
+4. Select the profile and select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+
+5. Next, a certificate warning will appear. Select **Install**.
+
+If a second prompt is displayed, select **Install** again.
+
+6. Next, the **Profile Installed** screen will appear. Select **Done**.
+
+![iOS message confirming certificate profile installation](/images/cloudflare-one/connections/ios_profile_installed.PNG)
+
+The certificate is now installed. However, before it can be used, it must be trusted by the device.
+
+7. On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
+
+The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
+
+![iOS screen for configuring certificate trust settings](/images/cloudflare-one/connections/ios_cert_trust1.PNG)
+
+8. Select the slide button next to the Cloudflare certificate you just installed.
+
+9. A confirmation dialogue will appear. Select **Continue**.
+
+![iOS popup message asking to confirm trust setting](/images/cloudflare-one/connections/ios_cert_trust2.PNG)
+
+The root certificate is now installed and ready to be used.
 
 ### Android
 
@@ -289,10 +293,6 @@ The root certificate is now installed and ready to be used.
 7. Enter anything you want for the certificate name and select **OK**.
 
 ![ChromeOS dialogue for naming the certificate](/images/cloudflare-one/connections/chromeOS8_cert.png)
-
-### Nix and NixOS
-
-NixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
 
 ## Add the certificate to applications
 
