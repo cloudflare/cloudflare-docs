@@ -15,9 +15,9 @@ You can also set up 1.1.1.1 for Families for an added layer of protection on you
 
 ## 1.1.1.1 for Families
 
-1.1.1.1 for Families categorizes destinations on the Internet based on the potential threat they pose regarding malware, phishing, or other types of security risks. When enabled, 1.1.1.1 for Families will block resolution to these destinations.
+{{<render file="_for-families-intro.md" >}} <br />
 
-1.1.1.1 for Families has two default options: 
+1.1.1.1 for Families has two default options:
 
 <details>
 <summary>Block malware</summary>
