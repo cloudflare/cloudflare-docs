@@ -4,6 +4,7 @@ import core from "@actions/core";
 
 const navigationTimeout = 120000; // Set the navigation timeout to 120 seconds (120,000 milliseconds)
 let resultsArray = [];
+let printArray = [];
 
 async function checkLinks() {
   const browser = await puppeteer.launch({
@@ -25,36 +26,24 @@ async function checkLinks() {
       continue; // Skip if the link is in a certain section
     }
 
-    const page1 = await browser.newPage();
-    let result1 = await pa11y(link, {
+    const testPage = await browser.newPage();
+    let result = await pa11y(link, {
       browser,
       page: page1,
       runners: ["axe", "htmlcs"],
     });
-    console.log(result1);
-    await page1.close();
-
-    const page2 = await browser.newPage();
-    let result2 = await pa11y(link, {
-      browser,
-      page: page2,
-      runners: ["axe", "htmlcs"],
-      actions: [
-        'click element #ThemeToggle--toggle',
-        'wait for element #DocsSidebar:before to be added'
-      ],
-    });
-    console.log(result2);
-    await page2.close();
-    /* for (const issue of result.issues) {
+    
+    for (const issue of result.issues) {
         if (!resultsArray.contains(issue)) {
           resultsArray.push(issue);
         }
-      } */
+      } 
+
+    await testPage.close();
   }
   await page.close();
   await browser.close();
-  /* console.log(resultsArray); */
+  console.log(resultsArray)
 }
 
 checkLinks();
