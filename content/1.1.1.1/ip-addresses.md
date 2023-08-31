@@ -22,12 +22,13 @@ For detailed guidance refer to [Set up](/1.1.1.1/setup/).
 | --------------- | ----------------------------------------- |
 | `1.1.1.1` <br/>`1.0.0.1` | `2606:4700:4700::1111` <br/>`2606:4700:4700::1001` |
 
+Refer to [Encryption](/1.1.1.1/encryption/) to learn how to use 1.1.1.1 in an encrypted way.
+
 ---
 
 ## 1.1.1.1 for Families
 
 {{<render file="_for-families-intro.md" >}} <br />
-For more information, refer to [1.1.1.1 for Families set up](/1.1.1.1/setup/#1111-for-families).
 
 ### Block malware
 
@@ -41,3 +42,5 @@ For more information, refer to [1.1.1.1 for Families set up](/1.1.1.1/setup/#111
 |  IPv4            | IPv6                                      |
 | -----------------|-------------------------------------------|
 |  `1.1.1.3` <br/>`1.0.0.3` | `2606:4700:4700::1113` <br/>`2606:4700:4700::1003` |
+
+For more information, refer to [1.1.1.1 for Families set up](/1.1.1.1/setup/#1111-for-families).
