@@ -34,7 +34,7 @@ async function checkLinks() {
     });
     
     for (const issue of result.issues) {
-        if (!resultsArray.contains(issue)) {
+        if (!resultsArray.includes(issue)) {
           resultsArray.push(issue);
         }
       } 
