@@ -28,7 +28,11 @@ async function checkLinks() {
     const page2 = await browser.newPage()
     const result = await pa11y(link, {
       browser,
-      page: page2
+      page: page2,
+      runners: [
+        'axe',
+        'htmlcs'
+    ]
     })
 
     console.log(result);
