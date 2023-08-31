@@ -28,7 +28,7 @@ Where possible, Queues will optimize for keeping your backlog from growing expon
 
 {{<Aside type="warning" header="Consumer concurrency and retried messages">}}
 
-Retrying messages with `.retry()` or calling `.retryAll()` on a batch will count as a failed invocation and cause the consumer to autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is something higher, it is usually due to messages being retried, preventing your consumer from scaling up.
+Retrying messages with `.retry()` or calling `.retryAll()` on a batch will count as a failed invocation and cause the consumer to cease any increase in autoscaling. Continued `.retry()` / `.retryAll()` invocations will cause the consumers autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is something higher, it is usually due to messages being retried, preventing your consumer from scaling up.
 
 {{</Aside>}}
 
