@@ -33,3 +33,5 @@ The Customer Metadata Boundary is for customers who want to limit personal data 
 ## What are the analytics products available for Metadata Boundary?
 
 HTTP and Firewall analytics are available. At the moment, there are no analytics available for Workers, DNS, Network Analytics, Load Balancing and Rate Limiting.
+
+Dashboard Analytics are only viewable in the EU.
