@@ -28,7 +28,7 @@ async function checkLinks() {
     const page1 = await browser.newPage();
     let result1 =  await pa11y(link, {
       browser,
-      page: value,
+      page: page1,
       runners: ["axe", "htmlcs"],
     });
     console.log(result1)
@@ -37,7 +37,7 @@ async function checkLinks() {
     const page2 = await browser.newPage();
     let result2 =  await pa11y(link, {
       browser,
-      page: value,
+      page: page2,
       runners: ["axe", "htmlcs"],
       actions: [
         'click element #ThemeToggle',
