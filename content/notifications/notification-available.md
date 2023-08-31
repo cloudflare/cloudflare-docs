@@ -7,9 +7,9 @@ layout: single
 
 # Available Notifications
 
-Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as Billing, Denial-of-Service protection, Magic Transit, and SSL/TLS.
+Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/fundamentals/account-and-billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
 
-Depending on your plan, you will also be able to configure webhooks (which allow you to connect your account with external services such as Slack and Google Chat) and PagerDuty to receive Cloudflare Notifications.
+Depending on your plan, you can also configure webhooks, allowing you to connect your account with external services such as Slack and Google Chat, and PagerDuty to receive Cloudflare Notifications.
 
 ## Actions available on receiving a Notification
 
@@ -192,7 +192,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md">}}
+{{<render file="_ddos.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -215,7 +215,7 @@ Purchase of Magic Transit and/or BYOIP.
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md">}}
+{{<render file="_ddos.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -242,7 +242,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md">}}
+{{<render file="_ddos.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -271,7 +271,7 @@ Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md">}}
+{{<render file="_ddos.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -478,7 +478,7 @@ Enterprise plans.
 **What should you do if you receive one?**
 
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-2. {{<render file="_errors.md">}}
+2. {{<render file="_errors.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -501,7 +501,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_errors.md">}}
+{{<render file="_errors.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -594,7 +594,7 @@ Investigate to confirm it is an expected change.
 
 Page Shield customers who want to receive a notification when resources from a known malicious domain appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md" productFolder="fundamentals">}} <br>
 
 **Other options / filters**
 
@@ -606,7 +606,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
+{{<render file="_script-monitor-review-malicious-scripts.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -619,7 +619,7 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md" productFolder="fundamentals">}} <br>
 
 **Other options / filters**
 
@@ -631,7 +631,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
+{{<render file="_script-monitor-review-malicious-scripts.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -644,7 +644,7 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when resources from a known malicious URL appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md" productFolder="fundamentals">}} <br>
 
 **Other options / filters**
 
@@ -656,7 +656,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-{{<render file="_script-monitor-review-malicious-scripts.md">}}
+{{<render file="_script-monitor-review-malicious-scripts.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -852,7 +852,7 @@ Purchase of Cloudflare for SaaS.
 
 **What should you do if you receive one?**
 
-{{<render file="_troubleshoot-ssl.md">}}
+{{<render file="_troubleshoot-ssl.md" productFolder="fundamentals">}}
 
 </div>
 </details>
@@ -875,7 +875,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_troubleshoot-ssl.md">}}
+{{<render file="_troubleshoot-ssl.md" productFolder="fundamentals">}}
 
 </div>
 </details>
