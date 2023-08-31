@@ -30,7 +30,7 @@ This page lists the error codes that can appear in the WARP client GUI. If you d
 ### Resolution
 
 1. Increase the [captive portal timeout](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection) to allow users more time to login.
-2. If this does not resolve the issue, allow users to manually [turn off WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch).
+2. If this does not resolve the issue, allow users to manually [turn off WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch). We recommend setting an [auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) value so that the client turns itself back on after a few minutes.
 
 ## CF_CONNECTIVITY_FAILURE_UNKNOWN
 
@@ -42,11 +42,12 @@ This page lists the error codes that can appear in the WARP client GUI. If you d
 
 ### Cause
 
-The initial [connectivity check](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check) failed for an unknown reason.
+The initial [connectivity check](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check) failed for an unknown reason. Refer to [Unable to connect WARP](cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#unable-to-connect-warp) for the most common reasons why this error occurs.
 
 ### Resolution
 
-Contact Cloudflare Support for assistance.
+1. Retrieve [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for the device.
+2. Follow the troubleshooting steps in [Unable to connect WARP](cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#unable-to-connect-warp).
 
 ## CF_DNS_LOOKUP_FAILURE
 
@@ -65,6 +66,7 @@ WARP was unable to resolve hostnames via its [local DNS proxy](/cloudflare-one/c
 1. Verify that the network the user is on has DNS connectivity.
 2. Verify that DNS resolution works when WARP is disabled.
 3. Ensure that no third-party tools are interfering with WARP for control of DNS.
+4. Ensure that no third-party tools are [performing TLS decryption](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#a-third-party-security-product-is-interfering-with-gateway) on traffic to the [WARP IP addresses](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
 ## CF_DNS_PROXY_FAILURE
 
@@ -74,11 +76,11 @@ WARP was unable to resolve hostnames via its [local DNS proxy](/cloudflare-one/c
 
 ### Cause
 
-A third-party process is bound to port 53, which is used by WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) to perform DNS resolution. This is commonly caused by third-party DNS software.
+A third-party process (usually a third-party DNS software) is bound to port 53, which is used by WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) to perform DNS resolution. The name of third-party process will appear in the GUI error message.
 
 ### Resolution
 
-1. Remove or disable DNS interception in the third-party software.
+1. Remove or disable DNS interception in the third-party process.
 2. Alternatively, switch WARP to [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
 
 ## CF_FAILED_TO_SET_MTLS
@@ -124,7 +126,7 @@ The initial [connectivity check](/cloudflare-one/connections/connect-devices/war
 
 ### Resolution
 
-1. Check for the presence of third-party HTTP filtering software (AV, DLP, or firewall) that could be intercepting traffic.
+1. Check for the presence of third-party HTTP filtering software (AV, DLP, or firewall) that could be intercepting traffic to the [WARP IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall).
 2. In the third-party software, bypass inspection for all IP traffic going through WARP. To find out what traffic routes through the WARP tunnel, refer to [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 
 ## CF_INSUFFICIENT_DISK
@@ -200,7 +202,7 @@ The WARP client was deployed on the device using an invalid MDM configuration fi
 
 ### Cause
 
-The device is not connected to a Wi-Fi network or LAN.
+The device is not connected to a Wi-Fi network or LAN that has connectivity to the Internet.
 
 ### Resolution
 
@@ -220,7 +222,7 @@ The device is not connected to a Wi-Fi network or LAN.
 The device is not authenticated to a Zero Trust organization because:
 
 - The device was revoked in Zero Trust.
-- The GUI erroneously deleted the registration after a computer crash.
+- The registration was corrupted or deleted for an unknown reason.
 
 ### Resolution
 
@@ -228,7 +230,7 @@ The device is not authenticated to a Zero Trust organization because:
 2. Select the gear icon and go to **Preferences** > **Account**.
 3. Select **Re-Authenticate Session**.
 4. Complete the authentication steps required by your organization.
-5. If this does not resolve the error, select **Logout from Cloudflare Zero Trust** and then log back in.
+5. If this does not resolve the error, select **Logout from Cloudflare Zero Trust** and then log back in. Logging out is only possible if [Allow device to leave organization](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled for your device.
 
 ## CF_TLS_INTERCEPTION_BLOCKING_DOH
 
