@@ -25,36 +25,32 @@ async function checkLinks() {
       continue; // Skip if the link is in a certain section
     }
 
-    let pages;
-    pages = [await browser.newPage(), await browser.newPage()];
+    const page1 = await browser.newPage();
+    let result1 =  await pa11y(link, {
+      browser,
+      page: value,
+      runners: ["axe", "htmlcs"],
+    });
+    console.log(result1)
+    await page1.close();
 
-    pages.forEach(async function (value, index) {
-      let result;
-      if (index === 0) {
-        result = await pa11y(link, {
-          browser,
-          page: value,
-          runners: ["axe", "htmlcs"],
-        });
-      } else {
-        result = await pa11y(link, {
-          browser,
-          page: value,
-          runners: ["axe", "htmlcs"],
-          actions: [
-            'click element #ThemeToggle',
-          ]
-        });
-      }
-      console.log(result)
+    const page2 = await browser.newPage();
+    let result2 =  await pa11y(link, {
+      browser,
+      page: value,
+      runners: ["axe", "htmlcs"],
+      actions: [
+        'click element #ThemeToggle',
+        'wait for element #DocsSidebar:before to be added'
+      ]
+    });
+    console.log(result2)
+    await page2.close();
       /* for (const issue of result.issues) {
         if (!resultsArray.contains(issue)) {
           resultsArray.push(issue);
         }
       } */
-
-      await value.close();
-    });
   }
   await page.close();
   await browser.close();
