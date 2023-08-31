@@ -41,13 +41,22 @@ To add a site:
 
 </div>
 
-9. Repeat this process to define your LAN configuration. 
+Select **Save** when you are finished.
+
+9. Repeat this process to define your LAN configuration. If you choose a static IP for your LAN, you will also have to specify the static IP address, and if the server is DHCP. If it is, you will further need to specify:
+    - The DNS server address
+    - The DHCP pool start
+    - The DHCP pool end
+
+For example:
 
 <div class="medium-img">
 
 ![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-config.png)
 
 </div>
+
+Select **Save** when you are finished.
 
 10. Select **Save and exit** to finish your configuration. Tunnels and static routes will be automatically created and associated with your Site once the Magic WAN Connector boots up (refer to the next step).
 
