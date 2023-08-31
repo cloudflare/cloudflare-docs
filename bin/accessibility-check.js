@@ -26,27 +26,27 @@ async function checkLinks() {
     }
 
     const page1 = await browser.newPage();
-    let result1 =  await pa11y(link, {
+    let result1 = await pa11y(link, {
       browser,
       page: page1,
       runners: ["axe", "htmlcs"],
     });
-    console.log(result1)
+    console.log(result1);
     await page1.close();
 
     const page2 = await browser.newPage();
-    let result2 =  await pa11y(link, {
+    let result2 = await pa11y(link, {
       browser,
       page: page2,
       runners: ["axe", "htmlcs"],
       actions: [
         'click element #ThemeToggle',
         'wait for element #DocsSidebar:before to be added'
-      ]
+      ],
     });
-    console.log(result2)
+    console.log(result2);
     await page2.close();
-      /* for (const issue of result.issues) {
+    /* for (const issue of result.issues) {
         if (!resultsArray.contains(issue)) {
           resultsArray.push(issue);
         }
