@@ -34,7 +34,21 @@ To add a site:
     1. Enter a descriptive name for your WAN.
     2. (Optional) Specify a VLAN ID and port for your WAN.
     3. Specify whether the WAN IP should be DHCP or static IP. If you choose a static IP, you also need to specify the static IP and gateway IP addresses.
-9. Repeat this process to define your LAN configuration.
+
+<div class="medium-img">
+
+![An example of how to configure you Magic WAN Connector WAN](/images/magic-wan/connector/wan-config.png)
+
+</div>
+
+9. Repeat this process to define your LAN configuration. 
+
+<div class="medium-img">
+
+![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-config.png)
+
+</div>
+
 10. Select **Save and exit** to finish your configuration. Tunnels and static routes will be automatically created and associated with your Site once the Magic WAN Connector boots up (refer to the next step).
 
 ## 3. Set up your Magic WAN Connector
