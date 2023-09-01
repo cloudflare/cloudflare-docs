@@ -51,7 +51,7 @@ We recommend that you migrate all your current custom hostnames away from DigiCe
 
 #### Identify certificates
 
-To identify certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostnames Alert** events.
+To identify certificates that are coming up for renewal, set up [notifications](/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostnames Alert** events.
 
 You can also send a [GET](/api/operations/custom-hostname-for-a-zone-list-custom-hostnames) request to the API and look for certificates with a `ssl_status` of `pending_validation` and a `certificate_authority` of `digicert` within the SSL object.
 
