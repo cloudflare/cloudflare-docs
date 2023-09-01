@@ -12,7 +12,12 @@ Requests to your Functions are billed as Cloudflare Workers requests. Workers pl
 
 Requests to your Pages functions count towards your quota for Workers Paid plans, including requests from your Function to KV or Durable Object bindings.
 
-Pages supports both Bundled and Unbound Usage Models. When an account is first upgraded to a Paid Plan, Unbound is the default Usage Model. This default applies only to new projects created after upgrading your plan; existing projects created under the Free Plan will continue to use the Bundled Usage Model. To change the default Usage Model, go to Account Home > Pages and select Change next to the Default Usage Model in the top right of the page.
+Pages supports both Bundled and Unbound Usage Models. When an account is first upgraded to a Paid Plan, Unbound is the default Usage Model. This default applies only to new projects created after upgrading your plan; existing projects created under the Free Plan will continue to use the Bundled Usage Model. To change the default Usage Model:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Pages project.
+4. Find **Default Usage Model** on the right-side menu and select **Change**.
 
 You can update the Usage Model per project, for both Production and Preview deployments, in the Project Settings page. Like other modifications to your Project Settings, you must redeploy your site in order for this change to take effect. Requests to previous deployments will continue to be billed under the Usage Model the Function was deployed with.
 

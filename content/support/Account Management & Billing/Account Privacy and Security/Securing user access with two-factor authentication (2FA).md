@@ -26,24 +26,19 @@ secure location.
 
 As the user account owner, you are automatically assigned the [Super Administrator](https://support.cloudflare.com/hc/en-us/articles/205065067#12345682) role. Once 2FA is enabled, all Cloudflare account members are required to configure 2FA on their mobile devices.
 
-{{<Aside type="note">}}
-Free, Pro, and Business customers can only have one Super Administrator.
-Enterprise customers can have more than one Super Administrator and
-[assign additional membership
-roles](https://support.cloudflare.com/hc/articles/205065067).
-{{</Aside>}}
-
 ___
 
 ## Enable two-factor authentication for your Cloudflare account
 
 We recommend that all Cloudflare user account holders enable 2FA to keep their accounts secure. 
 
+2FA can only be enabled successfully on an account with a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/). If you do not verify your email address first, you may lock yourself out of your account.
+
 {{<Aside type="warning">}}
 Super Administrators can turn on **2FA Enforcement** to require all
 members to enable 2FA. If you are not a Super Administrator, you will be
 forced to turn on 2FA prior to accepting the invitation to join a
-Cloudflare account as a member.
+Cloudflare account as a member. 
 {{</Aside>}}
 
 To enable two-factor authentication for your Cloudflare login:
@@ -113,7 +108,7 @@ To enable 2FA mobile app authentication:
 
 -   If you can't scan the QR code, click **Can't scan QR code, Follow alternative steps** to configure your authenticator app manually.
 
-![You can enable 2FA by scanning a QR code with your mobile device.](/support/static/2FA_scan_QR_code.png)
+![You can enable 2FA by scanning a QR code with your mobile device.](/images/support/2FA_scan_QR_code.png)
 
 5\. Enter your Cloudflare password again.
 
@@ -220,7 +215,7 @@ If you do not have access to your 2FA account or backup codes, use a verified de
 
 1\. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
-2\. On the **Two-Factor Authentication** page, click **Can't access your 2FA device or backup codes?**.
+2\. On the **Two-Factor Authentication** page, next to *Lost all 2FA devices and backup codes?* click **Try recovery**.
 
 3\. Click **Begin recovery**.
 

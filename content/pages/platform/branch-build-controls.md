@@ -19,7 +19,7 @@ To configure deployment options, go to your Pages project > **Settings** > **Bui
 
 You can also enable or disable automatic deployment behavior on the production branch by checking the **Enable automatic production branch deployments** box. You must save your settings in order for the new production branch controls to take effect. 
 
-![Configure your preview deployments by following the steps above](../media/configure-preview-deployment.png)
+![Configure your preview deployments by following the steps above](/images/pages/platform/configure-preview-deployment.png)
 
 ## Preview branch control 
 
@@ -29,7 +29,7 @@ When configuring automatic builds for preview deployments, there are three optio
 * **None**: Turns off automatic builds for all preview branches.
 * **Custom branches**: Customize the automatic deployments of certain preview branches.
 
-![Choose what kind of preview deployment you need for your Pages project in the Cloudflare dashboard](../media/include-preview-brances.png)
+![Choose what kind of preview deployment you need for your Pages project in the Cloudflare dashboard](/images/pages/platform/include-preview-brances.png)
 
 ### Custom preview branch control  
 

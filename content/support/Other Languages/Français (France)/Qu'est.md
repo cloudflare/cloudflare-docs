@@ -15,7 +15,7 @@ Vous trouverez l'option Géolocalisation IP dans la section « Réseau » du tab
 
 L'option pour la géolocalisation IP se trouve près du bas de la page:
 
-![](/support/static/IPGeolocation2.png)
+![](/images/support/IPGeolocation2.png)
 
 Une fois activé, nous ajouterons alors un en-tête appelé « CF-IPCountry » à toutes les demandes que nous faisons à votre site Web. Voici quelques exemples de la façon d'accéder à / magasin cette valeur:
 

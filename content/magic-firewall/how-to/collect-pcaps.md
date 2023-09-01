@@ -75,20 +75,20 @@ Leave `filter_v1` empty to collect all packets without any filtering.
 ---
 header: Full PCAP example request
 ---
-  curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
-  -H 'Content-Type: application/json' \
-  -H "X-Auth-Email: ${email}" \
-  -H "X-Auth-Key: ${auth_key}" \
-  --data '{
-          "filter_v1": {},
-          "time_limit": 300,
-          "packet_limit": 10000,
-          "byte_limit": 100000000,
-          "type": "full",
-          "colo": "ORD",
-          "system": "magic-transit",
-           "destination_conf": "${bucket}"
-           }'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
+--header 'Content-Type: application/json' \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "filter_v1": {},
+  "time_limit": 300,
+  "packet_limit": 10000,
+  "byte_limit": 100000000,
+  "type": "full",
+  "colo": "ORD",
+  "system": "magic-transit",
+  "destination_conf": "${BUCKET}"
+  }'
 ```
 
 While the collection is in progress, the response returns the `status` field as `pending`. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status changes to `success`.
@@ -97,24 +97,24 @@ While the collection is in progress, the response returns the `status` field as 
 ---
 header: Full PCAP example response
 ---
-    {
-      "result": {
-        "id": "7d7c88382f0b4d5daa9587aa45a1a877",
-        "submitted": "2022-06-02T18:38:22.269047Z",
-        "filter_v1": {},
-        "time_limit": 300,
-        "status": "pending",
-        "type": "full",
-        "system": "magic-transit",
-        "packet_limit": 10000,
-        "byte_limit": 100000000,
-        "colo": "ORD",
-        "destination_conf": "gs://test-magic-pcaps"
-      },
-      "success": true,
-      "errors": [],
-      "messages": []
-    }
+{
+  "result": {
+    "id": "7d7c88382f0b4d5daa9587aa45a1a877",
+    "submitted": "2022-06-02T18:38:22.269047Z",
+    "filter_v1": {},
+    "time_limit": 300,
+    "status": "pending",
+    "type": "full",
+    "system": "magic-transit",
+    "packet_limit": 10000,
+    "byte_limit": 100000000,
+    "colo": "ORD",
+    "destination_conf": "gs://test-magic-pcaps"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
 </div>
 </details>
@@ -133,23 +133,23 @@ Leave `filter_v1` to collect all packets without any filtering.
 ---
 header: Simple PCAP example request
 ---
-  curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
-  -H 'Content-Type: application/json' \
-  -H 'X-Auth-Email: user@example.com' \
-  -H 'X-Auth-Key: 00000000000' \
-  --data '{
-          "filter_v1": {
-                  "source_address": "1.2.3.4",
-                  "source_port": 123,
-                  "destination_address": "5.6.7.8",
-                  "destination_port": 80,
-                  "protocol": 6
-          },
-          "time_limit": 300,
-          "packet_limit": 10000,
-          "type": "simple",
-          "system": "magic-transit"
-  }'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "filter_v1": {
+    "source_address": "1.2.3.4",
+    "source_port": 123,
+    "destination_address": "5.6.7.8",
+    "destination_port": 80,
+    "protocol": 6
+  },
+  "time_limit": 300,
+  "packet_limit": 10000,
+  "type": "simple",
+  "system": "magic-transit"
+}'
 ```
 
 The response is a JSON body that contains the details of the job running to build the packet capture. The response contains a unique identifier for the packet capture request along with the details sent in the request.
@@ -158,28 +158,29 @@ The response is a JSON body that contains the details of the job running to buil
 ---
 header: Simple PCAP example response
 ---
-    {
-      "result": {
-        "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
-        "submitted": "2021-12-20T17:29:20.641845Z",
-        "filter_v1": {
-          "source_address": "1.2.3.4",
-          "source_port": 123,
-          "destination_address": "5.6.7.8",
-          "destination_port": 80,
-          "protocol": 6
-        },
-        "time_limit": 60,
-        "status": "pending",
-        "packets_remaining": 0,
-        "type": "simple",
-        "system": "magic-transit"
-      },
-      "success": true,
-      "errors": [],
-      "messages": []
-    }
+{
+  "result": {
+    "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
+    "submitted": "2021-12-20T17:29:20.641845Z",
+    "filter_v1": {
+      "source_address": "1.2.3.4",
+      "source_port": 123,
+      "destination_address": "5.6.7.8",
+      "destination_port": 80,
+      "protocol": 6
+    },
+    "time_limit": 60,
+    "status": "pending",
+    "packets_remaining": 0,
+    "type": "simple",
+    "system": "magic-transit"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
+
 </div>
 </details>
 
@@ -202,10 +203,10 @@ header: Simple PCAP example response
 To check the status of a running job, send a request to the endpoint and specify the PCAP identifier. The PCAP identifier is received in the response of a collect request as shown in the previous step.
 
 ```bash
-    curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id} \
-    -H 'Content-Type: application/json' \
-    -H 'X-Auth-Email: user@example.com' \
-    -H 'X-Auth-Key: 00000000000'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 The response will be similar to the one received when requesting a PCAP collection.
@@ -214,27 +215,27 @@ The response will be similar to the one received when requesting a PCAP collecti
 ---
 header: Simple PCAP example result
 ---
-    {
-      "result": {
-        "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
-        "submitted": "2021-12-20T17:29:20.641845Z",
-        "filter_v1": {
-          "source_address": "1.2.3.4",
-          "source_port": 123,
-          "destination_address": "5.6.7.8",
-          "destination_port": 80,
-          "protocol": 6
-        },
-        "time_limit": 120,
-        "status": "success",
-        "packets_remaining": 0,
-        "type": "simple",
-        "system": "magic-transit"
-      },
-      "success": true,
-      "errors": [],
-      "messages": []
-    }
+{
+  "result": {
+    "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
+    "submitted": "2021-12-20T17:29:20.641845Z",
+    "filter_v1": {
+      "source_address": "1.2.3.4",
+      "source_port": 123,
+      "destination_address": "5.6.7.8",
+      "destination_port": 80,
+      "protocol": 6
+    },
+    "time_limit": 120,
+    "status": "success",
+    "packets_remaining": 0,
+    "type": "simple",
+    "system": "magic-transit"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
 
 {{</tab>}}
@@ -275,11 +276,11 @@ To obtain full PCAPs, download the files from the bucket specified in `destinati
 Once the simple PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
 
 ```bash
-    curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
-    -H 'Content-Type: application/json' \
-    -H 'X-Auth-Email: user@example.com' \
-    -H 'X-Auth-Key: 00000000000' \
-    --output download.pcap
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id}/download \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--output download.pcap
 ```
 
 {{</tab>}}
@@ -307,10 +308,10 @@ To view a list of sent requests, use the following command:
 ---
 header: List request example
 ---
-    curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
-    -H 'Content-Type: application/json' \
-    -H 'X-Auth-Email: user@example.com' \
-    -H 'X-Auth-Key: 00000000000'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 The response returns an array that includes up to 50 sent requests, which includes completed and ongoing requests.
@@ -319,23 +320,23 @@ The response returns an array that includes up to 50 sent requests, which includ
 ---
 header: List response example
 ---
+{
+  "result": [
     {
-      "result": [
-        {
-          "id": "43adab5adeca4dab9c51f4b7f70f2ec3",
-          "submitted": "2021-12-15T03:04:09.277394Z",
-          "filter_v1": {},
-          "time_limit": 120,
-          "status": "success",
-          "packets_remaining": 0,
-          "type": "simple",
-          "system": "magic-transit"
-        }
-      ],
-      "success": true,
-      "errors": [],
-      "messages": []
+      "id": "43adab5adeca4dab9c51f4b7f70f2ec3",
+      "submitted": "2021-12-15T03:04:09.277394Z",
+      "filter_v1": {},
+      "time_limit": 120,
+      "status": "success",
+      "packets_remaining": 0,
+      "type": "simple",
+      "system": "magic-transit"
     }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
 
 {{</tab>}}

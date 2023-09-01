@@ -12,7 +12,7 @@ title: What settings are applied when I click Optimize Cloudflare for WordPress 
 
 If you're using Cloudflare's Wordpress plugin, our "Optimize Cloudflare for WordPress" one-click configuration applies the following settings to your Cloudflare account:
 
-![Cloudflare's one-click configuration Wordpress plugin.](/support/static/dash-optimize_wordpress.png)
+![Cloudflare's one-click configuration Wordpress plugin.](/images/support/dash-optimize_wordpress.png)
 
 | **Setting** | **Value** |
 | --- | --- |

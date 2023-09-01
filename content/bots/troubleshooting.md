@@ -41,7 +41,7 @@ If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/m
 
 **Solution:**
 
-Once the new Yandex IP is propagated to our system, the requests will not be blocked anymore and you can remove any workaround you configured. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, please contact [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
+Once the new Yandex IP is propagated to our system, the requests will not be blocked anymore and you can remove any workaround you configured. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 ___
 
@@ -61,6 +61,9 @@ When you choose to challenge different bot categories with Bot Fight Mode or Sup
 
 You may also see Managed Challenge due to a triggered [WAF custom rule](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended) or firewall rule.
 
+This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.
+
+To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 ___
 
 ## What is the difference between the threat score and bot management score?
@@ -74,9 +77,9 @@ These fields are available via [WAF custom rules](/waf/custom-rules/), other pro
 
 ___
 
-## What is cf.bot\_management.verified\_bot?
+## What is cf.bot\_management.verified\_bot?
 
-A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
+A request's _cf.bot\_management.verified\_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
 
 Cloudflare has built an allowlist of good, automated bots, e.g. Google Search Engine, Pingdom, and more.
 
@@ -86,11 +89,21 @@ To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-la
 
 ___
 
-## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
+## Why might the ja3hash be empty in HTTP logs?
+
+The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:
+
+- Orange to Orange zones (Cloudflare Zone proxied to another Cloudflare Zone).
+
+- Worker sending requests within the same zone or to a zone that is not proxied (or a 3rd party).
+
+___
+
+## I run a good bot and want for it to be added to the allowlist (cf.bot\_management.verified\_bot). What should I do?
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).
 
-As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ___
 
@@ -99,13 +112,11 @@ ___
 If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:
 
 {{<Aside type="warning">}}
-
 The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan).
 
 Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.
 
 Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.
-
 {{</Aside>}}
 
 -   RayIDs
@@ -116,7 +127,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 -   Screenshots of strange activity from the WAF, such as a huge spike in challenged traffic on the graph
 -   Problematic URIs or paths
 -   Rough description of how your domain is configured.
-    -   Is one zone SSL for SaaS while the others are not?
+    -   Is one zone Cloudflare for SaaS while the others are not?
     -   Is most API traffic sent to a particular URI?
     -   How much mobile traffic do you expect?
 
@@ -126,9 +137,11 @@ ___
 
 {{<Aside type="warning" header="Important considerations you need to be aware of before turning on BFM or SBFM">}}
 
--   Super Bot Fight Mode is a high security feature intended to very quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen. If you turned on Super Bot Fight Mode during an attack, and the attack has subsided, we recommend either disabling the feature, using IP Access Rules to bypass BFM/SBFM or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+-   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.
 
--   The current version of BFM/SBFM has limited control. You can’t bypass or skip BFM/SBFM using Firewall Rules or Page Rules. SBFM can be bypassed with IP access "Allow" action rules. BFM will be disabled if there are any IP access rules present.
+-   BFM has limited control. You cannot bypass or skip BFM using Firewall Rules or Page Rules. BFM will be disabled if there are any IP access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access Rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+
+-   SBFM can be bypassed with IP Access `Allow` action rules. You can use the Skip action in [Custom Rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
 
 {{</Aside>}}
 
@@ -137,8 +150,8 @@ ___
 If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can disable it under **Security** > **Bots**.
 
 -   For **Free** plans, toggle the **Bot Fight Mode** option to **Off**
--   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
--   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+-   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+-   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 
 {{<render file="_flexible-sbfm.md">}}
 

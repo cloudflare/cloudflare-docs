@@ -12,7 +12,6 @@ meta:
   description: Cloudflare’s bot solutions identify and mitigate automated traffic
     to protect your domain from bad bots.
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/c/security/6

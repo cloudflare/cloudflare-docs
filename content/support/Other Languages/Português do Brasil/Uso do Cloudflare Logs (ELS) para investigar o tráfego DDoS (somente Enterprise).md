@@ -97,7 +97,7 @@ Classifique os logs pelo valor do campo e envie-os para um arquivo.
 
 O padrão _: 525,_ (dois pontos, código de status, vírgula) é exclusivo para o campo _EdgeResponseStatus_ . A simples pesquisa no código de status HTTP _525_ sem dois pontos e vírgula à direita também incluiria entradas de log com o padrão _525_ em outros campos como _EdgeStartTimeStamp_ , por exemplo, que contém muitos números e também pode conter a sequência numérica _525_ .
 
-![captura de tela dos arquivos de saída com o campo EdgeResponseStatus realçado](/support/static/hc-external-edge_response_status_ELS.png)
+![captura de tela dos arquivos de saída com o campo EdgeResponseStatus realçado](/images/support/hc-external-edge_response_status_ELS.png)
 
 Os arquivos de saída (els-200.txt e els-525.txt) não são muito legíveis como estão. Para visualizá-los em um formato mais legível, use jq no seguinte comando:
 
@@ -116,7 +116,7 @@ Neste exemplo, contamos solicitações por versão do protocolo SSL, que é indi
 
 ### Saída de exemplo:
 
-![captura de tela da saída de exemplo ao classificar logs do ELS](/support/static/hc-import-11.png)
+![captura de tela da saída de exemplo ao classificar logs do ELS](/images/support/hc-import-11.png)
 
 Os campos _ClientRequestURI, ClientIP, ClientRequestUserAgent, ClientCountry_ e _ClientRequestHost_ geralmente são os mais úteis para encontrar padrões de ataque nesses logs.
 

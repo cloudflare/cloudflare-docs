@@ -55,10 +55,4 @@ ICP 번호와 인증서가 발급됐다면 웹 사이트 홈페이지의 하단�
 
 ![이전 URL: https://support.cloudflare.com/hc/article_attachments/360040367132/baidu_home_page.png
 문서 ID: 209714777 | ICP 번호의 이해와 설정
-](/support/static/hc-import-baidu_home_page.png)
-
-___
-
-## 관련 자료
-
-[Cloudflare와 Yunjiasu 중 어떤 것을 선택해야 할까요?](https://support.cloudflare.com/hc/articles/209156358)
+](/images/support/hc-import-baidu_home_page.png)

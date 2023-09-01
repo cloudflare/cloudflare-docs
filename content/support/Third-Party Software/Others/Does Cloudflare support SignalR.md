@@ -12,7 +12,7 @@ Yes, Cloudflare supports [ASP.NET SignalR.](http://signalr.net/)
 
 SignalR negotiates what transport method to use: long polling or WebSockets. 
 
-Customers using Cloudflare Railgun should note that when SignalIR negotiates using:
+Customers using [Cloudflare Railgun](/railgun/) (deprecated) should note that when SignalR negotiates using:
 
 -   WebSockets, Railgun is bypassed.
 -   Long polling, the request goes over Railgun but, if such request is idle for 60 seconds, Railgun times out and returns a [527 error](https://support.cloudflare.com/hc/articles/115003011431#527error).

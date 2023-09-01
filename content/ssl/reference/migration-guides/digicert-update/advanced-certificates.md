@@ -9,15 +9,11 @@ meta:
 
 # Advanced certificates
 
-On **March 6, 2023**, Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/). This will not affect existing advanced certificates.
+Starting on **August 31, 2023**, new Cloudflare accounts will not have the option to choose DigiCert as a certificate authority (CA) for [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
-On **March 13, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
+On **October 4, 2023**, Cloudflare will stop using DigiCert as a CA for new advanced certificates. This will not affect existing advanced certificates.
 
-{{<Aside type="note">}}
-
-Though Cloudflare has paused the deadlines associated with DigiCert certificates, this will resume in the near future and - as such - affected customers should prepare their infrastructure for the switch.
-
-{{</Aside>}}
+On **October 11, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
 ## Summary of changes
 
@@ -34,7 +30,7 @@ This table provides a summary of the differences between DigiCert and Cloudflare
 
 ## Required actions
 
-### Before March 6, 2023
+### Before October 4, 2023
 
 If your system integrates with the Cloudflare API to [order advanced certificates](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack), you will need to update the following fields:
 
@@ -42,13 +38,13 @@ If your system integrates with the Cloudflare API to [order advanced certificate
 - The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/reference/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 - The `"validity_days"` field should either use `14`, `30`, or `90` (14 or 30 day certificates will use Google Trust Services as the issuing CA).
 
-## Changes after March 13, 2023
+### Changes after October 11, 2023
 
-The following changes will automatically affect certificates that are renewed after March 13, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate. 
+The following changes will automatically affect certificates that are renewed after October 11, 2023. The renewed certificate will have a different certificate pack ID than the DigiCert certificate. 
 
-### Certificate authorities
+#### Certificate authorities
 
-DigiCert certificates renewed after March 13th will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
+DigiCert certificates renewed after October 11, 2023 will be issued through a Certificate Authority chosen by Cloudflare (Let's Encrypt or Google Trust Services).
 
 {{<Aside type="note">}}
 
@@ -56,11 +52,11 @@ Certificates with 14 and 30 day validity periods will be renewed with Google Tru
 
 {{</Aside>}}
 
-### Validity period
+#### Validity period
 
 If the current DigiCert certificate has a 365 day validity period, that value will change to 90 in the `“validity_days”` field when the certificate is renewed.
 
-### DCV method
+#### DCV method
 
 If the DigiCert certificate had the `“validation_method”` set to `“email”`, then this value will change to either `“txt”` or `“http”` when the certificate is renewed.
 
@@ -70,7 +66,7 @@ Partial zone certificate renewals will default to [HTTP DCV](/ssl/edge-certifica
 
 Certificates with wildcard hostnames will be required to complete [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) or [TXT DCV](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 
-### DCV tokens
+#### DCV tokens
 
 For multi-hostname or wildcard certificates using DigiCert, multiple DCV records will now be returned in the `“validation_records”` field.
 
@@ -86,7 +82,7 @@ If your certificate includes a wildcard hostname, you will see a TXT DCV token r
 
 If you want to take control of migrating your certificates and choose a particular CA - instead of having Cloudflare handle migrations as certificates come up for renewal and choose a CA on your behalf - you will need to:
 
-1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-march-13-2023) noted before).
+1. Order [new certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) (applying all the [required changes](#changes-after-october-11-2023) noted before).
 2. Make sure your certificates are validated ([partial zones](#dcv---partial-zones) will require additional steps than previously).
 3. [Delete](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) all existing DigiCert certificates (once each has been replaced and the new certificate is active).
 
@@ -128,6 +124,8 @@ Notifications can be sent to an email address or a webhook.
 {{</tabs>}}
 
 You will need to add all of the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
+
+Once you update your DNS records, you can either [wait for the next retry](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) or request an immediate recheck.
 
 {{<render file="_dcv-validate-patch.md">}}
 

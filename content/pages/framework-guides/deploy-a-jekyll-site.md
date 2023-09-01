@@ -62,17 +62,13 @@ If you are migrating an existing Jekyll project to Pages, confirm that your `Gem
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
 
-<div>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-| Configuration option | Value          |
-| -------------------- | -------------- |
-| Production branch    | `main`         |
-| Build command        | `jekyll build` |
-| Build directory      | `_site`        |
-
-</div>
+{{<pages-build-preset framework="jekyll">}}
 
 After configuring your site, you can begin your first deployment. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site before deploying it.
 

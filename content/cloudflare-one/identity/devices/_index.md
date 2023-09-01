@@ -27,7 +27,7 @@ Before integrating a device posture check in a Gateway or Access policy, go to *
 
 ## 3. Build a device posture policy
 
-You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/filtering/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/filtering/network-policies/#device-posture) selector.
+You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/gateway/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/gateway/network-policies/#device-posture) selector.
 
 ## 4. Ensure traffic is going through WARP
 
@@ -43,12 +43,24 @@ Access detects changes in device posture at the same rate as the [polling freque
 
 Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device.
 
+```mermaid
+flowchart LR
+accTitle: Device posture policy enforcement
+A[Device] --schedule--> B[WARP client]--> C((Cloudflare)) --> D[Access policy]
+C --5 min--> E[Cache] --> F[Gateway policy]
+A --> G[Service provider] --interval--> C
+```
+
+### Expiration
+
+By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/operations/device-posture-rules-update-device-posture-rule). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
+
 ### Polling frequency
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` and `expiration` duration using the [API](/api/operations/device-posture-rules-create-device-posture-rule).
+By default, the WARP client polls the device for status changes every five minutes. To modify the polling frequency, use the API to update the [`schedule`](/api/operations/device-posture-rules-update-device-posture-rule) parameter.
 
 #### Service provider checks
 
-When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. The polling frequency also sets the expiration time for the device posture result.
+When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/operations/device-posture-integrations-update-device-posture-integration) parameter.

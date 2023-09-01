@@ -1,11 +1,11 @@
 ---
-title: How to
+title: Cache configuration
 pcx_content_type: navigation
-weight: 3
+weight: 6
 ---
 
-# How to
+# Cache configuration
 
-Learn how to complete different tasks to customize your cache behavior.
+Learn how to complete different configuration options to customize your cache behavior.
 
 {{<directory-listing>}}

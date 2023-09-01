@@ -18,7 +18,7 @@ You may already have a reasonably complex Worker and/or it would be tedious to s
 
 {{<Aside type="note">}}
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker).
+When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-es-modules).
 
 {{</Aside>}}
 
@@ -36,7 +36,7 @@ When moving to Cloudflare Pages, remove the Workers application and any associat
 
 ## Migrate headers and redirects
 
-You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentaion](/pages/platform/redirects/). 
+You can migrate your redirects to Pages, by creating a `_redirects` file in your output directory. Pages currently offers limited support for advanced redirects. More support will be added in the future. For a list of support types, refer to the [Redirects documentation](/pages/platform/redirects/). 
 
 {{<Aside type="note">}}
 
@@ -73,6 +73,10 @@ These options allow you to create and name a new project from the CLI or dashboa
 
 ## Cleaning up your old application and assigning the domain
 
-After you have deployed your application, navigate to [Workers](https://dash.cloudflare.com/?to=/:account/workers) and remove your old Workers project by going to your **Workers project** > **Settings** > **Delete**.
+After you have deployed your Pages application, to delete your Worker:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Workers & Pages** and in **Overview**, select your Worker.
+3. Go to **Manage service** > **Delete**.
 
 With your Workers application removed, requests will go to your Pages application. You have successfully migrated your Workers Sites project to Cloudflare Pages by completing this guide.

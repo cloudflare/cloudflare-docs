@@ -7,6 +7,32 @@ rss: file
 
 # Changelog
 
+## 2023-08-08
+
+### Scheduled Deletion
+
+Stream now supports adding a scheduled deletion date to new and existing videos. Live inputs support deletion policies for automatic recording deletion.
+
+For more, refer to the [video on demand](/stream/uploading-videos/) or [live input](/stream/stream-live/) docs.
+
+## 2023-05-16
+
+### Multiple audio tracks now generally available
+
+Stream supports adding multiple audio tracks to an existing video.
+
+For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/) to get started.
+
+## 2023-04-26
+
+### Player Enhancement Properties
+
+Cloudflare Stream now supports player enhancement properties.
+
+With player enhancements, you can modify your video player to incorporate elements of your branding, such as your logo, and customize additional options to present to your viewers.
+
+For more, refer to the [documentation](https://developers.cloudflare.com/stream/edit-videos/player-enhancements/) to get started.
+
 ## 2023-03-21
 
 ### Limits for downloadable MP4s for live recordings
@@ -72,7 +98,7 @@ For more about this change and how to migrate existing API queries, refer to [th
 
 ### Create an unlimited number of live inputs
 
-Cloudflare Stream now has no limit on the number of [live inputs](/api/operations/stream-live-inputs-properties) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
+Cloudflare Stream now has no limit on the number of [live inputs](/api/operations/stream-live-inputs-retrieve-a-live-input) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
 
 For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
 

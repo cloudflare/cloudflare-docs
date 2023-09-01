@@ -9,7 +9,7 @@ layout: single
 
 ## Dummy sitekeys and secret keys
 
-The following sitekeys and secret keys are available for testing.
+The following sitekeys and secret keys are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
 
 | Sitekey | Description | Visibility |
 | --- | --- | --- |
@@ -18,12 +18,6 @@ The following sitekeys and secret keys are available for testing.
 | `1x00000000000000000000BB` | Always passes | invisible |
 | `2x00000000000000000000BB` | Always blocks | invisible |
 | `3x00000000000000000000FF` | Forces an interactive challenge | visible |
-
-{{<Aside type="note">}}
-
-There are currently no sitekeys for testing invisible mode.
-
-{{</Aside>}}
 
 | Secret key | Description |
 | --- | --- |
@@ -34,5 +28,4 @@ There are currently no sitekeys for testing invisible mode.
 
 ## Testing locally
 
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your
-[domain whitelist](/turnstile/reference/domain-management/).
+To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain whitelist](/turnstile/reference/domain-management/).

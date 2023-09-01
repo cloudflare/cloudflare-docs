@@ -8,7 +8,7 @@ _build:
 To set up alerts:
 
 1.  Go to **Security** > **Page Shield**.
-2.  Select **Configure Alerts**.
+2.  In the **Settings** tab, select **Configure an alert**.
 3.  Select an [alert type](/page-shield/reference/alerts/).
 4.  Fill in the required information and select **Create**.
 

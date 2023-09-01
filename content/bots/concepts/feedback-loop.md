@@ -35,7 +35,7 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 | Scraping | Automated retrieval of valuable or proprietary information from an Internet application. |
 | Spamming | The abuse of content forms to send spam. |
 | Token Cracking | Identification of valid token codes providing some form of user benefit within the application. |
-| Vulnerability Scanning | Systematic enumeration and examination of identifiable, guessable and unknown content locations, paths, file names, parameters, in order to find weaknesses and points where a security vulnerability might exist. |
+| Vulnerability Scanning | Systematic enumeration and examination of identifiable, guessable and unknown content locations, paths, file names, parameters, to find weaknesses and points where a security vulnerability might exist. |
 
 ## Submit a report
 
@@ -98,7 +98,7 @@ Null
 curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576aec3fc2b/bot_management/feedback' \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
-     -H "Content-Type: application/json" \
+     -H "Content-Type: application/json"
 ```
 ```json
  # Output
@@ -188,13 +188,13 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
   }
 ```
 
-### Expression Fields
+### Expression fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `cf.bot_management.ja3_hash` | string | This provides an SSL/TLS fingerprint to help you identify potential bot requests. |
 | `cf.bot_management.score` | integer | This represents the likelihood that a request originates from a bot using a score from 1-99. |
-| `http.host` | string | This represents the host name used in the full request URI. |
+| `http.host` | string | This represents the hostname used in the full request URI. |
 | `http.request.uri.path` | string | This represents the URI path of the request. |
 | `http.user_agent` | string | This represents the HTTP user agent which is a request header that contains a characteristic string to allow identification of the client operating system and web browser. |
 | `ip.geoip.asnum` | integer | This represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address. |
@@ -211,20 +211,16 @@ We appreciate any comments you wish to leave in the description field that might
 
 ## Recommendations after submitting a false positive
 
-{{<Aside>}}
-
-**Note**: The instructions below apply to Enterprise subscription with Bot Management only.
-
+{{<Aside type="note">}}
+The instructions below apply to Enterprise subscription with Bot Management only.
 {{</Aside>}}
 
-After submitting a false positive, you can explicitly allow the traffic if you are confident that this traffic source cannot be used for abuse in the future. To allow traffic, you can create a WAF custom rule with a [Skip the remaining custom rules](/waf/custom-rules/skip/options/) action or a firewall rule with an [Allow](/firewall/cf-firewall-rules/actions/) action that matches the characteristics of your false positive report. We recommend any skip or allow rule that you create uses the most narrow possible scope, including restricting the request methods and URIs that the expected traffic has access to, in order to limit potential abuse.
+After submitting a false positive, you can explicitly allow the traffic if you are confident that this traffic source cannot be used for abuse in the future. To allow traffic, you can create a WAF custom rule with a [Skip the remaining custom rules](/waf/custom-rules/skip/options/) action or a firewall rule with an [Allow](/firewall/cf-firewall-rules/actions/) action that matches the characteristics of your false positive report. We recommend any skip rule (or allow action) that you create uses the most narrow possible scope, including restricting the request methods and URIs that the expected traffic has access to, to limit potential abuse.
 
-* Allowing a **[JA3 fingerprint](/bots/concepts/ja3-fingerprint/)**:  If you want to allow access to a stable software client that does not come from a dedicated IP, you can do so by looking up the JA3 fingerprint(s) used by that client in the Bot Analytics dashboard, and creating a WAF custom rule or firewall rule to allow traffic based on that JA3 fingerprint. JA3 fingerprints will only match a client’s TLS library, so be cautious in looking for both overlap with other clients and with variation based on the operating system. <br><br>Cloudflare does not recommend relying on JA3 rules for mobile applications that may be abused. If you have questions about how to securely allow traffic from your mobile application, please contact your account team.
+* Allowing a **[JA3 fingerprint](/bots/concepts/ja3-fingerprint/)**:  If you want to allow access to a stable software client that does not come from a dedicated IP, you can do so by looking up the JA3 fingerprint(s) used by that client in the Bot Analytics dashboard, and creating a WAF custom rule (or a firewall rule) to allow traffic based on that JA3 fingerprint. JA3 fingerprints will only match a client’s TLS library, so be cautious in looking for both overlap with other clients and with variation based on the operating system. <br><br>Cloudflare does not recommend relying on JA3 rules for mobile applications that may be abused. If you have questions about how to securely allow traffic from your mobile application, please contact your account team.
 
-{{<Aside>}}
-
-**Note**: The instructions below apply to Enterprise subscription with Bot Management, Bot Fight Mode and Super Bot Fight Mode.
-
+{{<Aside type="note">}}
+The instructions below apply to Enterprise subscription with Bot Management, Bot Fight Mode and Super Bot Fight Mode.
 {{</Aside>}}
 
 * Allowing an **IP address**: Only use an IP address to allow traffic if the IP is a dedicated resource that belongs only to the traffic source you wish to allow. <br>If the traffic you want to allow shares an IP with other traffic sources, or if the IP changes frequently, consider an alternative to allowing by IP address.

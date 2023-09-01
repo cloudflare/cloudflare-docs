@@ -83,7 +83,9 @@ Une règle Page Rule correspond à un modèle d’URL selon le format suivant (c
 Voici un exemple d'URL comportant ces quatre composants :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://www.exemple.com:443/image.png?parameter1=value1</span></div></span></span></span></code></pre>{{</raw>}}
+```
+https://www.exemple.com:443/image.png?parameter1=value1
+```
 
 Les segments _scheme_ et _port_ sont facultatifs. S’il n’est pas spécifié, _scheme_ correspond aux protocoles  _http://_ et _https://_. Si _port_ n’est pas spécifié, la règle s’applique à tous les ports.
 
@@ -128,12 +130,18 @@ ___
 Vous pouvez utiliser l’astérisque (\*) dans n’importe quel segment d’URL pour établir une correspondance avec certaines structures. Par exemple :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/t*st</span></div></span></span></span></code></pre>{{</raw>}}
+```
+exemple.com/t*st
+```
 
 Correspond à :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/test</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/toast</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/trust</span></div></span></span></span></code></pre>{{</raw>}}
+```
+exemple.com/test
+exemple.com/toast
+exemple.com/trust
+```
 
 _exemple.com/foo/\*_ ne correspond pas à exemple.com/foo.  Toutefois, _exemple.com/foo\*_ correspond à la chaîne saisie.
 
@@ -146,29 +154,37 @@ _exemple.com/foo/\*_ ne correspond pas à exemple.com/foo.  Toutefois, _exemp
 
 ### Référencement des correspondances avec des caractères génériques
 
-Vous pouvez référencer les correspondances avec des caractères génériques ultérieurement, avec la syntaxe _$X_._X_ indique l’index d’un motif glob. Ainsi, $1 représente le premier caractère générique, $1 le deuxième caractère générique et ainsi de suite.
+Vous pouvez référencer les correspondances avec des caractères génériques ultérieurement, avec la syntaxe _$X_._X_ indique l’index d’un motif glob. Ainsi, $1 représente le premier caractère générique, $2 le deuxième caractère générique et ainsi de suite.
 
 Cela est particulièrement utile avec le paramètre _Forwarding URL_ (URL de redirection). Par exemple :
 
 Vous pouvez rediriger :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://exemple.com/*</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://*.exemple.com/*
+```
 
 Vers :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://exemple.com/images/$1/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://exemple.com/images/$1/$2.jpg
+```
 
 Cette règle correspondrait à :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://cloud.exemple.com/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://cloud.exemple.com/flare.jpg
+```
 
 qui serait ensuite redirigé vers :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://exemple.com/images/cloud/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://exemple.com/images/cloud/flare.jpg
+```
 
 Pour utiliser un caractère littéral _$_ dans l’URL de redirection, annulez sa valeur spéciale en ajoutant une barre oblique inversée (\\) devant : _\\$_.
 
@@ -243,7 +259,7 @@ Browser Cache TTL
 
  | 
 
-(Durée de vie du cache du navigateur) Contrôlez la durée de validité des ressources mises en cache par les navigateurs clients.L’interface utilisateur et l’API Cloudflare interdisent tous les deux de définir **Browser Cache TTL** sur une valeur de _0_ pour les domaines non couverts par une offre Enterprise.[En savoir plus](/cache/about/edge-browser-cache-ttl).
+(Durée de vie du cache du navigateur) Contrôlez la durée de validité des ressources mises en cache par les navigateurs clients.L’interface utilisateur et l’API Cloudflare interdisent tous les deux de définir **Browser Cache TTL** sur une valeur de _0_ pour les domaines non couverts par une offre Enterprise.[En savoir plus](/cache/how-to/edge-browser-cache-ttl/).
 
  | 
 
@@ -287,7 +303,7 @@ Cache By Device Type
 
  | 
 
-(Mise en cache par type d’appareil) Séparer le contenu mis en cache en fonction du type d’appareil du visiteur. [En savoir plus.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only)
+(Mise en cache par type d’appareil) Séparer le contenu mis en cache en fonction du type d’appareil du visiteur. [En savoir plus.](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)
 
  | 
 
@@ -300,7 +316,7 @@ Cache Deception Armor
 
  | 
 
-(Protection contre les attaques Cache Deception) Protégez-vous contre les attaques Web Cache Deception tout en permettant la mise en cache de ressources statiques. Ce paramètre confirme que l’extension de l’URL correspond à la balise  _Content-Type_ renvoyée. [En savoir plus.](/cache/about/cache-deception-armor)
+(Protection contre les attaques Cache Deception) Protégez-vous contre les attaques Web Cache Deception tout en permettant la mise en cache de ressources statiques. Ce paramètre confirme que l’extension de l’URL correspond à la balise  _Content-Type_ renvoyée. [En savoir plus.](/cache/cache-security/cache-deception-armor/)
 
  | 
 
@@ -315,7 +331,7 @@ Cache Key
 
 (Clé de cache) Elle est également appelée _Custom Cache Key_.
 
-Contrôlez précisément les variables à prendre en compte lorsque vous décidez des ressources à mettre en cache. Cela permet aux clients de déterminer quelles ressources doivent être mises en cache en fonction de données autres que l’URL. [En savoir plus](/cache/about/cache-keys).
+Contrôlez précisément les variables à prendre en compte lorsque vous décidez des ressources à mettre en cache. Cela permet aux clients de déterminer quelles ressources doivent être mises en cache en fonction de données autres que l’URL. [En savoir plus](/cache/how-to/cache-keys/).
 
  | 
 
@@ -338,7 +354,7 @@ Cache Level
 
 **Standard** - Met en cache tout contenu statique comportant une chaîne de requête.
 
-**Cache Everything** (Tout mettre en cache) - Considère tous les contenus comme statiques et met en cache tous les types de fichiers au-delà du [contenu mis en cache par défaut par Cloudflare](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respecte les en-têtes de cache du serveur web d’origine, sauf si **Edge Cache TTL** est également défini dans la règle Page Rule. Associée à une valeur **Edge Cache TTL** > _0_, **Cache Everything** supprime les cookies de la réponse du serveur web d’origine.   
+**Cache Everything** (Tout mettre en cache) - Considère tous les contenus comme statiques et met en cache tous les types de fichiers au-delà du [contenu mis en cache par défaut par Cloudflare](/cache/concepts/default-cache-behavior#default-cached-file-extensions).  Respecte les en-têtes de cache du serveur web d’origine, sauf si **Edge Cache TTL** est également défini dans la règle Page Rule. Associée à une valeur **Edge Cache TTL** > _0_, **Cache Everything** supprime les cookies de la réponse du serveur web d’origine.   
 
 
  | 
@@ -538,7 +554,7 @@ Opportunistic Encryption
 -   Toutes
 
  |
-| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/about/cache-control) est activé par défaut pour les domaines Free, Pro et Business. | 
+| Origin Cache Control | Le [contrôle du cache des serveurs d'origine](/cache/concepts/cache-control/) est activé par défaut pour les domaines Free, Pro et Business. | 
 
 -   Toutes
 
@@ -714,11 +730,11 @@ ___
 
 **Cause profonde** : ce problème peut être dû à un problème de configuration sur une Page Rule. Lors de la création d'une Page Rule qui utilise deux caractères génériques, comme une règle de _redirection d'URL_, il est possible de créer une règle qui mentionne le second caractère générique avec l'espace réservé $2. Voir l'exemple ci-dessous :
 
-![Exemple de configuration Page Rule avec deux caractères génériques. L'URL de redirection contient un espace réservé $2, qui sera remplacé par le contenu correspondant au second ](/support/static/page-rule-create.png)
+![Exemple de configuration Page Rule avec deux caractères génériques. L'URL de redirection contient un espace réservé $2, qui sera remplacé par le contenu correspondant au second ](/images/support/page-rule-create.png)
 
 Lors de la mise à jour de la même règle, vous pouvez supprimer un des caractères génériques dans le champ **If the URL matches** (Si l'URL correspond à) et enregistrer votre mise à jour. Voir l'exemple ci-dessous :
 
-![Configuration Page Rule incorrecte avec un caractère générique unique, mais qui utilise malgré tout l'espace réservé $2 dans l'URL de redirection. Cette configuration provoque ](/support/static/page-rule-update.png)
+![Configuration Page Rule incorrecte avec un caractère générique unique, mais qui utilise malgré tout l'espace réservé $2 dans l'URL de redirection. Cette configuration provoque ](/images/support/page-rule-update.png)
 
 Si vous procédez ainsi, l'espace réservé $2 renvoie à un caractère générique qui n'existe plus et, en conséquence, une erreur de type « _Error 500 (Internal server error)_ » survient quand une URL déclenche la Page Rule.
 
@@ -769,7 +785,7 @@ Si vous spécifiez un port dans le champ **If the URL matches** (Si l'URL corres
 
 ### Utilisation de Page Rules avec Workers
 
-Si l'URL de la requête actuelle correspond à la fois à une Page Rule et à une [route Workers personnalisée](/workers/platform/routes), certains paramètres Page Rules ne seront pas appliqués. Pour plus d'informations sur l'utilisation de Page Rules avec Workers, consultez [Workers : Page Rules](/workers/platform/workers-with-page-rules/) dans la documentation destinée aux développeurs.
+Si l'URL de la requête actuelle correspond à la fois à une Page Rule et à une [route Workers personnalisée](/workers/platform/routes), certains paramètres Page Rules ne seront pas appliqués. Pour plus d'informations sur l'utilisation de Page Rules avec Workers, consultez [Workers : Page Rules](/workers/configuration/workers-with-page-rules/) dans la documentation destinée aux développeurs.
 
 ___
 

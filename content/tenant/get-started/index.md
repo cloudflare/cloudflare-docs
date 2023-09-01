@@ -18,7 +18,7 @@ After you sign your partner agreement with Cloudflare, Cloudflare will add [cert
 
 ### API access
 
-You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
+You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) to authenticate your requests to the Tenant API.
 
 For more details on using the Cloudflare API, refer to our [API overview](/fundamentals/api/).
 
@@ -28,14 +28,14 @@ For more details on using the Cloudflare API, refer to our [API overview](/funda
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 {{<render file="_create-account-dash.md">}}
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 {{<render file="_create-account-api.md">}}
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -65,9 +65,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
 -H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<customer-email>", 
-    "roles": ["<user-role>"] 
+-d '{
+    "email": "<customer-email>",
+    "roles": ["<user-role>"]
     }'
 ```
 
@@ -83,7 +83,7 @@ This means that you will be making API calls to Cloudflare on behalf of your cus
 
 {{<Aside type="note">}}
 
-This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 {{</Aside>}}
 
@@ -97,8 +97,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/users' \
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <EMAIL>' \
 -H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<ID@youremaildomain.com>" 
+-d '{
+    "email": "<ID@youremaildomain.com>"
     }'
 ```
 
@@ -133,7 +133,7 @@ header: Response
 
 Now that you have a customer account and customer users (or service users), you need to create a zone.
 
-To do this, send a [`POST`](/api/operations/zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
+To do this, send a [`POST`](/api/operations/zones-post) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
 
 ```bash
 ---

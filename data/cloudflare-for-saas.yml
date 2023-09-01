@@ -2,8 +2,8 @@ name: Cloudflare for SaaS
 
 product:
   title: Cloudflare for SaaS
-  group: Application security
-  additional_groups: [Application performance]
+  group: Application performance
+  additional_groups: [Application security]
   url: /cloudflare-for-platforms/cloudflare-for-saas/
   grid_placeholder: true
   preview_tryout: true

@@ -52,13 +52,3 @@ highlight: [9,10,11]
 ```
 
 Cloudflare will add new IP addresses to this list 30 days in advance before connecting from those IP addresses to an origin server. If you are using the China Network on JD Cloud, you should update your firewalls to reflect any IP address changes at least once every 30 days.
-
-## Certifications
-
-JD Cloud's infrastructure has the following certifications:
-
-* ISO/IEC 27001 Audit and Certification
-* ISO/IEC 27018 Audit and Certification
-* CSA C-STAR (Security, Trust & Assurance Registry) Certificate
-* Certificate of PCI DSS Compliance
-

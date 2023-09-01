@@ -1,9 +1,9 @@
 ---
 title: Object lifecycles
-pcx_content_type: how to
+pcx_content_type: how-to
 ---
 
-{{<beta heading="h1">}} Object lifecycles {{</beta>}}
+# Object lifecycles
 
 Object lifecycles affect how long objects uploaded to your bucket are kept.
 

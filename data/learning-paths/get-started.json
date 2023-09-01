@@ -10,7 +10,8 @@
       "WAF",
       "Cache"
     ],
-    "category": ["Security", "Performance", "Reliability"],
+    "product_group": "Cloudflare essentials",
+    "additional_groups": ["Application security", "Application performance"],
     "elements": [
       {
         "type": "module",
@@ -56,7 +57,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+            "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
@@ -222,7 +223,7 @@
             "additional_description": "If you control your <a href='https://www.cloudflare.com/learning/cdn/glossary/origin-server/'>origin server</a> and plan on using <a href='/dns/manage-dns-records/reference/proxied-dns-records/'>Cloudflare’s proxy</a>, review your server configuration to avoid accidentally blocking Cloudflare IP addresses."
           },
           {
-            "url_path": "/dns/additional-options/dnssec/#disable-dnssec",
+            "url_path": "/dns/dnssec/#disable-dnssec",
             "link_title": "(At your registrar) Disable DNSSEC",
             "additional_description": "Make sure DNSSEC is disabled at your registrar (where you purchased your domain name). Otherwise, your domain will experience connectivity errors when you change your nameservers."
           },
@@ -257,14 +258,14 @@
         "estimated_time": 20,
         "pages": [
           {
-            "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
-            "link_title": "Create a root domain",
+            "url_path": "/dns/manage-dns-records/how-to/create-zone-apex/",
+            "link_title": "Create zone apex record",
             "additional_description": "Once you have content hosted online, you need to create DNS records so visitors can access that content using your domain name."
           },
           {
             "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
-            "link_title": "Create a subdomain",
-            "additional_description": "Beyond having a root domain (<code>example.com</code>), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
+            "link_title": "Create subdomain records",
+            "additional_description": "Beyond having a domain (<code>example.com</code>), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
           },
           {
             "url_path": "/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/",
@@ -301,13 +302,13 @@
             "additional_description": "Make sure you understand Cloudflare's proxy status, which affects how Cloudflare treats incoming traffic to a DNS record."
           },
           {
-            "url_path": "/dns/additional-options/dnssec/",
+            "url_path": "/dns/dnssec/",
             "link_title": "Set up DNSSEC"
           },
           {
             "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
             "link_title": "Create a subdomain (Optional)",
-            "additional_description": "Beyond having a root domain (<code>example.com</code>), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
+            "additional_description": "Beyond having a domain (<code>example.com</code>), you may want to make sure visitors can access content on a subdomain, such as <code>www.example.com</code> or <code>blog.example.com</code>."
           },
           {
             "url_path": "/dns/manage-dns-records/how-to/email-records/",

@@ -74,7 +74,7 @@ Mit den folgenden Tools erhalten Sie weitere Informationen darüber, welche Inha
 -   Nutzer der Cache Analytics: Öffnen Sie in Ihrem Dashboard die **Registerkarte Caching**, filtern Sie nach Inhaltstyp und identifizieren Sie die Art des Traffics, den Sie übertragen. 
 -   Nutzer ohne Cache Analytics: Öffnen Sie in Ihrem Dashboard die **Registerkarte Analytics** und wählen Sie den Abschnitt **Performance**. Dort erhalten Sie Informationen über die von Ihnen bereitgestellten Inhalte.
 
-![Cache Analytics Identifizieren Sie die Art des übertragenen Traffics](/support/static/traffic-types.png)
+![Cache Analytics Identifizieren Sie die Art des übertragenen Traffics](/images/support/traffic-types.png)
 
 ## Sie haben noch Fragen? Kontaktieren Sie den Support
 

@@ -48,7 +48,7 @@ Those additional info will be included in the Certificate Subject, allowing you 
 
 Here's an example on how it will look (with Country, Organization Name, and Organizational Unit Name) in Cloudflare Dashboard:
 
-![](/support/static/chrome_mQRJVOpkTQ.png)
+![](/images/support/chrome_mQRJVOpkTQ.png)
 
 ___
 

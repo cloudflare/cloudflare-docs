@@ -1,7 +1,7 @@
 ---
 title: Make API calls
 pcx_content_type: how-to
-weight: 11
+weight: 2
 ---
 
 # Make API calls
@@ -33,6 +33,31 @@ For specific guidance on making API calls, refer to the following resources:
 *   The product's [Developer Docs section](/products/) for how-to guides.
 *   [API schema docs](/api/) for request and response payloads for each endpoint.
 *   If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare), use our first-party libraries to integrate with Cloudflare's API.
+
+## Pagination
+
+Sometimes there will be too many results to display via the default page size, for example you might receive the following:
+
+```txt
+"count": 1,
+"page": 1,
+"per_page": 20,
+"total_count": 200,
+```
+
+There are two options, which can be combined to paginate across the results.
+
+* `page=x` enables you to select a specific page.
+* `per-page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
+
+An example might be `https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2`.
+
+Other options are:
+
+* `order`: select the attribute to order by
+* `direction` - either `ASC` (ascending) or `DESC` (descending)
+
+The available options will be listed at the end of the `result_info` of all endpoints in the [API documentation](/api/).
 
 
 ## Making API calls on Windows

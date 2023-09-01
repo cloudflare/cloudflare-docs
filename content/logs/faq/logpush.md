@@ -74,5 +74,5 @@ Simply updating a Logpush job does not push the job from v1 to v2. To upgrade a 
 $ curl -sX PUT https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID> \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \
--d '{"logstream":true}' \
+-d '{"logstream":true}'
 ```

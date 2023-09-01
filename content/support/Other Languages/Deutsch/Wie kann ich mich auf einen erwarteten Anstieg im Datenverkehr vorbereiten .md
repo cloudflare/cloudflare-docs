@@ -15,7 +15,7 @@ title: Wie kann ich mich auf einen erwarteten Anstieg im Datenverkehr vorbereite
 
 Standardmäßig speichert Cloudflare[statische Inhalte](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-) wie Bilder, CSS und JavaScript im Cache. Sie können unser Caching jedoch erweitern und auch HTML einschließen. Erstellen Sie hierzu Ihre eigenen[Seitenregeln](http://blog.cloudflare.com/introducing-pagerules-fine-grained-feature-co/).
 
-![Screen_Shot_2017-03-09_at_16.54.36.png](/support/static/Screen_Shot_2017-03-09_at_16.54.36.png)
+![Screen_Shot_2017-03-09_at_16.54.36.png](/images/support/Screen_Shot_2017-03-09_at_16.54.36.png)
 
 Im Abschnitt "Page Rules" (Seitenregeln) Ihres Kontos können Sie für Ihre gesamte Website oder nur einen Ausschnitt daraus ein Muster einrichten und danach die Option "Cache Everything" (Alles zwischenspeichern) aktivieren. Mit einer Seitenregel und der Option "Cache Everything" stellen Sie   sicher, dass Cloudflare HTML vollständig in unserem Edge-Netzwerk zwischenspeichert. Roundtrips zu Ihrem Ursprungs-Webserver sind dann nicht mehr nötig.
 

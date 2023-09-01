@@ -25,7 +25,7 @@ To set up Device Information Only mode:
 
 4. For **Service mode**, select **Device Information Only**.
 
-5. Next, [enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) into your Zero Trust organization.
+5. Next, [enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) into your Zero Trust organization.
 
    When enrolled in Device Information Only mode, the WARP client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
 
@@ -39,7 +39,7 @@ To set up Device Information Only mode:
 3. Go to **Personal** > **Certificates**.
 
 The certificate name should match the **Device ID** in your WARP client **Preferences**.
-![Verifying the Device Information Only mode certificate in Windows](/cloudflare-one/static/documentation/connections/device-information-only-windows.png)
+![Verifying the Device Information Only mode certificate in Windows](/images/cloudflare-one/connections/device-information-only-windows.png)
 
 {{</tab>}}
 {{<tab label="macos" no-code="true">}}
@@ -58,7 +58,7 @@ The certificate name should match the **Device ID** in your WARP client **Prefer
    2. Go to **SSL/TLS** > **Client Certificates**.
 
    The certificate name is the WARP enrollment **Device ID**.
-   ![Example client certificate in the Cloudflare dashboard](/cloudflare-one/static/documentation/connections/device-information-only-cert.png)
+   ![Example client certificate in the Cloudflare dashboard](/images/cloudflare-one/connections/device-information-only-cert.png)
 
 8. Lastly, block traffic from devices that do not have a valid client certificate:
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **SSL/TLS** > **Client Certificates**.
@@ -71,6 +71,6 @@ Device Information Only mode is now enabled on the device. To start enforcing de
 
 <div class="large-img">
 
-![Browser prompts for client certificate](/cloudflare-one/static/documentation/connections/device-information-only-browser.png)
+![Browser prompts for client certificate](/images/cloudflare-one/connections/device-information-only-browser.png)
 
 </div>

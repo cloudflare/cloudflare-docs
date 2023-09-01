@@ -26,6 +26,11 @@ SameSite settings for [Cloudflare cookies](https://support.cloudflare.com/hc/art
 | cf\_clearance | SameSite=None; Secure | Yes |
 | \_\_cflb | SameSite=Lax | No |
 
+When configuring SameSite attributes on session affinity cookies, it is recommended that you set the values. The value `Auto` is translated to `Lax` if **Always Use HTTPS** is enabled, or `None` if **Always Use HTTPS** is disabled. When using the value `None`, the secure attribute cannot be set to `Never`.
+
+- Default value: `Auto`
+- Valid values: `Auto`, `Lax`, `None`, `Script`.
+
 ___
 
 ## Known issues with SameSite and cf_clearance cookies

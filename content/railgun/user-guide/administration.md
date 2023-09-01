@@ -6,6 +6,8 @@ weight: 4
 
 # Administration
 
+{{<render file="_railgun-deprecation-notice.md">}}
+
 Multiple Railguns may be added to a Cloudflare account. Only one registered and activated Railgun may be used per domain.
 
 Railgun can be load-balanced and multiple Railgun daemons can be used per activated public IP and token. There is no need to register each Railgun daemon.

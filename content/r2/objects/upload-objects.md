@@ -1,6 +1,6 @@
 ---
 title: Upload objects
-pcx_content_type: how to
+pcx_content_type: how-to
 weight: 1
 ---
 

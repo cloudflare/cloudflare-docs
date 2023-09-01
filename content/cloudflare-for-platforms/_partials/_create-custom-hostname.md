@@ -14,9 +14,3 @@ _build:
     *   Whether you want to **Enable wildcard**, which adds a `*.<custom-hostname>` SAN to the custom hostname certificate. For more details, refer to [Hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
     *   Choosing a value for [Custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/).
 6.  Click **Add Custom Hostname**.
-
-{{<Aside type="warning">}}
-
-If you issue a custom hostname certificate with wildcards enabled, you cannot customize TLS settings for these wildcard hostnames.
-
-{{</Aside>}}

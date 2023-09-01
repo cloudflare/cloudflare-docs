@@ -65,7 +65,7 @@ ___
 -   Un dominio externo que no está utilizando Cloudflare tiene un registro CNAME para un dominio activo en Cloudflare.
 -   El destino del registro CNAME del DNS no se resuelve.
 -   Un registro CNAME en tu aplicación DNS de Cloudflare requiere una solución a través de un proveedor de DNS que está actualmente desconectado.
--   [Always Online](/cache/about/always-online) está activado para un dominio de [nombre de servidor personalizado (SSL para SaaS](/ssl/ssl-for-saas)).
+-   [Always Online](/cache/how-to/always-online/) está activado para un dominio de [nombre de servidor personalizado (SSL para SaaS](/ssl/ssl-for-saas)).
 
 ### Solución
 
@@ -73,7 +73,7 @@ Un dominio que no es de Cloudflare no puede generar un registro CNAME para un do
 
 Intentar acceder directamente a los registros DNS utilizados para las [configuraciones CNAME de Cloudflare](/dns/zone-setups/partial-setup) también provoca un error 1001 (por ejemplo: _www.ejemplo.com.cdn.cloudflare.net_).
 
-Desactiva [Always Online](/cache/how-to/enable-always-online) si utilizas [nombres de servidor personalizados (SSL para SaaS)](/ssl/ssl-for-saas).
+Desactiva [Always Online](/cache/how-to/always-online/#enable-always-online) si utilizas [nombres de servidor personalizados (SSL para SaaS)](/ssl/ssl-for-saas).
 
 ___
 
@@ -419,7 +419,7 @@ Has solicitado una página en un sitio web (`tunnel.ejemplo.com`) que está en l
 ### Solución
 
 -   **Si eres un visitante del sitio web**: por favor, inténtalo de nuevo en unos minutos.
--   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) para tu túnel.
+-   **Si eres el propietario del sitio web**: comprueba que _cloudflared_ está funcionando y puede llegar a la red. Si lo deseas, puedes habilitar [el equilibrio de carga](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) para tu túnel.
 
 ___
 
@@ -526,7 +526,7 @@ ___
 
 ### Causas habituales
 
-Cloudflare Worker supera el [Límite de tiempo de CPU](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
+Cloudflare Worker supera el [Límite de tiempo de CPU](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions). El tiempo de CPU es el tiempo de ejecución de un código (por ejemplo, bucles, análisis JSON, etc.) El tiempo empleado en las solicitudes de red (búsqueda, respuesta) no se computa para el tiempo de CPU.
 
 ### Solución
 

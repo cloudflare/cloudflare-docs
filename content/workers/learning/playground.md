@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Playground
-weight: 17
 ---
 
 # Playground
@@ -42,7 +41,11 @@ To get familiar with Workers, experiment with the Playground by borrowing [Examp
 
 There are two versions of the Playground available: the [browser Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank) and the dashboard Playground, also known as the previewer.
 
-To access the dashboard Playground, log in to your Cloudflare account and go to **Account Home** > **Workers** > **your Worker script** > **Quick edit**.
+To access the dashboard Playground:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Quick edit**.
 
 When you have code you are ready to test, select **Save and Deploy** to preview at the bottom of the script panel.
 
@@ -54,7 +57,7 @@ To test a raw HTTP request — not in an HTML previewer, for example, to test a 
 
 ---
 
-## Devtools
+## DevTools
 
 For debugging Workers inside the Playground, use the developer tools at the bottom of the Playground's preview panel. The developer tools for the Workers Playground works similar to the developer tools in Chrome or Firefox.
 

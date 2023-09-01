@@ -20,7 +20,7 @@ $ npm install -g ember-cli
 Use the `ember new` command to create a new application:
 
 ```sh
-$ ember new ember-quickstart --lang en
+$ npx ember new ember-quickstart --lang en
 ```
 
 After the application is generated, change the directory to your project and run your project by running the following commands:
@@ -36,21 +36,13 @@ $ npm start
 
 ## Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. In **Account Home**, select **Pages** > **Create a project**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Ember_ as your **Framework preset**. Your selection will provide the following information:
 
-{{<table-wrap>}}
-
-| Configuration option | Value         |
-| -------------------- | ------------- |
-| Production branch    | `main`        |
-| Build command        | `ember build` |
-| Build directory      | `dist`        |
-
-{{</table-wrap>}}
+{{<pages-build-preset framework="ember-js">}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 

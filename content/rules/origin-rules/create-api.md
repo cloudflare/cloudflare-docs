@@ -3,59 +3,48 @@ title: Create a rule via API
 pcx_content_type: how-to
 weight: 3
 meta:
-  title: Create an Origin Rule via API
+  title: Create an origin rule via API
 ---
 
-# Create an Origin Rule via API
+# Create an origin rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Origin Rules via API. Define the route configuration in the `action_parameters` field.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create origin rules via API.
 
-When creating an Origin Rule via API, make sure you:
+## Basic rule settings
+
+When creating an origin rule via API, make sure you:
 
 * Set the rule action to `route`.
 * Define the [parameters](/rules/origin-rules/parameters/) in the `action_parameters` field according to the type of origin override.
 * Deploy the rule to the `http_request_origin` phase at the zone level.
 
-***
+## Procedure
 
-Follow this workflow to create an Origin Rule for a given zone via API:
+{{<render file="_rules-creation-workflow.md" withParameters="an origin rule;;http_request_origin">}}
 
-1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_origin` phase at the zone level.
+Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
 
-2. If the phase ruleset does not exist, create it using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method with the zone-level endpoint. In the new ruleset properties, set the following values:
-
-    * **kind**: `zone`
-    * **phase**: `http_request_origin`
-
-3. Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to add an Origin Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](/ruleset-engine/rulesets-api/create/) request mentioned in the previous step.
-
-## Required API token permissions
-
-The API token used in API requests to manage Origin Rules must have at least the following permission:
-
-* _Origin_ > _Edit_
-
-## Examples
+## Example requests
 
 <details>
 <summary>Example: Add a rule that overrides the HTTP <code>Host</code> header</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the HTTP `Host` header — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the HTTP `Host` header — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
-```json
+```bash
 ---
-header: cURL example request
+header: Request
 ---
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "http.request.uri.query contains \"/eu/\"",
-      "description": "My first Origin Rule",
+      "description": "My first origin rule",
       "action": "route",
       "action_parameters": {
         "host_header": "eu_server.example.net"
@@ -75,7 +64,7 @@ header: Response
   "result": {
     "id": "<RULESET_ID>",
     "name": "Origin Rules ruleset",
-    "description": "Zone-level ruleset that will execute Origin Rules.",
+    "description": "Zone-level ruleset that will execute origin rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
@@ -87,7 +76,7 @@ header: Response
           "host_header": "eu_server.example.net"
         },
         "expression": "http.request.uri.query contains \"/eu/\"",
-        "description": "My first Origin Rule",
+        "description": "My first origin rule",
         "last_updated": "2022-06-02T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -108,17 +97,17 @@ header: Response
 <summary>Example: Add a rule that overrides the SNI value of incoming requests</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
-```json
+```bash
 ---
-header: cURL example request
+header: Request
 ---
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "http.host eq \"admin.example.com\"",
@@ -141,21 +130,21 @@ $ curl -X PUT \
 <summary>Example: Add a rule that overrides the resolved DNS record and the <code>Host</code> header of incoming requests</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the resolved DNS record and the `Host` header of incoming requests — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the resolved DNS record and the `Host` header of incoming requests — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
-```json
+```bash
 ---
-header: cURL example request
+header: Request
 ---
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
-      "description": "Origin Rule for the company's HR application",
+      "description": "Origin rule for the company HR application",
       "action": "route",
       "action_parameters": {
         "host_header": "hr-server.example.com",
@@ -178,7 +167,7 @@ header: Response
   "result": {
     "id": "<RULESET_ID>",
     "name": "Origin Rules ruleset",
-    "description": "Zone-level ruleset that will execute Origin Rules.",
+    "description": "Zone-level ruleset that will execute origin rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
@@ -193,7 +182,7 @@ header: Response
           }
         },
         "expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
-        "description": "Origin Rule for the company's HR application",
+        "description": "Origin rule for the company HR application",
         "last_updated": "2022-06-03T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -214,21 +203,21 @@ header: Response
 <summary>Example: Add a rule that overrides the port of incoming requests</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the port of incoming requests — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the port of incoming requests — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
-```json
+```bash
 ---
-header: cURL example request
+header: Request
 ---
-$ curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "expression": "starts_with(http.request.uri.path, \"/team/calendar/\")",
-      "description": "Origin Rule for the team calendar application",
+      "description": "Origin rule for the team calendar application",
       "action": "route",
       "action_parameters": {
         "origin": {
@@ -250,7 +239,7 @@ header: Response
   "result": {
     "id": "<RULESET_ID>",
     "name": "Origin Rules ruleset",
-    "description": "Zone-level ruleset that will execute Origin Rules.",
+    "description": "Zone-level ruleset that will execute origin rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
@@ -264,7 +253,7 @@ header: Response
           }
         },
         "expression": "starts_with(http.request.uri.path, \"/team/calendar/\")",
-        "description": "Origin Rule for the team calendar application",
+        "description": "Origin rule for the team calendar application",
         "last_updated": "2022-06-03T14:42:04.219025Z",
         "ref": "<RULE_REF>"
       }
@@ -280,3 +269,11 @@ header: Response
 
 </div>
 </details>
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage origin rules must have at least the following permission:
+
+* _Origin_ > _Edit_

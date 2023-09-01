@@ -13,11 +13,11 @@ title: Solución de errores de contenido mixto
 
 Los dominios añadidos a Cloudflare reciben certificados SSL y pueden servir tráfico en HTTPS. Sin embargo, tras comenzar a usar Cloudflare, algunos clientes notan contenido perdido o problemas en la representación de la página cuando sirve tráfico HTTPS por primera vez.
 
-En general, el problema se debe a una solicitud de recursos HTTP de una página web que se sirve en HTTPS.  Por ejemplo, escribes _https://ejemplo.com_ en un navegador y la página contiene una imagen de referencia a través de HTTP en el HTML a ```<img src="/support/static/recurso.jpg">```
+En general, el problema se debe a una solicitud de recursos HTTP de una página web que se sirve en HTTPS.  Por ejemplo, escribes _https://ejemplo.com_ en un navegador y la página contiene una imagen de referencia a través de HTTP en el HTML a ```<img src="/images/support/recurso.jpg">```
 
 Normalmente, si tu sitio web carga todos los recursos de manera segura en HTTPS, los visitantes observan un icono de candado (verde, en general) en la barra de direcciones de su navegador:
 
-![green-lock-icon.png](/support/static/green-lock-icon.png)
+![green-lock-icon.png](/images/support/green-lock-icon.png)
 
 Esto indica que tu sitio tiene un certificado SSL en funcionamiento y todos los recursos cargados por el sitio se cargan a través de HTTPS. El candado verde garantiza a los visitantes que su conexión es segura. Uno de los [indicadores del contenido mixto](https://support.cloudflare.com/hc/es-es/articles/200170476-Soluci%C3%B3n-de-errores-de-contenido-mixto#h_a6c5a05b-baba-4f88-a75c-d61f206366ed) es que aparecen iconos diferentes en lugar del icono de candado verde.
 
@@ -41,11 +41,11 @@ A continuación, hay indicaciones de que tu navegador web observa contenido mixt
 
 En cuanto a las advertencias de contenido mixto, el navegador web carga los recursos, pero los usuarios no ven el icono de candado verde en la URL. Los mensajes de advertencia aparecen dentro de las herramientas de depuración del navegador:
 
-![mixed-content-warning.png](/support/static/mixed-content-warning.png)
+![mixed-content-warning.png](/images/support/mixed-content-warning.png)
 
 En cuanto a los errores de contenido mixto, el navegador se niega a cargar los recursos cuando la conexión no es segura:
 
-![mixed-content-error.png](/support/static/mixed-content-error.png)
+![mixed-content-error.png](/images/support/mixed-content-error.png)
 
 Puedes encontrar información relativa al uso de las herramientas de depuración del navegador para localizar estos problemas en la documentación de [Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content) y [Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content). Como alternativa, puedes ver la fuente de tu página y encontrar referencias específicas de _http://_ sobre rutas hacia otros recursos.
 

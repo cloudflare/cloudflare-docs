@@ -29,21 +29,13 @@ $ brunch new proj -s es6
 
 ## Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. In **Account Home**, select **Pages** > **Create a project**. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Brunch* as your **Framework preset**. Your selection will provide the following information.
 
-{{<table-wrap>}}
-
-| Configuration option | Value                       |
-| -------------------- | --------------------------- |
-| Production branch    | `main`                      |
-| Build command        | `brunch build --production` |
-| Build directory      | `public`                    |
-
-{{</table-wrap>}}
+{{<pages-build-preset framework="brunch">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 

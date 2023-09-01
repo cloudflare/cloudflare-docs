@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: System Environment Variables
-weight: 5
 ---
 
 # System Environment Variables
@@ -10,7 +9,7 @@ System Environment Variables are local environment variables that can change Wra
 
 1. Create an `.env` file in your project directory. Set the values of your environment variables in your [`.env`](/workers/wrangler/system-environment-variables/#example-env-file) file. This is the recommended way to set these variables, as it persists the values between Wrangler sessions.
 
-2. Inline the values in your Wrangler command. For example, `WRANGLER_LOG="debug" wrangler publish` will set the value of `WRANGLER_LOG` to `"debug"` for this execution of the command.
+2. Inline the values in your Wrangler command. For example, `WRANGLER_LOG="debug" npx wrangler deploy` will set the value of `WRANGLER_LOG` to `"debug"` for this execution of the command.
 
 3. Set the values in your shell environment. For example, if you are using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
@@ -22,7 +21,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_ACCOUNT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The account ID for the Workers related account, can be [found in the Cloudflare dashboard](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), can usually be inferred by Wrangler.
+  - The [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for the Workers related account.
 
 - `CLOUDFLARE_API_TOKEN` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

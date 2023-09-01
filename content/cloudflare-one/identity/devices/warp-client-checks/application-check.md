@@ -33,7 +33,7 @@ The Application Check device posture attribute checks that a specific applicatio
 
 5. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/analytics/logs/posture-logs) that the application check is returning the expected results.
+Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the application check is returning the expected results.
 
 ## Determine the signing thumbprint
 

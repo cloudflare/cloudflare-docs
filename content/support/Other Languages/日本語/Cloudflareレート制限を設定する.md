@@ -175,7 +175,7 @@ _POST_ （投稿）または _GET_（取得）です。指定されるものが�
 
 -   **ブロック** **\-** しきい値を超えると、CloudflareがHTTP 429 エラーを出します。
 -   **従来型のCAPTCHA** **\-**訪問者は、CAPTCHAチャレンジで正解する必要があります。正解した場合、Cloudflareがリクエストを許可します。
--   **JS チャレンジ** **\-**訪問者はCloudflare Javascriptチャレンジに正解する必要があります。正解すると、Cloudflareがリクエストを許可します。
+-   **JS チャレンジ** **\-**訪問者はCloudflare JavaScriptチャレンジに正解する必要があります。正解すると、Cloudflareがリクエストを許可します。
 -   **ログ -** リクエストは [Cloudflare ログ](https://support.cloudflare.com/hc/articles/216672448)に記録されます。これは、本番で適用される前にルールをテストするのに役立ちます。
 
 #### **禁止期間**
@@ -216,7 +216,7 @@ Cloudflare **レート制限**ルールの一般的な2つのルールを作成�
 
 4\. **レート制限ルールを作成する**をクリックします。新しいルールの詳細を特定するところで、ダイアログが開きます。
 
-![レート制限ルールポップアップダイアログを例示のルール設定で作成します。そのルールでは、1時間で1分あたり150リクエストを超えるIP アドレスから来るリクエストをブロックします。](/support/static/previous-rate-limiting-create-rule.png)
+![レート制限ルールポップアップダイアログを例示のルール設定で作成します。そのルールでは、1時間で1分あたり150リクエストを超えるIP アドレスから来るリクエストをブロックします。](/images/support/previous-rate-limiting-create-rule.png)
 
 5\. わかりやすい「**ルール名**」を入力します。
 
@@ -251,7 +251,7 @@ ___
 
 1\. **高度な基準**を拡張します。
 
-![レート制限ルールの高度な基準を設定する際に利用可能なフィールド。](/support/static/previous-rate-limiting-advanced-criteria.png)
+![レート制限ルールの高度な基準を設定する際に利用可能なフィールド。](/images/support/previous-rate-limiting-advanced-criteria.png)
 
 2\. **メソッド**ドロップダウンから値を選択します。デフォルト値は、すべてのHTTPメソッドと一致するように_ANY_となっています。
 
@@ -277,7 +277,7 @@ ___
 
 1.**高度なレスポンス**を拡張します。
 
-![レート制限ルールに関して高度なレスポンスを設定する際の利用可能なフィールド。](/support/static/previous-rate-limiting-advanced-response.png)
+![レート制限ルールに関して高度なレスポンスを設定する際の利用可能なフィールド。](/images/support/previous-rate-limiting-advanced-response.png)
 
 2\. デフォルト以外の**レスポンスタイプ**のフォーマット：_カスタムJSON_または_カスタムTEXT_を選択します。
 
@@ -326,7 +326,7 @@ ___
 
 2\. **URLに関するバイパスルール**で、レート制限ルールから免除するために、このURLを入力します。URLの行に各URLを入力します。URLで指定されているHTTPまたはHTTPSは、ルールが保存されると自動的に消去され、代りにHTTPとHTTPSの両方に適用されます。
 
-![レート制限ルール（各行1つ）について、バイパス用に２つのURLを設定します。](/support/static/previous-rate-limiting-bypass.png)
+![レート制限ルール（各行1つ）について、バイパス用に２つのURLを設定します。](/images/support/previous-rate-limiting-bypass.png)
 
 3\. （任意）ご利用のプランに基づき、追加のレート制限機能を設定します。
 
@@ -364,7 +364,6 @@ ___
 
 ## 関連リソース
 
--   [Cloudflareレート制限の請求](https://support.cloudflare.com/hc/articles/115000272247)
 -   [ELS（Enterprise Log Share）でレート制限はどのように報告されますか？](/logs/reference/log-fields)
 -   [Cloudflareレート制限のトラブルシューティング](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Cloudflare APIを使ったレート制限設定](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

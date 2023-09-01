@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Since this is a service with [usage-based billing](/support/account-management-billing/billing-cloudflare-add-on-services/understanding-billing-for-add-on-services/), Cloudflare recommends that you set up usage-based billing notifications to avoid unexpected bills.
+Since this is a service with [usage-based billing](/support/account-management-billing/billing-add-on-service/), Cloudflare recommends that you set up usage-based billing notifications to avoid unexpected bills.
 
 To set up those notifications:
 

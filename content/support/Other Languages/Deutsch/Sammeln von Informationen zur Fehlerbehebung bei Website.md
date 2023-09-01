@@ -36,17 +36,17 @@ Gegenwärtig können nur Chrome und Firefox standardmäßig auf das HAR-Feature 
 
 1\. Klicken Sie auf einer Browser-Seite die rechte Maustaste an und wählen Sie **Element untersuchen**.
 
-2\. Die Entwickler-Tools erscheinen entweder unten oder an der linken Seite des Browsers. Klicken Sie die Registerkarte **Netzwerk** an. ![gathering_har_file_network.png](/support/static/gathering_har_file_network.png)
+2\. Die Entwickler-Tools erscheinen entweder unten oder an der linken Seite des Browsers. Klicken Sie die Registerkarte **Netzwerk** an. ![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
 
 3\. Markieren Sie **Protokoll erhalten**.
 
 4\. Klicken Sie auf „Aufzeichnen“.
 
- ![gathering_har_file_record.png](/support/static/gathering_har_file_record.png)
+ ![gathering_har_file_record.png](/images/support/gathering_har_file_record.png)
 
 5\. Browsen Sie zu der URL, die Probleme verursacht. Sobald das Problem auftritt, klicken Sie mit der rechten Maustaste auf eines der Elemente in der Registerkarte **Netzwerk** und wählen Sie **Alles als HAR mit Inhalt speichern**.
 
- ![save_har_with_content.png](/support/static/save_har_with_content.png)
+ ![save_har_with_content.png](/images/support/save_har_with_content.png)
 
  6. Fügen Sie die HAR-Datei an Ihr Support-Ticket an.
 

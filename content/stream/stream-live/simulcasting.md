@@ -8,6 +8,8 @@ weight: 5
 
 Simulcasting lets you forward your live stream to third-party platforms such as Twitch, YouTube, Facebook, Twitter, and more. You can simulcast to up to 50 concurrent destinations from each live input. To begin simulcasting, select an input and add one or more Outputs.
 
+{{<render file="_chromecast_limitations.md">}}
+
 ## Add an Output using the API
 
 Add an Output to start retransmitting live video. You can add or remove Outputs at any time during a broadcast to start and stop retransmitting.
@@ -40,7 +42,7 @@ header: Response
 
 ## Control when you start and stop simulcasting
 
-You can enable and disable individual live outputs via the [API](/api/operations/stream-live-inputs-update-a-single-output-on-a-live-input) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
+You can enable and disable individual live outputs via the [API](/api/operations/stream-live-inputs-update-an-output) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
 
 - Start a live stream, but wait to start simulcasting to YouTube and Twitch until right before the content begins.
 - Stop simulcasting before the live stream ends, to encourage viewers to transition from a third-party service like YouTube or Twitch to a direct live stream.

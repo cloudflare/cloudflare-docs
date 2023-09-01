@@ -87,7 +87,7 @@ ___
 
 当您的源站 Web 服务器标准的 HTTP 502 网关损坏或 504 网关超时错误响应时，Cloudflare 将返回带有 Cloudflare 标志的 HTTTP 502 或 504 错误：
 
-![Cloudflare 品牌化错误 502 的示例。](/support/static/image1.png)
+![Cloudflare 品牌化错误 502 的示例。](/images/support/image1.png)
 
 **解决方案**
 
@@ -101,7 +101,7 @@ ___
 
 源自 Cloudflare 的 502 或 504 错误如下方所示：
 
-![非品牌化错误 502 的示例。](/support/static/image5.png)
+![非品牌化错误 502 的示例。](/images/support/image5.png)
 
 如果错误未提及“cloudflare”，请联系主机提供商来寻求与[源自源站的 502/504 错误](https://support.cloudflare.com/hc/zh-cn/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_85e06a1a-fa89-4685-aa24-2aaf57c0141b)相关的帮助。
 
@@ -287,7 +287,7 @@ ___
 -   您的源站 Web 服务器接受通过 SSL 端口 443 进行连接
 -   [暂停 Cloudflare](https://support.cloudflare.com/hc/articles/200169176) 并访问 [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com)（将 www.example.com 替换为您的主机名和域名），以验源站 SSL 证书并无问题：
 
-![该屏幕显示了没有错误的 SSL 证书。](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+![该屏幕显示了没有错误的 SSL 证书。](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 如果源站服务器使用自签名证书，请将域配置为使用 _Full_ _SSL_ 而非 _Full SSL (Strict)_。请参考[适用于您的源站的 SSL 推荐设置](/ssl/origin-configuration/ssl-modes)。
 

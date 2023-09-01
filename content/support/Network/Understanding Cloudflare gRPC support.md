@@ -29,7 +29,7 @@ ___
 
 The following products have limited capabilities with gRPC requests:
 
--   **Argo Tunnel** currently does not support gRPC.
+-   **Cloudflare Tunnel** currently does not support gRPC.
 -   **Cloudflare Access** does not support gRPC traffic sent through Cloudflare’s reverse proxy. gRPC traffic will be ignored by Access if gRPC is enabled in Cloudflare. We recommend disabling gRPC for any sensitive origin servers protected by Access or enabling another means of authenticating gRPC traffic to your origin servers.
 
 ___
@@ -39,9 +39,7 @@ ___
 Follow the instructions below to enable gRPC:
 
 {{<Aside type="note">}}
-[Orange-cloud the
-domain](https://support.cloudflare.com/hc/articles/200169626) that hosts
-your gRPC endpoint.
+Make sure that the hostname that hosts your gRPC endpoint is set to [proxied (orange-cloud)](/dns/manage-dns-records/reference/proxied-dns-records/) and that you use at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
 {{</Aside>}}
 
 1.  Log in to your Cloudflare account.

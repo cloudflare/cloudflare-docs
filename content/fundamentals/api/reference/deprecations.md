@@ -1,7 +1,7 @@
 ---
 title: API deprecations
 pcx_content_type: reference
-weight: 22
+weight: 5
 ---
 
 # API v4 deprecations
@@ -11,7 +11,7 @@ Cloudflare occasionally makes updates to our APIs that result in behavior change
 ## ChaCha20 TLS Cipher Removal
 **End of life Date: July 1st, 2023**
 
-Back in 2016 Cloudflare [introduced support](https://blog.cloudflare.com/it-takes-two-to-chacha-poly/) for `ChaCha20-Poly1305` cipher suites for TLS 1.2.
+Back in 2016, Cloudflare [introduced support](https://blog.cloudflare.com/it-takes-two-to-chacha-poly/) for `ChaCha20-Poly1305` cipher suites for TLS 1.2.
 
 At the time, we introduced two variants of these new suites, the "standard" suites as defined by the IETF RFC 7905, and "draft" suites that followed an earlier draft of said specification.
 

@@ -39,5 +39,4 @@ ___
 
 ## 관련 자료
 
--   [Cloudflare 속도 제한 구성](https://support.cloudflare.com/hc/articles/115001635128)[](https://support.cloudflare.com/hc/ko/articles/115000272247)
--   [Cloudflare 속도 제한의 요금 청구](https://support.cloudflare.com/hc/ko/articles/115000272247)
+-   [Cloudflare 속도 제한 구성](https://support.cloudflare.com/hc/articles/115001635128)

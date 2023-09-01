@@ -4,9 +4,9 @@ title: Customize a waiting room
 weight: 2
 ---
 
-# Customize a waiting room 
+# Customize a waiting room
 
-A waiting room can be customized from the dashboard or via API.
+You can customize your waiting room from the dashboard or via API.
 
 ## Customize a waiting room from the dashboard
 
@@ -111,7 +111,7 @@ If you are using images or other resources for your customized waiting room, **d
 To preview the appearance of a waiting room:
 
 1.  In your application, go to **Traffic** > **Waiting Room**.
-2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
+2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
 4.  Select **Preview waiting room**:
 
@@ -120,7 +120,7 @@ To preview the appearance of a waiting room:
 
 ### Troubleshooting
 
-If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).
+If you notice something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).
 
 ## Customize a waiting room via API
 

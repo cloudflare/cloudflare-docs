@@ -29,7 +29,7 @@ Die Cloudflare-Ansicht **Network Analytics** bietet nahezu in Echtzeit Einblick 
     [Migrationsanleitung](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
-![Analytics-Bereich mit Zusammenfassung der Pakete pro Typ](/support/static/na-main-dashboard.png)
+![Analytics-Bereich mit Zusammenfassung der Pakete pro Typ](/images/support/na-main-dashboard.png)
 
 Mit Network Analytics wird böswilliger Traffic schneller gemeldet und untersucht. Sie können Daten nach diesen Parametern filtern:
 
@@ -73,7 +73,7 @@ ___
 
 Die Kopfzeile und die Seitenbereiche zeigen eine Zusammenfassung der Aktivität über den Zeitrahmen, der in der Dropdown-Liste **Zeitrahmen** ausgewählt wurde.
 
-![Überschrift und Seitenleiste mit einer Zusammenfassung der Aktivitäten der letzten 24 Stunden](/support/static/na-navigate.png)
+![Überschrift und Seitenleiste mit einer Zusammenfassung der Aktivitäten der letzten 24 Stunden](/images/support/na-navigate.png)
 
 In der Kopfzeile werden die gesamten Pakete oder Bits und die Anzahl der erkannten und bekämpften Angriffe angezeigt. Wenn ein Angriff gerade stattfindet, steht in der Kopfzeile die maximale Rate von Paketen (oder Bits) und nicht die Gesamtanzahl.
 
@@ -85,7 +85,7 @@ In der Dropdown-Liste **Zeitrahmen** können Sie den Zeitbereich der über die N
 
 Wenn Sie _Letzte 30 Minuten_ auswählen, zeigt die Ansicht **Network Analytics** die Daten der letzten 30 Minuten an. Die Daten werden alle 20 Sekunden aktualisiert. Eine _Live_\-Benachrichtigung erscheint neben der Dropdown-Liste für die Statistik. Sie zeigt an, dass die Ansicht automatisch aktualisiert wird:
 
-![Automatisches Aktualisieren in Network Analytics aktiviert](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![Automatisches Aktualisieren in Network Analytics aktiviert](/images/support/hc-dash-Network_Analytics-auto_refresh.png)
 
 Mit der Option _Benutzerdefinierter Bereich_ können Sie einen Zeitbereich von bis zu 30 Tagen über einen beliebigen Zeitraum der letzten 365 Tage angeben.
 
@@ -97,13 +97,13 @@ Wählen Sie eine Statistik aus der Dropdown-Liste aus, um zwischen _Durchschnitt
 
 Mit dem Umschaltfeld **Anmerkungen anzeigen** können Sie Anmerkungen für angekündigte/widerrufene IP-Präfix-Ereignisse in der Ansicht **Network Analytics** anzeigen oder ausblenden. Klicken Sie für weitere Details auf die jeweilige Anmerkung.
 
-![Umschalttaste für die Anzeige von Anmerkungen im Diagramm der Network Analytics](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![Umschalttaste für die Anzeige von Anmerkungen im Diagramm der Network Analytics](/images/support/hc-dash-Network_Analytics-show_annotations.png)
 
 ### Zoomen in die Paket-Zusammenfassung 
 
 Durch Klicken und Ziehen eines Diagrammbereichs können Sie ihn vergrößern. Auf diese Weise können Sie auf einen Zeitbereich von bis zu 3 Minuten heranzoomen.
 
-![Zoomen in die Paket-Zusammenfassung ](/support/static/unnamed.gif)
+![Zoomen in die Paket-Zusammenfassung ](/images/support/unnamed.gif)
 
 Zum Herauszoomen klicken Sie im Auswahlfeld für den **Zeitbereich** auf das Symbol **X**.
 
@@ -155,7 +155,7 @@ Gehen Sie wie folgt vor:
 
 2\. Klicken Sie auf **Magic Firewall-Regel erstellen**. 
 
-![Einen Firewall-Regel-Link in Network Analytics erstellen](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+![Einen Firewall-Regel-Link in Network Analytics erstellen](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Der Editor für Magic Firewall-Regeln wird mit den ausgewählten Filtern und Werten angezeigt.
 
@@ -439,7 +439,7 @@ Sie können Network-Analytics-Daten entlang einer Vielzahl von Dimensionen darst
 
 Wählen Sie eine der **Zusammenfassungs**\-Registerkarten, wenn die Daten in einer anderen Dimension angezeigt werden sollen.
 
-![Visualisierung von Daten über mehrere Dimensionen hinweg](/support/static/unnamed__1_.gif)
+![Visualisierung von Daten über mehrere Dimensionen hinweg](/images/support/unnamed__1_.gif)
 
 Sie können aus folgenden Optionen wählen:
 
@@ -467,7 +467,7 @@ Wenn Sie auf der Network-Analytics-Seite Filter hinzufügen und einen Zeitbereic
 
 Um Ihre Ansicht der Daten freizugeben, kopieren Sie die URL und senden Sie sie an andere Nutzer, damit diese mit der gleichen Ansicht arbeiten können.
 
-![Auswählen der URL der Network Analytics-Seite](/support/static/hc-dashboard-network-analytics-6.png)
+![Auswählen der URL der Network Analytics-Seite](/images/support/hc-dashboard-network-analytics-6.png)
 
 ___
 

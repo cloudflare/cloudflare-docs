@@ -194,7 +194,7 @@ Las acciones de limitación de velocidad se basan en el plan del dominio, tal y 
 
 -   **Bloquear:** Cloudflare emite un código de error HTTP 429 cuando se supera el límite.
 -   **CAPTCHA heredado** **\-** El visitante debe superar un desafío de CAPTCHA. Si lo consigue, Cloudflare permite la solicitud.
--   **Desafío JS**: el visitante debe pasar un desafió Javascript de Cloudflare. Si lo consigue, Cloudflare permite la solicitud.
+-   **Desafío JS**: el visitante debe pasar un desafió JavaScript de Cloudflare. Si lo consigue, Cloudflare permite la solicitud.
 -   **Registrar-** Las solicitudes se registran en [Registros de Cloudflare](https://support.cloudflare.com/hc/articles/216672448). De este modo, se ayuda a probar las reglas antes de aplicarlas.
 
 #### **Duración de la prohibición**
@@ -235,7 +235,7 @@ La función **Limitación de velocidad** incluye la herramienta **Proteger tu in
 
 4\. Haz clic en **Crear una regla personalizada**.  Aparecerá un cuadro de diálogo en el que puedes escribir información detallada de tu nueva regla.
 
-![Crea un diálogo emergente de una regla de limitación de velocidad con un ejemplo de configuración de regla. La regla bloqueará las solicitudes de las direcciones IP que superen las 150 solicitudes por minuto en el plazo de una hora.](/support/static/previous-rate-limiting-create-rule.png)
+![Crea un diálogo emergente de una regla de limitación de velocidad con un ejemplo de configuración de regla. La regla bloqueará las solicitudes de las direcciones IP que superen las 150 solicitudes por minuto en el plazo de una hora.](/images/support/previous-rate-limiting-create-rule.png)
 
 5\. Escribe un **nombre de la regla** descriptivo.
 
@@ -270,7 +270,7 @@ Para configurar tus criterios avanzados para una regla nueva o existente, sigue 
 
 1\. Despliega el menú **Criterios avanzados**.
 
-![Campos disponibles al configurar Criterios avanzados para una regla de limitación de velocidad.](/support/static/previous-rate-limiting-advanced-criteria.png)
+![Campos disponibles al configurar Criterios avanzados para una regla de limitación de velocidad.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
 2\. Selecciona un valor del menú desplegable **Método(s)**. El valor por defecto es _CUALQUIERA_, que coincide con todos los métodos HTTP.
 
@@ -296,7 +296,7 @@ Para configurar una respuesta de texto sin formato o JSON:
 
 1\. Despliega el menú **Respuesta avanzada**.
 
-![Campos disponibles al configurar una Respuesta avanzada para una regla de limitación de velocidad.](/support/static/previous-rate-limiting-advanced-response.png)
+![Campos disponibles al configurar una Respuesta avanzada para una regla de limitación de velocidad.](/images/support/previous-rate-limiting-advanced-response.png)
 
 2\. Selecciona un formato de **tipo de respuesta** que no sea el predeterminado: _JSON Personalizado_ o _Texto Personalizado_.
 
@@ -345,7 +345,7 @@ ___
 
 2\. En **Omitir regla para estas URL**, escribe las URL que deseas eximir de la regla de limitación de velocidad. Escribe cada URL en su propia línea. Un HTTP o HTTPS especificado en la URL se elimina automáticamente cuando se guarda la regla y, en su lugar, se aplica tanto a HTTP como a HTTPS.
 
-![Configurar dos URL para evitar una regla de limitación de velocidad (una por línea).](/support/static/previous-rate-limiting-bypass.png)
+![Configurar dos URL para evitar una regla de limitación de velocidad (una por línea).](/images/support/previous-rate-limiting-bypass.png)
 
 3\. (Opcional) Configura las funciones adicionales de limitación de velocidad en función de tu plan.
 
@@ -383,7 +383,6 @@ ___
 
 ## Recursos relacionados
 
--   [Facturación de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000272247)
 -   [¿Cómo se notifica la limitación de velocidad en los registros de Enterprise Log Share (ELS)?](/logs/reference/log-fields)
 -   [Resolución de problemas de la función de Limitación de velocidad de Cloudflare](https://support.cloudflare.com/hc/articles/115000546328)
 -   [Configuración de la limitación de velocidad desde el panel de Cloudflare](https://api.cloudflare.com/#rate-limits-for-a-zone-properties)

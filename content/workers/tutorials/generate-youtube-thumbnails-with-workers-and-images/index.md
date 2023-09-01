@@ -347,13 +347,13 @@ $ wrangler dev
 
 This should spin up a `localhost` instance with the image displayed:
 
-![Run `wrangler dev` to start a local server for your Worker](./media/hello-worker.png)
+![Run `wrangler dev` to start a local server for your Worker](/images/workers/tutorials/youtube-thumbnails/hello-worker.png)
 
 Adding a query parameter with custom text, you should receive:
 
-![Follow the instructions above to receive an output image](./media/build-serverles.png)
+![Follow the instructions above to receive an output image](/images/workers/tutorials/youtube-thumbnails/build-serverles.png)
 
-To publish your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
 ```toml
 ---
@@ -364,13 +364,13 @@ name = "worker-to-text"
 
 ```
 
-Then run the `wrangler publish` command to publish your Worker.
+Then run the `npx wrangler deploy` command to deploy your Worker.
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
-A `.workers.dev` domain will be generated for your Worker after running `wrangler publish`. You will use this domain in the main thumbnail image.
+A `.workers.dev` domain will be generated for your Worker after running `wrangler deploy`. You will use this domain in the main thumbnail image.
 
 ## Create a Worker to display the original image
 
@@ -528,14 +528,14 @@ name = "thumbnail-image"
 Deploy your Worker by running:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 The command deploys your Worker to custom `workers.dev` subdomain. Go to your `.workers.dev` subdomain and go to the `/thumbnail` route.
 
 You should see the resized image with the text `Hello Workers!`.
 
-![Follow the steps above to generate your resized image.](./media/thumbnail.png)
+![Follow the steps above to generate your resized image.](/images/workers/tutorials/youtube-thumbnails/thumbnail.png)
 
 You will now make text applied dynamic. Making your text dynamic will allow you change the text and have it update on the image automatically.
 
@@ -568,7 +568,7 @@ for (const title of url.searchParams.values()) {
 
 This will always return the text you pass as a query string in the generated image. This example URL, https://socialcard.cdnuptime.com/thumbnail?Getting%20Started%20With%20Cloudflare%20Images, will generate the following image:
 
-![An example thumbnail.](./media/thumbnail2.png)
+![An example thumbnail.](/images/workers/tutorials/youtube-thumbnails/thumbnail2.png)
 
 By completing this tutorial, you have successfully made a custom YouTube thumbnail generator.
 

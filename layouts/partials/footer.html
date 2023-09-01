@@ -12,7 +12,7 @@
 
       {{ with $DATA.resources.discord }}
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := default "https://discord.gg/cloudflaredev" $DATA.resources.discord -}} {{- partial
+        {{- $url := "https://discord.gg/cloudflaredev" -}} {{- partial
         "external.link" (dict "text" "Discord" "url" $url) }}
       </span>
 

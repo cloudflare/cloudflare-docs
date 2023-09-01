@@ -22,7 +22,6 @@ The descriptions below detail the fields available for `gateway_network`.
 | DeviceID | UUID of the device where the network session originated from. | string |
 | DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
 | Email | Email associated with the user identity where the network sesion originated from. | string |
-| InternalSourceIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | OverrideIP | Overriden IP of the network session, if any. | string |
 | OverridePort | Overriden port of the network session, if any. | int |
 | PolicyID | Identifier of the policy/rule that was applied, if any. | string |
@@ -30,6 +29,7 @@ The descriptions below detail the fields available for `gateway_network`.
 | SNI | Content of the SNI for the TLS network session, if any. | string |
 | SessionID | The session identifier of this network session. | string |
 | SourceIP | Source IP of the network session. | string |
+| SourceInternalIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | SourcePort | Source port of the network session. | int |
 | Transport | Transport protocol used for this session. <br />Possible values are <em>tcp</em> \| <em>quic</em> \| <em>udp</em>. | string |
 | UserID | User identity where the network session originated from. | string |

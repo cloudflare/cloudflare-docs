@@ -29,11 +29,11 @@ ___
 
 加载之后，Analytics 应用会显示一组用于**流量**、**安全性**、**性能**、**DNS**、**Workers** 和**日志**（仅限 Enterprise 域）的选项卡。要了解可用的各项指标，请参阅下面的_检查您的网站指标_。
 
-![Cloudflare Dashboard 中显示 Web 流量数据的 Analytics 应用 UI](/support/static/hc-dash-analytics-dashboard_overview.png)
+![Cloudflare Dashboard 中显示 Web 流量数据的 Analytics 应用 UI](/images/support/hc-dash-analytics-dashboard_overview.png)
 
 Pro、Business 和Enterprise 计划客户可以在“流量”选项卡下查看最新的 Web 分析数据。
 
-![屏幕截图中显示 Pro、Business 和 Enterprise 客户使用 Cloudflare Analytics 仪表板时的用户界面。](/support/static/hc-dash-analytics-web_traffic.png)
+![屏幕截图中显示 Pro、Business 和 Enterprise 客户使用 Cloudflare Analytics 仪表板时的用户界面。](/images/support/hc-dash-analytics-web_traffic.png)
 
 ___
 

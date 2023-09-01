@@ -13,7 +13,6 @@ meta:
     reduces your server load and bandwidth, with no extra charges for bandwidth
     spikes
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/tag/caching

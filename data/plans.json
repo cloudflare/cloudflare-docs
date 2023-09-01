@@ -136,7 +136,7 @@
     "link": "/cache/",
     "always_online": {
       "title": "Always Online",
-      "link": "/cache/about/always-online/",
+      "link": "/cache/how-to/always-online/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -158,7 +158,7 @@
     },
     "browser_cache_ttl": {
       "title": "Browser Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -168,12 +168,19 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "minimum": {
-          "title": "Minimum Browser Cache TTL",
+        "minimum_page_rules": {
+          "title": "Minimum Browser Cache TTL (Page Rules)",
           "free": "2 minutes",
           "pro": "2 minutes",
           "biz": "2 minutes",
           "ent": "30 seconds"
+        },
+        "minimum_cache_rules": {
+          "title": "Minimum Browser Cache TTL (Cache Rules)",
+          "free": "2 hours",
+          "pro": "1 hour",
+          "biz": "1 second",
+          "ent": "1 second"
         },
         "default": {
           "title": "Default Browser Cache TTL",
@@ -186,7 +193,7 @@
     },
     "cache_analytics": {
       "title": "Cache analytics",
-      "link": "/cache/about/cache-analytics/",
+      "link": "/cache/performance-review/cache-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -200,7 +207,7 @@
     },
     "cache_key": {
       "title": "Cache keys",
-      "link": "/cache/about/cache-keys/",
+      "link": "/cache/how-to/cache-keys/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -228,7 +235,7 @@
     },
     "cache_reserve": {
       "title": "Cache reserve",
-      "link": "/cache/about/cache-reserve/",
+      "link": "/cache/advanced-configuration/cache-reserve/",
       "paid_add_on": true,
       "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
@@ -244,7 +251,7 @@
     },
     "cache_rules": {
       "title": "Cache Rules",
-      "link": "/cache/about/cache-rules/",
+      "link": "/cache/how-to/cache-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -279,7 +286,7 @@
     },
     "crawler_hints": {
       "title": "Crawler Hints",
-      "link": "/cache/about/crawler-hints/",
+      "link": "/cache/advanced-configuration/crawler-hints/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -321,7 +328,7 @@
     },
     "edge_cache_ttl": {
       "title": "Edge Cache TTL",
-      "link": "/cache/about/edge-browser-cache-ttl/",
+      "link": "/cache/how-to/edge-browser-cache-ttl/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -377,7 +384,7 @@
     },
     "query_string_sort": {
       "title": "Query string sort",
-      "link": "/cache/about/query-string-sort/",
+      "link": "/cache/advanced-configuration/query-string-sort/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -391,21 +398,49 @@
     },
     "tiered_cache": {
       "title": "Tiered cache",
-      "link": "/cache/about/tiered-cache/",
+      "link": "/cache/how-to/tiered-cache/",
       "properties": {
         "availability": {
-          "title": "Availability",
+          "title": "Tiered Cache",
           "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
+          "ent": "Yes"
+        },
+        "b_smart_topology": {
+          "title": "Smart Topology",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "c_generic_global_topology": {
+          "title": "Generic Global Topology",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "d_regional_tiered_cache": {
+          "title": "Regional Tiered Cache",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "z_custom_topology": {
+          "title": "Custom Topology",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
           "ent": "Yes"
         }
       }
     },
     "vary_for_images": {
       "title": "Vary for images",
-      "link": "/cache/about/vary-for-images/",
+      "link": "/cache/advanced-configuration/vary-for-images/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -537,7 +572,7 @@
     },
     "dnssec": {
       "title": "DNSSEC",
-      "link": "/dns/additional-options/dnssec/",
+      "link": "/dns/dnssec/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -607,11 +642,11 @@
         },
         "character_limit": {
           "title": "Character limit",
-          "free": 50,
-          "lite": 250,
-          "pro": 250,
-          "biz": 250,
-          "ent": 250
+          "free": 100,
+          "lite": 500,
+          "pro": 500,
+          "biz": 500,
+          "ent": 500
         },
         "number_per_record": {
           "title": "Comments per record",
@@ -704,6 +739,20 @@
           "ent": "Yes"
         }
       }
+    },
+    "reverse_zones": {
+      "title": "Reverse zones",
+      "link": "/dns/additional-options/reverse-zones/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
     }
   },
   "email": {
@@ -741,7 +790,7 @@
     "title": "Network",
     "0_rtt": {
       "title": "0-RTT Connection Resumption",
-      "link": "/fundamentals/network/0-rtt-connection-resumption/",
+      "link": "/speed/optimization/protocol/0-rtt-connection-resumption/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -791,7 +840,7 @@
     },
     "http2_to_origin": {
       "title": "HTTP/2 to Origin",
-      "link": "/cache/how-to/enable-http2-to-origin/",
+      "link": "/cache/concepts/enable-http2-to-origin/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -855,7 +904,7 @@
     },
     "max_upload_size": {
       "title": "Max upload size",
-      "link": "/cache/about/default-cache-behavior/",
+      "link": "/cache/concepts/default-cache-behavior/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -993,7 +1042,7 @@
       }
     },
     "config_rules": {
-      "title": "Configuration rules",
+      "title": "Configuration Rules",
       "link": "/rules/configuration-rules/",
       "properties": {
         "availability": {
@@ -1010,6 +1059,27 @@
           "pro": 25,
           "biz": 50,
           "ent": 125
+        }
+      }
+    },
+    "compression_rules": {
+      "title": "Compression Rules",
+      "link": "/rules/compression-rules/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "num_rules": {
+          "title": "Number of rules",
+          "free": 0,
+          "pro": 0,
+          "biz": 0,
+          "ent": 10
         }
       }
     },
@@ -1081,6 +1151,27 @@
           "pro_plus": 30,
           "biz": 50,
           "ent": 125
+        }
+      }
+    },
+    "snippets": {
+      "title": "Snippets (alpha)",
+      "link": "/rules/snippets/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "rules": {
+          "title": "Number of snippets",
+          "free": 5,
+          "pro": 10,
+          "biz": 25,
+          "ent": 50
         }
       }
     },
@@ -1374,13 +1465,40 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "managed_rulesets": {
-          "title": "Other WAF managed rulesets",
+        "managed_ruleset_1": {
+          "title": "Cloudflare Managed Ruleset",
           "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
+          "ent": "Yes"
+        },
+        "managed_ruleset_2": {
+          "title": "Cloudflare OWASP Core Ruleset",
+          "summary": "Available on paid plans",
+          "link": "/waf/managed-rules/",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "managed_ruleset_3": {
+          "title": "Cloudflare Exposed Credentials Check",
+          "summary": "Available on paid plans",
+          "link": "/waf/managed-rules/",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "managed_rulesets_response": {
+          "title": "Cloudflare Sensitive Data Detection",
+          "summary": "Enterprise-only",
+          "link": "/waf/managed-rules/",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
           "ent": "Yes"
         }
       }
@@ -1475,7 +1593,7 @@
         },
         "e_malicious_scripts": {
           "title": "Malicious script detection<br/> and alerting",
-          "summary": "Enterprise-only",
+          "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1484,7 +1602,7 @@
         },
         "f_code_change_detection": {
           "title": "Code change detection<br /> and alerting",
-          "summary": "Enterprise-only",
+          "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1502,7 +1620,7 @@
         },
         "i_malicious_connections": {
           "title": "Malicious connection detection<br/> and alerting",
-          "summary": "Enterprise-only",
+          "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1546,8 +1664,8 @@
       }
     },
     "rate_limiting_previous": {
-      "title": "Rate limiting rules (previous version)",
-      "link": "https://support.cloudflare.com/hc/articles/115001635128",
+      "title": "Rate Limiting (previous version)",
+      "link": "/waf/reference/legacy/old-rate-limiting/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1731,7 +1849,7 @@
     "title": "Speed",
     "amp": {
       "title": "AMP Real URL",
-      "link": "/fundamentals/speed/amp-real-ulr/",
+      "link": "/speed/optimization/other/amp-real-ulr/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1759,7 +1877,7 @@
     },
     "automatic_signed_exchanges": {
       "title": "Automatic Signed Exchanges (SXGs)",
-      "link": "/fundamentals/speed/signed-exchanges/",
+      "link": "/speed/optimization/other/signed-exchanges/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1773,7 +1891,7 @@
     },
     "auto_minify": {
       "title": "Auto Minify",
-      "link": "/support/speed/optimization-file-size/using-cloudflare-auto-minify/",
+      "link": "/speed/optimization/content/auto-minify/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1787,7 +1905,7 @@
     },
     "brotli": {
       "title": "Brotli compression",
-      "link": "/support/speed/optimization-file-size/what-will-cloudflare-compress/",
+      "link": "/speed/optimization/content/brotli/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1801,7 +1919,7 @@
     },
     "early_hints": {
       "title": "Early Hints",
-      "link": "/cache/about/early-hints",
+      "link": "/cache/advanced-configuration/early-hints",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1846,7 +1964,7 @@
     },
     "mirage": {
       "title": "Mirage",
-      "link": "https://support.cloudflare.com/hc/articles/219178057",
+      "link": "/speed/optimization/images/mirage/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1860,7 +1978,7 @@
     },
     "mobile_redirect": {
       "title": "Mobile redirect",
-      "link": "/support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/",
+      "link": "/speed/optimization/other/mobile-redirect/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1888,7 +2006,7 @@
     },
     "prefetch_urls": {
       "title": "Prefetch URLs",
-      "link": "/fundamentals/speed/prefetch-urls/",
+      "link": "/speed/optimization/content/prefetch-urls/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1901,7 +2019,7 @@
       }
     },
     "railgun": {
-      "title": "Railgun",
+      "title": "Railgun (deprecated)",
       "link": "/railgun/",
       "properties": {
         "availability": {
@@ -1916,7 +2034,7 @@
     },
     "rocket_loader": {
       "title": "Rocket Loader",
-      "link": "/fundamentals/speed/rocket-loader/",
+      "link": "/speed/optimization/content/rocket-loader/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2234,7 +2352,7 @@
           "ent": "Create and apply custom firewall rulesets."
         },
         "y_apex": {
-          "title": "Apex proxing/BYOIP",
+          "title": "[Apex proxing/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -2574,7 +2692,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": "Custom"
+          "ent": "1 (default)<br/><br/><em>With add-on</em><br/>Custom (can purchase more)"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2590,7 +2708,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO)<br/><br/><em>With add-on</em><br/>All options"
+          "ent": "First In First Out (FIFO) (default)<br/><br/><em>With add-on</em><br/>All options"
         },
         "disable_session_renewal": {
           "title": "Disable session renewal",
@@ -2608,6 +2726,14 @@
           "biz": "No",
           "ent": "Paid add-on"
         },
+        "k_customize_queuing_status_code": {
+          "title": "Customize queuing status code",
+          "link": "/waiting-room/reference/configuration-settings/",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
         "scheduled_events": {
           "title": "Scheduled events",
           "link": "/waiting-room/additional-options/create-events/",
@@ -2623,6 +2749,14 @@
           "pro": "No",
           "biz": "No",
           "ent": "Paid add-on"
+        },
+        "seo_crawler": {
+          "title": "SEO Crawler Bypassing",
+          "link": "/waiting-room/reference/best-practices/#waiting-room-and-seo",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
         }
       }
     }

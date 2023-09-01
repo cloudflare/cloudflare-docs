@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 1
 meta:
     title: Junk email and Area 1 Admin Quarantine - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1
@@ -43,7 +44,7 @@ To create the transport rules that will send emails with certain dispositions to
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_.
 
-    ![Set the rules in the above step](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
+    ![Set the rules in the above step](/email-security/static/flexible-partial-images/o365-area1-mx/step4-rules.png)
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.

@@ -8,7 +8,7 @@ meta:
 
 # Terraform example
 
-The following example defines a single Configuration Rule for a zone using Terraform. The rule disables Email Obfuscation and Browser Integrity Check for API requests.
+The following example defines a single configuration rule for a zone using Terraform. The rule disables Email Obfuscation and Browser Integrity Check for API requests.
 
 ```tf
 # Disable a couple of Cloudflare settings for API requests

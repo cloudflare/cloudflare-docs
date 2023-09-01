@@ -3,12 +3,38 @@
   {{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
   {{- $metaTruncateLength := 150 -}}
   {{- $title := "" -}}
+  {{- $rellink := .Context.RelPermalink -}}
+
+  <!-- Evaluate content type against standards -->
+
+  {{- $availableContentTypes := slice
+    "changelog" "concept" "configuration" "faq" "get-started" "glossary"
+    "how-to" "integration-guide" "learning-path" "learning-unit" "migration" 
+    "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
+    "tutorial"
+    -}}
 
   <!-- Pull the product group -->
 
   {{- $productGroup := "" -}}
   {{- with $DATA.product.group -}}
   {{- $productGroup = . -}}
+  {{- else -}}
+  <!-- Special behavior for learning paths -->
+  {{- if or (eq .Context.Params.pcx_content_type "learning-path") (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
+  {{- $learningPathArray := index .Context.Site.Data "learning-paths" -}}
+  {{- range $index, $item := $learningPathArray -}}
+  {{- if eq (printf "%T" $item) "map[string]interface {}" -}}
+  {{- with $item.path -}}
+  {{- if (in $rellink .) -}}
+  {{- with $item.product_group -}}
+  {{- $productGroup = . -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
   {{- end -}}
 
   <!-- Choose the preview image based on the product group -->
@@ -30,9 +56,14 @@
 
   {{- $pt := default .Context.Title .Context.Params.meta.title -}}
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
-  {{- $title = print .Context.Title " | Training" -}}
-
-  {{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
+  {{- $titleAddition := "" -}}
+  {{- if eq (len .Context.Ancestors) 4 -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 1).Title -}}
+  {{- else -}}
+    {{- $titleAddition = printf " · %s" (index .Context.Ancestors 0).Title -}}
+  {{- end -}}
+  
+  {{- $title = print .Context.Title $titleAddition " · Learning paths" -}}
 
   {{- else -}}
   {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
@@ -45,7 +76,7 @@
   {{- $folderPlaceholder := "" -}}
   {{ $rssFeed := "" }}
 
-  {{- if (in $.Context.RelPermalink "/learning-paths/modules/") -}}
+  {{- if (eq $.Context.Params.no_index true ) -}}
   <meta name="robots" content="noindex">
   {{- end -}}
 
@@ -75,14 +106,42 @@
   <meta name="twitter:description" content="{{ $description }}" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  {{- with .Context.Params.pcx_content_type -}}
-  <meta name="pcx_content_type" content="{{ . }}" />
+  <!-- Add metadata for reporting -->
+  {{- if or (ne .Context.Params.layout "home") (eq .Context.Params.pcx_content_type "learning-path") -}}
+  {{- $product := replace (delimit (findRE `\/.*?\/` $rellink 1) "") "/" "" -}}
+  <meta name="pcx_product" content="{{- $product -}}">
   {{- end -}}
+
+  <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
+  {{- $lastMod := $.Context.Lastmod.Format "2006-01-02"  | time -}}
+  {{- $diffMod := now.Sub $lastMod -}}
+  {{- $lastModifiedDays := math.Round (div $diffMod.Hours 24) -}}
+  <meta name="pcx_last_modified" content="{{- $lastModifiedDays -}}">
+  
+  {{- with .Context.Params.updated -}}
+  {{- $lastReview := . | time -}}
+  {{- $diffReview := now.Sub $lastReview -}}
+  <meta name="pcx_last_reviewed" content="{{- math.Round (div $diffReview.Hours 24) -}}" />
+  {{- else -}}
+  <meta name="pcx_last_reviewed" content="500" />
+  {{- end -}}
+
+  {{- with .Context.Params.pcx_content_type -}}
+  {{- if in $availableContentTypes . -}}
+  <meta name="pcx_content_type" content="{{ . }}" />
+  {{- else -}}
+  <meta name="pcx_content_type" content="Invalid content type" />
+  {{- end -}}
+  {{- else -}}
+  <meta name="pcx_content_type" content="Not set" />
+  {{- end -}}
+
   {{- if ne $productGroup "" -}}
   <meta name="pcx_content_group" content="{{$productGroup}}" />
   {{- end -}}
-  {{ with $.Context.Params.rss -}}
 
+    <!--Add rss feed links if specified-->
+  {{ with $.Context.Params.rss -}}
   {{ if eq . "folder" }}
 
   {{ $folderPlaceholder = ".atom" }}
@@ -123,10 +182,9 @@
   <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
 
   {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch-js/3.3.3/umd/index.js"
-    integrity="sha512-B04n6SO1wtH4RsIK/UGPnzokxldxXdy9FNFIGrXAa3rFUr0xzVuZHNRx4uile1ra9FkGDvMTB/XPxliN31OzbQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  {{- partial "script" (dict "src" "search.ts" "defer" true) -}}
 
   {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>

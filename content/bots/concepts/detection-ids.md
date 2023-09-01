@@ -8,13 +8,19 @@ title: Detection IDs
 {{<render file="_detection-ids.md">}}
 <br/>
 
-With customer configurable heuristics, you can choose unique actions for different bots, detected through Cloudflare’s heuristics engine. You can block, allow, or serve alternate content to specific bots to meet the unique needs of your site's traffic.
+If you are having an issue with one of our heuristics, detection IDs allow you to decide which heuristics to enforce on your zones using customer configurable heuristics. You can choose unique actions for different bots, detected through Cloudflare’s heuristics engine. You can block, allow, or serve alternate content to specific bots to meet the unique needs of your site’s traffic.
 
 {{<Aside type="note">}}
-
-You can use `cf.bot_management.detection_ids` fields in tools such as Custom Rules, Advanced Rate Limiting, Transform Rules, and Workers (as `request.cf.botManagement.detectionIds`).
-
+A request can trigger multiple detection IDs.
 {{</Aside>}}
+
+You can use `cf.bot_management.detection_ids` fields in tools such as:
+
+- [Custom Rules](/waf/custom-rules/)
+- [Advanced Rate Limiting](/waf/rate-limiting-rules/)
+- [Transform Rules](/rules/transform/)
+- [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
+- Firewall Rules (deprecated)
 
 ## Bot Detection IDs via Logpush
 
@@ -23,7 +29,7 @@ You can create or edit their existing Logpush jobs to include the new Bot Detect
 ### Via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Navigate to **Analytics & Logs** > **Logs**.
+2. Go to **Analytics & Logs** > **Logs**.
 3. Select **Add Logpush Job**.
 4. Select **HTTP Requests** as the dataset.
 5. Select **BotDetectionIDs** under the General data field category.
@@ -38,7 +44,7 @@ You can create or edit their existing Logpush jobs to include the new Bot Detect
 ## Create or edit an expression
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Navigate to **Security** > **Bots**.
+2. Go to **Security** > **Bots**.
 3. [Create a WAF custom rule](/waf/custom-rules/create-dashboard/) or select **Edit** on an existing custom rule.
 4. Select **Edit expression**.
 5. Add or edit the expression with the new field.

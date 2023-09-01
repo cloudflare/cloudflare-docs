@@ -14,7 +14,7 @@ Fast, resilient and easy-to-manage DNS service
 
 Leverage [Cloudflare's global Anycast network](https://www.cloudflare.com/network/) to deliver excellent performance and reliability to your domain while also protecting your business from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) and [route leaks and hijacking](https://www.cloudflare.com/learning/security/glossary/bgp-hijacking/).
 
-Cloudflare authoritative DNS provides [CNAME flattening](/dns/cname-flattening/) support, [free DNSSEC](/dns/additional-options/dnssec/), and several other features and setups to meet your needs.
+Cloudflare authoritative DNS provides [CNAME flattening](/dns/cname-flattening/) support, [free DNSSEC](/dns/dnssec/), and several other features and setups to meet your needs.
 
 ---
 

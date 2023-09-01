@@ -28,9 +28,10 @@ If you do not have access to WAF custom rules, you can use a firewall rule.
 
 The `cf.bot_management.js_detection.passed` field should never be used in a WAF custom rule that matches a visitor's first request to a site. It is necessary to have at least one HTML request before Cloudflare can inject JavaScript detection.
 
-### Example with Workers
-
 ```js
+---
+header: Example with Workers
+---
 "botManagement": {
 "jsDetection":
 

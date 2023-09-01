@@ -15,14 +15,14 @@ Connect to the Internet faster and in a more secure way.
 
 {{<plan type="all">}}
 
-The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online. The WARP client sits between your device and the Internet, and has several connection modes to better suit different needs.
+The Cloudflare WARP client allows individuals to have a faster, more secure, and more private experience online. The WARP client sits between your device and the Internet, and has several connection modes to better suit different needs.
 
-If you are looking for the enterprise version of WARP, refer to the [Cloudflare Zero Trust documentation](/cloudflare-one/connections/connect-devices/warp/).
+This documentation is for the consumer version of WARP. If you are using WARP with Cloudflare Zero Trust, refer to the [Zero Trust documentation](/cloudflare-one/connections/connect-devices/warp/).
 
 ## Features
 
 {{<feature header="WARP modes" href="/warp-client/warp-modes/">}}
-The WARP client has several modes to better suit your connection needs
+The WARP client has several modes to better suit your connection needs.
 {{</feature>}}
 
 {{<feature header="OS clients" href="/warp-client/get-started/">}}
@@ -37,6 +37,6 @@ WARP is available to several operating systems, including iOS and Android.
 1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet.
 {{</related>}}
 
-{{<related header="WARP" href="/cloudflare-one/connections/connect-devices/warp/" product="cloudflare-one">}}
-Refer to the Cloudflare Zero Trust documentation if you are looking for the enterprise version of WARP. 
+{{<related header="WARP for Zero Trust" href="/cloudflare-one/connections/connect-devices/warp/" product="cloudflare-one">}}
+The enterprise version of WARP allows organizations to apply security policies to corporate devices. 
 {{</related>}}

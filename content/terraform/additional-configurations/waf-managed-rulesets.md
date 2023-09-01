@@ -99,6 +99,7 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
     description = "Execute Cloudflare Managed Ruleset on my account-level phase entry point ruleset"
     enabled = true
   }
+
   # Execute Cloudflare OWASP Core Ruleset
   rules {
     action = "execute"
@@ -126,8 +127,11 @@ Add the two skip rules to the `cloudflare_ruleset` resource before the rule that
 
 ```tf
 ---
-highlight: [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]
+highlight: 4-13,15-27
 ---
+resource "cloudflare_ruleset" "account_level_managed_waf" {
+  # (...)
+
   # Skip execution of the entire Cloudflare Managed Ruleset for specific URLs
   rules {
     action = "skip"
@@ -164,6 +168,7 @@ highlight: [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]
     description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
     enabled = true
   }
+
   # (...)
 }
 ```
@@ -190,8 +195,10 @@ The following configuration includes the three overrides in the rule that execut
 
 ```tf
 ---
-highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
+highlight: 9-24
 ---
+  # (...)
+
   # Execute Cloudflare Managed Ruleset
   rules {
     action = "execute"
@@ -219,19 +226,22 @@ highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
     description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
     enabled = true
   }
-}
+
+  # (...)
 ```
 
 ## Configure payload logging
 
 This example enables [payload logging](/waf/managed-rules/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
 
-Building upon the rule that deploys the Cloudflare Managed Ruleset, the following configuration adds the `matched_data` object with the public key used to encrypt the payload:
+Building upon the rule that deploys the Cloudflare Managed Ruleset, the following rule configuration adds the `matched_data` object with the public key used to encrypt the payload:
 
 ```tf
 ---
-highlight: [7,8,9]
+highlight: 9-11
 ---
+  # (...)
+
   # Execute Cloudflare Managed Ruleset
   rules {
     action = "execute"
@@ -246,7 +256,8 @@ highlight: [7,8,9]
     description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
     enabled = true
   }
-}
+
+  # (...)
 ```
 
 ## Configure the OWASP paranoia level, score threshold, and action
@@ -270,8 +281,10 @@ The following example rule of a `cloudflare_ruleset` Terraform resource performs
 
 ```tf
 ---
-highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+highlight: 8-25
 ---
+  # (...)
+
   # Execute Cloudflare OWASP Core Ruleset
   rules {
     action = "execute"
@@ -300,4 +313,6 @@ highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
     description = "zone"
     enabled = true
   }
+
+  # (...)
 ```

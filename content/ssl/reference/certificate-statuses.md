@@ -63,3 +63,11 @@ For more details on certificate validation, refer to [Domain Control Validation]
 Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by using the [Custom Hostname Details endpoint](/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
 
 For more details on certificate validation, refer to [Issue and validate certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+
+### Via the command line
+
+To view certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/)).
+
+```sh
+$ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
+```

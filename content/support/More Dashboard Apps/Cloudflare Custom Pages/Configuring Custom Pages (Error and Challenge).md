@@ -20,7 +20,7 @@ avoid breaking specific API endpoints and other web applications.
 Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard..
 
 {{<Aside type="note">}}
-Enable Origin Error Pages excludes 521 and 522 errors.
+Enable Origin Error Pages excludes errors 520 to 527.
 {{</Aside>}}
 
 ___
@@ -112,11 +112,7 @@ After customizing your custom error page, there are two options for adding the p
 -   Domain level: the custom error page will apply to only one domain associated with your account.
 
 {{<Aside type="note">}}
-If Cloudflare cannot load your site or you have blocked the United
-States (US) via [IP Access
-Rules](https://support.cloudflare.com/hc/articles/217074967 "Configuring IP Access Rules")
-or firewall rules, publishing and previewing the error page will not
-work.
+If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work.
 {{</Aside>}}
 
 ### Account-level custom error page
@@ -149,15 +145,15 @@ ___
 
 ## Troubleshoot common custom pages issues
 
-### IP/Country Block vs 1000 Class Errors pages
+### Error pages for blocked requests
 
-If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
+If you block countries or IP addresses with an [IP Access rule](/waf/tools/ip-access-rules/), affected visitors will get a `1005` error and your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](/firewall/) (now deprecated), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with a [WAF custom rule](/waf/custom-rules/) and you do not configure a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests in the rule, affected visitors will get your **WAF Block** page.
 
-If you block countries or IP addresses with [WAF custom rules](/waf/custom-rules/), affected visitors will see your **WAF Block** page.
+If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom response for blocked requests](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) in the rule, affected visitors will get your **429 Errors** page displaying a Cloudflare `1015` error.
 
-If you block requests due to [rate limiting](/waf/rate-limiting-rules/), affected visitors will see your **429 Errors** page displaying a Cloudflare `1015` error.
+If you block countries or IP addresses with a [firewall rule](/firewall/) (now deprecated), affected visitors will get your **1000 Class Errors page**.
 
 ### 1xxx errors
 
@@ -179,7 +175,7 @@ Your custom error page cannot be blank and cannot exceed 1.43 MB. To avoid excee
 
 ___
 
-## Related Resources
+## Related resources
 
 -   [IP Access rules](/waf/tools/ip-access-rules/)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)

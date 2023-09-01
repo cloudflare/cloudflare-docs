@@ -1,12 +1,12 @@
 ---
-pcx_content_type: content
+pcx_content_type: how-to
 title: Early Hints for SaaS
 weight: 3
 ---
 
 # Early Hints for SaaS
 
-[Early Hints](/cache/about/early-hints/) allows the browser to begin loading resources while the origin server is compiling the full response. This improves webpage’s loading speed for the end user. As a SaaS provider, you may prioritize speed for some of your custom hostnames. Using custom metadata, you can [enable Early Hints](/cache/about/early-hints/#enabling-early-hints) per custom hostname.
+[Early Hints](/cache/advanced-configuration/early-hints/) allows the browser to begin loading resources while the origin server is compiling the full response. This improves webpage’s loading speed for the end user. As a SaaS provider, you may prioritize speed for some of your custom hostnames. Using custom metadata, you can [enable Early Hints](/cache/advanced-configuration/early-hints/#enable-early-hints) per custom hostname.
 
 ---
 

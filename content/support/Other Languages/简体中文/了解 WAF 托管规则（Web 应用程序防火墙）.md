@@ -48,7 +48,7 @@ ___
 -   托管规则解析 JSON 响应，以识别针对 API 的漏洞。JSON 有效负载解析限制为 128KB。
 -   托管规则可缓解填充（Padding）技术攻击。建议进行如下设置：
     1.  开启 _100048_ 规则。此规则现在可以预防填充型攻击，但默认状态下并不启用，因为它会导致客户环境中出现许多误报。不过，客户务必要调优他们的托管规则配置，这很重要。Cloudflare 正在奋力开发效果更优的长期解决方案。
-    2.  使用 [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) 创建防火墙规则，具体取决于对检查报头和/或正文以阻止较大有效负载（> 128 KB）的需求。务必首先在_日志_模式中测试您的防火墙规则，因为它可能容易产生误报。
+    2.  使用 [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) 创建防火墙规则，具体取决于对检查报头和/或正文以阻止较大有效负载（> 128 KB）的需求。务必首先在_日志_模式中测试您的防火墙规则，因为它可能容易产生误报。
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   有一小部分托管规则是 Cloudflare 不会禁用的，即使**托管规则**在 Cloudflare 仪表板中处于_关闭_状态，例如 ID 为 _WP0025B_、_100043A_ 和 _100030_ 的规则。

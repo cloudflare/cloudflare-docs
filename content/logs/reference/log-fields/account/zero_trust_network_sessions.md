@@ -33,7 +33,6 @@ The descriptions below detail the fields available for `zero_trust_network_sessi
 | EgressRuleName | The name of the egress rule that was applied by the Secure Web Gateway, if any. | string |
 | Email | Email address associated with the user identity which initiated the network session. | string |
 | IngressColoName | The name of the Cloudflare colo to which traffic ingressed. | string |
-| InternalSourceIP | The virtual source IP used within Cloudflare systems (for example, the WARP virtual IP address). | string |
 | Offramp | The type of destination to which the network session was routed. <br />Possible values are <em>internet</em> \| <em>magic</em> \| <em>cfd_tunnel</em> \| <em>WARP</em>. | string |
 | OriginIP | The IP of the destination ("origin") for the network session. | string |
 | OriginPort | The port of the destination origin for the network session. | int |
@@ -48,6 +47,7 @@ The descriptions below detail the fields available for `zero_trust_network_sessi
 | SessionID | The identifier of this network session. | string |
 | SessionStartTime | The network session start timestamp with nanosecond precision. | int or string |
 | SourceIP | Source IP of the network session. | string |
+| SourceInternalIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | SourcePort | Source port of the network session. | int |
 | UserID | User identity where the network session originated from. Only applicable for WARP device clients. | string |
 | VirtualNetworkID | Identifier of the virtual network configured for the client. | string |

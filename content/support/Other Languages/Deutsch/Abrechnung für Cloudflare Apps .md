@@ -7,13 +7,9 @@ title: Abrechnung für Cloudflare Apps
 
 # Abrechnung für Cloudflare Apps 
 
-
-
-## Überblick
-
 Viele Apps innerhalb von Cloudflare Apps sind kostenlos und werden Ihnen nicht in Rechnung gestellt.
 
-![Screenshot der Apps-Startseite im Cloudflare-Dashboard](/support/static/hc-dash-apps_main_page.png)
+![Screenshot der Apps-Startseite im Cloudflare-Dashboard](/images/support/hc-dash-apps_main_page.png)
 
 Alle kostenpflichtigen Apps in Cloudflare Apps werden monatlich abgerechnet. Für jede Domain, für die Sie eine App gekauft und installiert haben, werden Ihnen monatliche Gebühren berechnet.
 

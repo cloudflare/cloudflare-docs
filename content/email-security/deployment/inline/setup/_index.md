@@ -1,6 +1,6 @@
 ---
 title: Setup
-pcx_content_type: tutorial
+pcx_content_type: navigation
 weight: 1
 meta:
    title: Setup - Inline deployment

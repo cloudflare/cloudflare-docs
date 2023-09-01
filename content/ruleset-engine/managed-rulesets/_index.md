@@ -3,7 +3,7 @@ title: Work with managed rulesets
 pcx_content_type: navigation
 type: overview
 weight: 6
-layout: list
+layout: single
 ---
 
 # Work with managed rulesets

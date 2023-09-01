@@ -15,7 +15,7 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 This Enterprise product provides the most flexibility to customers by:
 
 - Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-- Allowing customers to take action on this score with [WAF custom rules](/waf/custom-rules/), firewall rules, or [Workers](/workers/runtime-apis/request/#incomingrequestcfproperties).
+- Allowing customers to take action on this score with [WAF custom rules](/waf/custom-rules/) firewall rules, or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
 - Allowing customers to view this score in Bot Analytics or Logs.
 
 ---
@@ -75,8 +75,6 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 Based on your analysis of **automated** traffic, create a [WAF custom rule](/waf/custom-rules/) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
-If you do not have access to custom rules, create a firewall rule instead.
-
 {{<example>}}
 
 <table style='table-layout:fixed; width:100%'>
@@ -95,9 +93,9 @@ If you do not have access to custom rules, create a firewall rule instead.
 </table>
 {{</example>}}
 
-### Step 4 — Create additional rules
+### Step 4 — Create additional custom rules
 
-Create custom rules (or firewall rules) that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds and other considerations, refer to [Challenge bad bots](/firewall/recipes/challenge-bad-bots/) or [Bot Management variables](/bots/reference/bot-management-variables/).
+Create custom rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds and other considerations, refer to the [WAF documentation](/waf/custom-rules/use-cases/challenge-bad-bots/) or [Bot Management variables](/bots/reference/bot-management-variables/).
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 
@@ -109,7 +107,7 @@ The best approach is to start small and slowly increase your threshold to preven
 
 ### Step 5 — Continue monitoring domain traffic
 
-You can adjust your WAF custom rules (or firewall rules) at any point. Set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/security-events/) to see if your rules need additional tuning.
+You can adjust your custom rules at any point. Set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/security-events/) to see if your rules need additional tuning.
 
 ---
 
@@ -119,7 +117,7 @@ You can adjust your WAF custom rules (or firewall rules) at any point. Set aside
 
 {{<render file="_static-resources-bm.md">}}
 
-For more details, see [Static resource protection](/bots/reference/static-resources/).
+For more details, refer to [Static resource protection](/bots/reference/static-resources/).
 
 ### Verified bots
 
@@ -127,7 +125,7 @@ Some automated traffic is good! To allow good bots like Google or Bing, use the 
 
 ### Mobile traffic
 
-To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your WAF custom rules.
+To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your custom rules.
 
 ### `Skip` action
 

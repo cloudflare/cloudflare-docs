@@ -107,7 +107,7 @@ The [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextE
 
 ## URL API
 
-The URL API supports URLs conforming to HTTP and HTTPs schemes.
+The URL API supports URLs conforming to HTTP and HTTPS schemes.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 
@@ -115,7 +115,7 @@ The URL API supports URLs conforming to HTTP and HTTPs schemes.
 
 The default URL class behavior differs from the URL Spec documented above.
 
-A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/platform/compatibility-dates/#compatibility-flags).
+A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/configuration/compatibility-dates/#compatibility-flags).
 
 {{</Aside>}}
 
@@ -139,4 +139,25 @@ The `URLPattern` API provides a mechanism for matching URLs based on a convenien
 
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/platform/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+
+## Unhandled promise rejections
+
+The [`unhandledrejection`](https://developer.mozilla.org/en-US/docs/Web/API/Window/unhandledrejection_event) event is emitted by the global scope when a JavaScript promise is rejected without a rejection handler attached.
+
+The [`rejectionhandled`](https://developer.mozilla.org/en-US/docs/Web/API/Window/rejectionhandled_event) event is emitted by the global scope when a JavaScript promise rejection is handled late (after a rejection handler is attached to the promise after an `unhandledrejection` event has already been emitted).
+
+```js
+---
+header: worker.js
+---
+addEventListener('unhandledrejection', (event) => {
+  console.log(event.promise);  // The promise that was rejected.
+  console.log(event.reason);  // The value or Error with which the promise was rejected.
+});
+
+addEventListener('rejectionhandled', (event) => {
+  console.log(event.promise);  // The promise that was rejected.
+  console.log(event.reason);  // The value or Error with which the promise was rejected.
+});
+```

@@ -7,13 +7,13 @@ weight: 1
 
 # Managed deployment
 
-Organizations can deploy WARP automatically to their fleet of devices in a single operation. The WARP client is compatible with the vast majority of managed deployment workflows, including [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) such as Intune or JAMF, or by executing an `.msi` file on desktop machines.
+{{<render file="_mdm-intro.md">}}
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
 {{<Aside type="warning">}}
 
-Settings you specify in a local policy file and deploy with your management software will overrule any settings you configure in Zero Trust.
+{{<render file="_mdm-dash-conflict.md">}}
 
 {{</Aside>}}
 
@@ -30,7 +30,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
 To install the WARP client, run the following command:
 
 ```txt
-msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="exampleorg" SUPPORT_URL="http://support.example.com"
+msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
@@ -50,7 +50,7 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 ```xml
 <dict>
   <key>organization</key>
-  <string>yourorganization</string>
+  <string>your-team-name</string>
 	<key>onboarding</key>
 	<false/>
 </dict>
@@ -107,7 +107,7 @@ The format of `/var/lib/cloudflare-warp/mdm.xml` is as follows:
 ```xml
 <dict>
   <key>organization</key>
-  <string>yourorganization</string>
+  <string>your-team-name</string>
 </dict>
 ```
 
@@ -115,14 +115,18 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ## iOS
 
-The Cloudflare WARP iOS client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The legacy iOS client, [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
+The Cloudflare WARP iOS client, known in the App Store as [Cloudflare One Agent](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
 
 To proceed with the installation, here is an example of the XML code you will need:
 
 ```xml
 <dict>
     <key>organization</key>
-    <string>yourorganization</string>
+    <string>your-team-name</string>
     <key>auto_connect</key>
     <integer>1</integer>
     <key>switch_locked</key>
@@ -138,13 +142,17 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ## Android
 
-The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en_US&gl=US) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
+The Cloudflare WARP Android client, known in the Google Play store as [Cloudflare One Agent](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent), allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 
 To proceed with the installation, here is an example of the XML code you will need:
 
 ```xml
 <key>organization</key>
-<string>yourorganization</string>
+<string>your-team-name</string>
 <key>enable</key>
 <true />
 <key>gateway_unique_id</key>
@@ -153,6 +161,19 @@ To proceed with the installation, here is an example of the XML code you will ne
 <string>warp</string>
 <key>support_url</key>
 <string>https://support.example.com</string>
+```
+If your MDM tool does not support XML, you may need to convert the XML to JSON. Here is an example below:
+
+```json
+{
+  "organization": "your-team-name",
+  "gateway_unique_id": "your_gateway_doh_subdomain",
+  "onboarding": true,
+  "switch_locked": true,
+  "auto_connect": 0,
+  "service_mode": "warp",
+  "support_url": "https://support.example.com"
+}
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each value.

@@ -45,9 +45,9 @@ Configure scoping for your traffic in the **Region code** section when adding or
 
 ## ​​Create a static route
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select $1.
-3. Select **Static Routes** > **Create** to add a new route.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to $1.
+3. From the **Static Routes** tab, select **Create** to add a new route.
 4. Enter a descriptive name for your route in **Description**.
 5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
 6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in [Configure tunnel endpoints]($2).

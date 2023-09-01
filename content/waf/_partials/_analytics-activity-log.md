@@ -7,7 +7,7 @@ _build:
 
 The **Activity log** summarizes security events by date to show the action taken and the applied Cloudflare security feature.
 
-![Example list of events in the Activity log, with one of the events expanded to show its details](/waf/static/analytics-activity-log.png)
+![Example list of events in the Activity log, with one of the events expanded to show its details](/images/waf/events-activity-log.png)
 
 Security events are shown by individual event rather than by request. For example, if a single request triggers three different security features, the security events will show three individual events in the **Activity log**.
 

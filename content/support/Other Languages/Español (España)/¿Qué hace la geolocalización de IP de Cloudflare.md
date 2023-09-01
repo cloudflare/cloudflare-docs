@@ -14,7 +14,7 @@ Encontrará la opción de geolocalización de IP en la aplicación **Network** d
 
 La opción para geolocalización de IP se encuentra cerca de la parte inferior de la página:
 
-![](/support/static/IPGeolocation2.png)
+![](/images/support/IPGeolocation2.png)
 
 Una vez activada, Cloudflare añade un encabezado denominado «CF-IPCountry» a todas las solicitudes que realizamos en su sitio web. A continuación se incluyen un par de ejemplos de cómo acceder/almacenar este valor:
 

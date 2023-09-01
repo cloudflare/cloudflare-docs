@@ -55,5 +55,5 @@ ___
 ## 관련 자료
 
 -   [Cloudflare DDoS 방어 이해](https://support.cloudflare.com/hc/articles/200172676)
--   [DDoS 공격에 대한 대응](https://support.cloudflare.com/hc/articles/200170196)
+-   [DDoS 공격에 대한 대응](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [DDoS 공격이란?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

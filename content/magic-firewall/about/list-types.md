@@ -8,13 +8,9 @@ weight: 3
 
 ## Threat intelligence
 
-Cloudflare sees approximately 39 million HTTP requests each second and blocks 126 billion cyber threats each day. Cloudflare uses that data to detect malicious actors on the Internet and turns that information into a list of known malicious IP addresses. Cloudflare also integrates with a number of third-party vendors to augment the coverage.
+Cloudflare handles millions of HTTP requests each second and blocks billions of cyber threats each day. Cloudflare uses that data to detect malicious actors on the Internet and turns that information into a list of known malicious IP addresses. Cloudflare also integrates with a number of third-party vendors to augment the coverage.
 
-The threat intelligence feed categories include Malware, Anonymizer, and Botnet Command-and-Control centers. Malware and Botnet lists cover properties on the Internet distributing malware and known command-and-control centers. Anonymizers contain a list of known forward proxies that allow attackers to hide their IP addresses.
-
-- **Anonymizer** - Targets sites that allow users to surf the Internet anonymously.
-- **Botnet** — Targets sites that are queried by compromised devices to exfiltrate information or potentially infect other devices in a network.
-- **Malware** — Targets sites hosting malicious content and other compromised websites.
+The threat intelligence feed categories are described in [Managed IP Lists](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists).  All of these lists are compatible with Magic Firewall.
 
 ## IP Lists
 

@@ -28,7 +28,7 @@ export default {
 }
 ```
 
-Refer to the [Workers Languages](/workers/platform/languages/) for more information regarding the languages you can use with Workers.
+Refer to the [Workers Languages](/workers/learning/languages/) for more information regarding the languages you can use with Workers.
 
 ## How to use Email Workers
 

@@ -9,13 +9,17 @@ layout: single
 
 # HTTP DDoS Attack Protection managed ruleset
 
-The Cloudflare HTTP DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at layer 7 (application layer) on the Cloudflare global network. Cloudflare updates the list of rules in the managed ruleset on a regular basis.
+The Cloudflare HTTP DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at layer 7 (application layer) on the Cloudflare global network. The rules match known attack patterns and tools, suspicious patterns, protocol violations, requests causing large amounts of origin errors, excessive traffic hitting the origin/cache, and additional attack vectors at the application layer.
+
+Cloudflare updates the list of rules in the managed ruleset on a regular basis.
 
 The HTTP DDoS Attack Protection managed ruleset is always enabled — you can only customize its behavior.
 
 The HTTP DDoS Attack Protection managed ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Security Events dashboard](/waf/security-events/), available at **Security** > **Events**, will display information about the top HTTP DDoS managed rules.
 
 ## Ruleset configuration
+
+If you are expecting large spikes of legitimate traffic, consider customizing your DDoS protection settings to avoid [false positives](/ddos-protection/managed-rulesets/adjust-rules/false-positive/), where legitimate traffic is falsely identified as attack traffic and blocked/challenged.
 
 You can adjust the behavior of the rules in the managed ruleset by modifying the following parameters:
 

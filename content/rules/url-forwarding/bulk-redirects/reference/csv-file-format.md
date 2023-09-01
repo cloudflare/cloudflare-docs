@@ -25,7 +25,6 @@ All the lines in this example are valid lines that you can import in the dashboa
 ```txt
 example.com/contacts,https://example.net/contact-us,301,,,,
 example.com/about,https://example.net/about-us,,FALSE,TRUE,,
-"example.com/search?q=bar,baz",https://example.net/search,,TRUE
 example.com/docs,https://example.com/draft-docs,302,,TRUE
 ```
 

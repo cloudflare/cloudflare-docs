@@ -5,6 +5,6 @@ _build:
   list: never
 ---
 
-Cloudflare [Bot Management](/bots/plans/bm-subscription/) and [API Shield](/api-shield/) are currently unsupported products and can cause complications when used with version management.
+Version Management does not currently support versioning for [Bot Management](/bots/plans/bm-subscription/) or [API Shield](/api-shield/).
 
-We are actively working on a fix for this issue.
+Additionally, you cannot currently manage versioning through the [Cloudflare API](/api/) or deploy Workers used by zones that have enabled versioning via [Wrangler](/workers/wrangler/).

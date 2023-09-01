@@ -12,10 +12,10 @@ When setting up your Pages project, you may encounter various errors that preven
 You can review build errors in your Pages build log. To access your build log:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, go to **Pages**.
-3. Select your Pages project > **View build**.
+2. In **Account Home**, go to **Workers & Pages**.
+3. In **Overview**, select your Pages project > **View build**.
 
-![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](../media/pages-build-log.png)
+![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](/images/pages/platform/pages-build-log.png)
 
 Possible errors in your build log are included in the following sections.
 
@@ -76,7 +76,7 @@ If you are not using Functions or have reviewed that your Functions configuratio
 
 If your custom domain is proxied (orange-clouded) through Cloudflare, your zone's settings such as Auto Minify and caching will apply.
 
-If you are experiencing issues with a framework, like Nuxt.js, only on the custom domain, review if Auto Minify is enabled (log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Speed** > **Optimization** > **Auto Minify**) for HTML and disable it.
+If you are experiencing issues with a framework, like Nuxt.js, only on the custom domain, review if Auto Minify is enabled (log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Speed** > **Optimization** > **Content Optimization** > **Auto Minify**) for HTML and disable it.
 
 If you are experiencing issues with new content not being shown, go to **Rules** > **Page Rules** in the Cloudflare dashboard and check for a Page Rule with **Cache Everything** enabled. If present, remove this rule as Pages handles its own cache.
 
@@ -103,7 +103,7 @@ server: cloudflare
 cf-ray: 7b1ffdaa8ad60693-MAN
 ```
 
-In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until the domain is verified. After the domain is verified, Access can be reenabled.
+In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until the domain is verified. After the domain is verified, Access can be re-enabled.
 
 You will need to do the same kind of thing for Redirect Rules or a Worker example too.
 

@@ -11,7 +11,7 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 
 Learn more about [How KV works](/workers/learning/how-kv-works/).
 
-To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/workers-kv/) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
+To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/workers-kv/) on how to create a namespace with Wrangler. Create a KV namespace in the dashboard by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > select **Workers & Pages** > **KV**.
 
 The descriptions of KV methods below also contain links to Wrangler or REST API equivalents where appropriate, but using KV from your Worker is generally better for latency, scalability, and availability.
 
@@ -346,15 +346,17 @@ const next_value = await NAMESPACE.list({ cursor: cursor });
 
 Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch; check `list_complete` instead. The reason it is possible to have an empty array in `keys`, but still have more keys to fetch, is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
 
+When de-paginating a large result set while also providing a `prefix` argument, the `prefix` argument must be provided in all subsequent calls along with the initial arguments.
+
 ## KV bindings
 
-### Referencing KV from Workers
+### Reference KV from Workers
 
 A KV namespace is a key-value database that is replicated to Cloudflare's global network. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 
 The name of your binding does not need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
 
-This is not the case with Modules, refer to [Referencing KV using Modules](/workers/runtime-apis/kv/#referencing-kv-from-durable-objects-and-workers-using-modules-syntax).
+This is not the case with ES modules format, refer to [Reference KV using ES modules](/workers/runtime-apis/kv/#reference-kv-from-durable-objects-and-workers-using-es-modules-format).
 
 When you create a namespace, it will have a name you choose (for example, `My tasks`), and an assigned ID (for example, `06779da6940b431db6e566b4846d64db`).
 
@@ -370,7 +372,7 @@ kv_namespaces = [
 ]
 ```
 
-With this, the deployed Worker will have a `TODO` binding on the `env` parameter in Modules format, and a `TODO` global variable in Service Worker format. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
+With this, the deployed Worker will have a `TODO` binding on the `env` parameter in ES modules format, and a `TODO` global variable in Service Worker format. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -405,19 +407,20 @@ addEventListener("fetch", async (event) => {
 
 {{<Aside type="note">}}
 
-You can create a namespace [using Wrangler](/workers/wrangler/install-and-update/) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
+Create a namespace [using Wrangler](/workers/wrangler/install-and-update/) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
 
-1.  Go to **Workers**.
-2.  Select your **Worker**.
-3.  Select **Settings** > **Variables**.
-4.  Go to **KV Namespace Bindings**.
-5.  Select **Add binding**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages**.
+2. In **Overview**, select your Worker.
+3. Select **Settings** > **Variables**.
+4. Go to **KV Namespace Bindings**.
+5. Select **Add binding**.
 
 {{</Aside>}}
 
-### Referencing KV from Durable Objects and Workers using Modules Syntax
+### Reference KV from Durable Objects and Workers using ES Modules format
 
-The documentation above assumes you are using the original Service Worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, for example, `NAMESPACE`. Durable Objects use Modules syntax. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/workers/runtime-apis/durable-objects/#durable-object-class-definition). A typical example might look like:
+The documentation above assumes you are using the original Service Worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, for example, `NAMESPACE`. Durable Objects use ES modules. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object). A typical example might look like:
 
 ```js
 export class DurableObject {

@@ -8,6 +8,56 @@ rss: file
 
 # Changelog
 
+## 2023-07-14
+
+- An implementation of the [`util.MIMEType`](https://nodejs.org/api/util.html#class-utilmimetype) API from Node.js is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) is enabled.
+
+## 2023-07-07
+
+- An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+- An implementation of the [`diagnostics_channel`](/workers/runtime-apis/nodejs/diagnostics-channel) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+
+## 2023-06-22
+
+- Added the [`strict_crypto_checks`](/workers/configuration/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
+- Fixes regression in the [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) where `connect("google.com:443")` would fail with a `TypeError`.
+
+## 2023-06-19
+
+- The [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) now reports clearer errors when a connection cannot be established.
+- Updated V8 to 11.5.
+
+## 2023-06-09
+
+- `AbortSignal.any()` is now available.
+- Updated V8 to 11.4.
+- Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/configuration/compatibility-dates/#new-url-parser-implementation) compatibility flags.
+- Added the [`strict_compression_checks`](/workers/configuration/compatibility-dates/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
+
+## 2023-05-26
+
+- A new [Hibernatable WebSockets API](/durable-objects/api/hibernatable-websockets-api/) (beta) has been added to [Durable Objects](/durable-objects/). The Hibernatable WebSockets API allows a Durable Object that is not currently running an event handler (for example, processing a WebSocket message or alarm) to be removed from memory while keeping its WebSockets connected (“hibernation”). A Durable Object that hibernates will not incur billable Duration (GB-sec) charges. 
+
+## 2023-05-16
+
+- The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/learning/protocols/).
+- We have added new [native database integrations](/workers/databases/native-integrations/) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
+- You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/workers/databases/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
+- The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
+
+## 2023-05-15
+
+- [Cursor](/workers/ai/), an experimental AI assistant, trained to answer questions about Cloudflare's Developer Platform, is now available to preview! Cursor can answer questions about Workers and the Cloudflare Developer Platform, and is itself built on Workers. You can read more about Cursor in the [announcement blog](https://blog.cloudflare.com/introducing-cursor-the-ai-assistant-for-docs/).
+
+## 2023-05-12
+
+- The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security reasons](/workers/learning/security-model/) time only advances after I/O.
+
+## 2023-05-05
+
+- The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
+- Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+
 ## 2023-04-28
 
 - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
@@ -32,7 +82,7 @@ rss: file
 
 ## 2023-03-06
 
-- [Workers Logpush](/workers/platform/logpush/#limits) now supports 300 characters per log line. This is an increase from the previous limit of 150 characters per line.
+- [Workers Logpush](/workers/observability/logpush/#limits) now supports 300 characters per log line. This is an increase from the previous limit of 150 characters per line.
 
 ## 2023-02-06
 
@@ -91,6 +141,10 @@ rss: file
 - Validation errors during Worker upload for module scripts now include correct line and column numbers.
 - Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
 
+## 2022-07-08
+
+- Workers Usage Report and Workers Weekly Summary have been disabled due to scaling issues with the service.
+
 ## 2022-06-24
 
 - `wrangler dev` in global network preview mode now supports scheduling alarms.
@@ -122,7 +176,7 @@ rss: file
 ## 2022-05-19
 
 - R2 bindings: `contentEncoding`, `contentLanguage`, and `cacheControl` are now correctly rendered.
-- ReadableStream `pipeTo` and `pipeThrough` now support cancelation using `AbortSignal`.
+- ReadableStream `pipeTo` and `pipeThrough` now support cancellation using `AbortSignal`.
 - Calling `setAlarm()` in a DO with no `alarm()` handler implemented will now throw instead of failing silently. Calling `getAlarm()` when no `alarm()` handler is currently implemented will return null, even if an alarm was previously set on an old version of the DO class, as no execution will take place.
 - R2: Better runtime support for additional ranges.
 - R2 bindings now support ranges that have an `offset` and an optional `length`, a `length` and an optional `offset`, or a `suffix` (returns the last `N` bytes of a file).
@@ -163,7 +217,7 @@ rss: file
 
 ## 2022-03-24
 
-- A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](/workers/platform/compatibility-dates/#minimal-subrequests).
+- A new compatibility flag has been introduced, `minimal_subrequests` , which removes some features that were unintentionally being applied to same-zone `fetch()` calls. The flag will default to enabled on Tuesday, 2022-04-05, and is described in [Workers `minimal_subrequests` compatibility flag](/workers/configuration/compatibility-dates/#minimal-subrequests).
 - When creating a `Response` with JavaScript-backed ReadableStreams, the `Body` mixin functions (e.g. `await response.text()` ) are now implemented.
 - The `IdentityTransformStream` creates a byte-oriented `TransformStream` implementation that simply passes bytes through unmodified. The readable half of the `TransformStream` supports BYOB-reads. It is important to note that `IdentityTransformStream` is identical to the current non-spec compliant `TransformStream` implementation, which will be updated soon to conform to the WHATWG Stream Standard. All current uses of `new TransformStream()` should be replaced with `new IdentityTransformStream()` to avoid potentially breaking changes later.
 
@@ -265,7 +319,7 @@ rss: file
 - The `unhandledrejection` and `rejectionhandled` events are now supported.
 - The `ReadableStreamDefaultReader` and `ReadableStreamBYOBReader` constructors are now supported.
 - Added non-standard `ReadableStreamBYOBReader` method `.readAtLeast(size, buffer)` that can be used to return a buffer with at least `size` bytes. The `buffer` parameter must be an `ArrayBufferView`. Behavior is identical to `.read()` except that at least `size` bytes are read, only returning fewer if EOF is encountered. One final call to `.readAtLeast()` is still needed to get back a `done = true` value.
-- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to [Compatibility Dates](/workers/platform/compatibility-dates/)
+- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to [Compatibility Dates](/workers/configuration/compatibility-dates/)
 
 ## 2021-10-14
 
@@ -618,7 +672,7 @@ New this week:
 Runtime release notes covering the past few weeks:
 
 - Increased total per-request `Cache.put()` limit to 5GiB.
-- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/about/default-cache-behavior/).
+- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/concepts/default-cache-behavior/).
 - Added a helpful error message explaining AES decryption failures.
 - Some overload errors were erroneously being reported as daemonDown (1105) errors. They have been changed to exceededCpu (1102) errors, which better describes their cause.
 - More “internal errors” were converted to useful user-facing errors.

@@ -12,9 +12,7 @@ weight: 0
 WordPress relies on making loopback requests to monitor and occasionally administer its websites. Customers can opt-in to optimize Super Bot Fight Mode for WordPress. If this feature is enabled, automated loopback requests made by your WordPress site will be authorized even when Super Bot Fight Mode blocks other bots.
 
 {{<Aside type="note">}}
-
-Loopback requests may also be blocked by [I’m Under Attack mode](/support/firewall/settings/understanding-cloudflare-under-attack-mode-advanced-ddos-protection/), or certain [WAF custom rules](/waf/custom-rules/) or firewall rules.
-
+Loopback requests may also be blocked by [I’m Under Attack mode](/fundamentals/security/under-attack-mode/) or certain [WAF custom rules](/waf/custom-rules/).
 {{</Aside>}}
 
 ## Enable Optimize for WordPress

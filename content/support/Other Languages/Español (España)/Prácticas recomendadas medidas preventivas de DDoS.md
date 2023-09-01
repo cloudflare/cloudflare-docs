@@ -52,5 +52,5 @@ ___
 ## Recursos relacionados
 
 -   [Cómo comprender la protección DDoS de Cloudflare](https://support.cloudflare.com/hc/articles/200172676)
--   [Cómo responder a los ataques DDoS](https://support.cloudflare.com/hc/articles/200170196)
+-   [Cómo responder a los ataques DDoS](/ddos-protection/best-practices/respond-to-ddos-attacks/)
 -   [¿Qué es un ataque DDoS?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

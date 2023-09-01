@@ -20,7 +20,7 @@ To set up PhishNet with Google Workspace you need admin access to your Google Wo
 
     <div class="large-img">
 
-    ![Select Admin install to start installing Cloudflare PhishNet](/email-security/static/phish-submissions/phishnet-gworkspace/step1-phishnet-install.png)
+    ![Select Admin install to start installing Cloudflare PhishNet](/images/email-security/phish-submissions/phishnet-gworkspace/step1-phishnet-install.png)
 
     </div>
 
@@ -28,7 +28,7 @@ To set up PhishNet with Google Workspace you need admin access to your Google Wo
 
     <div class="medium-img">
 
-    ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gworkspace/step3-select-users.png)
+    ![Select to which users you want to install PhishNet to](/images/email-security/phish-submissions/phishnet-gworkspace/step3-select-users.png)
 
     </div>
 
@@ -38,7 +38,7 @@ To set up PhishNet with Google Workspace you need admin access to your Google Wo
 
     <div class="medium-img">
 
-    ![If everything goes well, you will need to select Done to continue.](/email-security/static/phish-submissions/phishnet-gworkspace/step5-done.png)
+    ![If everything goes well, you will need to select Done to continue.](/images/email-security/phish-submissions/phishnet-gworkspace/step5-done.png)
 
     </div>
 
@@ -51,7 +51,7 @@ Cloudflare PhishNet is now installed.
 
     <div class="medium-img">
 
-    ![Open the side panel on Gmail's interface if you need to](/email-security/static/phish-submissions/phishnet-gworkspace/step2-side-panel.png)
+    ![Open the side panel on Gmail's interface if you need to](/images/email-security/phish-submissions/phishnet-gworkspace/step2-side-panel.png)
 
     </div>
 
@@ -59,7 +59,7 @@ Cloudflare PhishNet is now installed.
 
     <div class="medium-img">
 
-    ![Select PhishNet's logo](/email-security/static/phish-submissions/phishnet-gworkspace/step3-logo.png)
+    ![Select PhishNet's logo](/images/email-security/phish-submissions/phishnet-gworkspace/step3-logo.png)
 
     </div>
 
@@ -67,7 +67,7 @@ Cloudflare PhishNet is now installed.
 
     <div class="medium-img">
 
-    ![Choose the type of submission you'd like to make](/email-security/static/phish-submissions/phishnet-gworkspace/step4-submission-type.png)
+    ![Choose the type of submission you'd like to make](/images/email-security/phish-submissions/phishnet-gworkspace/step4-submission-type.png)
 
     </div>
 
