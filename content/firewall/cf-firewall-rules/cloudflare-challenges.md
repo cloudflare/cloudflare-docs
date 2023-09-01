@@ -36,16 +36,15 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 
 Currently, **Managed Challenge** actions are available in the following security products:
 
-- [IP Access Rules](/waf/tools/ip-access-rules/)
-- [User Agent Blocking](/waf/tools/user-agent-blocking/)
-- [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)
-- [Custom rules](/waf/custom-rules/)
-- [WAF Managed Rules](/waf/managed-rules/)
 - [WAF custom rules](/waf/custom-rules/)
 - [Rate limiting rules](/waf/rate-limiting-rules/)
-- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](/bots/troubleshooting/#why-am-i-seeing-a-managed-challenge-action-for-firewall-rules).
+- [WAF Managed Rules](/waf/managed-rules/)
+- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](/bots/troubleshooting/#why-am-i-seeing-a-managed-challenge-action-for-waf-rules).
 - [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
+- [IP Access Rules](/waf/tools/ip-access-rules/)
+- [User Agent Blocking](/waf/tools/user-agent-blocking/)
 - [Firewall rules](/firewall/) (deprecated)
+- [Rate Limiting (previous version, deprecated)](/waf/reference/legacy/old-rate-limiting/)
 
 ### JS challenge
 
@@ -121,7 +120,7 @@ For additional help, refer to [our FAQ for Challenges](/firewall/known-issues-an
 
 ## Multi-language support
 
-Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser UI. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
+Cloudflare Challenge Platform can detect multiple languages and display the localized challenge experience, which is determined by `navigator.language` value. The [Navigator.language read-only property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language) returns a string representing the preferred language of the user, usually the language of the browser user interface. The supported languages are currently English, Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, French, German, Indonesian, Italian, Japanese, Korean, Persian/Farsi, Polish, Portuguese, Russian, Spanish, Turkish.
 
 ## Common issues
 
