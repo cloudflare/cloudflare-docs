@@ -67,6 +67,12 @@ Instead of running the `wrangler d1 execute` command in your terminal every time
 
 * [GitHub](https://github.com/isaac-mcfadyen/d1-console)
 
+### wrangler-proxy
+
+`wrangler-proxy` exposes Workers API (including D1) to the outside world, so you can integrate it with your favorite frameworks. It is compatible with DrizzleORM. It was originally created to enable Workers API in local development environments, but can also be used to self-host Workers runtime.
+
+* [wrangler-proxy](https://github.com/chientrm/wrangler-proxy)
+
 ## Feedback
 
 To report a bug or file feature requests for these community projects, create an issue directly on the project's repository. 
