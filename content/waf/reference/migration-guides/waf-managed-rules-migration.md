@@ -6,7 +6,7 @@ weight: 1
 
 # Migrating to the new WAF Managed Rules
 
-On May 4, 2022, Cloudflare started phase 1 of the WAF migration from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Phase 2, available since September 19, 2022, allows the remaining zones to migrate to WAF Managed Rules.
+On 2022-05-04, Cloudflare started the WAF migration from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Currently, all zones can migrate to WAF Managed Rules, including partner accounts.
 
 You can start the update process for a zone in the Cloudflare dashboard or via API. Currently, the update process is always started by you. **The migration is irreversible** — once you update to the new WAF Managed Rules, you cannot go back to using WAF managed rules.
 
@@ -100,9 +100,15 @@ ___
 
 ## Eligible zones
 
-### Phase 2 (since September 19, 2022)
+### Phase 3 (since 2023-08-18)
 
-In phase 2 all zones are eligible for migration. The exact migration procedure varies according to your Cloudflare plan.
+In phase 3 the migration is available for all zones, including partner accounts. The migration procedure is the same as in phase 2.
+
+**Note:** You will not be able to migrate zones that have [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides). You must delete these overrides before migrating.
+
+### Phase 2 (since 2022-09-19)
+
+In phase 2 all zones are eligible for migration, except partner accounts. The exact migration procedure varies according to your Cloudflare plan.
 
 - **Pro** and **Business** customers can update to the new WAF Managed Rules in the Cloudflare dashboard or via API. Once the new version is enabled, the previous version of WAF managed rules will be automatically disabled.
 
@@ -110,7 +116,7 @@ In phase 2 all zones are eligible for migration. The exact migration procedure v
 
 **Note:** Zones that have [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides), which you could only manage via API, will not be able to migrate immediately to the new WAF Managed Rules. You must delete these overrides before migrating.
 
-### Phase 1 (since May 4, 2022)
+### Phase 1 (since 2022-05-04)
 
 In phase 1 the migration became available to a subset of eligible zones, which had to meet the following requirements:
 
