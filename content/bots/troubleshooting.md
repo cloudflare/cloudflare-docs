@@ -37,7 +37,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/migration-guides/waf-managed-rules-migration/)):
 
 - Disable the WAF managed rule with ID `100203` temporarily.
-- Alternatively, create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
+- Alternatively, create a firewall rule ([deprecated](/waf/reference/migration-guides/firewall-rules-to-custom-rules/)) with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
 
 **Solution:**
 
