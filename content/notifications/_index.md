@@ -10,6 +10,8 @@ layout: list
 
 # Cloudflare Notifications
 
+{{<plan type="all">}}
+
 Cloudflare Notifications help you stay up to date with your Cloudflare account. Manage your Notifications to define what you want to be warned about and how, be it a denial-of-service attack or an issue with your server.
 
 The available Notification features vary according to your plan:

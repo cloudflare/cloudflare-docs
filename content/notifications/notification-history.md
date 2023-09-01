@@ -14,19 +14,18 @@ Currently, customers can access Notification History [via the Cloudflare API](/a
 
 ```txt
 ---
-header: Syntax:
+header: Syntax
 ---
-GET accounts/:identifier/alerting/v3/history
+GET accounts/{account_id}/alerting/v3/history
 ```
 
-```sh
+```bash
 ---
 header: Example
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/9a7806061c88ada191ed06f989cc3dac/alerting/v3/history?page=1&per_page=25" \
-     --header "X-Auth-Email: user@example.com" \
-     --header "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
-     --header "Content-Type: application/json"
+     --header "X-Auth-Email: <EMAIL>" \
+     --header "X-Auth-Key: <API_KEY>" \
 ```
 
 ## Availability
@@ -38,6 +37,6 @@ Notification History is available to all plans. The amount of history clients ha
 
 {{<Aside type="note">}}
 
-Customers will not be able to to access Notification History from before Oct 11, 2021.
+Customers will not be able to to access Notification History from before 2021-10-11.
 
 {{</Aside>}}

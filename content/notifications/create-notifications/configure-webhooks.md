@@ -12,7 +12,7 @@ This feature is only available if your account has at least one paid feature. Fo
 
 There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Refer to the table below to learn how to connect your Cloudflare account to [popular webhook services](#popular-webhook-services).
 
-## Set up webhooks:
+## Set up webhooks
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Notifications** > **Destinations**.

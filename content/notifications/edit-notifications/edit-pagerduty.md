@@ -19,4 +19,4 @@ If other delivery destinations were selected, then those notifications will stil
 3. In the **Connected notification services** card, select **View** on the PagerDuty service you want to disconnect.
 4. Select **Disconnect** > **Confirm**.
 5. Go to your [PagerDuty account](https://www.pagerduty.com/) and make the required changes.
-6. Reconnect [PagerDuty to Cloudflare](/notifications/create-notifications/create-pagerduty/).
+6. [Reconnect PagerDuty to Cloudflare](/notifications/create-notifications/create-pagerduty/).

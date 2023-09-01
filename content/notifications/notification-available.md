@@ -192,7 +192,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md" productFolder="fundamentals">}}
+{{<render file="_ddos.md">}}
 
 </div>
 </details>
@@ -215,7 +215,7 @@ Purchase of Magic Transit and/or BYOIP.
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md" productFolder="fundamentals">}}
+{{<render file="_ddos.md">}}
 
 </div>
 </details>
@@ -242,7 +242,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md" productFolder="fundamentals">}}
+{{<render file="_ddos.md">}}
 
 </div>
 </details>
@@ -271,7 +271,7 @@ Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 **What should you do if you receive one?**
 
-{{<render file="_ddos.md" productFolder="fundamentals">}}
+{{<render file="_ddos.md">}}
 
 </div>
 </details>
@@ -478,7 +478,7 @@ Enterprise plans.
 **What should you do if you receive one?**
 
 1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-2. {{<render file="_errors.md" productFolder="fundamentals">}}
+2. {{<render file="_errors.md">}}
 
 </div>
 </details>
@@ -501,7 +501,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_errors.md" productFolder="fundamentals">}}
+{{<render file="_errors.md">}}
 
 </div>
 </details>
@@ -594,7 +594,7 @@ Investigate to confirm it is an expected change.
 
 Page Shield customers who want to receive a notification when resources from a known malicious domain appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md" productFolder="fundamentals">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
 
 **Other options / filters**
 
@@ -606,7 +606,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-{{<render file="_script-monitor-review-malicious-scripts.md" productFolder="fundamentals">}}
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
 
 </div>
 </details>
@@ -619,7 +619,7 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md" productFolder="fundamentals">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
 
 **Other options / filters**
 
@@ -631,7 +631,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-{{<render file="_script-monitor-review-malicious-scripts.md" productFolder="fundamentals">}}
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
 
 </div>
 </details>
@@ -644,7 +644,7 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when resources from a known malicious URL appear in their domain.
 
-{{<render file="_script-monitor-detect-malicious-scripts.md" productFolder="fundamentals">}} <br>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}} <br>
 
 **Other options / filters**
 
@@ -656,7 +656,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-{{<render file="_script-monitor-review-malicious-scripts.md" productFolder="fundamentals">}}
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
 
 </div>
 </details>
@@ -852,7 +852,7 @@ Purchase of Cloudflare for SaaS.
 
 **What should you do if you receive one?**
 
-{{<render file="_troubleshoot-ssl.md" productFolder="fundamentals">}}
+{{<render file="_troubleshoot-ssl.md">}}
 
 </div>
 </details>
@@ -875,7 +875,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-{{<render file="_troubleshoot-ssl.md" productFolder="fundamentals">}}
+{{<render file="_troubleshoot-ssl.md">}}
 
 </div>
 </details>
