@@ -73,7 +73,7 @@ To install the certificate with Keychain Access:
 
 3. In **Keychain**, choose the access option that suits your needs and select **Add**.
 
-4. In the list of certificates, right-click the new certificate and select **Get Info**.
+4. In the list of certificates, locate the newly installed certificate. Keychain Access will mark this certificate as not trusted. Right-click the certificate and select **Get Info**.
 
 5. Select **Trust**. Under **When using this certificate**, select _Always Trust_.
 
@@ -166,7 +166,7 @@ $ sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
 $ sudo update-ca-trust
 ```
 
-#### Nix and NixOS
+#### NixOS
 
 NixOS does not use the system certificate store for self updating and instead relies on the certificates found in `~/.nix-profile/etc/ssl/certs` or provided by `NIX_SSL_CERT_FILE` at runtime.
 
@@ -196,7 +196,7 @@ Alternatively, you can go to **Settings** > **General** > **VPN & Device Managem
 
 8. Enable the Cloudflare certificate.
 
-9. A confirmation dialogue will appear. Choose **Continue**.
+9. A security warning message will appear. Choose **Continue**.
 
 The root certificate is now installed and ready to be used.
 
