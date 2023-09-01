@@ -44,7 +44,7 @@ ___
 ## Add domains
 
 1. Create a list of domains you want to add, each on a separate line (newline separated), stored in a file such as `domains.txt`.
-2. Create a bash script `add-multiple-zones.sh` and add the following. Add `domains.txt` to the same directory or update it's path accordingly. 
+2. Create a bash script `add-multiple-zones.sh` and add the following. Add `domains.txt` to the same directory or update its path accordingly. 
 ```js
   for domain in $(cat domains.txt); do
     printf "Adding ${domain}:\n"
@@ -65,7 +65,7 @@ ___
   done
 ```
 
-3. Add executible commands to the script
+3. Add executable commands to the script:
 ```js
   chmod +x add-multiple-zones.sh
 ```
@@ -95,7 +95,7 @@ This tool is a requirement to complete any `Additional options` steps in this tu
   echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
 ```
 
-See `jq` [documation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.
+Refer to `jq` [documentation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.
 
 ### Quick scan
 
@@ -140,7 +140,7 @@ Using `jq` with the first option above, modify your script `add-multiple-zones.s
   done
 ```
 
-## Update Nameservers
+## Update nameservers
 
 For each domain to become active on Cloudflare, it must be activated in either [Full setup](/dns/zone-setups/full-setup/setup/) or [Partial setup](/dns/zone-setups/partial-setup/setup/). The following script will output a list containing the nameservers associated with each domain.
 
