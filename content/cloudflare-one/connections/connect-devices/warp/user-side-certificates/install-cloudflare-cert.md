@@ -103,9 +103,9 @@ $ echo | sudo tee -a /etc/ssl/cert.pem < Cloudflare_CA.pem
 
 ### Windows
 
-Windows offers two options to install the certificate, each having a different impact on which users will be affected by trusting the root certificate.
+Windows offers two locations to install the certificate, each impacting which users will be affected by trusting the root certificate.
 
-| Store Location      | Impact                  |
+| Store location      | Access scope            |
 | ------------------- | ----------------------- |
 | Current User Store  | The logged in user      |
 | Local Machine Store | All users on the system |
@@ -118,21 +118,13 @@ Windows offers two options to install the certificate, each having a different i
 
 4. The **Certificate** window will appear. Select **Install Certificate**.
 
-![Window for Cloudflare certificate](/images/cloudflare-one/connections/windows_install_cert.png)
-
 5. Now choose a Store Location. If you see a Security Warning, choose **Yes** to proceed.
 
 6. On the next screen, select **Browse**.
 
-7. Choose the **Trusted Root Certification Authorities** store.
+7. In the list, choose the _Trusted Root Certification Authorities_ store.
 
-8. Select **OK**.
-
-![Window for selecting certificate store location](/images/cloudflare-one/connections/windows_cert_location.png)
-
-9. Select **Finish**.
-
-![Window for finishing certificate installation](/images/cloudflare-one/connections/windows_cert_install_finished.png)
+8. Select **OK**, then select **Finish**.
 
 The root certificate is now installed and ready to be used.
 
