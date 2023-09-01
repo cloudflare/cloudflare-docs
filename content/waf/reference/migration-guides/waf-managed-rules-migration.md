@@ -340,13 +340,13 @@ Go to the [Activity log](/waf/security-events/paid-plans/#activity-log) in Secur
 
 - Look for any requests allowed by the new WAF that are being handled by the previous WAF version (for example, by a challenge or block action). If this happens, consider writing a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) or a [WAF custom rule](/waf/custom-rules/create-dashboard/) to handle the requests you previously identified.
 
-- Look for legitimate requests being blocked by the new WAF. In this situation, edit the WAF managed rule that is blocking these requests, changing the performed action or disabling the rule. For more information, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) in the WAF documentation.
+- Look for legitimate requests being blocked by the new WAF. In this situation, edit the WAF managed rule that is blocking these requests, changing the performed action or disabling the rule. For more information, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
 ### For Business/Professional customers
 
 Business and Professional customers do not have access to validation mode, which means that they will be able to check the new WAF behavior after they migrate to the new WAF Managed Rules.
 
-In the days following the migration, check the [Activity log](/waf/security-events/paid-plans/#activity-log) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure a single rule in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-single-rule-in-a-managed-ruleset) in the WAF documentation.
+In the days following the migration, check the [Activity log](/waf/security-events/paid-plans/#activity-log) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure a single rule in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-single-rule-in-a-managed-ruleset).
 
 Additionally, check for requests that should have been blocked. In this situation, consider creating a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) or a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block these requests.
 
