@@ -48,7 +48,7 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 ### OIDC claims
 
-OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can be referenced in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access based on these specific attributes.
+OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can be referenced in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access based on these specific attributes. Custom OIDC claims are not currently supported in Gateway policies.
 
 #### Multi-record OIDC claims
 
