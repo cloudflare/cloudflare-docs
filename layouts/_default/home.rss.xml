@@ -35,6 +35,7 @@
     <link>{{ $link }}</link>
     <description>{{ $description }}</description>
     <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
+    <product>{{- $product -}}</product>
     </item>
     {{- end -}}
   </channel>
