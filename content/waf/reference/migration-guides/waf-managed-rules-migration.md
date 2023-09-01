@@ -100,15 +100,13 @@ ___
 
 ## Eligible zones
 
-### Phase 3 (since 2023-08-18)
-
-In phase 3 the migration is available for all zones, including partner accounts. The migration procedure is the same as in phase 2.
-
-**Note:** You will not be able to migrate zones that have [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides). You must delete these overrides before migrating.
-
 ### Phase 2 (since 2022-09-19)
 
-In phase 2 all zones are eligible for migration, except partner accounts. The exact migration procedure varies according to your Cloudflare plan.
+{{<Aside type="note" header="Update notice">}}
+On 2023-08-18, Cloudflare added support for migrating partner accounts to the new WAF Managed Rules.
+{{</Aside>}}
+
+In phase 2 all zones are eligible for migration. The exact migration procedure varies according to your Cloudflare plan.
 
 - **Pro** and **Business** customers can update to the new WAF Managed Rules in the Cloudflare dashboard or via API. Once the new version is enabled, the previous version of WAF managed rules will be automatically disabled.
 
