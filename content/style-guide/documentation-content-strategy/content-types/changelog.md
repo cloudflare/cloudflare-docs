@@ -32,7 +32,7 @@ Do not use the following terms: change log (two words), release notes, what's ne
 
 ## Structure
 
-When creating a changelog, you need a markdown page file and a corresponding YAML file in the [`/data/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/data/changelogs).
+When creating a changelog, you need a Markdown page file and a corresponding YAML file in the [`/data/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/data/changelogs).
 
 The combination of these files allows us to:
 
@@ -42,7 +42,7 @@ The combination of these files allows us to:
 
 ### Markdown file
 
-Your markdown file needs to have several special values to pull in the changelog information. These values are highlighted in the sample page.
+Your Markdown file needs to have several special values to pull in the changelog information. These values are highlighted in the sample page.
 
 ```
 ---

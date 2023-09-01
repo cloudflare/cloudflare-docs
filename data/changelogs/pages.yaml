@@ -45,7 +45,9 @@ entries:
   description: Build log now supports ansi color codes.
 - publish_date: '2022-10-05'
   title: Deep linking to a Pages project
-  description: You can now deep-link to a Pages project in the dashboard with `:pages-project`.
+  description: |-
+    You can now deep-link to a Pages project in the dashboard with `:pages-project`.
+
     An example would be `https://dash.cloudflare.com?to=/:account/pages/view/:pages-project`.
 - publish_date: '2022-09-12'
   title: Increased domain limits
@@ -54,7 +56,7 @@ entries:
 
     Now, the limits are:
 
-    - **Free**: 100 custom domains
+    - **Free**: 100 custom domains.
     - **Pro**: 250 custom domains.
     - **Business** and **Enterprise**: 500 custom domains.
 - publish_date: '2022-09-08'
