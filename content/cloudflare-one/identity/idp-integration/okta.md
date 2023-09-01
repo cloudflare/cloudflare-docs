@@ -53,7 +53,9 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-16. Select **Save**.
+16. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+
+17. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 

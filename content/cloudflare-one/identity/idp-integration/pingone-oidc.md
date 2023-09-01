@@ -24,6 +24,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 12. Select **PingOne**.
 13. Input the **Client ID**, **Client Secret**, and **Environment ID** generated previously.
 14. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
-15. Select **Save**.
+15. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+16. Select **Save**.
 
 You can now [test your connection](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method.
