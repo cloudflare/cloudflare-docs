@@ -230,6 +230,9 @@ entries:
   title: MP4 video file downloads (beta)
   description: You can now give your viewers the option to download videos uploaded
     to Stream as an MP4 video file. For more, read the docs [here](/stream/viewing-videos/download-videos/).
+- publish_date: '2021-03-25'
+  title: Improved client bandwidth hints for third-party video players
+  description: If you use Cloudflare Stream with a third party player, and send the `clientBandwidthHint` parameter in requests to fetch video manifests, Cloudflare Stream now selects the ideal resolution to provide to your client player more intelligently. This ensures your viewers receive the ideal resolution for their network connection.
 - publish_date: '2021-03-10'
   title: Stream Player 2.0 (preview)
   description: |-

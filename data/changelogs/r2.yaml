@@ -3,13 +3,13 @@ link: "/r2/reference/changelog/"
 productName: R2
 entries:
 - publish_date: '2023-07-05'
-  description: Improved performance for ranged reads on very large files. Previously
-    ranged reads near the end of very large files would be noticeably slower than
-    ranged reads on smaller files. Performance should now be consistently good independent
-    of filesize.
+  description: |-
+      - Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than 
+      ranged reads on smaller files. Performance should now be consistently good independent of filesize.
 - publish_date: '2023-06-21'
-  description: "[Multipart ETags](/r2/objects/multipart-objects/#etags) are now MD5
-    hashes."
+  description: |-
+      - [Multipart ETags](/r2/objects/multipart-objects/#etags) are now MD5
+      hashes.
 - publish_date: '2023-06-16'
   description: |-
     - Fixed a bug where calling [GetBucket](/api/operations/r2-get-bucket) on a non-existent bucket would return a 500 instead of a 404.
@@ -28,8 +28,9 @@ entries:
     - Object Lifecycles are now available for use.
     - Bug fix: Requests to public buckets will now return the `Content-Encoding` header for gzip files when `Accept-Encoding: gzip` is used.
 - publish_date: '2023-01-27'
-  description: R2 authentication tokens created via the R2 token page are now scoped
-    to a single account by default.
+  description: |-
+    - R2 authentication tokens created via the R2 token page are now scoped
+      to a single account by default.
 - publish_date: '2022-12-07'
   description: |-
     - Fix CORS preflight requests for the S3 API, which allows using the S3 SDK in the browser.
@@ -58,14 +59,18 @@ entries:
     - Multipart upload part sizes are always expected to be of the same size, but this enforcement is now done when you complete an upload instead of being done very time you upload a part.
     - Fixed a performance issue where concurrent multipart part uploads would get rejected.
 - publish_date: '2022-10-26'
-  description: Fixed ranged reads for multipart objects with part sizes unaligned
+  description: |-
+    - Fixed ranged reads for multipart objects with part sizes unaligned
     to 64KiB.
 - publish_date: '2022-10-19'
-  description: "`HeadBucket` now sets `x-amz-bucket-region` to `auto` in the response."
+  description: |-
+    - `HeadBucket` now sets `x-amz-bucket-region` to `auto` in the response.
 - publish_date: '2022-10-06'
-  description: Temporarily disabled `UploadPartCopy` while we investigate an issue.
+  description: |-
+    - Temporarily disabled `UploadPartCopy` while we investigate an issue.
 - publish_date: '2022-09-29'
-  description: Fixed a CORS issue where `Access-Control-Allow-Headers` was not being
+  description: |-
+    - Fixed a CORS issue where `Access-Control-Allow-Headers` was not being
     set for preflight requests.
 - publish_date: '2022-09-28'
   description: |-
@@ -96,7 +101,8 @@ entries:
     - The S3 `DeleteObjects` operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 `DeleteObject` operation was not affected by this.
     - Fixed presigned URL support for the S3 `ListBuckets` and `ListObjects` operations.
 - publish_date: '2022-08-06'
-  description: Uploads will automatically infer the `Content-Type` based on file body
+  description: |-
+    - Uploads will automatically infer the `Content-Type` based on file body
     if one is not explicitly set in the `PutObject` request. This functionality will
     come to multipart operations in the future.
 - publish_date: '2022-07-30'
@@ -104,17 +110,18 @@ entries:
     - Fixed S3 conditionals to work properly when provided the `LastModified` date of the last upload, bindings fixes will come in the next release.
     - `If-Match` / `If-None-Match` headers now support arrays of ETags, Weak ETags and wildcard (`*`) as per the HTTP standard and undocumented AWS S3 behavior.
 - publish_date: '2022-07-21'
-  description: 'Added dummy implementation of the following operation that mimics
-    the response that a basic AWS S3 bucket will return when first created: `GetBucketAcl`.'
+  description: |-
+    - Added dummy implementation of the following operation that mimics
+      the response that a basic AWS S3 bucket will return when first created: `GetBucketAcl`.
 - publish_date: '2022-07-20'
   description: |-
-    Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:
+    - Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:
 
-    - `GetBucketVersioning`
-    - `GetBucketLifecycleConfiguration`
-    - `GetBucketReplication`
-    - `GetBucketTagging`
-    - `GetObjectLockConfiguration`
+      - `GetBucketVersioning`
+      - `GetBucketLifecycleConfiguration`
+      - `GetBucketReplication`
+      - `GetBucketTagging`
+      - `GetObjectLockConfiguration`
 - publish_date: '2022-07-19'
   description: |-
     - Fixed an S3 compatibility issue for error responses with MinIO .NET SDK and any other tooling that expects no `xmlns` namespace attribute on the top-level `Error` tag.
@@ -135,24 +142,28 @@ entries:
     - `cf-create-bucket-if-missing` can be set on a `PutObject`/`CreateMultipartUpload` request to implicitly create the bucket if it does not exist.
     - Fix S3 compatibility with MinIO client spec non-compliant XML for publishing multipart uploads. Any leading and trailing quotes in `CompleteMultipartUpload` are now optional and ignored as it seems to be the actual non-standard behavior AWS implements.
 - publish_date: '2022-07-01'
-  description: "- Unsupported search parameters to `ListObjects`/`ListObjectsV2` are
-    now rejected with `501 Not Implemented`.\n- Fixes for Listing:\n\n\t- Fix listing
-    behavior when the number of files within a folder exceeds the limit (you'd end
+  description: |-
+    - Unsupported search parameters to `ListObjects`/`ListObjectsV2` are
+    now rejected with `501 Not Implemented`.
+    - Fixes for Listing:
+      - Fix listing behavior when the number of files within a folder exceeds the limit (you'd end
     up seeing a CommonPrefix for that large folder N times where N = number of children
-    within the CommonPrefix / limit).\n\t- Fix corner case where listing could cause
-    objects with sharing the base name of a \"folder\" to be skipped.\n\t- Fix listing
-    over some files that shared a certain common prefix.\n- `DeleteObjects` can now
-    handle 1000 objects at a time.\n- S3 `CreateBucket` request can specify `x-amz-bucket-object-lock-enabled`
-    with a value of `false` and not have the requested rejected with a `NotImplemented`
-    error. A value of `true` will continue to be rejected as R2 does not yet support
-    object locks."
+    within the CommonPrefix / limit).
+      - Fix corner case where listing could cause
+    objects with sharing the base name of a \"folder\" to be skipped.
+      - Fix listing over some files that shared a certain common prefix.
+    - `DeleteObjects` can now handle 1000 objects at a time.
+    - S3 `CreateBucket` request can specify `x-amz-bucket-object-lock-enabled` with a value of `false` and not have the requested rejected with a `NotImplemented`
+      error. A value of `true` will continue to be rejected as R2 does not yet support
+      object locks.
 - publish_date: '2022-06-17'
   description: |-
     - Fixed a regression for some clients when using an empty delimiter.
     - Added support for S3 pre-signed URLs.
 - publish_date: '2022-06-16'
-  description: Fixed a regression in the S3 API `UploadPart` operation where `TooMuchConcurrency`
-    & `NoSuchUpload` errors were being returned as `NoSuchBucket`.
+  description: |-
+    - Fixed a regression in the S3 API `UploadPart` operation where `TooMuchConcurrency`
+      & `NoSuchUpload` errors were being returned as `NoSuchBucket`.
 - publish_date: '2022-06-13'
   description: |-
     - Fixed a bug with the S3 API `ListObjectsV2` operation not returning empty folder/s as common prefixes when using delimiters.
@@ -167,9 +178,10 @@ entries:
     - Fixed a bug where the S3 API's `PutObject` or the `.put()` binding could fail but still show the bucket upload as successful.
     - If [conditional headers](https://datatracker.ietf.org/doc/html/rfc7232) are provided to S3 API `UploadObject` or `CreateMultipartUpload` operations, and the object exists, a `412 Precondition Failed` status code will be returned if these checks are not met.
 - publish_date: '2022-05-20'
-  description: Fixed a bug when `Accept-Encoding` was being used in `SignedHeaders`
-    when sending requests to the S3 API would result in a `SignatureDoesNotMatch`
-    response.
+  description: |-
+    - Fixed a bug when `Accept-Encoding` was being used in `SignedHeaders`
+      when sending requests to the S3 API would result in a `SignatureDoesNotMatch`
+      response.
 - publish_date: '2022-05-17'
   description: |-
     - Fixed a bug where requests to the S3 API were not handling non-encoded parameters used for the authorization signature.
@@ -214,5 +226,6 @@ entries:
     - The S3 API `ListObjectsV2` now correctly honors the `encoding-type` parameter.
     - The S3 API `PutObject` operation now works with `POST` requests for `s3cmd` compatibility.
 - publish_date: '2022-04-04'
-  description: The S3 API `DeleteObjects` request now properly returns a `MalformedXML`
-    error instead of `InternalError` when provided with more than 128 keys.
+  description: |-
+    - The S3 API `DeleteObjects` request now properly returns a `MalformedXML`
+      error instead of `InternalError` when provided with more than 128 keys.
