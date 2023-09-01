@@ -118,7 +118,7 @@ Windows offers two locations to install the certificate, each impacting which us
 
 4. The **Certificate** window will appear. Select **Install Certificate**.
 
-5. Now choose a Store Location. If you see a Security Warning, choose **Yes** to proceed.
+5. Now choose a Store Location. If you see a security warning, choose **Yes** to proceed.
 
 6. On the next screen, select **Browse**.
 
@@ -176,43 +176,27 @@ iOS only allows the Safari browser to open and install certificates.
 
 1. Open Safari and [download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
 
-![iOS popup message asking for permission to download certificate](/images/cloudflare-one/connections/ios_cert_download.PNG)
-
 2. Select **Allow**.
 
-3. Go to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
+3. Go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
 
 {{<Aside type="note">}}
 
-Alternatively, you can go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
+Alternatively, you can go to **Settings** > **General** > **VPN & Device Management** and select the **Cloudflare for Teams ECC Certificate Authority** profile.
 
 {{</Aside>}}
 
-![iOS screen for viewing certificate profile](/images/cloudflare-one/connections/ios_cert_profile.PNG)
+4. Select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
-4. Select the profile and select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+5. Next, a certificate warning will appear. Select **Install**. If a second prompt appears, select **Install** again.
 
-5. Next, a certificate warning will appear. Select **Install**.
+6. Next, the Profile Installed screen will appear. Select **Done**. The certificate is now installed. However, before it can be used, it must be trusted by the device.
 
-If a second prompt is displayed, select **Install** again.
+7. Go to **Settings** > **General** > **About** > **Certificate Trust Settings**. The installed root certificates will be displayed under Enable full trust for root certificates.
 
-6. Next, the **Profile Installed** screen will appear. Select **Done**.
+8. Enable the Cloudflare certificate.
 
-![iOS message confirming certificate profile installation](/images/cloudflare-one/connections/ios_profile_installed.PNG)
-
-The certificate is now installed. However, before it can be used, it must be trusted by the device.
-
-7. On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
-
-The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
-
-![iOS screen for configuring certificate trust settings](/images/cloudflare-one/connections/ios_cert_trust1.PNG)
-
-8. Select the slide button next to the Cloudflare certificate you just installed.
-
-9. A confirmation dialogue will appear. Select **Continue**.
-
-![iOS popup message asking to confirm trust setting](/images/cloudflare-one/connections/ios_cert_trust2.PNG)
+9. A confirmation dialogue will appear. Choose **Continue**.
 
 The root certificate is now installed and ready to be used.
 
@@ -220,39 +204,15 @@ The root certificate is now installed and ready to be used.
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-2. Go to **Settings** > **Security**.
+2. Go to **Settings** > **Security** > **Advanced** > **Encryption & credentials** > **Install a certificate**.
 
-![Android **Settings** screen](/images/cloudflare-one/connections/android_security_settings.png)
+3. Select **CA certificate**.
 
-3. Select **Advanced** > **Encryption & Credentials**.
+4. Select **Install anyway**.
 
-{{<table-wrap>}}
+5. Verify your identity.
 
-|                                                                                                          |                                                                                                                                    |
-| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| ![Android **Security** settings screen](/images/cloudflare-one/connections/android_advanced_encrypt.png) | ![Android **Security** screen after expanding **Advanced** menu](/images/cloudflare-one/connections/android_advanced_encrypt2.png) |
-
-{{</table-wrap>}}
-
-4. Select **Install a certificate** > **CA certificate**.
-
-{{<table-wrap>}}
-
-|                                                                                                             |                                                                                                      |
-| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| ![Android **Encryption & credentials** screen](/images/cloudflare-one/connections/android_install_cert.png) | ![Android **Install a certificate*** screen](/images/cloudflare-one/connections/android_ca_cert.png) |
-
-{{</table-wrap>}}
-
-5. Select **Install Anyway**.
-
-![Android screen asking to confirm certificate installation](/images/cloudflare-one/connections/android_install_anyway.png)
-
-6. Verify your identity through the fingerprint, or by inserting the pin code.
-
-7. Select the certificate you want to install.
-
-![Selecting the Cloudflare certificate in the Android Google Drive app](/images/cloudflare-one/connections/android_choose_certificate.png)
+6. Choose the certificate file you want to install.
 
 The root certificate is now installed and ready to be used.
 
