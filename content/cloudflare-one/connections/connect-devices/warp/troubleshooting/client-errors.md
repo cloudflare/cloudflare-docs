@@ -122,7 +122,7 @@ Configure the third-party security product to allow the [WARP ingress IPs and po
 
 ### Cause
 
-The initial [connectivity check](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check) to `connectivity.cloudflareclient.com` has failed.
+The [connectivity check](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check) inside of the WARP tunnel has failed.
 
 ### Resolution
 
