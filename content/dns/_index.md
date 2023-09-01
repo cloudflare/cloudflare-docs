@@ -22,7 +22,7 @@ Cloudflare DNS is a fast, resilient and easy-to-manage authoritative DNS service
 {{<feature header="DNSSEC" href="/dns/dnssec/">}}
 DNS Security Extensions (DNSSEC) adds cryptographic signatures to your DNS records, preventing anyone else from redirecting traffic intended for your domain.
 
-Cloudflare also suppports [Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/).
+Cloudflare also supports [Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/).
 {{</feature>}}
 
 {{<feature header="CNAME flattening" href="/dns/cname-flattening/">}}
