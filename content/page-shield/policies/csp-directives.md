@@ -19,7 +19,7 @@ The following table lists the supported CSP directives and keywords you can use 
 {{<table-wrap>}}
 
 Directive         | Name in the dashboard | Supported keywords | Monitored
-------------------|-----------------------|-------------|------------------|----------------------------
+------------------|-----------------------|----------------|------------------
 `script-src`      | Scripts         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
 `connect-src`     | Connections     | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
 `default-src`     | Default         | `'none'`<br>`'self'` | No
