@@ -22,9 +22,15 @@ weight: 7
 - Deprecated Layer 3
   [summary](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary) endpoint, this will stop
   receiving data after 2023-08-14.
+  - To continue getting this data, switch to the
+    new [timeseries group protocol](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary-by-protocol)
+    endpoint.
 - Deprecated Layer 3
   [timeseries groups](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-groups)
   endpoint, this will stop receiving data after 2023-08-14.
+  - To continue getting this data, switch to the
+    new [timeseries group protocol](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-group-by-protocol)
+    endpoint.
 
 ## 2023-07-31
 
