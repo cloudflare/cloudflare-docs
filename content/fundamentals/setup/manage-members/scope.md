@@ -27,7 +27,7 @@ If you want the member to have a role that applies to all domains within your ac
 
 {{<Aside type="note">}}
 
-You can only assign [account-scoped roles](/fundamentals/account-and-billing/members/roles/#account-scoped-roles) to members who have access to all domains.
+You can only assign [account-scoped roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) to members who have access to all domains.
 
 {{</Aside>}}
 
@@ -48,7 +48,7 @@ If you want the member to have roles associated with most domains, but not one o
 
 {{<Aside type="note">}}
 
-If you limit permissions to any domain, you can only assign [domain-scoped roles](/fundamentals/account-and-billing/members/roles/#domain-scoped-roles) to these members.
+If you limit permissions to any domain, you can only assign [domain-scoped roles](/fundamentals/setup/manage-members/roles/#domain-scoped-roles) to these members.
 
 {{</Aside>}}
 
@@ -83,6 +83,6 @@ To assign a member permissions to a domain group, use the following combination 
 
 {{<Aside type="note">}}
 
-With Domain Groups, you can only assign [domain-scoped roles](/fundamentals/account-and-billing/members/roles/#domain-scoped-roles) to these members.
+With Domain Groups, you can only assign [domain-scoped roles](/fundamentals/setup/manage-members/roles/#domain-scoped-roles) to these members.
 
 {{</Aside>}}
