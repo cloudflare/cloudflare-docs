@@ -18,22 +18,23 @@ The following table lists the supported CSP directives and keywords you can use 
 
 {{<table-wrap>}}
 
-Directive         | Supported keywords | Monitored
-------------------|------------|------------------|----------------------------
-`script-src`      | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`connect-src`     | `'none'`<br>`'self'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`default-src`     | `'none'`<br>`'self'` | No
-`img-src`         | `'none'`<br>`'self'` | No
-`style-src`       | `'none'`<br>`'self'` | No
-`font-src`        | `'none'`<br>`'self'` | No
-`object-src`      | `'none'`<br>`'self'` | No
-`media-src`       | `'none'`<br>`'self'` | No
-`child-src`       | `'none'`<br>`'self'` | No
-`form-action`     | `'none'`<br>`'self'` | No
-`worker-src`      | `'none'`<br>`'self'` | No
-`base-uri`        | `'none'`<br>`'self'` | No
-`manifest-src`    | `'none'`<br>`'self'` | No
-`frame-ancestors` | `'none'`<br>`'self'` | No
+Directive         | Name in the dashboard | Supported keywords | Monitored
+------------------|-----------------------|-------------|------------------|----------------------------
+`script-src`      | Scripts         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`connect-src`     | Connections     | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`default-src`     | Default         | `'none'`<br>`'self'` | No
+`img-src`         | Images          | `'none'`<br>`'self'` | No
+`style-src`       | Styles          | `'none'`<br>`'self'` | No
+`font-src`        | Fonts           | `'none'`<br>`'self'` | No
+`object-src`      | Objects         | `'none'`<br>`'self'` | No
+`media-src`       | Media           | `'none'`<br>`'self'` | No
+`child-src`       | Child           | `'none'`<br>`'self'` | No
+`form-action`     | Form actions    | `'none'`<br>`'self'` | No
+`worker-src`      | Workers         | `'none'`<br>`'self'` | No
+`base-uri`        | Base URI        | `'none'`<br>`'self'` | No
+`manifest-src`    | Manifests       | `'none'`<br>`'self'` | No
+`frame-src`       | Frames          | `'none'`<br>`'self'` | No
+`frame-ancestors` | Frame ancestors | `'none'`<br>`'self'` | No
 
 {{</table-wrap>}}
 
