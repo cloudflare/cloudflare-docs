@@ -29,6 +29,10 @@ Cloudflare also supports [Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/)
 CNAME flattening delivers better performance and allows you to add a CNAME record at your apex domain (`example.com`). Paid accounts can choose to flatten all CNAME records on their domain.
 {{</feature>}}
 
+<br />
+
+Refer to [DNS features and availability](/dns/reference/all-features/) for a complete list of features and their availability according to different Cloudflare plans.
+
 ---
  
 ## Related products
