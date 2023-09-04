@@ -1,7 +1,7 @@
 ---
-weight: 12
+weight: 6
 pcx_content_type: reference
-title: Verify 1.1.1.1 connection
+title: Verify connection
 ---
 
 # Verify 1.1.1.1 connection
