@@ -23,4 +23,4 @@ The Network Analytics logs refer to IP traffic of Magic Transit customer prefixe
 
 * [Cloudflare GraphQL API](/analytics/graphql-api/)
 * [Migrating from Network Analytics v1 to Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2/)
-* [Cloudflare Network Analytics v1](/analytics/network-analytics/reference/network-analytics-v1/)
+* [Cloudflare Network Analytics v1](/analytics/network-analytics/reference/network-analytics-v1/) (deprecated)

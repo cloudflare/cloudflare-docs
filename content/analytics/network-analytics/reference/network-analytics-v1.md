@@ -3,15 +3,16 @@ pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360038696631-Understanding-Cloudflare-Network-Analytics-v1
 title: Cloudflare Network Analytics v1
 meta:
-  description: Network Analytics provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.
+  description: Network Analytics v1 (deprecated) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.
 weight: 3
 ---
 
-# Cloudflare Network Analytics v1
+{{<deprecated>}} Cloudflare Network Analytics v1 {{</deprecated>}}
 
-{{<Aside type="note" header="Network Analytics v2 is now available">}}
--   For more information on the Network Analytics v2 (NAv2) dashboard, refer to [Cloudflare Network Analytics](/analytics/network-analytics/).
--   There is also a new version of the Network Analytics GraphQL API. If you are still using NAv1, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
+
+{{<Aside type="warning">}}
+- {{<render file="_network-analytics-v1-deprecation.md">}}
+- If you are using the Network Analytics GraphQL API, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
 Access to Network Analytics requires the following:
