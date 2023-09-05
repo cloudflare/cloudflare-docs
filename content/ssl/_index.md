@@ -18,11 +18,6 @@ Encrypt your web traffic to prevent data theft and other tampering
 Through Universal SSL, Cloudflare is the first Internet performance and security company to offer free SSL/TLS protection.
 Cloudflare SSL/TLS also provides a number of other features to meet your encryption requirements and certificate management needs.
 
-{{<button-group>}}
-  {{<button type="primary" href="/ssl/get-started/">}}Get started{{</button>}}
-  {{<button type="secondary" href="https://www.cloudflare.com/learning/ssl/what-is-ssl/" target="_blank">}}Learn more{{</button>}}
-{{</button-group>}}
-
 ---
 
 ## Features
