@@ -32,13 +32,8 @@ async function checkLinks() {
       page: testPage,
       runners: ["axe", "htmlcs"],
     });
+    console.log(result)
     
-    for (const issue of result.issues) {
-        if (!resultsArray.includes(issue)) {
-          resultsArray.push(issue);
-        }
-      } 
-
     await testPage.close();
   }
   await page.close();
