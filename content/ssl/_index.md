@@ -22,7 +22,17 @@ Cloudflare SSL/TLS also provides a number of other features to meet your encrypt
 
 ## Features
 
-{{<product-table id="ssl">}}
+{{<feature header="Universal SSL" href="/ssl/edge-certificates/universal-ssl/">}}
+Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+{{</feature>}}
+
+{{<feature header="Total TLS" href="/ssl/edge-certificates/additional-options/total-tls/">}}
+Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+{{</feature>}}
+
+{{<feature header="Delegated DCV" href="/ssl/edge-certificates/changing-dcv-method/">}}
+Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+{{</feature>}}
 
 ---
 
