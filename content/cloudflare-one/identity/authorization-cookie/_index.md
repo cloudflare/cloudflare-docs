@@ -81,10 +81,7 @@ The Binding Cookie is an additional cookie created when a user successfully auth
 
 #### When not to use Binding Cookie
 
-Do not enable Binding Cookie if:
-
-- You are using the Access application for non-browser based tools (such as SSH or RDP).
-- You have enabled [Automatic Signed Exchanges](/speed/optimization/other/signed-exchanges/enable-signed-exchange/), [Automatic Platform Optimization](/automatic-platform-optimization) or [Zaraz](/zaraz) on the application domain.
+Do not enable Binding Cookie if you are using the Access application for non-browser based tools (such as SSH or RDP).
 
 ### Cookie Path Attribute
 
