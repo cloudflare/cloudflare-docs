@@ -84,7 +84,7 @@ The Binding Cookie is an additional cookie created when a user successfully auth
 Do not enable Binding Cookie if:
 
 - You are using the Access application for non-browser based tools (such as SSH or RDP).
-- You have enabled [these Cloudflare products](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) on the application domain.
+- You have enabled [incompatible Cloudflare products](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) on the application domain.
 
 ### Cookie Path Attribute
 
