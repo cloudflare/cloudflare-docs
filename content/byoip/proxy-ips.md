@@ -13,30 +13,26 @@ For an Address Map to take effect, DNS records within the mapped zone must be se
 Creating an Address Map does not automatically change DNS configuration. DNS Responses only begin to change when a zone or account is added to a map.  Additionally, Address Maps that are not yet **Enabled** will not take effect in DNS responses.
 
 {{<Aside type="note">}}
-
 IPv4 and IPv6 addresses are both supported.
-
 {{</Aside>}}
 
 ## Create Address Maps
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **IP Addresses** > **Proxy IP Addresses**.
+2. Go to **IP Addresses** > **Proxy IP Addresses**.
 3. Select **Create an Address Map** and fill out the form.
 4. Select **Save and Deploy**.
 
 ## Manage Address Maps
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **IP Addresses** > **Proxy IP Addresses**.
-3. Navigate to your Address Map and select **Review**.
+2. Go to **IP Addresses** > **Proxy IP Addresses**.
+3. Go to your Address Map and select **Review**.
 4. Edit your Address Map.
 5. Select **Save**.
 
 {{<Aside type="note">}}
-
 You can also enable, disable, and delete Address Maps. This will likely change the IP addresses used for your zones.
-
 {{</Aside>}}
 
 ## Immutable Address Maps

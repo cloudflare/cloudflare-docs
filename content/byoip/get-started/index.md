@@ -10,19 +10,18 @@ To bring your own IPs, you must go through the onboarding process. Work with you
 
 ## Overview
 
-Cloudflare requires a service-specific configuration for your prefixes, as well as some requirements common to all BYOIP customers regardless of service type. These requirements are common to all products compatible with BYOIP, such as Magic Transit, CDN, and Spectrum.
+Cloudflare requires a service-specific configuration for your prefixes, as well as some requirements common to all BYOIP customers regardless of service type. These requirements are common to all products compatible with BYOIP, such as [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), and [CDN services](/cache/).
 
 ## Prerequisites
 
 There are two major prerequisites before Cloudflare can begin onboarding your IP space.
 
-1.  You must verify your [Internet Routing Registry (IRR)](/byoip/about/irr/) records are up to date with the correct prefix/ASN information.
+1.  You must verify your [Internet Routing Registry (IRR)](/byoip/concepts/irr/) records are up to date with the correct prefix or ASN information.
+2.  Cloudflare must receive a [Letter of Authorization (LOA)](/byoip/concepts/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
 
-2.  Cloudflare must receive a [Letter of Authorization](/byoip/about/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
+Optionally, if you use the Resource Public Key Infrastructure (RPKI) protocol to sign your routes, Cloudflare can help with this as well. Contact your account team know if you are interested in using RPKI.
 
-Optionally, if you use the RPKI protocol to sign your routes, Cloudflare can help with this as well. Just let your account team know if you’re interested in using RPKI.
-
-After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement](/byoip/about/dynamic-advertisement/) API or via the Cloudflare dashboard.
+After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement](/byoip/concepts/dynamic-advertisement/) API or via the Cloudflare dashboard.
 
 ## Cloudflare IPs
 
@@ -40,7 +39,5 @@ Using a Cloudflare IP may be a good option if you:
 To protect your network using a Cloudflare IP address, contact your account manager. 
 
 {{<Aside type="note">}}
-
-When you use a Cloudflare-managed IP space, you can skip the steps for providing an LOA and advertising your prefixes that are associated with bringing your own IP.
-
+When you use a Cloudflare-managed IP space, you do not need to provide a Letter of Authorization (LOA) and advertise your prefixes that are associated with bringing your own IP.
 {{</Aside>}}

@@ -8,12 +8,12 @@ weight: 1
 
 {{<Aside>}}
 
-To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [dynamic advertisement best practices](/byoip/best-practices/dynamic-advertisement/).
+To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [dynamic advertisement best practices](/byoip/dynamic-advertisement/best-practices).
 
 {{</Aside>}}
 
-To configure BGP advertisement at the Cloudflare edge, [use the Cloudflare API](/byoip/how-to/configure-dynamic-advertisement/#configure-dynamic-advertisement-via-the-api) or [use the IP Prefixes page](/byoip/how-to/configure-dynamic-advertisement/#configure-dynamic-advertisement-via-the-dashboard) from your Cloudflare Account Home.
+To configure BGP advertisement at the Cloudflare edge, [use the Cloudflare API](/byoip/how-to/configure-dynamic-advertisement/#configure-dynamic-advertisement-via-the-api) or [use the IP Prefixes page](/byoip/how-to/configure-dynamic-advertisement/#configure-dynamic-advertisement-via-the-dashboard) in the Cloudflare dashboard.
 
-When using the API, you can authorize a call with your email and API key or create a service token for this purpose. A successful API response indicates the service registered the request. Enabling advertising typically takes 2 to 7 minutes and disabling advertising takes approximately 15 minutes.
+When using the API, you can authorize a call with your email and API key or create a service token for this purpose. A successful API response indicates the service registered the request. Enabling advertising typically takes two to seven minutes and disabling advertising takes approximately 15 minutes.
 
-Both the API and Cloudflare UI support prefix delegations, which allow other Cloudflare accounts to interact with your prefix. The effect of a delegation is service specific. For more information, refer to [prefix delegations](/byoip/about/prefix-delegations/).
+Both the API and [Cloudflare dashboard](https://dash.cloudflare.com/) support prefix delegations, which allow other Cloudflare accounts to interact with your prefix. The effect of a delegation is service specific. For more information, refer to [prefix delegations](/byoip/concepts/prefix-delegations/).
