@@ -8,7 +8,7 @@ meta:
 
 # Roles and permissions
 
-Cloudflare users with the following [roles](/fundamentals/account-and-billing/members/roles/) have access to Page Shield in the Cloudflare dashboard:
+Cloudflare users with the following [roles](/fundamentals/setup/manage-members/roles/) have access to Page Shield in the Cloudflare dashboard:
 
 * Administrator
 * Super Administrator - All Privileges
