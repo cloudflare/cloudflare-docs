@@ -18,46 +18,62 @@ Adding multiple sites can be useful when you:
 
 Using the API will allow you to add multiple sites quickly and efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 
+This tutorial assumes domains will be added using [full mode](/dns/zone-setups/full-setup/). 
 ___
 
-{{<tutorial>}}
-
-{{<tutorial-prereqs>}}
+## Prerequisites
 
 To add multiple sites to Cloudflare via automation, you need:
 
 - An existing [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
-- Basic familiarity with the command line.
-- `curl` installed (by default on macOS & Linux).
-- [`flarectl`](https://github.com/cloudflare/cloudflare-go/releases) installed
-- A Cloudflare [API token](/fundamentals/api/get-started/create-token/) with zone-level permissions for `Zone: Edit` and `DNS: Edit`.
-- A list of domains you want to add, each on a separate line (newline separated), stored in a file like `domains.txt`.
-- To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name).
+- Command line with `curl`
+- A Cloudflare [API token](/fundamentals/api/get-started/create-token/) with one of the following permissions:
+  - Zone-level `Administrator`
+  - Zone-level `Zone: Edit` and `DNS: Edit`
+  - Account-level `Domain Administrator`
+- To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name). 
+  - Follow this [tuorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
   
 {{<render file="_dnssec-providers.md" productFolder="dns">}}
 
 {{<render file="_dnssec-enabled-migration.md" productFolder="dns">}}
 
-{{</tutorial-prereqs>}}
 
-{{<tutorial-step title="Add domains">}}
+___
 
-Add domains using [flarectl](https://github.com/cloudflare/cloudflare-go/releases), Cloudflare's official CLI.
+## Add domains
 
-1. Open the command line.
-2. Set your API credentials:
+1. Create a list of domains you want to add, each on a separate line (newline separated), stored in a file such as `domains.txt`.
+2. Create a bash script `add-multiple-zones.sh` and add the following. Add `domains.txt` to the same directory or update its path accordingly. 
+```js
+  for domain in $(cat domains.txt); do
+    printf "Adding ${domain}:\n"
 
-  ```sh
-  $ export CF_API_TOKEN=<API_TOKEN>
-  ```
-
-3. Create your domains using `flarectl`:
-
-  ```sh
-  $ for domain in $(cat domains.txt); do
-      flarectl zone create --zone=$domain 
+    curl https://api.cloudflare.com/client/v4/zones \
+      -H 'Content-Type: application/json' \
+      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
+      -H 'X-Auth-Key: <CLOUDFLARE_API_KEY>' \
+      --data '{
+      "account": {
+        "id":"<ACCOUNT_ID" 
+      },
+      "name": "'"$domain"'",
+      "type": "full"
+    }'
+  
+  printf "\n\n"
   done
-  ```
+```
+
+3. Add executable commands to the script:
+```js
+  chmod +x add-multiple-zones.sh
+```
+
+4. Open the command line and run:
+```js
+  bash add-multiple-zones.sh
+```
 
 {{<Aside type="warning">}}
 
@@ -65,65 +81,120 @@ Add domains using [flarectl](https://github.com/cloudflare/cloudflare-go/release
 
 {{</Aside>}}
 
-{{</tutorial-step>}}
+After adding a domain, it will be in a [`Pending Nameserver Update`](/dns/zone-setups/reference/domain-status/) state. 
 
-{{<tutorial-step title="Trigger DNS scans" optional=true >}}
+## Additional options
+
+### jq
+
+[`jq`](https://jqlang.github.io/jq/) is a command-line tool that parses and beautifies JSON outputs. 
+
+This tool is a requirement to complete any `Additional options` steps in this tutorial.
+
+```sh
+  echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
+```
+
+Refer to `jq` [documentation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.
+
+### Quick scan
 
 Cloudflare offers a [quick scan](/dns/zone-setups/reference/dns-quick-scan/) that helps populate a zone's DNS records. This scan is a best effort attempt based on a predefined list of commonly used record names and types.
 
-To trigger this scan via the Cloudflare API:
+This API call requires the domain `ID`. This can be found in the following locations:
+- [Create Zone](/api/operations/zones-post#Request)
+- [List Zones](/api/operations/zones-get)
 
-1. Open your command line.
-2. Use `flarectl` to compile a list of zone IDs into a new file (named `ids.txt`).
+Using `jq` with the first option above, modify your script `add-multiple-zones.sh` to extract the domain ID and run a subsequent API call to quick scan DNS records.
 
-  ```sh
-  $ for domain in $(cat domains.txt); do
-    flarectl --json zone info --zone=$domain | jq -r '.[].ID' >> ids.txt
+```js
+  for domain in $(cat domains.txt); do
+    printf "Adding ${domain}:\n"
+
+    add_output=`curl https://api.cloudflare.com/client/v4/zones \
+      -H 'Content-Type: application/json' \
+      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
+      -H 'X-Auth-Key: <API_KEY>' \
+      --data '{
+      "account": {
+        "id":"<ACCOUNT_ID>" 
+      },
+      "name": "'"$domain"'",
+      "type": "full"
+    }'`
+
+    echo $add_output | jq .
+
+    domain_id=`echo $add_output | jq -r .result.id`
+
+    printf "\n\n"
+    printf "DNS quick scanning ${domain}:\n"
+
+    scan_output=`curl -X POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
+      -H 'Content-Type: application/json' \
+      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
+      -H 'X-Auth-Key: <API_KEY>'`
+
+    echo $scan_output | jq .
+
   done
-  ```
+```
 
-3. For each line in `ids.txt`, make an API call to trigger the [DNS quick scan](/api/operations/dns-records-for-a-zone-scan-dns-records).
+## Update nameservers
 
-  ```sh
-  $ for id in $(cat ids.txt); do  
-      curl --request POST \
-      --url "https://api.cloudflare.com/client/v4/zones/$id/dns_records/scan" \
-      --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $CF_API_TOKEN"
+For each domain to become active on Cloudflare, it must be activated in either [Full setup](/dns/zone-setups/full-setup/setup/) or [Partial setup](/dns/zone-setups/partial-setup/setup/). The following script will output a list containing the nameservers associated with each domain.
+
+You can find your zones nameservers in the following locations:
+- [Create Zone](/api/operations/zones-post#Request)
+- [Zone Details](/api/operations/zones-0-get) 
+
+1. Modify your script `add-multiple-zones.sh` to print a CSV with data from the `Create Zone` JSON response.
+
+```js
+  for domain in $(cat domains.txt); do
+    printf "Adding ${domain}:\n"
+
+    add_output=`curl https://api.cloudflare.com/client/v4/zones \
+      -H 'Content-Type: application/json' \
+      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
+      -H 'X-Auth-Key: <API_KEY>' \
+      --data '{
+      "account": {
+        "id":"<ACCOUNT_ID>" 
+      },
+      "name": "'"$domain"'",
+      "type": "full"
+    }'`
+
+    # Create csv of nameservers  
+    echo $add_output | jq -r '[.result.name,.result.id,.result.name_servers[]] | @csv' >> /tmp/domain_nameservers.csv
+
+
+    domain_id=`echo $add_output | jq -r .result.id`
+
+    printf "\n\n"
+    printf "DNS quick scanning ${domain}:\n"
+
+    scan_output=`curl -X POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
+      -H 'Content-Type: application/json' \
+      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
+      -H 'X-Auth-Key: <API_KEY>'`
+
+    echo $scan_output | jq .
+
   done
-  ```
 
-{{</tutorial-step>}}
+  printf "name_servers are saved in /tmp/domain_nameservers"
+  cat /tmp/domain_nameservers.csv
+```
 
-{{<tutorial-step title="Update nameservers">}}
-
-For each domain to become active on Cloudflare, it needs to use Cloudflare for its authoritative nameservers.
-
-1. Open your command line.
-2. Use `flarectl` to get a list nameservers associated with each domain. 
-
-  ```sh
-  $ for domain in $(cat domains.txt); do 
-      flarectl zone info --zone=$domain 
-  done
-  ```
-
-  The response will include a table containing the nameservers associated with each domain, similar to:
-
-  {{<table-wrap>}}
-
-  | ID | ZONE | PLAN | STATUS | NAME SERVERS | PAUSED | TYPE |
-  | --- | --- | --- | --- | --- | --- | --- |
-  | <ZONE_ID> | `example.com` | Free Website | pending | `arya.ns.cloudflare.com`, `tim.ns.cloudflare.com` | false  | full |
-
-  {{</table-wrap>}}
-
-3. Use the values in the **NAME SERVERS** column to [update the nameservers](/dns/zone-setups/full-setup/setup/#update-your-registrar) at the registrar of each domain.
+  | ID | ZONE | NAME SERVERS | 
+  | --- | --- | --- |
+  | <ZONE_ID> | `example.com` | `arya.ns.cloudflare.com`, `tim.ns.cloudflare.com` |
 
 
-{{</tutorial-step>}}
 
-{{</tutorial>}}
+2. Use the values in the **NAME SERVERS** column to [update the nameservers](/dns/zone-setups/full-setup/setup/#update-your-registrar) at the registrar of each domain.
 
 ___
 

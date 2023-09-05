@@ -19,6 +19,18 @@ weight: 7
   [timeseries](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-by-bytes) endpoint
   to start using the new Layer 3 data source by default, fetching the old data source now requires sending the parameter
   `metric=bytes_old`.
+- Deprecated Layer 3
+  [summary](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary) endpoint, this will stop
+  receiving data after 2023-08-14.
+  - To continue getting this data, switch to the
+    new [timeseries group protocol](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary-by-protocol)
+    endpoint.
+- Deprecated Layer 3
+  [timeseries groups](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-groups)
+  endpoint, this will stop receiving data after 2023-08-14.
+  - To continue getting this data, switch to the
+    new [timeseries group protocol](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-group-by-protocol)
+    endpoint.
 
 ## 2023-07-31
 
