@@ -724,9 +724,9 @@ Exactly one of `VALUE` or `--path` is required.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -795,9 +795,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Only list keys that begin with the given prefix.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -844,9 +844,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -885,9 +885,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -934,9 +934,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1022,9 +1022,9 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with local persisted data
+  - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory for local persisted data
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1116,6 +1116,10 @@ $ wrangler r2 object get <OBJECTPATH>
 
 - `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The source object path in the form of `{bucket}/{key}`.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
@@ -1148,6 +1152,10 @@ $ wrangler r2 object put <OBJECTPATH> [OPTIONS]
 - `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The date and time at which the object is no longer cacheable.
     {{</definitions>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 ### `delete`
 
@@ -1161,6 +1169,10 @@ $ wrangler r2 object delete <OBJECTPATH>
 
 - `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The destination object path in the form of `{bucket}/{key}`.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data
 
 {{</definitions>}}
 
