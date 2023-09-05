@@ -46,6 +46,7 @@ Cloudflare halted the request for one of the following reasons:
 -   Your Cloudflare DNS A or CNAME record references another reverse proxy (such as an nginx web server that uses the proxy\_pass function) that then proxies the request to Cloudflare a second time.
 -   The request X-Forwarded-For header is longer than 100 characters.
 -   The request includes two X-Forwarded-For headers.
+-   The request includes a CF-Connecting-IP header.
 -   A Server Name Indication (SNI) issue or mismatch at the origin.
 
 ### Resolution
