@@ -20,10 +20,10 @@ Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), r
 
 Besides these two parameters, rate limiting rules require the following additional parameters:
 
-*   **Characteristics** — The set of parameters that define how Cloudflare tracks the rate for this rule.
-*   **Period** — The period of time to consider (in seconds) when evaluating the rate.
-*   **Requests per period** — The number of requests over the period of time that will trigger the rate limiting rule.
-*   **Mitigation timeout** — Once the rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field.
+*   **Characteristics**: The set of parameters that define how Cloudflare tracks the rate for this rule.
+*   **Period**: The period of time to consider (in seconds) when evaluating the rate.
+*   **Requests per period**: The number of requests over the period of time that will trigger the rate limiting rule.
+*   **Duration** (or mitigation timeout): Once the rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field.
 
 Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on mandatory and optional parameters.
 
@@ -58,7 +58,7 @@ Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with 
 Available fields<br/>in counting expression | N/A | N/A | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers
 Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
 Counting periods | 10 s | 10 s, 1 min | 10 s, 1 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h
-Timeout periods | 10 s | 10 s, 1 min, 1 h | 10 s, 1 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day
+Mitigation timeout periods | 10 s | 10 s, 1 min, 1 h | 10 s, 1 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day
 Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{</table-wrap>}}
@@ -84,6 +84,6 @@ You can also configure rate limiting rules using the [Rulesets API](/ruleset-eng
 
 ## Related resources
 
-For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting (previous version)](/support/firewall/tools/configuring-cloudflare-rate-limiting/).
+For guidance on the previous version of rate limiting rules (billed based on usage and now deprecated), refer to [Cloudflare Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/).
 
 {{</content-column>}}

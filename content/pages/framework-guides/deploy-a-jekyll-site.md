@@ -68,15 +68,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value          |
-| -------------------- | -------------- |
-| Production branch    | `main`         |
-| Build command        | `jekyll build` |
-| Build directory      | `_site`        |
-
-</div>
+{{<pages-build-preset framework="jekyll">}}
 
 After configuring your site, you can begin your first deployment. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site before deploying it.
 

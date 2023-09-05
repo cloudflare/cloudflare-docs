@@ -769,7 +769,7 @@ No campo **Se o URL corresponder** de uma regra de página, somente as portas a 
 
 ### Como usar Page Rules com o Workers
 
-Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](/workers/platform/workers-with-page-rules/) na documentação para desenvolvedores.
+Caso a URL da solicitação atual corresponda a uma regra de página e a uma [rota personalizada do Workers](/workers/platform/routes), algumas configurações do Page Rules não serão aplicadas. Para saber como usar o Page Rules com o Workers, consulte [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) na documentação para desenvolvedores.
 
 ___
 

@@ -20,19 +20,19 @@ This page contains examples of different skip rule scenarios for custom rules. T
 
 * The `{ruleset_id}` value is the ID of the [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/). The API examples in this page add a skip rule to an existing ruleset using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
 
-    However, the entry point ruleset may not exist yet. In this case, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) API operation to create the entry point ruleset with a skip rule. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
+    However, the entry point ruleset may not exist yet. In this case, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) operation to create the entry point ruleset with a skip rule. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
 
 * Although each example only includes one action parameter, you can use several skip options in the same rule by specifying the `ruleset`, `phases`, and `products` action parameters simultaneously.
 
 ## Skip the remaining rules in the current ruleset
 
-This example invokes the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation to add a skip rule to the existing `http_request_firewall_custom` phase entry point ruleset with ID `{ruleset_id}`. The rule will skip all remaining rules in the current ruleset for requests matching the rule expression:
+This example invokes the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add a skip rule to the existing `http_request_firewall_custom` phase entry point ruleset with ID `{ruleset_id}`. The rule will skip all remaining rules in the current ruleset for requests matching the rule expression:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "ruleset": "current"
@@ -44,13 +44,13 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 
 ## Skip a phase
 
-This example invokes the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation to add a rule to the existing `http_request_firewall_custom` phase entry point ruleset with ID `{ruleset_id}`. The rule will skip the `http_ratelimit` phase for requests matching the rule expression:
+This example invokes the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add a rule to the existing `http_request_firewall_custom` phase entry point ruleset with ID `{ruleset_id}`. The rule will skip the `http_ratelimit` phase for requests matching the rule expression:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "phases": [
@@ -67,16 +67,16 @@ Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list 
 
 ## Skip a phase and do not log matching requests
 
-This example invokes the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation to add a rule that:
+This example invokes the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add a rule that:
 
 * Skips the `http_ratelimit` phase
 * Disables event logging for the current rule
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "phases": [
@@ -95,13 +95,13 @@ Refer to [Available skip options: Logging](/waf/custom-rules/skip/options/#loggi
 
 ## Skip security products
 
-This example uses the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation to add a rule that skips the [Zone Lockdown](/waf/tools/zone-lockdown/) and [User Agent Blocking](/waf/tools/user-agent-blocking/) products for requests matching the rule expression:
+This example uses the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add a rule that skips the [Zone Lockdown](/waf/tools/zone-lockdown/) and [User Agent Blocking](/waf/tools/user-agent-blocking/) products for requests matching the rule expression:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "skip",
   "action_parameters": {
     "products": [

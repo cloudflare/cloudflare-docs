@@ -16,7 +16,7 @@ Before installing and setting up the WARP Client, ensure that your device meets 
 | OS type       | 64-bit     | Intel & M1       | 64-bit                                                                                     | -       | -            |
 | Storage space | 184 MB     | 75 MB            | 75 MB                                                                                      | -       | -            |
 | RAM           | 3 MB       | 35 MB            | 35 MB                                                                                      | -       | -            |
-| Network types | WiFi / LAN | WiFi / LAN       | WiFi / LAN                                                                                 | -       | -            |
+| Network types | Wi-Fi / LAN | Wi-Fi / LAN       | Wi-Fi / LAN                                                                                 | -       | -            |
 | Download link | [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release) or [1.1.1.1](https://1111-releases.cloudflareclient.com/windows/Cloudflare_WARP_Release-x64.msi) | [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release) or [1.1.1.1](https://1111-releases.cloudflareclient.com/mac/Cloudflare_WARP.zip) | [Package repository](https://pkg.cloudflareclient.com/) | [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/id1423538627) | [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) |
 
 {{</table-wrap>}}

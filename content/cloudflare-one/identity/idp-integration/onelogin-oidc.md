@@ -14,9 +14,9 @@ To set up OneLogin as your identity provider:
 
 1.  Log in to your OneLogin admin portal.
 
-1.  Select **Apps > Custom Connectors**. The _Custom Connectors_ card displays.
+1.  Select **Apps** > **Custom Connectors**. The _Custom Connectors_ card displays.
 
-1.  Click **New Connector**.
+1.  Select **New Connector**.
 
 1.  Name the connector. The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
 
@@ -30,13 +30,13 @@ To set up OneLogin as your identity provider:
 
     ![OneLogin OIDC Application Basic Configuration page with example Redirect URI](/images/cloudflare-one/identity/onelogin/onelogin-oidc-3.png)
 
-1.  Click **Save**.
+1.  Select **Save**.
 
-1.  Select **More Actions > Add App to Connector**.
+1.  Select **More Actions** > **Add App to Connector**.
 
 1.  In the **Portal** section, enter a name for your application in the **Display Name** field.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
 1.  Select the **Access** tab.
 
@@ -44,21 +44,21 @@ To set up OneLogin as your identity provider:
 
 1.  Select the **SSO** tab.
 
-1.  Click **Show client secret**.
+1.  Select **Show client secret**.
 
 1.  Copy both the **Client ID** and **Client Secret**.
 
-1.  In Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Select OneLogin as your IdP.
 
 1.  Paste in your copied **Client ID** and **Client secret**.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to OneLogin.
 
 ## Example API Config
 

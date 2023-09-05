@@ -49,7 +49,7 @@ Deploy dynamic front-end applications in record time.
 
 ## Coming soon
 
-* **Larger databases**: During the alpha period, the maximum per-database size is limited to 100 MB. We plan to support not only larger databases, but more databases, in the near future.
+* **Larger databases**: During the alpha period, the maximum per-database size is limited to 500 MB. We plan to support not only larger databases, but more databases, in the near future.
 
 * **Read replication**: D1 will create and distribute replicas of your data across the Cloudflare global network, reducing the latency for your read queries. Cloudflare distributes your data close to where your users are and keeps your read replicas up to date with changes.
 
@@ -65,7 +65,7 @@ Deploy dynamic front-end applications in record time.
 
 {{<resource header="Community projects" href="/d1/platform/community-projects/" icon="reference-architecture">}}Browse what developers are building with D1.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
+{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

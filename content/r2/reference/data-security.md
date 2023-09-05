@@ -7,7 +7,7 @@ pcx_content_type: concept
 
 This page details the data security properties of R2, including encryption-at-rest (EAR), encryption-in-transit (EIT), and Cloudflare's compliance certifications.
 
-## Encryption at Rest 
+## Encryption at Rest
 
 All objects stored in R2, including their metadata, are encrypted at rest. Encryption and decryption are automatic, do not require user configuration to enable, and do not impact the effective performance of R2.
 
@@ -20,6 +20,12 @@ Objects are encrypted using [AES-256](https://www.cloudflare.com/learning/ssl/wh
 Data transfer between a client and R2 is secured using the same [Transport Layer Security](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) (TLS/SSL) supported on all Cloudflare domains.
 
 Access over plaintext HTTP (without TLS/SSL) can be disabled by connecting a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your R2 bucket and enabling [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/).
+
+{{<Aside type="note">}}
+
+R2 custom domains use Cloudflare for SaaS certificates and cannot be customized. Even if you have [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/), the advanced certificate will not be used due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
+
+{{</Aside>}}
 
 ## Compliance
 

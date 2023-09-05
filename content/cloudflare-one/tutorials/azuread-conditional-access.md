@@ -37,7 +37,7 @@ We suggest naming the IdP integration after the target application, for example 
 
 7. To show the application in the Microsoft App Launcher, change **Visible to users** to **Yes**. The application will appear when the user goes to [**My Apps**](https://myapplications.microsoft.com/).
 
-8. Next, navigate to **Conditional Access** and [build a new policy](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-conditional-access-policies).
+8. Next, go to **Conditional Access** and [build a new policy](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-conditional-access-policies).
 
 9. Create and enable any additional policies for your application.
 

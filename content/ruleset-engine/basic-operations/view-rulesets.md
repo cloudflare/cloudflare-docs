@@ -20,8 +20,8 @@ You can list the available rulesets for a zone, account, or phase.
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response displays the following rulesets:
@@ -81,8 +81,8 @@ header: Response
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response displays the following rulesets:
@@ -157,8 +157,8 @@ The following example lists the rules in version `2` of the `http_request_firewa
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2 \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -206,8 +206,8 @@ The following example lists the rules in version `2` of a managed ruleset (the m
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<MANAGED_RULESET_ID>/versions/2" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{managed_ruleset_id}/versions/2 \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json

@@ -37,7 +37,7 @@ ___
 
 ## Problèmes connus avec les cookies SameSite et cf\_clearance
 
-Lorsqu'un défi [CAPTCHA Cloudflare](https://support.cloudflare.com/hc/articles/200170136) ou Javascript est résolu, par exemple dans le cadre d'une [**règle de pare-feu**](https://support.cloudflare.com/hc/articles/360016473712) ou [**d'accès selon l'adresse IP**](https://support.cloudflare.com/hc/articles/217074967), un cookie **cf\_clearance** est placé dans le navigateur du client. Le cookie _cf\_clearance_ a une durée de vie par défaut de 30 minutes mais est configuré via [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) dans l'onglet **Paramètres** de l'application Cloudflare **Firewall** .
+Lorsqu'un défi [CAPTCHA Cloudflare](https://support.cloudflare.com/hc/articles/200170136) ou JavaScript est résolu, par exemple dans le cadre d'une [**règle de pare-feu**](https://support.cloudflare.com/hc/articles/360016473712) ou [**d'accès selon l'adresse IP**](https://support.cloudflare.com/hc/articles/217074967), un cookie **cf\_clearance** est placé dans le navigateur du client. Le cookie _cf\_clearance_ a une durée de vie par défaut de 30 minutes mais est configuré via [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) dans l'onglet **Paramètres** de l'application Cloudflare **Firewall** .
 
 Cloudflare définit **SameSite** sur _None_ pour le cookie **cf\_clearance** de sorte que les requêtes de visiteurs provenant de noms d'hôtes différents ne débouchent pas sur des défis ou des erreurs ultérieurement. Lorsque **SameSite** est défini sur _None_, le flag _Secure_ doit être également activé.
 

@@ -54,7 +54,7 @@ The new severity level will only apply to the finding within this specific integ
 Using the security findings from CASB allows for fine-grained Gateway policies which prevent future unwanted behavior while still allowing usage that aligns to your company's security policy. This means going from viewing a CASB finding, like the use of an unapproved SaaS application, to preventing or controlling access in minutes.
 
 {{<Aside type="note" header="Before you begin">}}
-Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) for your organization.
+Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) for your organization.
 {{</Aside>}}
 
 To create a Gateway policy directly from a CASB finding:
@@ -66,7 +66,7 @@ To create a Gateway policy directly from a CASB finding:
    {{<Aside type="note">}}
    Not all CASB findings will have the **Block with Gateway HTTP policy** option. Unsupported findings can only be resolved from your SaaS application dashboard or through your domain provider.
    {{</Aside>}}
-5. (Optional) [Customize the HTTP policy](/cloudflare-one/policies/filtering/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
+5. (Optional) [Customize the HTTP policy](/cloudflare-one/policies/gateway/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
 6. Select **Save**.
 
 Your HTTP policy will now prevent future instances of the security finding.

@@ -6,13 +6,13 @@ weight: 5
 
 # Webhook data definitions
 
-When you [create a webhook notification](/fundamentals/notifications/create-notifications/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
+When you [create a webhook notification](/notifications/create-notifications/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
 
 The following section details the data Cloudflare sends to a webhook destination.
 
 ## Certificate validation
 
-Before a Certificate Authority will issue a certificate for a domain, the requestor must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).
+Before a Certificate Authority will issue a certificate for a domain, the requester must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).
 
 ### Validation succeeded
 

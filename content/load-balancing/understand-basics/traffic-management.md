@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Traffic management
+title: Local Traffic Management
 weight: 17
 ---
 
@@ -16,7 +16,7 @@ Virtual IP support is currently API only.
 
 ## Via the API
 
-You can [set up your Tunnels and Tunnel routes](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) to create a `virtual_network_id` value to use in the Load Balancing API call. To enable Cloudflare Load Balancers to connect to private IP origins, a Cloudflare Tunnel is required with an associated Virtual Network. VNets are associated with Load Balancing origins. You can find out more about Tunnel Virtual Networks in the [Cloudflare Tunnels documentation](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/). 
+You can [set up your Tunnels and Tunnel routes](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) to create a `virtual_network_id` value to use in the Load Balancing API call. To enable Cloudflare Load Balancers to connect to private IP origins, a Cloudflare Tunnel is required with an associated Virtual Network. VNets are associated with Load Balancing origins. You can find out more about Tunnel Virtual Networks in the [Cloudflare Tunnels documentation](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). 
 
 To get a list of your current Virtual Networks, use the [`/teamnet/virtual_networks`](/api/operations/tunnel-virtual-network-list-virtual-networks) API endpoint.
 

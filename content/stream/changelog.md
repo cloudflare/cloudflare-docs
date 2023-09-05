@@ -7,6 +7,14 @@ rss: file
 
 # Changelog
 
+## 2023-08-08
+
+### Scheduled Deletion
+
+Stream now supports adding a scheduled deletion date to new and existing videos. Live inputs support deletion policies for automatic recording deletion.
+
+For more, refer to the [video on demand](/stream/uploading-videos/) or [live input](/stream/stream-live/) docs.
+
 ## 2023-05-16
 
 ### Multiple audio tracks now generally available

@@ -767,7 +767,7 @@ Page Rule을 저장할 때, Cloudflare는 **URL이 일치하는 경우** 필드�
 
 ### Workers와 함께 Page Rules 사용하기
 
-현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/platform/workers-with-page-rules/)를 참조하시기 바랍니다.
+현재 요청의 URL이 Page Rule 및 [Workers 사용자 지정 경로](/workers/platform/routes)에 모두 일치하는 경우 Pages Rules 설정 중에는 적용되지 않는 것이 있습니다. Workers와 함께 Page Rules를 사용하는 방법에 대해서는 개발자 문서의 [Workers: Page Rules](/workers/configuration/workers-with-page-rules/)를 참조하시기 바랍니다.
 
 ___
 

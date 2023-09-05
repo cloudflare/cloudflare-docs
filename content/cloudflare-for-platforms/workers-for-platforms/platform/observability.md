@@ -13,12 +13,12 @@ Learn how to access logs with Workers for Platforms.
 
 ### Workers Trace Events Logpush
 
-Workers Trace Events logpush is used to get raw Workers execution logs. Refer to [Logpush](/workers/platform/logpush/) for more information.
+Workers Trace Events logpush is used to get raw Workers execution logs. Refer to [Logpush](/workers/observability/logpush/) for more information.
 
 Logpush can be enabled for an entire dispatch namespace or a single user Worker. To capture logs for all of the user Workers in a dispatch namespace:
 
-1. Create a [Logpush job](/workers/platform/logpush/#create-a-logpush-job).
-2. Enable [logging](/workers/platform/logpush/#enable-logging-on-your-worker) on your dispatch Worker.
+1. Create a [Logpush job](/workers/observability/logpush/#create-a-logpush-job).
+2. Enable [logging](/workers/observability/logpush/#enable-logging-on-your-worker) on your dispatch Worker.
 
 Enabling logging on your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, skip step 1 and complete step 2 on your user Worker.
 

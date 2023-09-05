@@ -4,7 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M4 14
 product:
   title: Zaraz
   url: /zaraz/
-  group: Application performance
+  group: Developer platform
+  additional_groups: [Application performance, Analytics]
 
 meta:
   title: Cloudflare Zaraz docs

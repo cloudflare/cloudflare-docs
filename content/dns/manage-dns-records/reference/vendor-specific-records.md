@@ -58,11 +58,11 @@ For help setting up DKIM in SES, refer to the [Amazon documentation](https://doc
 
 Refer to [Amazon's ELB help content](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) for guidance on ELB configuration at Amazon, but generally you should:
 
-Add a [`CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) to Cloudflare for the hostname, for example:
+Add a [`CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) to Cloudflare for the hostname you receive from AWS, for example:
 
 | Type | Name | Target | Proxy status |
 | --- | --- | --- | --- |
-| `CNAME` | `elb` | `_<AWS HOSTNAME>.<REGION>._elb.amazonaws.com` | Proxied |
+| `CNAME` | `elb` | `<AWS_HOSTNAME>.<REGION>._elb.amazonaws.com` | Proxied |
   
 ---
 

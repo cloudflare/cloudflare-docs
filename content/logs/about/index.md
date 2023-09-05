@@ -18,7 +18,7 @@ Logpush v2 does not store logs; we attempt to send logs as quickly as they arriv
 
 {{<Aside type="note">}}
 
-Users without an Enterprise plan can still access [Workers Trace Events Logpush](/workers/platform/logpush/) by subscribing to the [Workers Paid](/workers/platform/pricing/) plan.
+Users without an Enterprise plan can still access [Workers Trace Events Logpush](/workers/observability/logpush/) by subscribing to the [Workers Paid](/workers/platform/pricing/) plan.
 
 {{</Aside>}}
 

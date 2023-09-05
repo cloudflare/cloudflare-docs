@@ -31,9 +31,9 @@ For most applications, a single producer Worker per queue, with a single consume
 
 ## Producers
 
-A producer is the term for a client that is publishing or producing messages on to a queue. A producer is configured by [binding](/workers/platform/bindings/) a queue to a Worker and writing messages to the queue by calling that binding.
+A producer is the term for a client that is publishing or producing messages on to a queue. A producer is configured by [binding](/workers/configuration/bindings/) a queue to a Worker and writing messages to the queue by calling that binding.
 
-For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRST_QUEUE`, messages can be written to the queue by calling `.send()` on the binding:
+For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRST_QUEUE`, messages can be written to the queue by calling `send()` on the binding:
 
 ```ts
 type Environment = {

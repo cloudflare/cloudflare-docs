@@ -20,7 +20,7 @@ avoid breaking specific API endpoints and other web applications.
 Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard..
 
 {{<Aside type="note">}}
-Enable Origin Error Pages excludes 521 and 522 errors.
+Enable Origin Error Pages excludes errors 520 to 527.
 {{</Aside>}}
 
 ___

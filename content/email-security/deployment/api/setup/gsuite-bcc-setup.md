@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 1
 meta:
     title: Setup phishing risk assessment for Gmail with Area 1
+updated: 2022-10-11
 ---
 
 # Gmail BCC setup with Area 1

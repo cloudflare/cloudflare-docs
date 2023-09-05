@@ -35,7 +35,4 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 ## Related resources
 
-For additional information, refer to the following pages:
-
-* [Common use cases for firewall rules](/firewall/recipes/)
 * [Cloudflare Rules language](/ruleset-engine/rules-language/)

@@ -25,7 +25,7 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 | ------------------------------- | ------------------------------------- |
 | Bucket                          | 1000 buckets per account              |
 | Data storage per bucket         | Unlimited                             |
-| Object metadata size            | 2,048 bytes                           |
+| Object metadata size            | 8,192 bytes                           |
 | Object size                     | 5 TiB per object<sup>1</sup>           |
 | Maximum upload size<sup>3</sup> | 5 GiB<sup>2</sup>                      |
 | Maximum upload parts            | 10,000                                |

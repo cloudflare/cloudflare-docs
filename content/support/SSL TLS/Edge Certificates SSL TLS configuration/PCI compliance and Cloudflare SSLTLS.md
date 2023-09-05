@@ -62,7 +62,7 @@ Cloudflare provides additional mitigations for:
 -   Lucky Thirteen
 -   CCS injection vulnerability
 
-Cloudflare has patched all servers against these vulnerabilities. Also, thethere Cloudflareare WAF hasmanaged rules tothat mitigate several of these vulnerabilities including Heartbleed and ShellShock.
+Cloudflare has patched all servers against these vulnerabilities. Also, the Cloudflare WAF has managed rules that mitigate several of these vulnerabilities including Heartbleed and ShellShock.
 
 ### Return of Bleichenbacher's Oracle Threat (ROBOT)
 

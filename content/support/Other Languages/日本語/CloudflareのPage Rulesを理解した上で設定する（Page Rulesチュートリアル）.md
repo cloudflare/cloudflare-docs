@@ -33,41 +33,10 @@ Page Ruleを定義し、URLパターンが一致するたびに、複数のア�
 
 | **プラン** | **許可されているページルール数の上限** |
 | --- | --- |
-| 
-Free
-
- | 
-
-3
-
- |
-| 
-
-Pro
-
- | 
-
-20
-
- |
-| 
-
-Business
-
- | 
-
-50
-
- |
-| 
-
-Enterprise
-
- | 
-
-125
-
- |
+| Free | 3 |
+| Pro | 20 |
+| Business | 50 |
+| Enterprise | 125 |
 
 Freeプラン、Proプラン、Businessプランのドメインに関しては、（最大100まで）[追加のルールを購入](https://www.cloudflare.com/features-page-rules/)できます。
 
@@ -771,7 +740,7 @@ Page Ruleの**URLが一致する場合**フィールドでポートを特定す�
 
 ### WorkersでPage Rulesを使う
 
-現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/platform/workers-with-page-rules/)を参照してください。
+現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/configuration/workers-with-page-rules/)を参照してください。
 
 ___
 

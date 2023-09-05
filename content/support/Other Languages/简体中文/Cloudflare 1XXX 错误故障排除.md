@@ -376,7 +376,7 @@ ___
 ### 解决方案
 
 -   **如果您是该网站的访问者**：请在几分钟后重试。
--   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)。
+-   **如果您是该网站的所有者**：请确保 _cloudflared_ 正在运行并可以访问网络。您可能需要为您的隧道启用[负载平衡](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb)。
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### 常见原因
 
-Cloudflare Worker 超过了 [CPU 时间限值](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)。CPU 时间是执行代码（如循环或分析 JSON 等）所花费的时间。网络请求（获取、响应）所花费的时间不计入 CPU 时间。
+Cloudflare Worker 超过了 [CPU 时间限值](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions)。CPU 时间是执行代码（如循环或分析 JSON 等）所花费的时间。网络请求（获取、响应）所花费的时间不计入 CPU 时间。
 
 ### 解决方案
 

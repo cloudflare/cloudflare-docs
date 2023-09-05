@@ -35,7 +35,7 @@ Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/po
 
 ### Validate the domain value on your Windows device
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Run the `(Get-WmiObject Win32_ComputerSystem).Domain` command to determine the value of your domain.
 
    ```txt

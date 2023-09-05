@@ -13,6 +13,7 @@ Cloudflare Zaraz supports the following third-party tools:
 
 Name                              | Category
 --------------------------------- | -----------
+Amplitude                         | Analytics
 Bing                              | Advertising 
 Branch                            | Marketing automation
 Facebook Pixel                    | Advertising

@@ -26,7 +26,7 @@ Use custom hostname analytics to help your organization with billing and infrast
 
 If you see one customer is using more data than another, you might increase their bill. If requests are increasing in a certain geographic region, you might want to increase the origin servers in that region.
 
-To access custom hostname analytics, either [use the dashboard](https://support.cloudflare.com/hc/articles/360037684111) and filter by the `Host` field or [use the GraphQL API](/analytics/graphql-api/) and filter by the `clientRequestHTTPHost` field. For more details, refer to our tutorial on [Querying HTTP events by hostname with GraphQL](/analytics/graphql-api/tutorials/end-customer-analytics/).
+To access custom hostname analytics, either [use the dashboard](/fundamentals/data-products/about-analytics/) and filter by the `Host` field or [use the GraphQL API](/analytics/graphql-api/) and filter by the `clientRequestHTTPHost` field. For more details, refer to our tutorial on [Querying HTTP events by hostname with GraphQL](/analytics/graphql-api/tutorials/end-customer-analytics/).
 
 ## Share Cloudflare data with your customers
 

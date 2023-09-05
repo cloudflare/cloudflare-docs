@@ -3,10 +3,10 @@ title: Examples
 pcx_content_type: configuration
 weight: 5
 meta:
-  title: Compression Rules examples
+  title: Compression rules examples
 ---
 
-# Compression rule examples
+# Compression rules examples
 
 The following examples cover common patterns for configuring compression rules.
 

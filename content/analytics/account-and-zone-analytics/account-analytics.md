@@ -71,7 +71,7 @@ This panel features spark lines for various caching metrics, including: _request
 
 ![Panel displaying lines for 4xx and 5xx error rates](/images/support/hc-account-analytics_errors_card.png)
 
-This panel displays spark lines for 4xx and 5xx error rates, respectively. Learn more about [HTTP Status Codes](https://support.cloudflare.com/hc/articles/115003014432-HTTP-Status-Codes). 
+This panel displays spark lines for 4xx and 5xx error rates, respectively. Learn more about [HTTP Status Codes](/support/troubleshooting/http-status-codes/http-status-codes/). 
 
 #### Network
 

@@ -14,7 +14,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Log in to your OneLogin admin portal.
 
-1.  Select **Apps > Add Apps**.
+1.  Select **Apps** > **Add Apps**.
 
 1.  Under **Find Applications**, search for **Cloudflare Access**.
 
@@ -26,7 +26,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  In the **Cloudflare Access Authorization Domain** field, paste your [team domain](/cloudflare-one/glossary/#team-domain).
 
-1.  Select the **Parameters** tab, click **Add Parameter** and enter your values for **Cloudflare Access Field**.
+1.  Select the **Parameters** tab, select **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
 1.  Select the **Access** tab
 
@@ -44,9 +44,9 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO interface with SAML2.0 sign on method, Issuer URL, and X.509 Certificate](/images/cloudflare-one/identity/onelogin/onelogin-saml-7.png)
 
-1.  In Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, select **Add new**.
 
 1.  Select SAML.
 
@@ -54,9 +54,9 @@ To set up OneLogin (SAML) as your identity provider:
 
     If other headers and SAML attribute names were added to OneLogin, be sure to add them to Cloudflare under **SAML attributes** and **SAML header attributes** in the **Optional configurations** menu.
 
-1.  Click **Save**.
+1.  Select **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

@@ -1,6 +1,6 @@
 ---
-title: Multipart Upload
-pcx_content_type: how-to
+title: Multipart upload
+pcx_content_type: concept
 weight: 1
 ---
 
@@ -24,6 +24,13 @@ The default object lifecycle policy for multipart uploads is that incompleted up
 
 The ETags for objects uploaded via multipart are different than those uploaded with PutObject.
 
-For uploads created after June 21, 2023, R2's multipart ETags now mimic the behavior of S3.  The ETag of each individual part is the MD5 hash of the contents of the part.  The ETag of the completed multipart object is the hash of the MD5 sums of each of the constituent parts concanated together followed by a hyphen and the number of parts uploaded.
+For uploads created after June 21, 2023, R2's multipart ETags now mimic the behavior of S3.  The ETag of each individual part is the MD5 hash of the contents of the part.  The ETag of the completed multipart object is the hash of the MD5 sums of each of the constituent parts concatenated together followed by a hyphen and the number of parts uploaded.
 
 For example, consider a multipart upload with two parts.  If they have the ETags `bce6bf66aeb76c7040fdd5f4eccb78e6` and `8165449fc15bbf43d3b674595cbcc406` respectively, the ETag of the completed multipart upload will be `f77dc0eecdebcd774a2a22cb393ad2ff-2`.
+
+Note that the binary MD5 sums themselves are concatenated and then summed, not the hexadecimal representation. For example, in order to validate the above example on the command line, you would need do the following:
+
+```
+echo -n $(echo -n bce6bf66aeb76c7040fdd5f4eccb78e6 | xxd -r -p -)\
+$(echo -n 8165449fc15bbf43d3b674595cbcc406 | xxd -r -p -) | md5sum
+```

@@ -83,7 +83,9 @@ Une règle Page Rule correspond à un modèle d’URL selon le format suivant (c
 Voici un exemple d'URL comportant ces quatre composants :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://www.exemple.com:443/image.png?parameter1=value1</span></div></span></span></span></code></pre>{{</raw>}}
+```
+https://www.exemple.com:443/image.png?parameter1=value1
+```
 
 Les segments _scheme_ et _port_ sont facultatifs. S’il n’est pas spécifié, _scheme_ correspond aux protocoles  _http://_ et _https://_. Si _port_ n’est pas spécifié, la règle s’applique à tous les ports.
 
@@ -128,12 +130,18 @@ ___
 Vous pouvez utiliser l’astérisque (\*) dans n’importe quel segment d’URL pour établir une correspondance avec certaines structures. Par exemple :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/t*st</span></div></span></span></span></code></pre>{{</raw>}}
+```
+exemple.com/t*st
+```
 
 Correspond à :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/test</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/toast</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">exemple.com/trust</span></div></span></span></span></code></pre>{{</raw>}}
+```
+exemple.com/test
+exemple.com/toast
+exemple.com/trust
+```
 
 _exemple.com/foo/\*_ ne correspond pas à exemple.com/foo.  Toutefois, _exemple.com/foo\*_ correspond à la chaîne saisie.
 
@@ -146,29 +154,37 @@ _exemple.com/foo/\*_ ne correspond pas à exemple.com/foo.  Toutefois, _exemp
 
 ### Référencement des correspondances avec des caractères génériques
 
-Vous pouvez référencer les correspondances avec des caractères génériques ultérieurement, avec la syntaxe _$X_._X_ indique l’index d’un motif glob. Ainsi, $1 représente le premier caractère générique, $1 le deuxième caractère générique et ainsi de suite.
+Vous pouvez référencer les correspondances avec des caractères génériques ultérieurement, avec la syntaxe _$X_._X_ indique l’index d’un motif glob. Ainsi, $1 représente le premier caractère générique, $2 le deuxième caractère générique et ainsi de suite.
 
 Cela est particulièrement utile avec le paramètre _Forwarding URL_ (URL de redirection). Par exemple :
 
 Vous pouvez rediriger :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://exemple.com/*</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://*.exemple.com/*
+```
 
 Vers :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://exemple.com/images/$1/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://exemple.com/images/$1/$2.jpg
+```
 
 Cette règle correspondrait à :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://cloud.exemple.com/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://cloud.exemple.com/flare.jpg
+```
 
 qui serait ensuite redirigé vers :
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://exemple.com/images/cloud/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://exemple.com/images/cloud/flare.jpg
+```
 
 Pour utiliser un caractère littéral _$_ dans l’URL de redirection, annulez sa valeur spéciale en ajoutant une barre oblique inversée (\\) devant : _\\$_.
 
@@ -769,7 +785,7 @@ Si vous spécifiez un port dans le champ **If the URL matches** (Si l'URL corres
 
 ### Utilisation de Page Rules avec Workers
 
-Si l'URL de la requête actuelle correspond à la fois à une Page Rule et à une [route Workers personnalisée](/workers/platform/routes), certains paramètres Page Rules ne seront pas appliqués. Pour plus d'informations sur l'utilisation de Page Rules avec Workers, consultez [Workers : Page Rules](/workers/platform/workers-with-page-rules/) dans la documentation destinée aux développeurs.
+Si l'URL de la requête actuelle correspond à la fois à une Page Rule et à une [route Workers personnalisée](/workers/platform/routes), certains paramètres Page Rules ne seront pas appliqués. Pour plus d'informations sur l'utilisation de Page Rules avec Workers, consultez [Workers : Page Rules](/workers/configuration/workers-with-page-rules/) dans la documentation destinée aux développeurs.
 
 ___
 

@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
 title: HTTP test
-weight: 2
+weight: 1
 ---
 
 # Run an HTTP test
 
-An HTTP test sends a `GET` request from an end-user device to a specific web application. You can use the response metrics to troubleshoot connectivity issues. For example, you can check whether the application is inaccessible for all users in your organization, or only certain ones.
+An HTTP test sends a `GET` request from an end-user device to a specific web application. You can use the [response metrics](/cloudflare-one/insights/dex/tests/view-results/#http-get) to troubleshoot connectivity issues. For example, you can check whether the application is inaccessible for all users in your organization, or only certain ones.
 
 ## Create a test
 
@@ -34,5 +34,5 @@ To run an HTTP test, the device must be connected to Zero Trust via the WARP cli
 | Windows | 2023.3.381 |
 | Linux | 2023.3.398 |
 | iOS | Not supported |
-| ChromeOS | 6.24 |
+| ChromeOS | 6.28 |
 | Android | 6.26 |

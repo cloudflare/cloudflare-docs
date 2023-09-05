@@ -1,5 +1,9 @@
 name: Image audit
 
+# **What it does**: Regularly audits our documentation for unused image files.
+# **Why we have it**: Good hygiene + helps simplify future image audits.
+# **Who does it impact**: PCX team
+
 on:
   workflow_dispatch:
   schedule:
@@ -11,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Find Unused Files
         id: find-files
@@ -30,7 +34,7 @@ jobs:
           
           # If there are unused files, output them
           if [ -n "$UNUSED_FILES" ]; then
-            echo "::set-output name=unused_files::$UNUSED_FILES"
+            echo "unused_files=$UNUSED_FILES" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create Issue if Unused Files Found

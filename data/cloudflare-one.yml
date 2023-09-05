@@ -26,8 +26,8 @@ resources:
 externals:
   - title: 'Blog: Introducing Cloudflare One'
     url: https://blog.cloudflare.com/introducing-cloudflare-one/
-  - title: Cloudflare for Teams pricing
-    url: https://www.cloudflare.com/teams-pricing/
+  - title: Zero Trust and SASE plans and pricing
+    url: https://www.cloudflare.com/plans/zero-trust-services/
   - title: Cloudflare homepage
     url: https://cloudflare.com
 

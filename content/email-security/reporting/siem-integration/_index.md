@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 3
 meta:
     description: SIEM integrations allow you to view message-level information outside of the dashboard and create your own custom reports.
+updated: 2022-07-14
 ---
 
 # SIEM integration
@@ -22,13 +23,4 @@ For help setting up the proper configuration in your SIEM tool, refer to the fol
 
 ### 2. Create a webhook
 
-To [create a webhook](/email-security/email-configuration/domains-and-routing/alert-webhooks/) in Area 1 and send data into a SIEM tool:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Go to **Settings** (the gear icon).
-3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
-4. Select **New Webhook**.
-5. For **App Type**, select **SIEM**.
-6. Choose **Splunk** or **Sumologic**.
-7. Enter the **Auth Code** and **Target**.
-8. Select **Publish Webhook**.
+Refer to [Alert webhooks](/email-security/email-configuration/domains-and-routing/alert-webhooks/) to learn how to create a webhook and send data into your SIEM tool.

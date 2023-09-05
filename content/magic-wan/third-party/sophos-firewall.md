@@ -184,18 +184,19 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ## Verify tunnel status on Cloudflare dashboard
 
-{{<render file="_tunnel-healthchecks-dash.md" productFolder="magic-wan" withParameters="**Magic WAN** > **Tunnel health**" >}}
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
 
 ### Make Cloudflare health checks work
 
-1. The ICMP probe packet from Cloudflare must be the type ICMP request, with anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
+1. The ICMP probe packet from Cloudflare must be the type ICMP request, with Anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
 
 ```bash
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/ipsec_tunnels/<tunnel_identifier> \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <YOUR_EMAIL> ' \
-  --data '{
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
     "health_check": {
         "enabled":true,
         "target":"172.64.240.252",

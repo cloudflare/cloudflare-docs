@@ -24,7 +24,7 @@ Advanced certificates allow you multiple customization options:
 *   Choose the certificate validity period.
 *   Remove Cloudflare branding that is normally present on [Universal certificates](/ssl/edge-certificates/universal-ssl/).
 *   Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
-*   Control [cipher suites used for TLS](/ssl/reference/cipher-suites/customize-cipher-suites/).
+*   Control [cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
 
 
 {{<feature-table id="ssl.advanced_certificates">}}
@@ -41,9 +41,9 @@ Enterprise customers can also purchase a subscription for Advanced Certificate M
 
 ## Limitations
 
-Advanced Certificate Manager cannot be used with [Cloudflare Pages](/pages/) due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/). This is because Pages uses Cloudflare for SaaS for Custom Domains.
+Advanced certificates are not used with [Cloudflare Pages](/pages/) nor [R2](/r2/) due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/). Both Pages and R2 custom domains use Cloudflare for SaaS certificates.
 
-{{<render file="_validation-level-intro.md" withParameters="Advanced ceritificates">}}. If your organization needs Organization Validated (OV) or Extended Validation (EV) certificates, refer to [Custom certificates](/ssl/edge-certificates/custom-certificates/).
+{{<render file="_validation-level-intro.md" withParameters="Advanced certificates">}}. If your organization needs Organization Validated (OV) or Extended Validation (EV) certificates, refer to [Custom certificates](/ssl/edge-certificates/custom-certificates/).
 <br/>
 
 ## Related resources

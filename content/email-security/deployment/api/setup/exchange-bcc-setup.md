@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 2
 meta:
     title: Setup phishing risk assessment for Microsoft Exchange with Area 1
+updated: 2022-10-11
 ---
 
 # Microsoft Exchange BCC setup with Area 1

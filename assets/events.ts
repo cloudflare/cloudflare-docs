@@ -113,7 +113,7 @@ export function tabs() {
   // Find all tab wrappers
   let wrappers = document.querySelectorAll(".tabs-wrapper");
 
-  addEventListener("load", () => {
+  addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
@@ -235,7 +235,7 @@ export function dropdowns() {
 
 export function toggleSidebar() {
   const toggleButton = document.getElementsByClassName("toggleSidebar");
-  if (toggleButton) {
+  if (toggleButton.length > 0) {
     let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {
@@ -267,6 +267,14 @@ export function toggleSidebar() {
         let isHidden = item.hasAttribute(attr);
         item.toggleAttribute(attr, !isHidden);
       });
+
+      let moduleCounters = document.getElementsByClassName("moduleCounter")
+      if (moduleCounters) {
+        for (const counter of moduleCounters) {
+          let isHidden2 = counter.hasAttribute(attr);
+          counter.toggleAttribute(attr, !isHidden2)
+        }
+      }
     });
   }
 }

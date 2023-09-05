@@ -51,7 +51,7 @@ When you grant user access to an account, Cloudflare will send an invitation to 
 
 #### Using the dashboard
 
-If you want to give customers access to their individual accounts, it is the same as if you were [inviting a teammate](/fundamentals/account-and-billing/members/manage/#add-account-members) to help manage your account.
+If you want to give customers access to their individual accounts, it is the same as if you were [inviting a teammate](/fundamentals/setup/manage-members/manage/#add-account-members) to help manage your account.
 
 #### Using the API
 
@@ -83,7 +83,7 @@ This means that you will be making API calls to Cloudflare on behalf of your cus
 
 {{<Aside type="note">}}
 
-This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
 
 {{</Aside>}}
 

@@ -18,7 +18,7 @@ Compresses the response according to the algorithms supported by the website vis
 
 ### Disable compression
 
-Disables compression for matching requests. Also disables Cloudflare's [default compression behavior](/support/speed/optimization-file-size/what-will-cloudflare-compress/).
+Disables compression for matching requests. Also disables Cloudflare's [default compression behavior](/speed/optimization/content/brotli/).
 
 ### Custom
 
@@ -29,12 +29,12 @@ Allowed values are the following:
 - **Gzip**: Use the GZIP compression algorithm, if supported by the website visitor.
 - **Brotli**: Use the Brotli compression algorithm, if supported by the website visitor.
 - **Auto**: Compress the response according to the algorithms supported by the website visitor (if any). Cloudflare will define the order of preference for the compression algorithms, which may change in the future. Has the same behavior of the **Enable compression** option.
-- **Default**: Use Cloudflare's [default compression behavior](/support/speed/optimization-file-size/what-will-cloudflare-compress/), which depends on the response content type.
+- **Default**: Use Cloudflare's [default compression behavior](/speed/optimization/content/brotli/), which depends on the response content type.
 
 If you specify only _Gzip_ and/or _Brotli_ and no algorithm matches, the response will have no compression. To configure a fallback compression mechanism, add _Auto_ to the list.
 
 {{<Aside type="note">}}
-The compression applied by the _Default_ option takes into account global configuration settings such as [Enable Brotli compression](/support/speed/optimization-file-size/what-will-cloudflare-compress/#enable-brotli-compression).
+The compression applied by the _Default_ option takes into account global configuration settings such as [Enable Brotli compression](/speed/optimization/content/brotli/).
 {{</Aside>}}
 
 ---
@@ -61,14 +61,14 @@ The supported algorithm values are:
 - `brotli`: Use the Brotli compression algorithm, if supported by the website visitor.
 - `none`: Do not use any compression algorithm.
 - `auto`: Compress the response according to the algorithms supported by the website visitor (if any). Cloudflare will define the order of preference for the compression algorithms, which may change in the future.
-- `default`: Use Cloudflare's [default compression behavior](/support/speed/optimization-file-size/what-will-cloudflare-compress/), which depends on the response content type.
+- `default`: Use Cloudflare's [default compression behavior](/speed/optimization/content/brotli/), which depends on the response content type.
 
 If you include `none`, `default`, or `auto` in the list, it must be the last value in the list.
 
 When you specify only the `gzip` and/or `brotli` algorithms, if no algorithm matches then the response will have no compression. To configure a fallback compression mechanism, add `auto` to the list.
 
 {{<Aside type="note">}}
-The compression applied by the `default` algorithm takes into account global configuration settings such as [Enable Brotli compression](/support/speed/optimization-file-size/what-will-cloudflare-compress/#enable-brotli-compression).
+The compression applied by the `default` algorithm takes into account global configuration settings such as [Enable Brotli compression](/speed/optimization/content/brotli/).
 {{</Aside>}}
 
 ### Examples

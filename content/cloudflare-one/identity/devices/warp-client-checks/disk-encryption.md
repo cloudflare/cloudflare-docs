@@ -53,7 +53,7 @@ Operating systems determine disk encryption in various ways. The following infor
 
 ### On Windows
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
 1. **Protection Status** must be set to **On** for the disk to be considered encrypted.
 

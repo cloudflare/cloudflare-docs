@@ -6,12 +6,12 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
@@ -53,12 +53,12 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -83,7 +83,7 @@
         }, 
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
@@ -95,8 +95,7 @@
           "title": "Change your nameservers"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/200167906",
+          "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
           "title": "Set up two-factor authentication (2FA)"
         }
       ]
@@ -152,7 +151,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -279,7 +278,7 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -307,7 +306,7 @@
       "recommendations": [
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -350,16 +349,16 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
-          "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
-          "title": "Create root domain"
+          "url_path": "/dns/manage-dns-records/how-to/create-zone-apex/",
+          "title": "Create zone apex record"
         },
         {
           "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
-          "title": "Create subdomain"
+          "title": "Create subdomain records"
         }
       ]
     },
@@ -399,7 +398,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
@@ -421,8 +420,7 @@
       "dashPath": "/:accountId/:zoneName/rules",
       "recommendations": [
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/218411427",
+          "url_path": "/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/",
           "title": "Page Rules"
         },
         {
@@ -466,7 +464,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "url_path": "/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/",
           "title": "Troubleshooting Cloudflare 5XX errors"
         }
       ]

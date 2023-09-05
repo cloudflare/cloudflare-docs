@@ -160,7 +160,7 @@ cURL is not installed by default in Windows and requires an [install
 wizard](http://curl.haxx.se/dlwiz/).
 {{</Aside>}}
 
-Run the following command to send a standard HTTP GET request to your website (replace _www.example.com_ with your domain and host name):
+Run the following command to send a standard HTTP GET request to your website (replace _www.example.com_ with your domain and hostname):
 
 ```
 $ curl -svo /dev/null http://www.example.com/
@@ -235,7 +235,7 @@ Cloudflare's Help Center.
 
 #### Reviewing Certificates with cURL
 
-The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and host name):
+The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and hostname):
 
 ```sh
 $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
@@ -246,7 +246,7 @@ $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* h
 parses the TLS handshake and certificate information.
 {{</Aside>}}
 
-To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and host name:
+To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and hostname:
 
 ```sh
 $ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
@@ -278,7 +278,7 @@ Timeouts are possible for ping results because Cloudflare limits ping
 requests.
 {{</Aside>}}
 
-Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and host name in the examples below:
+Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and hostname in the examples below:
 
 1\. Open the **Start** menu.
 

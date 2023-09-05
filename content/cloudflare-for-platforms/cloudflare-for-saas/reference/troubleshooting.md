@@ -18,7 +18,7 @@ If you require a higher rate limit, contact your Customer Success Manager.
 
 ## Purge cache
 
-To remove specific files from Cloudflare’s cache, [purge the cache](/cache/how-to/purge-cache/#purge-by-single-file-by-url) while specifying one or more hosts.
+To remove specific files from Cloudflare’s cache, [purge the cache](/cache/how-to/purge-cache/purge-by-single-file/) while specifying one or more hosts.
 
 ---
 
@@ -33,7 +33,7 @@ There are two main causes of error 1016:
 
 {{<Aside type="note">}}
 
-If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Errors](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors).
+If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
 
 {{</Aside>}}
 

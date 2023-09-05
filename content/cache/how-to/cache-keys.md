@@ -116,15 +116,15 @@ Currently, you can only exclude the `Origin` header. The `Origin` header is alwa
 - Headers that are covered by other Cache Key features
   - `cookie`
   - `host`
-- Headers that are specific to Cloudflare and prefixed with `cf-`, e.g. `cf-ray`
-- Headers that are already included in the custom Cache Key template, e.g. `origin`
+- Headers that are specific to Cloudflare and prefixed with `cf-`, for example, `cf-ray`
+- Headers that are already included in the custom Cache Key template, for example, `origin`
 
 ### Host
 
 Host determines which host header to include in the Cache Key.
 
 - If `resolved: false`, Cloudflare includes the `Host` header in the HTTP request sent to the origin.
-- If `resolved: true`, Cloudflare includes the `Host` header that was resolved to get the `origin IP` for the request. In this scenario, the `Host` header may be different from the header actually sent if the [Cloudflare Resolve Override](https://support.cloudflare.com/hc/articles/206190798) feature is used.
+- If `resolved: true`, Cloudflare includes the `Host` header that was resolved to get the `origin IP` for the request. In this scenario, the `Host` header may be different from the header actually sent if the [Cloudflare Resolve Override](/support/page-rules/using-resolve-override-in-page-rules/) feature is used.
 
 ### Cookie
 
@@ -132,7 +132,7 @@ Like `query_string` or `header`, `cookie` controls which cookies appear in the C
 
 #### Usage notes
 
-You cannot include cookies specific to Cloudflare. Cloudflare cookies are prefixed with `__cf`, e.g. `__cflb`
+You cannot include cookies specific to Cloudflare. Cloudflare cookies are prefixed with `__cf`, for example, `__cflb`
 
 #### User features
 

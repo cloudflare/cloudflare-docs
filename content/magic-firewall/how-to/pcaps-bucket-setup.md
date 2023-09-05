@@ -62,11 +62,11 @@ The `bucket` field should be the URI of the bucket. For Amazon S3, the `bucket` 
 ---
 header: Ownership challenge request example
 ---
-curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership \
--H 'Content-Type: application/json' \
--H "X-Auth-Email: ${email}" \
--H "X-Auth-Key: ${auth_key}" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
+--header 'Content-Type: application/json' \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
        "destination_conf": "'${bucket}'"
 }'
 ```
@@ -97,14 +97,14 @@ Validate the bucket by inserting the copied text in the `ownership_text` below:
 ```bash
 ---
 header: Bucket validation example
-----
-curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership/validate \
--H 'Content-Type: application/json' \
--H "X-Auth-Email: ${email}" \
--H "X-Auth-Key: ${auth_key}" \
--d '{
-       "destination_conf": "'${bucket}'",
-       "ownership_challenge": "'${ownership_text}'"
+---
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership/validate \
+--header 'Content-Type: application/json' \
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "destination_conf": "'${bucket}'",
+  "ownership_challenge": "'${ownership_text}'"
 }'
 ```
 
@@ -159,10 +159,10 @@ The list of buckets associated with your account displays.
 ---
 header: Bucket list request example
 ---
-curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ownership \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
 -H 'Content-Type: application/json' \
--H "X-Auth-Email: ${email}" \
--H "X-Auth-Key: ${auth_key}"
+--header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json

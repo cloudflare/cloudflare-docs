@@ -376,7 +376,7 @@ Cloudflare 네트워크에 있는 웹 사이트(`tunnel.example.com`) 페이지�
 ### 문제 해결
 
 -   **이 웹 사이트의 방문자인 경우**: 잠시 후 다시 시도하시기 바랍니다.
--   **이 웹 사이트의 소유자인 경우**: _cloudflared_가 실행 중이며 해당 네트워크에 도달할 수 있는지 확인하시기 바랍니다. 터널에 대해 [로드 밸런싱](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb)을 사용해야 하는 경우도 있습니다.
+-   **이 웹 사이트의 소유자인 경우**: _cloudflared_가 실행 중이며 해당 네트워크에 도달할 수 있는지 확인하시기 바랍니다. 터널에 대해 [로드 밸런싱](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb)을 사용해야 하는 경우도 있습니다.
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### 일반적인 원인
 
-Cloudflare Worker가  [CPU 시간제한](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions)을 초과했습니다. CPU 시간은 loops, parsing JSON 등의 코드를 실행하는 데 걸리는 시간을 말합니다. 네트워크 요청(가져오기, 응답하기)에 걸리는 시간은 CPU 시간에 포함되지 않습니다.
+Cloudflare Worker가  [CPU 시간제한](/workers/observability/log-from-workers/#identifying-and-handling-errors-and-exceptions)을 초과했습니다. CPU 시간은 loops, parsing JSON 등의 코드를 실행하는 데 걸리는 시간을 말합니다. 네트워크 요청(가져오기, 응답하기)에 걸리는 시간은 CPU 시간에 포함되지 않습니다.
 
 ### 문제 해결
 

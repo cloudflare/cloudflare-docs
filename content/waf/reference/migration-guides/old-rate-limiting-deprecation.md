@@ -9,7 +9,7 @@ meta:
 
 # Rate limiting (previous version) deprecation notice
 
-**The [previous version of rate limiting rules](/support/firewall/tools/configuring-cloudflare-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2024-05-01. After this date all remaining active rules will stop working.
+**The [previous version of rate limiting rules](/waf/reference/legacy/old-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2024-05-01. After this date all remaining active rules will stop working.
 
 ![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/images/waf/reference/rate-limiting-both-versions.png)
 
@@ -58,7 +58,7 @@ If you had access to the previous version of Cloudflare Rate Limiting, you will 
 
 The new rate limiting rules are based on the [Ruleset Engine](/ruleset-engine/). To configure rate limiting rules via the API, you must use the [Rulesets API](/ruleset-engine/rulesets-api/). The Rulesets API is used on all recent Cloudflare security products to provide a uniform user experience when interacting with the Cloudflare API.
 
-**The [previous Rate Limiting API](https://developers.cloudflare.com/api/operations/rate-limits-for-a-zone-list-rate-limits) is now deprecated.** You will not be able to perform any API calls after 2024-05-01.
+**The [previous Rate Limiting API](/api/operations/rate-limits-for-a-zone-list-rate-limits) is now deprecated.** You will not be able to perform any API calls after 2024-05-01.
 
 ### Relevant changes for Terraform users
 

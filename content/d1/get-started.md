@@ -33,7 +33,7 @@ You will create a new Worker as the container for both your D1 database and the 
 Create a new project named `d1-tutorial` by running:
 
 ```sh
-$ npm create cloudflare
+$ npm create cloudflare@latest
 
 ```
 
@@ -52,13 +52,21 @@ This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare`.
+If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
-For example: `CI=true npm create cloudflare d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
+For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
 {{</Aside>}}
 
 ## 2. Create a database
+
+{{<Aside type="note" heading="New, faster storage sub-system">}}
+
+D1 has [a new storage sub-system](/d1/changelog/#new-default-storage-subsystem) that dramatically improves query throughput, latency and reliability. This backend is now the default since `wrangler` version `3.4.0`, and is up to 20x faster than the previous alpha backend.
+
+When using a version of `wrangler` prior to `3.4.0`, you will need to pass the `--experimental-backend` flag to `wrangler d1 create` to create a database on this backend.
+
+{{</Aside>}}
 
 A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familiar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
 
@@ -85,11 +93,11 @@ database_name = "<DATABASE_NAME>"
 database_id = "<unique-ID-for-your-database>"
 ```
 
-This will create a new D1 database, and output the [binding](/workers/platform/bindings/) configuration needed in the next step.
+This will create a new D1 database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
 
 ## 3. Bind your Worker to your D1 database
 
-You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/platform/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
 To bind your D1 database to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -233,7 +241,7 @@ $ wrangler d1 execute <DATABASE_NAME> --command='SELECT * FROM Customers'
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 # Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
 ```
 

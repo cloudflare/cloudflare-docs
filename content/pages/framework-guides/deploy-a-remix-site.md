@@ -11,7 +11,7 @@ In this guide, you will create a new Remix application and deploy to Cloudflare 
 
 ## Setting up a new project
 
-Start by installing the latest version of Remix. Create a new project directory and then intialize a Remix project by running:
+Start by installing the latest version of Remix. Create a new project directory and then initialize a Remix project by running:
 
 ```sh
 $ npx create-remix@latest
@@ -46,16 +46,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Framework preset     | `Remix`         |
-| Build command        | `npm run build` |
-| Build directory      | `public`        |
-
-</div>
+{{<pages-build-preset framework="remix">}}
 
 {{<Aside type="warning">}}
 
@@ -76,15 +67,16 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 
 ## Create and add a binding to your Remix application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
-
 To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
-### Use a binding in your Remix application
+### Binding resources to your Remix application
 
-If you have created a KV namespace binding called `PRODUCTS_KV`, you can access its data in a [Remix `loader` function](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv).
+To access bound resources within a Remix application, you need to configure a [Remix `loader` function](https://remix.run/docs/en/main/route/loader).
 
-The following code block shows an example of accessing a KV namespace in Remix.
+The following example uses a KV namespace called `PRODUCTS_KV` [bound to a Pages Function](/pages/platform/functions/bindings/#kv-namespaces). The `PRODUCTS_KV` binding is accessible on the `context` parameter passed to a `LoaderFunction` as `context.env.<BINDING_NAME>`.
+
+The following example shows a Remix `LoaderFunction` accessing a KV namespace in Remix:
 
 ```typescript
 ---
@@ -95,12 +87,20 @@ import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
-export const loader = async ({
+// Define the bindings associated with our Function
+// so that they are typed
+interface Env {
+  PRODUCTS_KV: KVNamespace;
+}
+
+export const loader: LoaderFunction = async ({
   context,
   params,
-}: LoaderArgs) => {
+}) => {
+  // Bindings are accessible on context.env
+  let env = context.env as Env
   return json(
-    await context.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
+    await env.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
       type: "json",
     })
   );
@@ -120,10 +120,13 @@ export default function Product() {
     </div>
   );
 }
-
 ```
 
-Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. For example:
+Refer to the [Remix documentation](https://remix.run/docs/en/main/guides/data-loading) to learn more about data loading within a Remix application.
+
+#### Durable Objects
+
+Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
 ```ts
 export const loader = async ({ context, params }: LoaderArgs) => {
@@ -135,8 +138,6 @@ export const loader = async ({ context, params }: LoaderArgs) => {
 };
 ```
 
-You have to do this because there is no way to export the Durable Object class from a Pages Function.
-
-Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
+Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/durable-objects/).
 
 {{<render file="_learn-more.md" withParameters="Remix">}}

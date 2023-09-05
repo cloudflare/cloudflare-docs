@@ -114,16 +114,6 @@ No. A domain cannot have more than 10 years on the term. If you registered your 
 ## Domain registrations
 
 {{<faq-item>}}
-{{<faq-question level=3 text="Can I register a premium domain?" >}}
-
-{{<faq-answer>}}
-
-Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
 {{<faq-question level=3 text="My domain’s registration was not extended by one year after transferring to Cloudflare" >}}
 
 {{<faq-answer>}}

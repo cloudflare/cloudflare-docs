@@ -34,7 +34,7 @@ Authentication audit logs do not capture actions the user takes once they have a
 
 To view logs for identity-based authentication events:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Logs** > **Access**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
 2. Expand a row to view details such as the login method, the IP address of the user, and more.
 3. If a login attempt was blocked, select **View** for information about why Access denied the user access.
 

@@ -1,6 +1,7 @@
 ---
 title: Mastodon
 pcx_content_type: tutorial
+updated: 2023-01-31
 ---
 
 # Use R2 with Mastodon

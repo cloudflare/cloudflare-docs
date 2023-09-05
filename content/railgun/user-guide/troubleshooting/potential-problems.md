@@ -59,7 +59,7 @@ Railgun Flag rg-listener found dictionary
 
 ## Support
 
-When contacting [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476), provide the following information (if available):
+When contacting [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/), provide the following information (if available):
 
 - Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
 - Output from `/var/log/messages` from Railgun.
