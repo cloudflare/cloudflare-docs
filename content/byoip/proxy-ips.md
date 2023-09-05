@@ -1,7 +1,7 @@
 ---
 title: Proxy IPs
 pcx_content_type: concept
-weight: 6
+weight: 5
 ---
 
 # Proxy IPs

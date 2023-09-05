@@ -1,6 +1,7 @@
 ---
 title: Letter of Authorization
 pcx_content_type: concept
+weight: 3
 meta:
   title: Letter of Authorization (LOA)
 ---
