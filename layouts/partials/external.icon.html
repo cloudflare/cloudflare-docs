@@ -1,4 +1,4 @@
-{{ $seed := "bar" }}
+{{ $seed := "foo" }}
 {{ $random := delimit (shuffle (split (md5 $seed) "" )) "" }}
 {{- $titleID := print "title - " $random -}}
 <span class="DocsMarkdown--link-external-icon" aria-hidden="true">

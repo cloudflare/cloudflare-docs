@@ -1,5 +1,5 @@
 {{- $class := default "DocsMarkdown--link" .class -}}
 <a href="{{ .url }}" class="{{  $class }}" target="_blank" rel="noopener">
   <span class="DocsMarkdown--link-content">{{- .text -}}</span>
-  {{- partialCached "external.icon" . -}}
+  {{- partial "external.icon" . -}}
 </a>
