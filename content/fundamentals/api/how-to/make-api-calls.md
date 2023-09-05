@@ -48,17 +48,16 @@ Sometimes there will be too many results to display via the default page size, f
 There are two options, which can be combined to paginate across the results.
 
 * `page=x` enables you to select a specific page.
-* `per-page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
+* `per_page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
 
 An example might be `https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2`.
 
 Other options are:
 
-* `order`: select the attribute to order by
-* `direction` - either `ASC` (ascending) or `DESC` (descending)
+* `order`: Select the attribute to order by.
+* `direction`: Either `ASC` (ascending order) or `DESC` (descending order).
 
 The available options will be listed at the end of the `result_info` of all endpoints in the [API documentation](/api/).
-
 
 ## Making API calls on Windows
 
