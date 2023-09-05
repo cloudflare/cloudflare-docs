@@ -509,7 +509,7 @@ header: Read product response
 }
 ```
 
-Finally, deploy your Worker using the [`wrangler deploy`][wrangler-deploy] command:
+Finally, deploy your Worker using the [`npx wrangler deploy`][wrangler-deploy] command:
 
 ```sh
 ---

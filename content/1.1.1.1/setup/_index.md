@@ -11,13 +11,24 @@ meta:
 
 By default, the [DNS server](https://www.cloudflare.com/learning/dns/what-is-dns/) your devices use is provided by your Internet provider. To start using 1.1.1.1 for your DNS queries, you will need to change the DNS settings in your device or router.
 
-You can also set up 1.1.1.1 for Families for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1.
+<details>
+<summary>Device or router specific guides</summary>
+<div>
+
+{{<directory-listing>}}
+
+</div>
+</details>
+
+You can also set up [1.1.1.1 for Families](#1111-for-families) for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that Cloudflare committed to when launching 1.1.1.1.
+
+---
 
 ## 1.1.1.1 for Families
 
-1.1.1.1 for Families categorizes destinations on the Internet based on the potential threat they pose regarding malware, phishing, or other types of security risks. When enabled, 1.1.1.1 for Families will block resolution to these destinations.
+{{<render file="_for-families-intro.md" >}} <br />
 
-1.1.1.1 for Families has two default options: 
+1.1.1.1 for Families has two default options:
 
 <details>
 <summary>Block malware</summary>
@@ -65,7 +76,7 @@ After configuring 1.1.1.1 for Families, you can test if it is working as intende
 - https://malware.testcategory.com/: Use this to test if 1.1.1.1 for Families is blocking known malware addresses correctly.
 - https://nudity.testcategory.com/: Use this to test if 1.1.1.1 for Families is blocking known adult content and malware addresses correctly.
 
-## DNS over HTTPS (DoH)
+### DNS over HTTPS (DoH)
 
 If you have a DoH-compliant client, such as a compatible router, you can set up 1.1.1.1 for Families to encrypt your DNS queries over HTTPS. This prevents spoofing and tracking by malicious actors, advertisers, ISPs, and others. For more information on DoH, refer to the [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
 
@@ -93,7 +104,7 @@ https://family.cloudflare-dns.com/dns-query
 </div>
 </details>
 
-## DNS over TLS (DoT)
+### DNS over TLS (DoT)
 
 1.1.1.1 for Families also supports DoT if you have a compliant client, such as a compatible DoT router. DoT allows you to encrypt your DNS queries, protecting you from spoofing, malicious actors, and others. You can learn more about DoT in the [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
 

@@ -7,9 +7,7 @@ weight: 10
 # Manage Turnstile with Terraform
 
 {{<Aside type="note"header="Requirements">}}
-
 This guide assumes that you have the [Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) command installed on your machine.
-
 {{</Aside>}}
 
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). Listed below are examples to help you get started with Turnstile using Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
@@ -69,9 +67,7 @@ output "turnstile_example_secretkey" {
 ```
 
 {{<Aside type="note">}}
-
 The `id` field in the `cloudflare_turnstile_widget.example` resource is your Turnstile widget's sitekey.
-
 {{</Aside>}}
 
 ### Initialize Terraform and the Cloudflare provider
@@ -199,7 +195,5 @@ $ terraform output turnstile_example_secretkey
 ```
 
 {{<Aside type="note">}}
-
 For advanced usage, refer to our [Terraform resource documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/turnstile_widget).
-
 {{</Aside>}}

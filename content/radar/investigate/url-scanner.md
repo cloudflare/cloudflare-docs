@@ -110,7 +110,7 @@ Some examples of more specific properties include:
 
 The [Get URL Scan](/api/operations/urlscanner-get-scan) API endpoint documentation contains the full response schema.
 
-In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot), [DOM](/api/operations/urlscanner-get-scan-dom) and full [network log](/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
+In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot) or full [network log](/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
 
 
 ## Search scans

@@ -116,9 +116,9 @@ This event handler will be called when your Worker receives a [`fetch` event](/w
 
 3. Parameters: `request`, `env`, `context`
 
-The `fetch` event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/fetch-event/#syntax-module-worker).
+The `fetch` event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/fetch-event/#syntax-es-modules).
 
-4. The `Response` object: `return new Response("Hello World!");`
+1. The `Response` object: `return new Response("Hello World!");`
 
 The Workers runtime expects `fetch` events to return a `Response` object. In this example, you will return a new Response with the string `"Hello World!"`.
 
@@ -128,7 +128,7 @@ To experiment with more Workers code, refer to [Workers Examples](/workers/examp
 
 ## 4. Deploy your project
 
-If you did not deploy your Worker during [step 1](/workers/get-started/guide/#1-create-a-new-worker-project), deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [custom domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+If you did not deploy your Worker during [step 1](/workers/get-started/guide/#1-create-a-new-worker-project), deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [Custom Domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 $ npx wrangler deploy

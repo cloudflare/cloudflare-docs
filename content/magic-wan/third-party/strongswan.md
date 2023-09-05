@@ -11,7 +11,7 @@ This tutorial explains how to set up strongSwan along with Magic WAN. You will l
 
 Start by configuring the symmetric health checks target for Magic WAN as explained in [tunnel health checks](/magic-wan/how-to/run-tunnel-health-checks/). For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
 
-This can be set up [with the API](/api/operations/magic-i-psec-tunnels-update-i-psec-tunnel). For example:
+This can be set up [with the API](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel). For example:
 
 ```bash
 $ curl --request PUT \

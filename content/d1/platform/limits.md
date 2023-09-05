@@ -20,6 +20,7 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 | Queries per Worker invocation (see [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make))                      | 50 (Bundled) / 1000 (Unbound)
 | Maximum [database backups](/d1/learning/backups/)  | 24 hours (backups are hourly) (alpha only)   |
 | Maximum number of columns per table                | 100                                          |
+| Maximum number of rows per table                | Unlimited (excluding per-database storage limits) |
 | Maximum string, `BLOB` or table row size           | 1,000,000 bytes (1MB)                        |
 | Maximum SQL statement length                       | 100,000 bytes (100KB)                        |
 | Maximum bound parameters per query                 | 100                                          |

@@ -1,7 +1,7 @@
 ---
 title: Make API calls
 pcx_content_type: how-to
-weight: 11
+weight: 2
 ---
 
 # Make API calls

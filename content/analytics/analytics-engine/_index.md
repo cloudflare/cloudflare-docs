@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Workers Analytics Engine (beta)
-weight: 1
+weight: 4
 ---
 
 {{<beta>}} Workers Analytics Engine {{</beta>}}

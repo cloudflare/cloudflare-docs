@@ -10,7 +10,8 @@
       "WAF",
       "Cache"
     ],
-    "category": ["Security", "Performance", "Reliability"],
+    "product_group": "Cloudflare essentials",
+    "additional_groups": ["Application security", "Application performance"],
     "elements": [
       {
         "type": "module",

@@ -32,3 +32,4 @@ Some of Cloudflare's optional features, including Rocket Loader and Email Obfusc
 If you observe JavaScript or jQuery issues for your website, [disable Rocket Loader](/speed/optimization/content/rocket-loader/enable/) and retest your website.
 
 {{<render file="_rocket-loader-csp.md">}}
+<br/>

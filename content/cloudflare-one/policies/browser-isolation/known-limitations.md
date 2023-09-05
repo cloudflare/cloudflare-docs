@@ -21,6 +21,10 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 - Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
 - Internet Explorer 11 and below is unsupported.
 
+## File download size
+
+When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total download limit per session depends on the amount of memory available to the remote browser. We recommend a maximum individual file size of 512MB.
+
 ## Multifactor authentication
 
 [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN. These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Therefore, they will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/policies/browser-isolation/setup/) such as [isolated Access applications](/cloudflare-one/policies/access/isolate-application/).

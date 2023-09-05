@@ -57,7 +57,10 @@ export function filterResults() {
             )) {
               if (filterValue === "all") {
                 continue;
-              } else if (!currentPath[filterName].includes(filterValue)) {
+              } else if (currentPath["additional_groups"] && filterName === "product_group" && currentPath["additional_groups"].includes(filterValue)) {
+                continue;
+              }
+              else if (!currentPath[filterName].includes(filterValue) ) {
                 keepItem = false;
                 break;
               }

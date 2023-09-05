@@ -46,8 +46,8 @@ When you [activate your waiting room](#step-3--activate-your-waiting-room), choo
 
 Create your waiting room by:
 
-- Using the [dashboard](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard).
-- Using the [API](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-via-the-api).
+- Using the [dashboard](/waiting-room/how-to/create-waiting-room/).
+- Using the [API](/waiting-room/how-to/create-waiting-room/).
 
 ### Appearance (optional)
 

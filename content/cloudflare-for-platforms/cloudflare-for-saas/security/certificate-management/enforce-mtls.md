@@ -35,7 +35,7 @@ Currently, you cannot add mTLS policies for custom hostnames using [API Shield](
 4. Choose the desired TLS version under **Minimum TLS Version** and click **Save**.
 
 {{<Aside type="note">}}
-While TLS 1.3 is the most recent and secure version, it is not supported by some older devices. Refer to Cloudflare's recommendations when [deciding what version to use](/ssl/edge-certificates/additional-options/minimum-tls/#decide-what-version-to-use).
+While TLS 1.3 is the most recent and secure version, it is not supported by some older devices. Refer to Cloudflare's recommendations when [deciding what version to use](/ssl/reference/protocols/#decide-which-version-to-use).
 {{</Aside>}}
 
 ## Cipher suites

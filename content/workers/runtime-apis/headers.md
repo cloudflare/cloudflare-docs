@@ -49,3 +49,7 @@ console.log(headers.getAll("Set-Cookie"));
 Cloudflare sets a number of its own custom headers on incoming requests and outgoing responses. While some may be used for its own tracking and bookkeeping, many of these can be useful to your own applications – or Workers – too.
 
 For a list of documented Cloudflare request headers, refer to [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/).
+
+## Related resources
+
+* [Logging headers to console](/workers/examples/logging-headers/) - Review how to log headers in the console.

@@ -27,31 +27,33 @@ The available rate limiting rule parameters are the following:
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
   - Use one or more of the following characteristics:
 
-    | Dashboard value                           | API value                                            |
-    |-------------------------------------------|------------------------------------------------------|
-    | N/A (implicitly included)                 | `cf.colo.id` (mandatory)                             |
-    | _IP_                                      | `ip.src`                                             |
-    | _IP with NAT support_                     | `cf.unique_visitor_id`                               |
-    | _Header value of_ (enter header name)     | `http.request.headers["<header_name>"]`              |
-    | _Cookie value of_ (enter cookie name)     | `http.request.cookies["<cookie_name>"]`              |
-    | _Query value of_ (enter parameter name)   | `http.request.uri.args["<query_param_name>"]`        |
-    | _Host_                                    | `http.host`                                          |
-    | _Path_                                    | `http.request.uri.path`                              |
-    | _AS Num_                                  | `ip.geoip.asnum`                                     |
-    | _Country_                                 | `ip.geoip.country`                                   |
-    | _JA3 Fingerprint_                         | `cf.bot_management.ja3_hash`                         |
-    | _JSON string value of_ (enter key)        | `lookup_json_string(http.request.body.raw, "<key>")` |
-    | _Body_                                    | `http.request.body.raw`                              |
-    | _Body size_ (select operator, enter size) | `http.request.body.size`                             |
-    | _Form input value of_ (enter field name)  | `http.request.body.form["<input_field_name>"]`       |
-    | N/A (API only)                            | `substring(<field>, <start>[, <end>])`               |
+    | Dashboard value                           | API value                                             |
+    |-------------------------------------------|------------------------------------------------------ |
+    | N/A (implicitly included)                 | `cf.colo.id` (mandatory)                              |
+    | _IP_                                      | `ip.src`                                              |
+    | _IP with NAT support_                     | `cf.unique_visitor_id`                                |
+    | _Header value of_ (enter header name)     | `http.request.headers["<header_name>"]`               |
+    | _Cookie value of_ (enter cookie name)     | `http.request.cookies["<cookie_name>"]`               |
+    | _Query value of_ (enter parameter name)   | `http.request.uri.args["<query_param_name>"]`         |
+    | _Host_                                    | `http.host`                                           |
+    | _Path_                                    | `http.request.uri.path`                               |
+    | _AS Num_                                  | `ip.geoip.asnum`                                      |
+    | _Country_                                 | `ip.geoip.country`                                    |
+    | _JA3 Fingerprint_                         | `cf.bot_management.ja3_hash`                          |
+    | _JSON string value of_ (enter key)        | `lookup_json_string(http.request.body.raw, "<key>")`  |
+    | N/A (API only)                            | `lookup_json_integer(http.request.body.raw, "<key>")` |
+    | _Body_                                    | `http.request.body.raw`                               |
+    | _Body size_ (select operator, enter size) | `http.request.body.size`                              |
+    | _Form input value of_ (enter field name)  | `http.request.body.form["<input_field_name>"]`        |
+    | N/A (API only)                            | `substring(<field>, <start>[, <end>])`                |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
   - If you use `http.request.headers["<header_name>"]` in an API request, you must enter the header name in lower case, since Cloudflare normalizes header names on the Cloudflare global network.
   - If you use _Cookie value of_, refer to [Recommendations](#recommendations) for additional validations you should implement.
+  - If you use the _Header value of_, _Cookie value of_, or _Query value of_ characteristic and the specific header/cookie/parameter name is not present in the request, the rate limiting rule may still apply to the request, depending on your counting expression. If you do not filter out such requests, there will be a specific [request counter](/waf/rate-limiting-rules/request-rate/) for requests where the header/cookie/query parameter is not present, which will be different from the request counter where the header/cookie/query parameter is present with an empty value. For example, to consider only requests where a specific HTTP header is present in the context of a specific rate limiting rule, adjust the rule counting expression so it contains something similar to the following: `and len(http.request.headers["<header_name>"]) > 0`, where `<header_name>` is the same header name used as a rate limiting characteristic.
   - You should not use _Header value of_ or _Cookie value of_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
-  - For more information on the `lookup_json_string` and `substring` functions, refer to [Functions](/ruleset-engine/rules-language/functions/) in the Ruleset Engine documentation.
+  - For more information on the `lookup_json_string`, `lookup_json_integer`, and `substring` functions, refer to [Functions](/ruleset-engine/rules-language/functions/) in the Ruleset Engine documentation.
   - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/).
   - Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
   - Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/) for details.
@@ -60,8 +62,8 @@ The available rate limiting rule parameters are the following:
 
   - Field name in the API: `counting_expression` (optional).
   - Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
-  - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule expression. This default is also applied when you set this field to an empty string (`""`).
-  - The counting expression does not extend the rule matching expression defined in **If incoming requests match**. Therefore, you may wish to include the matching expression in the counting expression. For example, you might want to perform rate limiting for clients sending more than five requests to `/api/` resulting in a `403` HTTP status code from the origin server. In this case, the matching expression would be `starts_with(http.request.uri.path, "/api/")` and the counting expression would be `http.response.code eq 403 and starts_with(http.request.uri.path, "/api/")`. If the counting expression did not include the matching expression (that is, if you had set the counting expression to `http.response.code eq 403`), any response with a `403` status code on any URL would increase the counter.
+  - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule matching expression (defined in **If incoming requests match**). This default is also applied when you set this field to an empty string (`""`).
+  - If you set a custom counting expression, it will not automatically extend the rule matching expression. Therefore, you may wish to include the matching expression in the counting expression. For example, you might want to perform rate limiting for clients sending more than five requests to `/api/` resulting in a `403` HTTP status code from the origin server. In this case, the matching expression would be `starts_with(http.request.uri.path, "/api/")` and the counting expression would be `http.response.code eq 403 and starts_with(http.request.uri.path, "/api/")`. If the counting expression did not include the matching expression (that is, if you had set the counting expression to `http.response.code eq 403`), any response with a `403` status code on any URL would increase the counter.
   - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
   - In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 

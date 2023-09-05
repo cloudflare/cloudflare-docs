@@ -168,7 +168,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram-ipsec.png)
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)

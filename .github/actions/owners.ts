@@ -32,7 +32,7 @@ export const OWNERS: Record<string, string[]> = {
   "email-routing": ["deadlypants1973"],
   "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
-  fundamentals: ["kodster28"],
+  fundamentals: ["jason-cf"],
   "health-checks": ["RebeccaTamachiro"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],

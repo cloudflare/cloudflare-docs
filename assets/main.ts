@@ -10,8 +10,6 @@ declare global {
   }
 }
 
-const currentLocation = window.location.href;
-
 (function () {
   navs.init();
   timeago.init();
