@@ -15,16 +15,12 @@ Encrypt your web traffic to prevent data theft and other tampering
 
 {{<plan type = "all">}}
 
-Through Universal SSL, Cloudflare is the first Internet performance and security company to offer free SSL/TLS protection.
+Through [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare is the first Internet performance and security company to offer free SSL/TLS protection.
 Cloudflare SSL/TLS also provides a number of other features to meet your encryption requirements and certificate management needs.
 
 ---
 
 ## Features
-
-{{<feature header="Universal SSL" href="/ssl/edge-certificates/universal-ssl/">}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
-{{</feature>}}
 
 {{<feature header="Total TLS" href="/ssl/edge-certificates/additional-options/total-tls/">}}
 Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
