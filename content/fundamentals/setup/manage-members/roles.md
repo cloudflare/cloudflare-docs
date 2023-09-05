@@ -76,6 +76,8 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Domain Administrator | Grants full access to domains in an account, and read-only access to account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain Administrator Read Only | Grants read-only access to domains in an account, as well as account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain DNS | Grants access to edit [DNS settings](/dns/) for domains in an account. |
+| Domain Page Shield | Grants write access to [Page Shield](/page-shield/) for domains in an account. |
+| Domain Page Shield Read | Grants read access to [Page Shield](/page-shield/) for domains in an account. |
 | Domain Waiting Room Admin | Can edit [waiting rooms](/waiting-room/) configuration. |
 | Domain Waiting Room Read | Can read [waiting rooms](/waiting-room/) configuration. |
 | Zone Versioning | Grants full access to [Zone Versioning](/version-management/). |
