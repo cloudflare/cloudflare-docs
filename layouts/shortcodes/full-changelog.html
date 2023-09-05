@@ -54,7 +54,7 @@ $products = sort ($products | uniq) . "asc" -}}
         <tr class="data-row" data-product="{{.product | lower}}">
           <td>{{ .product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
-          <td>{{ .publish_date }}</td>
+          <td class="changelogDate">{{ .publish_date }}</td>
           <td>{{ .description | $.Page.RenderString }}</td>
         </tr>
         {{- end -}}

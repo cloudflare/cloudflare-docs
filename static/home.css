@@ -3779,3 +3779,25 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 [theme=dark] .rssLink {
     color: #ff9e40;
 }
+
+p>code,
+span>code,
+a>code,
+div>code,
+li>code,
+td>code,
+.DocsMarkdown--aside>code,
+.InlineCode {
+  font-family: var(--monospace-font-family);
+  font-size: var(--inline-code-font-size);
+  --default-padding: 0.2em 0.3em;
+  padding: var(--padding, var(--default-padding));
+  --default-background: rgba(var(--color-rgb), 0.05);
+  background: var(--background, var(--default-background));
+  border-radius: 0.25em;
+  max-width: 100%;
+}
+
+.changelogDate {
+    line-break: strict !important;
+}
