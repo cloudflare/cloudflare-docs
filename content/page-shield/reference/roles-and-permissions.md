@@ -21,5 +21,17 @@ Cloudflare users with the following [roles](/fundamentals/setup/manage-members/r
 
 To interact with the [Page Shield API](/page-shield/reference/page-shield-api/) you need an API token with one of the following [permissions](/fundamentals/api/reference/permissions/):
 
-* Page Shield Edit
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+* Page Shield > Edit
+* Page Shield > Read _(read-only access)_
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+* Page Shield Write
 * Page Shield Read _(read-only access)_
+
+{{</tab>}}
+{{</tabs>}}
