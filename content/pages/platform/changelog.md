@@ -6,6 +6,45 @@ rss: file
 
 # Changelog
 
+## 2023-08-23
+
+* Commit messages can now be up to 384 characters before being trimmed.
+
+## 2023-08-01
+
+* Support newer TLDs such as `.party` and `.music`.
+
+## 20223-07-11
+
+* V2 build system is now default for all new projects.
+
+## 2023-07-10
+
+* Sped up project creation.
+
+## 2023-05-19
+
+* Builds which fail due to Out of memory (OOM) will return a proper error message indicating so rather than `Internal error`.
+
+## 2023-05-17
+
+* The V2 build system is now available in open beta. Enable the V2 build system by going to your Pages project in the Cloudflare dashboard and selecting **Settings** > [**Build & deployments**](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/settings/builds-deployments) > **Build system version**.
+
+## 2023-05-16
+
+* [Smart placement](/workers/configuration/smart-placement/) can now be enabled for Pages within your Pages Project by going to **Settings** > [**Functions**](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/settings/functions).
+
+## 2023-03-23
+
+* Files uploaded are now visible for Git projects, you can view them in the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment/files).
+
+## 2023-03-20
+
+* Notifications for Pages events are now available in the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/notifications). Events supported include:
+  * Deployment started.
+  * Deployment succeeded.
+  * Deployment failed.
+
 ## 2023-02-14
 
 * Added support for [Analytics Engine](/analytics/analytics-engine/) in Functions.
