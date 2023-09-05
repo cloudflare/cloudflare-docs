@@ -124,7 +124,7 @@ You can interact with your KV namespace via Wrangler or via a Worker.
 
 ### Interact with your KV namespace via Wrangler
 
-To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively. "<KEY>" and "<VALUE>" are values of your choice.
+To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively.  `<KEY>`and `<VALUE>` are values of your choice.
 
 ```sh
 $ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
@@ -168,7 +168,14 @@ Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to writ
 
 ### Interact with your KV namespace via a Worker
 
-You can now access the binding from within a Worker. In your Worker script, use the KV `get()` method to fetch the data you stored in your KV database:
+You can now access the binding from within a Worker. 
+
+In your Worker script, add your KV namespace in the  `Env` interface:
+
+```js
+	YOUR_KV_NAMESPACE: KVNamespace;
+```
+Use the KV `get()` method to fetch the data you stored in your KV database:
 
 ```js
 let value = await <YOUR_BINDING>.get("KEY");
