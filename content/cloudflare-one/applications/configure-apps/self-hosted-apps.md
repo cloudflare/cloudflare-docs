@@ -86,10 +86,10 @@ Users can now connect to your self-hosted application after authenticating with 
 
 When using Access self-hosted applications, the majority of Cloudflare products will be compatible with your application.
 
-However, the following products are not yet supported:
+However, the following products are not supported:
 
-- [Automatic Signed Exchanges](/speed/optimization/other/signed-exchanges/enable-signed-exchange/)
+- [Automatic Signed Exchanges](/speed/optimization/other/signed-exchanges/)
 - [Automatic Platform Optimization](/automatic-platform-optimization)
 - [Zaraz](/zaraz)
 
-If these features are enabled for your Access application, disable them using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
+If these products are enabled for your Access application, disable them using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
