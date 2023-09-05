@@ -59,3 +59,20 @@ The following secrets are validated with regex.
 - AWS keys
 - Azure API keys
 - SSH keys
+
+## Source code
+
+The following programming languages are validated with natural language processing (NLP).
+
+- C
+- C++
+- C#
+- Go
+- Haskell
+- Java
+- JavaScript
+- Lua
+- Python
+- R
+- Rust
+- Swift
