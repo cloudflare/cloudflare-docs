@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside>}}
 
-To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [dynamic advertisement best practices](/byoip/dynamic-advertisement/best-practices).
+To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [dynamic advertisement best practices](/byoip/concepts/dynamic-advertisement/best-practices).
 
 {{</Aside>}}
 
