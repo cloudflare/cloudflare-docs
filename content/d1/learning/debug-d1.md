@@ -52,7 +52,7 @@ You should include as much of the following in any bug report:
 * The ID of your database: use `wrangler d1 list` to match a database name to its ID.
 * The query, or queries, that you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
 * The Worker code that makes the query, including any calls to `.bind()` using the [client API](/d1/platform/client-api/).
-* The full error text, including the content of [`error.cause.message`](#handling-errors).
+* The full error text, including the content of [`error.cause.message`](#handle-errors).
 
 ## Related resources
 

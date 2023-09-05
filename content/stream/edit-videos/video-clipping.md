@@ -23,6 +23,12 @@ Before you can clip a video, you will need an API token. For more information on
 
 To clip your video, determine the start and end times you want to use from the existing video to create the new video. Use the `videoUID` and the start end times to make your request.
 
+{{<Aside type="note">}}
+
+Clipped videos will not inherit the `scheduledDeletion` date. To set the deletion date, you must clip the video first and then set the deletion date.
+
+{{</Aside>}}
+
 ```json
 ---
 header: Required parameters

@@ -10,7 +10,7 @@ With Cloudflare Zero Trust, you can show applications on the [App Launcher](/clo
 
 Links to applications not protected by Access can be added as bookmarks. To add a bookmark:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Select **Add an application** > **Bookmark**.
 

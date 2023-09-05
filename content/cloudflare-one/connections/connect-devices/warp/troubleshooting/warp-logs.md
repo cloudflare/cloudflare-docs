@@ -27,7 +27,7 @@ This will place a `warp-debugging-info-<date>-<time>.zip` on your Desktop.
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-1. Open a Command Prompt or Powershell window.
+1. Open a Command Prompt or PowerShell window.
 2. Run the `warp-diag` tool:
     ```bash
     C:\Users\JohnDoe>warp-diag

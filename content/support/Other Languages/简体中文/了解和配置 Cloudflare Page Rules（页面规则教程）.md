@@ -740,7 +740,7 @@ ___
 
 ### 将页面规则用于 Workers
 
-如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/platform/workers-with-page-rules/)。
+如果当前请求的 URL 同时匹配页面规则和 [Workers 自定义路由](/workers/platform/routes)，则将不会应用某些页面规则设置。关于将页面规则用于 Workers 的详情，请参阅开发人员文档中的 [Workers：页面规则](/workers/configuration/workers-with-page-rules/)。
 
 ___
 

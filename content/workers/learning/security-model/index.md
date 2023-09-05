@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Security model
-weight: 2
 layout: single
 ---
 
@@ -48,7 +47,7 @@ Additionally, even for isolates that run in a shared process with other isolates
 
 At the whole-process level, Cloudflare applies another layer of sandboxing for defense in depth. The layer 2 sandbox uses Linux namespaces and `seccomp` to prohibit all access to the filesystem and network. Namespaces and `seccomp` are commonly used to implement containers. However, Cloudflare's use of these technologies is much stricter than what is usually possible in container engines, because Cloudflare configures namespaces and `seccomp` after the process has started but before any isolates have been loaded. This means, for example, Cloudflare can (and does) use a totally empty filesystem (mount namespace) and uses `seccomp` to block absolutely all filesystem-related system calls. Container engines cannot normally prohibit all filesystem access because doing so would make it impossible to use `exec()` to start the guest program from disk. In the Workers case, Cloudflare's guest programs are not native binaries and the Workers runtime itself has already finished loading before Cloudflare blocks filesystem access.
 
-The layer 2 sandbox also totally prohibits network access. Instead, the process is limited to communicating only over local Unix domain sockets to talk to other processes on the same system. Any communication to the outside world must be mediated by some other local process outside the sandbox.
+The layer 2 sandbox also totally prohibits network access. Instead, the process is limited to communicating only over local UNIX domain sockets to talk to other processes on the same system. Any communication to the outside world must be mediated by some other local process outside the sandbox.
 
 One such process in particular, which is called the supervisor, is responsible for fetching Worker code and configuration from disk or from other internal services. The supervisor ensures that the sandbox process cannot read any configuration except that which is relevant to the Workers that it should be running.
 
@@ -74,9 +73,9 @@ How would such an API be implemented? As described above, the sandbox process ca
 
 Now what about network access? Today, Workers are allowed to talk to the rest of the world only via HTTP — both incoming and outgoing. There is no API for other forms of network access, therefore it is prohibited; although, Cloudflare plans to support other protocols in the future.
 
-As mentioned before, the sandbox process cannot connect directly to the network. Instead, all outbound HTTP requests are sent over a Unix domain socket to a local proxy service. That service implements restrictions on the request. For example, it verifies that the request is either addressed to a public Internet service or to the Worker’s zone’s own origin server, not to internal services that might be visible on the local machine or network. It also adds a header to every request identifying the Worker from which it originates, so that abusive requests can be traced and blocked. Once everything is in order, the request is sent on to the Cloudflare network's HTTP caching layer and then out to the Internet.
+As mentioned before, the sandbox process cannot connect directly to the network. Instead, all outbound HTTP requests are sent over a UNIX domain socket to a local proxy service. That service implements restrictions on the request. For example, it verifies that the request is either addressed to a public Internet service or to the Worker’s zone’s own origin server, not to internal services that might be visible on the local machine or network. It also adds a header to every request identifying the Worker from which it originates, so that abusive requests can be traced and blocked. Once everything is in order, the request is sent on to the Cloudflare network's HTTP caching layer and then out to the Internet.
 
-Similarly, inbound HTTP requests do not go directly to the Workers runtime. They are first received by an inbound proxy service. That service is responsible for TLS termination (the Workers runtime never sees TLS keys), as well as identifying the correct Worker script to run for a particular request URL. Once everything is in order, the request is passed over a Unix domain socket to the sandbox process.
+Similarly, inbound HTTP requests do not go directly to the Workers runtime. They are first received by an inbound proxy service. That service is responsible for TLS termination (the Workers runtime never sees TLS keys), as well as identifying the correct Worker script to run for a particular request URL. Once everything is in order, the request is passed over a UNIX domain socket to the sandbox process.
 
 ## V8 bugs and the patch gap
 

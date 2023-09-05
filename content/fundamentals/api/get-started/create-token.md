@@ -1,7 +1,7 @@
 ---
 title: Create API token
 pcx_content_type: how-to
-weight: 11
+weight: 3
 meta:
   description: Learn how to create a token to perform actions using the Cloudflare API.
 ---

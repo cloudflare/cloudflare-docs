@@ -42,13 +42,6 @@ Before you [log in to your Zero Trust organization](/cloudflare-one/connections/
 
 WARP utilizes UDP for all of its communications. By default, the UDP port required for WARP is `UDP 2408`. WARP can fallback to `UDP 500`, `UDP 1701`, or `UDP 4500`.
 
-## Creating firewall rules
-
-If your organization does not currently allow inbound/outbound communication over the IP addresses and ports described above, you must manually add an exception. The rule at a minimum needs to be scoped to the following process based on your platform:
-
-- Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
-- macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
-
 ## Captive portal
 
 The following domains are used as part of our captive portal check:
@@ -67,3 +60,17 @@ As part of establishing the WARP connection, the client will check the following
 ## NEL reporting
 
 While not required for the WARP client to function, we will report connectivity issues to our NEL endpoint via `a.nel.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+
+## Scope of firewall rules
+
+### Required scopes
+If your organization does not currently allow inbound/outbound communication over the IP addresses, ports, and domains described above, you must manually add an exception. The rule at a minimum needs to be scoped to the following process based on your platform:
+
+- Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
+- macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+
+### Optional scopes
+To run [Digital Experience Monitoring tests](/cloudflare-one/insights/dex/tests/), you will also need to allow the `warp-dex` process to generate network traffic to your target destinations:
+
+- Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-dex.exe`
+- macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/warp-dex`

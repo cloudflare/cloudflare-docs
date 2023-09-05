@@ -54,6 +54,12 @@ For example, this configuration blocks every request to the application, except 
 
 ### Bypass
 
+{{<Aside type="warning" header="Warning">}}
+
+Bypass does not enforce any Access security controls and requests are not logged. This should be tested before deploying to production. Consider using Service Auth if you would like to enforce policies and maintain logging without requiring user authentication.
+
+{{</Aside>}}
+
 The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
 
 A Bypass policy based on IP ranges for an internal application could look like this, where you can input your office's IP addresses in the `Value` field:
@@ -142,8 +148,8 @@ These criteria are available for all Access application types, including [SaaS](
 | Login Methods | Checks the identity provider used at the time of login. | ✅ | ❌ |
 | Authentication Method | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider. |✅ | ❌  |
 | Identity provider group| Checks the user groups you configured with your identity provider (IdP). This selector only displays if you use AzureAD, GitHub, Google, or Okta as your IdP.  | ✅ | ❌ |
-| SAML Group | Checks a SAML attribute name / value pair. This selector only displays if you use a generic SAML identity provider. | ✅ | ❌ |
-| OIDC Claim | Checks an OIDC claim name / value pair. This selector only displays if you use a generic OIDC identity provider. | ✅ | ❌ |
+| SAML Group | Checks a SAML attribute name / value pair. This selector only displays if you use a [generic SAML](/cloudflare-one/identity/idp-integration/generic-saml/) identity provider. | ✅ | ❌ |
+| OIDC Claim | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) identity provider. | ✅ | ❌ |
 | Device posture | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider. |✅ | ✅ |
 | Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
 | Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |

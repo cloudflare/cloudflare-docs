@@ -36,7 +36,7 @@ Yes. Cloudflare Tunnel has full support for Websockets.
 
 {{<faq-answer>}}
 
-Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cloudflare-one/connections/connect-apps/private-net/). Public hostname deployments are not supported at this time.
+Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cloudflare-one/connections/connect-networks/private-net/). Public hostname deployments are not supported at this time.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -129,7 +129,7 @@ If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME r
 
 ### View debug logs
 
-Refer to [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
+Refer to [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -141,11 +141,11 @@ Refer to [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/
 
 ### View debug logs
 
-Refer to [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
+Refer to [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
 
 ### Check SSL/TLS encryption mode
 
-1.  On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
+1.  On the Cloudflare dashboard for your zone, go to **SSL/TLS** > **Overview**.
 1.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
 
 When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
@@ -176,9 +176,9 @@ Before contacting the Cloudflare support team:
 
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-- Set [`log-level`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Set [`log-level`](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
 
 - Include your full `config.yml` file for the affected tunnel.
 

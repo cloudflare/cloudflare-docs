@@ -41,7 +41,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 {{<tutorial-step title="Verify ownership for your domain">}}
 
-Once you [add your domain to Cloudflare](#step-1--add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
+Once you [add your domain to Cloudflare](#add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
 <details>
 <summary>Example verification record</summary>

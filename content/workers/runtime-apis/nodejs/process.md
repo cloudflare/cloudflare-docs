@@ -29,7 +29,7 @@ In the Node.js implementation of `process.env`, the `env` object is a copy of th
 
 ### Relationship to per-request `env` argument in `fetch()` handlers
 
-Workers do have a concept of [environment variables](/workers/platform/environment-variables/) that are applied on a per-Worker and per-request basis. These are not accessible automatically via the `process.env` API. It is possible to manually copy these values into `process.env` if you need to. Be aware, however, that setting any value on `process.env` will coerce that value into a string.
+Workers do have a concept of [environment variables](/workers/configuration/environment-variables/) that are applied on a per-Worker and per-request basis. These are not accessible automatically via the `process.env` API. It is possible to manually copy these values into `process.env` if you need to. Be aware, however, that setting any value on `process.env` will coerce that value into a string.
 
 ```js
 import * as process from 'node:process';

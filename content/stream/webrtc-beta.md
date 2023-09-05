@@ -55,7 +55,7 @@ Every live input has a unique URL that one creator can be stream to. This URL sh
 
 Copy the URL from the `webRTC` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs).
 
-Paste this URL into the provided [WHIP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whip.html#L13), which you can [run in your web browser on Stackblitz](https://workers.new/stream/webrtc-whip):
+Paste this URL into the provided [WHIP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whip.html#L13), which you can [run in your web browser on StackBlitz](https://workers.new/stream/webrtc-whip):
 
 ```javascript
 ---
@@ -80,7 +80,7 @@ You can also use this URL with any client that supports the [WebRTC-HTTP ingesti
 
 Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
 
-Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whep.html#L13), which you [can run in your browser on Stackblitz](https://workers.new/stream/webrtc-whep).
+Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whep.html#L13), which you [can run in your browser on StackBlitz](https://workers.new/stream/webrtc-whep).
 
 ```javascript
 ---
@@ -117,15 +117,15 @@ Beyond the [example WHIP client](https://github.com/cloudflare/workers-sdk/blob/
 
 ### WHIP
 
-- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
+- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (TypeScript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 - [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
 
 ### WHEP
 
-- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
-- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
+- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (TypeScript)
+- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (TypeScript)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
 As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.

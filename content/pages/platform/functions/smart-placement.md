@@ -22,7 +22,7 @@ Smart Placement on Pages currently has some caveats. While assets are always mea
 
 {{<Aside type= "note">}}
 
-To understand how Smart Placement works, refer to [Smart Placement](/workers/platform/smart-placement/).
+To understand how Smart Placement works, refer to [Smart Placement](/workers/configuration/smart-placement/).
 
 {{</Aside>}}
 

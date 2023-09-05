@@ -282,7 +282,7 @@ If you specify a port in the **If the URL matches** field of a Page Rule, it mus
 
 ### Using Page Rules with Workers
 
-If the URL of the current request matches both a Page Rule and a [Workers custom route](/workers/platform/triggers/routes/), some Pages Rules settings will not be applied. For details on using Page Rules with Workers, refer to [Workers: Page Rules](/workers/platform/workers-with-page-rules/) in the developers documentation.
+If the URL of the current request matches both a Page Rule and a [Workers custom route](/workers/configuration/routing/routes/), some Pages Rules settings will not be applied. For details on using Page Rules with Workers, refer to [Workers: Page Rules](/workers/configuration/workers-with-page-rules/) in the developers documentation.
 
 ___
 

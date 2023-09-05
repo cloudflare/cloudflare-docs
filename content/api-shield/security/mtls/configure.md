@@ -101,7 +101,5 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 ```
 
 {{<Aside type="note">}}
-
-To check for revoked certificates, you must use the [**Expression Builder**](#expression-builder).
-
+To check for revoked certificates, you must use the [Expression Builder](#expression-builder).
 {{</Aside>}}

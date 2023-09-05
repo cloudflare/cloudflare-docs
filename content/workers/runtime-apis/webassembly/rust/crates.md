@@ -1,6 +1,6 @@
 ---
 title: Supported crates
-pcx_content_type: single
+pcx_content_type: reference
 weight: 1
 meta:
   title: Supported crates

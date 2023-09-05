@@ -87,9 +87,9 @@ If you do not configure an Access policy for your custom domain, an Access authe
 
 If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
 
-## Delete a project with a high amount of deployments
+## Delete a project with a high number of deployments
 
-You may not be able to delete your Pages project if it has a high amount (over 800) of deployments. The Cloudflare team is tracking this issue.
+You may not be able to delete your Pages project if it has a high number (over 800) of deployments. The Cloudflare team is tracking this issue.
 
 As a workaround, review the following steps to delete all deployments in your Pages project. After you delete your deployments, you will be able to delete your Pages project.
 

@@ -1,7 +1,7 @@
 ---
 title: Security reports (beta)
 pcx_content_type: concept
-weight: 5
+weight: 6
 meta:
   title: Application security reports
 ---

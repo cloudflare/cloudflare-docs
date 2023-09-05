@@ -35,7 +35,7 @@ ___
 
 ## Known issues with SameSite and cf\_clearance cookies
 
-When a [Cloudflare Interactive Challenge](https://support.cloudflare.com/hc/articles/200170136) or Javascript challenge is solved such as for a [**Firewall Rule**](https://support.cloudflare.com/hc/articles/360016473712) or [**IP Access Rule**](https://support.cloudflare.com/hc/articles/217074967), a **cf\_clearance** cookie is set in the client browser. The _cf\_clearance_ cookie has a default lifetime of 30 minutes but is configured via [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) within the **Settings** tab of the Cloudflare **Firewall** app. 
+When a [Cloudflare Interactive Challenge](https://support.cloudflare.com/hc/articles/200170136) or JavaScript challenge is solved such as for a [**Firewall Rule**](https://support.cloudflare.com/hc/articles/360016473712) or [**IP Access Rule**](https://support.cloudflare.com/hc/articles/217074967), a **cf\_clearance** cookie is set in the client browser. The _cf\_clearance_ cookie has a default lifetime of 30 minutes but is configured via [**Challenge Passage**](https://support.cloudflare.com/hc/articles/200170136#2dwCrNWIMnNJDP6AVjEQ3e) within the **Settings** tab of the Cloudflare **Firewall** app. 
 
 Cloudflare uses **SameSite**\=_None_ in the **cf\_clearance** cookie so that visitor requests from different hostnames are not met with subsequent challenges or errors. When **SameSite**\=_None_ is used, it must be set in conjunction with the _Secure_ flag.
 

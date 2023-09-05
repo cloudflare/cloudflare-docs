@@ -14,8 +14,10 @@ Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytic
 
 | <div style="width:150px">Date of change</div> | Description |
 | -------------- | ----------- |
+| 2023-07-25     | Fixed ETag format in the response header.
+| 2023-07-13     | Fixed the issue that was causing an illegal invocation error.
 | 2023-04-19     | Reports additional LCP diagnostic information using web-vitals library's attribution build.
-| 2023-04-06     | Updated Webpack configuration to output code in ECMAScript 3 (ES3) format.
+| 2023-04-06     | Updated webpack configuration to output code in ECMAScript 3 (ES3) format.
 | 2023-03-23     | Updated Google's web-vitals library (version 3.1.1) and removed experimental `server-timing` header.
 | 2022-10-17     | Updated to report new metrics such as time to first byte (TTFB), interaction to next paint (INP), and first contentful paint (FCP). Additionally, it reports `navigator.webdriver`, `server-timing` header (experimental), and protocol info (`nextHopProtocol`). |
 | 2021-12-14     | Improved site filtering. |

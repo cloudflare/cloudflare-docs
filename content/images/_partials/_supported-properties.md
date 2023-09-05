@@ -260,6 +260,13 @@ format=auto
 
 ```js
 ---
+header: URL format alias
+---
+f=auto
+```
+
+```js
+---
 header: Workers
 ---
 cf: {image: {format: "avif"}}
@@ -317,6 +324,13 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
   ```js
   ---
+  header: URL format alias
+  ---
+  g=auto
+  ```
+
+  ```js
+  ---
   header: Workers
   ---
   cf: {image: {gravity: "auto"}}
@@ -358,6 +372,13 @@ Specifies maximum height of the image in pixels. Exact behavior depends on the `
 header: URL format
 ---
 height=250
+```
+
+```js
+---
+header: URL format alias
+---
+h=250
 ```
 
 ```js
@@ -457,6 +478,13 @@ quality=50
 
 ```js
 ---
+header: URL format alias
+---
+q=50
+```
+
+```js
+---
 header: Workers
 ---
 cf: {image: {quality: 50}}
@@ -530,6 +558,14 @@ header: URL format
 ---
 width=250
 ```
+
+```js
+---
+header: URL format alias
+---
+w=250
+```
+
 
 ```js
 ---

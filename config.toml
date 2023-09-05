@@ -6,7 +6,7 @@ DefaultContentLanguage = "en"
 disableHugoGeneratorInject = true
 enableRobotsTXT = false
 summaryLength = 30
-disableAliases = true
+disableAliases = false
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
 enableEmoji = true

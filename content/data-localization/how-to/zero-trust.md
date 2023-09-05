@@ -14,12 +14,12 @@ Regional Services can be used with Gateway in all [supported regions](/data-loca
 
 ### Egress policies
 
-Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/policies/filtering/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
-This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/policies/filtering/egress-policies/).
+Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
+This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/).
 
 ### HTTP policies
 
-As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/connections/connect-devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)).
+As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/connections/connect-devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)).
 
 {{<render file="gateway/_disable-udp.md" productFolder="cloudflare-one">}}
 
@@ -31,7 +31,7 @@ You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/
 
 ### Network policies
 
-You are able to [configure SSH proxy and command logs](/cloudflare-one/policies/filtering/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
+You are able to [configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
 
 ### DNS policies
 
@@ -45,7 +45,7 @@ You can [bring your own certificate](/cloudflare-one/connections/connect-devices
 
 ### Logs and Analytics
 
-By default, Cloudflare will store and deliver logs from data centers across our global edge network. To maintain regional control over your data, you can use [Customer Metadata Boundary](/data-localization/metadata-boundary/) and restrict data storage to a specific geographic region. For more information refer to the section about [Logpush datasets supported](/data-localization/metadata-boundary/logpush-datasets/).
+By default, Cloudflare will store and deliver logs from data centers across our global network. To maintain regional control over your data, you can use [Customer Metadata Boundary](/data-localization/metadata-boundary/) and restrict data storage to a specific geographic region. For more information refer to the section about [Logpush datasets supported](/data-localization/metadata-boundary/logpush-datasets/).
 
 Customers also have the option to reduce the logs that Cloudflare stores:
 - You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/) 
@@ -57,7 +57,7 @@ To ensure that all reverse proxy requests for applications protected by Cloudfla
 
 ## Cloudflare Tunnel
 
-You can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
+You can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
 
 ## WARP settings
 

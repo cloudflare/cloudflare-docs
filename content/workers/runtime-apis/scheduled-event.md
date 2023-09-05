@@ -7,7 +7,7 @@ title: ScheduledEvent
 
 ## Background
 
-A `ScheduledEvent` is the event type for scheduled requests to a Worker. It is the `Object` passed through as the `event` when a Worker is invoked by a Worker's [Cron Trigger](/workers/platform/triggers/cron-triggers/).
+A `ScheduledEvent` is the event type for scheduled requests to a Worker. It is the `Object` passed through as the `event` when a Worker is invoked by a Worker's [Cron Trigger](/workers/configuration/cron-triggers/).
 
 {{<Aside type="note" header="Testing Scheduled Events">}}
 
@@ -43,7 +43,7 @@ export default {
 
 - `event.cron` {{<type>}}string{{</type>}}
 
-  - The value of the [Cron Trigger](/workers/platform/triggers/cron-triggers/) that started the `ScheduledEvent`.
+  - The value of the [Cron Trigger](/workers/configuration/cron-triggers/) that started the `ScheduledEvent`.
 
 - `event.type` {{<type>}}string{{</type>}}
 
@@ -64,12 +64,12 @@ export default {
 
 ### Methods
 
-When a Workers script is invoked by a [Cron Trigger](/workers/platform/triggers/cron-triggers/), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the context your function runs in, and contains the following methods to control what happens next:
+When a Workers script is invoked by a [Cron Trigger](/workers/configuration/cron-triggers/), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the context your function runs in, and contains the following methods to control what happens next:
 
 {{<definitions>}}
 
 - {{<code>}}ctx.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/workers/platform/triggers/cron-triggers/) Past Events table. Otherwise, it will be reported as a success.
+  - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/workers/configuration/cron-triggers/) Past Events table. Otherwise, it will be reported as a success.
 
 {{</definitions>}}

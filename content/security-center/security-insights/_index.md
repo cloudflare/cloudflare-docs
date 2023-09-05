@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Security Insights
-weight: 2
+weight: 4
 ---
 
 # Security Insights

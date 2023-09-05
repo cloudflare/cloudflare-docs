@@ -9,7 +9,7 @@ weight: 7
 layout: example
 ---
 
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/shaka-player) 
+[Run and edit this code in your browser on StackBlitz.](https://workers.new/stream/shaka-player) 
 
 First, create a video element, using the poster attribute to set a preview thumbnail image. Refer to [Display thumbnails](/stream/viewing-videos/displaying-thumbnails/) for instructions on how to generate a thumbnail image using Cloudflare Stream.
 

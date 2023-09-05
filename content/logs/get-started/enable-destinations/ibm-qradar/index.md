@@ -9,7 +9,7 @@ layout: single
 To configure a QRadar/Cloudflare integration you have the option to use one of the following methods: 
 
 * [HTTP Receiver protocol](/logs/get-started/enable-destinations/ibm-qradar/#http-receiver-protocol)
-* [Amazon AWS S3 Rest API](/logs/get-started/enable-destinations/ibm-qradar/#amazon-aws-s3-rest-api-protocol)
+* [Amazon AWS S3 Rest API](/logs/get-started/enable-destinations/ibm-qradar/#amazon-aws-s3-rest-api)
 
 ## HTTP Receiver Protocol
 To send Cloudflare logs to QRadar you need to create a [Logpush job to HTTP endpoints](/logs/get-started/enable-destinations/http/) via API. Below you can find two curl examples of how to send Cloudflare Firewalls events and Cloudflare HTTP events to QRadar.
@@ -49,7 +49,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 
 Cloudflare checks the accessibility of the IP address, port, and validates the certificate of the HTTP Receive log source. If all parameters are valid, a Logpush is created, and starts to send events to HTTP Receiver log source.
 
-## Amazon AWS S3 Rest API Protocol
+## Amazon AWS S3 Rest API
 
 When you use the Amazon S3 REST API protocol, IBM QRadar collects Cloudflare Log events from an Amazon S3 bucket. To use this option, you need to:
 

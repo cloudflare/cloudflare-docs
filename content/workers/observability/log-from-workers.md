@@ -133,7 +133,7 @@ Note that:
 
 - Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
 - Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
-- Logs from any [Durable Objects](/workers/learning/using-durable-objects/) your Worker is using will show up in the dashboard.
+- Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
 ## Push logs to storage

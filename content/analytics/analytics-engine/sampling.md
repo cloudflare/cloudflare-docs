@@ -106,7 +106,7 @@ To address this issue, we employ a method called [adaptive bit rate](https://blo
 
 To achieve this, we store the data in multiple resolutions (that is, with different levels of detail, for instance, 100%, 10%, 1%) derived from the equitably sampled data. At query time, we select the most suitable data resolution to read based on the query's complexity. The query's complexity is determined by the number of rows to be retrieved and the probability of the query completing within a specified time limit of N seconds. By dynamically selecting the appropriate resolution, we optimize the query performance and ensure it stays within the allotted time budget.
 
-ABR offers a significant advantage by enabling us to consistently provide query results within a fixed query budget, regardless of the data size or time span involved. This sets it apart from systems that struggle with timeouts, errors, or high costs when dealing with extensive data sets.
+ABR offers a significant advantage by enabling us to consistently provide query results within a fixed query budget, regardless of the data size or time span involved. This sets it apart from systems that struggle with timeouts, errors, or high costs when dealing with extensive datasets.
 
 ## How to select an index
 

@@ -18,7 +18,8 @@ The Cloudflare APO WordPress plugin does not support multisite WordPress install
 
 ## Compatible plugins
 
-- [FlyingPress](https://flying-press.com/)
+- [NitroPack](https://nitropack.io/)
+- [FlyingPress](https://flyingpress.com/)
 - [WP Rocket](https://community.cloudflare.com/t/cloudflares-apo-with-wp-rockets-minified-css/225906/3?u=yevgen) **version 3.8.6 or later**
 - [BigCommerce](https://wordpress.org/plugins/bigcommerce/)
 - [Easy Digital Downloads](https://wordpress.org/plugins/easy-digital-downloads/)

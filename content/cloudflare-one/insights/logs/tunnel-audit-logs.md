@@ -6,7 +6,7 @@ weight: 6
 
 # Tunnel audit logs
 
-Audit logs for Tunnel are available in the [account section of the Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log) which you can find by clicking on your name or email in the upper right-hand corner of the dashboard. The following actions are logged:
+Audit logs for Tunnel are available in the [account section of the Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log) which you can find by selecting your name or email in the upper right-hand corner of the dashboard. The following actions are logged:
 
 | Action       | Description                                                                                         |
 | ------------ | --------------------------------------------------------------------------------------------------- |

@@ -437,7 +437,7 @@ You've requested a page on a website (`tunnel.example.com`) that is on the Cloud
 ### Resolution
 
 -   **If you are a visitor of this website**: Please try again in a few minutes.
--   **If you are the owner of this website**: Ensure that _cloudflared_ is running and can reach the network. You may wish to enable [load balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) for your tunnel.
+-   **If you are the owner of this website**: Ensure that _cloudflared_ is running and can reach the network. You may wish to enable [load balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) for your tunnel.
 
 ___
 

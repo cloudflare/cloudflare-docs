@@ -5,6 +5,7 @@ product:
   title: Rules
   url: /rules/
   group: Cloudflare essentials
+  additional_groups: [Application performance, Application security, Network security]
 
 meta:
   title: Cloudflare Rules docs

@@ -14,13 +14,9 @@ meta:
 
 {{<tutorial-prereqs>}}
 
-Before update your domain nameservers, make sure that you:
+Before you update your domain nameservers, make sure that you:
 
 - Already own a domain name (such as `example.com` or `cloudflare.com`).
-- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
-- Disabled DNSSEC at your registrar (where you bought your domain name).
-  
-{{<render file="_dnssec-providers.md">}}
 
 {{<Aside type="note">}}
 
@@ -29,6 +25,13 @@ If you do not already have a [domain name](https://www.cloudflare.com/learning/d
 All domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, which means you can skip the rest of this tutorial.
 
 {{</Aside>}}
+
+- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+- Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
+  
+{{<render file="_dnssec-providers.md">}}
+
+{{<render file="_dnssec-enabled-migration.md">}}
 
 {{</tutorial-prereqs>}}
 
@@ -42,7 +45,9 @@ In the Cloudflare dashboard, [add your domain](/fundamentals/get-started/setup/a
 
 When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a full setup, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
-{{<render file="_dns-auto-scan-info.md">}}
+{{<render file="_dns-scan-intro.md">}} <br />
+
+{{<render file="_dns-scan-note.md">}}
 
 {{<render file="_dns-scan-procedure.md">}}
 

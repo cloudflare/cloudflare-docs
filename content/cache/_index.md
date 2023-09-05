@@ -4,10 +4,10 @@ pcx_content_type: overview
 weight: 1
 layout: overview
 meta:
-  title: Cache
+  title: Cloudflare Cache
 ---
 
-# Cache
+# Cloudflare Cache
 
 {{<description>}}
 Cache content across Cloudflare's global server network.

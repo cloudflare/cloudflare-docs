@@ -4,6 +4,11 @@ title: Wrangler
 weight: 30
 ---
 
+{{<Aside>}}
+Wrangler local development for Constellation is not supported yet. You need to use the [`--remote`](https://developers.cloudflare.com/workers/wrangler/commands/#dev) flag.
+{{</Aside>}}
+
+
 # Wrangler Support
 
 [Wrangler](/workers/wrangler/) is our command-line tool for configuring, building and deploying applications with Cloudflare developer products. Use Wrangler to manipulate your Constellation projects and machine-learning models or search for verified models in our [catalog](/constellation/platform/data-model/#catalog).
@@ -28,7 +33,7 @@ Commands:
   wrangler constellation project  Manage your projects
   wrangler constellation model    Manage your models
   wrangler constellation catalog  Check the curated model catalog
-  wrangler constellation runtime  Check the suported runtimes
+  wrangler constellation runtime  Check the supported runtimes
 
 Flags:
   -j, --experimental-json-config  Experimental: Support wrangler.json  [boolean]
@@ -133,7 +138,7 @@ $ npx wrangler constellation catalog list
 
 ## Bindings
 
-To deploy a Constellation Worker, you must declare one or more [bindings](/workers/platform/bindings/) for the Constellation projects you want to use in your `wrangler.toml` configuration file.
+To deploy a Constellation Worker, you must declare one or more [bindings](/workers/configuration/bindings/) for the Constellation projects you want to use in your `wrangler.toml` configuration file.
 
 ```toml
 ---

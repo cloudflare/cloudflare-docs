@@ -15,11 +15,7 @@ layout: single
 
 {{<render file="_disable_dnssec.md">}}
 
-{{<Aside type="note">}}
-
-If your previous provider allows you to add DNSKEY records on the zone apex and use these records in responses to DNS queries, refer to this [migration tutorial](/dns/dnssec/dnssec-active-migration/) to learn how to migrate a zone with DNSSEC enabled.
-
-{{</Aside>}}
+{{<render file="_dnssec-enabled-migration.md">}}
 
 ---
 

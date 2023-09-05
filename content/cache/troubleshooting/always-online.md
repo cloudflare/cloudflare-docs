@@ -38,7 +38,7 @@ Always Online does not trigger for HTTP response codes such as [404](/support/tr
 2. Why were not pages x, y, and z crawled?
     - Since Cloudflare only requests to crawl the most popular pages on the site, it is possible that there will be missing pages. If you really want to archive a page, then you can visit the [Internet Archive](https://web.archive.org/save) save page and ask them to crawl a particular page.
 
-3. What IP addresses do we need to whitelist to make sure crawling works?
+3. What IP addresses do we need to allowlist to make sure crawling works?
     - IP Range: `207.241.224.0/20` and `208.70.24.0/21`. Note that this ip range belongs to Internet Archive and NOT Cloudflare, since it is the Internet Archive that does the crawling.
 
 4. What user agent should the origin expect to see?

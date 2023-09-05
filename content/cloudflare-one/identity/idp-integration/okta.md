@@ -10,7 +10,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 ## Set up Okta as an OIDC provider
 
-1. On your Okta admin dashboard, navigate to **Applications** > **Applications**.
+1. On your Okta admin dashboard, go to **Applications** > **Applications**.
 2. Select **Create App Integration**.
 3. For the **Sign-in method**, select **OIDC - OpenID Connect**.
 
@@ -26,7 +26,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 6. Choose the desired **Assignment** option and select **Save**.
 
-7. From the application view, navigate to the **Sign On** tab.
+7. From the application view, go to the **Sign On** tab.
 
 8. Scroll down to the **OpenID ConnectID Token** and select **Edit**.
 
@@ -38,7 +38,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
     ![Finding your Client credentials and Okta domain in Okta](/images/cloudflare-one/identity/okta/okta-3.png)
 
-11. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+11. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 12. Under **Login methods**, select **Add new**. Select **Okta** as your identity provider.
 
@@ -71,6 +71,7 @@ If you see the error `Failed to fetch user/group information from the identity`,
 The Okta OIDC integration supports the [System for Cross-domain Identity Management (SCIM)](https://www.rfc-editor.org/rfc/rfc7642.txt) protocol. With SCIM, Cloudflare Access can automatically deprovision users after they are deactivated in the identity provider and display synchronized group names in the Access policy builder.
 
 To synchronize users and groups between Access and Okta, you need two separate app integrations in Okta:
+
 - The Okta OIDC connector you created when adding [Okta as an identity provider](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider).
 - A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM provisioning.
 
@@ -80,7 +81,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 ### 2. Configure SCIM in Okta
 
-1. On your Okta admin dashboard, navigate to **Applications** > **Applications**.
+1. On your Okta admin dashboard, go to **Applications** > **Applications**.
 
 2. Select **Browse App Catalog**.
 
@@ -92,7 +93,7 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 6. On the **Sign-on Options** tab, ensure that **SAML 2.0** is selected. Select **Done** to create the integration.
 
-7. On the **Provisioning** tab, and select **Configure API Integration**.
+7. On the **Provisioning** tab, select **Configure API Integration**.
 
 8. Select **Enable API integration**.
 
@@ -114,7 +115,8 @@ To synchronize users and groups between Access and Okta, you need two separate a
 
 13. Select **Save** to complete the configuration.
 
-14. In the **Assignments** tab, add the users and groups you want to synchronize with Cloudflare Access.
+14. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group.
+15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder.
 
 Provisioning will begin immediately. To verify the integration, select **View Logs** in the Okta SCIM application.
 

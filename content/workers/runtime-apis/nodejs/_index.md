@@ -24,7 +24,7 @@ import { Buffer } from 'buffer';
 
 ## Enable Node.js with Workers
 
-Add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
 ```toml
 ---

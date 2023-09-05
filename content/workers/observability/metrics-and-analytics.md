@@ -54,7 +54,7 @@ To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/comma
 
 ### CPU Time per execution
 
-The CPU Time per execution chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-runtime) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
+The CPU Time per execution chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-time) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
 
 ### Execution duration
 
@@ -64,7 +64,7 @@ Workers on the [Bundled Usage Model](/workers/platform/pricing/#usage-models) ma
 
 ### Request duration
 
-The request duration per execution chart is currently only available when your Worker has [Smart Placement](/workers/platform/smart-placement) enabled. Request duration shows how long it took your Worker to respond to requests, including execution duration and network latency.
+The request duration per execution chart is currently only available when your Worker has [Smart Placement](/workers/configuration/smart-placement) enabled. Request duration shows how long it took your Worker to respond to requests, including execution duration and network latency.
 
 The data shows the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis.
 
@@ -81,7 +81,7 @@ Worker script metrics can be inspected for up to three months in the past in max
 
 ## Zone analytics
 
-Aggregates request data for all scripts assigned to any [routes](/workers/platform/triggers/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
+Aggregates request data for all scripts assigned to any [routes](/workers/configuration/routing/routes/) defined for a zone. Find Zone Metrics in **Analytics** > **Workers** in your [Cloudflare dashboard](https://dash.cloudflare.com/?zone=analytics/workers).
 
 Zone data can be scoped by time range within the last 30 days. The dashboard includes charts and information described below.
 

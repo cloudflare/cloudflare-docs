@@ -28,9 +28,9 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
    You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
 
-4. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+4. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-5. Under **Login methods**, click **Add new**.
+5. Under **Login methods**, select **Add new**.
 
 6. Choose **OpenID Connect**..
 
@@ -38,11 +38,21 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-9. (Optional) Under **Optional configurations**, enter custom OIDC claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
-10. Click **Save**.
+10. Select **Save**.
 
-To test that your connection is working, navigate to **Authentication** > **Login methods** and click **Test** next to the login method you want to test. On success, a confirmation screen displays.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test. On success, a confirmation screen displays.
+
+## OIDC claims
+
+Generic OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can be referenced in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access based on these specific attributes.
+
+### Multi-record OIDC claims
+
+Cloudflare Access extends support for multi-record OIDC claims. These claims are parsed out and can be individually referenced in policies. This feature enables granular access control and precise user authorization in applications.
+
+Cloudflare Access does not support partial OIDC claim value references or OIDC scopes.
 
 ## Example API Configuration
 

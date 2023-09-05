@@ -75,7 +75,7 @@ Operating systems display version numbers in different ways. This section covers
 
 ### On Windows
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
 
    ```bash

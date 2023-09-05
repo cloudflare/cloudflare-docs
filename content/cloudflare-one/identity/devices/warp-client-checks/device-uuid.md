@@ -29,7 +29,7 @@ You will need to use a [managed deployment tool](/cloudflare-one/connections/con
 
 ## 2. Create a list of UUIDs
 
-To create rules based on device UUIDs, you first need to create a [Gateway List](/cloudflare-one/policies/filtering/lists/) of UUIDs.
+To create rules based on device UUIDs, you first need to create a [Gateway List](/cloudflare-one/policies/gateway/lists/) of UUIDs.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 

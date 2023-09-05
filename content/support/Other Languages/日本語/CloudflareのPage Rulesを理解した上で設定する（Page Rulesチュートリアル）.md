@@ -740,7 +740,7 @@ Page Ruleの**URLが一致する場合**フィールドでポートを特定す�
 
 ### WorkersでPage Rulesを使う
 
-現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/platform/workers-with-page-rules/)を参照してください。
+現在のリクエストのURLがPage Ruleと[Workersカスタムルート](/workers/platform/routes)の両方と一致する場合、適用されないPage Rule設定がいくつかあります。WorkersでPage Rulesを使う場合の詳細については、開発者ドキュメントの[Workers: Page Rules](/workers/configuration/workers-with-page-rules/)を参照してください。
 
 ___
 

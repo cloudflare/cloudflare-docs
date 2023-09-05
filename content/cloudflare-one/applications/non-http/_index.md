@@ -10,10 +10,10 @@ layout: single
 You can connect applications to Cloudflare Zero Trust over a number of different protocols.
 
 - [Connect through Access using a CLI](/cloudflare-one/tutorials/cli/)
-- [Connect through Access over RDP](/cloudflare-one/connections/connect-apps/use-cases/rdp/)
-- [Connect through Access over SSH](/cloudflare-one/connections/connect-apps/use-cases/ssh/)
+- [Connect through Access over RDP](/cloudflare-one/connections/connect-networks/use-cases/rdp/)
+- [Connect through Access over SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/)
 - [Connect through Access using kubectl](/cloudflare-one/tutorials/kubectl/)
-- [Connect through Access over SMB](/cloudflare-one/connections/connect-apps/use-cases/smb/)
+- [Connect through Access over SMB](/cloudflare-one/connections/connect-networks/use-cases/smb/)
 
 ## Rendering in the browser
 
@@ -28,7 +28,7 @@ Cloudflare can render certain non-web applications in your browser without the n
 To enable browser rendering:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Locate the SSH or VNC application you created when [connecting the server to Cloudflare](/cloudflare-one/connections/connect-apps/use-cases/ssh/). Select **Configure**.
+2. Locate the SSH or VNC application you created when [connecting the server to Cloudflare](/cloudflare-one/connections/connect-networks/use-cases/ssh/). Select **Configure**.
 3. In the **Policies** tab, ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
 4. In the **Settings** tab, scroll down to **Browser rendering**.
 5. Choose _SSH_ or _VNC_.
@@ -57,7 +57,7 @@ displaying this page:
 
 ![Access request prompt page displayed after logging in with cloudflared.](/images/cloudflare-one/applications/non-http/access-screen.png)
 
-To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in Zero Trust. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
+To avoid seeing this page every time you authenticate through `cloudflared`, go to the application page of the Access section in Zero Trust. Select **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
 
 ![The toggle to enable automatic connection is set to on.](/images/cloudflare-one/applications/non-http/cloudflared-app-settings.png)
 
