@@ -3799,5 +3799,5 @@ td>code,
 }
 
 .changelogDate {
-    line-break: strict !important;
+    width: 8em;
 }
