@@ -56,8 +56,6 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Query Cache Read | Grants read access to Query Cache configuration. |
 | Query Cache Write | Grants write access to Query Cache configuration. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for DNS and Firewall. |
-| Page Shield | Grants write access to [Page Shield](/page-shield/) across the whole account. |
-| Page Shield Read | Grants read access to [Page Shield](/page-shield/) across the whole account. |
 | Trust & Safety | Can access trust and safety related services. |
 | Turnstile | Grants full access to [Turnstile](/turnstile/). |
 | Turnstile Read | Grants read access to [Turnstile](/turnstile/). |
