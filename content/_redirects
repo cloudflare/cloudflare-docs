@@ -708,7 +708,7 @@
 /r2/learning/data-security/ /r2/reference/data-security/ 301
 /r2/learning/cors/ /r2/buckets/cors/ 301
 /r2/learning/unicode-interoperability/ /r2/reference/unicode-interoperability/ 301
-/r2/learning/data-location/ /r2/buckets/data-location/ 301
+/r2/learning/data-location/ /r2/reference/data-location/ 301
 /r2/platform/pricing/ /r2/pricing/ 301
 /r2/platform/limits/ /r2/reference/limits/ 301
 /r2/platform/changelog/ /r2/reference/changelog/ 301
@@ -721,6 +721,7 @@
 /r2/examples/aws-sdk-ruby/ /r2/examples/aws/aws-sdk-ruby/ 301
 /r2/examples/aws4fetch/ /r2/examples/aws/aws4fetch/ 301
 /r2/examples/boto3/ /r2/examples/aws/boto3/ 301
+/r2/buckets/data-location/ /r2/reference/data-location/ 301
 
 # tenant_redirects
 /tenant/get-started/prerequisites/ /tenant/get-started/ 301
