@@ -150,12 +150,17 @@
 /support/other-languages/한국어/cloudflare-bot-제품/ /bots/troubleshooting/ 301
 
 # byoip
-/byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
-/byoip/dynamic-advertisement/best-practices/ /byoip/best-practices/dynamic-advertisement/ 301
+/byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
+/byoip/best-practices/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
 /byoip/dynamic-advertisement/configure-dynamic-advertisement/ /byoip/how-to/configure-dynamic-advertisement/ 301
 /byoip/irr-records/verify-irr-entries/ /byoip/how-to/verify-irr-entries/ 301
-/byoip/loa/ /byoip/about/loa/ 301
-/byoip/loa/loa-template/ /byoip/about/loa/ 301
+/byoip/about/irr/ /byoip/concepts/irr-entries/ 301
+/byoip/best-practices/irr-entries/ /byoip/concepts/irr-entries/best-practices/ 301
+/byoip/about/loa/ /byoip/concepts/loa/ 301
+/byoip/loa/loa-template/ /byoip/concepts/loa/ 301
+/byoip/about/prefix-delegations/ /byoip/concepts/prefix-delegations/ 301
+/byoip/about/ /byoip/concepts/ 301
+/byoip/cloudflare-ips/ /byoip/get-started/#cloudflare-ips 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
