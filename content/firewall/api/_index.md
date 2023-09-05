@@ -15,4 +15,4 @@ These APIs are the following:
 
 * [**Firewall Rules API**](/firewall/api/cf-firewall-rules/): Manage firewall rules and their actions, based on criteria separately defined through filters.
 * [**Filters API**](/firewall/api/cf-filters/): Manage the filters that enable rule matching.
-* [**Lists API**](/fundamentals/global-configurations/lists/lists-api/): Manage named lists of items (such as IP addresses) that you can use in the rules of different Cloudflare products.
+* [**Lists API**](/waf/tools/lists/lists-api/): Manage named lists of items (such as IP addresses) that you can use in the rules of different Cloudflare products.

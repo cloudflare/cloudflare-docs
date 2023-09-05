@@ -11,7 +11,7 @@ Use IP Access rules to allowlist, block, and challenge traffic based on the visi
 
 {{<Aside type="warning">}}
 If you wish to perform IP-based or geography-based blocking (geoblocking), Cloudflare recommends that you use [Cloudflare Firewall Rules](/firewall/) instead of IP Access rules:
-- For IP-based blocking, use an [IP list](/fundamentals/global-configurations/lists/custom-lists/) in the firewall rule expression.
+- For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/) in the firewall rule expression.
 - For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the firewall rule expression.
 {{</Aside>}}
 

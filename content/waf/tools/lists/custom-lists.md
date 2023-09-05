@@ -15,11 +15,11 @@ Cloudflare supports the following custom list types:
 
 Each type has its own properties and CSV file format. Refer to the following sections for details.
 
-For more information on lists managed by Cloudflare, like Managed IP Lists, refer to [Managed Lists](/fundamentals/global-configurations/lists/managed-lists/).
+For more information on lists managed by Cloudflare, like Managed IP Lists, refer to [Managed Lists](/waf/tools/lists/managed-lists/).
 
 ## Create a custom list
 
-Refer to [Create a list in the dashboard](/fundamentals/global-configurations/lists/create-dashboard/) or to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) page.
+Refer to [Create a list in the dashboard](/waf/tools/lists/create-dashboard/) or to the [Lists API](/waf/tools/lists/lists-api/) page.
 
 ## Use a custom list
 
@@ -37,7 +37,7 @@ IP address     | Fields with type `IP address` listed in [Fields](/ruleset-engin
 Hostname       | `http.host`
 ASN            | `ip.src.asnum`
 
-For more information on using a custom list in the Cloudflare dashboard, refer to [Use lists in expressions](/fundamentals/global-configurations/lists/use-in-expressions/).
+For more information on using a custom list in the Cloudflare dashboard, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
 
 ---
 

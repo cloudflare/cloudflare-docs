@@ -11,7 +11,7 @@ aliases:
 
 The [Lists API](/api/operations/lists-get-lists) provides an interface for programmatically managing the following types of lists:
 
-* [Custom lists](/fundamentals/global-configurations/lists/custom-lists/): Contain one or more strings of the same type (such as IP addresses or hostnames) that you can reference collectively, by name, in rule expressions.
+* [Custom lists](/waf/tools/lists/custom-lists/): Contain one or more strings of the same type (such as IP addresses or hostnames) that you can reference collectively, by name, in rule expressions.
 
 * [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists): Contain URL redirects that you enable by creating a Bulk Redirect Rule.
 
@@ -19,4 +19,4 @@ To use a list in a rule expression, refer to [Values: Lists](/ruleset-engine/rul
 
 ## Get started
 
-To get started, review the Lists [JSON object](/fundamentals/global-configurations/lists/lists-api/json-object/) and [Endpoints](/fundamentals/global-configurations/lists/lists-api/endpoints/).
+To get started, review the Lists [JSON object](/waf/tools/lists/lists-api/json-object/) and [Endpoints](/waf/tools/lists/lists-api/endpoints/).

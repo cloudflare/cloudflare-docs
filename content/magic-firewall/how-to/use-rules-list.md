@@ -8,7 +8,7 @@ meta:
 
 # Define an IP list
 
-[IP lists](/fundamentals/global-configurations/lists/custom-lists/) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
+[IP lists](/waf/tools/lists/custom-lists/) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
 
 To use this feature first [create a new IP list](/api/operations/lists-create-a-list).
 

@@ -9,7 +9,7 @@ weight: 3
 Cloudflare provides Managed Lists you can use in rule expressions. These lists are regularly updated.
 
 {{<Aside type="note">}}
-The available Managed Lists depend on your Cloudflare plan and product subscriptions. Refer to [Availability](/fundamentals/global-configurations/lists/#availability) for details.
+The available Managed Lists depend on your Cloudflare plan and product subscriptions. Refer to [Availability](/waf/tools/lists/#availability) for details.
 {{</Aside>}}
 
 ## Managed IP Lists
