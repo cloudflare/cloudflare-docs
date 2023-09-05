@@ -18,7 +18,7 @@ The Free plan applies to accounts without a Workers Paid plan, and it includes u
 
 ### Workers Paid
 
-The Workers Paid plan includes the first 200,000 Zaraz Loads per month per account free of charge, with a charge of $0.5 for every additional 1,000 Zaraz Loads. In addition to all the features of the Free plan, the Paid plan includes:
+The Workers Paid plan includes the first 200,000 Zaraz Loads per month per account free of charge, with a charge of $0.50 for every additional 1,000 Zaraz Loads. In addition to all the features of the Free plan, the Paid plan includes:
 
 - [Preview/publish configuration workflow](/zaraz/history/preview-mode/)
 - [Workers Variables](/zaraz/advanced/worker-variables/)
@@ -32,7 +32,7 @@ The Workers Paid plan includes the first 200,000 Zaraz Loads per month per accou
 
 |                                        | Without Workers Paid            | With Workers Paid                                                                 |
 | -------------------------------------- | ------------------------------- | --------------------------------------------------------------------------------- |
-| **Zaraz Loads**                        | Up to 100,000/month per account | First 200,000/month per account free, $0.5 for every additional 1,000 Zaraz Loads |
+| **Zaraz Loads**                        | Up to 100,000/month per account | First 200,000/month per account free, $0.50 for every additional 1,000 Zaraz Loads |
 | **Installation + Configuration**       | Unlimited number of websites    | Unlimited number of websites                                                      |
 | Auto-injection                         | ✔️                              | ✔️                                                                                |
 | Import & export configuration          | ✔️                              | ✔️                                                                                |
@@ -73,11 +73,11 @@ Suppose you have a personal website that generates 150,000 Zaraz Loads per month
 
 ### Example 3: Small business website with Workers Paid plan
 
-Suppose you have a small business website that generates 250,000 Zaraz Loads per month. Under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you will be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for 50,000 additional Zaraz Loads, which would cost you an extra $25 (`(50,000/1,000) * $0.5`) on top of your monthly plan cost.
+Suppose you have a small business website that generates 250,000 Zaraz Loads per month. Under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you will be charged $0.50 for every additional 1,000 Zaraz Loads. In this case, you would be charged for 50,000 additional Zaraz Loads, which would cost you an extra $25 (`(50,000/1,000) * $0.50`) on top of your monthly plan cost.
 
 ### Example 4: High traffic website with Workers Paid plan
 
-If you have a high traffic website that generates 20,000,000 Zaraz Loads per month, under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you would be charged $0.5 for every additional 1,000 Zaraz Loads. In this case, you would be charged for an additional 19,800,000 Zaraz Loads, which would cost you an extra $9,900 (`(19,800,000/1,000) * $0.5`) on top of your monthly plan cost. However, with such high usage, it would likely be more beneficial to consider the Workers Enterprise plan. For a custom quote tailored to your specific needs, please contact our sales team.
+If you have a high traffic website that generates 20,000,000 Zaraz Loads per month, under the Workers Paid plan, the first 200,000 Zaraz Loads are free, and you would be charged $0.50 for every additional 1,000 Zaraz Loads. In this case, you would be charged for an additional 19,800,000 Zaraz Loads, which would cost you an extra $9,900 (`(19,800,000/1,000) * $0.50`) on top of your monthly plan cost. However, with such high usage, it would likely be more beneficial to consider the Workers Enterprise plan. For a custom quote tailored to your specific needs, please contact our sales team.
 
 ## Already using Zaraz?
 

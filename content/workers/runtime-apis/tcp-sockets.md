@@ -65,7 +65,7 @@ export default {
   - Specifies whether or not to use [TLS](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) when creating the TCP socket.
   - `off` — Do not use TLS.
   - `on` — Use TLS.
-  - `starttls` — Do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#how-to-implement-the-starttls-pattern).
+  - `starttls` — Do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#opportunistic-tls-starttls).
 
 - `allowHalfOpen` {{<type>}}boolean{{</type>}} — Defaults to `false`
   - Defines whether the writable side of the TCP socket will automatically close on end-of-file (EOF). When set to `false`, the writable side of the TCP socket will automatically close on EOF. When set to `true`, the writable side of the TCP socket will remain open on EOF.
@@ -156,7 +156,7 @@ const reader = socket.readable.getReader(); // This fails
 ## Considerations
  
 - Outbound TCP sockets to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are temporarily blocked, but will be re-enabled shortly.
-- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/scheduled-event/), [`queue()`](/queues/platform/javascript-apis/#consumer)) or [`alarm()`](/workers/runtime-apis/durable-objects/#alarm-handler-method).
+- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/scheduled-event/), [`queue()`](/queues/platform/javascript-apis/#consumer)) or [`alarm()`](/durable-objects/api/alarms-in-durable-objects/).
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
 - By default, Workers cannot create outbound TCP connections on port `25` to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
 

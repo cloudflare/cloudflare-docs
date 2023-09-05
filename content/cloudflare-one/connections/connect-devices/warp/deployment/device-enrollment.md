@@ -37,9 +37,9 @@ To check for an mTLS certificate:
 2. In **Associated hostnames**, enter your Zero Trust [team domain](/cloudflare-one/glossary/#team-domain): `<team-name>.cloudflareaccess.com`
 3. In your [device enrollment permissions](#set-device-enrollment-permissions), add a _Common Name_ or _Valid Certificate_ rule. For example, the following policy requires a client certificate with a specific common name:
 
-    | Selector          | Operator | Value        | Action        |
-    | ----------------- | -------- | ------------ | ------------- |
-    | Common Name       | is       | `<CERT-COMMON-NAME>` | Allow  |
+    | Selector    | Operator | Value                | Action |
+    | ----------- | -------- | -------------------- | ------ |
+    | Common Name | is       | `<CERT-COMMON-NAME>` | Allow  |
 
 4. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
 

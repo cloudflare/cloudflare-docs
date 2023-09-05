@@ -1493,7 +1493,7 @@
           "ent": "Yes"
         },
         "managed_rulesets_response": {
-          "title": "Cloudflare Sensitive Data Detection (Beta)",
+          "title": "Cloudflare Sensitive Data Detection",
           "summary": "Enterprise-only",
           "link": "/waf/managed-rules/",
           "free": "No",
@@ -2701,6 +2701,14 @@
           "pro": "No",
           "biz": "No",
           "ent": "Paid add-on"
+        },
+        "k_customize_queuing_status_code": {
+          "title": "Customize queuing status code",
+          "link": "/waiting-room/reference/configuration-settings/",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
         },
         "scheduled_events": {
           "title": "Scheduled events",

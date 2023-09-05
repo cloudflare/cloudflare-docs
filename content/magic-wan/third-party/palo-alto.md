@@ -58,7 +58,7 @@ These are the target IP addresses for bidirectional tunnel health checks:
 
 #### Add IPsec tunnels
 
-1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/#dashboard-instructions) instructions to create the required IPsec tunnels with the following options:
+1. Follow the [Add tunnels](/magic-wan/get-started/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
     - **Tunnel name**: `SFO_IPSEC_TUN01`
     - **Interface address**: `10.252.2.96/31`
     - **Customer endpoint**: `203.0.113.254`
@@ -82,7 +82,7 @@ These are the target IP addresses for bidirectional tunnel health checks:
 
 #### Generate Pre-shared keys
 
-When you create IPSec tunnels with the option **Add pre-shared key later**, the Cloudflare dashboard will show you a warning indicator:
+When you create IPsec tunnels with the option **Add pre-shared key later**, the Cloudflare dashboard will show you a warning indicator:
 
 ![Magic IPsec Tunnels - No PSK](/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/03_magic_ipsec_tun_no_psk.png)
 

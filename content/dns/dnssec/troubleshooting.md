@@ -30,7 +30,7 @@ $ dig www.cloudflare.com +dnssec +short
 A 13 3 300 20180927180434 20180925160434 35273 cloudflare.com. DYYZ/bhHSAIlpvu/HEUsxlzkC9NsswbCQ7dcfcuiNBrbhYV7k3AI8t46 QMnOlfhwT6jqsfN7ePV6Fwpym3B0pg==
 ```
 
-`Dig` also retrieves the public key used to verify the DNS record. A domain's DNS records are all signed with the same public key. Therefore, query for the root domain's public key, not the subdomain's public key: 
+`Dig` also retrieves the public key used to verify the DNS record. A domain's DNS records are all signed with the same public key. Therefore, query for the apex domain's public key, not the subdomain's public key: 
 
 
 ```sh

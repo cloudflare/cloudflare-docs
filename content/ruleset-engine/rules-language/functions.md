@@ -80,11 +80,45 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     `len(http.host)`
 
-- <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-lookup_json_integer">{{<name>}}lookup_json_integer{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}Integer{{</type>}}
+
+  - Returns the integer value associated with the supplied `key` in `field`.<br/>
+  The `field` must be a string representation of a valid JSON document.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific integer value.<br>
+  Note: This function only works for plain integers. For example, it will not work for floating numbers with a zero decimal part such as `42.0`.
+
+  - _Examples:_
+
+    A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
+    `{ "record_id": "aed53a", "version": 2 }`<br/>
+    The following function call will return `2`:<br/>
+    `lookup_json_integer(http.request.body.raw, "version") == 2`
+
+    B) Given the following nested object:<br/>
+    `{ "product": { "id": 356 } }`<br/>
+    The following function call will return `356`:<br/>
+    `lookup_json_integer(http.request.body.raw, "product", "id") == 356`
+
+    C) Given the following JSON array at the root level:<br/>
+    `["first_item", -234]`<br/>
+    The following function call will return `-234`:<br/>
+    `lookup_json_integer(http.request.body.raw, 1) == -234`
+
+    D) Given the following array in a JSON object attribute:<br/>
+    `{ "network_ids": [123, 456] }`<br/>
+    The following function call will return `123`:<br/>
+    `lookup_json_integer(http.request.body.raw, "network_ids", 0) == 123`
+
+    E) Given the following root-level array of JSON objects:<br/>
+    `[{ "product_id": 123 }, { "product_id": 456 }]`<br/>
+    The following function call will return `456`:<br/>
+    `lookup_json_integer(http.request.body.raw, 1, "product_id") == 456`
+
+- <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}String{{</type>}}
 
   - Returns the string value associated with the supplied `key` in `field`.<br/>
-  The `field` must be a string representation of a valid JSON object.<br/>
-  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON object to obtain a specific value.
+  The `field` must be a string representation of a valid JSON document.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific value.
 
   - _Examples:_
 
@@ -220,18 +254,29 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
     <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
-- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
+- <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}[, options{{<param-type>}}String{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
-  - Decodes a URL formatted string, as in the following:
+  - Decodes a URL-formatted string defined in `source`, as in the following:
 
-    - <code>%20</code> and <code>+</code> decode to space characters <code> </code>
+    - `%20` and `+` decode to a space character (` `).
 
-    - <code>%E4%BD</code> decodes to <code>ä½ </code>
+    - `%E4%BD` decodes to `ä½`.
 
-  - <em>Example:</em>
+  - The `options` parameter is optional. You must provide any options as a single string wrapped in quotes, such as `"r"` or `"ur"`. The available options are the following:
+
+      - `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
+      - `u`: Enables Unicode percent decoding. For example, `%E2%98%81%EF%B8%8F` will be decoded to a cloud emoji (`☁️`).
+
+  - <em>Examples:</em>
     <br />
 
     ```txt
+    url_decode("John%20Doe") == "John Doe"
+    url_decode("John+Doe") == "John Doe"
+    url_decode("%2520") == "%20"
+    url_decode("%2520", "r") == " "
+
+    // With the any() function:
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
 
@@ -294,7 +339,7 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 - <code>{{<name>}}currentTimeStamp{{</name>}}</code> {{<type>}}Integer{{</type>}}
 
-  - Represents the Unix timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
+  - Represents the UNIX timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
 
 - <code>{{<name>}}lengthOfSeparator{{</name>}}</code> {{<type>}}Integer literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -352,7 +397,7 @@ and is composed of these parentheses-delimited expressions:
     </tr>
     <tr>
       <td valign="top"><code>(\d{10})</code></td>
-      <td>The 10-digit Unix <code>timestamp</code> when the MAC was issued, expressed in seconds.</td>
+      <td>The 10-digit UNIX <code>timestamp</code> when the MAC was issued, expressed in seconds.</td>
       <td valign="top"><code>1484063137</code></td>
     </tr>
     <tr>

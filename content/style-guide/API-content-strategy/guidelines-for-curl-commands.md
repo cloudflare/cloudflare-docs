@@ -2,18 +2,17 @@
 pcx_content_type: concept
 title: Guidelines for cURL commands
 weight: 3
-
 ---
 
 # Guidelines for cURL commands
 
-Use long parameter names, like in the API docs, for clarity:
+Use long parameter names, like in the [API reference documentation](/api/), for clarity:
 
-+ `--header` (instead of -H)
-+ `--request` (when needed, instead of -X)
-+ `--data` (instead of -d)
++ `--header` (instead of `-H`)
++ `--request` (when needed, instead of `-X`)
++ `--data` (instead of `-d`)
 
-You do not need to use the `--url` parameter since it is the main cURL parameter. Also, the URL does not need to be enclosed in double quotes (""), except if it contains a `?` character (that is, when it includes a query string).
+You do not need to use the `--url` parameter since it is the main cURL parameter. Also, the URL does not need to be enclosed in double quotes (`""`), except if it contains a `?` character (that is, when it includes a query string).
 
 ## Indentation
 
@@ -27,7 +26,7 @@ Requests without a body should not be indented also, to make them consistent wit
 
 [jq](https://jqlang.github.io/jq/) is a separate tool that not everyone will have installed. cURL examples should not include response formatting through jq as part of the example.
 
-If you must suggest the use of this tool, you can add a link to the [Make API calls](/fundamentals/api/how-to/make-api-calls/) page in Fundamentals, which briefly mentions this tool. Do not repeat the existing content about jq near the cURL example.
+If you must suggest the use of this tool, you can add a link to the [Make API calls](/fundamentals/api/how-to/make-api-calls/) page in Fundamentals, which mentions this tool. Do not repeat the existing content about jq near the cURL example.
 
 ## Request guidelines
 
@@ -39,11 +38,11 @@ If you must suggest the use of this tool, you can add a link to the [Make API ca
 
 The same placeholder name should correspond to the same value – use different placeholder names for different ID values. You can use the same request placeholders in the response, if they should match the values in the request.
 
-## Authentication HTTP headers
+### Authentication HTTP headers
 
 If using Email + API Key authentication, include the following arguments in the cURL command to add the two required HTTP headers to the request:
 
-```
+```txt
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 ```
@@ -54,86 +53,63 @@ Ending slashes included to facilitate copy and paste. Do not include the last sl
 
 If using API Token (the preferred authentication method), include the following arguments in the cURL command to add the required HTTP header to the request:
 
-```
+```txt
 --header "Authorization: Bearer <API_TOKEN>" \
 ```
 
-## Request without body content (`GET`, `DELETE`)
+### Request without body content (`GET`, `DELETE`)
 
-For `GET` requests, do not include the `--request` command-line argument, since it is the default where the request does not include a body and it is not recommended for `GET`/`POST` requests:
+For `GET` requests, do not include the `--request GET` command-line argument, since it is the default where the request does not include a body and it is not recommended for `GET`/`POST` requests:
 
-### `GET` request template
+#### `GET` request template
 
-```
-cURL {full_url_with_placeholders} \
-
+```txt
+curl {full_url_with_placeholders} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-### `DELETE` request template
-
+```bash
+---
+header: Example
+---
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
-cURL --request DELETE \
 
+#### `DELETE` request template
+
+```txt
+curl --request DELETE \
 {full_url_with_placeholders} \
-
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-### `GET` request example
+Requests without a body do not need syntax highlight, but we use `bash` syntax highlighting to highlight the several delimited strings.
 
-```
-cURL https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
+### Request with JSON body content (`POST`, `PUT`, `PATCH`)
 
---header "Authorization: Bearer <API_TOKEN>"
-```
-
-Requests without a body do not need syntax highlight, but `bash` syntax highlighting is used to highlight the several delimited strings.
-
-## Request with JSON body content (`POST`, `PUT`, `PATCH`)
-
-Make sure to include a `Content-Type` header if the request includes a body. For requests with `JSON` content, the header should be: `Content-Type: application/json`
+Make sure to include a `Content-Type` header if the request includes a body. For requests with JSON content, the header should be `Content-Type: application/json`.
 
 This header should appear after the authentication headers.
 
-For `POST` requests, do not include the `--request` command-line argument, since it is the default when the request includes a body:
+For `POST` requests with a body, do not include the `--request POST` command-line argument, since it is the default when the request includes a body.
 
-### `POST` request template
+#### `POST` request template
 
-```
-cURL {full_url_with_placeholders} \
-
+```txt
+curl {full_url_with_placeholders} \
 --header "Authorization: Bearer <API_TOKEN>" \
-
 --header "Content-Type: application/json" \
-
 --data '({|[)
   (...JSON content, pretty printed, using 2-space indents...)
 (}|])'
 ```
 
-### `PUT`/`PATCH` request template
-
-```
-cURL --request (PUT/PATCH) \
-
-{full_url_with_placeholders} \
-
---header "Authorization: Bearer <API_TOKEN>" \
-
---header "Content-Type: application/json" \
-
---data '({|[)
-  (...JSON content, pretty printed, using 2-space indents...)
-(}|])'
-```
-
-Enclose the `JSON` payload ( the --data command-line argument) in single quotes (') instead of double quotes because it requires less escaping (strings in `JSON` must be delimited using double quotes).
-
-### `POST` request example
-
-```
-cURL https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
+```bash
+---
+header: Example
+---
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '[
@@ -147,18 +123,33 @@ cURL https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 ]'
 ```
 
-### Escaping a single quote in the body
+#### `PUT`/`PATCH` request template
+
+```txt
+curl --request (PUT/PATCH) \
+{full_url_with_placeholders} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '({|[)
+  (...JSON content, pretty printed, using 2-space indents...)
+(}|])'
+```
+
+Enclose the JSON payload ( the `--data` command-line argument) in single quotes (`'`) instead of double quotes because it requires less escaping (strings in JSON must be delimited using double quotes).
+
+#### Escaping a single quote in the body
 
 The recommended way of escaping a single quote inside the body is the following (assuming the user will run the command in a bash-like terminal):
 
-+ Replace the single quote `'` with `\`
++ Replace the single quote `'` with `'\''`
 
 Which means "close string, add escaped single quote, begin string again".
 
-Example:
-
-```
-cURL https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
+```bash
+---
+header: Example
+---
+curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -166,26 +157,24 @@ cURL https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 }'
 ```
 
-### `POST` requests without a body
+#### `POST` requests without a body
 
-If you have a `POST` request without a body, add a `--request POST` argument explicitly to the cUrl command.
+If you have a `POST` request without a body, you must add the `--request POST` argument explicitly to the cURL command.
 
-Example:
-
-```
-cURL --request POST \
+```txt
+curl --request POST \
 {full_url_with_placeholders} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-## Additional information
+### Additional information
 
-Code blocks with example requests that include a `JSON` body should use `bash` syntax, just like example requests without a body.
+Code blocks with example requests that include a JSON body should use `bash` syntax, similarly to example requests without a body.
 
-## Full request example
+### Full request example
 
-```
-cURL https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
+```bash
+curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -199,21 +188,22 @@ cURL https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
 
 ## Response guidelines
 
-Include the complete response (including any empty error and message arrays, if present) using `JSON` syntax highlighting.
+Include the complete response (including any empty error and message arrays, if present) using `json` syntax highlighting.
 
-A response starts either with an object `({ ... })` or a list `([ ... ])`. The initial character should appear on its own line, as well as the last character.
+A response starts either with an object (`{ ... }`) or a list (`[ ... ]`). The initial character should appear on its own line, as well as the last character.
 
-```({|[)
+```txt
+({|[)
   (...JSON content, pretty printed, using 2-space indents...)
 (}|])
 ```
 
-+ If there are IDs that were obtained using a previous command, or if their exact value is not relevant in the current context, use a placeholder (for example, `<RULE_ID>`) instead of the ID. The same placeholder name should correspond to the same value – use different placeholder names for different ID values.
++ If there are IDs that were obtained using a previous command, or if their exact value is not relevant in the current context, use a placeholder (for example, `<RULE_ID>`) instead of the ID. The same placeholder name should correspond to the same value. Use different placeholder names for different ID values.
 + Response excerpts or snippets containing the most relevant parts of the response body should mention that they do not correspond to the entire response.
 
-## Full response example
+### Full response example
 
-```
+```json
 {
   "result": {
     "id": "<RULE_ID>",

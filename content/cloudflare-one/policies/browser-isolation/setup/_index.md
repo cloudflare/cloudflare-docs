@@ -29,7 +29,7 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 To configure Browser Isolation policies:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
-2. Select **Create a policy** and enter a name for the policy.
+2. Select **Add a policy** and enter a name for the policy.
 3. Use the HTTP policy [selectors](/cloudflare-one/policies/gateway/http-policies/#selectors) and [operators](/cloudflare-one/policies/gateway/http-policies/#comparison-operators) to specify the websites or content you want to isolate.
 4. For **Action**, choose either [_Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate) or [_Do not Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 5. (Optional) Configure [settings](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) for an Isolate policy.

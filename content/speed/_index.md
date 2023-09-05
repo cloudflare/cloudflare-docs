@@ -48,7 +48,7 @@ Customize the cache properties of your HTTP requests.
 {{</related>}}
 
 {{<related header="Cloudflare Web Analytics" href="/analytics/web-analytics/" product="analytics">}}
-Understand the performance of your web pages as experienced by your site visitors.
+Understand the performance of your webpages as experienced by your site visitors.
 {{</related>}}
 
 {{<related header="Cloudflare Image Resizing" href="/images/image-resizing/" product="images">}}

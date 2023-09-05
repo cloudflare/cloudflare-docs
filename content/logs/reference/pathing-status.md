@@ -134,7 +134,7 @@ These occur for actions triggered from users based on the configuration for a sp
 | EdgePathingStatus                                                                                                 | Description                                                              | EdgePathingOp | EdgePathingSrc | Status Code |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------- | -------------- | ----------- |
 | `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctry`<br/> | The request was blocked.                                                 | `ban`         | `user`         | `403`       |
-| `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctr`<br/>  | <ul><li>The request was allowed.</li><li>WAF will not execute.</li></ul> | `wl`          | `user`         |      n/a       |
+| `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctry`<br/>  | <ul><li>The request was allowed.</li><li>WAF will not execute.</li></ul> | `wl`          | `user`         |      n/a       |
 
 {{</table-wrap>}}
 

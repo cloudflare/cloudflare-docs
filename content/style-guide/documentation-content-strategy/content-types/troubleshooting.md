@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-pcx_content_type: Content
+pcx_content_type: concept
 ---
 
 # Troubleshooting
@@ -38,7 +38,7 @@ Guiding, straightforward, solution-oriented
 ## Template
 
 ```
-{
+
 ---
 weight: xx
 pcx_content_type: troubleshooting
@@ -55,7 +55,7 @@ Explanation of how to address this issue.
 ## Concise noun title
 
 Explanation of how to address this issue.
-}
+
 ```
 
 ## Additional information

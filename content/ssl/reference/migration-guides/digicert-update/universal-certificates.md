@@ -8,9 +8,7 @@ meta:
 
 # Changes to Universal certificates
 
-{{<render file="_digicert-offboarding-paused">}}
-
-Cloudflare will stop using DigiCert as an issuing certificate authority (CA) for new [Universal certificates](/ssl/edge-certificates/universal-ssl/). This will not affect existing Universal certificates.
+On August and September, 2023, Cloudflare will be offboarding DigiCert as an issuing certificate authority (CA) for new [Universal certificates](/ssl/edge-certificates/universal-ssl/). This will not affect existing Universal certificates.
 
 The validity period for Universal certificates will also be decreased from one year to 90 days.
 

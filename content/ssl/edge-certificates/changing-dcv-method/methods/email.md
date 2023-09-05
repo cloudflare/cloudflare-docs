@@ -41,8 +41,6 @@ Once you locate your certificate, find the following values:
 
 {{<render file="_email-validation-process.md">}}
 
-{{<render file="_dcv-validate-patch.md">}}
-
 ## Renewal
 
 {{<render file="_dcv-certificate-renewal.md">}}

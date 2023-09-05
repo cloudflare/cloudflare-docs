@@ -1,7 +1,7 @@
 ---
 title: SSH proxy and command logs
 pcx_content_type: how-to
-weight: 2
+weight: 3
 ---
 
 # Configure SSH proxy and command logs
@@ -69,7 +69,9 @@ $ cat /etc/ssh/sshd_config
 
 2. In the **Network** tab, create a new network policy.
 
-3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) for your origin server.
+3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) for your origin server. 
+
+   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/).
 
 4. Add any other conditions to your policy. If a user does not meet the criteria, they will be blocked by default.
 
@@ -83,11 +85,17 @@ $ cat /etc/ssh/sshd_config
 
 Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Cloudflare Zero Trust will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
 
+Users must specify their desired username to connect with as part of the SSH command:
+
+```sh
+$ ssh <username>@<hostname>
+```
+
 {{<Aside type="note">}}
 If the target resource is already in a user’s `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
 
 ```sh
-$ ssh-keygen -R <targetIP or Hostname>
+$ ssh-keygen -R <targetIP or hostname>
 ```
 
 {{</Aside>}}

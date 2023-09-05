@@ -72,7 +72,7 @@ The sensitivity score required to trigger the WAF for a specific **Sensitivity**
 - **Medium**: 40 and higher
 - **High**: 25 and higher
 
-For Ajax requests, the following scores are applied instead:
+For AJAX requests, the following scores are applied instead:
 
 - **Low**: 120 and higher
 - **Medium**: 80 and higher

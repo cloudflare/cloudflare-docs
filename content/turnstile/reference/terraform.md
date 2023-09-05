@@ -7,9 +7,7 @@ weight: 10
 # Manage Turnstile with Terraform
 
 {{<Aside type="note"header="Requirements">}}
-
 This guide assumes that you have the [Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) command installed on your machine.
-
 {{</Aside>}}
 
 [Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). Listed below are examples to help you get started with Turnstile using Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
@@ -26,7 +24,7 @@ $ export CLOUDFLARE_API_TOKEN=<YOUR_API_TOKEN>
 
 ### Create a Turnstile widget
 
-Here is an example configuration:
+Example configuration:
 
 ```tf
 ---
@@ -69,9 +67,7 @@ output "turnstile_example_secretkey" {
 ```
 
 {{<Aside type="note">}}
-
 The `id` field in the `cloudflare_turnstile_widget.example` resource is your Turnstile widget's sitekey.
-
 {{</Aside>}}
 
 ### Initialize Terraform and the Cloudflare provider
@@ -103,11 +99,9 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-
-
 ### Review the Terraform plan
 
-Now you can run a `terraform plan` which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully:
+You can run `terraform plan`, which will output any proposed changes. This will prompt you for your Cloudflare Account ID. Make sure to review the plan carefully:
 
 ```sh
 $ terraform plan
@@ -144,7 +138,6 @@ Changes to Outputs:
 
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
 ```
-
 
 ### Apply the Terraform changes
 
@@ -191,7 +184,7 @@ turnstile_example_secretkey = <sensitive>
 turnstile_example_sitekey = "0x4AAAAAAAEe4wQdBshJxBeK"
 ```
 
-You have successfuly created a Turnstile widget. Go to [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
+You have successfuly created a Turnstile widget. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) to view its configuration and analytics in a user-friendly interface.
 
 ### Retrieve the secret key
 Use `terraform output` to get your secret key:
@@ -202,7 +195,5 @@ $ terraform output turnstile_example_secretkey
 ```
 
 {{<Aside type="note">}}
-
 For advanced usage, refer to our [Terraform resource documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/turnstile_widget).
-
 {{</Aside>}}

@@ -1,5 +1,5 @@
 ---
-title: Using Queues to store data in R2
+title: Use Queues to store data in R2
 summary: Example of how to use Queues to batch data and store it in an R2 bucket.
 pcx_content_type: configuration
 weight: 1001
@@ -8,7 +8,7 @@ meta:
   title: Cloudflare Queues - Queues & R2
 ---
 
-The following Worker will catch JavaScript errors and send them to a Queue. The same Worker will receive those errors in batches and store them to a log file in an R2 bucket.
+The following Worker will catch JavaScript errors and send them to a queue. The same Worker will receive those errors in batches and store them to a log file in an R2 bucket.
 
 ```toml
 ---

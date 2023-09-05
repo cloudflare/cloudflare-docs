@@ -6,7 +6,7 @@ weight: 1
 
 # Migrating to the new WAF Managed Rules
 
-On May 4, 2022, Cloudflare started phase 1 of the WAF migration from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Phase 2, available since September 19, 2022, allows the remaining zones to migrate to WAF Managed Rules.
+On 2022-05-04, Cloudflare started the WAF migration from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Currently, all zones can migrate to WAF Managed Rules, including partner accounts.
 
 You can start the update process for a zone in the Cloudflare dashboard or via API. Currently, the update process is always started by you. **The migration is irreversible** — once you update to the new WAF Managed Rules, you cannot go back to using WAF managed rules.
 
@@ -100,7 +100,11 @@ ___
 
 ## Eligible zones
 
-### Phase 2 (since September 19, 2022)
+### Phase 2 (since 2022-09-19)
+
+{{<Aside type="note" header="Update notice">}}
+On 2023-08-18, Cloudflare added support for migrating partner accounts to the new WAF Managed Rules.
+{{</Aside>}}
 
 In phase 2 all zones are eligible for migration. The exact migration procedure varies according to your Cloudflare plan.
 
@@ -110,7 +114,7 @@ In phase 2 all zones are eligible for migration. The exact migration procedure v
 
 **Note:** Zones that have [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides), which you could only manage via API, will not be able to migrate immediately to the new WAF Managed Rules. You must delete these overrides before migrating.
 
-### Phase 1 (since May 4, 2022)
+### Phase 1 (since 2022-05-04)
 
 In phase 1 the migration became available to a subset of eligible zones, which had to meet the following requirements:
 
@@ -176,13 +180,16 @@ The update process can take up to an hour. During this period you may observe se
 1. Use the [Check WAF update compatibility](#api-operations) operation to determine if the zone can update to the new WAF, given its current configuration:
 
     ```bash
-    $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waf_migration/check?phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>"
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waf_migration/check?phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>"
     ```
 
     Example response:
 
     ```json
+    ---
+    highlight: 3
+    ---
     {
       "result": {
         "compatible": true,
@@ -199,8 +206,8 @@ The update process can take up to an hour. During this period you may observe se
 2. To get the new WAF configuration corresponding to your current configuration, use the [Get new WAF configuration](#api-operations) operation:
 
     ```bash
-    $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waf_migration/config?phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>"
+    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waf_migration/config?phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>"
     ```
 
     Example response:
@@ -245,13 +252,13 @@ The returned configuration in the example above, which would match the existing 
 - A rule that executes the Cloudflare Managed Ruleset (ruleset with ID `efb7b8c949ac4650a09736fc376e9aee`).
 - A single override for the rule "Apache Struts - Open Redirect - CVE:CVE-2013-2248" (rule with ID `23ee7cebe6e8443e99ecf932ab579455`) in the same ruleset, setting the action to `log` and disabling the rule.
 
-3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the Update zone entry point ruleset operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
+3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
 
     ```bash
-    $ curl -X PUT \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=validation&phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>" \
-    -d '{
+    curl --request PUT \
+    "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=validation&phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --data '{
       "name": "default",
       "rules": [
         {
@@ -282,10 +289,10 @@ The returned configuration in the example above, which would match the existing 
 4. To finish the migration and disable WAF managed rules, set the configuration for the new WAF using the settings you obtained in step 2 and possibly adjusted in step 3. Make sure you include the `waf_migration=pending&phase_two=1` query string parameters.
 
     ```bash
-    $ curl -X PUT \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=pending&phase_two=1" \
-    -H "Authorization: Bearer <API_TOKEN>" \
-    -d '{
+    curl --request PUT \
+    "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=pending&phase_two=1" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --data '{
       "name": "default",
       "rules": [
         {
@@ -331,13 +338,13 @@ Go to the [Activity log](/waf/security-events/paid-plans/#activity-log) in Secur
 
 - Look for any requests allowed by the new WAF that are being handled by the previous WAF version (for example, by a challenge or block action). If this happens, consider writing a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) or a [WAF custom rule](/waf/custom-rules/create-dashboard/) to handle the requests you previously identified.
 
-- Look for legitimate requests being blocked by the new WAF. In this situation, edit the WAF managed rule that is blocking these requests, changing the performed action or disabling the rule. For more information, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) in the WAF documentation.
+- Look for legitimate requests being blocked by the new WAF. In this situation, edit the WAF managed rule that is blocking these requests, changing the performed action or disabling the rule. For more information, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
 ### For Business/Professional customers
 
 Business and Professional customers do not have access to validation mode, which means that they will be able to check the new WAF behavior after they migrate to the new WAF Managed Rules.
 
-In the days following the migration, check the [Activity log](/waf/security-events/paid-plans/#activity-log) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure a single rule in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-single-rule-in-a-managed-ruleset) in the WAF documentation.
+In the days following the migration, check the [Activity log](/waf/security-events/paid-plans/#activity-log) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure a single rule in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-single-rule-in-a-managed-ruleset).
 
 Additionally, check for requests that should have been blocked. In this situation, consider creating a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) or a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block these requests.
 

@@ -98,6 +98,28 @@ Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-fo
 
 You will now upload `customer-worker-1` into your dispatch namespace that you created in step 2. This user Worker has a simple `fetch()` handler that sends a `Hello world` response.
 
+```js
+---
+filename: main.js
+---
+export default {
+  fetch(request) {
+    return new Response('Hello World');
+  },
+};
+```
+
+Do the following to define a simple metadata file for the user Worker:
+
+```js
+---
+filename: metadata.json
+---
+{
+    "main_module": "main.js"
+}
+```
+
 You will use the Cloudflare API to upload the user Worker. This will upload the user Worker to a dispatch namespace. User Workers must be uploaded via the Cloudflare API as Wrangler does not support this operation. Workers uploaded this way will appear in Account Home > your account > **Workers for Platforms** > your namespace.
 
 Update the necessary fields and run the following command:
@@ -128,7 +150,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 
 {{<Aside type="note">}}
 
-You should perform [Multipart uploads](/cloudflare-for-platforms/workers-for-platforms/platform/multipart/) if you want to use ES Modules syntax.
+For more information on the `metadata.json` refer to [Metadata configuration](/cloudflare-for-platforms/workers-for-platforms/platform/metadata/).
 
 {{</Aside>}}
 

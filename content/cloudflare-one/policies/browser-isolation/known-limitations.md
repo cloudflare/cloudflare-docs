@@ -21,6 +21,10 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 - Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
 - Internet Explorer 11 and below is unsupported.
 
+## File download size
+
+When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total download limit per session depends on the amount of memory available to the remote browser. We recommend a maximum individual file size of 512MB.
+
 ## Multifactor authentication
 
 [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN. These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Therefore, they will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/policies/browser-isolation/setup/) such as [isolated Access applications](/cloudflare-one/policies/access/isolate-application/).
@@ -29,7 +33,7 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 
 When Browser Isolation is [deployed in-line](/cloudflare-one/policies/browser-isolation/setup/) (for example, via WARP, Gateway proxy endpoint or Magic WAN) it is possible to configure a subset of traffic to be isolated. Browser Isolation segregates local and remote browsing contexts. Due to this, cross-domain interactions (such as single sign-on) may not function as expected.
 
-### `POST` request returns `405` error 
+### `POST` request returns `405` error
 
 This error typically occurs due to SAML HTTP-POST bindings. These are not yet supported between non-isolated Identity Providers (IdP) and isolated Service Providers (SP).
 
@@ -37,11 +41,11 @@ This error typically occurs due to SAML HTTP-POST bindings. These are not yet su
 
 The following workarounds enable isolating SAML applications with Browser Isolation.
 
-#### Use SAML HTTP-Redirect bindings 
+#### Use SAML HTTP-Redirect bindings
 
 Configure your SAML implementation to use HTTP Redirect Bindings. This avoids the HTTP `405` error by using URL parameters to route SAMLResponse data into the isolated SP.
 
-#### Clientless Web Isolation 
+#### Clientless Web Isolation
 
 Direct your users to use access the application via [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/). Clientless Web Isolation implicitly isolates all traffic (both IdP and SP) and supports HTTP-POST SAML bindings.
 
@@ -55,15 +59,15 @@ IdP sessions are not shared between the non-isolated IdP and the Clientless Web 
 
 Configure a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) in Cloudflare Access and [enable browser isolation](/cloudflare-one/policies/access/isolate-application/) in the application settings.
 
-#### Isolate both Identity Provider and Service Provider 
+#### Isolate both Identity Provider and Service Provider
 
 The HTTP `405` error does not occur when both the IdP and SP are isolated.
 
 {{<table-wrap>}}
 
-| Order | Selector    | Operator | Value  | Action | 
-| ------| ------------| ---------| -------|--------| 
-| 1     | Application | In | Your Identity Provider, Your Application  | Isolate |
+| Order | Selector    | Operator | Value                                    | Action  |
+| ----- | ----------- | -------- | ---------------------------------------- | ------- |
+| 1     | Application | In       | Your Identity Provider, Your Application | Isolate |
 
 {{</table-wrap>}}
 

@@ -31,6 +31,7 @@ The list order is based on how the cipher suites appear in the [ClientHello](htt
 | AES128-GCM-SHA256                   | ❌      | ❌      | ✅      | ❌      |
 | AES128-SHA                          | ✅      | ✅      | ✅      | ❌      |
 | ECDHE-ECDSA-AES256-GCM-SHA384       | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES256-GCM-SHA384         | ❌      | ❌      | ✅      | ❌      |
 | ECDHE-RSA-AES256-SHA384             | ❌      | ❌      | ✅      | ❌      |
 | AES256-SHA                          | ✅      | ✅      | ✅      | ❌      |
 | DES-CBC3-SHA                        | ✅      | ❌      | ❌      | ❌      |

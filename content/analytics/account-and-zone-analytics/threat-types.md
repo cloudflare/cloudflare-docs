@@ -26,7 +26,7 @@ _Note: An interactive challenge page is a difficult to read word or set of numbe
 
 ## Browser challenge
 
-A bot gave an invalid answer to the JavaScript challenge (in most cases this won't happen, bots typically do not respond to the challenge at all, so "failed" JavaScript challenges would not get logged).
+A bot gave an invalid answer to the JavaScript challenge (in most cases this will not happen, bots typically do not respond to the challenge at all, so "failed" JavaScript challenges would not get logged).
 
 _Note: During a JavaScript challenge you will be shown an interstitial page for about five seconds while Cloudflare performs a series of mathematical challenges to make sure it is a legitimate human visitor._
 

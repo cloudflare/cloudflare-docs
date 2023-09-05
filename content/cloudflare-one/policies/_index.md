@@ -21,7 +21,7 @@ With Cloudflare Zero Trust, you can create:
 
 - [Inspect HTTP and block file uploads](/cloudflare-one/policies/gateway/http-policies/common-policies/#block-google-drive-uploads)
 - [Block sites by host and URL](/cloudflare-one/policies/gateway/http-policies/common-policies/#block-sites)
-- [Block sites by TLD](gateway/dns-policies/common-policies/#block-sites-by-top-level-domain)
+- [Block sites by TLD](/cloudflare-one/policies/gateway/dns-policies/common-policies/#block-top-level-domains)
 - [Block sites for specific users](/cloudflare-one/policies/gateway/http-policies/common-policies/#check-user-identity)
 
 ### Zero Trust policies

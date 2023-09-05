@@ -12,7 +12,8 @@ Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and
 
 A Worker that can send messages to a Queue is a producer Worker, while a Worker that can receive messages from a Queue is a consumer Worker. It is possible for the same Worker to be a producer and consumer, if desired.
 
-In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. If you have any feedback about these APIs, please [contact us](mailto:queues@cloudflare.com) and we would be happy to hear from you.
+In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/workers/40). To give feedback, go to the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) Discord channel.
+
 
 ## Producer
 
@@ -53,20 +54,20 @@ const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
 A binding that allows a producer to send messages to a Queue.
 
 ```ts
-interface Queue<Body = any> {
-  send(body: Body): Promise<void>;
+interface Queue<Body = unknown> {
+  send(body: Body, options?: { contentType?: QueuesContentType }): Promise<void>;
   sendBatch(messages: Iterable<MessageSendRequest<Body>>): Promise<void>;
 }
 ```
 
 {{<definitions>}}
 
-- {{<code>}}send(body{{<param-type>}}any{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+- {{<code>}}send(body{{<param-type>}}unknown{{</param-type>}}, options?{{<param-type>}}{ contentType?: QueuesContentType }{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
   - Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   - When the promise resolves, the message is confirmed to be written to disk.
 
-- {{<code>}}sendBatch(body{{<param-type>}}Iterable\<MessageSendRequest\<any\>>{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+- {{<code>}}sendBatch(body{{<param-type>}}Iterable\<MessageSendRequest\<unknown\>>{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
   - Sends a batch of messages to the Queue. Each item in the provided [Iterable](https://www.typescriptlang.org/docs/handbook/iterators-and-generators.html) must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
   - When the promise resolves, the messages are confirmed to be written to disk.
@@ -78,19 +79,41 @@ interface Queue<Body = any> {
 A wrapper type used for sending message batches.
 
 ```ts
-type MessageSendRequest<Body = any> = {
+type MessageSendRequest<Body = unknown> = {
   body: Body;
+  contentType?: QueuesContentType;
 };
 ```
 
 {{<definitions>}}
 
-- {{<code>}}body{{</code>}} {{<type>}}any{{</type>}}
+- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}} 
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
+- {{<code>}}contentType{{<param-type>}}QueuesContentType{{</param-type>}}{{</code>}}
+
+  - The explicit content type of a message so it can be previewed correctly with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature. Optional argument.
+  - As of now, this option is for internal use. In the future, `contentType` will be used by alternative consumer types to explicitly mark messages as serialized so they can be consumed in the desired type.
+  - See [QueuesContentType](#queuescontenttype) for possible values.
+
 {{</definitions>}}
+
+### `QueuesContentType`
+
+A union type containing valid message content types.
+
+```ts
+type QueuesContentType = "text" | "bytes" | "json" | "v8";
+```
+
+- Use `"text"` to send a `String`. This content type can be previewed with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature.
+- Use `"json"` to send a JavaScript object that can be JSON-serialized. This content type can be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com).
+- Use `"bytes"` to send an `ArrayBuffer`. This content type cannot be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com) and will display as Base64-encoded.
+- Use `"v8"` to send a JavaScript object that cannot be JSON-serialized but is supported by [structured clone](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) (for example `Date` and `Map`). This content type cannot be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com) and will display as Base64-encoded. `"v8"` is the default content type.
+
+If you specify an invalid content type, or if your specified content type does not match the message content's type, the send operation will fail with an error.
 
 ## Consumer
 
@@ -137,7 +160,7 @@ In service worker syntax, `event` provides the same fields and methods as `Messa
 A batch of messages that are sent to a consumer Worker.
 
 ```ts
-interface MessageBatch<Body = any> {
+interface MessageBatch<Body = unknown> {
   readonly queue: string;
   readonly messages: Message<Body>[];
   ackAll(): void;
@@ -170,7 +193,7 @@ interface MessageBatch<Body = any> {
 A message that is sent to a consumer Worker.
 
 ```ts
-interface Message<Body = any> {
+interface Message<Body = unknown> {
   readonly id: string;
   readonly timestamp: Date;
   readonly body: Body;
@@ -189,7 +212,7 @@ interface Message<Body = any> {
 
   - A timestamp when the message was sent.
 
-- {{<code>}}body{{</code>}} {{<type>}}any{{</type>}}
+- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}} 
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.

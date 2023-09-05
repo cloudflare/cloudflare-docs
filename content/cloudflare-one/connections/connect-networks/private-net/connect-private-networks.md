@@ -33,10 +33,9 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
 
 ### Enable the Gateway proxy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
-2. Enable **Proxy** for TCP.
-3. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
-4. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`:
+1. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP.
+2. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
+3. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`:
 
    1. Select **ICMP**.
    2. On Linux servers:
@@ -48,7 +47,7 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
    $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
    ```
 
-Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp).
+Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp). For more information on how Gateway forwards traffic, refer to [Gateway proxy](/cloudflare-one/policies/gateway/proxy/).
 
 ### Create Zero Trust policies
 
@@ -68,15 +67,15 @@ You can create Zero Trust policies to manage access to specific applications on 
 8. Modify the policies to include additional identity-based conditions. For example:
 
    - **Policy 1**
-     | Action | Selector | Operator | Value |
-     |--|--|--|--|
-     | Allow | Destination IP |in|`10.128.0.7` |
-     | |User email| Matches regex| `.*@example.com`|
+     | Selector       | Operator      | Value            | Logic | Action |
+     | -------------- | ------------- | ---------------- | ----- | ------ |
+     | Destination IP | in            | `10.128.0.7`     | And   | Allow  |
+     | User email     | Matches regex | `.*@example.com` |       |        |
 
    - **Policy 2**
-     | Action | Selector | Operator | Value |
-     |--|--|--|--|
-     | Block | Destination IP |in|`10.128.0.7` |
+     | Selector       | Operator | Value        | Action |
+     | -------------- | -------- | ------------ | ------ |
+     | Destination IP | in       | `10.128.0.7` | Block  |
 
    Policies are evaluated in [numerical order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/gateway/network-policies/).
 

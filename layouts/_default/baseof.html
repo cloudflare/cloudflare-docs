@@ -23,6 +23,9 @@
     <script data-source="docs" defer src="https://feedback.developers.cloudflare.com/sdk.js"></script>
     <link rel="preload" href="https://feedback.developers.cloudflare.com/sdk.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
     <noscript><link rel="stylesheet" href="https://feedback.developers.cloudflare.com/sdk.css"/></noscript>
+    {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
+    <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
+    {{- end -}}
   </head>
   <body>
     {{- block "main" . -}}{{- end -}}

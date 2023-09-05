@@ -22,9 +22,9 @@ ___
 
 To view metrics for your website:
 
-1.  Log in to the Cloudflare dashboard.
-2.  Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
-3.  Next, click the **Analytics** app icon.
+1. Log in to the Cloudflare dashboard.
+2. Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
+3. Next, select the **Analytics** app icon.
 
 Once it loads, the Analytics app displays a set of tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to _Review your website metrics_ below.
 
@@ -74,7 +74,7 @@ To receive more detailed metrics, **Add filter**. You can also filter each metri
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
 
 {{<Aside type="note">}}
-To opt out of the new Web Traffic Analytics, click **Switch back to the
+To opt out of the new Web Traffic Analytics, select **Switch back to the
 old experience** on the left side of the page.
 {{</Aside>}}
 

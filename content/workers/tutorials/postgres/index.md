@@ -66,8 +66,8 @@ Make sure you are using `pg` (node-postgres) version `8.11.0` or higher, as earl
 
 Choose one of the two methods to connect to your PostgreSQL database:
 
-1. [Use a connection string](#using-a-connection-string).
-2. [Set explicit parameters](#setting-explicit-parameters).
+1. [Use a connection string](#use-a-connection-string).
+2. [Set explicit parameters](#set-explicit-parameters).
 
 ### Use a connection string
 
@@ -91,7 +91,7 @@ $ wrangler secret put DB_URL
 
 ### Set explicit parameters
 
-Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
+Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
 
 ```toml
 ---

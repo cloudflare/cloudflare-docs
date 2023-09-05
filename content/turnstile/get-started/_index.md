@@ -57,8 +57,6 @@ To add the Turnstile widget:
 After you have installed the Turnstile widget on your site, you must configure your server to validate the Turnstile response.
 Refer to [Server-side validation](/turnstile/get-started/server-side-validation/).
 
-{{<Aside type= "Note">}}
-
+{{<Aside type= "note">}}
 Rendering the client-side integration & validating the server-side response are both necessary to allow Turnstile to function properly.
-
 {{</Aside>}}

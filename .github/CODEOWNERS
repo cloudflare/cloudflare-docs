@@ -2,11 +2,15 @@
 * @cloudflare/pcx-technical-writing
 
 # More dev-specific files
-/.github/ @kodster28 @pedrosousa @haleycode @codewithkristian
+/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
-/components/ @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
-*.js @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
-*.ts @cloudflare/developer-advocacy @codewithkristian @kodster28 @pedrosousa
+/.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
+/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
+/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
+/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
+/assets/json-collector.ts @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 /content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
@@ -40,6 +44,10 @@
 # Firewall Rules & WAF
 /content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
 /content/waf/ @cloudflare/firewall @cloudflare/pcx-technical-writing
+/content/waf/change-log/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+
+# DDoS Protection
+/content/ddos-protection/change-log/ @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
 
 # Magic products
 /content/magic-transit/ @cloudflare/pcx-technical-writing
@@ -49,7 +57,7 @@
 # Radar
 /content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
 
-# Support 
+# Support
 /content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
 
 # Turnstile
