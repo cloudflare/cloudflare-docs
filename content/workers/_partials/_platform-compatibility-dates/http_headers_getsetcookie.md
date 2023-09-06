@@ -4,16 +4,16 @@ _build:
   render: never
   list: never
 
-name: "Get set cookie"
+name: "`Headers` supports `getSetCookie()`"
 sort_date: "2023-03-01"
 enable_date: "2023-03-01"
 enable_flag: "http_headers_getsetcookie"
-disable_flag: "http_headers_getsetcookie"
+disable_flag: "no_http_headers_getsetcookie"
 ---
 
-Adds the standard [`getSetCookie()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/getSetCookie) method to the [headers API](https://developer.mozilla.org/en-US/docs/Web/API/Headers) in Workers.
+Adds the [`getSetCookie()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/getSetCookie) method to the [Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers) API in Workers.
 
 ```js
 const response = await fetch("https://example.com");
-response.headers.getSetCookie();
+let cookieValues = response.headers.getSetCookie();
 ```
