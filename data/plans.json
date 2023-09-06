@@ -2686,6 +2686,14 @@
           "biz": "First In First Out (FIFO)",
           "ent": "First In First Out (FIFO) (default)<br/><br/><em>With add-on</em><br/>All options"
         },
+        "configure_multiple_hostnames_paths": {
+          "title": "Configure multiple hostnames and paths",
+          "link": "/waiting-room/how-to/place-waiting-room/",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Paid add-on"
+        },
         "disable_session_renewal": {
           "title": "Disable session renewal",
           "link": "/waiting-room/reference/configuration-settings/",
