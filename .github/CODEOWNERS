@@ -38,12 +38,11 @@
 /content/stream/ @tsmith512 @cloudflare/pcx-technical-writing
 /data/changelogs/stream.yaml @tsmith512 @cloudflare/pcx-technical-writing
 /content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
+/data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing @irvinebroque @admah
 /content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/platform/changelog/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
 

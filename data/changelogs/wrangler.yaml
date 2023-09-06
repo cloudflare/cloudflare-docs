@@ -1,9 +1,11 @@
 ---
-link: "/workers/platform/changelog/"
+link: "/workers/platform/changelog/wrangler/"
 productName: Wrangler
+external: true
 entries:
 - publish_date: '2023-09-05'
   title: '3.7.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.7.0'
   description: |-
     -   [#3772](https://github.com/cloudflare/workers-sdk/pull/3772) [`a3b3765d`](https://github.com/cloudflare/workers-sdk/commit/a3b3765d9fe4d6e62aa31bb02b682998f1cb7276) Thanks [@jspspike](https://github.com/jspspike)! - Bump esbuild version to 0.17.19. Breaking changes to esbuild are documented [here](https://github.com/evanw/esbuild/releases/tag/v0.17.0)
     -   [#3895](https://github.com/cloudflare/workers-sdk/pull/3895) [`40f56562`](https://github.com/cloudflare/workers-sdk/commit/40f565628aaef2cad745aeeb4da297e7a6973e0d) Thanks [@mrbbot](https://github.com/mrbbot)! - chore: bump `miniflare` to [`3.20230904.0`](https://github.com/cloudflare/miniflare/releases/tag/v3.20230904.0)
@@ -12,6 +14,7 @@ entries:
 
 - publish_date: '2023-08-22'
   title: '3.6.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.6.0'
   description: |-
     -   [#3727](https://github.com/cloudflare/workers-sdk/pull/3727) [`a5e7c0be`](https://github.com/cloudflare/workers-sdk/commit/a5e7c0be0f1b095f9af3d2b55782f9d8b2a6bb09) Thanks [@echen67](https://github.com/echen67)! - Warn user when the last deployment was via the API
     -   [#3762](https://github.com/cloudflare/workers-sdk/pull/3762) [`18dc7b54`](https://github.com/cloudflare/workers-sdk/commit/18dc7b5428ffb5c68dc5ebbbaf506d8fc2fe1f48) Thanks [@GregBrimble](https://github.com/GregBrimble)! - feat: Add internal `wrangler pages project validate [directory]` command which validates an asset directory
@@ -20,12 +23,14 @@ entries:
 
 - publish_date: '2023-08-15'
   title: '3.5.1'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.5.1'
   description: |-
     -   [#3752](https://github.com/cloudflare/workers-sdk/pull/3752) [`8f5ed7fe`](https://github.com/cloudflare/workers-sdk/commit/8f5ed7febc1b348f3fc88eabccabd9678b6cd21a) Thanks [@DaniFoldi](https://github.com/DaniFoldi)! - Changed the binding type of WfP Dispatch Namespaces to `DispatchNamespace`
     -   [#3765](https://github.com/cloudflare/workers-sdk/pull/3765) [`e17d3096`](https://github.com/cloudflare/workers-sdk/commit/e17d3096ecde7cf697f7d5bc6ebc3a868eb88cfa) Thanks [@RamIdeas](https://github.com/RamIdeas)! - bump miniflare version to 3.20230814.1
 
 - publish_date: '2023-08-08'
   title: '3.5.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.5.0'
   description: |-
     -   [#3703](https://github.com/cloudflare/workers-sdk/pull/3703) [`e600f029`](https://github.com/cloudflare/workers-sdk/commit/e600f0298d4d2780bdfc1171a5f84a5f36ce5010) Thanks [@jspspike](https://github.com/jspspike)! - Added --local option for r2 commands to interact with local persisted r2 objects
     -   [#3704](https://github.com/cloudflare/workers-sdk/pull/3704) [`8e231afd`](https://github.com/cloudflare/workers-sdk/commit/8e231afde850f353694478a5994e6ddee6df67b1) Thanks [@JacobMGEvans](https://github.com/JacobMGEvans)! - secret:bulk exit 1 on failure
@@ -40,6 +45,7 @@ entries:
 
 - publish_date: '2023-07-27'
   title: '3.4.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.4.0'
   description: |-
     -   [#3649](https://github.com/cloudflare/workers-sdk/pull/3649) [`e2234bbc`](https://github.com/cloudflare/workers-sdk/commit/e2234bbc2fc06c201dd5f256357084c86789891c) Thanks [@JacobMGEvans](https://github.com/JacobMGEvans)! - Feature: 'stdin' support for 'secret:bulk'
         Added functionality that allows for files and strings to be piped in, or other means of standard input. This will allow for a broader variety of use cases and improved DX.
@@ -99,6 +105,7 @@ entries:
 
 - publish_date: '2023-07-18'
   title: '3.3.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.3.0'
   description: |-
     -   [#3628](https://github.com/cloudflare/workers-sdk/pull/3628) [`e72a5794`](https://github.com/cloudflare/workers-sdk/commit/e72a5794f219e21ede701a7184a4691058366753) Thanks [@mrbbot](https://github.com/mrbbot)! - chore: upgrade `miniflare` to [`3.20230717.0`](https://github.com/cloudflare/miniflare/releases/tag/v3.20230717.0)
     -   [#3587](https://github.com/cloudflare/workers-sdk/pull/3587) [`30f114af`](https://github.com/cloudflare/workers-sdk/commit/30f114afcdae8c794364a89ad8b7a7c92fce3524) Thanks [@mrbbot](https://github.com/mrbbot)! - fix: keep configuration watcher alive
@@ -107,6 +114,7 @@ entries:
 
 - publish_date: '2023-07-11'
   title: '3.2.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.2.0'
   description: |-
     -   [#3583](https://github.com/cloudflare/workers-sdk/pull/3583) [`78ddb8de`](https://github.com/cloudflare/workers-sdk/commit/78ddb8de78152b2cb4180f23b51ee5478637d92d) Thanks [@penalosa](https://github.com/penalosa)! - Upgrade Miniflare (and hence `workerd`) to `v3.20230710.0`.
     -   [#3426](https://github.com/cloudflare/workers-sdk/pull/3426) [`5a74cb55`](https://github.com/cloudflare/workers-sdk/commit/5a74cb559611b1035fe97ebbe870d7061f3b41d0) Thanks [@matthewdavidrodgers](https://github.com/matthewdavidrodgers)! - Prefer non-force deletes unless a Worker is a dependency of another.
@@ -121,6 +129,7 @@ entries:
 
 - publish_date: '2023-07-06'
   title: '3.1.2'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.2'
   description: |-
     -   [#3529](https://github.com/cloudflare/workers-sdk/pull/3529) [`bcdc1fe5`](https://github.com/cloudflare/workers-sdk/commit/bcdc1fe5684f325c86ff0f2c57af781ecba5b621) Thanks [@jspspike](https://github.com/jspspike)! - Support https in wrangler dev local mode
     -   [#3541](https://github.com/cloudflare/workers-sdk/pull/3541) [`09f317d4`](https://github.com/cloudflare/workers-sdk/commit/09f317d4c42d1787bdc636f13b4a303fa9a5b4b0) Thanks [@GregBrimble](https://github.com/GregBrimble)! - chore: Bump miniflare@3.0.2
@@ -129,6 +138,7 @@ entries:
 
 - publish_date: '2023-06-20'
   title: '3.1.1'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1'
   description: |-
     -   [#3498](https://github.com/cloudflare/workers-sdk/pull/3498) [`fddffdf0`](https://github.com/cloudflare/workers-sdk/commit/fddffdf0c23d2ca56f2139a2c6bc278052594cba) Thanks [@GregBrimble](https://github.com/GregBrimble)! - fix: Prevent `wrangler pages dev` from serving asset files outside of the build output directory
     -   [#3431](https://github.com/cloudflare/workers-sdk/pull/3431) [`68ba49a8`](https://github.com/cloudflare/workers-sdk/commit/68ba49a8c5bde2e9847e9599d71b9a501866c54b) Thanks [@Cherry](https://github.com/Cherry)! - fix: allow context.data to be overriden in Pages Functions
@@ -145,6 +155,7 @@ entries:
 
 - publish_date: '2023-06-06'
   title: '3.1.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.0'
   description: |-
     -   [#3293](https://github.com/cloudflare/workers-sdk/pull/3293) [`4a88db32`](https://github.com/cloudflare/workers-sdk/commit/4a88db32c8962a55bbcad82048a858fbce3f8e93) Thanks [@petebacondarwin](https://github.com/petebacondarwin)! - feat: add `wrangler pages project delete` command
     -   [#3399](https://github.com/cloudflare/workers-sdk/pull/3399) [`d8a9995b`](https://github.com/cloudflare/workers-sdk/commit/d8a9995b3748893057b4cb657abd8f658b1f5875) Thanks [@Skye-31](https://github.com/Skye-31)! - Fix: wrangler pages dev --script-path argument when using a proxy command instead of directory mode
@@ -192,11 +203,13 @@ entries:
 
 - publish_date: '2023-05-22'
   title: '3.0.1'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.0.1'
   description: |-
    -   [#3277](https://github.com/cloudflare/workers-sdk/pull/3277) [`99e6ccf5`](https://github.com/cloudflare/workers-sdk/commit/99e6ccf504f66e4885cddf91b7a09d2e256b2d11) Thanks [@RamIdeas](https://github.com/RamIdeas)! - fix: remove extraneous arg when wrangler delegates to c3
 
 - publish_date: '2023-05-17'
   title: '3.0.0'
+  link: 'https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.0.0'
   description: |-
     -   [#3197](https://github.com/cloudflare/workers-sdk/pull/3197) [`3b3fadfa`](https://github.com/cloudflare/workers-sdk/commit/3b3fadfa16009c6eac2f0aa747db8b06eb80a391) Thanks [@mrbbot](https://github.com/mrbbot)! - feature: rename `wrangler publish` to `wrangler deploy`
         This ensures consistency with other messaging, documentation and our dashboard,
