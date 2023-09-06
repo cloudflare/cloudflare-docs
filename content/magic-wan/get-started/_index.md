@@ -6,8 +6,8 @@ weight: 3
 
 # Get started
 
-There are two ways of setting up Magic WAN: 
-- Through Magic WAN Connector (preferred)
+There are two ways to set up Magic WAN: 
+- Through Magic WAN Connector (preferred).
 - Manually, through a third-party device.
 
 ## Set up through Magic WAN Connector
