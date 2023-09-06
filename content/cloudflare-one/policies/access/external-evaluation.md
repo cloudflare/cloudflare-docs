@@ -83,10 +83,10 @@ You can set up External Evaluation rules using any API service, but to get start
 - To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
   {{</Aside>}}
 
-2. Publish the Worker to your Workers account.
+2. Deploy the Worker to Cloudflare's global network.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -130,10 +130,10 @@ To debug your External Evaluation rule:
 
 2. Open `wrangler.toml` in a text editor and set the `debug` variable to `TRUE`.
 
-3. Publish your changes.
+3. Deploy your changes.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 4. Next, start a session to output realtime logs from your Worker.

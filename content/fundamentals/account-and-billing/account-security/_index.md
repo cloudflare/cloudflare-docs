@@ -1,7 +1,9 @@
 ---
 pcx_content_type: navigation
 title: Account security
-weight: 3
+weight: 1
+aliases:
+- /fundamentals/account-and-billing/account-security/
 ---
 
 # Account security

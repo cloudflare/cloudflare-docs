@@ -68,8 +68,8 @@ In the example below, the DoH subdomain is: `65y9p2vm1u`.
 
 By default, all queries from a configured DNS location will be sent to its DNS resolver IP address to be inspected by Gateway. You can configure Gateway to only filter queries originating from specific networks within a location:
 
-1. [Create an IP list](/cloudflare-one/policies/filtering/lists/) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
-2. Add a [Source IP](/cloudflare-one/policies/filtering/dns-policies/#source-ip) condition to your DNS policies.
+1. [Create an IP list](/cloudflare-one/policies/gateway/lists/) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
+2. Add a [Source IP](/cloudflare-one/policies/gateway/dns-policies/#source-ip) condition to your DNS policies.
 
 For example, if you want to block security threats for specific networks, you could create the following policy:
 

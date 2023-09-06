@@ -25,7 +25,7 @@ All dates in the calendar are in UTC Timezone.
 
 ### Notifications
 
-Scheduled maintenances can also be sent out via [Cloudflare Notifications](/fundamentals/notifications/).
+Scheduled maintenances can also be sent out via [Cloudflare Notifications](/notifications/).
 
 ## Unplanned Maintenance
 

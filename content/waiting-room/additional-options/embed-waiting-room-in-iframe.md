@@ -23,7 +23,7 @@ Available options include:
 *   `samesite`: Configures the `SameSite` attribute on the waiting room cookie:
 
     *   **auto** (default): Meant to be as flexible as possible, defaulting to **lax** but becoming **none** if you have enabled [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/).
-    *   **lax**: Cookies are not sent on normal cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site
+    *   **lax**: Cookies are not sent on typical cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site
     *   **strict**: Cookies will only be sent in a first-party context.
     *   **none**: Cookies will always be sent.
 

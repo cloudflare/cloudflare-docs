@@ -99,7 +99,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 ## 2. Test your proxy server
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) for testing purposes. For example:
+1. In [Zero Trust](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) for testing purposes. For example:
 
    | Selector | Operator | Value         | Action |
    | -------- | -------- | ------------- | ------ |
@@ -179,4 +179,4 @@ When a browser is connected to Gateway by a proxy endpoint, the browser does not
 
 ## Limitations
 
-At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/filtering/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
+At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/gateway/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.

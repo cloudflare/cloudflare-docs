@@ -24,7 +24,7 @@ Draft a [Letter of Authorization (LOA)](/byoip/about/loa/) that identifies the p
 
 If you are an Internet service provider (ISP) and advertising prefixes on behalf of a customer, an LOA is required for the ISP and for the customer.
 
-If you are using a Cloudflare IP, you do not need to submit an LOA. 
+If you are using a [Cloudflare IP address](/magic-transit/cloudflare-ips/), you do not need to submit an LOA. 
 
 {{<Aside type="note" header="Note">}}
 

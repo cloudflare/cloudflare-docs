@@ -33,7 +33,7 @@ You can view a list of all discovered SaaS applications and mark them as approve
 | Field | Description |
 | ------------| ----------- |
 | Application | SaaS application's name and logo. |
-| Application type |[Application type](/cloudflare-one/policies/filtering/application-app-types/#app-types) assigned by Cloudflare Zero Trust. |
+| Application type |[Application type](/cloudflare-one/policies/gateway/application-app-types/#app-types) assigned by Cloudflare Zero Trust. |
 | Status | Application's [approval status](#approval-status). |
 | Secured | Whether the application is currently secured behind Cloudflare Access. |
 | Users | Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
@@ -42,7 +42,7 @@ You can view a list of all discovered SaaS applications and mark them as approve
 3. Select a specific application to view details.
 4. Assign a new [approval status](#approval-status) according to your organization's preferences.
 
-The application's status will now be updated across charts and visualizations on the **SaaS** tab. You can block unapproved applications by creating a [Gateway policy](/cloudflare-one/policies/filtering/).
+The application's status will now be updated across charts and visualizations on the **SaaS** tab. You can block unapproved applications by creating a [Gateway policy](/cloudflare-one/policies/gateway/).
 
 ## Private network origins
 
@@ -78,7 +78,7 @@ You can view a list of all discovered origins and mark them as approved or unapp
 3. Select a specific origin to view details.
 4. Assign a new [approval status](#approval-status) according to your organization's preferences.
 
-The origin's status will now be updated across charts and visualizations on the **Private Network** tab. You can block unapproved origins by creating a [Gateway policy](/cloudflare-one/policies/filtering/).
+The origin's status will now be updated across charts and visualizations on the **Private Network** tab. You can block unapproved origins by creating a [Gateway policy](/cloudflare-one/policies/gateway/).
 
 ## Approval status
 

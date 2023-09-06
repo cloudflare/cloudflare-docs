@@ -25,7 +25,7 @@ Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) 
 
 {{<Aside type="note">}}
 
-[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/filtering/dns-policies/), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
+[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/gateway/dns-policies/), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
 
 If you require additional controls over our public 1.1.1.1 resolver, [contact us](https://www.cloudflare.com/products/zero-trust/).
 
@@ -54,4 +54,6 @@ Best practices include:
 * Avoiding tunneling or proxying all queries from a single IP address at high rates. Distributing queries across multiple public IPs will improve this without impacting cache hit rates (caches are regional).
 * A high rate of "uncacheable" responses (such as `SERVFAIL`) against the same domain may be rate limited to protect upstream, authoritative nameservers. Many authoritative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
 
-If you are a network operator and still have outstanding questions, contact `resolver@cloudflare.com` with your use case and we will be happy to discuss further.
+## Help
+
+If you are a network operator and still have outstanding questions, contact `resolver@cloudflare.com` with your use case, so it can be discussed further. Make sure to visit [1.1.1.1/help](https://one.one.one.one/help) from within your network and share the resulting report when contacting Cloudflare.

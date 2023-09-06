@@ -7,7 +7,7 @@ title: Errores de cliente 4xx
 
 # Errores de cliente 4xx
 
-**Descripción**
+## Descripción
 
 En general, los códigos 4xx son respuestas de error que especifican un problema del cliente. Posiblemente un problema en la red.  
 
@@ -15,45 +15,24 @@ En general, los códigos 4xx son respuestas de error que especifican un problem
 
 -   El servidor de origen debe incluir una explicación, que debe mostrar el agente de usuario, con la excepción de una solicitud `HEAD`.
 
-Cloudflare mostrará los siguientes errores directamente desde el servidor de origen
+Cloudflare mostrará los siguientes errores directamente desde el servidor de origen.
 
--   [400 Bad Request](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_400)  
--   [401 Unauthorized](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_401)
--   [402 Payment Required](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_402)
--   [403 Forbidden](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_403)
--   [404 Not Found](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_404)
--   [405 Method Not Allowed](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_405)
--   [406 Not Acceptable](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_406)
--   [407 Authentication Required](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_407)  
--   [408 Request Timeout](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_408)  
--   [409 Conflict](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_409)
--   [410 Gone](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_410)
--   [411 Length Required](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_411)
--   [412 Precondition Failed](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_412)  
--   [413 Payload Too Large](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_413)
--   [414 URI Too Long](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_414)
--   [415 Unsupported Media Type](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_415)
--   [417 Expectation Failed](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_417)
--   [429 Too Many Requests](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_429)
--   [451 Unavailable For Legal](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_451)
--   [499 Client Close Request](https://support.cloudflare.com/hc/es-es/articles/115003014512-Errores-de-cliente-4xx#code_499)
-
-**400 Bad Request**  **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **400 Bad Request (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El servidor no puede procesar o no procesará la solicitud debido a algo que se percibe como un error del cliente (p. ej., sintaxis de una solicitud mal formulada, estructura de un mensaje de solicitud no válida, o enrutamiento de una solicitud engañosa).
 
-**401 Unauthorized (**[**RFC 7235**](https://tools.ietf.org/html/rfc7235)**)**
+### **401 Unauthorized (**[**RFC 7235**](https://tools.ietf.org/html/rfc7235)**)**
 
 La solicitud no se ha enviado con las credenciales de autenticación pertinentes.
 
 -   El servidor debe enviar al menos un control en forma de un campo de encabezado `WWW-Authenticate` según la [Sección 4.1](https://tools.ietf.org/html/rfc7235#section-4.1).
 -   El cliente puede enviar una segunda solicitud con las mismas credenciales y, posteriormente, si el control es idéntico al anterior, el servidor facilitará una entidad para ayudar al cliente a encontrar las credenciales necesarias.
 
-**402 Payment Required** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **402 Payment Required (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 Los estándares RFC aún no han implementado este error, pero lo reservan para su uso futuro.
 
-**403 Forbidden** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **403 Forbidden (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 Si aparece un error 403 sin la marca Cloudflare, este siempre se devuelve directamente desde el servidor web de origen, no desde Cloudflare, y suele estar relacionado con reglas de permisos en el servidor.
 
@@ -76,7 +55,7 @@ Si aparece una respuesta 403 con la marca Cloudflare en el texto de respuesta, e
 
 Si tienes alguna pregunta, ponte en contacto con el servicio de asistencia de Cloudflare e incluye una captura de pantalla del mensaje que aparezca, o copia todo el texto de la página en un ticket de asistencia.
 
-**404 Not Found** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **404 Not Found (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El servidor de origen no ha podido encontrar el recurso solicitado o se ha negado a hacerlo. En general, implica que el servidor de host no ha podido encontrar el recurso. Para gestionar una versión más permanente de este error, se debe utilizar un código de error 410.
 
@@ -86,7 +65,7 @@ Los propietarios de sitios web generalmente implementan una página personalizad
 
 Cloudflare no genera errores 404 en los sitios web de los clientes; solo redirigimos la solicitud mediante nuestro proxy desde el servidor de origen. Si aparece un error 404 en tu sitio con tecnología Cloudflare, deberás ponerte en contacto con tu proveedor de alojamiento para obtener ayuda.
 
-**405 Method Not Allowed** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **405 Method Not Allowed (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El servidor de origen conoce el recurso solicitado, pero el método de solicitud utilizado no es compatible.
 
@@ -94,17 +73,17 @@ El servidor de origen conoce el recurso solicitado, pero el método de solicitud
 
 Un ejemplo sería una solicitud POST en un recurso inalterable, donde solo se acepta la solicitud GET.
 
-**406 Not Acceptable** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **406 Not Acceptable (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El recurso no se encuentra disponible en el origen que se adhiere a los encabezados de negociación establecidos anteriormente (p. ej., mediante los encabezados`Accept-Charset` y `Accept-Language`)
 
 Este código de estado puede reemplazarse simplemente ofreciendo el método menos preferido al agente-usuario, en lugar de generar este error.
 
-**407 Authentication Required  (**[**RFC 7235**](https://tools.ietf.org/html/rfc7235)**)**
+### **407 Authentication Required (**[**RFC 7235**](https://tools.ietf.org/html/rfc7235)**)**
 
 El cliente no ha enviado la autenticación requerida con la solicitud.
 
-**408 Request Timeout**  **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **408 Request Timeout (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El servidor de origen no ha recibido la solicitud completa en lo que se considera un tiempo razonable.
 
@@ -112,7 +91,7 @@ El servidor de origen no ha recibido la solicitud completa en lo que se consider
 
 -   No se utiliza mucho porque, en general, los servidores eligen la opción de conexión “cerrada”.
 
-**409 Conflict** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **409 Conflict (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 La solicitud no se ha completado debido a un conflicto con el estado actual del recurso. En general, ocurre con una solicitud PUT en la que varios clientes intentan editar el mismo recurso.
 
@@ -121,20 +100,20 @@ La solicitud no se ha completado debido a un conflicto con el estado actual del 
 
 Cloudflare generará y mostrará una respuesta de error 409 para un [Error 1001: Error de resolución de DNS](https://support.cloudflare.com/hc/articles/360029779472#error1001).
 
-**410 Gone** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **410 Gone (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El recurso solicitado ya no existe de manera permanente en el origen.
 
 -   El servidor sugiere eliminar los enlaces que hagan referencia al recurso.
 -   El servidor no está calificado para utilizar este código de estado en una respuesta 404, ni se requiere que tenga esta respuesta durante un periodo determinado de tiempo.
 
-**411 Length Required** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **411 Length Required (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El cliente no ha definido el `Content-Length` (tamaño del contenido) del cuerpo de la solicitud en los encabezados y este dato es necesario para obtener el recurso.
 
 -   El cliente puede reenviar la solicitud después de añadir el campo de encabezado.
 
-**412 Precondition Failed  (**[**RFC 7232**](https://tools.ietf.org/html/rfc7232)**)**
+### **412 Precondition Failed (**[**RFC 7232**](https://tools.ietf.org/html/rfc7232)**)**
 
 El servidor rechaza la solicitud porque el recurso no ha cumplido con las condiciones especificadas por el cliente.
 
@@ -142,33 +121,33 @@ Como ejemplo del control de versiones, un cliente modifica un recurso existente 
 
 Cloudflare generará esta respuesta. Para obtener más información, consulte: [Encabezados ETag](https://support.cloudflare.com/hc/en-us/articles/218505467).
 
-**413 Payload Too Large**  **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **413 Payload Too Large (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El servidor se niega a procesar la solicitud porque la carga útil enviada desde el cliente es mayor que la que el servidor deseaba aceptar. El servidor tiene la opción de cerrar la conexión.
 
 -   Si el rechazo solo ocurre de forma temporal, luego el servidor debe enviar un encabezado `Retry-After` para especificar el momento en el que el cliente debe intentar la solicitud de nuevo.
 
-**414 URI Too Long** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **414 URI Too Long (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 Rechazo del servidor debido a que el URI era demasiado extenso para su procesamiento. Por ejemplo, si un cliente intenta realizar una solicitud GET con un URI inusualmente largo después de una solicitud POST, esto podría considerarse un riesgo de seguridad y se produciría un error 414.
 
 Cloudflare generará esta respuesta para un URI superior a 32KB.
 
-**415 Unsupported Media Type** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **415 Unsupported Media Type (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El servidor se niega a procesar el formato de la carga útil actual. Una forma de identificar y solucionar este problema sería analizar los encabezados `Content-Type` o `Content-Encoding` enviados en la solicitud del cliente.
 
-**417 Expectation Failed** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### **417 Expectation Failed (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 
 El servidor no cumple los requisitos especificados en el encabezado `Expect` de la solicitud del cliente.
 
-**429 Too Many Requests (**[**RFC6585**](https://tools.ietf.org/html/rfc6585)**)**
+### **429 Too Many Requests (**[**RFC6585**](https://tools.ietf.org/html/rfc6585)**)**
 
 El cliente ha enviado demasiadas solicitudes en el tiempo especificado de acuerdo con el servidor. Con frecuencia, esto se conoce como «limitación de tráfico». El servidor puede responder con información que permita al solicitante volver a intentarlo después de un periodo determinado de tiempo.
 
 Cloudflare generará y enviará este código de estado cuando una solicitud tenga una [limitación de tráfico](https://www.cloudflare.com/rate-limiting/). Si los visitantes de tu sitio reciben estos códigos de error, podrás verlos en las [Analíticas de Rate Limiting](https://support.cloudflare.com/hc/en-us/articles/115003414428-Rate-Limiting-Analytics).
 
-**451 Unavailable For Legal Reason (**[**RFC7725**](https://tools.ietf.org/html/rfc7725)**)**
+### **451 Unavailable For Legal Reason (**[**RFC7725**](https://tools.ietf.org/html/rfc7725)**)**
 
 El servidor no puede enviar el recurso debido a acciones legales.
 
@@ -176,7 +155,7 @@ En general, los motores de búsqueda (p. ej., Google) e ISP (p. ej., ATT) se 
 
 -   La respuesta debe incluir una explicación en el cuerpo de la respuesta con detalles de la demanda legal.
 
-**499 Client Close Request**
+### **499 Client Close Request**
 
 El código de respuesta específico de Nginx para indicar el momento en que el cliente ha cerrado la conexión mientras el servidor aún estaba procesando su solicitud. De este modo, el servidor no puede devolver un código de estado.
 

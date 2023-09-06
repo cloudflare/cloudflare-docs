@@ -2,7 +2,7 @@
 title: View network analytics
 pcx_content_type: how-to
 meta:
-    title: How to view GRE and IPSec tunnel analytics
+    title: How to view GRE and IPsec tunnel analytics
 ---
 
 {{<render file="_network-analytics.md" withParameters="Magic WAN">}}

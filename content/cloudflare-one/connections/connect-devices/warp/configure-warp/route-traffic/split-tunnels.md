@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Split Tunnels
-weight: 6
+weight: 3
 ---
 
 # Configure Split Tunnels
@@ -105,7 +105,7 @@ Domain-based split tunneling has a few ramifications you should be aware of befo
 
 - Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
 - You may inadvertently exclude or include additional hostnames that happen to share an IP address. This commonly occurs if you add a domain hosted by a CDN or large Internet provider such as Cloudflare, AWS, or Azure. For example, if you wanted to exclude a VPN hosted on AWS, do not add `*.amazonaws.com` as that will open up your devices to all traffic on AWS. Instead, add the specific VPN endpoint (`*.cvpn-endpoint-<UUID>.prod.clientvpn.us-west-2.amazonaws.com`).
-- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/application-app-types/), you will need to manually add all domains used by a particular app or service.
+- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/gateway/application-app-types/), you will need to manually add all domains used by a particular app or service.
 - WARP must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted (for example, via your browser's secure DNS settings), the IP address will not be dynamically added to your Split Tunnel.
 
 ### Valid domains
@@ -148,4 +148,4 @@ Removing default Split Tunnel entries may cause users to lose Internet connectiv
 
 4. Find the IP address or hostname in the list and select **Delete**.
 
-If you need to revert to the default Split Tunnels entries, select **Restore default entries**.
+If you need to revert to the default Split Tunnel entries recommended by Cloudflare, select **Restore default entries**.

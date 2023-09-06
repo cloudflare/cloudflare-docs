@@ -5,7 +5,7 @@ weight: 15
 layout: single
 ---
 
-# Requesting logs
+# Request logs
 
 ## Endpoints
 

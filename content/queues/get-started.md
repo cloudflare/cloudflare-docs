@@ -43,9 +43,22 @@ You will access your queue from a Worker, the producer Worker. You must create a
 
 To create a producer Worker, run:
 
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
 ```sh
-$ npm create cloudflare@latest # or 'yarn create cloudflare@latest'
+$ npm create cloudflare@latest
 ```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn create cloudflare@latest
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 In your terminal, you will be asked a series of questions related to your project. 
 
@@ -138,7 +151,7 @@ In a production application, you would likely use a [`try-catch`](https://develo
 With your `wrangler.toml` file and `worker.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 You should see output that resembles the below, with a `*.workers.dev` URL by default.
@@ -219,7 +232,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 With your `wrangler.toml` file and `worker.ts` file configured, publish your consumer Worker by running:
 
 ```sh
-$ wrangler deploy
+$ npx wrangler deploy
 ```
 
 ## 6. Read messages from your queue

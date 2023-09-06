@@ -45,22 +45,25 @@ Contact your account team to get access to WAF content scanning.
 Enable the feature using a `POST` request similar to the following:
 
 ```bash
-$ curl -X POST \
+curl --request POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ### 2. (Optional) Configure a custom scan expression
 
 If you wish to check uploaded content in a way that is not covered by the [default configuration](#default-configuration), add a custom scan expression. For example:
 
-```json
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '[
+  {
+    "payload": "lookup_json_string(http.request.body.raw, \"file\")"
+  }
+]'
 ```
 
 The above `POST` request will add the following expression to the current list of custom scan expressions:
@@ -197,12 +200,12 @@ To enable content scanning, use a `POST` request similar to the following:
 
 ```bash
 ---
-header: Example cURL request
+header: Example request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/enable" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -216,12 +219,12 @@ To disable content scanning, use a `POST` request similar to the following:
 
 ```bash
 ---
-header: Example cURL request
+header: Example request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/disable" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/disable" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -235,11 +238,11 @@ To obtain the current status of the content scanning feature, use a `GET` reques
 
 ```bash
 ---
-header: Example cURL request
+header: Example request
 ---
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/settings" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/settings" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -255,11 +258,11 @@ To get a list of existing custom scan expressions, use a `GET` request similar t
 
 ```bash
 ---
-header: Example cURL request
+header: Example request
 ---
-$ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -288,15 +291,18 @@ header: Example response
 
 Use a `POST` request similar to the following:
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Example request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '[
+  {
+    "payload": "lookup_json_string(http.request.body.raw, \"file\")"
+  }
+]'
 ```
 
 </div>
@@ -310,12 +316,12 @@ Use a `DELETE` request similar to the following:
 
 ```bash
 ---
-header: Example cURL request
+header: Example request
 ---
-$ curl -X DELETE \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads/<EXPRESSION_ID>" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads/{expression_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 </div>

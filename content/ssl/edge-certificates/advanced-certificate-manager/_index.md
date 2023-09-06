@@ -24,7 +24,7 @@ Advanced certificates allow you multiple customization options:
 *   Choose the certificate validity period.
 *   Remove Cloudflare branding that is normally present on [Universal certificates](/ssl/edge-certificates/universal-ssl/).
 *   Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
-*   Control [cipher suites used for TLS](/ssl/reference/cipher-suites/customize-cipher-suites/).
+*   Control [cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
 
 
 {{<feature-table id="ssl.advanced_certificates">}}

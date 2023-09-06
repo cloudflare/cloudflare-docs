@@ -311,9 +311,9 @@ Delete the Ingress: 
 
 ```sh
 $ kubectl delete ingress basic-ingress
-``` 
+```
 
-___
+---
 
 ## Creating Cloudflare Load Balancer
 

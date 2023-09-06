@@ -145,7 +145,7 @@ A protocol, or technical standard, for using a desktop computer remotely. RDP wa
 
 ## SafeSearch
 
-[SafeSearch](/cloudflare-one/policies/filtering/dns-policies/#safesearch) is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
+[SafeSearch](/cloudflare-one/policies/gateway/dns-policies/#safe-search) is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
 ## SAML
 

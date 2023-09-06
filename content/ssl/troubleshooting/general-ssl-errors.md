@@ -37,7 +37,7 @@ ___
 
 ### Symptom
 
-[Cloudflare Universal SSL certificates](/ssl/edge-certificates/universal-ssl) only cover the root-level domain (`example.com`) and one level of subdomains (`blog.example.com`). If visitors to your domain observe errors accessing a second level of subdomains in their browser (such as `dev.www.example.com`) but not the first level of subdomains, resolve the issue using one of the following methods below.
+[Cloudflare Universal SSL certificates](/ssl/edge-certificates/universal-ssl) only cover the apex domain (`example.com`) and one level of subdomains (`blog.example.com`). If visitors to your domain observe errors accessing a second level of subdomains in their browser (such as `dev.www.example.com`) but not the first level of subdomains, resolve the issue using one of the following methods below.
 
 ### Resolution
 
@@ -110,7 +110,7 @@ You may have configured [HTTP Response Header Modification Rules](/rules/transfo
 
 ___
 
-## Kapersky Antivirus
+## Kaspersky Antivirus
 
 To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
 Antivirus, allow `dash.cloudflare.com` in Kaspersky.

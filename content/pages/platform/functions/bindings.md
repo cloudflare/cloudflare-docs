@@ -6,7 +6,7 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/configuration/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
@@ -57,7 +57,7 @@ While developing locally, interact with your KV namespace by adding `-k <BINDING
 
 ## Durable Object namespaces
 
-[Durable Objects](/workers/configuration/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. To bind your DO namespace to your Pages Function:
+[Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. To bind your DO namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -148,7 +148,7 @@ While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NA
 
 ## D1 databases
 
-Cloudflare [D1](/d1/) is Cloudflare's first SQL database built on SQLite. To bind your D1 database to your Pages Function:
+[D1](/d1/) is Cloudflare’s native serverless database. To bind your D1 database to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -192,15 +192,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 ### Interact with your D1 databases locally
 
 While developing locally, interact with a D1 database by adding `--d1=<BINDING_NAME>` to your run command.
-  
+
 {{<Aside type="note">}}
-By default, data in local development is not persisted. This means if you create a schema and/or insert data into a D1 table, the next time you start local development, it will no longer exist.
-  
-You can enable persistence with the `--persist` flag.
+By default, `wrangler dev` automatically persists data.
 {{</Aside>}}
-  
+
 Specifically:
-  
+
 * If your database is bound to `NORTHWIND_DB`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`.
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
@@ -426,3 +424,80 @@ filename:  `.dev.vars`
 ---
 API_KEY=1x0000000000000000000000000000000AA
 ```
+
+## Constellation
+
+[Constellation](/constellation/) allows you to run fast, low-latency inference tasks on pre-trained machine learning models natively on Cloudflare Workers.
+
+To Constellation projects to your Pages project:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your Pages project > **Settings** > **Functions** > **Constellation bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Select your Constellation project. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+### Interact with your Constellation project
+
+Below is an example of how to use a Constellation project in your Function. Your binding is PETALS_CLASSIFIER:
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+import { Tensor, InferenceSession, TensorType } from "@cloudflare/constellation";
+
+export async function onRequest(context) {
+
+  const session = new InferenceSession(
+    context.env.PETALS_CLASSIFIER,
+    "939ac893-5e55-32c0-0223-929edb231929"
+  );
+
+  let payload: any = await context.request.json();
+
+  const tensorInput = new Tensor(
+      TensorType.Float32,
+      Array.prototype.concat(...payload.data),
+      { shape: [payload.batch_size, payload.feature_size] }
+  );
+
+  const output = await session.run([tensorInput]);
+
+  return new Response(output);
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+import { Tensor, InferenceSession, TensorType } from "@cloudflare/constellation";
+
+interface Env {
+  PETALS_CLASSIFIER: any;
+}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+
+  const session = new InferenceSession(
+    context.env.PETALS_CLASSIFIER,
+    "939ac893-5e55-32c0-0223-929edb231929"
+  );
+
+  let payload: any = await context.request.json();
+
+  const tensorInput = new Tensor(
+      TensorType.Float32,
+      Array.prototype.concat(...payload.data),
+      { shape: [payload.batch_size, payload.feature_size] }
+  );
+
+  const output = await session.run([tensorInput]);
+
+  return new Response(output);
+}
+```
+{{</tab>}}
+{{</tabs>}}
+
+Refer to the [Constellation](/constellation/) documentation for more information.

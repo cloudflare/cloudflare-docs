@@ -48,7 +48,7 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
 - **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
 
   - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
-  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
   - Redirect all HTTPS requests to HTTP.
 
 If none of the above scenarios apply, contact Cloudflare support with the following information:
@@ -62,12 +62,12 @@ For more troubleshooting information, refer to [Support](/support/troubleshootin
 
 ## I see error 504 when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/filtering/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
 
-| Selector          | Operator | Value         | Action |
-| ----------------- | -------- | ------------- | ------ |
-| Host              | is       | `example.com` | Block  |
-| Query Record Type | is       | `AAAA`        |        |
+| Selector          | Operator | Value         | Logic | Action |
+| ----------------- | -------- | ------------- | ----- | ------ |
+| Host              | is       | `example.com` | And   | Block  |
+| Query Record Type | is       | `AAAA`        |       |        |
 
 For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-502-bad-gateway-or-error-504-gateway-timeout).
 
@@ -107,8 +107,8 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#6-run-the-tunnel)).
+1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
+2. Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/#6-run-the-tunnel)).
 
 For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
@@ -137,7 +137,7 @@ The third component, the token, consists of the zone ID (for the selected domain
 
 If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
-## `cloudflared access` shows an error `websocket: bad handshake`
+## `cloudflared access` shows an error `websocket: bad handshake`.
 
 This means that your `cloudflared access` client is unable to reach your `cloudflared tunnel` origin.
 To diagnose this, you should look at the `cloudflared tunnel` logs. A very often root cause is that the `cloudflared tunnel` is unable to proxy to your origin (e.g. because the ingress is mis-configured, or the origin is down, or because the origin HTTPS certificate cannot be validated by `cloudflared tunnel`).
@@ -151,15 +151,15 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 - Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
-## My tunnel randomly disconnects
+## My tunnel randomly disconnects.
 
 Long-lived connections initiated through the Cloudflare Zero Trust platform, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) and contact Support.
 
-## Tunnel connections fail with SSL error
+## Tunnel connections fail with SSL error.
 
 If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
 
-## Tunnel connections fail with `Too many open files` error
+## Tunnel connections fail with `Too many open files` error.
 
 If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to configure system settings on the machine running `cloudflared`. This setting cannot be changed by `cloudflared`.
 

@@ -39,7 +39,7 @@ This will instruct WARP to begin proxying any traffic destined for a `100.64/10`
 
 Once enrolled, your users and services will be able to connect to the virtual IPs configured for TCP, UDP, or ICMP-based traffic.
 
-Optionally, you can create [Gateway network policies](/cloudflare-one/policies/filtering/network-policies/) by blocking the `100.64/10` IP space and creating [identity-based rules](/cloudflare-one/policies/filtering/identity-selectors/) around the virtual IPs you wish to allow users to access.
+Optionally, you can create [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) by blocking the `100.64/10` IP space and creating [identity-based rules](/cloudflare-one/policies/gateway/identity-selectors/) around the virtual IPs you wish to allow users to access.
 
 ## Availability
 

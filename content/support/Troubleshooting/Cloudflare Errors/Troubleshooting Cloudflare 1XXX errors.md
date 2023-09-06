@@ -46,6 +46,7 @@ Cloudflare halted the request for one of the following reasons:
 -   Your Cloudflare DNS A or CNAME record references another reverse proxy (such as an nginx web server that uses the proxy\_pass function) that then proxies the request to Cloudflare a second time.
 -   The request X-Forwarded-For header is longer than 100 characters.
 -   The request includes two X-Forwarded-For headers.
+-   The request includes a CF-Connecting-IP header.
 -   A Server Name Indication (SNI) issue or mismatch at the origin.
 
 ### Resolution
@@ -328,6 +329,7 @@ Common causes for Error 1016 are:
 -   A _CNAME record_ in the Cloudflare DNS points to an unresolvable external domain.
 -   The origin hostnames (CNAMEs) in your Cloudflare [Load Balancer](/load-balancing/) default, region, and fallback pools are unresolvable. Use a fallback pool configured with an origin IP as a backup in case all other pools are unavailable.
 -   When creating a Spectrum app with a CNAME origin, you need first to create a CNAME on the Cloudflare DNS side that points to the origin. Please see [Spectrum CNAME origins](/spectrum/get-started/#create-a-spectrum-application-using-a-cname-record) for more details
+-   There is no DNS record for the hostname in the Cloudflare for SaaS target zone
 
 ### Resolution
 

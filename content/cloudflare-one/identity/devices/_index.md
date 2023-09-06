@@ -27,7 +27,7 @@ Before integrating a device posture check in a Gateway or Access policy, go to *
 
 ## 3. Build a device posture policy
 
-You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/filtering/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/filtering/network-policies/#device-posture) selector.
+You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/gateway/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/gateway/network-policies/#device-posture) selector.
 
 ## 4. Ensure traffic is going through WARP
 

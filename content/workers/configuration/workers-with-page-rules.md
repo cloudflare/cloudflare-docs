@@ -83,9 +83,9 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 |     Page Rule    | Source     | Target     | Behavior       |
 | -----------------|------------|------------|----------------|
-| Always Use HTTPS | Client     | Worker     | Rule Ignored   |
-| Always Use HTTPS | Worker     | Same Zone  | Rule Respected |
-| Always Use HTTPS | Worker     | Other Zone | Rule Ignored   |
+| Auto Minify | Client     | Worker     | Rule Ignored   |
+| Auto Minify | Worker     | Same Zone  | Rule Respected |
+| Auto Minify | Worker     | Other Zone | Rule Ignored   |
 
 {{</table-wrap>}}
 

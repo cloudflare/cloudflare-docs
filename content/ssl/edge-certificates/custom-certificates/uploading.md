@@ -59,7 +59,7 @@ To upload a custom SSL certificate in the dashboard:
 
 7.  Select a value for [**Private Key Restriction**](/ssl/edge-certificates/custom-certificates/#geo-key-manager-private-key-restriction).
 
-8.  Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](/fundamentals/glossary/#server-name-indication-sni) support:
+8.  Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](/fundamentals/reference/glossary/#server-name-indication-sni) support:
 
     - **Modern (recommended)**: SNI only
     - **Legacy**: Supports non-SNI
@@ -144,7 +144,11 @@ For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/caa-rec
 
 ---
 
-## Update a custom certificate
+## Update an existing custom certificate
+
+Before you update an existing custom certificate, you might want to consider having active [universal](/ssl/edge-certificates/universal-ssl/) or [advanced](/ssl/edge-certificates/advanced-certificate-manager/) certificates as fallback options. Go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) to check a list of hostnames and status of the edge certificates in your zone.
+
+If you are on an Enterprise plan and want to update a custom (modern) certificate, also consider requesting access to [Staging environment (Beta)](/ssl/edge-certificates/staging-environment/).
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -171,5 +175,3 @@ To update a certificate using the API, send a [`PATCH`](/api/operations/custom-s
 To update the **Private Key Restriction** setting of a certificate, delete and re-add the certificate.
 
 {{</Aside>}}
-
-

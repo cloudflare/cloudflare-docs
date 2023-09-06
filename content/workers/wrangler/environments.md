@@ -18,9 +18,7 @@ Review the following environments flow:
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
 6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
 
-Environments are used with the `--env` or `-e` flag on `wrangler dev`, `wrangler deploy`, and `wrangler secret`.
-
----
+Environments are used with the `--env` or `-e` flag on `wrangler dev`, `npx wrangler deploy`, and `wrangler secret`.
 
 ## Configuration
 
@@ -49,13 +47,38 @@ You cannot specify multiple environments with the same name.
 
 Wrangler appends the environment name to the top-level name to deploy a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would deploy a Worker named `my-worker-dev`.
 
-{{<Aside type="warning" header="Inheritable keys and bindings">}}
-
-Review [Wrangler Environments Configuration documentation](/workers/wrangler/configuration/#environments) to learn more about inheritable keys in top-level configuration.
-
-{{</Aside>}}
-
 After you have configured your environment, run `npx wrangler deploy` in your Worker project directory for the changes to take effect.
+
+## Non-inheritable keys and environments
+
+[Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
+
+[Bindings](/workers/configuration/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [`wrangler.toml`](/workers/wrangler/configuration/) file.
+
+Review the following example `wrangler.toml` file:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker"
+
+vars = { API_HOST = "example.com" }
+
+kv_namespaces = [
+  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_DEV>" }
+]
+
+[env.production]
+
+vars = { API_HOST = "production.example.com" }
+
+kv_namespaces = [
+  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_PRODUCTION>" }
+]
+```
+
+You may assign environment-specific [secrets](/workers/configuration/environment-variables/#add-secrets-to-your-project) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3). 
 
 ---
 

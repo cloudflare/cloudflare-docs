@@ -14,18 +14,19 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 
 {{<table-wrap>}}
 
-| Database                                                                         |Native Integration |  Library or Driver      | Connection Method      |
+| Database                                                                         | Integration |  Library or Driver      | Connection Method      |
 | ------------------------------------------------------------------------------- | ----- | --------- | --------- |
 | [Postgres](/workers/tutorials/postgres/) | - |  [node-postgres](https://node-postgres.com/) | [Workers Socket API](/workers/runtime-apis/tcp-sockets/) |
 | [Postgres](/workers/tutorials/postgres/) | - |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) |
 | [MySQL](/workers/tutorials/postgres/) | - | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) |
 | [FaunaDB](https://fauna.com/blog/getting-started-with-fauna-and-cloudflare-workers) | No |  [faunadb](https://github.com/fauna/faunadb-js)         | API via client library |
-| [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript) | [Yes](/workers/databases/native-integrations/#planetscale) |[@planetscale/database](https://github.com/planetscale/database-js)         | API via client library |
-| [Supabase](https://github.com/supabase/examples-archive/tree/main/supabase-js-v1/with-cloudflare-workers) | [Yes](/workers/databases/native-integrations/#supabase) | [@supabase/supabase-js](https://github.com/supabase/supabase-js)         | API via client library |
+| [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript) | [Yes](/workers/databases/native-integrations/planetscale/) |[@planetscale/database](https://github.com/planetscale/database-js)         | API via client library |
+| [Supabase](https://github.com/supabase/supabase/tree/master/examples/with-cloudflare-workers) | [Yes](/workers/databases/native-integrations/supabase/) | [@supabase/supabase-js](https://github.com/supabase/supabase-js)         | API via client library |
 | [Mongo](https://www.mongodb.com/developer/products/atlas/cloudflare-worker-rest-api/) | No | [realm-web](https://www.mongodb.com/docs/realm/web/)         | API via client library |
 | [Prisma](https://www.prisma.io/docs/guides/deployment/deployment-guides/deploying-to-cloudflare-workers) | No |  [prisma](https://github.com/prisma/prisma)         | API via client library |
-| [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/databases/native-integrations/#neon) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
+| [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/databases/native-integrations/neon/) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
 | [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No | API | GraphQL API via fetch() |
+| [Upstash Redis](https://blog.cloudflare.com/cloudflare-workers-database-integration-with-upstash/) | [Yes](/workers/databases/native-integrations/upstash/) | [@upstash/redis](https://github.com/upstash/upstash-redis) | API via client library |
 
 {{</table-wrap>}}
 

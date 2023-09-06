@@ -14,6 +14,24 @@ If you want to forward or redirect traffic to a different URL, you have the foll
 -   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/): Define a large number (thousands or even millions) of essentially static URL redirects at the account level.
 -   [Page Rules](https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules#how-to): Should only be used when the other two options do not meet your use case.
 
+{{<Aside type="warning">}}
+In order to ensure that traffic to the hostname (e.g. `www.example.com`) you want to redirect is reaching Cloudflare, you need to create a DNS record with the proxy status set to \"[proxied](/dns/manage-dns-records/reference/proxied-dns-records)\". 
+Depending on the record type, you can use different values as the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
+
+```
+www.example.com  A      192.0.2.1
+www.example.com  AAAA   2001:DB8::1
+www.example.com  CNAME  domain.example
+```
+
+We recommend only using reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure in case you disable the redirect for traffic on that hostname.
+
+For more information on reserved IP addresses or top level domains, please refer to these RFCs:
+[RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)
+[RFC 3849](https://datatracker.ietf.org/doc/html/rfc3849)
+[RFC 2606](https://datatracker.ietf.org/doc/html/rfc2606)
+{{</Aside>}}
+
 ___
 
 ## Redirect with Page Rules
@@ -43,11 +61,6 @@ To configure URL forwarding or redirects using Page Rules:
 ___
 
 ## Forwarding examples
-
-{{<Aside type="warning">}}
-Traffic must pass through Cloudflare for Page Rules to work. If you only
-use Cloudflare for DNS, Page Rules are not active.
-{{</Aside>}}
 
 Imagine you want site visitors to easily reach your website for a variety of URL patterns.  For instance, the Page Rule URL patterns _\*www.example.com/products_ and _\*example.com/products_ match:
 
@@ -82,7 +95,7 @@ ___
 
 ## Advanced forwarding options
 
-If you use a basic redirect, such as forwarding the root domain to www.example.com, then you lose anything else in the URL.
+If you use a basic redirect, such as forwarding the apex domain (`example.com`) to `www.example.com`, then you lose anything else in the URL.
 
 For example, you could set up the pattern:
 
@@ -110,7 +123,7 @@ www.example.com/some-particular-page.html
 
 The solution is to use variables. Each wildcard corresponds to a variable when can be referenced in the forwarding address. The variables are represented by a $ followed by a number. To refer to the first wildcard you'd use $1, to refer to the second wildcard you'd use $2, and so on.
 
-To fix the forwarding from the root to www in the above example, you could use the same pattern:
+To fix the forwarding from the apex to `www` in the above example, you could use the same pattern:
 
 ```
 example.com/*

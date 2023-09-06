@@ -8,7 +8,7 @@ inputParameters: errorName
 
 If you experience `$1` errors with a newly activated domain, review your DNS settings in the Cloudflare dashboard.
 
-Check your expected root domain (`example.com`) and any active subdomains (`www.example.com` or `blog.example.com`). If they do not resolve correctly, you may need to add a [root domain record](/dns/manage-dns-records/how-to/create-root-domain/) or a [subdomain record](/dns/manage-dns-records/how-to/create-subdomain/) in Cloudflare DNS.
+Check your expected apex domain (`example.com`) and any active subdomains (`www.example.com` or `blog.example.com`). If they do not resolve correctly, you may need to [add a record on the zone apex](/dns/manage-dns-records/how-to/create-zone-apex/) or a [subdomain record](/dns/manage-dns-records/how-to/create-subdomain/) in Cloudflare DNS.
 
 If you have the correct records set up, make sure those records are also pointing to the correct origin IP address.
 

@@ -54,7 +54,11 @@ When you put your Google Workspace behind Access, users will not be able to log 
 
 ## 4. Test the integration
 
-To test the integration, open an incognito browser window and go to `https://mail.google.com/`. An Access login screen should appear.
+1. In your [Google Admin console](https://admin.google.com/), go to **Apps** > **Google Workspace** > **Gmail** > **Setup**,
+2. Copy your Gmail **Web address**.
+3. Open an incognito browser window and go to your Gmail web address (for example, `https://mail.google.com/a/<your_domain.com>`).
+
+An Access login screen should appear.
 
 ## Troubleshooting
 
