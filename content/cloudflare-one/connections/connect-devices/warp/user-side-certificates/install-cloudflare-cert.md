@@ -218,6 +218,11 @@ The root certificate is now installed and ready to be used.
 
 ### ChromeOS
 
+ChromeOS has multiple methods that can be used to deploy the Cloudflare root certificate. Each method depends on what device is used and where that devices stores root certificates. Use the procedure that your device most closely follows.
+
+{{<tabs labels="deploy1 | deploy2 | deploy3">}}
+{{<tab label="deploy1" no-code="false">}}
+
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
 2. Go to your **ChromeOS Settings**.
@@ -249,6 +254,10 @@ The root certificate is now installed and ready to be used.
 7. Enter anything you want for the certificate name and select **OK**.
 
 ![ChromeOS dialogue for naming the certificate](/images/cloudflare-one/connections/chromeOS8_cert.png)
+
+{{</tab>}}
+
+{{</tabs>}}
 
 ## Add the certificate to applications
 
