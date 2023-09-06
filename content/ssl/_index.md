@@ -2,7 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
   description: Cloudflare SSL/TLS offers free Universal SSL alongside advanced and enterprise features to meet your encryption and certificate management needs.
 ---
@@ -23,18 +23,18 @@ Cloudflare SSL/TLS also provides a number of other features to meet your encrypt
 ## Features
 
 {{<feature header="Total TLS" href="/ssl/edge-certificates/additional-options/total-tls/">}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+Extending the protection offered by Universal SSL, Total TLS is an easy way to automatically issue certificates for all levels of subdomains that you have.
 {{</feature>}}
 
-{{<feature header="Delegated DCV" href="/ssl/edge-certificates/changing-dcv-method/">}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
+{{<feature header="Delegated DCV" href="/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/">}}
+For domains that do not use Cloudflare as their authoritative DNS provider, delegated DCV is a way of reducing the need of manual intervention at the time of certificate renewal.
 {{</feature>}}
 
 ---
 
 ## Related products
 
-{{<related header="Cloudflare DNS" href="/dns/" product="dns">}} 
+{{<related header="Cloudflare DNS" href="/dns/" product="dns">}}
 When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare’s global Anycast network. This network delivers performance and global availability.
 {{</related>}}
 
