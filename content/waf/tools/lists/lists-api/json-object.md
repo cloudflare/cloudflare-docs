@@ -96,6 +96,8 @@ This table summarizes the object properties:
 
 Each list type (IP address, hostname, ASN, redirects) can only contain items of the same type.
 
+### IP address
+
 A fully populated JSON object for an IP address list item has the following structure:
 
 ```json
@@ -107,6 +109,8 @@ A fully populated JSON object for an IP address list item has the following stru
   "modified_on": "2021-10-01T05:20:00.12345Z"
 }
 ```
+
+### Hostname
 
 A fully populated JSON object for a hostname list item has the following structure:
 
@@ -121,6 +125,8 @@ A fully populated JSON object for a hostname list item has the following structu
 }
 ```
 
+### ASN
+
 A fully populated JSON object for an ASN list item has the following structure:
 
 ```json
@@ -132,6 +138,8 @@ A fully populated JSON object for an ASN list item has the following structure:
   "modified_on": "2021-10-11T12:39:02Z"
 }
 ```
+
+### URL redirect
 
 A fully populated JSON object for a Bulk Redirect List item has the following structure:
 
@@ -151,6 +159,8 @@ A fully populated JSON object for a Bulk Redirect List item has the following st
   "modified_on": "2021-10-11T12:39:02Z"
 }
 ```
+
+### Properties reference
 
 The JSON object properties for a list item are defined as follows:
 
