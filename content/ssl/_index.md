@@ -27,7 +27,7 @@ Extending the protection offered by Universal SSL, Total TLS is an easy way to a
 {{</feature>}}
 
 {{<feature header="Delegated DCV" href="/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/">}}
-For domains that do not use Cloudflare as their authoritative DNS provider, delegated DCV is a way of reducing the need of manual intervention at the time of certificate renewal.
+Even if you use a different provider for authoritative DNS, you can delegate domain control validation (DCV) to Cloudflare, reducing the need of manual intervention.
 {{</feature>}}
 
 ---
