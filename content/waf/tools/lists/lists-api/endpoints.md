@@ -15,9 +15,9 @@ To invoke a [Lists API](/api/operations/lists-get-lists) operation, append the e
 
 `https://api.cloudflare.com/client/v4/`
 
-For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
+For authentication instructions, refer to [Cloudflare's API: Getting Started](/fundamentals/api/get-started/).
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
+For help with making API calls and paginating results, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
 {{<Aside type="note">}}
 
