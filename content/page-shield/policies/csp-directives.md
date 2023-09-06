@@ -21,19 +21,19 @@ The following table lists the supported CSP directives and keywords you can use 
 Directive         | Name in the dashboard | Supported keywords | Monitored
 ------------------|-----------------------|--------------------|----------
 `script-src`      | Scripts         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`connect-src`     | Connections     | `'none'`<br>`'self'      | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`default-src`     | Default         | `'none'`<br>`'self'`     | No
-`img-src`         | Images          | `'none'`<br>`'self'`     | No
-`style-src`       | Styles          | `'none'`<br>`'self'`     | No
-`font-src`        | Fonts           | `'none'`<br>`'self'`     | No
-`object-src`      | Objects         | `'none'`<br>`'self'`     | No
-`media-src`       | Media           | `'none'`<br>`'self'`     | No
-`child-src`       | Child           | `'none'`<br>`'self'`     | No
-`form-action`     | Form actions    | `'none'`<br>`'self'`     | No
-`worker-src`      | Workers         | `'none'`<br>`'self'`     | No
-`base-uri`        | Base URI        | `'none'`<br>`'self'`     | No
-`manifest-src`    | Manifests       | `'none'`<br>`'self'`     | No
-`frame-src`       | Frames          | `'none'`<br>`'self'`     | No
+`connect-src`     | Connections     | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`default-src`     | Default         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`img-src`         | Images          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`style-src`       | Styles          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`font-src`        | Fonts           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`object-src`      | Objects         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`media-src`       | Media           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`child-src`       | Child           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`form-action`     | Form actions    | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`worker-src`      | Workers         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`base-uri`        | Base URI        | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`manifest-src`    | Manifests       | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
+`frame-src`       | Frames          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
 `frame-ancestors` | Frame ancestors | `'none'`<br>`'self'`     | No
 `upgrade-insecure-requests` | Upgrade insecure requests | N/A  | No
 
