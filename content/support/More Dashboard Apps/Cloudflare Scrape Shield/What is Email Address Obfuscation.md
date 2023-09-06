@@ -42,6 +42,10 @@ To prevent unexpected website behavior, email addresses are not obfuscated when 
 
 **Please Note** that Email Obfuscation will **not take affect** if you're using the `Cache-Control: no-transform` header.
 
+**Please Note** that Email obfuscation will **not apply** to HTML/JS code which is specifically added by a Worker. This code will be respected as is, without change and without applying the obfuscation.
+
+
+
 ___
 
 ## Prevent Cloudflare from obfuscating email
