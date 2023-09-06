@@ -14,7 +14,7 @@ SERVICES AGREEMENT
 
 Your installation of this software is symbol of your signature indicating that you accept the terms of this Services Agreement (this “Agreement”). This Agreement is a legal agreement between you (either an individual or a single entity) and CloudFlare Inc. for the services being provided to you by CloudFlare or its authorized representative (the “Services”), including any computer software and any associated media, printed materials, and “online” or electronic documentation provided in connection with the Services (the “Software” and together with the Services are hereinafter collectively referred to as the “Solution”). If the user is not an individual, then “you” means your company, its officers, members, employees, agents, representatives, successors and assigns. BY USING THE SOLUTION, YOU ARE INDICATING THAT YOU HAVE READ, AND AGREE TO BE BOUND BY, THE POLICIES, TERMS, AND CONDITIONS SET FORTH BELOW IN THEIR ENTIRETY WITHOUT LIMITATION OR QUALIFICATION, AS WELL AS BY ALL APPLICABLE LAWS AND REGULATIONS, AS IF YOU HAD HANDWRITTEN YOUR NAME ON A CONTRACT. IF YOU DO NOT AGREE TO THESE TERMS AND CONDITIONS, YOU MAY NOT USE THE SOLUTION.
 
-1\. GRANT OF RIGHTS
+1. GRANT OF RIGHTS
 
 1.1 Grant of License. The Solution is licensed by CloudFlare and its licensors, not sold. Subject to the terms and conditions of this Agreement, CloudFlare hereby grants you a nonexclusive, nonsublicensable, nontransferable license to use the Solution.
 
@@ -22,15 +22,15 @@ Your installation of this software is symbol of your signature indicating that y
 
 1.3 Ownership. As between the parties, CloudFlare and/or its licensors own and shall retain all right, title, and interest in and to the Solution, including any and all technology embodied therein, including all copyrights, patents, trade secrets, trade dress and other proprietary rights associated therewith, and any derivative works created there from.
 
-2\. LIMITATION OF LIABILITY
+2. LIMITATION OF LIABILITY
 
 YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT DOWNLOADING THE SOFTWARE IS AT YOUR SOLE RISK. THE SOFTWARE IS PROVIDED “AS IS” AND WITHOUT WARRANTY OF ANY KIND AND CloudFlare, ITS LICENSORS AND ITS AUTHORIZED REPRESENTATIVES (TOGETHER FOR PURPOSES HEREOF, “CloudFlare”) EXPRESSLY DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. CloudFlare DOES NOT WARRANT THAT THE FUNCTIONS CONTAINED IN THE SOFTWARE WILL MEET YOUR REQUIREMENTS, OR THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE, OR THAT DEFECTS IN THE SOFTWARE WILL BE CORRECTED. FURTHERMORE, CLOUDFLARE DOES NOT WARRANT OR MAKE ANY REPRESENTATIONS REGARDING THE SOFTWARE OR RELATED DOCUMENTATION IN TERMS OF THEIR CORRECTNESS, ACCURACY, RELIABILITY, OR OTHERWISE. NO ORAL OR WRITTEN INFORMATION OR ADVICE GIVEN BY CloudFlare SHALL CREATE A WARRANTY OR IN ANY WAY INCREASE THE SCOPE OF THIS WARRANTY.
 
-3\. CONFIDENTIALITY
+3. CONFIDENTIALITY
 
 It may be necessary during the set up and performance of the Solution for the parties to exchange Confidential Information. “Confidential Information” means any information whether oral, or written, of a private, secret, proprietary or confidential nature, concerning either party or its business operations, including without limitation: (a) your data and (b) CloudFlare’s access control systems, specialized network equipment and techniques related to the Solution, use policies, which include trade secrets of CloudFlare and its licensors. Each party agrees to use the same degree of care to protect the confidentiality of the Confidential Information of the other party and to prevent its unauthorized use or dissemination as it uses to protect its own Confidential Information of a similar nature, but in no event shall exercise less than due diligence and reasonable care. Each party agrees to use the Confidential Information of the other party only for purposes related to the performance of this Agreement. All Confidential Information remains the property of the party disclosing the information and no license or other rights to Confidential Information is granted or implied hereby.
 
-4\. TERM AND TERMINATION
+4. TERM AND TERMINATION
 
 4.1 Term. This Agreement shall be effective upon download or install of the Software.
 
@@ -38,7 +38,7 @@ It may be necessary during the set up and performance of the Solution for the pa
 
 4.3 Effect of Termination. Upon the termination of this Agreement for any reason: (1) all license rights granted hereunder shall terminate and (2) all Confidential Information shall be returned to the disclosing party or destroyed.
 
-5\. MISCELLANEOUS
+5. MISCELLANEOUS
 
 5.1 Assignment. You may not assign any of your rights or delegate any of your obligations under this Agreement, whether by operation of law or otherwise, without the prior express written consent of CloudFlare or its authorized representative. Any such assignment without the prior express written consent of CloudFlare or its authorized representative shall be void. Subject to the foregoing, this Agreement will bind and inure to the benefit of the parties, their respective successors and permitted assigns.
 

@@ -17,9 +17,9 @@ ___
 
 Cloudflare offre des [services DNS gratuits](https://www.cloudflare.com/dns) aux clients de toutes les offres. Notez que :
 
-1\. Vous n’avez pas besoin de changer de fournisseur d’hébergement pour utiliser Cloudflare.
+1. Vous n’avez pas besoin de changer de fournisseur d’hébergement pour utiliser Cloudflare.
 
-2\. Vous n’avez pas besoin de quitter votre registrar. Le seul changement effectué au niveau de votre registrar est de faire pointer les serveurs de noms autoritaires vers les serveurs de noms Cloudflare.
+2. Vous n’avez pas besoin de quitter votre registrar. Le seul changement effectué au niveau de votre registrar est de faire pointer les serveurs de noms autoritaires vers les serveurs de noms Cloudflare.
 
 Depuis octobre 2018, vous pouvez transférer votre domaine vers [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/).
 
@@ -55,9 +55,9 @@ ___
 
 Remplacer vos serveurs de noms par Cloudflare nous permet de mettre en proxy et d’approvisionner l’intégralité d’un site. Si vous ne pouvez pas utiliser nos serveurs de noms, deux options s’offrent à vous :
 
-1\. Activez Cloudflare via l’un de nos [partenaires d’hébergement certifiés](https://www.cloudflare.com/hosting-partners).
+1. Activez Cloudflare via l’un de nos [partenaires d’hébergement certifiés](https://www.cloudflare.com/hosting-partners).
 
-2\. Demandez une [configuration en CNAME](https://support.cloudflare.com/hc/en-us/articles/360020348832).
+2. Demandez une [configuration en CNAME](https://support.cloudflare.com/hc/en-us/articles/360020348832).
 
 ___
 

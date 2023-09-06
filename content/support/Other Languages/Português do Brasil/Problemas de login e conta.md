@@ -32,11 +32,11 @@ Se você esquecer o endereço de e-mail associado à sua conta, entre em contato
 
 Se você esquecer o endereço de e-mail associado ao seu aplicativo:
 
-1\. Acesse [](http://dash.cloudflare.com/forgot-email)[Esqueceu o e-mail?](https://dash.cloudflare.com/forgot-email)
+1. Acesse [](http://dash.cloudflare.com/forgot-email)[Esqueceu o e-mail?](https://dash.cloudflare.com/forgot-email)
 
-2\. Digite seu nome de domínio.
+2. Digite seu nome de domínio.
 
-3\. A Cloudflare enviará um e-mail para o endereço associado ao seu nome de domínio. Se você não receber um e-mail dentro de 20 minutos, verifique sua pasta de spam. A mensagem será enviada de `no-reply@cloudflare.com` ou de `noreply@notify.cloudflare.com`.
+3. A Cloudflare enviará um e-mail para o endereço associado ao seu nome de domínio. Se você não receber um e-mail dentro de 20 minutos, verifique sua pasta de spam. A mensagem será enviada de `no-reply@cloudflare.com` ou de `noreply@notify.cloudflare.com`.
 
 Se você ainda não conseguir acessar o endereço de e-mail associado à sua conta da Cloudflare, será necessário [mover o domínio para outra conta](https://support.cloudflare.com/hc/articles/204615358).
 
@@ -48,13 +48,13 @@ ___
 
 Se você esquecer a senha da sua conta:
 
-1\. Acesse [](http://dash.cloudflare.com/forgot-email)[Redefinição de senha](https://dash.cloudflare.com/password-reset).
+1. Acesse [](http://dash.cloudflare.com/forgot-email)[Redefinição de senha](https://dash.cloudflare.com/password-reset).
 
-2\. Digite seu endereço de e-mail.
+2. Digite seu endereço de e-mail.
 
-3\. Você deve receber um e-mail da Cloudflare. Se não recebê-lo dentro de 20 minutos, verifique sua pasta de spam. A mensagem será enviada de `no-reply@cloudflare.com` ou de `noreply@notify.cloudflare.com`.
+3. Você deve receber um e-mail da Cloudflare. Se não recebê-lo dentro de 20 minutos, verifique sua pasta de spam. A mensagem será enviada de `no-reply@cloudflare.com` ou de `noreply@notify.cloudflare.com`.
 
-4\. Selecione o link de redefinição de senha. Esse link expirará após duas horas.
+4. Selecione o link de redefinição de senha. Esse link expirará após duas horas.
 
 ___
 
@@ -68,11 +68,11 @@ Geralmente, você pode resolver esses problemas usando um código de backup ou r
 
 Ao configurar a 2FA, você deve salvar seus códigos de backup em um local seguro. Para restaurar o acesso perdido usando um código de backup da Cloudflare:
 
-1\. Recupere o código de backup de onde você o armazenou.
+1. Recupere o código de backup de onde você o armazenou.
 
-2\. Navegue até a página de login da Cloudflare.
+2. Navegue até a página de login da Cloudflare.
 
-3\. Digite o código de backup na tela de login e clique em **Entrar** .
+3. Digite o código de backup na tela de login e clique em **Entrar** .
 
 #### **Desativar a 2FA**
 
@@ -82,17 +82,17 @@ Se você ou outro proprietário da conta ainda tiver acesso à sua conta da Clou
 
 Caso você não tenha acesso à sua conta com 2FA ou aos códigos de backup, use um dispositivo verificado para solicitar um código de acesso temporário.
 
-1\. Entre no [painel de controle da Cloudflare](https://dash.cloudflare.com/login).
+1. Entre no [painel de controle da Cloudflare](https://dash.cloudflare.com/login).
 
-2\. Na página **Autenticação de dois fatores**, clique em **Não consegue acessar o dispositivo com 2FA ou os códigos de backup?**.
+2. Na página **Autenticação de dois fatores**, clique em **Não consegue acessar o dispositivo com 2FA ou os códigos de backup?**.
 
-3\. Clique em **Iniciar recuperação**.
+3. Clique em **Iniciar recuperação**.
 
-4\. Com um código de acesso temporário, verifique o endereço de e-mail associado à sua conta.
+4. Com um código de acesso temporário, verifique o endereço de e-mail associado à sua conta.
 
-5\. Com um dispositivo em que você já fez login antes, verifique o dispositivo. Se você limpa os cookies com frequência ou está fazendo login de um endereço de IP diferente, isso significa que você limpou a memória do seu dispositivo e precisará usar outro para realizar a verificação.
+5. Com um dispositivo em que você já fez login antes, verifique o dispositivo. Se você limpa os cookies com frequência ou está fazendo login de um endereço de IP diferente, isso significa que você limpou a memória do seu dispositivo e precisará usar outro para realizar a verificação.
 
-6\. Por motivos de segurança, é necessário esperar de três a cinco dias após a conclusão da verificação para receber o código de acesso temporário.
+6. Por motivos de segurança, é necessário esperar de três a cinco dias após a conclusão da verificação para receber o código de acesso temporário.
 
 #### **Ainda precisa de mais ajuda?**
 
@@ -117,27 +117,27 @@ ___
 
 Para alterar o endereço de email associado à sua conta Cloudflare:
 
-1\. Acesse seu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Acesse seu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Selecione sua conta.
+2. Selecione sua conta.
 
-3\. No painel **Endereço de e-mail** , selecione **Alterar endereço de e-mail**.
+3. No painel **Endereço de e-mail** , selecione **Alterar endereço de e-mail**.
 
-5\. Na caixa de diálogo, insira seu novo endereço de e-mail em **Novo e-mail** e **Confirmar e-mail** . Em seguida, digite sua senha atual.
+5. Na caixa de diálogo, insira seu novo endereço de e-mail em **Novo e-mail** e **Confirmar e-mail** . Em seguida, digite sua senha atual.
 
-5\. Selecione **Salvar**.
+5. Selecione **Salvar**.
 
 #### **Alterar senha**
 
-1\. Acesse seu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Acesse seu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Selecione sua conta.
+2. Selecione sua conta.
 
-3\. Selecione **Autenticação**.
+3. Selecione **Autenticação**.
 
-4\. Em **Senha**, selecione **Alterar**.
+4. Em **Senha**, selecione **Alterar**.
 
-5\. Altere sua senha e selecione **Salvar**.
+5. Altere sua senha e selecione **Salvar**.
 
 ___
 

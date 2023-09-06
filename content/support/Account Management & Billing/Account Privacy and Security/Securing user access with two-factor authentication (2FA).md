@@ -98,11 +98,11 @@ ___
 
 To enable 2FA mobile app authentication:
 
-1\. Under **Mobile App Authentication**, click **Add**.
+1. Under **Mobile App Authentication**, click **Add**.
 
-2\. Scan the QR code with your mobile device and enter the code from your authenticator app.
+2. Scan the QR code with your mobile device and enter the code from your authenticator app.
 
-3\. Enter the code from your authenticator app. 
+3. Enter the code from your authenticator app. 
 
 4.  Enter your Cloudflare password, then click **Next**.
 
@@ -110,18 +110,18 @@ To enable 2FA mobile app authentication:
 
 ![You can enable 2FA by scanning a QR code with your mobile device.](/images/support/2FA_scan_QR_code.png)
 
-5\. Enter your Cloudflare password again.
+5. Enter your Cloudflare password again.
 
 6. Click **Next** again to review your backup codes. You can use backup codes to access your account without your mobile device.  
 
-7\. Click **Download**, **Print**, or **Copy** to save the codes, then click **Next**.
+7. Click **Download**, **Print**, or **Copy** to save the codes, then click **Next**.
 
 {{<Aside type="note">}}
 You can regenerate your backup codes on the following screen or at any
 time in the Authentication tab.
 {{</Aside>}}
 
-8\. Click **Next** on the backup code page to complete the recovery code set up. Two-Factor Authentication is now _Enabled_.
+8. Click **Next** on the backup code page to complete the recovery code set up. Two-Factor Authentication is now _Enabled_.
 
 ### Reconfigure TOTP mobile app authentication
 
@@ -172,7 +172,7 @@ To disable 2FA:
 -   Click **Delete**. A pop-up will appear.
 -   Enter your Cloudflare password, then click **Remove**.
 
-5\. To remove your TOTP mobile app authentication: 
+5. To remove your TOTP mobile app authentication: 
 
 -   Click **Delete method** in the **Mobile App Authentication** card. A popup window appears.
 -   Enter your Cloudflare password, authenticator app code, or a recovery code,  then click **Disable**.
@@ -195,11 +195,11 @@ another](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3D
 
 When setting up 2FA, you should have saved your backup codes in a secure location. To restore lost access using a Cloudflare backup code:
 
-1\. Retrieve the backup code from where you stored it.
+1. Retrieve the backup code from where you stored it.
 
-2\. Navigate to the Cloudflare login page.
+2. Navigate to the Cloudflare login page.
 
-3\. Enter the backup code in the login screen, then click **Log in**.
+3. Enter the backup code in the login screen, then click **Log in**.
 
 {{<Aside type="note">}}
 Once you use a backup code, it becomes invalid.
@@ -213,17 +213,17 @@ If you or another account owner still has access to your Cloudflare account, you
 
 If you do not have access to your 2FA account or backup codes, use a verified device to request a temporary access code.
 
-1\. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
-2\. On the **Two-Factor Authentication** page, next to *Lost all 2FA devices and backup codes?* click **Try recovery**.
+2. On the **Two-Factor Authentication** page, next to *Lost all 2FA devices and backup codes?* click **Try recovery**.
 
-3\. Click **Begin recovery**.
+3. Click **Begin recovery**.
 
-4\. Using a temporary access code, verify the email address associated with your account.
+4. Using a temporary access code, verify the email address associated with your account.
 
-5\. Using a device that you have logged in from before, verify your device. If you clear your cookies often or are logging in from a different IP address, you have wiped our memory of your device and will need to use a different device to verify.
+5. Using a device that you have logged in from before, verify your device. If you clear your cookies often or are logging in from a different IP address, you have wiped our memory of your device and will need to use a different device to verify.
 
-6\. For security reasons, you have to wait 3 to 5 days after completing verification to receive your temporary access code.
+6. For security reasons, you have to wait 3 to 5 days after completing verification to receive your temporary access code.
 
 #### **Still need additional help?**
 

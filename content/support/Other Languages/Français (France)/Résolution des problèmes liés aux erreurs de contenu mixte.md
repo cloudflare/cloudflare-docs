@@ -47,7 +47,7 @@ ___
 
 Il existe deux méthodes pour résoudre les erreurs de contenu mixte.
 
-1\. Chargez toutes les ressources via votre source HTML sans spécifier les protocoles HTTP ou HTTPS. Par exemple :
+1. Chargez toutes les ressources via votre source HTML sans spécifier les protocoles HTTP ou HTTPS. Par exemple :
 
      _//domaine.com/path/to.file_
 
@@ -55,7 +55,7 @@ Il existe deux méthodes pour résoudre les erreurs de contenu mixte.
 
      _http://domaine.com/path/to.file_
 
-2\. En fonction de votre système de gestion de contenu, recherchez des plug-ins qui réécrivent automatiquement les ressources HTTP en HTTPS. Dans l’application **SSL/TLS**, Cloudflare fournit un tel service via des [Remplacements HTTPS automatiques](https://support.cloudflare.com/hc/articles/227227647).
+2. En fonction de votre système de gestion de contenu, recherchez des plug-ins qui réécrivent automatiquement les ressources HTTP en HTTPS. Dans l’application **SSL/TLS**, Cloudflare fournit un tel service via des [Remplacements HTTPS automatiques](https://support.cloudflare.com/hc/articles/227227647).
 
 ___
 

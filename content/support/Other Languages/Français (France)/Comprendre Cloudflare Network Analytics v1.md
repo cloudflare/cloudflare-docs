@@ -146,17 +146,17 @@ Les autres types de filtres Network Analytics ne seront pas ajoutés à la nouve
 
 Procédez comme suit :
 
-1\. Appliquez un ou plusieurs filtres dans Network Analytics.
+1. Appliquez un ou plusieurs filtres dans Network Analytics.
 
-2\. Cliquez sur **Create Magic Firewall rule**. 
+2. Cliquez sur **Create Magic Firewall rule**. 
 
 ![Création d'un lien de règle de pare-feu dans Network Analytics](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 L'éditeur de règles Magic Firewall s'affiche avec les filtres et les valeurs sélectionnés.
 
-3\. Vérifiez la définition de la règle dans l'éditeur de règles de Magic Firewall.
+3. Vérifiez la définition de la règle dans l'éditeur de règles de Magic Firewall.
 
-4\. Cliquez sur **Add new**.
+4. Cliquez sur **Add new**.
 
 ### Champs, opérateurs et valeurs de filtre pris en charge
 

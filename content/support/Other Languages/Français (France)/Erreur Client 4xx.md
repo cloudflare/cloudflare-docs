@@ -58,9 +58,9 @@ Pas encore mis en place par les normes RFC, mais réservé pour une utilisation 
 Si vous rencontrez une erreur 403 sans l’image Cloudflare, elle provient toujours directement du serveur web d’origine et non de Cloudflare. Elle est généralement liée aux règles d’autorisation sur votre serveur.
 
 Les causes principales de cette erreur sont :  
-1\. Les règles d’autorisation que vous avez configurées, ou une erreur dans les règles .htaccess que vous avez configurées  
-2\. Les règles mod\_security.  
-3\. Les règles de refus d’adresses IP
+1. Les règles d’autorisation que vous avez configurées, ou une erreur dans les règles .htaccess que vous avez configurées  
+2. Les règles mod\_security.  
+3. Les règles de refus d’adresses IP
 
 Dans la mesure où Cloudflare ne peut pas accéder directement à votre serveur, veuillez contacter votre fournisseur d’hébergement pour résoudre les erreurs 403 et modifier les règles. Assurez-vous que les [adresses IP de Cloudflare](https://www.cloudflare.com/ips) ne sont pas bloquées. 
 

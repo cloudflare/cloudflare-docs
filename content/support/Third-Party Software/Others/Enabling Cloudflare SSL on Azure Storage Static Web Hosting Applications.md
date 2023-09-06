@@ -45,11 +45,11 @@ ___
 
 To receive SSL on a custom domain:
 
-1\. Create a new Cloudflare account or use an existing account. 
+1. Create a new Cloudflare account or use an existing account. 
 
-2\. Enter the name of your custom domain under **Add Your Site**.
+2. Enter the name of your custom domain under **Add Your Site**.
 
-3\. Cloudflare queries authoritative DNS servers for the DNS records registered for the domain.
+3. Cloudflare queries authoritative DNS servers for the DNS records registered for the domain.
 
 ___
 

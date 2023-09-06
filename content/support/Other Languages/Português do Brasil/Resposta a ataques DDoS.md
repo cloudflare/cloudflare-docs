@@ -32,13 +32,13 @@ ___
 
 Para ativar o modo [**Estou sob Ataque**](https://support.cloudflare.com/hc/articles/200170076):
 
-1\. Faça login na sua conta Cloudflare.
+1. Faça login na sua conta Cloudflare.
 
-2\. Selecione o domínio atualmente sob ataque.
+2. Selecione o domínio atualmente sob ataque.
 
-3\. Alterne o modo **Estou sob Ataque** para _Ativado_ na seção **Ações Rápidas** do aplicativo **Overview** da Cloudflare.
+3. Alterne o modo **Estou sob Ataque** para _Ativado_ na seção **Ações Rápidas** do aplicativo **Overview** da Cloudflare.
 
-4\. \[Opcional\] Ajuste o [**Tempo de Validade do Desafio**](https://support.cloudflare.com/hc/articles/200170136) na guia **Configurações** do aplicativo **Firewal**.
+4. \[Opcional\] Ajuste o [**Tempo de Validade do Desafio**](https://support.cloudflare.com/hc/articles/200170136) na guia **Configurações** do aplicativo **Firewal**.
 
 ___
 

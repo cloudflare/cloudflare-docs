@@ -144,17 +144,17 @@ ___
 
 请执行下列操作：
 
-1\. 在 Network Analytics 中应用一个或多个筛选器。
+1. 在 Network Analytics 中应用一个或多个筛选器。
 
-2\. 点击**创建 Magic Firewall 规则**。
+2. 点击**创建 Magic Firewall 规则**。
 
 ![Network Analytics 中的“创建防火墙规则”链接](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Magic Firewall 规则编辑器显示了选定的筛选器和值。
 
-3\. 在 Magic Firewall 规则编辑器中检查规则定义。
+3. 在 Magic Firewall 规则编辑器中检查规则定义。
 
-4\. 点击**新建**。
+4. 点击**新建**。
 
 ### 支持的过滤器字段、运算符和值
 

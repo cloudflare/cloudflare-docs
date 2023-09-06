@@ -372,7 +372,7 @@ Konvertieren Sie bei der Suche im **Firewall-Events-Protokoll** den
 UTC-Zeitstempel des Fehlers 1020 in Ihre lokale Zeitzone.
 {{</Aside>}}
 
-3\. Stellen Sie die Ursache der Blockierung fest und ändern Sie entweder die **Firewall-Regel** oder lassen Sie die IP-Adresse des Besuchers in den [**IP-Zugriffsregeln**](https://support.cloudflare.com/hc/articles/217074967) zu.
+3. Stellen Sie die Ursache der Blockierung fest und ändern Sie entweder die **Firewall-Regel** oder lassen Sie die IP-Adresse des Besuchers in den [**IP-Zugriffsregeln**](https://support.cloudflare.com/hc/articles/217074967) zu.
 
 ___
 

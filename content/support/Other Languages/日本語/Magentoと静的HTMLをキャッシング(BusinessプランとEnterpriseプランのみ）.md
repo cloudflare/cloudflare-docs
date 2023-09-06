@@ -32,17 +32,17 @@ ___
 
  **Page Rules**を使って静的HTMLをキャッシュするには、
 
-1\. Cloudflareアカウントにログインします。
+1. Cloudflareアカウントにログインします。
 
-2\.  **キャッシング** アプリをクリックします。 
+2.  **キャッシング** アプリをクリックします。 
 
-3\.  **Browser Cache TTL**までスクロールダウンし、 **既存ヘッダーを尊重する**を選択します。
+3.  **Browser Cache TTL**までスクロールダウンし、 **既存ヘッダーを尊重する**を選択します。
 
 この設定を実行すると、匿名のページ訪問者をキャッシュするために必要なPage Ruleが設定できます。
 
-4\. **ルール >** **Page Rules**へ移動します。
+4. **ルール >** **Page Rules**へ移動します。
 
-5\.  **Page Ruleを作成** ボタンをクリックして、ドメインを入力します。以下に示す通り、ドメインは www.orangeclouded.comです。
+5.  **Page Ruleを作成** ボタンをクリックして、ドメインを入力します。以下に示す通り、ドメインは www.orangeclouded.comです。
 
 -   _Cache Everything_ (すべてをキャッシュする)は、Cloudflareに静的HTMLをキャッシュするように指示します。
 -   _Bypass Cache on Cookie_ が設定された基準を満たす場合、（[静的画像とその他のファイルはキャッシュされますが、](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-)）CloudflareはTHMLをキャッシュしません。Magento 1とMagento 2のどちらをご利用かによって、ルールが異なります。
@@ -53,7 +53,7 @@ ___
 
 ![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/images/support/hc-import-page_rules_caching_static_html_with_magento.png)
 
-6\.  **保存とデプロイ**をクリックします。
+6.  **保存とデプロイ**をクリックします。
 
 ___
 
@@ -63,11 +63,11 @@ Magento 1.8.x サイト、または1.9.xで **Bypass Cache on Cookie** をセ�
 
 Magento 1.8.x と1.9.xは、Megentoフォーム全体で [Cross Site Request Forgery checks](https://www.section.io/blog/csrf-and-caching/) (CSRF) を導入しています。これはCookieを使用するため、匿名キャッシングメカニズムが問題を引き起こす可能性もあります。この問題の解決方法は3つあります。以下のセキュリティレベルに基づいて、オプションを紹介します。
 
-1\. 最も低いセキュリティ:  _システム -> 設定 -> システム -> CSRF 保護 -> Urlに秘密鍵を追加する_ の設定が、デフォルトで _Yes_ となっています。この設定を _No_ にすると、Megentoフロントエンド全体でCSRFセキュリティプロテクションが無効となり、サイト上にCSRF保護をオンにできる別のメカニズムがあれば、このオプションだけが表示されます。ただし、この方法は推奨されません。  _システム -> ADMIN -> システム -> CSRF 保護 -> Urlに秘密鍵を追加する_のAdminパネルに同様の名前設定があることに注意してください。この設定はYesに保ち、 **変更しない**でください。この設定では、Adminエンドポイントにセキュリティを提供することになるため、使用には特別な注意が必要となります。
+1. 最も低いセキュリティ:  _システム -> 設定 -> システム -> CSRF 保護 -> Urlに秘密鍵を追加する_ の設定が、デフォルトで _Yes_ となっています。この設定を _No_ にすると、Megentoフロントエンド全体でCSRFセキュリティプロテクションが無効となり、サイト上にCSRF保護をオンにできる別のメカニズムがあれば、このオプションだけが表示されます。ただし、この方法は推奨されません。  _システム -> ADMIN -> システム -> CSRF 保護 -> Urlに秘密鍵を追加する_のAdminパネルに同様の名前設定があることに注意してください。この設定はYesに保ち、 **変更しない**でください。この設定では、Adminエンドポイントにセキュリティを提供することになるため、使用には特別な注意が必要となります。
 
-2\.  中程度のセキュリティ: ユーザーが「カートに追加する」フォームでCSRFチェックのみを無効にできるようにする Magento コミュニティモジュールがセキュリティリスクの重大性がやや低いところに存在します。  [Inovarti\_FixAddToCartMage18](https://github.com/deivisonarthur/Inovarti_FixAddToCartMage18/blob/master/README.md) プラグインが CSRF 保護から「カートに追加する」をホワイトリストに設定してこれを行います。 
+2.  中程度のセキュリティ: ユーザーが「カートに追加する」フォームでCSRFチェックのみを無効にできるようにする Magento コミュニティモジュールがセキュリティリスクの重大性がやや低いところに存在します。  [Inovarti\_FixAddToCartMage18](https://github.com/deivisonarthur/Inovarti_FixAddToCartMage18/blob/master/README.md) プラグインが CSRF 保護から「カートに追加する」をホワイトリストに設定してこれを行います。 
 
-3\.  最も高いセキュリティ: MagentoサイトのCSRFトークン値を動的に埋めるためにAJAXを使うことが最良の方法です。ユーザーが何かをカートに加えるためにボタンをクリックすると、ユーザーのセッションと一致する形式でCSRFを更新するためにジャンプするJavaScriptもあります。これにより、ページのほとんどをキャッシュから提供することが可能になりますが、トークンを取得するためにオリジンに戻るリクエストが必要となります。
+3.  最も高いセキュリティ: MagentoサイトのCSRFトークン値を動的に埋めるためにAJAXを使うことが最良の方法です。ユーザーが何かをカートに加えるためにボタンをクリックすると、ユーザーのセッションと一致する形式でCSRFを更新するためにジャンプするJavaScriptもあります。これにより、ページのほとんどをキャッシュから提供することが可能になりますが、トークンを取得するためにオリジンに戻るリクエストが必要となります。
 
 最終的なAJAXのメカニズムが [Magento Turpentine拡張機能](https://github.com/nexcess/magento-turpentine)と呼ばれるプラグインで実行されています。このプラグインはVarnishでキャッシュの実行ができるように構築されましたが、Cloudflareで使うこともできます。
 

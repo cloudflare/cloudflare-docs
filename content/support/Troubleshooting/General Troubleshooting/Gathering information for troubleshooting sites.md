@@ -6,8 +6,6 @@ title: Gathering information for troubleshooting sites
 
 # Gathering information for troubleshooting sites
 
-
-
 ## Overview
 
 It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
@@ -35,62 +33,64 @@ Currently, only Chrome and Firefox can access the HAR feature by default. Other 
 ## Desktop Browsers
 <details>
 <summary>In Chrome</summary>
+  <div>
   
-  ###
-  1\. In a browser page, right-click anywhere and select **Inspect Element**.
-  
-  2\. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab.
-  
-  ![HAR network tab screenshot from Chrome developer tools](/images/support/gathering_har_file_network.png)
+    1. In a browser page, right-click anywhere and select **Inspect Element**.
+    
+    2. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab.
+    
+    ![HAR network tab screenshot from Chrome developer tools](/images/support/gathering_har_file_network.png)
 
-  3\. Check **Preserve log**.
-  
-  4\. Click record.
-  
-  ![HAR record button in chrome dev tools.](/images/support/gathering_har_file_record.png)
-  
-  5\. Browse to the URL that causes issues. Once the issue is experienced, right click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
-  
-  ![HAR save menu in Chrome developer tools.](/images/support/gathering_har_file_save.png)
-  
-  6\. Attach the HAR file to your support ticket.
-
+    3. Check **Preserve log**.
+    
+    4. Click record.
+    
+    ![HAR record button in chrome dev tools.](/images/support/gathering_har_file_record.png)
+    
+    5. Browse to the URL that causes issues. Once the issue is experienced, right click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
+    
+    ![HAR save menu in Chrome developer tools.](/images/support/gathering_har_file_save.png)
+    
+    6. Attach the HAR file to your support ticket.
+  </div>
 </details>
 
 <details>
 <summary>In Firefox</summary>
+  <div>
   
-  ###
-  1\. From the application menu, select **Tools** > **Web Developer** > **Network** or press _Ctrl+Shift+I_ (Windows/Linux) or _Cmd+Option+I_ (OS X).
-  
-  2\. Browse to the URL that causes issues.
-  
-  3\. After duplicating the issue, right-click and choose **Save All As HAR**.
+    1. From the application menu, select **Tools** > **Web Developer** > **Network** or press _Ctrl+Shift+I_ (Windows/Linux) or _Cmd+Option+I_ (OS X).
+    
+    2. Browse to the URL that causes issues.
+    
+    3. After duplicating the issue, right-click and choose **Save All As HAR**.
+  </div>
 </details>
 
 <details>
 <summary>In Microsoft Edge</summary>
-
-  ###
-  1\. Navigate to **Developer tools** (use _F12_ as a shortcut) and select the **Network** tab.
+  <div>
   
-  2\. Browse to the URL that causes issues.
-  
-  3\. After duplicating the issue, click on **Export as HAR** followed by **Save As...**.
+    1. Navigate to **Developer tools** (use _F12_ as a shortcut) and select the **Network** tab.
+    
+    2. Browse to the URL that causes issues.
+    
+    3. After duplicating the issue, click on **Export as HAR** followed by **Save As...**.
+  </div>
 </details>
 
 <details>
 <summary>In Safari</summary>
+  <div>
 
-
-  ###
-  1\. In Safari, ensure a **Develop** menu appears at the top of the browser window. Otherwise, go to **Safari** > **Preferences** > **Advanced** and select **Show Develop Menu in menu bar**
-  
-  2\. Navigate to **Develop** > **Show Web Inspector**.
-  
-  3\. Browse to the URL that causes issues.
-  
-  4\. Ctrl + click on a resource within Web Inspector and click **Export HAR**.
+    1. In Safari, ensure a **Develop** menu appears at the top of the browser window. Otherwise, go to **Safari** > **Preferences** > **Advanced** and select **Show Develop Menu in menu bar**
+    
+    2. Navigate to **Develop** > **Show Web Inspector**.
+    
+    3. Browse to the URL that causes issues.
+    
+    4. Ctrl + click on a resource within Web Inspector and click **Export HAR**.
+  </div>
 </details>
 
 ___
@@ -99,39 +99,40 @@ ___
 
 <details>
 <summary>Chrome on Android</summary>
+  <div>
 
-  ###
-  1\. Enable USB Debugging mode on your mobile device.
-  
-  2\. Go to `chrome://inspect/#devices`.
-  
-  3\. If debugging mode is enabled, you will see your device listed below “Remote Target” like the example below:
-  
-  ![Where to find the Inspect Devices when in Debug Mode for Android.](/images/support/step_1.jpg)
-  
-  4\. Type in the URL, select **Open** and **inspect** to open Chrome’s DevTools.
-  
-  5\. Select the **Network** tab in the DevTools window.
-  
-  6\. Check **Preserve log**.
-  
-  7\. Click **record**.
+    1. Enable USB Debugging mode on your mobile device.
+    
+    2. Go to `chrome://inspect/#devices`.
+    
+    3. If debugging mode is enabled, you will see your device listed below “Remote Target” like the example below:
+    
+    ![Where to find the Inspect Devices when in Debug Mode for Android.](/images/support/step_1.jpg)
+    
+    4. Type in the URL, select **Open** and **inspect** to open Chrome’s DevTools.
+    
+    5. Select the **Network** tab in the DevTools window.
+    
+    6. Check **Preserve log**.
+    
+    7. Click **record**.
 
-  ![Where to find the record button in Chrome's dev tools.](/images/support/step_2_-_better.jpg)
-  
-  8\. Browse to the URL that causes issues. Once the issue is experienced, right-click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
-  
-  ![How to save HAR content. ](/images/support/step_3.png)
-  
-  9. Attach the HAR file to your support ticket alongside a screen recording from the affected Samsung device. Instructions on how to do this from Samsung devices can be found in [Samsung's documentation here](https://www.samsung.com/au/support/mobile-devices/screen-recorder/).
+    ![Where to find the record button in Chrome's dev tools.](/images/support/step_2_-_better.jpg)
+    
+    8. Browse to the URL that causes issues. Once the issue is experienced, right-click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
+    
+    ![How to save HAR content. ](/images/support/step_3.png)
+    
+    9. Attach the HAR file to your support ticket alongside a screen recording from the affected Samsung device. Instructions on how to do this from Samsung devices can be found in [Samsung's documentation here](https://www.samsung.com/au/support/mobile-devices/screen-recorder/).
+  </div>
 </details>
-
 
 <details>
 <summary>Safari on iPhone</summary>
+  <div>
 
-  ###
-  Refer to [Okta](https://support.okta.com/help/s/article/How-to-generate-a-HAR-capture-on-an-iOS-device?language=en_US) or [Apple's](https://developer.apple.com/library/archive/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/GettingStarted/GettingStarted.html#//apple_ref/doc/uid/TP40007874-CH2-SW1) support article on how to generate a HAR file from an iOS device. Attach the HAR file to your support ticket alongside a screen recording from the affected iOS device. Apple devices now have [built-in screen recording functionality](https://support.apple.com/en-us/HT207935).
+    Refer to [Okta](https://support.okta.com/help/s/article/How-to-generate-a-HAR-capture-on-an-iOS-device?language=en_US) or [Apple's](https://developer.apple.com/library/archive/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/GettingStarted/GettingStarted.html#//apple_ref/doc/uid/TP40007874-CH2-SW1) support article on how to generate a HAR file from an iOS device. Attach the HAR file to your support ticket alongside a screen recording from the affected iOS device. Apple devices now have [built-in screen recording functionality](https://support.apple.com/en-us/HT207935).
+  </div>
 </details>
 
 ___
@@ -143,48 +144,68 @@ In certain situations when request is not issued or cancelled by the browser (fo
 
 <details>
 <summary>In Chrome</summary>
-  
-  ###
-  1.  Go to the **Console** tab from the Developer Tools bar.
-  2.  Go to the Console Settings and select **Preserve Log**.
-  3.  Leave the console open and perform the steps that reproduce the issue.
-  4.  Right click on any of the items within the **Console** tab and select **Save as** log file.
-  5.  Attach the log file to your support ticket.
-  
-  ![How to find the console tab in Chrome's developer tools.](/images/support/console_snapshot.png)
+  <div>
+
+    1.  Go to the **Console** tab from the Developer Tools bar.
+
+    2.  Go to the Console Settings and select **Preserve Log**.
+
+    3.  Leave the console open and perform the steps that reproduce the issue.
+
+    4.  Right click on any of the items within the **Console** tab and select **Save as** log file.
+    
+    5.  Attach the log file to your support ticket.
+    
+    ![How to find the console tab in Chrome's developer tools.](/images/support/console_snapshot.png)
+  </div>
 </details>
 
 <details>
 <summary>In Firefox</summary>
+  <div>
 
-  ###
-  1.  Go to the **Console** tab from the Web Developer Tools bar.
-  2.  Go to the Console Settings and select **Persist Log** and **Show Timestamps**.
-  3.  Leave the console open and perform the steps that reproduce the issue.
-  4.  Right click, **Select All** messages and **Export Visible Messages to File**.
-  5.  Attach the log file to your support ticket.
+    1.  Go to the **Console** tab from the Web Developer Tools bar.
+
+    2.  Go to the Console Settings and select **Persist Log** and **Show Timestamps**.
+
+    3.  Leave the console open and perform the steps that reproduce the issue.
+
+    4.  Right click, **Select All** messages and **Export Visible Messages to File**.
+
+    5.  Attach the log file to your support ticket.
+  </div>
 </details>
 
 <details>
-<summary>In Microsoft Edge</summary>  
+<summary>In Microsoft Edge</summary>
+  <div>
 
-  ###
-  1.  Go to the **Console** tab from the Developer Tools bar.
-  2.  Go to the Console Settings and select **Preserve Log**.
-  3.  Leave the console open and perform the steps that reproduce the issue.
-  4.  Right click on any of the items within the **Console** tab and select **Save as** log file.
-  5.  Attach the log file to your support ticket.
+    1.  Go to the **Console** tab from the Developer Tools bar.
+
+    2.  Go to the Console Settings and select **Preserve Log**.
+
+    3.  Leave the console open and perform the steps that reproduce the issue.
+
+    4.  Right click on any of the items within the **Console** tab and select **Save as** log file.
+
+    5.  Attach the log file to your support ticket.
+  </div>
 </details>
 
 <details>
 <summary>In Safari</summary>
+  <div>
 
-  ###
-  1.  Go to the **Console** tab from the Web Inspector bar.
-  2.  Tick the box **Preserve Log**.
-  3.  Leave the console open and perform the steps that reproduce the issue.
-  4.  Select all the messages, right click and **Save Selected** to a log file.
-  5.  Attach the log file to your support ticket.
+    1.  Go to the **Console** tab from the Web Inspector bar.
+
+    2.  Tick the box **Preserve Log**.
+
+    3.  Leave the console open and perform the steps that reproduce the issue.
+
+    4.  Select all the messages, right click and **Save Selected** to a log file.
+
+    5.  Attach the log file to your support ticket.
+  </div>
 </details>
 
 ___
@@ -231,107 +252,111 @@ Expand the sections below for tips on troubleshooting HTTP errors, performance, 
 
 <details>
 <summary>HTTP Errors</summary>
-
-  ###
-  When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a cURL directly to your origin web server IP address (bypassing Cloudflare’s proxy):
+  <div>
   
-  ```
-  $ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
-  ```
-  
-  {{<Aside type="tip">}}
-  If you have multiple origin web servers, test each one to ensure there
-  are no response differences. If you observe the issue when connecting
-  directly to your origin web server, contact your hosting provider for
-  assistance.
-  {{</Aside>}}
-  </details>
+    When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a cURL directly to your origin web server IP address (bypassing Cloudflare’s proxy):
+    
+    ```
+    $ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
+    ```
+    
+    {{<Aside type="tip">}}
+    If you have multiple origin web servers, test each one to ensure there
+    are no response differences. If you observe the issue when connecting
+    directly to your origin web server, contact your hosting provider for
+    assistance.
+    {{</Aside>}}
+  </div>
+</details>
 
 <details>
 <summary>Performance</summary>
+  <div>
 
-  ###
-  cURL measures latency or performance degradation for HTTP/HTTPS requests via the [_\-w_ or _\--write-out_ cURL options](https://curl.haxx.se/docs/manpage.html#-w). The example cURL below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
-  
-  ```
-  curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
-  \nHTTP Code: %{http_code} \
-  \nHTTP Connect:%{http_connect} \
-  \nNumber Connects: %{num_connects} \
-  \nNumber Redirects: %{num_redirects} \
-  \nRedirect URL: %{redirect_url} \
-  \nSize Download: %{size_download} \
-  \nSize Upload: %{size_upload} \
-  \nSSL Verify: %{ssl_verify_result} \
-  \nTime Handshake: %{time_appconnect} \
-  \nTime Connect: %{time_connect} \
-  \nName Lookup Time: %{time_namelookup} \
-  \nTime Pretransfer: %{time_pretransfer} \
-  \nTime Redirect: %{time_redirect} \
-  \nTime Start Transfer: %{time_starttransfer} \
-  \nTime Total: %{time_total} \
-  \nEffective URL: %{url_effective}\n" 2>&1
-  ```
+    cURL measures latency or performance degradation for HTTP/HTTPS requests via the [_\-w_ or _\--write-out_ cURL options](https://curl.haxx.se/docs/manpage.html#-w). The example cURL below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
+    
+    ```
+    curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
+    \nHTTP Code: %{http_code} \
+    \nHTTP Connect:%{http_connect} \
+    \nNumber Connects: %{num_connects} \
+    \nNumber Redirects: %{num_redirects} \
+    \nRedirect URL: %{redirect_url} \
+    \nSize Download: %{size_download} \
+    \nSize Upload: %{size_upload} \
+    \nSSL Verify: %{ssl_verify_result} \
+    \nTime Handshake: %{time_appconnect} \
+    \nTime Connect: %{time_connect} \
+    \nName Lookup Time: %{time_namelookup} \
+    \nTime Pretransfer: %{time_pretransfer} \
+    \nTime Redirect: %{time_redirect} \
+    \nTime Start Transfer: %{time_starttransfer} \
+    \nTime Total: %{time_total} \
+    \nEffective URL: %{url_effective}\n" 2>&1
+    ```
 
-  [Explanation of this timing output](https://blog.cloudflare.com/a-question-of-timing/) is found on the Cloudflare blog.
-  
-  {{<Aside type="tip">}}
-  As demonstrated in the preceding example, cleaner results are achieved
-  by denoting a new line with **\\n** before each variable. Otherwise, all
-  metrics are displayed together on a single line.
-  {{</Aside>}}
+    [Explanation of this timing output](https://blog.cloudflare.com/a-question-of-timing/) is found on the Cloudflare blog.
+    
+    {{<Aside type="tip">}}
+    As demonstrated in the preceding example, cleaner results are achieved
+    by denoting a new line with **\\n** before each variable. Otherwise, all
+    metrics are displayed together on a single line.
+    {{</Aside>}}
+  </div>
 </details>
 
 <details>
 <summary>Caching</summary>
+  <div>
 
-  ###
-  cURL helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
-  
-  -   CF-Cache-Status
-  -   Cache-control/Pragma
-  -   Expires
-  -   Last-Modified
-  -   S-Maxage
-  
-  {{<Aside type="note">}}
-  Find specifics on [Cloudflare\'s caching
-  behavior](https://support.cloudflare.com/hc/articles/202775670) in
-  Cloudflare's Help Center.
-  {{</Aside>}}
+    cURL helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
+    
+    -   CF-Cache-Status
+    -   Cache-control/Pragma
+    -   Expires
+    -   Last-Modified
+    -   S-Maxage
+    
+    {{<Aside type="note">}}
+    Find specifics on [Cloudflare\'s caching
+    behavior](https://support.cloudflare.com/hc/articles/202775670) in
+    Cloudflare's Help Center.
+    {{</Aside>}}
+  </div>
 </details>
 
 <details>
 <summary>SSL/TLS certificates</summary>
+  <div>
 
-  ###
-  #### Reviewing Certificates with cURL
-  
-  The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and hostname):
-  
-  ```sh
-  $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
-  ```
-  
-  {{<Aside type="tip">}}
-  2*\>&1 \| egrep -v \"\^{.*\$\|\^}.*\$\|\^* http.\*\$\" \*cleans and
-  parses the TLS handshake and certificate information.
-  {{</Aside>}}
-  
-  To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and hostname:
-  
-  ```sh
-  $ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
-  ```
-  
-  #### Testing TLS Versions
+    #### Reviewing Certificates with cURL
+    
+    The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and hostname):
+    
+    ```sh
+    $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
+    ```
+    
+    {{<Aside type="tip">}}
+    2*\>&1 \| egrep -v \"\^{.*\$\|\^}.*\$\|\^* http.\*\$\" \*cleans and
+    parses the TLS handshake and certificate information.
+    {{</Aside>}}
+    
+    To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and hostname:
+    
+    ```sh
+    $ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
+    ```
+    
+    #### Testing TLS Versions
 
-  If troubleshooting browser support or confirming what TLS versions are supported, cURL allows you to test a specific TLS version by adding one of the following options to your cURL:
-  
-  -   \--tlsv1.0
-  -   \--tlsv1.1
-  -   \--tlsv1.2
-  -   \--tlsv1.3
+    If troubleshooting browser support or confirming what TLS versions are supported, cURL allows you to test a specific TLS version by adding one of the following options to your cURL:
+    
+    -   \--tlsv1.0
+    -   \--tlsv1.1
+    -   \--tlsv1.2
+    -   \--tlsv1.3
+  </div>
 </details>
 
 ___
@@ -355,64 +380,70 @@ Review the instructions below for running traceroute on different operating sys
 
 <details>
 <summary>Run traceroute on Windows</summary>
+  <div>
 
-  ###
-  1\. Open the **Start** menu.
-  
-  2\. Click **Run**.
-  
-  3\. To open the command line interface, type **cmd** and then click **OK**.
-  
-  4\. At the command line prompt, type: For IPv4 -
-  
-  ```sh
-  $ tracert www.example.com
-  ```
-  
-  For IPv6 -
-  
-  ```sh
-  $ tracert -6 www.example.com
-  ```
-  
-  5\. Press **Enter**.
+      1. Open the **Start** menu.
+      
+      2. Click **Run**.
+      
+      3. To open the command line interface, type **cmd** and then click **OK**.
+      
+      4. At the command line prompt, type: For IPv4 -
+      
+      ```sh
+      $ tracert www.example.com
+      ```
+      
+      For IPv6 -
+      
+      ```sh
+      $ tracert -6 www.example.com
+      ```
+      
+      5. Press **Enter**.
 
-  6\. You can copy the results to save in a file or paste in another program.
+      6. You can copy the results to save in a file or paste in another program.
+  </div>
 </details>
 
 <details>
 <summary>Run traceroute on Linux</summary>
+  <div>
 
-  ###
-  1\. Open a terminal window.
-  
-  2\. At the command line prompt, type:
-  
-  For IPv4 -
-  
-  ```sh
-  $ traceroute www.example.com
-  ```
-  
-  For IPv6 -
-  
-  ```sh
-  $ traceroute -6 www.example.com
-  ```
-  
-  3\. You can copy the results to save in a file or paste in another program.
+      1. Open a terminal window.
+      
+      2. At the command line prompt, type:
+      
+      For IPv4 -
+      
+      ```sh
+      $ traceroute www.example.com
+      ```
+      
+      For IPv6 -
+      
+      ```sh
+      $ traceroute -6 www.example.com
+      ```
+      
+      3. You can copy the results to save in a file or paste in another program.
+  </div>
 </details>
 
 <details>
 <summary>Run traceroute on MacOS</summary>
-
-  ###
-  1.  Open the **Network Utility** application.
-  2.  Click the **Traceroute** tab.
-  3.  Type the _domain_ or _IP address_ in the appropriate input field and press **Trace**.
-  4.  You can copy the results to save in a file or paste in another program.
+  <div>
   
-  Alternatively, follow the same Linux traceroute instructions above when using the Mac OS terminal program.
+      1.  Open the **Network Utility** application.
+
+      2.  Click the **Traceroute** tab.
+
+      3.  Type the _domain_ or _IP address_ in the appropriate input field and press **Trace**.
+
+      4.  You can copy the results to save in a file or paste in another program.
+      
+      Alternatively, follow the same Linux traceroute instructions above when using the Mac OS terminal program.
+  </div>
 </details>
 
 ___

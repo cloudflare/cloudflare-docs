@@ -46,21 +46,21 @@ ___
 
 ## 步骤 2 - 检查域注册是否列出 Cloudflare 域名服务器
 
-1\. 使用操作系统提供的基于命令行的“whois”应用程序或 [whois.icann.org](https://whois.icann.org/en) 或 [www.whois.net](https://www.whois.net/) 等网站。
+1. 使用操作系统提供的基于命令行的“whois”应用程序或 [whois.icann.org](https://whois.icann.org/en) 或 [www.whois.net](https://www.whois.net/) 等网站。
 
 -   如果无法找到您的域的域名服务器详细信息，请与您的域名注册商或域名提供商联系，以提供域名注册信息。
 -   确保 Cloudflare 的域名服务器是域名注册详细信息中列出的唯一两个域名服务器。
 -   确保在域名注册中域名服务器拼写正确。
 
-2\. 确认域名服务器与 Cloudflare **DNS** 应用的 **Cloudflare 域名服务器**部分中提供的域名服务器完全匹配。
+2. 确认域名服务器与 Cloudflare **DNS** 应用的 **Cloudflare 域名服务器**部分中提供的域名服务器完全匹配。
 
-3\. 如果识别出错误信息，请登录域名提供商的门户进行更新，或与您的域名提供商联系以获取帮助。
+3. 如果识别出错误信息，请登录域名提供商的门户进行更新，或与您的域名提供商联系以获取帮助。
 
 ___
 
 ## 步骤 3 - 检查域名解析是否使用 Cloudflare 域名服务器
 
-1\. 使用命令行或第三方工具确认是否已配置 Cloudflare 的域名服务器：
+1. 使用命令行或第三方工具确认是否已配置 Cloudflare 的域名服务器：
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com @8.8.8.8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -78,9 +78,9 @@ ___
 -   确保域名服务器拼写正确。
 -   确认域名服务器与 Cloudflare **DNS** 应用的 **Cloudflare 域名服务器**部分中提供的域名服务器完全匹配。
 
-2\. 如果识别出错误信息，请登录域名提供商的门户进行更新，或与您的域名提供商联系以获取帮助。
+2. 如果识别出错误信息，请登录域名提供商的门户进行更新，或与您的域名提供商联系以获取帮助。
 
-3\. 如果域名服务器和域名注册数据正确无误，请与您的域名提供商联系，以确认是否存在最近的 DNS 传播问题。
+3. 如果域名服务器和域名注册数据正确无误，请与您的域名提供商联系，以确认是否存在最近的 DNS 传播问题。
 
 ___
 

@@ -227,29 +227,29 @@ La función **Limitación de velocidad** incluye la herramienta **Proteger tu in
 6.  Haz clic en **Guardar.**
 7.  El **nombre de regla** aparece en su lista de reglas de **limitación de velocidad**.
 
-1\. Inicia sesión en el panel de control de Cloudflare.
+1. Inicia sesión en el panel de control de Cloudflare.
 
-2\. Selecciona el dominio correspondiente.
+2. Selecciona el dominio correspondiente.
 
-3\. Ve a **Seguridad** > **WAF** > **Reglas de limitación de velocidad**.
+3. Ve a **Seguridad** > **WAF** > **Reglas de limitación de velocidad**.
 
-4\. Haz clic en **Crear una regla personalizada**.  Aparecerá un cuadro de diálogo en el que puedes escribir información detallada de tu nueva regla.
+4. Haz clic en **Crear una regla personalizada**.  Aparecerá un cuadro de diálogo en el que puedes escribir información detallada de tu nueva regla.
 
 ![Crea un diálogo emergente de una regla de limitación de velocidad con un ejemplo de configuración de regla. La regla bloqueará las solicitudes de las direcciones IP que superen las 150 solicitudes por minuto en el plazo de una hora.](/images/support/previous-rate-limiting-create-rule.png)
 
-5\. Escribe un **nombre de la regla** descriptivo.
+5. Escribe un **nombre de la regla** descriptivo.
 
-6\. En la opción **Si el tráfico coincidente con la URL**, selecciona un esquema HTTP del menú desplegable así como una URL.
+6. En la opción **Si el tráfico coincidente con la URL**, selecciona un esquema HTTP del menú desplegable así como una URL.
 
-7\. En **desde la misma dirección IP supera**, escribe un número entero mayor que 1 para representar el número de solicitudes en un periodo de muestreo.
+7. En **desde la misma dirección IP supera**, escribe un número entero mayor que 1 para representar el número de solicitudes en un periodo de muestreo.
 
-8\. En **solicitudes por**, selecciona el periodo de muestreo (el periodo durante el cual se cuentan las solicitudes). Los dominios de los planes Enterprise pueden escribir manualmente cualquier duración entre 10 segundos y 3 600 segundos (1 hora).
+8. En **solicitudes por**, selecciona el periodo de muestreo (el periodo durante el cual se cuentan las solicitudes). Los dominios de los planes Enterprise pueden escribir manualmente cualquier duración entre 10 segundos y 3 600 segundos (1 hora).
 
-9\. En el menú desplegable **A continuación**, elige una de las acciones disponibles según tu plan. Revisa la sección _Mitigación de reglas_ de _Elementos de una regla de limitación de velocidad_ para obtener más información.
+9. En el menú desplegable **A continuación**, elige una de las acciones disponibles según tu plan. Revisa la sección _Mitigación de reglas_ de _Elementos de una regla de limitación de velocidad_ para obtener más información.
 
-10\. Si has seleccionado _bloquear_ o _registrar_ para que **coincida con el tráfico de ese visitante**, selecciona durante cuánto tiempo se aplicará la opción una vez que se haya activado un umbral. Los dominios de los planes Enterprise pueden escribir cualquier tiempo entre 10 segundos y 86.400 segundos (24 horas).
+10. Si has seleccionado _bloquear_ o _registrar_ para que **coincida con el tráfico de ese visitante**, selecciona durante cuánto tiempo se aplicará la opción una vez que se haya activado un umbral. Los dominios de los planes Enterprise pueden escribir cualquier tiempo entre 10 segundos y 86.400 segundos (24 horas).
 
-11\. Para activar tu nueva regla, haz clic en **Guardar e implementar**.
+11. Para activar tu nueva regla, haz clic en **Guardar e implementar**.
 
 La nueva regla aparece en la lista de reglas de limitación de velocidad.
 
@@ -268,23 +268,23 @@ La opción **Criterios avanzados** configura qué métodos HTTP, respuestas de e
 
 Para configurar tus criterios avanzados para una regla nueva o existente, sigue estos pasos:
 
-1\. Despliega el menú **Criterios avanzados**.
+1. Despliega el menú **Criterios avanzados**.
 
 ![Campos disponibles al configurar Criterios avanzados para una regla de limitación de velocidad.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
-2\. Selecciona un valor del menú desplegable **Método(s)**. El valor por defecto es _CUALQUIERA_, que coincide con todos los métodos HTTP.
+2. Selecciona un valor del menú desplegable **Método(s)**. El valor por defecto es _CUALQUIERA_, que coincide con todos los métodos HTTP.
 
-3\. Filtra por **encabezado(s) de respuesta HTTP**. Haz clic en **Añadir campo de respuesta de encabezado** para incluir los encabezados devueltos por tu servidor web de origen.
+3. Filtra por **encabezado(s) de respuesta HTTP**. Haz clic en **Añadir campo de respuesta de encabezado** para incluir los encabezados devueltos por tu servidor web de origen.
 
 El encabezado **CF-Cache-Status** aparece por defecto para que Cloudflare entregue los recursos almacenados en caché en lugar de limitar la velocidad de esos recursos. Para limitar la velocidad de los recursos almacenados en caché, elimina este encabezado haciendo clic en el botón **X** o activa **Aplicar también límite de velocidad a los recursos en caché**.
 
 Si tienes más de un encabezado en **Encabezados(s) de respuesta HTTP**, se aplica una lógica booleana _Y_. Para excluir un encabezado, utiliza la opción _No iguales_. Cada encabezado no distingue entre mayúsculas y minúsculas.
 
-4\. En **Código(s) de respuesta de origen**, escribe el valor numérico de cada código de respuesta HTTP que deba coincidir.  Separa dos o más códigos HTTP con una coma (p. ej. `401, 403`).
+4. En **Código(s) de respuesta de origen**, escribe el valor numérico de cada código de respuesta HTTP que deba coincidir.  Separa dos o más códigos HTTP con una coma (p. ej. `401, 403`).
 
-5\. (Opcional) Configura las funciones adicionales de limitación de velocidad basadas en tu plan.
+5. (Opcional) Configura las funciones adicionales de limitación de velocidad basadas en tu plan.
 
-6\.  Haz clic en **Guardar e implementar**.
+6.  Haz clic en **Guardar e implementar**.
 
 ___
 
@@ -294,17 +294,17 @@ La opción **Respuesta avanzada** configura el formato de la información devuel
 
 Para configurar una respuesta de texto sin formato o JSON:
 
-1\. Despliega el menú **Respuesta avanzada**.
+1. Despliega el menú **Respuesta avanzada**.
 
 ![Campos disponibles al configurar una Respuesta avanzada para una regla de limitación de velocidad.](/images/support/previous-rate-limiting-advanced-response.png)
 
-2\. Selecciona un formato de **tipo de respuesta** que no sea el predeterminado: _JSON Personalizado_ o _Texto Personalizado_.
+2. Selecciona un formato de **tipo de respuesta** que no sea el predeterminado: _JSON Personalizado_ o _Texto Personalizado_.
 
-3\. Escribe la respuesta de texto sin formato o JSON que deseas devolver. El tamaño máximo de respuesta es de 32 kB.
+3. Escribe la respuesta de texto sin formato o JSON que deseas devolver. El tamaño máximo de respuesta es de 32 kB.
 
-5\. (Opcional) Configura las funciones adicionales de limitación de velocidad en función de tu plan.
+5. (Opcional) Configura las funciones adicionales de limitación de velocidad en función de tu plan.
 
-6\. Haz clic en **Guardar e implementar**.
+6. Haz clic en **Guardar e implementar**.
 
 ### Uso de página HTML personalizada o redireccionamiento
 
@@ -312,7 +312,7 @@ Si deseas mostrar una página HTML personalizada, configura una página personal
 
 Puedes utilizar este método para redirigir a un cliente con tarifa limitada a una URL específica:
 
-1\. Crea una página HTML en tu servidor que redirija a la URL final de la página que deseas mostrar. Incluye una etiqueta [meta refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html) en el contenido de la página, como en el siguiente ejemplo:
+1. Crea una página HTML en tu servidor que redirija a la URL final de la página que deseas mostrar. Incluye una etiqueta [meta refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html) en el contenido de la página, como en el siguiente ejemplo:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;!tipodedocumento html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -322,11 +322,11 @@ Puedes utilizar este método para redirigir a un cliente con tarifa limitada a u
 
 Toma nota de la URL pública de la página que has creado.
 
-2\. En el panel de control de Cloudflare, ve a **Inicio de la cuenta** > **Configuraciones** > **Páginas personalizadas**.
+2. En el panel de control de Cloudflare, ve a **Inicio de la cuenta** > **Configuraciones** > **Páginas personalizadas**.
 
-3\. En **errores 429**, haz clic en **Páginas personalizadas**.
+3. En **errores 429**, haz clic en **Páginas personalizadas**.
 
-4\. Escribe la URL de la página que has creado en tu servidor, la página que contiene la etiqueta meta refresh, y haz clic en **Publicar**.
+4. Escribe la URL de la página que has creado en tu servidor, la página que contiene la etiqueta meta refresh, y haz clic en **Publicar**.
 
 Sigue el mismo procedimiento si deseas devolver contenido de texto sin formato o JSON, pero la respuesta es mayor de 32 kB. En este caso, la URL de redireccionamiento sería la URL del recurso de texto sin formato o JSON que se desea mostrar.
 
@@ -341,15 +341,15 @@ ___
 
 **Omitir** crea una lista de permitidos o una excepción para que no se aplique ninguna acción a un conjunto específico de URL, incluso si coincide con el límite de velocidad. Configura **Omitir** siguiendo estos pasos:
 
-1\. Despliega el menú **Omitir**.
+1. Despliega el menú **Omitir**.
 
-2\. En **Omitir regla para estas URL**, escribe las URL que deseas eximir de la regla de limitación de velocidad. Escribe cada URL en su propia línea. Un HTTP o HTTPS especificado en la URL se elimina automáticamente cuando se guarda la regla y, en su lugar, se aplica tanto a HTTP como a HTTPS.
+2. En **Omitir regla para estas URL**, escribe las URL que deseas eximir de la regla de limitación de velocidad. Escribe cada URL en su propia línea. Un HTTP o HTTPS especificado en la URL se elimina automáticamente cuando se guarda la regla y, en su lugar, se aplica tanto a HTTP como a HTTPS.
 
 ![Configurar dos URL para evitar una regla de limitación de velocidad (una por línea).](/images/support/previous-rate-limiting-bypass.png)
 
-3\. (Opcional) Configura las funciones adicionales de limitación de velocidad en función de tu plan.
+3. (Opcional) Configura las funciones adicionales de limitación de velocidad en función de tu plan.
 
-4\. Haz clic en **Guardar e implementar**.
+4. Haz clic en **Guardar e implementar**.
 
 ___
 

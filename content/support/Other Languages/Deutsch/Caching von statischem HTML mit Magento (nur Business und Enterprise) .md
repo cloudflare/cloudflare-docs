@@ -27,17 +27,17 @@ ___
 
 Gehen Sie folgendermaßen vor, um statisches HTML mit Cloudflare **Page Rules** zwischenzuspeichern:
 
-1\. Melden Sie sich bei Ihrem Cloudflare-Konto an.
+1. Melden Sie sich bei Ihrem Cloudflare-Konto an.
 
-2\. Klicken Sie auf die **Caching**\-App.
+2. Klicken Sie auf die **Caching**\-App.
 
-3\. Scrollen Sie nach unten zur Option **Browser-Cache-TTL** und wählen Sie **Vorhandene Header** respektieren aus.
+3. Scrollen Sie nach unten zur Option **Browser-Cache-TTL** und wählen Sie **Vorhandene Header** respektieren aus.
 
 Mit dieser Einstellung können Sie die erforderlichen Page Rules festlegen, um anonymisierte Seitenaufrufe zwischenzuspeichern.
 
-4\. Gehe zu **Rules** > **Page Rules**.
+4. Gehe zu **Rules** > **Page Rules**.
 
-5\. Klicken Sie auf die Schaltfläche **Page Rule erstellen** und geben Sie Ihre Domain ein. Im folgenden Beispiel lautet die Domain www.orangeclouded.com.
+5. Klicken Sie auf die Schaltfläche **Page Rule erstellen** und geben Sie Ihre Domain ein. Im folgenden Beispiel lautet die Domain www.orangeclouded.com.
 
 -   _Alles zwischenspeichern_ weist Cloudflare an, statisches HTML zwischenzuspeichern.
 -   Wenn die Regel _Bypass Cache on Cookie_ den von uns festgelegten Kriterien entspricht, speichert Cloudflare kein HTML zwischen ([statische Bilder und andere Dateien werden jedoch weiterhin zwischengespeichert](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-)). Je nachdem, ob Sie Magento 1 oder Magento 2 verwenden, benötigen Sie eine andere Regel:
@@ -48,7 +48,7 @@ Mit dieser Einstellung können Sie die erforderlichen Page Rules festlegen, um a
 
 ![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/images/support/hc-import-page_rules_caching_static_html_with_magento.png)
 
-6\. Klicken Sie auf **Speichern und bereitstellen**.
+6. Klicken Sie auf **Speichern und bereitstellen**.
 
 {{<Aside type="note">}}
 Cloudflares Enterprise-Kunden können Custom Cache Keys verwenden, um
@@ -65,11 +65,11 @@ Wenn Sie **Bypass Cache on Cookie** auf einer Magento 1.8.x- oder 1.9.x-Site ein
 
 Mit Magento 1.8.x und 1.9.x wurden [Cross Site Request Forgery Checks](https://www.section.io/blog/csrf-and-caching/) (CSRF) für alle Magento-Formulare eingeführt. Da hierfür Cookies verwendet werden, können anonyme Caching-Mechanismen Probleme verursachen. Es gibt drei Möglichkeiten, um dieses Problem zu beheben. Wir haben die Optionen basierend auf ihrer Sicherheitsstufe unten aufgeführt.
 
-1\. Am wenigsten sicher: Die Konfiguration unter _System -> Konfiguration -> System -> CSRF-Schutz -> Geheimen Schlüssel zur Url hinzufügen_ ist standardmäßig auf _Ja_ gesetzt. Wenn Sie diese Einstellung auf _Nein_ setzen, wird der CSRF-Sicherheitsschutz auf Ihrem gesamten Magento-Frontend deaktiviert. Sie sollten diese Option nur dann verwenden, wenn Sie einen separaten Mechanismus für den CSRF-Schutz auf Ihrer Website aktiviert haben Wir empfehlen diesen Ansatz nicht. Bitte beachten Sie, dass es eine ähnlich benannte Konfiguration für das Admin-Panel unter _System -> ADMIN -> System -> CSRF-Schutz -> Geheimen Schlüssel zur Url hinzufügen_ gibt; diese Konfiguration sollte auf „Ja“ bleiben und **nicht verändert** werden. Diese Konfiguration bietet Sicherheit für Ihren Admin-Endpunkt, weshalb besondere Vorsicht geboten ist.
+1. Am wenigsten sicher: Die Konfiguration unter _System -> Konfiguration -> System -> CSRF-Schutz -> Geheimen Schlüssel zur Url hinzufügen_ ist standardmäßig auf _Ja_ gesetzt. Wenn Sie diese Einstellung auf _Nein_ setzen, wird der CSRF-Sicherheitsschutz auf Ihrem gesamten Magento-Frontend deaktiviert. Sie sollten diese Option nur dann verwenden, wenn Sie einen separaten Mechanismus für den CSRF-Schutz auf Ihrer Website aktiviert haben Wir empfehlen diesen Ansatz nicht. Bitte beachten Sie, dass es eine ähnlich benannte Konfiguration für das Admin-Panel unter _System -> ADMIN -> System -> CSRF-Schutz -> Geheimen Schlüssel zur Url hinzufügen_ gibt; diese Konfiguration sollte auf „Ja“ bleiben und **nicht verändert** werden. Diese Konfiguration bietet Sicherheit für Ihren Admin-Endpunkt, weshalb besondere Vorsicht geboten ist.
 
-2\. Etwas sicherer: Es gibt ein Magento-Community-Modul, mit dem Benutzer die CSRF-Überprüfungen nur im „In den Warenkorb“-Formular deaktivieren können, wo das Sicherheitsrisiko weniger hoch ist. Das Plugin [Inovarti\_FixAddToCartMage18](https://github.com/deivisonarthur/Inovarti_FixAddToCartMage18/blob/master/README.md) tut dies, indem es die „Add to Cart“-Funktionalität des CSRF-Schutzes auf eine Whitelist setzt. 
+2. Etwas sicherer: Es gibt ein Magento-Community-Modul, mit dem Benutzer die CSRF-Überprüfungen nur im „In den Warenkorb“-Formular deaktivieren können, wo das Sicherheitsrisiko weniger hoch ist. Das Plugin [Inovarti\_FixAddToCartMage18](https://github.com/deivisonarthur/Inovarti_FixAddToCartMage18/blob/master/README.md) tut dies, indem es die „Add to Cart“-Funktionalität des CSRF-Schutzes auf eine Whitelist setzt. 
 
-3\. Am sichersten: Die beste Alternative ist die Verwendung von AJAX, um den Wert des CSRF-Tokens auf Ihrer Magento-Site dynamisch auszufüllen. Wenn ein Benutzer auf die Schaltfläche klickt, um etwas zu seinem Warenkorb hinzuzufügen, springt JavaScript ein, um das CSRF-Token in den Formularen entsprechend der Sitzung des Benutzers zu aktualisieren. Dadurch kann der größte Teil der Seite aus dem Cache bereitgestellt werden, aber es ist immer noch eine Anfrage an den Ursprung erforderlich, um das Token abzurufen.
+3. Am sichersten: Die beste Alternative ist die Verwendung von AJAX, um den Wert des CSRF-Tokens auf Ihrer Magento-Site dynamisch auszufüllen. Wenn ein Benutzer auf die Schaltfläche klickt, um etwas zu seinem Warenkorb hinzuzufügen, springt JavaScript ein, um das CSRF-Token in den Formularen entsprechend der Sitzung des Benutzers zu aktualisieren. Dadurch kann der größte Teil der Seite aus dem Cache bereitgestellt werden, aber es ist immer noch eine Anfrage an den Ursprung erforderlich, um das Token abzurufen.
 
 Dieser letzte AJAX-Mechanismus ist in einem Plugin namens [Magento Terpentine-Erweiterung](https://github.com/nexcess/magento-turpentine) implementiert. Dieses Plugin wurde ursprünglich für das Caching mit Varnish entwickelt, kann aber auch mit Cloudflare verwendet werden.
 

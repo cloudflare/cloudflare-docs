@@ -25,15 +25,15 @@ By default Cloudflare [caches static content](/cache/concepts/default-cache-beh
 
 ### Cache everything
 
-1\. Log in to your Cloudflare account
+1. Log in to your Cloudflare account
 
-2\. Go to **Rules >** **Page Rules**. 
+2. Go to **Rules >** **Page Rules**. 
 
-3\. Select **Create Page Rule**.
+3. Select **Create Page Rule**.
 
 4.  For the url, enter either your entire website or a section of your site.
 
-5\. For **Settings**, select **Cache Level** and then **Cache Everything**. Cloudflare will now fully cache HTML at our Edge network, instead of making roundtrips to your origin web server.
+5. For **Settings**, select **Cache Level** and then **Cache Everything**. Cloudflare will now fully cache HTML at our Edge network, instead of making roundtrips to your origin web server.
 
 6. To control how long Cloudflare caches resources, add another setting for **Edge Cache TTL** and select a time duration.
 

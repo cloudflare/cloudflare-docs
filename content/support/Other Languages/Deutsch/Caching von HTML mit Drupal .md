@@ -19,11 +19,11 @@ Cloudflare **Page Rules** vornehmen.
 
 Um Browser-Cache-Kollisionen zu vermeiden, müssen Sie zuerst Bypass Cache on Cookie im Cloudflare-Dashboard aktivieren. Führen Sie hierfür folgende Schritte durch:
 
-1\. Melden Sie sich bei Ihrem Cloudflare-Konto an.
+1. Melden Sie sich bei Ihrem Cloudflare-Konto an.
 
-2\. Klicken Sie auf die **Caching**\-App.
+2. Klicken Sie auf die **Caching**\-App.
 
-3\. Scrollen Sie nach unten zu **Browser-Cache-TTL** und wählen Sie **Vorhandene Header respektieren** aus.
+3. Scrollen Sie nach unten zu **Browser-Cache-TTL** und wählen Sie **Vorhandene Header respektieren** aus.
 
 Jetzt können Sie die Einstellung von _Bypass Cache on Cookie_ mithilfe von Cloudflare **Page Rules** konfigurieren. 
 
@@ -33,13 +33,13 @@ ___
 
 Wenn die Page Rule _Bypass Cache on Cookie_ den von uns festgelegten Kriterien entspricht, speichert Cloudflare statische Bilder und andere Dateien zwischen, ohne HTML zwischenzuspeichern. Um _Bypass Cache on Cookie_ mit **Page Rules** zu konfigurieren: 
 
-1\. Melden Sie sich bei Ihrem Cloudflare-Konto an.
+1. Melden Sie sich bei Ihrem Cloudflare-Konto an.
 
-2\. Klicken Sie auf die **Page Rules**\-App.
+2. Klicken Sie auf die **Page Rules**\-App.
 
 Klicken Sie auf die Schaltfläche **Page Rule erstellen** und geben Sie Ihre Domain ein. Im folgenden Beispiel lautet die Domain www.orangeclouded.com. 
 
-4\. Konfigurieren Sie die Einstellungen für Page Rules wie folgt:
+4. Konfigurieren Sie die Einstellungen für Page Rules wie folgt:
 
 -   Verwenden Sie den _\*_ Platzhalteroperator im Drupal-Installationspfad, um die gesamte Domain abzugleichen.
 -   Stellen Sie dann den Cache-Level auf „Alles zwischenspeichern“ ein.

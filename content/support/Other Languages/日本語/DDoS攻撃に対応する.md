@@ -32,13 +32,13 @@ ___
 
 [**Under Attack Mode**](https://support.cloudflare.com/hc/articles/200170076)を有効にするには、次の手順に従います：
 
-1\. Cloudflareアカウントにログインします。
+1. Cloudflareアカウントにログインします。
 
-2\. 現在攻撃を受けているドメインを選択します。
+2. 現在攻撃を受けているドメインを選択します。
 
-3\. Cloudflare Overviewアプリの「Quick Actions」セクション内の**Under Attack Mode**を_「オン（On）」_に切り替えます。
+3. Cloudflare Overviewアプリの「Quick Actions」セクション内の**Under Attack Mode**を_「オン（On）」_に切り替えます。
 
-4\. \[オプション\] ファイアウォールアプリの設定内の[**チャレンジパッセージ**](https://support.cloudflare.com/hc/articles/200170136)を調整します。
+4. \[オプション\] ファイアウォールアプリの設定内の[**チャレンジパッセージ**](https://support.cloudflare.com/hc/articles/200170136)を調整します。
 
 ___
 

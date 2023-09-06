@@ -16,11 +16,11 @@ If you forget the email address associated with your account, contact your Custo
 
 If you forget the email address associated with your application:
 
-1\. Go to [](http://dash.cloudflare.com/forgot-email)[Forgot Email?](https://dash.cloudflare.com/forgot-email)
+1. Go to [](http://dash.cloudflare.com/forgot-email)[Forgot Email?](https://dash.cloudflare.com/forgot-email)
 
-2\. Enter your domain name.
+2. Enter your domain name.
 
-3\. Cloudflare will send an email to the address associated with your domain name. If you do not receive an email within 20 minutes, check your spam folder. The message will be sent from `no-reply@cloudflare.com` or `noreply@notify.cloudflare.com`.
+3. Cloudflare will send an email to the address associated with your domain name. If you do not receive an email within 20 minutes, check your spam folder. The message will be sent from `no-reply@cloudflare.com` or `noreply@notify.cloudflare.com`.
 
 {{<Aside type="note">}}
 This process does not affect your account or share your email address
@@ -37,13 +37,13 @@ ___
 
 If you forget your account password:
 
-1\. Go to [](http://dash.cloudflare.com/forgot-email)[Password Reset](https://dash.cloudflare.com/password-reset).
+1. Go to [](http://dash.cloudflare.com/forgot-email)[Password Reset](https://dash.cloudflare.com/password-reset).
 
-2\. Enter your email address.
+2. Enter your email address.
 
-3\. You should receive an email from Cloudflare. If you do not receive it within 20 minutes, check your spam folder. The message will be sent from `no-reply@cloudflare.com` or `noreply@notify.cloudflare.com`.
+3. You should receive an email from Cloudflare. If you do not receive it within 20 minutes, check your spam folder. The message will be sent from `no-reply@cloudflare.com` or `noreply@notify.cloudflare.com`.
 
-4\. Select the password reset link. This link will expire after two hours.
+4. Select the password reset link. This link will expire after two hours.
 
 {{<Aside type="tip">}}
 Cloudflare recommends strong passwords. Minimum requirements are:
@@ -77,11 +77,11 @@ another](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3D
 
 When setting up 2FA, you should have saved your backup codes in a secure location. To restore lost access using a Cloudflare backup code:
 
-1\. Retrieve the backup code from where you stored it.
+1. Retrieve the backup code from where you stored it.
 
-2\. Navigate to the Cloudflare login page.
+2. Navigate to the Cloudflare login page.
 
-3\. Enter the backup code in the login screen, then click **Log in**.
+3. Enter the backup code in the login screen, then click **Log in**.
 
 {{<Aside type="note">}}
 Once you use a backup code, it becomes invalid.
@@ -95,17 +95,17 @@ If you or another account owner still has access to your Cloudflare account, you
 
 If you do not have access to your 2FA account or backup codes, use a verified device to request a temporary access code.
 
-1\. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
-2\. On the **Two-Factor Authentication** page, click **Can't access your 2FA device or backup codes?**.
+2. On the **Two-Factor Authentication** page, click **Can't access your 2FA device or backup codes?**.
 
-3\. Click **Begin recovery**.
+3. Click **Begin recovery**.
 
-4\. Using a temporary access code, verify the email address associated with your account.
+4. Using a temporary access code, verify the email address associated with your account.
 
-5\. Using a device that you have logged in from before, verify your device. If you clear your cookies often or are logging in from a different IP address, you have wiped our memory of your device and will need to use a different device to verify.
+5. Using a device that you have logged in from before, verify your device. If you clear your cookies often or are logging in from a different IP address, you have wiped our memory of your device and will need to use a different device to verify.
 
-6\. For security reasons, you have to wait 3 to 5 days after completing verification to receive your temporary access code.
+6. For security reasons, you have to wait 3 to 5 days after completing verification to receive your temporary access code.
 
 #### **Still need additional help?**
 

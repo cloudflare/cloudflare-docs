@@ -24,13 +24,13 @@ Por padrão, o Cloudflare [armazena em cache o conteúdo estático](https://supp
 
 ### Coloque tudo em cache
 
-1\. Faça login na sua conta Cloudflare.
+1. Faça login na sua conta Cloudflare.
 
-2\. Escolha o aplicativo **Page Rules** .
+2. Escolha o aplicativo **Page Rules** .
 
-3\. Clique em **Criar regra de página**.
+3. Clique em **Criar regra de página**.
 
-4\. Digite o site inteiro ou uma seção do site e defina o _Nível de cache_ como _Tudo em cache_ . Agora, o Cloudflare armazenará em cache totalmente o HTML em nossa rede Edge, em vez de fazer ida e volta ao servidor Web de origem.
+4. Digite o site inteiro ou uma seção do site e defina o _Nível de cache_ como _Tudo em cache_ . Agora, o Cloudflare armazenará em cache totalmente o HTML em nossa rede Edge, em vez de fazer ida e volta ao servidor Web de origem.
 
 5)Nas Page Rules, você também pode  alterar o parâmetro Edge Cache Expire TTL, o que permite determinar por quanto tempo armazenaremos em cache a funcionalidade na nossa borda. As opções TTL variam de 2 (duas) horas a um mês.
 

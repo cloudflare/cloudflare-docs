@@ -334,7 +334,7 @@ ___
 1.  从客户那里获取 1020 错误屏幕截图
 2.  搜索 Cloudflare **防火墙**应用程序的**概述**选项卡的[**防火墙事件日志**](/waf/analytics)，查找访问者的 1020 错误消息中是否有 **RayID** 或客户端 IP 地址。
 
-3\. 评估阻止原因，再更新**防火墙规则**或在 [**IP 访问规则**](https://support.cloudflare.com/hc/articles/217074967)中允许访问者的 IP 地址。
+3. 评估阻止原因，再更新**防火墙规则**或在 [**IP 访问规则**](https://support.cloudflare.com/hc/articles/217074967)中允许访问者的 IP 地址。
 
 ___
 

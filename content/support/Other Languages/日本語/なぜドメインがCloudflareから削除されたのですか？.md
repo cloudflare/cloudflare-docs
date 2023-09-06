@@ -46,21 +46,21 @@ ___
 
 ## 手順2 - ドメイン登録にCloudflareネームサーバーがあるかを確かめる
 
-1\. オペレーティングシステムまたは [whois.icann.org](https://whois.icann.org/en) または [www.whois.net](https://www.whois.net/)などのWebサイトが提供するコマンドラインベースの「WHOIS」アプリケーションを使用します。
+1. オペレーティングシステムまたは [whois.icann.org](https://whois.icann.org/en) または [www.whois.net](https://www.whois.net/)などのWebサイトが提供するコマンドラインベースの「WHOIS」アプリケーションを使用します。
 
 -   ドメインのネームサーバーの詳細が見つからない場合は、ドメインレジストラーまたはドメインプロバイダーに連絡してドメイン登録情報を入手してください。
 -   Cloudflareのネームサーバーが、ドメイン登録の詳細に記載されている2つのネームサーバーのみであることを確認します。
 -   ドメイン登録内のネームサーバー名が正しいことを確認します。
 
-2\. ネームサーバーが、Cloudflare  **DNS** アプリの **「Cloudflareネームサーバー（Cloudflare Nameservers）」** セクション内で提供されるネームサーバーと完全に一致していることを確認します。
+2. ネームサーバーが、Cloudflare  **DNS** アプリの **「Cloudflareネームサーバー（Cloudflare Nameservers）」** セクション内で提供されるネームサーバーと完全に一致していることを確認します。
 
-3\. 情報が正しくない場合は、ドメインプロバイダーのポータルにログインして変更するか、またはドメインプロバイダーに連絡して支援を求めてください。
+3. 情報が正しくない場合は、ドメインプロバイダーのポータルにログインして変更するか、またはドメインプロバイダーに連絡して支援を求めてください。
 
 ___
 
 ## 手順3 - ドメイン解決にCloudflareネームサーバーが使用されるかを確かめる
 
-1\. コマンドラインまたはサードパーティツールを使用して、Cloudflareのネームサーバーが設定されているかどうかを確認します：
+1. コマンドラインまたはサードパーティツールを使用して、Cloudflareのネームサーバーが設定されているかどうかを確認します：
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com @8.8.8.8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -78,9 +78,9 @@ ___
 -   ネームサーバーのスペル間違いがないことを確認します。
 -   ネームサーバーが、Cloudflare **DNSアプリ**の**Cloudflareネームサーバー** セクション内で提供されるネームサーバーと完全に一致していることを確認します。
 
-2\. 情報が正しくない場合は、ドメインプロバイダーのポータルにログインして変更するか、またはドメインプロバイダーに連絡して支援を求めてください。
+2. 情報が正しくない場合は、ドメインプロバイダーのポータルにログインして変更するか、またはドメインプロバイダーに連絡して支援を求めてください。
 
-3\. ネームサーバーとドメイン登録データが正しい場合は、ドメインプロバイダーに連絡して、DNS伝播に関する問題が最近発生したかどうかを確認します。
+3. ネームサーバーとドメイン登録データが正しい場合は、ドメインプロバイダーに連絡して、DNS伝播に関する問題が最近発生したかどうかを確認します。
 
 ___
 

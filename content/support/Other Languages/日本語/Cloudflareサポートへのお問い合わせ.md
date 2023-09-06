@@ -33,11 +33,11 @@ Cloudflareのお客様は、コミュニティ、チャット、サポートチ�
 
 ### アカウントの認証
 
-1\. Cloudflareアカウントにログインします。
+1. Cloudflareアカウントにログインします。
 
 2.Cloudflareダッシュボードの右上にある**Support**をクリックします。
 
-3\. **Contact Support**をクリックします。_緊急時電話サポートホットライン - 認証_カードまでスクロールダウンします。
+3. **Contact Support**をクリックします。_緊急時電話サポートホットライン - 認証_カードまでスクロールダウンします。
 
 ![](/images/support/contact_support_ent_phone_card.png)
 
@@ -45,7 +45,7 @@ Cloudflareのお客様は、コミュニティ、チャット、サポートチ�
 
 5.認証アプリを使用して認証するには、 **Configure authenticator app**（認証アプリの設定）をクリックし、次の画面に表示される[設定手順](https://support.cloudflare.com/hc/ja/articles/200167906/#12345681) に従います。設定が完了すると、モバイル認証アプリケーションにトークンコードが表示されます。
 
-6\. Cloudflare Supportの担当者がトークンコードを尋ねた後、認証トークンを共有するようにしてください。
+6. Cloudflare Supportの担当者がトークンコードを尋ねた後、認証トークンを共有するようにしてください。
 
 ___
 

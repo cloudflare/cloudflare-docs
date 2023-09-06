@@ -29,27 +29,27 @@ ___
 
 Vor dem Start: Stellen Sie sicher, dass Cloudflare die _Cache-Control_\-Header von Ihrem Ursprungswebserver berücksichtigt. Andernfalls stellen Sie möglicherweise fest, dass _Cache-Control_\-Header von Cloudflare mit dem in der Option **Browser-Cache-TTL** festgelegten Wert überschrieben werden. Um die Option _Vorhandene Header respektieren_ einzustellen:
 
-1\. Melden Sie sich bei Ihrem Cloudflare-Konto an.
+1. Melden Sie sich bei Ihrem Cloudflare-Konto an.
 
-2\. Klicken Sie auf die **Caching**\-App.
+2. Klicken Sie auf die **Caching**\-App.
 
-3\. Scrollen Sie nach unten zu **Browser-Cache-TTL** und wählen Sie den Wert _Vorhandene Header respektieren_ aus.
+3. Scrollen Sie nach unten zu **Browser-Cache-TTL** und wählen Sie den Wert _Vorhandene Header respektieren_ aus.
 
 ___
 
 ## Caching von statischem HTML mit Cloudflare Page Rules
 
-1\. Melden Sie sich bei Ihrem Cloudflare-Konto an.
+1. Melden Sie sich bei Ihrem Cloudflare-Konto an.
 
-2\. Klicken Sie als Nächstes auf **Page Rule erstellen**, um statisches HTML-Caching auf unserer Website einzurichten.
+2. Klicken Sie als Nächstes auf **Page Rule erstellen**, um statisches HTML-Caching auf unserer Website einzurichten.
 
-3\. Passen Sie die Page Rule an Ihren WordPress-Installationspfad an. Wenn sich Ihre Website unter https://www.example.com befindet, wäre die Regel [https://www.example.com.](https://www.example.com./)
+3. Passen Sie die Page Rule an Ihren WordPress-Installationspfad an. Wenn sich Ihre Website unter https://www.example.com befindet, wäre die Regel [https://www.example.com.](https://www.example.com./)
 
 -   In dem Beispiel hier läuft WordPress auf https://junade.com. Daher sollte die Page Rule mit https://junade.com/\* übereinstimmen.
 
 ![Screen_Shot_2017-03-09_at_16.54.36.png](/images/support/Screen_Shot_2017-03-09_at_16.54.36.png)
 
-4\. Legen Sie zusätzliche Page Rules fest, um statisches HTML zwischenzuspeichern:
+4. Legen Sie zusätzliche Page Rules fest, um statisches HTML zwischenzuspeichern:
 
 -   _Alles zwischenspeichern_ weist Cloudflare an, statisches HTML zwischenzuspeichern.
 -   Wenn die Regel _Bypass Cache on Cookie_ den von ihnen festgelegten Kriterien entspricht, speichert Cloudflare kein HTML zwischen ([statische Bilder und andere Dateien werden jedoch weiterhin zwischengespeichert](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-)). Je nachdem, ob Sie reines WordPress oder WooCommerce verwenden, sollten Sie eine der folgenden Konfigurationen nutzen:
@@ -58,6 +58,6 @@ ___
 
 -   Schließlich definiert die Einstellung _Edge-Cache-TTL_ die maximale Zeitspanne, für die Cloudflare die zwischengespeicherte Dateien aufbewahren soll, bevor sie vom Ursprungswebserver abgerufen werden. Selbst wenn Sie eine lange Edge-Cache-TTL-Zeit festgelegt haben, können Sie den Cache [noch manuell löschen](https://support.cloudflare.com/hc/en-us/articles/200169246-How-do-I-purge-my-cache-) oder unser WordPress-Plugin verwenden, um die Cache-Bereinigung automatisch zu verwalten.
 
-5\. Klicken Sie zum Abschluss auf **Speichern und bereitstellen**. 
+5. Klicken Sie zum Abschluss auf **Speichern und bereitstellen**. 
 
 Mithilfe des Features [_Automatic Cache Management_ (Automatische Cache-Verwaltung) des Cloudflare WordPress-Plugins](https://support.cloudflare.com/hc/en-us/articles/115002708027-What-does-Automatic-Cache-Management-in-the-Cloudflare-Plugin-do-) können Sie außerdem den Cache für Ihre Website automatisch löschen, wenn sich Ihre Site ändert (d. h. wenn Sie das Design ändern/anpassen oder einen Beitrag, eine Anlage oder Seite bearbeiten, löschen oder erstellen).

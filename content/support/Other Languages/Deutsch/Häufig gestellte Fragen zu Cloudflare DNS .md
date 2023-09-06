@@ -19,9 +19,9 @@ ___
 
 Cloudflare bietet Kunden in allen Tarifen [kostenlose DNS-Services](https://www.cloudflare.com/dns) an. Beachten Sie dazu Folgendes:
 
-1\. Sie brauchen Ihren Hosting-Provider nicht zu wechseln, um Cloudflare nutzen zu können.
+1. Sie brauchen Ihren Hosting-Provider nicht zu wechseln, um Cloudflare nutzen zu können.
 
-2\. Sie brauchen auch nicht Ihren Registrar zu kündigen. Das einzige, was Sie ändern müssen, ist Folgendes: Stellen Sie die autoritativen Nameserver bei Ihrem Registrar so um, dass sie auf die Nameserver von Cloudflare zeigen.
+2. Sie brauchen auch nicht Ihren Registrar zu kündigen. Das einzige, was Sie ändern müssen, ist Folgendes: Stellen Sie die autoritativen Nameserver bei Ihrem Registrar so um, dass sie auf die Nameserver von Cloudflare zeigen.
 
 Ab Oktober 2018 können Sie Ihre Domain auf den [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/) überstellen.
 
@@ -60,9 +60,9 @@ ___
 
 Durch die Umstellung Ihrer Nameserver auf Cloudflare ermöglichen Sie es uns, die Zuständigkeit und Bereitstellung einer Website voll zu übernehmen. Wenn Sie Ihre Nameserver nicht zu uns umstellen können, haben Sie zwei Möglichkeiten:
 
-1\. Aktivieren Sie Cloudflare über einen unserer [Certified Hosting Partner](https://www.cloudflare.com/hosting-partners).
+1. Aktivieren Sie Cloudflare über einen unserer [Certified Hosting Partner](https://www.cloudflare.com/hosting-partners).
 
-2\. Bitten Sie um ein [CNAME Setup](https://support.cloudflare.com/hc/en-us/articles/360020348832).
+2. Bitten Sie um ein [CNAME Setup](https://support.cloudflare.com/hc/en-us/articles/360020348832).
 
 ___
 

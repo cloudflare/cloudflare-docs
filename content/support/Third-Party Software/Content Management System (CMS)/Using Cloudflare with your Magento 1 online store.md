@@ -10,25 +10,25 @@ title: Using Cloudflare with your Magento 1 online store
 
 The following steps will help you to activate Cloudflare for your Magento store:
 
-1\. Login to your [Cloudflare account](https://www.cloudflare.com/a/login). If you don’t yet have a Cloudflare account, you can sign up [here.](https://web.archive.org/web/20160428154415/https://www.cloudflare.com/sign-up)
+1. Login to your [Cloudflare account](https://www.cloudflare.com/a/login). If you don’t yet have a Cloudflare account, you can sign up [here.](https://web.archive.org/web/20160428154415/https://www.cloudflare.com/sign-up)
 
-2\. Add your domain and follow the steps for full configuration by using your domain registrar interface and pointing your nameservers to the Cloudflare nameservers provided.
+2. Add your domain and follow the steps for full configuration by using your domain registrar interface and pointing your nameservers to the Cloudflare nameservers provided.
 
 We suggest you read the following article that explains the Cloudflare setup process in detail: [https://support.cloudflare.com/hc/en-us/articles/201720164-How-do-I-sign-up-for-Cloudflare-](https://web.archive.org/web/20160428154415/https://support.cloudflare.com/hc/en-us/articles/201720164-How-do-I-sign-up-for-CloudFlare-)
 
 Once the required DNS changes are implemented by your domain registrar, you can start with Cloudflare configuration for your Magento store by performing these steps.
 
-3\. Allow [Cloudflare IPs](https://support.cloudflare.com/hc/articles/201897700).
+3. Allow [Cloudflare IPs](https://support.cloudflare.com/hc/articles/201897700).
 
-4\. [Restore visitor IPs](https://support.cloudflare.com/hc/articles/200170786).
+4. [Restore visitor IPs](https://support.cloudflare.com/hc/articles/200170786).
 
-5\. Turn on Magento WAF managed rules (requires a paid subscription).
+5. Turn on Magento WAF managed rules (requires a paid subscription).
 
 -   On the dashboard, select **Security > WAF > Managed rules**.
 -   Make sure that WAF managed rules are enabled.
 -   Under “Package: Cloudflare Rule Set” select “Rule Details”. Here you can toggle the “Cloudflare Magento” Ruleset on.
 
-6\. Page Rules
+6. Page Rules
 
 Add a page rule for http://\*<domain>/\* with the setting “Always use HTTPS” where is your site’s domain name.
 

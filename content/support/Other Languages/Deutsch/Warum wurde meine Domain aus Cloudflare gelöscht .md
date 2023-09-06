@@ -47,15 +47,15 @@ Domain-Registrierungen für Domains, die ein Cloudflare-CNAME-Setup
 verwenden, müssen nicht geprüft werden.
 {{</Aside>}}
 
-1\. Verwenden Sie entweder die mit Ihrem Betriebssystem gelieferte kommandozeilenbasierte „whois“-Anwendung oder eine Website wie [whois.icann.org](https://whois.icann.org/en) oder [www.whois.net](https://www.whois.net/).
+1. Verwenden Sie entweder die mit Ihrem Betriebssystem gelieferte kommandozeilenbasierte „whois“-Anwendung oder eine Website wie [whois.icann.org](https://whois.icann.org/en) oder [www.whois.net](https://www.whois.net/).
 
 -   Wenn Sie die Nameserver-Details für Ihre Domain nicht finden können, wenden Sie sich an Ihren Domain-Registrar oder Domain-Provider, um die Domain-Registrierungsinformationen bereitzustellen.
 -   Stellen Sie sicher, dass die Nameserver von Cloudflare die einzigen beiden Nameserver sind, die in den Domain-Registrierungsdetails aufgeführt sind.
 -   Stellen Sie sicher, dass die Nameserver in der Domainregistrierung richtig geschrieben sind.
 
-2\. Stellen Sie sicher, dass die Nameserver genau mit den Nameservern übereinstimmen, die im Abschnitt **Cloudflare-Nameserver** der Cloudflare-App **DNS** angegeben sind.
+2. Stellen Sie sicher, dass die Nameserver genau mit den Nameservern übereinstimmen, die im Abschnitt **Cloudflare-Nameserver** der Cloudflare-App **DNS** angegeben sind.
 
-3\. Wenn Sie falsche Informationen feststellen, melden Sie sich beim Portal Ihres Domainanbieters an, um Aktualisierungen vorzunehmen, oder wenden Sie sich an Ihren Domainanbieter, um Unterstützung zu erhalten.
+3. Wenn Sie falsche Informationen feststellen, melden Sie sich beim Portal Ihres Domainanbieters an, um Aktualisierungen vorzunehmen, oder wenden Sie sich an Ihren Domainanbieter, um Unterstützung zu erhalten.
 
 ___
 
@@ -66,7 +66,7 @@ Domain-Registrierungen für Domains, die ein Cloudflare-CNAME-Setup
 verwenden, müssen nicht geprüft werden.
 {{</Aside>}}
 
-1\. Verwenden Sie Befehlszeilentools oder Tools von Drittanbietern, um zu überprüfen, ob die Nameserver von Cloudflare konfiguriert sind:
+1. Verwenden Sie Befehlszeilentools oder Tools von Drittanbietern, um zu überprüfen, ob die Nameserver von Cloudflare konfiguriert sind:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com @8.8.8.8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -86,9 +86,9 @@ Einige Online-Dienste (wie zum Beispiel [whatsmydns.net](https://www.whatsmydns.
 -   Stellen Sie sicher, dass keine falsch geschriebenen Nameserver vorhanden sind.
 -   Stellen Sie sicher, dass die Nameserver genau mit den Nameservern übereinstimmen, die im Abschnitt **Cloudflare-Nameserver** der Cloudflare-App **DNS** angegeben sind.
 
-2\. Wenn Sie falsche Informationen feststellen, melden Sie sich beim Portal Ihres Domainanbieters an, um Aktualisierungen vorzunehmen, oder wenden Sie sich an Ihren Domainanbieter, um Unterstützung zu erhalten.
+2. Wenn Sie falsche Informationen feststellen, melden Sie sich beim Portal Ihres Domainanbieters an, um Aktualisierungen vorzunehmen, oder wenden Sie sich an Ihren Domainanbieter, um Unterstützung zu erhalten.
 
-3\. Wenn die Registrierungsdaten für Nameserver und Domain korrekt sind, wenden Sie sich an Ihren Domain-Provider, um zu überprüfen, ob kürzlich Probleme mit der DNS-Weitergabe aufgetreten sind.
+3. Wenn die Registrierungsdaten für Nameserver und Domain korrekt sind, wenden Sie sich an Ihren Domain-Provider, um zu überprüfen, ob kürzlich Probleme mit der DNS-Weitergabe aufgetreten sind.
 
 {{<Aside type="note">}}
 Einige Registrare stellen mehr als zwei Nameserver bereit. Verwenden Sie

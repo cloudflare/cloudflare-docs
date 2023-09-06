@@ -58,9 +58,9 @@ Bisher nicht durch RFC-Standards implementiert, aber für zukünftige Verwendung
 Wenn Sie einen Fehler 403 ohne Cloudflare-Branding erhalten, wird dieser immer direkt vom Ursprungswebserver und nicht von Cloudflare zurückgegeben und bezieht sich im Allgemeinen auf die Berechtigungsregeln auf Ihrem Server.
 
 Die Hauptgründe für diesen Fehler sind:  
-1\. Von Ihnen festgelegte Berechtigungsregeln oder ein Fehler in den von Ihnen festgelegten .htaccess-Regeln  
-2\. Mod\_security-Regeln.  
-3\. IP-Verweigerungsregeln
+1. Von Ihnen festgelegte Berechtigungsregeln oder ein Fehler in den von Ihnen festgelegten .htaccess-Regeln  
+2. Mod\_security-Regeln.  
+3. IP-Verweigerungsregeln
 
 Da Cloudflare nicht direkt auf Ihren Server zugreifen kann, wenden Sie sich bitte an Ihren Hosting-Provider, um Unterstützung bei der Behebung von 403-Fehlern und dem Korrigieren von Regeln zu erhalten. Sie sollten sicherstellen, dass die [IPs von Cloudflare](https://www.cloudflare.com/ips) nicht blockiert werden.
 

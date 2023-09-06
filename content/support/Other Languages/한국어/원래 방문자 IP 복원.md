@@ -46,18 +46,18 @@ Cloudflare는 이제 _mod\_cloudflare_를 업데이트하거나 지원하지 않
 
 다음의 단계에 따라 _mod\_remoteip_를 Apache 웹 서버에 설치합니다.
 
-1\. 다음의 명령어를 실행해 _mod\_remoteip_를 활성화합니다.
+1. 다음의 명령어를 실행해 _mod\_remoteip_를 활성화합니다.
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo a2enmod remoteip</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-2\. _RemoteIPHeader CF-Connecting-IP_가 포함되도록 사이트 설정을 업데이트합니다(예:`/etc/apache2/sites-available/000-default.conf`).
+2. _RemoteIPHeader CF-Connecting-IP_가 포함되도록 사이트 설정을 업데이트합니다(예:`/etc/apache2/sites-available/000-default.conf`).
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ServerAdmin webmaster@localhost</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">DocumentRoot /var/www/html</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ServerName remoteip.andy.support</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPHeader CF-Connecting-IP</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ErrorLog ${APACHE_LOG_DIR}/error.log</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">CustomLog ${APACHE_LOG_DIR}/access.log combined</span></div></span></span></span></code></pre>{{</raw>}}
 
-3\. `apache.conf`의 결합 _LogFormat_ 항목을 업데이트해서 `/etc/apache2/apache2.conf.`의 _%h_를 _%a_로 대체합니다.예를 들면, 현재 _LogFormat_이 다음과 같이 표시될 경우,
+3. `apache.conf`의 결합 _LogFormat_ 항목을 업데이트해서 `/etc/apache2/apache2.conf.`의 _%h_를 _%a_로 대체합니다.예를 들면, 현재 _LogFormat_이 다음과 같이 표시될 경우,
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat &quot;%h %l %u %t &quot;%r&quot; %&gt;s %O &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot;&quot; combined</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -69,25 +69,25 @@ _LogFormat_을 다음과 같이 업데이트해야 합니다.
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat &quot;%a %l %u %t &quot;%r&quot; %&gt;s %O &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot;&quot; combined</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-4\. 아래의 코드와 [Cloudflare IP](https://www.cloudflare.com/ips/)를 입력해 `/etc/apache2/conf-available/remoteip.conf`를 생성하여 신뢰할 수 있는 프록시 주소를 정의합니다.
+4. 아래의 코드와 [Cloudflare IP](https://www.cloudflare.com/ips/)를 입력해 `/etc/apache2/conf-available/remoteip.conf`를 생성하여 신뢰할 수 있는 프록시 주소를 정의합니다.
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPHeader CF-Connecting-IP</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPTrustedProxy 192.0.2.1 (예의 IP 주소)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPTrustedProxy 192.0.2.2 (예의 IP 주소)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">([https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/)에 열거된 모든 Cloudflare IP 주소에 대해 반복)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-5\. Apache 구성을 활성화합니다.
+5. Apache 구성을 활성화합니다.
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo a2enconf remoteip </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">conf remoteip를 활성화.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">새 구성을 활성화하려면 다음을 실행해야 합니다. </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">service apache2 reload</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-6\. Apache 구성을 테스트합니다.
+6. Apache 구성을 테스트합니다.
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo apache2ctl configtest</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Syntax OK</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-7\. Apache를 다시 시작합니다.
+7. Apache를 다시 시작합니다.
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo systemctl restart apache2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -188,7 +188,7 @@ Lighttpd로 액세스 로그와 애플리케이션에 자동으로 서버 IP를 
 
 1.  LiteSpeed 웹 관리 콘솔로 이동합니다.
 2.  구성에서 '헤더에서 클라이언트 IP 사용' 옵션을 활성화합니다.
-3.  3\. 이 옵션을 활성화하면, 액세스 로그에 정확한 IP 주소가 표시되며 PHP의 `$_SERVER['REMOTE_ADDR']` 변수에도 Cloudflare IP 주소 대신 클라이언트의 실제 IP 주소가 표시됩니다. 이 방법을 이용하면, PHP가 활성화된 웹 사이트(WordPress나 vBulletin 설치)에서 Cloudflare를 활성화했을 때 발생하는 문제의 대부분이 해결됩니다.
+3.  3. 이 옵션을 활성화하면, 액세스 로그에 정확한 IP 주소가 표시되며 PHP의 `$_SERVER['REMOTE_ADDR']` 변수에도 Cloudflare IP 주소 대신 클라이언트의 실제 IP 주소가 표시됩니다. 이 방법을 이용하면, PHP가 활성화된 웹 사이트(WordPress나 vBulletin 설치)에서 Cloudflare를 활성화했을 때 발생하는 문제의 대부분이 해결됩니다.
 
 ##### IIS 7~8의 경우
 

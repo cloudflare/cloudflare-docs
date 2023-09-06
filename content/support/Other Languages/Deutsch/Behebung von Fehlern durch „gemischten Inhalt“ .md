@@ -56,7 +56,7 @@ ___
 
 Es gibt zwei Methoden, um Fehler mit gemischtem Inhalt zu beheben.
 
-1\. Laden Sie alle Ressourcen über Ihre HTML-Quelle, ohne die HTTP- oder HTTPS-Protokolle anzugeben. Beispiel:
+1. Laden Sie alle Ressourcen über Ihre HTML-Quelle, ohne die HTTP- oder HTTPS-Protokolle anzugeben. Beispiel:
 
      _//domain.com/path/to.file_
 
@@ -64,7 +64,7 @@ Es gibt zwei Methoden, um Fehler mit gemischtem Inhalt zu beheben.
 
      _http://domain.com/path/to.file_
 
-2\. Suchen Sie je nach Content Management System nach Plug-ins, die HTTP-Ressourcen automatisch in HTTPS umschreiben. In der**SSL/TLS**\-App bietet Cloudflare einen solchen Service über [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647) an.
+2. Suchen Sie je nach Content Management System nach Plug-ins, die HTTP-Ressourcen automatisch in HTTPS umschreiben. In der**SSL/TLS**\-App bietet Cloudflare einen solchen Service über [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647) an.
 
 {{<Aside type="note">}}
 Cloudflare empfiehlt Wordpress-Benutzern, das [Cloudflare

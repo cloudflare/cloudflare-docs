@@ -36,41 +36,41 @@ Une archive HTTP (HAR) enregistre toutes les requêtes du navigateur web, y comp
 
 Pour le moment, seuls Chrome et Firefox peuvent accéder par défaut à la fonction HAR. D'autres navigateurs nécessitent une extension de navigateur ou ne permettent pas de générer un fichier HAR. Lors de l'installation d'une extension de navigateur, suivez les instructions du fournisseur de l'extension.
 
-1\. Dans une page du navigateur, effectuez un clic droit n'importe où et sélectionnez **Inspecter l'élément**.
+1. Dans une page du navigateur, effectuez un clic droit n'importe où et sélectionnez **Inspecter l'élément**.
 
-2\. Les outils de développement apparaissent en bas ou à gauche du navigateur. Cliquez sur l’onglet **Network**.![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
+2. Les outils de développement apparaissent en bas ou à gauche du navigateur. Cliquez sur l’onglet **Network**.![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
 
-3\. Cochez **Preserve log**.
+3. Cochez **Preserve log**.
 
-4\. Cliquez sur record.
+4. Cliquez sur record.
 
  ![gathering_har_file_record.png](/images/support/gathering_har_file_record.png)
 
-5\. Accédez à l'URL qui provoque les problèmes. Une fois le problème rencontré, cliquez avec le bouton droit de la souris sur l’un des éléments dans l’onglet **Network** et sélectionnez **Save all as HAR with Content**.
+5. Accédez à l'URL qui provoque les problèmes. Une fois le problème rencontré, cliquez avec le bouton droit de la souris sur l’un des éléments dans l’onglet **Network** et sélectionnez **Save all as HAR with Content**.
 
  ![save_har_with_content.png](/images/support/save_har_with_content.png)
 
  6. Joignez le fichier HAR à votre ticket de support.
 
-1\. Accédez au menu de l’application, sélectionnez **Tools** > **Web Developer** > **Network** ou appuyez sur _Ctrl+Shift+I_ (Windows/Linux) ou _Cmd+Option+I_ (OS X).
+1. Accédez au menu de l’application, sélectionnez **Tools** > **Web Developer** > **Network** ou appuyez sur _Ctrl+Shift+I_ (Windows/Linux) ou _Cmd+Option+I_ (OS X).
 
-2\. Accédez à l'URL qui provoque les problèmes.
+2. Accédez à l'URL qui provoque les problèmes.
 
-3\. Après avoir dupliqué le problème, effectuez un clic droit et choisissez **Save All As HAR**.
+3. Après avoir dupliqué le problème, effectuez un clic droit et choisissez **Save All As HAR**.
 
-1\. Accédez aux **outils de développement** (utilisez la touche _F12_) et sélectionnez l’onglet **Network**.
+1. Accédez aux **outils de développement** (utilisez la touche _F12_) et sélectionnez l’onglet **Network**.
 
-2\. Accédez à l'URL qui provoque les problèmes.
+2. Accédez à l'URL qui provoque les problèmes.
 
-3\. Après avoir dupliqué le problème, cliquez sur **Export as HAR** puis sur **Enregistrer sous...**.
+3. Après avoir dupliqué le problème, cliquez sur **Export as HAR** puis sur **Enregistrer sous...**.
 
-1\. Dans Safari, vérifiez qu'un menu **Develop** apparaît en haut de la fenêtre du navigateur. Si ce n’est pas le cas, accédez à **Safari** > **Préférences** > **Avancées** et sélectionnez **« Afficher le menu Développement dans la barre de menus »**.
+1. Dans Safari, vérifiez qu'un menu **Develop** apparaît en haut de la fenêtre du navigateur. Si ce n’est pas le cas, accédez à **Safari** > **Préférences** > **Avancées** et sélectionnez **« Afficher le menu Développement dans la barre de menus »**.
 
-2\. Accédez à **Développement** > **Afficher l’inspecteur web**.
+2. Accédez à **Développement** > **Afficher l’inspecteur web**.
 
-3\. Accédez à l'URL qui provoque les problèmes.
+3. Accédez à l'URL qui provoque les problèmes.
 
-4\. En maintenant la touche Ctrl enfoncée, cliquez sur une ressource dans l’inspecteur web et cliquez sur **Export HAR**.
+4. En maintenant la touche Ctrl enfoncée, cliquez sur une ressource dans l’inspecteur web et cliquez sur **Export HAR**.
 
 ___
 

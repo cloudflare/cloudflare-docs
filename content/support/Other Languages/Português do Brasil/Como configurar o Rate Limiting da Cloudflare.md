@@ -208,29 +208,29 @@ O **Rate Limiting** contém uma ferramenta de um clique **Proteger seu login** q
 6.  Clique em **Salvar**.
 7.  O **Nome da regra** aparecerá na lista de regras do **Rate Limiting**.
 
-1\. Entre no painel de controle da Cloudflare
+1. Entre no painel de controle da Cloudflare
 
-2\. Selecione o domínio adequado.
+2. Selecione o domínio adequado.
 
-3\. Navegue até **Segurança** > **WAF** > **Regras de Rate Limiting**.
+3. Navegue até **Segurança** > **WAF** > **Regras de Rate Limiting**.
 
-4\. Clique em **Criar uma regra de limitação de taxa**.  Será aberta uma caixa de diálogo para especificar os detalhes da nova regra.
+4. Clique em **Criar uma regra de limitação de taxa**.  Será aberta uma caixa de diálogo para especificar os detalhes da nova regra.
 
 ![Crie uma caixa de diálogo pop-up de regra de limitação de taxa com um exemplo de configuração de regra. A regra bloqueará solicitações de endereços de IP que excedam 150 solicitações por minuto por uma hora.](/images/support/previous-rate-limiting-create-rule.png)
 
-5\. Insira um **Nome da regra** descritivo.
+5. Insira um **Nome da regra** descritivo.
 
-6\. Para **Se o tráfego corresponder à URL**, selecione um esquema HTTP na lista suspensa, bem como uma URL.
+6. Para **Se o tráfego corresponder à URL**, selecione um esquema HTTP na lista suspensa, bem como uma URL.
 
-7\. Em **do mesmo endereço de IP excede**, insira um número inteiro maior que 1 para representar o  número de solicitações em um período de amostragem.
+7. Em **do mesmo endereço de IP excede**, insira um número inteiro maior que 1 para representar o  número de solicitações em um período de amostragem.
 
-8\. Para **solicitações por**, selecione o período de amostragem (o período durante o qual as solicitações são contadas). Nos planos Enterprise, os domínios podem inserir manualmente qualquer duração entre 10 segundos e 3.600 segundos (1 hora).
+8. Para **solicitações por**, selecione o período de amostragem (o período durante o qual as solicitações são contadas). Nos planos Enterprise, os domínios podem inserir manualmente qualquer duração entre 10 segundos e 3.600 segundos (1 hora).
 
-9\. Na lista suspensa **Então**, escolha uma das ações disponíveis com base no seu plano.  Leia a seção _Mitigação de regra_ de _Componentes de uma regra de Rate Limiting_ acima para ver os detalhes.
+9. Na lista suspensa **Então**, escolha uma das ações disponíveis com base no seu plano.  Leia a seção _Mitigação de regra_ de _Componentes de uma regra de Rate Limiting_ acima para ver os detalhes.
 
-10\. Se você selecionou _Bloqueio_ ou _Registro_, para **corresponder ao tráfego desse visitante por**, selecione por quanto tempo aplicar a opção depois que um limiar for acionado. Nos planos Enterprise, os domínios podem inserir qualquer duração entre 10 segundos e 86.400 segundos (24 horas).
+10. Se você selecionou _Bloqueio_ ou _Registro_, para **corresponder ao tráfego desse visitante por**, selecione por quanto tempo aplicar a opção depois que um limiar for acionado. Nos planos Enterprise, os domínios podem inserir qualquer duração entre 10 segundos e 86.400 segundos (24 horas).
 
-11\. Para ativar a nova regra, clique em **Salvar e implantar**.
+11. Para ativar a nova regra, clique em **Salvar e implantar**.
 
 A nova regra aparece na lista de regras de limitação de taxa.
 
@@ -249,21 +249,21 @@ A opção **Critérios Avançados** configura quais métodos HTTP, respostas de 
 
 Para configurar seus critérios avançados para uma regra nova ou existente, siga estas etapas:
 
-1\. Expandir os **Critérios avançados**.
+1. Expandir os **Critérios avançados**.
 
 ![Campos disponíveis ao configurar os critérios avançados para uma regra de limitação de taxa.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
-2\. Selecionar um valor na lista suspensa **Método(s)**. O valor padrão é _QUALQUER_, que corresponde a todos os métodos HTTP.
+2. Selecionar um valor na lista suspensa **Método(s)**. O valor padrão é _QUALQUER_, que corresponde a todos os métodos HTTP.
 
-3\. Filtrar por **Cabeçalhos de resposta HTTP**. Clique em **Adicionar campo de resposta de cabeçalho** para incluir cabeçalhos retornados pelo seu servidor web de origem.
+3. Filtrar por **Cabeçalhos de resposta HTTP**. Clique em **Adicionar campo de resposta de cabeçalho** para incluir cabeçalhos retornados pelo seu servidor web de origem.
 
 O cabeçalho **CF-Cache-Status** aparece por padrão para que a Cloudflare entregue recursos armazenados em cache em vez de limitar a taxa desses recursos. Para limitar também a taxa de recursos armazenados em cache, remova esse cabeçalho clicando no botão **X** ou ative **Também aplicar o limite de taxa a ativos armazenados em cache**.
 
 Se você tiver mais de um cabeçalho em **Cabeçalhos de resposta HTTP**, uma lógica booleana _E_ será aplicada. Para excluir um cabeçalho, use a opção _Não é igual a_. Cada cabeçalho diferencia maiúsculas e minúsculas.
 
-4\. Em **Código(s) de resposta de origem**, insira o valor numérico de cada código de resposta HTTP para corresponder.  Separe dois ou mais códigos HTTP com uma vírgula; por exemplo: `401, 403`).
+4. Em **Código(s) de resposta de origem**, insira o valor numérico de cada código de resposta HTTP para corresponder.  Separe dois ou mais códigos HTTP com uma vírgula; por exemplo: `401, 403`).
 
-5\. (Opcional) Configurar recursos adicionais de limitação de taxa, de acordo com seu plano.
+5. (Opcional) Configurar recursos adicionais de limitação de taxa, de acordo com seu plano.
 
 6.  Clicar em **Salvar e implantar**.
 
@@ -275,17 +275,17 @@ A opção **Resposta Avançada** configura o formato de informação retornado p
 
 Para configurar texto simples ou uma resposta JSON:
 
-1\. Expandir **Resposta avançada**.
+1. Expandir **Resposta avançada**.
 
 ![Campos disponíveis ao configurar uma resposta avançada para uma regra de limitação de taxa.](/images/support/previous-rate-limiting-advanced-response.png)
 
-2\. Selecionar um formato de **Tipo de resposta** diferente do padrão: _JSON personalizado_ ou _TEXT personalizado_.
+2. Selecionar um formato de **Tipo de resposta** diferente do padrão: _JSON personalizado_ ou _TEXT personalizado_.
 
-3\. Inserir o texto não criptografado ou a resposta JSON que você quer retornar. O tamanho máximo de resposta é de 32 KB.
+3. Inserir o texto não criptografado ou a resposta JSON que você quer retornar. O tamanho máximo de resposta é de 32 KB.
 
-4\. (Opcional) Configurar recursos adicionais de limitação de taxa, de acordo com seu plano.
+4. (Opcional) Configurar recursos adicionais de limitação de taxa, de acordo com seu plano.
 
-5\. Clicar em **Salvar e implantar**.
+5. Clicar em **Salvar e implantar**.
 
 ### Usar uma página HTML personalizada ou um redirecionamento
 
@@ -293,7 +293,7 @@ Para exibir uma página HTML personalizada, configure uma página personalizada 
 
 É possível usar esse método para redirecionar o cliente limitado por taxa a um URL específico:
 
-1\. Crie uma página HTML no servidor que redirecione para o URL final da página que você quer exibir. Inclua uma tag [meta refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html) no conteúdo da página, como no exemplo a seguir:
+1. Crie uma página HTML no servidor que redirecione para o URL final da página que você quer exibir. Inclua uma tag [meta refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html) no conteúdo da página, como no exemplo a seguir:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;!doctype html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -303,11 +303,11 @@ Para exibir uma página HTML personalizada, configure uma página personalizada 
 
 Anote o URL público da página criada.
 
-2\. No painel de controle da Cloudflare, navegue até **Página inicial da conta** > **Configurações** > **Páginas Personalizadas**.
+2. No painel de controle da Cloudflare, navegue até **Página inicial da conta** > **Configurações** > **Páginas Personalizadas**.
 
-3\. Em **Erros 429**, clique em **Páginas Personalizadas**.
+3. Em **Erros 429**, clique em **Páginas Personalizadas**.
 
-4\. Insira o URL da página criada no servidor — que contém a tag meta refresh — e clique em **Publicar**.
+4. Insira o URL da página criada no servidor — que contém a tag meta refresh — e clique em **Publicar**.
 
 Seguir a mesma abordagem para retornar texto não criptografado ou conteúdo JSON em respostas maiores que 32 KB. Nesse caso, o URL de redirecionamento seria o URL do texto não criptografado ou do recurso JSON que você quer exibir.
 
@@ -322,15 +322,15 @@ ___
 
 **Ignorar** cria uma lista de permissões ou exceção para que nenhuma ação se aplique a um conjunto específico de URLs, mesmo que o limite de taxa seja correspondido. Siga estas etapas para configurar a opção **Ignorar**:
 
-1\. Expandir **Ignorar**.
+1. Expandir **Ignorar**.
 
-2\. Na caixa de texto **Ignorar regra para estes URLs**, inserir os URLs que estão isentos da regra de limitação de taxa. Inserir cada URL em sua própria linha. Um HTTP ou HTTPS especificado no URL será removido automaticamente quando a regra for salva e, em vez disso, se aplica a HTTP e HTTPS.
+2. Na caixa de texto **Ignorar regra para estes URLs**, inserir os URLs que estão isentos da regra de limitação de taxa. Inserir cada URL em sua própria linha. Um HTTP ou HTTPS especificado no URL será removido automaticamente quando a regra for salva e, em vez disso, se aplica a HTTP e HTTPS.
 
 ![Configurar dois URLs para ignorar uma regra de limitação de taxa (um por linha).](/images/support/previous-rate-limiting-bypass.png)
 
-3\. (Opcional) Configurar recursos adicionais de limitação de taxa, de acordo com seu plano.
+3. (Opcional) Configurar recursos adicionais de limitação de taxa, de acordo com seu plano.
 
-4\. Clicar em **Salvar e implantar**.
+4. Clicar em **Salvar e implantar**.
 
 ___
 

@@ -12,7 +12,7 @@ title: WordPress.com and Cloudflare
 
 Cloudflare and WordPress.com are partnering to offer customers Cloudflare's performance and security solutions with WordPress.com's web-hosting platform. Getting started is easy.
 
-1\. Add your WordPress site to Cloudflare. Visit [Creating a Cloudflare account and adding a website](https://support.cloudflare.com/hc/en-us/articles/201720164) for more information.
+1. Add your WordPress site to Cloudflare. Visit [Creating a Cloudflare account and adding a website](https://support.cloudflare.com/hc/en-us/articles/201720164) for more information.
 
 During this process, Cloudflare scans your existing WordPress.com DNS records and displays them. The records will look similar to the examples below.
 
@@ -21,13 +21,13 @@ During this process, Cloudflare scans your existing WordPress.com DNS records an
 
 WordPress.com does not guarantee the IP address will never change. For maximum uptime, you should complete the following:
 
-2\. Find your `<site>.wordpress.com` domain from the [Manage Domains](https://wordpress.com/domains/manage) page. The domain will look like `examplecom.wordpress.com`, i.e. your domain with non-alphanumeric characters removed.
+2. Find your `<site>.wordpress.com` domain from the [Manage Domains](https://wordpress.com/domains/manage) page. The domain will look like `examplecom.wordpress.com`, i.e. your domain with non-alphanumeric characters removed.
 
-3\. Enter the domain into your browser's address bar to make sure the domain is correct.
+3. Enter the domain into your browser's address bar to make sure the domain is correct.
 
-4\. Add the record `CNAME @ examplecom.wordpress.com`.
+4. Add the record `CNAME @ examplecom.wordpress.com`.
 
-5\. Remove the A records.
+5. Remove the A records.
 
 ![Example of completed CNAME record setup.](/images/support/add-cname-wp.png)
 
@@ -43,27 +43,27 @@ Cloudflare Web Analytics gives web creators the information they need in a simpl
 
 ### Cloudflare
 
-1\. [Open your dashboard](https://dash.cloudflare.com/) and select the Account menu > **Account Home**.
+1. [Open your dashboard](https://dash.cloudflare.com/) and select the Account menu > **Account Home**.
 
-2\. On the Account homepage, select **Web Analytics** from the bottom, right of the page.
+2. On the Account homepage, select **Web Analytics** from the bottom, right of the page.
 
-3\. Enter the hostname to use with Web Analytics. Typically the hostname is your top-level domain, like `example.com`.
+3. Enter the hostname to use with Web Analytics. Typically the hostname is your top-level domain, like `example.com`.
 
-4\. Click **Next**.
+4. Click **Next**.
 
-5\. Select **Click to copy** under **Copy JS Snippet**.
+5. Select **Click to copy** under **Copy JS Snippet**.
 
 ### WordPress
 
-1\. Open WordPress and select your site.
+1. Open WordPress and select your site.
 
-2\. Select **Tools** \> **Marketing**.
+2. Select **Tools** \> **Marketing**.
 
-3\. Locate the Cloudflare section.
+3. Locate the Cloudflare section.
 
-4\. Paste the code snippet you copied from Cloudflare into the **Tracking ID** field. The field will extract the Tracking ID from the snippet.
+4. Paste the code snippet you copied from Cloudflare into the **Tracking ID** field. The field will extract the Tracking ID from the snippet.
 
-5\. Toggle **Add to Cloudflare** to enable the tracking.
+5. Toggle **Add to Cloudflare** to enable the tracking.
 
 WordPress.com automatically adds the javascript to each page of your site. You can view the new insights from your Cloudflare dashboard under **Web Analytics**.
 
@@ -86,11 +86,11 @@ using Cloudflare nameservers.
 
 ### **Install and enable APO**
 
-1\. From WordPress, install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) on your WordPress website or update to the latest version (3.8.2 or higher).
+1. From WordPress, install the [Cloudflare WordPress plugin](https://wordpress.org/plugins/cloudflare/) on your WordPress website or update to the latest version (3.8.2 or higher).
 
-2\. [Authenticate the plugin](https://wordpress.org/plugins/cloudflare/#installation) to connect to Cloudflare if you have not already done so.
+2. [Authenticate the plugin](https://wordpress.org/plugins/cloudflare/#installation) to connect to Cloudflare if you have not already done so.
 
-3\. From the Home screen of the Cloudflare section, turn on Automatic Platform Optimization.
+3. From the Home screen of the Cloudflare section, turn on Automatic Platform Optimization.
 
 For more details, refer to [Understanding Automatic Platform Optimization (APO) with WordPress](https://support.cloudflare.com/hc/en-us/articles/360049822312-Understanding-Automatic-Platform-Optimization-APO-with-WordPress#h_01EEXXJ3TS1J0Z7151CSBM9BYP).
 
@@ -100,13 +100,13 @@ ___
 
 ### **How do I verify that Cloudflare is now my DNS provider on record?**
 
-1\. Visit [https://dnschecker.org](https://dnschecker.org/#A/s-steiner.com).
+1. Visit [https://dnschecker.org](https://dnschecker.org/#A/s-steiner.com).
 
-2\. From the dropdown under **DNS Check, s**elect NS record.
+2. From the dropdown under **DNS Check, s**elect NS record.
 
-3\. In the text field, enter your domain name and click **Search**.
+3. In the text field, enter your domain name and click **Search**.
 
-4\. Verify that your Cloudflare nameservers display.
+4. Verify that your Cloudflare nameservers display.
 
 ### **How can I confirm APO is up and running?**
 
@@ -126,8 +126,8 @@ As always, `cf-cache-status` displays if the asset hit the cache or was consider
 
 ### How can I verify APO and the WordPress.com integration works?
 
-1\. Publish a change on your WordPress website.
+1. Publish a change on your WordPress website.
 
-2\. Refresh the page twice.
+2. Refresh the page twice.
 
-3\. You should see a change. The page should be cached with `cf-cache-status: HIT` and `cf-apo-via: cache` in a response header.
+3. You should see a change. The page should be cached with `cf-cache-status: HIT` and `cf-apo-via: cache` in a response header.

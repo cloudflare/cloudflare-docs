@@ -27,17 +27,17 @@ ___
 
 To cache static HTML using Cloudflare **Page Rules,**
 
-1\. Log in to your Cloudflare account.
+1. Log in to your Cloudflare account.
 
-2\. Click on the **Caching** app. 
+2. Click on the **Caching** app. 
 
-3\. Scroll down to **Browser Cache TTL** option and choose **Respect Existing Headers**.
+3. Scroll down to **Browser Cache TTL** option and choose **Respect Existing Headers**.
 
 With this setting in place, you can set the necessary Page Rules to cache anonymize page visits.
 
-4\. Go to **Rules >** **Page Rules**.
+4. Go to **Rules >** **Page Rules**.
 
-5\. Click the **Create Page Rule** button and enter your domain. In the example below, the domain is www.orangeclouded.com.
+5. Click the **Create Page Rule** button and enter your domain. In the example below, the domain is www.orangeclouded.com.
 
 -   _Cache Everything_ will instruct Cloudflare to cache static HTML.
 -   When the _Bypass Cache on Cookie_ rule matches the criteria we set, Cloudflare won't cache HTML ([though static images and other files will still be cached](/cache/concepts/default-cache-behavior/)). Depending on whether you're using Magento 1 or Magento 2, you will need a different rule:
@@ -48,7 +48,7 @@ With this setting in place, you can set the necessary Page Rules to cache anonym
 
 ![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/images/support/hc-import-page_rules_caching_static_html_with_magento.png)
 
-6\. Click **Save and Deploy**.
+6. Click **Save and Deploy**.
 
 {{<Aside type="note">}}
 Enterprise Cloudflare customers can use Custom Cache Keys to take their

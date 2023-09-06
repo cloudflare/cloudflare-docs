@@ -33,46 +33,46 @@ brindar información a asistencia de Cloudflare.
 
 Por el momento, solo Chrome y Firefox tienen acceso a la función HAR de forma predeterminada. Otros navegadores requieren una extensión de navegador o no pueden generar un archivo HAR. Para instalar una extensión de navegador, sigue las instrucciones del proveedor de la extensión.
 
-1\. Haz clic derecho en cualquier lugar de la página del navegador y selecciona **Inspeccionar elemento**.
+1. Haz clic derecho en cualquier lugar de la página del navegador y selecciona **Inspeccionar elemento**.
 
-2\. Las herramientas del desarrollador aparecen en la parte inferior o en el costado izquierdo del navegador. Haz clic en la pestaña **Network** (Red) ![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
+2. Las herramientas del desarrollador aparecen en la parte inferior o en el costado izquierdo del navegador. Haz clic en la pestaña **Network** (Red) ![gathering_har_file_network.png](/images/support/gathering_har_file_network.png)
 
-3\. Marca **Preserve log** (Conservar registro)
+3. Marca **Preserve log** (Conservar registro)
 
-4\. Haz clic en el registro
+4. Haz clic en el registro
 
  ![gathering_har_file_record.png](/images/support/gathering_har_file_record.png)
 
-5\. Navega a la URL que genera los problemas. Una vez que hayas experimentado el problema, haz clic con el botón derecho en cualquiera de los elementos de la pestaña **Network** (Red) y selecciona **Save all as HAR with Content** (Guardar todo como HAR con contenido).
+5. Navega a la URL que genera los problemas. Una vez que hayas experimentado el problema, haz clic con el botón derecho en cualquiera de los elementos de la pestaña **Network** (Red) y selecciona **Save all as HAR with Content** (Guardar todo como HAR con contenido).
 
  ![save_har_with_content.png](/images/support/save_har_with_content.png)
 
  6. Adjunta el archivo HAR a tu ticket de asistencia.
 
-1\. Desde el menú de aplicación, selecciona **Herramientas** > **Desarrollador web** > **Red** o presiona _Ctrl+Shift+I_ (Windows/Linux) o _Cmd+Option+I_ (OS X).
+1. Desde el menú de aplicación, selecciona **Herramientas** > **Desarrollador web** > **Red** o presiona _Ctrl+Shift+I_ (Windows/Linux) o _Cmd+Option+I_ (OS X).
 
-2\. Navega a la URL que genera los problemas.
+2. Navega a la URL que genera los problemas.
 
-3\. Después de duplicar el problema, haz clic con el botón derecho y selecciona **Save All As HAR** (Guardar todo como HAR).
+3. Después de duplicar el problema, haz clic con el botón derecho y selecciona **Save All As HAR** (Guardar todo como HAR).
 
-1\. Ve a **Herramientas de desarrollo** (utiliza _F12_ como acceso directo) y selecciona la pestaña **Red**.
+1. Ve a **Herramientas de desarrollo** (utiliza _F12_ como acceso directo) y selecciona la pestaña **Red**.
 
-2\. Navega a la URL que genera los problemas.
+2. Navega a la URL que genera los problemas.
 
-3\. Después de duplicar el problema, haz clic en **Export as HAR** (Exportar como HAR) y luego en **Save As...** (Guardar como...)
+3. Después de duplicar el problema, haz clic en **Export as HAR** (Exportar como HAR) y luego en **Save As...** (Guardar como...)
 
-1\. En Safari, verifica que el menú **Desarrollo** aparezca en la parte superior de la ventana del navegador. En caso contrario, ve a **Safari** > **Preferencias** > **Avanzado** y selecciona **Mostrar menú Desarrollo en la barra de menús**.
+1. En Safari, verifica que el menú **Desarrollo** aparezca en la parte superior de la ventana del navegador. En caso contrario, ve a **Safari** > **Preferencias** > **Avanzado** y selecciona **Mostrar menú Desarrollo en la barra de menús**.
 
-2\. Ve a **Desarrollo** > **Mostrar inspector web**.
+2. Ve a **Desarrollo** > **Mostrar inspector web**.
 
 {{<Aside type="note">}}
 El inspector web no está disponible hasta que navegues a una página que
 no sea la página de inicio de Safari.
 {{</Aside>}}
 
-3\. Navega a la URL que genera los problemas.
+3. Navega a la URL que genera los problemas.
 
-4\. Presiona Ctrl y haz clic en un recurso en el Inspector web y haz clic en **Export HAR** (Exportar HAR).
+4. Presiona Ctrl y haz clic en un recurso en el Inspector web y haz clic en **Export HAR** (Exportar HAR).
 
 ___
 

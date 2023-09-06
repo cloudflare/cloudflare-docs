@@ -32,11 +32,11 @@ Si vous oubliez l'adresse e-mail associée à votre compte, veuillez contacter v
 
 Si vous oubliez l'adresse e-mail associée à votre demande :
 
-1\. Rendez-vous dans [](http://dash.cloudflare.com/forgot-email)[Vous avez oublié votre adresse e-mail ?](https://dash.cloudflare.com/forgot-email)
+1. Rendez-vous dans [](http://dash.cloudflare.com/forgot-email)[Vous avez oublié votre adresse e-mail ?](https://dash.cloudflare.com/forgot-email)
 
-2\. Saisissez le nom de votre domaine.
+2. Saisissez le nom de votre domaine.
 
-3\. Cloudflare enverra un e-mail à l'adresse associée à votre nom de domaine. Si vous ne recevez pas d'e-mail dans les 20 minutes, vérifiez votre dossier de courrier indésirable. L'expéditeur du message sera `no-reply@cloudflare.com` ou `noreply@notify.cloudflare.com`.
+3. Cloudflare enverra un e-mail à l'adresse associée à votre nom de domaine. Si vous ne recevez pas d'e-mail dans les 20 minutes, vérifiez votre dossier de courrier indésirable. L'expéditeur du message sera `no-reply@cloudflare.com` ou `noreply@notify.cloudflare.com`.
 
 Si vous ne parvenez toujours pas à accéder à l'adresse e-mail associée à votre compte Cloudflare, vous devez [transférer votre domaine vers un autre compte](https://support.cloudflare.com/hc/articles/204615358).
 
@@ -48,13 +48,13 @@ ___
 
 Si vous oubliez le mot de passe de votre compte :
 
-1\. Rendez-vous dans [](http://dash.cloudflare.com/forgot-email)[Réinitialisation du mot de passe](https://dash.cloudflare.com/password-reset).
+1. Rendez-vous dans [](http://dash.cloudflare.com/forgot-email)[Réinitialisation du mot de passe](https://dash.cloudflare.com/password-reset).
 
-2\. Saisissez votre adresse e-mail.
+2. Saisissez votre adresse e-mail.
 
-3\. Vous devriez recevoir un e-mail de Cloudflare. Si vous ne le recevez pas dans les 20 minutes, vérifiez votre dossier de courrier indésirable. L'expéditeur du message sera `no-reply@cloudflare.com` ou `noreply@notify.cloudflare.com`.
+3. Vous devriez recevoir un e-mail de Cloudflare. Si vous ne le recevez pas dans les 20 minutes, vérifiez votre dossier de courrier indésirable. L'expéditeur du message sera `no-reply@cloudflare.com` ou `noreply@notify.cloudflare.com`.
 
-4\. Ouvrez le lien de réinitialisation du mot de passe. Ce lien expirera au bout de deux heures.
+4. Ouvrez le lien de réinitialisation du mot de passe. Ce lien expirera au bout de deux heures.
 
 ___
 
@@ -82,17 +82,17 @@ Si vous ou un autre propriétaire du compte avez toujours accès à votre compte
 
 Si vous n'avez pas accès à vos codes de secours ou à votre compte à authentification à deux facteurs, utilisez un appareil vérifié pour demander un code d'accès temporaire.
 
-1\. Connectez-vous au [tableau de bord Cloudflare](https://dash.cloudflare.com/login).
+1. Connectez-vous au [tableau de bord Cloudflare](https://dash.cloudflare.com/login).
 
-2\. Sur la page **Two-Factor Authentication** (Authentification à deux facteurs), cliquez sur **Can't access your 2FA device or backup codes?** (Impossible d'accéder à votre appareil à authentification à deux facteurs ou à vos codes de sauvegarde ?).
+2. Sur la page **Two-Factor Authentication** (Authentification à deux facteurs), cliquez sur **Can't access your 2FA device or backup codes?** (Impossible d'accéder à votre appareil à authentification à deux facteurs ou à vos codes de sauvegarde ?).
 
-3\. Cliquez sur **Begin recovery** (Commencer la récupération).
+3. Cliquez sur **Begin recovery** (Commencer la récupération).
 
-4\. À l'aide d'un code d'accès temporaire, vérifiez l'adresse e-mail associée à votre compte.
+4. À l'aide d'un code d'accès temporaire, vérifiez l'adresse e-mail associée à votre compte.
 
-5\. À l'aide d'un appareil depuis lequel vous vous êtes déjà connecté auparavant, vérifiez votre appareil. Si vous effacez vos cookies souvent ou effectuez la connexion depuis une adresse IP différente, vous avez effacé notre mémorisation de votre appareil et devrez utiliser un appareil différent pour réaliser la vérification.
+5. À l'aide d'un appareil depuis lequel vous vous êtes déjà connecté auparavant, vérifiez votre appareil. Si vous effacez vos cookies souvent ou effectuez la connexion depuis une adresse IP différente, vous avez effacé notre mémorisation de votre appareil et devrez utiliser un appareil différent pour réaliser la vérification.
 
-6\. Pour des questions de sécurité, une fois la vérification effectuée, vous devez patienter 3 à 5 jours pour recevoir votre code d'accès temporaire.
+6. Pour des questions de sécurité, une fois la vérification effectuée, vous devez patienter 3 à 5 jours pour recevoir votre code d'accès temporaire.
 
 #### **Avez-vous encore besoin d'aide ?**
 
@@ -117,27 +117,27 @@ ___
 
 Pour modifier l’adresse e-mail associée à votre compte Cloudflare :
 
-1\. Rendez-vous dans votre [profil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Rendez-vous dans votre [profil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Sélectionnez votre compte.
+2. Sélectionnez votre compte.
 
-4\. Dans le volet **Adresse e-mail**, cliquez sur **Modifier l’adresse e-mail**.
+4. Dans le volet **Adresse e-mail**, cliquez sur **Modifier l’adresse e-mail**.
 
-5\. Dans la boîte de dialogue, saisissez votre nouvelle adresse e-mail dans les champs **Nouvelle adresse e-mail** et **Confirmer l’adresse e-mail**, puis saisissez votre mot de passe actuel.
+5. Dans la boîte de dialogue, saisissez votre nouvelle adresse e-mail dans les champs **Nouvelle adresse e-mail** et **Confirmer l’adresse e-mail**, puis saisissez votre mot de passe actuel.
 
-5\. Appuyez sur **Enregistrer**.
+5. Appuyez sur **Enregistrer**.
 
 #### **Modifier le mot de passe**
 
-1\. Rendez-vous dans votre [profil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Rendez-vous dans votre [profil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Sélectionnez votre compte.
+2. Sélectionnez votre compte.
 
-3\. Appuyez sur **Authentification**.
+3. Appuyez sur **Authentification**.
 
-4\. Dans **Mot de passe**, sélectionnez **Modifier**.
+4. Dans **Mot de passe**, sélectionnez **Modifier**.
 
-5\. Modifiez votre mot de passe et appuyez sur **Enregistrer**.
+5. Modifiez votre mot de passe et appuyez sur **Enregistrer**.
 
 ___
 

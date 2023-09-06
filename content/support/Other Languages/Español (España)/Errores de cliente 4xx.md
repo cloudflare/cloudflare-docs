@@ -58,9 +58,9 @@ Los estándares RFC aún no han implementado este error, pero lo reservan para 
 Si aparece un error 403 sin la marca Cloudflare, este siempre se devuelve directamente desde el servidor web de origen, no desde Cloudflare, y suele estar relacionado con reglas de permisos en el servidor.
 
 Los principales motivos para este error son:  
-1\. Las reglas de permisos que has configurado o un error en las reglas .htaccess que has configurado.  
-2\. Las reglas Mod\_security.  
-3\. Las reglas de denegación de IP.
+1. Las reglas de permisos que has configurado o un error en las reglas .htaccess que has configurado.  
+2. Las reglas Mod\_security.  
+3. Las reglas de denegación de IP.
 
 Debido a que Cloudflare no puede acceder directamente a su servidor, ponte en contacto con el proveedor de alojamiento para obtener ayuda con la solución de errores 403 y la corrección de reglas. Debes asegurarte de que no se bloqueen [las IP de Cloudflare](https://www.cloudflare.com/ips).
 

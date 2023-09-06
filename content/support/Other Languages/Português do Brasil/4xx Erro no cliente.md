@@ -58,9 +58,9 @@ Ainda não implementado pelos padrões de RFC, mas reservado para uso futuro
 Se você estiver vendo um erro 403 sem a marca da Cloudflare, isso sempre significa que foi retornado diretamente pelo servidor de origem, não pela Cloudflare, e geralmente está relacionado às regras de permissão no seu servidor.
 
 As principais razões para esse erro são:  
-1\. Regras de permissão que você definiu ou um erro nas regras .htaccess que você configurou  
-2\. Regras de Mod\_security.  
-3\. Regras de negação de IP
+1. Regras de permissão que você definiu ou um erro nas regras .htaccess que você configurou  
+2. Regras de Mod\_security.  
+3. Regras de negação de IP
 
 Já que a Cloudflare não pode acessar seu servidor diretamente, entre em contato com o seu provedor de hospedagem para obter ajuda na solução de erros 403 e na correção das regras. Você deve se certificar de que os [IPs da Cloudflare](https://www.cloudflare.com/ips) não estejam sendo bloqueados. 
 

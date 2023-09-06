@@ -33,19 +33,19 @@ Para a segurança da conta, você deve verificar sua identidade e a propriedade 
 
 ### Autenticando sua conta
 
-1\. Entre na sua conta da Cloudflare.
+1. Entre na sua conta da Cloudflare.
 
-2\. No canto superior direito do painel de controle da Cloudflare, clique em **Suporte**.
+2. No canto superior direito do painel de controle da Cloudflare, clique em **Suporte**.
 
-3\. Clique em **Entrar em contato com o suporte**. Role a tela para baixo até o cartão _Linha direta de suporte por telefone de emergência - Autenticação_.
+3. Clique em **Entrar em contato com o suporte**. Role a tela para baixo até o cartão _Linha direta de suporte por telefone de emergência - Autenticação_.
 
 ![](/images/support/contact_support_ent_phone_card.png)
 
-4\. Para se autenticar utilizando um token de uso único, clique em **Obter um token de uso único**. Será exibida uma janela pop-up com o código do token. O código é atualizado automaticamente a cada 30 segundos.
+4. Para se autenticar utilizando um token de uso único, clique em **Obter um token de uso único**. Será exibida uma janela pop-up com o código do token. O código é atualizado automaticamente a cada 30 segundos.
 
-5\. Para se autenticar usando um aplicativo autenticador, clique em **Configurar aplicativo autenticador** e siga as [instruções de configuração](https://support.cloudflare.com/hc/pt-br/articles/200167906/#12345681) na tela a seguir. Após a configuração, o código do token aparecerá no aplicativo de autenticação móvel.
+5. Para se autenticar usando um aplicativo autenticador, clique em **Configurar aplicativo autenticador** e siga as [instruções de configuração](https://support.cloudflare.com/hc/pt-br/articles/200167906/#12345681) na tela a seguir. Após a configuração, o código do token aparecerá no aplicativo de autenticação móvel.
 
-6\. Aguarde até que o agente do Suporte da Cloudflare solicite o código antes de compartilhar o token de verificação.
+6. Aguarde até que o agente do Suporte da Cloudflare solicite o código antes de compartilhar o token de verificação.
 
 ___
 

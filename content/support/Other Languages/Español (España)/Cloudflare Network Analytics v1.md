@@ -153,15 +153,15 @@ Otros tipos de filtros de Network Analytics no se añadirán a la nueva definici
 
 Haz lo siguiente:
 
-1\. Aplica uno o más filtros en Network Analytics.
+1. Aplica uno o más filtros en Network Analytics.
 
-2\. Haz clic en **Crear regla de firewall mágico**. 
+2. Haz clic en **Crear regla de firewall mágico**. 
 
 ![Creación de un enlace de regla de cortafuegos en Network Analytics](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Aparecerá el editor de reglas de firewall mágico con los filtros y valores seleccionados.
 
-3\. Revisa la definición de regla en el editor de reglas de firewall mágico.
+3. Revisa la definición de regla en el editor de reglas de firewall mágico.
 
 Haz clic en **Añadir**.
 

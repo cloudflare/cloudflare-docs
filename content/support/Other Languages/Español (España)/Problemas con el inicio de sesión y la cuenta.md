@@ -19,11 +19,11 @@ Si has olvidado la dirección de correo electrónico asociada a tu cuenta, ponte
 
 Si has olvidado la dirección de correo electrónico asociada con tu solicitud:
 
-1\. Ve a [](http://dash.cloudflare.com/forgot-email)[¿Olvidaste tu correo electrónico?](https://dash.cloudflare.com/forgot-email)
+1. Ve a [](http://dash.cloudflare.com/forgot-email)[¿Olvidaste tu correo electrónico?](https://dash.cloudflare.com/forgot-email)
 
-2\. Introduce tu nombre de dominio.
+2. Introduce tu nombre de dominio.
 
-3\. Cloudflare enviará un correo electrónico a la dirección asociada a tu nombre de dominio. Si no lo recibes en 20 minutos, comprueba tu carpeta de correo no deseado. El mensaje se enviará desde `no-reply@cloudflare.com` o `noreply@notify.cloudflare.com`.
+3. Cloudflare enviará un correo electrónico a la dirección asociada a tu nombre de dominio. Si no lo recibes en 20 minutos, comprueba tu carpeta de correo no deseado. El mensaje se enviará desde `no-reply@cloudflare.com` o `noreply@notify.cloudflare.com`.
 
 {{<Aside type="note">}}
 Este proceso no afecta a tu cuenta ni comparte tu dirección de correo
@@ -40,13 +40,13 @@ ___
 
 Si olvidas la contraseña de tu cuenta:
 
-1\. Ve a [](http://dash.cloudflare.com/forgot-email)[Restablecimiento de la contraseña](https://dash.cloudflare.com/password-reset).
+1. Ve a [](http://dash.cloudflare.com/forgot-email)[Restablecimiento de la contraseña](https://dash.cloudflare.com/password-reset).
 
-2\. Escribe tu dirección de correo electrónico.
+2. Escribe tu dirección de correo electrónico.
 
-3\. Deberías recibir un correo electrónico de Cloudflare. Si no lo recibes en 20 minutos, comprueba tu carpeta de correo no deseado. El mensaje se enviará desde `no-reply@cloudflare.com` o `noreply@notify.cloudflare.com`.
+3. Deberías recibir un correo electrónico de Cloudflare. Si no lo recibes en 20 minutos, comprueba tu carpeta de correo no deseado. El mensaje se enviará desde `no-reply@cloudflare.com` o `noreply@notify.cloudflare.com`.
 
-4\. Selecciona el enlace para restablecer la contraseña. Este enlace expirará en dos horas.
+4. Selecciona el enlace para restablecer la contraseña. Este enlace expirará en dos horas.
 
 {{<Aside type="tip">}}
 Cloudflare recomienda el uso de contraseñas seguras. Los requisitos
@@ -80,11 +80,11 @@ otro](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DAnd
 
 Al configurar 2FA, te solicitamos que guardaras tus códigos de respaldo en una ubicación segura. Para restaurar el acceso perdido con un código de respaldo de Cloudflare:
 
-1\. Recupera el código de respaldo de donde lo almacenaste.
+1. Recupera el código de respaldo de donde lo almacenaste.
 
-2\. Ve a la página de inicio de sesión de Cloudflare.
+2. Ve a la página de inicio de sesión de Cloudflare.
 
-3\. Introduce el código de respaldo en la pantalla de inicio de sesión, luego haz clic en **Iniciar sesión**.
+3. Introduce el código de respaldo en la pantalla de inicio de sesión, luego haz clic en **Iniciar sesión**.
 
 {{<Aside type="note">}}
 Cuando usas un código de respaldo, queda inválido.
@@ -98,17 +98,17 @@ Si tú u otro propietario de la cuenta sigue teniendo acceso a tu cuenta de Clou
 
 Si no tienes acceso a tu cuenta de 2FA o a tus códigos seguridad, utiliza un dispositivo verificado para solicitar un código de acceso temporal.
 
-1\. Inicia sesión en el [panel de control de Cloudflare](https://dash.cloudflare.com/login).
+1. Inicia sesión en el [panel de control de Cloudflare](https://dash.cloudflare.com/login).
 
-2\. En la página **Autenticación de dos factores**, haz clic en **¿No puedes acceder a tu dispositivo 2FA o a tus códigos de seguridad?**.
+2. En la página **Autenticación de dos factores**, haz clic en **¿No puedes acceder a tu dispositivo 2FA o a tus códigos de seguridad?**.
 
-3\. Haz click en **Inicio de la recuperación**.
+3. Haz click en **Inicio de la recuperación**.
 
-4\. Mediante un código de acceso temporal, verifica la dirección de correo electrónico asociada a tu cuenta.
+4. Mediante un código de acceso temporal, verifica la dirección de correo electrónico asociada a tu cuenta.
 
-5\. Utiliza un dispositivo desde el que hayas iniciado sesión anteriormente, verifica tu dispositivo. Si borras las cookies a menudo o te conectas desde una dirección IP diferente, habrás borrado la memoria de tu dispositivo y tendrás que utilizar otro para verificarlo.
+5. Utiliza un dispositivo desde el que hayas iniciado sesión anteriormente, verifica tu dispositivo. Si borras las cookies a menudo o te conectas desde una dirección IP diferente, habrás borrado la memoria de tu dispositivo y tendrás que utilizar otro para verificarlo.
 
-6\. Por razones de seguridad, tienes que esperar de 3 a 5 días después de completar la verificación para recibir tu código de acceso temporal.
+6. Por razones de seguridad, tienes que esperar de 3 a 5 días después de completar la verificación para recibir tu código de acceso temporal.
 
 #### **¿Necesitas más ayuda?**
 
@@ -133,27 +133,27 @@ ___
 
 Para cambiar la dirección de correo electrónico asociada a tu cuenta de Cloudflare:
 
-1\. Ve a tu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Ve a tu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Selecciona tu cuenta.
+2. Selecciona tu cuenta.
 
-4\. En el panel **Dirección de correo electrónico**, haz clic en **Cambiar dirección de correo electrónico**.
+4. En el panel **Dirección de correo electrónico**, haz clic en **Cambiar dirección de correo electrónico**.
 
-5\. En el cuadro de diálogo, escribe tu nueva dirección de correo electrónico en **Nueva dirección de correo electrónico** y haz clic en **Confirmar correo electrónico**. A continuación, escribe tu contraseña actual.
+5. En el cuadro de diálogo, escribe tu nueva dirección de correo electrónico en **Nueva dirección de correo electrónico** y haz clic en **Confirmar correo electrónico**. A continuación, escribe tu contraseña actual.
 
-5\. Selecciona **Guardar**.
+5. Selecciona **Guardar**.
 
 #### **Cambiar la contraseña**
 
-1\. Ve a tu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Ve a tu [Perfil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Selecciona tu cuenta.
+2. Selecciona tu cuenta.
 
-3\. Selecciona **autenticación**.
+3. Selecciona **autenticación**.
 
-4\. En **Contraseña**, selecciona **Cambiar**.
+4. En **Contraseña**, selecciona **Cambiar**.
 
-5\. Cambia tu contraseña y selecciona **Guardar**.
+5. Cambia tu contraseña y selecciona **Guardar**.
 
 {{<Aside type="note">}}
 Para mayor seguridad de la cuenta, considera la posibilidad de cambiar

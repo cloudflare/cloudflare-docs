@@ -226,29 +226,29 @@ In unserer **Durchsatzbegrenzung** finden Sie das Ein-Klick-Tool „**Schützen 
 6.  Klicken Sie auf **Speichern**.
 7.  Der **Regelname** erscheint in Ihrer Liste der **Durchsatzbegrenzungsregeln**.
 
-1\. Melden Sie sich beim Cloudflare-Dashboard an.
+1. Melden Sie sich beim Cloudflare-Dashboard an.
 
-2\. Wählen Sie die entsprechende Domain aus.
+2. Wählen Sie die entsprechende Domain aus.
 
-3\. Gehen Sie zu **Sicherheit** > **WAF** > **Regeln zur Durchsatzbegrenzung**.
+3. Gehen Sie zu **Sicherheit** > **WAF** > **Regeln zur Durchsatzbegrenzung**.
 
-4\. Klicken Sie auf **Benutzerdefinierte Durchsatzbegrenzungsregel erstellen**.  Legen Sie im Dialogfeld die Einzelheiten Ihrer neuen Regel fest.
+4. Klicken Sie auf **Benutzerdefinierte Durchsatzbegrenzungsregel erstellen**.  Legen Sie im Dialogfeld die Einzelheiten Ihrer neuen Regel fest.
 
 ![Erstellen Sie ein Popup-Dialogfenster für Durchsatzbegrenzungsregeln mit einer Beispielkonfiguration der Regel. Die Regel blockiert eine Stunde lang Anfragen von IP-Adressen, die 150 Anfragen pro Minute überschreiten.](/images/support/previous-rate-limiting-create-rule.png)
 
-5\. Geben Sie einen beschreibenden **Regelnamen** ein.
+5. Geben Sie einen beschreibenden **Regelnamen** ein.
 
-6\. Für **Wenn Traffic mit der URL übereinstimmt** wählen Sie ein HTTP-Schema aus der Dropdown-Liste sowie eine URL aus.
+6. Für **Wenn Traffic mit der URL übereinstimmt** wählen Sie ein HTTP-Schema aus der Dropdown-Liste sowie eine URL aus.
 
-7\. In **von der gleichen IP-Adresse überschreitet** geben Sie eine ganze Zahl größer als 1 ein, um die Anzahl der Anfragen in einer Stichprobenzeitraum darzustellen.
+7. In **von der gleichen IP-Adresse überschreitet** geben Sie eine ganze Zahl größer als 1 ein, um die Anzahl der Anfragen in einer Stichprobenzeitraum darzustellen.
 
-8\. Wählen Sie unter **Anfragen pro** den Stichprobenzeitraum (der Zeitraum, in dem Anfragen gezählt werden). Für Domains auf dem Enterprise Plan kann manuell eine beliebige Dauer zwischen 10 und 3.600 Sekunden (1 Stunde) angegeben werden.
+8. Wählen Sie unter **Anfragen pro** den Stichprobenzeitraum (der Zeitraum, in dem Anfragen gezählt werden). Für Domains auf dem Enterprise Plan kann manuell eine beliebige Dauer zwischen 10 und 3.600 Sekunden (1 Stunde) angegeben werden.
 
-9\. Wählen Sie für das Dropdown-Menü **Dann** eine der verfügbaren Aktionen basierend auf Ihrem Plan aus.  Mehr Informationen erhalten Sie im Abschnitt _Regelabwehr_ unter _Bestandteile einer Durchsatzbegrenzungsregel_ weiter oben.
+9. Wählen Sie für das Dropdown-Menü **Dann** eine der verfügbaren Aktionen basierend auf Ihrem Plan aus.  Mehr Informationen erhalten Sie im Abschnitt _Regelabwehr_ unter _Bestandteile einer Durchsatzbegrenzungsregel_ weiter oben.
 
-10\. Wenn Sie _Blockieren_ oder _Protokollieren_ für den **übereinstimmenden Traffic dieses Besuchers** ausgewählt haben, wählen Sie aus, wie lange die Option angewendet werden soll, nachdem ein Threshold ausgelöst wurde. Für Domains auf dem Enterprise Plan kann ein beliebiger Wert zwischen 10 und 86.400 Sekunden (24 Stunden) angegeben werden.
+10. Wenn Sie _Blockieren_ oder _Protokollieren_ für den **übereinstimmenden Traffic dieses Besuchers** ausgewählt haben, wählen Sie aus, wie lange die Option angewendet werden soll, nachdem ein Threshold ausgelöst wurde. Für Domains auf dem Enterprise Plan kann ein beliebiger Wert zwischen 10 und 86.400 Sekunden (24 Stunden) angegeben werden.
 
-11\. Um Ihre neue Regel zu aktivieren, klicken Sie auf **Speichern und Bereitstellen**.
+11. Um Ihre neue Regel zu aktivieren, klicken Sie auf **Speichern und Bereitstellen**.
 
 Die neue Regel erscheint in der Liste der Regeln zur Durchsatzbegrenzung.
 
@@ -274,21 +274,21 @@ Mit der Option **Erweiterte Kriterien** werden die HTTP-Methoden, Header-Antwort
 
 Zur Konfiguration erweiterter Kriterien für eine neue oder vorhandene Regel gehen Sie so vor:
 
-1\. Öffnen Sie **Erweiterte Kriterien**.
+1. Öffnen Sie **Erweiterte Kriterien**.
 
 ![Verfügbare Felder bei der Konfiguration der erweiterten Kriterien für eine Durchsatzbegrenzungsregel.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
-2\. Wählen Sie einen Wert aus der Dropdown-Liste **„Methode(n)“** aus. _ANY_ ist ein Standardwert, der auf alle HTTP-Methoden passt.
+2. Wählen Sie einen Wert aus der Dropdown-Liste **„Methode(n)“** aus. _ANY_ ist ein Standardwert, der auf alle HTTP-Methoden passt.
 
-3\. Filtern Sie nach **HTTP Antwort-Header(n)**. Klicken Sie auf **Header-Antwortfeld hinzufügen**, um die von Ihrem Ursprungs-Webserver zurückgegebenen Header einzuschließen.
+3. Filtern Sie nach **HTTP Antwort-Header(n)**. Klicken Sie auf **Header-Antwortfeld hinzufügen**, um die von Ihrem Ursprungs-Webserver zurückgegebenen Header einzuschließen.
 
 Der Header **CF-Cache-Status** wird standardmäßig angezeigt, damit Cloudflare zwischengespeicherte Ressourcen bedienen kann, anstatt diese Ressourcen über die Durchsatzbegrenzung zu begrenzen. Um auch die Durchsatzbegrenzung für gecachte Ressourcen zu aktivieren, entfernen Sie diesen Header, indem Sie auf die Schaltfläche **X** klicken, oder aktivieren Sie „**Durchsatzbegrenzung auch auf gecachte Assets anwenden**“.
 
 Wenn Sie mehr als einen Header unter **HTTP-Antwort-Header** eintragen, gilt eine boolesche _UND_\-Logik. Um einen Header auszuschließen, verwenden Sie die Option _„Ungleich“_. Bei jedem Header wird die Groß-/Kleinschreibung beachtet.
 
-4\. Geben Sie unter **Origin Response code(s)** den numerischen Wert jedes abzugleichenden HTTP-Antwortcodes ein.  Trennen Sie zwei oder mehr HTTP-Codes durch ein Komma, zum Beispiel: `401,  403` 
+4. Geben Sie unter **Origin Response code(s)** den numerischen Wert jedes abzugleichenden HTTP-Antwortcodes ein.  Trennen Sie zwei oder mehr HTTP-Codes durch ein Komma, zum Beispiel: `401,  403` 
 
-5\. (Optional) Konfigurieren Sie zusätzliche Features zur Durchsatzbegrenzung, die auf Ihrem Tarif basieren.
+5. (Optional) Konfigurieren Sie zusätzliche Features zur Durchsatzbegrenzung, die auf Ihrem Tarif basieren.
 
 6. Klicken Sie auf **Speichern und bereitstellen**.
 
@@ -300,17 +300,17 @@ Mit der Option **Erweiterte Antwort** wird das Informationsformat konfiguriert, 
 
 So konfigurieren Sie eine Klartext- oder JSON-Antwort:
 
-1\. Öffnen Sie **Erweiterte Antwort**.
+1. Öffnen Sie **Erweiterte Antwort**.
 
 ![Verfügbare Felder bei der Konfiguration der Erweiterten Reaktion für eine Durchsatzbegrenzungsregel.](/images/support/previous-rate-limiting-advanced-response.png)
 
-2\. Wählen Sie einen anderen **Reaktionstyp** als den Standard: _Benutzerdefiniertes JSON_ oder _Benutzerdefiniertes TEXT_.
+2. Wählen Sie einen anderen **Reaktionstyp** als den Standard: _Benutzerdefiniertes JSON_ oder _Benutzerdefiniertes TEXT_.
 
-3\. Geben Sie die Klartext- oder JSON-Antwort ein, die Sie zurückgeben möchten. Die maximale Antwortgröße beträgt 32 KB.
+3. Geben Sie die Klartext- oder JSON-Antwort ein, die Sie zurückgeben möchten. Die maximale Antwortgröße beträgt 32 KB.
 
-4\. (Optional) Konfigurieren Sie zusätzliche Features zur Durchsatzbegrenzung, die auf Ihrem Tarif basieren.
+4. (Optional) Konfigurieren Sie zusätzliche Features zur Durchsatzbegrenzung, die auf Ihrem Tarif basieren.
 
-5\. Klicken Sie auf **Speichern und bereitstellen**.
+5. Klicken Sie auf **Speichern und bereitstellen**.
 
 ### Eine benutzerdefinierte HTML-Seite oder eine Umleitung verwenden
 
@@ -318,7 +318,7 @@ Wenn Sie eine benutzerdefinierte HTML-Seite anzeigen möchten, konfigurieren Sie
 
 Mit dieser Methode können Sie einen Client mit Durchsatzbegrenzung zu einer bestimmten URL umleiten:
 
-1\. Erstellen Sie eine HTML-Seite auf Ihrem Server, die auf die endgültige URL der Seite umleitet, die Sie anzeigen möchten. Fügen Sie einen [Meta-Refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html)\-Tag in den Seiteninhalt ein, wie im folgenden Beispiel:
+1. Erstellen Sie eine HTML-Seite auf Ihrem Server, die auf die endgültige URL der Seite umleitet, die Sie anzeigen möchten. Fügen Sie einen [Meta-Refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html)\-Tag in den Seiteninhalt ein, wie im folgenden Beispiel:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;!doctype html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -328,11 +328,11 @@ Mit dieser Methode können Sie einen Client mit Durchsatzbegrenzung zu einer bes
 
 Notieren Sie sich die öffentliche URL der erstellten Seite.
 
-2\. Gehen Sie im Cloudflare-Dashboard zu **Kontostartseite** > **Konfiguration** > **Benutzerdefinierte Seiten**.
+2. Gehen Sie im Cloudflare-Dashboard zu **Kontostartseite** > **Konfiguration** > **Benutzerdefinierte Seiten**.
 
-3\. Klicken Sie unter **429-Fehler** auf **Benutzerdefinierte Seiten**.
+3. Klicken Sie unter **429-Fehler** auf **Benutzerdefinierte Seiten**.
 
-4\. Geben Sie die URL der Seite ein, die Sie auf Ihrem Server erstellt haben – die Seite mit dem Meta-Refresh-Tag – und klicken Sie auf **Veröffentlichen**.
+4. Geben Sie die URL der Seite ein, die Sie auf Ihrem Server erstellt haben – die Seite mit dem Meta-Refresh-Tag – und klicken Sie auf **Veröffentlichen**.
 
 Gehen Sie genauso vor, wenn Sie Klartext- oder JSON-Inhalte zurückgeben möchten, die Antwort aber größer als 32 KB ist. In diesem Fall wäre die Umleitungs-URL die URL der Klartext- oder JSON-Ressource, die Sie anzeigen möchten.
 
@@ -347,15 +347,15 @@ ___
 
 **Bypass** erstellt eine Genehmigungsliste oder Ausnahme, damit auf bestimmte URLs keine Aktionen angewendet werden, auch wenn die Durchsatzbegrenzung erreicht wird. Konfigurieren Sie einen **Bypass** in folgenden Schritten:
 
-1\. Öffnen Sie **Bypass**.
+1. Öffnen Sie **Bypass**.
 
-2\. Geben Sie bei **Regel für diese URLs umgehen** die URL(s) ein, die von der Durchsatzbegrenzungsregel ausgenommen werden sollen. Geben Sie jede URL in einer eigenen Zeile ein. Ein „HTTP“ oder „HTTPS“, das in der URL angegeben ist, wird beim Speichern der Regel automatisch entfernt. Sie gilt stattdessen sowohl für HTTP als auch für HTTPS.
+2. Geben Sie bei **Regel für diese URLs umgehen** die URL(s) ein, die von der Durchsatzbegrenzungsregel ausgenommen werden sollen. Geben Sie jede URL in einer eigenen Zeile ein. Ein „HTTP“ oder „HTTPS“, das in der URL angegeben ist, wird beim Speichern der Regel automatisch entfernt. Sie gilt stattdessen sowohl für HTTP als auch für HTTPS.
 
 ![Konfigurieren Sie zwei URLs, die für eine Durchsatzbegrenzungsregel umgangen werden sollen (eine pro Zeile).](/images/support/previous-rate-limiting-bypass.png)
 
-3\. (Optional) Konfigurieren Sie zusätzliche Features zur Durchsatzbegrenzung, die auf Ihrem Tarif basieren.
+3. (Optional) Konfigurieren Sie zusätzliche Features zur Durchsatzbegrenzung, die auf Ihrem Tarif basieren.
 
-4\. Klicken Sie auf **Speichern und bereitstellen**.
+4. Klicken Sie auf **Speichern und bereitstellen**.
 
 ___
 

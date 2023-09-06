@@ -151,17 +151,17 @@ Andere Arten von Network Analytics-Filtern werden der neuen Regeldefinition nich
 
 Gehen Sie wie folgt vor:
 
-1\. Wenden Sie einen oder mehrere Filter in den Network Analytics an.
+1. Wenden Sie einen oder mehrere Filter in den Network Analytics an.
 
-2\. Klicken Sie auf **Magic Firewall-Regel erstellen**. 
+2. Klicken Sie auf **Magic Firewall-Regel erstellen**. 
 
 ![Einen Firewall-Regel-Link in Network Analytics erstellen](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 Der Editor für Magic Firewall-Regeln wird mit den ausgewählten Filtern und Werten angezeigt.
 
-3\. Überprüfen Sie die Regeldefinition im Editor für Magic Firewall-Regeln.
+3. Überprüfen Sie die Regeldefinition im Editor für Magic Firewall-Regeln.
 
-4\. Klicken Sie auf **Neu hinzufügen**.
+4. Klicken Sie auf **Neu hinzufügen**.
 
 ### Unterstützte Filterfelder, Operatoren und Werte 
 

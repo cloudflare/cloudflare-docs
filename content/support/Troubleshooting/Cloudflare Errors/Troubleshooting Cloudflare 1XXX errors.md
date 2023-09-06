@@ -162,7 +162,7 @@ Convert the UTC timestamp of the 1005 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 
-3\. Assess the cause of the block and ensure the ASN is allowed under the [IP Access Rules](https://support.cloudflare.com/hc/en-us/articles/217074967-Configuring-IP-Access-Rules) security feature.
+3. Assess the cause of the block and ensure the ASN is allowed under the [IP Access Rules](https://support.cloudflare.com/hc/en-us/articles/217074967-Configuring-IP-Access-Rules) security feature.
 
 ___
 
@@ -391,7 +391,7 @@ Convert the UTC timestamp of the 1005 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 
-3\. Assess the cause of the block and either update the **Firewall Rule** or allow the visitor’s IP address in [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967).
+3. Assess the cause of the block and either update the **Firewall Rule** or allow the visitor’s IP address in [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967).
 
 ___
 

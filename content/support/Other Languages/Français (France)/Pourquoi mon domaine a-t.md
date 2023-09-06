@@ -54,15 +54,15 @@ Utilisez l’application « whois » basée sur la ligne de commande fournie a
 -   Assurez-vous que les serveurs de noms Cloudflare soient les deux seuls serveurs de noms répertoriés dans les détails d’enregistrement du domaine.
 -   Assurez-vous que les serveurs de noms soient épelés correctement dans l’enregistrement de domaine.
 
-2\. Vérifiez que les serveurs de noms correspondent exactement aux serveurs de noms fournis dans la section **Serveurs de noms Cloudflare** de l’application **DNS** de Cloudflare.
+2. Vérifiez que les serveurs de noms correspondent exactement aux serveurs de noms fournis dans la section **Serveurs de noms Cloudflare** de l’application **DNS** de Cloudflare.
 
-3\. Si vous constatez des informations incorrectes, connectez-vous au portail de votre fournisseur de domaine pour effectuer des mises à jour ou contactez votre fournisseur de domaine pour obtenir de l’aide.
+3. Si vous constatez des informations incorrectes, connectez-vous au portail de votre fournisseur de domaine pour effectuer des mises à jour ou contactez votre fournisseur de domaine pour obtenir de l’aide.
 
 ___
 
 ## Étape 3 : vérifiez si la résolution de domaine utilise les serveurs de noms Cloudflare
 
-1\. Utilisez des outils de ligne de commande ou tiers pour vérifier si les serveurs de noms Cloudflare sont configurés :
+1. Utilisez des outils de ligne de commande ou tiers pour vérifier si les serveurs de noms Cloudflare sont configurés :
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS quelquechose.autredomaine.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS quelquechose.autredomaine.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS quelquechose.autredomaine.com @8.8.8.8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -82,9 +82,9 @@ Certains services en ligne, tels que [whatsmydns.net](https://www.whatsmydns.net
 -   Assurez-vous qu’il n’y ait aucun serveur de noms mal orthographié.
 -   Vérifiez que les serveurs de noms correspondent exactement aux serveurs de noms fournis dans la section **Serveurs de noms Cloudflare** de l’application **DNS** de Cloudflare.
 
-2\. Si vous constatez des informations incorrectes, connectez-vous au portail de votre fournisseur de domaine pour effectuer des mises à jour ou contactez votre fournisseur de domaine pour obtenir de l’aide.
+2. Si vous constatez des informations incorrectes, connectez-vous au portail de votre fournisseur de domaine pour effectuer des mises à jour ou contactez votre fournisseur de domaine pour obtenir de l’aide.
 
-3\. Si les données d’enregistrement du serveur de noms et du domaine sont correctes, contactez votre fournisseur de domaine pour vérifier s’il y a eu des problèmes de propagation DNS récents.
+3. Si les données d’enregistrement du serveur de noms et du domaine sont correctes, contactez votre fournisseur de domaine pour vérifier s’il y a eu des problèmes de propagation DNS récents.
 
 ___
 

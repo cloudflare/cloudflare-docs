@@ -144,17 +144,17 @@ Network Analytics 통계량과 연관된 데이터 유형을 기반으로 필터
 
 다음을 수행합니다.
 
-1\. 네트워크 Analytics에 하나 이상의 필터를 적용합니다.
+1. 네트워크 Analytics에 하나 이상의 필터를 적용합니다.
 
-2\. **Magic Firewall 규칙 생성**을 클릭합니다.
+2. **Magic Firewall 규칙 생성**을 클릭합니다.
 
 ![네트워크 Analytics의 방화벽 규칙 링크 생성](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 선택한 필터 및 값과 함께 Magic Firewall 규칙 편집기가 표시됩니다.
 
-3\. Magic Firewall 규칙 편집기에서 규칙 정의를 검토합니다.
+3. Magic Firewall 규칙 편집기에서 규칙 정의를 검토합니다.
 
-4\. **새로 추가**를 클릭합니다.
+4. **새로 추가**를 클릭합니다.
 
 ### 지원되는 필드, 연산자, 값 
 

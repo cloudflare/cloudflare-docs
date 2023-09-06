@@ -36,41 +36,41 @@ Atualmente, apenas o Chrome e o Firefox podem acessar o recurso HAR por padrão.
 
 1 Em uma página do navegador, clique com o botão direito do mouse em qualquer lugar e selecione **Inspecionar Elemento** .
 
-2\. As ferramentas do desenvolvedor aparecem na parte inferior ou esquerda do navegador. Clique na guia **Rede** .
+2. As ferramentas do desenvolvedor aparecem na parte inferior ou esquerda do navegador. Clique na guia **Rede** .
 
 ![Captura de tela da guia de rede HAR das ferramentas de desenvolvedor do Chrome](/images/support/image.png)
 
-3\. Marque **Preserve log** .
+3. Marque **Preserve log** .
 
-4\. Clique em gravar.
+4. Clique em gravar.
 
 ![Captura de tela HAR do botão de registro nas ferramentas de desenvolvimento do chrome](/images/support/image.png)
 
-5\. Navegue até o URL que causa problemas. Quando o problema for solucionado, clique com o botão direito do mouse em qualquer um dos itens da guia **Rede** e selecione **Salvar tudo como HAR com o Conteúdo** .
+5. Navegue até o URL que causa problemas. Quando o problema for solucionado, clique com o botão direito do mouse em qualquer um dos itens da guia **Rede** e selecione **Salvar tudo como HAR com o Conteúdo** .
 
 ![Captura de tela HAR do menu Salvar nas ferramentas de desenvolvedor do Chrome](/images/support/image.png)
 
-6\. Anexe o arquivo HAR ao seu tíquete de suporte.
+6. Anexe o arquivo HAR ao seu tíquete de suporte.
 
-1\. No menu da aplicação, selecione **Tools** > **Web Developer** > **Network** ou pressione _Ctrl+Shift+I_ (Windows/Linux) or _Cmd+Option+I_ (OS X).
+1. No menu da aplicação, selecione **Tools** > **Web Developer** > **Network** ou pressione _Ctrl+Shift+I_ (Windows/Linux) or _Cmd+Option+I_ (OS X).
 
-2\. Navegue até o URL que causa problemas.
+2. Navegue até o URL que causa problemas.
 
-3\. Após duplicar o problema, clique com o botão direito do mouse e escolha **Salvar tudo como HAR** .
+3. Após duplicar o problema, clique com o botão direito do mouse e escolha **Salvar tudo como HAR** .
 
-1\. Navegue até **Ferramentas do desenvolvedor** (use _F12_ como atalho) e selecione a guia **Rede** .
+1. Navegue até **Ferramentas do desenvolvedor** (use _F12_ como atalho) e selecione a guia **Rede** .
 
-2\. Navegue até o URL que causa problemas.
+2. Navegue até o URL que causa problemas.
 
-3\. Após duplicar o problema, clique em **Exportar como HAR** seguido por **Salvar como ...** .
+3. Após duplicar o problema, clique em **Exportar como HAR** seguido por **Salvar como ...** .
 
 1 No Safari, verifique se o menu **Desenvolver** exibido na parte superior da janela do navegador. Caso contrário, vá para **Safari** \> **Preferências** \> **Avançado** e selecione **Mostrar menu Desenvolver na barra de menus**
 
-2\. Navegue para **Revelação** \> **Mostrar Web Inspector** .
+2. Navegue para **Revelação** \> **Mostrar Web Inspector** .
 
-3\. Navegue até o URL que causa problemas.
+3. Navegue até o URL que causa problemas.
 
-4\. Ctrl + clique em um recurso no Web Inspector e clique em **Exportar HAR** .
+4. Ctrl + clique em um recurso no Web Inspector e clique em **Exportar HAR** .
 
 ___
 
@@ -165,13 +165,13 @@ O traceroute é uma ferramenta de diagnóstico de rede que mede a latência da r
 
 Leia as instruções abaixo para executar o traceroute em diferentes sistemas operacionais. Substitua _www.exemplo.com_ com seu domínio e nome de host nos exemplos abaixo:
 
-1\. Abra o menu **Iniciar** .
+1. Abra o menu **Iniciar** .
 
-2\. Clique em **Executar** .
+2. Clique em **Executar** .
 
-3\. Para abrir a interface da linha de comandos, digite **cmd** e clique em **OK** .
+3. Para abrir a interface da linha de comandos, digite **cmd** e clique em **OK** .
 
-4\. No prompt da linha de comandos, digite: Para IPv4 -
+4. No prompt da linha de comandos, digite: Para IPv4 -
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&gt; tracert  www.exemplo.com </span></div></span></span></span></code></pre>{{</raw>}}
@@ -181,13 +181,13 @@ Para IPv6:
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&gt; tracert -6  www.exemplo.com </span></div></span></span></span></code></pre>{{</raw>}}
 
-5\. Pressione **Digite** .
+5. Pressione **Digite** .
 
-6\. Você pode copiar os resultados para salvar em um arquivo ou colar em outro programa.
+6. Você pode copiar os resultados para salvar em um arquivo ou colar em outro programa.
 
-1\. Abra uma janela do terminal.
+1. Abra uma janela do terminal.
 
-2\. No prompt da linha de comandos, digite:
+2. No prompt da linha de comandos, digite:
 
 For IPv4 -
 
@@ -199,7 +199,7 @@ Para IPv6:
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&gt; traceroute -6 www.exemplo.com</span></div></span></span></span></code></pre>{{</raw>}}
 
-3\. Você pode copiar os resultados para salvar em um arquivo ou colar em outro programa.
+3. Você pode copiar os resultados para salvar em um arquivo ou colar em outro programa.
 
 1.  Abra o aplicativo **Network Utility**.
 2.  Clique na guia **Traceroute** .

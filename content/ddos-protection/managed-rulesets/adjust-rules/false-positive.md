@@ -18,19 +18,19 @@ To remedy a false positive:
 
     <details><summary>For WAF/CDN customers</summary><div>
 
-    1\. Select the zone that is experiencing DDoS attack false positives.
+    1. Select the zone that is experiencing DDoS attack false positives.
 
-    2\. Go to **Security** > **Events**.
+    2. Go to **Security** > **Events**.
 
-    3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+    3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
     </div></details>
 
     <details><summary>For Magic Transit and Spectrum customers</summary><div>
 
-    1\. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+    1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
-    2\. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+    2. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
     </div></details>
 

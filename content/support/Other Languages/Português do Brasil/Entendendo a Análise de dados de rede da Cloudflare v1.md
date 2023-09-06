@@ -146,17 +146,17 @@ Outros tipos de filtros da Análise de Dados de Rede não serão adicionados à 
 
 Faça o seguinte:
 
-1\. Aplique um ou mais filtros à Análise de Dados de Rede.
+1. Aplique um ou mais filtros à Análise de Dados de Rede.
 
-2\. Clique em **Criar regra de Magic Firewall**. 
+2. Clique em **Criar regra de Magic Firewall**. 
 
 ![Criar um link para a regra de firewall na Análise de Dados de Rede](/images/support/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 O editor de regras do Magic Firewall é exibido com os filtros e os valores selecionados.
 
-3\. Revise a definição da regra no editor de regras do Magic Firewall.
+3. Revise a definição da regra no editor de regras do Magic Firewall.
 
-4\. Clique em **Adicionar nova**.
+4. Clique em **Adicionar nova**.
 
 ### Campos, operadores e valores de filtro com suporte 
 

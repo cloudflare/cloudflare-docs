@@ -15,11 +15,11 @@ De forma predeterminada, Cloudflare almacena [contenido estático en la memoria 
 
 ### Almacenar todo en la memoria caché
 
-1\. Inicia sesión en tu cuenta de Cloudflare
+1. Inicia sesión en tu cuenta de Cloudflare
 
-2\. Elige la aplicación de **Page Rules**. 
+2. Elige la aplicación de **Page Rules**. 
 
-3\. Haz clic en **Crear Page Rule**.
+3. Haz clic en **Crear Page Rule**.
 
 4.  Introduce tu sitio web completo o una sección del mismo, luego establece el _Nivel de caché_ a _Todo caché_. Cloudflare almacenará completamente en caché el HTML en nuestra red perimetral, en lugar de tener que acudir a tu servidor web de origen.
 

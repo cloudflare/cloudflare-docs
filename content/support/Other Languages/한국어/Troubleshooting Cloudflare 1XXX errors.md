@@ -334,7 +334,7 @@ ___
 1.  고객으로부터 1020 오류의 스크린샷을 받습니다.
 2.  Cloudflare **Firewall** 앱의 **개요** 탭에 있는 [**방화벽 이벤트**](/waf/analytics)에서 방문자의 1020 오류 메시지에 있는 **RayID** 또는 클라이언트 IP 주소를 찾습니다.
 
-3\. 차단의 원인을 파악해 **방화벽 규칙**을 업데이트하거나, [**IP 액세스 규칙**](https://support.cloudflare.com/hc/articles/217074967)에서 방문자 IP 주소를 허용합니다.
+3. 차단의 원인을 파악해 **방화벽 규칙**을 업데이트하거나, [**IP 액세스 규칙**](https://support.cloudflare.com/hc/articles/217074967)에서 방문자 IP 주소를 허용합니다.
 
 ___
 

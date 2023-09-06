@@ -22,19 +22,19 @@ Por seguridad de la cuenta, debes verificar tu identidad y la propiedad de la cu
 
 ### Autenticación de tu cuenta
 
-1\. Inicia sesión en tu cuenta de Cloudflare.
+1. Inicia sesión en tu cuenta de Cloudflare.
 
-2\. En la esquina superior derecha del panel de control de Cloudflare, haz clic en **Soporte**.
+2. En la esquina superior derecha del panel de control de Cloudflare, haz clic en **Soporte**.
 
-3\. Haz clic en **Contactar con Soporte**. Desplázate hasta _Línea de asistencia telefónica de emergencia - Autenticación_.
+3. Haz clic en **Contactar con Soporte**. Desplázate hasta _Línea de asistencia telefónica de emergencia - Autenticación_.
 
 ![](/images/support/contact_support_ent_phone_card.png)
 
-4\. Para autenticarte usando un token de un solo uso, haz clic en **Obtener un token de un solo uso**. Aparecerá una ventana emergente con el código de token. El código se actualiza automáticamente cada 30 segundos.
+4. Para autenticarte usando un token de un solo uso, haz clic en **Obtener un token de un solo uso**. Aparecerá una ventana emergente con el código de token. El código se actualiza automáticamente cada 30 segundos.
 
-5\. Para autenticarse utilizando una aplicación de autenticación, haz clic en **Configurar aplicación de autenticación** y sigue las [instrucciones de configuración](https://support.cloudflare.com/hc/es-es/articles/200167906/#12345681) que aparecen en la siguiente pantalla. Después de la configuración, aparecerá el código de token en tu aplicación de autenticación móvil.
+5. Para autenticarse utilizando una aplicación de autenticación, haz clic en **Configurar aplicación de autenticación** y sigue las [instrucciones de configuración](https://support.cloudflare.com/hc/es-es/articles/200167906/#12345681) que aparecen en la siguiente pantalla. Después de la configuración, aparecerá el código de token en tu aplicación de autenticación móvil.
 
-6\. Espera hasta que el agente de Soporte de Cloudflare solicite el código antes de compartir el token de verificación.
+6. Espera hasta que el agente de Soporte de Cloudflare solicite el código antes de compartir el token de verificación.
 
 ___
 

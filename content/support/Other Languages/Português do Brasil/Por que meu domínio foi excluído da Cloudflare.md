@@ -48,21 +48,21 @@ ___
 
 ## Etapa 2 - verifique se o registro do domínio está listando os nameservers da Cloudflare
 
-1\. Use a aplicação "whois" baseado em comando fornecido com o seu sistema operacional ou consulte um site como [owhois.icann.org](https://whois.icann.org/en) ou [www.whois.net](https://www.whois.net/).
+1. Use a aplicação "whois" baseado em comando fornecido com o seu sistema operacional ou consulte um site como [owhois.icann.org](https://whois.icann.org/en) ou [www.whois.net](https://www.whois.net/).
 
 -   Se não conseguir localizar os dados do nameserver do seu domínio, entre em contato com o seu registrador ou com o provedor de domínios para obter as informações de registro do domínio.
 -   Certifique-se de que os nameservers da Cloudflare sejam os únicos dois nameservers listados nos dados de registro do domínio.
 -   Verifique se os nameservers estão digitados corretamente no registro do domínio.
 
-2\. Confirme se os nameservers correspondem exatamente aos nameservers informados na seção **nameservers da Cloudflare** do aplicativo de **DNS** da Cloudflare.
+2. Confirme se os nameservers correspondem exatamente aos nameservers informados na seção **nameservers da Cloudflare** do aplicativo de **DNS** da Cloudflare.
 
-3\. Se você identificar informações incorretas, faça login no portal do seu provedor de domínio para fazer atualizações ou entre em contato com o seu provedor de domínio para obter ajuda.
+3. Se você identificar informações incorretas, faça login no portal do seu provedor de domínio para fazer atualizações ou entre em contato com o seu provedor de domínio para obter ajuda.
 
 ___
 
 ## Etapa 3 - verifique se a resolução do domínio está usando os nameservers da Cloudflare
 
-1\. Use ferramentas de comando ou de terceiros para confirmar se os nameservers da Cloudflare estão configurados:
+1. Use ferramentas de comando ou de terceiros para confirmar se os nameservers da Cloudflare estão configurados:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com @8.8.8.8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -82,9 +82,9 @@ Alguns serviços on-line, comos [whatsmydns.net](https://www.whatsmydns.net/), 
 -   Certifique-se de que não haja nenhum nameserver com erros de digitação.
 -   Confirme se os nameservers correspondem exatamente aos nameservers informados na seção **nameservers da Cloudflare** do aplicativo de **DNS** da Cloudflare.
 
-2\. Se você identificar informações incorretas, faça login no portal do seu provedor de domínio para fazer atualizações ou entre em contato com o seu provedor de domínio para obter ajuda.
+2. Se você identificar informações incorretas, faça login no portal do seu provedor de domínio para fazer atualizações ou entre em contato com o seu provedor de domínio para obter ajuda.
 
-3\. Se os dados do nameserver ou do registro do domínio estiverem corretos, entre em contato com o seu provedor de domínio para confirmar se tiveram problemas de propagação de DNS recentemente.
+3. Se os dados do nameserver ou do registro do domínio estiverem corretos, entre em contato com o seu provedor de domínio para confirmar se tiveram problemas de propagação de DNS recentemente.
 
 ___
 

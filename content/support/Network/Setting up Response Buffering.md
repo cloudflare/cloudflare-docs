@@ -20,9 +20,9 @@ ___
 
 To set up response buffering for a domain:
 
-1\. Go to **Network.**
+1. Go to **Network.**
 
-2\. For **Response Buffering**, select **On**.
+2. For **Response Buffering**, select **On**.
 
 {{<Aside type="note">}}
 Response Buffering is available for all Enterprise customers. To upgrade

@@ -33,12 +33,12 @@ ___
 
 ドメインと関連づけられているCloudflare IPが中国でブロックされているか確認したい場合、次の詳細を[Cloudflare サポート](https://support.cloudflare.com/hc/articles/200172476)に提示してください：
 
-1\. 中国国内のロケーションから、[あなたのドメインへtraceroute](http://support.cloudflare.com/entries/22050846-how-do-i-run-a-traceroute)し、ネットワークパスを示しています。
+1. 中国国内のロケーションから、[あなたのドメインへtraceroute](http://support.cloudflare.com/entries/22050846-how-do-i-run-a-traceroute)し、ネットワークパスを示しています。
 
 2. [グレートファイアウォール チェッカー](http://www.greatfirewallofchina.org/)からの結果です。
 
-3\. 中国国内に位置するドメインへのDNS解決応答。[DNSチェッカー](https://dnschecker.org/)のようなツールを使用することをご検討ください。
+3. 中国国内に位置するドメインへのDNS解決応答。[DNSチェッカー](https://dnschecker.org/)のようなツールを使用することをご検討ください。
 
-4\. サイトでホストされているコンテンツの種類。中国では、ポルノグラフィ、ギャンブル、特定の政治的議論を含む、ある一定のコンテンツが検閲を受けます。
+4. サイトでホストされているコンテンツの種類。中国では、ポルノグラフィ、ギャンブル、特定の政治的議論を含む、ある一定のコンテンツが検閲を受けます。
 
 Cloudflareサポートでは、ドメインが中国でブロックされているかどうかを確認するだけで、ブロックを解除することはできません。

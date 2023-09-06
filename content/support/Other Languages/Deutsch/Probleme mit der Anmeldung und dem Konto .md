@@ -19,11 +19,11 @@ Wenn Sie die mit Ihrem Konto verknüpfte E-Mail-Adresse vergessen haben, wenden 
 
 Wenn Sie die mit Ihrer Anwendung verknüpfte E-Mail-Adresse vergessen haben:
 
-1\. Gehen Sie auf [](http://dash.cloudflare.com/forgot-email)[E-Mail-Adresse vergessen?](https://dash.cloudflare.com/forgot-email)
+1. Gehen Sie auf [](http://dash.cloudflare.com/forgot-email)[E-Mail-Adresse vergessen?](https://dash.cloudflare.com/forgot-email)
 
-2\. Geben Sie Ihren Domain-Namen ein.
+2. Geben Sie Ihren Domain-Namen ein.
 
-3\. Cloudflare sendet eine E-Mail an die Adresse, die Ihrem Domain-Namen zugeordnet ist. Wenn Sie nicht innerhalb von 20 Minuten eine E-Mail erhalten, überprüfen Sie Ihren Spam-Ordner. Die Nachricht wird von `no-reply@cloudflare.com` oder `noreply@notify.cloudflare.com` gesendet.
+3. Cloudflare sendet eine E-Mail an die Adresse, die Ihrem Domain-Namen zugeordnet ist. Wenn Sie nicht innerhalb von 20 Minuten eine E-Mail erhalten, überprüfen Sie Ihren Spam-Ordner. Die Nachricht wird von `no-reply@cloudflare.com` oder `noreply@notify.cloudflare.com` gesendet.
 
 {{<Aside type="note">}}
 Dieser Vorgang hat keine Auswirkungen auf Ihr Konto und Ihre
@@ -40,13 +40,13 @@ ___
 
 Wenn Sie Ihr Kontopasswort vergessen haben:
 
-1\. Gehen Sie auf [](http://dash.cloudflare.com/forgot-email)[Passwort zurücksetzen](https://dash.cloudflare.com/password-reset).
+1. Gehen Sie auf [](http://dash.cloudflare.com/forgot-email)[Passwort zurücksetzen](https://dash.cloudflare.com/password-reset).
 
-2\. Geben Sie Ihre E-Mail-Adresse ein.
+2. Geben Sie Ihre E-Mail-Adresse ein.
 
-3\. Sie sollten eine E-Mail von Cloudflare erhalten. Wenn Sie innerhalb von 20 Minuten keine E-Mail erhalten, überprüfen Sie Ihren Spam-Ordner. Die Nachricht wird von `no-reply@cloudflare.com` oder `noreply@notify.cloudflare.com` gesendet.
+3. Sie sollten eine E-Mail von Cloudflare erhalten. Wenn Sie innerhalb von 20 Minuten keine E-Mail erhalten, überprüfen Sie Ihren Spam-Ordner. Die Nachricht wird von `no-reply@cloudflare.com` oder `noreply@notify.cloudflare.com` gesendet.
 
-4\. Klicken Sie auf den Link zum Zurücksetzen des Passworts. Dieser Link läuft nach zwei Stunden ab.
+4. Klicken Sie auf den Link zum Zurücksetzen des Passworts. Dieser Link läuft nach zwei Stunden ab.
 
 {{<Aside type="tip">}}
 Cloudflare empfiehlt starke Passwörter. Die Mindestanforderungen sind:
@@ -82,11 +82,11 @@ anderes](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3D
 
 Nach der Einrichtung der 2FA wurden Sie gebeten, Ihre Backup-Codes an einem sicheren Ort aufzubewahren. So stellen Sie den Zugang mit einem Backup-Code von Cloudflare wieder her:
 
-1\. Rufen Sie den Backup-Code von dem Ort ab, an dem Sie ihn gespeichert haben.
+1. Rufen Sie den Backup-Code von dem Ort ab, an dem Sie ihn gespeichert haben.
 
-2\. Rufen Sie die Cloudflare-Anmeldeseite auf.
+2. Rufen Sie die Cloudflare-Anmeldeseite auf.
 
-3\. Tragen Sie den Backup-Code im Anmeldebildschirm ein und klicken Sie dann auf **Anmelden**.
+3. Tragen Sie den Backup-Code im Anmeldebildschirm ein und klicken Sie dann auf **Anmelden**.
 
 {{<Aside type="note">}}
 Ein Backup-Code wird ungültig, wenn er benutzt wurde.
@@ -100,17 +100,17 @@ Wenn Sie oder ein anderer Kontoinhaber noch Zugriff auf Ihr Cloudflare-Konto hab
 
 Wenn Sie nicht mehr auf Ihr 2FA-Konto oder Ihre Backup-Codes zugreifen können, verwenden Sie ein verifiziertes Gerät, um einen temporären Zugangscode anzufordern.
 
-1\. Melden Sie sich beim [Cloudflare-Dashboard](https://dash.cloudflare.com/login) an.
+1. Melden Sie sich beim [Cloudflare-Dashboard](https://dash.cloudflare.com/login) an.
 
-2\. Klicken Sie auf der Seite **Zwei-Faktor-Authentifizierung** auf **Sie können nicht auf Ihr 2FA-Gerät oder Ihre Backup-Codes zugreifen?**.
+2. Klicken Sie auf der Seite **Zwei-Faktor-Authentifizierung** auf **Sie können nicht auf Ihr 2FA-Gerät oder Ihre Backup-Codes zugreifen?**.
 
-3\. Klicken Sie auf **Wiederherstellung beginnen**.
+3. Klicken Sie auf **Wiederherstellung beginnen**.
 
-4\. Verifizieren Sie mit einem temporären Zugangscode die mit Ihrem Konto verknüpfte E-Mail-Adresse.
+4. Verifizieren Sie mit einem temporären Zugangscode die mit Ihrem Konto verknüpfte E-Mail-Adresse.
 
-5\. Verifizieren Sie Ihr Gerät mit einem Gerät, mit dem Sie sich zuvor angemeldet haben. Wenn Sie Ihre Cookies häufig löschen oder sich von einer anderen IP-Adresse aus anmelden, wird sich unser System nicht mehr an Ihr Gerät erinnern und Sie müssen für die Verifizierung ein anderes Gerät verwenden.
+5. Verifizieren Sie Ihr Gerät mit einem Gerät, mit dem Sie sich zuvor angemeldet haben. Wenn Sie Ihre Cookies häufig löschen oder sich von einer anderen IP-Adresse aus anmelden, wird sich unser System nicht mehr an Ihr Gerät erinnern und Sie müssen für die Verifizierung ein anderes Gerät verwenden.
 
-6\. Aus Sicherheitsgründen müssen Sie 3 bis 5 Tage nach Abschluss der Verifizierung warten, bis Sie Ihren vorläufigen Zugangscode erhalten.
+6. Aus Sicherheitsgründen müssen Sie 3 bis 5 Tage nach Abschluss der Verifizierung warten, bis Sie Ihren vorläufigen Zugangscode erhalten.
 
 #### **Benötigen Sie noch zusätzliche Hilfe?**
 
@@ -135,27 +135,27 @@ ___
 
 So ändern Sie die E-Mail-Adresse, die mit Ihrem Cloudflare Konto verknüpft ist:
 
-1\. Gehen Sie zu Ihrem [Profil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Gehen Sie zu Ihrem [Profil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Wählen Sie Ihr Konto aus.
+2. Wählen Sie Ihr Konto aus.
 
-3\. Wählen Sie im Menü **E-Mail-Adresse** die Option **E-Mail-Adresse ändern** aus.
+3. Wählen Sie im Menü **E-Mail-Adresse** die Option **E-Mail-Adresse ändern** aus.
 
-3\. Geben Sie in diesem Dialog unter **Neue E-Mail-Adresse** Ihre neue E-Mail-Adresse ein. Wiederholen Sie sie unter **E-Mail-Adresse bestätigen**. Geben Sie dann Ihr aktuelles Passwort ein.
+3. Geben Sie in diesem Dialog unter **Neue E-Mail-Adresse** Ihre neue E-Mail-Adresse ein. Wiederholen Sie sie unter **E-Mail-Adresse bestätigen**. Geben Sie dann Ihr aktuelles Passwort ein.
 
-5\. Klicken Sie auf **Speichern**.
+5. Klicken Sie auf **Speichern**.
 
 #### **Passwort ändern**
 
-1\. Gehen Sie zu Ihrem [Profil](https://dash.cloudflare.com/?to=/:account/profile).
+1. Gehen Sie zu Ihrem [Profil](https://dash.cloudflare.com/?to=/:account/profile).
 
-2\. Wählen Sie Ihr Konto aus.
+2. Wählen Sie Ihr Konto aus.
 
-3\. Wählen Sie **Authentifizierung**.
+3. Wählen Sie **Authentifizierung**.
 
-4\. Unter **Passwort** klicken Sie auf **Ändern**.
+4. Unter **Passwort** klicken Sie auf **Ändern**.
 
-5\. Ändern Sie Ihr Passwort und klicken Sie auf **Speichern**.
+5. Ändern Sie Ihr Passwort und klicken Sie auf **Speichern**.
 
 {{<Aside type="note">}}
 Sie sollten außerdem in Betracht ziehen, Ihre [API-Schlüssel und

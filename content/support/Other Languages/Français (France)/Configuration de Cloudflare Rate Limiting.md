@@ -208,29 +208,29 @@ Cliquez pour afficher des informations détaillées sur la création des deux ty
 6.  Cliquez sur **Save** (Enregistrer).
 7.  Le **nom de la règle** apparaît dans votre liste de règles **Rate Limiting**.
 
-1\. Connectez-vous au tableau de bord Cloudflare.
+1. Connectez-vous au tableau de bord Cloudflare.
 
-2\. Sélectionnez le domaine concerné.
+2. Sélectionnez le domaine concerné.
 
-3\. Accédez à **Security** (Sécurité) > **WAF** > **Rate limiting rules** (Règles de limitation du débit).
+3. Accédez à **Security** (Sécurité) > **WAF** > **Rate limiting rules** (Règles de limitation du débit).
 
-4\. Cliquez sur **Create a custome rule** (Créer une règle personnalisée).  Une boîte de dialogue s'affiche, vous permettant de saisir les détails de votre nouvelle règle.
+4. Cliquez sur **Create a custome rule** (Créer une règle personnalisée).  Une boîte de dialogue s'affiche, vous permettant de saisir les détails de votre nouvelle règle.
 
 ![Boîte de dialogue contextuelle de création d'une règle Rate Limiting avec un exemple de configuration de règle. La règle bloquera les requêtes provenant d'adresses IP qui dépassent les 150 requêtes par minute pendant une heure.](/images/support/previous-rate-limiting-create-rule.png)
 
-5\. Saisissez un **nom de règle** descriptif.
+5. Saisissez un **nom de règle** descriptif.
 
-6\. Pour **If Traffic Matching the URL** (Si le trafic correspond à l'URL), sélectionnez un modèle HTTP dans la liste déroulante, ainsi qu'une URL.
+6. Pour **If Traffic Matching the URL** (Si le trafic correspond à l'URL), sélectionnez un modèle HTTP dans la liste déroulante, ainsi qu'une URL.
 
-7\. Dans le champ **from the same IP address exceeds** (provenant de la même adresse dépasse), saisissez un entier supérieur à 1 pour représenter le nombre de requêtes dans une période d'échantillonnage.
+7. Dans le champ **from the same IP address exceeds** (provenant de la même adresse dépasse), saisissez un entier supérieur à 1 pour représenter le nombre de requêtes dans une période d'échantillonnage.
 
-8\. Pour **requests per** (requêtes par), sélectionnez la période d'échantillonnage (la période pendant laquelle les requêtes sont comptées). Pour les domaines pour lesquels une offre Enterprise a été souscrite, vous pouvez saisir toute durée comprise entre 10 secondes et 86 400 secondes (24 heures).
+8. Pour **requests per** (requêtes par), sélectionnez la période d'échantillonnage (la période pendant laquelle les requêtes sont comptées). Pour les domaines pour lesquels une offre Enterprise a été souscrite, vous pouvez saisir toute durée comprise entre 10 secondes et 86 400 secondes (24 heures).
 
-9\. Dans le menu déroulant **Then** (Alors), choisissez l'une des actions disponibles en fonction de votre offre. Consultez la section _Rule Mitigation_ (Atténuation des règles) de la section _Components of a Rate Limiting Rule_ (Composants d'une règle Rate Limiting) ci-dessus pour plus de détails.
+9. Dans le menu déroulant **Then** (Alors), choisissez l'une des actions disponibles en fonction de votre offre. Consultez la section _Rule Mitigation_ (Atténuation des règles) de la section _Components of a Rate Limiting Rule_ (Composants d'une règle Rate Limiting) ci-dessus pour plus de détails.
 
-10\. Si vous avez sélectionné _Block_ (Bloquer) ou _Simulate_ (Simuler), pour l'option **matching traffic from that visitor for** (trafic correspondant provenant de ce visiteur pour), sélectionnez la durée d'application de l'option lorsqu'un seuil a été atteint. Pour les domaines pour lesquels une offre Enterprise a été souscrite, vous pouvez saisir toute durée comprise entre 10 secondes et 86 400 secondes (24 heures).
+10. Si vous avez sélectionné _Block_ (Bloquer) ou _Simulate_ (Simuler), pour l'option **matching traffic from that visitor for** (trafic correspondant provenant de ce visiteur pour), sélectionnez la durée d'application de l'option lorsqu'un seuil a été atteint. Pour les domaines pour lesquels une offre Enterprise a été souscrite, vous pouvez saisir toute durée comprise entre 10 secondes et 86 400 secondes (24 heures).
 
-11\. Pour activer votre nouvelle règle, cliquez sur **Save and deploy** (Enregistrer et déployer).
+11. Pour activer votre nouvelle règle, cliquez sur **Save and deploy** (Enregistrer et déployer).
 
 La nouvelle règle apparaît dans la liste de règles Rate Limiting.
 
@@ -249,23 +249,23 @@ L'option **Advanced Criteria** (Critères avancés) permet de configurer les mé
 
 Pour configurer vos critères avancés pour une règle nouvelle ou existante, suivez ces étapes :
 
-1\. Développez **Advanced Criteria** (Critères avancés).
+1. Développez **Advanced Criteria** (Critères avancés).
 
 ![Champs disponibles lors de la configuration des critères avancés pour une règle Rate Limiting.](/images/support/previous-rate-limiting-advanced-criteria.png)
 
-2\. Sélectionnez une valeur dans la liste déroulante **Method(s)** (Méthodes). _ANY_ est une valeur par défaut qui correspond à toutes les méthodes HTTP.
+2. Sélectionnez une valeur dans la liste déroulante **Method(s)** (Méthodes). _ANY_ est une valeur par défaut qui correspond à toutes les méthodes HTTP.
 
-3\. Filtrez par **HTTP Response Header(s)** (En-têtes de réponse HTTP). Cliquez sur **Add header response field** (Ajouter un champ de réponse d'en-tête) pour inclure les en-têtes renvoyés par votre serveur web d'origine.
+3. Filtrez par **HTTP Response Header(s)** (En-têtes de réponse HTTP). Cliquez sur **Add header response field** (Ajouter un champ de réponse d'en-tête) pour inclure les en-têtes renvoyés par votre serveur web d'origine.
 
 L'en-tête **CF-Cache-Status** apparaît par défaut afin que Cloudflare diffuse des ressources mises en cache, plutôt que d'appliquer une limitation de taux à ces ressources. Pour appliquer également une limitation de taux aux ressources mises en cache, retirez cet en-tête en cliquant sur le bouton **X** ou activez **Also apply rate limit to cached assets** (Appliquer aussi la limitation de taux aux ressources mises en cache).
 
 Si plusieurs en-têtes figurent sous **HTTP Response Header(s)** (En-tête(s) de réponse HTTP), une logique booléenne _AND_ est appliquée. Pour exclure un en-tête, utilisez l'option _Not Equals_ (Non égal à). Les en-têtes ne sont pas sensibles à la casse.
 
-4\. Sous **Origin Response code(s)** (Code(s) de réponse du serveur d'origine), saisissez la valeur numérique de chaque code de réponse HTTP à associer.  En cas de codes HTTP multiples, séparez-les par une virgule, par exemple : `401, 403`.
+4. Sous **Origin Response code(s)** (Code(s) de réponse du serveur d'origine), saisissez la valeur numérique de chaque code de réponse HTTP à associer.  En cas de codes HTTP multiples, séparez-les par une virgule, par exemple : `401, 403`.
 
-5\. (Facultatif) Configurez d'autres fonctionnalités de Rate Limiting autorisées pour votre offre.
+5. (Facultatif) Configurez d'autres fonctionnalités de Rate Limiting autorisées pour votre offre.
 
-6\. Cliquez sur **Save and Deploy** (Enregistrer et déployer).
+6. Cliquez sur **Save and Deploy** (Enregistrer et déployer).
 
 ___
 
@@ -275,17 +275,17 @@ L'option **Advanced Response** (Réponse avancée) configure le format des infor
 
 Pour configurer une réponse en texte brut ou JSON :
 
-1\. Développez **Advanced Response** (Réponse avancée).
+1. Développez **Advanced Response** (Réponse avancée).
 
 ![Champs disponibles lors de la configuration de la réponse avancée pour une règle Rate Limiting.](/images/support/previous-rate-limiting-advanced-response.png)
 
-2\. Sélectionnez un format **Response type** (Type de réponse) autre que celui par défaut : _Custom JSON_ (JSON personnalisé) ou _Custom TEXT_ (TEXTE personnalisé).
+2. Sélectionnez un format **Response type** (Type de réponse) autre que celui par défaut : _Custom JSON_ (JSON personnalisé) ou _Custom TEXT_ (TEXTE personnalisé).
 
-3\. Saisissez la réponse en texte brut ou JSON que vous souhaitez renvoyer. La taille maximale des réponses est de 32 Ko.
+3. Saisissez la réponse en texte brut ou JSON que vous souhaitez renvoyer. La taille maximale des réponses est de 32 Ko.
 
-4\. (Facultatif) Configurez d'autres fonctionnalités de Rate Limiting autorisées pour votre offre.
+4. (Facultatif) Configurez d'autres fonctionnalités de Rate Limiting autorisées pour votre offre.
 
-5\. Cliquez sur **Save and Deploy** (Enregistrer et déployer).
+5. Cliquez sur **Save and Deploy** (Enregistrer et déployer).
 
 ### Utilisation d'une page HTML ou d'une redirection personnalisée
 
@@ -293,7 +293,7 @@ Si vous souhaitez afficher une page HTML personnalisée, configurez une page per
 
 Vous pouvez utiliser la méthode suivante pour rediriger un client soumis à une limitation de débit vers une URL spécifique :
 
-1\. Créez une page HTML sur votre serveur qui redirigera vers l'URL finale de la page que vous souhaitez afficher. Incluez une balise [meta refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html) dans la page, comme dans l'exemple suivant :
+1. Créez une page HTML sur votre serveur qui redirigera vers l'URL finale de la page que vous souhaitez afficher. Incluez une balise [meta refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html) dans la page, comme dans l'exemple suivant :
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;!doctype html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -303,9 +303,9 @@ Vous pouvez utiliser la méthode suivante pour rediriger un client soumis à une
 
 Relevez l'URL publique de la page que vous avez créée.
 
-2\. Dans le tableau de bord Cloudflare, rendez-vous dans **Account Home** > **Configurations** > **Custom Pages**.
+2. Dans le tableau de bord Cloudflare, rendez-vous dans **Account Home** > **Configurations** > **Custom Pages**.
 
-3\. Dans **429 errors**, cliquez sur **Custom Pages**.
+3. Dans **429 errors**, cliquez sur **Custom Pages**.
 
 4.Saisissez l'URL de la page que vous avez créée sur votre serveur (la page contenant la balise meta refresh) et cliquez sur **Publish**.
 
@@ -322,15 +322,15 @@ ___
 
 **Bypass** (Ignorer) crée une liste verte ou une exception afin qu'aucune action ne s'applique à un ensemble spécifique d'URL, même si la limite de taux correspondante est atteinte. Suivez ces étapes pour configurer une commande **Bypass** (Ignorer) :
 
-1\. Développez **Bypass** (Ignorer).
+1. Développez **Bypass** (Ignorer).
 
-2\. Dans la zone de texte **Bypass rule for these URLs** (Ignorer la règle pour ces URL), saisissez les URL que vous souhaitez exempter de la règle de limitation de taux. Saisissez chaque URL sur sa propre ligne. Toute spécification de HTTP ou HTTPS dans l'URL est automatiquement supprimée lorsque la règle est enregistrée et, au lieu de cela, s'applique à la fois à HTTP et HTTPS.
+2. Dans la zone de texte **Bypass rule for these URLs** (Ignorer la règle pour ces URL), saisissez les URL que vous souhaitez exempter de la règle de limitation de taux. Saisissez chaque URL sur sa propre ligne. Toute spécification de HTTP ou HTTPS dans l'URL est automatiquement supprimée lorsque la règle est enregistrée et, au lieu de cela, s'applique à la fois à HTTP et HTTPS.
 
 ![Configuration de deux URL à ignorer dans le cadre d'une règle Rate Limiting (une par ligne).](/images/support/previous-rate-limiting-bypass.png)
 
-3\. (Facultatif) Configurez d'autres fonctionnalités de Rate Limiting autorisées pour votre offre.
+3. (Facultatif) Configurez d'autres fonctionnalités de Rate Limiting autorisées pour votre offre.
 
-4\. Cliquez sur **Save and Deploy** (Enregistrer et déployer).
+4. Cliquez sur **Save and Deploy** (Enregistrer et déployer).
 
 ___
 

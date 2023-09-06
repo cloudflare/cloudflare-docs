@@ -49,7 +49,7 @@ ___
 
 Existem dois métodos para resolver erros de conteúdo misto.
 
-1\. Carregue todos os recursos por meio do seu código-fonte em HTML sem especificar um protocolo HTTP ou HTTPS. Por exemplo:
+1. Carregue todos os recursos por meio do seu código-fonte em HTML sem especificar um protocolo HTTP ou HTTPS. Por exemplo:
 
      _//domain.com/path/to.file_
 
@@ -57,7 +57,7 @@ Existem dois métodos para resolver erros de conteúdo misto.
 
      _http://domain.com/path/to.file_
 
-2\. Dependendo do seu Sistema de Gerenciamento de Conteúdo, verifique se existem plugins que reescrevam automaticamente os recursos com HTTP como HTTPS. No aplicativo **SSL/TLS**, a Cloudflare oferece esse serviço por meio do [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647).
+2. Dependendo do seu Sistema de Gerenciamento de Conteúdo, verifique se existem plugins que reescrevam automaticamente os recursos com HTTP como HTTPS. No aplicativo **SSL/TLS**, a Cloudflare oferece esse serviço por meio do [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647).
 
 ___
 

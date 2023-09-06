@@ -19,8 +19,8 @@ Para confirmar se os IPs Cloudflare associados ao seu domínio estão bloqueados
 
 1 Um [rastreador para seu domínio](http://support.cloudflare.com/entries/22050846-how-do-i-run-a-traceroute) de um local na China para demonstrar o caminho de rede.
 
-2\. Os resultados do [Great Firewall Checker](http://www.greatfirewallofchina.org/) .
+2. Os resultados do [Great Firewall Checker](http://www.greatfirewallofchina.org/) .
 
-3\. Resposta de resolução de DNS para o domínio de um local na China. Considere usar uma ferramenta como [Verificador de DNS](https://dnschecker.org/).
+3. Resposta de resolução de DNS para o domínio de um local na China. Considere usar uma ferramenta como [Verificador de DNS](https://dnschecker.org/).
 
-4\. O tipo de conteúdo hospedado no seu site.  A China censura certos conteúdos, incluindo pornografia, jogos de azar e tipos específicos de conversas políticas.
+4. O tipo de conteúdo hospedado no seu site.  A China censura certos conteúdos, incluindo pornografia, jogos de azar e tipos específicos de conversas políticas.

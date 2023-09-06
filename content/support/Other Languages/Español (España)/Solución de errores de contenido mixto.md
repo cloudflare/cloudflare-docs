@@ -53,7 +53,7 @@ ___
 
 Hay dos métodos para solucionar los errores de contenido mixto.
 
-1\. Carga todos los recursos a través de tu fuente HTML sin especificar los protocolos HTTP o HTTPS. Por ejemplo:
+1. Carga todos los recursos a través de tu fuente HTML sin especificar los protocolos HTTP o HTTPS. Por ejemplo:
 
      ```//domain.com/path/to.file```
 
@@ -61,7 +61,7 @@ Hay dos métodos para solucionar los errores de contenido mixto.
 
      ```http://domain.com/path/to.file```
 
-2\. Según tu sistema de administración de contenido, revisa los complementos que reescriben automáticamente los recursos HTTP a HTTPS. Dentro de la aplicación **SSL/TLS**, Cloudflare proporciona tal sistema a través de [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647).
+2. Según tu sistema de administración de contenido, revisa los complementos que reescriben automáticamente los recursos HTTP a HTTPS. Dentro de la aplicación **SSL/TLS**, Cloudflare proporciona tal sistema a través de [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647).
 
 {{<Aside type="note">}}
 Cloudflare recomienda a los usuarios de WordPress que instalen el

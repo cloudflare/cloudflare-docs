@@ -33,13 +33,13 @@ ___
 
 Para configurar seu domínio na Cloudflare de modo a permitir apenas conexões que utilizem protocolos TLS 1.2 ou mais recentes:
 
-1\. Entre no painel de controle da Cloudflare.
+1. Entre no painel de controle da Cloudflare.
 
-2\. Clique na conta adequada da Cloudflare e no aplicativo.
+2. Clique na conta adequada da Cloudflare e no aplicativo.
 
-4\. Navegue até **SSL/TLS** > **Certificados de Borda**.
+4. Navegue até **SSL/TLS** > **Certificados de Borda**.
 
-5\. Em **Versão Mínima de TLS**, selecione **TLS 1.2** ou uma opção mais recente.
+5. Em **Versão Mínima de TLS**, selecione **TLS 1.2** ou uma opção mais recente.
 
 ___
 

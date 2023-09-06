@@ -168,17 +168,17 @@ Cloudflare DNSアプリ内で_SPFレコード_と_DKIMレコード_を_TXTレコ
 
 ドメインネームサーバーがCloudflareに設定されていることを確認したら、以下の手順に従います。 
 
-1\. Cloudflareダッシュボードにログインします。
+1. Cloudflareダッシュボードにログインします。
 
-2\. レコードを追加するドメインの該当するCloudflareアカウントをクリックします。
+2. レコードを追加するドメインの該当するCloudflareアカウントをクリックします。
 
-3\. 正しいドメインが選択されていることを確認します。
+3. 正しいドメインが選択されていることを確認します。
 
-4\. **DNS**アプリをクリックします。
+4. **DNS**アプリをクリックします。
 
-5\. 4つのAレコードすべてとSquarespaceからのwww CNAMEが（以下に示されているように）_「プロキシ済み（Proxied）」_とマークされていることを確認します。
+5. 4つのAレコードすべてとSquarespaceからのwww CNAMEが（以下に示されているように）_「プロキシ済み（Proxied）」_とマークされていることを確認します。
 
-6\. 「verify.squarespace.com」のCNAMEレコードが（以下のように）_DNS Only_とマークされていることを確認します。
+6. 「verify.squarespace.com」のCNAMEレコードが（以下のように）_DNS Only_とマークされていることを確認します。
 
 ![cloudflare_with_squarespace.png](/images/support/cloudflare_with_squarespace.png)
 

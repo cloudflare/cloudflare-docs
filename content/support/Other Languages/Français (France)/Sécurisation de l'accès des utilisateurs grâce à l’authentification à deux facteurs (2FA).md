@@ -24,13 +24,13 @@ ___
 
 Activer l’authentification à deux facteurs sur votre compte Cloudflare :
 
-1\. Connectez-vous au tableau de bord Cloudflare.
+1. Connectez-vous au tableau de bord Cloudflare.
 
-2\. Dans la liste déroulante **My Profile**, cliquez sur **My Profile**.
+2. Dans la liste déroulante **My Profile**, cliquez sur **My Profile**.
 
-3\. Cliquez sur l'onglet **Authentication**. 
+3. Cliquez sur l'onglet **Authentication**. 
 
-4\. Défilez vers le bas jusqu'à la section **Two-Factor Authentication** et basculez sur _On_.
+4. Défilez vers le bas jusqu'à la section **Two-Factor Authentication** et basculez sur _On_.
 
 ![2FA_enable.png](/images/support/2FA_enable.png)
 
@@ -45,25 +45,25 @@ Tous les détenteurs d'un compte Cloudflare doivent activer l’authentification
 
 Pour activer l’authentification à deux facteurs :
 
-1\. Scannez le code QR avec votre appareil mobile et saisissez le code dans votre application d'authentification.
+1. Scannez le code QR avec votre appareil mobile et saisissez le code dans votre application d'authentification.
 
-2\. Saisissez votre mot de passe Cloudflare, puis cliquez sur **Next** (Suivant)
+2. Saisissez votre mot de passe Cloudflare, puis cliquez sur **Next** (Suivant)
 
 -   Si vous ne parvenez pas à scanner le code QR, cliquez sur **Can't scan QR code (Impossible de scanner le code QR)**, puis suivez les étapes de la procédure de configuration manuelle de votre application d'authentification..
 
 ![2FA_scan_QR_code.png](/images/support/2FA_scan_QR_code.png)
 
-3\. Saisissez votre mot de passe et cliquez à nouveau sur **Next** pour voir vos codes de vérification de secours.
+3. Saisissez votre mot de passe et cliquez à nouveau sur **Next** pour voir vos codes de vérification de secours.
 
-4\. Après avoir téléchargé vos codes de secours, nous vous recommandons de les enregistrer en lieu sûr. Vous pouvez cliquer sur **Download** (Télécharger), **Print** (Imprimer), ou **Copy** (Copier) pour sauvegarder les codes. Cliquez ensuite sur **Next**.
+4. Après avoir téléchargé vos codes de secours, nous vous recommandons de les enregistrer en lieu sûr. Vous pouvez cliquer sur **Download** (Télécharger), **Print** (Imprimer), ou **Copy** (Copier) pour sauvegarder les codes. Cliquez ensuite sur **Next**.
 
 ![2FA_review_and_backup_codes_v2.png](/images/support/2FA_review_and_backup_codes_v2.png)
 
 Vous pouvez renouveler vos codes de secours à l'écran suivant ou à tout moment dans l'onglet **Authentication**. 
 
-5\. Cliquez sur **Next**  sur l'écran de configuration des codes de secours pour terminer. Vous verrez que **l’authentification à deux facteurs** est _activée_.
+5. Cliquez sur **Next**  sur l'écran de configuration des codes de secours pour terminer. Vous verrez que **l’authentification à deux facteurs** est _activée_.
 
-6\. Vous pouvez également demander de nouveaux codes de secours. Cliquez sur **regenerate them now** (renouveler les maintenant) pour enregistrer de nouveaux codes de secours pour l’authentification à deux facteurs.
+6. Vous pouvez également demander de nouveaux codes de secours. Cliquez sur **regenerate them now** (renouveler les maintenant) pour enregistrer de nouveaux codes de secours pour l’authentification à deux facteurs.
 
 ![2FA_configuration_complete.png](/images/support/2FA_configuration_complete.png)
 
@@ -75,15 +75,15 @@ Les super administrateurs sont les seuls utilisateurs qui peuvent activer l’au
 
 Pour désactiver l’authentification à deux facteurs sur votre compte Cloudflare :
 
-1\. Connectez-vous au tableau de bord Cloudflare.
+1. Connectez-vous au tableau de bord Cloudflare.
 
-2\. Dans la liste déroulante **My Profile**, cliquez sur **My Profile**.
+2. Dans la liste déroulante **My Profile**, cliquez sur **My Profile**.
 
-3\. Cliquez sur l'onglet **Authentication**.
+3. Cliquez sur l'onglet **Authentication**.
 
-4\. Faites défiler vers le bas jusqu'à la section **Two-Factor Authentication** (Authentification à deux facteurs) et cliquez pour la _désactiver_. Vous verrez un écran de confirmation.
+4. Faites défiler vers le bas jusqu'à la section **Two-Factor Authentication** (Authentification à deux facteurs) et cliquez pour la _désactiver_. Vous verrez un écran de confirmation.
 
-5\. Saisissez votre mot de passe, un code d'application d'authentification ou un code de secours, puis cliquez sur **Disable** (Désactiver).
+5. Saisissez votre mot de passe, un code d'application d'authentification ou un code de secours, puis cliquez sur **Disable** (Désactiver).
 
 ![2FA_disable.png](/images/support/2FA_disable.png)
 
@@ -95,15 +95,15 @@ Les problèmes les plus courants que l'on rencontre avec l’authentification à
 
 Lors de la configuration de l’authentification à deux facteurs, il vous a été demandé d'enregistrer vos codes de secours dans un emplacement sécurisé. Pour rétablir un accès perdu en utilisant un code de secours Cloudflare :
 
-1\. Récupérez le code de secours à l'endroit où vous l'avez enregistré.
+1. Récupérez le code de secours à l'endroit où vous l'avez enregistré.
 
-2\. Rendez-vous sur la page de connexion de Cloudflare.
+2. Rendez-vous sur la page de connexion de Cloudflare.
 
-3\. Saisissez le code de secours sur l'écran de connexion, puis cliquez sur **Log in**.
+3. Saisissez le code de secours sur l'écran de connexion, puis cliquez sur **Log in**.
 
 ![2FA_backup_code_login_annontated.png](/images/support/2FA_backup_code_login_annontated.png)
 
-4\. Si vous utilisez un code de secours, il devient invalide.
+4. Si vous utilisez un code de secours, il devient invalide.
 
 5.  Si vous tentez de saisir à nouveau un code de secours ou si vous saisissez le mauvais code, un message d'erreur s'affiche au bas de l'écran. Après plusieurs tentatives infructueuses, vous serez invité à vous connecter à nouveau.
 

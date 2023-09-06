@@ -37,12 +37,12 @@ ___
 
 도메인에 연결된 Cloudflare IP가 중국에서 차단된 경우, 다음의 세부 정보를 [Cloudflare 지원팀](https://support.cloudflare.com/hc/articles/200172476)에 제공해야 합니다.
 
-1\. 네트워크 경로를 설명하는 중국 내 [도메인에 대한 추적 경로](http://support.cloudflare.com/entries/22050846-how-do-i-run-a-traceroute).
+1. 네트워크 경로를 설명하는 중국 내 [도메인에 대한 추적 경로](http://support.cloudflare.com/entries/22050846-how-do-i-run-a-traceroute).
 
-2\. [Great Firewall Checker](http://www.greatfirewallofchina.org/)의 결과.
+2. [Great Firewall Checker](http://www.greatfirewallofchina.org/)의 결과.
 
-3\. 중국 내 위치에서의 도메인에 대한 DNS 확인 응답. [DNS Checker](https://dnschecker.org/) 등 도구의 사용을 권장합니다.
+3. 중국 내 위치에서의 도메인에 대한 DNS 확인 응답. [DNS Checker](https://dnschecker.org/) 등 도구의 사용을 권장합니다.
 
-4\. 사이트에서 호스팅하는 콘텐츠 타입.  중국은 음란물, 도박 및 특정한 유형의 정치 토론을 포함한 일부 콘텐츠를 검열하여 삭제합니다.
+4. 사이트에서 호스팅하는 콘텐츠 타입.  중국은 음란물, 도박 및 특정한 유형의 정치 토론을 포함한 일부 콘텐츠를 검열하여 삭제합니다.
 
 Cloudflare 지원팀은 도메인이 중국에서 차단되었는지만 확인할 수 있으며, 차단을 해제할 권한은 없습니다.

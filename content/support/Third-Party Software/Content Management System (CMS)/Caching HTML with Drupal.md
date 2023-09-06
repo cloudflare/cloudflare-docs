@@ -23,11 +23,11 @@ ___
 
 To avoid browser cache collisions, you must first enable Bypass Cache on Cookie in the Cloudflare dashboard. To do this,
 
-1\. Log in to your Cloudflare account.
+1. Log in to your Cloudflare account.
 
-2\. Click on the **Caching** app.
+2. Click on the **Caching** app.
 
-3\. Scroll down to **Browser Cache TTL** and choose **Respect Existing Headers**.
+3. Scroll down to **Browser Cache TTL** and choose **Respect Existing Headers**.
 
 Now, you can configure the _Bypass Cache on Cookie_ setting using Cloudflare **Page Rules**. 
 
@@ -37,13 +37,13 @@ ___
 
 When the _Bypass Cache on Cookie_ page rule matches the criteria we set, Cloudflare will cache static images and other files, without caching HTML. To configure _Bypass Cache on Cookie_ using **Page Rules**, 
 
-1\. Log in to your Cloudflare account.
+1. Log in to your Cloudflare account.
 
-2\. Go to **Rules > Page Rules**.
+2. Go to **Rules > Page Rules**.
 
-3\. Click the **Create Page Rule** button and enter your domain. In the example below, the domain is www.orangeclouded.com. 
+3. Click the **Create Page Rule** button and enter your domain. In the example below, the domain is www.orangeclouded.com. 
 
-4\. Configure the Page Rules settings as follows:
+4. Configure the Page Rules settings as follows:
 
 -   use the _\*_ wildcard operator on the Drupal installation path to match the entire domain
 -   set the Cache Level to Cache Everything

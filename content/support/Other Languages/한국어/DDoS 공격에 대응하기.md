@@ -32,13 +32,13 @@ ___
 
  [**공격 중 모드**](https://support.cloudflare.com/hc/articles/200170076) 활성화 방법:
 
-1\. Cloudflare 계정에 로그인하세요.
+1. Cloudflare 계정에 로그인하세요.
 
-2\. 현재 공격을 받는 도메인을 선택하세요.
+2. 현재 공격을 받는 도메인을 선택하세요.
 
-3\. Cloudflare **Overview** 앱의 **빠른 작업** 섹션에서 **공격 중 모드** 를  _켜짐_으로 전환하세요.
+3. Cloudflare **Overview** 앱의 **빠른 작업** 섹션에서 **공격 중 모드** 를  _켜짐_으로 전환하세요.
 
-4\. \[선택 사항\] **방화벽** 앱의 **설정** 탭에서 [**인증 유효 기간**](https://support.cloudflare.com/hc/articles/200170136)을 조정하세요.
+4. \[선택 사항\] **방화벽** 앱의 **설정** 탭에서 [**인증 유효 기간**](https://support.cloudflare.com/hc/articles/200170136)을 조정하세요.
 
 ___
 

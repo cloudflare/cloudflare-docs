@@ -22,19 +22,19 @@ Um die Sicherheit Ihres Kontos zu gewährleisten, müssen Sie Ihre Identität un
 
 ### Ihr Konto authentifizieren
 
-1\. Melden Sie sich bei Ihrem Cloudflare-Konto an.
+1. Melden Sie sich bei Ihrem Cloudflare-Konto an.
 
-2\. Klicken Sie in der oberen rechten Ecke des Cloudflare-Dashboards auf **Support**.
+2. Klicken Sie in der oberen rechten Ecke des Cloudflare-Dashboards auf **Support**.
 
-3\. Klicken Sie auf **Support kontaktieren**. Scrollen Sie nach unten zur Karte _Support-Hotline für Notfälle Authentifizierung_ .
+3. Klicken Sie auf **Support kontaktieren**. Scrollen Sie nach unten zur Karte _Support-Hotline für Notfälle Authentifizierung_ .
 
 ![](/images/support/contact_support_ent_phone_card.png)
 
-4\. Um sich mit einem Einmal-Token zu authentifizieren, klicken Sie auf **Einmal-Token erzeugen**. Es erscheint ein Pop-up-Fenster mit dem Token-Code. Der Code wird automatisch alle 30 Sekunden aktualisiert.
+4. Um sich mit einem Einmal-Token zu authentifizieren, klicken Sie auf **Einmal-Token erzeugen**. Es erscheint ein Pop-up-Fenster mit dem Token-Code. Der Code wird automatisch alle 30 Sekunden aktualisiert.
 
-5\. Um sich mit einer Authentifizierungs-App zu authentifizieren, klicken Sie auf **Authentifizierungs-App konfigurieren** und folgen Sie den [Konfigurationsanweisungen](https://support.cloudflare.com/hc/de/articles/200167906/#12345681) auf dem nächsten Bildschirm. Nach der Konfiguration wird der Token-Code in Ihrer mobilen Authentifizierungs-App angezeigt.
+5. Um sich mit einer Authentifizierungs-App zu authentifizieren, klicken Sie auf **Authentifizierungs-App konfigurieren** und folgen Sie den [Konfigurationsanweisungen](https://support.cloudflare.com/hc/de/articles/200167906/#12345681) auf dem nächsten Bildschirm. Nach der Konfiguration wird der Token-Code in Ihrer mobilen Authentifizierungs-App angezeigt.
 
-6\. Warten Sie, bis der Cloudflare-Support-Agent nach dem Code fragt, bevor Sie den Verifizierungs-Token weitergeben.
+6. Warten Sie, bis der Cloudflare-Support-Agent nach dem Code fragt, bevor Sie den Verifizierungs-Token weitergeben.
 
 ___
 

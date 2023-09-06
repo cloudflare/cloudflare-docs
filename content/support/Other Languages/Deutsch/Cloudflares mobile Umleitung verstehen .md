@@ -26,19 +26,19 @@ ___
 
 ## Mobile Umleitung aktivieren 
 
-1\. Melden Sie sich bei Ihrem Cloudflare-Konto an.
+1. Melden Sie sich bei Ihrem Cloudflare-Konto an.
 
-2\. Klicken Sie auf das entsprechende Cloudflare-Konto für die Domain, für die Sie die mobile Umleitung aktivieren möchten.
+2. Klicken Sie auf das entsprechende Cloudflare-Konto für die Domain, für die Sie die mobile Umleitung aktivieren möchten.
 
-3\. Klicken Sie auf die **Speed**\-App.
+3. Klicken Sie auf die **Speed**\-App.
 
-4\. Klicken Sie auf die Registerkarte **Optimierung**.
+4. Klicken Sie auf die Registerkarte **Optimierung**.
 
-5\. Scrollen Sie nach unten zum Abschnitt **Mobil** der Registerkarte **Optimierung**.
+5. Scrollen Sie nach unten zum Abschnitt **Mobil** der Registerkarte **Optimierung**.
 
-6\. Wählen Sie aus der Dropdown-Liste die Subdomain aus, die Sie umleiten möchten.
+6. Wählen Sie aus der Dropdown-Liste die Subdomain aus, die Sie umleiten möchten.
 
-7\. Wählen Sie **Pfad beibehalten** oder **Pfad entfernen** aus_._
+7. Wählen Sie **Pfad beibehalten** oder **Pfad entfernen** aus_._
 
 {{<Aside type="note">}}
 **Pfad beibehalten** leitet alle mobilen Anfragen zu derselben, aber auf
@@ -47,7 +47,7 @@ Ihrer für Mobilgeräte optimierten Website gehosteten Ressource um.
 optimierte Website-Homepage um.
 {{</Aside>}}
 
-8\. Schalten Sie den Schalter auf **Ein**.
+8. Schalten Sie den Schalter auf **Ein**.
 
 ![Mobile Redirect card with a sample URL, Keep path option, and the feature toggled to ](/images/support/hc-import-speed_mobileredirect_enabled.png)
 

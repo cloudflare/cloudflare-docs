@@ -46,18 +46,18 @@ Cloudflareでは、 _mod\_cloudflare_ の更新およびサポートを終了�
 
 Apache Webサーバーで _mod\_remoteip_ をインストールするには：
 
-1\.  _mod\_remoteip_ を有効化するために次のコマンドを出します。
+1.  _mod\_remoteip_ を有効化するために次のコマンドを出します。
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo a2enmod remoteip</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-2\.  _RemoteIPHeader CF-Connecting-IP_を含むサイト設定に更新します。例： `/etc/apache2/sites-available/000-default.conf`
+2.  _RemoteIPHeader CF-Connecting-IP_を含むサイト設定に更新します。例： `/etc/apache2/sites-available/000-default.conf`
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ServerAdmin webmaster@localhost</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">DocumentRoot /var/www/html</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ServerName remoteip.andy.support</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPHeader CF-Connecting-IP</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ErrorLog ${APACHE_LOG_DIR}/error.log</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">CustomLog ${APACHE_LOG_DIR}/access.log combined</span></div></span></span></span></code></pre>{{</raw>}}
 
-3\.  `apache.conf`で結合された _LogFormat_ エントリを `/etc/apache2/apache2.conf.` で、 _%h_ を _%a_ に替えてから更新してください。例えば、現在の _LogFormat_ は次のように表示されています。
+3.  `apache.conf`で結合された _LogFormat_ エントリを `/etc/apache2/apache2.conf.` で、 _%h_ を _%a_ に替えてから更新してください。例えば、現在の _LogFormat_ は次のように表示されています。
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat &quot;%h %l %u %t &quot;%r&quot; %&gt;s %O &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot;&quot; combined</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -69,25 +69,25 @@ Apache Webサーバーで _mod\_remoteip_ をインストールするには：
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat &quot;%a %l %u %t &quot;%r&quot; %&gt;s %O &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot;&quot; combined</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-4\. 次のコードと [Cloudflare IP](https://www.cloudflare.com/ips/)を入力して、 `/etc/apache2/conf-available/remoteip.conf` を作成し、信頼されるプロキシアドレスを定義します。
+4. 次のコードと [Cloudflare IP](https://www.cloudflare.com/ips/)を入力して、 `/etc/apache2/conf-available/remoteip.conf` を作成し、信頼されるプロキシアドレスを定義します。
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPHeader CF-Connecting-IP</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPTrustedProxy 192.0.2.1 (example IP address)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">RemoteIPTrustedProxy 192.0.2.2 (IPアドレスの例)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">( [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/)に記載されているすべてのCloudflare IPについて繰り返します）</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-5\. Apacheの設定を有効にします。
+5. Apacheの設定を有効にします。
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo a2enconf remoteip</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Enabling conf remoteip.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">新しい設定を有効にするには、</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">service apache2 reloadを実行する必要があります。</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-6\. Apache設定をテストします。
+6. Apache設定をテストします。
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo apache2ctl configtest</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Syntax OK</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
-7\. Apacheを再起動します。
+7. Apacheを再起動します。
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo systemctl restart apache2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -174,7 +174,7 @@ Railgun(または、Varnishなどのリバースプロキシソフトウェア)�
 
 1.  これを修正するには、Apache設定を開きます。これは通常、 `/etc/apache2/apache2.conf` `/etc/httpd/httpd.conf`、 `/usr/local/apache/conf/httpd.conf` o、またはほかのロケーションで見つかります。不明な場合は、ホスティングプロバイダーにお問い合わせください。
 2.  最後に追加するもの:`CloudflareRemoteIPTrustedProxy railgun_address`したがって、Railgunサーバーが127.0.0.1にある場合、次のようになります：`CloudflareRemoteIPTrustedProxy 127.0.0.1`
-3.  3\. 信頼するプロキシ一覧に追加するサーバーが複数ある場合、最後にそうしたサーバーを追加することができます：CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
+3.  3. 信頼するプロキシ一覧に追加するサーバーが複数ある場合、最後にそうしたサーバーを追加することができます：CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
 
 Lighttpdが自動的にログとアプリケーションにアクセスするためのサーバーIPを書き換えるようにするには、以下のソリューション二つのどちらかにしたがってください。
 
@@ -279,7 +279,7 @@ XenForoユーザーが [Cloudflare用のプラグイン](https://xenforo.com/co
 1.  サーバーに `cherokee-admin` を開きます。
 2.  Webブラウザで **Cherokee管理インターフェース** に移動します。
 3.  Cloudflareが提供しているドメインの **仮想サーバー** を選択します。
-4.  4\.  _「ロギング」_ タブで選択した **仮想サーバー**で、転送されたIPを受け入れるを有効化します。
+4.  4.  _「ロギング」_ タブで選択した **仮想サーバー**で、転送されたIPを受け入れるを有効化します。
 5.   _「ホストから受け入れる」_  ボックスに、 [CloudflareのIPアドレス](https://www.cloudflare.com/ips/)を入力します。
 
 Livezillaサーバー上で `PHP IP Server Param` フィールドを `HTTP_CF_CONNECTING_IP`に変更すると、IPアドレスを修正することができます。

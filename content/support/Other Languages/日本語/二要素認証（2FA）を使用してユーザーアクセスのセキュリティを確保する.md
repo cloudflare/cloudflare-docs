@@ -42,25 +42,25 @@ ___
 
 2FAを有効にするには、次の手順に従います：
 
-1\. モバイルデバイスでQRコードをスキャンし、認証アプリに表示されるコードを入力します。
+1. モバイルデバイスでQRコードをスキャンし、認証アプリに表示されるコードを入力します。
 
-2\. Cloudflareのパスワードを入力してから、**「次へ（Next）」**をクリックします。
+2. Cloudflareのパスワードを入力してから、**「次へ（Next）」**をクリックします。
 
 -   QRコードをスキャンできない場合は、**「QRコードをスキャンできない。別の手順を実行する（Can't scan QR code, Follow alternative steps）」**をクリックして、認証アプリを手動で設定します。
 
 ![モバイルデバイスでQRコードをスキャンして2FAを有効にする方法を示す画面のスクリーンショット](/images/support/2FA_scan_QR_code.png)
 
-3\. パスワードを入力し、**「次へ（Next）」**を再度クリックして、バックアップコードを確認します。
+3. パスワードを入力し、**「次へ（Next）」**を再度クリックして、バックアップコードを確認します。
 
-4\. バックアップコードを確認したら、安全な場所に保管しておいてください。**「ダウンロード（Download）」**、**「印刷（Print）」**、または**「コピー（Copy）」**をクリックして、コードを保存してから、**「次へ（Next）」**をクリックします。
+4. バックアップコードを確認したら、安全な場所に保管しておいてください。**「ダウンロード（Download）」**、**「印刷（Print）」**、または**「コピー（Copy）」**をクリックして、コードを保存してから、**「次へ（Next）」**をクリックします。
 
 ![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176771/2FA_review_and_backup_codes_v2.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_review_and_backup_codes_v2.png)
 
 バックアップ コードは、次の画面で再生成するか、**「認証（Authentication）」**タブでいつでも再再生することができます。
 
-5\. 「バックアップコード設定（Backup code set up）」画面で**「次へ（Next）」**をクリックして終了します。**二要素認証**が_「オン（On）」_になっていることがわかります。
+5. 「バックアップコード設定（Backup code set up）」画面で**「次へ（Next）」**をクリックして終了します。**二要素認証**が_「オン（On）」_になっていることがわかります。
 
-6\. また、新しいバックアップコード一式をリクエストすることもできます。 **「今すぐ再生成する（Regenerate them now）」**をクリックして、新しい二要素認証のバックアップコード一式を保存します。
+6. また、新しいバックアップコード一式をリクエストすることもできます。 **「今すぐ再生成する（Regenerate them now）」**をクリックして、新しい二要素認証のバックアップコード一式を保存します。
 
 ![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176791/2FA_configuration_complete.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_configuration_complete.png)
 
@@ -88,15 +88,15 @@ ___
 
 2FAを設定するときは、バックアップコードを安全な場所に保管しておいてください。Cloudflareのバックアップコードを使用して、失われたアクセスを復元するには、次の手順に従います：
 
-1\. 保管した場所からバックアップコードを取得します。
+1. 保管した場所からバックアップコードを取得します。
 
-2\. Cloudflareのログインページに移動します。
+2. Cloudflareのログインページに移動します。
 
-3\. ログイン画面にバックアップコードを入力してから、**「ログイン（Log in）」**をクリックします。
+3. ログイン画面にバックアップコードを入力してから、**「ログイン（Log in）」**をクリックします。
 
 ![旧URL： https://support.cloudflare.com/hc/article_attachments/360038176971/2FA_backup_code_login_annontated.png Article IDs: 200167906 | Securing user access with two-factor authentication (2FA)](/images/support/hc-import-2fa_backup_code_login_annontated.png)
 
-4\. 一度使用したバックアップコードは無効になります。
+4. 一度使用したバックアップコードは無効になります。
 
 5.  バックアップコードを再度入力しようとしたり、間違ったコードを入力したりすると、画面下にエラーメッセージが表示されます。複数回入力に失敗すると、再度ログインするよう求められます。
 

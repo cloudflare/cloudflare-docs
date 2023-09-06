@@ -26,13 +26,13 @@ Cloudflareは、デフォルトで画像やCSS、JavaScriptのような[静的�
 
 ### Cache everything (すべてをキャッシュする)
 
-1\. Cloudflareアカウントにログインします。
+1. Cloudflareアカウントにログインします。
 
-2\. **Page Rule**アプリを選択します。
+2. **Page Rule**アプリを選択します。
 
-3\. **Page Ruleを作成**をクリックします。
+3. **Page Ruleを作成**をクリックします。
 
-4\. Webサイト全体かサイトの一部分を入力し、_Cache Level_(キャッシュレベル)を_Cahche Everything_(すべてをキャッシュする)に設定します。オリジンWebサーバーへとラウンドトリップする代わりに、Cloudflareは現在、Edgeネットワークで完全にHTMLをキャッシュしています。
+4. Webサイト全体かサイトの一部分を入力し、_Cache Level_(キャッシュレベル)を_Cahche Everything_(すべてをキャッシュする)に設定します。オリジンWebサーバーへとラウンドトリップする代わりに、Cloudflareは現在、Edgeネットワークで完全にHTMLをキャッシュしています。
 
 5. _Edge Cache Expire TTL_を変更することもでき、ClouddflareはあなたのEdgeでリソースをキャッシュする時間を決定できるようになります。TTLオプションの範囲は、二(2)時間から一ヶ月です。
 

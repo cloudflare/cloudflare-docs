@@ -42,25 +42,25 @@ Todos os titulares de conta Cloudflare precisam ativar o 2FA. Se você não é u
 
 Para ativar o 2FA:
 
-1\. Digitalize o código QR com o seu dispositivo móvel e insira o código no aplicativo autenticador.
+1. Digitalize o código QR com o seu dispositivo móvel e insira o código no aplicativo autenticador.
 
-2\. Digite sua senha do Cloudflare e clique em **Avançar.**
+2. Digite sua senha do Cloudflare e clique em **Avançar.**
 
 -   Se não conseguir digitalizar o código QR, clique em **Não é possível digitalizar o código QR, Siga as etapas alternativas** para configurar seu aplicativo autenticador manualmente.
 
 ![captura de tela de uma tela com instruções sobre como ativar o 2FA, digitalizando um código QR com seu dispositivo móvel](/images/support/2FA_scan_QR_code.png)
 
-3\. Digite sua senha e clique em **Avançar** novamente para ver seus códigos de revisão de backup.
+3. Digite sua senha e clique em **Avançar** novamente para ver seus códigos de revisão de backup.
 
-4\. Depois de ver seus códigos de backup, recomendamos que você os salve em um local seguro. Você pode clicar em **Baixar** , **Imprimir** ou **Copiar** para salvar os códigos e clique em **Avançar** .
+4. Depois de ver seus códigos de backup, recomendamos que você os salve em um local seguro. Você pode clicar em **Baixar** , **Imprimir** ou **Copiar** para salvar os códigos e clique em **Avançar** .
 
 ![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176771/2FA_review_and_backup_codes_v2.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_review_and_backup_codes_v2.png)
 
 Você pode gerar novamente seus códigos de backup na tela a seguir ou a qualquer momento na guia **Autenticação** .
 
-5\. Clique em **Próximo** na tela de configuração do código de backup para Concluir. Você verá que **Autenticação de dois fatores** agora está _Ativado_ .
+5. Clique em **Próximo** na tela de configuração do código de backup para Concluir. Você verá que **Autenticação de dois fatores** agora está _Ativado_ .
 
-6\. Você também tem a opção de solicitar um novo conjunto de códigos de backup. Clique em **regenerá-los agora** para salvar um novo conjunto de códigos de backup de dois fatores.
+6. Você também tem a opção de solicitar um novo conjunto de códigos de backup. Clique em **regenerá-los agora** para salvar um novo conjunto de códigos de backup de dois fatores.
 
 ![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176791/2FA_configuration_complete.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_configuration_complete.png)
 
@@ -88,17 +88,17 @@ Os problemas mais comuns da 2FA estão relacionados à perda de acesso a um disp
 
 Ao configurar a 2FA, você foi solicitado a salvar seus códigos de backup em um local seguro. Para restaurar o acesso perdido usando um código de backup do Cloudflare:
 
-1\. Recupere o código de backup de onde você o armazenou.
+1. Recupere o código de backup de onde você o armazenou.
 
-2\. Navegue até a página de login do Cloudflare.
+2. Navegue até a página de login do Cloudflare.
 
-3\. Digite o código de backup na tela de logon e clique em **Logon** .
+3. Digite o código de backup na tela de logon e clique em **Logon** .
 
 ![URL antigo: https://support.cloudflare.com/hc/article_attachments/360038176971/2FA_backup_code_login_annontated.png IDs do artigo: 200167906 | Como obter acesso usando a autenticação de dois fatores (2FA)](/images/support/hc-import-2fa_backup_code_login_annontated.png)
 
-4\. Depois de usar um código de backup, ele se torna inválido.
+4. Depois de usar um código de backup, ele se torna inválido.
 
-5\. Se você tentar inserir novamente um código de backup ou digitar o código errado, verá uma mensagem de erro na parte inferior da tela. Após várias tentativas com falha, você será solicitado a fazer login novamente.
+5. Se você tentar inserir novamente um código de backup ou digitar o código errado, verá uma mensagem de erro na parte inferior da tela. Após várias tentativas com falha, você será solicitado a fazer login novamente.
 
 Documentação de alguns aplicativos de autenticação comuns para revisão:
 

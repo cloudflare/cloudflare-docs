@@ -35,19 +35,19 @@ Pour la sécurité du compte, vous devez valider votre identité et la propriét
 
 ### Authentification de votre compte
 
-1\. Connectez-vous à votre compte Cloudflare.
+1. Connectez-vous à votre compte Cloudflare.
 
-2\. Dans le coin supérieur droit du tableau de bord Cloudflare, cliquez sur **Support**.
+2. Dans le coin supérieur droit du tableau de bord Cloudflare, cliquez sur **Support**.
 
-3\. Cliquez sur **Contact Support** (Contacter le support). Faites défiler l'écran vers le bas jusqu'à la carte _Emergency Phone Support Hotline - Authentication_ (Support téléphonique d'urgence - Authentification).
+3. Cliquez sur **Contact Support** (Contacter le support). Faites défiler l'écran vers le bas jusqu'à la carte _Emergency Phone Support Hotline - Authentication_ (Support téléphonique d'urgence - Authentification).
 
 ![](/images/support/contact_support_ent_phone_card.png)
 
-4\. Pour vous authentifier à l'aide d'un jeton à usage unique, cliquez sur **Get a single-use token** (Générer un jeton à usage unique). Une fenêtre contextuelle s'affiche avec le code du jeton. Le code s'actualise automatiquement toutes les 30 secondes.
+4. Pour vous authentifier à l'aide d'un jeton à usage unique, cliquez sur **Get a single-use token** (Générer un jeton à usage unique). Une fenêtre contextuelle s'affiche avec le code du jeton. Le code s'actualise automatiquement toutes les 30 secondes.
 
-5\. Pour vous authentifier à l'aide d'une application d'authentification, cliquez sur **Configure authenticator app** (Configurer une application d'authentification) et suivez les [instructions de configuration](https://support.cloudflare.com/hc/fr-fr/articles/200167906/#12345681) sur l'écran suivant. Une fois la configuration terminée, le code du jeton apparaît dans votre application d'authentification mobile.
+5. Pour vous authentifier à l'aide d'une application d'authentification, cliquez sur **Configure authenticator app** (Configurer une application d'authentification) et suivez les [instructions de configuration](https://support.cloudflare.com/hc/fr-fr/articles/200167906/#12345681) sur l'écran suivant. Une fois la configuration terminée, le code du jeton apparaît dans votre application d'authentification mobile.
 
-6\. Attendez que le préposé du support Cloudflare vous demande le code avant de partager le jeton de validation.
+6. Attendez que le préposé du support Cloudflare vous demande le code avant de partager le jeton de validation.
 
 ___
 

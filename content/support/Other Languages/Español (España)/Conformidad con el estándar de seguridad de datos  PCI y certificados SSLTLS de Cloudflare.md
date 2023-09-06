@@ -23,13 +23,13 @@ ___
 
 To configure your Cloudflare domain to only allow connections using TLS 1.2 or newer protocols:
 
-1\. Log in to the Cloudflare dashboard.
+1. Log in to the Cloudflare dashboard.
 
-2\. Click the appropriate Cloudflare account and application.
+2. Click the appropriate Cloudflare account and application.
 
-4\. Navigate to **SSL/TLS** > **Edge Certificates**.
+4. Navigate to **SSL/TLS** > **Edge Certificates**.
 
-5\. For **Minimum TLS Version**, select **TLS 1.2** or higher.
+5. For **Minimum TLS Version**, select **TLS 1.2** or higher.
 
 ___
 

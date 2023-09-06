@@ -40,13 +40,13 @@ Cloudflare no longer updates and supports _mod\_cloudflare._ However, if you 
 
 To install _mod\_remoteip_ on your Apache web server:
 
-1\. Enable _mod\_remoteip_ by issuing the following command:
+1. Enable _mod\_remoteip_ by issuing the following command:
 
 ```sh
 $ sudo a2enmod remoteip
 ```
 
-2\. Update the site configuration to include _RemoteIPHeader CF-Connecting-IP_, e.g. `/etc/apache2/sites-available/000-default.conf`
+2. Update the site configuration to include _RemoteIPHeader CF-Connecting-IP_, e.g. `/etc/apache2/sites-available/000-default.conf`
 
 ```
 ServerAdmin webmaster@localhost
@@ -57,7 +57,7 @@ ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
 ```
 
-3\. Update combined _LogFormat_ entry in `apache.conf`, replacing _%h_ with _%a in_ `/etc/apache2/apache2.conf.` For example, if your current _LogFormat_ appeared as follows
+3. Update combined _LogFormat_ entry in `apache.conf`, replacing _%h_ with _%a in_ `/etc/apache2/apache2.conf.` For example, if your current _LogFormat_ appeared as follows
 
 ```
 LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
@@ -69,7 +69,7 @@ you would update _LogFormat_ to the following:
 LogFormat "%a %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
 ```
 
-4\. Define trusted proxy addresses by creating `/etc/apache2/conf-available/remoteip.conf` by entering the following code and [Cloudflare IPs](https://www.cloudflare.com/ips/):
+4. Define trusted proxy addresses by creating `/etc/apache2/conf-available/remoteip.conf` by entering the following code and [Cloudflare IPs](https://www.cloudflare.com/ips/):
 
 ```
 RemoteIPHeader CF-Connecting-IP
@@ -78,7 +78,7 @@ RemoteIPTrustedProxy 192.0.2.2 (example IP address)
 (repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 ```
 
-5\. Enable Apache configuration:
+5. Enable Apache configuration:
 
 ```sh
 $ sudo a2enconf remoteip
@@ -87,14 +87,14 @@ To activate the new configuration, you need to run:
 service apache2 reload
 ```
 
-6\. Test Apache configuration:
+6. Test Apache configuration:
 
 ```sh
 $ sudo apache2ctl configtest
 Syntax OK
 ```
 
-7\. Restart Apache:
+7. Restart Apache:
 
 ```sh
 $ sudo systemctl restart apache2

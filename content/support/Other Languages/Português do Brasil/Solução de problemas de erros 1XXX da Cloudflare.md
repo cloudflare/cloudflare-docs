@@ -334,7 +334,7 @@ Se você é o proprietário do site:
 1.  Recupere uma captura de tela do erro 1020 do seu cliente
 2.  Pesquise o [**Registro de Eventos de Firewall**](/waf/analytics) na guia**Visão Geral** do aplicativo de **Firewall** da Cloudflare para obter a **RayID** ou o endereço IP do cliente na mensagem de erro 1020 do visitante.
 
-3\. Avalie a causa do bloqueio e atualize a **Regra de Firewall** ou permita o endereço IP do visitante nas [**Regras do Acesso de IPs**](https://support.cloudflare.com/hc/articles/217074967).
+3. Avalie a causa do bloqueio e atualize a **Regra de Firewall** ou permita o endereço IP do visitante nas [**Regras do Acesso de IPs**](https://support.cloudflare.com/hc/articles/217074967).
 
 ___
 

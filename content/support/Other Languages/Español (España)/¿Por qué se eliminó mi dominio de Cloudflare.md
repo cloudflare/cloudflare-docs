@@ -47,15 +47,15 @@ No es necesario revisar el registro de dominio para los dominios que
 utilizan una configuración de CNAME de Cloudflare.
 {{</Aside>}}
 
-1\. Usa la aplicación “whois” de la línea de comandos que se proporciona con tu sistema operativo o un sitio web, como [whois.icann.org](https://whois.icann.org/en) o [www.whois.net](https://www.whois.net/).
+1. Usa la aplicación “whois” de la línea de comandos que se proporciona con tu sistema operativo o un sitio web, como [whois.icann.org](https://whois.icann.org/en) o [www.whois.net](https://www.whois.net/).
 
 -   Si no puedes encontrar los detalles sobre el servidor de nombres de tu dominio, ponte en contacto con el registrador de tu dominio o el proveedor de dominios para obtener información sobre el registro de dominios.
 -   Asegúrate de que los servidores de nombres de Cloudflare sean los únicos dos mencionados en los detalles del registro de dominios.
 -   Asegúrate de que los servidores de dominios estén bien escritos en el registro de dominios.
 
-2\. Confirma que los servidores de nombres coinciden exactamente con los proporcionados en la sección **Servidores de nombres de Cloudflare** de la aplicación **DNS** de Cloudflare.
+2. Confirma que los servidores de nombres coinciden exactamente con los proporcionados en la sección **Servidores de nombres de Cloudflare** de la aplicación **DNS** de Cloudflare.
 
-3\. Si identificas información incorrecta, inicia sesión en el portal del proveedor de dominios para realizar actualizaciones o ponte en contacto con el proveedor de dominios para obtener asistencia.
+3. Si identificas información incorrecta, inicia sesión en el portal del proveedor de dominios para realizar actualizaciones o ponte en contacto con el proveedor de dominios para obtener asistencia.
 
 ___
 
@@ -66,7 +66,7 @@ No es necesario revisar el registro de dominio para los dominios que
 utilizan una configuración de CNAME de Cloudflare.
 {{</Aside>}}
 
-1\. Usa herramientas de línea de comandos o de terceros para confirmar la configuración de los servidores de nombres de Cloudflare:
+1. Usa herramientas de línea de comandos o de terceros para confirmar la configuración de los servidores de nombres de Cloudflare:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS algo.otrodominio.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS algo.otrodominio.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS algo.otrodominio.com @8.8.8.8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -86,9 +86,9 @@ Algunos servicios en línea, como [whatsmydns.net](https://www.whatsmydns.net/),
 -   Asegúrate de que no haya servidores de nombres mal escritos.
 -   Confirma que los servidores de nombres coinciden exactamente con los proporcionados en la sección **Servidores de nombres de Cloudflare** de la aplicación **DNS** de Cloudflare.
 
-2\. Si identificas información incorrecta, inicia sesión en el portal del proveedor de dominios para realizar actualizaciones o ponte en contacto con el proveedor de dominios para obtener asistencia.
+2. Si identificas información incorrecta, inicia sesión en el portal del proveedor de dominios para realizar actualizaciones o ponte en contacto con el proveedor de dominios para obtener asistencia.
 
-3\. Si el servidor de nombres y los datos del registro de dominios son correctos, ponte en contacto con el proveedor de dominios para confirmar que ha habido problemas de propagación de DNS últimamente.
+3. Si el servidor de nombres y los datos del registro de dominios son correctos, ponte en contacto con el proveedor de dominios para confirmar que ha habido problemas de propagación de DNS últimamente.
 
 {{<Aside type="note">}}
 Algunos registradores proporcionan más de dos servidores de nombres. Sin

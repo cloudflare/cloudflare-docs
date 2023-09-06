@@ -48,19 +48,19 @@ ___
 
 ## Step 2 - Check whether domain registration lists Cloudflare nameservers
 
-1\. Use either the command-line based “whois” application provided with your Operating System or a website such as [whois.icann.org](https://whois.icann.org/en) or [www.whois.net](https://www.whois.net/).
+1. Use either the command-line based “whois” application provided with your Operating System or a website such as [whois.icann.org](https://whois.icann.org/en) or [www.whois.net](https://www.whois.net/).
 
 -   If you are unable to find the nameserver details for your domain, reach out to your domain registrar or domain provider to provide the domain registration information.
 -   Ensure Cloudflare’s nameservers are the only two nameservers listed in the domain registration details.
 -   Ensure nameservers are spelled correctly in the domain registration.
 
-2\. Confirm that the nameservers exactly match the nameservers provided within the **Cloudflare Nameservers** section of the Cloudflare **DNS** app.
+2. Confirm that the nameservers exactly match the nameservers provided within the **Cloudflare Nameservers** section of the Cloudflare **DNS** app.
 
-3\. If you identify incorrect information, log in to your domain provider’s portal to make updates or contact your domain provider for assistance.
+3. If you identify incorrect information, log in to your domain provider’s portal to make updates or contact your domain provider for assistance.
 
 ___
 
-1\. Use command-line or third-party tools to confirm if Cloudflare's nameservers are configured:
+1. Use command-line or third-party tools to confirm if Cloudflare's nameservers are configured:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com @8.8.8.8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
@@ -78,9 +78,9 @@ ___
 -   철자가 잘못된 이름 서버가 있는지 확인하세요. 
 -   Confirm the nameservers exactly match the nameservers provided within the **Cloudflare Nameservers** section of the Cloudflare **DNS** app.
 
-2\. If you identify incorrect information, log in to your domain provider’s portal to make updates or contact your domain provider for assistance.
+2. If you identify incorrect information, log in to your domain provider’s portal to make updates or contact your domain provider for assistance.
 
-3\. If the nameserver and domain registration data are correct, reach out to your domain provider to confirm if there have been recent DNS propagation issues.
+3. If the nameserver and domain registration data are correct, reach out to your domain provider to confirm if there have been recent DNS propagation issues.
 
 ___
 
