@@ -844,7 +844,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
 - `--text` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Decode the returned value as a utf8 string
+  - Decode the returned value as a UTF-8 string.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with local persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
