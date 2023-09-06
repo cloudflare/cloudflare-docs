@@ -22,7 +22,7 @@ Header rules are defined in multi-line blocks. The first line of a block is the 
   [name]: [value]
 ```
 
-Using absolute URLs is supported, though be aware that they must begin with `https` and specifying a port is not supported. Cloudflare Pages ignores the incoming request's port and protocol when matching against an incoming request. For example, a rule like `https://example.com/path` would match against requests to `other://example.com:1234/path`.
+Using absolute URLs is supported, though be aware that absolute URLs must begin with `https` and specifying a port is not supported. Cloudflare Pages ignores the incoming request's port and protocol when matching against an incoming request. For example, a rule like `https://example.com/path` would match against requests to `other://example.com:1234/path`.
 
 You can define as many `[name]: [value]` pairs as you require on subsequent lines. For example:
 
@@ -89,9 +89,7 @@ The matched value can be referenced within the header value as the `:splat` plac
 
 #### Placeholders
 
-A placeholder can be defined with `:placeholder_name`. A colon (`:`) followed by a letter indicates the start of a placeholder and the placeholder name that follows must be composed of alphanumeric characters and underscores (`:[A-Za-z]\w*`). Every named placeholder can only be referenced once. Placeholders match all characters apart from the delimiter, which when part of the host, is a period (`.`) or a forward-slash (`/`) and may only be a forward-slash (`/`) when part of the path.
-
-Similarly, the matched value can be used in the header values with `:placeholder_name`.
+{{<render file="_headers_redirects_placeholders.md" withParameters="header">}}
 
 ```txt
 ---

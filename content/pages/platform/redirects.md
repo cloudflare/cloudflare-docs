@@ -85,9 +85,14 @@ The matched value can be used in the redirect location with `:splat`.
 
 ### Placeholders
 
-A placeholder can be defined with `:placeholder_name`. A colon (`:`) followed by a letter indicates the start of a placeholder and the placeholder name that follows must be composed of alphanumeric characters and underscores (`:[A-Za-z]\w*`). Every named placeholder can only be referenced once. Placeholders match all characters apart from the delimiter, which when part of the host, is a period (`.`) or a forward-slash (`/`) and may only be a forward-slash (`/`) when part of the path.
+{{<render file="_headers_redirects_placeholders.md" withParameters="redirect">}}
 
-Similarly, the matched value can be used in the redirect location with `:placeholder_name`.
+```txt
+---
+filename: _redirects
+---
+/movies/:title /media/:title
+```
 
 ### Proxying
 
