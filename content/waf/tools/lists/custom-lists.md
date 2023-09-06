@@ -43,7 +43,7 @@ For more information on using a custom list in the Cloudflare dashboard, refer t
 
 ## List item format
 
-### Lists with IP addresses
+### Lists with IP addresses (IP lists)
 
 List items in custom lists with IP addresses must be in one of the following formats:
 
@@ -96,7 +96,7 @@ For example, the following entries would be valid for a list with ASNs:
 
 The exact format of CSV file entries varies according to the type of list items you are importing.
 
-### Lists with IP addresses
+### Lists with IP addresses (IP lists)
 
 When uploading items to a custom list with IP addresses via CSV file, use the following file format (enter one item per line):
 
