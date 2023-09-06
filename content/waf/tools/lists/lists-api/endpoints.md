@@ -21,7 +21,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 {{<Aside type="note">}}
 
-The Lists API endpoints require a value for `<ACCOUNT_ID>`.
+The Lists API endpoints require a value for `{account_id}`.
 
 To retrieve a list of accounts to which you have access, use the [List Accounts](/api/operations/accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 
@@ -47,7 +47,7 @@ The Lists API supports the operations outlined below. Visit the associated links
         <a href="/api/operations/lists-create-a-list">Create a list</a>
       </td>
       <td>
-        <code class="InlineCode">POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
+        <code class="InlineCode">POST accounts/{account_id}/rules/lists</code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">Creates an empty list.</td>
     </tr>
@@ -56,7 +56,7 @@ The Lists API supports the operations outlined below. Visit the associated links
         <a href="/api/operations/lists-get-lists">Get lists</a>
       </td>
       <td>
-        <code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
+        <code class="InlineCode">GET accounts/{account_id}/rules/lists</code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
         Fetch all lists for the account. (This request does not fetch the items in the lists.)
@@ -68,11 +68,11 @@ The Lists API supports the operations outlined below. Visit the associated links
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
+          GET accounts/{account_id}/rules/lists/{list_id}
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
-        Fetches a list by its <code class="InlineCode">id</code>. (This request does not display the
+        Fetches a list by its ID. (This request does not display the
         items in the list.)
       </td>
     </tr>
@@ -82,7 +82,7 @@ The Lists API supports the operations outlined below. Visit the associated links
       </td>
       <td>
         <code class="InlineCode">
-          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
+          PUT accounts/{account_id}/rules/lists/{list_id}
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
@@ -100,7 +100,7 @@ The Lists API supports the operations outlined below. Visit the associated links
       </td>
       <td>
         <code class="InlineCode">
-          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
+          DELETE accounts/{account_id}/rules/lists/{list_id}
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
@@ -137,7 +137,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          GET accounts/{account_id}/rules/lists/{list_id}/items
         </code>
       </td>
       <td>
@@ -152,7 +152,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items/&lt;ITEM_ID&gt;
+          GET accounts/{account_id}/rules/lists/{list_id}/items/{item_id}
         </code>
       </td>
       <td>
@@ -165,7 +165,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          POST accounts/{account_id}/rules/lists/{list_id}/items
         </code>
       </td>
       <td>
@@ -185,7 +185,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          PUT accounts/{account_id}/rules/lists/{list_id}/items
         </code>
       </td>
       <td>
@@ -207,7 +207,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          DELETE accounts/{account_id}/rules/lists/{list_id}/items
         </code>
       </td>
       <td>
