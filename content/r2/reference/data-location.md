@@ -82,7 +82,7 @@ Use Jurisdictional Restrictions when you need to ensure data is stored and proce
 
 ### Using jurisdictions from Workers
 
-To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you'll need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your `wrangler.toml`:
+To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your `wrangler.toml`:
 
 ```toml
 [[r2_buckets]]
@@ -91,7 +91,7 @@ bindings = [
 ]
 ```
 
-For more information on getting started visit to [Use R2 from Workers](/r2/api/workers/workers-api-usage/). 
+For more information on getting started, refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/). 
 
 ### Using jurisdictions with the S3 API
 
@@ -138,4 +138,4 @@ During the beta, the following services will not interact with R2 resources with
 
 ### Additional considerations
 
-Once an R2 bucket is created, the jurisdiction can't be changed.
+Once an R2 bucket is created, the jurisdiction cannot be changed.
