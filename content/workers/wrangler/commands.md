@@ -836,13 +836,15 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The key value to get.
 - `--binding` {{<type>}}string{{</type>}}
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
 - `--namespace-id` {{<type>}}string{{</type>}}
-  - The ID of the namespace to delete.
+  - The ID of the namespace to get from.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--text` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Decode the returned value as a UTF-8 string.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with locally persisted data
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
