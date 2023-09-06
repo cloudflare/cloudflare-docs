@@ -7,7 +7,7 @@ layout: single
 
 # Nested Structures
 
-Two kinds of nested structures that behave in special ways are supported: **arrays** and **maps**. Fields of either of these types are arrays; when they are part part of query result, which is already an array of objects, they become nested arrays.
+Two kinds of nested structures that are supported: **arrays** and **maps**. Fields of either of these types are arrays; when they are part part of query result, which is already an array of objects, they become nested arrays.
 
 ## Arrays
 
@@ -16,7 +16,7 @@ The GraphQL API supports two different sorts of arrays:
 - Some arrays contain scalar types (for example, `[String]`) and function like ordinary fields that [can be filtered](/analytics/graphql-api/features/filtering/)
 - Some arrays contain more complex types (for example, `[Subrequest]`.) The following section describes their behaviour.
 
-Arrays of non-scalar types behave as a special kind of single value. There is no way to paginate through, filter, filter by, group, or group by the array.
+Arrays of non-scalar types behave as a single value. There is no way to paginate through, filter, filter by, group, or group by the array.
 
 On the other hand, you can choose which fields of the underlying type you want fetched.
 

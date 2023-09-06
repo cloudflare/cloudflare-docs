@@ -7,7 +7,7 @@ layout: single
 
 # Filtering
 
-Filters constrain queries to a particular account or set of zones, requests by date, or those from a specific user agent, for example. Without filters, queries can suffer performance degradation, results can easily exceed supported bounds, and the data returned can be noisy.
+Filters constrain queries to a particular account or set of zones, requests by date, or those from a specific user agent, for example. Without filters, queries can suffer performance degradation, results can exceed supported bounds, and the data returned can be noisy.
 
 ## Filter Structure
 
