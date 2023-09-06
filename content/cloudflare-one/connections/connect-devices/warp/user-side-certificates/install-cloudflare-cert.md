@@ -225,35 +225,17 @@ ChromeOS has multiple methods that can be used to deploy the Cloudflare root cer
 
 1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-2. Go to your **ChromeOS Settings**.
-
-![**Settings** cog in ChromeOS](/images/cloudflare-one/connections/chromeOS1_cert.png)
+2. Go to **ChromeOS Settings**.
 
 3. Go to **Apps** > **Google Play Store**.
 
-![**Google Play Store** app in ChromeOS settings](/images/cloudflare-one/connections/chromeOS2_cert.png)
-
 4. Select **Manage Android preferences**.
-
-![**Manage Android preferences** in ChromeOS settings](/images/cloudflare-one/connections/chromeOS3_cert.png)
 
 5. Go to **Security & location** > **Credentials** > **Install from SD card**.
 
-{{<table-wrap>}}
-
-|                                                                                                  |                                                                                                   |                                                                                           |
-| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| ![ChromeOS **Network & Internet** screen](/images/cloudflare-one/connections/chromeOS4_cert.png) | ![ChromeOS **Security & location** screen](/images/cloudflare-one/connections/chromeOS5_cert.png) | ![ChromeOS **Credentials** screen](/images/cloudflare-one/connections/chromeOS6_cert.png) |
-
-{{</table-wrap>}}
-
 6. In the file open dialog, select the `Cloudflare_CA.crt` file downloaded in step #1 and select **Open**.
 
-![ChromeOS dialogue for selecting a certificate file](/images/cloudflare-one/connections/chromeOS7_cert.png)
-
 7. Enter anything you want for the certificate name and select **OK**.
-
-![ChromeOS dialogue for naming the certificate](/images/cloudflare-one/connections/chromeOS8_cert.png)
 
 {{</tab>}}
 
