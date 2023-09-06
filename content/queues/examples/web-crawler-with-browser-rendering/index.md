@@ -23,7 +23,7 @@ To continue, you will need:
 3. Access to the [Browser Rendering](https://www.cloudflare.com/lp/workers-browser-rendering-api/) API, currently in open beta.
 
 {{<Aside type="note">}}
-Note: Queues today works with local development mode in wrangler. `wrangler dev --remote` is not supported.
+Queues today works with local development mode in wrangler. `wrangler dev --remote` is not supported.
 {{</Aside>}}
 
 ## 1. Build the crawler Worker
