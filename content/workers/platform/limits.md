@@ -287,30 +287,6 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 ---
 
-## Durable Objects
-
-- Unlimited Durable Objects within an account or of a given class
-
-- 50 GB total storage per account (can be raised by contacting Cloudflare)
-
-- No storage limit per Durable Object separate from the account limit
-
-- No storage limit per Durable Object class separate from the account limit
-
-- Storage keys of up to 2 KiB (2048 bytes)
-
-- Storage values of up to 128 KiB (131072 bytes)
-
-- WebSocket messages of up to 1 MiB (1048576 bytes). This limit applies to messages received, not sent or proxied through.
-
-- 30s of CPU time per request, including websocket messages
-
-Durable Objects scale well across Objects, but each object is inherently single-threaded. A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload.
-
-Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your account team.
-
----
-
 ## Image Resizing with Workers 
 
 When using Image Resizing with Workers, refer to [Image Resizing documentation](/images/image-resizing/format-limitations/#limits-per-format) for more information on the applied limits.
