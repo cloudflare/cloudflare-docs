@@ -197,7 +197,7 @@ highlight: [4, 5]
 
 export async function GET(request: Request) {
   // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const { MY_KV } = (process.env as { MY_KV: KVNamespace }));
+  const { MY_KV } = (process.env as { MY_KV: KVNamespace });
 
   return new Response(
     // ...
