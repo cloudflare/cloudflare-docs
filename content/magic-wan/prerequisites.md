@@ -8,7 +8,7 @@ weight: 2
 
 Before you can begin using Magic WAN, verify that you meet Cloudflare's onboarding requirements. You can skip the list of prerequisites below if you use [Magic WAN Connector](/magic-wan/connector/) to onboard your network locations to Cloudflare.
 
-## Use Magic WAN Connector or compatible tunnel endpoint routers
+## Use compatible tunnel endpoint routers
 
 Magic WAN relies [on GRE](/magic-wan/reference/tunnels/) and [IPsec tunnels](/magic-wan/reference/tunnels/#ipsec-tunnels) to transmit packets from Cloudflare’s global network to your origin network.
 
