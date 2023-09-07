@@ -271,7 +271,23 @@ All of the applications below first require downloading the Cloudflare certifica
 Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for the domains or IPs that the application relies on.
 {{</Aside>}}
 
-### Firefox
+### Browsers
+
+#### Chromium-based browsers
+
+In macOS and Windows, [Chromium browsers use the operating system root store](https://support.google.com/chrome/answer/95617?visit_id=638297158670039236-3119581239&p=root_store&rd=1#zippy=%2Cmanage-device-certificates-on-mac-windows). In other operating systems, such as Linux and ChromeOS, you may have to install the Cloudflare certificate to your browser manually.
+
+1. Download the [Cloudflare certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) in `.pem` format.
+2. In your browser, go to **Settings** > **Privacy and security** > **Security**.
+3. Select **Manage certificates**.
+4. Go to **Authorities**. Select **Import**.
+5. In the file open dialog, choose the `Cloudflare_CA.pem` file you downloaded and select **Open**.
+6. In the dialog box, enable **Trust this certificate for identifying websites**, **Trust this certificate for identifying email users**, and **Trust this certificate for identifying software makers**. Select **OK**.
+7. To verify the certificate was installed and trusted, locate it in **Authorities**.
+
+For information on installing the Cloudflare certificate for organizations, refer to [Google's Chrome Enterprise and Education documentation](https://support.google.com/chrome/a/answer/3505249).
+
+#### Firefox
 
 If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, see this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
 
