@@ -67,7 +67,7 @@ Monthly and annual billing subscriptions run on different billing cycles.
 
 The first monthly purchase on a Cloudflare account sets the billing date for the following monthly subscriptions. The same behaviour occurs for annual subscriptions. 
 
-You can have two different billing cycles on your account, one for monthly subscription and another for an annual subscription.
+You can have two different billing cycles on your account, one for a monthly subscription and another for an annual subscription.
 
 ---
 
