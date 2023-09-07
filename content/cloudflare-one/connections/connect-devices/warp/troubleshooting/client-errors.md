@@ -42,12 +42,12 @@ This page lists the error codes that can appear in the WARP client GUI. If you d
 
 ### Cause
 
-The initial [connectivity check](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check) failed for an unknown reason. Refer to [Unable to connect WARP](cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#unable-to-connect-warp) for the most common reasons why this error occurs.
+The initial [connectivity check](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check) failed for an unknown reason. Refer to [Unable to connect WARP](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#unable-to-connect-warp) for the most common reasons why this error occurs.
 
 ### Resolution
 
 1. Retrieve [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for the device.
-2. Follow the troubleshooting steps in [Unable to connect WARP](cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#unable-to-connect-warp).
+2. Follow the troubleshooting steps in [Unable to connect WARP](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#unable-to-connect-warp).
 
 ## CF_DNS_LOOKUP_FAILURE
 
