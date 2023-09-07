@@ -29,7 +29,7 @@
 /data/changelogs/d1.yaml @elithrar @rozenmd @cloudflare/pcx-technical-writing
 /content/images/ @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing 
+/data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /content/pub-sub/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
 /content/queues/ @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
 /data/changelogs/queues.yaml @CharlieBurnett @elithrar @cloudflare/pcx-technical-writing
@@ -63,6 +63,7 @@
 
 # Radar
 /content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
+/data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
