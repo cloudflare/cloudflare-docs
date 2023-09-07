@@ -59,7 +59,7 @@ filename: wrangler.toml
 ---
 name = "my-worker-dev"
 
-[[env.staging.vars]]
+[env.staging.vars]
 API_HOST = "staging.example.com"
 API_ACCOUNT_ID = "staging_example_user"
 SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
