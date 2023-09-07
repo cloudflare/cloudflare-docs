@@ -24,4 +24,6 @@ If your domain is on a [Partial setup](/dns/zone-setups/partial-setup/), Cloudfl
 
 If you are currently pinning your Universal certificate, stop pinning the certificate. This will ensure your certificates are not impacted during the Universal certificate renewal.
 
+{{<render file="_digicert-caa-warning.md">}} <br />
+
 If you want to choose the issuing CA for your certificate, [order an Advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/). Once that certificate has deployed, [disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to prevent Cloudflare from issuing the Universal certificate for you.
