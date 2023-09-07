@@ -114,11 +114,11 @@ Windows offers two locations to install the certificate, each impacting which us
 
 2. Right-click the certificate file.
 
-3. Select **Open**. If you see a Security Warning, choose **Open** to proceed.
+3. Select **Open**. If a security warning appears, choose **Open** to proceed.
 
 4. The **Certificate** window will appear. Select **Install Certificate**.
 
-5. Now choose a Store Location. If you see a security warning, choose **Yes** to proceed.
+5. Now choose a Store Location. If a security warning appears, choose **Yes** to proceed.
 
 6. On the next screen, select **Browse**.
 
@@ -289,7 +289,7 @@ For information on installing the Cloudflare certificate for organizations, refe
 
 #### Firefox
 
-If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, see this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
+If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, refer to this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
 
 ### Python
 
