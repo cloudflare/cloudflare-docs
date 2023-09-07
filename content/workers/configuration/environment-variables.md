@@ -49,7 +49,10 @@ export default {
 }
 ```
 
-It is possible to define environment variables for different environments as below:
+`vars` is a non-inheritable key. [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
+
+To define environment variables for different environments, refer to the example below:
+
 ```toml
 ---
 filename: wrangler.toml
