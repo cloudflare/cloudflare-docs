@@ -28,6 +28,8 @@ Which page will you cover with a waiting room? You can only have one waiting roo
 
 Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](/waiting-room/reference/configuration-settings/).
 
+Advanced Waiting Room customers can also [specify multiple hostname and path combinations](/waiting-room/how-to/place-waiting-room/) for the same zone.
+
 ### Access method
 
 You can direct visitors to your high-traffic page:

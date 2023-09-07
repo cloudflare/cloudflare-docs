@@ -3700,3 +3700,104 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   display: inline;
   margin: 0 10px 0 0;
 }
+
+.DocsMarkdown--link-api-icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    margin-left: 4px;
+  }
+
+  .selectorDropdowns {
+    display: flex;
+    justify-content: flex-start;
+    border-top: 1px solid #242628;
+    border-bottom: 1px solid #242628;
+    padding: .5em 0 .5em 0;
+}
+
+@media (max-width:950px) {
+    .selectorDropdowns {
+        flex-direction: column;
+    }
+}
+
+[theme=dark] .selectorDropdowns {
+    border-top: 1px solid #f3f3f4;
+    border-bottom: 1px solid #f3f3f4;
+}
+
+.selectorDropdowns div {
+    margin-right: 2em;
+    display: flex;
+    flex-direction: column;
+    padding: .75em;
+    justify-content: center;
+}
+
+.selectorDropdowns div label {
+    padding-bottom: .3em;
+}
+
+.selectorDropdowns div select {
+    width: 15em;
+    height: 2.25em;
+}
+
+.searchInput input {
+    height: 2.25em;
+    width: 15em;
+    padding-left: .5em
+}
+
+.viewMoreChangesContainer {
+    width: 100%;
+}
+
+.viewMoreChangesButton {
+    margin: auto;
+    width: 12em;
+    height: 2em;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.viewMoreChangesButton:hover {
+    text-decoration: underline;
+    transition: text-decoration 0.5s ease-in-out;
+}
+
+.rssLink {
+    text-decoration: underline;
+    color: #0055DC;
+}
+
+[theme=dark] .rssLink {
+    color: #ff9e40;
+}
+
+p>code,
+span>code,
+a>code,
+div>code,
+li>code,
+td>code,
+.DocsMarkdown--aside>code,
+.InlineCode {
+  font-family: var(--monospace-font-family);
+  font-size: var(--inline-code-font-size);
+  --default-padding: 0.2em 0.3em;
+  padding: var(--padding, var(--default-padding));
+  --default-background: rgba(var(--color-rgb), 0.05);
+  background: var(--background, var(--default-background));
+  border-radius: 0.25em;
+  max-width: 100%;
+}
+
+.changelogDate {
+    width: 8em;
+}

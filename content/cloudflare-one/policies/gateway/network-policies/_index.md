@@ -68,7 +68,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 API value: `l4_override`
 
-Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
+Policies with Network Override actions override traffic directed to, or coming from, certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user’s identity:
 
 | Selector       | Operator | Value           | Logic | Action           |
 | -------------- | -------- | --------------- | ----- | ---------------- |

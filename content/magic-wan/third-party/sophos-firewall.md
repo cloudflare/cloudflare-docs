@@ -58,6 +58,7 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
     - **Authentication type**: **Preshared key**
 5. In **Gateway settings**, make sure you have the following settings:
     - **Gateway address**: Enter your Cloudflare Anycast IP address provided by Cloudflare.
+    - **Local ID type**: Add the [IKE ID](/magic-wan/reference/tunnels/#supported-ike-id-formats) provided by Cloudflare.
 
 ![Configure an IPsec tunnel.](/images/magic-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)
 

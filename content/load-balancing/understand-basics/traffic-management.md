@@ -8,12 +8,6 @@ weight: 17
 
 Local Traffic Management enables you to load balance traffic within a data center between your servers, eliminating the need for hardware appliances and allowing you to move infrastructure to the cloud to benefit from elastic scalability and reliability. Local Traffic Management has the ability to support virtual IPs, private IPs, and public IPs as origin values in a customer data center.
 
-{{<Aside type="note">}}
-
-Virtual IP support is currently API only.
-
-{{</Aside>}}
-
 ## Via the API
 
 You can [set up your Tunnels and Tunnel routes](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/) to create a `virtual_network_id` value to use in the Load Balancing API call. To enable Cloudflare Load Balancers to connect to private IP origins, a Cloudflare Tunnel is required with an associated Virtual Network. VNets are associated with Load Balancing origins. You can find out more about Tunnel Virtual Networks in the [Cloudflare Tunnels documentation](/cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/). 
