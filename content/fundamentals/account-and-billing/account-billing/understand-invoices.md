@@ -61,6 +61,16 @@ Invoices cannot be re-generated once issued. Any pending billing updates or chan
 
 ---
 
+## Billing cycles
+
+Monthly and annual billing subscriptions run on different billing cycles.
+
+The first monthly purchase on a Cloudflare account sets the billing date for the following monthly subscriptions. The same behaviour occurs for annual subscriptions. 
+
+You can have two different billing cycles on your account, one for monthly subscription and another an annual subscription.
+
+---
+
 ## Troubleshooting your invoice
 
 ### Change in billing contact information
