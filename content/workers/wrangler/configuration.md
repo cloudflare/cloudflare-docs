@@ -494,7 +494,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The name of another queue to send a message if it fails processing at least `max_retries` times.
-  - If a dead_letter_queue is not defined, messages that repeatedly fail processing will be discarded.
+  - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will be discarded.
   - If there is no queue with the specified name, it will be created automatically.
 
 - `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

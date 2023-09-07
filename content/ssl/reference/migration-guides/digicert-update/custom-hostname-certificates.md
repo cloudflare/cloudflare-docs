@@ -17,6 +17,12 @@ On **October 25, 2023**, Cloudflare will stop using DigiCert as the CA for SSL f
 
 The default CA - for API orders that do not specify `certificate_authority` - and the CA used for certificate renewals will shift to either Let's Encrypt or Google Trust Services.
 
+{{<Aside type="warning">}}
+
+{{<render file="_digicert-caa-warning.md">}}
+
+{{</Aside>}}
+
 ## Summary of changes
 
 This table provides a summary of the differences between DigiCert and our other CAs.

@@ -22,6 +22,10 @@ To continue, you will need:
 2. A subscription to Workers Paid, required for using Queues.
 3. Access to the [Browser Rendering](https://www.cloudflare.com/lp/workers-browser-rendering-api/) API, currently in open beta.
 
+{{<Aside type="note">}}
+Queues today works with local development mode in wrangler. `wrangler dev --remote` is not supported.
+{{</Aside>}}
+
 ## 1. Build the crawler Worker
 You will first need to create KV namespaces and queue required for the crawler before creating a new Worker, setting up bindings, and writing the crawler script.
 

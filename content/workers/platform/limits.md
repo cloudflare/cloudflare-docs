@@ -201,9 +201,7 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## Subrequests
 
-### Can a Worker make subrequests to load other sites on the Internet?
-
-Yes. Use the [Fetch API](/workers/runtime-apis/fetch/) to make arbitrary requests to other Internet resources.
+A subrequest is any request that a Worker makes to another Internet resource using the [Fetch API](/workers/runtime-apis/fetch/).
 
 ### How many subrequests can I make?
 
@@ -270,6 +268,10 @@ App Workers do not count towards this limit.
 ## Number of routes per zone
 
 Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
+## Number of routed zones per Worker
+
+When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ---
 
