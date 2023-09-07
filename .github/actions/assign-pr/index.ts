@@ -55,7 +55,8 @@ async function list(
  * @note code runs in posix environment ("/" not "\\")
  */
 function parse(filename: string): string | void {
-  return (/^data[/](.*).ya?ml$/.exec(filename) ||
+  return (/^data[/]changelogs[/](.*)\.ya?ml$/.exec(filename) ||
+    /^data[/](.*)\.ya?ml$/.exec(filename) ||
     /^content[/]([^\/]+)[/]/.exec(filename) ||
     [])[1];
 }
