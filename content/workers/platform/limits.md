@@ -201,9 +201,7 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## Subrequests
 
-### Can a Worker make subrequests to load other sites on the Internet?
-
-Yes. Use the [Fetch API](/workers/runtime-apis/fetch/) to make arbitrary requests to other Internet resources.
+A subrequest is any request that a Worker makes to another Internet resource using the [Fetch API](/workers/runtime-apis/fetch/).
 
 ### How many subrequests can I make?
 
