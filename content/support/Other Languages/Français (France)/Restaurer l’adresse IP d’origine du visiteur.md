@@ -257,7 +257,7 @@ Ce plugin ayant été créé par un tiers, nous ne pouvons fournir d'assistance 
 1.  Allez à la ligne 1232 dans `GlobalFunctions.php`, remplacez `REMOTE_ADDR` par `HTTP_CF_CONNECTING_IP`.
 2.  Ensuite, allez dans `WebRequest.php`, aux lignes 1151 à 1159, remplacez `REMOTE_ADDR` par `HTTP_CF_CONNECTING_IP`.
 
-Un utilisateur de Xenforo a créé un [plugin pour Cloudflar](https://xenforo.com/community/resources/solidmean-cloudflare-detect.1595/)e.
+Un utilisateur de Xenforo a créé un [plugin pour Cloudflare](https://xenforo.com/community/resources/solidmean-cloudflare-detect.1595/)e.
 
 Ce plugin ayant été créé par un tiers, nous ne pouvons fournir d'assistance technique pour les problèmes qu’il présenterait.
 
