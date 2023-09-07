@@ -23,7 +23,7 @@ You can configure the origin pool via the API or on the dashboard.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Once you have Cloudflare tunnels with associated virtual networks configured, you can select them on the respective **Virtual Network** field that is displayed for each origin when you [create or edit a pool](/load-balancing/how-to/create-pool/#create-a-pool).
+Once you have Cloudflare tunnels with associated virtual networks configured, you can select them on the respective **Virtual Network** field displayed for each origin when you [create or edit a pool](/load-balancing/how-to/create-pool/#create-a-pool).
 
 {{<Aside type="warning">}}
 
@@ -34,7 +34,7 @@ All origins with private IPs must have `virtual_network_id` specified.
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To get a list of your current virtual networks, use the [`/teamnet/virtual_networks`](/api/operations/tunnel-virtual-network-list-virtual-networks) API endpoint.
+To get a list of your current virtual networks, use the [List virtual networks](/api/operations/tunnel-virtual-network-list-virtual-networks) API operation.
 
 Enable Virtual IP support by adding the `virtual_network_id` field to the origins in you API request. Refer to the [Cloudflare Load Balancer API documentation](/api/operations/account-load-balancer-pools-create-pool) for more information on creating a pool using the API.
 
