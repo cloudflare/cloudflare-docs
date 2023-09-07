@@ -10,7 +10,7 @@ meta:
 # Cloudflare SSL/TLS
 
 {{<description>}}
-Encrypt your web traffic to prevent data theft and other tampering
+Encrypt your web traffic to prevent data theft and other tampering.
 {{</description>}}
 
 {{<plan type = "all">}}
@@ -28,6 +28,10 @@ Extending the protection offered by Universal SSL, Total TLS is an easy way to a
 
 {{<feature header="Delegated DCV" href="/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/">}}
 Even if you use a different provider for authoritative DNS, you can delegate domain control validation (DCV) to Cloudflare, reducing the need of manual intervention.
+{{</feature>}}
+
+{{<feature header="Custom TLS settings" href="/ssl/edge-certificates/additional-options/minimum-tls/">}}
+Cloudflare also allows you to specify the minimum TLS version that visitors must use to connect to your website or application, and restrict cipher suites according to your security requirements.
 {{</feature>}}
 
 <br />
