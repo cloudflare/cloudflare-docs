@@ -4,7 +4,7 @@ pcx_content_type: get-started
 weight: 1
 ---
 
-# Getting started guide
+# Get started
 
 {{<Aside type="note">}}
 
