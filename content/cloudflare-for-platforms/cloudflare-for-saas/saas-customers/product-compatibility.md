@@ -39,7 +39,7 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) | Yes* | Yes | Page Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Mirage](/speed/optimization/images/mirage/) | Yes | Yes |
 | [Origin Rules](/rules/origin-rules/) | No | Yes | Origin Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
-| [Page Shield](/page-shield/) | Yes | Yes |
+| [Page Shield](/page-shield/) | No | Yes |
 | [Polish](/images/polish/) | Yes* | Yes | Polish only runs on cached assets. If the customer zone is bypassing cache for SaaS zone destined traffic, then images optimized by Polish will not be loaded from origin. |
 | [Rate Limiting](/waf/rate-limiting-rules/) | Yes* | Yes | Rate Limiting rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Security Level](/fundamentals/security/security-level/) | Yes | Yes |
@@ -50,6 +50,6 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Waiting Room](/waiting-room/) | Yes | Yes |
 | [Websockets](/support/network/using-cloudflare-with-websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
-| [Zaraz](/zaraz/) | Yes | No | 
+| [Zaraz](/zaraz/) | Yes | No |
 
 {{</table-wrap>}}
