@@ -56,7 +56,7 @@ async function list(
  */
 function parse(filename: string): string | void {
   return (/^data[/]changelogs[/](.*)\.ya?ml$/.exec(filename) ||
-    /^data[/]([^/]+)\.ya?ml$/.exec(filename) ||
+    /^data[/]([^\/]+)\.ya?ml$/.exec(filename) ||
     /^content[/]([^\/]+)[/]/.exec(filename) ||
     [])[1];
 }
@@ -66,6 +66,7 @@ function parse(filename: string): string | void {
 
 (async function () {
   try {
+    console.log('DEBUG: Using the action code included in the PR');
     const token = core.getInput("GITHUB_TOKEN", { required: true });
 
     const payload = github.context.payload;
