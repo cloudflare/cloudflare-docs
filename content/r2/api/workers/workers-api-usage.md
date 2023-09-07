@@ -73,6 +73,11 @@ Find more detailed information on configuring your Worker in the [Wrangler Confi
 
 Within your Worker code, your bucket is now available under the `MY_BUCKET` variable and you can begin interacting with it.
 
+{{<Aside type="warning" header="Local Development mode in Wrangler">}}
+By default `wrangler dev` runs in local development mode. In this mode, all operations performed by your local worker will operate against local storage on your machine.
+Use `wrangler dev --remote` if you want R2 operations made during development to be performed against a real R2 bucket.
+{{</Aside>}}
+
 An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Module Worker syntax. Add the following snippet into your project's `index.js` file:
 
 ```js
