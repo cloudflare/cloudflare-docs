@@ -168,9 +168,9 @@ Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to writ
 
 ### Interact with your KV namespace via a Worker
 
-You can now access the binding from within a Worker. 
+You can access the binding from within a Worker. 
 
-In your Worker script, add your KV namespace in the  `Env` interface:
+In your Worker script, add your KV namespace in the `Env` interface:
 
 ```js
 	YOUR_KV_NAMESPACE: KVNamespace;
@@ -181,7 +181,29 @@ Use the KV `get()` method to fetch the data you stored in your KV database:
 let value = await <YOUR_BINDING>.get("KEY");
 ```
 
-At the end of this tutorial, you have learned how to create and interact with a KV namespace.
+## 5. Develop locally with Wrangler
+
+While in your project directory, test your KV locally by running:
+
+```sh
+$ wrangler dev
+```
+
+When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Hello World!`.
+
+## 6. Deploy your KV
+
+Run the following command to deploy KV to Cloudflare's global network:
+
+
+```sh
+$ npx wrangler deploy
+```
+
+Preview your Workers KV at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
+
+
+At the end of this tutorial, you have learned how to create, test and a deploy a Workers KV globally.
 
 ## Related resources
 

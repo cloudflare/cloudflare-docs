@@ -6,7 +6,7 @@ weight: 7
 
 # KV bindings
 
-KV bindings allow for communication between a Worker and a KV namespace. 
+KV [bindings](/workers/configuration/bindings/) allow for communication between a Worker and a KV namespace. 
 
 Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/#configure-wranglertoml). 
 
