@@ -232,7 +232,7 @@ The root certificate is now installed and ready to be used.
 
 ChromeOS has multiple methods that can be used to deploy the Cloudflare root certificate. Each method depends on what device is used and where that devices stores root certificates. Use the procedure that your device most closely follows.
 
-{{<tabs labels="VPN and apps | CA Certificate | Browser trust store">}}
+{{<tabs labels="VPN and apps | CA Certificate">}}
 {{<tab label="vpn and apps" no-code="true">}}
 
 {{<render file="_chromeos-cert-settings.md" withParameters="**Install from SD card**">}}
@@ -254,12 +254,9 @@ ChromeOS has multiple methods that can be used to deploy the Cloudflare root cer
 7. To verify the certificate is installed and trusted, go to **Settings** > **Apps** > **Google Play Store** > **Manage Android Preferences** > **Security** > **Credentials** > **Trusted credentials** > **User**.
 
 {{</tab>}}
-
-{{<tab label="browser trust store" no-code="true">}}
-test2
-{{</tab>}}
-
 {{</tabs>}}
+
+You may also have to [install the certificate in your browser](#browsers).
 
 ## Add the certificate to applications
 
