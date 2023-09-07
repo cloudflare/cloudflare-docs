@@ -50,21 +50,37 @@
       </thead>
       <tbody id="tableBody">
         {{- range $changelogRendered -}} 
+        {{- $entry := . -}}
+        {{- $product := .product -}}
         {{- $link := "" -}} 
         {{- $rellink := .url -}} 
         {{- $title := "" -}} 
         {{- with .title -}} 
-        {{- $title = . -}} 
+        {{- $title = . -}}
+        <!-- Custom logic for products with separate pages -->
+        {{- if or (eq $product "WAF") (eq $product "DDoS") -}} 
+        {{- $link = print "https://developers.cloudflare.com" $rellink (urlize .) -}} 
+        <!-- End custom logic -->
+        {{- else -}}
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}} 
+        {{- end -}}
         {{ else }} 
-        {{- $title = printf "%s · %s" .product .publish_date -}} 
+        {{- $title = printf "%s · %s" $product .publish_date -}} 
         {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}} 
         {{- end -}}        
-        <tr class="data-row" data-product="{{.product | lower}}">
-          <td>{{ .product }}</td>
+        <tr class="data-row" data-product="{{$product | lower}}" data-changelog="{{- print .url "index.xml" -}}">
+          <td>{{ $product }}</td>
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
           <td class="changelogDate">{{ .publish_date }}</td>
+          <!-- Custom logic for products with separate pages -->
+          {{- with .table -}} 
+          <td>
+            <p>For more details, refer to the dedicated page for {{ printf "[WAF entries - %s](%s)" $title $link | $.Page.RenderString }}.</p>
+          </td>
+          <!-- End custom logic -->
+          {{- else -}}
           <td>{{ .description | $.Page.RenderString }}</td>
+          {{- end -}}
         </tr>
         {{- end -}}
       </tbody>
@@ -111,13 +127,8 @@
         while (changelogLink === "/changelog/index.xml") {
           dataRows.forEach((row) => {
             if (row.cells[0].innerText === productName) {
-              const rawHTML = row.cells[1].innerHTML;
-              const match = rawHTML.match(regexPattern);
-              if (match && match[1]) {
-                const hrefValue = match[1];
-                changelogLink = hrefValue + "index.xml";
+              changelogLink = row.getAttribute("data-changelog");
               }
-            }
           });
         }
       }

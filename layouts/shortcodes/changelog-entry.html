@@ -1,0 +1,43 @@
+{{- $date := .Get "date" -}}
+{{- $product := .Page.Params.changelog_file_name -}}
+{{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
+{{- $changelogEntry := dict -}}
+
+{{- range $changelogData -}}
+
+{{- if eq .publish_date $date -}}
+
+{{ $changelogEntry = . }}
+
+{{- end -}}
+{{- end -}}
+<div class="DocsMarkdown--table-wrap">
+<div class="DocsMarkdown--table-wrap-inner">
+<table style="width: 100%">
+<thead>
+<tr>
+<th>Ruleset</th>
+<th>Rule ID</th>
+<th>Legacy Rule ID</th>
+<th>Description</th>
+<th>Previous Action</th>
+<th>New Action</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+{{- range index $changelogEntry "entries" -}}
+<tr>
+<td>{{- .ruleset -}}</td>
+<td>{{- .rule_id -}}</td>
+<td>{{- .legacy_id -}}</td>
+<td>{{- .description -}}</td>
+<td>{{- .previous_action -}}</td>
+<td>{{- .new_action -}}</td>
+<td>{{- .comments -}}</td>
+</tr>
+{{- end -}}
+</tbody>
+</table>
+</div>
+</div>
