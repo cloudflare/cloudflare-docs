@@ -14,7 +14,7 @@ Messaging systems that also implement or strongly align to the "publish-subscrib
 
 Cloudflare is still exploring pricing models for Pub/Sub and will share more with developers prior to GA. Users will be given prior notice and will require beta users to explicitly opt-in.
 
-## Does Pub/Sub show data in the Cloudflare Dashboard?
+## Does Pub/Sub show data in the Cloudflare dashboard?
 
 Pub/Sub today does not support the Cloudflare dashboard. You can set up Pub/Sub through Wrangler by following [these steps](/pub-sub/guide/).
 
