@@ -33,10 +33,9 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
 
 ### Enable the Gateway proxy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
-2. Enable **Proxy** for TCP.
-3. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
-4. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`:
+1. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP.
+2. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
+3. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`:
 
    1. Select **ICMP**.
    2. On Linux servers:
@@ -48,7 +47,7 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
    $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
    ```
 
-Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp).
+Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp). For more information on how Gateway forwards traffic, refer to [Gateway proxy](/cloudflare-one/policies/gateway/proxy/).
 
 ### Create Zero Trust policies
 

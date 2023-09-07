@@ -1,36 +1,18 @@
 ---
 pcx_content_type: changelog
 title: Changelog
+layout: changelog
 meta:
-    description: Review recent changes to Cloudflare Radar.
-rss: file
+  description: Review recent changes to Cloudflare Radar.
+changelog_file_name: radar
+outputs:
+    - html
+    - rss
 weight: 7
 ---
 
 # Changelog
 
-## 2023-08-14
+<!-- Actual content lives in /data/changelogs/radar.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
 
-- Stopped collecting data in the old Layer 3 data source
-- Updated Layer 3
-[timeseries](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-by-bytes) endpoint
-to start using the new Layer 3 data source by default, fetching the old data source now requires sending the parameter
-`metric=bytes_old`
-
-## 2023-01-23
-
-- IPv6 percentage started to be calculated as (IPv6 requests / requests for dual-stacked content), where as before it
-was calculated as (IPv6 requests / IPv4+IPv6 requests).
-
-## 2023-01-11
-
-- Added new Layer 3 data source and related endpoints
-- Updated Layer 3
-[timeseries](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-by-bytes) endpoint
-to support fetching both current and new data sources. For retro-compatibility
-reasons, fetching the new data source requires sending the parameter `metric=bytes` else the current data
-source will be returned
-- Deprecated old Layer 3 endpoints
-[TimeseriesGroups](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-groups) and
-[Summary](https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary).
-Users should upgrade to newer endpoints
+{{<product-changelog>}}

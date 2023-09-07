@@ -8,7 +8,7 @@ weight: 5
 
 You can receive Magic Network Monitoring notifications via email, PagerDuty, or webhooks.
 
-For more information on receiving notifications via PagerDuty or using webhooks, refer to [Create a notification](/fundamentals/notifications/create-notifications/).
+For more information on receiving notifications via PagerDuty or using webhooks, refer to [Create a notification](/notifications/create-notifications/).
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.

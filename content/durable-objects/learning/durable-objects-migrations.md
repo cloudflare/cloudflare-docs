@@ -18,7 +18,7 @@ This process informs the Workers runtime of the changes and provides it with ins
 
 {{<Aside type="note">}}
 
-Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`wrangler deploy`](/workers/wrangler/commands/#deploy). This is true even for changes to how code interacts with persistent storage. Because of [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
+Updating code for an existing Durable Object class does not require a migration. To update code for an existing Durable Object class, run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy). This is true even for changes to how code interacts with persistent storage. Because of [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), you do not have to be concerned about old and new code interacting with the same storage simultaneously. However, it is your responsibility to ensure that new code is backwards compatible with existing stored data.
 
 {{</Aside>}}
 
@@ -94,11 +94,11 @@ Note that `.toml` files do not allow line breaks in inline tables (the `{key = "
 
 ### Durable Object migrations through Wrangler CLI
 
-It is possible to define a migration through extra arguments to the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command. When taking this route, any migrations listed in the [`wrangler.toml`](/workers/wrangler/configuration/#migrations) configuration file are ignored.
+It is possible to define a migration through extra arguments to the [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) command. When taking this route, any migrations listed in the [`wrangler.toml`](/workers/wrangler/configuration/#migrations) configuration file are ignored.
 
-You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler deploy` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
+You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `npx wrangler deploy` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
 
-The list of CLI migration arguments that can be added to `wrangler deploy` is as follows:
+The list of CLI migration arguments that can be added to `npx wrangler deploy` is as follows:
 
 ```bash
 --old-tag <tag name> # Optional if your Worker code does not have a migration tag set yet.

@@ -24,9 +24,7 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
 
 {{<Aside type="note">}}
-
 Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.
-
 {{</Aside>}}
 
 To configure the challenge, refer to [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
@@ -58,10 +56,8 @@ highlight: [4]
 
 An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
 
-{{<Aside type= "Note">}}
-
+{{<Aside type= "note">}}
 A form is not protected by having a widget rendered. The corresponding token that is a result of a widget being rendered also needs to be verified using the siteverify API.
-
 {{</Aside>}}
 
 ### Disable implicit rendering
@@ -166,7 +162,7 @@ To unmount Turnstile, `turnstile.render()` will return an ID which you can pass 
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). |
+| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/reference/client-side-errors). |
 | `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. Refer to [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
 | `expired-callback` | `data-expired-callback` | A JavaScript callback invoked when the token expires and does not reset the widget. |
 | `before-interactive-callback` | `data-before-interactive-callback` | A JavaScript callback invoked before the challenge enters interactive mode. |

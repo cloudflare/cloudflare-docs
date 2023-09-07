@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Customize a waiting room
-weight: 2
+weight: 3
 ---
 
 # Customize a waiting room
@@ -111,7 +111,7 @@ If you are using images or other resources for your customized waiting room, **d
 To preview the appearance of a waiting room:
 
 1.  In your application, go to **Traffic** > **Waiting Room**.
-2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
+2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
 4.  Select **Preview waiting room**:
 

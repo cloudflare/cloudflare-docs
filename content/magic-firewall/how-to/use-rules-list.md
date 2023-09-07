@@ -63,7 +63,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 
 {{<Aside type="note">}}Available for customers with a Magic Firewall Advanced plan.{{</Aside>}}
 
-You can create rules with managed lists. Managed IP Lists are [lists of IP addresses](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
+You can create rules with managed lists. Managed IP Lists are [lists of IP addresses](/waf/tools/lists/ip-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
 
 You can access these managed lists when you create rules with either _IP destination address_ or _IP source address_ in the **Field** dropdown, and _is in list_ or _is not in list_ in the **Operator** dropdown.
 

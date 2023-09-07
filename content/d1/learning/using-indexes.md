@@ -137,7 +137,7 @@ Use `DROP INDEX` to remove an index. Dropped indexes cannot be restored.
 
 Take note of the following considerations when creating indexes:
 
-* Indexes are not always a free performance boost. You should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained. When you write to an indexed column, the database needs to write to the table and the index.
+* Indexes are not always a free performance boost. You should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained. When you write to an indexed column, the database needs to write to the table and the index. The performance benefit of an index and reduction in rows read will, in nearly all cases, offset this additonal write.
 * You cannot create indexes that reference other tables or use non-deterministic functions, since the index would not be stable.
 * Indexes cannot be updated. To add or remove a column from an index, [remove](#removing-indexes) the index and then [create a new index](#create-an-index) with the new columns.
 * Indexes contribute to the overall storage required by your database: an index is effectively a table itself.

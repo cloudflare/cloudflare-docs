@@ -19,6 +19,7 @@ The descriptions below detail the fields available for `gateway_network`.
 | Datetime | The date and time the corresponding network session was made (for example, '2021-07-27T00:01:07Z'). | int or string |
 | DestinationIP | Destination IP of the network session. | string |
 | DestinationPort | Destination port of the network session. | int |
+| DetectedProtocol | Detected traffic protocol of the network session. | string |
 | DeviceID | UUID of the device where the network session originated from. | string |
 | DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
 | Email | Email associated with the user identity where the network sesion originated from. | string |
