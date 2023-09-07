@@ -66,7 +66,6 @@ function parse(filename: string): string | void {
 
 (async function () {
   try {
-    console.log('DEBUG: Using the action code included in the PR');
     const token = core.getInput("GITHUB_TOKEN", { required: true });
 
     const payload = github.context.payload;
