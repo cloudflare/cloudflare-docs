@@ -31,7 +31,7 @@ entries:
 - publish_date: '2023-01-04'
   title: Earlier detection (and rejection) of non-video uploads
   description: |-
-    Cloudflare Stream now detects non-video content on upload using [the POST API](/stream/uploading-videos/upload-video-file/) and returns a `400 Bad Request` HTTP error with code `10059`.
+    Cloudflare Stream now detects non-video content on upload using [the POST API](/stream/uploading-videos/upload-video-file/) and returns a 400 Bad Request HTTP error with code `10059`.
 
     Previously, if you or one of your users attempted to upload a file that is not a video (ex: an image), the request to upload would appear successful, but then fail to be encoded later on.
 
