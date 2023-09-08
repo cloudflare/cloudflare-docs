@@ -44,6 +44,16 @@ Unlike `wrangler dev`, which provides local instances of resources to develop ag
 
 {{</Aside>}}
 
+### DevTools
+
+Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/devtools/) to view logs/sources, set breakpoints, and profile CPU/memory usage. With `wrangler dev` running, press the <kbd>d</kbd> key in your terminal to open a DevTools session connected to your Worker.
+
+{{<Aside type="warning">}}
+
+Breakpoint debugging is only supported when running `wrangler dev` locally, without the `--remote` flag.
+
+{{</Aside>}}
+
 ### Customize `wrangler dev`
 
 You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/wrangler/commands/#dev) for available configuration options.

@@ -30,7 +30,7 @@ Configurez vos enregistrements DNS pour bénéficier d'une protection maximale e
 
 ### Ne limitez pas les requêtes provenant des adresses IP Cloudflare
 
-Une fois le trafic envoyé en proxy vers Cloudflare, les connexions à votre serveur web d'origine proviennent [des adresses IP de Cloudfare.](http://www.cloudflare.com/ips) Votre serveur web d'origine doit donc [mettre sur liste blanche les adresses IP Cloudflare](https://support.cloudflare.com/hc/articles/201897700) et bloquer systématiquement le trafic ne provenant pas de Cloudflare ou des adresses IP de vos partenaires, fournisseurs, ou applications de confiance.
+Une fois le trafic envoyé en proxy vers Cloudflare, les connexions à votre serveur web d'origine proviennent [des adresses IP de Cloudflare.](http://www.cloudflare.com/ips) Votre serveur web d'origine doit donc [mettre sur liste blanche les adresses IP Cloudflare](https://support.cloudflare.com/hc/articles/201897700) et bloquer systématiquement le trafic ne provenant pas de Cloudflare ou des adresses IP de vos partenaires, fournisseurs, ou applications de confiance.
 
 ### Restaurez les adresses IP des visiteurs d'origine dans les journaux de votre serveur d'origine
 

@@ -15,6 +15,12 @@ On **October 4, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 On **October 11, 2023**, Cloudflare will stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
+{{<Aside type="warning">}}
+
+{{<render file="_digicert-caa-warning.md">}}
+
+{{</Aside>}}
+
 ## Summary of changes
 
 This table provides a summary of the differences between DigiCert and Cloudflare's other CAs.

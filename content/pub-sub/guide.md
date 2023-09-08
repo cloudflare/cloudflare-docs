@@ -1,9 +1,10 @@
 ---
-title: Guide
+title: Get started
 pcx_content_type: get-started
+weight: 1
 ---
 
-# Get started guide
+# Get started
 
 {{<Aside type="note">}}
 

@@ -1362,6 +1362,7 @@ div>code,
 li>code,
 td>code,
 .DocsMarkdown--aside>code,
+code,
 .InlineCode {
   font-family: var(--monospace-font-family);
   font-size: var(--inline-code-font-size);
@@ -5542,4 +5543,8 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   .tutorialPreReqHeader {
     margin-top: 4em !important;
   }
+}
+
+.footnote-backref {
+  visibility: hidden;
 }
