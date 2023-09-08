@@ -99,7 +99,7 @@ To serve the TLS certificate from an nginx container in Docker:
    }
    ```
 
-   If needed, replace `/certs/example.pem` and `/certs/example.key` with the locations of your certificate and key.
+If needed, replace `/certs/example.pem` and `/certs/example.key` with the locations of your certificate and key.
 
 2. Add the nginx image to your Docker compose file:
 
