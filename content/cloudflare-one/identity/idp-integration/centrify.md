@@ -18,7 +18,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 4. Select the **Custom** tab, then select **Add OpenID Connect**.
 
-5. On the **Add Web App** scree, select **Yes** to create an OpenID Connect application.
+5. On the **Add Web App** screen, select **Yes** to create an OpenID Connect application.
 
 6. Enter an **Application ID**.
 
