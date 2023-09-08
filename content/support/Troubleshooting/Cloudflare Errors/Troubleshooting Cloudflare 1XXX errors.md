@@ -203,7 +203,9 @@ A website owner blocked your request based on your client's web browser.
 
 ### Resolution
 
-Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup). Site owners disable **Browser** **Integrity Check** via the **Settings** tab of the **Security** app.
+Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup). 
+
+Site owners may disable **Browser** **Integrity Check** via the **Settings** tab of the **Security** app.
 
 {{<Aside type="note">}}
 Since the website owner performed the blocking, Cloudflare support
