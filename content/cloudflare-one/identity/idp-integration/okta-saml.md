@@ -94,9 +94,11 @@ SAML attributes are only refreshed during authentications with the Okta identity
         "attributes": [
             "email",
             "group",
-            "email_attribute_name": "",
-            "sign_request": false,
-            "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+        ],
+        "email_attribute_name": "",
+        "sign_request": false,
+        "idp_public_certs": [
+            "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
         ]
     },
     "type": "saml",
