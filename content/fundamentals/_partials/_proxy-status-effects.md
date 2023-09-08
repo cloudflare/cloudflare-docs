@@ -39,4 +39,4 @@ This means that all requests intended for proxied hostnames will go to Cloudflar
         A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[Origin server]
 ```
 
-The Cloudflare assigns specific Anycast IPs to your domain dynamically and may change at any time. This is an expected part of the operation of our Anycast network and does not affect the proxy behavior described above.
+Cloudflare assigns specific Anycast IPs to your domain dynamically and these IPs may change at any time. This is an expected part of the operation of our Anycast network and does not affect the proxy behavior described above.
