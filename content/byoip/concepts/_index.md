@@ -1,10 +1,10 @@
 ---
-title: About
+title: Concepts
 pcx_content_type: navigation
-weight: 2
+weight: 3
 ---
 
-# About
+# Concepts
 
 Review the topics below for more information about concepts related to BYOIP.
 
