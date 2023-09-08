@@ -13,7 +13,7 @@ layout: single
 
 ## Overview
 
-In this tutorial you learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna](https://fauna.com/) as its data layer.
+In this tutorial, you learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna](https://fauna.com/) as its data layer.
 
 ## Learning goals
 
@@ -21,7 +21,7 @@ In this tutorial you learn how to store and retrieve data in your Cloudflare Wor
 - How to use Wrangler to store secrets securely.
 - How to use [Hono](https://hono.dev) as a web framework for your Workers.
 
-Building with Fauna, Workers, and Hono enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
+Building with Fauna, Workers, and Hono enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository.
 
 Fauna is a document-based database with a flexible schema. This allows you to define the structure of your data – whatever it may be – and store documents that adhere to that structure. In this tutorial, you will build a product inventory, where each `product` document must contain the following properties:
 
@@ -50,7 +50,7 @@ In the Fauna dashboard:
 
 1. Select **CREATE DATABASE**.
 2. Provide a valid name.
-3. Select a [Region Group][fauna-region-groups].
+3. Select a [Region Group](https://docs.fauna.com/fauna/current/administration/region_groups).
 4. Select **CREATE**.
 
 ### Create the products catalog
@@ -64,11 +64,11 @@ header: Create a new collection
 Collection.create({ name: "Products" })
 ```
 
-Click the run button on bottom, you will see the output similar to the following.
+Select **Run**. You will see an output similar to the following.
 
 ```js
 ---
-header: The output
+header: Output
 ---
 {
   name: "Products",
@@ -81,9 +81,9 @@ header: The output
 
 ### Create a secret key
 
-You must create a secret key to connect to the database from your Worker.
+You must create a secret key to connect to the database from your Worker. 
 
-Go to the **Explorer** page, hover the database name, and click the key icon.
+To create a secret key, go to **Explorer** in the Fauna dashboar, hover over your database name, and select the key icon to manage your keys.
 
 ![Hover over the database name to reveal the Keys icon](/images/workers/tutorials/fauna/keys-icon.png)
 
@@ -131,12 +131,12 @@ $ yarn create cloudflare
 To continue with this guide:
 
 1. Give your new Worker application a name.
-2. Select "**Website or web app**".
-3. Select "**Hono**".
-4. Select "**No**" to skip Git initialization.
-5. Select "**No**" to skip deploying your application.
+2. Select `Website or web app`.
+3. Select `Hono`.
+4. Select `No` to skip Git initialization.
+5. Select `No` to skip deploying your application.
 
-Next, navigate to your project directory and update the `wrangler.toml` file to set the name for the Worker.
+Next, go to your Worker project directory and update the `wrangler.toml` file to set the name for the Worker.
 
 ```toml
 ---
@@ -147,9 +147,9 @@ name = "fauna-workers"
 
 ### Add your Fauna secret as an environment variable
 
-Before developing your Worker, add your Fauna secret key as environment variable.
+Before developing your Worker, add your Fauna secret key as an [environment variable](/workers/configuration/environment-variables/).
 
-There are two type of a secret for development or production.
+There are two types of secrets for [development](/workers/configuration/secrets/#secrets-in-development) or [production](/workers/configuration/secrets/#secrets-on-deployed-workers).
 
 For development, add a `.dev.vars` file on the project root and write your secret.
 
@@ -160,7 +160,7 @@ header: .dev.vars
 FAUNA_SECRET=<YOUR SECRET>
 ```
 
-For production, your secret safely with [the following command](/workers/wrangler/commands/#put-3):
+For production, your secret safely with [`wrangler secret put` command](/workers/wrangler/commands/#put-3):
 
 ```sh
 ---
@@ -259,7 +259,7 @@ app.use('*', async (c, next) => {
 });
 ```
 
-You can access `FAUNA_SECRET` environment variable from `c.env.FAUNA_SECRET`. Workers run on a [custom JavaScript runtime](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
+You can access the `FAUNA_SECRET` environment variable from `c.env.FAUNA_SECRET`. Workers run on a [custom JavaScript runtime](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
 
 ### Create product documents
 
@@ -305,7 +305,7 @@ fql`Products.create({
 })`
 ```
 
-To review what a document looks like, run the following query in the Fauna dashboard > Explorer > Region name > Database name like a `cloudflare_rest_api` > the **SHELL** window:
+To review what a document looks like, run the following query. In the Fauna dashboard, go to **Explorer** > Region name > Database name like a `cloudflare_rest_api` > the **SHELL** window:
 
 ```js
 ---
@@ -431,8 +431,7 @@ When the delete operation is successful, Fauna returns the deleted document and 
 
 ## Test and deploy your Worker
 
-Before deploying your Worker, test it locally by using Wrangler's [dev](/workers/wrangler/commands/#dev) command.
-You can execute it with NPM or Yarn:
+Before deploying your Worker, test it locally by using Wrangler's [`dev`](/workers/wrangler/commands/#dev) command:
 
 {{<tabs labels="NPM | Yarn">}}
 {{<tab label="npm" >}}
@@ -457,7 +456,7 @@ $ yarn dev
 {{</tab>}}
 {{</tabs>}}
 
-Once the development server is up and running, you can start making HTTP requests to your Worker.
+Once the development server is up and running, start making HTTP requests to your Worker.
 
 First, create a new product:
 
@@ -522,8 +521,7 @@ header: Read product response
 }
 ```
 
-Finally, deploy your Worker using the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command.
-You can execute this with NPM or Yarn:
+Finally, deploy your Worker using the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
 
 {{<tabs labels="NPM | Yarn">}}
 {{<tab label="npm" >}}
@@ -550,7 +548,7 @@ $ yarn deploy
 
 This publishes the Worker to your `*.workers.dev` subdomain.
 
-## Updating inventory quantity
+## Update inventory quantity
 
 As the last step, implement a route to update the quantity of a product in your inventory, which is `0` by default.
 
@@ -582,7 +580,7 @@ fql`Products.byId(${productId}){ quantity : .quantity + ${quantity}}`;
 
 {{<Aside type="note" header="Consistency guarantees in Fauna">}}
 
-Even if multiple Workers update this quantity from different parts of the world, Fauna guarantees the consistency of the data across all Fauna regions. [This article](https://fauna.com/blog/consistency-without-clocks-faunadb-transaction-protocol?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021) explains how Fauna's distributed protocol works without the need for atomic clocks.
+Even if multiple Workers update this quantity from different parts of the world, Fauna guarantees the consistency of the data across all Fauna regions. This article on [consistency](https://fauna.com/blog/consistency-without-clocks-faunadb-transaction-protocol?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021) explains how Fauna's distributed protocol works without the need for atomic clocks.
 
 {{</Aside>}}
 
@@ -635,11 +633,9 @@ $ yarn deploy
 {{</tab>}}
 {{</tabs>}}
 
-## Cleaning up
+## Clean up
 
-To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage application** > **Delete**:
-
-![Delete your Worker by following the steps above](/images/workers/tutorials/fauna/delete-worker.png)
+To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers & Pages** > select your Worker > **Manage application** > **Delete**.
 
 Finally, delete your Fauna database from its settings in the Fauna dashboard:
 
