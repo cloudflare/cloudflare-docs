@@ -73,8 +73,28 @@
           <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
           <td class="changelogDate">{{ .publish_date }}</td>
           <!-- Custom logic for products with separate pages -->
-          {{- with .table -}} 
+          {{- with .table -}}
           <td>
+            <p>Abbreviated list of updated rules:</p> 
+            <table>
+            <thead>
+              <tr>
+                <td>Ruleset</td>
+                <td>Rule ID</td>
+                <td>Description</td>
+              </tr>
+            </thead>
+            <tbody>
+              {{ range index $entry "entries" }}
+              <tr>
+                <td>{{.ruleset}}</td>
+                <td>{{.rule_id}}</td>
+                <td>{{.description}}</td>
+              </tr>
+              {{ end }}
+            </tbody>
+            </table>
+            <br/>
             <p>For more details, refer to the dedicated page for {{ printf "[WAF entries - %s](%s)" $title $link | $.Page.RenderString }}.</p>
           </td>
           <!-- End custom logic -->
