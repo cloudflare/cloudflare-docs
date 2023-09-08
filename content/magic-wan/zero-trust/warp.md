@@ -60,7 +60,7 @@ To check if WARP is working correctly as an on-ramp, you can do a resolution tes
 
 For example:
 
-```bash
+```sh
 $ nslookup <SERVER_BEHIND_MAGIC_WAN>
 ```
 
